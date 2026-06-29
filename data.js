@@ -1,22 +1,19 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
- * 공용 데이터 파일
- *  - 이 파일 하나만 수정하면 학생용 로드맵과 어드민이 함께 갱신됩니다.
- *  - 어드민(admin.html)에서 편집 후 GitHub 저장 또는 내보내기로 이 파일을 교체하세요.
+ * 공용 데이터 파일 — 이 파일만 수정하면 학생 화면과 어드민이 함께 갱신됩니다.
+ * 어드민(admin.html)에서 편집 후 GitHub 저장 또는 내보내기로 교체하세요.
+ *
+ * content[주차id] = { notice:"학습내용", homework:"과제", textbooks:[{title,url}] }
+ *   · 유튜브 링크 → 영상 재생 버튼 / 그 외 링크 → 자료 열기 / textbooks → 이름 워터마크 PDF
  * ========================================================= */
 window.GFIELD_DATA = {
   meta: {
     academy: "지필드 영재교육",
     title: "생각하는 황소 대비 아카이브",
     year: "2026 하반기",
-    // 현재 진행 중인 주차 (캐릭터가 멈춰 서는 노드)
     currentWeekId: "jul-w2"
   },
 
-  /* 로드맵 노드 (위 → 아래 순서)
-   * type: "week"(정규/모의/파이널 주차) | "special"(방학 특강 브랜치) | "divider"(페이즈 구분선) | "goal"(최종 목표)
-   * track: concept(파랑) | apply(하늘) | exam(주황) | mock(진주황) | final(빨강) | special(노랑)
-   */
   nodes: [
     { id:"may-w34", type:"week", track:"concept", date:"5월 3·4주차", title:"GIFTED MATH 3 V1-1", desc:"HS 개념 다지기", focus:"기초 개념 확립 주간" },
     { id:"jun-w12", type:"week", track:"concept", date:"6월 1·2주차", title:"GIFTED MATH 3 V1-2", desc:"HS 개념 다지기", focus:"심화 연산 및 개념 완성" },
@@ -24,7 +21,7 @@ window.GFIELD_DATA = {
     { id:"jun-w4",  type:"week", track:"apply",   date:"6월 4주차",   title:"THINKING BASIC 2", desc:"HS 개념 응용", focus:"문제 푸는 방법 찾기 (2)" },
     { id:"jul-w1",  type:"week", track:"apply",   date:"7월 1주차",   title:"THINKING BASIC 3", desc:"HS 개념 응용", focus:"규칙 찾아 문제 해결하기 (1)" },
 
-    { id:"jul-w2",  type:"week", track:"exam", date:"7월 2주차", title:"THINKING CORE CH1", desc:"NUMBERS (1) + 중급 모의고사 1회", focus:"⏱ 수업 시간 30분 연장 시작 · 실전 개념 병행" },
+    { id:"jul-w2",  type:"week", track:"exam", date:"7월 2주차", title:"THINKING CORE CH1", desc:"NUMBERS (1) + 중급 모의고사 1회", focus:"수업 시간 30분 연장 시작 · 실전 개념 병행" },
     { id:"jul-w3",  type:"week", track:"exam", date:"7월 3주차", title:"THINKING CORE CH2", desc:"Algebra (1) + 중급 모의고사 2회", focus:"개념 적용 및 오답 제로 훈련" },
     { id:"jul-w4",  type:"week", track:"exam", date:"7월 4주차", title:"THINKING CORE CH3", desc:"Numbers & Case + 중급 모의고사 3회", focus:"주차별 출석생 두 영상 동시 권한" },
     { id:"jul-w5",  type:"week", track:"exam", date:"7월 5주차", title:"THINKING CORE CH4", desc:"Geometry + 중급 모의고사 4회", focus:"도형/기하 파트 실전 적응" },
@@ -33,13 +30,13 @@ window.GFIELD_DATA = {
 
     { id:"aug-w2",  type:"week", track:"exam", date:"8월 2주차", title:"THINKING CORE CH5", desc:"활용 + 중급 모의고사 5회", focus:"실전 개념 단원 종료" },
 
-    { id:"div-mock", type:"divider", label:"🏁 Phase 2 · 중급 모의고사 집중 훈련 진입" },
+    { id:"div-mock", type:"divider", label:"Phase 2 · 중급 모의고사 집중 훈련 진입" },
 
     { id:"aug-w3",  type:"week", track:"mock", date:"8월 3주차", title:"중급 모의고사 6회", desc:"실전 풀이 및 오답 리뷰", focus:"모의고사 집중 훈련 체제 전환" },
     { id:"aug-w4",  type:"week", track:"mock", date:"8월 4주차", title:"중급 모의고사 7회", desc:"실전 풀이 및 오답 리뷰", focus:"약점 유형 변형 문제 풀이" },
     { id:"sep-w1",  type:"week", track:"mock", date:"9월 1주차", title:"중급 모의고사 8회", desc:"실전 풀이 및 오답 리뷰", focus:"중급 단계 최종 마무리 · 분석 리포트" },
 
-    { id:"div-final", type:"divider", label:"🔥 Phase 3 · 파이널 과정 진입 (실전 리허설)" },
+    { id:"div-final", type:"divider", label:"Phase 3 · 파이널 과정 진입 (실전 리허설)" },
 
     { id:"sep-14", type:"week", track:"final", date:"9월 14일 주차", title:"파이널 실전 모의고사 1회", desc:"신유형 지문 분석", focus:"파이널 과정 OT" },
     { id:"sep-21", type:"week", track:"final", date:"9월 21일 주차", title:"파이널 실전 모의고사 2회", desc:"영재성 검사 대비", focus:"OMR 마킹 훈련 도입" },
@@ -49,48 +46,85 @@ window.GFIELD_DATA = {
     { id:"oct-19", type:"week", track:"final", date:"10월 19일 주차", title:"파이널 실전 모의고사 6회", desc:"실전 시간 배분 훈련", focus:"목표 레벨(경시/심화/실력/일품) 기준선 제시" },
     { id:"oct-26", type:"week", track:"final", date:"10월 26일 주차", title:"파이널 실전 모의고사 7회 (최종 리허설)", desc:"실전 대비 총정리", focus:"종강 및 학부모 최종 상담" },
 
-    { id:"goal-exam", type:"goal", date:"11월 초", title:"🎯 생각하는 황소 입학시험", desc:"누적 데이터 기반 최종 상담 및 시험 응시", focus:"" }
+    { id:"goal-exam", type:"goal", date:"11월 초", title:"생각하는 황소 입학시험", desc:"누적 데이터 기반 최종 상담 및 시험 응시", focus:"" }
   ],
 
-  /* 주차별 콘텐츠 (어드민에서 채움)
-   * concept: 개념 영상 URL, mock: 모의고사 해설 영상 URL, pdf: 자료 PDF URL
-   */
   content: {
-    "may-w34": { concept:"", mock:"", pdf:"" },
-    "jun-w12": { concept:"", mock:"", pdf:"" },
-    "jun-w3":  { concept:"", mock:"", pdf:"" },
-    "jun-w4":  { concept:"", mock:"", pdf:"" },
-    "jul-w1":  { concept:"", mock:"", pdf:"" },
-    "jul-w2":  { concept:"", mock:"", pdf:"" },
-    "jul-w3":  { concept:"", mock:"", pdf:"" },
-    "jul-w4":  { concept:"", mock:"", pdf:"" },
-    "jul-w5":  { concept:"", mock:"", pdf:"" },
-    "special-summer": { concept:"", mock:"", pdf:"" },
-    "aug-w2":  { concept:"", mock:"", pdf:"" },
-    "aug-w3":  { concept:"", mock:"", pdf:"" },
-    "aug-w4":  { concept:"", mock:"", pdf:"" },
-    "sep-w1":  { concept:"", mock:"", pdf:"" },
-    "sep-14":  { concept:"", mock:"", pdf:"" },
-    "sep-21":  { concept:"", mock:"", pdf:"" },
-    "sep-28":  { concept:"", mock:"", pdf:"" },
-    "oct-5":   { concept:"", mock:"", pdf:"" },
-    "oct-12":  { concept:"", mock:"", pdf:"" },
-    "oct-19":  { concept:"", mock:"", pdf:"" },
-    "oct-26":  { concept:"", mock:"", pdf:"" }
+    "may-w34": { notice:"", homework:"", textbooks:[] },
+    "jun-w12": { notice:"", homework:"", textbooks:[] },
+    "jun-w3":  { notice:"", homework:"", textbooks:[] },
+    "jun-w4":  { notice:"", homework:"", textbooks:[] },
+    "jul-w1":  { notice:"", homework:"", textbooks:[] },
+
+    "jul-w2": {
+      notice: [
+        "1. GIFTED MATH 3 V1-1(2) 과제 질문",
+        "https://youtu.be/ynVb1PG5wp0",
+        "  · 약점 유형 - 도형의 개수세기",
+        "    수업 중 진행된 영상 안의 유형들을 꼭 복습해주세요. 영상을 봐야 합니다.",
+        "  · [약점 해결 추가 자료] 필요한 경우 학습해주세요.",
+        "    더 다양한 도형의 개수 세기 : https://naver.me/GYGahDDd",
+        "",
+        "2. GIFTED MATH 3 V1-2(1)",
+        "https://youtu.be/3KyijX8_neQ",
+        "  · p4의 4번째 문제 같은 '조건에 알맞은 수'는 특별한 스킬이 필요하지 않습니다.",
+        "    대부분 첫 글자·수를 쓰는 것부터 시작합니다. 오래 걸릴 것 같아도 방법을 알고 시도하지 않는 것이 문제입니다.",
+        "    - 기출 다지기 / 사고력 키우기",
+        "",
+        "※ 학원이 모든 것을 해결해 주지 않습니다. 지금은 제 자료만으로도 차고 넘치니 가정 학습을 늘려주세요.",
+        "   가장 좋은 선생님은 부모님입니다. 상담이 필요하시면 톡 주세요 ^^",
+        "※ 학원 특강 시간표가 모두 확정되었습니다. 이번 주 마감 예정이니 확인해 주세요. https://naver.me/FNIa1gbz"
+      ].join("\n"),
+      homework: [
+        "황소 대비 모의고사 중급 1회",
+        "https://youtu.be/_DDz_JTccso",
+        "앞으로 있을 실전 모의고사에 익숙해지는 훈련입니다. 조건을 조금 줄인 시험지이며, 너무 심화 문제까지 완벽히 이해할 필요는 없습니다(100점이 목표가 아닙니다).",
+        "단, 반드시 시험을 본 후 영상을 보고 이해하고, 여러 번 봐도 이해되지 않는(실수가 아닌) 유형을 질문하도록 해주세요.",
+        "수업 시간에 중요 유형 설명 후 유사 문제로 테스트를 진행합니다."
+      ].join("\n"),
+      textbooks: []
+    },
+
+    "jul-w3":  { notice:"", homework:"", textbooks:[] },
+    "jul-w4":  { notice:"", homework:"", textbooks:[] },
+    "jul-w5":  { notice:"", homework:"", textbooks:[] },
+    "special-summer": { notice:"", homework:"", textbooks:[] },
+    "aug-w2":  { notice:"", homework:"", textbooks:[] },
+    "aug-w3":  { notice:"", homework:"", textbooks:[] },
+    "aug-w4":  { notice:"", homework:"", textbooks:[] },
+    "sep-w1":  { notice:"", homework:"", textbooks:[] },
+    "sep-14":  { notice:"", homework:"", textbooks:[] },
+    "sep-21":  { notice:"", homework:"", textbooks:[] },
+    "sep-28":  { notice:"", homework:"", textbooks:[] },
+    "oct-5":   { notice:"", homework:"", textbooks:[] },
+    "oct-12":  { notice:"", homework:"", textbooks:[] },
+    "oct-19":  { notice:"", homework:"", textbooks:[] },
+    "oct-26":  { notice:"", homework:"", textbooks:[] }
   },
 
-  /* 학생 명단 */
   students: ["김민준", "이서연", "박지호"],
 
-  /* 정규반 출석/권한: 학생 이름 -> 출석한 주차 id 배열 (열린 자물쇠 🔓)
-   * 비어 있으면 기본값으로 현재 주차까지 자동 오픈됩니다.
-   */
   attendance: {
     "김민준": ["may-w34","jun-w12","jun-w3","jun-w4","jul-w1","jul-w2"],
     "이서연": ["may-w34","jun-w12","jun-w3","jun-w4","jul-w1"],
     "박지호": ["may-w34","jun-w12","jun-w3"]
   },
 
-  /* 방학 특강 수강생 (special-summer 노드 권한) */
-  specialStudents: ["김민준"]
+  specialStudents: ["김민준"],
+
+  /* ===== 자료실 (GFIELD 아카이브) =====
+   * archiveFolders : 폴더 목록 (어드민에서 추가/이름변경/삭제)
+   * archiveAccess  : 폴더이름 -> 허용 학생 배열. ["*"] 이면 전체 공개, 이름만 넣으면 그 학생만.
+   * archive        : { folder, title, file(교재 PDF·기본), video(영상 링크·선택), date }
+   *                  교재가 기본이며 영상이 있으면 함께 제공됩니다. (영상은 임베드가 아닌 새 창 링크)
+   */
+  archiveFolders: ["보충학습", "약점 유형", "사고력 교재 보충"],
+  archiveAccess: {
+    "보충학습": ["*"],
+    "약점 유형": ["*"],
+    "사고력 교재 보충": ["*"]
+  },
+  archive: [
+    /* 예) { folder:"약점 유형", title:"도형의 개수 세기 보충", file:"materials/shape-count.pdf", video:"https://youtu.be/...", date:"2026-06-29" } */
+  ]
 };
