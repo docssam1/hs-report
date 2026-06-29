@@ -141,7 +141,7 @@
   .node.current{border-color:var(--gold);box-shadow:0 0 0 2px rgba(212,175,55,.4),0 10px 26px rgba(212,175,55,.2);}
   .icon-status{position:absolute;left:-46px;top:16px;width:30px;height:30px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:2px solid rgba(212,175,55,.4);}
   /* 달리는 캐릭터 */
-  .marker{position:absolute;left:-70px;top:-24px;width:48px;height:54px;z-index:6;}
+  .marker{position:absolute;left:-46px;top:-34px;width:40px;height:46px;z-index:6;}
   .marker svg{width:100%;height:100%;overflow:visible;}
   .runner-bob{animation:runbob .4s ease-in-out infinite;transform-origin:50% 100%;}
   @keyframes runbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
@@ -161,29 +161,36 @@
   .node.goal h3{color:var(--gold);font-size:18px;}
   .node.goal .desc{color:#cfd5de;}
 
-  /* 자료실 / 게시판 */
-  .arc-intro{background:rgba(13,27,42,.55);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:13.5px;color:#cfd5de;line-height:1.6;margin-bottom:14px;}
-  .arc-intro b{color:var(--gold-light);}
-  .folder{background:rgba(13,27,42,.55);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.3);}
-  .folder-h{display:flex;align-items:center;gap:9px;padding:15px 18px;font-weight:800;font-size:15.5px;color:#0a0a0a;background:linear-gradient(135deg,var(--gold),#c5982e);}
-  .folder-h .folder-ic{font-size:18px;}
-  .folder-h .folder-c{margin-left:auto;background:rgba(0,0,0,.18);color:#0a0a0a;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;}
-  .folder-b{padding:8px 14px 14px;}
-  .arc-item{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 6px;border-bottom:1px solid var(--line);}
-  .arc-item:last-child{border-bottom:none;}
-  .arc-t{font-size:14px;font-weight:600;flex:1;min-width:140px;color:var(--white);}
-  .arc-acts{display:flex;gap:8px;flex-wrap:wrap;}
-  .arc-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 13px;border:none;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;}
-  .arc-btn.vid{background:rgba(229,86,78,.16);color:#ff8a82;border:1px solid rgba(229,86,78,.35);}
-  .arc-btn.pdf{background:linear-gradient(135deg,var(--gold),#c5982e);color:#0a0a0a;}
-  .upd-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 6px;border-bottom:1px solid var(--line);cursor:pointer;}
-  .upd-row:last-child{border-bottom:none;}
-  .upd-row:hover .upd-title{text-decoration:underline;color:var(--gold-light);}
-  .upd-fold{background:rgba(96,165,250,.14);color:#8ec0ff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;flex:none;}
-  .upd-title{font-size:14px;font-weight:600;flex:1;min-width:120px;color:var(--white);}
-  .upd-date{font-size:11.5px;color:var(--dim);flex:none;}
-  .post-video{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000;margin:4px 0 12px;}
-  .post-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  /* 자료실 서재(책장) */
+  .shelf-sec{margin-bottom:24px;}
+  .shelf-h{font-size:14px;font-weight:800;color:var(--gold-light);margin:6px 2px 14px;display:flex;align-items:center;gap:7px;border-bottom:1px solid rgba(212,175,55,.2);padding-bottom:8px;}
+  .shelf-h .c{margin-left:auto;font-size:12px;color:var(--dim);font-weight:600;}
+  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(116px,1fr));gap:24px 16px;perspective:1400px;}
+  .book{cursor:pointer;border:none;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .book .cover{position:relative;width:86%;aspect-ratio:1240/1755;transform-style:preserve-3d;transform:rotateY(-26deg);transition:transform .45s cubic-bezier(.22,1,.36,1);border-radius:3px 6px 6px 3px;box-shadow:12px 18px 32px rgba(0,0,0,.55);}
+  .book .cover img{width:100%;height:100%;object-fit:cover;display:block;border-radius:3px 6px 6px 3px;border:1px solid rgba(212,175,55,.25);border-left:none;position:relative;z-index:2;backface-visibility:hidden;background:#11161c;}
+  .book .cover::before{content:"";position:absolute;left:0;top:0;height:100%;width:20px;transform:translateX(-100%) rotateY(-90deg);transform-origin:right center;background:linear-gradient(90deg,#0d0a06,#2e2316 55%,#4a3820);border-radius:3px 0 0 3px;z-index:1;}
+  .book .cover::after{content:"";position:absolute;right:0;top:1%;height:98%;width:9px;transform:translateX(100%) rotateY(90deg);transform-origin:left center;background:repeating-linear-gradient(0deg,#efe4cd 0,#efe4cd 1.5px,#cdbf9f 3px);z-index:1;}
+  .book:hover .cover{transform:rotateY(-10deg) translateY(-6px);}
+  .book .label{font-size:12.5px;font-weight:700;color:var(--white);line-height:1.3;text-align:center;}
+  .book .pages{font-size:11px;color:var(--dim);}
+
+  /* 책 뷰어 */
+  #bookviewer{position:fixed;inset:0;z-index:75;display:none;flex-direction:column;background:radial-gradient(900px 500px at 50% 0%,#16201a,#06080a 70%);}
+  #bookviewer.open{display:flex;}
+  .bv-top{display:flex;align-items:center;gap:10px;padding:14px 16px;}
+  .bv-back{background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);color:var(--gold-light);font-size:14px;font-weight:700;padding:9px 14px;border-radius:11px;}
+  .bv-name{flex:1;text-align:center;font-size:14.5px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .bv-count{font-size:13px;color:var(--dim);min-width:48px;text-align:right;font-variant-numeric:tabular-nums;}
+  .bv-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;padding:6px 8px 0;overflow:hidden;touch-action:pan-y;}
+  .bv-img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 14px 40px rgba(0,0,0,.55);border:1px solid rgba(212,175,55,.18);background:#fff;-webkit-user-drag:none;}
+  .bv-arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:rgba(20,28,22,.72);border:1px solid rgba(212,175,55,.32);color:var(--gold-light);display:grid;place-items:center;font-size:22px;backdrop-filter:blur(4px);z-index:2;}
+  .bv-arrow.left{left:10px;} .bv-arrow.right{right:10px;}
+  .bv-arrow[disabled]{opacity:.25;pointer-events:none;}
+  .bv-dots{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:12px 16px;max-height:58px;overflow-y:auto;}
+  .bv-dot{width:7px;height:7px;border-radius:50%;background:rgba(212,175,55,.28);cursor:pointer;flex:0 0 auto;}
+  .bv-dot.on{background:var(--gold);transform:scale(1.3);}
+  .bv-note{text-align:center;font-size:11px;color:var(--dim);padding:0 0 14px;}
 
   /* 모달 */
   .overlay{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.7);display:flex;justify-content:center;align-items:center;padding:18px;}
@@ -273,7 +280,7 @@
   </section>
 
   <section id="view-archive" class="hidden">
-    <div class="arc-intro">🗂 <b>GFIELD 자료실</b> — 보충·약점·사고력 자료를 폴더에서 찾아보세요. 영상은 링크로 열리고, 교재는 <b>이름 워터마크</b>로 다운로드됩니다.</div>
+    <div class="arc-intro">📚 <b>GFIELD 서재</b> — 책장에서 교재를 골라 표지를 누르면 페이지를 한 장씩 넘겨볼 수 있어요. (열람 전용 · 다운로드 불가)</div>
     <div id="archive-list"></div>
   </section>
 
@@ -296,6 +303,22 @@
 
 <div class="toast" id="toast"></div>
 <div class="cheer hidden" id="cheer"><div class="ch-inner" id="cheer-text"></div></div>
+
+<!-- 책 뷰어 (서재) -->
+<div id="bookviewer">
+  <div class="bv-top">
+    <button class="bv-back" onclick="closeBook()">‹ 서재</button>
+    <div class="bv-name" id="bv-name"></div>
+    <div class="bv-count" id="bv-count"></div>
+  </div>
+  <div class="bv-stage" id="bv-stage">
+    <button class="bv-arrow left" id="bv-prev" onclick="bookGo(-1)" aria-label="이전 페이지">‹</button>
+    <img class="bv-img" id="bv-img" alt="교재 페이지" draggable="false">
+    <button class="bv-arrow right" id="bv-next" onclick="bookGo(1)" aria-label="다음 페이지">›</button>
+  </div>
+  <div class="bv-dots" id="bv-dots"></div>
+  <div class="bv-note">© 지필드 영재교육 · 무단 복제·배포 금지</div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="data.js"></script>
@@ -477,40 +500,47 @@
   document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
 
   function canSeeFolder(folder){ const acc=(D.archiveAccess||{})[folder]; if(!acc) return true; return acc.includes('*')||acc.includes(currentStudent); }
-  function itemActs(it){
-    let acts='';
-    if(it.video) acts+=`<a class="arc-btn vid" href="${escAttr(it.video)}" target="_blank" rel="noopener">▶ 영상 보기</a>`;
-    if(it.file)  acts+=`<button class="arc-btn pdf" data-f="${encodeURIComponent(it.file)}" data-t="${escAttr(it.title)}">📕 교재 받기</button>`;
-    return acts;
-  }
+  function bookPage(b,i){ return `${b.base}/p-${String(i).padStart(2,'0')}.${b.ext||'jpg'}`; }
+
   function renderArchive(){
     const wrap=document.getElementById('archive-list'); wrap.innerHTML='';
     if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 자료실이 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
     const folders=(D.archiveFolders||[]).filter(canSeeFolder);
-    if(!folders.length){ wrap.innerHTML='<div class="empty-note">열람 가능한 자료실 폴더가 없습니다.</div>'; return; }
+    if(!folders.length){ wrap.innerHTML='<div class="empty-note">열람 가능한 자료실이 없습니다.</div>'; return; }
+    let total=0;
     folders.forEach(folder=>{
-      const items=(D.archive||[]).filter(a=>a.folder===folder&&(a.video||a.file));
-      const card=document.createElement('div'); card.className='folder';
-      let body='';
-      if(items.length){ items.forEach(it=>{ body+=`<div class="arc-item"><div class="arc-t">${escHtml(it.title||'자료')}</div><div class="arc-acts">${itemActs(it)}</div></div>`; }); }
-      else body=`<div class="empty-note">등록된 자료가 없습니다.</div>`;
-      card.innerHTML=`<div class="folder-h"><span class="folder-ic">🗂</span> ${escHtml(folder)} <span class="folder-c">${items.length}</span></div><div class="folder-b">${body}</div>`;
-      wrap.appendChild(card);
+      const books=(D.books||[]).filter(b=>b&&b.folder===folder&&b.base&&b.count);
+      const sec=document.createElement('div'); sec.className='shelf-sec';
+      let inner=`<div class="shelf-h">📚 ${escHtml(folder)}<span class="c">${books.length}권</span></div>`;
+      if(books.length){
+        total+=books.length;
+        inner+='<div class="shelf">';
+        books.forEach(b=>{
+          const cover=b.cover||bookPage(b,1);
+          inner+=`<button class="book" data-bi="${(D.books||[]).indexOf(b)}"><span class="cover"><img loading="lazy" src="${escAttr(cover)}" alt="${escAttr(b.title||'교재')}"></span><span class="label">${escHtml(b.title||'교재')}</span><span class="pages">${b.count}쪽</span></button>`;
+        });
+        inner+='</div>';
+      } else inner+='<div class="empty-note" style="text-align:left;padding:8px 0">등록된 교재가 없습니다.</div>';
+      sec.innerHTML=inner; wrap.appendChild(sec);
     });
-    const updates=(D.archive||[]).filter(a=>(a.video||a.file)&&folders.includes(a.folder)).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))).slice(0,8);
-    if(updates.length){
-      const u=document.createElement('div'); u.className='folder'; let rows='';
-      updates.forEach(it=>{
-        const attr=(it.file?`data-f="${encodeURIComponent(it.file)}" data-t="${escAttr(it.title)}"`:(it.video?`data-v="${escAttr(it.video)}"`:''));
-        rows+=`<div class="upd-row" ${attr}><span class="upd-fold">${escHtml(it.folder)}</span><span class="upd-title">${escHtml(it.title||'자료')}</span><span class="upd-date">${escHtml(it.date||'')}</span></div>`;
-      });
-      u.innerHTML=`<div class="folder-h" style="background:linear-gradient(135deg,#e8973a,#c5982e)"><span class="folder-ic">🆕</span> 업데이트 목록</div><div class="folder-b">${rows}</div>`;
-      wrap.appendChild(u);
-    }
-    wrap.querySelectorAll('.arc-btn.pdf[data-f]').forEach(b=>b.onclick=()=>downloadWatermarked(decodeURIComponent(b.dataset.f), b.dataset.t));
-    wrap.querySelectorAll('.upd-row[data-f]').forEach(r=>r.onclick=()=>downloadWatermarked(decodeURIComponent(r.dataset.f), r.dataset.t));
-    wrap.querySelectorAll('.upd-row[data-v]:not([data-f])').forEach(r=>r.onclick=()=>window.open(r.dataset.v,'_blank'));
+    if(!total){ const n=document.createElement('div'); n.className='empty-note'; n.textContent='아직 책장에 교재가 없습니다.'; wrap.appendChild(n); }
+    wrap.querySelectorAll('.book[data-bi]').forEach(btn=>btn.onclick=()=>openBook((D.books||[])[+btn.dataset.bi]));
   }
+
+  /* ----- 책 뷰어(서재) ----- */
+  let curBook=null, bookIdx=1;
+  function openBook(b){ if(!b) return; curBook=b; bookIdx=1; document.getElementById('bv-name').textContent=b.title||'교재'; buildBookDots(); renderBook(); document.getElementById('bookviewer').classList.add('open'); }
+  function closeBook(){ document.getElementById('bookviewer').classList.remove('open'); curBook=null; }
+  function buildBookDots(){ const d=document.getElementById('bv-dots'); d.innerHTML=''; for(let i=1;i<=curBook.count;i++){ const s=document.createElement('span'); s.className='bv-dot'+(i===bookIdx?' on':''); s.onclick=()=>{bookIdx=i;renderBook();}; d.appendChild(s);} }
+  function renderBook(){ if(!curBook) return; document.getElementById('bv-img').src=bookPage(curBook,bookIdx); document.getElementById('bv-count').textContent=`${bookIdx} / ${curBook.count}`; document.getElementById('bv-prev').disabled=bookIdx<=1; document.getElementById('bv-next').disabled=bookIdx>=curBook.count; [...document.getElementById('bv-dots').children].forEach((s,i)=>s.classList.toggle('on',i+1===bookIdx)); if(bookIdx<curBook.count){const n=new Image();n.src=bookPage(curBook,bookIdx+1);} }
+  function bookGo(d){ if(!curBook) return; const n=bookIdx+d; if(n>=1&&n<=curBook.count){ bookIdx=n; renderBook(); } }
+  (function wireBookViewer(){
+    const st=document.getElementById('bv-stage'); if(!st) return;
+    let sx=0,sw=false;
+    st.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sw=true;},{passive:true});
+    st.addEventListener('touchend',e=>{ if(!sw)return; sw=false; const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>45) bookGo(dx<0?1:-1); },{passive:true});
+    document.addEventListener('keydown',e=>{ const v=document.getElementById('bookviewer'); if(!v.classList.contains('open'))return; if(e.key==='ArrowLeft')bookGo(-1); else if(e.key==='ArrowRight')bookGo(1); else if(e.key==='Escape')closeBook(); });
+  })();
 
   function infoEmbed(url){ const yt=ytId(url); if(yt) return `https://www.youtube.com/embed/${yt}?rel=0`; const vm=url.match(/vimeo\.com\/(\d+)/); if(vm) return `https://player.vimeo.com/video/${vm[1]}`; return url; }
   function renderInfo(){
@@ -528,6 +558,7 @@
     wrap.querySelectorAll('.lnk.yt[data-embed]').forEach(b=>b.onclick=()=>window.open(b.dataset.embed,'_blank'));
   }
 
+  /* 인트로 영상 제어 */
   function endIntroVideo(){ const sec=document.getElementById('video-intro'); if(!sec) return; const vid=document.getElementById('introVideo'); try{ vid.pause(); vid.removeAttribute('src'); vid.load(); }catch(e){} sec.remove(); }
   function skipIntro(){ endIntroVideo(); }
   function unmuteIntro(){ const vid=document.getElementById('introVideo'); if(!vid) return; vid.muted=false; vid.volume=1; const p=vid.play(); if(p&&p.catch) p.catch(()=>{}); const h=document.getElementById('unmuteHint'); if(h) h.remove(); }
@@ -538,6 +569,7 @@
     if(p&&p.catch) p.catch(()=>{ vid.muted=true; vid.play().catch(()=>{}); const h=document.getElementById('unmuteHint'); if(h) h.classList.remove('hidden'); });
   })();
 
+  /* PDF 워터마크 */
   async function downloadWatermarked(url, title){
     if(!currentStudent){ toast('로그인이 필요합니다'); return; }
     toast('자료를 준비하고 있어요…');
