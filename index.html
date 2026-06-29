@@ -17,6 +17,15 @@
   .hidden{display:none !important;}
   button{cursor:pointer;font-family:inherit;}
 
+  /* ===== 0. 인트로 영상 ===== */
+  #video-intro{position:fixed;inset:0;z-index:70;background:#000;display:flex;align-items:center;justify-content:center;}
+  #video-intro video{width:100%;height:100%;object-fit:contain;background:#000;}
+  #skipBtn{position:absolute;bottom:24px;right:20px;background:rgba(0,0,0,.55);color:#fff;border:1px solid rgba(255,255,255,.45);
+    padding:10px 18px;border-radius:999px;font-size:14px;font-weight:700;backdrop-filter:blur(4px);transition:.15s;}
+  #skipBtn:hover{background:rgba(0,0,0,.8);}
+  #unmuteHint{position:absolute;top:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);color:#fff;
+    border:1px solid rgba(255,255,255,.4);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;backdrop-filter:blur(4px);}
+
   /* ===== 1. 인트로 ===== */
   #intro{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;color:#fff;padding:24px;background:radial-gradient(1200px 600px at 50% -10%,#3258a6 0%,var(--navy) 45%,#152a52 100%);}
@@ -151,13 +160,12 @@
     font-weight:700;text-decoration:none;cursor:pointer;}
   .arc-btn.vid{background:#fdecec;color:#c0392b;}
   .arc-btn.pdf{background:#e7f6ed;color:#1e8e4e;}
-  .upd-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 6px;border-bottom:1px solid #f0f3f7;}
+  .upd-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 6px;border-bottom:1px solid #f0f3f7;cursor:pointer;}
   .upd-row:last-child{border-bottom:none;}
-  .upd-main{flex:1;min-width:150px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-  .upd-fold{background:#eef3fb;color:#2c6fbb;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;}
-  .upd-title{font-size:14px;font-weight:600;}
-  .upd-side{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-  .upd-date{font-size:11.5px;color:#9aa1ac;}
+  .upd-row:hover .upd-title{text-decoration:underline;}
+  .upd-fold{background:#eef3fb;color:#2c6fbb;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;flex:none;}
+  .upd-title{font-size:14px;font-weight:600;flex:1;min-width:120px;}
+  .upd-date{font-size:11.5px;color:#9aa1ac;flex:none;}
 
   /* 모달 */
   .overlay{position:fixed;inset:0;z-index:60;background:rgba(15,23,42,.6);display:flex;justify-content:center;align-items:center;padding:18px;}
@@ -178,6 +186,14 @@
 </style>
 </head>
 <body>
+
+<!-- 0. 인트로 영상 -->
+<section id="video-intro">
+  <video id="introVideo" autoplay muted playsinline preload="auto"
+    src="https://raw.githubusercontent.com/docssam1/ad/main/fields-classic/KakaoTalk_20260619_023621724.mp4"></video>
+  <div id="unmuteHint" onclick="unmuteIntro()">🔊 소리 켜기</div>
+  <button id="skipBtn" onclick="skipIntro()">건너뛰기 ›</button>
+</section>
 
 <!-- 1. 인트로 -->
 <section id="intro">
@@ -452,7 +468,7 @@
       wrap.appendChild(card);
     });
 
-    /* 하단 업데이트 목록 (열람 가능 폴더의 최신 자료) */
+    /* 하단 업데이트 목록 (열람 가능 폴더의 최신 자료) — 텍스트 위주 */
     const updates=(D.archive||[])
       .filter(a=>(a.video||a.file)&&folders.includes(a.folder))
       .slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')))
@@ -461,16 +477,38 @@
       const u=document.createElement('div'); u.className='folder';
       let rows='';
       updates.forEach(it=>{
-        rows+=`<div class="upd-row"><div class="upd-main"><span class="upd-fold">${escHtml(it.folder)}</span>`
-          +`<span class="upd-title">${escHtml(it.title||'자료')}</span></div>`
-          +`<div class="upd-side"><span class="upd-date">${escHtml(it.date||'')}</span><div class="arc-acts">${itemActs(it)}</div></div></div>`;
+        const attr=(it.file?`data-f="${encodeURIComponent(it.file)}" data-t="${escAttr(it.title)}"`:(it.video?`data-v="${escAttr(it.video)}"`:''));
+        rows+=`<div class="upd-row" ${attr}><span class="upd-fold">${escHtml(it.folder)}</span>`
+          +`<span class="upd-title">${escHtml(it.title||'자료')}</span>`
+          +`<span class="upd-date">${escHtml(it.date||'')}</span></div>`;
       });
       u.innerHTML=`<div class="folder-h" style="background:linear-gradient(135deg,#e67e22,#d35400)"><span class="folder-ic">🆕</span> 업데이트 목록</div><div class="folder-b">${rows}</div>`;
       wrap.appendChild(u);
     }
 
     wrap.querySelectorAll('.arc-btn.pdf[data-f]').forEach(b=>b.onclick=()=>downloadWatermarked(decodeURIComponent(b.dataset.f), b.dataset.t));
+    wrap.querySelectorAll('.upd-row[data-f]').forEach(r=>r.onclick=()=>downloadWatermarked(decodeURIComponent(r.dataset.f), r.dataset.t));
+    wrap.querySelectorAll('.upd-row[data-v]:not([data-f])').forEach(r=>r.onclick=()=>window.open(r.dataset.v,'_blank'));
   }
+
+  /* ---------- 인트로 영상 ---------- */
+  function endIntroVideo(){
+    const sec=document.getElementById('video-intro');
+    if(!sec) return;
+    const vid=document.getElementById('introVideo'); try{ vid.pause(); vid.removeAttribute('src'); vid.load(); }catch(e){}
+    sec.remove();
+  }
+  function skipIntro(){ endIntroVideo(); }
+  function unmuteIntro(){
+    const vid=document.getElementById('introVideo'); if(!vid) return;
+    vid.muted=false; vid.volume=1; const p=vid.play(); if(p&&p.catch) p.catch(()=>{});
+    const h=document.getElementById('unmuteHint'); if(h) h.remove();
+  }
+  (function wireIntroVideo(){
+    const vid=document.getElementById('introVideo'); if(!vid) return;
+    vid.addEventListener('ended', endIntroVideo);
+    vid.addEventListener('error', endIntroVideo);
+  })();
 
   /* ---------- PDF 워터마크 다운로드 ---------- */
   async function downloadWatermarked(url, title){
