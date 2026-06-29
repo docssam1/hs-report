@@ -97,7 +97,7 @@
   .home-head h2{font-size:21px;margin-bottom:5px;color:var(--white);}
   .hh-desc{font-size:14px;color:#cfd5de;}
   .content-card{background:rgba(13,27,42,.55);border:1px solid var(--line);border-top:none;border-radius:0 0 16px 16px;padding:6px 20px 22px;}
-  .locked-msg{background:rgba(13,27,42,.55);border:1px solid var(--line);border-top:none;border-radius:0 0 16px 16px;padding:30px 20px;text-align:center;color:var(--dim);font-size:14px;}
+  .locked-msg{background:rgba(13,27,42,.55);border:1px solid var(--line);border-top:none;border-radius:0 0 16px 16px;padding:30px 20px;text-align:center;color:var(--dim);font-size:14px;line-height:1.6;}
   .focus{margin-top:9px;font-size:12.5px;color:var(--gold-light);background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.18);border-radius:8px;padding:8px 11px;line-height:1.5;}
 
   /* 섹션 (홈/모달 공용) */
@@ -305,6 +305,7 @@
 <script>
   const D = window.GFIELD_DATA;
   let currentStudent = null;
+  let isDemo = false;
 
   /* 골드 파티클 */
   (function(){const c=document.getElementById('particles');if(!c)return;for(let i=0;i<22;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(6+Math.random()*8)+'s';p.style.animationDelay=Math.random()*10+'s';p.style.width=p.style.height=(1+Math.random()*3)+'px';c.appendChild(p);}})();
@@ -319,16 +320,18 @@
   function doLogin(){
     const name=document.getElementById('name-input').value.trim();
     if(!name){ toast('이름을 입력해주세요'); return; }
-    currentStudent=name;
-    try{ localStorage.setItem('gfield_student',name); }catch(e){}
+    if(name.toLowerCase()==='docssam'){ location.href='admin.html'; return; }   // 관리자 바로가기
+    isDemo=(name.toLowerCase()==='demo');
+    currentStudent=isDemo?'체험':name;
+    try{ localStorage.setItem('gfield_student',currentStudent); }catch(e){}
     document.getElementById('login').classList.add('hidden');
     document.getElementById('dashboard').classList.remove('hidden');
-    document.getElementById('who').textContent=name;
+    document.getElementById('who').textContent=currentStudent;
     renderStatus(); renderHome(); renderTimeline(); renderArchive(); renderInfo();
     nav('home'); window.scrollTo(0,0);
   }
   function logout(){
-    currentStudent=null;
+    currentStudent=null; isDemo=false;
     try{ localStorage.removeItem('gfield_student'); }catch(e){}
     document.getElementById('dashboard').classList.add('hidden');
     document.getElementById('intro').classList.remove('hidden');
@@ -350,6 +353,7 @@
   function currentIndex(){ return weekIds().indexOf(D.meta.currentWeekId); }
   function isUnlocked(node){
     if(!node||node.type==='divider'||node.type==='goal') return true;
+    if(isDemo) return false;
     if(node.type==='special') return (D.specialStudents||[]).includes(currentStudent);
     const att=D.attendance?D.attendance[currentStudent]:null;
     if(att&&att.length) return att.includes(node.id);
@@ -413,6 +417,7 @@
     const unlocked=isUnlocked(node);
     let h=`<div class="home-head"><div class="hh-tag">📍 이번 주 · ${node.date}</div><h2>${escHtml(node.title)}</h2>`
         +`<div class="hh-desc">${escHtml(node.desc)}</div>${node.focus?`<div class="focus">${escHtml(node.focus)}</div>`:''}</div>`;
+    if(isDemo){ card.innerHTML=h+`<div class="locked-msg">🔎 데모 미리보기입니다.<br>실제 학습 영상·자료는 재원생 로그인 후 제공됩니다.</div>`; return; }
     if(!unlocked){ card.innerHTML=h+`<div class="locked-msg">🔒 이번 주 자료는 출석 확인 후 열립니다.</div>`; return; }
     const c=Object.assign({notice:'',homework:'',textbooks:[]},(D.content&&D.content[node.id])||{});
     h+=`<div class="videoframe" id="home-videoframe"><iframe id="home-iframe" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
@@ -443,7 +448,7 @@
 
   /* ---------- 모달 ---------- */
   function openModal(node, unlocked){
-    if(!unlocked){ toast(node.type==='special'?'🔒 방학 특강 수강생에게만 열리는 자료입니다':'🔒 아직 오픈되지 않은 수업입니다'); return; }
+    if(!unlocked){ toast(isDemo?'🔎 데모에서는 열람할 수 없습니다':(node.type==='special'?'🔒 방학 특강 수강생에게만 열리는 자료입니다':'🔒 아직 오픈되지 않은 수업입니다')); return; }
     const c=Object.assign({notice:'',homework:'',textbooks:[]},(D.content&&D.content[node.id])||{});
     document.getElementById('m-date').textContent=node.date;
     document.getElementById('m-title').textContent=node.title;
@@ -473,6 +478,7 @@
   }
   function renderArchive(){
     const wrap=document.getElementById('archive-list'); wrap.innerHTML='';
+    if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 자료실이 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
     const folders=(D.archiveFolders||[]).filter(canSeeFolder);
     if(!folders.length){ wrap.innerHTML='<div class="empty-note">열람 가능한 자료실 폴더가 없습니다.</div>'; return; }
 
@@ -519,6 +525,7 @@
   }
   function renderInfo(){
     const wrap=document.getElementById('info-list'); wrap.innerHTML='';
+    if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 황소 정보가 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
     const posts=(D.info||[]).filter(p=>p&&(p.title||p.body||p.video));
     if(!posts.length){ wrap.innerHTML='<div class="empty-note">등록된 글이 없습니다.</div>'; return; }
     posts.forEach(p=>{
