@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지필드 영재교육 | 생각하는 황소 대비 아카이브</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --navy:#1e3c72; --navy2:#2a5298; --gold:#f39c12; --gold-d:#e67e22;
+    --concept:#3498db; --apply:#22a6b3; --exam:#f39c12; --mock:#e67e22; --final:#e74c3c; --special:#f1c40f;
+    --ink:#2d3436; --muted:#6b7280; --bg:#f4f6f9; --card:#ffffff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Pretendard',-apple-system,sans-serif;}
+  body{background:var(--bg);color:var(--ink);-webkit-tap-highlight-color:transparent;}
+  .hidden{display:none !important;}
+  button{cursor:pointer;font-family:inherit;}
+
+  /* ===================== 1. 인트로 스플래시 ===================== */
+  #intro{
+    position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;color:#fff;padding:24px;
+    background:radial-gradient(1200px 600px at 50% -10%,#3258a6 0%,var(--navy) 45%,#152a52 100%);
+  }
+  #intro .logo{width:96px;height:96px;border-radius:24px;background:rgba(255,255,255,.12);
+    display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:24px;
+    box-shadow:0 12px 40px rgba(0,0,0,.3);animation:floaty 3s ease-in-out infinite;}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  #intro .eyebrow{letter-spacing:.35em;font-size:13px;opacity:.8;margin-bottom:14px;}
+  #intro h1{font-size:34px;font-weight:800;line-height:1.3;margin-bottom:12px;}
+  #intro p{opacity:.85;font-size:15px;max-width:460px;line-height:1.7;margin-bottom:34px;}
+  #intro .enter{padding:15px 46px;border:none;border-radius:999px;background:var(--gold);
+    color:#fff;font-size:17px;font-weight:800;box-shadow:0 10px 30px rgba(243,156,18,.45);transition:.2s;}
+  #intro .enter:hover{background:var(--gold-d);transform:translateY(-2px);}
+  #intro .scroll-hint{margin-top:40px;font-size:13px;opacity:.6;}
+  .badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:30px;}
+  .badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+    padding:7px 14px;border-radius:999px;font-size:12.5px;}
+
+  /* ===================== 2. 로그인 ===================== */
+  #login{position:fixed;inset:0;z-index:40;display:flex;justify-content:center;align-items:center;
+    background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;padding:20px;}
+  .login-box{background:rgba(255,255,255,.1);backdrop-filter:blur(12px);
+    padding:44px 36px;border-radius:20px;width:100%;max-width:380px;text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.15);}
+  .login-box .mini{font-size:14px;letter-spacing:.2em;opacity:.85;margin-bottom:8px;}
+  .login-box h2{font-size:26px;font-weight:800;margin-bottom:6px;}
+  .login-box .sub{font-size:13px;opacity:.7;margin-bottom:28px;}
+  .login-box input{width:100%;padding:15px;border:none;border-radius:10px;font-size:16px;
+    text-align:center;margin-bottom:16px;outline:none;}
+  .login-box .enter{width:100%;padding:15px;border:none;border-radius:10px;background:var(--gold);
+    color:#fff;font-size:17px;font-weight:800;transition:.2s;}
+  .login-box .enter:hover{background:var(--gold-d);}
+  .login-box .hint{margin-top:18px;font-size:12px;opacity:.6;line-height:1.6;}
+  .login-box .back{margin-top:14px;background:none;border:none;color:#fff;opacity:.6;font-size:13px;text-decoration:underline;}
+
+  /* ===================== 3. 대시보드 / 로드맵 ===================== */
+  #dashboard{max-width:760px;margin:0 auto;padding:22px 18px 80px;}
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(244,246,249,.92);backdrop-filter:blur(8px);
+    display:flex;justify-content:space-between;align-items:center;padding:14px 4px;margin-bottom:8px;}
+  .topbar .brand{font-weight:800;color:var(--navy);font-size:18px;}
+  .topbar .brand small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.05em;}
+  .logout{background:#e9edf2;border:none;color:#555;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;}
+
+  .statusboard{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;
+    border-radius:16px;padding:20px 22px;margin-bottom:8px;box-shadow:0 10px 30px rgba(30,60,114,.25);}
+  .statusboard .hi{font-size:18px;font-weight:800;margin-bottom:10px;}
+  .statusboard .now{display:flex;align-items:center;gap:10px;font-size:14px;opacity:.95;}
+  .statusboard .now .dot{width:9px;height:9px;border-radius:50%;background:#2ecc71;box-shadow:0 0 0 4px rgba(46,204,113,.25);animation:pulse 1.4s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .progresswrap{margin-top:14px;height:8px;background:rgba(255,255,255,.2);border-radius:99px;overflow:hidden;}
+  .progressbar{height:100%;background:var(--gold);border-radius:99px;width:0;transition:width 1s ease;}
+  .progress-label{font-size:12px;opacity:.8;margin-top:7px;}
+
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:14px 4px 6px;}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;}
+
+  .timeline{position:relative;padding-left:46px;margin-top:8px;}
+  .timeline::before{content:'';position:absolute;left:14px;top:6px;bottom:6px;width:4px;
+    background:linear-gradient(#3498db,#f39c12 45%,#e67e22 60%,#e74c3c);border-radius:4px;}
+
+  .node{position:relative;margin-bottom:18px;padding:16px 18px;background:var(--card);border-radius:14px;
+    box-shadow:0 4px 14px rgba(0,0,0,.06);border-left:6px solid #ccc;transition:.18s;cursor:pointer;}
+  .node:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.12);}
+  .node .date{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.02em;}
+  .node h3{font-size:16.5px;margin:3px 0 4px;}
+  .node .desc{font-size:13.5px;color:#444;}
+  .node .focus{margin-top:9px;font-size:12px;color:#777;background:#f6f8fb;border-radius:8px;padding:7px 10px;line-height:1.5;}
+  .node.locked{opacity:.62;cursor:not-allowed;}
+  .node.locked:hover{transform:none;box-shadow:0 4px 14px rgba(0,0,0,.06);}
+  .node.concept{border-left-color:var(--concept);}
+  .node.apply{border-left-color:var(--apply);}
+  .node.exam{border-left-color:var(--exam);}
+  .node.mock{border-left-color:var(--mock);background:#fffaf3;}
+  .node.final{border-left-color:var(--final);background:#fff6f5;}
+  .node.current{box-shadow:0 0 0 3px rgba(243,156,18,.4),0 10px 24px rgba(243,156,18,.25);}
+
+  .icon-status{position:absolute;left:-46px;top:16px;width:30px;height:30px;background:#fff;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:15px;border:2px solid #e1e6ee;}
+  .marker{position:absolute;left:-58px;top:-12px;font-size:30px;z-index:5;animation:bounce 1s infinite alternate;}
+  @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-9px)}}
+
+  /* 방학 특강 브랜치 */
+  .special-branch{position:relative;margin:4px 0 18px 28px;padding-left:18px;border-left:3px dashed var(--special);}
+  .node.special{border-left:6px solid var(--special);background:#fffdf3;}
+  .node.special h3{color:#d35400;}
+  .branch-tag{position:absolute;left:-12px;top:14px;background:var(--special);color:#7a5b00;font-size:10px;
+    font-weight:800;padding:2px 7px;border-radius:6px;}
+
+  /* 페이즈 구분선 */
+  .divider{position:relative;text-align:center;margin:26px 0 24px -46px;padding-left:46px;}
+  .divider span{position:relative;z-index:2;background:var(--navy);color:#fff;font-weight:700;font-size:13px;
+    padding:8px 18px;border-radius:999px;box-shadow:0 6px 16px rgba(30,60,114,.25);}
+
+  /* 최종 목표 */
+  .node.goal{border-left:none;background:linear-gradient(135deg,#111c34,#27408b);color:#fff;text-align:center;cursor:default;}
+  .node.goal:hover{transform:none;}
+  .node.goal h3{color:#fff;font-size:18px;}
+  .node.goal .desc{color:rgba(255,255,255,.85);}
+
+  /* ===================== 4. 모달 ===================== */
+  .overlay{position:fixed;inset:0;z-index:60;background:rgba(15,23,42,.6);
+    display:flex;justify-content:center;align-items:center;padding:18px;}
+  .modal{background:#fff;border-radius:18px;width:100%;max-width:460px;padding:26px 24px 24px;
+    position:relative;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:pop .2s ease;}
+  @keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+  .modal .x{position:absolute;top:14px;right:16px;font-size:26px;color:#aaa;background:none;border:none;line-height:1;}
+  .modal .m-date{font-size:12px;font-weight:700;color:var(--gold-d);letter-spacing:.04em;}
+  .modal h2{font-size:20px;margin:4px 0 4px;}
+  .modal .m-desc{font-size:13.5px;color:var(--muted);margin-bottom:18px;}
+  .videoframe{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;
+    background:#000;margin-bottom:14px;display:none;}
+  .videoframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .act{display:flex;align-items:center;gap:10px;width:100%;padding:14px 16px;margin-top:10px;border:none;
+    border-radius:12px;color:#fff;font-size:15px;font-weight:700;text-align:left;transition:.18s;}
+  .act:hover{filter:brightness(1.07);}
+  .act:disabled{background:#e5e8ee !important;color:#9aa1ac;cursor:not-allowed;}
+  .act .ico{font-size:18px;}
+  .btn-concept{background:#34495e;}
+  .btn-mock{background:#2c6fbb;}
+  .btn-pdf{background:#27ae60;}
+  .watermark-note{margin-top:16px;font-size:11.5px;color:#9aa1ac;text-align:center;line-height:1.6;}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#2d3436;color:#fff;
+    padding:12px 20px;border-radius:10px;font-size:14px;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.3);opacity:0;
+    transition:opacity .25s, transform .25s;pointer-events:none;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+
+  @media(max-width:520px){
+    #intro h1{font-size:27px;} .login-box{padding:36px 26px;}
+    .node h3{font-size:15.5px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. 인트로 -->
+<section id="intro">
+  <div class="logo">🐂</div>
+  <div class="eyebrow" id="intro-academy">지필드 영재교육</div>
+  <h1 id="intro-title">생각하는 황소 대비 아카이브</h1>
+  <p>5월부터 입학시험 직전까지, 한 화면에서 진도·복습 영상·자료를 관리하는<br>지필드만의 마스터 로드맵 학습 시스템입니다.</p>
+  <div class="badges">
+    <span class="badge">📍 수직선 진도 로드맵</span>
+    <span class="badge">🔓 출석 기반 권한</span>
+    <span class="badge">🎬 복습 영상 · 워터마크 자료</span>
+  </div>
+  <button class="enter" onclick="goLogin()">입장하기 →</button>
+  <div class="scroll-hint">학생 이름으로 접속합니다</div>
+</section>
+
+<!-- 2. 로그인 -->
+<section id="login" class="hidden">
+  <div class="login-box">
+    <div class="mini" id="login-academy">지필드 영재교육</div>
+    <h2 id="login-title">생각하는 황소 대비 아카이브</h2>
+    <div class="sub">학생 이름을 입력하고 입장하세요</div>
+    <input type="text" id="name-input" placeholder="이름" autocomplete="off" onkeypress="if(event.key==='Enter')doLogin()">
+    <button class="enter" onclick="doLogin()">입장하기</button>
+    <div class="hint">출석이 확인된 주차의 영상과 자료만 열립니다.<br>문의는 담당 선생님께 해주세요.</div>
+    <button class="back" onclick="backToIntro()">← 처음으로</button>
+  </div>
+</section>
+
+<!-- 3. 대시보드 -->
+<main id="dashboard" class="hidden">
+  <div class="topbar">
+    <div class="brand">G-FIELD 마스터 로드맵<small id="brand-sub">생각하는 황소 대비 아카이브</small></div>
+    <button class="logout" onclick="logout()">나가기</button>
+  </div>
+
+  <div class="statusboard">
+    <div class="hi"><span id="who"></span> 학생, 환영합니다! 🏃</div>
+    <div class="now"><span class="dot"></span><span id="now-text">현재 학습 위치를 불러오는 중…</span></div>
+    <div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
+    <div class="progress-label" id="progress-label"></div>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:var(--concept)"></i>개념 다지기</span>
+    <span><i style="background:var(--apply)"></i>개념 응용</span>
+    <span><i style="background:var(--exam)"></i>실전 병행</span>
+    <span><i style="background:var(--mock)"></i>중급 모의고사</span>
+    <span><i style="background:var(--final)"></i>파이널</span>
+    <span><i style="background:var(--special)"></i>방학 특강</span>
+  </div>
+
+  <div class="timeline" id="timeline"></div>
+</main>
+
+<!-- 4. 모달 -->
+<div class="overlay hidden" id="overlay">
+  <div class="modal">
+    <button class="x" onclick="closeModal()">&times;</button>
+    <div class="m-date" id="m-date"></div>
+    <h2 id="m-title"></h2>
+    <div class="m-desc" id="m-desc"></div>
+    <div class="videoframe" id="videoframe"><iframe id="videoiframe" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    <button class="act btn-concept" id="btn-concept"><span class="ico">▶</span> 개념 강의 보기</button>
+    <button class="act btn-mock" id="btn-mock"><span class="ico">▶</span> 모의고사 해설 보기</button>
+    <button class="act btn-pdf" id="btn-pdf"><span class="ico">📄</span> 모의고사 · 과제 다운로드</button>
+    <div class="watermark-note">📥 다운로드 자료에는 <b id="wm-name"></b> 님의 이름이 워터마크로 새겨집니다. 무단 공유를 삼가주세요.</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- pdf-lib (워터마크용) -->
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="data.js"></script>
+<script>
+  const D = window.GFIELD_DATA;
+  let currentStudent = null;
+  let activeNode = null;
+
+  /* ---------- 화면 전환 ---------- */
+  function goLogin(){ document.getElementById('intro').classList.add('hidden');
+    document.getElementById('login').classList.remove('hidden');
+    setTimeout(()=>document.getElementById('name-input').focus(),100); }
+  function backToIntro(){ document.getElementById('login').classList.add('hidden');
+    document.getElementById('intro').classList.remove('hidden'); }
+
+  function doLogin(){
+    const name = document.getElementById('name-input').value.trim();
+    if(!name){ toast('이름을 입력해주세요'); return; }
+    currentStudent = name;
+    try{ localStorage.setItem('gfield_student', name); }catch(e){}
+    document.getElementById('login').classList.add('hidden');
+    document.getElementById('dashboard').classList.remove('hidden');
+    document.getElementById('who').textContent = name;
+    document.getElementById('wm-name').textContent = name;
+    renderTimeline();
+    window.scrollTo(0,0);
+  }
+  function logout(){
+    currentStudent = null;
+    try{ localStorage.removeItem('gfield_student'); }catch(e){}
+    document.getElementById('dashboard').classList.add('hidden');
+    document.getElementById('intro').classList.remove('hidden');
+    document.getElementById('name-input').value='';
+  }
+
+  /* ---------- 권한 판정 ---------- */
+  function weekIds(){ return D.nodes.filter(n=>n.type==='week').map(n=>n.id); }
+  function currentIndex(){ return weekIds().indexOf(D.meta.currentWeekId); }
+
+  function isUnlocked(node){
+    if(node.type==='divider'||node.type==='goal') return true;
+    if(node.type==='special'){
+      return (D.specialStudents||[]).includes(currentStudent);
+    }
+    const att = D.attendance ? D.attendance[currentStudent] : null;
+    if(att && att.length){ return att.includes(node.id); }
+    // 출석 기록이 없으면 현재 주차까지 기본 오픈
+    const ids = weekIds(); const ci = currentIndex();
+    return ids.indexOf(node.id) <= ci;
+  }
+
+  /* ---------- 타임라인 렌더 ---------- */
+  function renderTimeline(){
+    const tl = document.getElementById('timeline');
+    tl.innerHTML='';
+
+    D.nodes.forEach(node=>{
+      if(node.type==='divider'){
+        const d=document.createElement('div'); d.className='divider';
+        d.innerHTML=`<span>${node.label}</span>`; tl.appendChild(d); return;
+      }
+      if(node.type==='goal'){
+        const g=document.createElement('div'); g.className='node goal';
+        g.innerHTML=`<div class="date">${node.date}</div><h3>${node.title}</h3><div class="desc">${node.desc}</div>`;
+        tl.appendChild(g); return;
+      }
+
+      const unlocked=isUnlocked(node);
+      const isCurrent=(node.id===D.meta.currentWeekId);
+      const el=document.createElement('div');
+      el.className=`node ${node.track}${unlocked?'':' locked'}${isCurrent?' current':''}`;
+      const icon = node.type==='special' ? (unlocked?'⭐':'🔒') : (unlocked?'🔓':'🔒');
+      el.innerHTML=`
+        ${isCurrent?'<div class="marker">🏃</div>':''}
+        <div class="icon-status">${icon}</div>
+        <div class="date">${node.date}${isCurrent?' · 현재 진행 중':''}</div>
+        <h3>${node.title}</h3>
+        <div class="desc">${node.desc}</div>
+        ${node.focus?`<div class="focus">${node.focus}</div>`:''}`;
+      el.onclick=()=>onNodeClick(node, unlocked);
+
+      if(node.type==='special'){
+        const wrap=document.createElement('div'); wrap.className='special-branch';
+        wrap.innerHTML='<span class="branch-tag">특강</span>';
+        wrap.appendChild(el); tl.appendChild(wrap);
+      }else{
+        tl.appendChild(el);
+      }
+    });
+
+    // 상태 보드
+    const cur = D.nodes.find(n=>n.id===D.meta.currentWeekId);
+    document.getElementById('now-text').textContent = cur ? `현재 학습: ${cur.date} · ${cur.title}` : '진행 중인 주차 정보 없음';
+    const ids=weekIds(); const total=ids.length;
+    const att=D.attendance ? D.attendance[currentStudent] : null;
+    const done = att && att.length ? att.filter(id=>ids.includes(id)).length : (currentIndex()+1);
+    const pct=Math.round(done/total*100);
+    document.getElementById('progressbar').style.width=pct+'%';
+    document.getElementById('progress-label').textContent=`전체 ${total}주차 중 ${done}주차 진행 (${pct}%)`;
+  }
+
+  /* ---------- 노드 클릭 → 모달 ---------- */
+  function onNodeClick(node, unlocked){
+    if(!unlocked){
+      toast(node.type==='special' ? '🔒 방학 특강 수강생에게만 열리는 자료입니다' : '🔒 아직 오픈되지 않은 수업입니다');
+      return;
+    }
+    activeNode=node;
+    const c=(D.content&&D.content[node.id])||{concept:'',mock:'',pdf:''};
+    document.getElementById('m-date').textContent=node.date;
+    document.getElementById('m-title').textContent=node.title;
+    document.getElementById('m-desc').textContent=node.desc;
+    // 영상 프레임 초기화
+    document.getElementById('videoframe').style.display='none';
+    document.getElementById('videoiframe').src='';
+
+    setupBtn('btn-concept', c.concept, '개념 강의 보기');
+    setupBtn('btn-mock', c.mock, '모의고사 해설 보기');
+    const pdfBtn=document.getElementById('btn-pdf');
+    if(c.pdf){ pdfBtn.disabled=false; pdfBtn.onclick=()=>downloadWatermarked(c.pdf); }
+    else{ pdfBtn.disabled=true; pdfBtn.onclick=null; }
+
+    document.getElementById('overlay').classList.remove('hidden');
+  }
+
+  function setupBtn(id, url, label){
+    const b=document.getElementById(id);
+    const ico=b.querySelector('.ico').outerHTML;
+    if(url){ b.disabled=false; b.innerHTML=ico+' '+label; b.onclick=()=>playVideo(url); }
+    else{ b.disabled=true; b.innerHTML=ico+' '+label+' (준비 중)'; b.onclick=null; }
+  }
+
+  function playVideo(url){
+    const f=document.getElementById('videoframe');
+    document.getElementById('videoiframe').src=toEmbed(url);
+    f.style.display='block';
+    f.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  function toEmbed(url){
+    let m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+    if(m) return `https://www.youtube.com/embed/${m[1]}?autoplay=1&rel=0`;
+    m=url.match(/vimeo\.com\/(\d+)/);
+    if(m) return `https://player.vimeo.com/video/${m[1]}?autoplay=1`;
+    return url;
+  }
+  function closeModal(){
+    document.getElementById('overlay').classList.add('hidden');
+    document.getElementById('videoiframe').src='';
+  }
+  document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
+
+  /* ---------- PDF 워터마크 다운로드 ---------- */
+  async function downloadWatermarked(url){
+    if(!currentStudent){ toast('로그인이 필요합니다'); return; }
+    toast('자료를 준비하고 있어요…');
+    try{
+      const bytes = await fetch(url).then(r=>{ if(!r.ok) throw new Error('fetch'); return r.arrayBuffer(); });
+      const { PDFDocument, rgb, degrees } = PDFLib;
+      const pdf = await PDFDocument.load(bytes);
+      const stamp = `${currentStudent} · 지필드 영재교육`;
+      pdf.getPages().forEach(p=>{
+        const {width,height}=p.getSize();
+        for(let y=40;y<height;y+=150){
+          for(let x=-40;x<width;x+=240){
+            p.drawText(stamp,{x,y,size:14,color:rgb(0.6,0.6,0.6),opacity:0.22,rotate:degrees(35)});
+          }
+        }
+      });
+      const out = await pdf.save();
+      const blob = new Blob([out],{type:'application/pdf'});
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download=`${activeNode?activeNode.title:'자료'}_${currentStudent}.pdf`;
+      document.body.appendChild(a); a.click(); a.remove();
+      toast('다운로드를 시작합니다 ✅');
+    }catch(e){
+      // PDF 처리 실패 시 원본 링크로 폴백
+      window.open(url,'_blank');
+      toast('원본 자료를 새 창에서 엽니다');
+    }
+  }
+
+  /* ---------- 토스트 ---------- */
+  let toastTimer=null;
+  function toast(msg){
+    const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+  }
+
+  /* ---------- 초기화 ---------- */
+  (function init(){
+    if(D&&D.meta){
+      document.getElementById('intro-academy').textContent=D.meta.academy;
+      document.getElementById('intro-title').textContent=D.meta.title;
+      document.getElementById('login-academy').textContent=D.meta.academy;
+      document.getElementById('login-title').textContent=D.meta.title;
+      document.getElementById('brand-sub').textContent=D.meta.title;
+      document.title=`${D.meta.academy} | ${D.meta.title}`;
+    }
+  })();
+</script>
+</body>
+</html>
