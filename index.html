@@ -189,9 +189,9 @@
 
 <!-- 0. 인트로 영상 -->
 <section id="video-intro">
-  <video id="introVideo" autoplay muted playsinline preload="auto"
+  <video id="introVideo" autoplay playsinline preload="auto"
     src="https://raw.githubusercontent.com/docssam1/ad/main/fields-classic/KakaoTalk_20260619_023621724.mp4"></video>
-  <div id="unmuteHint" onclick="unmuteIntro()">🔊 소리 켜기</div>
+  <div id="unmuteHint" class="hidden" onclick="unmuteIntro()">🔊 탭하여 소리 켜기</div>
   <button id="skipBtn" onclick="skipIntro()">건너뛰기 ›</button>
 </section>
 
@@ -508,6 +508,13 @@
     const vid=document.getElementById('introVideo'); if(!vid) return;
     vid.addEventListener('ended', endIntroVideo);
     vid.addEventListener('error', endIntroVideo);
+    // 소리 자동 켜기 시도 → 막히면 음소거 재생 + 안내 표시
+    vid.muted=false; vid.volume=1;
+    const p=vid.play();
+    if(p&&p.catch) p.catch(()=>{
+      vid.muted=true; vid.play().catch(()=>{});
+      const h=document.getElementById('unmuteHint'); if(h) h.classList.remove('hidden');
+    });
   })();
 
   /* ---------- PDF 워터마크 다운로드 ---------- */
