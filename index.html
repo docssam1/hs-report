@@ -105,7 +105,13 @@
   .m-sec h4{font-size:13px;font-weight:900;color:var(--gold);margin:16px 0 8px;display:flex;align-items:center;gap:6px;
     border-bottom:1px solid rgba(212,175,55,.25);padding-bottom:6px;}
   .wm-tag{font-weight:600;color:var(--dim);font-size:11px;}
-  .notice{white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.75;color:#dfe3ea;}
+  .notice{word-break:break-word;font-size:14px;line-height:1.7;color:#dfe3ea;}
+  .notice .nl-h{font-weight:800;color:var(--gold-light);font-size:15px;margin:12px 0 5px;}
+  .notice .nl-p{margin:3px 0;white-space:pre-wrap;}
+  .notice .nl-ul{margin:5px 0 5px 18px;padding:0;}
+  .notice .nl-ul li{margin:3px 0;}
+  .notice .nl-gap{height:8px;}
+  .notice b{color:#fff;}
   .notice .lnk{display:inline-flex;align-items:center;gap:5px;margin:4px 0;padding:7px 12px;border:none;border-radius:9px;
     font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;vertical-align:middle;}
   .notice .lnk.yt{background:rgba(229,86,78,.16);color:#ff8a82;border:1px solid rgba(229,86,78,.35);}
@@ -372,12 +378,13 @@
     document.getElementById('progress-label').textContent=`전체 ${total}주차 중 ${done}주차 진행 (${pct}%)`;
   }
 
-  /* ---------- 공용: 섹션 HTML & 이벤트 ---------- */
+  /* ---------- 공용: 텍스트 서식 & 이벤트 ---------- */
   function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function escAttr(s){ return escHtml(s).replace(/"/g,'&quot;'); }
   function ytId(url){ const m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/); return m?m[1]:null; }
-  function linkify(text){
-    let s=escHtml(text);
+  function inlineFmt(str){
+    let s=escHtml(str);
+    s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
     s=s.replace(/(https?:\/\/[^\s<]+)/g,(url)=>{
       const yt=ytId(url);
       if(yt) return `<button class="lnk yt" data-embed="https://www.youtube.com/embed/${yt}?autoplay=1&rel=0">▶ 영상 재생</button>`;
@@ -386,6 +393,21 @@
       return `<a class="lnk ext" href="${url}" target="_blank" rel="noopener">🔗 자료 열기</a>`;
     });
     return s;
+  }
+  function linkify(text){
+    const lines=String(text||'').split('\n');
+    let html=''; let inUl=false;
+    const closeUl=()=>{ if(inUl){ html+='</ul>'; inUl=false; } };
+    lines.forEach(raw=>{
+      const line=raw.replace(/\s+$/,'');
+      if(!line.trim()){ closeUl(); html+='<div class="nl-gap"></div>'; return; }
+      let m;
+      if(m=line.match(/^\s*(#{1,3})\s+(.*)$/)){ closeUl(); html+=`<div class="nl-h">${inlineFmt(m[2])}</div>`; return; }
+      if(m=line.match(/^\s*[-*·]\s+(.*)$/)){ if(!inUl){ html+='<ul class="nl-ul">'; inUl=true; } html+=`<li>${inlineFmt(m[1])}</li>`; return; }
+      closeUl(); html+=`<div class="nl-p">${inlineFmt(line)}</div>`;
+    });
+    closeUl();
+    return html;
   }
   function sectionsHTML(c){
     let h='';
