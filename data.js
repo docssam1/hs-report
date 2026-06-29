@@ -1,17 +1,15 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 이 파일만 수정하면 학생 화면과 어드민이 함께 갱신됩니다.
- * 어드민(admin.html)에서 편집 후 GitHub 저장 또는 내보내기로 교체하세요.
- *
- * content[주차id] = { notice:"학습내용", homework:"과제", textbooks:[{title,url}] }
- *   · 유튜브 링크 → 영상 재생 버튼 / 그 외 링크 → 자료 열기 / textbooks → 이름 워터마크 PDF
  * ========================================================= */
 window.GFIELD_DATA = {
   meta: {
     academy: "지필드 영재교육",
     title: "생각하는 황소 대비 아카이브",
     year: "2026 하반기",
-    currentWeekId: "jul-w2"
+    currentWeekId: "jul-w2",
+    examDate: "2026-11-01",
+    examLabel: "생각하는 황소 입학시험"
   },
 
   nodes: [
@@ -46,7 +44,7 @@ window.GFIELD_DATA = {
     { id:"oct-19", type:"week", track:"final", date:"10월 19일 주차", title:"파이널 실전 모의고사 6회", desc:"실전 시간 배분 훈련", focus:"목표 레벨(경시/심화/실력/일품) 기준선 제시" },
     { id:"oct-26", type:"week", track:"final", date:"10월 26일 주차", title:"파이널 실전 모의고사 7회 (최종 리허설)", desc:"실전 대비 총정리", focus:"종강 및 학부모 최종 상담" },
 
-    { id:"goal-exam", type:"goal", date:"11월 초", title:"생각하는 황소 입학시험", desc:"누적 데이터 기반 최종 상담 및 시험 응시", focus:"" }
+    { id:"goal-exam", type:"goal", date:"11월 1일(일)", title:"생각하는 황소 입학시험", desc:"누적 데이터 기반 최종 상담 및 시험 응시", focus:"" }
   ],
 
   content: {
@@ -112,11 +110,6 @@ window.GFIELD_DATA = {
 
   specialStudents: ["김민준"],
 
-  /* ===== 자료실 (GFIELD 아카이브) =====
-   * archiveFolders : 폴더 목록 (어드민에서 추가/이름변경/삭제)
-   * archiveAccess  : 폴더이름 -> 허용 학생 배열. ["*"] 이면 전체 공개, 이름만 넣으면 그 학생만.
-   * archive        : { folder, title, file(교재 PDF·기본), video(영상 링크·선택), date }
-   */
   archiveFolders: ["보충학습", "약점 유형", "사고력 교재 보충"],
   archiveAccess: {
     "보충학습": ["*"],
@@ -127,10 +120,6 @@ window.GFIELD_DATA = {
     /* 예) { folder:"약점 유형", title:"도형의 개수 세기 보충", file:"materials/shape-count.pdf", video:"https://youtu.be/...", date:"2026-06-29" } */
   ],
 
-  /* =========================================================
-   * 생각하는 황소 정보 게시판 — 칼럼/안내 글 또는 영상 임베드
-   *   { title, date, body(칼럼 본문·링크 가능), video(있으면 상단에 임베드) }
-   * ========================================================= */
   info: [
     {
       title: "생각하는 황소 초등 선발, 무엇을 보나",
