@@ -128,6 +128,7 @@
       <button data-tab="content" onclick="tab('content')">③ 콘텐츠 링크</button>
       <button data-tab="settings" onclick="tab('settings')">④ 진행 주차</button>
       <button data-tab="archive" onclick="tab('archive')">⑤ 자료실</button>
+      <button data-tab="info" onclick="tab('info')">⑥ 황소 정보</button>
     </div>
 
     <!-- ① 출석/권한 -->
@@ -195,6 +196,16 @@
         <button class="btn add sm" onclick="addArcItem()" style="margin-top:8px;">＋ 자료 추가</button>
       </div>
     </section>
+
+    <!-- ⑥ 황소 정보 -->
+    <section id="tab-info" class="hidden">
+      <div class="card">
+        <h3>생각하는 황소 정보 게시판</h3>
+        <div class="hint">칼럼(글) 또는 영상 임베드를 등록합니다. 영상 링크를 넣으면 글 상단에 영상이 임베드되어 재생됩니다. (학생 화면 ‘📰 황소 정보’ 탭에 표시)</div>
+        <div id="info-items"></div>
+        <button class="btn add sm" onclick="addInfo()" style="margin-top:8px;">＋ 글 추가</button>
+      </div>
+    </section>
   </div>
 
   <!-- 저장 바 -->
@@ -223,6 +234,7 @@
   S.archiveFolders = S.archiveFolders || [];
   S.archiveAccess = S.archiveAccess || {};
   S.archive = S.archive || [];
+  S.info = S.info || [];
   function today(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
   const weekNodes = () => S.nodes.filter(n=>n.type==='week');
@@ -244,14 +256,14 @@
 
   /* ===== 탭 ===== */
   function tab(name){
-    ['attend','students','content','settings','archive'].forEach(t=>{
+    ['attend','students','content','settings','archive','info'].forEach(t=>{
       document.getElementById('tab-'+t).classList.toggle('hidden', t!==name);
     });
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
   }
 
   /* ===== 렌더 ===== */
-  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); }
+  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderInfoAdmin(); }
 
   function ensureStudent(name){
     if(!S.attendance[name]) S.attendance[name]=[];
@@ -455,6 +467,25 @@
   }
   function setArc(i,key,val){ if(S.archive[i]){ S.archive[i][key]=(key==='date')?val:val.trim(); dirty(); } }
   function delArc(i){ S.archive.splice(i,1); renderArcItems(); dirty(); }
+
+  /* ===== ⑥ 황소 정보 ===== */
+  function renderInfoAdmin(){
+    let h='';
+    S.info.forEach((p,i)=>{
+      h+=`<div class="content-week">
+        <div class="field"><label>제목</label><input type="text" value="${esc(p.title)}" oninput="setInfo(${i},'title',this.value)" placeholder="글 제목"></div>
+        <div class="field"><label>날짜</label><input type="date" value="${esc(p.date)}" oninput="setInfo(${i},'date',this.value)"></div>
+        <div class="field"><label>영상 링크(선택)</label><input type="url" value="${esc(p.video)}" oninput="setInfo(${i},'video',this.value)" placeholder="https://youtu.be/... (있으면 상단 임베드)"></div>
+        <label class="flbl">본문 (칼럼 · 링크 자동 변환)</label>
+        <textarea class="cta" oninput="setInfo(${i},'body',this.value)" placeholder="칼럼 본문을 입력하세요. 링크를 넣으면 자동으로 버튼이 됩니다.">${esc(p.body)}</textarea>
+        <button class="btn del sm" onclick="delInfo(${i})" style="margin-top:8px;">글 삭제</button>
+      </div>`;
+    });
+    document.getElementById('info-items').innerHTML=h||'<span class="hint">등록된 글이 없습니다.</span>';
+  }
+  function addInfo(){ S.info.unshift({title:'',date:today(),video:'',body:''}); renderInfoAdmin(); dirty(); }
+  function setInfo(i,key,val){ if(S.info[i]){ S.info[i][key]=(key==='date'||key==='body')?val:val.trim(); dirty(); } }
+  function delInfo(i){ if(!confirm('이 글을 삭제할까요?')) return; S.info.splice(i,1); renderInfoAdmin(); dirty(); }
 
   /* ===== 저장 ===== */
   function dirty(){ document.getElementById('save-status').textContent='● 저장되지 않은 변경 있음'; }
