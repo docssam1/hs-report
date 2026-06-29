@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GFIELD 관리자 | 생각하는 황소 대비 아카이브</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{--navy:#1e3c72;--navy2:#2a5298;--gold:#f39c12;--gold-d:#e67e22;--ink:#2d3436;--muted:#6b7280;--bg:#eef1f6;--card:#fff;--line:#e3e8ef;--ok:#27ae60;--danger:#e74c3c;}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Pretendard',sans-serif;}
+  body{background:var(--bg);color:var(--ink);}
+  button{cursor:pointer;font-family:inherit;}
+  .hidden{display:none !important;}
+
+  /* 로그인 게이트 */
+  #gate{position:fixed;inset:0;z-index:30;display:flex;justify-content:center;align-items:center;
+    background:linear-gradient(135deg,#10203f,#26447f);padding:20px;}
+  .gate-box{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);
+    padding:42px 34px;border-radius:18px;width:100%;max-width:360px;text-align:center;color:#fff;}
+  .gate-box .lock{font-size:40px;margin-bottom:12px;}
+  .gate-box h2{font-size:22px;font-weight:800;margin-bottom:4px;}
+  .gate-box p{font-size:13px;opacity:.7;margin-bottom:24px;}
+  .gate-box input{width:100%;padding:14px;border:none;border-radius:10px;font-size:16px;text-align:center;margin-bottom:14px;outline:none;}
+  .gate-box button{width:100%;padding:14px;border:none;border-radius:10px;background:var(--gold);color:#fff;font-size:16px;font-weight:800;}
+  .gate-box .err{color:#ffd2d2;font-size:13px;height:18px;margin-top:6px;}
+
+  /* 레이아웃 */
+  header{background:var(--navy);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;}
+  header .t{font-weight:800;font-size:17px;}
+  header .t small{display:block;font-weight:500;opacity:.7;font-size:11px;}
+  header .right{display:flex;gap:8px;align-items:center;}
+  header button{background:rgba(255,255,255,.15);border:none;color:#fff;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:600;}
+  header button.primary{background:var(--gold);}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 80px;}
+
+  .tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
+  .tabs button{background:#fff;border:1px solid var(--line);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;color:#555;}
+  .tabs button.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;}
+  .card h3{font-size:15px;margin-bottom:4px;}
+  .card .hint{font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6;}
+
+  /* 출석 매트릭스 */
+  .matrix-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;}
+  table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap;}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:center;}
+  thead th{background:#f7f9fc;position:sticky;top:0;font-weight:700;font-size:11.5px;color:#555;}
+  tbody th{position:sticky;left:0;background:#fff;text-align:left;font-weight:700;z-index:2;}
+  td.cell{cursor:pointer;user-select:none;}
+  td.on{background:#e8f8ee;}
+  td.on::after{content:'🔓';}
+  td.off::after{content:'·';color:#cbd2dc;}
+  td.special-col.on{background:#fff7d6;}
+
+  .student-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center;}
+  input[type=text],input[type=url]{padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;outline:none;}
+  .btn{padding:10px 16px;border:none;border-radius:8px;font-weight:700;font-size:13.5px;}
+  .btn.add{background:var(--navy);color:#fff;}
+  .btn.del{background:#fde8e8;color:var(--danger);}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:#f2f5fa;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:13.5px;margin:0 6px 8px 0;}
+  .chip button{background:none;border:none;color:var(--danger);font-weight:800;font-size:15px;}
+
+  /* 콘텐츠 편집 */
+  .content-week{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;}
+  .content-week .wt{font-weight:700;font-size:14px;margin-bottom:2px;}
+  .content-week .wd{font-size:12px;color:var(--muted);margin-bottom:10px;}
+  .field{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+  .field label{width:120px;font-size:12.5px;color:#555;flex:none;}
+  .field input{flex:1;width:100%;}
+
+  .select{padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;}
+  .savebar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);
+    padding:12px 16px;display:flex;gap:10px;justify-content:center;align-items:center;z-index:25;flex-wrap:wrap;}
+  .savebar .btn.save{background:var(--ok);color:#fff;}
+  .savebar .btn.export{background:#34495e;color:#fff;}
+  .savebar .btn.copy{background:#eef1f6;color:#333;}
+  .savebar .status{font-size:12.5px;color:var(--muted);}
+
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;justify-content:center;align-items:center;z-index:40;padding:18px;}
+  .modal-bg .m{background:#fff;border-radius:14px;max-width:460px;width:100%;padding:24px;}
+  .modal-bg h3{margin-bottom:10px;}
+  .modal-bg p{font-size:13px;color:#555;line-height:1.7;margin-bottom:14px;}
+  .modal-bg textarea{width:100%;height:120px;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:12px;font-family:monospace;}
+  .modal-bg .row{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;}
+  .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#2d3436;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:60;opacity:0;transition:.25s;pointer-events:none;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+</style>
+</head>
+<body>
+
+<!-- 로그인 게이트 -->
+<div id="gate">
+  <div class="gate-box">
+    <div class="lock">🔐</div>
+    <h2>GFIELD 관리자</h2>
+    <p>원장님 / 선생님 전용 관리 페이지</p>
+    <input type="password" id="pw" placeholder="관리자 비밀번호" onkeypress="if(event.key==='Enter')unlock()">
+    <button onclick="unlock()">입장</button>
+    <div class="err" id="gate-err"></div>
+  </div>
+</div>
+
+<!-- 본문 -->
+<div id="app" class="hidden">
+  <header>
+    <div class="t">GFIELD 관리자 콘솔<small id="h-sub">생각하는 황소 대비 아카이브</small></div>
+    <div class="right">
+      <a href="index.html" target="_blank" style="text-decoration:none;"><button>학생 화면 ↗</button></a>
+      <button onclick="lockAgain()">잠금</button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="active" data-tab="attend" onclick="tab('attend')">① 출석 · 권한</button>
+      <button data-tab="students" onclick="tab('students')">② 학생 명단</button>
+      <button data-tab="content" onclick="tab('content')">③ 콘텐츠 링크</button>
+      <button data-tab="settings" onclick="tab('settings')">④ 진행 주차</button>
+    </div>
+
+    <!-- ① 출석/권한 -->
+    <section id="tab-attend">
+      <div class="card">
+        <h3>주차별 출석 체크 (권한 부여)</h3>
+        <div class="hint">칸을 클릭하면 해당 학생의 그 주차 영상·자료가 열립니다(🔓). ⭐ 열은 방학 특강 수강 여부입니다.</div>
+        <div class="matrix-scroll"><table id="matrix"></table></div>
+      </div>
+    </section>
+
+    <!-- ② 학생 명단 -->
+    <section id="tab-students" class="hidden">
+      <div class="card">
+        <h3>학생 추가</h3>
+        <div class="hint">학생이 로그인 화면에서 입력할 이름과 정확히 같아야 합니다.</div>
+        <div class="student-row">
+          <input type="text" id="new-student" placeholder="학생 이름" onkeypress="if(event.key==='Enter')addStudent()">
+          <button class="btn add" onclick="addStudent()">＋ 추가</button>
+        </div>
+        <div id="student-chips"></div>
+      </div>
+    </section>
+
+    <!-- ③ 콘텐츠 -->
+    <section id="tab-content" class="hidden">
+      <div class="card">
+        <h3>주차별 콘텐츠 링크</h3>
+        <div class="hint">유튜브/Vimeo 링크와 PDF 파일 URL을 입력하세요. 입력하면 학생 모달에 버튼이 활성화됩니다. (PDF는 다운로드 시 학생 이름 워터마크가 자동 삽입됩니다)</div>
+        <div id="content-list"></div>
+      </div>
+    </section>
+
+    <!-- ④ 진행 주차 -->
+    <section id="tab-settings" class="hidden">
+      <div class="card">
+        <h3>현재 진행 중인 주차</h3>
+        <div class="hint">캐릭터 🏃 가 멈춰 서고 강조 표시되는 주차입니다.</div>
+        <select class="select" id="current-week"></select>
+      </div>
+    </section>
+  </div>
+
+  <!-- 저장 바 -->
+  <div class="savebar">
+    <span class="status" id="save-status">변경 후 저장을 눌러주세요</span>
+    <button class="btn save" onclick="saveToGitHub()">💾 GitHub에 저장</button>
+    <button class="btn export" onclick="exportFile()">⬇ data.js 내보내기</button>
+    <button class="btn copy" onclick="showCode()">📋 코드 보기</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="data.js"></script>
+<script>
+  /* ===== 설정 ===== */
+  const ADMIN_PW = "01020837265";          // 관리자 비밀번호 (독선생 시스템과 동일)
+  const REPO = "docssam1/hs-report";        // GitHub 저장소
+  const FILE_PATH = "data.js";
+  const BRANCH = "main";
+
+  // 작업용 복제본
+  let S = JSON.parse(JSON.stringify(window.GFIELD_DATA));
+  S.content = S.content || {};
+  S.attendance = S.attendance || {};
+  S.specialStudents = S.specialStudents || [];
+
+  const weekNodes = () => S.nodes.filter(n=>n.type==='week');
+  const specialNode = () => S.nodes.find(n=>n.type==='special');
+
+  /* ===== 게이트 ===== */
+  function unlock(){
+    const v=document.getElementById('pw').value;
+    if(v===ADMIN_PW){
+      document.getElementById('gate').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      document.getElementById('h-sub').textContent=S.meta.title;
+      renderAll();
+    }else{
+      document.getElementById('gate-err').textContent='비밀번호가 올바르지 않습니다';
+    }
+  }
+  function lockAgain(){ location.reload(); }
+
+  /* ===== 탭 ===== */
+  function tab(name){
+    ['attend','students','content','settings'].forEach(t=>{
+      document.getElementById('tab-'+t).classList.toggle('hidden', t!==name);
+    });
+    document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  }
+
+  /* ===== 렌더 ===== */
+  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); }
+
+  function ensureStudent(name){
+    if(!S.attendance[name]) S.attendance[name]=[];
+  }
+
+  function renderMatrix(){
+    const weeks=weekNodes(); const sp=specialNode();
+    let html='<thead><tr><th>학생</th>';
+    weeks.forEach(w=>{ html+=`<th title="${w.title}">${w.date.replace('주차','주').replace(' ','')}</th>`; });
+    if(sp) html+='<th>⭐특강</th>';
+    html+='</tr></thead><tbody>';
+    S.students.forEach(name=>{
+      ensureStudent(name);
+      html+=`<tr><th>${name}</th>`;
+      weeks.forEach(w=>{
+        const on=S.attendance[name].includes(w.id);
+        html+=`<td class="cell ${on?'on':'off'}" onclick="toggleCell('${name}','${w.id}',this)"></td>`;
+      });
+      if(sp){
+        const on=S.specialStudents.includes(name);
+        html+=`<td class="cell special-col ${on?'on':'off'}" onclick="toggleSpecial('${name}',this)"></td>`;
+      }
+      html+='</tr>';
+    });
+    html+='</tbody>';
+    document.getElementById('matrix').innerHTML=html;
+  }
+  function toggleCell(name,wid,td){
+    ensureStudent(name);
+    const arr=S.attendance[name]; const i=arr.indexOf(wid);
+    if(i>=0){ arr.splice(i,1); td.className='cell off'; }
+    else{ arr.push(wid); td.className='cell on'; }
+    dirty();
+  }
+  function toggleSpecial(name,td){
+    const i=S.specialStudents.indexOf(name);
+    if(i>=0){ S.specialStudents.splice(i,1); td.className='cell special-col off'; }
+    else{ S.specialStudents.push(name); td.className='cell special-col on'; }
+    dirty();
+  }
+
+  function renderStudents(){
+    let html='';
+    S.students.forEach(name=>{
+      html+=`<span class="chip">${name}<button onclick="removeStudent('${name}')">×</button></span>`;
+    });
+    document.getElementById('student-chips').innerHTML=html||'<span class="hint">등록된 학생이 없습니다.</span>';
+  }
+  function addStudent(){
+    const inp=document.getElementById('new-student'); const name=inp.value.trim();
+    if(!name) return;
+    if(S.students.includes(name)){ toast('이미 있는 학생입니다'); return; }
+    S.students.push(name); ensureStudent(name); inp.value='';
+    renderStudents(); renderMatrix(); dirty();
+  }
+  function removeStudent(name){
+    if(!confirm(`'${name}' 학생을 삭제할까요?`)) return;
+    S.students=S.students.filter(s=>s!==name);
+    delete S.attendance[name];
+    S.specialStudents=S.specialStudents.filter(s=>s!==name);
+    renderStudents(); renderMatrix(); dirty();
+  }
+
+  function renderContent(){
+    let html='';
+    weekNodes().concat(specialNode()?[specialNode()]:[]).forEach(w=>{
+      const c=S.content[w.id]||{concept:'',mock:'',pdf:''}; S.content[w.id]=c;
+      html+=`<div class="content-week">
+        <div class="wt">${w.date} · ${w.title}</div>
+        <div class="wd">${w.desc}</div>
+        <div class="field"><label>개념 영상 URL</label><input type="url" value="${esc(c.concept)}" oninput="setC('${w.id}','concept',this.value)" placeholder="https://youtu.be/..."></div>
+        <div class="field"><label>모의고사 해설 URL</label><input type="url" value="${esc(c.mock)}" oninput="setC('${w.id}','mock',this.value)" placeholder="https://youtu.be/..."></div>
+        <div class="field"><label>자료 PDF URL</label><input type="url" value="${esc(c.pdf)}" oninput="setC('${w.id}','pdf',this.value)" placeholder="https://.../file.pdf"></div>
+      </div>`;
+    });
+    document.getElementById('content-list').innerHTML=html;
+  }
+  function setC(id,key,val){ S.content[id]=S.content[id]||{concept:'',mock:'',pdf:''}; S.content[id][key]=val.trim(); dirty(); }
+
+  function renderSettings(){
+    const sel=document.getElementById('current-week');
+    sel.innerHTML=weekNodes().map(w=>`<option value="${w.id}" ${w.id===S.meta.currentWeekId?'selected':''}>${w.date} · ${w.title}</option>`).join('');
+    sel.onchange=()=>{ S.meta.currentWeekId=sel.value; dirty(); };
+  }
+
+  function esc(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+  /* ===== 저장 ===== */
+  function dirty(){ document.getElementById('save-status').textContent='● 저장되지 않은 변경 있음'; }
+
+  function buildFile(){
+    return "/* =========================================================\n"
+      + " * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)\n"
+      + " * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨\n"
+      + " * 생성: " + new Date().toLocaleString('ko-KR') + "\n"
+      + " * ========================================================= */\n"
+      + "window.GFIELD_DATA = " + JSON.stringify(S, null, 2) + ";\n";
+  }
+
+  function exportFile(){
+    const blob=new Blob([buildFile()],{type:'text/javascript'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='data.js';
+    document.body.appendChild(a); a.click(); a.remove();
+    toast('data.js 다운로드됨 — 저장소에 업로드하세요');
+  }
+  function showCode(){
+    const bg=document.createElement('div'); bg.className='modal-bg';
+    bg.innerHTML=`<div class="m"><h3>data.js 코드</h3>
+      <p>아래 전체를 복사해 저장소의 <b>data.js</b>에 붙여넣으면 반영됩니다.</p>
+      <textarea readonly id="code-area"></textarea>
+      <div class="row"><button class="btn copy" onclick="navigator.clipboard.writeText(document.getElementById('code-area').value).then(()=>toast('복사됨'))">복사</button>
+      <button class="btn add" onclick="this.closest('.modal-bg').remove()">닫기</button></div></div>`;
+    document.body.appendChild(bg);
+    bg.querySelector('#code-area').value=buildFile();
+    bg.addEventListener('click',e=>{if(e.target===bg)bg.remove();});
+  }
+
+  async function saveToGitHub(){
+    let token=null;
+    try{ token=localStorage.getItem('gfield_gh_token'); }catch(e){}
+    if(!token){
+      token=prompt('GitHub Personal Access Token을 입력하세요\n(Contents 쓰기 권한 · 이 기기에만 저장됩니다)');
+      if(!token) return;
+      try{ localStorage.setItem('gfield_gh_token', token.trim()); }catch(e){}
+      token=token.trim();
+    }
+    document.getElementById('save-status').textContent='GitHub에 저장 중…';
+    try{
+      // 현재 파일 SHA 조회
+      let sha=null;
+      const getRes=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,{
+        headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}});
+      if(getRes.ok){ const j=await getRes.json(); sha=j.sha; }
+      // base64 (UTF-8)
+      const content=buildFile();
+      const b64=btoa(unescape(encodeURIComponent(content)));
+      const putRes=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,{
+        method:'PUT',
+        headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'},
+        body:JSON.stringify({message:'Update data.js via admin console', content:b64, sha:sha, branch:BRANCH})
+      });
+      if(putRes.ok){
+        document.getElementById('save-status').textContent='✅ 저장 완료 (1~2분 후 반영)';
+        toast('GitHub 저장 완료 ✅');
+      }else{
+        const e=await putRes.json();
+        document.getElementById('save-status').textContent='저장 실패: '+(e.message||putRes.status);
+        if(putRes.status===401){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} toast('토큰이 유효하지 않습니다. 다시 시도하세요'); }
+        else toast('저장 실패 — 코드 보기로 수동 반영하세요');
+      }
+    }catch(err){
+      document.getElementById('save-status').textContent='네트워크 오류';
+      toast('저장 실패 — 코드 보기/내보내기를 사용하세요');
+    }
+  }
+
+  let tt=null;
+  function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2400); }
+</script>
+</body>
+</html>
