@@ -116,8 +116,14 @@ window.GFIELD_DATA = {
     "약점 유형": ["*"],
     "사고력 교재 보충": ["*"]
   },
-  archive: [
-    /* 예) { folder:"약점 유형", title:"도형의 개수 세기 보충", file:"materials/shape-count.pdf", video:"https://youtu.be/...", date:"2026-06-29" } */
+  /* 자료실(서재) — 책장에 꽂힌 교재. 누르면 페이지를 한 장씩 이미지로 넘겨봄(다운로드 불가).
+   * base: 페이지 이미지 폴더 경로(끝 슬래시 없이), 페이지는 base/p-01.ext ~ p-NN.ext
+   * count: 총 페이지 수, ext: 확장자(jpg/png), cover(선택): 표지 이미지 URL(없으면 1쪽)
+   */
+  books: [
+    { folder:"사고력 교재 보충", title:"G-MATH BASIC 1", base:"https://raw.githubusercontent.com/docssam1/ad/main/kid/basic", count:19, ext:"jpg", date:"2026-06-29" },
+    { folder:"사고력 교재 보충", title:"G-ROOT 상(上)", base:"https://raw.githubusercontent.com/docssam1/ad/main/kid/groot", count:17, ext:"jpg", date:"2026-06-29" },
+    { folder:"보충학습", title:"탄탄 모의고사", base:"https://raw.githubusercontent.com/docssam1/ad/main/kid/5moi", count:7, ext:"jpg", date:"2026-06-29" }
   ],
 
   info: [
