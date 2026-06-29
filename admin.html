@@ -68,6 +68,16 @@
   .field{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
   .field label{width:120px;font-size:12.5px;color:#555;flex:none;}
   .field input{flex:1;width:100%;}
+  .flbl{display:block;font-size:12.5px;font-weight:700;color:#34495e;margin:14px 0 6px;}
+  .cta{width:100%;min-height:120px;border:1px solid var(--line);border-radius:8px;padding:11px 12px;
+    font-size:13.5px;line-height:1.6;font-family:'Pretendard',sans-serif;resize:vertical;outline:none;}
+  .cta:focus{border-color:var(--navy);}
+  .tb-hint{font-size:11.5px;color:var(--muted);margin-bottom:8px;line-height:1.5;}
+  .tb-list{display:flex;flex-direction:column;gap:8px;margin-bottom:8px;}
+  .tb-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .tb-row input[type=text]{flex:1;min-width:160px;}
+  .tb-row input[type=url]{flex:2;min-width:200px;}
+  .btn.sm{padding:8px 14px;font-size:13px;}
 
   .select{padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;}
   .savebar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);
@@ -117,6 +127,7 @@
       <button data-tab="students" onclick="tab('students')">② 학생 명단</button>
       <button data-tab="content" onclick="tab('content')">③ 콘텐츠 링크</button>
       <button data-tab="settings" onclick="tab('settings')">④ 진행 주차</button>
+      <button data-tab="archive" onclick="tab('archive')">⑤ 자료실</button>
     </div>
 
     <!-- ① 출석/권한 -->
@@ -158,6 +169,32 @@
         <select class="select" id="current-week"></select>
       </div>
     </section>
+
+    <!-- ⑤ 자료실 -->
+    <section id="tab-archive" class="hidden">
+      <div class="card">
+        <h3>자료실 폴더</h3>
+        <div class="hint">학생 화면 자료실에 보이는 폴더입니다. 이름을 바꾸면 자료·권한도 함께 따라갑니다.</div>
+        <div id="folder-list"></div>
+        <div class="student-row" style="margin-top:10px;">
+          <input type="text" id="new-folder" placeholder="새 폴더 이름" onkeypress="if(event.key==='Enter')addFolder()">
+          <button class="btn add" onclick="addFolder()">＋ 폴더 추가</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>폴더별 학생 권한</h3>
+        <div class="hint">‘전체공개’가 켜지면(🔓) 로그인한 모든 학생이 봅니다. 끄면 체크한 학생만 그 폴더를 열람합니다.</div>
+        <div class="matrix-scroll"><table id="acc-matrix"></table></div>
+      </div>
+
+      <div class="card">
+        <h3>자료 등록</h3>
+        <div class="hint">교재(PDF)가 기본이며, 영상이 있는 경우에만 영상 링크를 함께 넣습니다. 워터마크가 적용되려면 PDF가 이 저장소(예: <b>materials/</b>) 또는 CORS 허용 위치에 있어야 합니다.</div>
+        <div id="arc-items"></div>
+        <button class="btn add sm" onclick="addArcItem()" style="margin-top:8px;">＋ 자료 추가</button>
+      </div>
+    </section>
   </div>
 
   <!-- 저장 바 -->
@@ -183,6 +220,10 @@
   S.content = S.content || {};
   S.attendance = S.attendance || {};
   S.specialStudents = S.specialStudents || [];
+  S.archiveFolders = S.archiveFolders || [];
+  S.archiveAccess = S.archiveAccess || {};
+  S.archive = S.archive || [];
+  function today(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
   const weekNodes = () => S.nodes.filter(n=>n.type==='week');
   const specialNode = () => S.nodes.find(n=>n.type==='special');
@@ -203,14 +244,14 @@
 
   /* ===== 탭 ===== */
   function tab(name){
-    ['attend','students','content','settings'].forEach(t=>{
+    ['attend','students','content','settings','archive'].forEach(t=>{
       document.getElementById('tab-'+t).classList.toggle('hidden', t!==name);
     });
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
   }
 
   /* ===== 렌더 ===== */
-  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); }
+  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); }
 
   function ensureStudent(name){
     if(!S.attendance[name]) S.attendance[name]=[];
@@ -274,21 +315,49 @@
     renderStudents(); renderMatrix(); dirty();
   }
 
+  function cObj(id){
+    let c=S.content[id]; if(!c){ c={notice:'',homework:'',textbooks:[]}; S.content[id]=c; }
+    if(typeof c.notice!=='string') c.notice='';
+    if(typeof c.homework!=='string') c.homework='';
+    if(!Array.isArray(c.textbooks)) c.textbooks=[];
+    return c;
+  }
   function renderContent(){
     let html='';
     weekNodes().concat(specialNode()?[specialNode()]:[]).forEach(w=>{
-      const c=S.content[w.id]||{concept:'',mock:'',pdf:''}; S.content[w.id]=c;
+      const c=cObj(w.id);
+      let tbRows='';
+      c.textbooks.forEach((t,i)=>{
+        tbRows+=`<div class="tb-row">
+          <input type="text" value="${esc(t.title)}" oninput="setTB('${w.id}',${i},'title',this.value)" placeholder="교재 제목 (예: 중급 모의고사 1회 시험지)">
+          <input type="url" value="${esc(t.url)}" oninput="setTB('${w.id}',${i},'url',this.value)" placeholder="PDF 링크 (예: materials/mock-1.pdf)">
+          <button class="btn del" onclick="delTB('${w.id}',${i})">삭제</button>
+        </div>`;
+      });
       html+=`<div class="content-week">
         <div class="wt">${w.date} · ${w.title}</div>
         <div class="wd">${w.desc}</div>
-        <div class="field"><label>개념 영상 URL</label><input type="url" value="${esc(c.concept)}" oninput="setC('${w.id}','concept',this.value)" placeholder="https://youtu.be/..."></div>
-        <div class="field"><label>모의고사 해설 URL</label><input type="url" value="${esc(c.mock)}" oninput="setC('${w.id}','mock',this.value)" placeholder="https://youtu.be/..."></div>
-        <div class="field"><label>자료 PDF URL</label><input type="url" value="${esc(c.pdf)}" oninput="setC('${w.id}','pdf',this.value)" placeholder="https://.../file.pdf"></div>
+
+        <label class="flbl">📘 학습 내용 (안내문 그대로 붙여넣기 — 유튜브/링크 자동 변환)</label>
+        <textarea class="cta" oninput="setNotice('${w.id}',this.value)" placeholder="예)\n1. GIFTED MATH 3 V1-1(2)\nhttps://youtu.be/...\n  · 약점 유형 - 도형의 개수세기\n  추가자료: https://naver.me/...">${esc(c.notice)}</textarea>
+
+        <label class="flbl">📌 과제</label>
+        <textarea class="cta" oninput="setHW('${w.id}',this.value)" placeholder="예)\n황소 대비 모의고사 중급 1회\nhttps://youtu.be/...\n시험 후 영상 보고 질문하기">${esc(c.homework)}</textarea>
+
+        <label class="flbl">📕 교재 자료 (학생 이름 워터마크 다운로드)</label>
+        <div class="tb-hint">워터마크가 적용되려면 PDF가 이 저장소(예: <b>materials/</b> 폴더) 또는 CORS 허용 위치에 있어야 합니다. 네이버·드라이브 등 일반 자료는 위 안내문에 링크로 적어주세요.</div>
+        <div class="tb-list">${tbRows}</div>
+        <button class="btn add sm" onclick="addTB('${w.id}')">＋ 교재 추가</button>
       </div>`;
     });
     document.getElementById('content-list').innerHTML=html;
   }
-  function setC(id,key,val){ S.content[id]=S.content[id]||{concept:'',mock:'',pdf:''}; S.content[id][key]=val.trim(); dirty(); }
+  function setNotice(id,v){ cObj(id).notice=v; dirty(); }
+  function setHW(id,v){ cObj(id).homework=v; dirty(); }
+  function addTB(id){ cObj(id).textbooks.push({title:'',url:''}); renderContent(); dirty(); }
+  function delTB(id,i){ cObj(id).textbooks.splice(i,1); renderContent(); dirty(); }
+  function setTB(id,i,key,v){ const c=cObj(id); if(c.textbooks[i]){ c.textbooks[i][key]=v.trim(); dirty(); } }
+  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
   function renderSettings(){
     const sel=document.getElementById('current-week');
@@ -296,7 +365,96 @@
     sel.onchange=()=>{ S.meta.currentWeekId=sel.value; dirty(); };
   }
 
-  function esc(s){ return (s||'').replace(/"/g,'&quot;'); }
+  /* ===== ⑤ 자료실 ===== */
+  function accArr(f){ if(!Array.isArray(S.archiveAccess[f])) S.archiveAccess[f]=["*"]; return S.archiveAccess[f]; }
+
+  function renderArchiveAdmin(){ renderFolders(); renderAccMatrix(); renderArcItems(); }
+
+  function renderFolders(){
+    let h='';
+    S.archiveFolders.forEach((f,i)=>{
+      h+=`<div class="tb-row"><input type="text" value="${esc(f)}" onchange="renameFolder(${i},this.value)"><button class="btn del" onclick="delFolder(${i})">삭제</button></div>`;
+    });
+    document.getElementById('folder-list').innerHTML=h||'<span class="hint">폴더가 없습니다.</span>';
+  }
+  function addFolder(){
+    const inp=document.getElementById('new-folder'); const name=inp.value.trim();
+    if(!name) return;
+    if(S.archiveFolders.includes(name)){ toast('이미 있는 폴더입니다'); return; }
+    S.archiveFolders.push(name); S.archiveAccess[name]=["*"]; inp.value='';
+    renderArchiveAdmin(); dirty();
+  }
+  function renameFolder(i,val){
+    const v=val.trim(); const old=S.archiveFolders[i];
+    if(!v||v===old) { renderFolders(); return; }
+    if(S.archiveFolders.includes(v)){ toast('이미 있는 폴더입니다'); renderFolders(); return; }
+    S.archiveFolders[i]=v;
+    S.archiveAccess[v]=S.archiveAccess[old]||["*"]; delete S.archiveAccess[old];
+    S.archive.forEach(a=>{ if(a.folder===old) a.folder=v; });
+    renderArchiveAdmin(); dirty();
+  }
+  function delFolder(i){
+    const f=S.archiveFolders[i];
+    const cnt=S.archive.filter(a=>a.folder===f).length;
+    if(!confirm(`'${f}' 폴더를 삭제할까요?`+(cnt?`\n이 폴더의 자료 ${cnt}건도 함께 삭제됩니다.`:''))) return;
+    S.archiveFolders.splice(i,1); delete S.archiveAccess[f];
+    S.archive=S.archive.filter(a=>a.folder!==f);
+    renderArchiveAdmin(); dirty();
+  }
+
+  function renderAccMatrix(){
+    if(!S.archiveFolders.length){ document.getElementById('acc-matrix').innerHTML='<tbody><tr><td class="hint" style="padding:14px">폴더를 먼저 추가하세요.</td></tr></tbody>'; return; }
+    let html='<thead><tr><th>폴더</th><th>전체공개</th>';
+    S.students.forEach(s=>{ html+=`<th>${s}</th>`; });
+    html+='</tr></thead><tbody>';
+    S.archiveFolders.forEach((f,fi)=>{
+      const acc=accArr(f); const open=acc.includes('*');
+      html+=`<tr><th>${f}</th>`;
+      html+=`<td class="cell ${open?'on':'off'}" onclick="toggleOpen(${fi},this)"></td>`;
+      S.students.forEach((s,si)=>{
+        const on=!open&&acc.includes(s);
+        html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="toggleAcc(${fi},'${s}',this)"></td>`;
+      });
+      html+='</tr>';
+    });
+    html+='</tbody>';
+    document.getElementById('acc-matrix').innerHTML=html;
+  }
+  function toggleOpen(fi){
+    const f=S.archiveFolders[fi]; const acc=accArr(f);
+    if(acc.includes('*')) S.archiveAccess[f]=[];        // 전체공개 해제 → 개별 선택 모드
+    else S.archiveAccess[f]=["*"];                      // 전체공개
+    renderAccMatrix(); dirty();
+  }
+  function toggleAcc(fi,s){
+    const f=S.archiveFolders[fi]; let acc=accArr(f);
+    if(acc.includes('*')) acc=S.archiveAccess[f]=[];    // 개별 모드로 전환
+    const i=acc.indexOf(s);
+    if(i>=0) acc.splice(i,1); else acc.push(s);
+    renderAccMatrix(); dirty();
+  }
+
+  function renderArcItems(){
+    let h='';
+    S.archive.forEach((it,i)=>{
+      const opts=S.archiveFolders.map(f=>`<option ${f===it.folder?'selected':''}>${esc(f)}</option>`).join('');
+      h+=`<div class="content-week">
+        <div class="field"><label>폴더</label><select onchange="setArc(${i},'folder',this.value)">${opts}</select></div>
+        <div class="field"><label>제목</label><input type="text" value="${esc(it.title)}" oninput="setArc(${i},'title',this.value)" placeholder="자료 제목"></div>
+        <div class="field"><label>교재 PDF</label><input type="url" value="${esc(it.file)}" oninput="setArc(${i},'file',this.value)" placeholder="materials/xxx.pdf"></div>
+        <div class="field"><label>영상 링크(선택)</label><input type="url" value="${esc(it.video)}" oninput="setArc(${i},'video',this.value)" placeholder="https://youtu.be/... (없으면 비움)"></div>
+        <div class="field"><label>날짜</label><input type="date" value="${esc(it.date)}" oninput="setArc(${i},'date',this.value)"></div>
+        <button class="btn del sm" onclick="delArc(${i})">자료 삭제</button>
+      </div>`;
+    });
+    document.getElementById('arc-items').innerHTML=h||'<span class="hint">등록된 자료가 없습니다.</span>';
+  }
+  function addArcItem(){
+    S.archive.push({folder:S.archiveFolders[0]||'', title:'', file:'', video:'', date:today()});
+    renderArcItems(); dirty();
+  }
+  function setArc(i,key,val){ if(S.archive[i]){ S.archive[i][key]=(key==='date')?val:val.trim(); dirty(); } }
+  function delArc(i){ S.archive.splice(i,1); renderArcItems(); dirty(); }
 
   /* ===== 저장 ===== */
   function dirty(){ document.getElementById('save-status').textContent='● 저장되지 않은 변경 있음'; }
