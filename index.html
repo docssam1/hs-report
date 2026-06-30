@@ -161,6 +161,17 @@
   .node.goal h3{color:var(--gold);font-size:18px;}
   .node.goal .desc{color:#cfd5de;}
 
+  /* 자료실 / 게시판 */
+  .arc-intro{background:rgba(13,27,42,.55);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:13.5px;color:#cfd5de;line-height:1.6;margin-bottom:14px;}
+  .arc-intro b{color:var(--gold-light);}
+  .folder{background:rgba(13,27,42,.55);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.3);}
+  .folder-h{display:flex;align-items:center;gap:9px;padding:15px 18px;font-weight:800;font-size:15.5px;color:#0a0a0a;background:linear-gradient(135deg,var(--gold),#c5982e);}
+  .folder-h .folder-ic{font-size:18px;}
+  .folder-h .folder-c{margin-left:auto;background:rgba(0,0,0,.18);color:#0a0a0a;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;}
+  .folder-b{padding:8px 14px 14px;}
+  .post-video{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000;margin:4px 0 12px;}
+  .post-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+
   /* 자료실 서재(책장) */
   .shelf-sec{margin-bottom:24px;}
   .shelf-h{font-size:14px;font-weight:800;color:var(--gold-light);margin:6px 2px 14px;display:flex;align-items:center;gap:7px;border-bottom:1px solid rgba(212,175,55,.2);padding-bottom:8px;}
@@ -173,24 +184,28 @@
   .book .cover::after{content:"";position:absolute;right:0;top:1%;height:98%;width:9px;transform:translateX(100%) rotateY(90deg);transform-origin:left center;background:repeating-linear-gradient(0deg,#efe4cd 0,#efe4cd 1.5px,#cdbf9f 3px);z-index:1;}
   .book:hover .cover{transform:rotateY(-10deg) translateY(-6px);}
   .book .label{font-size:12.5px;font-weight:700;color:var(--white);line-height:1.3;text-align:center;}
-  .book .pages{font-size:11px;color:var(--dim);}
+  .book .pages{font-size:11px;color:var(--gold-light);}
+  .book .cover.noimg{background:linear-gradient(135deg,#2a4a86,#0d1b2a);display:flex;align-items:center;justify-content:center;border:1px solid rgba(212,175,55,.3);}
+  .book .cover.noimg .cv-title{color:var(--gold-light);font-weight:800;font-size:12px;line-height:1.35;padding:10px 8px;text-align:center;}
 
-  /* 책 뷰어 */
-  #bookviewer{position:fixed;inset:0;z-index:75;display:none;flex-direction:column;background:radial-gradient(900px 500px at 50% 0%,#16201a,#06080a 70%);}
+  /* 책 뷰어 (PDF + 영상) */
+  #bookviewer{position:fixed;inset:0;z-index:75;display:none;flex-direction:column;background:#06080a;}
   #bookviewer.open{display:flex;}
-  .bv-top{display:flex;align-items:center;gap:10px;padding:14px 16px;}
-  .bv-back{background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);color:var(--gold-light);font-size:14px;font-weight:700;padding:9px 14px;border-radius:11px;}
+  .bv-top{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#0d1b2a;border-bottom:1px solid rgba(212,175,55,.25);}
+  .bv-back{background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);color:var(--gold-light);font-size:14px;font-weight:700;padding:9px 14px;border-radius:11px;flex:none;}
   .bv-name{flex:1;text-align:center;font-size:14.5px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .bv-count{font-size:13px;color:var(--dim);min-width:48px;text-align:right;font-variant-numeric:tabular-nums;}
-  .bv-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;padding:6px 8px 0;overflow:hidden;touch-action:pan-y;}
-  .bv-img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 14px 40px rgba(0,0,0,.55);border:1px solid rgba(212,175,55,.18);background:#fff;-webkit-user-drag:none;}
-  .bv-arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:rgba(20,28,22,.72);border:1px solid rgba(212,175,55,.32);color:var(--gold-light);display:grid;place-items:center;font-size:22px;backdrop-filter:blur(4px);z-index:2;}
-  .bv-arrow.left{left:10px;} .bv-arrow.right{right:10px;}
-  .bv-arrow[disabled]{opacity:.25;pointer-events:none;}
-  .bv-dots{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:12px 16px;max-height:58px;overflow-y:auto;}
-  .bv-dot{width:7px;height:7px;border-radius:50%;background:rgba(212,175,55,.28);cursor:pointer;flex:0 0 auto;}
-  .bv-dot.on{background:var(--gold);transform:scale(1.3);}
-  .bv-note{text-align:center;font-size:11px;color:var(--dim);padding:0 0 14px;}
+  #bv-actions{display:flex;gap:8px;flex:none;}
+  .bv-act{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--gold),#c5982e);color:#0a0a0a;font-size:13px;font-weight:800;padding:8px 13px;border-radius:9px;text-decoration:none;}
+  .bv-stage{flex:1;display:flex;min-height:0;}
+  .bv-stage.split{flex-direction:row;}
+  .bv-vid{flex:1;background:#000;display:flex;align-items:center;justify-content:center;min-width:0;}
+  .bv-vid iframe{width:100%;height:100%;border:0;}
+  .bv-doc{flex:1.2;background:#525659;min-width:0;display:flex;position:relative;}
+  .bv-doc iframe{width:100%;height:100%;border:0;}
+  .bv-doc .empty-note{margin:auto;color:#fff;}
+  .bv-wm{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:22px 34px;transform:rotate(-24deg) scale(1.4);opacity:.16;}
+  .bv-wm span{color:#111;font-size:17px;font-weight:800;white-space:nowrap;}
+  @media(max-width:760px){ .bv-stage.split{flex-direction:column;} .bv-vid{height:36vh;flex:none;} }
 
   /* 모달 */
   .overlay{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.7);display:flex;justify-content:center;align-items:center;padding:18px;}
@@ -280,7 +295,7 @@
   </section>
 
   <section id="view-archive" class="hidden">
-    <div class="arc-intro">📚 <b>GFIELD 서재</b> — 책장에서 교재를 골라 표지를 누르면 페이지를 한 장씩 넘겨볼 수 있어요. (열람 전용 · 다운로드 불가)</div>
+    <div class="arc-intro">📚 <b>GFIELD 서재</b> — 책장에서 교재를 골라 표지를 누르면 PDF로 펼쳐집니다. 강의 영상이 있으면 영상과 함께 보여요.</div>
     <div id="archive-list"></div>
   </section>
 
@@ -309,15 +324,9 @@
   <div class="bv-top">
     <button class="bv-back" onclick="closeBook()">‹ 서재</button>
     <div class="bv-name" id="bv-name"></div>
-    <div class="bv-count" id="bv-count"></div>
+    <div id="bv-actions"></div>
   </div>
-  <div class="bv-stage" id="bv-stage">
-    <button class="bv-arrow left" id="bv-prev" onclick="bookGo(-1)" aria-label="이전 페이지">‹</button>
-    <img class="bv-img" id="bv-img" alt="교재 페이지" draggable="false">
-    <button class="bv-arrow right" id="bv-next" onclick="bookGo(1)" aria-label="다음 페이지">›</button>
-  </div>
-  <div class="bv-dots" id="bv-dots"></div>
-  <div class="bv-note">© 지필드 영재교육 · 무단 복제·배포 금지</div>
+  <div class="bv-stage" id="bv-stage"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
@@ -500,7 +509,7 @@
   document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
 
   function canSeeFolder(folder){ const acc=(D.archiveAccess||{})[folder]; if(!acc) return true; return acc.includes('*')||acc.includes(currentStudent); }
-  function bookPage(b,i){ return `${b.base}/p-${String(i).padStart(2,'0')}.${b.ext||'jpg'}`; }
+  function ytSingle(url){ return !!ytId(url) && !/[?&]list=/.test(url); }
 
   function renderArchive(){
     const wrap=document.getElementById('archive-list'); wrap.innerHTML='';
@@ -509,15 +518,19 @@
     if(!folders.length){ wrap.innerHTML='<div class="empty-note">열람 가능한 자료실이 없습니다.</div>'; return; }
     let total=0;
     folders.forEach(folder=>{
-      const books=(D.books||[]).filter(b=>b&&b.folder===folder&&b.base&&b.count);
+      const books=(D.books||[]).filter(b=>b&&b.folder===folder&&(b.pdf||b.video));
       const sec=document.createElement('div'); sec.className='shelf-sec';
       let inner=`<div class="shelf-h">📚 ${escHtml(folder)}<span class="c">${books.length}권</span></div>`;
       if(books.length){
         total+=books.length;
         inner+='<div class="shelf">';
         books.forEach(b=>{
-          const cover=b.cover||bookPage(b,1);
-          inner+=`<button class="book" data-bi="${(D.books||[]).indexOf(b)}"><span class="cover"><img loading="lazy" src="${escAttr(cover)}" alt="${escAttr(b.title||'교재')}"></span><span class="label">${escHtml(b.title||'교재')}</span><span class="pages">${b.count}쪽</span></button>`;
+          const i=(D.books||[]).indexOf(b);
+          const cover=b.cover
+            ? `<span class="cover"><img loading="lazy" src="${escAttr(b.cover)}" alt="${escAttr(b.title||'교재')}"></span>`
+            : `<span class="cover noimg"><span class="cv-title">${escHtml(b.title||'교재')}</span></span>`;
+          const tag = b.video ? (ytSingle(b.video)?'🎬 강의 포함':'▶ 영상 링크') : '📄 교재';
+          inner+=`<button class="book" data-bi="${i}">${cover}<span class="label">${escHtml(b.title||'교재')}</span><span class="pages">${tag}</span></button>`;
         });
         inner+='</div>';
       } else inner+='<div class="empty-note" style="text-align:left;padding:8px 0">등록된 교재가 없습니다.</div>';
@@ -527,20 +540,30 @@
     wrap.querySelectorAll('.book[data-bi]').forEach(btn=>btn.onclick=()=>openBook((D.books||[])[+btn.dataset.bi]));
   }
 
-  /* ----- 책 뷰어(서재) ----- */
-  let curBook=null, bookIdx=1;
-  function openBook(b){ if(!b) return; curBook=b; bookIdx=1; document.getElementById('bv-name').textContent=b.title||'교재'; buildBookDots(); renderBook(); document.getElementById('bookviewer').classList.add('open'); }
-  function closeBook(){ document.getElementById('bookviewer').classList.remove('open'); curBook=null; }
-  function buildBookDots(){ const d=document.getElementById('bv-dots'); d.innerHTML=''; for(let i=1;i<=curBook.count;i++){ const s=document.createElement('span'); s.className='bv-dot'+(i===bookIdx?' on':''); s.onclick=()=>{bookIdx=i;renderBook();}; d.appendChild(s);} }
-  function renderBook(){ if(!curBook) return; document.getElementById('bv-img').src=bookPage(curBook,bookIdx); document.getElementById('bv-count').textContent=`${bookIdx} / ${curBook.count}`; document.getElementById('bv-prev').disabled=bookIdx<=1; document.getElementById('bv-next').disabled=bookIdx>=curBook.count; [...document.getElementById('bv-dots').children].forEach((s,i)=>s.classList.toggle('on',i+1===bookIdx)); if(bookIdx<curBook.count){const n=new Image();n.src=bookPage(curBook,bookIdx+1);} }
-  function bookGo(d){ if(!curBook) return; const n=bookIdx+d; if(n>=1&&n<=curBook.count){ bookIdx=n; renderBook(); } }
-  (function wireBookViewer(){
-    const st=document.getElementById('bv-stage'); if(!st) return;
-    let sx=0,sw=false;
-    st.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sw=true;},{passive:true});
-    st.addEventListener('touchend',e=>{ if(!sw)return; sw=false; const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>45) bookGo(dx<0?1:-1); },{passive:true});
-    document.addEventListener('keydown',e=>{ const v=document.getElementById('bookviewer'); if(!v.classList.contains('open'))return; if(e.key==='ArrowLeft')bookGo(-1); else if(e.key==='ArrowRight')bookGo(1); else if(e.key==='Escape')closeBook(); });
-  })();
+  /* ----- 책 뷰어(PDF + 영상) ----- */
+  function wmTiles(){ let s=''; const t=escHtml((currentStudent||'')+' · 지필드'); for(let i=0;i<60;i++) s+=`<span>${t}</span>`; return s; }
+  function openBook(b){
+    if(!b) return;
+    document.getElementById('bv-name').textContent=b.title||'교재';
+    const mode = !b.video ? 'none' : (ytSingle(b.video)?'embed':'link');
+    const stage=document.getElementById('bv-stage');
+    const wm = currentStudent ? `<div class="bv-wm">${wmTiles()}</div>` : '';
+    const pdfPane = b.pdf
+      ? `<div class="bv-doc"><iframe src="${escAttr(b.pdf)}#view=FitH" title="교재"></iframe>${wm}</div>`
+      : `<div class="bv-doc"><div class="empty-note">교재 파일이 없습니다.</div></div>`;
+    if(mode==='embed'){
+      stage.className='bv-stage split';
+      stage.innerHTML=`<div class="bv-vid"><iframe src="${escAttr(infoEmbed(b.video))}" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>${pdfPane}`;
+    } else {
+      stage.className='bv-stage';
+      stage.innerHTML=pdfPane;
+    }
+    document.getElementById('bv-actions').innerHTML = (mode==='link'&&b.video)
+      ? `<a class="bv-act" href="${escAttr(b.video)}" target="_blank" rel="noopener">▶ 영상 보기</a>` : '';
+    document.getElementById('bookviewer').classList.add('open');
+  }
+  function closeBook(){ const v=document.getElementById('bookviewer'); v.classList.remove('open'); document.getElementById('bv-stage').innerHTML=''; document.getElementById('bv-actions').innerHTML=''; }
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElementById('bookviewer').classList.contains('open')) closeBook(); });
 
   function infoEmbed(url){ const yt=ytId(url); if(yt) return `https://www.youtube.com/embed/${yt}?rel=0`; const vm=url.match(/vimeo\.com\/(\d+)/); if(vm) return `https://player.vimeo.com/video/${vm[1]}`; return url; }
   function renderInfo(){
@@ -569,7 +592,7 @@
     if(p&&p.catch) p.catch(()=>{ vid.muted=true; vid.play().catch(()=>{}); const h=document.getElementById('unmuteHint'); if(h) h.classList.remove('hidden'); });
   })();
 
-  /* PDF 워터마크 */
+  /* PDF 워터마크 다운로드 (주간 교재용) */
   async function downloadWatermarked(url, title){
     if(!currentStudent){ toast('로그인이 필요합니다'); return; }
     toast('자료를 준비하고 있어요…');
