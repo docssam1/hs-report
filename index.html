@@ -89,9 +89,9 @@
   /* 로그인 응원 */
   .cheer{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
     background:radial-gradient(circle at 50% 45%,#ffe2bd,rgba(255,247,237,.96));}
-  .cheer .ch-inner{color:var(--orange-d);line-height:1.4;font-size:32px;text-shadow:0 4px 18px rgba(249,115,22,.25);animation:cheerPop 2.1s ease forwards;}
-  .cheer .ch-inner small{display:block;font-family:'Noto Sans KR',sans-serif;color:var(--ink);font-size:16px;margin-top:12px;font-weight:700;}
-  @keyframes cheerPop{0%{transform:scale(.5);opacity:0}14%{transform:scale(1.1);opacity:1}34%{transform:scale(1);opacity:1}78%{transform:scale(.9) translateY(-4vh);opacity:1}100%{transform:scale(.32) translateY(-42vh);opacity:0}}
+  .cheer .ch-inner{color:var(--orange-d);line-height:1.4;font-size:42px;text-shadow:0 4px 18px rgba(249,115,22,.25);animation:cheerPop 3.15s ease forwards;}
+  .cheer .ch-inner small{display:block;font-family:'Noto Sans KR',sans-serif;color:var(--ink);font-size:19px;margin-top:14px;font-weight:700;}
+  @keyframes cheerPop{0%{transform:scale(.5);opacity:0}10%{transform:scale(1.1);opacity:1}24%{transform:scale(1);opacity:1}84%{transform:scale(.94) translateY(-3vh);opacity:1}100%{transform:scale(.32) translateY(-42vh);opacity:0}}
 
   /* 홈 카드 */
   .home-head{background:var(--soft);border:1px solid var(--line);border-bottom:2px dashed #fcd3a3;border-radius:18px 18px 0 0;padding:20px 20px 16px;}
@@ -219,10 +219,10 @@
   .modal .m-desc{font-size:13.5px;color:var(--ink2);margin-bottom:6px;}
   .modal-body{max-height:64vh;overflow-y:auto;margin:0 -2px;padding:0 2px;}
 
-  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#3b2a1d;color:#fff;padding:12px 20px;border:1px solid #5a4staff;border-radius:12px;font-size:14px;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.3);opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#3b2a1d;color:#fff;padding:12px 20px;border:1px solid #5a4636;border-radius:12px;font-size:14px;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.3);opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
 
-  @media(max-width:520px){ #intro h1{font-size:27px;} .login-box{padding:36px 24px;} .nav-btn{font-size:11.5px;} .cheer .ch-inner{font-size:26px;} }
+  @media(max-width:520px){ #intro h1{font-size:27px;} .login-box{padding:36px 24px;} .nav-btn{font-size:11.5px;} .cheer .ch-inner{font-size:32px;} .cheer .ch-inner small{font-size:16px;} }
 </style>
 </head>
 <body>
@@ -347,11 +347,24 @@
 
   function givenName(name){ return name.length>=2 ? name.slice(1) : name; }
   function josa(n){ if(!n) return '야'; const c=n.charCodeAt(n.length-1); if(c<0xAC00||c>0xD7A3) return '야'; return ((c-0xAC00)%28)?'아':'야'; }
+  function cheerPool(g,j){ return [
+    {big:`${g}${j} 할 수 있어!!!!<br>아잣아잣 파이팅`, sub:'DOCSSAM이 응원한다 🔥'},
+    {big:`${g}${j} 오늘도 한 걸음씩!<br>천천히, 그러나 확실하게`, sub:'DOCSSAM이 함께 간다 💪'},
+    {big:`${g}${j}, 어제보다 오늘 더!<br>넌 분명 해낼 거야`, sub:'황소까지 같이 달리자 🐂'},
+    {big:`${g}${j} 집중 모드 ON 🔥<br>딱 한 문제만 더!`, sub:'DOCSSAM이 믿는다 ✨'},
+    {big:`${g}${j} 멋지다!<br>실수해도 괜찮아, 다시 가보자`, sub:'포기만 안 하면 된다 💛'},
+    {big:`${g}${j} 오늘의 주인공!<br>한 칸씩 정복하자`, sub:'DOCSSAM이 응원한다 🔥'},
+    {big:`${g}${j}, 꾸준함이 재능을 이긴다<br>오늘도 출석 완료!`, sub:'잘하고 있어 👍'},
+    {big:`${g}${j} 파이팅!<br>네 속도로 가면 돼`, sub:'DOCSSAM이 지켜본다 🙌'}
+  ]; }
   function showCheer(given){
     const el=document.getElementById('cheer'), t=document.getElementById('cheer-text');
-    t.innerHTML=`${given}${josa(given)} 할 수 있어!!!!<br>아잣아잣 파이팅<small>DOCSSAM이 응원한다 🔥</small>`;
+    const pool=cheerPool(given, josa(given));
+    const day=Math.floor((Date.now()+9*3600000)/86400000);
+    const c=pool[day%pool.length];
+    t.innerHTML=`${c.big}<small>${c.sub}</small>`;
     el.classList.remove('hidden');
-    setTimeout(()=>el.classList.add('hidden'),2100);
+    setTimeout(()=>el.classList.add('hidden'),3150);
   }
 
   function doLogin(){
