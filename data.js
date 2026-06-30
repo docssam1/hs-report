@@ -9,7 +9,9 @@ window.GFIELD_DATA = {
     "year": "2026 하반기",
     "currentWeekId": "jul-w2",
     "examDate": "2026-11-01",
-    "examLabel": "생각하는 황소 입학시험"
+    "examLabel": "생각하는 황소 입학시험",
+    "lat": 37.4996,
+    "lng": 127.0584
   },
   "nodes": [
     { "id": "may-w34", "type": "week", "track": "concept", "date": "5월 3·4주차", "title": "GIFTED MATH 3 V1-1", "desc": "HS 개념 다지기", "focus": "기초 개념 확립 주간" },
@@ -89,6 +91,12 @@ window.GFIELD_DATA = {
     "사고력 교재 보충": ["*"]
   },
   "books": [],
+  "vip": {
+    "sessions": [],
+    "courses": [],
+    "clinic": { "notice": "결석·보강·클리닉 신청은 아래 버튼으로 접수해주세요.", "url": "" },
+    "magazine": []
+  },
   "info": [
     {
       "title": "생각하는 황소 초등 선발, 무엇을 보나",
