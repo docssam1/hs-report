@@ -33,34 +33,21 @@
   #unmuteHint{position:absolute;top:22px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.45);color:#fff;
     border:1px solid rgba(249,115,22,.6);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;}
 
-  /* 인트로 */
-  #intro{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:center;align-items:center;
-    text-align:center;padding:24px;background:radial-gradient(1000px 600px at 50% 6%,#ffe7c7,transparent 60%),var(--bg);}
-  #intro .logo{width:112px;height:auto;border-radius:20px;object-fit:contain;margin-bottom:24px;filter:drop-shadow(0 10px 22px rgba(249,115,22,.28));animation:logoPulse 2.6s ease-in-out infinite;}
-  @keyframes logoPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-  #intro .eyebrow{letter-spacing:.3em;font-size:12px;color:var(--orange-d);font-weight:700;margin-bottom:14px;}
-  #intro h1{font-size:32px;line-height:1.4;margin-bottom:14px;color:var(--ink);}
-  #intro h1 em{font-style:normal;color:var(--orange-d);}
-  #intro p{color:var(--ink2);font-size:14px;max-width:440px;line-height:1.8;margin-bottom:28px;}
-  #intro .enter{padding:15px 46px;border:none;border-radius:999px;background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 24px rgba(249,115,22,.35);transition:.2s;}
-  #intro .enter:hover{transform:translateY(-2px);}
-  #intro .scroll-hint{margin-top:32px;font-size:12px;color:var(--dim);}
-
   /* 로그인 */
   #login{position:fixed;inset:0;z-index:40;display:flex;justify-content:center;align-items:center;padding:20px;
     background:radial-gradient(900px 500px at 50% 0%,#ffe7c7,transparent 60%),var(--bg);}
   .login-box{background:var(--card);padding:42px 32px;border-radius:24px;width:100%;max-width:380px;text-align:center;border:1px solid var(--line);box-shadow:0 22px 60px rgba(186,110,40,.16);}
-  .login-box .crest{width:66px;height:auto;border-radius:16px;margin-bottom:14px;filter:drop-shadow(0 8px 16px rgba(249,115,22,.25));}
+  .login-box .crest{width:78px;height:auto;border-radius:18px;margin-bottom:14px;filter:drop-shadow(0 8px 16px rgba(249,115,22,.25));animation:logoPulse 2.6s ease-in-out infinite;}
+  @keyframes logoPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
   .login-box .mini{font-size:11px;letter-spacing:.26em;color:var(--orange-d);font-weight:700;margin-bottom:10px;}
-  .login-box h2{font-size:24px;margin-bottom:6px;color:var(--ink);}
-  .login-box .sub{font-size:13px;color:var(--ink2);margin-bottom:24px;}
+  .login-box h2{font-size:24px;margin-bottom:8px;color:var(--ink);}
+  .login-box .sub{font-size:13px;color:var(--ink2);margin-bottom:24px;line-height:1.6;}
   .login-box input{width:100%;padding:15px;border:1.5px solid var(--line2);border-radius:14px;font-size:16px;text-align:center;margin-bottom:14px;outline:none;background:var(--soft);color:var(--ink);}
   .login-box input::placeholder{color:var(--dim);}
   .login-box input:focus{border-color:var(--orange);background:#fff;}
   .login-box .enter{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 22px rgba(249,115,22,.28);}
   .login-box .enter:active{transform:scale(.97);}
   .login-box .hint{margin-top:18px;font-size:12px;color:var(--dim);line-height:1.6;}
-  .login-box .back{margin-top:14px;background:none;border:none;color:var(--dim);font-size:13px;text-decoration:underline;}
 
   /* 대시보드 */
   #dashboard{position:relative;z-index:10;max-width:760px;margin:0 auto;padding:18px 18px 80px;}
@@ -85,6 +72,18 @@
   .progresswrap{margin-top:10px;height:9px;background:#fde9d6;border-radius:99px;overflow:hidden;}
   .progressbar{height:100%;background:linear-gradient(90deg,#fdba74,var(--orange-d));border-radius:99px;width:0;transition:width 1s ease;}
   .progress-label{font-size:11px;color:var(--dim);margin-top:6px;}
+
+  /* 오늘의 브리핑 */
+  .brief-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:12px 0 14px;box-shadow:0 4px 14px rgba(186,110,40,.08);}
+  .brief-mood{font-size:13.5px;line-height:1.7;color:var(--ink2);}
+  .brief-mood b{color:var(--orange-d);font-size:14px;}
+  .brief-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+  .brief-box{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px 12px;}
+  .bb-h{font-size:12px;font-weight:800;color:var(--orange-d);margin-bottom:6px;}
+  .bb-main{font-size:14px;font-weight:700;color:var(--ink);}
+  .bb-sub{font-size:12px;color:var(--ink2);margin-top:4px;line-height:1.5;}
+  .bt-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:5px;}
+  .bt-chip{font-size:11.5px;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--ink);}
 
   /* 로그인 응원 */
   .cheer{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
@@ -143,7 +142,6 @@
   .node.final{border-left-color:var(--final);}
   .node.current{border-color:var(--orange);box-shadow:0 0 0 2px rgba(249,115,22,.35),0 10px 24px rgba(249,115,22,.2);}
   .icon-status{position:absolute;left:-46px;top:16px;width:32px;height:32px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:2px solid #fcd3a3;box-shadow:0 2px 6px rgba(186,110,40,.15);}
-  /* 달리는 캐릭터 */
   .marker{position:absolute;left:-46px;top:-34px;width:42px;height:48px;z-index:6;}
   .marker svg{width:100%;height:100%;overflow:visible;}
   .runner-bob{animation:runbob .4s ease-in-out infinite;transform-origin:50% 100%;}
@@ -164,7 +162,7 @@
   .node.goal h3{color:var(--orange-d);font-size:19px;}
   .node.goal .desc{color:var(--ink2);}
 
-  /* 자료실 / 게시판 */
+  /* 자료실 / 공통 카드 */
   .arc-intro{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;font-size:13.5px;color:var(--ink2);line-height:1.6;margin-bottom:14px;}
   .arc-intro b{color:var(--orange-d);}
   .folder{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:14px;overflow:hidden;box-shadow:0 4px 14px rgba(186,110,40,.08);}
@@ -175,7 +173,7 @@
   .post-video{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;margin:4px 0 12px;}
   .post-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 
-  /* 자료실 서재(책장) */
+  /* 서재(책장) */
   .shelf-sec{margin-bottom:24px;}
   .shelf-h{font-size:15px;color:var(--orange-d);margin:6px 2px 14px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--line);padding-bottom:8px;}
   .shelf-h .c{margin-left:auto;font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--dim);font-weight:600;}
@@ -184,14 +182,14 @@
   .book .cover{position:relative;width:86%;aspect-ratio:1240/1755;transform-style:preserve-3d;transform:rotateY(-26deg);transition:transform .45s cubic-bezier(.22,1,.36,1);border-radius:3px 6px 6px 3px;box-shadow:12px 16px 28px rgba(120,70,20,.3);}
   .book .cover img{width:100%;height:100%;object-fit:cover;display:block;border-radius:3px 6px 6px 3px;border:1px solid #f0d8bd;border-left:none;position:relative;z-index:2;backface-visibility:hidden;background:#f3ead9;}
   .book .cover::before{content:"";position:absolute;left:0;top:0;height:100%;width:20px;transform:translateX(-100%) rotateY(-90deg);transform-origin:right center;background:linear-gradient(90deg,#7a3e10,#b5651f 55%,#d98a3a);border-radius:3px 0 0 3px;z-index:1;}
-  .book .cover::after{content:"";position:absolute;right:0;top:1%;height:98%;width:9px;transform:translateX(100%) rotateY(90deg);transform-origin:left center;background:repeating-linear-gradient(0deg,#f5ecd9 0,#f5ecd9 1.5px,#dcc9a4 3px);z-index:1;}
+  .book .cover::after{content:"";position:absolute;right:0;top:1%;height:98%;width:9px;transform:translateX(100%) rotateY(90deg);transform-origin:left center;background:repeating-linear-gradient(0deg,#f5ecd9 0,#f5ecd9 1.5px,#dcc9a4 3px);z:1;z-index:1;}
   .book:hover .cover{transform:rotateY(-10deg) translateY(-6px);}
   .book .label{font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.3;text-align:center;}
   .book .pages{font-size:11px;color:var(--orange-d);font-weight:600;}
   .book .cover.noimg{background:linear-gradient(135deg,#fdba74,#fb923c);display:flex;align-items:center;justify-content:center;border:1px solid #f5b06a;}
   .book .cover.noimg .cv-title{color:#7a2e06;font-weight:800;font-size:12px;line-height:1.35;padding:10px 8px;text-align:center;}
 
-  /* 책 뷰어 (PDF + 영상) */
+  /* 책 뷰어 */
   #bookviewer{position:fixed;inset:0;z-index:75;display:none;flex-direction:column;background:#eef1f4;}
   #bookviewer.open{display:flex;}
   .bv-top{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--line);}
@@ -210,6 +208,57 @@
   .bv-wm span{color:#111;font-size:17px;font-weight:800;white-space:nowrap;}
   @media(max-width:760px){ .bv-stage.split{flex-direction:column;} .bv-vid{height:36vh;flex:none;} }
 
+  /* VIP 라운지 */
+  .vip-sec{margin-bottom:24px;}
+  .vip-h{font-size:16px;color:var(--orange-d);margin:6px 2px 12px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--line);padding-bottom:8px;}
+  .carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;-webkit-overflow-scrolling:touch;}
+  .carousel::-webkit-scrollbar{height:6px;}
+  .carousel::-webkit-scrollbar-thumb{background:#f0d6b8;border-radius:99px;}
+  .vid-card{flex:0 0 220px;scroll-snap-align:start;border:none;background:none;padding:0;cursor:pointer;text-align:left;}
+  .vid-thumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#1b1b1b;border:1px solid var(--line);}
+  .vid-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .vid-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6);}
+  .vc-t{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-top:7px;line-height:1.35;}
+  .sess-list{margin-top:10px;border-top:1px dashed var(--line);}
+  .sess-row{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;background:none;border:none;border-bottom:1px solid var(--line);padding:11px 4px;cursor:pointer;text-align:left;}
+  .sess-row .sr-t{font-size:13.5px;font-weight:600;color:var(--ink);}
+  .sess-row .sr-d{font-size:12px;color:var(--dim);white-space:nowrap;}
+  .clinic-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;}
+  .clinic-card p{font-size:13.5px;color:var(--ink2);line-height:1.6;margin-bottom:12px;}
+  .clinic-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;font-weight:800;font-size:14px;padding:11px 22px;border-radius:12px;border:none;text-decoration:none;}
+  .col-banner{display:flex;align-items:center;gap:13px;background:linear-gradient(135deg,#3b2a1d,#7a4a28);color:#fff;border-radius:16px;padding:16px 18px;margin-bottom:12px;}
+  .col-banner .cb-ic{font-size:28px;flex:none;}
+  .col-banner b{font-size:16px;}
+  .col-banner span{display:block;font-size:12px;color:#f3d9bf;margin-top:2px;}
+  .mag-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+  .mag-card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;padding:0;box-shadow:0 4px 12px rgba(186,110,40,.07);}
+  .mag-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#fde7d3;}
+  .mag-b{padding:10px 12px;}
+  .mag-chip{display:inline-block;font-size:11px;font-weight:800;color:var(--orange-d);background:#ffedd5;border-radius:999px;padding:2px 9px;margin-bottom:6px;}
+  .mag-t{font-size:14px;font-weight:700;color:var(--ink);line-height:1.35;}
+  .mag-d{font-size:12px;color:var(--ink2);margin-top:5px;line-height:1.5;}
+  .col-card{display:flex;gap:12px;align-items:flex-start;width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;cursor:pointer;text-align:left;}
+  .col-card .cc-t{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.35;}
+  .col-card .cc-d{font-size:12px;color:var(--dim);margin-top:4px;}
+
+  /* 영상 라이트박스 */
+  .vlight{position:fixed;inset:0;z-index:78;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:18px;}
+  .vlight.open{display:flex;}
+  .vl-box{width:100%;max-width:880px;position:relative;}
+  .vl-x{position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:24px;}
+  .vl-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;}
+  .vl-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+
+  /* 칼럼 리더 */
+  #reader{position:fixed;inset:0;z-index:76;background:var(--bg);display:none;flex-direction:column;}
+  #reader.open{display:flex;}
+  .rd-top{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--line);}
+  .rd-back{background:var(--soft);border:1px solid #fcd3a3;color:var(--orange-d);font-weight:700;font-size:14px;padding:9px 14px;border-radius:12px;}
+  .rd-name{font-weight:800;color:var(--ink);font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .rd-body{flex:1;overflow-y:auto;padding:20px 18px 60px;max-width:820px;margin:0 auto;width:100%;line-height:1.85;color:#3a2c20;font-size:15px;}
+  .rd-body img{max-width:100%;height:auto;border-radius:10px;}
+  .rd-body h1,.rd-body h2,.rd-body h3{color:var(--ink);line-height:1.35;margin:18px 0 8px;}
+
   /* 모달 */
   .overlay{position:fixed;inset:0;z-index:60;background:rgba(60,40,20,.45);display:flex;justify-content:center;align-items:center;padding:18px;}
   .modal{background:var(--card);border:1px solid var(--line);border-radius:20px;width:100%;max-width:480px;padding:24px 22px 22px;position:relative;box-shadow:0 30px 70px rgba(60,40,20,.3);}
@@ -222,7 +271,7 @@
   .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#3b2a1d;color:#fff;padding:12px 20px;border:1px solid #5a4636;border-radius:12px;font-size:14px;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.3);opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
 
-  @media(max-width:520px){ #intro h1{font-size:27px;} .login-box{padding:36px 24px;} .nav-btn{font-size:11.5px;} .cheer .ch-inner{font-size:32px;} .cheer .ch-inner small{font-size:16px;} }
+  @media(max-width:520px){ .login-box{padding:36px 24px;} .nav-btn{font-size:11.5px;} .cheer .ch-inner{font-size:32px;} .cheer .ch-inner small{font-size:16px;} .brief-grid{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
@@ -237,27 +286,16 @@
   <button id="skipBtn" onclick="skipIntro()">SKIP →</button>
 </section>
 
-<!-- 인트로 -->
-<section id="intro">
-  <img class="logo" src="https://raw.githubusercontent.com/docssam1/gfield-archive/main/logo.png" alt="GFIELD" onerror="this.onerror=null;this.src='logo.png'">
-  <div class="eyebrow">GFIELD GIFTED EDUCATION</div>
-  <h1 class="disp">생각하는 황소 대비 <em>아카이브</em></h1>
-  <p>11월 생각하는 황소 초등 선발 합격을 위한<br>지필드 재원생 전용 자료실</p>
-  <button class="enter" onclick="goLogin()">입장하기 →</button>
-  <div class="scroll-hint">학생 이름으로 접속합니다</div>
-</section>
-
 <!-- 로그인 -->
-<section id="login" class="hidden">
+<section id="login">
   <div class="login-box">
     <img class="crest" src="https://raw.githubusercontent.com/docssam1/gfield-archive/main/logo.png" alt="GFIELD" onerror="this.onerror=null;this.src='logo.png'">
     <div class="mini">GFIELD GIFTED EDUCATION</div>
     <h2 class="disp" id="login-title">생각하는 황소 대비 아카이브</h2>
-    <div class="sub">학생 이름을 입력하고 입장하세요</div>
+    <div class="sub">11월 생각하는 황소 초등 선발 대비 · 재원생 전용<br>학생 이름으로 입장하세요</div>
     <input type="text" id="name-input" placeholder="이름" autocomplete="off" onkeypress="if(event.key==='Enter')doLogin()">
     <button class="enter" onclick="doLogin()">입장하기</button>
     <div class="hint">출석이 확인된 주차의 영상과 자료만 열립니다.<br>문의는 담당 선생님께 해주세요.</div>
-    <button class="back" onclick="backToIntro()">← 처음으로</button>
   </div>
 </section>
 
@@ -271,9 +309,9 @@
   <div class="stickyhead">
     <nav class="nav">
       <button class="nav-btn active" data-v="home" onclick="nav('home')">📍 이번 주</button>
-      <button class="nav-btn" data-v="roadmap" onclick="nav('roadmap')">🗺 전체 로드맵</button>
+      <button class="nav-btn" data-v="roadmap" onclick="nav('roadmap')">🗺 로드맵</button>
       <button class="nav-btn" data-v="archive" onclick="nav('archive')">🗂 자료실</button>
-      <button class="nav-btn" data-v="info" onclick="nav('info')">📰 황소 정보</button>
+      <button class="nav-btn" data-v="vip" onclick="nav('vip')">👑 VIP</button>
     </nav>
     <div class="statusbar">
       <div class="sb-top"><span class="sb-name"><b id="who"></b> 학생, 오늘도 파이팅! 🔥</span><span class="dday" id="dday"></span></div>
@@ -283,7 +321,10 @@
     </div>
   </div>
 
-  <section id="view-home"><div id="home-card"></div></section>
+  <section id="view-home">
+    <div id="briefing"></div>
+    <div id="home-card"></div>
+  </section>
 
   <section id="view-roadmap" class="hidden">
     <div class="legend">
@@ -302,9 +343,9 @@
     <div id="archive-list"></div>
   </section>
 
-  <section id="view-info" class="hidden">
-    <div class="arc-intro">📰 <b>생각하는 황소 정보</b> — 선발 안내·칼럼과 영상 자료를 모았습니다.</div>
-    <div id="info-list"></div>
+  <section id="view-vip" class="hidden">
+    <div class="arc-intro">👑 <b>지필드 VIP 라운지</b> — 설명회·강좌 소식·클리닉 신청·교육 매거진·원장님 칼럼을 한곳에 모았습니다.</div>
+    <div id="vip-list"></div>
   </section>
 </main>
 
@@ -322,7 +363,12 @@
 <div class="toast" id="toast"></div>
 <div class="cheer hidden" id="cheer"><div class="ch-inner disp" id="cheer-text"></div></div>
 
-<!-- 책 뷰어 (서재) -->
+<!-- 영상 라이트박스 -->
+<div class="vlight" id="vlight" onclick="if(event.target.id==='vlight')closeVid()">
+  <div class="vl-box"><button class="vl-x" onclick="closeVid()">✕</button><div class="vl-frame"><iframe id="vl-if" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></div>
+</div>
+
+<!-- 책 뷰어 -->
 <div id="bookviewer">
   <div class="bv-top">
     <button class="bv-back" onclick="closeBook()">‹ 서재</button>
@@ -332,18 +378,22 @@
   <div class="bv-stage" id="bv-stage"></div>
 </div>
 
+<!-- 칼럼 리더 -->
+<div id="reader">
+  <div class="rd-top"><button class="rd-back" onclick="closeReader()">‹ 닫기</button><div class="rd-name" id="rd-name"></div></div>
+  <div class="rd-body" id="rd-body"></div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="data.js"></script>
 <script>
   const D = window.GFIELD_DATA;
   let currentStudent = null;
   let isDemo = false;
+  let carTimer = null;
   const RUNNER='<svg viewBox="0 0 40 50" class="runner-bob" aria-hidden="true"><rect class="limb legB" x="18.5" y="30" width="3" height="15" rx="1.5" fill="#c2410c"/><rect class="limb armB" x="18.5" y="16" width="3" height="12" rx="1.5" fill="#c2410c"/><rect x="18.5" y="13" width="3" height="18" rx="1.5" fill="#f97316"/><rect class="limb legF" x="18.5" y="30" width="3" height="15" rx="1.5" fill="#f97316"/><rect class="limb armF" x="18.5" y="16" width="3" height="12" rx="1.5" fill="#f97316"/><circle cx="20" cy="8" r="5" fill="#fb923c"/></svg>';
 
   (function(){const c=document.getElementById('particles');if(!c)return;for(let i=0;i<22;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(6+Math.random()*8)+'s';p.style.animationDelay=Math.random()*10+'s';p.style.width=p.style.height=(1+Math.random()*3)+'px';c.appendChild(p);}})();
-
-  function goLogin(){ document.getElementById('intro').classList.add('hidden'); document.getElementById('login').classList.remove('hidden'); setTimeout(()=>document.getElementById('name-input').focus(),100); }
-  function backToIntro(){ document.getElementById('login').classList.add('hidden'); document.getElementById('intro').classList.remove('hidden'); }
 
   function givenName(name){ return name.length>=2 ? name.slice(1) : name; }
   function josa(n){ if(!n) return '야'; const c=n.charCodeAt(n.length-1); if(c<0xAC00||c>0xD7A3) return '야'; return ((c-0xAC00)%28)?'아':'야'; }
@@ -378,7 +428,7 @@
     document.getElementById('login').classList.add('hidden');
     document.getElementById('dashboard').classList.remove('hidden');
     document.getElementById('who').textContent=given;
-    renderStatus(); renderHome(); renderTimeline(); renderArchive(); renderInfo();
+    renderStatus(); renderBriefing(); renderHome(); renderTimeline(); renderArchive(); renderVip();
     nav('home'); window.scrollTo(0,0);
     if(!isDemo) showCheer(given);
   }
@@ -386,12 +436,12 @@
     currentStudent=null; isDemo=false;
     try{ localStorage.removeItem('gfield_student'); }catch(e){}
     document.getElementById('dashboard').classList.add('hidden');
-    document.getElementById('intro').classList.remove('hidden');
+    document.getElementById('login').classList.remove('hidden');
     document.getElementById('name-input').value='';
   }
 
   function nav(view){
-    ['home','roadmap','archive','info'].forEach(v=>{ document.getElementById('view-'+v).classList.toggle('hidden', v!==view); });
+    ['home','roadmap','archive','vip'].forEach(v=>{ document.getElementById('view-'+v).classList.toggle('hidden', v!==view); });
     document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.v===view));
     const hf=document.getElementById('home-iframe'); if(hf) hf.src='';
     const hv=document.getElementById('home-videoframe'); if(hv) hv.style.display='none';
@@ -427,12 +477,80 @@
     }
   }
 
+  /* ----- 오늘의 브리핑 ----- */
+  function studentMood(given){
+    const now=new Date(); const h=now.getHours(); const wknd=(now.getDay()===0||now.getDay()===6);
+    const j=josa(given);
+    const time = h<6 ? '늦은 시간이야. 무리하지 말고 푹 자고 내일 다시 달리자.'
+      : h<12 ? '오전 집중 구간이야. 사고력 문제는 속도보다 정확도 먼저!'
+      : h<18 ? '오후 전환 구간이야. 개념 한 번 정리하고 실전 문제로 가보자.'
+      : '저녁 몰입 구간이야. 오늘 오답 2문항만 깊게 정리해도 충분해.';
+    const mode = wknd ? '주말엔 학원 과제 + 스스로 한 세트만 완주하면 다음 주가 편해져.'
+      : '평일엔 짧고 굵게! 끝나고 30분만 집중해도 차곡차곡 쌓인다.';
+    return `${given}${j}, 오늘도 지필드-ON 접속 완료! ${time} ${mode}`;
+  }
+  function trafficNow(){
+    const now=new Date(); const h=now.getHours(); const mins=h*60+now.getMinutes();
+    const inR=(a,b)=>mins>=a&&mins<=b;
+    let center='🟢 원활', em='🟢 원활', note='두 방향 모두 비교적 원활합니다.';
+    if(h<8||h>=22){ center='🌙 야간'; em='🌙 야간'; note='야간 시간대입니다. 안전하게 이동하세요.'; }
+    else if(inR(13*60,15*60+30)){ center='🟡 서행'; em='🔴 정체'; note='EM프라자 쪽 혼잡. 주민센터 방향을 먼저 확인하세요.'; }
+    else if(inR(17*60+30,19*60+30)){ center='🔴 정체'; em='🟡 서행'; note='피크 시간대입니다. 출발을 조금 앞당겨 주세요.'; }
+    else if(inR(21*60+30,22*60+30)){ center='🔴 정체'; em='🔴 정체'; note='하원 피크. 짧은 승하차를 권장합니다.'; }
+    return {center,em,note};
+  }
+  function wcodeIcon(c){
+    c=Number(c);
+    if([0,1].includes(c)) return '☀️';
+    if([2,3,45,48].includes(c)) return '☁️';
+    if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(c)) return '🌧️';
+    if([71,73,75,77,85,86].includes(c)) return '❄️';
+    if([95,96,99].includes(c)) return '⛈️';
+    return '🌤️';
+  }
+  async function loadWeather(){
+    const lat=(D.meta&&D.meta.lat)||37.4996, lng=(D.meta&&D.meta.lng)||127.0584;
+    try{
+      const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&timezone=Asia%2FSeoul&forecast_days=2`;
+      const r=await fetch(url); if(!r.ok) throw 0; return await r.json();
+    }catch(e){ return null; }
+  }
+  async function renderBriefing(){
+    const el=document.getElementById('briefing'); if(!el) return;
+    if(isDemo){ el.innerHTML=''; return; }
+    const given=givenName(currentStudent); const tr=trafficNow();
+    el.innerHTML=`<div class="brief-card">
+      <div class="brief-mood"><b>📣 오늘의 브리핑</b><br>${escHtml(studentMood(given))}</div>
+      <div class="brief-grid">
+        <div class="brief-box"><div class="bb-h">🌤 날씨</div><div class="bb-main" id="wx-main">불러오는 중…</div><div class="bb-sub" id="wx-sub"></div></div>
+        <div class="brief-box"><div class="bb-h">🚦 교통</div><div class="bt-row"><span class="bt-chip">주민센터 ${tr.center}</span><span class="bt-chip">EM프라자 ${tr.em}</span></div><div class="bb-sub">${escHtml(tr.note)}</div></div>
+      </div>
+    </div>`;
+    const w=await loadWeather();
+    const wm=document.getElementById('wx-main'), ws=document.getElementById('wx-sub');
+    if(!wm) return;
+    if(w&&w.current){
+      const cur=w.current, dly=w.daily||{};
+      const lo=Math.round((dly.temperature_2m_min||[])[0]), hi=Math.round((dly.temperature_2m_max||[])[0]);
+      const pop=(dly.precipitation_probability_max||[])[0];
+      const lo2=Math.round((dly.temperature_2m_min||[])[1]), hi2=Math.round((dly.temperature_2m_max||[])[1]);
+      wm.textContent=`${wcodeIcon(cur.weather_code)} 지금 ${Math.round(cur.temperature_2m)}°`;
+      ws.innerHTML=`오늘 ${lo}~${hi}°${pop!=null?` · 강수 ${pop}%`:''}<br>내일 ${lo2}~${hi2}°`;
+    } else { wm.textContent='날씨를 불러오지 못했어요'; ws.textContent=''; }
+  }
+
   function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function escAttr(s){ return escHtml(s).replace(/"/g,'&quot;'); }
-  function ytId(url){ const m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/); return m?m[1]:null; }
+  function ytId(url){ const m=String(url||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/); return m?m[1]:null; }
+  function ytSingle(url){ return !!ytId(url) && !/[?&]list=/.test(url); }
+  function ytThumb(url){ const id=ytId(url); return id?`https://i.ytimg.com/vi/${id}/hqdefault.jpg`:''; }
+  function vidEmbed(url){ const id=ytId(url); if(id) return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`; const vm=String(url||'').match(/vimeo\.com\/(\d+)/); if(vm) return `https://player.vimeo.com/video/${vm[1]}?autoplay=1`; return ''; }
+  function infoEmbed(url){ const id=ytId(url); if(id) return `https://www.youtube.com/embed/${id}?rel=0`; const vm=String(url||'').match(/vimeo\.com\/(\d+)/); if(vm) return `https://player.vimeo.com/video/${vm[1]}`; return url; }
+
   function inlineFmt(str){
     let s=escHtml(str);
     s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
+    s=s.replace(/\[강조\]([\s\S]*?)\[\/강조\]/g,'<b>$1</b>');
     s=s.replace(/(https?:\/\/[^\s<]+)/g,(url)=>{
       const yt=ytId(url);
       if(yt) return `<button class="lnk yt" data-embed="https://www.youtube.com/embed/${yt}?autoplay=1&rel=0">▶ 영상 재생</button>`;
@@ -525,7 +643,6 @@
   document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
 
   function canSeeFolder(folder){ const acc=(D.archiveAccess||{})[folder]; if(!acc) return true; return acc.includes('*')||acc.includes(currentStudent); }
-  function ytSingle(url){ return !!ytId(url) && !/[?&]list=/.test(url); }
 
   function renderArchive(){
     const wrap=document.getElementById('archive-list'); wrap.innerHTML='';
@@ -556,7 +673,6 @@
     wrap.querySelectorAll('.book[data-bi]').forEach(btn=>btn.onclick=()=>openBook((D.books||[])[+btn.dataset.bi]));
   }
 
-  /* ----- 책 뷰어(PDF + 영상) ----- */
   function wmTiles(){ let s=''; const t=escHtml((currentStudent||'')+' · 지필드'); for(let i=0;i<60;i++) s+=`<span>${t}</span>`; return s; }
   function openBook(b){
     if(!b) return;
@@ -581,26 +697,119 @@
     document.getElementById('bookviewer').classList.add('open');
   }
   function closeBook(){ const v=document.getElementById('bookviewer'); v.classList.remove('open'); document.getElementById('bv-stage').innerHTML=''; document.getElementById('bv-actions').innerHTML=''; }
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElementById('bookviewer').classList.contains('open')) closeBook(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(document.getElementById('bookviewer').classList.contains('open')) closeBook(); if(document.getElementById('reader').classList.contains('open')) closeReader(); if(document.getElementById('vlight').classList.contains('open')) closeVid(); } });
 
-  function infoEmbed(url){ const yt=ytId(url); if(yt) return `https://www.youtube.com/embed/${yt}?rel=0`; const vm=url.match(/vimeo\.com\/(\d+)/); if(vm) return `https://player.vimeo.com/video/${vm[1]}`; return url; }
-  function renderInfo(){
-    const wrap=document.getElementById('info-list'); wrap.innerHTML='';
-    if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 황소 정보가 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
-    const posts=(D.info||[]).filter(p=>p&&(p.title||p.body||p.video));
-    if(!posts.length){ wrap.innerHTML='<div class="empty-note">등록된 글이 없습니다.</div>'; return; }
-    posts.forEach(p=>{
-      let h=`<div class="folder"><div class="folder-h disp"><span class="folder-ic">📰</span> ${escHtml(p.title||'제목 없음')}${p.date?`<span class="folder-c">${escHtml(p.date)}</span>`:''}</div><div class="folder-b">`;
-      if(p.video) h+=`<div class="post-video"><iframe src="${escAttr(infoEmbed(p.video))}" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
-      if(p.body&&p.body.trim()) h+=`<div class="notice" style="padding:8px 2px">${linkify(p.body)}</div>`;
-      h+='</div></div>';
-      wrap.insertAdjacentHTML('beforeend',h);
-    });
-    wrap.querySelectorAll('.lnk.yt[data-embed]').forEach(b=>b.onclick=()=>window.open(b.dataset.embed,'_blank'));
+  /* ----- VIP 라운지 ----- */
+  function sessThumb(s){ return s.thumb || ytThumb(s.url) || ''; }
+  function playVid(url){ const e=vidEmbed(url); if(!e){ window.open(url,'_blank','noopener'); return; } document.getElementById('vl-if').src=e; document.getElementById('vlight').classList.add('open'); }
+  function closeVid(){ document.getElementById('vl-if').src=''; document.getElementById('vlight').classList.remove('open'); }
+
+  function renderVip(){
+    const wrap=document.getElementById('vip-list'); if(!wrap) return;
+    if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 VIP 라운지가 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
+    const V=D.vip||{}; let h='';
+
+    // 프리미엄 설명회
+    const ses=(V.sessions||[]).filter(s=>s&&s.url);
+    h+=`<div class="vip-sec"><div class="vip-h disp">🎬 프리미엄 설명회</div>`;
+    if(ses.length){
+      h+='<div class="carousel" id="sessCar">';
+      ses.forEach((s,i)=>{ const th=sessThumb(s); h+=`<button class="vid-card" data-ses="${i}"><span class="vid-thumb">${th?`<img loading="lazy" src="${escAttr(th)}" onerror="this.style.display='none'">`:''}<span class="vid-play">▶</span></span><span class="vc-t">${escHtml(s.title||'설명회 영상')}</span></button>`; });
+      h+='</div><div class="sess-list">';
+      ses.forEach((s,i)=>{ h+=`<button class="sess-row" data-ses="${i}"><span class="sr-t">${escHtml(s.title||'설명회 영상')}</span><span class="sr-d">${escHtml(s.date||'')} ›</span></button>`; });
+      h+='</div>';
+    } else h+='<div class="empty-note" style="text-align:left">등록된 설명회 영상이 없습니다.</div>';
+    h+='</div>';
+
+    // 신규 강좌 공지
+    const courses=(V.courses||[]).filter(c=>c&&(c.title||c.body));
+    h+=`<div class="vip-sec"><div class="vip-h disp">📣 신규 강좌 공지</div>`;
+    if(courses.length){
+      courses.forEach(c=>{
+        h+=`<div class="folder"><div class="folder-h disp"><span class="folder-ic">📣</span> ${escHtml(c.title||'공지')}${c.date?`<span class="folder-c">${escHtml(c.date)}</span>`:''}</div><div class="folder-b">`;
+        if(c.body&&c.body.trim()) h+=`<div class="notice" style="padding:6px 2px">${linkify(c.body)}</div>`;
+        if(c.link) h+=`<a class="tb-btn" href="${escAttr(c.link)}" target="_blank" rel="noopener" style="margin-top:10px"><span class="ico">🔗</span> 자세히 보기 / 신청</a>`;
+        h+='</div></div>';
+      });
+    } else h+='<div class="empty-note" style="text-align:left">등록된 강좌 공지가 없습니다.</div>';
+    h+='</div>';
+
+    // 결석·클리닉 신청
+    const cl=V.clinic||{};
+    h+=`<div class="vip-sec"><div class="vip-h disp">🩺 결석 · 클리닉 신청</div><div class="clinic-card"><p>${escHtml(cl.notice||'결석·보강·클리닉 신청은 아래 버튼으로 접수해주세요.')}</p>${cl.url?`<a class="clinic-btn" href="${escAttr(cl.url)}" target="_blank" rel="noopener">📝 신청하러 가기</a>`:'<span class="empty-note" style="display:inline-block">신청 링크 준비중입니다. 담당 선생님께 문의해주세요.</span>'}</div></div>`;
+
+    // DOCSSAM의 프리미엄 칼럼
+    const cols=(V.columns||[]).filter(c=>c&&c.title);
+    h+=`<div class="vip-sec"><div class="vip-h disp">👑 DOCSSAM의 프리미엄 칼럼</div>`;
+    h+=`<div class="col-banner"><span class="cb-ic">✒️</span><div><b>DOCSSAM의 프리미엄 칼럼</b><span>원장이 직접 쓰는 학습·입시 인사이트</span></div></div>`;
+    if(cols.length){
+      cols.forEach((c,i)=>{ h+=`<button class="col-card" data-col="${i}"><div style="flex:1"><div class="cc-t">${escHtml(c.title)}</div><div class="cc-d">${escHtml([c.category,c.date].filter(Boolean).join(' · '))}</div></div><span style="color:var(--orange-d);font-weight:800">›</span></button>`; });
+    } else h+='<div class="empty-note" style="text-align:left">아직 등록된 칼럼이 없습니다.</div>';
+    h+='</div>';
+
+    // 교육 매거진
+    const mags=(V.magazine||[]).filter(m=>m&&m.title);
+    h+=`<div class="vip-sec"><div class="vip-h disp">📰 교육 매거진</div>`;
+    if(mags.length){
+      h+='<div class="mag-grid">';
+      mags.forEach((m,i)=>{
+        const thumb=m.image?`<img class="mag-thumb" loading="lazy" src="${escAttr(m.image)}" onerror="this.style.display='none'">`:'';
+        const snip=(m.desc||'').replace(/\s+/g,' ').slice(0,60);
+        h+=`<button class="mag-card" data-mag="${i}">${thumb}<div class="mag-b"><span class="mag-chip">${escHtml(m.category||'매거진')}</span><div class="mag-t">${escHtml(m.title)}</div><div class="mag-d">${escHtml(snip)}${snip.length>=60?'…':''}</div></div></button>`;
+      });
+      h+='</div>';
+    } else h+='<div class="empty-note" style="text-align:left">등록된 매거진 글이 없습니다.</div>';
+    h+='</div>';
+
+    wrap.innerHTML=h;
+    wrap.querySelectorAll('.vid-card[data-ses],.sess-row[data-ses]').forEach(b=>b.onclick=()=>{ const s=ses[+b.dataset.ses]; if(s) playVid(s.url); });
+    wrap.querySelectorAll('.mag-card[data-mag]').forEach(b=>b.onclick=()=>openMag(mags[+b.dataset.mag]));
+    wrap.querySelectorAll('.col-card[data-col]').forEach(b=>b.onclick=()=>openCol(cols[+b.dataset.col]));
+    startCarousel();
   }
+  function startCarousel(){
+    const car=document.getElementById('sessCar'); if(!car) return;
+    if(carTimer) clearInterval(carTimer);
+    let paused=false;
+    car.addEventListener('pointerdown',()=>{paused=true;});
+    car.addEventListener('mouseenter',()=>{paused=true;});
+    car.addEventListener('mouseleave',()=>{paused=false;});
+    carTimer=setInterval(()=>{
+      if(paused||!document.body.contains(car)) return;
+      const max=car.scrollWidth-car.clientWidth-4;
+      if(car.scrollLeft>=max) car.scrollTo({left:0,behavior:'smooth'});
+      else car.scrollBy({left:232,behavior:'smooth'});
+    },3500);
+  }
+  function openMag(m){
+    if(!m) return;
+    document.getElementById('m-date').textContent=m.category||'교육 매거진';
+    document.getElementById('m-title').textContent=m.title||'';
+    document.getElementById('m-desc').textContent=[m.source,m.date].filter(Boolean).join(' · ');
+    document.getElementById('videoframe').style.display='none';
+    document.getElementById('videoiframe').src='';
+    let h='';
+    if(m.image) h+=`<img src="${escAttr(m.image)}" style="width:100%;border-radius:12px;margin:4px 0 12px" onerror="this.style.display='none'">`;
+    h+=`<div class="notice">${linkify(m.desc||'')}</div>`;
+    if(m.sourceUrl) h+=`<a class="lnk ext" href="${escAttr(m.sourceUrl)}" target="_blank" rel="noopener" style="margin-top:12px">🔗 출처 보기</a>`;
+    const body=document.getElementById('modal-body');
+    body.innerHTML=h;
+    body.querySelectorAll('.lnk.yt[data-embed]').forEach(b=>b.onclick=()=>window.open(b.dataset.embed,'_blank'));
+    document.getElementById('overlay').classList.remove('hidden');
+    body.scrollTop=0;
+  }
+  function openCol(c){
+    if(!c) return;
+    document.getElementById('rd-name').textContent=c.title||'프리미엄 칼럼';
+    const body=document.getElementById('rd-body');
+    body.innerHTML = (c.html&&c.html.trim()) ? c.html : `<div class="notice">${linkify(c.body||'')}</div>`;
+    document.getElementById('reader').classList.add('open');
+    body.scrollTop=0;
+  }
+  function closeReader(){ document.getElementById('reader').classList.remove('open'); document.getElementById('rd-body').innerHTML=''; }
 
   /* 인트로 영상 제어 */
-  function endIntroVideo(){ const sec=document.getElementById('video-intro'); if(!sec) return; const vid=document.getElementById('introVideo'); try{ vid.pause(); vid.removeAttribute('src'); vid.load(); }catch(e){} sec.remove(); }
+  function endIntroVideo(){ const sec=document.getElementById('video-intro'); if(!sec) return; const vid=document.getElementById('introVideo'); try{ vid.pause(); vid.removeAttribute('src'); vid.load(); }catch(e){} sec.remove(); const ni=document.getElementById('name-input'); if(ni) setTimeout(()=>ni.focus(),100); }
   function skipIntro(){ endIntroVideo(); }
   function unmuteIntro(){ const vid=document.getElementById('introVideo'); if(!vid) return; vid.muted=false; vid.volume=1; const p=vid.play(); if(p&&p.catch) p.catch(()=>{}); const h=document.getElementById('unmuteHint'); if(h) h.remove(); }
   (function wireIntroVideo(){
@@ -610,7 +819,7 @@
     if(p&&p.catch) p.catch(()=>{ vid.muted=true; vid.play().catch(()=>{}); const h=document.getElementById('unmuteHint'); if(h) h.classList.remove('hidden'); });
   })();
 
-  /* PDF 워터마크 다운로드 (주간 교재용) */
+  /* PDF 워터마크 다운로드 */
   async function downloadWatermarked(url, title){
     if(!currentStudent){ toast('로그인이 필요합니다'); return; }
     toast('자료를 준비하고 있어요…');
