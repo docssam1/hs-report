@@ -12,8 +12,11 @@
   button{cursor:pointer;font-family:inherit;}
   .hidden{display:none !important;}
 
-  #gate{position:fixed;inset:0;z-index:30;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#10203f,#26447f);padding:20px;}
-  .gate-box{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);padding:42px 34px;border-radius:18px;width:100%;max-width:360px;text-align:center;color:#fff;}
+  /* 로그인 게이트 */
+  #gate{position:fixed;inset:0;z-index:30;display:flex;justify-content:center;align-items:center;
+    background:linear-gradient(135deg,#10203f,#26447f);padding:20px;}
+  .gate-box{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);
+    padding:42px 34px;border-radius:18px;width:100%;max-width:360px;text-align:center;color:#fff;}
   .gate-box .lock{font-size:40px;margin-bottom:12px;}
   .gate-box h2{font-size:22px;font-weight:800;margin-bottom:4px;}
   .gate-box p{font-size:13px;opacity:.7;margin-bottom:24px;}
@@ -21,11 +24,13 @@
   .gate-box button{width:100%;padding:14px;border:none;border-radius:10px;background:var(--gold);color:#fff;font-size:16px;font-weight:800;}
   .gate-box .err{color:#ffd2d2;font-size:13px;height:18px;margin-top:6px;}
 
+  /* 레이아웃 */
   header{background:var(--navy);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;}
   header .t{font-weight:800;font-size:17px;}
   header .t small{display:block;font-weight:500;opacity:.7;font-size:11px;}
   header .right{display:flex;gap:8px;align-items:center;}
   header button{background:rgba(255,255,255,.15);border:none;color:#fff;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:600;}
+  header button.primary{background:var(--gold);}
   .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 80px;}
 
   .tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
@@ -36,6 +41,7 @@
   .card h3{font-size:15px;margin-bottom:4px;}
   .card .hint{font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6;}
 
+  /* 출석 매트릭스 */
   .matrix-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;}
   table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap;}
   th,td{border:1px solid var(--line);padding:8px 10px;text-align:center;}
@@ -55,6 +61,7 @@
   .chip{display:inline-flex;align-items:center;gap:8px;background:#f2f5fa;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:13.5px;margin:0 6px 8px 0;}
   .chip button{background:none;border:none;color:var(--danger);font-weight:800;font-size:15px;}
 
+  /* 콘텐츠 편집 */
   .content-week{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;}
   .content-week .wt{font-weight:700;font-size:14px;margin-bottom:2px;}
   .content-week .wd{font-size:12px;color:var(--muted);margin-bottom:10px;}
@@ -62,7 +69,8 @@
   .field label{width:120px;font-size:12.5px;color:#555;flex:none;}
   .field input{flex:1;width:100%;}
   .flbl{display:block;font-size:12.5px;font-weight:700;color:#34495e;margin:14px 0 6px;}
-  .cta{width:100%;min-height:120px;border:1px solid var(--line);border-radius:8px;padding:11px 12px;font-size:13.5px;line-height:1.6;font-family:'Pretendard',sans-serif;resize:vertical;outline:none;}
+  .cta{width:100%;min-height:120px;border:1px solid var(--line);border-radius:8px;padding:11px 12px;
+    font-size:13.5px;line-height:1.6;font-family:'Pretendard',sans-serif;resize:vertical;outline:none;}
   .cta:focus{border-color:var(--navy);}
   .tb-hint{font-size:11.5px;color:var(--muted);margin-bottom:8px;line-height:1.5;}
   .tb-list{display:flex;flex-direction:column;gap:8px;margin-bottom:8px;}
@@ -72,7 +80,8 @@
   .btn.sm{padding:8px 14px;font-size:13px;}
 
   .select{padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;}
-  .savebar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:10px;justify-content:center;align-items:center;z-index:25;flex-wrap:wrap;}
+  .savebar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);
+    padding:12px 16px;display:flex;gap:10px;justify-content:center;align-items:center;z-index:25;flex-wrap:wrap;}
   .savebar .btn.save{background:var(--ok);color:#fff;}
   .savebar .btn.export{background:#34495e;color:#fff;}
   .savebar .btn.copy{background:#eef1f6;color:#333;}
@@ -90,6 +99,7 @@
 </head>
 <body>
 
+<!-- 로그인 게이트 -->
 <div id="gate">
   <div class="gate-box">
     <div class="lock">🔐</div>
@@ -101,6 +111,7 @@
   </div>
 </div>
 
+<!-- 본문 -->
 <div id="app" class="hidden">
   <header>
     <div class="t">GFIELD 관리자 콘솔<small id="h-sub">생각하는 황소 대비 아카이브</small></div>
@@ -120,6 +131,7 @@
       <button data-tab="info" onclick="tab('info')">⑥ 황소 정보</button>
     </div>
 
+    <!-- ① 출석/권한 -->
     <section id="tab-attend">
       <div class="card">
         <h3>주차별 출석 체크 (권한 부여)</h3>
@@ -128,6 +140,7 @@
       </div>
     </section>
 
+    <!-- ② 학생 명단 -->
     <section id="tab-students" class="hidden">
       <div class="card">
         <h3>학생 추가</h3>
@@ -140,26 +153,29 @@
       </div>
     </section>
 
+    <!-- ③ 콘텐츠 -->
     <section id="tab-content" class="hidden">
       <div class="card">
-        <h3>주차별 콘텐츠 (학습내용 · 과제 · 교재)</h3>
-        <div class="hint">안내문을 그대로 붙여넣으면 학생 화면에서 유튜브/링크가 자동 변환됩니다. # 제목, **굵게**, 줄앞 - 또는 · 불릿이 적용됩니다.</div>
+        <h3>주차별 콘텐츠 링크</h3>
+        <div class="hint">유튜브/Vimeo 링크와 PDF 파일 URL을 입력하세요. 입력하면 학생 모달에 버튼이 활성화됩니다. (PDF는 다운로드 시 학생 이름 워터마크가 자동 삽입됩니다)</div>
         <div id="content-list"></div>
       </div>
     </section>
 
+    <!-- ④ 진행 주차 -->
     <section id="tab-settings" class="hidden">
       <div class="card">
         <h3>현재 진행 중인 주차</h3>
-        <div class="hint">캐릭터(러너)가 멈춰 서고 강조 표시되는 주차입니다.</div>
+        <div class="hint">캐릭터 🏃 가 멈춰 서고 강조 표시되는 주차입니다.</div>
         <select class="select" id="current-week"></select>
       </div>
     </section>
 
+    <!-- ⑤ 자료실 -->
     <section id="tab-archive" class="hidden">
       <div class="card">
-        <h3>자료실 폴더(책장)</h3>
-        <div class="hint">학생 화면 서재에 보이는 책장(폴더)입니다. 이름을 바꾸면 교재·권한도 함께 따라갑니다.</div>
+        <h3>자료실 폴더</h3>
+        <div class="hint">학생 화면 자료실에 보이는 폴더입니다. 이름을 바꾸면 자료·권한도 함께 따라갑니다.</div>
         <div id="folder-list"></div>
         <div class="student-row" style="margin-top:10px;">
           <input type="text" id="new-folder" placeholder="새 폴더 이름" onkeypress="if(event.key==='Enter')addFolder()">
@@ -169,18 +185,19 @@
 
       <div class="card">
         <h3>폴더별 학생 권한</h3>
-        <div class="hint">‘전체공개’가 켜지면(🔓) 로그인한 모든 학생이 봅니다. 끄면 체크한 학생만 그 책장을 열람합니다.</div>
+        <div class="hint">‘전체공개’가 켜지면(🔓) 로그인한 모든 학생이 봅니다. 끄면 체크한 학생만 그 폴더를 열람합니다.</div>
         <div class="matrix-scroll"><table id="acc-matrix"></table></div>
       </div>
 
       <div class="card">
         <h3>교재(책) 등록 — 서재</h3>
-        <div class="hint">PDF를 업로드하면 저장소 <b>books/</b> 폴더에 자동으로 올라가고 링크가 자동 입력됩니다. (GitHub 토큰 1회 필요) · 영상 주소(선택): 유튜브 단일영상이면 [좌 영상·우 교재], 재생목록·기타 링크면 [영상 보기 버튼], 비우면 교재만. 업로드 후 하단 [GitHub에 저장]도 눌러 목록을 반영하세요.</div>
+        <div class="hint">PDF를 업로드하면 저장소 <b>books/</b> 폴더에 자동으로 올라가고 링크가 자동 입력됩니다. (GitHub 토큰 1회 필요) · 영상 주소(선택): 유튜브 단일영상이면 [좌 영상·우 교재], 비우면 교재만. 재생목록·답안 파일은 [링크 버튼]으로 넣으세요. 업로드 후 하단 [GitHub에 저장]도 눌러 목록을 반영하세요.</div>
         <div id="book-items"></div>
         <button class="btn add sm" onclick="addBook()" style="margin-top:8px;">＋ 교재 추가</button>
       </div>
     </section>
 
+    <!-- ⑥ 황소 정보 -->
     <section id="tab-info" class="hidden">
       <div class="card">
         <h3>생각하는 황소 정보 게시판</h3>
@@ -191,6 +208,7 @@
     </section>
   </div>
 
+  <!-- 저장 바 -->
   <div class="savebar">
     <span class="status" id="save-status">변경 후 저장을 눌러주세요</span>
     <button class="btn save" onclick="saveToGitHub()">💾 GitHub에 저장</button>
@@ -202,11 +220,13 @@
 <div class="toast" id="toast"></div>
 <script src="data.js"></script>
 <script>
-  const ADMIN_PW = "01020837265";
-  const REPO = "docssam1/hs-report";
+  /* ===== 설정 ===== */
+  const ADMIN_PW = "01020837265";          // 관리자 비밀번호
+  const REPO = "docssam1/hs-report";        // GitHub 저장소
   const FILE_PATH = "data.js";
   const BRANCH = "main";
 
+  // 작업용 복제본
   let S = JSON.parse(JSON.stringify(window.GFIELD_DATA));
   S.content = S.content || {};
   S.attendance = S.attendance || {};
@@ -220,6 +240,7 @@
   const weekNodes = () => S.nodes.filter(n=>n.type==='week');
   const specialNode = () => S.nodes.find(n=>n.type==='special');
 
+  /* ===== 게이트 ===== */
   function unlock(){
     const v=document.getElementById('pw').value;
     if(v===ADMIN_PW){
@@ -227,18 +248,26 @@
       document.getElementById('app').classList.remove('hidden');
       document.getElementById('h-sub').textContent=S.meta.title;
       renderAll();
-    }else{ document.getElementById('gate-err').textContent='비밀번호가 올바르지 않습니다'; }
+    }else{
+      document.getElementById('gate-err').textContent='비밀번호가 올바르지 않습니다';
+    }
   }
   function lockAgain(){ location.reload(); }
 
+  /* ===== 탭 ===== */
   function tab(name){
-    ['attend','students','content','settings','archive','info'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
+    ['attend','students','content','settings','archive','info'].forEach(t=>{
+      document.getElementById('tab-'+t).classList.toggle('hidden', t!==name);
+    });
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
   }
 
+  /* ===== 렌더 ===== */
   function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderInfoAdmin(); }
 
-  function ensureStudent(name){ if(!S.attendance[name]) S.attendance[name]=[]; }
+  function ensureStudent(name){
+    if(!S.attendance[name]) S.attendance[name]=[];
+  }
 
   function renderMatrix(){
     const weeks=weekNodes(); const sp=specialNode();
@@ -249,19 +278,38 @@
     S.students.forEach(name=>{
       ensureStudent(name);
       html+=`<tr><th>${name}</th>`;
-      weeks.forEach(w=>{ const on=S.attendance[name].includes(w.id); html+=`<td class="cell ${on?'on':'off'}" onclick="toggleCell('${name}','${w.id}',this)"></td>`; });
-      if(sp){ const on=S.specialStudents.includes(name); html+=`<td class="cell special-col ${on?'on':'off'}" onclick="toggleSpecial('${name}',this)"></td>`; }
+      weeks.forEach(w=>{
+        const on=S.attendance[name].includes(w.id);
+        html+=`<td class="cell ${on?'on':'off'}" onclick="toggleCell('${name}','${w.id}',this)"></td>`;
+      });
+      if(sp){
+        const on=S.specialStudents.includes(name);
+        html+=`<td class="cell special-col ${on?'on':'off'}" onclick="toggleSpecial('${name}',this)"></td>`;
+      }
       html+='</tr>';
     });
     html+='</tbody>';
     document.getElementById('matrix').innerHTML=html;
   }
-  function toggleCell(name,wid,td){ ensureStudent(name); const arr=S.attendance[name]; const i=arr.indexOf(wid); if(i>=0){ arr.splice(i,1); td.className='cell off'; } else { arr.push(wid); td.className='cell on'; } dirty(); }
-  function toggleSpecial(name,td){ const i=S.specialStudents.indexOf(name); if(i>=0){ S.specialStudents.splice(i,1); td.className='cell special-col off'; } else { S.specialStudents.push(name); td.className='cell special-col on'; } dirty(); }
+  function toggleCell(name,wid,td){
+    ensureStudent(name);
+    const arr=S.attendance[name]; const i=arr.indexOf(wid);
+    if(i>=0){ arr.splice(i,1); td.className='cell off'; }
+    else{ arr.push(wid); td.className='cell on'; }
+    dirty();
+  }
+  function toggleSpecial(name,td){
+    const i=S.specialStudents.indexOf(name);
+    if(i>=0){ S.specialStudents.splice(i,1); td.className='cell special-col off'; }
+    else{ S.specialStudents.push(name); td.className='cell special-col on'; }
+    dirty();
+  }
 
   function renderStudents(){
     let html='';
-    S.students.forEach(name=>{ html+=`<span class="chip">${name}<button onclick="removeStudent('${name}')">×</button></span>`; });
+    S.students.forEach(name=>{
+      html+=`<span class="chip">${name}<button onclick="removeStudent('${name}')">×</button></span>`;
+    });
     document.getElementById('student-chips').innerHTML=html||'<span class="hint">등록된 학생이 없습니다.</span>';
   }
   function addStudent(){
@@ -293,7 +341,7 @@
       let tbRows='';
       c.textbooks.forEach((t,i)=>{
         tbRows+=`<div class="tb-row">
-          <input type="text" value="${esc(t.title)}" oninput="setTB('${w.id}',${i},'title',this.value)" placeholder="교재 제목">
+          <input type="text" value="${esc(t.title)}" oninput="setTB('${w.id}',${i},'title',this.value)" placeholder="교재 제목 (예: 중급 모의고사 1회 시험지)">
           <input type="url" value="${esc(t.url)}" oninput="setTB('${w.id}',${i},'url',this.value)" placeholder="PDF 링크 (예: materials/mock-1.pdf)">
           <button class="btn del" onclick="delTB('${w.id}',${i})">삭제</button>
         </div>`;
@@ -301,12 +349,15 @@
       html+=`<div class="content-week">
         <div class="wt">${w.date} · ${w.title}</div>
         <div class="wd">${w.desc}</div>
-        <label class="flbl">📘 학습 내용</label>
-        <textarea class="cta" oninput="setNotice('${w.id}',this.value)" placeholder="안내문을 그대로 붙여넣기">${esc(c.notice)}</textarea>
+
+        <label class="flbl">📘 학습 내용 (안내문 그대로 붙여넣기 — 유튜브/링크 자동 변환)</label>
+        <textarea class="cta" oninput="setNotice('${w.id}',this.value)" placeholder="예)\n1. GIFTED MATH 3 V1-1(2)\nhttps://youtu.be/...\n  · 약점 유형 - 도형의 개수세기\n  추가자료: https://naver.me/...">${esc(c.notice)}</textarea>
+
         <label class="flbl">📌 과제</label>
-        <textarea class="cta" oninput="setHW('${w.id}',this.value)" placeholder="과제 안내">${esc(c.homework)}</textarea>
-        <label class="flbl">📕 교재 자료 (이름 워터마크 PDF)</label>
-        <div class="tb-hint">워터마크 적용을 위해 PDF는 이 저장소(예: <b>materials/</b>) 등 CORS 허용 위치에 두세요.</div>
+        <textarea class="cta" oninput="setHW('${w.id}',this.value)" placeholder="예)\n황소 대비 모의고사 중급 1회\nhttps://youtu.be/...\n시험 후 영상 보고 질문하기">${esc(c.homework)}</textarea>
+
+        <label class="flbl">📕 교재 자료 (학생 이름 워터마크 다운로드)</label>
+        <div class="tb-hint">워터마크가 적용되려면 PDF가 이 저장소(예: <b>materials/</b> 폴더) 또는 CORS 허용 위치에 있어야 합니다. 네이버·드라이브 등 일반 자료는 위 안내문에 링크로 적어주세요.</div>
         <div class="tb-list">${tbRows}</div>
         <button class="btn add sm" onclick="addTB('${w.id}')">＋ 교재 추가</button>
       </div>`;
@@ -328,11 +379,14 @@
 
   /* ===== ⑤ 자료실(서재) ===== */
   function accArr(f){ if(!Array.isArray(S.archiveAccess[f])) S.archiveAccess[f]=["*"]; return S.archiveAccess[f]; }
+
   function renderArchiveAdmin(){ renderFolders(); renderAccMatrix(); renderBooks(); }
 
   function renderFolders(){
     let h='';
-    S.archiveFolders.forEach((f,i)=>{ h+=`<div class="tb-row"><input type="text" value="${esc(f)}" onchange="renameFolder(${i},this.value)"><button class="btn del" onclick="delFolder(${i})">삭제</button></div>`; });
+    S.archiveFolders.forEach((f,i)=>{
+      h+=`<div class="tb-row"><input type="text" value="${esc(f)}" onchange="renameFolder(${i},this.value)"><button class="btn del" onclick="delFolder(${i})">삭제</button></div>`;
+    });
     document.getElementById('folder-list').innerHTML=h||'<span class="hint">폴더가 없습니다.</span>';
   }
   function addFolder(){
@@ -369,35 +423,64 @@
       const acc=accArr(f); const open=acc.includes('*');
       html+=`<tr><th>${f}</th>`;
       html+=`<td class="cell ${open?'on':'off'}" onclick="toggleOpen(${fi},this)"></td>`;
-      S.students.forEach((s,si)=>{ const on=!open&&acc.includes(s); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="toggleAcc(${fi},'${s}',this)"></td>`; });
+      S.students.forEach((s,si)=>{
+        const on=!open&&acc.includes(s);
+        html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="toggleAcc(${fi},'${s}',this)"></td>`;
+      });
       html+='</tr>';
     });
     html+='</tbody>';
     document.getElementById('acc-matrix').innerHTML=html;
   }
-  function toggleOpen(fi){ const f=S.archiveFolders[fi]; const acc=accArr(f); if(acc.includes('*')) S.archiveAccess[f]=[]; else S.archiveAccess[f]=["*"]; renderAccMatrix(); dirty(); }
-  function toggleAcc(fi,s){ const f=S.archiveFolders[fi]; let acc=accArr(f); if(acc.includes('*')) acc=S.archiveAccess[f]=[]; const i=acc.indexOf(s); if(i>=0) acc.splice(i,1); else acc.push(s); renderAccMatrix(); dirty(); }
+  function toggleOpen(fi){
+    const f=S.archiveFolders[fi]; const acc=accArr(f);
+    if(acc.includes('*')) S.archiveAccess[f]=[];        // 전체공개 해제 → 개별 선택 모드
+    else S.archiveAccess[f]=["*"];                      // 전체공개
+    renderAccMatrix(); dirty();
+  }
+  function toggleAcc(fi,s){
+    const f=S.archiveFolders[fi]; let acc=accArr(f);
+    if(acc.includes('*')) acc=S.archiveAccess[f]=[];    // 개별 모드로 전환
+    const i=acc.indexOf(s);
+    if(i>=0) acc.splice(i,1); else acc.push(s);
+    renderAccMatrix(); dirty();
+  }
 
   function renderBooks(){
     let h='';
     (S.books||[]).forEach((it,i)=>{
       const opts=S.archiveFolders.map(f=>`<option ${f===it.folder?'selected':''}>${esc(f)}</option>`).join('');
       const pdfState = it.pdf ? `<span style="color:var(--ok);font-size:12px">✓ ${esc((it.pdf||'').split('/').pop())}</span>` : `<span style="color:var(--muted);font-size:12px">아직 없음</span>`;
+      let linkRows='';
+      (it.links||[]).forEach((l,li)=>{
+        linkRows+=`<div class="tb-row">
+          <input type="text" value="${esc(l.label)}" oninput="setBookLink(${i},${li},'label',this.value)" placeholder="버튼 이름 (예: 답안 PDF / 재생목록)">
+          <input type="url" value="${esc(l.url)}" oninput="setBookLink(${i},${li},'url',this.value)" placeholder="링크 주소">
+          <button class="btn del" onclick="delBookLink(${i},${li})">삭제</button>
+        </div>`;
+      });
       h+=`<div class="content-week">
         <div class="field"><label>폴더(책장)</label><select onchange="setBook(${i},'folder',this.value)">${opts}</select></div>
         <div class="field"><label>제목</label><input type="text" value="${esc(it.title)}" oninput="setBook(${i},'title',this.value)" placeholder="교재 제목"></div>
         <div class="field"><label>교재 PDF</label><input type="file" accept="application/pdf" onchange="uploadBookPdf(${i},this)"> &nbsp; ${pdfState}</div>
         <div class="field"><label>PDF 링크</label><input type="url" value="${esc(it.pdf)}" oninput="setBook(${i},'pdf',this.value)" placeholder="업로드하면 자동 입력 / 직접 링크도 가능"></div>
-        <div class="field"><label>영상 주소(선택)</label><input type="url" value="${esc(it.video)}" oninput="setBook(${i},'video',this.value)" placeholder="유튜브 단일영상=좌우배치 / 재생목록·기타=버튼 / 비우면 교재만"></div>
-        <div class="field"><label>날짜</label><input type="date" value="${esc(it.date)}" oninput="setBook(${i},'date',this.value)"></div>
+        <div class="field"><label>영상 주소(선택)</label><input type="url" value="${esc(it.video)}" oninput="setBook(${i},'video',this.value)" placeholder="유튜브 단일영상이면 좌우 배치(강의+교재). 재생목록·답안은 아래 [링크 버튼] 사용"></div>
+        <label class="flbl">🔗 링크 버튼(선택) — 영상 재생목록 · 답안 파일 등</label>
+        <div class="tb-hint">버튼 이름과 링크를 넣으면 학생 뷰어 상단에 버튼으로 떠서 새 탭으로 열립니다. 여러 개 추가 가능.</div>
+        <div class="tb-list">${linkRows}</div>
+        <button class="btn add sm" onclick="addBookLink(${i})">＋ 링크 버튼 추가</button>
+        <div class="field" style="margin-top:12px;"><label>날짜</label><input type="date" value="${esc(it.date)}" oninput="setBook(${i},'date',this.value)"></div>
         <button class="btn del sm" onclick="delBook(${i})">교재 삭제</button>
       </div>`;
     });
     document.getElementById('book-items').innerHTML=h||'<span class="hint">등록된 교재가 없습니다.</span>';
   }
-  function addBook(){ (S.books=S.books||[]).push({folder:S.archiveFolders[0]||'', title:'', pdf:'', video:'', cover:'', date:today()}); renderBooks(); dirty(); }
+  function addBook(){ (S.books=S.books||[]).push({folder:S.archiveFolders[0]||'', title:'', pdf:'', video:'', cover:'', date:today(), links:[]}); renderBooks(); dirty(); }
   function setBook(i,key,val){ if(S.books[i]){ S.books[i][key]=(key==='date')?val:val.trim(); dirty(); } }
   function delBook(i){ S.books.splice(i,1); renderBooks(); dirty(); }
+  function addBookLink(i){ const b=S.books[i]; if(!b) return; (b.links=b.links||[]).push({label:'',url:''}); renderBooks(); dirty(); }
+  function setBookLink(i,li,key,v){ const b=S.books[i]; if(b&&b.links&&b.links[li]){ b.links[li][key]=v.trim(); dirty(); } }
+  function delBookLink(i,li){ const b=S.books[i]; if(b&&b.links){ b.links.splice(li,1); renderBooks(); dirty(); } }
 
   function ghToken(){
     let t=null; try{ t=localStorage.getItem('gfield_gh_token'); }catch(e){}
@@ -459,6 +542,7 @@
     return "/* =========================================================\n"
       + " * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)\n"
       + " * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨\n"
+      + " * 생성: " + new Date().toLocaleString('ko-KR') + "\n"
       + " * ========================================================= */\n"
       + "window.GFIELD_DATA = " + JSON.stringify(S, null, 2) + ";\n";
   }
@@ -485,9 +569,12 @@
     const token=ghToken(); if(!token) return;
     document.getElementById('save-status').textContent='GitHub에 저장 중…';
     try{
+      // 현재 파일 SHA 조회
       let sha=null;
-      const getRes=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,{ headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}});
+      const getRes=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,{
+        headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}});
       if(getRes.ok){ const j=await getRes.json(); sha=j.sha; }
+      // base64 (UTF-8)
       const content=buildFile();
       const b64=btoa(unescape(encodeURIComponent(content)));
       const putRes=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,{
@@ -495,9 +582,19 @@
         headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'},
         body:JSON.stringify({message:'Update data.js via admin console', content:b64, sha:sha, branch:BRANCH})
       });
-      if(putRes.ok){ document.getElementById('save-status').textContent='✅ 저장 완료 (1~2분 후 반영)'; toast('GitHub 저장 완료 ✅'); }
-      else{ const e=await putRes.json(); document.getElementById('save-status').textContent='저장 실패: '+(e.message||putRes.status); if(putRes.status===401){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} toast('토큰이 유효하지 않습니다. 다시 시도하세요'); } else toast('저장 실패 — 코드 보기로 수동 반영하세요'); }
-    }catch(err){ document.getElementById('save-status').textContent='네트워크 오류'; toast('저장 실패 — 코드 보기/내보내기를 사용하세요'); }
+      if(putRes.ok){
+        document.getElementById('save-status').textContent='✅ 저장 완료 (1~2분 후 반영)';
+        toast('GitHub 저장 완료 ✅');
+      }else{
+        const e=await putRes.json();
+        document.getElementById('save-status').textContent='저장 실패: '+(e.message||putRes.status);
+        if(putRes.status===401){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} toast('토큰이 유효하지 않습니다. 다시 시도하세요'); }
+        else toast('저장 실패 — 코드 보기로 수동 반영하세요');
+      }
+    }catch(err){
+      document.getElementById('save-status').textContent='네트워크 오류';
+      toast('저장 실패 — 코드 보기/내보내기를 사용하세요');
+    }
   }
 
   let tt=null;
