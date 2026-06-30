@@ -77,7 +77,9 @@
   .brief-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:12px 0 14px;box-shadow:0 4px 14px rgba(186,110,40,.08);}
   .brief-mood{font-size:13.5px;line-height:1.7;color:var(--ink2);}
   .brief-mood b{color:var(--orange-d);font-size:14px;}
-  .brief-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+  .brief-dday{margin-top:11px;background:#fff3e6;border:1px solid #fcd3a3;border-radius:12px;padding:9px 12px;font-size:13px;color:var(--ink);line-height:1.55;}
+  .brief-dday b{color:var(--orange-d);}
+  .brief-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:11px;}
   .brief-box{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px 12px;}
   .bb-h{font-size:12px;font-weight:800;color:var(--orange-d);margin-bottom:6px;}
   .bb-main{font-size:14px;font-weight:700;color:var(--ink);}
@@ -182,7 +184,7 @@
   .book .cover{position:relative;width:86%;aspect-ratio:1240/1755;transform-style:preserve-3d;transform:rotateY(-26deg);transition:transform .45s cubic-bezier(.22,1,.36,1);border-radius:3px 6px 6px 3px;box-shadow:12px 16px 28px rgba(120,70,20,.3);}
   .book .cover img{width:100%;height:100%;object-fit:cover;display:block;border-radius:3px 6px 6px 3px;border:1px solid #f0d8bd;border-left:none;position:relative;z-index:2;backface-visibility:hidden;background:#f3ead9;}
   .book .cover::before{content:"";position:absolute;left:0;top:0;height:100%;width:20px;transform:translateX(-100%) rotateY(-90deg);transform-origin:right center;background:linear-gradient(90deg,#7a3e10,#b5651f 55%,#d98a3a);border-radius:3px 0 0 3px;z-index:1;}
-  .book .cover::after{content:"";position:absolute;right:0;top:1%;height:98%;width:9px;transform:translateX(100%) rotateY(90deg);transform-origin:left center;background:repeating-linear-gradient(0deg,#f5ecd9 0,#f5ecd9 1.5px,#dcc9a4 3px);z:1;z-index:1;}
+  .book .cover::after{content:"";position:absolute;right:0;top:1%;height:98%;width:9px;transform:translateX(100%) rotateY(90deg);transform-origin:left center;background:repeating-linear-gradient(0deg,#f5ecd9 0,#f5ecd9 1.5px,#dcc9a4 3px);z-index:1;}
   .book:hover .cover{transform:rotateY(-10deg) translateY(-6px);}
   .book .label{font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.3;text-align:center;}
   .book .pages{font-size:11px;color:var(--orange-d);font-weight:600;}
@@ -459,6 +461,7 @@
     return weekIds().indexOf(node.id)<=currentIndex();
   }
 
+  function daysToExam(){ if(!D.meta||!D.meta.examDate) return null; const ex=new Date(D.meta.examDate+'T00:00:00'); const now=new Date(); now.setHours(0,0,0,0); return Math.round((ex-now)/86400000); }
   function renderStatus(){
     const cur=D.nodes.find(n=>n.id===D.meta.currentWeekId);
     document.getElementById('now-text').textContent=cur?`현재 학습: ${cur.date} · ${cur.title}`:'진행 중인 주차 정보 없음';
@@ -468,26 +471,40 @@
     const pct=Math.round(done/total*100);
     document.getElementById('progressbar').style.width=pct+'%';
     document.getElementById('progress-label').textContent=`전체 ${total}주차 중 ${done}주차 진행 (${pct}%)`;
-    const ddEl=document.getElementById('dday');
-    if(ddEl&&D.meta&&D.meta.examDate){
-      const ex=new Date(D.meta.examDate+'T00:00:00'); const now=new Date(); now.setHours(0,0,0,0);
-      const dd=Math.round((ex-now)/86400000);
+    const ddEl=document.getElementById('dday'); const dd=daysToExam();
+    if(ddEl&&dd!=null){
       ddEl.textContent=dd>0?('시험 D-'+dd):(dd===0?'시험 D-DAY':'시험 종료');
       ddEl.title=(D.meta.examLabel||'시험')+' · '+D.meta.examDate;
     }
   }
 
-  /* ----- 오늘의 브리핑 ----- */
-  function studentMood(given){
-    const now=new Date(); const h=now.getHours(); const wknd=(now.getDay()===0||now.getDay()===6);
-    const j=josa(given);
-    const time = h<6 ? '늦은 시간이야. 무리하지 말고 푹 자고 내일 다시 달리자.'
-      : h<12 ? '오전 집중 구간이야. 사고력 문제는 속도보다 정확도 먼저!'
-      : h<18 ? '오후 전환 구간이야. 개념 한 번 정리하고 실전 문제로 가보자.'
-      : '저녁 몰입 구간이야. 오늘 오답 2문항만 깊게 정리해도 충분해.';
-    const mode = wknd ? '주말엔 학원 과제 + 스스로 한 세트만 완주하면 다음 주가 편해져.'
-      : '평일엔 짧고 굵게! 끝나고 30분만 집중해도 차곡차곡 쌓인다.';
-    return `${given}${j}, 오늘도 지필드-ON 접속 완료! ${time} ${mode}`;
+  /* ----- 오늘의 브리핑 (시간대별 청자 구분 + D-day) ----- */
+  function audienceMode(){
+    const now=new Date(); const h=now.getHours(); const day=now.getDay();
+    const weekday=day>=1&&day<=5;
+    const night=(h>=22||h<6);
+    const schoolTime=(weekday&&h>=8&&h<16);
+    return (night||schoolTime)?'parent':'student';
+  }
+  function dPhase(dd){
+    if(dd==null) return null;
+    if(dd<0) return {tag:'시험 종료', line:'그동안 정말 고생 많았어. 결과와 상관없이 너는 한 뼘 더 자랐다.'};
+    if(dd===0) return {tag:'D-DAY', line:'드디어 오늘! 준비한 그대로, 침착하게 풀면 돼.'};
+    if(dd<=3) return {tag:'D-'+dd, line:'이제 컨디션이 실력이야. 푹 자고 따뜻하게, 마음 편히 가자.'};
+    if(dd<=14) return {tag:'D-'+dd, line:'마무리 구간. 새 문제보다 익숙한 유형을 완벽하게 다듬자.'};
+    if(dd<=45) return {tag:'D-'+dd, line:'실전 구간. 시간 배분과 오답 정리가 점수를 만든다.'};
+    if(dd<=90) return {tag:'D-'+dd, line:'모의고사로 실전 감각을 쌓는 시기. 틀린 문제가 보물이야.'};
+    return {tag:'D-'+dd, line:'지금은 개념을 단단히 다지는 시기. 기초가 깊을수록 멀리 간다.'};
+  }
+  function pickCoach(mode){
+    const V=D.vip||{};
+    const arr = mode==='parent' ? (V.coachParent||[]) : (V.coach||[]);
+    const fb = mode==='parent'
+      ? ['아이가 영상 보고 다시 푼 문제를 제대로 이해했는지 한 번만 확인해 주세요. 학원 20%, 가정 관리 80%입니다.']
+      : ['오늘도 한 걸음, 잘하고 있어. 천천히 정확하게 가자.'];
+    const pool = arr.length?arr:fb;
+    const di=Math.floor((Date.now()+9*3600000)/86400000);
+    return pool[di%pool.length];
   }
   function trafficNow(){
     const now=new Date(); const h=now.getHours(); const mins=h*60+now.getMinutes();
@@ -518,9 +535,15 @@
   async function renderBriefing(){
     const el=document.getElementById('briefing'); if(!el) return;
     if(isDemo){ el.innerHTML=''; return; }
-    const given=givenName(currentStudent); const tr=trafficNow();
+    const given=givenName(currentStudent);
+    const mode=audienceMode();
+    const ph=dPhase(daysToExam());
+    const headline = mode==='parent' ? '💛 학부모님께 드리는 한마디' : '💛 DOCSSAM의 한마디';
+    const who = mode==='parent' ? `${escHtml(given)} 학생 어머님,` : `${escHtml(given)}${josa(given)},`;
+    const tr=trafficNow();
     el.innerHTML=`<div class="brief-card">
-      <div class="brief-mood"><b>📣 오늘의 브리핑</b><br>${escHtml(studentMood(given))}</div>
+      <div class="brief-mood"><b>${headline}</b><br>${who} ${escHtml(pickCoach(mode))}</div>
+      ${ph?`<div class="brief-dday">🎯 ${escHtml(D.meta.examLabel||'시험')} <b>${ph.tag}</b> · ${escHtml(ph.line)}</div>`:''}
       <div class="brief-grid">
         <div class="brief-box"><div class="bb-h">🌤 날씨</div><div class="bb-main" id="wx-main">불러오는 중…</div><div class="bb-sub" id="wx-sub"></div></div>
         <div class="brief-box"><div class="bb-h">🚦 교통</div><div class="bt-row"><span class="bt-chip">주민센터 ${tr.center}</span><span class="bt-chip">EM프라자 ${tr.em}</span></div><div class="bb-sub">${escHtml(tr.note)}</div></div>
@@ -709,7 +732,6 @@
     if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 VIP 라운지가 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
     const V=D.vip||{}; let h='';
 
-    // 프리미엄 설명회
     const ses=(V.sessions||[]).filter(s=>s&&s.url);
     h+=`<div class="vip-sec"><div class="vip-h disp">🎬 프리미엄 설명회</div>`;
     if(ses.length){
@@ -721,7 +743,6 @@
     } else h+='<div class="empty-note" style="text-align:left">등록된 설명회 영상이 없습니다.</div>';
     h+='</div>';
 
-    // 신규 강좌 공지
     const courses=(V.courses||[]).filter(c=>c&&(c.title||c.body));
     h+=`<div class="vip-sec"><div class="vip-h disp">📣 신규 강좌 공지</div>`;
     if(courses.length){
@@ -734,11 +755,9 @@
     } else h+='<div class="empty-note" style="text-align:left">등록된 강좌 공지가 없습니다.</div>';
     h+='</div>';
 
-    // 결석·클리닉 신청
     const cl=V.clinic||{};
     h+=`<div class="vip-sec"><div class="vip-h disp">🩺 결석 · 클리닉 신청</div><div class="clinic-card"><p>${escHtml(cl.notice||'결석·보강·클리닉 신청은 아래 버튼으로 접수해주세요.')}</p>${cl.url?`<a class="clinic-btn" href="${escAttr(cl.url)}" target="_blank" rel="noopener">📝 신청하러 가기</a>`:'<span class="empty-note" style="display:inline-block">신청 링크 준비중입니다. 담당 선생님께 문의해주세요.</span>'}</div></div>`;
 
-    // DOCSSAM의 프리미엄 칼럼
     const cols=(V.columns||[]).filter(c=>c&&c.title);
     h+=`<div class="vip-sec"><div class="vip-h disp">👑 DOCSSAM의 프리미엄 칼럼</div>`;
     h+=`<div class="col-banner"><span class="cb-ic">✒️</span><div><b>DOCSSAM의 프리미엄 칼럼</b><span>원장이 직접 쓰는 학습·입시 인사이트</span></div></div>`;
@@ -747,7 +766,6 @@
     } else h+='<div class="empty-note" style="text-align:left">아직 등록된 칼럼이 없습니다.</div>';
     h+='</div>';
 
-    // 교육 매거진
     const mags=(V.magazine||[]).filter(m=>m&&m.title);
     h+=`<div class="vip-sec"><div class="vip-h disp">📰 교육 매거진</div>`;
     if(mags.length){
