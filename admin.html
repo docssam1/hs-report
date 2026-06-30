@@ -175,7 +175,7 @@
 
       <div class="card">
         <h3>교재(책) 등록 — 서재</h3>
-        <div class="hint">교재를 페이지 이미지로 올려 책장에 꽂습니다. 이미지는 <b>p-01.jpg, p-02.jpg …</b> 형식으로 한 폴더에 두고, 그 폴더 경로(base)와 페이지 수를 넣어주세요. (학생은 다운로드 없이 페이지를 넘겨봅니다)</div>
+        <div class="hint">PDF를 업로드하면 저장소 <b>books/</b> 폴더에 자동으로 올라가고 링크가 자동 입력됩니다. (GitHub 토큰 1회 필요) · 영상 주소(선택): 유튜브 단일영상이면 [좌 영상·우 교재], 재생목록·기타 링크면 [영상 보기 버튼], 비우면 교재만. 업로드 후 하단 [GitHub에 저장]도 눌러 목록을 반영하세요.</div>
         <div id="book-items"></div>
         <button class="btn add sm" onclick="addBook()" style="margin-top:8px;">＋ 교재 추가</button>
       </div>
@@ -382,22 +382,56 @@
     let h='';
     (S.books||[]).forEach((it,i)=>{
       const opts=S.archiveFolders.map(f=>`<option ${f===it.folder?'selected':''}>${esc(f)}</option>`).join('');
+      const pdfState = it.pdf ? `<span style="color:var(--ok);font-size:12px">✓ ${esc((it.pdf||'').split('/').pop())}</span>` : `<span style="color:var(--muted);font-size:12px">아직 없음</span>`;
       h+=`<div class="content-week">
         <div class="field"><label>폴더(책장)</label><select onchange="setBook(${i},'folder',this.value)">${opts}</select></div>
         <div class="field"><label>제목</label><input type="text" value="${esc(it.title)}" oninput="setBook(${i},'title',this.value)" placeholder="교재 제목"></div>
-        <div class="field"><label>이미지 폴더</label><input type="url" value="${esc(it.base)}" oninput="setBook(${i},'base',this.value)" placeholder="예: https://raw.githubusercontent.com/docssam1/hs-report/main/books/basic"></div>
-        <div class="field"><label>페이지 수</label><input type="text" value="${esc(it.count)}" oninput="setBook(${i},'count',this.value)" placeholder="예: 19"></div>
-        <div class="field"><label>확장자</label><input type="text" value="${esc(it.ext||'jpg')}" oninput="setBook(${i},'ext',this.value)" placeholder="jpg"></div>
-        <div class="field"><label>표지(선택)</label><input type="url" value="${esc(it.cover)}" oninput="setBook(${i},'cover',this.value)" placeholder="비우면 1쪽이 표지"></div>
+        <div class="field"><label>교재 PDF</label><input type="file" accept="application/pdf" onchange="uploadBookPdf(${i},this)"> &nbsp; ${pdfState}</div>
+        <div class="field"><label>PDF 링크</label><input type="url" value="${esc(it.pdf)}" oninput="setBook(${i},'pdf',this.value)" placeholder="업로드하면 자동 입력 / 직접 링크도 가능"></div>
+        <div class="field"><label>영상 주소(선택)</label><input type="url" value="${esc(it.video)}" oninput="setBook(${i},'video',this.value)" placeholder="유튜브 단일영상=좌우배치 / 재생목록·기타=버튼 / 비우면 교재만"></div>
         <div class="field"><label>날짜</label><input type="date" value="${esc(it.date)}" oninput="setBook(${i},'date',this.value)"></div>
         <button class="btn del sm" onclick="delBook(${i})">교재 삭제</button>
       </div>`;
     });
     document.getElementById('book-items').innerHTML=h||'<span class="hint">등록된 교재가 없습니다.</span>';
   }
-  function addBook(){ (S.books=S.books||[]).push({folder:S.archiveFolders[0]||'', title:'', base:'', count:'', ext:'jpg', cover:'', date:today()}); renderBooks(); dirty(); }
-  function setBook(i,key,val){ if(S.books[i]){ S.books[i][key]=(key==='count')?(parseInt(val,10)||0):((key==='date')?val:val.trim()); dirty(); } }
+  function addBook(){ (S.books=S.books||[]).push({folder:S.archiveFolders[0]||'', title:'', pdf:'', video:'', cover:'', date:today()}); renderBooks(); dirty(); }
+  function setBook(i,key,val){ if(S.books[i]){ S.books[i][key]=(key==='date')?val:val.trim(); dirty(); } }
   function delBook(i){ S.books.splice(i,1); renderBooks(); dirty(); }
+
+  function ghToken(){
+    let t=null; try{ t=localStorage.getItem('gfield_gh_token'); }catch(e){}
+    if(!t){ t=prompt('GitHub Personal Access Token (Contents 쓰기 권한)'); if(!t) return null; t=t.trim(); try{ localStorage.setItem('gfield_gh_token',t); }catch(e){} }
+    return t;
+  }
+  async function uploadBookPdf(i, input){
+    const f=input.files&&input.files[0]; if(!f) return;
+    if(!/\.pdf$/i.test(f.name)){ toast('PDF 파일만 업로드돼요'); input.value=''; return; }
+    const token=ghToken(); if(!token){ input.value=''; return; }
+    toast('PDF 업로드 중…');
+    try{
+      const b64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(',')[1]); r.onerror=rej; r.readAsDataURL(f); });
+      const safe=f.name.replace(/[^\w.\-]/g,'_');
+      const path='books/'+Date.now()+'_'+safe;
+      const res=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`,{
+        method:'PUT',
+        headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'},
+        body:JSON.stringify({message:'Upload book PDF '+safe, content:b64, branch:BRANCH})
+      });
+      if(res.ok){
+        const j=await res.json();
+        S.books[i].pdf=(j.content&&j.content.download_url)||`https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`;
+        if(!S.books[i].title) S.books[i].title=f.name.replace(/\.pdf$/i,'');
+        renderBooks(); dirty();
+        toast('업로드 완료 ✅ — 하단 [GitHub에 저장]도 눌러 목록을 반영하세요');
+      }else{
+        const e=await res.json();
+        if(res.status===401){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} toast('토큰이 유효하지 않습니다. 다시 시도하세요'); }
+        else toast('업로드 실패: '+(e.message||res.status));
+      }
+    }catch(err){ toast('업로드 실패(네트워크)'); }
+    input.value='';
+  }
 
   /* ===== ⑥ 황소 정보 ===== */
   function renderInfoAdmin(){
@@ -425,7 +459,6 @@
     return "/* =========================================================\n"
       + " * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)\n"
       + " * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨\n"
-      + " * 생성: " + new Date().toLocaleString('ko-KR') + "\n"
       + " * ========================================================= */\n"
       + "window.GFIELD_DATA = " + JSON.stringify(S, null, 2) + ";\n";
   }
@@ -449,14 +482,7 @@
   }
 
   async function saveToGitHub(){
-    let token=null;
-    try{ token=localStorage.getItem('gfield_gh_token'); }catch(e){}
-    if(!token){
-      token=prompt('GitHub Personal Access Token을 입력하세요\n(Contents 쓰기 권한 · 이 기기에만 저장됩니다)');
-      if(!token) return;
-      try{ localStorage.setItem('gfield_gh_token', token.trim()); }catch(e){}
-      token=token.trim();
-    }
+    const token=ghToken(); if(!token) return;
     document.getElementById('save-status').textContent='GitHub에 저장 중…';
     try{
       let sha=null;
