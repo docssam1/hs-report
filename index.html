@@ -86,6 +86,7 @@
   .bb-sub{font-size:12px;color:var(--ink2);margin-top:4px;line-height:1.5;}
   .bt-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:5px;}
   .bt-chip{font-size:11.5px;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--ink);}
+  .brief-wadvice{margin-top:10px;background:#fff7ec;border:1px solid #fcdcb8;border-radius:12px;padding:9px 12px;font-size:12.5px;color:var(--ink2);line-height:1.6;}
 
   /* 로그인 응원 */
   .cheer{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
@@ -482,7 +483,7 @@
     }
   }
 
-  /* ----- 오늘의 브리핑 (시간대별 청자 구분 + D-day) ----- */
+  /* ----- 오늘의 브리핑 (시간대별 청자 구분 + D-day + 날씨 코멘트) ----- */
   function audienceMode(){
     const now=new Date(); const h=now.getHours(); const day=now.getDay();
     const weekday=day>=1&&day<=5;
@@ -529,6 +530,32 @@
     if([95,96,99].includes(c)) return '⛈️';
     return '🌤️';
   }
+  function weatherAdvice(w, mode){
+    if(!w||!w.current) return '';
+    const dly=w.daily||{};
+    const code=Number(w.current.weather_code);
+    const hi=Math.round((dly.temperature_2m_max||[])[0]);
+    const lo=Math.round((dly.temperature_2m_min||[])[0]);
+    const pop=(dly.precipitation_probability_max||[])[0];
+    const rain=[51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(code) || (pop!=null&&pop>=60);
+    const gap=(isFinite(hi)&&isFinite(lo))?(hi-lo):0;
+    const parent = (mode==='parent');
+    if(rain) return parent
+      ? '오늘 비 소식이 있어요. 등하원 시 우산을 꼭 챙겨 주시고, 옷이 젖으면 체온이 빨리 떨어지니 여벌 양말·얇은 겉옷도 함께 준비해 주세요.'
+      : '오늘은 비가 올 수 있어. 우산 챙기고, 젖으면 추우니까 따뜻하게 입자!';
+    if(isFinite(hi)&&hi>=30) return parent
+      ? '오늘은 무더워요. 시원한 물을 넉넉히 챙겨 주시고 통풍이 잘 되는 옷차림을 권장드립니다.'
+      : '오늘 많이 더워. 물 자주 마시고 가볍게 입자!';
+    if(isFinite(lo)&&lo<=5) return parent
+      ? '기온이 낮아 쌀쌀합니다. 하원 시간엔 더 추워질 수 있으니 따뜻한 겉옷을 꼭 챙겨 주세요.'
+      : '오늘 쌀쌀해. 따뜻한 겉옷 꼭 챙기자!';
+    if(gap>=10) return parent
+      ? `일교차가 ${gap}°C로 큽니다. 하원 시간대로 갈수록 체감이 내려가니 얇은 가디건·바람막이를 챙겨 주세요.`
+      : `오늘 일교차가 ${gap}도나 돼. 얇은 겉옷 하나 챙기면 딱 좋아!`;
+    return parent
+      ? '오늘은 비교적 무난한 날씨입니다. 얇은 겉옷 한 장 정도면 충분합니다.'
+      : '오늘 날씨는 무난해. 편하게 집중하자!';
+  }
   async function loadWeather(){
     const lat=(D.meta&&D.meta.lat)||37.4996, lng=(D.meta&&D.meta.lng)||127.0584;
     try{
@@ -552,9 +579,10 @@
         <div class="brief-box"><div class="bb-h">🌤 날씨</div><div class="bb-main" id="wx-main">불러오는 중…</div><div class="bb-sub" id="wx-sub"></div></div>
         <div class="brief-box"><div class="bb-h">🚦 교통</div><div class="bt-row"><span class="bt-chip">주민센터 ${tr.center}</span><span class="bt-chip">EM프라자 ${tr.em}</span></div><div class="bb-sub">${escHtml(tr.note)}</div></div>
       </div>
+      <div class="brief-wadvice" id="wx-advice" style="display:none"></div>
     </div>`;
     const w=await loadWeather();
-    const wm=document.getElementById('wx-main'), ws=document.getElementById('wx-sub');
+    const wm=document.getElementById('wx-main'), ws=document.getElementById('wx-sub'), ad=document.getElementById('wx-advice');
     if(!wm) return;
     if(w&&w.current){
       const cur=w.current, dly=w.daily||{};
@@ -563,7 +591,9 @@
       const lo2=Math.round((dly.temperature_2m_min||[])[1]), hi2=Math.round((dly.temperature_2m_max||[])[1]);
       wm.textContent=`${wcodeIcon(cur.weather_code)} 지금 ${Math.round(cur.temperature_2m)}°`;
       ws.innerHTML=`오늘 ${lo}~${hi}°${pop!=null?` · 강수 ${pop}%`:''}<br>내일 ${lo2}~${hi2}°`;
-    } else { wm.textContent='날씨를 불러오지 못했어요'; ws.textContent=''; }
+      const adv=weatherAdvice(w,mode);
+      if(ad&&adv){ ad.textContent='🧥 '+adv; ad.style.display='block'; }
+    } else { wm.textContent='날씨를 불러오지 못했어요'; ws.textContent=''; if(ad) ad.style.display='none'; }
   }
 
   function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
