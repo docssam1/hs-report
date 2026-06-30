@@ -145,15 +145,18 @@
   .node.final{border-left-color:var(--final);}
   .node.current{border-color:var(--orange);box-shadow:0 0 0 2px rgba(249,115,22,.35),0 10px 24px rgba(249,115,22,.2);}
   .icon-status{position:absolute;left:-46px;top:16px;width:32px;height:32px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:2px solid #fcd3a3;box-shadow:0 2px 6px rgba(186,110,40,.15);}
-  .marker{position:absolute;left:-46px;top:-34px;width:42px;height:48px;z-index:6;}
+  /* 달리는 캐릭터 */
+  .marker{position:absolute;left:-50px;top:-42px;width:50px;height:58px;z-index:6;}
   .marker svg{width:100%;height:100%;overflow:visible;}
-  .runner-bob{animation:runbob .4s ease-in-out infinite;transform-origin:50% 100%;}
-  @keyframes runbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .runner-bob{animation:runbob .42s ease-in-out infinite;transform-origin:50% 100%;}
+  @keyframes runbob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
   .limb{transform-box:fill-box;transform-origin:50% 0%;}
-  .armF,.legB{animation:swingA .4s ease-in-out infinite;}
-  .armB,.legF{animation:swingB .4s ease-in-out infinite;}
-  @keyframes swingA{0%{transform:rotate(42deg)}50%{transform:rotate(-42deg)}100%{transform:rotate(42deg)}}
-  @keyframes swingB{0%{transform:rotate(-42deg)}50%{transform:rotate(42deg)}100%{transform:rotate(-42deg)}}
+  .armF,.legB{animation:swingA .42s ease-in-out infinite;}
+  .armB,.legF{animation:swingB .42s ease-in-out infinite;}
+  @keyframes swingA{0%{transform:rotate(46deg)}50%{transform:rotate(-46deg)}100%{transform:rotate(46deg)}}
+  @keyframes swingB{0%{transform:rotate(-46deg)}50%{transform:rotate(46deg)}100%{transform:rotate(-46deg)}}
+  .pony{transform-box:fill-box;transform-origin:15% 12%;animation:ponysway .42s ease-in-out infinite;}
+  @keyframes ponysway{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
   .special-branch{position:relative;margin:4px 0 18px 28px;padding-left:18px;border-left:3px dashed var(--special);}
   .node.special{border-left:6px solid var(--special);background:#f5f3ff;}
   .node.special h3{color:#6d28d9;}
@@ -212,7 +215,15 @@
   @media(max-width:760px){ .bv-stage.split{flex-direction:column;} .bv-vid{height:36vh;flex:none;} }
 
   /* VIP 라운지 */
-  .vip-sec{margin-bottom:24px;}
+  .vip-menu{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .vip-mbtn{display:flex;flex-direction:column;gap:7px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;cursor:pointer;text-align:left;box-shadow:0 4px 14px rgba(186,110,40,.08);transition:.15s;}
+  .vip-mbtn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(186,110,40,.16);border-color:#fcd3a3;}
+  .vip-mbtn .mi{font-size:27px;line-height:1;}
+  .vip-mbtn .mt{font-size:15px;font-weight:800;color:var(--ink);}
+  .vip-mbtn .mc{font-size:12px;color:var(--orange-d);font-weight:700;}
+  .vip-mbtn.full{grid-column:1/-1;flex-direction:row;align-items:center;gap:13px;}
+  .vip-mbtn.full .mi{font-size:24px;}
+  .vip-back{display:inline-flex;align-items:center;gap:6px;background:var(--soft);border:1px solid #fcd3a3;color:var(--orange-d);font-weight:700;font-size:13px;padding:8px 14px;border-radius:11px;margin-bottom:14px;}
   .vip-h{font-size:16px;color:var(--orange-d);margin:6px 2px 12px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--line);padding-bottom:8px;}
   .carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;-webkit-overflow-scrolling:touch;}
   .carousel::-webkit-scrollbar{height:6px;}
@@ -347,7 +358,7 @@
   </section>
 
   <section id="view-vip" class="hidden">
-    <div class="arc-intro">👑 <b>지필드 VIP 라운지</b> — 설명회·강좌 소식·클리닉 신청·교육 매거진·원장님 칼럼을 한곳에 모았습니다.</div>
+    <div class="arc-intro">👑 <b>지필드 VIP 라운지</b> — 아래 메뉴에서 원하는 항목을 눌러 들어가세요.</div>
     <div id="vip-list"></div>
   </section>
 </main>
@@ -395,7 +406,9 @@
   let isDemo = false;
   let carTimer = null;
   let briefTimer = null;
-  const RUNNER='<svg viewBox="0 0 40 50" class="runner-bob" aria-hidden="true"><rect class="limb legB" x="18.5" y="30" width="3" height="15" rx="1.5" fill="#c2410c"/><rect class="limb armB" x="18.5" y="16" width="3" height="12" rx="1.5" fill="#c2410c"/><rect x="18.5" y="13" width="3" height="18" rx="1.5" fill="#f97316"/><rect class="limb legF" x="18.5" y="30" width="3" height="15" rx="1.5" fill="#f97316"/><rect class="limb armF" x="18.5" y="16" width="3" height="12" rx="1.5" fill="#f97316"/><circle cx="20" cy="8" r="5" fill="#fb923c"/></svg>';
+  const RUNNER_BOY='<svg viewBox="0 0 48 56" class="runner-bob" aria-hidden="true"><rect class="limb legB" x="22" y="33" width="5" height="17" rx="2.5" fill="#c79a5b"/><rect class="limb armB" x="22.5" y="22" width="4.5" height="13" rx="2.2" fill="#c79a5b"/><rect x="17.5" y="19" width="13" height="17" rx="5.5" fill="#f97316"/><rect x="18.5" y="33" width="11" height="7" rx="3" fill="#1e3a5f"/><rect class="limb legF" x="22" y="33" width="5" height="17" rx="2.5" fill="#eab676"/><rect class="limb armF" x="20.5" y="22" width="4.5" height="13" rx="2.2" fill="#eab676"/><circle cx="24" cy="12.5" r="8" fill="#ffd9a8"/><path d="M16.5 12 a7.5 7.5 0 0 1 15 0 q-7.5 -7 -15 0 Z" fill="#3b2a1d"/><circle cx="21.3" cy="13" r="1.1" fill="#2a2018"/><circle cx="26.7" cy="13" r="1.1" fill="#2a2018"/><path d="M22.3 16 q1.7 1.4 3.4 0" stroke="#b9703f" stroke-width="1" fill="none" stroke-linecap="round"/></svg>';
+  const RUNNER_GIRL='<svg viewBox="0 0 48 56" class="runner-bob" aria-hidden="true"><rect class="limb legB" x="22" y="34" width="5" height="15" rx="2.5" fill="#c79a5b"/><rect class="limb armB" x="22.5" y="22" width="4.5" height="13" rx="2.2" fill="#c79a5b"/><path d="M16.5 35 L31.5 35 L34 42 L14 42 Z" fill="#e1568a"/><rect x="17.5" y="19" width="13" height="17" rx="5.5" fill="#14b8a6"/><rect class="limb legF" x="22" y="34" width="5" height="15" rx="2.5" fill="#eab676"/><rect class="limb armF" x="20.5" y="22" width="4.5" height="13" rx="2.2" fill="#eab676"/><path class="pony" d="M30 7 q9 3 5 14 q-1 -7 -7 -9 Z" fill="#4a3526"/><circle cx="24" cy="12.5" r="8" fill="#ffd9a8"/><path d="M16.5 12 a7.5 7.5 0 0 1 15 0 q-7.5 -8 -15 0 Z" fill="#4a3526"/><circle cx="21.3" cy="13" r="1.1" fill="#2a2018"/><circle cx="26.7" cy="13" r="1.1" fill="#2a2018"/><path d="M22.3 16 q1.7 1.4 3.4 0" stroke="#b9703f" stroke-width="1" fill="none" stroke-linecap="round"/></svg>';
+  function pickRunner(name){ let s=0; for(const ch of String(name||'')) s+=ch.charCodeAt(0); return (s%2===0)?RUNNER_GIRL:RUNNER_BOY; }
 
   (function(){const c=document.getElementById('particles');if(!c)return;for(let i=0;i<22;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(6+Math.random()*8)+'s';p.style.animationDelay=Math.random()*10+'s';p.style.width=p.style.height=(1+Math.random()*3)+'px';c.appendChild(p);}})();
 
@@ -452,6 +465,7 @@
     document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.v===view));
     const hf=document.getElementById('home-iframe'); if(hf) hf.src='';
     const hv=document.getElementById('home-videoframe'); if(hv) hv.style.display='none';
+    if(view==='vip') vipMenu();
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
@@ -666,6 +680,7 @@
 
   function renderTimeline(){
     const tl=document.getElementById('timeline'); tl.innerHTML='';
+    const runner=pickRunner(currentStudent);
     D.nodes.forEach(node=>{
       if(node.type==='divider'){ const d=document.createElement('div'); d.className='divider'; d.innerHTML=`<span>${node.label}</span>`; tl.appendChild(d); return; }
       if(node.type==='goal'){ const g=document.createElement('div'); g.className='node goal'; g.innerHTML=`<div class="date">${node.date}</div><h3 class="disp">${node.title}</h3><div class="desc">${node.desc}</div>`; tl.appendChild(g); return; }
@@ -673,7 +688,7 @@
       const el=document.createElement('div');
       el.className=`node ${node.track}${unlocked?'':' locked'}${isCurrent?' current':''}`;
       const icon=node.type==='special'?(unlocked?'⭐':'🔒'):(unlocked?'🔓':'🔒');
-      el.innerHTML=`${isCurrent?'<div class="marker">'+RUNNER+'</div>':''}<div class="icon-status">${icon}</div>`
+      el.innerHTML=`${isCurrent?'<div class="marker">'+runner+'</div>':''}<div class="icon-status">${icon}</div>`
         +`<div class="date">${node.date}${isCurrent?' · 현재 진행 중':''}</div><h3 class="disp">${escHtml(node.title)}</h3>`
         +`<div class="desc">${escHtml(node.desc)}</div>${node.focus?`<div class="focus">${escHtml(node.focus)}</div>`:''}`;
       el.onclick=()=>openModal(node,unlocked);
@@ -756,7 +771,7 @@
   function closeBook(){ const v=document.getElementById('bookviewer'); v.classList.remove('open'); document.getElementById('bv-stage').innerHTML=''; document.getElementById('bv-actions').innerHTML=''; }
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(document.getElementById('bookviewer').classList.contains('open')) closeBook(); if(document.getElementById('reader').classList.contains('open')) closeReader(); if(document.getElementById('vlight').classList.contains('open')) closeVid(); } });
 
-  /* ----- VIP 라운지 ----- */
+  /* ----- VIP 라운지 (버튼형) ----- */
   function sessThumb(s){ return s.thumb || ytThumb(s.url) || ''; }
   function playVid(url){ const e=vidEmbed(url); if(!e){ window.open(url,'_blank','noopener'); return; } document.getElementById('vl-if').src=e; document.getElementById('vlight').classList.add('open'); }
   function closeVid(){ document.getElementById('vl-if').src=''; document.getElementById('vlight').classList.remove('open'); }
@@ -764,60 +779,81 @@
   function renderVip(){
     const wrap=document.getElementById('vip-list'); if(!wrap) return;
     if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 VIP 라운지가 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
-    const V=D.vip||{}; let h='';
-
-    const ses=(V.sessions||[]).filter(s=>s&&s.url);
-    h+=`<div class="vip-sec"><div class="vip-h disp">🎬 프리미엄 설명회</div>`;
-    if(ses.length){
-      h+='<div class="carousel" id="sessCar">';
-      ses.forEach((s,i)=>{ const th=sessThumb(s); h+=`<button class="vid-card" data-ses="${i}"><span class="vid-thumb">${th?`<img loading="lazy" src="${escAttr(th)}" onerror="this.style.display='none'">`:''}<span class="vid-play">▶</span></span><span class="vc-t">${escHtml(s.title||'설명회 영상')}</span></button>`; });
-      h+='</div><div class="sess-list">';
-      ses.forEach((s,i)=>{ h+=`<button class="sess-row" data-ses="${i}"><span class="sr-t">${escHtml(s.title||'설명회 영상')}</span><span class="sr-d">${escHtml(s.date||'')} ›</span></button>`; });
-      h+='</div>';
-    } else h+='<div class="empty-note" style="text-align:left">등록된 설명회 영상이 없습니다.</div>';
-    h+='</div>';
-
-    const courses=(V.courses||[]).filter(c=>c&&(c.title||c.body));
-    h+=`<div class="vip-sec"><div class="vip-h disp">📣 신규 강좌 공지</div>`;
-    if(courses.length){
-      courses.forEach(c=>{
-        h+=`<div class="folder"><div class="folder-h disp"><span class="folder-ic">📣</span> ${escHtml(c.title||'공지')}${c.date?`<span class="folder-c">${escHtml(c.date)}</span>`:''}</div><div class="folder-b">`;
-        if(c.body&&c.body.trim()) h+=`<div class="notice" style="padding:6px 2px">${linkify(c.body)}</div>`;
-        if(c.link) h+=`<a class="tb-btn" href="${escAttr(c.link)}" target="_blank" rel="noopener" style="margin-top:10px"><span class="ico">🔗</span> 자세히 보기 / 신청</a>`;
-        h+='</div></div>';
-      });
-    } else h+='<div class="empty-note" style="text-align:left">등록된 강좌 공지가 없습니다.</div>';
-    h+='</div>';
-
-    const cl=V.clinic||{};
-    h+=`<div class="vip-sec"><div class="vip-h disp">🩺 결석 · 클리닉 신청</div><div class="clinic-card"><p>${escHtml(cl.notice||'결석·보강·클리닉 신청은 아래 버튼으로 접수해주세요.')}</p>${cl.url?`<a class="clinic-btn" href="${escAttr(cl.url)}" target="_blank" rel="noopener">📝 신청하러 가기</a>`:'<span class="empty-note" style="display:inline-block">신청 링크 준비중입니다. 담당 선생님께 문의해주세요.</span>'}</div></div>`;
-
-    const cols=(V.columns||[]).filter(c=>c&&c.title);
-    h+=`<div class="vip-sec"><div class="vip-h disp">👑 DOCSSAM의 프리미엄 칼럼</div>`;
-    h+=`<div class="col-banner"><span class="cb-ic">✒️</span><div><b>DOCSSAM의 프리미엄 칼럼</b><span>원장이 직접 쓰는 학습·입시 인사이트</span></div></div>`;
-    if(cols.length){
-      cols.forEach((c,i)=>{ h+=`<button class="col-card" data-col="${i}"><div style="flex:1"><div class="cc-t">${escHtml(c.title)}</div><div class="cc-d">${escHtml([c.category,c.date].filter(Boolean).join(' · '))}</div></div><span style="color:var(--orange-d);font-weight:800">›</span></button>`; });
-    } else h+='<div class="empty-note" style="text-align:left">아직 등록된 칼럼이 없습니다.</div>';
-    h+='</div>';
-
-    const mags=(V.magazine||[]).filter(m=>m&&m.title);
-    h+=`<div class="vip-sec"><div class="vip-h disp">📰 교육 매거진</div>`;
-    if(mags.length){
-      h+='<div class="mag-grid">';
-      mags.forEach((m,i)=>{
-        const thumb=m.image?`<img class="mag-thumb" loading="lazy" src="${escAttr(m.image)}" onerror="this.style.display='none'">`:'';
-        const snip=(m.desc||'').replace(/\s+/g,' ').slice(0,60);
-        h+=`<button class="mag-card" data-mag="${i}">${thumb}<div class="mag-b"><span class="mag-chip">${escHtml(m.category||'매거진')}</span><div class="mag-t">${escHtml(m.title)}</div><div class="mag-d">${escHtml(snip)}${snip.length>=60?'…':''}</div></div></button>`;
-      });
-      h+='</div>';
-    } else h+='<div class="empty-note" style="text-align:left">등록된 매거진 글이 없습니다.</div>';
-    h+='</div>';
-
-    wrap.innerHTML=h;
-    wrap.querySelectorAll('.vid-card[data-ses],.sess-row[data-ses]').forEach(b=>b.onclick=()=>{ const s=ses[+b.dataset.ses]; if(s) playVid(s.url); });
-    wrap.querySelectorAll('.mag-card[data-mag]').forEach(b=>b.onclick=()=>openMag(mags[+b.dataset.mag]));
-    wrap.querySelectorAll('.col-card[data-col]').forEach(b=>b.onclick=()=>openCol(cols[+b.dataset.col]));
-    startCarousel();
+    vipMenu();
+  }
+  function vipMenu(){
+    const wrap=document.getElementById('vip-list'); if(!wrap) return;
+    if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 VIP 라운지가 제공되지 않습니다.</div>'; return; }
+    const V=D.vip||{};
+    const ses=(V.sessions||[]).filter(s=>s&&s.url).length;
+    const cou=(V.courses||[]).filter(c=>c&&(c.title||c.body)).length;
+    const col=(V.columns||[]).filter(c=>c&&c.title).length;
+    const mag=(V.magazine||[]).filter(m=>m&&m.title).length;
+    wrap.innerHTML=`<div class="vip-menu">
+      <button class="vip-mbtn" data-k="ses"><span class="mi">🎬</span><span class="mt">프리미엄 설명회</span><span class="mc">${ses}개 영상 ›</span></button>
+      <button class="vip-mbtn" data-k="cou"><span class="mi">📣</span><span class="mt">신규 강좌 공지</span><span class="mc">${cou}건 ›</span></button>
+      <button class="vip-mbtn" data-k="clinic"><span class="mi">🩺</span><span class="mt">결석·클리닉 신청</span><span class="mc">바로 신청 ›</span></button>
+      <button class="vip-mbtn" data-k="col"><span class="mi">✒️</span><span class="mt">DOCSSAM 칼럼</span><span class="mc">${col}편 ›</span></button>
+      <button class="vip-mbtn full" data-k="mag"><span class="mi">📰</span><span><span class="mt">교육 매거진</span><span class="mc" style="display:block">${mag}건 · 매일 업데이트 ›</span></span></button>
+    </div>`;
+    wrap.querySelectorAll('.vip-mbtn[data-k]').forEach(b=>b.onclick=()=>openVipSection(b.dataset.k));
+  }
+  function openVipSection(k){
+    const wrap=document.getElementById('vip-list'); if(!wrap) return;
+    const V=D.vip||{};
+    const back='<button class="vip-back" onclick="vipMenu()">‹ VIP 라운지</button>';
+    if(k==='ses'){
+      const ses=(V.sessions||[]).filter(s=>s&&s.url);
+      let h=back+`<div class="vip-h disp">🎬 프리미엄 설명회</div>`;
+      if(ses.length){
+        h+='<div class="carousel" id="sessCar">';
+        ses.forEach((s,i)=>{ const th=sessThumb(s); h+=`<button class="vid-card" data-ses="${i}"><span class="vid-thumb">${th?`<img loading="lazy" src="${escAttr(th)}" onerror="this.style.display='none'">`:''}<span class="vid-play">▶</span></span><span class="vc-t">${escHtml(s.title||'설명회 영상')}</span></button>`; });
+        h+='</div><div class="sess-list">';
+        ses.forEach((s,i)=>{ h+=`<button class="sess-row" data-ses="${i}"><span class="sr-t">${escHtml(s.title||'설명회 영상')}</span><span class="sr-d">${escHtml(s.date||'')} ›</span></button>`; });
+        h+='</div>';
+      } else h+='<div class="empty-note" style="text-align:left">등록된 설명회 영상이 없습니다.</div>';
+      wrap.innerHTML=h;
+      wrap.querySelectorAll('[data-ses]').forEach(b=>b.onclick=()=>{ const s=ses[+b.dataset.ses]; if(s) playVid(s.url); });
+      startCarousel();
+    } else if(k==='cou'){
+      const courses=(V.courses||[]).filter(c=>c&&(c.title||c.body));
+      let h=back+`<div class="vip-h disp">📣 신규 강좌 공지</div>`;
+      if(courses.length){
+        courses.forEach(c=>{
+          h+=`<div class="folder"><div class="folder-h disp"><span class="folder-ic">📣</span> ${escHtml(c.title||'공지')}${c.date?`<span class="folder-c">${escHtml(c.date)}</span>`:''}</div><div class="folder-b">`;
+          if(c.body&&c.body.trim()) h+=`<div class="notice" style="padding:6px 2px">${linkify(c.body)}</div>`;
+          if(c.link) h+=`<a class="tb-btn" href="${escAttr(c.link)}" target="_blank" rel="noopener" style="margin-top:10px"><span class="ico">🔗</span> 자세히 보기 / 신청</a>`;
+          h+='</div></div>';
+        });
+      } else h+='<div class="empty-note" style="text-align:left">등록된 강좌 공지가 없습니다.</div>';
+      wrap.innerHTML=h;
+    } else if(k==='clinic'){
+      const cl=V.clinic||{};
+      wrap.innerHTML=back+`<div class="vip-h disp">🩺 결석 · 클리닉 신청</div><div class="clinic-card"><p>${escHtml(cl.notice||'결석·보강·클리닉 신청은 아래 버튼으로 접수해주세요.')}</p>${cl.url?`<a class="clinic-btn" href="${escAttr(cl.url)}" target="_blank" rel="noopener">📝 신청하러 가기</a>`:'<span class="empty-note" style="display:inline-block">신청 링크 준비중입니다. 담당 선생님께 문의해주세요.</span>'}</div>`;
+    } else if(k==='col'){
+      const cols=(V.columns||[]).filter(c=>c&&c.title);
+      let h=back+`<div class="vip-h disp">👑 DOCSSAM의 프리미엄 칼럼</div><div class="col-banner"><span class="cb-ic">✒️</span><div><b>DOCSSAM의 프리미엄 칼럼</b><span>원장이 직접 쓰는 학습·입시 인사이트</span></div></div>`;
+      if(cols.length){
+        cols.forEach((c,i)=>{ h+=`<button class="col-card" data-col="${i}"><div style="flex:1"><div class="cc-t">${escHtml(c.title)}</div><div class="cc-d">${escHtml([c.category,c.date].filter(Boolean).join(' · '))}</div></div><span style="color:var(--orange-d);font-weight:800">›</span></button>`; });
+      } else h+='<div class="empty-note" style="text-align:left">아직 등록된 칼럼이 없습니다.</div>';
+      wrap.innerHTML=h;
+      wrap.querySelectorAll('[data-col]').forEach(b=>b.onclick=()=>openCol(cols[+b.dataset.col]));
+    } else if(k==='mag'){
+      const mags=(V.magazine||[]).filter(m=>m&&m.title);
+      let h=back+`<div class="vip-h disp">📰 교육 매거진</div>`;
+      if(mags.length){
+        h+='<div class="mag-grid">';
+        mags.forEach((m,i)=>{
+          const thumb=m.image?`<img class="mag-thumb" loading="lazy" src="${escAttr(m.image)}" onerror="this.style.display='none'">`:'';
+          const snip=(m.desc||'').replace(/\s+/g,' ').slice(0,60);
+          h+=`<button class="mag-card" data-mag="${i}">${thumb}<div class="mag-b"><span class="mag-chip">${escHtml(m.category||'매거진')}</span><div class="mag-t">${escHtml(m.title)}</div><div class="mag-d">${escHtml(snip)}${snip.length>=60?'…':''}</div></div></button>`;
+        });
+        h+='</div>';
+      } else h+='<div class="empty-note" style="text-align:left">등록된 매거진 글이 없습니다.</div>';
+      wrap.innerHTML=h;
+      wrap.querySelectorAll('[data-mag]').forEach(b=>b.onclick=()=>openMag(mags[+b.dataset.mag]));
+    }
+    window.scrollTo({top:0,behavior:'smooth'});
   }
   function startCarousel(){
     const car=document.getElementById('sessCar'); if(!car) return;
