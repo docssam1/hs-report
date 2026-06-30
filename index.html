@@ -393,6 +393,7 @@
   let currentStudent = null;
   let isDemo = false;
   let carTimer = null;
+  let briefTimer = null;
   const RUNNER='<svg viewBox="0 0 40 50" class="runner-bob" aria-hidden="true"><rect class="limb legB" x="18.5" y="30" width="3" height="15" rx="1.5" fill="#c2410c"/><rect class="limb armB" x="18.5" y="16" width="3" height="12" rx="1.5" fill="#c2410c"/><rect x="18.5" y="13" width="3" height="18" rx="1.5" fill="#f97316"/><rect class="limb legF" x="18.5" y="30" width="3" height="15" rx="1.5" fill="#f97316"/><rect class="limb armF" x="18.5" y="16" width="3" height="12" rx="1.5" fill="#f97316"/><circle cx="20" cy="8" r="5" fill="#fb923c"/></svg>';
 
   (function(){const c=document.getElementById('particles');if(!c)return;for(let i=0;i<22;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(6+Math.random()*8)+'s';p.style.animationDelay=Math.random()*10+'s';p.style.width=p.style.height=(1+Math.random()*3)+'px';c.appendChild(p);}})();
@@ -431,12 +432,15 @@
     document.getElementById('dashboard').classList.remove('hidden');
     document.getElementById('who').textContent=given;
     renderStatus(); renderBriefing(); renderHome(); renderTimeline(); renderArchive(); renderVip();
+    if(briefTimer) clearInterval(briefTimer);
+    if(!isDemo) briefTimer=setInterval(renderBriefing, 600000);
     nav('home'); window.scrollTo(0,0);
     if(!isDemo) showCheer(given);
   }
   function logout(){
     currentStudent=null; isDemo=false;
     try{ localStorage.removeItem('gfield_student'); }catch(e){}
+    if(briefTimer){ clearInterval(briefTimer); briefTimer=null; }
     document.getElementById('dashboard').classList.add('hidden');
     document.getElementById('login').classList.remove('hidden');
     document.getElementById('name-input').value='';
@@ -529,12 +533,12 @@
     const lat=(D.meta&&D.meta.lat)||37.4996, lng=(D.meta&&D.meta.lng)||127.0584;
     try{
       const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&timezone=Asia%2FSeoul&forecast_days=2`;
-      const r=await fetch(url); if(!r.ok) throw 0; return await r.json();
+      const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw 0; return await r.json();
     }catch(e){ return null; }
   }
   async function renderBriefing(){
     const el=document.getElementById('briefing'); if(!el) return;
-    if(isDemo){ el.innerHTML=''; return; }
+    if(isDemo||!currentStudent){ el.innerHTML=''; return; }
     const given=givenName(currentStudent);
     const mode=audienceMode();
     const ph=dPhase(daysToExam());
