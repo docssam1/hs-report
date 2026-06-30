@@ -194,7 +194,7 @@
   .bv-top{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#0d1b2a;border-bottom:1px solid rgba(212,175,55,.25);}
   .bv-back{background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);color:var(--gold-light);font-size:14px;font-weight:700;padding:9px 14px;border-radius:11px;flex:none;}
   .bv-name{flex:1;text-align:center;font-size:14.5px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  #bv-actions{display:flex;gap:8px;flex:none;}
+  #bv-actions{display:flex;gap:8px;flex:none;flex-wrap:wrap;justify-content:flex-end;}
   .bv-act{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--gold),#c5982e);color:#0a0a0a;font-size:13px;font-weight:800;padding:8px 13px;border-radius:9px;text-decoration:none;}
   .bv-stage{flex:1;display:flex;min-height:0;}
   .bv-stage.split{flex-direction:row;}
@@ -518,7 +518,7 @@
     if(!folders.length){ wrap.innerHTML='<div class="empty-note">열람 가능한 자료실이 없습니다.</div>'; return; }
     let total=0;
     folders.forEach(folder=>{
-      const books=(D.books||[]).filter(b=>b&&b.folder===folder&&(b.pdf||b.video));
+      const books=(D.books||[]).filter(b=>b&&b.folder===folder&&(b.pdf||b.video||(b.links&&b.links.length)));
       const sec=document.createElement('div'); sec.className='shelf-sec';
       let inner=`<div class="shelf-h">📚 ${escHtml(folder)}<span class="c">${books.length}권</span></div>`;
       if(books.length){
@@ -529,7 +529,7 @@
           const cover=b.cover
             ? `<span class="cover"><img loading="lazy" src="${escAttr(b.cover)}" alt="${escAttr(b.title||'교재')}"></span>`
             : `<span class="cover noimg"><span class="cv-title">${escHtml(b.title||'교재')}</span></span>`;
-          const tag = b.video ? (ytSingle(b.video)?'🎬 강의 포함':'▶ 영상 링크') : '📄 교재';
+          const tag = b.video ? (ytSingle(b.video)?'🎬 강의 포함':'▶ 영상 링크') : ((b.links&&b.links.length)?'🔗 링크 포함':'📄 교재');
           inner+=`<button class="book" data-bi="${i}">${cover}<span class="label">${escHtml(b.title||'교재')}</span><span class="pages">${tag}</span></button>`;
         });
         inner+='</div>';
@@ -558,8 +558,10 @@
       stage.className='bv-stage';
       stage.innerHTML=pdfPane;
     }
-    document.getElementById('bv-actions').innerHTML = (mode==='link'&&b.video)
+    let acts = (mode==='link'&&b.video)
       ? `<a class="bv-act" href="${escAttr(b.video)}" target="_blank" rel="noopener">▶ 영상 보기</a>` : '';
+    (b.links||[]).forEach(l=>{ if(l&&l.url) acts+=`<a class="bv-act" href="${escAttr(l.url)}" target="_blank" rel="noopener">🔗 ${escHtml(l.label||'링크')}</a>`; });
+    document.getElementById('bv-actions').innerHTML = acts;
     document.getElementById('bookviewer').classList.add('open');
   }
   function closeBook(){ const v=document.getElementById('bookviewer'); v.classList.remove('open'); document.getElementById('bv-stage').innerHTML=''; document.getElementById('bv-actions').innerHTML=''; }
