@@ -254,6 +254,20 @@
   .col-card{display:flex;gap:12px;align-items:flex-start;width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;cursor:pointer;text-align:left;}
   .col-card .cc-t{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.35;}
   .col-card .cc-d{font-size:12px;color:var(--dim);margin-top:4px;}
+  /* 성적표 */
+  .rep-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 4px 12px rgba(186,110,40,.07);}
+  .rep-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px;}
+  .rep-t{font-size:15px;font-weight:800;color:var(--ink);}
+  .rep-date{font-size:12px;color:var(--dim);white-space:nowrap;}
+  .rep-score{font-size:13px;color:var(--ink2);}
+  .rep-score b{font-size:23px;color:var(--orange-d);vertical-align:-2px;}
+  .rep-grade{display:inline-block;font-size:12px;font-weight:800;color:#fff;background:linear-gradient(135deg,#fb923c,var(--orange-d));border-radius:999px;padding:3px 11px;margin-left:6px;}
+  .rep-areas{margin-top:11px;display:flex;flex-direction:column;gap:7px;}
+  .rep-area .ra-t{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);margin-bottom:3px;}
+  .rep-bar{height:7px;background:#fde9d6;border-radius:99px;overflow:hidden;}
+  .rep-bar i{display:block;height:100%;background:linear-gradient(90deg,#fdba74,var(--orange-d));border-radius:99px;}
+  .rep-comment{margin-top:11px;background:#fff7ec;border:1px solid #fcdcb8;border-radius:10px;padding:9px 11px;font-size:12.5px;color:var(--ink2);line-height:1.65;}
+  .rep-comment b{color:var(--orange-d);}
 
   /* 영상 라이트박스 */
   .vlight{position:fixed;inset:0;z-index:78;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:18px;}
@@ -406,6 +420,7 @@
   let isDemo = false;
   let carTimer = null;
   let briefTimer = null;
+  let reportUnlocked = false;
   const RUNNER_BOY='<svg viewBox="0 0 48 56" class="runner-bob" aria-hidden="true"><rect class="limb legB" x="22" y="33" width="5" height="17" rx="2.5" fill="#c79a5b"/><rect class="limb armB" x="22.5" y="22" width="4.5" height="13" rx="2.2" fill="#c79a5b"/><rect x="17.5" y="19" width="13" height="17" rx="5.5" fill="#f97316"/><rect x="18.5" y="33" width="11" height="7" rx="3" fill="#1e3a5f"/><rect class="limb legF" x="22" y="33" width="5" height="17" rx="2.5" fill="#eab676"/><rect class="limb armF" x="20.5" y="22" width="4.5" height="13" rx="2.2" fill="#eab676"/><circle cx="24" cy="12.5" r="8" fill="#ffd9a8"/><path d="M16.5 12 a7.5 7.5 0 0 1 15 0 q-7.5 -7 -15 0 Z" fill="#3b2a1d"/><circle cx="21.3" cy="13" r="1.1" fill="#2a2018"/><circle cx="26.7" cy="13" r="1.1" fill="#2a2018"/><path d="M22.3 16 q1.7 1.4 3.4 0" stroke="#b9703f" stroke-width="1" fill="none" stroke-linecap="round"/></svg>';
   const RUNNER_GIRL='<svg viewBox="0 0 48 56" class="runner-bob" aria-hidden="true"><rect class="limb legB" x="22" y="34" width="5" height="15" rx="2.5" fill="#c79a5b"/><rect class="limb armB" x="22.5" y="22" width="4.5" height="13" rx="2.2" fill="#c79a5b"/><path d="M16.5 35 L31.5 35 L34 42 L14 42 Z" fill="#e1568a"/><rect x="17.5" y="19" width="13" height="17" rx="5.5" fill="#14b8a6"/><rect class="limb legF" x="22" y="34" width="5" height="15" rx="2.5" fill="#eab676"/><rect class="limb armF" x="20.5" y="22" width="4.5" height="13" rx="2.2" fill="#eab676"/><path class="pony" d="M30 7 q9 3 5 14 q-1 -7 -7 -9 Z" fill="#4a3526"/><circle cx="24" cy="12.5" r="8" fill="#ffd9a8"/><path d="M16.5 12 a7.5 7.5 0 0 1 15 0 q-7.5 -8 -15 0 Z" fill="#4a3526"/><circle cx="21.3" cy="13" r="1.1" fill="#2a2018"/><circle cx="26.7" cy="13" r="1.1" fill="#2a2018"/><path d="M22.3 16 q1.7 1.4 3.4 0" stroke="#b9703f" stroke-width="1" fill="none" stroke-linecap="round"/></svg>';
   function pickRunner(name){ let s=0; for(const ch of String(name||'')) s+=ch.charCodeAt(0); return (s%2===0)?RUNNER_GIRL:RUNNER_BOY; }
@@ -440,6 +455,7 @@
     if(name.toLowerCase()==='docssam'){ location.href='admin.html'; return; }
     isDemo=(name.toLowerCase()==='demo');
     currentStudent=isDemo?'체험':name;
+    reportUnlocked=false;
     const given=isDemo?'체험':givenName(name);
     try{ localStorage.setItem('gfield_student',currentStudent); }catch(e){}
     document.getElementById('login').classList.add('hidden');
@@ -452,7 +468,7 @@
     if(!isDemo) showCheer(given);
   }
   function logout(){
-    currentStudent=null; isDemo=false;
+    currentStudent=null; isDemo=false; reportUnlocked=false;
     try{ localStorage.removeItem('gfield_student'); }catch(e){}
     if(briefTimer){ clearInterval(briefTimer); briefTimer=null; }
     document.getElementById('dashboard').classList.add('hidden');
@@ -497,7 +513,7 @@
     }
   }
 
-  /* ----- 오늘의 브리핑 (시간대별 청자 구분 + D-day + 날씨 코멘트) ----- */
+  /* ----- 오늘의 브리핑 ----- */
   function audienceMode(){
     const now=new Date(); const h=now.getHours(); const day=now.getDay();
     const weekday=day>=1&&day<=5;
@@ -776,6 +792,27 @@
   function playVid(url){ const e=vidEmbed(url); if(!e){ window.open(url,'_blank','noopener'); return; } document.getElementById('vl-if').src=e; document.getElementById('vlight').classList.add('open'); }
   function closeVid(){ document.getElementById('vl-if').src=''; document.getElementById('vlight').classList.remove('open'); }
 
+  function reportHTML(){
+    const list=(D.reports&&D.reports[currentStudent])||[];
+    if(!list.length) return '<div class="empty-note" style="text-align:left">아직 등록된 성적표가 없습니다.</div>';
+    let h='';
+    list.forEach(r=>{
+      const total=(r.total!=null&&r.total!=='')?` / ${escHtml(String(r.total))}`:'';
+      h+=`<div class="rep-card"><div class="rep-top"><span class="rep-t">${escHtml(r.title||'모의고사')}</span><span class="rep-date">${escHtml(r.date||'')}</span></div>`;
+      if(r.score!=null&&r.score!=='') h+=`<div class="rep-score">점수 <b>${escHtml(String(r.score))}</b>${total}${r.grade?`<span class="rep-grade">${escHtml(r.grade)}</span>`:''}</div>`;
+      else if(r.grade) h+=`<div class="rep-score"><span class="rep-grade">${escHtml(r.grade)}</span></div>`;
+      const areas=(r.areas||[]).filter(a=>a&&a.name);
+      if(areas.length){
+        h+='<div class="rep-areas">';
+        areas.forEach(a=>{ const got=Number(a.got)||0, max=Number(a.max)||0; const pct=max?Math.max(0,Math.min(100,Math.round(got/max*100))):0; h+=`<div class="rep-area"><div class="ra-t"><span>${escHtml(a.name)}</span><span>${got}${max?' / '+max:''}</span></div><div class="rep-bar"><i style="width:${pct}%"></i></div></div>`; });
+        h+='</div>';
+      }
+      if(r.comment&&r.comment.trim()) h+=`<div class="rep-comment"><b>선생님 코멘트</b><br>${escHtml(r.comment)}</div>`;
+      h+='</div>';
+    });
+    return h;
+  }
+
   function renderVip(){
     const wrap=document.getElementById('vip-list'); if(!wrap) return;
     if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 VIP 라운지가 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
@@ -789,7 +826,9 @@
     const cou=(V.courses||[]).filter(c=>c&&(c.title||c.body)).length;
     const col=(V.columns||[]).filter(c=>c&&c.title).length;
     const mag=(V.magazine||[]).filter(m=>m&&m.title).length;
+    const rep=((D.reports&&D.reports[currentStudent])||[]).length;
     wrap.innerHTML=`<div class="vip-menu">
+      <button class="vip-mbtn full" data-k="report" style="border:1.5px solid #fcd3a3;background:#fff7ec"><span class="mi">📊</span><span><span class="mt">내 성적표</span><span class="mc" style="display:block">모의고사 결과 · 본인 확인 ${rep?`(${rep})`:''} ›</span></span></button>
       <button class="vip-mbtn" data-k="ses"><span class="mi">🎬</span><span class="mt">프리미엄 설명회</span><span class="mc">${ses}개 영상 ›</span></button>
       <button class="vip-mbtn" data-k="cou"><span class="mi">📣</span><span class="mt">신규 강좌 공지</span><span class="mc">${cou}건 ›</span></button>
       <button class="vip-mbtn" data-k="clinic"><span class="mi">🩺</span><span class="mt">결석·클리닉 신청</span><span class="mc">바로 신청 ›</span></button>
@@ -802,7 +841,16 @@
     const wrap=document.getElementById('vip-list'); if(!wrap) return;
     const V=D.vip||{};
     const back='<button class="vip-back" onclick="vipMenu()">‹ VIP 라운지</button>';
-    if(k==='ses'){
+    if(k==='report'){
+      const pin=(D.pins&&D.pins[currentStudent])||'';
+      if(pin && !reportUnlocked){
+        const inp=prompt(givenName(currentStudent)+' 학생, 전화번호 뒷 4자리를 입력하세요');
+        if(inp==null){ vipMenu(); return; }
+        if(String(inp).replace(/\D/g,'').slice(-4)!==String(pin).replace(/\D/g,'').slice(-4)){ toast('번호가 일치하지 않습니다'); vipMenu(); return; }
+        reportUnlocked=true;
+      }
+      wrap.innerHTML=back+`<div class="vip-h disp">📊 ${escHtml(givenName(currentStudent))} 학생 성적표</div>`+reportHTML();
+    } else if(k==='ses'){
       const ses=(V.sessions||[]).filter(s=>s&&s.url);
       let h=back+`<div class="vip-h disp">🎬 프리미엄 설명회</div>`;
       if(ses.length){
