@@ -120,7 +120,7 @@
       <button data-tab="archive" onclick="tab('archive')">⑤ 자료실</button>
       <button data-tab="vip" onclick="tab('vip')">⑥ VIP 라운지</button>
       <button data-tab="mag" onclick="tab('mag')">⑦ 교육 매거진</button>
-      <button data-tab="report" onclick="tab('report')">⑧ 성적표</button>
+      <button data-tab="report" onclick="tab('report')">⑧ 진단 결과</button>
     </div>
 
     <section id="tab-attend">
@@ -235,8 +235,8 @@
 
     <section id="tab-report" class="hidden">
       <div class="card">
-        <h3>📊 학생별 성적표</h3>
-        <div class="hint">학생을 선택해 <b>전화번호 뒷 4자리(잠금)</b>와 모의고사 성적을 입력하세요. 학생 화면 → 👑 VIP 라운지 → 내 성적표에서 본인만 열람합니다. (뒷자리가 비면 잠금 없이 열립니다)</div>
+        <h3>📊 학생별 진단 결과 · 코멘트</h3>
+        <div class="hint">학생을 선택해 <b>전화번호 뒷 4자리(잠금)</b>와 모의고사 진단 결과·코멘트를 입력하세요. 학생 화면 → 👑 VIP 라운지 → 진단 결과에서 본인만 열람합니다. (뒷자리가 비면 잠금 없이 열립니다)</div>
         <div class="field"><label>학생 선택</label><select class="select" id="rep-student" onchange="repSelect(this.value)"></select></div>
         <div id="rep-body"></div>
       </div>
@@ -563,7 +563,7 @@
     finally{ btn.disabled=false; btn.textContent=o; }
   }
 
-  /* ===== ⑧ 성적표 ===== */
+  /* ===== ⑧ 진단 결과 ===== */
   function ensureRep(){ S.pins=S.pins||{}; S.reports=S.reports||{}; }
   function repList(name){ ensureRep(); if(!Array.isArray(S.reports[name])) S.reports[name]=[]; return S.reports[name]; }
   function renderReportAdmin(){
@@ -592,17 +592,17 @@
         <button class="btn add sm" onclick="addArea(${i})">＋ 영역 추가</button>
         <label class="flbl">선생님 코멘트</label>
         <textarea class="cta" style="min-height:70px" oninput="setRep(${i},'comment',this.value)">${esc(r.comment)}</textarea>
-        <button class="btn del sm" onclick="delRep(${i})" style="margin-top:8px">이 성적표 삭제</button>
+        <button class="btn del sm" onclick="delRep(${i})" style="margin-top:8px">이 진단 결과 삭제</button>
       </div>`;
     });
-    if(!list.length) h+='<span class="hint">등록된 성적표가 없습니다.</span>';
-    h+=`<div style="margin-top:10px"><button class="btn add sm" onclick="addRep()">＋ 성적표 추가</button></div>`;
+    if(!list.length) h+='<span class="hint">등록된 진단 결과가 없습니다.</span>';
+    h+=`<div style="margin-top:10px"><button class="btn add sm" onclick="addRep()">＋ 진단 결과 추가</button></div>`;
     document.getElementById('rep-body').innerHTML=h;
   }
   function setPin(name,v){ ensureRep(); S.pins[name]=String(v).replace(/\D/g,'').slice(0,4); dirty(); }
   function addRep(){ repList(repSel).unshift({title:'',date:today(),score:'',total:'',grade:'',areas:[],comment:''}); renderRepBody(); dirty(); }
   function setRep(i,k,v){ const l=repList(repSel); if(l[i]){ l[i][k]=(k==='date'||k==='comment')?v:v.trim(); dirty(); } }
-  function delRep(i){ if(!confirm('이 성적표를 삭제할까요?')) return; repList(repSel).splice(i,1); renderRepBody(); dirty(); }
+  function delRep(i){ if(!confirm('이 진단 결과를 삭제할까요?')) return; repList(repSel).splice(i,1); renderRepBody(); dirty(); }
   function addArea(i){ const l=repList(repSel); if(l[i]){ (l[i].areas=l[i].areas||[]).push({name:'',got:'',max:''}); renderRepBody(); dirty(); } }
   function setArea(i,ai,k,v){ const l=repList(repSel); if(l[i]&&l[i].areas&&l[i].areas[ai]){ l[i].areas[ai][k]=v.trim(); dirty(); } }
   function delArea(i,ai){ const l=repList(repSel); if(l[i]&&l[i].areas){ l[i].areas.splice(ai,1); renderRepBody(); dirty(); } }
