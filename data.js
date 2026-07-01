@@ -91,6 +91,8 @@ window.GFIELD_DATA = {
     "사고력 교재 보충": ["*"]
   },
   "books": [],
+  "pins": {},
+  "reports": {},
   "vip": {
     "sessions": [],
     "courses": [],
