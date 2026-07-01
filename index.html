@@ -254,7 +254,7 @@
   .col-card{display:flex;gap:12px;align-items:flex-start;width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;cursor:pointer;text-align:left;}
   .col-card .cc-t{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.35;}
   .col-card .cc-d{font-size:12px;color:var(--dim);margin-top:4px;}
-  /* 성적표 */
+  /* 진단 결과 */
   .rep-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 4px 12px rgba(186,110,40,.07);}
   .rep-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px;}
   .rep-t{font-size:15px;font-weight:800;color:var(--ink);}
@@ -794,7 +794,7 @@
 
   function reportHTML(){
     const list=(D.reports&&D.reports[currentStudent])||[];
-    if(!list.length) return '<div class="empty-note" style="text-align:left">아직 등록된 성적표가 없습니다.</div>';
+    if(!list.length) return '<div class="empty-note" style="text-align:left">아직 등록된 진단 결과가 없습니다.</div>';
     let h='';
     list.forEach(r=>{
       const total=(r.total!=null&&r.total!=='')?` / ${escHtml(String(r.total))}`:'';
@@ -828,7 +828,7 @@
     const mag=(V.magazine||[]).filter(m=>m&&m.title).length;
     const rep=((D.reports&&D.reports[currentStudent])||[]).length;
     wrap.innerHTML=`<div class="vip-menu">
-      <button class="vip-mbtn full" data-k="report" style="border:1.5px solid #fcd3a3;background:#fff7ec"><span class="mi">📊</span><span><span class="mt">내 성적표</span><span class="mc" style="display:block">모의고사 결과 · 본인 확인 ${rep?`(${rep})`:''} ›</span></span></button>
+      <button class="vip-mbtn full" data-k="report" style="border:1.5px solid #fcd3a3;background:#fff7ec"><span class="mi">📊</span><span><span class="mt">진단 결과 · 코멘트</span><span class="mc" style="display:block">모의고사 진단 · 본인 확인 ${rep?`(${rep})`:''} ›</span></span></button>
       <button class="vip-mbtn" data-k="ses"><span class="mi">🎬</span><span class="mt">프리미엄 설명회</span><span class="mc">${ses}개 영상 ›</span></button>
       <button class="vip-mbtn" data-k="cou"><span class="mi">📣</span><span class="mt">신규 강좌 공지</span><span class="mc">${cou}건 ›</span></button>
       <button class="vip-mbtn" data-k="clinic"><span class="mi">🩺</span><span class="mt">결석·클리닉 신청</span><span class="mc">바로 신청 ›</span></button>
@@ -849,7 +849,7 @@
         if(String(inp).replace(/\D/g,'').slice(-4)!==String(pin).replace(/\D/g,'').slice(-4)){ toast('번호가 일치하지 않습니다'); vipMenu(); return; }
         reportUnlocked=true;
       }
-      wrap.innerHTML=back+`<div class="vip-h disp">📊 ${escHtml(givenName(currentStudent))} 학생 성적표</div>`+reportHTML();
+      wrap.innerHTML=back+`<div class="vip-h disp">📊 ${escHtml(givenName(currentStudent))} 학생 진단 결과</div>`+reportHTML();
     } else if(k==='ses'){
       const ses=(V.sessions||[]).filter(s=>s&&s.url);
       let h=back+`<div class="vip-h disp">🎬 프리미엄 설명회</div>`;
