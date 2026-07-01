@@ -68,7 +68,7 @@
   .tb-hint{font-size:11.5px;color:var(--muted);margin-bottom:8px;line-height:1.5;}
   .tb-list{display:flex;flex-direction:column;gap:8px;margin-bottom:8px;}
   .tb-row{display:flex;gap:8px;flex-wrap:wrap;}
-  .tb-row input[type=text]{flex:1;min-width:160px;}
+  .tb-row input[type=text]{flex:1;min-width:120px;}
   .tb-row input[type=url]{flex:2;min-width:200px;}
   .btn.sm{padding:8px 14px;font-size:13px;}
 
@@ -120,6 +120,7 @@
       <button data-tab="archive" onclick="tab('archive')">⑤ 자료실</button>
       <button data-tab="vip" onclick="tab('vip')">⑥ VIP 라운지</button>
       <button data-tab="mag" onclick="tab('mag')">⑦ 교육 매거진</button>
+      <button data-tab="report" onclick="tab('report')">⑧ 성적표</button>
     </div>
 
     <section id="tab-attend">
@@ -231,6 +232,15 @@
         <button class="btn add sm" onclick="addMag()" style="margin-top:8px;">＋ 뉴스 직접 추가</button>
       </div>
     </section>
+
+    <section id="tab-report" class="hidden">
+      <div class="card">
+        <h3>📊 학생별 성적표</h3>
+        <div class="hint">학생을 선택해 <b>전화번호 뒷 4자리(잠금)</b>와 모의고사 성적을 입력하세요. 학생 화면 → 👑 VIP 라운지 → 내 성적표에서 본인만 열람합니다. (뒷자리가 비면 잠금 없이 열립니다)</div>
+        <div class="field"><label>학생 선택</label><select class="select" id="rep-student" onchange="repSelect(this.value)"></select></div>
+        <div id="rep-body"></div>
+      </div>
+    </section>
   </div>
 
   <div class="savebar">
@@ -258,6 +268,9 @@
   S.books = S.books || [];
   S.info = S.info || [];
   S.vip = S.vip || {};
+  S.pins = S.pins || {};
+  S.reports = S.reports || {};
+  let repSel = '';
   function today(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
   function vip(){ const v=S.vip; v.sessions=v.sessions||[]; v.courses=v.courses||[]; v.clinic=v.clinic||{notice:'',url:''}; v.magazine=v.magazine||[]; v.columns=v.columns||[]; return v; }
 
@@ -276,11 +289,11 @@
   function lockAgain(){ location.reload(); }
 
   function tab(name){
-    ['attend','students','content','settings','archive','vip','mag'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
+    ['attend','students','content','settings','archive','vip','mag','report'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
   }
 
-  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); }
+  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); }
 
   function ensureStudent(name){ if(!S.attendance[name]) S.attendance[name]=[]; }
 
@@ -308,8 +321,8 @@
     S.students.forEach(name=>{ html+=`<span class="chip">${name}<button onclick="removeStudent('${name}')">×</button></span>`; });
     document.getElementById('student-chips').innerHTML=html||'<span class="hint">등록된 학생이 없습니다.</span>';
   }
-  function addStudent(){ const inp=document.getElementById('new-student'); const name=inp.value.trim(); if(!name) return; if(S.students.includes(name)){ toast('이미 있는 학생입니다'); return; } S.students.push(name); ensureStudent(name); inp.value=''; renderStudents(); renderMatrix(); renderAccMatrix(); dirty(); }
-  function removeStudent(name){ if(!confirm(`'${name}' 학생을 삭제할까요?`)) return; S.students=S.students.filter(s=>s!==name); delete S.attendance[name]; S.specialStudents=S.specialStudents.filter(s=>s!==name); renderStudents(); renderMatrix(); renderAccMatrix(); dirty(); }
+  function addStudent(){ const inp=document.getElementById('new-student'); const name=inp.value.trim(); if(!name) return; if(S.students.includes(name)){ toast('이미 있는 학생입니다'); return; } S.students.push(name); ensureStudent(name); inp.value=''; renderStudents(); renderMatrix(); renderAccMatrix(); renderReportAdmin(); dirty(); }
+  function removeStudent(name){ if(!confirm(`'${name}' 학생을 삭제할까요?`)) return; S.students=S.students.filter(s=>s!==name); delete S.attendance[name]; S.specialStudents=S.specialStudents.filter(s=>s!==name); if(S.reports) delete S.reports[name]; if(S.pins) delete S.pins[name]; renderStudents(); renderMatrix(); renderAccMatrix(); renderReportAdmin(); dirty(); }
 
   function cObj(id){ let c=S.content[id]; if(!c){ c={notice:'',homework:'',textbooks:[]}; S.content[id]=c; } if(typeof c.notice!=='string') c.notice=''; if(typeof c.homework!=='string') c.homework=''; if(!Array.isArray(c.textbooks)) c.textbooks=[]; return c; }
   function renderContent(){
@@ -467,7 +480,7 @@
     const key=geminiKey(); if(!key) throw new Error('키 없음');
     const url=`https://generativelanguage.googleapis.com/v1beta/models/${gmModelGet()}:generateContent?key=${key}`;
     const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    if(!r.ok){ const t=await r.text(); if(r.status===400||r.status===403){ try{}catch(_){} } throw new Error(r.status+' '+t.slice(0,160)); }
+    if(!r.ok){ const t=await r.text(); throw new Error(r.status+' '+t.slice(0,160)); }
     const j=await r.json();
     return (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts && j.candidates[0].content.parts[0] && j.candidates[0].content.parts[0].text) || '';
   }
@@ -549,6 +562,50 @@
     }catch(e){ toast('수집 실패: '+e.message); }
     finally{ btn.disabled=false; btn.textContent=o; }
   }
+
+  /* ===== ⑧ 성적표 ===== */
+  function ensureRep(){ S.pins=S.pins||{}; S.reports=S.reports||{}; }
+  function repList(name){ ensureRep(); if(!Array.isArray(S.reports[name])) S.reports[name]=[]; return S.reports[name]; }
+  function renderReportAdmin(){
+    ensureRep();
+    const sel=document.getElementById('rep-student');
+    if(!S.students.length){ sel.innerHTML=''; document.getElementById('rep-body').innerHTML='<span class="hint">학생을 먼저 추가하세요.</span>'; return; }
+    if(!repSel||!S.students.includes(repSel)) repSel=S.students[0];
+    sel.innerHTML=S.students.map(n=>`<option ${n===repSel?'selected':''}>${esc(n)}</option>`).join('');
+    renderRepBody();
+  }
+  function repSelect(name){ repSel=name; renderRepBody(); }
+  function renderRepBody(){
+    ensureRep();
+    const name=repSel; const list=repList(name);
+    let h=`<div class="field"><label>전화 뒷 4자리</label><input type="text" maxlength="4" value="${esc(S.pins[name]||'')}" oninput="setPin('${name}',this.value)" placeholder="예: 1234 (잠금번호 · 비우면 잠금 없음)"></div><div style="height:6px"></div>`;
+    list.forEach((r,i)=>{
+      let areas='';
+      (r.areas||[]).forEach((a,ai)=>{ areas+=`<div class="tb-row"><input type="text" value="${esc(a.name)}" oninput="setArea(${i},${ai},'name',this.value)" placeholder="영역(예: 수/연산)"><input type="text" value="${esc(a.got)}" oninput="setArea(${i},${ai},'got',this.value)" placeholder="획득" style="max-width:90px;min-width:70px"><input type="text" value="${esc(a.max)}" oninput="setArea(${i},${ai},'max',this.value)" placeholder="만점" style="max-width:90px;min-width:70px"><button class="btn del" onclick="delArea(${i},${ai})">×</button></div>`; });
+      h+=`<div class="content-week">
+        <div class="field"><label>회차/제목</label><input type="text" value="${esc(r.title)}" oninput="setRep(${i},'title',this.value)" placeholder="예: 중급 모의고사 1회"></div>
+        <div class="field"><label>날짜</label><input type="date" value="${esc(r.date)}" oninput="setRep(${i},'date',this.value)"></div>
+        <div class="field"><label>점수 / 만점</label><input type="text" value="${esc(r.score)}" oninput="setRep(${i},'score',this.value)" placeholder="획득" style="max-width:120px;min-width:90px"><input type="text" value="${esc(r.total)}" oninput="setRep(${i},'total',this.value)" placeholder="만점" style="max-width:120px;min-width:90px"></div>
+        <div class="field"><label>등급(선택)</label><input type="text" value="${esc(r.grade)}" oninput="setRep(${i},'grade',this.value)" placeholder="예: 실력 / 경시"></div>
+        <label class="flbl">영역별 (선택)</label>
+        <div class="tb-list">${areas}</div>
+        <button class="btn add sm" onclick="addArea(${i})">＋ 영역 추가</button>
+        <label class="flbl">선생님 코멘트</label>
+        <textarea class="cta" style="min-height:70px" oninput="setRep(${i},'comment',this.value)">${esc(r.comment)}</textarea>
+        <button class="btn del sm" onclick="delRep(${i})" style="margin-top:8px">이 성적표 삭제</button>
+      </div>`;
+    });
+    if(!list.length) h+='<span class="hint">등록된 성적표가 없습니다.</span>';
+    h+=`<div style="margin-top:10px"><button class="btn add sm" onclick="addRep()">＋ 성적표 추가</button></div>`;
+    document.getElementById('rep-body').innerHTML=h;
+  }
+  function setPin(name,v){ ensureRep(); S.pins[name]=String(v).replace(/\D/g,'').slice(0,4); dirty(); }
+  function addRep(){ repList(repSel).unshift({title:'',date:today(),score:'',total:'',grade:'',areas:[],comment:''}); renderRepBody(); dirty(); }
+  function setRep(i,k,v){ const l=repList(repSel); if(l[i]){ l[i][k]=(k==='date'||k==='comment')?v:v.trim(); dirty(); } }
+  function delRep(i){ if(!confirm('이 성적표를 삭제할까요?')) return; repList(repSel).splice(i,1); renderRepBody(); dirty(); }
+  function addArea(i){ const l=repList(repSel); if(l[i]){ (l[i].areas=l[i].areas||[]).push({name:'',got:'',max:''}); renderRepBody(); dirty(); } }
+  function setArea(i,ai,k,v){ const l=repList(repSel); if(l[i]&&l[i].areas&&l[i].areas[ai]){ l[i].areas[ai][k]=v.trim(); dirty(); } }
+  function delArea(i,ai){ const l=repList(repSel); if(l[i]&&l[i].areas){ l[i].areas.splice(ai,1); renderRepBody(); dirty(); } }
 
   /* ===== 저장 ===== */
   function dirty(){ document.getElementById('save-status').textContent='● 저장되지 않은 변경 있음'; }
