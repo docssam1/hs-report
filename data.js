@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 1. 오후 10:04:15
+ * 생성: 2026. 7. 2. 오전 10:25:05
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -225,9 +225,14 @@ window.GFIELD_DATA = {
   ],
   "content": {
     "may-w34": {
-      "notice": "",
+      "notice": "학습내용\n1. GIFTED MATH 3 V1-1(1)\n  복습영상) https://youtu.be/ASN1UYcip0c\n   - 기출 다지기\n   황소 시험에 익숙해지기 위하여 몇 년간의 실제 기출문제를 가지고 학습하였습니다.\n   개구리 문제 섬을 색칠하여 풀 학생^^ 했는데 아무도 ㅜㅜ 없었습니다.\n\n   - 사고력 키우기\n   다양한 풀이와 지문이해를 위한 멘사 퍼즐형 문제입니다. 쉽지만 단순히 선행이 많이되었다고 식으로\n   풀기보다는 조건을 이해하고 그림으로 그릴수 있도록 하였습니다.\n\n2. GIFTED MATH 3 V1-1(2)\n   복습영상) https://youtu.be/a1uMuvgpl_4\n   - 덧셈과 밸셈식에서 숨겨진 수 알아보기\n     복면산과 도형이 나타낸 수 개념 유형입니다. \n\n3.  GIFTED MATH 3 V1-1(3) 도형의 개수\n   복습영상) https://youtu.be/bsQUySr0j4s\n",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "GIFTED MATH 3 V1-1 NEW",
+          "url": "https://1drv.ms/b/c/56e991161e579560/IQA8SiU6ZJikS649QG6ENervAW-H0sG-yK2_hFm_k9Hv1Zk?e=O6fcnL"
+        }
+      ]
     },
     "jun-w12": {
       "notice": "",
