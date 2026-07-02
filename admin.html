@@ -67,7 +67,7 @@
   .cta:focus{border-color:var(--navy);}
   .tb-hint{font-size:11.5px;color:var(--muted);margin-bottom:8px;line-height:1.5;}
   .tb-list{display:flex;flex-direction:column;gap:8px;margin-bottom:8px;}
-  .tb-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .tb-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
   .tb-row input[type=text]{flex:1;min-width:120px;}
   .tb-row input[type=url]{flex:2;min-width:200px;}
   .btn.sm{padding:8px 14px;font-size:13px;}
@@ -237,7 +237,7 @@
     <section id="tab-report" class="hidden">
       <div class="card">
         <h3>📊 학생별 진단 결과 · 코멘트</h3>
-        <div class="hint">학생을 선택해 <b>전화번호 뒷 4자리(잠금)</b>와 모의고사 진단 결과·코멘트를 입력하세요. 학생 화면 → 👑 VIP 라운지 → 진단 결과에서 본인만 열람합니다. (뒷자리가 비면 잠금 없이 열립니다)</div>
+        <div class="hint">학생을 선택해 <b>전화번호 뒷 4자리(잠금)</b>·점수·코멘트를 입력하고, <b>성적표·복습용 시험지 PDF</b>와 <b>풀이 영상 링크</b>를 첨부하세요. 진단 이름은 자유롭게 직접 입력합니다. 학생 화면 → 👑 VIP 라운지 → 진단 결과에서 본인만 열람합니다. (뒷자리가 비면 잠금 없이 열립니다) · PDF 업로드엔 GitHub 토큰이 필요합니다.</div>
         <div class="field"><label>학생 선택</label><select class="select" id="rep-student" onchange="repSelect(this.value)"></select></div>
         <div id="rep-body"></div>
       </div>
@@ -425,18 +425,23 @@
 
   function ghToken(){ let t=null; try{ t=localStorage.getItem('gfield_gh_token'); }catch(e){} if(!t){ t=prompt('GitHub Personal Access Token (Contents 쓰기 권한)'); if(!t) return null; t=t.trim(); try{ localStorage.setItem('gfield_gh_token',t); }catch(e){} } return t; }
   function resetToken(){ try{ localStorage.removeItem('gfield_gh_token'); }catch(e){} const t=prompt('새 GitHub 토큰을 입력하세요.\n※ docssam1/hs-report 저장소에 Contents: Read and write 권한이 있어야 합니다.\n(비워두고 확인을 누르면 지우기만 하고, 다음 저장 때 다시 물어봅니다)'); if(t&&t.trim()){ try{ localStorage.setItem('gfield_gh_token',t.trim()); }catch(e){} toast('토큰이 교체되었습니다 ✅'); } else { toast('저장된 토큰을 지웠습니다. 다음 저장 때 새로 입력하세요'); } }
+  async function ghUploadPdf(file, dir){
+    const token=ghToken(); if(!token) return {err:'notoken'};
+    const b64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(',')[1]); r.onerror=rej; r.readAsDataURL(file); });
+    const safe=file.name.replace(/[^\w.\-]/g,'_'); const path=dir+'/'+Date.now()+'_'+safe;
+    const res=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`,{ method:'PUT', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}, body:JSON.stringify({message:'Upload '+path, content:b64, branch:BRANCH}) });
+    if(res.ok){ const j=await res.json(); return {url:(j.content&&j.content.download_url)||`https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`}; }
+    const e=await res.json().catch(()=>({})); if(res.status===401||res.status===403){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} return {err:'perm'}; }
+    return {err:(e.message||res.status)};
+  }
   async function uploadBookPdf(i, input){
     const f=input.files&&input.files[0]; if(!f) return;
     if(!/\.pdf$/i.test(f.name)){ toast('PDF 파일만 업로드돼요'); input.value=''; return; }
-    const token=ghToken(); if(!token){ input.value=''; return; }
     toast('PDF 업로드 중…');
-    try{
-      const b64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(',')[1]); r.onerror=rej; r.readAsDataURL(f); });
-      const safe=f.name.replace(/[^\w.\-]/g,'_'); const path='books/'+Date.now()+'_'+safe;
-      const res=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`,{ method:'PUT', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}, body:JSON.stringify({message:'Upload book PDF '+safe, content:b64, branch:BRANCH}) });
-      if(res.ok){ const j=await res.json(); S.books[i].pdf=(j.content&&j.content.download_url)||`https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`; if(!S.books[i].title) S.books[i].title=f.name.replace(/\.pdf$/i,''); renderBooks(); dirty(); toast('업로드 완료 ✅ — 하단 [GitHub에 저장]도 눌러 목록을 반영하세요'); }
-      else{ const e=await res.json(); if(res.status===401||res.status===403){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents 쓰기 권한 토큰을 넣어주세요'); } else toast('업로드 실패: '+(e.message||res.status)); }
-    }catch(err){ toast('업로드 실패(네트워크)'); }
+    const r=await ghUploadPdf(f,'books');
+    if(r.url){ S.books[i].pdf=r.url; if(!S.books[i].title) S.books[i].title=f.name.replace(/\.pdf$/i,''); renderBooks(); dirty(); toast('업로드 완료 ✅ — 하단 [GitHub에 저장]도 눌러 목록을 반영하세요'); }
+    else if(r.err==='perm'){ toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents 쓰기 권한 토큰을 넣어주세요'); }
+    else if(r.err&&r.err!=='notoken'){ toast('업로드 실패: '+r.err); }
     input.value='';
   }
 
@@ -583,19 +588,23 @@
     const name=repSel; const list=repList(name);
     let h=`<div class="field"><label>전화 뒷 4자리</label><input type="text" maxlength="4" value="${esc(S.pins[name]||'')}" oninput="setPin('${name}',this.value)" placeholder="예: 1234 (잠금번호 · 비우면 잠금 없음)"></div><div style="height:6px"></div>`;
     list.forEach((r,i)=>{
-      let areas='';
-      (r.areas||[]).forEach((a,ai)=>{ areas+=`<div class="tb-row"><input type="text" value="${esc(a.name)}" oninput="setArea(${i},${ai},'name',this.value)" placeholder="영역(예: 수/연산)"><input type="text" value="${esc(a.got)}" oninput="setArea(${i},${ai},'got',this.value)" placeholder="획득" style="max-width:90px;min-width:70px"><input type="text" value="${esc(a.max)}" oninput="setArea(${i},${ai},'max',this.value)" placeholder="만점" style="max-width:90px;min-width:70px"><button class="btn del" onclick="delArea(${i},${ai})">×</button></div>`; });
+      let files='';
+      (r.files||[]).forEach((f,fi)=>{
+        const st = f.url ? '<span style="color:var(--ok);font-size:12px">✓ 첨부됨</span>' : '<span style="color:var(--muted);font-size:12px">링크 없음</span>';
+        files+=`<div class="tb-row"><input type="text" value="${esc(f.label)}" oninput="setRepFile(${i},${fi},'label',this.value)" placeholder="파일 이름 (예: 성적표 / 복습용 시험지)"><input type="url" value="${esc(f.url)}" oninput="setRepFile(${i},${fi},'url',this.value)" placeholder="PDF 링크 (업로드하면 자동 입력)"><input type="file" accept="application/pdf" onchange="uploadRepPdf(${i},${fi},this)"> ${st} <button class="btn del" onclick="delRepFile(${i},${fi})">×</button></div>`;
+      });
       h+=`<div class="content-week">
-        <div class="field"><label>회차/제목</label><input type="text" value="${esc(r.title)}" oninput="setRep(${i},'title',this.value)" placeholder="예: 중급 모의고사 1회"></div>
+        <div class="field"><label>진단 이름</label><input type="text" value="${esc(r.title)}" oninput="setRep(${i},'title',this.value)" placeholder="예: 중급 모의고사 1회 · 7월 진단평가 (직접 입력)"></div>
         <div class="field"><label>날짜</label><input type="date" value="${esc(r.date)}" oninput="setRep(${i},'date',this.value)"></div>
-        <div class="field"><label>점수 / 만점</label><input type="text" value="${esc(r.score)}" oninput="setRep(${i},'score',this.value)" placeholder="획득" style="max-width:120px;min-width:90px"><input type="text" value="${esc(r.total)}" oninput="setRep(${i},'total',this.value)" placeholder="만점" style="max-width:120px;min-width:90px"></div>
-        <div class="field"><label>등급(선택)</label><input type="text" value="${esc(r.grade)}" oninput="setRep(${i},'grade',this.value)" placeholder="예: 실력 / 경시"></div>
-        <label class="flbl">영역별 (선택)</label>
-        <div class="tb-list">${areas}</div>
-        <button class="btn add sm" onclick="addArea(${i})">＋ 영역 추가</button>
+        <div class="field"><label>점수 / 만점</label><input type="text" value="${esc(r.score)}" oninput="setRep(${i},'score',this.value)" placeholder="획득(선택)" style="max-width:130px;min-width:90px"><input type="text" value="${esc(r.total)}" oninput="setRep(${i},'total',this.value)" placeholder="만점(선택)" style="max-width:130px;min-width:90px"></div>
         <label class="flbl">선생님 코멘트</label>
-        <textarea class="cta" style="min-height:70px" oninput="setRep(${i},'comment',this.value)">${esc(r.comment)}</textarea>
-        <button class="btn del sm" onclick="delRep(${i})" style="margin-top:8px">이 진단 결과 삭제</button>
+        <textarea class="cta" style="min-height:80px" oninput="setRep(${i},'comment',this.value)" placeholder="학생/학부모에게 전할 코멘트">${esc(r.comment)}</textarea>
+        <div class="field" style="margin-top:8px"><label>풀이 영상</label><input type="url" value="${esc(r.video)}" oninput="setRep(${i},'video',this.value)" placeholder="유튜브 링크 (선택)"></div>
+        <label class="flbl">📎 첨부파일 — 성적표 · 복습용 시험지 등 PDF (누적 첨부 가능)</label>
+        <div class="tb-list">${files}</div>
+        <button class="btn add sm" onclick="addRepFile(${i})">＋ 첨부파일 추가</button>
+        <div style="height:8px"></div>
+        <button class="btn del sm" onclick="delRep(${i})">이 진단 결과 삭제</button>
       </div>`;
     });
     if(!list.length) h+='<span class="hint">등록된 진단 결과가 없습니다.</span>';
@@ -603,12 +612,22 @@
     document.getElementById('rep-body').innerHTML=h;
   }
   function setPin(name,v){ ensureRep(); S.pins[name]=String(v).replace(/\D/g,'').slice(0,4); dirty(); }
-  function addRep(){ repList(repSel).unshift({title:'',date:today(),score:'',total:'',grade:'',areas:[],comment:''}); renderRepBody(); dirty(); }
+  function addRep(){ repList(repSel).unshift({title:'',date:today(),score:'',total:'',comment:'',video:'',files:[]}); renderRepBody(); dirty(); }
   function setRep(i,k,v){ const l=repList(repSel); if(l[i]){ l[i][k]=(k==='date'||k==='comment')?v:v.trim(); dirty(); } }
   function delRep(i){ if(!confirm('이 진단 결과를 삭제할까요?')) return; repList(repSel).splice(i,1); renderRepBody(); dirty(); }
-  function addArea(i){ const l=repList(repSel); if(l[i]){ (l[i].areas=l[i].areas||[]).push({name:'',got:'',max:''}); renderRepBody(); dirty(); } }
-  function setArea(i,ai,k,v){ const l=repList(repSel); if(l[i]&&l[i].areas&&l[i].areas[ai]){ l[i].areas[ai][k]=v.trim(); dirty(); } }
-  function delArea(i,ai){ const l=repList(repSel); if(l[i]&&l[i].areas){ l[i].areas.splice(ai,1); renderRepBody(); dirty(); } }
+  function addRepFile(i){ const l=repList(repSel); if(l[i]){ (l[i].files=l[i].files||[]).push({label:'',url:''}); renderRepBody(); dirty(); } }
+  function setRepFile(i,fi,k,v){ const l=repList(repSel); if(l[i]&&l[i].files&&l[i].files[fi]){ l[i].files[fi][k]=v.trim(); dirty(); } }
+  function delRepFile(i,fi){ const l=repList(repSel); if(l[i]&&l[i].files){ l[i].files.splice(fi,1); renderRepBody(); dirty(); } }
+  async function uploadRepPdf(i,fi,input){
+    const f=input.files&&input.files[0]; if(!f) return;
+    if(!/\.pdf$/i.test(f.name)){ toast('PDF 파일만 업로드돼요'); input.value=''; return; }
+    toast('PDF 업로드 중…');
+    const r=await ghUploadPdf(f,'reports');
+    if(r.url){ const l=repList(repSel); if(l[i]&&l[i].files&&l[i].files[fi]){ l[i].files[fi].url=r.url; if(!l[i].files[fi].label) l[i].files[fi].label=f.name.replace(/\.pdf$/i,''); } renderRepBody(); dirty(); toast('업로드 완료 ✅ — 하단 [GitHub에 저장]도 눌러주세요'); }
+    else if(r.err==='perm'){ toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents 쓰기 권한 토큰을 넣어주세요'); }
+    else if(r.err&&r.err!=='notoken'){ toast('업로드 실패: '+r.err); }
+    input.value='';
+  }
 
   /* ===== 저장 ===== */
   function dirty(){ document.getElementById('save-status').textContent='● 저장되지 않은 변경 있음'; }
