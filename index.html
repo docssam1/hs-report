@@ -279,13 +279,11 @@
   .rep-date{font-size:12px;color:var(--dim);white-space:nowrap;}
   .rep-score{font-size:13px;color:var(--ink2);}
   .rep-score b{font-size:23px;color:var(--orange-d);vertical-align:-2px;}
-  .rep-grade{display:inline-block;font-size:12px;font-weight:800;color:#fff;background:linear-gradient(135deg,#fb923c,var(--orange-d));border-radius:999px;padding:3px 11px;margin-left:6px;}
-  .rep-areas{margin-top:11px;display:flex;flex-direction:column;gap:7px;}
-  .rep-area .ra-t{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);margin-bottom:3px;}
-  .rep-bar{height:7px;background:#fde9d6;border-radius:99px;overflow:hidden;}
-  .rep-bar i{display:block;height:100%;background:linear-gradient(90deg,#fdba74,var(--orange-d));border-radius:99px;}
   .rep-comment{margin-top:11px;background:#fff7ec;border:1px solid #fcdcb8;border-radius:10px;padding:9px 11px;font-size:12.5px;color:var(--ink2);line-height:1.65;}
   .rep-comment b{color:var(--orange-d);}
+  .rep-files{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px;}
+  .rep-file{display:inline-flex;align-items:center;gap:5px;background:var(--soft);border:1px solid #fcd3a3;color:var(--orange-d);font-size:12.5px;font-weight:700;padding:8px 13px;border-radius:10px;text-decoration:none;cursor:pointer;}
+  .rep-file.vid{background:#fee2e2;border-color:#fbcaca;color:#dc2626;}
 
   /* 영상 라이트박스 */
   .vlight{position:fixed;inset:0;z-index:78;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:18px;}
@@ -826,15 +824,13 @@
     list.forEach(r=>{
       const total=(r.total!=null&&r.total!=='')?` / ${escHtml(String(r.total))}`:'';
       h+=`<div class="rep-card"><div class="rep-top"><span class="rep-t">${escHtml(r.title||'모의고사')}</span><span class="rep-date">${escHtml(r.date||'')}</span></div>`;
-      if(r.score!=null&&r.score!=='') h+=`<div class="rep-score">점수 <b>${escHtml(String(r.score))}</b>${total}${r.grade?`<span class="rep-grade">${escHtml(r.grade)}</span>`:''}</div>`;
-      else if(r.grade) h+=`<div class="rep-score"><span class="rep-grade">${escHtml(r.grade)}</span></div>`;
-      const areas=(r.areas||[]).filter(a=>a&&a.name);
-      if(areas.length){
-        h+='<div class="rep-areas">';
-        areas.forEach(a=>{ const got=Number(a.got)||0, max=Number(a.max)||0; const pct=max?Math.max(0,Math.min(100,Math.round(got/max*100))):0; h+=`<div class="rep-area"><div class="ra-t"><span>${escHtml(a.name)}</span><span>${got}${max?' / '+max:''}</span></div><div class="rep-bar"><i style="width:${pct}%"></i></div></div>`; });
-        h+='</div>';
-      }
-      if(r.comment&&r.comment.trim()) h+=`<div class="rep-comment"><b>선생님 코멘트</b><br>${escHtml(r.comment)}</div>`;
+      if(r.score!=null&&r.score!=='') h+=`<div class="rep-score">점수 <b>${escHtml(String(r.score))}</b>${total}</div>`;
+      if(r.comment&&r.comment.trim()) h+=`<div class="rep-comment"><b>선생님 코멘트</b><br>${escHtml(r.comment).replace(/\n/g,'<br>')}</div>`;
+      const files=(r.files||[]).filter(f=>f&&f.url);
+      let btns='';
+      files.forEach(f=>{ btns+=`<a class="rep-file" href="${escAttr(f.url)}" target="_blank" rel="noopener">📄 ${escHtml(f.label||'첨부파일')}</a>`; });
+      if(r.video){ const e=vidEmbed(r.video); if(e) btns+=`<button class="rep-file vid" data-v="${escAttr(r.video)}">▶ 풀이 영상</button>`; else btns+=`<a class="rep-file vid" href="${escAttr(r.video)}" target="_blank" rel="noopener">▶ 풀이 영상</a>`; }
+      if(btns) h+=`<div class="rep-files">${btns}</div>`;
       h+='</div>';
     });
     return h;
@@ -877,6 +873,7 @@
         reportUnlocked=true;
       }
       wrap.innerHTML=back+`<div class="vip-h disp">📊 ${escHtml(givenName(currentStudent))} 학생 진단 결과</div>`+reportHTML();
+      wrap.querySelectorAll('.rep-file.vid[data-v]').forEach(b=>b.onclick=()=>playVid(b.dataset.v));
     } else if(k==='ses'){
       const ses=(V.sessions||[]).filter(s=>s&&s.url);
       let h=back+`<div class="vip-h disp">🎬 프리미엄 설명회</div>`;
