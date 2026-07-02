@@ -105,7 +105,7 @@
 
 <div id="app" class="hidden">
   <header>
-    <div class="t">GFIELD 관리자 콘솔<small id="h-sub">생각하는 황소 대비 아카이브</small></div>
+    <div class="t">GFIELD 관리자 콘솔<small id="h-sub">생각하는 황소 대비 аकाइ브</small></div>
     <div class="right">
       <a href="index.html" target="_blank" style="text-decoration:none;"><button>학생 화면 ↗</button></a>
       <button onclick="lockAgain()">잠금</button>
@@ -157,6 +157,12 @@
         <h3>현재 진행 중인 주차</h3>
         <div class="hint">캐릭터(러너)가 멈춰 서고 강조 표시되는 주차입니다.</div>
         <select class="select" id="current-week"></select>
+      </div>
+      <div class="card">
+        <h3>🔑 GitHub 토큰</h3>
+        <div class="hint">저장·PDF 업로드에 쓰는 개인 토큰입니다. <b>이 브라우저에 계속 저장</b>되며(사이트엔 안 올라감), 저장 실패가 나도 자동으로 지워지지 않습니다. 공용 PC에서는 저장하지 마세요.</div>
+        <div class="field"><label>토큰</label><input type="password" id="ghKey" placeholder="github_pat_... (Contents: Read and write)"><button class="btn add sm" onclick="saveGhKey()">저장</button><button class="btn del sm" onclick="clearGhKey()">삭제</button></div>
+        <span id="ghStat" class="hint"></span>
       </div>
     </section>
 
@@ -295,7 +301,7 @@
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
   }
 
-  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); }
+  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderGhStat(); }
 
   function ensureStudent(name){ if(!S.attendance[name]) S.attendance[name]=[]; }
 
@@ -423,15 +429,22 @@
   function setBookLink(i,li,key,v){ const b=S.books[i]; if(b&&b.links&&b.links[li]){ b.links[li][key]=v.trim(); dirty(); } }
   function delBookLink(i,li){ const b=S.books[i]; if(b&&b.links){ b.links.splice(li,1); renderBooks(); dirty(); } }
 
-  function ghToken(){ let t=null; try{ t=localStorage.getItem('gfield_gh_token'); }catch(e){} if(!t){ t=prompt('GitHub Personal Access Token (Contents 쓰기 권한)'); if(!t) return null; t=t.trim(); try{ localStorage.setItem('gfield_gh_token',t); }catch(e){} } return t; }
-  function resetToken(){ try{ localStorage.removeItem('gfield_gh_token'); }catch(e){} const t=prompt('새 GitHub 토큰을 입력하세요.\n※ docssam1/hs-report 저장소에 Contents: Read and write 권한이 있어야 합니다.\n(비워두고 확인을 누르면 지우기만 하고, 다음 저장 때 다시 물어봅니다)'); if(t&&t.trim()){ try{ localStorage.setItem('gfield_gh_token',t.trim()); }catch(e){} toast('토큰이 교체되었습니다 ✅'); } else { toast('저장된 토큰을 지웠습니다. 다음 저장 때 새로 입력하세요'); } }
+  /* ===== GitHub 토큰 (localStorage에 계속 저장) ===== */
+  function ghKeyGet(){ try{ return localStorage.getItem('gfield_gh_token')||''; }catch(e){ return ''; } }
+  function ghKeySet(v){ try{ localStorage.setItem('gfield_gh_token',v); }catch(e){} }
+  function ghKeyDel(){ try{ localStorage.removeItem('gfield_gh_token'); }catch(e){} }
+  function ghToken(){ let t=ghKeyGet(); if(!t){ t=prompt('GitHub Personal Access Token (Contents 쓰기 권한). 한 번 넣으면 이 브라우저에 계속 저장됩니다.'); if(!t) return null; t=t.trim(); ghKeySet(t); renderGhStat(); } return t; }
+  function resetToken(){ const cur=ghKeyGet(); const t=prompt('GitHub 토큰 (이 브라우저에 계속 저장됩니다).\n※ docssam1/hs-report · Contents: Read and write 권한 필요.\n(취소=변경 안 함 / 빈칸으로 저장=토큰 삭제)', cur); if(t===null) return; const v=t.trim(); if(v){ ghKeySet(v); toast('토큰 저장됨 ✅ (계속 유지)'); } else { ghKeyDel(); toast('토큰을 삭제했습니다'); } renderGhStat(); }
+  function saveGhKey(){ const el=document.getElementById('ghKey'); const v=(el.value||'').trim(); if(!v){ toast('토큰을 입력하세요'); return; } ghKeySet(v); toast('토큰 저장됨 ✅ (계속 유지)'); renderGhStat(); }
+  function clearGhKey(){ ghKeyDel(); const el=document.getElementById('ghKey'); if(el) el.value=''; toast('토큰을 삭제했습니다'); renderGhStat(); }
+  function renderGhStat(){ const st=document.getElementById('ghStat'); if(st) st.textContent=ghKeyGet()?'✅ 토큰이 이 브라우저에 저장되어 있습니다 (계속 유지)':'토큰 미설정 — 저장/업로드 시 한 번 물어봅니다'; const el=document.getElementById('ghKey'); if(el&&ghKeyGet()) el.value=ghKeyGet(); }
   async function ghUploadPdf(file, dir){
     const token=ghToken(); if(!token) return {err:'notoken'};
     const b64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(',')[1]); r.onerror=rej; r.readAsDataURL(file); });
     const safe=file.name.replace(/[^\w.\-]/g,'_'); const path=dir+'/'+Date.now()+'_'+safe;
     const res=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`,{ method:'PUT', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}, body:JSON.stringify({message:'Upload '+path, content:b64, branch:BRANCH}) });
     if(res.ok){ const j=await res.json(); return {url:(j.content&&j.content.download_url)||`https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`}; }
-    const e=await res.json().catch(()=>({})); if(res.status===401||res.status===403){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} return {err:'perm'}; }
+    const e=await res.json().catch(()=>({})); if(res.status===401||res.status===403){ return {err:'perm'}; }
     return {err:(e.message||res.status)};
   }
   async function uploadBookPdf(i, input){
@@ -655,7 +668,7 @@
       const content=buildFile(); const b64=btoa(unescape(encodeURIComponent(content)));
       const putRes=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,{ method:'PUT', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}, body:JSON.stringify({message:'Update data.js via admin console', content:b64, sha:sha, branch:BRANCH}) });
       if(putRes.ok){ document.getElementById('save-status').textContent='✅ 저장 완료 (1~2분 후 반영)'; toast('GitHub 저장 완료 ✅'); }
-      else{ const e=await putRes.json(); document.getElementById('save-status').textContent='저장 실패: '+(e.message||putRes.status); if(putRes.status===401||putRes.status===403){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents: Read and write 권한 토큰을 넣어주세요'); } else toast('저장 실패 — 코드 보기로 수동 반영하세요'); }
+      else{ const e=await putRes.json(); document.getElementById('save-status').textContent='저장 실패: '+(e.message||putRes.status); if(putRes.status===401||putRes.status===403){ toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents: Read and write 권한 토큰을 넣어주세요 (저장된 토큰은 유지됩니다)'); } else toast('저장 실패 — 코드 보기로 수동 반영하세요'); }
     }catch(err){ document.getElementById('save-status').textContent='네트워크 오류'; toast('저장 실패 — 코드 보기/내보내기를 사용하세요'); }
   }
 
