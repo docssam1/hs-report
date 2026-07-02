@@ -77,6 +77,7 @@
   .savebar .btn.save{background:var(--ok);color:#fff;}
   .savebar .btn.export{background:#34495e;color:#fff;}
   .savebar .btn.copy{background:#eef1f6;color:#333;}
+  .savebar .btn.token{background:#fff3e0;color:var(--gold-d);border:1px solid #f5d9b0;}
   .savebar .status{font-size:12.5px;color:var(--muted);}
 
   .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;justify-content:center;align-items:center;z-index:40;padding:18px;}
@@ -248,6 +249,7 @@
     <button class="btn save" onclick="saveToGitHub()">💾 GitHub에 저장</button>
     <button class="btn export" onclick="exportFile()">⬇ data.js 내보내기</button>
     <button class="btn copy" onclick="showCode()">📋 코드 보기</button>
+    <button class="btn token" onclick="resetToken()">🔑 토큰 변경</button>
   </div>
 </div>
 
@@ -422,6 +424,7 @@
   function delBookLink(i,li){ const b=S.books[i]; if(b&&b.links){ b.links.splice(li,1); renderBooks(); dirty(); } }
 
   function ghToken(){ let t=null; try{ t=localStorage.getItem('gfield_gh_token'); }catch(e){} if(!t){ t=prompt('GitHub Personal Access Token (Contents 쓰기 권한)'); if(!t) return null; t=t.trim(); try{ localStorage.setItem('gfield_gh_token',t); }catch(e){} } return t; }
+  function resetToken(){ try{ localStorage.removeItem('gfield_gh_token'); }catch(e){} const t=prompt('새 GitHub 토큰을 입력하세요.\n※ docssam1/hs-report 저장소에 Contents: Read and write 권한이 있어야 합니다.\n(비워두고 확인을 누르면 지우기만 하고, 다음 저장 때 다시 물어봅니다)'); if(t&&t.trim()){ try{ localStorage.setItem('gfield_gh_token',t.trim()); }catch(e){} toast('토큰이 교체되었습니다 ✅'); } else { toast('저장된 토큰을 지웠습니다. 다음 저장 때 새로 입력하세요'); } }
   async function uploadBookPdf(i, input){
     const f=input.files&&input.files[0]; if(!f) return;
     if(!/\.pdf$/i.test(f.name)){ toast('PDF 파일만 업로드돼요'); input.value=''; return; }
@@ -432,7 +435,7 @@
       const safe=f.name.replace(/[^\w.\-]/g,'_'); const path='books/'+Date.now()+'_'+safe;
       const res=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`,{ method:'PUT', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}, body:JSON.stringify({message:'Upload book PDF '+safe, content:b64, branch:BRANCH}) });
       if(res.ok){ const j=await res.json(); S.books[i].pdf=(j.content&&j.content.download_url)||`https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`; if(!S.books[i].title) S.books[i].title=f.name.replace(/\.pdf$/i,''); renderBooks(); dirty(); toast('업로드 완료 ✅ — 하단 [GitHub에 저장]도 눌러 목록을 반영하세요'); }
-      else{ const e=await res.json(); if(res.status===401){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} toast('토큰이 유효하지 않습니다. 다시 시도하세요'); } else toast('업로드 실패: '+(e.message||res.status)); }
+      else{ const e=await res.json(); if(res.status===401||res.status===403){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents 쓰기 권한 토큰을 넣어주세요'); } else toast('업로드 실패: '+(e.message||res.status)); }
     }catch(err){ toast('업로드 실패(네트워크)'); }
     input.value='';
   }
@@ -633,7 +636,7 @@
       const content=buildFile(); const b64=btoa(unescape(encodeURIComponent(content)));
       const putRes=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,{ method:'PUT', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}, body:JSON.stringify({message:'Update data.js via admin console', content:b64, sha:sha, branch:BRANCH}) });
       if(putRes.ok){ document.getElementById('save-status').textContent='✅ 저장 완료 (1~2분 후 반영)'; toast('GitHub 저장 완료 ✅'); }
-      else{ const e=await putRes.json(); document.getElementById('save-status').textContent='저장 실패: '+(e.message||putRes.status); if(putRes.status===401){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} toast('토큰이 유효하지 않습니다. 다시 시도하세요'); } else toast('저장 실패 — 코드 보기로 수동 반영하세요'); }
+      else{ const e=await putRes.json(); document.getElementById('save-status').textContent='저장 실패: '+(e.message||putRes.status); if(putRes.status===401||putRes.status===403){ try{localStorage.removeItem('gfield_gh_token');}catch(_){} toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents: Read and write 권한 토큰을 넣어주세요'); } else toast('저장 실패 — 코드 보기로 수동 반영하세요'); }
     }catch(err){ document.getElementById('save-status').textContent='네트워크 오류'; toast('저장 실패 — 코드 보기/내보내기를 사용하세요'); }
   }
 
