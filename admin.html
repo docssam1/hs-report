@@ -53,6 +53,7 @@
   .btn.add{background:var(--navy);color:#fff;}
   .btn.del{background:#fde8e8;color:var(--danger);}
   .btn.ai{background:#6d28d9;color:#fff;}
+  .btn.save{background:var(--ok);color:#fff;}
   .chip{display:inline-flex;align-items:center;gap:8px;background:#f2f5fa;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:13.5px;margin:0 6px 8px 0;}
   .chip button{background:none;border:none;color:var(--danger);font-weight:800;font-size:15px;}
 
@@ -80,6 +81,9 @@
   .savebar .btn.token{background:#fff3e0;color:var(--gold-d);border:1px solid #f5d9b0;}
   .savebar .status{font-size:12.5px;color:var(--muted);}
 
+  .ai-thumbs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0;}
+  .ai-thumbs img{width:54px;height:54px;object-fit:cover;border-radius:6px;border:1px solid var(--line);}
+
   .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;justify-content:center;align-items:center;z-index:40;padding:18px;}
   .modal-bg .m{background:#fff;border-radius:14px;max-width:460px;width:100%;padding:24px;}
   .modal-bg h3{margin-bottom:10px;}
@@ -105,7 +109,7 @@
 
 <div id="app" class="hidden">
   <header>
-    <div class="t">GFIELD 관리자 콘솔<small id="h-sub">생각하는 황소 대비 аकाइ브</small></div>
+    <div class="t">GFIELD 관리자 콘솔<small id="h-sub">생각하는 황소 대비 아카이브</small></div>
     <div class="right">
       <a href="index.html" target="_blank" style="text-decoration:none;"><button>학생 화면 ↗</button></a>
       <button onclick="lockAgain()">잠금</button>
@@ -122,6 +126,7 @@
       <button data-tab="vip" onclick="tab('vip')">⑥ VIP 라운지</button>
       <button data-tab="mag" onclick="tab('mag')">⑦ 교육 매거진</button>
       <button data-tab="report" onclick="tab('report')">⑧ 진단 결과</button>
+      <button data-tab="exam" onclick="tab('exam')">⑨ AI 진단</button>
     </div>
 
     <section id="tab-attend">
@@ -248,6 +253,24 @@
         <div id="rep-body"></div>
       </div>
     </section>
+
+    <section id="tab-exam" class="hidden">
+      <div class="card">
+        <h3>🤖 AI 일일테스트 진단 — 시험 세트</h3>
+        <div class="hint">시험별로 <b>영상·스크립트·프롬프트·문항수·장수</b>를 저장해두면 다음에 같은 시험을 볼 때 그대로 재사용됩니다. <b>학생당 장수</b>를 넣으면 반 전체를 순서대로 올려도 정확히 학생별로 나눕니다(권장). 비우면 첫 장 이름으로 자동 분리합니다.</div>
+        <div class="field"><label>시험 세트</label><select class="select" id="exam-sel" onchange="examSelect(this.value)"></select><button class="btn add sm" onclick="examNew()">＋ 새 세트</button></div>
+        <div id="exam-form"></div>
+      </div>
+      <div class="card">
+        <h3>📸 반 시험지 업로드 → 자동 채점·코멘트</h3>
+        <div class="hint">위 세트를 선택하고 반 학생 시험지를 <b>순서대로 한 번에</b> 올리세요(사진 여러 장). 각 학생 첫 장의 이름으로 분류하고, 동그라미/점수 표시를 세어 득점·코멘트를 학생별로 생성합니다. <b>결과를 검토·수정한 뒤</b> 저장하세요. (Gemini 키 필요 · 사진은 전송 전 자동 축소)</div>
+        <div class="field"><label>시험지 사진</label><input type="file" id="exam-imgs" accept="image/*" multiple onchange="examImgsPicked(this)"></div>
+        <div id="exam-imgstat" class="hint"></div>
+        <div class="field"><label style="width:auto"><input type="checkbox" id="exam-attach" checked style="width:auto;min-width:0;margin-right:6px">시험지를 학생별 PDF로 첨부(업로드)</label></div>
+        <button class="btn ai" id="exam-run" onclick="runAiDiagnosis()">🤖 AI 분석 시작</button>
+        <div id="exam-results" style="margin-top:14px"></div>
+      </div>
+    </section>
   </div>
 
   <div class="savebar">
@@ -260,6 +283,7 @@
 </div>
 
 <div class="toast" id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="data.js"></script>
 <script>
   const ADMIN_PW = "01020837265";
@@ -278,9 +302,39 @@
   S.vip = S.vip || {};
   S.pins = S.pins || {};
   S.reports = S.reports || {};
+  S.examSets = S.examSets || [];
   let repSel = '';
+  let examSel = '';
+  let examImages = [];
+  let aiResults = [];
   function today(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
   function vip(){ const v=S.vip; v.sessions=v.sessions||[]; v.courses=v.courses||[]; v.clinic=v.clinic||{notice:'',url:''}; v.magazine=v.magazine||[]; v.columns=v.columns||[]; return v; }
+
+  const DEFAULT_PROMPT = `[지시 사항]
+너는 수학 전문 학원 '지필드 영재교육'의 원장이야. 학생의 수학 시험지 사진을 꼼꼼히 분석해서, 학부모님께 카카오톡으로 보내드릴 친근하고 전문적인 일일테스트 진단 결과를 작성해 줘.
+
+[분석 및 작성 원칙]
+1. 점수/채점: 시험지의 동그라미(정답), 작대기(오답), 부분점수, 수정 흔적, 7/10 같은 점수 표기를 정확히 파악해 실제 득점을 계산할 것.
+2. 말투: "오늘은 글이 길어요^^ 그래도 우리 [학생이름]를 위해 필독!! 즐거운 하루 되세요."처럼 다정한 원장님 말투. 딱딱한 로봇 말투 금지.
+3. 분석 포커스(가장 중요): 단순 오답 지적이 아닌 '풀이 과정' 분석.
+   - 강점: 직관력·수 감각·배운 원리(가우스 등) 잘 적용한 부분은 아낌없이 칭찬.
+   - 약점: 기호로 논리적 식 세우기를 귀찮아하고 '때려 맞추기/노가다/일일이 손으로 쓰기/감으로 풀기' 방식을 쓴 문항을 찾아 지적.
+   - 실수: '양쪽에' 같은 핵심 조건을 놓친 습관적 읽기 오류를 짚기.
+4. 포맷: 문항 번호를 명시해 영역별로 강점/약점을 나눠 설명. 파일명은 절대 노출 금지. 은어/전문용어 금지.
+
+[출력 템플릿]
+오늘은 글이 길어요^^ 그래도 우리 [학생이름]를 위해 필독!! 즐거운 하루 되세요.
+당장 눈앞의 점수나 진도가 중요하지는 않습니다. [학생이름]가 끝까지 바른 방법으로 해결하는 힘을 기르도록 먼저 지도하겠습니다. 머리도 좋고 직관이 뛰어나지만, 기호 쓰기를 귀찮아하고 머리로만 풀면 심화·모의고사에서 충격이 큽니다. 지금부터 감으로 푸는 습관을 잡겠습니다.
+[일일테스트 진단 결과]
+[학생이름] 학생은 [전체문항수]문제 중 [맞춘문항수]문제를 득점하였습니다. 지금 위치를 기준으로 약점을 보완하면 분명 목표 이상의 결과를 낼 수 있습니다.
+학습내용 및 분석
+1. [강점 영역명] (O번, O번 문제) -> 완벽 이해 (Excellent)
+ * [구체적 풀이 칭찬]
+2. [약점 영역명] (O번 문제) -> 직관적 대입 오류
+ * [원인 분석 · 기호화 훈련 필요성]
+3. [실수 영역명] (O번 문제) -> 단어 간과/꼼꼼함 부족
+ * [읽기 습관 지적]
+마지막으로 문제를 꼼꼼히 읽고 조건을 놓치지 않는 연습과 부모님의 관리가 제일 중요합니다. 앞으로 직관적 대입/단순 나열을 버리고 오답이 없게 철저히 지도하겠습니다. 궁금한 점은 언제든 톡 주세요.`;
 
   const weekNodes = () => S.nodes.filter(n=>n.type==='week');
   const specialNode = () => S.nodes.find(n=>n.type==='special');
@@ -297,11 +351,11 @@
   function lockAgain(){ location.reload(); }
 
   function tab(name){
-    ['attend','students','content','settings','archive','vip','mag','report'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
+    ['attend','students','content','settings','archive','vip','mag','report','exam'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
   }
 
-  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderGhStat(); }
+  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderExam(); renderGhStat(); }
 
   function ensureStudent(name){ if(!S.attendance[name]) S.attendance[name]=[]; }
 
@@ -438,15 +492,16 @@
   function saveGhKey(){ const el=document.getElementById('ghKey'); const v=(el.value||'').trim(); if(!v){ toast('토큰을 입력하세요'); return; } ghKeySet(v); toast('토큰 저장됨 ✅ (계속 유지)'); renderGhStat(); }
   function clearGhKey(){ ghKeyDel(); const el=document.getElementById('ghKey'); if(el) el.value=''; toast('토큰을 삭제했습니다'); renderGhStat(); }
   function renderGhStat(){ const st=document.getElementById('ghStat'); if(st) st.textContent=ghKeyGet()?'✅ 토큰이 이 브라우저에 저장되어 있습니다 (계속 유지)':'토큰 미설정 — 저장/업로드 시 한 번 물어봅니다'; const el=document.getElementById('ghKey'); if(el&&ghKeyGet()) el.value=ghKeyGet(); }
-  async function ghUploadPdf(file, dir){
+  async function ghUploadBlob(blob, dir, filename){
     const token=ghToken(); if(!token) return {err:'notoken'};
-    const b64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(',')[1]); r.onerror=rej; r.readAsDataURL(file); });
-    const safe=file.name.replace(/[^\w.\-]/g,'_'); const path=dir+'/'+Date.now()+'_'+safe;
+    const b64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(',')[1]); r.onerror=rej; r.readAsDataURL(blob); });
+    const safe=(filename||'file').replace(/[^\w.\-]/g,'_'); const path=dir+'/'+Date.now()+'_'+safe;
     const res=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`,{ method:'PUT', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}, body:JSON.stringify({message:'Upload '+path, content:b64, branch:BRANCH}) });
     if(res.ok){ const j=await res.json(); return {url:(j.content&&j.content.download_url)||`https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`}; }
     const e=await res.json().catch(()=>({})); if(res.status===401||res.status===403){ return {err:'perm'}; }
     return {err:(e.message||res.status)};
   }
+  function ghUploadPdf(file, dir){ return ghUploadBlob(file, dir, file.name); }
   async function uploadBookPdf(i, input){
     const f=input.files&&input.files[0]; if(!f) return;
     if(!/\.pdf$/i.test(f.name)){ toast('PDF 파일만 업로드돼요'); input.value=''; return; }
@@ -640,6 +695,160 @@
     else if(r.err==='perm'){ toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents 쓰기 권한 토큰을 넣어주세요'); }
     else if(r.err&&r.err!=='notoken'){ toast('업로드 실패: '+r.err); }
     input.value='';
+  }
+
+  /* ===== ⑨ AI 진단 (반 시험지 일괄 → 채점·코멘트) ===== */
+  function renderExam(){
+    const sel=document.getElementById('exam-sel'); if(!sel) return;
+    const sets=S.examSets;
+    if(!sets.length){ sel.innerHTML='<option value="">(세트 없음)</option>'; examSel=''; document.getElementById('exam-form').innerHTML='<span class="hint">‘＋ 새 세트’를 눌러 시험을 만드세요.</span>'; return; }
+    if(examSel===''||+examSel>=sets.length) examSel='0';
+    sel.innerHTML=sets.map((s,i)=>`<option value="${i}" ${String(i)===String(examSel)?'selected':''}>${esc(s.title||('시험 '+(i+1)))}</option>`).join('');
+    sel.value=examSel;
+    renderExamForm();
+  }
+  function examNew(){ S.examSets.push({title:'',video:'',questions:'',pages:'',script:'',prompt:DEFAULT_PROMPT,date:today()}); examSel=String(S.examSets.length-1); renderExam(); dirty(); }
+  function examSelect(v){ examSel=v; renderExamForm(); }
+  function curExam(){ return S.examSets[+examSel]; }
+  function renderExamForm(){
+    const e=curExam(); const box=document.getElementById('exam-form'); if(!box) return;
+    if(!e){ box.innerHTML=''; return; }
+    box.innerHTML=`
+      <div class="field"><label>제목</label><input type="text" value="${esc(e.title)}" oninput="setExam('title',this.value)" placeholder="예: HS BASIC CH1 문제푸는 방법 찾기(1) 일일테스트"></div>
+      <div class="field"><label>풀이 영상</label><input type="url" value="${esc(e.video)}" oninput="setExam('video',this.value)" placeholder="유튜브 링크 (학생별 진단에 함께 저장)"></div>
+      <div class="field"><label>문항수</label><input type="text" value="${esc(e.questions)}" oninput="setExam('questions',this.value)" placeholder="예: 10" style="max-width:120px;min-width:80px"></div>
+      <div class="field"><label>학생당 장수</label><input type="text" value="${esc(e.pages)}" oninput="setExam('pages',this.value)" placeholder="예: 2 (비우면 이름으로 자동 분리)" style="max-width:180px;min-width:110px"></div>
+      <label class="flbl">영상 스크립트 (채점·분석 참고용 · 재사용됨)</label>
+      <textarea class="cta" oninput="setExam('script',this.value)" placeholder="풀이 영상 스크립트를 붙여넣으세요">${esc(e.script)}</textarea>
+      <label class="flbl">코멘트 프롬프트 (재사용됨)</label>
+      <textarea class="cta" style="min-height:180px;font-size:12px" oninput="setExam('prompt',this.value)">${esc(e.prompt)}</textarea>
+      <div style="margin-top:8px"><button class="btn del sm" onclick="examDel()">이 시험 세트 삭제</button></div>`;
+  }
+  function setExam(k,v){ const e=curExam(); if(e){ e[k]=v; dirty(); } }
+  function examDel(){ if(!confirm('이 시험 세트를 삭제할까요?')) return; S.examSets.splice(+examSel,1); examSel=''; renderExam(); dirty(); }
+
+  function examImgsPicked(input){
+    const files=Array.from(input.files||[]);
+    examImages=[]; const stat=document.getElementById('exam-imgstat');
+    if(!files.length){ stat.textContent=''; return; }
+    stat.textContent=files.length+'장 처리 중…';
+    Promise.all(files.map((f,idx)=>downscaleFile(f).then(o=>{ examImages[idx]=o; }))).then(()=>{ stat.textContent='✅ '+files.length+'장 준비됨 (올린 순서대로 처리)'; });
+  }
+  function downscaleFile(f){
+    return new Promise(res=>{
+      const r=new FileReader();
+      r.onload=()=>{
+        const im=new Image();
+        im.onload=()=>{ const max=1600; let w=im.naturalWidth,h=im.naturalHeight; const sc=Math.min(1,max/Math.max(w,h)); const cw=Math.max(1,Math.round(w*sc)),ch=Math.max(1,Math.round(h*sc)); const c=document.createElement('canvas'); c.width=cw; c.height=ch; c.getContext('2d').drawImage(im,0,0,cw,ch); const dataUrl=c.toDataURL('image/jpeg',0.85); res({name:f.name,mime:'image/jpeg',b64:dataUrl.split(',')[1],dataUrl}); };
+        im.onerror=()=>{ const dataUrl=String(r.result); res({name:f.name,mime:f.type||'image/jpeg',b64:dataUrl.split(',')[1],dataUrl}); };
+        im.src=String(r.result);
+      };
+      r.readAsDataURL(f);
+    });
+  }
+
+  async function splitByName(imgs){
+    const parts=[{text:'다음은 여러 학생의 수학 시험지 사진이며 순서대로 정렬되어 있다. 각 이미지에 학생 이름이 크게 손글씨로 적혀 있으면 그 이름을, 없으면 null 을 출력한다. 이미지 순서와 정확히 같은 길이의 JSON 배열만 출력해라. 예: ["홍길동", null, "김철수"]'}];
+    imgs.forEach(im=> parts.push({inline_data:{mime_type:im.mime, data:im.b64}}));
+    const txt=await callGemini({contents:[{parts}]});
+    let arr=null; try{ arr=JSON.parse(txt); }catch(_){ const m=txt&&txt.match(/\[[\s\S]*\]/); if(m){ try{ arr=JSON.parse(m[0]); }catch(__){} } }
+    const groups=[]; let cur=null;
+    imgs.forEach((im,idx)=>{ const nm=arr&&arr[idx]; if(nm&&String(nm).trim()){ cur=[im]; groups.push(cur); } else { if(!cur){ cur=[im]; groups.push(cur); } else cur.push(im); } });
+    return groups;
+  }
+  async function gradeGroup(e, imgs){
+    const total=(e.questions||'').toString().trim();
+    const sys=e.prompt||DEFAULT_PROMPT;
+    const instr='아래는 한 학생의 수학 시험지 사진들이다(첫 장에 학생 이름이 손글씨로 있음). 위 시스템 지침(원장 프롬프트)에 따라 작업해라.\n'
+      +'1) 첫 장에서 학생 이름을 정확히 읽어라.\n'
+      +'2) 동그라미(정답)/작대기(오답)/부분점수/7/10 같은 점수 표기를 세어 실제 득점을 계산하라.'+(total?(' 전체 문항수는 '+total+'문항이다.'):'')+'\n'
+      +'3) 프롬프트의 출력 템플릿 형식으로 카카오톡 진단 메시지를 작성하라. [학생이름]/[전체문항수]/[맞춘문항수]는 실제 값으로 채워라. 파일명은 절대 쓰지 마라.\n'
+      +(e.script?('참고용 풀이영상 스크립트(내용 이해용, 그대로 인용 금지):\n'+String(e.script).slice(0,4000)+'\n'):'')
+      +'반드시 아래 JSON만 출력(다른 텍스트 금지):\n{"name":"학생이름","total":전체문항수숫자,"correct":맞은개수숫자,"comment":"카톡 메시지 전문"}';
+    const parts=[{text:instr}];
+    imgs.forEach(im=> parts.push({inline_data:{mime_type:im.mime, data:im.b64}}));
+    const txt=await callGemini({ contents:[{parts}], systemInstruction:{parts:[{text:sys}]} });
+    let d=null; try{ d=JSON.parse(txt); }catch(_){ const m=txt&&txt.match(/\{[\s\S]*\}/); if(m){ try{ d=JSON.parse(m[0]); }catch(__){} } }
+    if(!d) d={name:'', total:total, correct:'', comment:(txt||'').trim()};
+    return { name:(d.name||'').toString().trim(), total:(d.total!=null?d.total:total).toString(), correct:(d.correct!=null?d.correct:'').toString(), comment:(d.comment||'').toString() };
+  }
+  function matchStudent(name){
+    if(!name) return ''; const n=String(name).replace(/\s/g,'');
+    let hit=S.students.find(s=>s.replace(/\s/g,'')===n); if(hit) return hit;
+    hit=S.students.find(s=>{ const ss=s.replace(/\s/g,''); return ss&&(n.includes(ss)||ss.includes(n)); }); return hit||'';
+  }
+  async function runAiDiagnosis(){
+    const e=curExam(); if(!e){ toast('시험 세트를 선택/생성하세요'); return; }
+    if(!examImages.length){ toast('시험지 사진을 올려주세요'); return; }
+    if(!gmKeyGet()){ if(!geminiKey()) return; }
+    const btn=document.getElementById('exam-run'); btn.disabled=true; const o=btn.textContent; btn.textContent='분석 중…';
+    const res=document.getElementById('exam-results'); res.innerHTML='<span class="hint">학생 분류 중… 잠시만요</span>';
+    try{
+      let groups=[]; const pages=parseInt(e.pages,10);
+      if(pages>0){ for(let i=0;i<examImages.length;i+=pages){ groups.push(examImages.slice(i,i+pages)); } }
+      else { groups=await splitByName(examImages); }
+      aiResults=[];
+      for(let gi=0; gi<groups.length; gi++){
+        res.innerHTML=`<span class="hint">학생 ${gi+1} / ${groups.length} 채점·코멘트 생성 중…</span>`;
+        let r; try{ r=await gradeGroup(e, groups[gi]); }catch(err){ r={name:'',total:(e.questions||'').toString(),correct:'',comment:'(생성 실패: '+err.message+')'}; }
+        aiResults.push(Object.assign({imgs:groups[gi], student:matchStudent(r.name)}, r));
+      }
+      renderAiResults();
+    }catch(err){ res.innerHTML='<span class="hint" style="color:var(--danger)">분석 실패: '+esc(err.message)+'</span>'; }
+    finally{ btn.disabled=false; btn.textContent=o; }
+  }
+  function renderAiResults(){
+    const res=document.getElementById('exam-results');
+    if(!aiResults.length){ res.innerHTML='<span class="hint">결과가 없습니다.</span>'; return; }
+    let h='<div class="hint" style="margin-bottom:8px">아래 인식 결과를 검토·수정하고, 학생이 맞는지 확인한 뒤 저장하세요. (틀린 이름은 드롭다운으로 수정)</div>';
+    aiResults.forEach((r,i)=>{
+      const opts=['<option value="">(학생 선택)</option>'].concat(S.students.map(s=>`<option ${s===r.student?'selected':''}>${esc(s)}</option>`)).join('');
+      const thumbs=(r.imgs||[]).map(im=>`<img src="${im.dataUrl}">`).join('');
+      h+=`<div class="content-week">
+        <div class="field"><label>인식 이름</label><b style="min-width:70px">${esc(r.name||'(못 읽음)')}</b> → <select onchange="aiSet(${i},'student',this.value)">${opts}</select></div>
+        <div class="ai-thumbs">${thumbs}</div>
+        <div class="field"><label>득점 / 문항</label><input type="text" value="${esc(r.correct)}" oninput="aiSet(${i},'correct',this.value)" style="max-width:90px;min-width:70px"> / <input type="text" value="${esc(r.total)}" oninput="aiSet(${i},'total',this.value)" style="max-width:90px;min-width:70px"></div>
+        <label class="flbl">코멘트 (검토·수정)</label>
+        <textarea class="cta" style="min-height:150px" oninput="aiSet(${i},'comment',this.value)">${esc(r.comment)}</textarea>
+      </div>`;
+    });
+    h+='<button class="btn save" onclick="saveAllAi(this)" style="margin-top:6px">💾 검토 완료 → 학생별 저장</button>';
+    res.innerHTML=h;
+  }
+  function aiSet(i,k,v){ if(aiResults[i]){ aiResults[i][k]=v; } }
+  async function buildImagesPdf(imgs){
+    try{
+      const JS=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF; if(!JS) return null;
+      const doc=new JS({unit:'pt',format:'a4'});
+      for(let i=0;i<imgs.length;i++){
+        const im=imgs[i]; const dim=await imgSize(im.dataUrl);
+        const pw=doc.internal.pageSize.getWidth(), ph=doc.internal.pageSize.getHeight();
+        const ratio=Math.min(pw/dim.w, ph/dim.h); const w=dim.w*ratio, h=dim.h*ratio;
+        if(i>0) doc.addPage();
+        doc.addImage(im.dataUrl,'JPEG',(pw-w)/2,(ph-h)/2,w,h);
+      }
+      return doc.output('blob');
+    }catch(e){ return null; }
+  }
+  function imgSize(dataUrl){ return new Promise(res=>{ const im=new Image(); im.onload=()=>res({w:im.naturalWidth||1000,h:im.naturalHeight||1400}); im.onerror=()=>res({w:1000,h:1400}); im.src=dataUrl; }); }
+  async function saveAllAi(btn){
+    const e=curExam(); if(!e){ toast('시험 세트가 없습니다'); return; }
+    const attach=document.getElementById('exam-attach').checked;
+    let saved=0, skipped=0;
+    if(btn){ btn.disabled=true; btn.textContent='저장 중…'; }
+    for(const r of aiResults){
+      if(!r.student){ skipped++; continue; }
+      const entry={ title:(e.title||'일일테스트'), date:today(), score:String(r.correct||''), total:String(r.total||e.questions||''), comment:r.comment||'', video:e.video||'', files:[] };
+      if(attach && r.imgs && r.imgs.length){
+        const pdf=await buildImagesPdf(r.imgs);
+        if(pdf){ const up=await ghUploadBlob(pdf,'reports', 'test.pdf'); if(up.url) entry.files.push({label:'시험지', url:up.url}); else if(up.err==='perm'){ toast('토큰 권한이 없어 시험지 첨부는 건너뜁니다'); } }
+      }
+      repList(r.student).unshift(entry);
+      saved++;
+    }
+    dirty(); renderReportAdmin();
+    toast(`${saved}명 저장됨${skipped?(' · '+skipped+'명 학생 미지정으로 건너뜀'):''} — 하단 [💾 GitHub에 저장] 꼭 눌러 반영하세요`);
+    if(btn){ btn.disabled=false; btn.textContent='💾 검토 완료 → 학생별 저장'; }
   }
 
   /* ===== 저장 ===== */
