@@ -264,7 +264,7 @@
       <div class="card">
         <h3>📸 반 시험지 업로드 → 자동 채점·코멘트</h3>
         <div class="hint">위 세트를 선택하고 반 학생 시험지를 <b>순서대로 한 번에</b> 올리세요(사진 여러 장). <b>시험지 부분만 자동으로 크롭</b>한 뒤, 각 학생 첫 장의 이름으로 분류하고 동그라미/점수 표기를 세어 득점·코멘트를 학생별로 생성합니다. <b>결과를 검토·수정한 뒤</b> 저장하세요. (Gemini 키 필요)</div>
-        <div class="field"><label>AI 모델</label><input type="text" id="examModel" oninput="setExamModel(this.value)" placeholder="gemini-2.5-pro" style="max-width:240px;min-width:160px"><span class="hint" style="margin:0">품질↑ gemini-2.5-pro · 속도↑ gemini-2.5-flash</span></div>
+        <div class="field"><label>AI 모델</label><input type="text" id="examModel" oninput="setExamModel(this.value)" placeholder="gemini-2.5-flash" style="max-width:240px;min-width:160px"><span class="hint" style="margin:0">무료 넉넉 gemini-2.5-flash · 최고품질(결제) gemini-2.5-pro</span></div>
         <div class="field"><label>시험지 사진</label><input type="file" id="exam-imgs" accept="image/*" multiple onchange="examImgsPicked(this)"></div>
         <div id="exam-imgstat" class="hint"></div>
         <div class="field"><label style="width:auto"><input type="checkbox" id="exam-attach" checked style="width:auto;min-width:0;margin-right:6px">크롭한 시험지를 사진 파일로 학생별 첨부(업로드)</label></div>
@@ -548,7 +548,7 @@
 
   /* ===== Gemini 공통 ===== */
   const GM_MODEL_DEFAULT='gemini-2.0-flash';
-  const EXAM_MODEL_DEFAULT='gemini-2.5-pro';
+  const EXAM_MODEL_DEFAULT='gemini-2.5-flash';
   function gmKeyGet(){ try{ return localStorage.getItem('tb_user_gemini_key')||''; }catch(e){ return ''; } }
   function gmModelGet(){ try{ return localStorage.getItem('gf_gemini_model')||GM_MODEL_DEFAULT; }catch(e){ return GM_MODEL_DEFAULT; } }
   function examModelGet(){ try{ return localStorage.getItem('gf_exam_model')||EXAM_MODEL_DEFAULT; }catch(e){ return EXAM_MODEL_DEFAULT; } }
@@ -664,7 +664,7 @@
       let files='';
       (r.files||[]).forEach((f,fi)=>{
         const st = f.url ? '<span style="color:var(--ok);font-size:12px">✓ 첨부됨</span>' : '<span style="color:var(--muted);font-size:12px">링크 없음</span>';
-        files+=`<div class="tb-row"><input type="text" value="${esc(f.label)}" oninput="setRepFile(${i},${fi},'label',this.value)" placeholder="파일 이름 (예: 성적표 / 복습용 시험지)"><input type="url" value="${esc(f.url)}" oninput="setRepFile(${i},${fi},'url',this.value)" placeholder="PDF 링크 (업로드하면 자동 입력)"><input type="file" accept="application/pdf" onchange="uploadRepPdf(${i},${fi},this)"> ${st} <button class="btn del" onclick="delRepFile(${i},${fi})">×</button></div>`;
+        files+=`<div class="tb-row"><input type="text" value="${esc(f.label)}" oninput="setRepFile(${i},${fi},'label',this.value)" placeholder="파일 이름 (예: 성적표 / 복습용 시험지)"><input type="url" value="${esc(f.url)}" oninput="setRepFile(${i},${fi},'url',this.value)" placeholder="PDF 링크 (업로드하면 자동 입력)"><input type="file" accept="application/pdf,image/*" onchange="uploadRepPdf(${i},${fi},this)"> ${st} <button class="btn del" onclick="delRepFile(${i},${fi})">×</button></div>`;
       });
       h+=`<div class="content-week">
         <div class="field"><label>진단 이름</label><input type="text" value="${esc(r.title)}" oninput="setRep(${i},'title',this.value)" placeholder="예: 중급 모의고사 1회 · 7월 진단평가 (직접 입력)"></div>
@@ -673,7 +673,7 @@
         <label class="flbl">선생님 코멘트</label>
         <textarea class="cta" style="min-height:80px" oninput="setRep(${i},'comment',this.value)" placeholder="학생/학부모에게 전할 코멘트">${esc(r.comment)}</textarea>
         <div class="field" style="margin-top:8px"><label>풀이 영상</label><input type="url" value="${esc(r.video)}" oninput="setRep(${i},'video',this.value)" placeholder="유튜브 링크 (선택)"></div>
-        <label class="flbl">📎 첨부파일 — 성적표 · 복습용 시험지 등 PDF (누적 첨부 가능)</label>
+        <label class="flbl">📎 첨부파일 — 성적표 · 복습용 시험지 PDF/사진 (누적 첨부 가능)</label>
         <div class="tb-list">${files}</div>
         <button class="btn add sm" onclick="addRepFile(${i})">＋ 첨부파일 추가</button>
         <div style="height:8px"></div>
@@ -693,10 +693,10 @@
   function delRepFile(i,fi){ const l=repList(repSel); if(l[i]&&l[i].files){ l[i].files.splice(fi,1); renderRepBody(); dirty(); } }
   async function uploadRepPdf(i,fi,input){
     const f=input.files&&input.files[0]; if(!f) return;
-    if(!/\.pdf$/i.test(f.name)){ toast('PDF 파일만 업로드돼요'); input.value=''; return; }
-    toast('PDF 업로드 중…');
+    if(!/\.(pdf|png|jpe?g|webp)$/i.test(f.name)){ toast('PDF 또는 이미지 파일만 업로드돼요'); input.value=''; return; }
+    toast('파일 업로드 중…');
     const r=await ghUploadPdf(f,'reports');
-    if(r.url){ const l=repList(repSel); if(l[i]&&l[i].files&&l[i].files[fi]){ l[i].files[fi].url=r.url; if(!l[i].files[fi].label) l[i].files[fi].label=f.name.replace(/\.pdf$/i,''); } renderRepBody(); dirty(); toast('업로드 완료 ✅ — 하단 [GitHub에 저장]도 눌러주세요'); }
+    if(r.url){ const l=repList(repSel); if(l[i]&&l[i].files&&l[i].files[fi]){ l[i].files[fi].url=r.url; if(!l[i].files[fi].label) l[i].files[fi].label=f.name.replace(/\.[^.]+$/,''); } renderRepBody(); dirty(); toast('업로드 완료 ✅ — 하단 [GitHub에 저장]도 눌러주세요'); }
     else if(r.err==='perm'){ toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents 쓰기 권한 토큰을 넣어주세요'); }
     else if(r.err&&r.err!=='notoken'){ toast('업로드 실패: '+r.err); }
     input.value='';
@@ -797,8 +797,7 @@
     txt=String(txt||'');
     const marker=txt.indexOf('@@@코멘트@@@');
     const head = marker>=0 ? txt.slice(0,marker) : txt;
-    let comment = marker>=0 ? txt.slice(marker+8).replace(/^코멘트@@@/,'').trim() : txt.trim();
-    if(marker>=0){ comment = txt.slice(marker).replace('@@@코멘트@@@','').trim(); }
+    let comment = marker>=0 ? txt.slice(marker).replace('@@@코멘트@@@','').trim() : txt.trim();
     const nm=((head.match(/이름\s*[:：]\s*(.+)/)||[])[1]||'').trim();
     const sc=((head.match(/득점\s*[:：]\s*([0-9]+)/)||[])[1]||'').trim();
     const tt=((head.match(/문항\s*[:：]\s*([0-9]+)/)||[])[1]||total).toString().trim();
