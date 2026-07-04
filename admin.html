@@ -264,6 +264,7 @@
       <div class="card">
         <h3>📸 반 시험지 업로드 → 자동 채점·코멘트</h3>
         <div class="hint">위 세트를 선택하고 반 학생 시험지를 <b>순서대로 한 번에</b> 올리세요(사진 여러 장). <b>시험지 부분만 자동으로 크롭</b>한 뒤, 각 학생 첫 장의 이름으로 분류하고 동그라미/점수 표기를 세어 득점·코멘트를 학생별로 생성합니다. <b>결과를 검토·수정한 뒤</b> 저장하세요. (Gemini 키 필요)</div>
+        <div class="field"><label>AI 모델</label><input type="text" id="examModel" oninput="setExamModel(this.value)" placeholder="gemini-2.5-pro" style="max-width:240px;min-width:160px"><span class="hint" style="margin:0">품질↑ gemini-2.5-pro · 속도↑ gemini-2.5-flash</span></div>
         <div class="field"><label>시험지 사진</label><input type="file" id="exam-imgs" accept="image/*" multiple onchange="examImgsPicked(this)"></div>
         <div id="exam-imgstat" class="hint"></div>
         <div class="field"><label style="width:auto"><input type="checkbox" id="exam-attach" checked style="width:auto;min-width:0;margin-right:6px">크롭한 시험지를 사진 파일로 학생별 첨부(업로드)</label></div>
@@ -545,21 +546,25 @@
   function delCourse(i){ vip().courses.splice(i,1); renderVip(); dirty(); }
   function setClinic(k,v){ vip().clinic[k]=(k==='notice')?v:v.trim(); dirty(); }
 
-  /* ===== ⑦ 교육 매거진 · 프리미엄 칼럼 ===== */
+  /* ===== Gemini 공통 ===== */
   const GM_MODEL_DEFAULT='gemini-2.0-flash';
+  const EXAM_MODEL_DEFAULT='gemini-2.5-pro';
   function gmKeyGet(){ try{ return localStorage.getItem('tb_user_gemini_key')||''; }catch(e){ return ''; } }
   function gmModelGet(){ try{ return localStorage.getItem('gf_gemini_model')||GM_MODEL_DEFAULT; }catch(e){ return GM_MODEL_DEFAULT; } }
+  function examModelGet(){ try{ return localStorage.getItem('gf_exam_model')||EXAM_MODEL_DEFAULT; }catch(e){ return EXAM_MODEL_DEFAULT; } }
+  function setExamModel(v){ try{ localStorage.setItem('gf_exam_model',(v||'').trim()||EXAM_MODEL_DEFAULT); }catch(e){} }
   function geminiKey(){ let k=gmKeyGet(); if(!k){ k=prompt('Gemini API Key 입력 (aistudio.google.com/app/apikey)'); if(!k) return null; k=k.trim(); try{ localStorage.setItem('tb_user_gemini_key',k);}catch(e){} } return k; }
   function saveGmKey(){ const v=document.getElementById('gmKey').value.trim(); if(!v){ toast('키를 입력하세요'); return; } try{ localStorage.setItem('tb_user_gemini_key',v);}catch(e){} toast('Gemini 키 저장됨 ✅'); renderMag(); }
   function saveGmModel(){ const v=document.getElementById('gmModel').value.trim()||GM_MODEL_DEFAULT; try{ localStorage.setItem('gf_gemini_model',v);}catch(e){} toast('모델 저장됨: '+v); }
-  async function callGemini(payload){
+  async function callGeminiModel(payload, model){
     const key=geminiKey(); if(!key) throw new Error('키 없음');
-    const url=`https://generativelanguage.googleapis.com/v1beta/models/${gmModelGet()}:generateContent?key=${key}`;
+    const url=`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
     const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    if(!r.ok){ const t=await r.text(); throw new Error(r.status+' '+t.slice(0,160)); }
+    if(!r.ok){ const t=await r.text(); throw new Error(r.status+' '+t.slice(0,180)); }
     const j=await r.json();
-    return (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts && j.candidates[0].content.parts[0] && j.candidates[0].content.parts[0].text) || '';
+    return (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts && j.candidates[0].content.parts.map(p=>p.text||'').join('')) || '';
   }
+  async function callGemini(payload){ return callGeminiModel(payload, gmModelGet()); }
 
   function renderMag(){
     const V=vip();
@@ -585,7 +590,7 @@
       <button class="btn del sm" onclick="delMag(${i})">삭제</button></div>`; });
     document.getElementById('mag-items').innerHTML=m||'<span class="hint">등록된 뉴스가 없습니다. (매일 오전 자동 등록)</span>';
 
-    const st=document.getElementById('gmStat'); if(st) st.textContent=(gmKeyGet()?'✅ 키 저장됨':'키 미설정')+' · 모델 '+gmModelGet();
+    const st=document.getElementById('gmStat'); if(st) st.textContent=(gmKeyGet()?'✅ 키 저장됨':'키 미설정')+' · 뉴스/칼럼 모델 '+gmModelGet();
     const gk=document.getElementById('gmKey'); if(gk&&gmKeyGet()) gk.value=gmKeyGet();
     const gmd=document.getElementById('gmModel'); if(gmd) gmd.value=gmModelGet();
   }
@@ -697,8 +702,9 @@
     input.value='';
   }
 
-  /* ===== ⑨ AI 진단 (반 시험지 일괄 → 자동크롭 → 채점·코멘트) ===== */
+  /* ===== ⑨ AI 진단 ===== */
   function renderExam(){
+    const em=document.getElementById('examModel'); if(em&&!em.value) em.value=examModelGet();
     const sel=document.getElementById('exam-sel'); if(!sel) return;
     const sets=S.examSets;
     if(!sets.length){ sel.innerHTML='<option value="">(세트 없음)</option>'; examSel=''; document.getElementById('exam-form').innerHTML='<span class="hint">‘＋ 새 세트’를 눌러 시험을 만드세요.</span>'; return; }
@@ -740,10 +746,10 @@
       r.onload=()=>{
         const im=new Image();
         im.onload=()=>{
-          const max=1600; let w=im.naturalWidth,h=im.naturalHeight; const sc=Math.min(1,max/Math.max(w,h)); const cw=Math.max(1,Math.round(w*sc)),ch=Math.max(1,Math.round(h*sc));
+          const max=2000; let w=im.naturalWidth,h=im.naturalHeight; const sc=Math.min(1,max/Math.max(w,h)); const cw=Math.max(1,Math.round(w*sc)),ch=Math.max(1,Math.round(h*sc));
           const c=document.createElement('canvas'); c.width=cw; c.height=ch; c.getContext('2d').drawImage(im,0,0,cw,ch);
           let outC=c; try{ const cr=autoCropCanvas(c); if(cr) outC=cr; }catch(e){}
-          const dataUrl=outC.toDataURL('image/jpeg',0.85);
+          const dataUrl=outC.toDataURL('image/jpeg',0.9);
           res({name:f.name,mime:'image/jpeg',b64:dataUrl.split(',')[1],dataUrl});
         };
         im.onerror=()=>{ const dataUrl=String(r.result); res({name:f.name,mime:f.type||'image/jpeg',b64:dataUrl.split(',')[1],dataUrl}); };
@@ -752,7 +758,6 @@
       r.readAsDataURL(f);
     });
   }
-  // 시험지(밝은 종이) 영역만 자동 크롭. 못 찾으면 null 반환(원본 사용).
   function autoCropCanvas(canvas){
     const W=canvas.width, H=canvas.height; if(W<40||H<40) return null;
     const ctx=canvas.getContext('2d'); const d=ctx.getImageData(0,0,W,H).data;
@@ -772,8 +777,8 @@
     top=Math.max(0,top-padY); bot=Math.min(H-1,bot+padY); left=Math.max(0,left-padX); right=Math.min(W-1,right+padX);
     const nw=right-left+1, nh=bot-top+1;
     if(nw<=0||nh<=0) return null;
-    if(nw>W*0.97 && nh>H*0.97) return null;   // 거의 전체 → 크롭 의미 없음
-    if(nw<W*0.35 || nh<H*0.35) return null;   // 너무 작게 잡힘 → 오검출로 보고 원본 사용
+    if(nw>W*0.97 && nh>H*0.97) return null;
+    if(nw<W*0.35 || nh<H*0.35) return null;
     const out=document.createElement('canvas'); out.width=nw; out.height=nh;
     out.getContext('2d').drawImage(canvas,left,top,nw,nh,0,0,nw,nh);
     return out;
@@ -782,27 +787,37 @@
   async function splitByName(imgs){
     const parts=[{text:'다음은 여러 학생의 수학 시험지 사진이며 순서대로 정렬되어 있다. 각 이미지에 학생 이름이 크게 손글씨로 적혀 있으면 그 이름을, 없으면 null 을 출력한다. 이미지 순서와 정확히 같은 길이의 JSON 배열만 출력해라. 예: ["홍길동", null, "김철수"]'}];
     imgs.forEach(im=> parts.push({inline_data:{mime_type:im.mime, data:im.b64}}));
-    const txt=await callGemini({contents:[{parts}]});
+    const txt=await callGeminiModel({contents:[{parts}]}, examModelGet());
     let arr=null; try{ arr=JSON.parse(txt); }catch(_){ const m=txt&&txt.match(/\[[\s\S]*\]/); if(m){ try{ arr=JSON.parse(m[0]); }catch(__){} } }
     const groups=[]; let cur=null;
     imgs.forEach((im,idx)=>{ const nm=arr&&arr[idx]; if(nm&&String(nm).trim()){ cur=[im]; groups.push(cur); } else { if(!cur){ cur=[im]; groups.push(cur); } else cur.push(im); } });
     return groups;
   }
+  function parseGrade(txt, total){
+    txt=String(txt||'');
+    const marker=txt.indexOf('@@@코멘트@@@');
+    const head = marker>=0 ? txt.slice(0,marker) : txt;
+    let comment = marker>=0 ? txt.slice(marker+8).replace(/^코멘트@@@/,'').trim() : txt.trim();
+    if(marker>=0){ comment = txt.slice(marker).replace('@@@코멘트@@@','').trim(); }
+    const nm=((head.match(/이름\s*[:：]\s*(.+)/)||[])[1]||'').trim();
+    const sc=((head.match(/득점\s*[:：]\s*([0-9]+)/)||[])[1]||'').trim();
+    const tt=((head.match(/문항\s*[:：]\s*([0-9]+)/)||[])[1]||total).toString().trim();
+    return { name:nm, total:tt, correct:sc, comment:comment };
+  }
   async function gradeGroup(e, imgs){
     const total=(e.questions||'').toString().trim();
     const sys=e.prompt||DEFAULT_PROMPT;
-    const instr='아래는 한 학생의 수학 시험지 사진들이다(첫 장에 학생 이름이 손글씨로 있음). 위 시스템 지침(원장 프롬프트)에 따라 작업해라.\n'
-      +'1) 첫 장에서 학생 이름을 정확히 읽어라.\n'
-      +'2) 동그라미(정답)/작대기(오답)/부분점수/7/10 같은 점수 표기를 세어 실제 득점을 계산하라.'+(total?(' 전체 문항수는 '+total+'문항이다.'):'')+'\n'
-      +'3) 프롬프트의 출력 템플릿 형식으로 카카오톡 진단 메시지를 작성하라. [학생이름]/[전체문항수]/[맞춘문항수]는 실제 값으로 채워라. 파일명은 절대 쓰지 마라.\n'
-      +(e.script?('참고용 풀이영상 스크립트(내용 이해용, 그대로 인용 금지):\n'+String(e.script).slice(0,4000)+'\n'):'')
-      +'반드시 아래 JSON만 출력(다른 텍스트 금지):\n{"name":"학생이름","total":전체문항수숫자,"correct":맞은개수숫자,"comment":"카톡 메시지 전문"}';
+    const instr='아래는 한 학생의 수학 시험지 사진들이다(첫 장에 학생 이름이 손글씨로 있음). 위 시스템 지침(원장 프롬프트)에 100% 맞춰 작성하라.\n'
+      +'- 첫 장에서 학생 이름을 정확히 읽어라.\n'
+      +'- 동그라미(정답)/작대기(오답)/부분점수/7/10 같은 점수 표기를 문항마다 하나씩 세어 실제 득점을 정확히 계산하라.'+(total?(' 전체 문항수는 '+total+'문항.'):'')+'\n'
+      +'- 코멘트는 프롬프트의 [출력 템플릿] 형식 그대로, 문항 번호를 넣어 강점/약점/실수를 나누어 충분히 풍부하고 다정하게 작성하라(줄바꿈 자유). 파일명은 절대 쓰지 마라.\n'
+      +(e.script?('참고용 풀이영상 스크립트(내용 이해용, 그대로 인용 금지):\n'+String(e.script).slice(0,6000)+'\n'):'')
+      +'\n출력은 정확히 아래 형식으로만(머리 3줄 + 마커 + 코멘트, JSON 쓰지 마라):\n'
+      +'이름: <학생 이름>\n득점: <맞은 개수 숫자>\n문항: <전체 문항수 숫자>\n@@@코멘트@@@\n<카카오톡 메시지 전문>';
     const parts=[{text:instr}];
     imgs.forEach(im=> parts.push({inline_data:{mime_type:im.mime, data:im.b64}}));
-    const txt=await callGemini({ contents:[{parts}], systemInstruction:{parts:[{text:sys}]} });
-    let dd=null; try{ dd=JSON.parse(txt); }catch(_){ const m=txt&&txt.match(/\{[\s\S]*\}/); if(m){ try{ dd=JSON.parse(m[0]); }catch(__){} } }
-    if(!dd) dd={name:'', total:total, correct:'', comment:(txt||'').trim()};
-    return { name:(dd.name||'').toString().trim(), total:(dd.total!=null?dd.total:total).toString(), correct:(dd.correct!=null?dd.correct:'').toString(), comment:(dd.comment||'').toString() };
+    const txt=await callGeminiModel({ contents:[{parts}], systemInstruction:{parts:[{text:sys}]} }, examModelGet());
+    return parseGrade(txt, total);
   }
   function matchStudent(name){
     if(!name) return ''; const n=String(name).replace(/\s/g,'');
@@ -814,19 +829,19 @@
     if(!examImages.length){ toast('시험지 사진을 올려주세요'); return; }
     if(!gmKeyGet()){ if(!geminiKey()) return; }
     const btn=document.getElementById('exam-run'); btn.disabled=true; const o=btn.textContent; btn.textContent='분석 중…';
-    const res=document.getElementById('exam-results'); res.innerHTML='<span class="hint">학생 분류 중… 잠시만요</span>';
+    const res=document.getElementById('exam-results'); res.innerHTML='<span class="hint">학생 분류 중… 잠시만요 ('+examModelGet()+')</span>';
     try{
       let groups=[]; const pages=parseInt(e.pages,10);
       if(pages>0){ for(let i=0;i<examImages.length;i+=pages){ groups.push(examImages.slice(i,i+pages)); } }
       else { groups=await splitByName(examImages); }
       aiResults=[];
       for(let gi=0; gi<groups.length; gi++){
-        res.innerHTML=`<span class="hint">학생 ${gi+1} / ${groups.length} 채점·코멘트 생성 중…</span>`;
+        res.innerHTML=`<span class="hint">학생 ${gi+1} / ${groups.length} 채점·코멘트 생성 중… (${examModelGet()})</span>`;
         let r; try{ r=await gradeGroup(e, groups[gi]); }catch(err){ r={name:'',total:(e.questions||'').toString(),correct:'',comment:'(생성 실패: '+err.message+')'}; }
         aiResults.push(Object.assign({imgs:groups[gi], student:matchStudent(r.name)}, r));
       }
       renderAiResults();
-    }catch(err){ res.innerHTML='<span class="hint" style="color:var(--danger)">분석 실패: '+esc(err.message)+'</span>'; }
+    }catch(err){ res.innerHTML='<span class="hint" style="color:var(--danger)">분석 실패: '+esc(err.message)+' (모델명이 맞는지, 키 권한이 있는지 확인하세요)</span>'; }
     finally{ btn.disabled=false; btn.textContent=o; }
   }
   function renderAiResults(){
@@ -841,7 +856,7 @@
         <div class="ai-thumbs">${thumbs}</div>
         <div class="field"><label>득점 / 문항</label><input type="text" value="${esc(r.correct)}" oninput="aiSet(${i},'correct',this.value)" style="max-width:90px;min-width:70px"> / <input type="text" value="${esc(r.total)}" oninput="aiSet(${i},'total',this.value)" style="max-width:90px;min-width:70px"></div>
         <label class="flbl">코멘트 (검토·수정)</label>
-        <textarea class="cta" style="min-height:150px" oninput="aiSet(${i},'comment',this.value)">${esc(r.comment)}</textarea>
+        <textarea class="cta" style="min-height:170px" oninput="aiSet(${i},'comment',this.value)">${esc(r.comment)}</textarea>
       </div>`;
     });
     h+='<button class="btn save" onclick="saveAllAi(this)" style="margin-top:6px">💾 검토 완료 → 학생별 저장</button>';
