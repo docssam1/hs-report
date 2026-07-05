@@ -265,7 +265,7 @@
         <h3>📸 반 시험지 업로드 → 자동 채점·코멘트</h3>
         <div class="hint">위 세트를 선택하고 반 학생 시험지를 <b>순서대로 한 번에</b> 올리세요(사진 여러 장). <b>시험지 부분만 자동으로 크롭</b>한 뒤, 각 학생 첫 장의 이름으로 분류하고 동그라미/점수 표기를 세어 득점·코멘트를 학생별로 생성합니다. <b>결과를 검토·수정한 뒤</b> 저장하세요. (Gemini 키 필요)</div>
         <div class="field"><label>AI 모델</label><input type="text" id="examModel" oninput="setExamModel(this.value)" placeholder="gemini-2.5-flash" style="max-width:240px;min-width:160px"><span class="hint" style="margin:0">무료 넉넉 gemini-2.5-flash · 최고품질(결제) gemini-2.5-pro</span></div>
-        <div class="field"><label style="width:auto"><input type="checkbox" id="exam-firstclass" style="width:auto;min-width:0;margin-right:6px">🌱 오늘 첫 수업 (아직 안 배운 학생 톤으로 전체 생성)</label></div>
+        <div class="field"><label style="width:auto"><input type="checkbox" id="exam-firstclass" style="width:auto;min-width:0;margin-right:6px">🌱 아직 안 배운 범위 (진도 전·결석 — 못 풀어도 지적하지 않고 격려 톤)</label></div>
         <div class="field"><label>시험지 사진</label><input type="file" id="exam-imgs" accept="image/*" multiple onchange="examImgsPicked(this)"></div>
         <div id="exam-imgstat" class="hint"></div>
         <div class="field"><label style="width:auto"><input type="checkbox" id="exam-attach" checked style="width:auto;min-width:0;margin-right:6px">크롭한 시험지를 사진 파일로 학생별 첨부(업로드)</label></div>
@@ -337,7 +337,7 @@
  * [읽기 습관 지적]
 마지막으로 문제를 꼼꼼히 읽고 조건을 놓치지 않는 연습과 부모님의 관리가 제일 중요합니다. 앞으로 직관적 대입/단순 나열을 버리고 오답이 없게 철저히 지도하겠습니다. 궁금한 점은 언제든 톡 주세요.`;
 
-  const FIRST_CLASS_NOTE = `\n\n[★첫 수업 특별 지침 — 최우선 적용]\n이 학생은 '오늘이 첫 수업'이라 아직 배우지 않은 내용이다. 따라서:\n- 못 풀거나 틀린 것을 '나쁜 습관/때려맞추기/노가다'로 절대 지적하지 마라(아직 안 배웠으니 당연하다).\n- 대신 (1) 첫 만남을 따뜻하게 환영하고, (2) 지금 시험지에서 보이는 강점·수 감각·가능성을 진단하고, (3) 앞으로 어떻게 지도해 나갈지 방향을 안내하는 '첫 수업 진단' 톤으로 써라.\n- 점수는 '앞으로 성장할 출발점'으로만 표현하고, 낮아도 전혀 걱정할 필요 없다는 다정한 뉘앙스를 담아라.\n- 위 [출력 템플릿]의 '감으로 푸는 나쁜 습관을 잡겠습니다' 같은 지적성 문장은 첫 수업엔 쓰지 말고, 환영·격려 중심으로 바꿔라.`;
+  const FIRST_CLASS_NOTE = `\n\n[★미학습 범위 특별 지침 — 최우선 적용]\n이 학생은 오늘 시험 범위를 '아직 학원에서 배우지 않았다'(진도 전이거나 결석 등). 앞으로 배울 내용이다. 따라서:\n- 못 풀거나 틀린 것을 '나쁜 습관/때려맞추기/노가다'로 절대 지적하지 마라. 아직 안 배웠으니 못 푸는 게 자연스럽다.\n- 먼저 '아직 배우지 않은 범위라 지금 어려운 게 당연하다'고 안심시켜라(신규생 환영 인사는 하지 말 것 — 이미 우리 학생이다).\n- 그럼에도 시험지에서 보이는 강점·수 감각·가능성을 짚어 칭찬하고, 앞으로 이 부분을 어떻게 배워 나갈지 방향을 안내하라.\n- 점수는 '배우기 전의 출발점'으로만 표현하고, 낮아도 전혀 걱정할 필요 없다는 다정한 뉘앙스를 담아라.\n- [출력 템플릿]의 '감으로 푸는 나쁜 습관을 잡겠습니다' 같은 지적성 문장은 쓰지 말고, 안심·격려 중심으로 바꿔라.`;
 
   const weekNodes = () => S.nodes.filter(n=>n.type==='week');
   const specialNode = () => S.nodes.find(n=>n.type==='special');
@@ -813,7 +813,7 @@
     const instr='아래는 한 학생의 수학 시험지 사진들이다(첫 장에 학생 이름이 손글씨로 있음). 위 시스템 지침(원장 프롬프트)에 100% 맞춰 작성하라.\n'
       +'- 첫 장에서 학생 이름을 정확히 읽어라.\n'
       +'- 동그라미(정답)/작대기(오답)/부분점수/7/10 같은 점수 표기를 문항마다 하나씩 세어 실제 득점을 정확히 계산하라.'+(total?(' 전체 문항수는 '+total+'문항.'):'')+'\n'
-      +(firstClass?'- ★오늘은 이 학생의 첫 수업이다. 안 배운 걸 못 푼 것으로 지적하지 말고, 환영·강점·가능성·앞으로의 방향 중심으로 다정하게 써라. 점수는 출발점으로만 표현.\n':'- 코멘트는 프롬프트의 [출력 템플릿] 형식 그대로, 문항 번호를 넣어 강점/약점/실수를 나누어 충분히 풍부하고 다정하게 작성하라(줄바꿈 자유). 파일명은 절대 쓰지 마라.\n')
+      +(firstClass?'- ★이 학생은 오늘 시험 범위를 아직 배우지 않았다(진도 전·결석). 못 푼 것을 지적하지 말고, "아직 안 배운 부분이라 당연하다"고 안심시키며 강점·가능성·앞으로 배울 방향 중심으로 다정하게 써라. 점수는 배우기 전 출발점으로만 표현. (신규생 환영 인사는 하지 말 것)\n':'- 코멘트는 프롬프트의 [출력 템플릿] 형식 그대로, 문항 번호를 넣어 강점/약점/실수를 나누어 충분히 풍부하고 다정하게 작성하라(줄바꿈 자유). 파일명은 절대 쓰지 마라.\n')
       +(e.script?('참고용 풀이영상 스크립트(내용 이해용, 그대로 인용 금지):\n'+String(e.script).slice(0,6000)+'\n'):'')
       +'\n출력은 정확히 아래 형식으로만(머리 3줄 + 마커 + 코멘트, JSON 쓰지 마라):\n'
       +'이름: <학생 이름>\n득점: <맞은 개수 숫자>\n문항: <전체 문항수 숫자>\n@@@코멘트@@@\n<카카오톡 메시지 전문>';
@@ -833,7 +833,7 @@
     if(!gmKeyGet()){ if(!geminiKey()) return; }
     const firstClass=!!(document.getElementById('exam-firstclass')&&document.getElementById('exam-firstclass').checked);
     const btn=document.getElementById('exam-run'); btn.disabled=true; const o=btn.textContent; btn.textContent='분석 중…';
-    const res=document.getElementById('exam-results'); res.innerHTML='<span class="hint">학생 분류 중… 잠시만요 ('+examModelGet()+(firstClass?' · 첫 수업 톤':'')+')</span>';
+    const res=document.getElementById('exam-results'); res.innerHTML='<span class="hint">학생 분류 중… 잠시만요 ('+examModelGet()+(firstClass?' · 미학습 격려 톤':'')+')</span>';
     try{
       let groups=[]; const pages=parseInt(e.pages,10);
       if(pages>0){ for(let i=0;i<examImages.length;i+=pages){ groups.push(examImages.slice(i,i+pages)); } }
@@ -851,7 +851,7 @@
   function renderAiResults(){
     const res=document.getElementById('exam-results');
     if(!aiResults.length){ res.innerHTML='<span class="hint">결과가 없습니다.</span>'; return; }
-    let h='<div class="hint" style="margin-bottom:8px">아래 인식 결과를 검토·수정하고, 학생이 맞는지 확인한 뒤 저장하세요. (틀린 이름은 드롭다운으로 수정 · 썸네일은 크롭된 시험지 · 신규생은 🌱 체크 후 [다시 생성])</div>';
+    let h='<div class="hint" style="margin-bottom:8px">아래 인식 결과를 검토·수정하고, 학생이 맞는지 확인한 뒤 저장하세요. (틀린 이름은 드롭다운으로 수정 · 썸네일은 크롭된 시험지 · 아직 안 배운 학생은 🌱 체크 후 [다시 생성])</div>';
     aiResults.forEach((r,i)=>{
       const opts=['<option value="">(학생 선택)</option>'].concat(S.students.map(s=>`<option ${s===r.student?'selected':''}>${esc(s)}</option>`)).join('');
       const thumbs=(r.imgs||[]).map(im=>`<img src="${im.dataUrl}">`).join('');
@@ -859,7 +859,7 @@
         <div class="field"><label>인식 이름</label><b style="min-width:70px">${esc(r.name||'(못 읽음)')}</b> → <select onchange="aiSet(${i},'student',this.value)">${opts}</select></div>
         <div class="ai-thumbs">${thumbs}</div>
         <div class="field"><label>득점 / 문항</label><input type="text" value="${esc(r.correct)}" oninput="aiSet(${i},'correct',this.value)" style="max-width:90px;min-width:70px"> / <input type="text" value="${esc(r.total)}" oninput="aiSet(${i},'total',this.value)" style="max-width:90px;min-width:70px"></div>
-        <div class="field"><label style="width:auto"><input type="checkbox" id="fc-${i}" ${r.firstClass?'checked':''} style="width:auto;min-width:0;margin-right:5px">🌱 첫 수업 톤</label><button class="btn ai sm" onclick="regenOne(${i},this)">↻ 이 학생 다시 생성</button></div>
+        <div class="field"><label style="width:auto"><input type="checkbox" id="fc-${i}" ${r.firstClass?'checked':''} style="width:auto;min-width:0;margin-right:5px">🌱 아직 안 배운 범위</label><button class="btn ai sm" onclick="regenOne(${i},this)">↻ 이 학생 다시 생성</button></div>
         <label class="flbl">코멘트 (검토·수정)</label>
         <textarea class="cta" style="min-height:170px" oninput="aiSet(${i},'comment',this.value)">${esc(r.comment)}</textarea>
       </div>`;
