@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 2. 오후 3:14:39
+ * 생성: 2026. 7. 5. 오후 6:41:44
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -226,7 +226,7 @@ window.GFIELD_DATA = {
   "content": {
     "may-w34": {
       "notice": "학습내용\n1. GIFTED MATH 3 V1-1(1)\n  복습영상) https://youtu.be/ASN1UYcip0c\n   - 기출 다지기\n   황소 시험에 익숙해지기 위하여 몇 년간의 실제 기출문제를 가지고 학습하였습니다.\n   개구리 문제 섬을 색칠하여 풀 학생^^ 했는데 아무도 ㅜㅜ 없었습니다.\n\n   - 사고력 키우기\n   다양한 풀이와 지문이해를 위한 멘사 퍼즐형 문제입니다. 쉽지만 단순히 선행이 많이되었다고 식으로\n   풀기보다는 조건을 이해하고 그림으로 그릴수 있도록 하였습니다.\n\n2. GIFTED MATH 3 V1-1(2)\n   복습영상) https://youtu.be/a1uMuvgpl_4\n   - 덧셈과 밸셈식에서 숨겨진 수 알아보기\n     복면산과 도형이 나타낸 수 개념 유형입니다. \n\n3.  GIFTED MATH 3 V1-1(3) 도형의 개수\n   복습영상) https://youtu.be/bsQUySr0j4s\n",
-      "homework": "",
+      "homework": "\n",
       "textbooks": [
         {
           "title": "GIFTED MATH 3 V1-1 NEW",
@@ -235,7 +235,7 @@ window.GFIELD_DATA = {
       ]
     },
     "jun-w12": {
-      "notice": "",
+      "notice": "GIFTED MATH 3 V1-2(1)\n   * p4의 4번쨰 문제같은 조건에 알맞은 수는 특별한 스킬이 필요하지 않습니다.\n    대부분의 문제가 첫 글자,수를 쓰는 것 부터 시작하는데 오래 걸릴것 같은면 방법을 \n   알고도 시도하지 않는 것이 문제입니다. \n\n- 기출 다지기 \n - 사고력 키우기 \n   https://youtu.be/3KyijX8_neQ\n    \n  \n황소대비 개념3 v1-2(2)\nhttps://youtu.be/oS_QW3smwbM\n- 마방진 및 다양한 방진 해결\n- 논리추리(이중 조건), 줄세우기\n- 조건에 맞는 수 , 수의 성질\n\nGIFTED MATH V1-2 (2) 실전유형\n  https://youtu.be/c76FzeLSPRg\n\nGIFTED MATH V 1-3 개념 및 유제\n   https://youtu.be/j93kA9PXIA4\n\n\n",
       "homework": "",
       "textbooks": []
     },
@@ -347,7 +347,9 @@ window.GFIELD_DATA = {
     "민준기",
     "김서연",
     "김명서",
-    "임유준"
+    "임유준",
+    "안태하",
+    "김시후"
   ],
   "attendance": {
     "허유민": [],
@@ -410,7 +412,9 @@ window.GFIELD_DATA = {
       "jun-w12",
       "jun-w3",
       "jun-w4"
-    ]
+    ],
+    "안태하": [],
+    "김시후": []
   },
   "specialStudents": [],
   "archiveFolders": [
@@ -635,5 +639,6 @@ window.GFIELD_DATA = {
       "body": "생각하는 황소 입학시험은 단편 선행이 아니라 깊이 있는 수학적 사고력과 정확성을 평가합니다.\n· 출제 범위: 초3 과정까지의 연산을 바탕으로 한 사고력\n· 핵심: 단 하나의 오답도 만들지 않는 정확성 훈련\n자세한 일정과 대비 전략은 로드맵 탭을 참고하세요.",
       "video": ""
     }
-  ]
+  ],
+  "examSets": []
 };
