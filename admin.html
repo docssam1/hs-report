@@ -73,6 +73,13 @@
   .tb-row input[type=url]{flex:2;min-width:200px;}
   .btn.sm{padding:8px 14px;font-size:13px;}
 
+  .dz{display:inline-flex;align-items:center;gap:6px;border:1.5px dashed #c3cede;border-radius:8px;padding:6px 10px;background:#f8fafd;cursor:pointer;font-size:12px;color:var(--muted);vertical-align:middle;}
+  .dz:hover{border-color:var(--navy2);}
+  .dz.over{border-color:var(--navy);background:#e9f0ff;color:var(--navy);}
+  .dz input[type=file]{max-width:150px;font-size:12px;min-width:0;}
+  .dz span{white-space:nowrap;}
+  .dz.big{display:flex;justify-content:center;padding:16px;font-size:13px;}
+
   .select{padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;}
   .savebar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:10px;justify-content:center;align-items:center;z-index:25;flex-wrap:wrap;}
   .savebar .btn.save{background:var(--ok);color:#fff;}
@@ -152,7 +159,7 @@
     <section id="tab-content" class="hidden">
       <div class="card">
         <h3>주차별 콘텐츠 (학습내용 · 과제 · 교재)</h3>
-        <div class="hint">안내문을 그대로 붙여넣으면 학생 화면에서 유튜브/링크가 자동 변환됩니다. · 교재 PDF는 <b>웹 링크를 넣거나</b>, <b>로컬 PDF 파일을 직접 올리면</b> 저장소에 자동 업로드되고 링크가 채워집니다. (업로드엔 GitHub 토큰 필요)</div>
+        <div class="hint">안내문을 그대로 붙여넣으면 학생 화면에서 유튜브/링크가 자동 변환됩니다. · 교재 PDF는 <b>웹 링크를 넣거나</b>, <b>로컬 PDF를 파일 선택/드래그</b>하면 저장소에 자동 업로드되고 링크가 채워집니다. (업로드엔 GitHub 토큰 필요)</div>
         <div id="content-list"></div>
       </div>
     </section>
@@ -188,7 +195,7 @@
       </div>
       <div class="card">
         <h3>교재(책) 등록 — 서재</h3>
-        <div class="hint">PDF를 업로드하면 저장소 <b>books/</b> 폴더에 자동으로 올라가고 링크가 자동 입력됩니다. (GitHub 토큰 1회 필요) · 재생목록·답안 파일은 [링크 버튼]으로 넣으세요. 업로드 후 하단 [GitHub에 저장]도 눌러 목록을 반영하세요.</div>
+        <div class="hint">PDF를 <b>파일 선택 또는 드래그</b>하면 저장소 <b>books/</b> 폴더에 자동으로 올라가고 링크가 자동 입력됩니다. (GitHub 토큰 1회 필요) · 재생목록·답안 파일은 [링크 버튼]으로 넣으세요. 업로드 후 하단 [GitHub에 저장]도 눌러 목록을 반영하세요.</div>
         <div id="book-items"></div>
         <button class="btn add sm" onclick="addBook()" style="margin-top:8px;">＋ 교재 추가</button>
       </div>
@@ -248,7 +255,7 @@
     <section id="tab-report" class="hidden">
       <div class="card">
         <h3>📊 학생별 진단 결과 · 코멘트</h3>
-        <div class="hint">학생을 선택해 <b>전화번호 뒷 4자리(잠금)</b>·점수·코멘트를 입력하고, <b>성적표·복습용 시험지 PDF/사진</b>과 <b>풀이 영상 링크</b>를 첨부하세요. 진단 이름은 자유롭게 직접 입력합니다. 학생 화면 → 👑 VIP 라운지 → 진단 결과에서 본인만 열람합니다. (뒷자리가 비면 잠금 없이 열립니다) · 업로드엔 GitHub 토큰이 필요합니다.</div>
+        <div class="hint">학생을 선택해 <b>전화번호 뒷 4자리(잠금)</b>·점수·코멘트를 입력하고, <b>성적표·복습용 시험지 PDF/사진</b>과 <b>풀이 영상 링크</b>를 첨부하세요(파일 선택 또는 드래그). 진단 이름은 자유롭게 직접 입력합니다. 학생 화면 → 👑 VIP 라운지 → 진단 결과에서 본인만 열람합니다. (뒷자리가 비면 잠금 없이 열립니다) · 업로드엔 GitHub 토큰이 필요합니다.</div>
         <div class="field"><label>학생 선택</label><select class="select" id="rep-student" onchange="repSelect(this.value)"></select></div>
         <div id="rep-body"></div>
       </div>
@@ -263,10 +270,10 @@
       </div>
       <div class="card">
         <h3>📸 반 시험지 업로드 → 자동 채점·코멘트</h3>
-        <div class="hint">위 세트를 선택하고 반 학생 시험지를 <b>순서대로 한 번에</b> 올리세요(사진 여러 장). <b>시험지 부분만 자동으로 크롭</b>한 뒤, 각 학생 첫 장의 이름으로 분류하고 동그라미/점수 표기를 세어 득점·코멘트를 학생별로 생성합니다. <b>결과를 검토·수정한 뒤</b> 저장하세요. (Gemini 키 필요)</div>
+        <div class="hint">위 세트를 선택하고 반 학생 시험지를 <b>순서대로 한 번에</b> 올리세요(파일 선택 또는 드래그, 여러 장 가능). <b>시험지 부분만 자동으로 크롭</b>한 뒤, 각 학생 첫 장의 이름으로 분류하고 동그라미/점수 표기를 세어 득점·코멘트를 학생별로 생성합니다. <b>결과를 검토·수정한 뒤</b> 저장하세요. (Gemini 키 필요)</div>
         <div class="field"><label>AI 모델</label><input type="text" id="examModel" oninput="setExamModel(this.value)" placeholder="gemini-2.5-flash" style="max-width:240px;min-width:160px"><span class="hint" style="margin:0">무료 넉넉 gemini-2.5-flash · 최고품질(결제) gemini-2.5-pro</span></div>
         <div class="field"><label style="width:auto"><input type="checkbox" id="exam-firstclass" style="width:auto;min-width:0;margin-right:6px">🌱 아직 안 배운 범위 (진도 전·결석 — 못 풀어도 지적하지 않고 격려 톤)</label></div>
-        <div class="field"><label>시험지 사진</label><input type="file" id="exam-imgs" accept="image/*" multiple onchange="examImgsPicked(this)"></div>
+        <label class="dz big" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" id="exam-imgs" accept="image/*" multiple onchange="examImgsPicked(this)"><span>📸 시험지 사진 파일 선택 · 또는 여기로 드래그</span></label>
         <div id="exam-imgstat" class="hint"></div>
         <div class="field"><label style="width:auto"><input type="checkbox" id="exam-attach" checked style="width:auto;min-width:0;margin-right:6px">크롭한 시험지를 사진 파일로 학생별 첨부(업로드)</label></div>
         <button class="btn ai" id="exam-run" onclick="runAiDiagnosis()">🤖 AI 분석 시작</button>
@@ -310,6 +317,17 @@
   let aiResults = [];
   function today(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
   function vip(){ const v=S.vip; v.sessions=v.sessions||[]; v.courses=v.courses||[]; v.clinic=v.clinic||{notice:'',url:''}; v.magazine=v.magazine||[]; v.columns=v.columns||[]; return v; }
+
+  /* ===== 드래그&드롭 (모든 파일 입력 공통) ===== */
+  function dzOver(e){ e.preventDefault(); e.currentTarget.classList.add('over'); }
+  function dzOff(e){ e.currentTarget.classList.remove('over'); }
+  function dzDrop(e){
+    e.preventDefault(); e.currentTarget.classList.remove('over');
+    const inp=e.currentTarget.querySelector('input[type=file]'); if(!inp) return;
+    const dt=e.dataTransfer; if(!dt||!dt.files||!dt.files.length) return;
+    try{ inp.files=dt.files; }catch(_){ try{ const n=new DataTransfer(); for(const f of dt.files) n.items.add(f); inp.files=n.files; }catch(__){ return; } }
+    inp.dispatchEvent(new Event('change',{bubbles:true}));
+  }
 
   const DEFAULT_PROMPT = `[지시 사항]
 너는 수학 전문 학원 '지필드 영재교육'의 원장이야. 학생의 수학 시험지 사진을 꼼꼼히 분석해서, 학부모님께 카카오톡으로 보내드릴 친근하고 전문적인 일일테스트 진단 결과를 작성해 줘.
@@ -399,8 +417,8 @@
         const up = t.url ? `<span style="color:var(--ok);font-size:12px">✓ 링크 있음</span>` : `<span style="color:var(--muted);font-size:12px">링크 없음</span>`;
         tbRows+=`<div class="tb-row">
           <input type="text" value="${esc(t.title)}" oninput="setTB('${w.id}',${i},'title',this.value)" placeholder="교재 제목">
-          <input type="url" value="${esc(t.url)}" oninput="setTB('${w.id}',${i},'url',this.value)" placeholder="웹 PDF 링크 (또는 아래에서 파일 올리기)">
-          <input type="file" accept="application/pdf" onchange="uploadContentTB('${w.id}',${i},this)"> ${up}
+          <input type="url" value="${esc(t.url)}" oninput="setTB('${w.id}',${i},'url',this.value)" placeholder="웹 PDF 링크 (또는 파일 선택/드래그)">
+          <label class="dz" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" accept="application/pdf" onchange="uploadContentTB('${w.id}',${i},this)"><span>또는 드래그</span></label> ${up}
           <button class="btn del" onclick="delTB('${w.id}',${i})">삭제</button>
         </div>`;
       });
@@ -411,7 +429,7 @@
         <textarea class="cta" oninput="setNotice('${w.id}',this.value)" placeholder="안내문 붙여넣기">${esc(c.notice)}</textarea>
         <label class="flbl">📌 과제</label>
         <textarea class="cta" oninput="setHW('${w.id}',this.value)" placeholder="과제 안내">${esc(c.homework)}</textarea>
-        <label class="flbl">📕 교재 자료 (학생 이름 워터마크 다운로드 · 웹 링크 또는 파일 업로드)</label>
+        <label class="flbl">📕 교재 자료 (학생 이름 워터마크 다운로드 · 웹 링크 또는 파일 선택/드래그)</label>
         <div class="tb-list">${tbRows}</div>
         <button class="btn add sm" onclick="addTB('${w.id}')">＋ 교재 추가</button>
       </div>`;
@@ -479,7 +497,7 @@
       h+=`<div class="content-week">
         <div class="field"><label>폴더(책장)</label><select onchange="setBook(${i},'folder',this.value)">${opts}</select></div>
         <div class="field"><label>제목</label><input type="text" value="${esc(it.title)}" oninput="setBook(${i},'title',this.value)" placeholder="교재 제목"></div>
-        <div class="field"><label>교재 PDF</label><input type="file" accept="application/pdf" onchange="uploadBookPdf(${i},this)"> &nbsp; ${pdfState}</div>
+        <div class="field"><label>교재 PDF</label><label class="dz" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" accept="application/pdf" onchange="uploadBookPdf(${i},this)"><span>또는 드래그</span></label> &nbsp; ${pdfState}</div>
         <div class="field"><label>PDF 링크</label><input type="url" value="${esc(it.pdf)}" oninput="setBook(${i},'pdf',this.value)" placeholder="업로드하면 자동 입력 / 직접 링크도 가능"></div>
         <div class="field"><label>영상 주소(선택)</label><input type="url" value="${esc(it.video)}" oninput="setBook(${i},'video',this.value)" placeholder="유튜브 단일영상이면 좌우 배치(강의+교재)"></div>
         <label class="flbl">🔗 링크 버튼(선택) — 영상 재생목록 · 답안 파일 등</label>
@@ -679,7 +697,7 @@
       let files='';
       (r.files||[]).forEach((f,fi)=>{
         const st = f.url ? '<span style="color:var(--ok);font-size:12px">✓ 첨부됨</span>' : '<span style="color:var(--muted);font-size:12px">링크 없음</span>';
-        files+=`<div class="tb-row"><input type="text" value="${esc(f.label)}" oninput="setRepFile(${i},${fi},'label',this.value)" placeholder="파일 이름 (예: 성적표 / 복습용 시험지)"><input type="url" value="${esc(f.url)}" oninput="setRepFile(${i},${fi},'url',this.value)" placeholder="PDF/사진 링크 (업로드하면 자동 입력)"><input type="file" accept="application/pdf,image/*" onchange="uploadRepPdf(${i},${fi},this)"> ${st} <button class="btn del" onclick="delRepFile(${i},${fi})">×</button></div>`;
+        files+=`<div class="tb-row"><input type="text" value="${esc(f.label)}" oninput="setRepFile(${i},${fi},'label',this.value)" placeholder="파일 이름 (예: 성적표 / 복습용 시험지)"><input type="url" value="${esc(f.url)}" oninput="setRepFile(${i},${fi},'url',this.value)" placeholder="PDF/사진 링크 (업로드하면 자동 입력)"><label class="dz" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" accept="application/pdf,image/*" onchange="uploadRepPdf(${i},${fi},this)"><span>또는 드래그</span></label> ${st} <button class="btn del" onclick="delRepFile(${i},${fi})">×</button></div>`;
       });
       h+=`<div class="content-week">
         <div class="field"><label>진단 이름</label><input type="text" value="${esc(r.title)}" oninput="setRep(${i},'title',this.value)" placeholder="예: 중급 모의고사 1회 · 7월 진단평가 (직접 입력)"></div>
@@ -688,7 +706,7 @@
         <label class="flbl">선생님 코멘트</label>
         <textarea class="cta" style="min-height:80px" oninput="setRep(${i},'comment',this.value)" placeholder="학생/학부모에게 전할 코멘트">${esc(r.comment)}</textarea>
         <div class="field" style="margin-top:8px"><label>풀이 영상</label><input type="url" value="${esc(r.video)}" oninput="setRep(${i},'video',this.value)" placeholder="유튜브 링크 (선택)"></div>
-        <label class="flbl">📎 첨부파일 — 성적표 · 복습용 시험지 PDF/사진 (누적 첨부 가능)</label>
+        <label class="flbl">📎 첨부파일 — 성적표 · 복습용 시험지 PDF/사진 (파일 선택 또는 드래그 · 누적 가능)</label>
         <div class="tb-list">${files}</div>
         <button class="btn add sm" onclick="addRepFile(${i})">＋ 첨부파일 추가</button>
         <div style="height:8px"></div>
