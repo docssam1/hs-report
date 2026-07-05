@@ -152,7 +152,7 @@
     <section id="tab-content" class="hidden">
       <div class="card">
         <h3>주차별 콘텐츠 (학습내용 · 과제 · 교재)</h3>
-        <div class="hint">안내문을 그대로 붙여넣으면 학생 화면에서 유튜브/링크가 자동 변환됩니다.</div>
+        <div class="hint">안내문을 그대로 붙여넣으면 학생 화면에서 유튜브/링크가 자동 변환됩니다. · 교재 PDF는 <b>웹 링크를 넣거나</b>, <b>로컬 PDF 파일을 직접 올리면</b> 저장소에 자동 업로드되고 링크가 채워집니다. (업로드엔 GitHub 토큰 필요)</div>
         <div id="content-list"></div>
       </div>
     </section>
@@ -396,9 +396,11 @@
       const c=cObj(w.id);
       let tbRows='';
       c.textbooks.forEach((t,i)=>{
+        const up = t.url ? `<span style="color:var(--ok);font-size:12px">✓ 링크 있음</span>` : `<span style="color:var(--muted);font-size:12px">링크 없음</span>`;
         tbRows+=`<div class="tb-row">
           <input type="text" value="${esc(t.title)}" oninput="setTB('${w.id}',${i},'title',this.value)" placeholder="교재 제목">
-          <input type="url" value="${esc(t.url)}" oninput="setTB('${w.id}',${i},'url',this.value)" placeholder="PDF 링크 (예: materials/mock-1.pdf)">
+          <input type="url" value="${esc(t.url)}" oninput="setTB('${w.id}',${i},'url',this.value)" placeholder="웹 PDF 링크 (또는 아래에서 파일 올리기)">
+          <input type="file" accept="application/pdf" onchange="uploadContentTB('${w.id}',${i},this)"> ${up}
           <button class="btn del" onclick="delTB('${w.id}',${i})">삭제</button>
         </div>`;
       });
@@ -409,7 +411,7 @@
         <textarea class="cta" oninput="setNotice('${w.id}',this.value)" placeholder="안내문 붙여넣기">${esc(c.notice)}</textarea>
         <label class="flbl">📌 과제</label>
         <textarea class="cta" oninput="setHW('${w.id}',this.value)" placeholder="과제 안내">${esc(c.homework)}</textarea>
-        <label class="flbl">📕 교재 자료 (학생 이름 워터마크 다운로드)</label>
+        <label class="flbl">📕 교재 자료 (학생 이름 워터마크 다운로드 · 웹 링크 또는 파일 업로드)</label>
         <div class="tb-list">${tbRows}</div>
         <button class="btn add sm" onclick="addTB('${w.id}')">＋ 교재 추가</button>
       </div>`;
@@ -421,6 +423,16 @@
   function addTB(id){ cObj(id).textbooks.push({title:'',url:''}); renderContent(); dirty(); }
   function delTB(id,i){ cObj(id).textbooks.splice(i,1); renderContent(); dirty(); }
   function setTB(id,i,key,v){ const c=cObj(id); if(c.textbooks[i]){ c.textbooks[i][key]=v.trim(); dirty(); } }
+  async function uploadContentTB(id,i,input){
+    const f=input.files&&input.files[0]; if(!f) return;
+    if(!/\.pdf$/i.test(f.name)){ toast('PDF 파일만 업로드돼요'); input.value=''; return; }
+    toast('PDF 업로드 중…');
+    const r=await ghUploadPdf(f,'materials');
+    if(r.url){ const c=cObj(id); if(c.textbooks[i]){ c.textbooks[i].url=r.url; if(!c.textbooks[i].title) c.textbooks[i].title=f.name.replace(/\.pdf$/i,''); } renderContent(); dirty(); toast('업로드 완료 ✅ — 하단 [GitHub에 저장]도 눌러 반영하세요'); }
+    else if(r.err==='perm'){ toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents 쓰기 권한 토큰을 넣어주세요'); }
+    else if(r.err&&r.err!=='notoken'){ toast('업로드 실패: '+r.err); }
+    input.value='';
+  }
   function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
   function renderSettings(){
