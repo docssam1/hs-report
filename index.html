@@ -481,6 +481,7 @@
     if(!name){ toast('이름을 입력해주세요'); return; }
     if(name.toLowerCase()==='docssam'){ location.href='admin.html'; return; }
     isDemo=(name.toLowerCase()==='demo');
+    if(!isDemo && !((D.students||[]).includes(name))){ toast('등록된 학생만 입장할 수 있어요. 이름을 정확히 입력해 주세요.'); return; }
     currentStudent=isDemo?'체험':name;
     reportUnlocked=false;
     const given=isDemo?'체험':givenName(name);
