@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 5. 오후 6:41:44
+ * 생성: 2026. 7. 7. 오후 4:13:58
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -352,18 +352,22 @@ window.GFIELD_DATA = {
     "김시후"
   ],
   "attendance": {
-    "허유민": [],
+    "허유민": [
+      "jul-w1"
+    ],
     "김현우": [
       "may-w34",
       "jun-w12",
       "jun-w3",
-      "jun-w4"
+      "jun-w4",
+      "jul-w1"
     ],
     "김유준": [
       "may-w34",
       "jun-w12",
       "jun-w3",
-      "jun-w4"
+      "jun-w4",
+      "jul-w1"
     ],
     "김소이": [
       "may-w34",
@@ -374,38 +378,46 @@ window.GFIELD_DATA = {
       "may-w34",
       "jun-w12",
       "jun-w3",
-      "jun-w4"
+      "jun-w4",
+      "jul-w1"
     ],
-    "정지안": [],
+    "정지안": [
+      "jul-w1"
+    ],
     "안채연": [
       "may-w34",
       "jun-w12",
       "jun-w3",
-      "jun-w4"
+      "jun-w4",
+      "jul-w1"
     ],
     "박서진": [
       "may-w34",
       "jun-w12",
       "jun-w3",
-      "jun-w4"
+      "jun-w4",
+      "jul-w1"
     ],
     "민준기": [
       "may-w34",
       "jun-w12",
       "jun-w3",
-      "jun-w4"
+      "jun-w4",
+      "jul-w1"
     ],
     "김서연": [
       "may-w34",
       "jun-w12",
       "jun-w3",
-      "jun-w4"
+      "jun-w4",
+      "jul-w1"
     ],
     "김명서": [
       "may-w34",
       "jun-w12",
       "jun-w3",
-      "jun-w4"
+      "jun-w4",
+      "jul-w1"
     ],
     "임유준": [
       "may-w34",
@@ -413,8 +425,12 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4"
     ],
-    "안태하": [],
-    "김시후": []
+    "안태하": [
+      "jul-w1"
+    ],
+    "김시후": [
+      "jul-w1"
+    ]
   },
   "specialStudents": [],
   "archiveFolders": [
