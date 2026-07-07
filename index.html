@@ -661,12 +661,14 @@
   function vidEmbed(url){ const id=ytId(url); if(id) return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`; const vm=String(url||'').match(/vimeo\.com\/(\d+)/); if(vm) return `https://player.vimeo.com/video/${vm[1]}?autoplay=1`; return ''; }
   function infoEmbed(url){ const id=ytId(url); if(id) return `https://www.youtube.com/embed/${id}?rel=0`; const vm=String(url||'').match(/vimeo\.com\/(\d+)/); if(vm) return `https://player.vimeo.com/video/${vm[1]}`; return url; }
 
+  const RICH_STYLE={ b:'font-weight:800', i:'font-style:italic', u:'text-decoration:underline', red:'color:#dc2626;font-weight:700', blue:'color:#2563eb;font-weight:700', green:'color:#16a34a;font-weight:700', big:'font-size:1.28em;font-weight:800', hl:'background:#fff2a6;border-radius:3px;padding:0 2px', hlg:'background:#c6f6d5;border-radius:3px;padding:0 2px', hlp:'background:#fbd4e6;border-radius:3px;padding:0 2px', hlb:'background:#cfe4ff;border-radius:3px;padding:0 2px' };
   function inlineFmt(str){
     let s=escHtml(str);
     s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
     s=s.replace(/\[강조\]([\s\S]*?)\[\/강조\]/g,'<b>$1</b>');
     s=s.replace(/==([\s\S]+?)==/g,'<mark class="hl">$1</mark>');
     s=s.replace(/!!([\s\S]+?)!!/g,'<span class="em-red">$1</span>');
+    s=s.replace(/\[\[(\w+):([\s\S]+?)\]\]/g,(m,k,txt)=>{ const st=RICH_STYLE[k]; return st?`<span style="${st}">${txt}</span>`:txt; });
     s=s.replace(/(https?:\/\/[^\s<]+)/g,(url)=>{
       const yt=ytId(url);
       if(yt) return `<button class="lnk yt" data-embed="https://www.youtube.com/embed/${yt}?autoplay=1&rel=0">▶ 영상 재생</button>`;
@@ -684,7 +686,7 @@
       if(!line.trim()){ closeUl(); html+='<div class="nl-gap"></div>'; return; }
       let m;
       if(m=line.match(/^\s*(#{1,3})\s+(.*)$/)){ closeUl(); html+=`<div class="nl-h">${inlineFmt(m[2])}</div>`; return; }
-      if(m=line.match(/^\s*[-*·]\s+(.*)$/)){ if(!inUl){ html+='<ul class="nl-ul">'; inUl=true; } html+=`<li>${inlineFmt(m[1])}</li>`; return; }
+      if(m=line.match(/^\s*[-·]\s+(.*)$/)){ if(!inUl){ html+='<ul class="nl-ul">'; inUl=true; } html+=`<li>${inlineFmt(m[1])}</li>`; return; }
       closeUl(); html+=`<div class="nl-p">${inlineFmt(line)}</div>`;
     });
     closeUl(); return html;
