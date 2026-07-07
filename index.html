@@ -115,6 +115,8 @@
   .notice .nl-ul li{margin:3px 0;}
   .notice .nl-gap{height:8px;}
   .notice b{color:var(--ink);}
+  .notice mark.hl{background:#fff2a6;color:inherit;padding:0 2px;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone;}
+  .notice .em-red{color:#dc2626;font-weight:700;}
   .notice .lnk{display:inline-flex;align-items:center;gap:5px;margin:4px 0;padding:7px 12px;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;vertical-align:middle;}
   .notice .lnk.yt{background:#fee2e2;color:#dc2626;border:1px solid #fbcaca;}
   .notice .lnk.ext{background:#e0f2fe;color:#0369a1;border:1px solid #bae3fb;}
@@ -663,6 +665,8 @@
     let s=escHtml(str);
     s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
     s=s.replace(/\[강조\]([\s\S]*?)\[\/강조\]/g,'<b>$1</b>');
+    s=s.replace(/==([\s\S]+?)==/g,'<mark class="hl">$1</mark>');
+    s=s.replace(/!!([\s\S]+?)!!/g,'<span class="em-red">$1</span>');
     s=s.replace(/(https?:\/\/[^\s<]+)/g,(url)=>{
       const yt=ytId(url);
       if(yt) return `<button class="lnk yt" data-embed="https://www.youtube.com/embed/${yt}?autoplay=1&rel=0">▶ 영상 재생</button>`;
