@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 10. 오후 5:33:21
+ * 생성: 2026. 7. 10. 오후 5:39:15
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -229,8 +229,8 @@ window.GFIELD_DATA = {
       "homework": "\n",
       "textbooks": [
         {
-          "title": "GIFTED MATH 3 V1-1 NEW",
-          "url": "https://1drv.ms/b/c/56e991161e579560/IQA8SiU6ZJikS649QG6ENervAW-H0sG-yK2_hFm_k9Hv1Zk?e=O6fcnL"
+          "title": "GIFTED MATH 3 V1-1",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783672745748_2cxl_GIFTED_MATH_3_V1-1_NEW.pdf"
         }
       ]
     },
