@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 11. 오후 4:12:01
+ * 생성: 2026. 7. 11. 오후 5:34:00
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -253,7 +253,7 @@ window.GFIELD_DATA = {
       "homework": "",
       "textbooks": [
         {
-          "title": "HS 대비 필수 개념정리-HS 경시4",
+          "title": "HS 대비 필수 개념정리-THINKING BASIC",
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753689111_1mbr_HS___________-HS___4.pdf"
         },
         {
@@ -263,11 +263,11 @@ window.GFIELD_DATA = {
       ]
     },
     "jun-w4": {
-      "notice": "",
+      "notice": "[[hlp: THINKING BASIC 2]]\n",
       "homework": "",
       "textbooks": [
         {
-          "title": "HS 대비 필수 개념정리-HS 경시4",
+          "title": "HS 대비 필수 개념정리-THINKING BASIC",
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753701741_hnwb_HS___________-HS___4.pdf"
         },
         {
