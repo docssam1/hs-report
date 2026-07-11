@@ -19,7 +19,7 @@
   .gate-box p{font-size:12.5px;opacity:.75;margin-bottom:22px;line-height:1.6;}
   .gate-box input{width:100%;padding:14px;border:none;border-radius:10px;font-size:16px;text-align:center;margin-bottom:12px;outline:none;}
   .gate-box button{width:100%;padding:14px;border:none;border-radius:10px;background:var(--orange);color:#fff;font-size:16px;font-weight:800;}
-  .gate-box .err{color:#ffd2d2;font-size:13px;height:18px;margin-top:6px;}
+  .gate-box .err{color:#ffe0b8;font-size:12.5px;min-height:18px;margin-top:6px;line-height:1.5;}
 
   header{background:var(--navy);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;}
   header .t{font-weight:800;font-size:16px;}
@@ -46,7 +46,6 @@
   .qgrid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:10px 0;}
   @media(max-width:560px){ .qgrid{grid-template-columns:repeat(6,1fr);} }
   .qbtn{aspect-ratio:1;border:1.5px solid var(--line);border-radius:9px;background:#fff;font-size:14px;font-weight:800;color:#334;display:flex;align-items:center;justify-content:center;position:relative;user-select:none;}
-  .qbtn small{position:absolute;top:2px;right:4px;font-size:8px;color:#9aa;font-weight:600;}
   .qbtn.wrong{background:#fee2e2;border-color:#f6a6a6;color:#dc2626;}
   .qbtn.wrong::after{content:'✕';}
   .qbtn.wrong span{display:none;}
@@ -66,7 +65,7 @@
   .wt-item .wt-h{font-size:13.5px;font-weight:700;color:var(--ink);}
   .wt-item .wt-h .no{display:inline-block;background:#fee2e2;color:#dc2626;font-weight:800;border-radius:6px;padding:1px 7px;margin-right:6px;font-size:12px;}
   .wt-item .wt-a{font-size:11.5px;color:var(--muted);margin-left:2px;}
-  .wt-item .wt-c{font-size:12.5px;color:var(--ink2,#555);margin-top:5px;line-height:1.6;background:#fff7ec;border:1px solid #fcdcb8;border-radius:8px;padding:7px 9px;}
+  .wt-item .wt-c{font-size:12.5px;color:#555;margin-top:5px;line-height:1.6;background:#fff7ec;border:1px solid #fcdcb8;border-radius:8px;padding:7px 9px;}
 
   .cmp{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
   .cmp .chip{font-size:12px;font-weight:700;border-radius:999px;padding:5px 11px;}
@@ -147,6 +146,7 @@
   function roundItems(r){ return (M.rounds[r]&&M.rounds[r].items)||[]; }
   function itemOf(r,no){ return roundItems(r).find(i=>i.no===no)||{no:no,type:'',answer:'',comment:''}; }
   function Q(){ return M.questions||30; }
+  function givenName(n){ return n&&n.length>=2? n.slice(1):n; }
 
   /* ===== 로그인 ===== */
   function enter(){
@@ -154,7 +154,9 @@
     if(!v){ return; }
     if(v.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; startTeacher(); return; }
     if(!(D.students||[]).includes(v)){ document.getElementById('gate-err').textContent='등록된 학생만 입장할 수 있어요.'; return; }
-    mode='parent'; me=v; startParent();
+    mode='parent'; me=v; try{ localStorage.setItem('gfield_student',v); }catch(e){}
+    startParent();
+    if(window._pendingRound && M.rounds[window._pendingRound]){ openMark(window._pendingRound); window._pendingRound=null; }
   }
   function boot(){
     document.getElementById('gate').classList.add('hidden');
@@ -169,17 +171,15 @@
   function wrongList(r,ox){ const out=[]; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X'){ const it=itemOf(r,n); const b=bp(n); out.push({no:n, area:b.area, type:it.type, comment:it.comment}); } } return out; }
   function typeComment(it){ if(it.comment&&it.comment.trim()) return it.comment; if(it.type) return "'"+it.type+"' 유형이에요. 풀이 강의를 보며 방법을 익힌 뒤, 며칠 뒤 새 종이에 스스로 다시 풀어보세요."; return "풀이 강의를 보며 방법을 익힌 뒤 스스로 다시 풀어보세요."; }
 
-  /* ===== 결과 저장(학생별/회차별 응시 배열, 최대 3) ===== */
+  /* ===== 결과 저장 ===== */
   function attemptsOf(student,r){ M.results[student]=M.results[student]||{}; M.results[student][r]=M.results[student][r]||[]; return M.results[student][r]; }
   function latestOx(student,r){ const a=attemptsOf(student,r); return a.length? a[a.length-1].ox : null; }
   function pushAttempt(student,r,ox,by){ const a=attemptsOf(student,r); a.push({ox:ox.slice(), ts:new Date().toISOString().slice(0,10), by:by||'parent'}); while(a.length>3) a.shift(); }
   function lsKey(){ return 'gfield_mock_'+me; }
-  function loadLocal(){ try{ const j=localStorage.getItem(lsKey()); if(j){ const o=JSON.parse(j); M.results[me]=o; } }catch(e){} }
+  function loadLocal(){ try{ const j=localStorage.getItem(lsKey()); if(j){ M.results[me]=JSON.parse(j); } }catch(e){} }
   function saveLocal(){ try{ localStorage.setItem(lsKey(), JSON.stringify(M.results[me]||{})); }catch(e){} }
 
-  /* =========================================================
-     학부모 모드
-     ========================================================= */
+  /* ===== 학부모 모드 ===== */
   let markOx=null;
   function startParent(){ boot(); loadLocal(); renderRoundPick(); }
   function renderRoundPick(){
@@ -229,18 +229,14 @@
     const sc=scoreOf(ox); const as=areaStats(ox); const wl=wrongList(r,ox);
     let h=`<div class="card"><div class="row-inline"><button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button><b>${esc(givenName(student))} · ${esc(M.rounds[r].title||r+'회')} 진단 결과</b></div>`;
     h+=`<div class="scorebar"><div><div class="big">${sc.score}</div><div class="lbl">점 / 100점</div></div><div><div class="big" style="color:#334">${sc.correct} / ${Q()}</div><div class="lbl">맞은 개수</div></div><div><div class="big" style="color:#dc2626">${sc.wrong}</div><div class="lbl">틀린 개수</div></div><div><div class="big" style="color:#334">${at.length}<span style="font-size:15px;color:#889">회</span></div><div class="lbl">응시</div></div></div>`;
-    // 영역별
     h+='<h3 style="margin-top:10px">영역별 수행률</h3>';
     M.areas.forEach(a=>{ const s=as[a]||{tot:0,got:0,cnt:0,ok:0}; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${s.ok}/${s.cnt}문항 · ${pct}%</span></div><div class="abar"><i class="${pct<50?'low':''}" style="width:${pct}%"></i></div></div>`; });
-    // 회차(응시) 비교
     if(prevOx){ let solved=[],still=[],neo=[]; for(let n=1;n<=Q();n++){ const p=prevOx[n-1]==='X', c=ox[n-1]==='X'; if(p&&!c) solved.push(n); else if(p&&c) still.push(n); else if(!p&&c) neo.push(n); } h+=`<h3 style="margin-top:12px">지난 응시 대비 변화</h3><div class="cmp">`; h+=`<span class="chip solved">✅ 해결 ${solved.length}: ${solved.join(', ')||'-'}</span>`; h+=`<span class="chip still">🔁 여전히 틀림 ${still.length}: ${still.join(', ')||'-'}</span>`; h+=`<span class="chip newx">⚠️ 새로 틀림 ${neo.length}: ${neo.join(', ')||'-'}</span>`; h+='</div>'; }
     h+='</div>';
-    // 오답 상세
     h+='<div class="card"><h3>📋 오답 문항 상세 분석</h3>';
     if(!wl.length){ h+='<div class="hint">틀린 문항이 없어요. 훌륭합니다! 🎉</div>'; }
     else wl.forEach(w=>{ const it=itemOf(r,w.no); h+=`<div class="wt-item"><div class="wt-h"><span class="no">${w.no}번</span>${esc(w.type||'(유형 준비중)')}<span class="wt-a"> · ${esc(w.area)}</span></div><div class="wt-c">${esc(typeComment(it))}</div></div>`; });
     h+='</div>';
-    // 원장에게 보내기
     const code=btoa(unescape(encodeURIComponent(JSON.stringify({s:student,r:r,ox:ox.join('')}))));
     h+=`<div class="card"><h3>💬 원장님께 결과 보내기</h3><div class="hint">아래 코드를 복사해 <b>카카오톡으로 원장님께 전송</b>하면, 원장님이 수업 전에 우리 아이 약점을 확인합니다.</div>
       <textarea id="sendcode" rows="2" readonly>${code}</textarea>
@@ -248,11 +244,8 @@
     document.getElementById('main').innerHTML=h;
   }
   function copyCode(){ const t=document.getElementById('sendcode'); t.select(); try{ navigator.clipboard.writeText(t.value); }catch(e){ document.execCommand('copy'); } toast('코드가 복사됐어요. 카톡에 붙여넣어 보내주세요.'); }
-  function givenName(n){ return n&&n.length>=2? n.slice(1):n; }
 
-  /* =========================================================
-     원장 모드
-     ========================================================= */
+  /* ===== 원장 모드 ===== */
   let tSel=''; let tTab='student';
   function startTeacher(){ boot(); document.getElementById('teacher-savebar').classList.remove('hidden'); renderTeacher(); }
   function renderTeacher(){
@@ -275,7 +268,6 @@
     if(!tSel||!students.includes(tSel)) tSel=students[0]||'';
     let h=`<div class="card"><div class="row-inline"><b>학생</b><select class="select" onchange="tPick(this.value)">${students.map(s=>`<option ${s===tSel?'selected':''}>${esc(s)}</option>`).join('')}</select></div>`;
     if(!tSel){ h+='<div class="hint">학생이 없습니다.</div></div>'; document.getElementById('t-body').innerHTML=h; return; }
-    // 매트릭스: 행=회차, 열=1~30, 셀 O/X (클릭 토글), 마지막 틀린개수
     h+='<div class="mtable-scroll"><table class="mx"><thead><tr><th>회차</th>';
     for(let n=1;n<=Q();n++) h+=`<th>${n}</th>`;
     h+='<th>틀린수</th><th>점수</th></tr></thead><tbody>';
@@ -287,8 +279,6 @@
       h+='</tr>';
     });
     h+='</tbody></table></div><div class="hint" style="margin-top:6px">칸을 클릭하면 O↔✕ 수정돼요. 값이 없는 회차(·)는 클릭하면 응시 칸이 만들어집니다. 학부모가 보낸 코드는 [결과 코드 받기]에서 가져오세요.</div></div>';
-
-    // 누적 약점 분석
     h+=tAnalysisHTML(tSel);
     document.getElementById('t-body').innerHTML=h;
   }
@@ -297,17 +287,15 @@
   function tToggle(r,n){ const ox=latestOx(tSel,r); if(!ox) return; ox[n-1]= ox[n-1]==='X'?'O':'X'; markDirty(); tStudent(); }
 
   function tAnalysisHTML(student){
-    // 최신 응시 기준 누적: 영역별 수행률 평균 + 세부유형 오답 빈도
     const rs=roundKeys().filter(r=>latestOx(student,r));
     if(!rs.length) return '<div class="card"><div class="hint">아직 응시 기록이 없습니다.</div></div>';
     const areaAgg={}; M.areas.forEach(a=>areaAgg[a]={tot:0,got:0});
     const typeCnt={}; const scores=[];
-    rs.forEach(r=>{ const ox=latestOx(student,r); const as=areaStats(ox); M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; }); scoreOf(ox); scores.push({r:r,sc:scoreOf(ox).score}); wrongList(r,ox).forEach(w=>{ const key=w.type||('('+w.area+' 유형)'); typeCnt[key]=(typeCnt[key]||0)+1; }); });
+    rs.forEach(r=>{ const ox=latestOx(student,r); const as=areaStats(ox); M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; }); scores.push({r:r,sc:scoreOf(ox).score}); wrongList(r,ox).forEach(w=>{ const key=w.type||('('+w.area+' 유형)'); typeCnt[key]=(typeCnt[key]||0)+1; }); });
     let h=`<div class="card"><h3>📊 ${esc(givenName(student))} 누적 약점 분석 (응시 ${rs.length}회차)</h3>`;
     h+='<div class="row-inline" style="gap:6px">';
-    scores.forEach(s=>{ h+=`<span class="cmp"></span><span class="chip solved" style="background:#eef2ff;color:#3641a8">${esc(M.rounds[s.r].title||s.r)}: ${s.sc}점</span>`; });
-    h+='</div>';
-    h+='<div style="height:8px"></div>';
+    scores.forEach(s=>{ h+=`<span class="chip solved" style="background:#eef2ff;color:#3641a8;font-size:12px;font-weight:700;border-radius:999px;padding:5px 11px">${esc(M.rounds[s.r].title||s.r)}: ${s.sc}점</span>`; });
+    h+='</div><div style="height:8px"></div>';
     M.areas.forEach(a=>{ const s=areaAgg[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${pct}%</span></div><div class="abar"><i class="${pct<50?'low':''}" style="width:${pct}%"></i></div></div>`; });
     const top=Object.entries(typeCnt).sort((a,b)=>b[1]-a[1]).slice(0,8);
     if(top.length){ h+='<h3 style="margin-top:12px">자주 틀리는 세부 유형</h3>'; top.forEach(([t,c])=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${c}회</span>${esc(t)}</div></div>`; }); }
@@ -376,6 +364,19 @@
     }catch(e){ st.textContent='네트워크 오류'; toast('저장 실패 — 코드 보기로 수동 반영'); }
   }
   function showCode(){ const w=window.open('','_blank'); w.document.write('<pre style="white-space:pre-wrap;word-break:break-all;font-size:12px;padding:12px">'+buildMockFile().replace(/</g,'&lt;')+'</pre>'); }
+
+  /* ===== URL로 바로 진입 (과제 링크에서) ===== */
+  (function initFromUrl(){
+    const p=new URLSearchParams(location.search); const rd=p.get('round');
+    let stu=''; try{ stu=localStorage.getItem('gfield_student')||''; }catch(e){}
+    if(stu && stu.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; startTeacher(); return; }
+    if(stu && (D.students||[]).includes(stu)){
+      mode='parent'; me=stu; startParent();
+      if(rd && M.rounds[rd]) openMark(rd);
+      return;
+    }
+    if(rd){ window._pendingRound=rd; document.getElementById('gate-err').textContent='이름을 입력하면 '+((M.rounds[rd]&&M.rounds[rd].title)||(rd+'회'))+' 진단으로 바로 들어갑니다.'; }
+  })();
 </script>
 </body>
 </html>
