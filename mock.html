@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지필드 영재교육 | 중급 모의고사 진단</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{--navy:#1e3c72;--navy2:#2a5298;--orange:#f97316;--orange-d:#ea580c;--ink:#2d3436;--muted:#6b7280;--bg:#eef1f6;--card:#fff;--line:#e3e8ef;--ok:#27ae60;--danger:#e74c3c;--soft:#fff3e6;}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Pretendard',sans-serif;}
+  body{background:var(--bg);color:var(--ink);-webkit-tap-highlight-color:transparent;}
+  button{cursor:pointer;font-family:inherit;}
+  .hidden{display:none !important;}
+  .wrap{max-width:960px;margin:0 auto;padding:16px 14px 90px;}
+
+  #gate{position:fixed;inset:0;z-index:30;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#10203f,#26447f);padding:20px;}
+  .gate-box{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);padding:40px 30px;border-radius:18px;width:100%;max-width:380px;text-align:center;color:#fff;}
+  .gate-box h2{font-size:21px;font-weight:800;margin-bottom:4px;}
+  .gate-box p{font-size:12.5px;opacity:.75;margin-bottom:22px;line-height:1.6;}
+  .gate-box input{width:100%;padding:14px;border:none;border-radius:10px;font-size:16px;text-align:center;margin-bottom:12px;outline:none;}
+  .gate-box button{width:100%;padding:14px;border:none;border-radius:10px;background:var(--orange);color:#fff;font-size:16px;font-weight:800;}
+  .gate-box .err{color:#ffd2d2;font-size:13px;height:18px;margin-top:6px;}
+
+  header{background:var(--navy);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;}
+  header .t{font-weight:800;font-size:16px;}
+  header .t small{display:block;font-weight:500;opacity:.7;font-size:11px;}
+  header a,header button{background:rgba(255,255,255,.15);border:none;color:#fff;padding:8px 12px;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .card h3{font-size:15px;margin-bottom:8px;}
+  .hint{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:10px;}
+  .select{padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;}
+  .btn{padding:11px 16px;border:none;border-radius:9px;font-weight:800;font-size:14px;}
+  .btn.pri{background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;}
+  .btn.navy{background:var(--navy);color:#fff;}
+  .btn.gray{background:#eef1f6;color:#333;}
+  .btn.ok{background:var(--ok);color:#fff;}
+  .btn.sm{padding:7px 12px;font-size:12.5px;border-radius:8px;}
+
+  .round-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;}
+  .round-card{border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;cursor:pointer;background:#fff;}
+  .round-card:hover{border-color:#fcd3a3;box-shadow:0 4px 12px rgba(186,110,40,.1);}
+  .round-card .rn{font-size:17px;font-weight:800;color:var(--orange-d);}
+  .round-card .rs{font-size:11.5px;color:var(--muted);margin-top:4px;}
+
+  .qgrid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:10px 0;}
+  @media(max-width:560px){ .qgrid{grid-template-columns:repeat(6,1fr);} }
+  .qbtn{aspect-ratio:1;border:1.5px solid var(--line);border-radius:9px;background:#fff;font-size:14px;font-weight:800;color:#334;display:flex;align-items:center;justify-content:center;position:relative;user-select:none;}
+  .qbtn small{position:absolute;top:2px;right:4px;font-size:8px;color:#9aa;font-weight:600;}
+  .qbtn.wrong{background:#fee2e2;border-color:#f6a6a6;color:#dc2626;}
+  .qbtn.wrong::after{content:'✕';}
+  .qbtn.wrong span{display:none;}
+
+  .scorebar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--soft);border:1px solid #fcdcb8;border-radius:12px;padding:12px 14px;margin:8px 0;}
+  .scorebar .big{font-size:26px;font-weight:900;color:var(--orange-d);}
+  .scorebar .lbl{font-size:12px;color:var(--muted);}
+
+  .area-row{margin:8px 0;}
+  .area-row .at{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;}
+  .area-row .at b{color:var(--ink);}
+  .abar{height:9px;background:#eef1f6;border-radius:99px;overflow:hidden;}
+  .abar i{display:block;height:100%;background:linear-gradient(90deg,#fdba74,var(--orange-d));border-radius:99px;}
+  .abar i.low{background:linear-gradient(90deg,#fca5a5,#dc2626);}
+
+  .wt-item{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;}
+  .wt-item .wt-h{font-size:13.5px;font-weight:700;color:var(--ink);}
+  .wt-item .wt-h .no{display:inline-block;background:#fee2e2;color:#dc2626;font-weight:800;border-radius:6px;padding:1px 7px;margin-right:6px;font-size:12px;}
+  .wt-item .wt-a{font-size:11.5px;color:var(--muted);margin-left:2px;}
+  .wt-item .wt-c{font-size:12.5px;color:var(--ink2,#555);margin-top:5px;line-height:1.6;background:#fff7ec;border:1px solid #fcdcb8;border-radius:8px;padding:7px 9px;}
+
+  .cmp{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  .cmp .chip{font-size:12px;font-weight:700;border-radius:999px;padding:5px 11px;}
+  .cmp .solved{background:#dcfce7;color:#166534;}
+  .cmp .still{background:#fee2e2;color:#991b1b;}
+  .cmp .newx{background:#fef3c7;color:#92400e;}
+
+  .mtable-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;}
+  table.mx{border-collapse:collapse;font-size:12px;white-space:nowrap;}
+  table.mx th,table.mx td{border:1px solid var(--line);padding:5px 7px;text-align:center;}
+  table.mx thead th{background:#f7f9fc;position:sticky;top:0;font-weight:700;font-size:11px;}
+  table.mx tbody th{position:sticky;left:0;background:#fff;font-weight:800;z-index:2;}
+  table.mx td.ox{cursor:pointer;font-weight:800;width:26px;}
+  table.mx td.o{color:#16a34a;}
+  table.mx td.x{color:#dc2626;background:#fff1f1;}
+  table.mx td.wc{font-weight:800;background:#f7f9fc;}
+
+  textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:13px;font-family:'Pretendard',sans-serif;resize:vertical;}
+  .row-inline{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;}
+  .savebar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:11px 14px;display:flex;gap:10px;justify-content:center;align-items:center;z-index:25;flex-wrap:wrap;}
+  .savebar .status{font-size:12px;color:var(--muted);}
+  .toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#2d3436;color:#fff;padding:11px 18px;border-radius:10px;font-size:13.5px;z-index:60;opacity:0;transition:.25s;pointer-events:none;max-width:90%;text-align:center;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+  .tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+  .tabs button{background:#fff;border:1px solid var(--line);padding:9px 14px;border-radius:9px;font-size:13.5px;font-weight:700;color:#555;}
+  .tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .ed-row{display:grid;grid-template-columns:34px 1.2fr 1fr 2fr;gap:6px;align-items:center;margin-bottom:6px;}
+  .ed-row .no{font-weight:800;text-align:center;color:var(--muted);font-size:12px;}
+  .ed-row input{padding:7px 9px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;width:100%;}
+  .ed-row .area{font-size:11px;color:var(--muted);text-align:center;}
+  @media(max-width:620px){ .ed-row{grid-template-columns:28px 1fr;} .ed-row .area{display:none;} }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-box">
+    <h2>중급 모의고사 진단</h2>
+    <p>학생 이름으로 입장하면 학부모 자가진단,<br>docssam으로 입장하면 원장 분석입니다.</p>
+    <input type="text" id="pw" placeholder="이름" onkeypress="if(event.key==='Enter')enter()">
+    <button onclick="enter()">입장</button>
+    <div class="err" id="gate-err"></div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <header>
+    <div class="t">중급 모의고사 진단<small id="h-sub"></small></div>
+    <div>
+      <a href="index.html">← 아카이브</a>
+      <button onclick="location.reload()">나가기</button>
+    </div>
+  </header>
+  <div class="wrap" id="main"></div>
+</div>
+
+<div id="teacher-savebar" class="savebar hidden">
+  <span class="status" id="save-status">원장 모드 · 변경 후 저장</span>
+  <button class="btn ok sm" onclick="saveMock()">💾 GitHub에 저장</button>
+  <button class="btn gray sm" onclick="showCode()">📋 코드 보기</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="data.js"></script>
+<script src="mock-data.js"></script>
+<script>
+  const REPO="docssam1/hs-report", FILE="mock-data.js", BRANCH="main", ADMIN_PW="01020837265";
+  const D=window.GFIELD_DATA||{students:[]};
+  const M=window.GFIELD_MOCK;
+  M.results=M.results||{};
+  let mode=null, me=null, curRound="1";
+
+  function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.remove('show'),2400); }
+  function bp(no){ return M.blueprint.find(b=>b.no===no)||{no:no,area:'',pts:0}; }
+  function roundKeys(){ return Object.keys(M.rounds).sort((a,b)=>+a-+b); }
+  function roundItems(r){ return (M.rounds[r]&&M.rounds[r].items)||[]; }
+  function itemOf(r,no){ return roundItems(r).find(i=>i.no===no)||{no:no,type:'',answer:'',comment:''}; }
+  function Q(){ return M.questions||30; }
+
+  /* ===== 로그인 ===== */
+  function enter(){
+    const v=document.getElementById('pw').value.trim();
+    if(!v){ return; }
+    if(v.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; startTeacher(); return; }
+    if(!(D.students||[]).includes(v)){ document.getElementById('gate-err').textContent='등록된 학생만 입장할 수 있어요.'; return; }
+    mode='parent'; me=v; startParent();
+  }
+  function boot(){
+    document.getElementById('gate').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    document.getElementById('h-sub').textContent = mode==='teacher'?'원장 분석':(me+' 학생');
+  }
+
+  /* ===== 채점 계산 ===== */
+  function blankOx(){ const a=[]; for(let i=0;i<Q();i++) a.push('O'); return a; }
+  function scoreOf(ox){ let s=0,wrong=0; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X') wrong++; else s+=bp(n).pts; } return {score:Math.round(s*10)/10, wrong:wrong, correct:Q()-wrong}; }
+  function areaStats(ox){ const map={}; M.areas.forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=Q();n++){ const b=bp(n); if(!map[b.area]) map[b.area]={tot:0,got:0,cnt:0,ok:0}; map[b.area].tot+=b.pts; map[b.area].cnt++; if(ox[n-1]!=='X'){ map[b.area].got+=b.pts; map[b.area].ok++; } } return map; }
+  function wrongList(r,ox){ const out=[]; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X'){ const it=itemOf(r,n); const b=bp(n); out.push({no:n, area:b.area, type:it.type, comment:it.comment}); } } return out; }
+  function typeComment(it){ if(it.comment&&it.comment.trim()) return it.comment; if(it.type) return "'"+it.type+"' 유형이에요. 풀이 강의를 보며 방법을 익힌 뒤, 며칠 뒤 새 종이에 스스로 다시 풀어보세요."; return "풀이 강의를 보며 방법을 익힌 뒤 스스로 다시 풀어보세요."; }
+
+  /* ===== 결과 저장(학생별/회차별 응시 배열, 최대 3) ===== */
+  function attemptsOf(student,r){ M.results[student]=M.results[student]||{}; M.results[student][r]=M.results[student][r]||[]; return M.results[student][r]; }
+  function latestOx(student,r){ const a=attemptsOf(student,r); return a.length? a[a.length-1].ox : null; }
+  function pushAttempt(student,r,ox,by){ const a=attemptsOf(student,r); a.push({ox:ox.slice(), ts:new Date().toISOString().slice(0,10), by:by||'parent'}); while(a.length>3) a.shift(); }
+  function lsKey(){ return 'gfield_mock_'+me; }
+  function loadLocal(){ try{ const j=localStorage.getItem(lsKey()); if(j){ const o=JSON.parse(j); M.results[me]=o; } }catch(e){} }
+  function saveLocal(){ try{ localStorage.setItem(lsKey(), JSON.stringify(M.results[me]||{})); }catch(e){} }
+
+  /* =========================================================
+     학부모 모드
+     ========================================================= */
+  let markOx=null;
+  function startParent(){ boot(); loadLocal(); renderRoundPick(); }
+  function renderRoundPick(){
+    let h=`<div class="card"><h3>📝 진단할 회차를 선택하세요</h3><div class="hint">집에서 푼 <b>중급 모의고사</b>의 회차를 고르고, <b>틀린 문제 번호만</b> 체크하면 점수·약점 유형·오답 코멘트가 바로 나옵니다. (회차별 최대 3회 재응시 가능)</div><div class="round-grid">`;
+    roundKeys().forEach(r=>{
+      const at=attemptsOf(me,r).length;
+      const hasType=roundItems(r).length>0;
+      h+=`<div class="round-card" onclick="openMark('${r}')"><div class="rn">${esc(M.rounds[r].title||r+'회')}</div><div class="rs">${at?('응시 '+at+'회'):'미응시'}${hasType?'':' · 유형 준비중'}</div></div>`;
+    });
+    h+='</div></div>';
+    document.getElementById('main').innerHTML=h;
+  }
+  function openMark(r){
+    curRound=r;
+    const prev=latestOx(me,r);
+    markOx = prev? prev.slice() : blankOx();
+    renderMark();
+  }
+  function renderMark(){
+    const r=curRound, at=attemptsOf(me,r);
+    let g='';
+    for(let n=1;n<=Q();n++){ const w=markOx[n-1]==='X'; g+=`<div class="qbtn ${w?'wrong':''}" onclick="toggleQ(${n})"><span>${n}</span></div>`; }
+    const sc=scoreOf(markOx);
+    let attemptBtns='';
+    if(at.length){ attemptBtns='<div class="row-inline"><span class="hint" style="margin:0">이전 응시 불러오기:</span>'; at.forEach((a,i)=>{ attemptBtns+=`<button class="btn gray sm" onclick="loadAttempt(${i})">${i+1}회차 (${a.ts})</button>`; }); attemptBtns+='</div>'; }
+    document.getElementById('main').innerHTML=`
+      <div class="card">
+        <div class="row-inline"><button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button><b>${esc(M.rounds[r].title||r+'회')} 진단</b></div>
+        <div class="hint">✔️ <b>틀린 문제 번호만</b> 눌러 체크하세요. (누르면 ✕, 다시 누르면 해제) 이미 완벽히 아는 문제는 체크하지 마세요.</div>
+        ${attemptBtns}
+        <div class="qgrid">${g}</div>
+        <div class="scorebar"><div><div class="big" id="mk-score">${sc.score}</div><div class="lbl">점 / 100점</div></div><div><div class="big" style="color:#334">${sc.correct}<span style="font-size:15px;color:#889"> / ${Q()}</span></div><div class="lbl">맞은 개수</div></div><div><div class="big" style="color:#dc2626" id="mk-wrong">${sc.wrong}</div><div class="lbl">틀린 개수</div></div></div>
+        <button class="btn pri" style="width:100%" onclick="submitAttempt()">결과 제출 및 확인 →</button>
+      </div>`;
+  }
+  function toggleQ(n){ markOx[n-1]= markOx[n-1]==='X'?'O':'X'; renderMark(); }
+  function loadAttempt(i){ const a=attemptsOf(me,curRound); if(a[i]){ markOx=a[i].ox.slice(); renderMark(); } }
+  function submitAttempt(){
+    const at=attemptsOf(me,curRound);
+    if(at.length>=3){ if(!confirm('이미 3회 응시했어요. 가장 오래된 기록을 지우고 새로 저장할까요?')) return; }
+    const prev = at.length? at[at.length-1].ox.slice() : null;
+    pushAttempt(me,curRound,markOx,'parent'); saveLocal();
+    renderReport(me,curRound,prev);
+  }
+  function renderReport(student,r,prevOx){
+    const at=attemptsOf(student,r); const ox=at[at.length-1].ox;
+    const sc=scoreOf(ox); const as=areaStats(ox); const wl=wrongList(r,ox);
+    let h=`<div class="card"><div class="row-inline"><button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button><b>${esc(givenName(student))} · ${esc(M.rounds[r].title||r+'회')} 진단 결과</b></div>`;
+    h+=`<div class="scorebar"><div><div class="big">${sc.score}</div><div class="lbl">점 / 100점</div></div><div><div class="big" style="color:#334">${sc.correct} / ${Q()}</div><div class="lbl">맞은 개수</div></div><div><div class="big" style="color:#dc2626">${sc.wrong}</div><div class="lbl">틀린 개수</div></div><div><div class="big" style="color:#334">${at.length}<span style="font-size:15px;color:#889">회</span></div><div class="lbl">응시</div></div></div>`;
+    // 영역별
+    h+='<h3 style="margin-top:10px">영역별 수행률</h3>';
+    M.areas.forEach(a=>{ const s=as[a]||{tot:0,got:0,cnt:0,ok:0}; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${s.ok}/${s.cnt}문항 · ${pct}%</span></div><div class="abar"><i class="${pct<50?'low':''}" style="width:${pct}%"></i></div></div>`; });
+    // 회차(응시) 비교
+    if(prevOx){ let solved=[],still=[],neo=[]; for(let n=1;n<=Q();n++){ const p=prevOx[n-1]==='X', c=ox[n-1]==='X'; if(p&&!c) solved.push(n); else if(p&&c) still.push(n); else if(!p&&c) neo.push(n); } h+=`<h3 style="margin-top:12px">지난 응시 대비 변화</h3><div class="cmp">`; h+=`<span class="chip solved">✅ 해결 ${solved.length}: ${solved.join(', ')||'-'}</span>`; h+=`<span class="chip still">🔁 여전히 틀림 ${still.length}: ${still.join(', ')||'-'}</span>`; h+=`<span class="chip newx">⚠️ 새로 틀림 ${neo.length}: ${neo.join(', ')||'-'}</span>`; h+='</div>'; }
+    h+='</div>';
+    // 오답 상세
+    h+='<div class="card"><h3>📋 오답 문항 상세 분석</h3>';
+    if(!wl.length){ h+='<div class="hint">틀린 문항이 없어요. 훌륭합니다! 🎉</div>'; }
+    else wl.forEach(w=>{ const it=itemOf(r,w.no); h+=`<div class="wt-item"><div class="wt-h"><span class="no">${w.no}번</span>${esc(w.type||'(유형 준비중)')}<span class="wt-a"> · ${esc(w.area)}</span></div><div class="wt-c">${esc(typeComment(it))}</div></div>`; });
+    h+='</div>';
+    // 원장에게 보내기
+    const code=btoa(unescape(encodeURIComponent(JSON.stringify({s:student,r:r,ox:ox.join('')}))));
+    h+=`<div class="card"><h3>💬 원장님께 결과 보내기</h3><div class="hint">아래 코드를 복사해 <b>카카오톡으로 원장님께 전송</b>하면, 원장님이 수업 전에 우리 아이 약점을 확인합니다.</div>
+      <textarea id="sendcode" rows="2" readonly>${code}</textarea>
+      <div class="row-inline" style="margin-top:8px"><button class="btn navy sm" onclick="copyCode()">코드 복사</button><a class="btn pri sm" style="text-decoration:none" href="https://open.kakao.com/me/gfield" target="_blank" rel="noopener">카톡으로 열기</a></div></div>`;
+    document.getElementById('main').innerHTML=h;
+  }
+  function copyCode(){ const t=document.getElementById('sendcode'); t.select(); try{ navigator.clipboard.writeText(t.value); }catch(e){ document.execCommand('copy'); } toast('코드가 복사됐어요. 카톡에 붙여넣어 보내주세요.'); }
+  function givenName(n){ return n&&n.length>=2? n.slice(1):n; }
+
+  /* =========================================================
+     원장 모드
+     ========================================================= */
+  let tSel=''; let tTab='student';
+  function startTeacher(){ boot(); document.getElementById('teacher-savebar').classList.remove('hidden'); renderTeacher(); }
+  function renderTeacher(){
+    let h=`<div class="tabs">
+      <button class="${tTab==='student'?'on':''}" onclick="tSetTab('student')">👤 학생별 분석</button>
+      <button class="${tTab==='class'?'on':''}" onclick="tSetTab('class')">👥 반 전체 약점</button>
+      <button class="${tTab==='import'?'on':''}" onclick="tSetTab('import')">📥 결과 코드 받기</button>
+      <button class="${tTab==='edit'?'on':''}" onclick="tSetTab('edit')">✏️ 회차 유형 편집</button>
+    </div><div id="t-body"></div>`;
+    document.getElementById('main').innerHTML=h;
+    if(tTab==='student') tStudent();
+    else if(tTab==='class') tClass();
+    else if(tTab==='import') tImport();
+    else tEdit();
+  }
+  function tSetTab(t){ tTab=t; renderTeacher(); }
+
+  function tStudent(){
+    const students=D.students||[];
+    if(!tSel||!students.includes(tSel)) tSel=students[0]||'';
+    let h=`<div class="card"><div class="row-inline"><b>학생</b><select class="select" onchange="tPick(this.value)">${students.map(s=>`<option ${s===tSel?'selected':''}>${esc(s)}</option>`).join('')}</select></div>`;
+    if(!tSel){ h+='<div class="hint">학생이 없습니다.</div></div>'; document.getElementById('t-body').innerHTML=h; return; }
+    // 매트릭스: 행=회차, 열=1~30, 셀 O/X (클릭 토글), 마지막 틀린개수
+    h+='<div class="mtable-scroll"><table class="mx"><thead><tr><th>회차</th>';
+    for(let n=1;n<=Q();n++) h+=`<th>${n}</th>`;
+    h+='<th>틀린수</th><th>점수</th></tr></thead><tbody>';
+    roundKeys().forEach(r=>{
+      const ox=latestOx(tSel,r);
+      h+=`<tr><th>${esc(M.rounds[r].title||r+'회')}</th>`;
+      if(!ox){ for(let n=1;n<=Q();n++) h+=`<td class="ox" onclick="tSeed('${r}',${n})">·</td>`; h+='<td class="wc">-</td><td class="wc">-</td>'; }
+      else { for(let n=1;n<=Q();n++){ const x=ox[n-1]==='X'; h+=`<td class="ox ${x?'x':'o'}" onclick="tToggle('${r}',${n})">${x?'✕':'O'}</td>`; } const sc=scoreOf(ox); h+=`<td class="wc">${sc.wrong}</td><td class="wc">${sc.score}</td>`; }
+      h+='</tr>';
+    });
+    h+='</tbody></table></div><div class="hint" style="margin-top:6px">칸을 클릭하면 O↔✕ 수정돼요. 값이 없는 회차(·)는 클릭하면 응시 칸이 만들어집니다. 학부모가 보낸 코드는 [결과 코드 받기]에서 가져오세요.</div></div>';
+
+    // 누적 약점 분석
+    h+=tAnalysisHTML(tSel);
+    document.getElementById('t-body').innerHTML=h;
+  }
+  function tPick(v){ tSel=v; tStudent(); }
+  function tSeed(r,n){ pushAttempt(tSel,r,blankOx(),'teacher'); tToggle(r,n); }
+  function tToggle(r,n){ const ox=latestOx(tSel,r); if(!ox) return; ox[n-1]= ox[n-1]==='X'?'O':'X'; markDirty(); tStudent(); }
+
+  function tAnalysisHTML(student){
+    // 최신 응시 기준 누적: 영역별 수행률 평균 + 세부유형 오답 빈도
+    const rs=roundKeys().filter(r=>latestOx(student,r));
+    if(!rs.length) return '<div class="card"><div class="hint">아직 응시 기록이 없습니다.</div></div>';
+    const areaAgg={}; M.areas.forEach(a=>areaAgg[a]={tot:0,got:0});
+    const typeCnt={}; const scores=[];
+    rs.forEach(r=>{ const ox=latestOx(student,r); const as=areaStats(ox); M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; }); scoreOf(ox); scores.push({r:r,sc:scoreOf(ox).score}); wrongList(r,ox).forEach(w=>{ const key=w.type||('('+w.area+' 유형)'); typeCnt[key]=(typeCnt[key]||0)+1; }); });
+    let h=`<div class="card"><h3>📊 ${esc(givenName(student))} 누적 약점 분석 (응시 ${rs.length}회차)</h3>`;
+    h+='<div class="row-inline" style="gap:6px">';
+    scores.forEach(s=>{ h+=`<span class="cmp"></span><span class="chip solved" style="background:#eef2ff;color:#3641a8">${esc(M.rounds[s.r].title||s.r)}: ${s.sc}점</span>`; });
+    h+='</div>';
+    h+='<div style="height:8px"></div>';
+    M.areas.forEach(a=>{ const s=areaAgg[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${pct}%</span></div><div class="abar"><i class="${pct<50?'low':''}" style="width:${pct}%"></i></div></div>`; });
+    const top=Object.entries(typeCnt).sort((a,b)=>b[1]-a[1]).slice(0,8);
+    if(top.length){ h+='<h3 style="margin-top:12px">자주 틀리는 세부 유형</h3>'; top.forEach(([t,c])=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${c}회</span>${esc(t)}</div></div>`; }); }
+    h+='</div>';
+    return h;
+  }
+
+  function tClass(){
+    const students=(D.students||[]).filter(s=>M.results[s]);
+    const areaAgg={}; M.areas.forEach(a=>areaAgg[a]={tot:0,got:0}); const typeCnt={}; let n=0;
+    students.forEach(s=>{ roundKeys().forEach(r=>{ const ox=latestOx(s,r); if(!ox) return; n++; const as=areaStats(ox); M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; }); wrongList(r,ox).forEach(w=>{ const key=w.type||('('+w.area+')'); typeCnt[key]=(typeCnt[key]||0)+1; }); }); });
+    let h=`<div class="card"><h3>👥 반 전체 약점 (응시 ${n}건 · 학생 ${students.length}명)</h3>`;
+    if(!n){ h+='<div class="hint">아직 응시 기록이 없습니다. 학부모 코드를 받거나 학생별 분석에서 입력하세요.</div></div>'; document.getElementById('t-body').innerHTML=h; return; }
+    M.areas.forEach(a=>{ const s=areaAgg[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${pct}%</span></div><div class="abar"><i class="${pct<50?'low':''}" style="width:${pct}%"></i></div></div>`; });
+    const top=Object.entries(typeCnt).sort((a,b)=>b[1]-a[1]).slice(0,12);
+    h+='<h3 style="margin-top:12px">반에서 가장 많이 틀린 유형</h3>';
+    top.forEach(([t,c])=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${c}회</span>${esc(t)}</div></div>`; });
+    h+='</div>';
+    document.getElementById('t-body').innerHTML=h;
+  }
+
+  function tImport(){
+    document.getElementById('t-body').innerHTML=`<div class="card"><h3>📥 학부모 결과 코드 받기</h3><div class="hint">학부모가 카톡으로 보낸 <b>결과 코드</b>를 붙여넣고 [가져오기]를 누르세요. 여러 개를 줄바꿈으로 한 번에 넣어도 됩니다. 가져온 뒤 하단 [💾 GitHub에 저장]을 눌러야 다른 기기에서도 보입니다.</div>
+      <textarea id="impcode" rows="4" placeholder="여기에 코드 붙여넣기"></textarea>
+      <div class="row-inline" style="margin-top:8px"><button class="btn navy sm" onclick="doImport()">가져오기</button></div>
+      <div id="imp-res" class="hint"></div></div>`;
+  }
+  function doImport(){
+    const raw=document.getElementById('impcode').value.trim(); if(!raw){ return; }
+    const lines=raw.split(/\s+/).filter(Boolean); let ok=0,fail=0,names=[];
+    lines.forEach(code=>{ try{ const o=JSON.parse(decodeURIComponent(escape(atob(code)))); if(o&&o.s&&o.r&&o.ox&&o.ox.length===Q()){ pushAttempt(o.s,o.r,o.ox.split(''),'parent'); ok++; names.push(o.s+' '+(M.rounds[o.r]?M.rounds[o.r].title:o.r)); } else fail++; }catch(e){ fail++; } });
+    markDirty();
+    document.getElementById('imp-res').innerHTML=`✅ ${ok}건 반영${fail?(' · ❌ '+fail+'건 실패'):''}${names.length?('<br>'+names.map(esc).join(', ')):''}<br><b>하단 [💾 GitHub에 저장]을 눌러 반영하세요.</b>`;
+    toast(ok+'건 가져옴 — 저장 필요');
+  }
+
+  function tEdit(){
+    const r=curRound; const rd=M.rounds[r];
+    let h=`<div class="card"><div class="row-inline"><b>회차</b><select class="select" onchange="curRound=this.value; tEdit();">${roundKeys().map(k=>`<option value="${k}" ${k===r?'selected':''}>${esc(M.rounds[k].title||k+'회')}</option>`).join('')}</select></div>
+      <div class="hint">각 문항의 <b>세부유형·정답·오답코멘트</b>를 입력하세요. 영역·배점은 전 회차 공통(고정)입니다. 나중에 ⑨ AI 진단으로 스크립트·시험지에서 유형을 자동 추출해 채울 수도 있어요.</div>
+      <div class="row-inline"><label style="font-size:12px;color:#555;width:64px">풀이영상</label><input id="ed-video" value="${esc(rd.video||'')}" placeholder="유튜브 링크" style="flex:1;padding:8px;border:1px solid var(--line);border-radius:7px" oninput="M.rounds['${r}'].video=this.value; markDirty();"></div>`;
+    for(let n=1;n<=Q();n++){ const it=itemOf(r,n); const b=bp(n); h+=`<div class="ed-row"><div class="no">${n}</div>
+      <input value="${esc(it.type)}" placeholder="세부유형" oninput="edSet('${r}',${n},'type',this.value)">
+      <input value="${esc(it.answer)}" placeholder="정답" oninput="edSet('${r}',${n},'answer',this.value)">
+      <div style="display:flex;gap:6px"><span class="area" style="min-width:74px">${esc(b.area)} · ${b.pts}</span><input value="${esc(it.comment)}" placeholder="오답 코멘트(선택)" oninput="edSet('${r}',${n},'comment',this.value)" style="flex:1"></div></div>`; }
+    h+='</div>';
+    document.getElementById('t-body').innerHTML=h;
+  }
+  function edSet(r,n,k,v){ const items=M.rounds[r].items=M.rounds[r].items||[]; let it=items.find(x=>x.no===n); if(!it){ it={no:n,type:'',answer:'',comment:''}; items.push(it); items.sort((a,b)=>a.no-b.no); } it[k]=v; markDirty(); }
+
+  /* ===== 저장 (GitHub) ===== */
+  function markDirty(){ const s=document.getElementById('save-status'); if(s) s.textContent='● 저장되지 않은 변경 있음'; }
+  function buildMockFile(){
+    return "/* =========================================================\n * 지필드 영재교육 · 중급 모의고사 진단 데이터\n * 저장: "+new Date().toLocaleString('ko-KR')+"\n * ========================================================= */\nwindow.GFIELD_MOCK = "+JSON.stringify(M,null,2)+";\n";
+  }
+  function ghToken(){ let t=null; try{ t=localStorage.getItem('gfield_gh_token'); }catch(e){} if(!t){ t=prompt('GitHub 토큰 (Contents: Read and write). 어드민에서 쓰던 것과 동일합니다.'); if(!t) return null; t=t.trim(); try{ localStorage.setItem('gfield_gh_token',t); }catch(e){} } return t; }
+  async function saveMock(){
+    const token=ghToken(); if(!token) return;
+    const st=document.getElementById('save-status'); st.textContent='저장 중…';
+    try{
+      let sha=null; const g=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?ref=${BRANCH}`,{headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'}}); if(g.ok){ sha=(await g.json()).sha; }
+      const b64=btoa(unescape(encodeURIComponent(buildMockFile())));
+      const p=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{method:'PUT',headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'},body:JSON.stringify({message:'Update mock-data.js (mock diagnosis)',content:b64,sha:sha,branch:BRANCH})});
+      if(p.ok){ st.textContent='✅ 저장 완료 (1~2분 후 반영)'; toast('저장 완료 ✅'); }
+      else{ const e=await p.json(); st.textContent='저장 실패: '+(e.message||p.status); if(p.status===401||p.status===403){ toast('토큰 권한 확인(Contents 쓰기)'); } }
+    }catch(e){ st.textContent='네트워크 오류'; toast('저장 실패 — 코드 보기로 수동 반영'); }
+  }
+  function showCode(){ const w=window.open('','_blank'); w.document.write('<pre style="white-space:pre-wrap;word-break:break-all;font-size:12px;padding:12px">'+buildMockFile().replace(/</g,'&lt;')+'</pre>'); }
+</script>
+</body>
+</html>
