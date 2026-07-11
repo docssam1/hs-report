@@ -665,6 +665,7 @@
   const RICH_STYLE={ b:'font-weight:800', i:'font-style:italic', u:'text-decoration:underline', red:'color:#dc2626;font-weight:700', blue:'color:#2563eb;font-weight:700', green:'color:#16a34a;font-weight:700', big:'font-size:1.28em;font-weight:800', hl:'background:#fff2a6;border-radius:3px;padding:0 2px', hlg:'background:#c6f6d5;border-radius:3px;padding:0 2px', hlp:'background:#fbd4e6;border-radius:3px;padding:0 2px', hlb:'background:#cfe4ff;border-radius:3px;padding:0 2px' };
   function inlineFmt(str){
     let s=escHtml(str);
+    s=s.replace(/\[모의고사:(\d+)\]/g,(m,n)=>`<a class="lnk ext mock-hw" href="mock.html?round=${n}" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:9px 14px;border-radius:10px;text-decoration:none;margin:5px 0">📝 중급 모의고사 ${n}회 진단하기 ›</a>`);
     s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
     s=s.replace(/\[강조\]([\s\S]*?)\[\/강조\]/g,'<b>$1</b>');
     s=s.replace(/==([\s\S]+?)==/g,'<mark class="hl">$1</mark>');
