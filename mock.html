@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>지필드 영재교육 | 중급 모의고사 진단</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <style>
   :root{--navy:#1e3c72;--navy2:#2a5298;--orange:#f97316;--orange-d:#ea580c;--ink:#2d3436;--muted:#6b7280;--bg:#eef1f6;--card:#fff;--line:#e3e8ef;--ok:#27ae60;--danger:#e74c3c;--soft:#fff3e6;}
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Pretendard',sans-serif;}
@@ -366,7 +369,7 @@
       <div class="row-inline"><label style="font-size:12px;color:#555;width:64px">풀이영상</label><input id="ed-video" value="${esc(rd.video||'')}" placeholder="유튜브 링크" style="flex:1;padding:8px;border:1px solid var(--line);border-radius:7px" oninput="M.rounds['${r}'].video=this.value; markDirty();"></div>`;
     for(let n=1;n<=Q();n++){ const it=itemOf(r,n); const b=bp(n); h+=`<div class="ed-row"><div class="no">${n}</div>
       <input value="${esc(it.type)}" placeholder="세부유형" oninput="edSet('${r}',${n},'type',this.value)">
-      <input value="${esc(it.answer)}" placeholder="정답" oninput="edSet('${r}',${n},'answer',this.value)">
+      <div><input value="${esc(it.answer)}" placeholder="정답" oninput="edSet('${r}',${n},'answer',this.value)" style="width:100%"><div class="ans-prev" style="font-size:12px;color:#0a7a3d;margin-top:3px;min-height:14px">${esc(it.answer)}</div></div>
       <div style="display:flex;gap:6px"><span class="area" style="min-width:74px">${esc(b.area)} · ${b.pts}</span><input value="${esc(it.comment)}" placeholder="오답 코멘트(선택)" oninput="edSet('${r}',${n},'comment',this.value)" style="flex:1"></div></div>`; }
     h+='</div>';
     document.getElementById('t-body').innerHTML=h;
@@ -392,6 +395,11 @@
     }catch(e){ st.textContent='네트워크 오류'; toast('저장 실패'); }
   }
   function showCode(){ const w=window.open('','_blank'); w.document.write('<pre style="white-space:pre-wrap;word-break:break-all;font-size:12px;padding:12px">'+buildMockFile().replace(/</g,'&lt;')+'</pre>'); }
+
+  /* ===== 수식(LaTeX) 렌더 ===== */
+  let _mathT=null;
+  function typeset(){ if(!window.renderMathInElement) return; clearTimeout(_mathT); _mathT=setTimeout(function(){ try{ renderMathInElement(document.getElementById('main'),{delimiters:[{left:'$',right:'$',display:false}],throwOnError:false,ignoredClasses:['katex']}); }catch(e){} },20); }
+  (function(){ var m=document.getElementById('main'); if(m&&window.MutationObserver){ new MutationObserver(typeset).observe(m,{childList:true,subtree:true}); } window.addEventListener('load',typeset); })();
 
   /* ===== URL로 바로 진입 (과제 링크에서) ===== */
   (function initFromUrl(){
