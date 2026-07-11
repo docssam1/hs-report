@@ -97,6 +97,8 @@
   .ed-row input{padding:7px 9px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;width:100%;}
   .ed-row .area{font-size:11px;color:var(--muted);text-align:center;}
   @media(max-width:620px){ .ed-row{grid-template-columns:28px 1fr;} .ed-row .area{display:none;} }
+  .pill{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;}
+  .pill.on{background:#dcfce7;color:#166534;} .pill.off{background:#f1f5f9;color:#64748b;}
 </style>
 </head>
 <body>
@@ -123,9 +125,10 @@
 </div>
 
 <div id="teacher-savebar" class="savebar hidden">
-  <span class="status" id="save-status">원장 모드 · 변경 후 저장</span>
-  <button class="btn ok sm" onclick="saveMock()">💾 GitHub에 저장</button>
-  <button class="btn gray sm" onclick="showCode()">📋 코드 보기</button>
+  <span class="status" id="save-status">원장 모드</span>
+  <button class="btn navy sm" onclick="reloadResults()">🔄 결과 새로고침</button>
+  <button class="btn ok sm" onclick="saveMock()">💾 유형·정답 저장</button>
+  <button class="btn gray sm" onclick="showCode()">📋 코드</button>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -133,7 +136,9 @@
 <script src="data.js"></script>
 <script src="mock-data.js"></script>
 <script>
-  const REPO="docssam1/hs-report", FILE="mock-data.js", BRANCH="main", ADMIN_PW="01020837265";
+  const REPO="docssam1/hs-report", FILE="mock-data.js", BRANCH="main";
+  const SUPA_URL="https://fgahqumaldheqettmvqg.supabase.co";
+  const SUPA_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
   const D=window.GFIELD_DATA||{students:[]};
   const M=window.GFIELD_MOCK;
   M.results=M.results||{};
@@ -147,6 +152,24 @@
   function itemOf(r,no){ return roundItems(r).find(i=>i.no===no)||{no:no,type:'',answer:'',comment:''}; }
   function Q(){ return M.questions||30; }
   function givenName(n){ return n&&n.length>=2? n.slice(1):n; }
+
+  /* ===== Supabase 자동 수집 ===== */
+  async function supaUpsert(student,r,ox,source){
+    const oxs = ox.join? ox.join('') : ox; const sc=scoreOf(oxs.split(''));
+    try{
+      const res=await fetch(SUPA_URL+"/rest/v1/mock_results",{method:"POST",headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates"},body:JSON.stringify({student:student,round:r,ox:oxs,score:sc.score,wrong:sc.wrong,source:source||'parent'})});
+      return res.ok;
+    }catch(e){ return false; }
+  }
+  async function supaLoadAll(){
+    try{
+      const r=await fetch(SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,source,updated_at",{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
+      if(!r.ok) return false;
+      const rows=await r.json();
+      rows.forEach(row=>{ if(!row.ox||row.ox.length!==Q()) return; M.results[row.student]=M.results[row.student]||{}; M.results[row.student][row.round]=[{ox:row.ox.split(''),ts:(row.updated_at||'').slice(0,10),by:row.source||'db'}]; });
+      return true;
+    }catch(e){ return false; }
+  }
 
   /* ===== 로그인 ===== */
   function enter(){
@@ -183,7 +206,7 @@
   let markOx=null;
   function startParent(){ boot(); loadLocal(); renderRoundPick(); }
   function renderRoundPick(){
-    let h=`<div class="card"><h3>📝 진단할 회차를 선택하세요</h3><div class="hint">집에서 푼 <b>중급 모의고사</b>의 회차를 고르고, <b>틀린 문제 번호만</b> 체크하면 점수·약점 유형·오답 코멘트가 바로 나옵니다. (회차별 최대 3회 재응시 가능)</div><div class="round-grid">`;
+    let h=`<div class="card"><h3>📝 진단할 회차를 선택하세요</h3><div class="hint">집에서 푼 <b>중급 모의고사</b>의 회차를 고르고, <b>틀린 문제 번호만</b> 체크하면 점수·약점 유형·오답 코멘트가 바로 나옵니다. 제출하면 <b>원장님께 자동 전송</b>돼요. (회차별 최대 3회 재응시)</div><div class="round-grid">`;
     roundKeys().forEach(r=>{
       const at=attemptsOf(me,r).length;
       const hasType=roundItems(r).length>0;
@@ -217,17 +240,19 @@
   }
   function toggleQ(n){ markOx[n-1]= markOx[n-1]==='X'?'O':'X'; renderMark(); }
   function loadAttempt(i){ const a=attemptsOf(me,curRound); if(a[i]){ markOx=a[i].ox.slice(); renderMark(); } }
-  function submitAttempt(){
+  async function submitAttempt(){
     const at=attemptsOf(me,curRound);
     if(at.length>=3){ if(!confirm('이미 3회 응시했어요. 가장 오래된 기록을 지우고 새로 저장할까요?')) return; }
     const prev = at.length? at[at.length-1].ox.slice() : null;
     pushAttempt(me,curRound,markOx,'parent'); saveLocal();
-    renderReport(me,curRound,prev);
+    const ok=await supaUpsert(me,curRound,markOx,'parent');
+    toast(ok?'제출 완료 · 원장님께 자동 전송됐어요 ✅':'제출 저장됨(자동전송 실패) — 코드로 보내주세요');
+    renderReport(me,curRound,prev,ok);
   }
-  function renderReport(student,r,prevOx){
+  function renderReport(student,r,prevOx,sent){
     const at=attemptsOf(student,r); const ox=at[at.length-1].ox;
     const sc=scoreOf(ox); const as=areaStats(ox); const wl=wrongList(r,ox);
-    let h=`<div class="card"><div class="row-inline"><button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button><b>${esc(givenName(student))} · ${esc(M.rounds[r].title||r+'회')} 진단 결과</b></div>`;
+    let h=`<div class="card"><div class="row-inline"><button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button><b>${esc(givenName(student))} · ${esc(M.rounds[r].title||r+'회')} 진단 결과</b>${sent!==undefined?`<span class="pill ${sent?'on':'off'}">${sent?'원장님께 전송됨':'전송 대기'}</span>`:''}</div>`;
     h+=`<div class="scorebar"><div><div class="big">${sc.score}</div><div class="lbl">점 / 100점</div></div><div><div class="big" style="color:#334">${sc.correct} / ${Q()}</div><div class="lbl">맞은 개수</div></div><div><div class="big" style="color:#dc2626">${sc.wrong}</div><div class="lbl">틀린 개수</div></div><div><div class="big" style="color:#334">${at.length}<span style="font-size:15px;color:#889">회</span></div><div class="lbl">응시</div></div></div>`;
     h+='<h3 style="margin-top:10px">영역별 수행률</h3>';
     M.areas.forEach(a=>{ const s=as[a]||{tot:0,got:0,cnt:0,ok:0}; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${s.ok}/${s.cnt}문항 · ${pct}%</span></div><div class="abar"><i class="${pct<50?'low':''}" style="width:${pct}%"></i></div></div>`; });
@@ -237,22 +262,25 @@
     if(!wl.length){ h+='<div class="hint">틀린 문항이 없어요. 훌륭합니다! 🎉</div>'; }
     else wl.forEach(w=>{ const it=itemOf(r,w.no); h+=`<div class="wt-item"><div class="wt-h"><span class="no">${w.no}번</span>${esc(w.type||'(유형 준비중)')}<span class="wt-a"> · ${esc(w.area)}</span></div><div class="wt-c">${esc(typeComment(it))}</div></div>`; });
     h+='</div>';
-    const code=btoa(unescape(encodeURIComponent(JSON.stringify({s:student,r:r,ox:ox.join('')}))));
-    h+=`<div class="card"><h3>💬 원장님께 결과 보내기</h3><div class="hint">아래 코드를 복사해 <b>카카오톡으로 원장님께 전송</b>하면, 원장님이 수업 전에 우리 아이 약점을 확인합니다.</div>
-      <textarea id="sendcode" rows="2" readonly>${code}</textarea>
-      <div class="row-inline" style="margin-top:8px"><button class="btn navy sm" onclick="copyCode()">코드 복사</button><a class="btn pri sm" style="text-decoration:none" href="https://open.kakao.com/me/gfield" target="_blank" rel="noopener">카톡으로 열기</a></div></div>`;
+    if(!sent){
+      const code=btoa(unescape(encodeURIComponent(JSON.stringify({s:student,r:r,ox:ox.join('')}))));
+      h+=`<div class="card"><h3>💬 자동 전송이 안 됐어요</h3><div class="hint">인터넷 문제로 자동 전송이 안 됐습니다. 아래 코드를 복사해 원장님께 카톡으로 보내주세요.</div>
+        <textarea id="sendcode" rows="2" readonly>${code}</textarea>
+        <div class="row-inline" style="margin-top:8px"><button class="btn navy sm" onclick="copyCode()">코드 복사</button><a class="btn pri sm" style="text-decoration:none" href="https://open.kakao.com/me/gfield" target="_blank" rel="noopener">카톡으로 열기</a></div></div>`;
+    }
     document.getElementById('main').innerHTML=h;
   }
-  function copyCode(){ const t=document.getElementById('sendcode'); t.select(); try{ navigator.clipboard.writeText(t.value); }catch(e){ document.execCommand('copy'); } toast('코드가 복사됐어요. 카톡에 붙여넣어 보내주세요.'); }
+  function copyCode(){ const t=document.getElementById('sendcode'); t.select(); try{ navigator.clipboard.writeText(t.value); }catch(e){ document.execCommand('copy'); } toast('코드가 복사됐어요.'); }
 
   /* ===== 원장 모드 ===== */
   let tSel=''; let tTab='student';
-  function startTeacher(){ boot(); document.getElementById('teacher-savebar').classList.remove('hidden'); renderTeacher(); }
+  async function startTeacher(){ boot(); document.getElementById('teacher-savebar').classList.remove('hidden'); document.getElementById('main').innerHTML='<div class="card"><div class="hint">결과 불러오는 중…</div></div>'; await supaLoadAll(); renderTeacher(); }
+  async function reloadResults(){ const st=document.getElementById('save-status'); st.textContent='불러오는 중…'; const ok=await supaLoadAll(); st.textContent=ok?'✅ 최신 결과 불러옴':'불러오기 실패'; renderTeacher(); }
   function renderTeacher(){
     let h=`<div class="tabs">
       <button class="${tTab==='student'?'on':''}" onclick="tSetTab('student')">👤 학생별 분석</button>
       <button class="${tTab==='class'?'on':''}" onclick="tSetTab('class')">👥 반 전체 약점</button>
-      <button class="${tTab==='import'?'on':''}" onclick="tSetTab('import')">📥 결과 코드 받기</button>
+      <button class="${tTab==='import'?'on':''}" onclick="tSetTab('import')">📥 코드 수동입력</button>
       <button class="${tTab==='edit'?'on':''}" onclick="tSetTab('edit')">✏️ 회차 유형 편집</button>
     </div><div id="t-body"></div>`;
     document.getElementById('main').innerHTML=h;
@@ -266,7 +294,7 @@
   function tStudent(){
     const students=D.students||[];
     if(!tSel||!students.includes(tSel)) tSel=students[0]||'';
-    let h=`<div class="card"><div class="row-inline"><b>학생</b><select class="select" onchange="tPick(this.value)">${students.map(s=>`<option ${s===tSel?'selected':''}>${esc(s)}</option>`).join('')}</select></div>`;
+    let h=`<div class="card"><div class="row-inline"><b>학생</b><select class="select" onchange="tPick(this.value)">${students.map(s=>`<option ${s===tSel?'selected':''}>${esc(s)}</option>`).join('')}</select><span class="hint" style="margin:0">칸 클릭=수동 입력(자동 저장)</span></div>`;
     if(!tSel){ h+='<div class="hint">학생이 없습니다.</div></div>'; document.getElementById('t-body').innerHTML=h; return; }
     h+='<div class="mtable-scroll"><table class="mx"><thead><tr><th>회차</th>';
     for(let n=1;n<=Q();n++) h+=`<th>${n}</th>`;
@@ -278,13 +306,13 @@
       else { for(let n=1;n<=Q();n++){ const x=ox[n-1]==='X'; h+=`<td class="ox ${x?'x':'o'}" onclick="tToggle('${r}',${n})">${x?'✕':'O'}</td>`; } const sc=scoreOf(ox); h+=`<td class="wc">${sc.wrong}</td><td class="wc">${sc.score}</td>`; }
       h+='</tr>';
     });
-    h+='</tbody></table></div><div class="hint" style="margin-top:6px">칸을 클릭하면 O↔✕ 수정돼요. 값이 없는 회차(·)는 클릭하면 응시 칸이 만들어집니다. 학부모가 보낸 코드는 [결과 코드 받기]에서 가져오세요.</div></div>';
+    h+='</tbody></table></div><div class="hint" style="margin-top:6px">학부모가 제출한 결과는 자동 반영됩니다. 안 푼 학생은 값 없는 회차(·)를 클릭해 직접 O/X를 입력하세요. 클릭 시 DB에 자동 저장됩니다.</div></div>';
     h+=tAnalysisHTML(tSel);
     document.getElementById('t-body').innerHTML=h;
   }
   function tPick(v){ tSel=v; tStudent(); }
   function tSeed(r,n){ pushAttempt(tSel,r,blankOx(),'teacher'); tToggle(r,n); }
-  function tToggle(r,n){ const ox=latestOx(tSel,r); if(!ox) return; ox[n-1]= ox[n-1]==='X'?'O':'X'; markDirty(); tStudent(); }
+  function tToggle(r,n){ const ox=latestOx(tSel,r); if(!ox) return; ox[n-1]= ox[n-1]==='X'?'O':'X'; tStudent(); supaUpsert(tSel,r,ox,'teacher').then(ok=>{ document.getElementById('save-status').textContent= ok?'✅ 저장됨':'저장 실패'; }); }
 
   function tAnalysisHTML(student){
     const rs=roundKeys().filter(r=>latestOx(student,r));
@@ -308,7 +336,7 @@
     const areaAgg={}; M.areas.forEach(a=>areaAgg[a]={tot:0,got:0}); const typeCnt={}; let n=0;
     students.forEach(s=>{ roundKeys().forEach(r=>{ const ox=latestOx(s,r); if(!ox) return; n++; const as=areaStats(ox); M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; }); wrongList(r,ox).forEach(w=>{ const key=w.type||('('+w.area+')'); typeCnt[key]=(typeCnt[key]||0)+1; }); }); });
     let h=`<div class="card"><h3>👥 반 전체 약점 (응시 ${n}건 · 학생 ${students.length}명)</h3>`;
-    if(!n){ h+='<div class="hint">아직 응시 기록이 없습니다. 학부모 코드를 받거나 학생별 분석에서 입력하세요.</div></div>'; document.getElementById('t-body').innerHTML=h; return; }
+    if(!n){ h+='<div class="hint">아직 응시 기록이 없습니다. 학부모 제출을 기다리거나 학생별 분석에서 직접 입력하세요.</div></div>'; document.getElementById('t-body').innerHTML=h; return; }
     M.areas.forEach(a=>{ const s=areaAgg[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${pct}%</span></div><div class="abar"><i class="${pct<50?'low':''}" style="width:${pct}%"></i></div></div>`; });
     const top=Object.entries(typeCnt).sort((a,b)=>b[1]-a[1]).slice(0,12);
     h+='<h3 style="margin-top:12px">반에서 가장 많이 틀린 유형</h3>';
@@ -318,24 +346,23 @@
   }
 
   function tImport(){
-    document.getElementById('t-body').innerHTML=`<div class="card"><h3>📥 학부모 결과 코드 받기</h3><div class="hint">학부모가 카톡으로 보낸 <b>결과 코드</b>를 붙여넣고 [가져오기]를 누르세요. 여러 개를 줄바꿈으로 한 번에 넣어도 됩니다. 가져온 뒤 하단 [💾 GitHub에 저장]을 눌러야 다른 기기에서도 보입니다.</div>
+    document.getElementById('t-body').innerHTML=`<div class="card"><h3>📥 코드 수동입력 (자동 전송 실패분)</h3><div class="hint">대부분은 자동 수집되지만, 학부모 자동 전송이 실패해 <b>코드</b>를 받은 경우 여기에 붙여넣어 반영하세요. 붙여넣으면 DB에도 저장됩니다. 여러 개는 줄바꿈으로.</div>
       <textarea id="impcode" rows="4" placeholder="여기에 코드 붙여넣기"></textarea>
       <div class="row-inline" style="margin-top:8px"><button class="btn navy sm" onclick="doImport()">가져오기</button></div>
       <div id="imp-res" class="hint"></div></div>`;
   }
-  function doImport(){
+  async function doImport(){
     const raw=document.getElementById('impcode').value.trim(); if(!raw){ return; }
     const lines=raw.split(/\s+/).filter(Boolean); let ok=0,fail=0,names=[];
-    lines.forEach(code=>{ try{ const o=JSON.parse(decodeURIComponent(escape(atob(code)))); if(o&&o.s&&o.r&&o.ox&&o.ox.length===Q()){ pushAttempt(o.s,o.r,o.ox.split(''),'parent'); ok++; names.push(o.s+' '+(M.rounds[o.r]?M.rounds[o.r].title:o.r)); } else fail++; }catch(e){ fail++; } });
-    markDirty();
-    document.getElementById('imp-res').innerHTML=`✅ ${ok}건 반영${fail?(' · ❌ '+fail+'건 실패'):''}${names.length?('<br>'+names.map(esc).join(', ')):''}<br><b>하단 [💾 GitHub에 저장]을 눌러 반영하세요.</b>`;
-    toast(ok+'건 가져옴 — 저장 필요');
+    for(const code of lines){ try{ const o=JSON.parse(decodeURIComponent(escape(atob(code)))); if(o&&o.s&&o.r&&o.ox&&o.ox.length===Q()){ M.results[o.s]=M.results[o.s]||{}; M.results[o.s][o.r]=[{ox:o.ox.split(''),ts:new Date().toISOString().slice(0,10),by:'parent'}]; await supaUpsert(o.s,o.r,o.ox,'parent'); ok++; names.push(o.s+' '+(M.rounds[o.r]?M.rounds[o.r].title:o.r)); } else fail++; }catch(e){ fail++; } }
+    document.getElementById('imp-res').innerHTML=`✅ ${ok}건 반영·저장${fail?(' · ❌ '+fail+'건 실패'):''}${names.length?('<br>'+names.map(esc).join(', ')):''}`;
+    toast(ok+'건 반영 완료');
   }
 
   function tEdit(){
     const r=curRound; const rd=M.rounds[r];
     let h=`<div class="card"><div class="row-inline"><b>회차</b><select class="select" onchange="curRound=this.value; tEdit();">${roundKeys().map(k=>`<option value="${k}" ${k===r?'selected':''}>${esc(M.rounds[k].title||k+'회')}</option>`).join('')}</select></div>
-      <div class="hint">각 문항의 <b>세부유형·정답·오답코멘트</b>를 입력하세요. 영역·배점은 전 회차 공통(고정)입니다. 나중에 ⑨ AI 진단으로 스크립트·시험지에서 유형을 자동 추출해 채울 수도 있어요.</div>
+      <div class="hint">각 문항의 <b>세부유형·정답·오답코멘트</b>를 입력하세요. 영역·배점은 전 회차 공통(고정)입니다. 입력 후 하단 [💾 유형·정답 저장]을 눌러야 반영됩니다. (결과 O/X는 DB에 자동 저장되므로 이 버튼과 무관)</div>
       <div class="row-inline"><label style="font-size:12px;color:#555;width:64px">풀이영상</label><input id="ed-video" value="${esc(rd.video||'')}" placeholder="유튜브 링크" style="flex:1;padding:8px;border:1px solid var(--line);border-radius:7px" oninput="M.rounds['${r}'].video=this.value; markDirty();"></div>`;
     for(let n=1;n<=Q();n++){ const it=itemOf(r,n); const b=bp(n); h+=`<div class="ed-row"><div class="no">${n}</div>
       <input value="${esc(it.type)}" placeholder="세부유형" oninput="edSet('${r}',${n},'type',this.value)">
@@ -346,10 +373,11 @@
   }
   function edSet(r,n,k,v){ const items=M.rounds[r].items=M.rounds[r].items||[]; let it=items.find(x=>x.no===n); if(!it){ it={no:n,type:'',answer:'',comment:''}; items.push(it); items.sort((a,b)=>a.no-b.no); } it[k]=v; markDirty(); }
 
-  /* ===== 저장 (GitHub) ===== */
-  function markDirty(){ const s=document.getElementById('save-status'); if(s) s.textContent='● 저장되지 않은 변경 있음'; }
+  /* ===== 저장 (GitHub: 유형·정답만) ===== */
+  function markDirty(){ const s=document.getElementById('save-status'); if(s) s.textContent='● 유형·정답 변경됨 — 저장 필요'; }
   function buildMockFile(){
-    return "/* =========================================================\n * 지필드 영재교육 · 중급 모의고사 진단 데이터\n * 저장: "+new Date().toLocaleString('ko-KR')+"\n * ========================================================= */\nwindow.GFIELD_MOCK = "+JSON.stringify(M,null,2)+";\n";
+    const out={title:M.title,areas:M.areas,roundCount:M.roundCount,questions:M.questions,blueprint:M.blueprint,rounds:M.rounds,results:{}};
+    return "/* =========================================================\n * 지필드 영재교육 · 중급 모의고사 진단 데이터\n * (결과는 Supabase에 저장됩니다. 이 파일은 유형·정답·영상만)\n * 저장: "+new Date().toLocaleString('ko-KR')+"\n * ========================================================= */\nwindow.GFIELD_MOCK = "+JSON.stringify(out,null,2)+";\n";
   }
   function ghToken(){ let t=null; try{ t=localStorage.getItem('gfield_gh_token'); }catch(e){} if(!t){ t=prompt('GitHub 토큰 (Contents: Read and write). 어드민에서 쓰던 것과 동일합니다.'); if(!t) return null; t=t.trim(); try{ localStorage.setItem('gfield_gh_token',t); }catch(e){} } return t; }
   async function saveMock(){
@@ -358,10 +386,10 @@
     try{
       let sha=null; const g=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?ref=${BRANCH}`,{headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'}}); if(g.ok){ sha=(await g.json()).sha; }
       const b64=btoa(unescape(encodeURIComponent(buildMockFile())));
-      const p=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{method:'PUT',headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'},body:JSON.stringify({message:'Update mock-data.js (mock diagnosis)',content:b64,sha:sha,branch:BRANCH})});
+      const p=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{method:'PUT',headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'},body:JSON.stringify({message:'Update mock-data.js (types/answers)',content:b64,sha:sha,branch:BRANCH})});
       if(p.ok){ st.textContent='✅ 저장 완료 (1~2분 후 반영)'; toast('저장 완료 ✅'); }
       else{ const e=await p.json(); st.textContent='저장 실패: '+(e.message||p.status); if(p.status===401||p.status===403){ toast('토큰 권한 확인(Contents 쓰기)'); } }
-    }catch(e){ st.textContent='네트워크 오류'; toast('저장 실패 — 코드 보기로 수동 반영'); }
+    }catch(e){ st.textContent='네트워크 오류'; toast('저장 실패'); }
   }
   function showCode(){ const w=window.open('','_blank'); w.document.write('<pre style="white-space:pre-wrap;word-break:break-all;font-size:12px;padding:12px">'+buildMockFile().replace(/</g,'&lt;')+'</pre>'); }
 
