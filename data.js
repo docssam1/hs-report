@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 10. 오후 5:40:23
+ * 생성: 2026. 7. 11. 오후 4:12:01
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -235,24 +235,56 @@ window.GFIELD_DATA = {
       ]
     },
     "jun-w12": {
-      "notice": "GIFTED MATH 3 V1-2(1)\n   * p4의 4번쨰 문제같은 조건에 알맞은 수는 특별한 스킬이 필요하지 않습니다.\n    대부분의 문제가 첫 글자,수를 쓰는 것 부터 시작하는데 오래 걸릴것 같은면 방법을 \n   알고도 시도하지 않는 것이 문제입니다. \n\n- 기출 다지기 \n - 사고력 키우기 \n   https://youtu.be/3KyijX8_neQ\n    \n  \n황소대비 개념3 v1-2(2)\nhttps://youtu.be/oS_QW3smwbM\n- 마방진 및 다양한 방진 해결\n- 논리추리(이중 조건), 줄세우기\n- 조건에 맞는 수 , 수의 성질\n\nGIFTED MATH V1-2 (2) 실전유형\n  https://youtu.be/c76FzeLSPRg\n\nGIFTED MATH V 1-3 개념 및 유제\n   https://youtu.be/j93kA9PXIA4\n\n\n",
+      "notice": "[[hlp:GIFTED MATH 3 V1-2(1)]]\n   * p4의 4번째 문제같은 조건에 알맞은 수는 특별한 스킬이 필요하지 않습니다.\n    대부분의 문제가 첫 글자,수를 쓰는 것 부터 시작하는데 오래 걸릴것 같은면 방법을 \n   알고도 시도하지 않는 것이 문제입니다. \n\n- 기출 다지기 \n - 사고력 키우기 \n   학습영상 https://youtu.be/3KyijX8_neQ\n    \n  \n황소대비 개념3 v1-2(2)\n학습영상  https://youtu.be/oS_QW3smwbM\n- 마방진 및 다양한 방진 해결\n- 논리추리(이중 조건), 줄세우기\n- 조건에 맞는 수 , 수의 성질\n\nGIFTED MATH V1-2 (2) 실전유형\n 학습영상  https://youtu.be/c76FzeLSPRg\n\nGIFTED MATH V 1-3 개념 및 유제\n학습영상    https://youtu.be/j93kA9PXIA4",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "GIFTED MATH 3 V1-2 NEW",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753365276_q5ho_GIFTED_MATH_3_V1-2_NEW.pdf"
+        },
+        {
+          "title": "GIFTED MATH 3 V1-3",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753558814_go0g_GIFTED_MATH_3_V1-3.pdf"
+        }
+      ]
     },
     "jun-w3": {
-      "notice": " THINKING BASIC \n      CH1 문제푸는 방법 찾기(1) 개념\n  학습 영상) https://youtu.be/F3RHYlGtcp4\n\n    - 간격과 둘레\n    - 마방진\n    - 달력\n    - 합과 차의 배수\n\n------------------------------------------------\n실수 많이 한 유형\n- 도형의 간격에서 '꼭짓점에 반드시 나무를 심는다는' 말은 신경쓰지 말기\n     그냥 둘레 나누기 간격 = 나무\n\n- 4X4 , 5X5 마방진에서 한줄의 합\n     모든 수의 합 나누기 줄의 수 (가우스 덧셈 활용)\n\n- 합과 차의 배수\n    가장 작은 수를 O 로 놓기\n    -2와 5의 차이는 7\n    연필2=볼펜3 이하면 연필은 OOO  볼펜은 OO\n---------------------------------------------------------------\n  필수유형\n    학습영상) https://youtu.be/zNkGD57AcNs\n",
+      "notice": "[[hlp: THINKING BASIC 1]]\n      CH1 문제푸는 방법 찾기(1) 개념\n  학습 영상) https://youtu.be/F3RHYlGtcp4\n\n    - 간격과 둘레\n    - 마방진\n    - 달력\n    - 합과 차의 배수\n\n------------------------------------------------\n실수 많이 한 유형\n- 도형의 간격에서 '꼭짓점에 반드시 나무를 심는다는' 말은 신경쓰지 말기\n     그냥 둘레 나누기 간격 = 나무\n\n- 4X4 , 5X5 마방진에서 한줄의 합\n     모든 수의 합 나누기 줄의 수 (가우스 덧셈 활용)\n\n- 합과 차의 배수\n    가장 작은 수를 O 로 놓기\n    -2와 5의 차이는 7\n    연필2=볼펜3 이하면 연필은 OOO  볼펜은 OO\n---------------------------------------------------------------\n[[hlp:  필수유형]]\n    학습영상) https://youtu.be/zNkGD57AcNs\n\n[[red:문제푸는 방법 찾기(1)  DT]]\n학습영상) https://youtu.be/CaFhlPFvDXw\n",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "HS 대비 필수 개념정리-HS 경시4",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753689111_1mbr_HS___________-HS___4.pdf"
+        },
+        {
+          "title": "HS 응용4 문제푸는 방법찿기(1) DT",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753904629_4uvw_HS___4___________1__DT.pdf"
+        }
+      ]
     },
     "jun-w4": {
       "notice": "",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "HS 대비 필수 개념정리-HS 경시4",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753701741_hnwb_HS___________-HS___4.pdf"
+        },
+        {
+          "title": "HS 응용4 문제푸는 방법찿기(2) DT",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753917751_38ha_HS___4___________2__DT.pdf"
+        }
+      ]
     },
     "jul-w1": {
       "notice": "",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "HS 대비 필수 개념정리-HS 경시4",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753706157_6p6d_HS___________-HS___4.pdf"
+        }
+      ]
     },
     "jul-w2": {
       "notice": "1. GIFTED MATH 3 V1-1(2) 과제 질문\nhttps://youtu.be/ynVb1PG5wp0\n  · 약점 유형 - 도형의 개수세기\n    수업 중 진행된 영상 안의 유형들을 꼭 복습해주세요. 영상을 봐야 합니다.\n  · [약점 해결 추가 자료] 필요한 경우 학습해주세요.\n    더 다양한 도형의 개수 세기 : https://naver.me/GYGahDDd\n\n2. GIFTED MATH 3 V1-2(1)\nhttps://youtu.be/3KyijX8_neQ\n  · p4의 4번째 문제 같은 '조건에 알맞은 수'는 특별한 스킬이 필요하지 않습니다.\n    대부분 첫 글자·수를 쓰는 것부터 시작합니다. 오래 걸릴 것 같아도 방법을 알고 시도하지 않는 것이 문제입니다.\n    - 기출 다지기 / 사고력 키우기\n\n※ 학원이 모든 것을 해결해 주지 않습니다. 지금은 제 자료만으로도 차고 넘치니 가정 학습을 늘려주세요.\n   가장 좋은 선생님은 부모님입니다. 상담이 필요하시면 톡 주세요 ^^\n※ 학원 특강 시간표가 모두 확정되었습니다. 이번 주 마감 예정이니 확인해 주세요. https://naver.me/FNIa1gbz",
