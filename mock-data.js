@@ -1,0 +1,88 @@
+/* =========================================================
+ * 지필드 영재교육 · 중급 모의고사 진단 데이터
+ * 30문항 고정 템플릿(영역·배점은 전 회차 공통) + 회차별 세부유형/정답
+ * mock.html(학부모 진단 · 원장 분석)에서 사용
+ * ========================================================= */
+window.GFIELD_MOCK = {
+  "title": "생각하는 황소 대비 중급 모의고사 진단",
+  "areas": ["수·규칙찾기", "도형", "경우의 수", "식의 계산"],
+  "roundCount": 6,
+  "questions": 30,
+  "blueprint": [
+    { "no": 1,  "area": "수·규칙찾기", "pts": 2.7 },
+    { "no": 2,  "area": "도형",       "pts": 2.7 },
+    { "no": 3,  "area": "도형",       "pts": 2.7 },
+    { "no": 4,  "area": "수·규칙찾기", "pts": 2.7 },
+    { "no": 5,  "area": "도형",       "pts": 2.7 },
+    { "no": 6,  "area": "식의 계산",   "pts": 2.7 },
+    { "no": 7,  "area": "식의 계산",   "pts": 2.7 },
+    { "no": 8,  "area": "식의 계산",   "pts": 2.7 },
+    { "no": 9,  "area": "수·규칙찾기", "pts": 2.7 },
+    { "no": 10, "area": "수·규칙찾기", "pts": 2.7 },
+    { "no": 11, "area": "식의 계산",   "pts": 2.7 },
+    { "no": 12, "area": "식의 계산",   "pts": 2.7 },
+    { "no": 13, "area": "식의 계산",   "pts": 3.4 },
+    { "no": 14, "area": "식의 계산",   "pts": 3.4 },
+    { "no": 15, "area": "경우의 수",   "pts": 3.4 },
+    { "no": 16, "area": "수·규칙찾기", "pts": 3.4 },
+    { "no": 17, "area": "도형",       "pts": 3.4 },
+    { "no": 18, "area": "도형",       "pts": 3.4 },
+    { "no": 19, "area": "수·규칙찾기", "pts": 3.4 },
+    { "no": 20, "area": "도형",       "pts": 3.4 },
+    { "no": 21, "area": "식의 계산",   "pts": 3.4 },
+    { "no": 22, "area": "도형",       "pts": 3.4 },
+    { "no": 23, "area": "경우의 수",   "pts": 4.2 },
+    { "no": 24, "area": "수·규칙찾기", "pts": 4.2 },
+    { "no": 25, "area": "수·규칙찾기", "pts": 4.2 },
+    { "no": 26, "area": "식의 계산",   "pts": 4.2 },
+    { "no": 27, "area": "식의 계산",   "pts": 4.2 },
+    { "no": 28, "area": "식의 계산",   "pts": 4.2 },
+    { "no": 29, "area": "수·규칙찾기", "pts": 4.2 },
+    { "no": 30, "area": "수·규칙찾기", "pts": 4.2 }
+  ],
+  "rounds": {
+    "1": {
+      "title": "1회",
+      "video": "",
+      "script": "",
+      "items": [
+        { "no": 1,  "type": "합이 일정한 수의 가짓수",        "answer": "62",          "comment": "" },
+        { "no": 2,  "type": "색칠된 쌓기나무의 개수",         "answer": "21",          "comment": "" },
+        { "no": 3,  "type": "시침과 분침의 겹친 개수",         "answer": "12",          "comment": "" },
+        { "no": 4,  "type": "두 수의 곱의 최대·최소",          "answer": "1546",        "comment": "" },
+        { "no": 5,  "type": "규칙이 있는 도형의 둘레",         "answer": "314",         "comment": "" },
+        { "no": 6,  "type": "고장난 시계",                  "answer": "48",          "comment": "" },
+        { "no": 7,  "type": "표를 활용한 거리 구하기",         "answer": "335",         "comment": "" },
+        { "no": 8,  "type": "우기기",                     "answer": "215",         "comment": "" },
+        { "no": 9,  "type": "규칙 찾아 합 구하기",           "answer": "331",         "comment": "" },
+        { "no": 10, "type": "수 피라미드",                 "answer": "4641",        "comment": "" },
+        { "no": 11, "type": "별 마방진",                  "answer": "389",         "comment": "" },
+        { "no": 12, "type": "기준 맞춰 해결하기",           "answer": "23,40,30,10", "comment": "" },
+        { "no": 13, "type": "도형이 나타내는 수의 활용",       "answer": "32",          "comment": "" },
+        { "no": 14, "type": "기준 맞춰 해결하기",           "answer": "10",          "comment": "" },
+        { "no": 15, "type": "색칠하기 서로 다른 경우의 가짓수",  "answer": "12",          "comment": "" },
+        { "no": 16, "type": "나머지의 성질",               "answer": "3",           "comment": "" },
+        { "no": 17, "type": "영역의 개수",                "answer": "37",          "comment": "" },
+        { "no": 18, "type": "종이 접기",                  "answer": "40",          "comment": "" },
+        { "no": 19, "type": "하노이 탑",                  "answer": "63",          "comment": "" },
+        { "no": 20, "type": "정육면체 자르기",             "answer": "24",          "comment": "" },
+        { "no": 21, "type": "도형이 나타내는 수",           "answer": "30,30",       "comment": "" },
+        { "no": 22, "type": "조건이 포함된 도형의 개수",       "answer": "249",         "comment": "" },
+        { "no": 23, "type": "논리추리",                   "answer": "목,농구",       "comment": "" },
+        { "no": 24, "type": "거듭제곱에서의 일의 자리",       "answer": "6",           "comment": "" },
+        { "no": 25, "type": "조건에 맞는 수(나머지가 더 큰 경우)", "answer": "33",       "comment": "" },
+        { "no": 26, "type": "나이 계산",                  "answer": "84,48,12",    "comment": "" },
+        { "no": 27, "type": "거리·속력·시간",              "answer": "1",           "comment": "" },
+        { "no": 28, "type": "이상한 시계",                "answer": "16",          "comment": "" },
+        { "no": 29, "type": "숫자카드로 만든 수의 합",       "answer": "289980",      "comment": "" },
+        { "no": 30, "type": "수 규칙찾기",                "answer": "6354",        "comment": "" }
+      ]
+    },
+    "2": { "title": "2회", "video": "", "script": "", "items": [] },
+    "3": { "title": "3회", "video": "", "script": "", "items": [] },
+    "4": { "title": "4회", "video": "", "script": "", "items": [] },
+    "5": { "title": "5회", "video": "", "script": "", "items": [] },
+    "6": { "title": "6회", "video": "", "script": "", "items": [] }
+  },
+  "results": {}
+};
