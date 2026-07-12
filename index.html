@@ -697,6 +697,7 @@
     let h='';
     if(c.notice&&c.notice.trim()) h+=`<div class="m-sec"><h4>📘 학습 내용</h4><div class="notice">${linkify(c.notice)}</div></div>`;
     if(c.homework&&c.homework.trim()) h+=`<div class="m-sec"><h4>📌 과제</h4><div class="notice">${linkify(c.homework)}</div></div>`;
+    if(node && /THINKING\s*BASIC/i.test((node.title||'')+' '+(node.desc||''))){ h+=`<div class="m-sec"><a href="gfield_ugigi_tutor.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#6847ef,#28b58a);color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 10px rgba(85,52,216,.28)"><span>🧩</span> THINKING BASIC AI 튜터 열기 ›</a><div style="font-size:11.5px;color:#6f6b7a;margin-top:6px">우기기 등 문제 푸는 방법을 단계별로 익히고, 막히면 AI 튜터에게 질문하세요.</div></div>`; }
     const _rt=((node&&((node.desc||'')+' '+(node.title||'')+' '+(node.focus||'')))||'')+' '+(c.homework||'')+' '+(c.notice||'');
     const _rm=_rt.match(/중급\s*모의고사\s*(\d+)\s*회/)||_rt.match(/모의고사\s*중급\s*(\d+)\s*회/);
     if(_rm){ const rn=_rm[1]; h+=`<div class="m-sec"><a href="mock.html?round=${rn}" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 10px rgba(234,88,12,.3)"><span>📝</span> 중급 모의고사 ${rn}회 진단하기 ›</a><div style="font-size:11.5px;color:#94794f;margin-top:6px">집에서 푼 시험지의 틀린 번호만 체크하면 약점·점수가 바로 나와요.</div></div>`; }
