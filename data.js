@@ -1,14 +1,14 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 12. 오후 5:03:39
+ * 생성: 2026. 7. 12. 오후 8:24:19
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
     "academy": "지필드 영재교육",
     "title": "생각하는 황소 대비 아카이브",
     "year": "2026 하반기",
-    "currentWeekId": "jul-w1",
+    "currentWeekId": "jul-w2",
     "examDate": "2026-11-01",
     "examLabel": "생각하는 황소 입학시험",
     "lat": 37.4996,
@@ -260,7 +260,9 @@ window.GFIELD_DATA = {
       "textbooks": [
         {
           "title": "HS 대비 필수 개념정리-THINKING BASIC",
-          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753689111_1mbr_HS___________-HS___4.pdf"
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753689111_1mbr_HS___________-HS___4.pdf",
+          "folder": "tb_mrho8522",
+          "pages": 40
         },
         {
           "title": "HS 응용4 문제푸는 방법찿기(1) DT",
@@ -269,7 +271,7 @@ window.GFIELD_DATA = {
       ]
     },
     "jun-w4": {
-      "notice": "[[hlp: THINKING BASIC 2]]\n",
+      "notice": "[[hlp: THINKING BASIC 2]]\n   CH1 문제푸는 방법 찾기(2) 개념\n [[hlb:- 개념유형 1 [우기기]]]\n학습영상) https://youtu.be/GMZdS5LUN8c <자세한 설명 버전>\n\n  [[hlb:- 개념유형 3,4 [차를 이용한 계산,비,연비,바꾸어 넣어 해결하기]]]\n학습영상) https://youtu.be/qFvUchnAW48\n\n   [[hlb:- 개념유형 5 [거리,속력,시간]]]\n  학습영상) https://youtu.be/xbo9h8rBIW0\n",
       "homework": "",
       "textbooks": [
         {
@@ -279,6 +281,10 @@ window.GFIELD_DATA = {
         {
           "title": "HS 응용4 문제푸는 방법찿기(2) DT",
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753917751_38ha_HS___4___________2__DT.pdf"
+        },
+        {
+          "title": "HS 응용4 문제푸는 방법찿기(1) DT",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753904629_4uvw_HS___4___________1__DT.pdf"
         }
       ]
     },
@@ -287,8 +293,12 @@ window.GFIELD_DATA = {
       "homework": "",
       "textbooks": [
         {
-          "title": "HS 대비 필수 개념정리-HS 경시4",
-          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753706157_6p6d_HS___________-HS___4.pdf"
+          "title": "HS 응용4 문제푸는 방법찿기(2) DT",
+          "url": ""
+        },
+        {
+          "title": "",
+          "url": ""
         }
       ]
     },
@@ -517,7 +527,17 @@ window.GFIELD_DATA = {
       "*"
     ]
   },
-  "books": [],
+  "books": [
+    {
+      "folder": "보충학습",
+      "title": "",
+      "pdf": "",
+      "video": "",
+      "cover": "",
+      "date": "2026-07-12",
+      "links": []
+    }
+  ],
   "pins": {},
   "reports": {
     "허유민": []
