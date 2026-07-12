@@ -316,6 +316,7 @@
   <button type="button" onclick="richStar()" title="별표">⭐</button>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="data.js"></script>
 <script>
   const ADMIN_PW = "01020837265";
@@ -476,11 +477,14 @@
       let tbRows='';
       c.textbooks.forEach((t,i)=>{
         const up = t.url ? `<span style="color:var(--ok);font-size:12px">✓ 링크 있음</span>` : `<span style="color:var(--muted);font-size:12px">링크 없음</span>`;
+        const spl = (t.folder&&t.pages) ? `<span style="color:var(--ok);font-size:12px">🖼 분할됨 ${t.pages}p</span>` : `<span style="color:var(--muted);font-size:12px">미분할</span>`;
         tbRows+=`<div class="tb-row">
           <input type="text" value="${esc(t.title)}" oninput="setTB('${w.id}',${i},'title',this.value)" placeholder="교재 제목">
           <input type="url" value="${esc(t.url)}" oninput="setTB('${w.id}',${i},'url',this.value)" placeholder="웹 PDF 링크 (또는 파일 선택/드래그)">
           <label class="dz" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" accept="application/pdf" onchange="uploadContentTB('${w.id}',${i},this)"><span>또는 드래그</span></label> ${up}
+          <button class="btn" style="background:#0ea5e9;color:#fff" onclick="splitTextbook('${w.id}',${i})">🖼 이미지 분할</button> ${spl}
           <button class="btn del" onclick="delTB('${w.id}',${i})">삭제</button>
+          <span id="spl-${w.id}-${i}" class="hint" style="flex-basis:100%"></span>
         </div>`;
       });
       html+=`<div class="content-week">
@@ -512,8 +516,45 @@
     else if(r.err&&r.err!=='notoken'){ toast('업로드 실패: '+r.err); }
     input.value='';
   }
+  async function ghPutExact(path, b64){
+    const token=ghToken(); if(!token) return {err:'notoken'};
+    let sha=null;
+    try{ const g=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}`,{headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'}}); if(g.ok){ sha=(await g.json()).sha; } }catch(e){}
+    const body={message:'split '+path, content:b64, branch:BRANCH}; if(sha) body.sha=sha;
+    const res=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`,{method:'PUT',headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'},body:JSON.stringify(body)});
+    if(res.ok) return {ok:true};
+    if(res.status===401||res.status===403) return {err:'perm'};
+    return {err:res.status};
+  }
+  async function splitTextbook(id,i){
+    const token=ghToken(); if(!token){ toast('GitHub 토큰이 필요합니다'); return; }
+    const c=cObj(id); const t=c.textbooks[i]; if(!t||!t.url){ toast('먼저 PDF를 업로드하거나 링크를 넣어주세요'); return; }
+    const st=document.getElementById('spl-'+id+'-'+i); const setp=(m)=>{ if(st) st.textContent=m; };
+    if(!window.pdfjsLib){ toast('PDF 라이브러리 로딩 실패 — 새로고침 후 다시'); return; }
+    try{
+      pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      setp('생성 중입니다… PDF 불러오는 중');
+      const data=await fetch(t.url).then(r=>{ if(!r.ok) throw new Error('PDF fetch '+r.status); return r.arrayBuffer(); });
+      const pdf=await pdfjsLib.getDocument({data}).promise; const n=pdf.numPages;
+      const folder='tb_'+Date.now().toString(36);
+      for(let p=1;p<=n;p++){
+        setp('생성 중입니다… '+p+'/'+n+' ('+Math.round(p/n*100)+'%)');
+        const page=await pdf.getPage(p);
+        const s=Math.min(2,1240/page.getViewport({scale:1}).width);
+        const vp=page.getViewport({scale:s});
+        const cv=document.createElement('canvas'); cv.width=Math.round(vp.width); cv.height=Math.round(vp.height);
+        const ctx=cv.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,cv.width,cv.height);
+        await page.render({canvasContext:ctx,viewport:vp}).promise;
+        const b64=cv.toDataURL('image/jpeg',0.82).split(',')[1];
+        const r=await ghPutExact('materials/'+folder+'/'+String(p).padStart(3,'0')+'.jpg', b64);
+        if(r.err){ setp('업로드 실패('+(r.err)+') — 토큰 Contents 쓰기 권한 확인'); return; }
+      }
+      t.folder=folder; t.pages=n; dirty();
+      setp('✅ 분할 완료 '+n+'p — 하단 [GitHub에 저장]도 눌러 목록을 반영하세요');
+      toast('이미지 분할 완료 ✅ ('+n+'p)'); renderContent();
+    }catch(e){ setp('실패: '+(e&&e.message||e)); toast('분할 실패'); }
+  }
   function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
   function renderSettings(){
     const sel=document.getElementById('current-week');
     sel.innerHTML=weekNodes().map(w=>`<option value="${w.id}" ${w.id===S.meta.currentWeekId?'selected':''}>${w.date} · ${w.title}</option>`).join('');
