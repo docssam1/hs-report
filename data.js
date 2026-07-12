@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 11. 오후 5:35:33
+ * 생성: 2026. 7. 12. 오후 4:39:32
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -385,28 +385,32 @@ window.GFIELD_DATA = {
   ],
   "attendance": {
     "허유민": [
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
     "김현우": [
       "may-w34",
       "jun-w12",
       "jun-w3",
       "jun-w4",
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
     "김유준": [
       "may-w34",
       "jun-w12",
       "jun-w3",
       "jun-w4",
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
     "이하린": [
       "may-w34",
       "jun-w12",
       "jun-w3",
       "jun-w4",
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
     "정지안": [
       "jul-w1"
@@ -416,49 +420,79 @@ window.GFIELD_DATA = {
       "jun-w12",
       "jun-w3",
       "jun-w4",
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
     "박서진": [
       "may-w34",
       "jun-w12",
       "jun-w3",
       "jun-w4",
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
     "민준기": [
       "may-w34",
       "jun-w12",
       "jun-w3",
       "jun-w4",
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
     "김서연": [
       "may-w34",
       "jun-w12",
       "jun-w3",
       "jun-w4",
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
     "김명서": [
       "may-w34",
       "jun-w12",
       "jun-w3",
       "jun-w4",
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
     "임유준": [
       "may-w34",
       "jun-w12",
       "jun-w3",
-      "jun-w4"
+      "jun-w4",
+      "jul-w2",
+      "jul-w1"
     ],
     "안태하": [
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
     "김시후": [
-      "jul-w1"
+      "jul-w1",
+      "jul-w2"
     ],
-    "노관호": []
+    "노관호": [
+      "may-w34",
+      "jun-w12",
+      "jun-w3",
+      "jun-w4",
+      "jul-w1",
+      "jul-w2",
+      "jul-w3",
+      "jul-w4",
+      "jul-w5",
+      "aug-w3",
+      "aug-w2",
+      "aug-w4",
+      "sep-w1",
+      "sep-14",
+      "sep-21",
+      "sep-28",
+      "oct-5",
+      "oct-12",
+      "oct-19",
+      "oct-26"
+    ]
   },
   "specialStudents": [],
   "archiveFolders": [
