@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 12. 오후 9:07:01
+ * 생성: 2026. 7. 12. 오후 9:08:04
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -304,7 +304,9 @@ window.GFIELD_DATA = {
       "textbooks": [
         {
           "title": "Thinking Core — 생각하는 황소 대비 심화 개념 (2)",
-          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783857450970_tjse_Thinking_Core_____________________2_.pdf"
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783857450970_tjse_Thinking_Core_____________________2_.pdf",
+          "folder": "tb_mrhqq399",
+          "pages": 92
         },
         {
           "title": "초등과정 선발 대비 모의고사 1회 중급 답안",
@@ -402,12 +404,14 @@ window.GFIELD_DATA = {
     "임유준",
     "안태하",
     "김시후",
-    "노관호"
+    "노관호",
+    "윤하영"
   ],
   "attendance": {
     "허유민": [
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jun-w4"
     ],
     "김현우": [
       "may-w34",
@@ -434,7 +438,9 @@ window.GFIELD_DATA = {
       "jul-w2"
     ],
     "정지안": [
-      "jul-w1"
+      "jul-w1",
+      "jul-w2",
+      "jun-w4"
     ],
     "안채연": [
       "may-w34",
@@ -486,11 +492,13 @@ window.GFIELD_DATA = {
     ],
     "안태하": [
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jun-w4"
     ],
     "김시후": [
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jun-w4"
     ],
     "노관호": [
       "may-w34",
@@ -513,6 +521,14 @@ window.GFIELD_DATA = {
       "oct-12",
       "oct-19",
       "oct-26"
+    ],
+    "윤하영": [
+      "may-w34",
+      "jun-w12",
+      "jun-w3",
+      "jun-w4",
+      "jul-w1",
+      "jul-w2"
     ]
   },
   "specialStudents": [],
