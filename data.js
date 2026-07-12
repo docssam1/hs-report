@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 12. 오후 4:39:32
+ * 생성: 2026. 7. 12. 오후 4:54:03
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -230,21 +230,27 @@ window.GFIELD_DATA = {
       "textbooks": [
         {
           "title": "GIFTED MATH 3 V1-1",
-          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783672745748_2cxl_GIFTED_MATH_3_V1-1_NEW.pdf"
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783672745748_2cxl_GIFTED_MATH_3_V1-1_NEW.pdf",
+          "folder": "tb_mrhhi7af",
+          "pages": 51
         }
       ]
     },
     "jun-w12": {
-      "notice": "[[hlp:GIFTED MATH 3 V1-2(1)]]\n   * p4의 4번째 문제같은 조건에 알맞은 수는 특별한 스킬이 필요하지 않습니다.\n    대부분의 문제가 첫 글자,수를 쓰는 것 부터 시작하는데 오래 걸릴것 같은면 방법을 \n   알고도 시도하지 않는 것이 문제입니다. \n\n- 기출 다지기 \n - 사고력 키우기 \n   학습영상 https://youtu.be/3KyijX8_neQ\n    \n  \n황소대비 개념3 v1-2(2)\n학습영상  https://youtu.be/oS_QW3smwbM\n- 마방진 및 다양한 방진 해결\n- 논리추리(이중 조건), 줄세우기\n- 조건에 맞는 수 , 수의 성질\n\nGIFTED MATH V1-2 (2) 실전유형\n 학습영상  https://youtu.be/c76FzeLSPRg\n\nGIFTED MATH V 1-3 개념 및 유제\n학습영상    https://youtu.be/j93kA9PXIA4",
+      "notice": "[[hlp:GIFTED MATH 3 V1-2(1)]]\n   * p4의 4번째 문제같은 조건에 알맞은 수는 특별한 스킬이 필요하지 않습니다.\n    대부분의 문제가 첫 글자,수를 쓰는 것 부터 시작하는데 오래 걸릴 것 같으면 방법을 \n   알고도 시도하지 않는 것이 문제입니다. \n\n- 기출 다지기 \n - 사고력 키우기 \n   학습영상 https://youtu.be/3KyijX8_neQ\n    \n  \n황소대비 개념3 v1-2(2)\n학습영상  https://youtu.be/oS_QW3smwbM\n- 마방진 및 다양한 방진 해결\n- 논리추리(이중 조건), 줄세우기\n- 조건에 맞는 수 , 수의 성질\n\nGIFTED MATH V1-2 (2) 실전유형\n 학습영상  https://youtu.be/c76FzeLSPRg\n\nGIFTED MATH V 1-3 개념 및 유제\n학습영상    https://youtu.be/j93kA9PXIA4",
       "homework": "",
       "textbooks": [
         {
           "title": "GIFTED MATH 3 V1-2 NEW",
-          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753365276_q5ho_GIFTED_MATH_3_V1-2_NEW.pdf"
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753365276_q5ho_GIFTED_MATH_3_V1-2_NEW.pdf",
+          "folder": "tb_mrhhl1l3",
+          "pages": 44
         },
         {
           "title": "GIFTED MATH 3 V1-3",
-          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753558814_go0g_GIFTED_MATH_3_V1-3.pdf"
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753558814_go0g_GIFTED_MATH_3_V1-3.pdf",
+          "folder": "tb_mrhhn9kd",
+          "pages": 35
         }
       ]
     },
