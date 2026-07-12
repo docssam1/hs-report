@@ -693,10 +693,13 @@
     });
     closeUl(); return html;
   }
-  function sectionsHTML(c){
+  function sectionsHTML(c, node){
     let h='';
     if(c.notice&&c.notice.trim()) h+=`<div class="m-sec"><h4>📘 학습 내용</h4><div class="notice">${linkify(c.notice)}</div></div>`;
     if(c.homework&&c.homework.trim()) h+=`<div class="m-sec"><h4>📌 과제</h4><div class="notice">${linkify(c.homework)}</div></div>`;
+    const _rt=((node&&((node.desc||'')+' '+(node.title||'')+' '+(node.focus||'')))||'')+' '+(c.homework||'')+' '+(c.notice||'');
+    const _rm=_rt.match(/중급\s*모의고사\s*(\d+)\s*회/)||_rt.match(/모의고사\s*중급\s*(\d+)\s*회/);
+    if(_rm){ const rn=_rm[1]; h+=`<div class="m-sec"><a href="mock.html?round=${rn}" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 10px rgba(234,88,12,.3)"><span>📝</span> 중급 모의고사 ${rn}회 진단하기 ›</a><div style="font-size:11.5px;color:#94794f;margin-top:6px">집에서 푼 시험지의 틀린 번호만 체크하면 약점·점수가 바로 나와요.</div></div>`; }
     const tbs=(c.textbooks||[]).filter(t=>t&&((t.folder&&t.pages)||t.url));
     if(tbs.length){
       h+=`<div class="m-sec"><h4>📕 교재 자료 <span class="wm-tag">(이름 워터마크 인쇄)</span></h4>`;
@@ -723,7 +726,7 @@
     if(!unlocked){ card.innerHTML=h+`<div class="locked-msg">🔒 이번 주 자료는 출석 확인 후 열립니다.</div>`; return; }
     const c=Object.assign({notice:'',homework:'',textbooks:[]},(D.content&&D.content[node.id])||{});
     h+=`<div class="videoframe" id="home-videoframe"><iframe id="home-iframe" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
-    h+=`<div class="content-card">${sectionsHTML(c)}</div>`;
+    h+=`<div class="content-card">${sectionsHTML(c, node)}</div>`;
     card.innerHTML=h;
     wireSections(card,{frame:document.getElementById('home-videoframe'),iframe:document.getElementById('home-iframe')});
   }
@@ -756,7 +759,7 @@
     document.getElementById('videoframe').style.display='none';
     document.getElementById('videoiframe').src='';
     const body=document.getElementById('modal-body');
-    body.innerHTML=sectionsHTML(c);
+    body.innerHTML=sectionsHTML(c, node);
     wireSections(body,{frame:document.getElementById('videoframe'),iframe:document.getElementById('videoiframe')});
     document.getElementById('overlay').classList.remove('hidden');
     body.scrollTop=0;
