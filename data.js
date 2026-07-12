@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 12. 오후 9:00:29
+ * 생성: 2026. 7. 12. 오후 9:07:01
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -295,10 +295,6 @@ window.GFIELD_DATA = {
         {
           "title": "HS 응용4 문제푸는 방법찿기(2) DT",
           "url": ""
-        },
-        {
-          "title": "",
-          "url": ""
         }
       ]
     },
@@ -311,8 +307,8 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783857450970_tjse_Thinking_Core_____________________2_.pdf"
         },
         {
-          "title": "",
-          "url": ""
+          "title": "초등과정 선발 대비 모의고사 1회 중급 답안",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783858008775_rdhu_________________1_______.pdf"
         }
       ]
     },
