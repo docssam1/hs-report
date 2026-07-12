@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 12. 오후 8:24:19
+ * 생성: 2026. 7. 12. 오후 9:00:29
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -271,7 +271,7 @@ window.GFIELD_DATA = {
       ]
     },
     "jun-w4": {
-      "notice": "[[hlp: THINKING BASIC 2]]\n   CH1 문제푸는 방법 찾기(2) 개념\n [[hlb:- 개념유형 1 [우기기]]]\n학습영상) https://youtu.be/GMZdS5LUN8c <자세한 설명 버전>\n\n  [[hlb:- 개념유형 3,4 [차를 이용한 계산,비,연비,바꾸어 넣어 해결하기]]]\n학습영상) https://youtu.be/qFvUchnAW48\n\n   [[hlb:- 개념유형 5 [거리,속력,시간]]]\n  학습영상) https://youtu.be/xbo9h8rBIW0\n",
+      "notice": "[[hlp: THINKING BASIC 2]]\n   CH1 문제푸는 방법 찾기(2) 개념\n [[hlb:- 개념유형 1 [우기기]]]\n학습영상) https://youtu.be/GMZdS5LUN8c <자세한 설명 버전>\n\n  [[hlb:- 개념유형 3,4 [차를 이용한 계산,비,연비,바꾸어 넣어 해결하기]]]\n학습영상) https://youtu.be/qFvUchnAW48\n\n   [[hlb:- 개념유형 5 [거리,속력,시간]]]\n  학습영상) https://youtu.be/xbo9h8rBIW0\n\n   [[hlb:- 필수유형 ]]]\nhttps://youtu.be/hDPKx7cQtIw\n\n[[hlp:문제푸는 방법 찾기(2) DT]]\n   https://youtu.be/vNIxPPswm4c",
       "homework": "",
       "textbooks": [
         {
@@ -289,7 +289,7 @@ window.GFIELD_DATA = {
       ]
     },
     "jul-w1": {
-      "notice": "",
+      "notice": "[[hlp: THINKING BASIC 3]]\n      [[green:CH3  규칙찾아 해결하기]]\n  학습 영상)https://youtu.be/T7yjdayjKxA \n\n      [[green:  필수 유형]]\n    학습영상)  https://youtu.be/PYHnn1x2dlM?si=_m1jMfoef6B_Pj-P&t=844",
       "homework": "",
       "textbooks": [
         {
@@ -303,9 +303,18 @@ window.GFIELD_DATA = {
       ]
     },
     "jul-w2": {
-      "notice": "1. GIFTED MATH 3 V1-1(2) 과제 질문\nhttps://youtu.be/ynVb1PG5wp0\n  · 약점 유형 - 도형의 개수세기\n    수업 중 진행된 영상 안의 유형들을 꼭 복습해주세요. 영상을 봐야 합니다.\n  · [약점 해결 추가 자료] 필요한 경우 학습해주세요.\n    더 다양한 도형의 개수 세기 : https://naver.me/GYGahDDd\n\n2. GIFTED MATH 3 V1-2(1)\nhttps://youtu.be/3KyijX8_neQ\n  · p4의 4번째 문제 같은 '조건에 알맞은 수'는 특별한 스킬이 필요하지 않습니다.\n    대부분 첫 글자·수를 쓰는 것부터 시작합니다. 오래 걸릴 것 같아도 방법을 알고 시도하지 않는 것이 문제입니다.\n    - 기출 다지기 / 사고력 키우기\n\n※ 학원이 모든 것을 해결해 주지 않습니다. 지금은 제 자료만으로도 차고 넘치니 가정 학습을 늘려주세요.\n   가장 좋은 선생님은 부모님입니다. 상담이 필요하시면 톡 주세요 ^^\n※ 학원 특강 시간표가 모두 확정되었습니다. 이번 주 마감 예정이니 확인해 주세요. https://naver.me/FNIa1gbz",
-      "homework": "황소 대비 모의고사 중급 1회\nhttps://youtu.be/_DDz_JTccso\n앞으로 있을 실전 모의고사에 익숙해지는 훈련입니다. 조건을 조금 줄인 시험지이며, 너무 심화 문제까지 완벽히 이해할 필요는 없습니다(100점이 목표가 아닙니다).\n단, 반드시 시험을 본 후 영상을 보고 이해하고, 여러 번 봐도 이해되지 않는(실수가 아닌) 유형을 질문하도록 해주세요.\n수업 시간에 중요 유형 설명 후 유사 문제로 테스트를 진행합니다.",
-      "textbooks": []
+      "notice": "[[hlp:문제푸는 방법 찾기(2) DT]]\n   학습영상) https://youtu.be/vNIxPPswm4c\n\n지금까지 공부한  THINKING BASIC 3는 왕수학 올림피아드3, 왕수학 응용 4의 황소 관련 중요 개념이었습니다.\n금주부터는 실전 훈련으로 Thinking Core — 생각하는 황소 대비 심화 개념을 진행합니다.\n이 교재는 모의고사 전 진행하는 핵심 심화 개념 교재로 개념 학습 후 관련 유형에 대한 SEMI 테스트로 시험에 적응 훈련을 진행합니다.\n\nCH1 - NUMBERS(1)\n학습영상) https://youtu.be/r6NRdZudWks\n• 배수 판정법\n• 소인수분해의 이용\n\n",
+      "homework": "[[hlp:문제푸는 방법 찾기(2) DT]] 다시 풀기\n   https://youtu.be/vNIxPPswm4c\n\n[[hlp:황소 대비 모의고사 중급 1회]]\n학습영상) https://youtu.be/_DDz_JTccso\n앞으로 있을 실전 모의고사에 익숙해지는 훈련입니다. 조건을 조금 줄인 시험지이며, 너무 심화 문제까지 완벽히 이해할 필요는 없습니다(100점이 목표가 아닙니다).\n단, 반드시 시험을 본 후 영상을 보고 이해하고, 여러 번 봐도 이해되지 않는(실수가 아닌) 유형을 질문하도록 해주세요.\n수업 시간에 중요 유형 설명 후 유사 문제로 테스트를 진행합니다.\n\n선택)  THINKING CORE CH1 배운 부분 공부하기",
+      "textbooks": [
+        {
+          "title": "Thinking Core — 생각하는 황소 대비 심화 개념 (2)",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783857450970_tjse_Thinking_Core_____________________2_.pdf"
+        },
+        {
+          "title": "",
+          "url": ""
+        }
+      ]
     },
     "jul-w3": {
       "notice": "",
