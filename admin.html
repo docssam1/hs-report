@@ -139,6 +139,7 @@
       <button data-tab="mag" onclick="tab('mag')">⑦ 교육 매거진</button>
       <button data-tab="report" onclick="tab('report')">⑧ 진단 결과</button>
       <button data-tab="exam" onclick="tab('exam')">⑨ AI 진단</button>
+      <button data-tab="mock" onclick="tab('mock')">⑩ 모의고사 결과</button>
     </div>
 
     <section id="tab-attend">
@@ -285,6 +286,18 @@
         <div id="exam-results" style="margin-top:14px"></div>
       </div>
     </section>
+
+    <section id="tab-mock" class="hidden">
+      <div class="card">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <h3 style="margin:0">⑩ 모의고사 결과</h3>
+          <button class="btn" onclick="loadMockResults()">🔄 새로고침</button>
+          <span id="mock-status" class="hint" style="margin:0"></span>
+        </div>
+        <div class="hint">학생이 제출한 중급 모의고사 진단이 자동으로 모입니다. 학생을 고르면 회차별 O/X와 약점을 봅니다.</div>
+        <div id="mock-body">🔄 새로고침을 눌러 결과를 불러오세요.</div>
+      </div>
+    </section>
   </div>
 
   <div class="savebar">
@@ -318,6 +331,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="data.js"></script>
+<script src="mock-data.js"></script>
 <script>
   const ADMIN_PW = "01020837265";
   const REPO = "docssam1/hs-report";
@@ -434,8 +448,9 @@
   function lockAgain(){ location.reload(); }
 
   function tab(name){
-    ['attend','students','content','settings','archive','vip','mag','report','exam'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
+    ['attend','students','content','settings','archive','vip','mag','report','exam','mock'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+    if(name==='mock' && window.loadMockResults) loadMockResults();
   }
 
   function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderExam(); renderGhStat(); }
@@ -554,6 +569,60 @@
       toast('이미지 분할 완료 ✅ ('+n+'p)'); renderContent();
     }catch(e){ setp('실패: '+(e&&e.message||e)); toast('분할 실패'); }
   }
+  /* ===== ⑩ 모의고사 결과 (Supabase 자동수집 뷰) ===== */
+  const MK_URL="https://fgahqumaldheqettmvqg.supabase.co";
+  const MK_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
+  let MK_ROWS=null, mkSel='';
+  function mkM(){ return window.GFIELD_MOCK; }
+  function mkQ(){ const M=mkM(); return (M&&M.questions)||30; }
+  function mkBp(no){ const M=mkM(); return (M&&M.blueprint.find(b=>b.no===no))||{no:no,area:'',pts:0}; }
+  function mkItem(r,no){ const M=mkM(); const it=((M&&M.rounds[r]&&M.rounds[r].items)||[]).find(i=>i.no===no); return it||{type:'',comment:''}; }
+  function mkScore(ox){ let s=0,w=0; for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X') w++; else s+=mkBp(n).pts; } return {score:Math.round(s*10)/10,wrong:w,correct:mkQ()-w}; }
+  function mkArea(ox){ const M=mkM(); const map={}; (M.areas||[]).forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=mkQ();n++){ const b=mkBp(n); if(!map[b.area])map[b.area]={tot:0,got:0,cnt:0,ok:0}; map[b.area].tot+=b.pts; map[b.area].cnt++; if(ox[n-1]!=='X'){map[b.area].got+=b.pts;map[b.area].ok++;} } return map; }
+  function mkStudents(){ return (window.GFIELD_DATA.students||[]); }
+  function mkRoundKeys(){ const M=mkM(); return Object.keys((M&&M.rounds)||{}).sort((a,b)=>+a-+b); }
+  function mkLatest(student,round){ if(!MK_ROWS) return null; const rows=MK_ROWS.filter(x=>x.student===student&&String(x.round)===String(round)); if(!rows.length) return null; rows.sort((a,b)=>(a.updated_at||'').localeCompare(b.updated_at||'')); const ox=rows[rows.length-1].ox; return (ox&&ox.length===mkQ())? ox.split(''):null; }
+  async function loadMockResults(){
+    const st=document.getElementById('mock-status'); const body=document.getElementById('mock-body');
+    if(!mkM()){ if(body) body.textContent='mock-data.js를 불러오지 못했습니다.'; return; }
+    if(st) st.textContent='불러오는 중…';
+    try{
+      const r=await fetch(MK_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at",{headers:{apikey:MK_KEY,Authorization:'Bearer '+MK_KEY}});
+      MK_ROWS = r.ok ? await r.json() : [];
+      if(st) st.textContent = r.ok ? ('✅ '+MK_ROWS.length+'건 불러옴') : '불러오기 실패';
+    }catch(e){ MK_ROWS=[]; if(st) st.textContent='네트워크 오류'; }
+    renderMock();
+  }
+  function renderMock(){
+    const body=document.getElementById('mock-body'); if(!body) return;
+    const subs = MK_ROWS? [...new Set(MK_ROWS.map(x=>x.student))]:[];
+    const studs=mkStudents();
+    if(!mkSel||!studs.includes(mkSel)) mkSel=studs[0]||'';
+    let h=`<div style="margin:8px 0;font-size:13px"><b>제출 학생:</b> ${subs.length? subs.map(s=>esc(s)).join(', '):'아직 없음'}</div>`;
+    h+=`<div style="display:flex;gap:8px;align-items:center;margin:8px 0"><b>학생</b> <select onchange="mkSel=this.value;renderMock()" style="padding:8px;border:1px solid #ddd;border-radius:8px">${studs.map(s=>`<option ${s===mkSel?'selected':''}>${esc(s)}</option>`).join('')}</select></div>`;
+    h+='<div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:12px;white-space:nowrap"><thead><tr><th style="border:1px solid #ddd;padding:4px 6px">회차</th>';
+    for(let n=1;n<=mkQ();n++) h+=`<th style="border:1px solid #ddd;padding:4px 6px">${n}</th>`;
+    h+='<th style="border:1px solid #ddd;padding:4px 6px">틀린</th><th style="border:1px solid #ddd;padding:4px 6px">점수</th></tr></thead><tbody>';
+    let any=false;
+    mkRoundKeys().forEach(r=>{ const ox=mkLatest(mkSel,r); if(!ox) return; any=true; const sc=mkScore(ox); h+=`<tr><th style="border:1px solid #ddd;padding:4px 6px">${esc((mkM().rounds[r].title)||r+'회')}</th>`; for(let n=1;n<=mkQ();n++){ const x=ox[n-1]==='X'; h+=`<td style="border:1px solid #ddd;padding:4px 6px;text-align:center;font-weight:800;color:${x?'#dc2626':'#16a34a'};background:${x?'#fff1f1':'#fff'}">${x?'✕':'O'}</td>`; } h+=`<td style="border:1px solid #ddd;padding:4px 6px;text-align:center;font-weight:800">${sc.wrong}</td><td style="border:1px solid #ddd;padding:4px 6px;text-align:center;font-weight:800">${sc.score}</td></tr>`; });
+    h+='</tbody></table></div>';
+    if(!any){ h+='<div class="hint" style="margin-top:8px">이 학생의 제출 기록이 없습니다.</div>'; }
+    else {
+      const aA={}; (mkM().areas||[]).forEach(a=>aA[a]={tot:0,got:0}); const tC={};
+      mkRoundKeys().forEach(r=>{ const ox=mkLatest(mkSel,r); if(!ox)return; const as=mkArea(ox); (mkM().areas||[]).forEach(a=>{aA[a].tot+=as[a].tot;aA[a].got+=as[a].got;}); for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X'){ const it=mkItem(r,n); const key=it.type||('('+mkBp(n).area+')'); tC[key]=(tC[key]||0)+1; } } });
+      h+='<h4 style="margin:14px 0 6px">영역별 수행률</h4>';
+      (mkM().areas||[]).forEach(a=>{ const s=aA[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div style="display:flex;justify-content:space-between;font-size:13px"><span>${esc(a)}</span><span>${pct}%</span></div><div style="height:8px;background:#eef1f6;border-radius:9px;margin:2px 0 6px"><div style="height:100%;width:${pct}%;background:${pct<50?'#dc2626':'#f97316'};border-radius:9px"></div></div>`; });
+      const top=Object.entries(tC).sort((a,b)=>b[1]-a[1]).slice(0,10);
+      if(top.length){ h+='<h4 style="margin:12px 0 6px">자주 틀리는 유형</h4>'; top.forEach(([t,c])=>{ h+=`<div style="border:1px solid #eee;border-radius:8px;padding:6px 10px;margin-bottom:5px;font-size:13px"><b style="color:#dc2626">${c}회</b> ${esc(t)}</div>`; }); }
+    }
+    h+='<h4 style="margin:16px 0 6px">👥 반 전체 약점</h4>';
+    const cA={}; (mkM().areas||[]).forEach(a=>cA[a]={tot:0,got:0}); const cT={}; let cnt=0;
+    studs.forEach(s=>{ mkRoundKeys().forEach(r=>{ const ox=mkLatest(s,r); if(!ox)return; cnt++; const as=mkArea(ox); (mkM().areas||[]).forEach(a=>{cA[a].tot+=as[a].tot;cA[a].got+=as[a].got;}); for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X'){ const it=mkItem(r,n); const key=it.type||('('+mkBp(n).area+')'); cT[key]=(cT[key]||0)+1; } } }); });
+    if(!cnt){ h+='<div class="hint">아직 제출이 없습니다.</div>'; }
+    else { (mkM().areas||[]).forEach(a=>{ const s=cA[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div style="display:flex;justify-content:space-between;font-size:13px"><span>${esc(a)}</span><span>${pct}%</span></div><div style="height:8px;background:#eef1f6;border-radius:9px;margin:2px 0 6px"><div style="height:100%;width:${pct}%;background:${pct<50?'#dc2626':'#f97316'};border-radius:9px"></div></div>`; }); const tt=Object.entries(cT).sort((a,b)=>b[1]-a[1]).slice(0,10); tt.forEach(([t,c])=>{ h+=`<div style="border:1px solid #eee;border-radius:8px;padding:6px 10px;margin-bottom:5px;font-size:13px"><b style="color:#dc2626">${c}회</b> ${esc(t)}</div>`; }); }
+    body.innerHTML=h;
+  }
+  window.loadMockResults=loadMockResults;
   function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function renderSettings(){
     const sel=document.getElementById('current-week');
