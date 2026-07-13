@@ -418,7 +418,7 @@
    - 강점: 직관력·수 감각·배운 원리(가우스 등) 잘 적용한 부분은 아낌없이 칭찬.
    - 약점: 기호로 논리적 식 세우기를 귀찮아하고 '때려 맞추기/노가다/일일이 손으로 쓰기/감으로 풀기' 방식을 쓴 문항을 찾아 지적.
    - 실수: '양쪽에' 같은 핵심 조건을 놓친 습관적 읽기 오류를 짚기.
-4. 포맷: 문항 번호를 명시해 영역별로 강점/약점을 나눠 설명. 파일명은 절대 노출 금지. 은어/전문용어 금지.
+4. 포맷: 문항 번호를 명시해 영역별로 강점/약점을 나눠 설명. 파일명은 절대 노출 금지. 은어·전문용어 금지.
 
 [출력 템플릿]
 오늘은 글이 길어요^^ 그래도 우리 [학생이름]를 위해 필독!! 즐거운 하루 되세요.
@@ -620,6 +620,20 @@
     studs.forEach(s=>{ mkRoundKeys().forEach(r=>{ const ox=mkLatest(s,r); if(!ox)return; cnt++; const as=mkArea(ox); (mkM().areas||[]).forEach(a=>{cA[a].tot+=as[a].tot;cA[a].got+=as[a].got;}); for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X'){ const it=mkItem(r,n); const key=it.type||('('+mkBp(n).area+')'); cT[key]=(cT[key]||0)+1; } } }); });
     if(!cnt){ h+='<div class="hint">아직 제출이 없습니다.</div>'; }
     else { (mkM().areas||[]).forEach(a=>{ const s=cA[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div style="display:flex;justify-content:space-between;font-size:13px"><span>${esc(a)}</span><span>${pct}%</span></div><div style="height:8px;background:#eef1f6;border-radius:9px;margin:2px 0 6px"><div style="height:100%;width:${pct}%;background:${pct<50?'#dc2626':'#f97316'};border-radius:9px"></div></div>`; }); const tt=Object.entries(cT).sort((a,b)=>b[1]-a[1]).slice(0,10); tt.forEach(([t,c])=>{ h+=`<div style="border:1px solid #eee;border-radius:8px;padding:6px 10px;margin-bottom:5px;font-size:13px"><b style="color:#dc2626">${c}회</b> ${esc(t)}</div>`; }); }
+    mkRoundKeys().forEach(r=>{
+      const miss=new Array(mkQ()+1).fill(0); let subN=0;
+      studs.forEach(s=>{ const ox=mkLatest(s,r); if(!ox)return; subN++; for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X') miss[n]++; } });
+      if(!subN) return;
+      h+=`<h4 style="margin:16px 0 6px">📌 ${esc((mkM().rounds[r].title)||r+'회')} 문항별 오답 (${subN}명 제출)</h4>`;
+      h+='<div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:11px;white-space:nowrap"><tbody><tr>';
+      for(let n=1;n<=mkQ();n++) h+=`<td style="border:1px solid #eee;padding:3px 6px;text-align:center;color:#999">${n}</td>`;
+      h+='</tr><tr>';
+      for(let n=1;n<=mkQ();n++){ const c=miss[n]; const bg = c===0?'#f4fff9':(c>=subN*0.6?'#dc2626':c>=subN*0.3?'#fb923c':'#fde68a'); const fg=c>=subN*0.6?'#fff':'#333'; h+=`<td style="border:1px solid #eee;padding:3px 6px;text-align:center;font-weight:800;background:${bg};color:${fg}">${c}</td>`; }
+      h+='</tr></tbody></table></div>';
+      const rank=[]; for(let n=1;n<=mkQ();n++) if(miss[n]>0) rank.push([n,miss[n]]); rank.sort((a,b)=>b[1]-a[1]);
+      const topq=rank.slice(0,6).map(([n,c])=>{ const it=mkItem(r,n); return `<b style="color:#dc2626">${n}번</b> ${c}명 <span style="color:#888">${esc(it.type||mkBp(n).area)}</span>`; }).join(' · ');
+      if(topq) h+=`<div style="font-size:12.5px;margin:5px 0 2px;line-height:1.7">많이 틀린 문항 → ${topq}</div>`;
+    });
     body.innerHTML=h;
   }
   window.loadMockResults=loadMockResults;
