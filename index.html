@@ -477,6 +477,15 @@
     setTimeout(()=>el.classList.add('hidden'),3150);
   }
 
+  /* 접속 기록 (관리자 확인용) */
+  const AL_URL="https://fgahqumaldheqettmvqg.supabase.co";
+  const AL_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
+  function logAccess(student){
+    try{
+      fetch(AL_URL+"/rest/v1/access_log",{method:"POST",headers:{apikey:AL_KEY,Authorization:"Bearer "+AL_KEY,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({student:student,page:"index"})}).catch(function(){});
+    }catch(e){}
+  }
+
   function doLogin(){
     const name=document.getElementById('name-input').value.trim();
     if(!name){ toast('이름을 입력해주세요'); return; }
@@ -487,6 +496,7 @@
     reportUnlocked=false;
     const given=isDemo?'체험':givenName(name);
     try{ localStorage.setItem('gfield_student',currentStudent); }catch(e){}
+    if(!isDemo) logAccess(currentStudent);
     document.getElementById('login').classList.add('hidden');
     document.getElementById('dashboard').classList.remove('hidden');
     document.getElementById('who').textContent=given;
