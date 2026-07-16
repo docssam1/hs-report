@@ -9,13 +9,20 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <style>
-  :root{--navy:#1e3c72;--navy2:#2a5298;--orange:#f97316;--orange-d:#ea580c;--ink:#2d3436;--muted:#6b7280;--bg:#eef1f6;--card:#fff;--line:#e3e8ef;--ok:#27ae60;--danger:#e74c3c;--soft:#fff3e6;}
+  :root{
+    --navy:#1e3c72;--navy2:#2a5298;--orange:#f97316;--orange-d:#ea580c;
+    --ink:#2d3436;--muted:#6b7280;--bg:#eef1f6;--card:#fff;--line:#e3e8ef;
+    --ok:#27ae60;--danger:#e74c3c;--soft:#fff3e6;
+    --t27:#3b82f6;--t34:#f97316;--t42:#dc2626;
+    --t27bg:#eff6ff;--t34bg:#fff7ed;--t42bg:#fff1f1;
+  }
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Pretendard',sans-serif;}
   body{background:var(--bg);color:var(--ink);-webkit-tap-highlight-color:transparent;}
   button{cursor:pointer;font-family:inherit;}
   .hidden{display:none !important;}
-  .wrap{max-width:960px;margin:0 auto;padding:16px 14px 90px;}
+  .wrap{max-width:960px;margin:0 auto;padding:16px 14px 100px;}
 
+  /* 게이트 */
   #gate{position:fixed;inset:0;z-index:30;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#10203f,#26447f);padding:20px;}
   .gate-box{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);padding:40px 30px;border-radius:18px;width:100%;max-width:380px;text-align:center;color:#fff;}
   .gate-box h2{font-size:21px;font-weight:800;margin-bottom:4px;}
@@ -24,11 +31,13 @@
   .gate-box button{width:100%;padding:14px;border:none;border-radius:10px;background:var(--orange);color:#fff;font-size:16px;font-weight:800;}
   .gate-box .err{color:#ffe0b8;font-size:12.5px;min-height:18px;margin-top:6px;line-height:1.5;}
 
+  /* 헤더 */
   header{background:var(--navy);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;}
   header .t{font-weight:800;font-size:16px;}
   header .t small{display:block;font-weight:500;opacity:.7;font-size:11px;}
   header a,header button{background:rgba(255,255,255,.15);border:none;color:#fff;padding:8px 12px;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;}
 
+  /* 공통 카드/버튼 */
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;}
   .card h3{font-size:15px;margin-bottom:8px;}
   .hint{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:10px;}
@@ -40,42 +49,52 @@
   .btn.ok{background:var(--ok);color:#fff;}
   .btn.sm{padding:7px 12px;font-size:12.5px;border-radius:8px;}
 
+  /* 회차 선택 그리드 */
   .round-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;}
   .round-card{border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;cursor:pointer;background:#fff;}
   .round-card:hover{border-color:#fcd3a3;box-shadow:0 4px 12px rgba(186,110,40,.1);}
   .round-card .rn{font-size:17px;font-weight:800;color:var(--orange-d);}
   .round-card .rs{font-size:11.5px;color:var(--muted);margin-top:4px;}
+  .round-card .rcprint{margin-top:8px;font-size:11px;background:#eef1f6;border:none;border-radius:6px;padding:5px 8px;color:#334;font-weight:700;}
 
+  /* 문항 그리드 */
   .qgrid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:10px 0;}
-  @media(max-width:560px){ .qgrid{grid-template-columns:repeat(6,1fr);} }
+  @media(max-width:560px){.qgrid{grid-template-columns:repeat(6,1fr);}}
   .qbtn{aspect-ratio:1;border:1.5px solid var(--line);border-radius:9px;background:#fff;font-size:14px;font-weight:800;color:#334;display:flex;align-items:center;justify-content:center;position:relative;user-select:none;}
   .qbtn.wrong{background:#fee2e2;border-color:#f6a6a6;color:#dc2626;}
   .qbtn.wrong::after{content:'✕';}
   .qbtn.wrong span{display:none;}
 
+  /* 점수바 */
   .scorebar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--soft);border:1px solid #fcdcb8;border-radius:12px;padding:12px 14px;margin:8px 0;}
   .scorebar .big{font-size:26px;font-weight:900;color:var(--orange-d);}
   .scorebar .lbl{font-size:12px;color:var(--muted);}
 
+  /* 영역별 바 */
   .area-row{margin:8px 0;}
   .area-row .at{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;}
   .area-row .at b{color:var(--ink);}
   .abar{height:9px;background:#eef1f6;border-radius:99px;overflow:hidden;}
   .abar i{display:block;height:100%;background:linear-gradient(90deg,#fdba74,var(--orange-d));border-radius:99px;}
   .abar i.low{background:linear-gradient(90deg,#fca5a5,#dc2626);}
+  .abar i.high{background:linear-gradient(90deg,#6ee7b7,#059669);}
 
+  /* 오답 아이템 */
   .wt-item{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;}
   .wt-item .wt-h{font-size:13.5px;font-weight:700;color:var(--ink);}
   .wt-item .wt-h .no{display:inline-block;background:#fee2e2;color:#dc2626;font-weight:800;border-radius:6px;padding:1px 7px;margin-right:6px;font-size:12px;}
   .wt-item .wt-a{font-size:11.5px;color:var(--muted);margin-left:2px;}
   .wt-item .wt-c{font-size:12.5px;color:#555;margin-top:5px;line-height:1.6;background:#fff7ec;border:1px solid #fcdcb8;border-radius:8px;padding:7px 9px;}
+  .wt-item .vjump{float:right;font-size:11px;color:#dc2626;font-weight:800;}
 
+  /* 비교 칩 */
   .cmp{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
   .cmp .chip{font-size:12px;font-weight:700;border-radius:999px;padding:5px 11px;}
   .cmp .solved{background:#dcfce7;color:#166534;}
   .cmp .still{background:#fee2e2;color:#991b1b;}
   .cmp .newx{background:#fef3c7;color:#92400e;}
 
+  /* 원장 테이블 */
   .mtable-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;}
   table.mx{border-collapse:collapse;font-size:12px;white-space:nowrap;}
   table.mx th,table.mx td{border:1px solid var(--line);padding:5px 7px;text-align:center;}
@@ -86,6 +105,7 @@
   table.mx td.x{color:#dc2626;background:#fff1f1;}
   table.mx td.wc{font-weight:800;background:#f7f9fc;}
 
+  /* 편집 폼 */
   textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:13px;font-family:'Pretendard',sans-serif;resize:vertical;}
   .row-inline{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;}
   .savebar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:11px 14px;display:flex;gap:10px;justify-content:center;align-items:center;z-index:25;flex-wrap:wrap;}
@@ -99,12 +119,73 @@
   .ed-row .no{font-weight:800;text-align:center;color:var(--muted);font-size:12px;}
   .ed-row input{padding:7px 9px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;width:100%;}
   .ed-row .area{font-size:11px;color:var(--muted);text-align:center;}
-  @media(max-width:620px){ .ed-row{grid-template-columns:28px 1fr;} .ed-row .area{display:none;} }
+  @media(max-width:620px){.ed-row{grid-template-columns:28px 1fr;} .ed-row .area{display:none;}}
   .pill{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;}
   .pill.on{background:#dcfce7;color:#166534;} .pill.off{background:#f1f5f9;color:#64748b;}
-  .round-card .rcprint{margin-top:8px;font-size:11px;background:#eef1f6;border:none;border-radius:6px;padding:5px 8px;color:#334;font-weight:700;}
-  .wt-item .vjump{float:right;font-size:11px;color:#dc2626;font-weight:800;}
-  @media print{ header,.savebar,.tabs{display:none !important;} }
+
+  /* ─── 신규: 단계별 분석 ─── */
+  .tier-section{border-radius:12px;overflow:hidden;margin:10px 0;}
+  .tier-row{display:flex;align-items:center;gap:10px;padding:10px 14px;}
+  .tier-row.t27{background:var(--t27bg);border-left:4px solid var(--t27);}
+  .tier-row.t34{background:var(--t34bg);border-left:4px solid var(--t34);}
+  .tier-row.t42{background:var(--t42bg);border-left:4px solid var(--t42);}
+  .tier-badge{font-size:11.5px;font-weight:800;border-radius:6px;padding:3px 8px;min-width:52px;text-align:center;}
+  .tier-badge.t27{background:var(--t27);color:#fff;}
+  .tier-badge.t34{background:var(--t34);color:#fff;}
+  .tier-badge.t42{background:var(--t42);color:#fff;}
+  .tier-info{flex:1;}
+  .tier-info .ti-label{font-size:12px;color:var(--muted);}
+  .tier-info .ti-score{font-size:15px;font-weight:800;}
+  .tier-bar-wrap{flex:2;min-width:80px;}
+  .tier-bar{height:8px;background:#e5e7eb;border-radius:99px;overflow:hidden;}
+  .tier-bar i{display:block;height:100%;border-radius:99px;transition:width .4s;}
+  .tier-bar i.t27{background:var(--t27);}
+  .tier-bar i.t34{background:var(--t34);}
+  .tier-bar i.t42{background:var(--t42);}
+  .tier-bar i.low27{background:#93c5fd;}
+  .tier-bar i.low34{background:#fdba74;}
+  .tier-bar i.low42{background:#fca5a5;}
+  .tier-comment{font-size:12px;color:#555;margin-top:6px;padding:7px 10px;background:#f9fafb;border-radius:8px;border-left:3px solid #d1d5db;}
+
+  /* ─── 신규: 점수 추이 그래프 ─── */
+  .sparkline-wrap{padding:14px;background:var(--card);border-radius:12px;border:1px solid var(--line);margin:10px 0;}
+  .sparkline-wrap h4{font-size:13.5px;font-weight:700;margin-bottom:10px;color:var(--ink);}
+  .sparkline-wrap svg{width:100%;overflow:visible;}
+  .spark-no-data{font-size:12.5px;color:var(--muted);text-align:center;padding:20px 0;}
+
+  /* ─── 신규: 처방 교재 ─── */
+  .rx-section{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:14px;margin:10px 0;}
+  .rx-section h4{font-size:13.5px;font-weight:800;color:#14532d;margin-bottom:10px;}
+  .rx-item{background:#fff;border:1px solid #d1fae5;border-radius:9px;padding:10px 12px;margin-bottom:8px;}
+  .rx-item .rx-type{font-size:13px;font-weight:700;color:#166534;margin-bottom:5px;}
+  .rx-item .rx-star{font-size:11px;background:#dcfce7;color:#166534;border-radius:4px;padding:1px 6px;margin-left:4px;font-weight:700;}
+  .rx-item .rx-cnt{font-size:11px;background:#fee2e2;color:#991b1b;border-radius:4px;padding:1px 6px;font-weight:700;}
+  .rx-book{font-size:12px;color:#374151;margin-top:3px;display:flex;align-items:baseline;gap:5px;}
+  .rx-book::before{content:'📚';font-size:11px;flex-shrink:0;}
+  .rx-book .bname{font-weight:700;color:#1d4ed8;}
+  .rx-book .bunit{color:#6b7280;}
+
+  /* ─── 신규: 레벨 예측 ─── */
+  .level-badge{display:inline-flex;align-items:center;gap:6px;border-radius:8px;padding:6px 12px;font-size:13px;font-weight:800;}
+  .level-kyungsi{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
+  .level-simhwa{background:#ede9fe;color:#5b21b6;border:1px solid #ddd6fe;}
+  .level-silryeok{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe;}
+  .level-ilpum{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;}
+  .level-entry{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;}
+
+  /* ─── 신규: 원장 누적 그래프 ─── */
+  .score-trend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px;margin:10px 0;}
+  .score-chip{background:#f0f4ff;border:1px solid #c7d2fe;border-radius:8px;padding:7px 6px;text-align:center;}
+  .score-chip .sc-rnd{font-size:11px;color:#6b7280;margin-bottom:2px;}
+  .score-chip .sc-val{font-size:16px;font-weight:900;color:#3730a3;}
+
+  /* 코치 메시지 */
+  .coach-msg{background:linear-gradient(135deg,#fef9f0,#fff7ed);border:1px solid #fde68a;border-radius:12px;padding:14px;margin:10px 0;}
+  .coach-msg .coach-icon{font-size:22px;margin-bottom:5px;}
+  .coach-msg .coach-text{font-size:13.5px;color:#78350f;line-height:1.7;font-weight:500;}
+  .coach-msg .coach-sub{font-size:12px;color:#92400e;margin-top:5px;line-height:1.6;}
+
+  @media print{header,.savebar,.tabs{display:none !important;}}
 </style>
 </head>
 <body>
@@ -142,292 +223,981 @@
 <script src="data.js"></script>
 <script src="mock-data.js"></script>
 <script>
-  const REPO="docssam1/hs-report", FILE="mock-data.js", BRANCH="main";
-  const SUPA_URL="https://fgahqumaldheqettmvqg.supabase.co";
-  const SUPA_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
-  const D=window.GFIELD_DATA||{students:[]};
-  const M=window.GFIELD_MOCK;
-  M.results=M.results||{};
-  let mode=null, me=null, curRound="1";
+/* =========================================================
+ * 지필드 영재교육 · 중급 모의고사 진단 v2
+ * 처방 시스템 + 단계별 분석 + 점수 추이 그래프 추가
+ * ========================================================= */
 
-  function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-  function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.remove('show'),2400); }
-  function bp(no){ return M.blueprint.find(b=>b.no===no)||{no:no,area:'',pts:0}; }
-  function roundKeys(){ return Object.keys(M.rounds).sort((a,b)=>+a-+b); }
-  function roundItems(r){ return (M.rounds[r]&&M.rounds[r].items)||[]; }
-  function itemOf(r,no){ return roundItems(r).find(i=>i.no===no)||{no:no,type:'',answer:'',comment:''}; }
-  function Q(){ return M.questions||30; }
-  function givenName(n){ return n&&n.length>=2? n.slice(1):n; }
-  function latexToPlain(s){ return (s||'').replace(/\$(.*?)\$/g,function(m,x){ return x.replace(/\\dfrac|\\frac/g,'').replace(/\{(\d+)\}\{(\d+)\}/g,'$1/$2').replace(/[{}]/g,''); }); }
-  function vidUrl(r,t){ var v=(M.rounds[r]&&M.rounds[r].video)||''; if(!v) return ''; if(t&&+t>0){ v += (v.indexOf('?')>=0?'&':'?')+'t='+Math.floor(t); } return v; }
-  function openVid(r,t){ var u=vidUrl(r,t); if(u) window.open(u,'_blank','noopener'); else toast('등록된 영상이 없어요.'); }
-  function printAnswers(r){
-    var items=roundItems(r); if(!items.length){ toast('등록된 정답이 없어요.'); return; }
-    var rows=''; for(var n=1;n<=Q();n++){ var it=itemOf(r,n); var b=bp(n); rows+='<tr><td>'+n+'</td><td>'+esc(b.area)+'</td><td>'+b.pts+'</td><td>'+esc(latexToPlain(it.answer))+'</td></tr>'; }
-    var w=window.open('','_blank'); if(!w) return;
-    var ti=esc((M.rounds[r].title||r+'회'));
-    w.document.write('<html><head><meta charset="utf-8"><title>'+ti+' 정답</title><style>body{font-family:sans-serif;padding:20px;}h2{margin:0 0 10px;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #999;padding:6px 8px;font-size:13px;text-align:center;}th{background:#eee;}td:last-child{text-align:left;font-weight:700;}</style></head><body><h2>중급 모의고사 '+ti+' 정답</h2><table><thead><tr><th>번호</th><th>영역</th><th>배점</th><th>정답</th></tr></thead><tbody>'+rows+'</tbody></table><scr'+'ipt>setTimeout(function(){window.print();},350);</scr'+'ipt></body></html>');
-    w.document.close();
-  }
+const REPO="docssam1/hs-report", FILE="mock-data.js", BRANCH="main";
+const SUPA_URL="https://fgahqumaldheqettmvqg.supabase.co";
+const SUPA_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
+const D=window.GFIELD_DATA||{students:[]};
+const M=window.GFIELD_MOCK;
+M.results=M.results||{};
+let mode=null, me=null, curRound="1";
 
-  /* ===== Supabase 자동 수집 ===== */
-  async function supaUpsert(student,r,ox,source){
-    const oxs = ox.join? ox.join('') : ox; const sc=scoreOf(oxs.split(''));
-    try{
-      const res=await fetch(SUPA_URL+"/rest/v1/mock_results",{method:"POST",headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates"},body:JSON.stringify({student:student,round:r,ox:oxs,score:sc.score,wrong:sc.wrong,source:source||'parent'})});
-      return res.ok;
-    }catch(e){ return false; }
+/* ─── 처방 교재 데이터 ────────────────────────────────────
+ * 교재 4분류: 시중교재 / 소마 교재 / 필즈더클래식 / 지필드
+ *   시중교재   : 3%올림피아드, 수학경시 문제의 정석(MEX) 등
+ *   소마       : 왕수학 올림피아드, 왕수학 응용 등 소마 브랜드
+ *   필즈더클래식: 필즈 초급·입문 상/중/하, GM초급·중급
+ *   지필드     : GIFTED MATH 3 V1-1~3, ThinkingCore CH1~5
+ * 교재매핑 8종(8개 md) 기반 · 추후 소마 단원 확인 필요
+ * ─────────────────────────────────────────────────────── */
+const PRESCRIPTION = [
+  /* ★2.7 기본 ───────────────────────────────────────── */
+  { kw:['마방진','방진'],
+    label:'마방진', star:'★2.7',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'22장 수 추리① (1~16 배치)'}],
+      '소마':[{b:'왕수학 올림피아드 3',u:'마방진·수배열 단원'}],
+      '필즈더클래식':[{b:'필즈 초급 상',u:'1단원 마방진·복면산'},{b:'GM중급',u:'마방진 단원'}],
+      '지필드':[{b:'GIFTED MATH V1-2',u:'CH2 마방진·논리추리'}]
+    },
+    pts:['한 줄 합 = 전체 합 ÷ 줄 수 (가우스 덧셈 활용)','중앙 숫자는 전체 평균','2×2 마방진은 없음']
+  },
+  { kw:['달력','요일','날짜','달력의 요일'],
+    label:'달력·요일', star:'★2.7~3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'11장 요일에 관한 문제'}],
+      '소마':[{b:'왕수학 올림피아드 3',u:'달력·요일 단원'}],
+      '필즈더클래식':[{b:'필즈 초급 상',u:'달력·요일 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH2 달력 수배열'}]
+    },
+    pts:['윤년(2월 29일) 확인 필수','날수 = 월별 누적일수 + 일수','7로 나눈 나머지 → 요일']
+  },
+  /* ★3.4 중심 ───────────────────────────────────────── */
+  { kw:['시침','분침','시계','시각의 각'],
+    label:'달력·요일(시계)', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'29장 시침과 분침의 각도'},{b:'3%올림피아드 2과정',u:'17장 시침과 분침의 각도'}],
+      '소마':[],
+      '필즈더클래식':[{b:'필즈 초급 상',u:'시계 단원'}],
+      '지필드':[]
+    },
+    pts:['분침 6°/분 · 시침 0.5°/분','같은 방향으로 겹치는 시각: 0, 65.45분, 130.9분…','각도 = |분침각 - 시침각|']
+  },
+  { kw:['고장난 시계','이상한 시계','빠르게 가는','느리게 가는','빨리 가는'],
+    label:'달력·요일(고장난 시계)', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 2과정',u:'36장 이상한 시계'}],
+      '소마':[],
+      '필즈더클래식':[],
+      '지필드':[]
+    },
+    pts:['실제시간 : 시계시간 = 비율로 환산','기준 시각(맞춘 시각)부터 계산','빠른 시계는 실제보다 더 많이 감']
+  },
+  { kw:['합','차','나이','몸무게','연령','살','세 사람','둘씩','합·차','합과 차','비율로 치환','바꾸어'],
+    label:'합차와 배수', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'7·19·25·31·35장'},{b:'3%올림피아드 2과정',u:'9·27장'}],
+      '소마':[{b:'왕수학 응용 4',u:'합과 차 단원'}],
+      '필즈더클래식':[{b:'필즈 초급 하',u:'7단원 나이·합차'},{b:'필즈 입문 상',u:'합차 심화 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH2 Algebra(1) 합차 연립'},{b:'GIFTED MATH V1-1',u:'CH1 합차'}]
+    },
+    pts:['가장 작은 수를 □로 놓기','연필2=볼펜3이면 연필OO, 볼펜OO','나이 차는 변하지 않음']
+  },
+  { kw:['우기기','가정하여','가정법','동전','사과','사탕','점수','맞힌','틀린','퀴즈'],
+    label:'우기기/가정하여 풀기', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'1·5장'},{b:'3%올림피아드 2과정',u:'34장 점수 맞히기'}],
+      '소마':[{b:'왕수학 올림피아드 3',u:'가정법 단원'}],
+      '필즈더클래식':[{b:'필즈 초급 하',u:'11단원 우기기'},{b:'GM초급',u:'1단계 우기기'}],
+      '지필드':[{b:'ThinkingCore',u:'CH2 가정하여 풀기'}]
+    },
+    pts:['모두 한 종류라고 가정 후 차이로 역산','맞힌 개수×맞힘점수 + 틀린 개수×틀림점수 = 총점','동전: 모두 큰 동전 → 차이÷단위']
+  },
+  { kw:['복면산','□안의 숫자','숫자 알아내기','계산식에서 숫자','추리하여 연산식','자리 이동','붙여 만든 수'],
+    label:'복면산', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'24장 계산식에서 숫자 알아내기'},{b:'3%올림피아드 2과정',u:'28장 추리하여 연산식 완성'}],
+      '소마':[],
+      '필즈더클래식':[{b:'필즈 초급 하',u:'5단원 복면산'},{b:'필즈 초급 상',u:'1단원(복면산 기초)'}],
+      '지필드':[{b:'GIFTED MATH V1-1',u:'CH2 덧셈·뺄셈식 숨겨진 수'}]
+    },
+    pts:['자리 올림(받아올림) 경우 나눠서 시도','가장 큰/작은 자리부터 확정','영(0)은 맨 앞 자리 불가']
+  },
+  { kw:['거꾸로','역산','처음 수','결과에서'],
+    label:'거꾸로 생각하기', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'13장 거꾸로 생각하기'}],
+      '소마':[{b:'왕수학 올림피아드 3',u:'거꾸로 생각하기 단원'}],
+      '필즈더클래식':[{b:'필즈 입문 상',u:'거꾸로 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH2 Algebra(1)'}]
+    },
+    pts:['마지막 결과부터 역연산','더하기↔빼기, 곱하기↔나누기 반대로','flowchart 그려서 역방향으로']
+  },
+  { kw:['규칙','수열','마디','n번째','패턴','등차','계차','차가 같은','차가 늘어나는'],
+    label:'마디수열·규칙찾기', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'3·10·12·18·30장'},{b:'3%올림피아드 2과정',u:'5·13·23장'}],
+      '소마':[{b:'왕수학 올림피아드 3',u:'수열·규칙 단원'}],
+      '필즈더클래식':[{b:'필즈 초급 상',u:'수열 단원'},{b:'GM초급',u:'규칙찾기'}],
+      '지필드':[{b:'ThinkingCore',u:'CH3 Numbers & Case'},{b:'GIFTED MATH V1-3',u:'규칙 수열'}]
+    },
+    pts:['마디 길이 = 주기, n ÷ 주기 → 나머지로 위치','등차: (n번째) = 첫째항 + (n-1)×공차','계차수열: 차이의 규칙을 먼저 파악']
+  },
+  { kw:['삼각수','묶음','묶음 수열','부분합'],
+    label:'삼각수·묶음수열', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'30장 묶음 수열'}],
+      '소마':[],
+      '필즈더클래식':[{b:'필즈 초급 상',u:'수열 응용'}],
+      '지필드':[{b:'ThinkingCore',u:'CH2 수배열'}]
+    },
+    pts:['1+2+3+…+n = n(n+1)/2','묶음 내 합부터 → 전체 누적','n번째 묶음 시작 번호 = 이전 묶음 끝+1']
+  },
+  { kw:['숫자 개수','숫자의 개수','수의 개수','n자리','몇 개의 숫자','n번째 자리'],
+    label:'수와 숫자의 개수', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'2·14장'},{b:'3%올림피아드 2과정',u:'10장'}],
+      '소마':[],
+      '필즈더클래식':[{b:'필즈 초급 상',u:'수와 숫자의 개수 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH2 Numbers(1)'}]
+    },
+    pts:['1자리:9개·2자리:90개·3자리:900개','1자리 숫자수:9 / 2자리:180 / 3자리:2700','총 n번째 자리 = 구간 확정 후 나머지']
+  },
+  { kw:['최단거리','경로','격자','길찾기','바둑판'],
+    label:'최단거리', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'8장 길찾기'}],
+      '소마':[{b:'왕수학 올림피아드 3',u:'최단거리 단원'}],
+      '필즈더클래식':[{b:'필즈 초급 하',u:'27단원 최단거리'}],
+      '지필드':[{b:'ThinkingCore',u:'CH3 최단거리'},{b:'ThinkingCore',u:'CH5 최단거리 심화'}]
+    },
+    pts:['각 교차점 = 왼쪽 + 위쪽 값','가로 m칸·세로 n칸: (m+n)!/(m!n!)','장애물은 해당 교차점에 0 입력']
+  },
+  { kw:['벤다이어그램','포함과 배제','포함','배제','합집합','교집합','~아닌'],
+    label:'벤다이어그램', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'9·17장'},{b:'3%올림피아드 2과정',u:'22장'}],
+      '소마':[],
+      '필즈더클래식':[{b:'필즈 입문 중',u:'포함과 배제 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH3 경우의 수 기초'}]
+    },
+    pts:['A이거나 B = |A|+|B|-|A∩B|','~아닌: 전체 - 해당','겹치는 인원 = 양쪽 합 - 전체']
+  },
+  { kw:['직사각형','사각형의 개수','삼각형의 개수','도형의 개수','도형 개수'],
+    label:'도형분할·개수 세기', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'20장 평면에서 도형의 개수 세기'}],
+      '소마':[{b:'왕수학 올림피아드 3',u:'도형의 개수 단원'}],
+      '필즈더클래식':[{b:'필즈 초급 상',u:'도형의 개수 단원'}],
+      '지필드':[{b:'GIFTED MATH V1-1',u:'CH3 도형의 개수'}]
+    },
+    pts:['직사각형: 가로선 조합×세로선 조합','삼각형: 기준선 없이 수직선 그어 세기','조건부(포함/제외) → 전체 - 제외 방법']
+  },
+  { kw:['숫자카드','카드','수 만들기','n번째 수','크기 순','배열'],
+    label:'숫자카드로 수 만들기', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'26장 크기 순으로 수 배열하기'}],
+      '소마':[],
+      '필즈더클래식':[{b:'필즈 초급 상',u:'경우의 수(순열) 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH5 경우의 수'}]
+    },
+    pts:['각 자리별 경우의 수 = (남은 카드)!','n번째: n÷경우의수 = 몇 번째 자리수','0이 포함되면 맨 앞 자리 제외']
+  },
+  { kw:['속력','거리','시간','빠르기','따라잡기','거리·시간','기차','뒤쫓기'],
+    label:'속력 기반 따라잡기', star:'★3.4~4.2',
+    books:{
+      '시중교재':[{b:'3%올림피아드 2과정',u:'11·35장 속력에 관한 문제'}],
+      '소마':[{b:'왕수학 응용 4',u:'거리·속력·시간 단원'}],
+      '필즈더클래식':[{b:'필즈 입문 하',u:'속력 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH2 속력·시간 응용'}]
+    },
+    pts:['거리=속력×시간','따라잡기: 거리 차÷속력 차','그림(선분 다이어그램)으로 시각화']
+  },
+  { kw:['쌓기나무','쌓기 나무','투영','위에서','앞에서','옆에서','색칠된 면'],
+    label:'쌓기나무', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 2과정',u:'15장 쌓기나무'}],
+      '소마':[],
+      '필즈더클래식':[{b:'GM초급',u:'공간 도형 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH4 Geometry 쌓기나무'}]
+    },
+    pts:['위·앞·옆 세 방향 투영 통합','색칠면 = 6면 - 접촉면×2','최소/최대 쌓기 구분']
+  },
+  { kw:['색종이','겹치기','넓이','접기','접었을 때'],
+    label:'색종이·넓이 측정', star:'★3.4',
+    books:{
+      '시중교재':[],
+      '소마':[],
+      '필즈더클래식':[{b:'필즈 입문 중',u:'도형 측정 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH4 색종이·측정'}]
+    },
+    pts:['겹친 부분 = A넓이+B넓이-전체 보이는 넓이','접으면 대칭점 이용','홀수 겹침 ↔ 짝수 겹침 패턴']
+  },
+  { kw:['주사위','눈','마주보는','전개도'],
+    label:'주사위', star:'★3.4',
+    books:{
+      '시중교재':[],
+      '소마':[],
+      '필즈더클래식':[{b:'필즈 입문 상',u:'주사위 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH4 주사위'}]
+    },
+    pts:['마주보는 면 합=7 (1↔6, 2↔5, 3↔4)','굴리는 방향 꼼꼼히 추적','전개도에서 접었을 때 마주보는 면 파악']
+  },
+  /* ★4.2 고난도 ──────────────────────────────────────── */
+  { kw:['논리','추리','참','거짓','줄 세우기','순서','~보다','조건 목록'],
+    label:'논리추리', star:'★4.2',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'28장 논리 추리'}],
+      '소마':[{b:'왕수학 올림피아드 3',u:'논리추리 단원'}],
+      '필즈더클래식':[{b:'필즈 초급 상',u:'논리추리 단원'},{b:'GM중급',u:'논리추리'}],
+      '지필드':[{b:'GIFTED MATH V1-2',u:'논리추리(이중 조건)'}]
+    },
+    pts:['조건을 표(행렬)로 정리','참인 진술→해당 칸 O, 거짓→나머지 X','줄 세우기: 직접 비교 관계 그래프']
+  },
+  { kw:['저울','무겁','가볍','구슬','진짜','가짜'],
+    label:'논리추리(저울)', star:'★4.2',
+    books:{
+      '시중교재':[{b:'3%올림피아드 1과정',u:'28장 논리 추리'}],
+      '소마':[],
+      '필즈더클래식':[{b:'GM중급',u:'논리추리'}],
+      '지필드':[{b:'GIFTED MATH V1-2',u:'논리추리'}]
+    },
+    pts:['겹치는 구슬 제거 후 차이 분석','3회 이하 측정으로 n개 가능: n ≤ 3^k','무거운지 가벼운지 모를 때 경우 2배']
+  },
+  { kw:['포포즈','약속','새 연산','기호 정의','★','●','◆','◇','□ ○ △','ⓐ','⊕'],
+    label:'포포즈·약속(새연산)', star:'★4.2',
+    books:{
+      '시중교재':[{b:'3%올림피아드 2과정',u:'16장 새 연산'}],
+      '소마':[],
+      '필즈더클래식':[],
+      '지필드':[{b:'GIFTED MATH V1-3',u:'포포즈·약속 단원'}]
+    },
+    pts:['약속된 기호를 숫자로 치환','중괄호·소괄호 순서대로 계산','포포즈: 4개 숫자로 특정 수 만들기']
+  },
+  { kw:['경우의 수','경우를 모두','몇 가지','방법의 수'],
+    label:'경우의 수', star:'★3.4~4.2',
+    books:{
+      '시중교재':[{b:'3%올림피아드 2과정',u:'4·31장'}],
+      '소마':[{b:'왕수학 올림피아드 3',u:'경우의 수 단원'}],
+      '필즈더클래식':[{b:'필즈 초급 상',u:'경우의 수 단원'}],
+      '지필드':[{b:'ThinkingCore',u:'CH5 경우의 수'},{b:'GIFTED MATH V1-3',u:'경우의 수'}]
+    },
+    pts:['가지 그림(tree diagram) 그리기','곱의 법칙: 독립 사건 경우 수 곱','순열: 줄 세우기 / 조합: 고르기만']
+  },
+  { kw:['배수 판정','4의 배수','배수 만들기','나누어 떨어지는'],
+    label:'배수·경우의 수', star:'★3.4',
+    books:{
+      '시중교재':[{b:'3%올림피아드 2과정',u:'4·31장 배수 판정'}],
+      '소마':[],
+      '필즈더클래식':[],
+      '지필드':[{b:'ThinkingCore',u:'CH1 배수 판정법'}]
+    },
+    pts:['2의 배수: 끝자리 짝수','4의 배수: 끝 두 자리가 4의 배수','3의 배수: 각 자리 합이 3의 배수']
   }
-  async function supaLoadAll(){
-    try{
-      const r=await fetch(SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,source,updated_at",{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
-      if(!r.ok) return false;
-      const rows=await r.json();
-      rows.forEach(row=>{ if(!row.ox||row.ox.length!==Q()) return; M.results[row.student]=M.results[row.student]||{}; M.results[row.student][row.round]=[{ox:row.ox.split(''),ts:(row.updated_at||'').slice(0,10),by:row.source||'db'}]; });
-      return true;
-    }catch(e){ return false; }
-  }
+];
 
-  /* ===== 로그인 ===== */
-  function enter(){
-    const v=document.getElementById('pw').value.trim();
-    if(!v){ return; }
-    if(v.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; startTeacher(); return; }
-    if(!(D.students||[]).includes(v)){ document.getElementById('gate-err').textContent='등록된 학생만 입장할 수 있어요.'; return; }
-    mode='parent'; me=v; try{ localStorage.setItem('gfield_student',v); }catch(e){}
-    startParent();
-    if(window._pendingRound && M.rounds[window._pendingRound]){ openMark(window._pendingRound); window._pendingRound=null; }
+/* 세부유형 텍스트에서 처방 찾기 (키워드 매칭) */
+function findRx(typeText){
+  if(!typeText) return null;
+  const t = typeText.toLowerCase();
+  for(const rx of PRESCRIPTION){
+    if(rx.kw.some(k => t.includes(k.toLowerCase()))) return rx;
   }
-  function boot(){
-    document.getElementById('gate').classList.add('hidden');
-    document.getElementById('app').classList.remove('hidden');
-    document.getElementById('h-sub').textContent = mode==='teacher'?'원장 분석':(me+' 학생');
-  }
+  return null;
+}
 
-  /* ===== 채점 계산 ===== */
-  function blankOx(){ const a=[]; for(let i=0;i<Q();i++) a.push('O'); return a; }
-  function scoreOf(ox){ let s=0,wrong=0; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X') wrong++; else s+=bp(n).pts; } return {score:Math.round(s*10)/10, wrong:wrong, correct:Q()-wrong}; }
-  function areaStats(ox){ const map={}; M.areas.forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=Q();n++){ const b=bp(n); if(!map[b.area]) map[b.area]={tot:0,got:0,cnt:0,ok:0}; map[b.area].tot+=b.pts; map[b.area].cnt++; if(ox[n-1]!=='X'){ map[b.area].got+=b.pts; map[b.area].ok++; } } return map; }
-  function wrongList(r,ox){ const out=[]; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X'){ const it=itemOf(r,n); const b=bp(n); out.push({no:n, area:b.area, type:it.type, comment:it.comment}); } } return out; }
-  function typeComment(it){ if(it.comment&&it.comment.trim()) return it.comment; if(it.type) return "'"+it.type+"' 유형이에요. 풀이 강의를 보며 방법을 익힌 뒤, 며칠 뒤 새 종이에 스스로 다시 풀어보세요."; return "풀이 강의를 보며 방법을 익힌 뒤 스스로 다시 풀어보세요."; }
+/* 레벨 예측 (2026년 3월 황소 기준: 경시55/심화44/실력35/일품25.7) */
+function levelLabel(score){
+  if(score>=55) return {label:'경시반', cls:'level-kyungsi', icon:'🥇'};
+  if(score>=44) return {label:'심화반', cls:'level-simhwa', icon:'🥈'};
+  if(score>=35) return {label:'실력반', cls:'level-silryeok', icon:'🥉'};
+  if(score>=25.7) return {label:'일품반', cls:'level-ilpum', icon:'📘'};
+  return {label:'입문반', cls:'level-entry', icon:'📗'};
+}
 
-  /* ===== 결과 저장 ===== */
-  function attemptsOf(student,r){ M.results[student]=M.results[student]||{}; M.results[student][r]=M.results[student][r]||[]; return M.results[student][r]; }
-  function latestOx(student,r){ const a=attemptsOf(student,r); return a.length? a[a.length-1].ox : null; }
-  function pushAttempt(student,r,ox,by){ const a=attemptsOf(student,r); a.push({ox:ox.slice(), ts:new Date().toISOString().slice(0,10), by:by||'parent'}); while(a.length>3) a.shift(); }
-  function lsKey(){ return 'gfield_mock_'+me; }
-  function loadLocal(){ try{ const j=localStorage.getItem(lsKey()); if(j){ M.results[me]=JSON.parse(j); } }catch(e){} }
-  function saveLocal(){ try{ localStorage.setItem(lsKey(), JSON.stringify(M.results[me]||{})); }catch(e){} }
+/* ★단계별 분석 */
+function scoreByTier(ox){
+  const tiers={27:{q:0,ok:0,max:0},34:{q:0,ok:0,max:0},42:{q:0,ok:0,max:0}};
+  for(let n=1;n<=Q();n++){
+    const b=bp(n); const key=Math.round(b.pts*10);
+    if(!tiers[key]) continue;
+    tiers[key].q++;
+    tiers[key].max+=b.pts;
+    if(ox[n-1]!=='X') tiers[key].ok++;
+  }
+  return tiers;
+}
 
-  /* ===== 학부모 모드 ===== */
-  let markOx=null;
-  function startParent(){ boot(); loadLocal(); renderRoundPick(); }
-  function renderRoundPick(){
-    let h=`<div class="card"><h3>📝 진단할 회차를 선택하세요</h3><div class="hint">집에서 푼 <b>중급 모의고사</b>의 회차를 고르고, <b>틀린 문제 번호만</b> 체크하면 점수·약점 유형·오답 코멘트가 바로 나옵니다. 제출하면 <b>원장님께 자동 전송</b>돼요. (회차별 최대 3회 재응시)</div><div class="round-grid">`;
-    roundKeys().forEach(r=>{
-      const at=attemptsOf(me,r).length;
-      const hasType=roundItems(r).length>0;
-      h+=`<div class="round-card" onclick="openMark('${r}')"><div class="rn">${esc(M.rounds[r].title||r+'회')}</div><div class="rs">${at?('응시 '+at+'회'):'미응시'}${hasType?'':' · 유형 준비중'}</div>${roundItems(r).length?`<button class="rcprint" onclick="event.stopPropagation();printAnswers('${r}')">🖨 정답 인쇄</button>`:''}</div>`;
-    });
-    h+='</div></div>';
-    document.getElementById('main').innerHTML=h;
+/* 점수 추이 SVG */
+function svgSparkline(student){
+  const rs=roundKeys().filter(r=>latestOx(student,r));
+  if(rs.length<2) return '';
+  const scores=rs.map(r=>({r:r,sc:scoreOf(latestOx(student,r)).score,lbl:M.rounds[r].title||r+'회'}));
+  const maxSc=100, W=280, H=80, pad=20;
+  const pts=scores.map((s,i)=>{
+    const x=pad+(i/(scores.length-1))*(W-pad*2);
+    const y=H-pad-(s.sc/maxSc)*(H-pad*2);
+    return {x,y,sc:s.sc,lbl:s.lbl};
+  });
+  let path='M'+pts.map(p=>p.x.toFixed(1)+','+p.y.toFixed(1)).join(' L');
+  let svgDots='';
+  pts.forEach(p=>{
+    svgDots+=`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4" fill="#f97316"/>`;
+    svgDots+=`<text x="${p.x.toFixed(1)}" y="${(p.y-8).toFixed(1)}" text-anchor="middle" font-size="9" fill="#ea580c" font-weight="800">${p.sc}</text>`;
+    svgDots+=`<text x="${p.x.toFixed(1)}" y="${(H+4).toFixed(1)}" text-anchor="middle" font-size="9" fill="#9ca3af">${p.lbl}</text>`;
+  });
+  return `<div class="sparkline-wrap">
+    <h4>📈 회차별 점수 추이</h4>
+    <svg viewBox="0 0 ${W} ${H+14}" xmlns="http://www.w3.org/2000/svg">
+      <line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}" stroke="#e5e7eb" stroke-width="1"/>
+      <path d="${path}" fill="none" stroke="#fdba74" stroke-width="2.5" stroke-linejoin="round"/>
+      ${svgDots}
+    </svg>
+  </div>`;
+}
+
+/* 단계별 분석 HTML */
+function tierHTML(tiers, comment){
+  const make=(key, cls, label, range)=>{
+    const t=tiers[key]||{q:0,ok:0,max:0};
+    const pct=t.q?Math.round(t.ok/t.q*100):0;
+    const barCls=pct>=70?cls:(pct>=50?'low'+cls.replace('t',''):'low'+cls.replace('t',''));
+    return `<div class="tier-row ${cls}">
+      <span class="tier-badge ${cls}">${label}</span>
+      <div class="tier-info">
+        <div class="ti-label">${range}</div>
+        <div class="ti-score">${t.ok}/${t.q}문항 · ${pct}%</div>
+      </div>
+      <div class="tier-bar-wrap">
+        <div class="tier-bar"><i class="${cls}" style="width:${pct}%"></i></div>
+      </div>
+    </div>`;
+  };
+  let html='<div class="tier-section" style="border:1px solid var(--line)">';
+  html+=make(27,'t27','★2.7','기본 (1~12번)');
+  html+=make(34,'t34','★3.4','중심 (13~22번)');
+  html+=make(42,'t42','★4.2','고난도 (23~30번)');
+  html+='</div>';
+  if(comment) html+=`<div class="tier-comment">${esc(comment)}</div>`;
+  return html;
+}
+
+/* 단계별 자동 코멘트 */
+function tierComment(tiers){
+  const t27=tiers[27]||{q:0,ok:0};
+  const t34=tiers[34]||{q:0,ok:0};
+  const t42=tiers[42]||{q:0,ok:0};
+  const p27=t27.q?Math.round(t27.ok/t27.q*100):0;
+  const p34=t34.q?Math.round(t34.ok/t34.q*100):0;
+  const p42=t42.q?Math.round(t42.ok/t42.q*100):0;
+  if(p27<70) return '★2.7 기본 문항에서 실수나 오개념이 있어요. 기본기 강화가 우선입니다.';
+  if(p34<60) return '기본은 잘 맞히고 있어요. ★3.4 중심 유형 집중 연습으로 점수를 끌어올릴 수 있어요.';
+  if(p42<40) return '기본·중심 문항은 안정적이에요. ★4.2 고난도 유형 1~2개만 더 잡아도 큰 점수 차이가 납니다.';
+  return '★2.7~★3.4 구간이 안정적이에요. 고난도 문항도 잘 풀고 있습니다. 실전 연습을 계속 쌓으세요!';
+}
+
+/* ─── 세부유형 키워드 매핑 ────────────────────────────── */
+function findRx(typeText){
+  if(!typeText) return null;
+  const t=typeText.toLowerCase();
+  for(const rx of PRESCRIPTION){
+    if(rx.kw.some(k=>t.includes(k.toLowerCase()))) return rx;
   }
-  function openMark(r){
-    curRound=r;
-    const prev=latestOx(me,r);
-    markOx = prev? prev.slice() : blankOx();
-    renderMark();
+  return null;
+}
+
+/* 레벨 예측 (2026년 3월 황소 기준: 경시55/심화44/실력35/일품25.7) */
+function levelLabel(score){
+  if(score>=55) return {label:'경시반', cls:'level-kyungsi', icon:'🥇'};
+  if(score>=44) return {label:'심화반', cls:'level-simhwa', icon:'🥈'};
+  if(score>=35) return {label:'실력반', cls:'level-silryeok', icon:'🥉'};
+  if(score>=25.7) return {label:'일품반', cls:'level-ilpum', icon:'📘'};
+  return {label:'입문반', cls:'level-entry', icon:'📗'};
+}
+
+/* 문항별 미니 처방 (오답 상세 아래 삽입) */
+function miniRxHTML(typeText){
+  const rx=findRx(typeText);
+  if(!rx) return '';
+  const cats=['시중교재','소마','필즈더클래식','지필드'];
+  const clrs=['#eff6ff','#f0fdf4','#fef9f0','#f5f3ff'];
+  const icons=['📗','🔵','📙','🟣'];
+  let rows='';
+  cats.forEach((cat,i)=>{
+    const list=(rx.books[cat]||[]);
+    if(!list.length) return;
+    rows+=`<tr><td style="font-size:11px;font-weight:700;color:#555;white-space:nowrap;background:${clrs[i]};padding:4px 8px">${icons[i]} ${cat}</td><td style="font-size:11.5px;padding:4px 8px">`;
+    rows+=list.map(b=>`<b>${esc(b.b)}</b> <span style="color:#6b7280">${esc(b.u)}</span>`).join('<br>');
+    rows+='</td></tr>';
+  });
+  if(!rows) return '';
+  let pts='';
+  if(rx.pts&&rx.pts.length){
+    pts='<div style="margin-top:5px;font-size:11.5px;color:#374151;background:#f9fafb;border-radius:6px;padding:5px 8px">';
+    pts+='<b style="color:#92400e">📌 학습 포인트:</b> ';
+    pts+=rx.pts.map(p=>`· ${esc(p)}`).join('  ');
+    pts+='</div>';
   }
-  function renderMark(){
-    const r=curRound, at=attemptsOf(me,r);
-    let g='';
-    for(let n=1;n<=Q();n++){ const w=markOx[n-1]==='X'; g+=`<div class="qbtn ${w?'wrong':''}" onclick="toggleQ(${n})"><span>${n}</span></div>`; }
-    const sc=scoreOf(markOx);
-    let attemptBtns='';
-    if(at.length){ attemptBtns='<div class="row-inline"><span class="hint" style="margin:0">이전 응시 불러오기:</span>'; at.forEach((a,i)=>{ attemptBtns+=`<button class="btn gray sm" onclick="loadAttempt(${i})">${i+1}회차 (${a.ts})</button>`; }); attemptBtns+='</div>'; }
-    document.getElementById('main').innerHTML=`
-      <div class="card">
-        <div class="row-inline"><button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button><b>${esc(M.rounds[r].title||r+'회')} 진단</b></div>
-        <div class="hint">✔️ <b>틀린 문제 번호만</b> 눌러 체크하세요. (누르면 ✕, 다시 누르면 해제) 이미 완벽히 아는 문제는 체크하지 마세요.</div>
-        ${attemptBtns}
-        <div class="qgrid">${g}</div>
-        <div class="scorebar"><div><div class="big" id="mk-score">${sc.score}</div><div class="lbl">점 / 100점</div></div><div><div class="big" style="color:#334">${sc.correct}<span style="font-size:15px;color:#889"> / ${Q()}</span></div><div class="lbl">맞은 개수</div></div><div><div class="big" style="color:#dc2626" id="mk-wrong">${sc.wrong}</div><div class="lbl">틀린 개수</div></div></div>
-        <button class="btn pri" style="width:100%" onclick="submitAttempt()">결과 제출 및 확인 →</button>
+  return `<div style="margin-top:6px;border:1px solid #d1fae5;border-radius:7px;overflow:hidden">
+    <div style="font-size:11px;font-weight:700;color:#065f46;background:#d1fae5;padding:3px 8px">📚 연결 교재 (4개 카테고리)</div>
+    <table style="width:100%;border-collapse:collapse">${rows}</table>
+    ${pts}
+  </div>`;
+}
+
+/* 전체 약점 처방 섹션 (누적 분석) */
+function prescriptionHTML(wl, limit){
+  const rxMap={};
+  wl.forEach(w=>{
+    const rx=findRx(w.type);
+    if(!rx) return;
+    const key=rx.label;
+    if(!rxMap[key]) rxMap[key]={rx:rx,cnt:0,nos:[]};
+    rxMap[key].cnt++; rxMap[key].nos.push(w.no);
+  });
+  const top=Object.values(rxMap).sort((a,b)=>b.cnt-a.cnt).slice(0,limit||6);
+  if(!top.length) return '';
+  const cats=['시중교재','소마','필즈더클래식','지필드'];
+  const catClrs=['#eff6ff','#f0fdf4','#fef9f0','#f5f3ff'];
+  const catIcons=['📗','🔵','📙','🟣'];
+  let h='<div class="rx-section"><h4>🎒 약점 유형별 처방 교재 — 4개 카테고리 연결</h4>';
+  top.forEach(({rx,cnt,nos})=>{
+    h+=`<div class="rx-item">
+      <div class="rx-type">${esc(rx.label)}<span class="rx-star">${rx.star}</span><span class="rx-cnt">오답 ${cnt}회 · ${nos.slice(0,5).join('·')}${nos.length>5?'…':''}번</span></div>`;
+    /* 교재 4분류 테이블 */
+    let hasAny=false;
+    cats.forEach((cat,i)=>{
+      const list=(rx.books[cat]||[]);
+      if(!list.length) return;
+      hasAny=true;
+      h+=`<div style="display:flex;gap:6px;align-items:baseline;margin:3px 0;font-size:12px">
+        <span style="background:${catClrs[i]};border-radius:4px;padding:1px 6px;font-size:11px;font-weight:700;white-space:nowrap">${catIcons[i]} ${cat}</span>
+        <span>${list.map(b=>`<b class="bname">${esc(b.b)}</b> <span class="bunit">${esc(b.u)}</span>`).join(' / ')}</span>
       </div>`;
-  }
-  function toggleQ(n){ markOx[n-1]= markOx[n-1]==='X'?'O':'X'; renderMark(); }
-  function loadAttempt(i){ const a=attemptsOf(me,curRound); if(a[i]){ markOx=a[i].ox.slice(); renderMark(); } }
-  async function submitAttempt(){
-    const at=attemptsOf(me,curRound);
-    if(at.length>=3){ if(!confirm('이미 3회 응시했어요. 가장 오래된 기록을 지우고 새로 저장할까요?')) return; }
-    const prev = at.length? at[at.length-1].ox.slice() : null;
-    pushAttempt(me,curRound,markOx,'parent'); saveLocal();
-    const ok=await supaUpsert(me,curRound,markOx,'parent');
-    toast(ok?'제출 완료 · 원장님께 자동 전송됐어요 ✅':'제출 저장됨(자동전송 실패) — 코드로 보내주세요');
-    renderReport(me,curRound,prev,ok);
-  }
-  function renderReport(student,r,prevOx,sent){
-    const at=attemptsOf(student,r); const ox=at[at.length-1].ox;
-    const sc=scoreOf(ox); const as=areaStats(ox); const wl=wrongList(r,ox);
-    let h=`<div class="card"><div class="row-inline"><button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button><b>${esc(givenName(student))} · ${esc(M.rounds[r].title||r+'회')} 진단 결과</b>${sent!==undefined?`<span class="pill ${sent?'on':'off'}">${sent?'원장님께 전송됨':'전송 대기'}</span>`:''}</div>`;
-    h+=`<div class="scorebar"><div><div class="big">${sc.score}</div><div class="lbl">점 / 100점</div></div><div><div class="big" style="color:#334">${sc.correct} / ${Q()}</div><div class="lbl">맞은 개수</div></div><div><div class="big" style="color:#dc2626">${sc.wrong}</div><div class="lbl">틀린 개수</div></div><div><div class="big" style="color:#334">${at.length}<span style="font-size:15px;color:#889">회</span></div><div class="lbl">응시</div></div></div>`;
-    h+='<h3 style="margin-top:10px">영역별 수행률</h3>';
-    M.areas.forEach(a=>{ const s=as[a]||{tot:0,got:0,cnt:0,ok:0}; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${s.ok}/${s.cnt}문항 · ${pct}%</span></div><div class="abar"><i class="${pct<50?'low':''}" style="width:${pct}%"></i></div></div>`; });
-    if(prevOx){ let solved=[],still=[],neo=[]; for(let n=1;n<=Q();n++){ const p=prevOx[n-1]==='X', c=ox[n-1]==='X'; if(p&&!c) solved.push(n); else if(p&&c) still.push(n); else if(!p&&c) neo.push(n); } h+=`<h3 style="margin-top:12px">지난 응시 대비 변화</h3><div class="cmp">`; h+=`<span class="chip solved">✅ 해결 ${solved.length}: ${solved.join(', ')||'-'}</span>`; h+=`<span class="chip still">🔁 여전히 틀림 ${still.length}: ${still.join(', ')||'-'}</span>`; h+=`<span class="chip newx">⚠️ 새로 틀림 ${neo.length}: ${neo.join(', ')||'-'}</span>`; h+='</div>'; }
-    h+='</div>';
-    const hasVid=(M.rounds[r]&&M.rounds[r].video);
-    h+='<div class="card"><div class="row-inline" style="justify-content:space-between;margin-bottom:2px"><h3 style="margin:0">📋 오답 문항 상세 분석</h3>'+(hasVid?`<button class="btn navy sm" onclick="openVid('${r}',0)">▶ 전체 풀이 영상</button>`:'')+'</div>';
-    if(!wl.length){ h+='<div class="hint">틀린 문항이 없어요. 훌륭합니다! 🎉</div>'; }
-    else { h+='<div class="hint">문항을 누르면 해당 부분 풀이 영상으로 바로 이동해요.</div>'; wl.forEach(w=>{ const it=itemOf(r,w.no); const t=it.t||0; const clk=hasVid?`onclick="openVid('${r}',${t})" style="cursor:pointer"`:''; h+=`<div class="wt-item" ${clk}><div class="wt-h"><span class="no">${w.no}번</span>${esc(w.type||'(유형 준비중)')}<span class="wt-a"> · ${esc(w.area)}</span>${hasVid?'<span class="vjump">▶ 영상</span>':''}</div><div class="wt-c">${esc(typeComment(it))}</div></div>`; }); }
-    h+='</div>';
-    if(!sent){
-      const code=btoa(unescape(encodeURIComponent(JSON.stringify({s:student,r:r,ox:ox.join('')}))));
-      h+=`<div class="card"><h3>💬 자동 전송이 안 됐어요</h3><div class="hint">인터넷 문제로 자동 전송이 안 됐습니다. 아래 코드를 복사해 원장님께 카톡으로 보내주세요.</div>
-        <textarea id="sendcode" rows="2" readonly>${code}</textarea>
-        <div class="row-inline" style="margin-top:8px"><button class="btn navy sm" onclick="copyCode()">코드 복사</button><a class="btn pri sm" style="text-decoration:none" href="https://open.kakao.com/me/gfield" target="_blank" rel="noopener">카톡으로 열기</a></div></div>`;
-    }
-    document.getElementById('main').innerHTML=h;
-  }
-  function copyCode(){ const t=document.getElementById('sendcode'); t.select(); try{ navigator.clipboard.writeText(t.value); }catch(e){ document.execCommand('copy'); } toast('코드가 복사됐어요.'); }
-
-  /* ===== 원장 모드 ===== */
-  let tSel=''; let tTab='student';
-  async function startTeacher(){ boot(); document.getElementById('teacher-savebar').classList.remove('hidden'); document.getElementById('main').innerHTML='<div class="card"><div class="hint">결과 불러오는 중…</div></div>'; await supaLoadAll(); renderTeacher(); }
-  async function reloadResults(){ const st=document.getElementById('save-status'); st.textContent='불러오는 중…'; const ok=await supaLoadAll(); st.textContent=ok?'✅ 최신 결과 불러옴':'불러오기 실패'; renderTeacher(); }
-  function renderTeacher(){
-    let h=`<div class="tabs">
-      <button class="${tTab==='student'?'on':''}" onclick="tSetTab('student')">👤 학생별 분석</button>
-      <button class="${tTab==='class'?'on':''}" onclick="tSetTab('class')">👥 반 전체 약점</button>
-      <button class="${tTab==='import'?'on':''}" onclick="tSetTab('import')">📥 코드 수동입력</button>
-      <button class="${tTab==='edit'?'on':''}" onclick="tSetTab('edit')">✏️ 회차 유형 편집</button>
-    </div><div id="t-body"></div>`;
-    document.getElementById('main').innerHTML=h;
-    if(tTab==='student') tStudent();
-    else if(tTab==='class') tClass();
-    else if(tTab==='import') tImport();
-    else tEdit();
-  }
-  function tSetTab(t){ tTab=t; renderTeacher(); }
-
-  function tStudent(){
-    const students=D.students||[];
-    if(!tSel||!students.includes(tSel)) tSel=students[0]||'';
-    let h=`<div class="card"><div class="row-inline"><b>학생</b><select class="select" onchange="tPick(this.value)">${students.map(s=>`<option ${s===tSel?'selected':''}>${esc(s)}</option>`).join('')}</select><span class="hint" style="margin:0">칸 클릭=수동 입력(자동 저장)</span></div>`;
-    if(!tSel){ h+='<div class="hint">학생이 없습니다.</div></div>'; document.getElementById('t-body').innerHTML=h; return; }
-    h+='<div class="mtable-scroll"><table class="mx"><thead><tr><th>회차</th>';
-    for(let n=1;n<=Q();n++) h+=`<th>${n}</th>`;
-    h+='<th>틀린수</th><th>점수</th></tr></thead><tbody>';
-    roundKeys().forEach(r=>{
-      const ox=latestOx(tSel,r);
-      h+=`<tr><th>${esc(M.rounds[r].title||r+'회')}</th>`;
-      if(!ox){ for(let n=1;n<=Q();n++) h+=`<td class="ox" onclick="tSeed('${r}',${n})">·</td>`; h+='<td class="wc">-</td><td class="wc">-</td>'; }
-      else { for(let n=1;n<=Q();n++){ const x=ox[n-1]==='X'; h+=`<td class="ox ${x?'x':'o'}" onclick="tToggle('${r}',${n})">${x?'✕':'O'}</td>`; } const sc=scoreOf(ox); h+=`<td class="wc">${sc.wrong}</td><td class="wc">${sc.score}</td>`; }
-      h+='</tr>';
     });
-    h+='</tbody></table></div><div class="hint" style="margin-top:6px">학부모가 제출한 결과는 자동 반영됩니다. 안 푼 학생은 값 없는 회차(·)를 클릭해 직접 O/X를 입력하세요. 클릭 시 DB에 자동 저장됩니다.</div></div>';
-    h+=tAnalysisHTML(tSel);
-    document.getElementById('t-body').innerHTML=h;
-  }
-  function tPick(v){ tSel=v; tStudent(); }
-  function tSeed(r,n){ pushAttempt(tSel,r,blankOx(),'teacher'); tToggle(r,n); }
-  function tToggle(r,n){ const ox=latestOx(tSel,r); if(!ox) return; ox[n-1]= ox[n-1]==='X'?'O':'X'; tStudent(); supaUpsert(tSel,r,ox,'teacher').then(ok=>{ document.getElementById('save-status').textContent= ok?'✅ 저장됨':'저장 실패'; }); }
-
-  function tAnalysisHTML(student){
-    const rs=roundKeys().filter(r=>latestOx(student,r));
-    if(!rs.length) return '<div class="card"><div class="hint">아직 응시 기록이 없습니다.</div></div>';
-    const areaAgg={}; M.areas.forEach(a=>areaAgg[a]={tot:0,got:0});
-    const typeCnt={}; const scores=[];
-    rs.forEach(r=>{ const ox=latestOx(student,r); const as=areaStats(ox); M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; }); scores.push({r:r,sc:scoreOf(ox).score}); wrongList(r,ox).forEach(w=>{ const key=w.type||('('+w.area+' 유형)'); typeCnt[key]=(typeCnt[key]||0)+1; }); });
-    let h=`<div class="card"><h3>📊 ${esc(givenName(student))} 누적 약점 분석 (응시 ${rs.length}회차)</h3>`;
-    h+='<div class="row-inline" style="gap:6px">';
-    scores.forEach(s=>{ h+=`<span class="chip solved" style="background:#eef2ff;color:#3641a8;font-size:12px;font-weight:700;border-radius:999px;padding:5px 11px">${esc(M.rounds[s.r].title||s.r)}: ${s.sc}점</span>`; });
-    h+='</div><div style="height:8px"></div>';
-    M.areas.forEach(a=>{ const s=areaAgg[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${pct}%</span></div><div class="abar"><i class="${pct<50?'low':''}" style="width:${pct}%"></i></div></div>`; });
-    const top=Object.entries(typeCnt).sort((a,b)=>b[1]-a[1]).slice(0,8);
-    if(top.length){ h+='<h3 style="margin-top:12px">자주 틀리는 세부 유형</h3>'; top.forEach(([t,c])=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${c}회</span>${esc(t)}</div></div>`; }); }
-    h+='</div>';
-    return h;
-  }
-
-  function tClass(){
-    const students=(D.students||[]).filter(s=>M.results[s]);
-    const areaAgg={}; M.areas.forEach(a=>areaAgg[a]={tot:0,got:0}); const typeCnt={}; let n=0;
-    students.forEach(s=>{ roundKeys().forEach(r=>{ const ox=latestOx(s,r); if(!ox) return; n++; const as=areaStats(ox); M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; }); wrongList(r,ox).forEach(w=>{ const key=w.type||('('+w.area+')'); typeCnt[key]=(typeCnt[key]||0)+1; }); }); });
-    let h=`<div class="card"><h3>👥 반 전체 약점 (응시 ${n}건 · 학생 ${students.length}명)</h3>`;
-    if(!n){ h+='<div class="hint">아직 응시 기록이 없습니다. 학부모 제출을 기다리거나 학생별 분석에서 직접 입력하세요.</div></div>'; document.getElementById('t-body').innerHTML=h; return; }
-    M.areas.forEach(a=>{ const s=areaAgg[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${pct}%</span></div><div class="abar"><i class="${pct<50?'low':''}" style="width:${pct}%"></i></div></div>`; });
-    const top=Object.entries(typeCnt).sort((a,b)=>b[1]-a[1]).slice(0,12);
-    h+='<h3 style="margin-top:12px">반에서 가장 많이 틀린 유형</h3>';
-    top.forEach(([t,c])=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${c}회</span>${esc(t)}</div></div>`; });
-    h+='</div>';
-    document.getElementById('t-body').innerHTML=h;
-  }
-
-  function tImport(){
-    document.getElementById('t-body').innerHTML=`<div class="card"><h3>📥 코드 수동입력 (자동 전송 실패분)</h3><div class="hint">대부분은 자동 수집되지만, 학부모 자동 전송이 실패해 <b>코드</b>를 받은 경우 여기에 붙여넣어 반영하세요. 붙여넣으면 DB에도 저장됩니다. 여러 개는 줄바꿈으로.</div>
-      <textarea id="impcode" rows="4" placeholder="여기에 코드 붙여넣기"></textarea>
-      <div class="row-inline" style="margin-top:8px"><button class="btn navy sm" onclick="doImport()">가져오기</button></div>
-      <div id="imp-res" class="hint"></div></div>`;
-  }
-  async function doImport(){
-    const raw=document.getElementById('impcode').value.trim(); if(!raw){ return; }
-    const lines=raw.split(/\s+/).filter(Boolean); let ok=0,fail=0,names=[];
-    for(const code of lines){ try{ const o=JSON.parse(decodeURIComponent(escape(atob(code)))); if(o&&o.s&&o.r&&o.ox&&o.ox.length===Q()){ M.results[o.s]=M.results[o.s]||{}; M.results[o.s][o.r]=[{ox:o.ox.split(''),ts:new Date().toISOString().slice(0,10),by:'parent'}]; await supaUpsert(o.s,o.r,o.ox,'parent'); ok++; names.push(o.s+' '+(M.rounds[o.r]?M.rounds[o.r].title:o.r)); } else fail++; }catch(e){ fail++; } }
-    document.getElementById('imp-res').innerHTML=`✅ ${ok}건 반영·저장${fail?(' · ❌ '+fail+'건 실패'):''}${names.length?('<br>'+names.map(esc).join(', ')):''}`;
-    toast(ok+'건 반영 완료');
-  }
-
-  function tEdit(){
-    const r=curRound; const rd=M.rounds[r];
-    let h=`<div class="card"><div class="row-inline"><b>회차</b><select class="select" onchange="curRound=this.value; tEdit();">${roundKeys().map(k=>`<option value="${k}" ${k===r?'selected':''}>${esc(M.rounds[k].title||k+'회')}</option>`).join('')}</select></div>
-      <div class="hint">각 문항의 <b>세부유형·정답·오답코멘트</b>를 입력하세요. 영역·배점은 전 회차 공통(고정)입니다. 입력 후 하단 [💾 유형·정답 저장]을 눌러야 반영됩니다. (결과 O/X는 DB에 자동 저장되므로 이 버튼과 무관)</div>
-      <div class="row-inline"><label style="font-size:12px;color:#555;width:64px">풀이영상</label><input id="ed-video" value="${esc(rd.video||'')}" placeholder="유튜브 링크" style="flex:1;padding:8px;border:1px solid var(--line);border-radius:7px" oninput="M.rounds['${r}'].video=this.value; markDirty();"></div>`;
-    for(let n=1;n<=Q();n++){ const it=itemOf(r,n); const b=bp(n); h+=`<div class="ed-row"><div class="no">${n}</div>
-      <input value="${esc(it.type)}" placeholder="세부유형" oninput="edSet('${r}',${n},'type',this.value)">
-      <div><input value="${esc(it.answer)}" placeholder="정답" oninput="edSet('${r}',${n},'answer',this.value)" style="width:100%"><div class="ans-prev" style="font-size:12px;color:#0a7a3d;margin-top:3px;min-height:14px">${esc(it.answer)}</div></div>
-      <div style="display:flex;gap:6px"><span class="area" style="min-width:74px">${esc(b.area)} · ${b.pts}</span><input value="${esc(it.comment)}" placeholder="오답 코멘트(선택)" oninput="edSet('${r}',${n},'comment',this.value)" style="flex:1"></div></div>`; }
-    h+='</div>';
-    document.getElementById('t-body').innerHTML=h;
-  }
-  function edSet(r,n,k,v){ const items=M.rounds[r].items=M.rounds[r].items||[]; let it=items.find(x=>x.no===n); if(!it){ it={no:n,type:'',answer:'',comment:''}; items.push(it); items.sort((a,b)=>a.no-b.no); } it[k]=v; markDirty(); }
-
-  /* ===== 저장 (GitHub: 유형·정답만) ===== */
-  function markDirty(){ const s=document.getElementById('save-status'); if(s) s.textContent='● 유형·정답 변경됨 — 저장 필요'; }
-  function buildMockFile(){
-    const out={title:M.title,areas:M.areas,roundCount:M.roundCount,questions:M.questions,blueprint:M.blueprint,rounds:M.rounds,results:{}};
-    return "/* =========================================================\n * 지필드 영재교육 · 중급 모의고사 진단 데이터\n * (결과는 Supabase에 저장됩니다. 이 파일은 유형·정답·영상만)\n * 저장: "+new Date().toLocaleString('ko-KR')+"\n * ========================================================= */\nwindow.GFIELD_MOCK = "+JSON.stringify(out,null,2)+";\n";
-  }
-  function ghToken(){ let t=null; try{ t=localStorage.getItem('gfield_gh_token'); }catch(e){} if(!t){ t=prompt('GitHub 토큰 (Contents: Read and write). 어드민에서 쓰던 것과 동일합니다.'); if(!t) return null; t=t.trim(); try{ localStorage.setItem('gfield_gh_token',t); }catch(e){} } return t; }
-  async function saveMock(){
-    const token=ghToken(); if(!token) return;
-    const st=document.getElementById('save-status'); st.textContent='저장 중…';
-    try{
-      let sha=null; const g=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?ref=${BRANCH}`,{headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'}}); if(g.ok){ sha=(await g.json()).sha; }
-      const b64=btoa(unescape(encodeURIComponent(buildMockFile())));
-      const p=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{method:'PUT',headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'},body:JSON.stringify({message:'Update mock-data.js (types/answers)',content:b64,sha:sha,branch:BRANCH})});
-      if(p.ok){ st.textContent='✅ 저장 완료 (1~2분 후 반영)'; toast('저장 완료 ✅'); }
-      else{ const e=await p.json(); st.textContent='저장 실패: '+(e.message||p.status); if(p.status===401||p.status===403){ toast('토큰 권한 확인(Contents 쓰기)'); } }
-    }catch(e){ st.textContent='네트워크 오류'; toast('저장 실패'); }
-  }
-  function showCode(){ const w=window.open('','_blank'); w.document.write('<pre style="white-space:pre-wrap;word-break:break-all;font-size:12px;padding:12px">'+buildMockFile().replace(/</g,'&lt;')+'</pre>'); }
-
-  /* ===== 수식(LaTeX) 렌더 ===== */
-  let _mathT=null;
-  function typeset(){ if(!window.renderMathInElement) return; clearTimeout(_mathT); _mathT=setTimeout(function(){ try{ renderMathInElement(document.getElementById('main'),{delimiters:[{left:'$',right:'$',display:false}],throwOnError:false,ignoredClasses:['katex']}); }catch(e){} },20); }
-  (function(){ var m=document.getElementById('main'); if(m&&window.MutationObserver){ new MutationObserver(typeset).observe(m,{childList:true,subtree:true}); } window.addEventListener('load',typeset); })();
-
-  /* ===== URL로 바로 진입 (과제 링크에서) ===== */
-  (function initFromUrl(){
-    const p=new URLSearchParams(location.search); const rd=p.get('round');
-    let stu=''; try{ stu=localStorage.getItem('gfield_student')||''; }catch(e){}
-    if(stu && stu.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; startTeacher(); return; }
-    if(stu && (D.students||[]).includes(stu)){
-      mode='parent'; me=stu; startParent();
-      if(rd && M.rounds[rd]) openMark(rd);
-      return;
+    if(!hasAny) h+='<div style="font-size:12px;color:#9ca3af">확인 필요</div>';
+    /* 학습 포인트 */
+    if(rx.pts&&rx.pts.length){
+      h+='<div style="margin-top:5px;font-size:11.5px;color:#374151;background:#f0fdf4;border-radius:6px;padding:5px 8px">';
+      h+='<b style="color:#166534">📌 추가 학습 포인트:</b> ';
+      h+=rx.pts.map(p=>`· ${esc(p)}`).join('  ');
+      h+='</div>';
     }
-    if(rd){ window._pendingRound=rd; document.getElementById('gate-err').textContent='이름을 입력하면 '+((M.rounds[rd]&&M.rounds[rd].title)||(rd+'회'))+' 진단으로 바로 들어갑니다.'; }
-  })();
+    h+='</div>';
+  });
+  h+='</div>';
+  return h;
+}
+
+/* ─── 기존 유틸 ─────────────────────────────────────────── */
+function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.remove('show'),2400); }
+function bp(no){ return M.blueprint.find(b=>b.no===no)||{no:no,area:'',pts:0}; }
+function roundKeys(){ return Object.keys(M.rounds).sort((a,b)=>+a-+b); }
+function roundItems(r){ return (M.rounds[r]&&M.rounds[r].items)||[]; }
+function itemOf(r,no){ return roundItems(r).find(i=>i.no===no)||{no:no,type:'',answer:'',comment:''}; }
+function Q(){ return M.questions||30; }
+function givenName(n){ return n&&n.length>=2? n.slice(1):n; }
+function latexToPlain(s){ return (s||'').replace(/\$(.*?)\$/g,function(m,x){ return x.replace(/\\dfrac|\\frac/g,'').replace(/\{(\d+)\}\{(\d+)\}/g,'$1/$2').replace(/[{}]/g,''); }); }
+function vidUrl(r,t){ var v=(M.rounds[r]&&M.rounds[r].video)||''; if(!v) return ''; if(t&&+t>0){ v += (v.indexOf('?')>=0?'&':'?')+'t='+Math.floor(t); } return v; }
+function openVid(r,t){ var u=vidUrl(r,t); if(u) window.open(u,'_blank','noopener'); else toast('등록된 영상이 없어요.'); }
+function printAnswers(r){
+  var items=roundItems(r); if(!items.length){ toast('등록된 정답이 없어요.'); return; }
+  var rows=''; for(var n=1;n<=Q();n++){ var it=itemOf(r,n); var b=bp(n); rows+='<tr><td>'+n+'</td><td>'+esc(b.area)+'</td><td>'+b.pts+'</td><td>'+esc(latexToPlain(it.answer))+'</td></tr>'; }
+  var w=window.open('','_blank'); if(!w) return;
+  var ti=esc((M.rounds[r].title||r+'회'));
+  w.document.write('<html><head><meta charset="utf-8"><title>'+ti+' 정답</title><style>body{font-family:sans-serif;padding:20px;}h2{margin:0 0 10px;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #999;padding:6px 8px;font-size:13px;text-align:center;}th{background:#eee;}td:last-child{text-align:left;font-weight:700;}</style></head><body><h2>중급 모의고사 '+ti+' 정답</h2><table><thead><tr><th>번호</th><th>영역</th><th>배점</th><th>정답</th></tr></thead><tbody>'+rows+'</tbody></table><scr'+'ipt>setTimeout(function(){window.print();},350);</scr'+'ipt></body></html>');
+  w.document.close();
+}
+
+/* ─── Supabase ──────────────────────────────────────────── */
+async function supaUpsert(student,r,ox,source){
+  const oxs=ox.join?ox.join(''):ox; const sc=scoreOf(oxs.split(''));
+  try{
+    const res=await fetch(SUPA_URL+"/rest/v1/mock_results",{method:"POST",headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates"},body:JSON.stringify({student:student,round:r,ox:oxs,score:sc.score,wrong:sc.wrong,source:source||'parent'})});
+    return res.ok;
+  }catch(e){ return false; }
+}
+async function supaLoadAll(){
+  try{
+    const r=await fetch(SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,source,updated_at",{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
+    if(!r.ok) return false;
+    const rows=await r.json();
+    rows.forEach(row=>{ if(!row.ox||row.ox.length!==Q()) return; M.results[row.student]=M.results[row.student]||{}; M.results[row.student][row.round]=[{ox:row.ox.split(''),ts:(row.updated_at||'').slice(0,10),by:row.source||'db'}]; });
+    return true;
+  }catch(e){ return false; }
+}
+
+/* ─── 로그인 ─────────────────────────────────────────────── */
+function enter(){
+  const v=document.getElementById('pw').value.trim();
+  if(!v){ return; }
+  if(v.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; startTeacher(); return; }
+  if(!(D.students||[]).includes(v)){ document.getElementById('gate-err').textContent='등록된 학생만 입장할 수 있어요.'; return; }
+  mode='parent'; me=v; try{ localStorage.setItem('gfield_student',v); }catch(e){}
+  startParent();
+  if(window._pendingRound && M.rounds[window._pendingRound]){ openMark(window._pendingRound); window._pendingRound=null; }
+}
+function boot(){
+  document.getElementById('gate').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('h-sub').textContent = mode==='teacher'?'원장 분석':(me+' 학생');
+}
+
+/* ─── 채점 계산 ──────────────────────────────────────────── */
+function blankOx(){ const a=[]; for(let i=0;i<Q();i++) a.push('O'); return a; }
+function scoreOf(ox){ let s=0,wrong=0; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X') wrong++; else s+=bp(n).pts; } return {score:Math.round(s*10)/10, wrong:wrong, correct:Q()-wrong}; }
+function areaStats(ox){ const map={}; M.areas.forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=Q();n++){ const b=bp(n); if(!map[b.area]) map[b.area]={tot:0,got:0,cnt:0,ok:0}; map[b.area].tot+=b.pts; map[b.area].cnt++; if(ox[n-1]!=='X'){ map[b.area].got+=b.pts; map[b.area].ok++; } } return map; }
+function wrongList(r,ox){ const out=[]; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X'){ const it=itemOf(r,n); const b=bp(n); out.push({no:n, area:b.area, pts:b.pts, type:it.type, comment:it.comment, t:it.t||0}); } } return out; }
+function typeComment(it){ if(it.comment&&it.comment.trim()) return it.comment; if(it.type) return "'"+it.type+"' 유형이에요. 풀이 강의를 보며 방법을 익힌 뒤, 며칠 뒤 새 종이에 스스로 다시 풀어보세요."; return "풀이 강의를 보며 방법을 익힌 뒤 스스로 다시 풀어보세요."; }
+
+/* ─── 결과 저장 ──────────────────────────────────────────── */
+function attemptsOf(student,r){ M.results[student]=M.results[student]||{}; M.results[student][r]=M.results[student][r]||[]; return M.results[student][r]; }
+function latestOx(student,r){ const a=attemptsOf(student,r); return a.length? a[a.length-1].ox : null; }
+function pushAttempt(student,r,ox,by){ const a=attemptsOf(student,r); a.push({ox:ox.slice(), ts:new Date().toISOString().slice(0,10), by:by||'parent'}); while(a.length>3) a.shift(); }
+function lsKey(){ return 'gfield_mock_'+me; }
+function loadLocal(){ try{ const j=localStorage.getItem(lsKey()); if(j){ M.results[me]=JSON.parse(j); } }catch(e){} }
+function saveLocal(){ try{ localStorage.setItem(lsKey(), JSON.stringify(M.results[me]||{})); }catch(e){} }
+
+/* 코치 메시지 (랜덤) */
+function coachMsg(isParent){
+  const arr = isParent? (D.vip&&D.vip.coachParent)||[] : (D.vip&&D.vip.coach)||[];
+  if(!arr.length) return '';
+  return arr[Math.floor(Math.random()*arr.length)];
+}
+
+/* ─── 학부모 모드 ────────────────────────────────────────── */
+let markOx=null;
+function startParent(){ boot(); loadLocal(); renderRoundPick(); }
+function renderRoundPick(){
+  let h=`<div class="card">
+    <h3>📝 진단할 회차를 선택하세요</h3>
+    <div class="hint">집에서 푼 <b>중급 모의고사</b>의 회차를 고르고, <b>틀린 문제 번호만</b> 체크하면 점수·약점 유형·처방 교재가 바로 나옵니다. 제출하면 <b>원장님께 자동 전송</b>돼요.</div>
+    <div class="round-grid">`;
+  roundKeys().forEach(r=>{
+    const at=attemptsOf(me,r).length;
+    const hasType=roundItems(r).length>0;
+    h+=`<div class="round-card" onclick="openMark('${r}')">
+      <div class="rn">${esc(M.rounds[r].title||r+'회')}</div>
+      <div class="rs">${at?('응시 '+at+'회'):'미응시'}${hasType?'':' · 준비중'}</div>
+      ${roundItems(r).length?`<button class="rcprint" onclick="event.stopPropagation();printAnswers('${r}')">🖨 정답 인쇄</button>`:''}
+    </div>`;
+  });
+  h+='</div></div>';
+  document.getElementById('main').innerHTML=h;
+}
+function openMark(r){
+  curRound=r;
+  const prev=latestOx(me,r);
+  markOx = prev? prev.slice() : blankOx();
+  renderMark();
+}
+function renderMark(){
+  const r=curRound, at=attemptsOf(me,r);
+  let g='';
+  for(let n=1;n<=Q();n++){
+    const w=markOx[n-1]==='X';
+    const b=bp(n);
+    const tierCls=b.pts>=4?'border-color:#fca5a5':b.pts>=3?'border-color:#fde68a':'';
+    g+=`<div class="qbtn ${w?'wrong':''}" onclick="toggleQ(${n})" title="${b.pts}점" style="${tierCls}"><span>${n}</span></div>`;
+  }
+  const sc=scoreOf(markOx);
+  let attemptBtns='';
+  if(at.length){ attemptBtns='<div class="row-inline"><span class="hint" style="margin:0">이전 응시 불러오기:</span>'; at.forEach((a,i)=>{ attemptBtns+=`<button class="btn gray sm" onclick="loadAttempt(${i})">${i+1}회차 (${a.ts})</button>`; }); attemptBtns+='</div>'; }
+  const hint='<div class="hint" style="margin-bottom:6px">🔴 경계 빨강=4.2점 · 🟡 노랑=3.4점 · 흰색=2.7점 · <b>틀린 번호만</b> 눌러 ✕ 표시하세요</div>';
+  document.getElementById('main').innerHTML=`
+    <div class="card">
+      <div class="row-inline"><button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button><b>${esc(M.rounds[r].title||r+'회')} 진단</b></div>
+      ${hint}${attemptBtns}
+      <div class="qgrid">${g}</div>
+      <div class="scorebar">
+        <div><div class="big" id="mk-score">${sc.score}</div><div class="lbl">점 / 100점</div></div>
+        <div><div class="big" style="color:#334">${sc.correct}<span style="font-size:15px;color:#889"> / ${Q()}</span></div><div class="lbl">맞은 개수</div></div>
+        <div><div class="big" style="color:#dc2626" id="mk-wrong">${sc.wrong}</div><div class="lbl">틀린 개수</div></div>
+      </div>
+      <button class="btn pri" style="width:100%;margin-top:8px" onclick="submitAttempt()">결과 제출 및 분석 보기 →</button>
+    </div>`;
+}
+function toggleQ(n){ markOx[n-1]= markOx[n-1]==='X'?'O':'X'; renderMark(); }
+function loadAttempt(i){ const a=attemptsOf(me,curRound); if(a[i]){ markOx=a[i].ox.slice(); renderMark(); } }
+async function submitAttempt(){
+  const at=attemptsOf(me,curRound);
+  if(at.length>=3){ if(!confirm('이미 3회 응시했어요. 가장 오래된 기록을 지우고 새로 저장할까요?')) return; }
+  const prev = at.length? at[at.length-1].ox.slice() : null;
+  pushAttempt(me,curRound,markOx,'parent'); saveLocal();
+  const ok=await supaUpsert(me,curRound,markOx,'parent');
+  toast(ok?'제출 완료 · 원장님께 자동 전송됐어요 ✅':'제출 저장됨(자동전송 실패) — 코드로 보내주세요');
+  renderReport(me,curRound,prev,ok);
+}
+
+/* ─── 학부모용 분석 리포트 (전면 개선) ──────────────────── */
+function renderReport(student,r,prevOx,sent){
+  const at=attemptsOf(student,r);
+  const ox=at[at.length-1].ox;
+  const sc=scoreOf(ox);
+  const as=areaStats(ox);
+  const wl=wrongList(r,ox);
+  const tiers=scoreByTier(ox);
+  const lv=levelLabel(sc.score);
+  const gName=givenName(student);
+
+  /* ── 헤더: 점수 카드 ── */
+  let h=`<div class="card">
+    <div class="row-inline" style="justify-content:space-between;margin-bottom:6px">
+      <div class="row-inline" style="gap:6px;margin-bottom:0">
+        <button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button>
+        <b>${esc(gName)} · ${esc(M.rounds[r].title||r+'회')} 분석 결과</b>
+      </div>
+      ${sent!==undefined?`<span class="pill ${sent?'on':'off'}">${sent?'원장님께 전송됨':'전송 대기'}</span>`:''}
+    </div>
+    <div class="scorebar">
+      <div><div class="big">${sc.score}</div><div class="lbl">점 / 100점</div></div>
+      <div><div class="big" style="color:#334">${sc.correct} / ${Q()}</div><div class="lbl">맞은 개수</div></div>
+      <div><div class="big" style="color:#dc2626">${sc.wrong}</div><div class="lbl">틀린 개수</div></div>
+      <div><div class="big" style="color:#334">${at.length}<span style="font-size:15px;color:#889">회</span></div><div class="lbl">응시</div></div>
+    </div>
+    <div class="row-inline" style="margin-top:8px">
+      <span class="level-badge ${lv.cls}">${lv.icon} 현재 수준 예측: <b>${lv.label}</b></span>
+      <span class="hint" style="margin:0;font-size:11px">경시55·심화44·실력35·일품25.7점 기준</span>
+    </div>
+  </div>`;
+
+  /* ── 이전 대비 변화 ── */
+  if(prevOx){
+    let solved=[],still=[],neo=[];
+    for(let n=1;n<=Q();n++){
+      const p=prevOx[n-1]==='X', c=ox[n-1]==='X';
+      if(p&&!c) solved.push(n); else if(p&&c) still.push(n); else if(!p&&c) neo.push(n);
+    }
+    h+=`<div class="card" style="padding:12px 14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px">📊 지난 응시 대비 변화</div>
+      <div class="cmp">
+        <span class="chip solved">✅ 새로 맞힘 ${solved.length}개: ${solved.join(', ')||'-'}</span>
+        <span class="chip still">🔁 반복 오답 ${still.length}개: ${still.join(', ')||'-'}</span>
+        <span class="chip newx">⚠️ 새로 틀림 ${neo.length}개: ${neo.join(', ')||'-'}</span>
+      </div>
+    </div>`;
+  }
+
+  /* ── 단계별 분석 ── */
+  h+=`<div class="card">
+    <h3 style="margin-bottom:10px">📊 단계별 정답률</h3>
+    ${tierHTML(tiers, tierComment(tiers))}
+  </div>`;
+
+  /* ── 점수 추이 (다회 응시 시) ── */
+  const spark=svgSparkline(student);
+  if(spark) h+=`<div class="card" style="padding:12px 14px">${spark}</div>`;
+
+  /* ── 영역별 수행률 ── */
+  h+=`<div class="card"><h3>영역별 수행률</h3>`;
+  M.areas.forEach(a=>{
+    const s=as[a]||{tot:0,got:0,cnt:0,ok:0};
+    const pct=s.tot?Math.round(s.got/s.tot*100):0;
+    h+=`<div class="area-row">
+      <div class="at"><b>${esc(a)}</b><span>${s.ok}/${s.cnt}문항 · ${pct}%</span></div>
+      <div class="abar"><i class="${pct>=70?'high':pct<50?'low':''}" style="width:${pct}%"></i></div>
+    </div>`;
+  });
+  h+='</div>';
+
+  /* ── 오답 문항 상세 ── */
+  const hasVid=(M.rounds[r]&&M.rounds[r].video);
+  h+=`<div class="card">
+    <div class="row-inline" style="justify-content:space-between;margin-bottom:6px">
+      <h3 style="margin:0">📋 오답 문항 상세 분석</h3>
+      ${hasVid?`<button class="btn navy sm" onclick="openVid('${r}',0)">▶ 전체 풀이 영상</button>`:''}
+    </div>`;
+  if(!wl.length){
+    h+='<div class="hint">틀린 문항이 없어요. 훌륭합니다! 🎉</div>';
+  } else {
+    h+='<div class="hint">문항을 누르면 해당 풀이 영상으로 바로 이동해요.</div>';
+    wl.forEach(w=>{
+      const it=itemOf(r,w.no);
+      const tierCls=w.pts>=4?'border-color:#fca5a5':w.pts>=3?'border-color:#fde68a':'';
+      const clk=hasVid?`onclick="openVid('${r}',${w.t})" style="cursor:pointer"`:''
+      h+=`<div class="wt-item" ${clk} style="${tierCls}">
+        <div class="wt-h">
+          <span class="no">${w.no}번</span>${esc(w.type||'(유형 준비중)')}
+          <span class="wt-a"> · ${esc(w.area)} · ${w.pts}점</span>
+          ${hasVid?'<span class="vjump">▶ 영상</span>':''}
+        </div>
+        <div class="wt-c">${esc(typeComment(it))}</div>
+      </div>`;
+    });
+  }
+  h+='</div>';
+
+  /* ── 처방 교재 ── */
+  const rxHtml=prescriptionHTML(wl,5);
+  if(rxHtml) h+=`<div class="card" style="padding:0;border:none;background:transparent">${rxHtml}</div>`;
+
+  /* ── 코치 메시지 ── */
+  const msg=coachMsg(false);
+  const msgP=coachMsg(true);
+  if(msg||msgP){
+    h+=`<div class="coach-msg">
+      <div class="coach-icon">💬</div>
+      ${msg?`<div class="coach-text">${esc(msg)}</div>`:''}
+      ${msgP?`<div class="coach-sub">📌 학부모님께 — ${esc(msgP)}</div>`:''}
+    </div>`;
+  }
+
+  /* ── 전송 실패 시 코드 ── */
+  if(sent===false){
+    const code=btoa(unescape(encodeURIComponent(JSON.stringify({s:student,r:r,ox:ox.join('')}))));
+    h+=`<div class="card"><h3>💬 자동 전송이 안 됐어요</h3>
+      <div class="hint">아래 코드를 복사해 원장님께 카톡으로 보내주세요.</div>
+      <textarea id="sendcode" rows="2" readonly>${code}</textarea>
+      <div class="row-inline" style="margin-top:8px">
+        <button class="btn navy sm" onclick="copyCode()">코드 복사</button>
+        <a class="btn pri sm" style="text-decoration:none" href="https://open.kakao.com/me/gfield" target="_blank" rel="noopener">카톡으로 열기</a>
+      </div></div>`;
+  }
+
+  document.getElementById('main').innerHTML=h;
+}
+function copyCode(){ const t=document.getElementById('sendcode'); t.select(); try{ navigator.clipboard.writeText(t.value); }catch(e){ document.execCommand('copy'); } toast('코드가 복사됐어요.'); }
+
+/* ─── 원장 모드 ──────────────────────────────────────────── */
+let tSel=''; let tTab='student';
+async function startTeacher(){ boot(); document.getElementById('teacher-savebar').classList.remove('hidden'); document.getElementById('main').innerHTML='<div class="card"><div class="hint">결과 불러오는 중…</div></div>'; await supaLoadAll(); renderTeacher(); }
+async function reloadResults(){ const st=document.getElementById('save-status'); st.textContent='불러오는 중…'; const ok=await supaLoadAll(); st.textContent=ok?'✅ 최신 결과 불러옴':'불러오기 실패'; renderTeacher(); }
+function renderTeacher(){
+  let h=`<div class="tabs">
+    <button class="${tTab==='student'?'on':''}" onclick="tSetTab('student')">👤 학생별 분석</button>
+    <button class="${tTab==='class'?'on':''}" onclick="tSetTab('class')">👥 반 전체 약점</button>
+    <button class="${tTab==='import'?'on':''}" onclick="tSetTab('import')">📥 코드 수동입력</button>
+    <button class="${tTab==='edit'?'on':''}" onclick="tSetTab('edit')">✏️ 회차 유형 편집</button>
+  </div><div id="t-body"></div>`;
+  document.getElementById('main').innerHTML=h;
+  if(tTab==='student') tStudent();
+  else if(tTab==='class') tClass();
+  else if(tTab==='import') tImport();
+  else tEdit();
+}
+function tSetTab(t){ tTab=t; renderTeacher(); }
+
+function tStudent(){
+  const students=D.students||[];
+  if(!tSel||!students.includes(tSel)) tSel=students[0]||'';
+  let h=`<div class="card">
+    <div class="row-inline">
+      <b>학생</b>
+      <select class="select" onchange="tPick(this.value)">${students.map(s=>`<option ${s===tSel?'selected':''}>${esc(s)}</option>`).join('')}</select>
+      <span class="hint" style="margin:0">칸 클릭=수동 O/X 입력</span>
+    </div>`;
+  if(!tSel){ h+='<div class="hint">학생이 없습니다.</div></div>'; document.getElementById('t-body').innerHTML=h; return; }
+  h+='<div class="mtable-scroll"><table class="mx"><thead><tr><th>회차</th>';
+  for(let n=1;n<=Q();n++) h+=`<th>${n}</th>`;
+  h+='<th>틀린수</th><th>점수</th><th>레벨</th></tr></thead><tbody>';
+  roundKeys().forEach(r=>{
+    const ox=latestOx(tSel,r);
+    h+=`<tr><th>${esc(M.rounds[r].title||r+'회')}</th>`;
+    if(!ox){
+      for(let n=1;n<=Q();n++) h+=`<td class="ox" onclick="tSeed('${r}',${n})">·</td>`;
+      h+='<td class="wc">-</td><td class="wc">-</td><td class="wc">-</td>';
+    } else {
+      for(let n=1;n<=Q();n++){ const x=ox[n-1]==='X'; h+=`<td class="ox ${x?'x':'o'}" onclick="tToggle('${r}',${n})">${x?'✕':'O'}</td>`; }
+      const sc=scoreOf(ox); const lv=levelLabel(sc.score);
+      h+=`<td class="wc">${sc.wrong}</td><td class="wc">${sc.score}</td><td class="wc">${lv.icon}${lv.label}</td>`;
+    }
+    h+='</tr>';
+  });
+  h+='</tbody></table></div><div class="hint" style="margin-top:6px">학부모 제출 결과 자동 반영. 안 푼 회차(·)는 클릭해 직접 입력하세요.</div></div>';
+  h+=tAnalysisHTML(tSel);
+  document.getElementById('t-body').innerHTML=h;
+}
+function tPick(v){ tSel=v; tStudent(); }
+function tSeed(r,n){ pushAttempt(tSel,r,blankOx(),'teacher'); tToggle(r,n); }
+function tToggle(r,n){ const ox=latestOx(tSel,r); if(!ox) return; ox[n-1]= ox[n-1]==='X'?'O':'X'; tStudent(); supaUpsert(tSel,r,ox,'teacher').then(ok=>{ document.getElementById('save-status').textContent= ok?'✅ 저장됨':'저장 실패'; }); }
+
+/* ─── 원장용 누적 분석 (개선) ───────────────────────────── */
+function tAnalysisHTML(student){
+  const rs=roundKeys().filter(r=>latestOx(student,r));
+  if(!rs.length) return '<div class="card"><div class="hint">아직 응시 기록이 없습니다.</div></div>';
+
+  const areaAgg={}; M.areas.forEach(a=>areaAgg[a]={tot:0,got:0});
+  const tierAgg={27:{q:0,ok:0},34:{q:0,ok:0},42:{q:0,ok:0}};
+  const typeCnt={}; const scores=[];
+  const allWrong=[];
+
+  rs.forEach(r=>{
+    const ox=latestOx(student,r);
+    const as=areaStats(ox);
+    const t=scoreByTier(ox);
+    M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; });
+    [27,34,42].forEach(k=>{ if(t[k]){tierAgg[k].q+=t[k].q; tierAgg[k].ok+=t[k].ok;} });
+    scores.push({r:r,sc:scoreOf(ox).score});
+    const wl=wrongList(r,ox);
+    wl.forEach(w=>{ allWrong.push(w); const key=w.type||('('+w.area+')'); typeCnt[key]=(typeCnt[key]||0)+1; });
+  });
+
+  const gName=givenName(student);
+  const avgScore=rs.length?Math.round(scores.reduce((a,s)=>a+s.sc,0)/rs.length*10)/10:0;
+  const lv=levelLabel(avgScore);
+
+  let h=`<div class="card">
+    <h3>📊 ${esc(gName)} 누적 분석 · 응시 ${rs.length}회차</h3>`;
+
+  /* 회차별 점수 칩 */
+  h+='<div class="score-trend-grid">';
+  scores.forEach(s=>{
+    const l=levelLabel(s.sc);
+    h+=`<div class="score-chip"><div class="sc-rnd">${esc(M.rounds[s.r].title||s.r+'회')}</div><div class="sc-val">${s.sc}</div><div style="font-size:10px;color:#6b7280">${l.icon}${l.label}</div></div>`;
+  });
+  h+='</div>';
+
+  /* 평균 레벨 */
+  h+=`<div class="row-inline" style="margin:8px 0">
+    <span class="level-badge ${lv.cls}">${lv.icon} 평균 ${avgScore}점 → ${lv.label} 수준</span>
+  </div>`;
+
+  /* 그래프 */
+  const spark=svgSparkline(student);
+  if(spark) h+=spark;
+
+  /* 단계별 누적 */
+  h+='<h3 style="margin:12px 0 8px">★단계별 누적 정답률</h3>';
+  h+=tierHTML(tierAgg, tierComment(tierAgg));
+
+  /* 영역별 수행률 */
+  h+='<h3 style="margin:12px 0 8px">영역별 수행률</h3>';
+  M.areas.forEach(a=>{
+    const s=areaAgg[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0;
+    h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${pct}%</span></div><div class="abar"><i class="${pct>=70?'high':pct<50?'low':''}" style="width:${pct}%"></i></div></div>`;
+  });
+
+  /* 자주 틀리는 유형 TOP8 */
+  const top=Object.entries(typeCnt).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  if(top.length){
+    h+='<h3 style="margin:12px 0 8px">🔴 자주 틀리는 세부 유형</h3>';
+    top.forEach(([t,c])=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${c}회</span>${esc(t)}</div></div>`; });
+  }
+  h+='</div>';
+
+  /* 처방 교재 */
+  const rxHtml=prescriptionHTML(allWrong, 6);
+  if(rxHtml) h+=`<div class="card" style="padding:0;border:none;background:transparent">${rxHtml}</div>`;
+
+  return h;
+}
+
+/* ─── 반 전체 약점 ───────────────────────────────────────── */
+function tClass(){
+  const students=(D.students||[]).filter(s=>M.results[s]);
+  const areaAgg={}; M.areas.forEach(a=>areaAgg[a]={tot:0,got:0});
+  const tierAgg={27:{q:0,ok:0},34:{q:0,ok:0},42:{q:0,ok:0}};
+  const typeCnt={}; let n=0;
+  const allWrong=[];
+
+  students.forEach(s=>{
+    roundKeys().forEach(r=>{
+      const ox=latestOx(s,r); if(!ox) return; n++;
+      const as=areaStats(ox);
+      const t=scoreByTier(ox);
+      M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; });
+      [27,34,42].forEach(k=>{ if(t[k]){tierAgg[k].q+=t[k].q; tierAgg[k].ok+=t[k].ok;} });
+      const wl=wrongList(r,ox);
+      wl.forEach(w=>{ allWrong.push(w); const key=w.type||('('+w.area+')'); typeCnt[key]=(typeCnt[key]||0)+1; });
+    });
+  });
+
+  let h=`<div class="card"><h3>👥 반 전체 약점 · 응시 ${n}건 · ${students.length}명</h3>`;
+  if(!n){ h+='<div class="hint">아직 응시 기록이 없습니다.</div></div>'; document.getElementById('t-body').innerHTML=h; return; }
+
+  h+='<h3 style="margin:10px 0 8px">★단계별 반 평균</h3>';
+  h+=tierHTML(tierAgg, null);
+
+  h+='<h3 style="margin:12px 0 8px">영역별 수행률</h3>';
+  M.areas.forEach(a=>{
+    const s=areaAgg[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0;
+    h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${pct}%</span></div><div class="abar"><i class="${pct>=70?'high':pct<50?'low':''}" style="width:${pct}%"></i></div></div>`;
+  });
+
+  const top=Object.entries(typeCnt).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  h+='<h3 style="margin:12px 0 8px">반에서 가장 많이 틀린 유형</h3>';
+  top.forEach(([t,c])=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${c}회</span>${esc(t)}</div></div>`; });
+  h+='</div>';
+
+  const rxHtml=prescriptionHTML(allWrong, 8);
+  if(rxHtml) h+=`<div class="card" style="padding:0;border:none;background:transparent">${rxHtml}</div>`;
+
+  document.getElementById('t-body').innerHTML=h;
+}
+
+/* ─── 수동 코드 입력 ─────────────────────────────────────── */
+function tImport(){
+  document.getElementById('t-body').innerHTML=`<div class="card"><h3>📥 코드 수동입력</h3>
+    <div class="hint">학부모 자동 전송 실패분 코드를 붙여넣어 반영하세요. 여러 개는 줄바꿈.</div>
+    <textarea id="impcode" rows="4" placeholder="여기에 코드 붙여넣기"></textarea>
+    <div class="row-inline" style="margin-top:8px"><button class="btn navy sm" onclick="doImport()">가져오기</button></div>
+    <div id="imp-res" class="hint"></div></div>`;
+}
+async function doImport(){
+  const raw=document.getElementById('impcode').value.trim(); if(!raw){ return; }
+  const lines=raw.split(/\s+/).filter(Boolean); let ok=0,fail=0,names=[];
+  for(const code of lines){ try{ const o=JSON.parse(decodeURIComponent(escape(atob(code)))); if(o&&o.s&&o.r&&o.ox&&o.ox.length===Q()){ M.results[o.s]=M.results[o.s]||{}; M.results[o.s][o.r]=[{ox:o.ox.split(''),ts:new Date().toISOString().slice(0,10),by:'parent'}]; await supaUpsert(o.s,o.r,o.ox,'parent'); ok++; names.push(o.s+' '+(M.rounds[o.r]?M.rounds[o.r].title:o.r)); } else fail++; }catch(e){ fail++; } }
+  document.getElementById('imp-res').innerHTML=`✅ ${ok}건 반영${fail?(' · ❌ '+fail+'건 실패'):''}${names.length?('<br>'+names.map(esc).join(', ')):''}}`;
+  toast(ok+'건 반영 완료');
+}
+
+/* ─── 회차 유형 편집 (원장) ─────────────────────────────── */
+function tEdit(){
+  const r=curRound; const rd=M.rounds[r];
+  let h=`<div class="card">
+    <div class="row-inline">
+      <b>회차</b>
+      <select class="select" onchange="curRound=this.value; tEdit();">${roundKeys().map(k=>`<option value="${k}" ${k===r?'selected':''}>${esc(M.rounds[k].title||k+'회')}</option>`).join('')}</select>
+    </div>
+    <div class="hint">세부유형·정답·오답코멘트 입력. 영역·배점은 전 회차 공통(고정). 저장 버튼 클릭 필수.</div>
+    <div class="row-inline">
+      <label style="font-size:12px;color:#555;width:64px">풀이영상</label>
+      <input id="ed-video" value="${esc(rd.video||'')}" placeholder="유튜브 링크" style="flex:1;padding:8px;border:1px solid var(--line);border-radius:7px" oninput="M.rounds['${r}'].video=this.value; markDirty();">
+    </div>`;
+  for(let n=1;n<=Q();n++){
+    const it=itemOf(r,n); const b=bp(n);
+    h+=`<div class="ed-row"><div class="no">${n}</div>
+      <input value="${esc(it.type)}" placeholder="세부유형" oninput="edSet('${r}',${n},'type',this.value)">
+      <div><input value="${esc(it.answer)}" placeholder="정답" oninput="edSet('${r}',${n},'answer',this.value)" style="width:100%"><div style="font-size:12px;color:#0a7a3d;margin-top:3px;min-height:14px">${esc(it.answer)}</div></div>
+      <div style="display:flex;gap:6px"><span class="area" style="min-width:74px;font-size:11px;color:#6b7280">${esc(b.area)} · ${b.pts}</span><input value="${esc(it.comment)}" placeholder="오답 코멘트(선택)" oninput="edSet('${r}',${n},'comment',this.value)" style="flex:1"></div>
+    </div>`;
+  }
+  h+='</div>';
+  document.getElementById('t-body').innerHTML=h;
+}
+function edSet(r,n,k,v){ const items=M.rounds[r].items=M.rounds[r].items||[]; let it=items.find(x=>x.no===n); if(!it){ it={no:n,type:'',answer:'',comment:''}; items.push(it); items.sort((a,b)=>a.no-b.no); } it[k]=v; markDirty(); }
+
+/* ─── GitHub 저장 ────────────────────────────────────────── */
+function markDirty(){ const s=document.getElementById('save-status'); if(s) s.textContent='● 변경됨 — 저장 필요'; }
+function buildMockFile(){
+  const out={title:M.title,areas:M.areas,roundCount:M.roundCount,questions:M.questions,blueprint:M.blueprint,rounds:M.rounds,results:{}};
+  return "/* =========================================================\n * 지필드 영재교육 · 중급 모의고사 진단 데이터\n * (결과는 Supabase에 저장됩니다. 이 파일은 유형·정답·영상만)\n * 저장: "+new Date().toLocaleString('ko-KR')+"\n * ========================================================= */\nwindow.GFIELD_MOCK = "+JSON.stringify(out,null,2)+";\n";
+}
+function ghToken(){ let t=null; try{ t=localStorage.getItem('gfield_gh_token'); }catch(e){} if(!t){ t=prompt('GitHub 토큰 (Contents: Read and write)'); if(!t) return null; t=t.trim(); try{ localStorage.setItem('gfield_gh_token',t); }catch(e){} } return t; }
+async function saveMock(){
+  const token=ghToken(); if(!token) return;
+  const st=document.getElementById('save-status'); st.textContent='저장 중…';
+  try{
+    let sha=null; const g=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?ref=${BRANCH}`,{headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'}}); if(g.ok){ sha=(await g.json()).sha; }
+    const b64=btoa(unescape(encodeURIComponent(buildMockFile())));
+    const p=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{method:'PUT',headers:{Authorization:'token '+token,Accept:'application/vnd.github+json'},body:JSON.stringify({message:'Update mock-data.js (types/answers)',content:b64,sha:sha,branch:BRANCH})});
+    if(p.ok){ st.textContent='✅ 저장 완료 (1~2분 후 반영)'; toast('저장 완료 ✅'); }
+    else{ const e=await p.json(); st.textContent='저장 실패: '+(e.message||p.status); if(p.status===401||p.status===403) toast('토큰 권한 확인'); }
+  }catch(e){ st.textContent='네트워크 오류'; toast('저장 실패'); }
+}
+function showCode(){ const w=window.open('','_blank'); w.document.write('<pre style="white-space:pre-wrap;word-break:break-all;font-size:12px;padding:12px">'+buildMockFile().replace(/</g,'&lt;')+'</pre>'); }
+
+/* ─── LaTeX ──────────────────────────────────────────────── */
+let _mathT=null;
+function typeset(){ if(!window.renderMathInElement) return; clearTimeout(_mathT); _mathT=setTimeout(function(){ try{ renderMathInElement(document.getElementById('main'),{delimiters:[{left:'$',right:'$',display:false}],throwOnError:false,ignoredClasses:['katex']}); }catch(e){} },20); }
+(function(){ var m=document.getElementById('main'); if(m&&window.MutationObserver){ new MutationObserver(typeset).observe(m,{childList:true,subtree:true}); } window.addEventListener('load',typeset); })();
+
+/* ─── URL 직접 진입 ──────────────────────────────────────── */
+(function initFromUrl(){
+  const p=new URLSearchParams(location.search); const rd=p.get('round');
+  let stu=''; try{ stu=localStorage.getItem('gfield_student')||''; }catch(e){}
+  if(stu && stu.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; startTeacher(); return; }
+  if(stu && (D.students||[]).includes(stu)){
+    mode='parent'; me=stu; startParent();
+    if(rd && M.rounds[rd]) openMark(rd);
+    return;
+  }
+  if(rd){ window._pendingRound=rd; document.getElementById('gate-err').textContent='이름을 입력하면 '+((M.rounds[rd]&&M.rounds[rd].title)||(rd+'회'))+' 진단으로 바로 들어갑니다.'; }
+})();
 </script>
 </body>
-</html>
