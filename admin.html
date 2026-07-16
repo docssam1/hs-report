@@ -148,6 +148,15 @@
         <div class="hint">칸을 클릭하면 해당 학생의 그 주차 영상·자료가 열립니다(🔓). ⭐ 열은 방학 특강 수강 여부입니다.</div>
         <div class="matrix-scroll"><table id="matrix"></table></div>
       </div>
+      <div class="card">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <h3 style="margin:0">📊 학생 접속 기록</h3>
+          <button class="btn" onclick="loadAccessLog()">🔄 새로고침</button>
+          <span id="al-status" class="hint" style="margin:0"></span>
+        </div>
+        <div class="hint">학생이 사이트에 로그인한 횟수와 최근 접속 시각입니다.</div>
+        <div id="al-body">🔄 새로고침을 눌러 불러오세요.</div>
+      </div>
     </section>
 
     <section id="tab-students" class="hidden">
@@ -418,7 +427,7 @@
    - 강점: 직관력·수 감각·배운 원리(가우스 등) 잘 적용한 부분은 아낌없이 칭찬.
    - 약점: 기호로 논리적 식 세우기를 귀찮아하고 '때려 맞추기/노가다/일일이 손으로 쓰기/감으로 풀기' 방식을 쓴 문항을 찾아 지적.
    - 실수: '양쪽에' 같은 핵심 조건을 놓친 습관적 읽기 오류를 짚기.
-4. 포맷: 문항 번호를 명시해 영역별로 강점/약점을 나눠 설명. 파일명은 절대 노출 금지. 은어/전문용어 금지.
+4. 포맷: 문항 번호를 명시해 영역별로 강점/약점을 나눠 설명. 파일명은 절대 노출 금지. 은어·전문용어 금지.
 
 [출력 템플릿]
 오늘은 글이 길어요^^ 그래도 우리 [학생이름]를 위해 필독!! 즐거운 하루 되세요.
@@ -637,6 +646,36 @@
     body.innerHTML=h;
   }
   window.loadMockResults=loadMockResults;
+
+  /* ===== 학생 접속 기록 ===== */
+  const AL_URL="https://fgahqumaldheqettmvqg.supabase.co";
+  const AL_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
+  async function loadAccessLog(){
+    const st=document.getElementById('al-status'), body=document.getElementById('al-body');
+    if(st) st.textContent='불러오는 중…';
+    let rows=[];
+    try{
+      const r=await fetch(AL_URL+"/rest/v1/access_log?select=student,page,at&order=at.desc&limit=2000",{headers:{apikey:AL_KEY,Authorization:'Bearer '+AL_KEY}});
+      rows = r.ok? await r.json():[];
+      if(st) st.textContent = r.ok? ('✅ '+rows.length+'건'):'불러오기 실패';
+    }catch(e){ if(st) st.textContent='네트워크 오류'; }
+    if(!body) return;
+    const agg={};
+    rows.forEach(x=>{ const s=x.student; if(!agg[s]) agg[s]={n:0,last:null}; agg[s].n++; if(!agg[s].last||x.at>agg[s].last) agg[s].last=x.at; });
+    const fmt=(t)=>{ if(!t) return '-'; try{ return new Date(t).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}); }catch(e){ return t; } };
+    const studs=(window.GFIELD_DATA.students||[]);
+    const names=[...new Set([...studs, ...Object.keys(agg)])];
+    names.sort((a,b)=>((agg[b]?agg[b].n:0)-(agg[a]?agg[a].n:0)));
+    let h='<div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:13px"><thead><tr><th style="border:1px solid #ddd;padding:6px 12px">학생</th><th style="border:1px solid #ddd;padding:6px 12px">접속 횟수</th><th style="border:1px solid #ddd;padding:6px 12px">최근 접속</th></tr></thead><tbody>';
+    names.forEach(s=>{ const a=agg[s]; const n=a?a.n:0; h+=`<tr><th style="border:1px solid #ddd;padding:6px 12px;text-align:left">${esc(s)}</th><td style="border:1px solid #ddd;padding:6px 12px;text-align:center;font-weight:800;color:${n?'#16a34a':'#bbb'}">${n}</td><td style="border:1px solid #ddd;padding:6px 12px;text-align:center;color:${n?'#333':'#bbb'}">${a?fmt(a.last):'-'}</td></tr>`; });
+    h+='</tbody></table></div>';
+    h+='<h4 style="margin:14px 0 6px">최근 접속 20건</h4><div style="font-size:12.5px;line-height:1.9;color:#444">';
+    if(!rows.length) h+='<span class="hint">아직 접속 기록이 없습니다.</span>';
+    else rows.slice(0,20).forEach(x=>{ h+=`${esc(x.student)} <span style="color:#888">— ${fmt(x.at)}</span><br>`; });
+    h+='</div>';
+    body.innerHTML=h;
+  }
+  window.loadAccessLog=loadAccessLog;
   function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function renderSettings(){
     const sel=document.getElementById('current-week');
