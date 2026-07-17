@@ -910,7 +910,7 @@ window.GFIELD_MOCK = {
     },
     "4": {
       "title": "4회",
-      "video": "",
+      "video": "https://youtu.be/cBZ7iS4keIo",
       "script": "",
       "items": [
         {
@@ -1157,7 +1157,7 @@ window.GFIELD_MOCK = {
     },
     "5": {
       "title": "5회",
-      "video": "",
+      "video": "https://youtu.be/uoJCr2vn4AQ",
       "script": "",
       "items": [
         {
@@ -1404,7 +1404,7 @@ window.GFIELD_MOCK = {
     },
     "6": {
       "title": "6회",
-      "video": "",
+      "video": "https://youtu.be/43D594kTXP4",
       "script": "",
       "items": [
         {
@@ -1651,7 +1651,7 @@ window.GFIELD_MOCK = {
     },
     "7": {
       "title": "7회",
-      "video": "",
+      "video": "https://youtu.be/J8BNb-tHiM0",
       "script": "",
       "items": [
         {
@@ -1898,7 +1898,7 @@ window.GFIELD_MOCK = {
     },
     "8": {
       "title": "8회",
-      "video": "",
+      "video": "https://youtu.be/UR28dko8N6c",
       "script": "",
       "items": [
         {
