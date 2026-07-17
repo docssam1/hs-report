@@ -405,3 +405,87 @@ const PRESCRIPTION = [
     pts:['전체를 1로 놓고 부분을 분수로','두 상태의 차 = 실제 양의 차','통분해서 같은 단위로 비교']
   },
 ];
+
+/* ─────────────────────────────────────────────
+ * 분석 리포트 헬퍼 (mock.html에서 사용)
+ * ───────────────────────────────────────────── */
+/* ★단계별 분석 */
+function scoreByTier(ox){
+  const tiers={27:{q:0,ok:0,max:0},34:{q:0,ok:0,max:0},42:{q:0,ok:0,max:0}};
+  for(let n=1;n<=Q();n++){
+    const b=bp(n); const key=Math.round(b.pts*10);
+    if(!tiers[key]) continue;
+    tiers[key].q++;
+    tiers[key].max+=b.pts;
+    if(ox[n-1]!=='X') tiers[key].ok++;
+  }
+  return tiers;
+}
+
+/* 점수 추이 SVG */
+function svgSparkline(student){
+  const rs=roundKeys().filter(r=>latestOx(student,r));
+  if(rs.length<2) return '';
+  const scores=rs.map(r=>({r:r,sc:scoreOf(latestOx(student,r)).score,lbl:M.rounds[r].title||r+'회'}));
+  const maxSc=100, W=280, H=80, pad=20;
+  const pts=scores.map((s,i)=>{
+    const x=pad+(i/(scores.length-1))*(W-pad*2);
+    const y=H-pad-(s.sc/maxSc)*(H-pad*2);
+    return {x,y,sc:s.sc,lbl:s.lbl};
+  });
+  let path='M'+pts.map(p=>p.x.toFixed(1)+','+p.y.toFixed(1)).join(' L');
+  let svgDots='';
+  pts.forEach(p=>{
+    svgDots+=`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4" fill="#f97316"/>`;
+    svgDots+=`<text x="${p.x.toFixed(1)}" y="${(p.y-8).toFixed(1)}" text-anchor="middle" font-size="9" fill="#ea580c" font-weight="800">${p.sc}</text>`;
+    svgDots+=`<text x="${p.x.toFixed(1)}" y="${(H+4).toFixed(1)}" text-anchor="middle" font-size="9" fill="#9ca3af">${p.lbl}</text>`;
+  });
+  return `<div class="sparkline-wrap">
+    <h4>📈 회차별 점수 추이</h4>
+    <svg viewBox="0 0 ${W} ${H+14}" xmlns="http://www.w3.org/2000/svg">
+      <line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}" stroke="#e5e7eb" stroke-width="1"/>
+      <path d="${path}" fill="none" stroke="#fdba74" stroke-width="2.5" stroke-linejoin="round"/>
+      ${svgDots}
+    </svg>
+  </div>`;
+}
+
+/* 단계별 분석 HTML */
+function tierHTML(tiers, comment){
+  const make=(key, cls, label, range)=>{
+    const t=tiers[key]||{q:0,ok:0,max:0};
+    const pct=t.q?Math.round(t.ok/t.q*100):0;
+    const barCls=pct>=70?cls:(pct>=50?'low'+cls.replace('t',''):'low'+cls.replace('t',''));
+    return `<div class="tier-row ${cls}">
+      <span class="tier-badge ${cls}">${label}</span>
+      <div class="tier-info">
+        <div class="ti-label">${range}</div>
+        <div class="ti-score">${t.ok}/${t.q}문항 · ${pct}%</div>
+      </div>
+      <div class="tier-bar-wrap">
+        <div class="tier-bar"><i class="${cls}" style="width:${pct}%"></i></div>
+      </div>
+    </div>`;
+  };
+  let html='<div class="tier-section" style="border:1px solid var(--line)">';
+  html+=make(27,'t27','★2.7','기본 (1~12번)');
+  html+=make(34,'t34','★3.4','중심 (13~22번)');
+  html+=make(42,'t42','★4.2','고난도 (23~30번)');
+  html+='</div>';
+  if(comment) html+=`<div class="tier-comment">${esc(comment)}</div>`;
+  return html;
+}
+
+/* 단계별 자동 코멘트 */
+function tierComment(tiers){
+  const t27=tiers[27]||{q:0,ok:0};
+  const t34=tiers[34]||{q:0,ok:0};
+  const t42=tiers[42]||{q:0,ok:0};
+  const p27=t27.q?Math.round(t27.ok/t27.q*100):0;
+  const p34=t34.q?Math.round(t34.ok/t34.q*100):0;
+  const p42=t42.q?Math.round(t42.ok/t42.q*100):0;
+  if(p27<70) return '★2.7 기본 문항에서 실수나 오개념이 있어요. 기본기 강화가 우선입니다.';
+  if(p34<60) return '기본은 잘 맞히고 있어요. ★3.4 중심 유형 집중 연습으로 점수를 끌어올릴 수 있어요.';
+  if(p42<40) return '기본·중심 문항은 안정적이에요. ★4.2 고난도 유형 1~2개만 더 잡아도 큰 점수 차이가 납니다.';
+  return '★2.7~★3.4 구간이 안정적이에요. 고난도 문항도 잘 풀고 있습니다. 실전 연습을 계속 쌓으세요!';
+}
