@@ -676,7 +676,7 @@
   const RICH_STYLE={ b:'font-weight:800', i:'font-style:italic', u:'text-decoration:underline', red:'color:#dc2626;font-weight:700', blue:'color:#2563eb;font-weight:700', green:'color:#16a34a;font-weight:700', big:'font-size:1.28em;font-weight:800', hl:'background:#fff2a6;border-radius:3px;padding:0 2px', hlg:'background:#c6f6d5;border-radius:3px;padding:0 2px', hlp:'background:#fbd4e6;border-radius:3px;padding:0 2px', hlb:'background:#cfe4ff;border-radius:3px;padding:0 2px' };
   function inlineFmt(str){
     let s=escHtml(str);
-    s=s.replace(/\[모의고사:(\d+)\]/g,(m,n)=>`<a class="lnk ext mock-hw" href="mock.html?round=${n}" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:9px 14px;border-radius:10px;text-decoration:none;margin:5px 0">📝 중급 모의고사 ${n}회 진단하기 ›</a>`);
+    s=s.replace(/\[모의고사:(\d+)\]/g,(m,n)=>`<a class="lnk ext mock-hw" href="mock.html?round=${n}&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:9px 14px;border-radius:10px;text-decoration:none;margin:5px 0">📝 중급 모의고사 ${n}회 진단하기 ›</a>`);
     s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
     s=s.replace(/\[강조\]([\s\S]*?)\[\/강조\]/g,'<b>$1</b>');
     s=s.replace(/==([\s\S]+?)==/g,'<mark class="hl">$1</mark>');
@@ -711,7 +711,7 @@
     if(node && /THINKING\s*BASIC/i.test((node.title||'')+' '+(node.desc||''))){ h+=`<div class="m-sec"><a href="gfield_ugigi_tutor.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#6847ef,#28b58a);color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 10px rgba(85,52,216,.28)"><span>🧩</span> THINKING BASIC AI 튜터 열기 ›</a><div style="font-size:11.5px;color:#6f6b7a;margin-top:6px">우기기 등 문제 푸는 방법을 단계별로 익히고, 막히면 AI 튜터에게 질문하세요.</div></div>`; }
     const _rt=((node&&((node.desc||'')+' '+(node.title||'')+' '+(node.focus||'')))||'')+' '+(c.homework||'')+' '+(c.notice||'');
     const _rm=_rt.match(/중급\s*모의고사\s*(\d+)\s*회/)||_rt.match(/모의고사\s*중급\s*(\d+)\s*회/);
-    if(_rm){ const rn=_rm[1]; h+=`<div class="m-sec"><a href="mock.html?round=${rn}" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 10px rgba(234,88,12,.3)"><span>📝</span> 중급 모의고사 ${rn}회 진단하기 ›</a><div style="font-size:11.5px;color:#94794f;margin-top:6px">집에서 푼 시험지의 틀린 번호만 체크하면 약점·점수가 바로 나와요.</div></div>`; }
+    if(_rm){ const rn=_rm[1]; h+=`<div class="m-sec"><a href="mock.html?round=${rn}&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 10px rgba(234,88,12,.3)"><span>📝</span> 중급 모의고사 ${rn}회 진단하기 ›</a><div style="font-size:11.5px;color:#94794f;margin-top:6px">집에서 푼 시험지의 틀린 번호만 체크하면 약점·점수가 바로 나와요.</div></div>`; }
     const tbs=(c.textbooks||[]).filter(t=>t&&((t.folder&&t.pages)||t.url));
     if(tbs.length){
       h+=`<div class="m-sec"><h4>📕 교재 자료 <span class="wm-tag">(이름 워터마크 인쇄)</span></h4>`;
