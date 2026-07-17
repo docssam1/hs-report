@@ -212,6 +212,9 @@
       <button onclick="location.reload()">나가기</button>
     </div>
   </header>
+  <div class="wrap">
+    <div class="print-hd" id="printHd"><div class="pt" id="phTitle">중급 모의고사 진단 결과</div><div class="pm" id="phMeta"></div></div>
+  </div>
   <div class="wrap" id="main"></div>
 </div>
 
@@ -501,7 +504,10 @@ function renderReport(student,r,prevOx,sent){
         <button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button>
         <b>${esc(gName)} · ${esc(M.rounds[r].title||r+'회')} 분석 결과</b>
       </div>
-      ${sent!==undefined?`<span class="pill ${sent?'on':'off'}">${sent?'원장님께 전송됨':'전송 대기'}</span>`:''}
+      <div class="row-inline" style="gap:6px;margin-bottom:0">
+        ${sent!==undefined?`<span class="pill ${sent?'on':'off'}">${sent?'원장님께 전송됨':'전송 대기'}</span>`:''}
+        <button class="btn navy sm" onclick="printReport('${esc(M.rounds[r].title||r+'회')} 진단 결과')">🖨 인쇄</button>
+      </div>
     </div>
     <div class="scorebar">
       <div><div class="big">${sc.score}</div><div class="lbl">점 / 100점</div></div>
@@ -619,6 +625,18 @@ function renderReport(student,r,prevOx,sent){
 function copyCode(){ const t=document.getElementById('sendcode'); t.select(); try{ navigator.clipboard.writeText(t.value); }catch(e){ document.execCommand('copy'); } toast('코드가 복사됐어요.'); }
 
 
+
+/* ─── 진단지 인쇄 ─────────────────────────────────────── */
+function printReport(subtitle){
+  const d=new Date();
+  const ymd=d.getFullYear()+'. '+(d.getMonth()+1)+'. '+d.getDate();
+  const t=document.getElementById('phTitle');
+  const m=document.getElementById('phMeta');
+  if(t) t.textContent=(givenName(me)||'')+' · '+(subtitle||'중급 모의고사 진단 결과');
+  if(m) m.innerHTML='지필드 영재교육 &nbsp;G!FIELD<br>출력일 '+ymd;
+  window.print();
+}
+
 /* ─── 학부모용 전체 누적 분석 ────────────────────────────── */
 function renderCumulative(){
   const student=me;
@@ -658,6 +676,8 @@ function renderCumulative(){
     <div class="row-inline" style="gap:6px;margin-bottom:8px">
       <button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button>
       <b>${esc(gName)} · 전체 누적 분석</b>
+      <span style="flex:1"></span>
+      <button class="btn navy sm" onclick="printReport('전체 누적 분석')">🖨 인쇄</button>
     </div>
     <div class="scorebar">
       <div><div class="big">${avg}</div><div class="lbl">평균 점수</div></div>
