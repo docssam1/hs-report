@@ -186,6 +186,10 @@
   .coach-msg .coach-sub{font-size:12px;color:#92400e;margin-top:5px;line-height:1.6;}
 
   @media print{header,.savebar,.tabs{display:none !important;}}
+
+  .mock-note{margin-top:10px;background:#F7FAFF;border:1px solid #DBE7FF;border-left:3px solid #1F3864;border-radius:9px;padding:9px 11px;font-size:11.8px;line-height:1.62;color:#374151;}
+  .mock-note b{display:block;color:#1F3864;font-size:12.2px;margin-bottom:3px;}
+  .mock-note em{display:block;margin-top:5px;font-style:normal;font-weight:800;color:#EA580C;}
 </style>
 </head>
 <body>
@@ -506,8 +510,13 @@ function renderReport(student,r,prevOx,sent){
       <div><div class="big" style="color:#334">${at.length}<span style="font-size:15px;color:#889">회</span></div><div class="lbl">응시</div></div>
     </div>
     <div class="row-inline" style="margin-top:8px">
-      <span class="level-badge ${lv.cls}">${lv.icon} 현재 수준 예측: <b>${lv.label}</b></span>
-      <span class="hint" style="margin:0;font-size:11px">경시55·심화44·실력35·일품25.7점 기준</span>
+      <span class="level-badge ${lv.cls}">${lv.icon} 참고 지표: <b>${lv.label}</b> 점수대</span>
+      <span class="hint" style="margin:0;font-size:11px">황소 실제 시험 기준(경시55·심화44·실력35·일품25.7) · 모의고사와는 다를 수 있어요</span>
+    </div>
+    <div class="mock-note">
+      <b>📌 중급 모의고사는 이런 과정입니다</b>
+      중급 모의고사는 가정에서 학습하며 파이널 대비에 익숙하게 만들기 위한 과정입니다. 이미 배웠던 사고력을 복습하고 지문에서의 조건을 놓치지 않는 연습을 합니다. 계산으로 가능한 실제 황소 기출 유형을 경험할 수 있지만 아직은 정확한 기준이라고 할 수 없습니다.
+      <em>반드시 점수보다는 발전하는 모습을 봐주세요.</em>
     </div>
   </div>`;
 
@@ -657,11 +666,16 @@ function renderCumulative(){
       <div><div class="big" style="color:#334">${rs.length}<span style="font-size:15px;color:#889">회</span></div><div class="lbl">응시 회차</div></div>
     </div>
     <div class="row-inline" style="margin-top:8px">
-      <span class="level-badge ${lv.cls}">${lv.icon} 평균 → <b>${lv.label}</b></span>
-      <span class="level-badge ${lvB.cls}">${lvB.icon} 최고 → <b>${lvB.label}</b></span>
-      <span class="hint" style="margin:0;font-size:11px">경시55·심화44·실력35·일품25.7 기준</span>
+      <span class="level-badge ${lv.cls}">${lv.icon} 평균 → <b>${lv.label}</b> 점수대</span>
+      <span class="level-badge ${lvB.cls}">${lvB.icon} 최고 → <b>${lvB.label}</b> 점수대</span>
+      <span class="hint" style="margin:0;font-size:11px">황소 실제 시험 기준 · 참고용</span>
     </div>
     <div class="hint" style="margin:8px 0 0">총 ${totQ}문항 중 ${totW}문항 오답 · 누적 정답률 ${Math.round((totQ-totW)/totQ*100)}%</div>
+    <div class="mock-note">
+      <b>📌 중급 모의고사는 이런 과정입니다</b>
+      중급 모의고사는 가정에서 학습하며 파이널 대비에 익숙하게 만들기 위한 과정입니다. 이미 배웠던 사고력을 복습하고 지문에서의 조건을 놓치지 않는 연습을 합니다. 계산으로 가능한 실제 황소 기출 유형을 경험할 수 있지만 아직은 정확한 기준이라고 할 수 없습니다.
+      <em>반드시 점수보다는 발전하는 모습을 봐주세요.</em>
+    </div>
   </div>`;
 
   /* 점수 추이 */
