@@ -309,10 +309,8 @@ window.GFIELD_DATA = {
           "pages": 92
         },
         {
-          "title": "초등과정 선발 대비 모의고사 1회 중급 답안",
-          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783858008775_rdhu_________________1_______.pdf",
-          "folder": "tb_mrkalnkn",
-          "pages": 30
+          "title": "중급 모의고사 1회 · 답안 및 교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=1"
         },
         {
           "title": "초등과정 선발 대비 모의고사 1회 중급",
