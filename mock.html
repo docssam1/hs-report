@@ -157,7 +157,7 @@
   .rx-section{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:14px;margin:10px 0;}
   .rx-section h4{font-size:13.5px;font-weight:800;color:#14532d;margin-bottom:10px;}
   .rx-item{background:#fff;border:1px solid #d1fae5;border-radius:9px;padding:10px 12px;margin-bottom:8px;}
-  .rx-item .rx-type{font-size:13px;font-weight:700;color:#166634;margin-bottom:5px;}
+  .rx-item .rx-type{font-size:13px;font-weight:700;color:#166534;margin-bottom:5px;}
   .rx-item .rx-star{font-size:11px;background:#dcfce7;color:#166534;border-radius:4px;padding:1px 6px;margin-left:4px;font-weight:700;}
   .rx-item .rx-cnt{font-size:11px;background:#fee2e2;color:#991b1b;border-radius:4px;padding:1px 6px;font-weight:700;}
   .rx-book{font-size:12px;color:#374151;margin-top:3px;display:flex;align-items:baseline;gap:5px;}
@@ -236,21 +236,21 @@ const M=window.GFIELD_MOCK;
 M.results=M.results||{};
 let mode=null, me=null, curRound="1";
 
-/* ─── 처방 교재 데이터 ────────────────────────────────────────────────
+/* ─── 처방 교재 데이터 ────────────────────────────────────
  * 교재 4분류: 시중교재 / 소마 교재 / 필즈더클래식 / 지필드
  *   시중교재   : 3%올림피아드, 수학경시 문제의 정석(MEX) 등
  *   소마       : 프리미어 수학 시리즈
  *   필즈더클래식: 필즈 초급·입문 상/중/하, GM초급·중급
  *   지필드     : GIFTED MATH 3 V1-1~3, ThinkingCore CH1~5
  * 교재매핑 8종(8개 md) 기반 · 추후 소마 단원 확인 필요
- * ──────────────────────────────────────────────────────────────────── */
+ * ─────────────────────────────────────────────────────── */
 const PRESCRIPTION = [
-  /* ★2.7 기본 ───────────────────────────────────────────────────────── */
+  /* ★2.7 기본 ───────────────────────────────────────── */
   { kw:['마방진','방진'],
     label:'마방진', star:'★2.7',
     books:{
       '시중교재':[{b:'3%올림피아드 1과정',u:'22장 수 추리① (1~16 배치)'}],
-      '소마':[{b:'프리미어 수학',u:'마방진·수배열 단원'}],
+      '소마':[{b:'프리미어 초급6',u:'1호 마방진과 복면산'},{b:'프리미어 중급7',u:'1호 마방진과 삼각진'}],
       '필즈더클래식':[{b:'필즈 초급 상',u:'1단원 마방진·복면산'},{b:'GM중급',u:'마방진 단원'}],
       '지필드':[{b:'GIFTED MATH V1-2',u:'CH2 마방진·논리추리'}]
     },
@@ -260,13 +260,13 @@ const PRESCRIPTION = [
     label:'달력·요일', star:'★2.7~3.4',
     books:{
       '시중교재':[{b:'3%올림피아드 1과정',u:'11장 요일에 관한 문제'}],
-      '소마':[{b:'프리미어 수학',u:'달력·요일 단원'}],
+      '소마':[{b:'프리미어 초급2',u:'2호 일주일이 7일인 이유'},{b:'프리미어 중급8',u:'2호 그레고리력과 윤년'}],
       '필즈더클래식':[{b:'필즈 초급 상',u:'달력·요일 단원'}],
       '지필드':[{b:'ThinkingCore',u:'CH2 달력 수배열'}]
     },
     pts:['윤년(2월 29일) 확인 필수','날수 = 월별 누적일수 + 일수','7로 나눈 나머지 → 요일']
   },
-  /* ★3.4 중심 ───────────────────────────────────────────────────────── */
+  /* ★3.4 중심 ───────────────────────────────────────── */
   { kw:['시침','분침','시계','시각의 각'],
     label:'달력·요일(시계)', star:'★3.4',
     books:{
@@ -291,7 +291,7 @@ const PRESCRIPTION = [
     label:'합차와 배수', star:'★3.4',
     books:{
       '시중교재':[{b:'3%올림피아드 1과정',u:'7·19·25·31·35장'}],
-      '소마':[{b:'프리미어 수학',u:'합과 차 단원'}],
+      '소마':[{b:'프리미어 초급4',u:'3호 같게 나누기와 합차문제'},{b:'프리미어 중급1',u:'4호 합과 배수·차와 배수'}],
       '필즈더클래식':[{b:'필즈 초급 하',u:'7단원 나이·합차'},{b:'필즈 입문 상',u:'합차 심화 단원'}],
       '지필드':[{b:'ThinkingCore',u:'CH2 Algebra(1) 합차 연립'},{b:'GIFTED MATH V1-1',u:'CH1 합차'}]
     },
@@ -301,7 +301,7 @@ const PRESCRIPTION = [
     label:'우기기/가정하여 풀기', star:'★3.4',
     books:{
       '시중교재':[{b:'3%올림피아드 1과정',u:'1·5장'}],
-      '소마':[{b:'프리미어 수학',u:'가정법 단원'}],
+      '소마':[{b:'프리미어 초급4',u:'3호 같게 나누기와 합차문제'},{b:'프리미어 중급4',u:'4호 가정하여 해결하기'}],
       '필즈더클래식':[{b:'필즈 초급 하',u:'11단원 우기기'},{b:'GM초급',u:'1단계 우기기'}],
       '지필드':[{b:'ThinkingCore',u:'CH2 가정하여 풀기'}]
     },
@@ -321,7 +321,7 @@ const PRESCRIPTION = [
     label:'거꾸로 생각하기', star:'★3.4',
     books:{
       '시중교재':[{b:'3%올림피아드 1과정',u:'13장 거꾸로 생각하기'}],
-      '소마':[{b:'프리미어 수학',u:'거꾸로 생각하기 단원'}],
+      '소마':[],
       '필즈더클래식':[{b:'필즈 입문 상',u:'거꾸로 단원'}],
       '지필드':[{b:'ThinkingCore',u:'CH2 Algebra(1)'}]
     },
@@ -331,7 +331,7 @@ const PRESCRIPTION = [
     label:'마디수열·규칙찾기', star:'★3.4',
     books:{
       '시중교재':[{b:'3%올림피아드 1과정',u:'3·10·12·18·30장'}],
-      '소마':[{b:'프리미어 수학',u:'수열·규칙 단원'}],
+      '소마':[{b:'프리미어 중급2',u:'2호 규칙 찾기'},{b:'프리미어 중급6',u:'2호 수열과 규칙 찾기·3호 등차수열'}],
       '필즈더클래식':[{b:'필즈 초급 상',u:'수열 단원'},{b:'GM초급',u:'규칙찾기'}],
       '지필드':[{b:'ThinkingCore',u:'CH3 Numbers & Case'},{b:'GIFTED MATH V1-3',u:'규칙 수열'}]
     },
@@ -361,7 +361,7 @@ const PRESCRIPTION = [
     label:'최단거리', star:'★3.4',
     books:{
       '시중교재':[{b:'3%올림피아드 1과정',u:'8장 길찾기'}],
-      '소마':[{b:'프리미어 수학',u:'최단거리 단원'}],
+      '소마':[{b:'프리미어 초급8',u:'2호 파스칼 삼각형과 최단거리'}],
       '필즈더클래식':[{b:'필즈 초급 하',u:'27단원 최단거리'}],
       '지필드':[{b:'ThinkingCore',u:'CH3 최단거리'},{b:'ThinkingCore',u:'CH5 최단거리 심화'}]
     },
@@ -371,7 +371,7 @@ const PRESCRIPTION = [
     label:'벤다이어그램', star:'★3.4',
     books:{
       '시중교재':[{b:'3%올림피아드 1과정',u:'9·17장'}],
-      '소마':[],
+      '소마':[{b:'프리미어 초급2',u:'1호 셋카드와 벤다이어그램'}],
       '필즈더클래식':[{b:'필즈 입문 중',u:'포함과 배제 단원'}],
       '지필드':[{b:'ThinkingCore',u:'CH3 경우의 수 기초'}]
     },
@@ -381,7 +381,7 @@ const PRESCRIPTION = [
     label:'도형분할·개수 세기', star:'★3.4',
     books:{
       '시중교재':[{b:'3%올림피아드 1과정',u:'20장 평면에서 도형의 개수 세기'}],
-      '소마':[{b:'프리미어 수학',u:'도형의 개수 단원'}],
+      '소마':[{b:'프리미어 초급4',u:'1호 성냥개비·도형의 개수'},{b:'프리미어 초급8',u:'3호 도형의 개수'},{b:'프리미어 중급6',u:'4호 도형의 개수'}],
       '필즈더클래식':[{b:'필즈 초급 상',u:'도형의 개수 단원'}],
       '지필드':[{b:'GIFTED MATH V1-1',u:'CH3 도형의 개수'}]
     },
@@ -401,7 +401,7 @@ const PRESCRIPTION = [
     label:'속력 기반 따라잡기', star:'★3.4~4.2',
     books:{
       '시중교재':[],
-      '소마':[{b:'프리미어 수학',u:'거리·속력·시간 단원'}],
+      '소마':[],
       '필즈더클래식':[{b:'필즈 입문 하',u:'속력 단원'}],
       '지필드':[{b:'ThinkingCore',u:'CH2 속력·시간 응용'}]
     },
@@ -437,12 +437,12 @@ const PRESCRIPTION = [
     },
     pts:['마주보는 면 합=7 (1↔6, 2↔5, 3↔4)','굴리는 방향 꼼꼼히 추적','전개도에서 접었을 때 마주보는 면 파악']
   },
-  /* ★4.2 고난도 ────────────────────────────────────────────────────── */
+  /* ★4.2 고난도 ──────────────────────────────────────── */
   { kw:['논리','추리','참','거짓','줄 세우기','순서','~보다','조건 목록'],
     label:'논리추리', star:'★4.2',
     books:{
       '시중교재':[{b:'3%올림피아드 1과정',u:'28장 논리 추리'}],
-      '소마':[{b:'프리미어 수학',u:'논리추리 단원'}],
+      '소마':[{b:'프리미어 초급6',u:'2호 연역적 논리 추리'},{b:'프리미어 중급7',u:'2호 논리 추리'}],
       '필즈더클래식':[{b:'필즈 초급 상',u:'논리추리 단원'},{b:'GM중급',u:'논리추리'}],
       '지필드':[{b:'GIFTED MATH V1-2',u:'논리추리(이중 조건)'}]
     },
@@ -472,7 +472,7 @@ const PRESCRIPTION = [
     label:'경우의 수', star:'★3.4~4.2',
     books:{
       '시중교재':[],
-      '소마':[{b:'프리미어 수학',u:'경우의 수 단원'}],
+      '소마':[{b:'프리미어 초급8',u:'4호 경우의 수'}],
       '필즈더클래식':[{b:'필즈 초급 상',u:'경우의 수 단원'}],
       '지필드':[{b:'ThinkingCore',u:'CH5 경우의 수'},{b:'GIFTED MATH V1-3',u:'경우의 수'}]
     },
@@ -590,7 +590,7 @@ function tierComment(tiers){
   return '★2.7~★3.4 구간이 안정적이에요. 고난도 문항도 잘 풀고 있습니다. 실전 연습을 계속 쌓으세요!';
 }
 
-/* ─── 세부유형 키워드 매핑 ────────────────────────────────────────── */
+/* ─── 세부유형 키워드 매핑 ────────────────────────────── */
 function findRx(typeText){
   if(!typeText) return null;
   const t=typeText.toLowerCase();
@@ -683,7 +683,7 @@ function prescriptionHTML(wl, limit){
   return h;
 }
 
-/* ─── 기존 유틸 ─────────────────────────────────────────────────────── */
+/* ─── 기존 유틸 ─────────────────────────────────────────── */
 function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.remove('show'),2400); }
 function bp(no){ return M.blueprint.find(b=>b.no===no)||{no:no,area:'',pts:0}; }
@@ -704,7 +704,7 @@ function printAnswers(r){
   w.document.close();
 }
 
-/* ─── Supabase ─────────────────────────────────────────────────────── */
+/* ─── Supabase ──────────────────────────────────────────── */
 async function supaUpsert(student,r,ox,source){
   const oxs=ox.join?ox.join(''):ox; const sc=scoreOf(oxs.split(''));
   try{
@@ -722,7 +722,7 @@ async function supaLoadAll(){
   }catch(e){ return false; }
 }
 
-/* ─── 로그인 ─────────────────────────────────────────────────────────── */
+/* ─── 로그인 ─────────────────────────────────────────────── */
 function enter(){
   const v=document.getElementById('pw').value.trim();
   if(!v){ return; }
@@ -738,14 +738,14 @@ function boot(){
   document.getElementById('h-sub').textContent = mode==='teacher'?'원장 분석':(me+' 학생');
 }
 
-/* ─── 채점 계산 ─────────────────────────────────────────────────────── */
+/* ─── 채점 계산 ──────────────────────────────────────────── */
 function blankOx(){ const a=[]; for(let i=0;i<Q();i++) a.push('O'); return a; }
 function scoreOf(ox){ let s=0,wrong=0; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X') wrong++; else s+=bp(n).pts; } return {score:Math.round(s*10)/10, wrong:wrong, correct:Q()-wrong}; }
 function areaStats(ox){ const map={}; M.areas.forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=Q();n++){ const b=bp(n); if(!map[b.area]) map[b.area]={tot:0,got:0,cnt:0,ok:0}; map[b.area].tot+=b.pts; map[b.area].cnt++; if(ox[n-1]!=='X'){ map[b.area].got+=b.pts; map[b.area].ok++; } } return map; }
 function wrongList(r,ox){ const out=[]; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X'){ const it=itemOf(r,n); const b=bp(n); out.push({no:n, area:b.area, pts:b.pts, type:it.type, comment:it.comment, t:it.t||0}); } } return out; }
 function typeComment(it){ if(it.comment&&it.comment.trim()) return it.comment; if(it.type) return "'"+it.type+"' 유형이에요. 풀이 강의를 보며 방법을 익힌 뒤, 며칠 뒤 새 종이에 스스로 다시 풀어보세요."; return "풀이 강의를 보며 방법을 익힌 뒤 스스로 다시 풀어보세요."; }
 
-/* ─── 결과 저장 ─────────────────────────────────────────────────────── */
+/* ─── 결과 저장 ──────────────────────────────────────────── */
 function attemptsOf(student,r){ M.results[student]=M.results[student]||{}; M.results[student][r]=M.results[student][r]||[]; return M.results[student][r]; }
 function latestOx(student,r){ const a=attemptsOf(student,r); return a.length? a[a.length-1].ox : null; }
 function pushAttempt(student,r,ox,by){ const a=attemptsOf(student,r); a.push({ox:ox.slice(), ts:new Date().toISOString().slice(0,10), by:by||'parent'}); while(a.length>3) a.shift(); }
@@ -760,7 +760,7 @@ function coachMsg(isParent){
   return arr[Math.floor(Math.random()*arr.length)];
 }
 
-/* ─── 학부모 모드 ──────────────────────────────────────────────────── */
+/* ─── 학부모 모드 ────────────────────────────────────────── */
 let markOx=null;
 function startParent(){ boot(); loadLocal(); renderRoundPick(); }
 function renderRoundPick(){
@@ -824,7 +824,7 @@ async function submitAttempt(){
   renderReport(me,curRound,prev,ok);
 }
 
-/* ─── 학부모용 분석 리포트 (전면 개선) ──────────────────────────────── */
+/* ─── 학부모용 분석 리포트 (전면 개선) ──────────────────── */
 function renderReport(student,r,prevOx,sent){
   const at=attemptsOf(student,r);
   const ox=at[at.length-1].ox;
@@ -909,7 +909,7 @@ function renderReport(student,r,prevOx,sent){
     wl.forEach(w=>{
       const it=itemOf(r,w.no);
       const tierCls=w.pts>=4?'border-color:#fca5a5':w.pts>=3?'border-color:#fde68a':'';
-      const clk=hasVid?`onclick="openVid('${r}',${w.t})" style="cursor:pointer"`:'';
+      const clk=hasVid?`onclick="openVid('${r}',${w.t})" style="cursor:pointer"`:\'\'';
       h+=`<div class="wt-item" ${clk} style="${tierCls}">
         <div class="wt-h">
           <span class="no">${w.no}번</span>${esc(w.type||'(유형 준비중)')}
@@ -953,7 +953,7 @@ function renderReport(student,r,prevOx,sent){
 }
 function copyCode(){ const t=document.getElementById('sendcode'); t.select(); try{ navigator.clipboard.writeText(t.value); }catch(e){ document.execCommand('copy'); } toast('코드가 복사됐어요.'); }
 
-/* ─── 원장 모드 ─────────────────────────────────────────────────────── */
+/* ─── 원장 모드 ──────────────────────────────────────────── */
 let tSel=''; let tTab='student';
 async function startTeacher(){ boot(); document.getElementById('teacher-savebar').classList.remove('hidden'); document.getElementById('main').innerHTML='<div class="card"><div class="hint">결과 불러오는 중…</div></div>'; await supaLoadAll(); renderTeacher(); }
 async function reloadResults(){ const st=document.getElementById('save-status'); st.textContent='불러오는 중…'; const ok=await supaLoadAll(); st.textContent=ok?'✅ 최신 결과 불러옴':'불러오기 실패'; renderTeacher(); }
@@ -1006,7 +1006,7 @@ function tPick(v){ tSel=v; tStudent(); }
 function tSeed(r,n){ pushAttempt(tSel,r,blankOx(),'teacher'); tToggle(r,n); }
 function tToggle(r,n){ const ox=latestOx(tSel,r); if(!ox) return; ox[n-1]= ox[n-1]==='X'?'O':'X'; tStudent(); supaUpsert(tSel,r,ox,'teacher').then(ok=>{ document.getElementById('save-status').textContent= ok?'✅ 저장됨':'저장 실패'; }); }
 
-/* ─── 원장용 누적 분석 (개선) ──────────────────────────────────────── */
+/* ─── 원장용 누적 분석 (개선) ───────────────────────────── */
 function tAnalysisHTML(student){
   const rs=roundKeys().filter(r=>latestOx(student,r));
   if(!rs.length) return '<div class="card"><div class="hint">아직 응시 기록이 없습니다.</div></div>';
@@ -1077,7 +1077,7 @@ function tAnalysisHTML(student){
   return h;
 }
 
-/* ─── 반 전체 약점 ──────────────────────────────────────────────────── */
+/* ─── 반 전체 약점 ───────────────────────────────────────── */
 function tClass(){
   const students=(D.students||[]).filter(s=>M.results[s]);
   const areaAgg={}; M.areas.forEach(a=>areaAgg[a]={tot:0,got:0});
@@ -1120,7 +1120,7 @@ function tClass(){
   document.getElementById('t-body').innerHTML=h;
 }
 
-/* ─── 수동 코드 입력 ──────────────────────────────────────────────────── */
+/* ─── 수동 코드 입력 ─────────────────────────────────────── */
 function tImport(){
   document.getElementById('t-body').innerHTML=`<div class="card"><h3>📥 코드 수동입력</h3>
     <div class="hint">학부모 자동 전송 실패분 코드를 붙여넣어 반영하세요. 여러 개는 줄바꿈.</div>
@@ -1132,11 +1132,11 @@ async function doImport(){
   const raw=document.getElementById('impcode').value.trim(); if(!raw){ return; }
   const lines=raw.split(/\s+/).filter(Boolean); let ok=0,fail=0,names=[];
   for(const code of lines){ try{ const o=JSON.parse(decodeURIComponent(escape(atob(code)))); if(o&&o.s&&o.r&&o.ox&&o.ox.length===Q()){ M.results[o.s]=M.results[o.s]||{}; M.results[o.s][o.r]=[{ox:o.ox.split(''),ts:new Date().toISOString().slice(0,10),by:'parent'}]; await supaUpsert(o.s,o.r,o.ox,'parent'); ok++; names.push(o.s+' '+(M.rounds[o.r]?M.rounds[o.r].title:o.r)); } else fail++; }catch(e){ fail++; } }
-  document.getElementById('imp-res').innerHTML=`✅ ${ok}건 반영${fail?(' · ❌ '+fail+'건 실패'):''}${names.length?('<br>'+names.map(esc).join(', ')):''}`;
+  document.getElementById('imp-res').innerHTML=`✅ ${ok}건 반영${fail?(' · ❌ '+fail+'건 실패'):''}${names.length?('<br>'+names.map(esc).join(', ')):''}``;
   toast(ok+'건 반영 완료');
 }
 
-/* ─── 회차 유형 편집 (원장) ──────────────────────────────────────────── */
+/* ─── 회차 유형 편집 (원장) ─────────────────────────────── */
 function tEdit(){
   const r=curRound; const rd=M.rounds[r];
   let h=`<div class="card">
@@ -1162,7 +1162,7 @@ function tEdit(){
 }
 function edSet(r,n,k,v){ const items=M.rounds[r].items=M.rounds[r].items||[]; let it=items.find(x=>x.no===n); if(!it){ it={no:n,type:'',answer:'',comment:''}; items.push(it); items.sort((a,b)=>a.no-b.no); } it[k]=v; markDirty(); }
 
-/* ─── GitHub 저장 ─────────────────────────────────────────────────────── */
+/* ─── GitHub 저장 ────────────────────────────────────────── */
 function markDirty(){ const s=document.getElementById('save-status'); if(s) s.textContent='● 변경됨 — 저장 필요'; }
 function buildMockFile(){
   const out={title:M.title,areas:M.areas,roundCount:M.roundCount,questions:M.questions,blueprint:M.blueprint,rounds:M.rounds,results:{}};
@@ -1182,12 +1182,12 @@ async function saveMock(){
 }
 function showCode(){ const w=window.open('','_blank'); w.document.write('<pre style="white-space:pre-wrap;word-break:break-all;font-size:12px;padding:12px">'+buildMockFile().replace(/</g,'&lt;')+'</pre>'); }
 
-/* ─── LaTeX ──────────────────────────────────────────────────────────── */
+/* ─── LaTeX ──────────────────────────────────────────────── */
 let _mathT=null;
 function typeset(){ if(!window.renderMathInElement) return; clearTimeout(_mathT); _mathT=setTimeout(function(){ try{ renderMathInElement(document.getElementById('main'),{delimiters:[{left:'$',right:'$',display:false}],throwOnError:false,ignoredClasses:['katex']}); }catch(e){} },20); }
 (function(){ var m=document.getElementById('main'); if(m&&window.MutationObserver){ new MutationObserver(typeset).observe(m,{childList:true,subtree:true}); } window.addEventListener('load',typeset); })();
 
-/* ─── URL 직접 진입 ──────────────────────────────────────────────────── */
+/* ─── URL 직접 진입 ──────────────────────────────────────── */
 (function initFromUrl(){
   const p=new URLSearchParams(location.search); const rd=p.get('round');
   let stu=''; try{ stu=localStorage.getItem('gfield_student')||''; }catch(e){}
