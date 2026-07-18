@@ -346,7 +346,7 @@ function roundItems(r){ return (M.rounds[r]&&M.rounds[r].items)||[]; }
 function itemOf(r,no){ return roundItems(r).find(i=>i.no===no)||{no:no,type:'',answer:'',comment:''}; }
 function Q(){ return M.questions||30; }
 function givenName(n){ return n&&n.length>=2? n.slice(1):n; }
-function latexToPlain(s){ return (s||'').replace(/\$(.*?)\$/g,function(m,x){ return x.replace(/\\dfrac|\\frac/g,'').replace(/\{(\d+)\}\{(\d+)\}/g,'$1/$2').replace(/[{}]/g,''); }); }
+function latexToPlain(s){ return (s||'').replace(/\$(.*?)\$/g, function(m,x){   var t=x.replace(/\\d?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g, function(_,a,b){ return ' '+a+'/'+b; });   return t.replace(/[{}]/g,'').replace(/\s+/g,' ').trim(); }); }
 function vidUrl(r,t){ var v=(M.rounds[r]&&M.rounds[r].video)||''; if(!v) return ''; if(t&&+t>0){ v += (v.indexOf('?')>=0?'&':'?')+'t='+Math.floor(t); } return v; }
 function openVid(r,t){ var u=vidUrl(r,t); if(u) window.open(u,'_blank','noopener'); else toast('등록된 영상이 없어요.'); }
 function printAnswers(r){
