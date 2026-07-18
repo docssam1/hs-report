@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+successfully downloaded text file (SHA: 2923598be5ba048ea802a108062fcc98f457e6ad)<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -1187,6 +1187,40 @@
 
   let tt=null;
   function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2600); }
+</script>
+<style>
+.content-week .cw-head{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer;font-weight:700;color:#333;padding:6px 4px;user-select:none}
+.content-week .cw-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1 1 auto}
+.content-week .cw-caret{transition:transform .2s;flex:0 0 auto;color:#f2681c;font-size:12px}
+.content-week.acc-collapsed .cw-caret{transform:rotate(-90deg)}
+.content-week .cw-body{overflow:hidden;transition:max-height .28s ease;max-height:6000px}
+.content-week.acc-collapsed .cw-body{max-height:0}
+</style>
+<script>
+(function(){
+  function labelFor(cw){
+    var t=cw.querySelector('input[type="text"]')||cw.querySelector('input:not([type="file"]):not([type="checkbox"]):not([type="date"])')||cw.querySelector('input,textarea,select');
+    var v=t&&t.value?t.value.trim():'';
+    return v||'(제목 없음)';
+  }
+  function apply(cw){
+    if(cw.dataset.acc) return; cw.dataset.acc='1';
+    var head=document.createElement('div'); head.className='cw-head';
+    var title=document.createElement('span'); title.className='cw-title'; title.textContent=labelFor(cw);
+    var caret=document.createElement('span'); caret.className='cw-caret'; caret.textContent='\u25be';
+    head.appendChild(title); head.appendChild(caret);
+    var body=document.createElement('div'); body.className='cw-body';
+    while(cw.firstChild){ body.appendChild(cw.firstChild); }
+    cw.appendChild(head); cw.appendChild(body);
+    cw.classList.add('acc-collapsed');
+    head.addEventListener('click',function(){ cw.classList.toggle('acc-collapsed'); title.textContent=labelFor(cw); });
+    body.addEventListener('input',function(){ title.textContent=labelFor(cw); });
+  }
+  function scan(){ document.querySelectorAll('.content-week:not([data-acc])').forEach(apply); }
+  var mo=new MutationObserver(function(){ scan(); });
+  function boot(){ scan(); mo.observe(document.body,{childList:true,subtree:true}); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+})();
 </script>
 </body>
 </html>
