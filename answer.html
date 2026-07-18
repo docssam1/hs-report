@@ -87,9 +87,9 @@ function bk(list){ if(!list||!list.length) return '<span class="none">—</span>
   return list.map(b=>`<b>${esc(b.b)}</b> <span class="u">${esc(b.u)}</span>`).join('<br>'); }
 
 const rounds = (M.rounds)||{};
+/* 회차 이동 버튼 없음 — 링크로 받은 회차만 열립니다 (다른 회차 답안 노출 방지) */
 document.getElementById('nav').innerHTML =
-  [1,2,3,4,5,6,7,8].map(i=>`<a href="?round=${i}" class="${i===RD?'on':''}">${i}회</a>`).join('')
-  + '<span class="sp"></span><button onclick="window.print()">🖨 인쇄 / PDF 저장</button>';
+  '<span class="sp"></span><button onclick="window.print()">🖨 인쇄 / PDF 저장</button>';
 document.getElementById('ttl').textContent = `중급 모의고사 ${RD}회  ·  답안 및 교재 연결표`;
 document.getElementById('ft1').textContent = `지필드 영재교육 · 중급 모의고사 ${RD}회 답안 및 교재 연결표`;
 
