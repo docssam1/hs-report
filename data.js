@@ -323,17 +323,32 @@ window.GFIELD_DATA = {
     "jul-w3": {
       "notice": "",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "중급 모의고사 2회 · 답안 및 교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=2"
+        }
+      ]
     },
     "jul-w4": {
       "notice": "",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "중급 모의고사 3회 · 답안 및 교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=3"
+        }
+      ]
     },
     "jul-w5": {
       "notice": "",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "중급 모의고사 4회 · 답안 및 교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=4"
+        }
+      ]
     },
     "special-summer": {
       "notice": "",
@@ -343,22 +358,42 @@ window.GFIELD_DATA = {
     "aug-w2": {
       "notice": "",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "중급 모의고사 5회 · 답안 및 교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=5"
+        }
+      ]
     },
     "aug-w3": {
       "notice": "",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "중급 모의고사 6회 · 답안 및 교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=6"
+        }
+      ]
     },
     "aug-w4": {
       "notice": "",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "중급 모의고사 7회 · 답안 및 교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=7"
+        }
+      ]
     },
     "sep-w1": {
       "notice": "",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "중급 모의고사 8회 · 답안 및 교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=8"
+        }
+      ]
     },
     "sep-14": {
       "notice": "",
@@ -641,33 +676,6 @@ window.GFIELD_DATA = {
       "url": ""
     },
     "magazine": [
-      {
-        "category": "입시",
-        "title": "2027학년 과학고 22개교로 확대…부천·성남 2개교 전환, 총 1858명 모집",
-        "desc": "부천고와 분당중앙고(성남)가 과학고로 전환되면서 2027학년 과학고는 전국 22개교 체제로 확대된다. 모집 정원은 총 1858명으로 전년(20개교 1642명)보다 216명 늘었다. 원서접수는 8월 18일 대전동신과학고를 시작으로 순차 진행되며, 신설 2개교는 각 100명씩 모집하고 지역인재를 20%씩 선발한다.",
-        "source": "베리타스알파",
-        "sourceUrl": "https://www.veritas-a.com/news/articleView.html?idxno=612371",
-        "image": "",
-        "date": "2026-07-18"
-      },
-      {
-        "category": "학습법",
-        "title": "금천구, 초·중생 여름방학 진로진학 특강 운영…AI 코딩·논술 프로그램",
-        "desc": "금천구가 8월 4일부터 7일까지 금천진로진학지원센터에서 여름방학 특강을 운영한다. 초등 4~6학년은 물고기 모양 AI 로봇을 센서와 코딩으로 조종하는 피지컬 AI 체험, 중학생은 기사·통계·그래프를 분석하고 개별 첨삭을 받는 논술형 평가 대비 프로그램이다. 초등 40명·중등 30명을 8월 2일까지 센터 홈페이지에서 선착순 접수한다.",
-        "source": "시정일보",
-        "sourceUrl": "https://www.sijung.co.kr/news/articleView.html?idxno=432922",
-        "image": "",
-        "date": "2026-07-18"
-      },
-      {
-        "category": "입시",
-        "title": "민사고, 여름방학 글로벌리더십 영어캠프(GLPS) 운영…초5~중2 선착순 350명",
-        "desc": "민족사관고가 7월 19일부터 8월 8일까지 여름방학 글로벌리더십 영어캠프(GLPS)를 운영한다. 초등 5학년부터 중학교 2학년까지 선착순 350명 규모로, 별도 영어 인증 성적 없이 입소 후 인터뷰를 통해 수준별 반을 배정한다. 참가비는 415만 원이며, 겨울방학에도 같은 프로그램이 운영된다.",
-        "source": "베리타스알파",
-        "sourceUrl": "https://www.veritas-a.com/news/articleView.html?idxno=610375",
-        "image": "",
-        "date": "2026-07-18"
-      },
       {
         "category": "교육정책",
         "title": "불법 학원 신고포상금 최대 10배 인상…무등록 신고 시 최대 200만 원",
@@ -1000,6 +1008,33 @@ window.GFIELD_DATA = {
         "sourceUrl": "https://www.khan.co.kr/article/202606061500001/",
         "image": "",
         "date": "2026-07-03"
+      },
+      {
+        "category": "교육정책",
+        "title": "교육부, 고교학점제 이수기준 완화…선택과목 '출석률'만 적용",
+        "desc": "교육부가 고교학점제 안착 지원대책을 발표하며 선택과목 학점 이수 기준에서 학업성취율을 제외하고 과목 출석률만 적용하기로 했다. 진로·학업 설계 지원 인력을 중3부터 확대하고 대입상담교사단 등 상담 지원도 강화한다. 통합형 수능·내신 5등급제로 바뀌는 2028 대입을 준비하는 현 중학생 학부모가 눈여겨볼 변화다.",
+        "source": "교육부",
+        "sourceUrl": "https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=294&boardSeq=105223&lev=0&searchType=null&statusYN=W&page=1&s=moe&m=020402&opType=N",
+        "image": "",
+        "date": "2026-07-03"
+      },
+      {
+        "category": "학원가",
+        "title": "대치동 학원가 보도 위 보행사고 216% 급증…등하원 안전 주의보",
+        "desc": "대치동 학원가에서 인도(보도) 위 보행자 사고가 216% 급증한 것으로 나타났다. 차량 역주행 등으로 인한 사고가 늘면서, 학원이 밀집한 지역을 오가는 초·중등 학생의 등하원 안전에 각별한 주의가 필요하다.",
+        "source": "청년일보",
+        "sourceUrl": "https://www.youthdaily.co.kr/news/article.html?no=208425",
+        "image": "",
+        "date": "2026-07-02"
+      },
+      {
+        "category": "학습법",
+        "title": "2026 상반기 KMA 한국수학학력평가, 6월 20일 전국 1030여 고사장 시행",
+        "desc": "2026 상반기 KMA 한국수학학력평가가 6월 20일 전국 1030여 개 고사장에서 동시 시행됐다. 초1~중3을 대상으로 문제해결·추론·창의융합 등 사고력 역량을 평가하며, 성적 상위 10%에게는 왕수학 전국경시대회 본선 진출 자격이 주어진다.",
+        "source": "고시위크",
+        "sourceUrl": "https://www.gosiweek.com/article/1065575727739630",
+        "image": "",
+        "date": "2026-07-02"
       }
     ],
     "coach": [
