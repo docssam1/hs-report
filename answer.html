@@ -79,8 +79,12 @@ tr.tier td{border-top:2px solid #EA580C}
 const RD = (()=>{ const r=new URLSearchParams(location.search).get('round'); const n=parseInt(r,10); return (n>=1&&n<=8)?n:1; })();
 const M = window.GFIELD_MOCK || window.MOCK || {};
 function esc(s){ return String(s==null||s===''?'—':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])).replace(/−/g,'-'); }
+/* mock-rx.js는 `const PRESCRIPTION`으로 선언 — const는 window에 붙지 않으므로
+   window.PRESCRIPTION이 아니라 전역 렉시컬 스코프에서 직접 참조해야 함 */
+const RX = (typeof PRESCRIPTION !== 'undefined') ? PRESCRIPTION
+         : (window.PRESCRIPTION || []);
 function findRx(t){ let best=null,bl=0; if(!t) return null;
-  for(const r of (window.PRESCRIPTION||[])) for(const k of r.kw)
+  for(const r of RX) for(const k of r.kw)
     if(k && t.includes(k) && k.length>bl){ best=r; bl=k.length; }
   return best; }
 function bk(list){ if(!list||!list.length) return '<span class="none">—</span>';
