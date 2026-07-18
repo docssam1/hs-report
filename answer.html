@@ -78,7 +78,11 @@ tr.tier td{border-top:2px solid #EA580C}
 <script>
 const RD = (()=>{ const r=new URLSearchParams(location.search).get('round'); const n=parseInt(r,10); return (n>=1&&n<=8)?n:1; })();
 const M = window.GFIELD_MOCK || window.MOCK || {};
-function esc(s){ return String(s==null||s===''?'—':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])).replace(/−/g,'-'); }
+/* $32\frac{8}{11}$ → 32 8/11 (mock.html의 latexToPlain과 동일) */
+function latexToPlain(s){ return (s||'').replace(/\$(.*?)\$/g, function(m,x){
+  var t=x.replace(/\\d?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g, function(_,a,b){ return ' '+a+'/'+b; });
+  return t.replace(/[{}]/g,'').replace(/\s+/g,' ').trim(); }); }
+function esc(s){ return String(s==null||s===''?'—':latexToPlain(String(s))).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])).replace(/−/g,'-'); }
 /* mock-rx.js는 `const PRESCRIPTION`으로 선언 — const는 window에 붙지 않으므로
    window.PRESCRIPTION이 아니라 전역 렉시컬 스코프에서 직접 참조해야 함 */
 const RX = (typeof PRESCRIPTION !== 'undefined') ? PRESCRIPTION
