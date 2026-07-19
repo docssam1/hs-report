@@ -347,8 +347,8 @@ function itemOf(r,no){ return roundItems(r).find(i=>i.no===no)||{no:no,type:'',a
 function Q(){ return M.questions||30; }
 function givenName(n){ return n&&n.length>=2? n.slice(1):n; }
 function latexToPlain(s){ return (s||'').replace(/\$(.*?)\$/g, function(m,x){   var t=x.replace(/\\d?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g, function(_,a,b){ return ' '+a+'/'+b; });   return t.replace(/[{}]/g,'').replace(/\s+/g,' ').trim(); }); }
-function vidUrl(r,t){ var v=(M.rounds[r]&&M.rounds[r].video)||''; if(!v) return ''; if(t&&+t>0){ v += (v.indexOf('?')>=0?'&':'?')+'t='+Math.floor(t); } return v; }
-function openVid(r,t){ var u=vidUrl(r,t); if(u) window.open(u,'_blank','noopener'); else toast('등록된 영상이 없어요.'); }
+function vidUrl(r,t,ov){ var v=ov||((M.rounds[r]&&M.rounds[r].video)||''); if(!v) return ''; if(t&&+t>0){ v += (v.indexOf('?')>=0?'&':'?')+'t='+Math.floor(t); } return v; }
+function openVid(r,t,ov){ var u=vidUrl(r,t,ov); if(u) window.open(u,'_blank','noopener'); else toast('등록된 영상이 없어요.'); }
 function printAnswers(r){
   var items=roundItems(r); if(!items.length){ toast('등록된 정답이 없어요.'); return; }
   var rows=''; for(var n=1;n<=Q();n++){ var it=itemOf(r,n); var b=bp(n); rows+='<tr><td>'+n+'</td><td>'+esc(b.area)+'</td><td>'+b.pts+'</td><td>'+esc(latexToPlain(it.answer))+'</td></tr>'; }
@@ -396,7 +396,7 @@ function boot(){
 function blankOx(){ const a=[]; for(let i=0;i<Q();i++) a.push('O'); return a; }
 function scoreOf(ox){ let s=0,wrong=0; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X') wrong++; else s+=bp(n).pts; } return {score:Math.round(s*10)/10, wrong:wrong, correct:Q()-wrong}; }
 function areaStats(ox){ const map={}; M.areas.forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=Q();n++){ const b=bp(n); if(!map[b.area]) map[b.area]={tot:0,got:0,cnt:0,ok:0}; map[b.area].tot+=b.pts; map[b.area].cnt++; if(ox[n-1]!=='X'){ map[b.area].got+=b.pts; map[b.area].ok++; } } return map; }
-function wrongList(r,ox){ const out=[]; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X'){ const it=itemOf(r,n); const b=bp(n); out.push({no:n, area:b.area, pts:b.pts, type:it.type, comment:it.comment, t:it.t||0}); } } return out; }
+function wrongList(r,ox){ const out=[]; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X'){ const it=itemOf(r,n); const b=bp(n); out.push({no:n, area:b.area, pts:b.pts, type:it.type, comment:it.comment, t:it.t||0, vid:it.video||''}); } } return out; }
 function typeComment(it){ if(it.comment&&it.comment.trim()) return it.comment; if(it.type) return "'"+it.type+"' 유형이에요. 풀이 강의를 보며 방법을 익힌 뒤, 며칠 뒤 새 종이에 스스로 다시 풀어보세요."; return "풀이 강의를 보며 방법을 익힌 뒤 스스로 다시 풀어보세요."; }
 
 /* ─── 결과 저장 ──────────────────────────────────────────── */
@@ -579,12 +579,13 @@ function renderReport(student,r,prevOx,sent){
     wl.forEach(w=>{
       const it=itemOf(r,w.no);
       const tierCls=w.pts>=4?'border-color:#fca5a5':w.pts>=3?'border-color:#fde68a':'';
-      const clk=hasVid?`onclick="openVid('${r}',${w.t})" style="cursor:pointer"`:'';
+      const canV=!!(w.vid||hasVid);
+      const clk=canV?`onclick="openVid('${r}',${w.t},'${esc(w.vid||'')}')" style="cursor:pointer"`:'';
       h+=`<div class="wt-item" ${clk} style="${tierCls}">
         <div class="wt-h">
           <span class="no">${w.no}번</span>${esc(w.type||'(유형 준비중)')}
           <span class="wt-a"> · ${esc(w.area)} · ${w.pts}점</span>
-          ${hasVid?'<span class="vjump">▶ 영상</span>':''}
+          ${canV?'<span class="vjump">▶ 영상</span>':''}
         </div>
         <div class="wt-c">${esc(typeComment(it))}</div>
         ${miniRxHTML(w.type)}
