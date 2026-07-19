@@ -1,4 +1,4 @@
-successfully downloaded text file (SHA: 1ca02c91b929220dc3c2761da3a8822cdd5d909d)<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -229,6 +229,7 @@ successfully downloaded text file (SHA: 1ca02c91b929220dc3c2761da3a8822cdd5d909d
 
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
 <script src="mock-data.js"></script>
+<script src="mock-data-hw.js"></script>
 <script src="mock-rx.js"></script>
 <script>
 /* =========================================================
@@ -240,8 +241,27 @@ const REPO="docssam1/hs-report", FILE="mock-data.js", BRANCH="main";
 const SUPA_URL="https://fgahqumaldheqettmvqg.supabase.co";
 const SUPA_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
 const D=window.GFIELD_DATA||{students:[]};
-const M=window.GFIELD_MOCK;
+/* 시험지 선택: ?set=hw 이면 활용 모의고사, 없으면 중급 */
+const SET=((new URLSearchParams(location.search).get('set')||'').toLowerCase()==='hw')?'hw':'mid';
+const M=(SET==='hw' ? (window.GFIELD_MOCK_HW||window.GFIELD_MOCK) : window.GFIELD_MOCK);
 M.results=M.results||{};
+/* Supabase 저장 키: 활용은 hw 접두사를 붙여 중급 결과와 섞이지 않게 함 */
+function rkey(r){ return (SET==='hw'?'hw':'')+r; }
+const SETNAME=(SET==='hw'?'활용':'중급');
+/* 화면의 '중급/활용' 표기를 시험지에 맞게 바꿔 줌 */
+function applySetName(){
+  if(SETNAME==='중급') return;
+  document.title=document.title.replace('중급','활용');
+  document.querySelectorAll('h2,.t,.pt,.hint,b').forEach(function(el){
+    if(el.children.length===0 && el.textContent.indexOf('중급')>=0)
+      el.textContent=el.textContent.split('중급').join('활용');
+  });
+  var sub=document.getElementById('h-sub');
+  var intro=document.getElementById('setIntro'); if(intro) intro.textContent=INTRO_HW;
+}
+const INTRO_HW='활용 모의고사는 배운 사고력을 실제 문제에 적용해 보는 과정입니다. 조건을 정확히 읽고 풀이 방법을 스스로 고르는 연습에 초점을 둡니다. 점수보다 틀린 유형을 이해했는지를 봐 주세요.';
+function unkey(k){ return (SET==='hw') ? (String(k).startsWith('hw')?String(k).slice(2):null)
+                                        : (String(k).startsWith('hw')?null:String(k)); }
 let mode=null, me=null, curRound="1";
 
 /* ─── 세부유형 키워드 매핑 ────────────────────────────── */
@@ -362,7 +382,7 @@ function printAnswers(r){
 async function supaUpsert(student,r,ox,source){
   const oxs=ox.join?ox.join(''):ox; const sc=scoreOf(oxs.split(''));
   try{
-    const res=await fetch(SUPA_URL+"/rest/v1/mock_results",{method:"POST",headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates"},body:JSON.stringify({student:student,round:r,ox:oxs,score:sc.score,wrong:sc.wrong,source:source||'parent'})});
+    const res=await fetch(SUPA_URL+"/rest/v1/mock_results",{method:"POST",headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates"},body:JSON.stringify({student:student,round:rkey(r),ox:oxs,score:sc.score,wrong:sc.wrong,source:source||'parent'})});
     return res.ok;
   }catch(e){ return false; }
 }
@@ -371,7 +391,7 @@ async function supaLoadAll(){
     const r=await fetch(SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,source,updated_at",{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
     if(!r.ok) return false;
     const rows=await r.json();
-    rows.forEach(row=>{ if(!row.ox||row.ox.length!==Q()) return; M.results[row.student]=M.results[row.student]||{}; M.results[row.student][row.round]=[{ox:row.ox.split(''),ts:(row.updated_at||'').slice(0,10),by:row.source||'db'}]; });
+    rows.forEach(row=>{ if(!row.ox||row.ox.length!==Q()) return; const rn=unkey(row.round); if(rn===null||!M.rounds[rn]) return; M.results[row.student]=M.results[row.student]||{}; M.results[row.student][rn]=[{ox:row.ox.split(''),ts:(row.updated_at||'').slice(0,10),by:row.source||'db'}]; });
     return true;
   }catch(e){ return false; }
 }
@@ -386,7 +406,7 @@ function enter(){
   startParent();
   if(window._pendingRound && M.rounds[window._pendingRound]){ openMark(window._pendingRound); window._pendingRound=null; }
 }
-function boot(){
+function boot(){ try{applySetName();}catch(e){}
   document.getElementById('gate').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('h-sub').textContent = mode==='teacher'?'원장 분석':(me+' 학생');
@@ -395,7 +415,9 @@ function boot(){
 /* ─── 채점 계산 ──────────────────────────────────────────── */
 function blankOx(){ const a=[]; for(let i=0;i<Q();i++) a.push('O'); return a; }
 function scoreOf(ox){ let s=0,wrong=0; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X') wrong++; else s+=bp(n).pts; } return {score:Math.round(s*10)/10, wrong:wrong, correct:Q()-wrong}; }
-function areaStats(ox){ const map={}; M.areas.forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=Q();n++){ const b=bp(n); if(!map[b.area]) map[b.area]={tot:0,got:0,cnt:0,ok:0}; map[b.area].tot+=b.pts; map[b.area].cnt++; if(ox[n-1]!=='X'){ map[b.area].got+=b.pts; map[b.area].ok++; } } return map; }
+/* 영역은 회차별 실제 문항(item.area)을 우선 사용. 없으면 blueprint 영역. */
+function areaOf(r,n){ const it=itemOf(r,n); return (it&&it.area)||bp(n).area||''; }
+function areaStats(ox,r){ const map={}; M.areas.forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=Q();n++){ const b=bp(n); const a=(r!=null?areaOf(r,n):b.area); if(!map[a]) map[a]={tot:0,got:0,cnt:0,ok:0}; map[a].tot+=b.pts; map[a].cnt++; if(ox[n-1]!=='X'){ map[a].got+=b.pts; map[a].ok++; } } return map; }
 function wrongList(r,ox){ const out=[]; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X'){ const it=itemOf(r,n); const b=bp(n); out.push({no:n, area:b.area, pts:b.pts, type:it.type, comment:it.comment, t:it.t||0, vid:it.video||''}); } } return out; }
 function typeComment(it){ if(it.comment&&it.comment.trim()) return it.comment; if(it.type) return "'"+it.type+"' 유형이에요. 풀이 강의를 보며 방법을 익힌 뒤, 며칠 뒤 새 종이에 스스로 다시 풀어보세요."; return "풀이 강의를 보며 방법을 익힌 뒤 스스로 다시 풀어보세요."; }
 
@@ -491,7 +513,7 @@ function renderReport(student,r,prevOx,sent){
   const at=attemptsOf(student,r);
   const ox=at[at.length-1].ox;
   const sc=scoreOf(ox);
-  const as=areaStats(ox);
+  const as=areaStats(ox,r);
   const wl=wrongList(r,ox);
   const tiers=scoreByTier(ox);
   const lv=levelLabel(sc.score);
@@ -520,9 +542,9 @@ function renderReport(student,r,prevOx,sent){
       <span class="hint" style="margin:0;font-size:11px">황소 실제 시험 기준(경시55·심화44·실력35·일품25.7) · 모의고사와는 다를 수 있어요</span>
     </div>
     <div class="mock-note">
-      <b>📌 중급 모의고사는 이런 과정입니다</b>
+      <b>📌 중급 모의고사는 이런 과정입니다</b><span id="setIntro">
       중급 모의고사는 가정에서 학습하며 파이널 대비에 익숙하게 만들기 위한 과정입니다. 이미 배웠던 사고력을 복습하고 지문에서의 조건을 놓치지 않는 연습을 합니다. 계산으로 가능한 실제 황소 기출 유형을 경험할 수 있지만 아직은 정확한 기준이라고 할 수 없습니다.
-      <em>반드시 점수보다는 발전하는 모습을 봐주세요.</em>
+      </span><em>반드시 점수보다는 발전하는 모습을 봐주세요.</em>
     </div>
   </div>`;
 
@@ -652,7 +674,7 @@ function renderCumulative(){
 
   rs.forEach(r=>{
     const ox=latestOx(student,r);
-    const as=areaStats(ox), t=scoreByTier(ox);
+    const as=areaStats(ox,r), t=scoreByTier(ox);
     M.areas.forEach(a=>{ const x=as[a]||{tot:0,got:0,cnt:0,ok:0};
       areaAgg[a].tot+=x.tot; areaAgg[a].got+=x.got; areaAgg[a].cnt+=x.cnt; areaAgg[a].ok+=x.ok; });
     [27,34,42].forEach(k=>{ if(t[k]){ tierAgg[k].q+=t[k].q; tierAgg[k].ok+=t[k].ok; tierAgg[k].max+=t[k].max; } });
@@ -852,7 +874,7 @@ function tAnalysisHTML(student){
 
   rs.forEach(r=>{
     const ox=latestOx(student,r);
-    const as=areaStats(ox);
+    const as=areaStats(ox,r);
     const t=scoreByTier(ox);
     M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; });
     [27,34,42].forEach(k=>{ if(t[k]){tierAgg[k].q+=t[k].q; tierAgg[k].ok+=t[k].ok;} });
@@ -922,7 +944,7 @@ function tClass(){
   students.forEach(s=>{
     roundKeys().forEach(r=>{
       const ox=latestOx(s,r); if(!ox) return; n++;
-      const as=areaStats(ox);
+      const as=areaStats(ox,r);
       const t=scoreByTier(ox);
       M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; });
       [27,34,42].forEach(k=>{ if(t[k]){tierAgg[k].q+=t[k].q; tierAgg[k].ok+=t[k].ok;} });
