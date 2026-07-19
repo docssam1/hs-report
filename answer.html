@@ -74,10 +74,15 @@ tr.tier td{border-top:2px solid #EA580C}
 </div>
 
 <script src="mock-data.js"></script>
+<script src="mock-data-hw.js"></script>
 <script src="mock-rx.js"></script>
 <script>
-const RD = (()=>{ const r=new URLSearchParams(location.search).get('round'); const n=parseInt(r,10); return (n>=1&&n<=8)?n:1; })();
-const M = window.GFIELD_MOCK || window.MOCK || {};
+const P  = new URLSearchParams(location.search);
+const SET=((P.get('set')||'').toLowerCase()==='hw')?'hw':'mid';
+const SETNAME=(SET==='hw'?'활용':'중급');
+const M = (SET==='hw' ? (window.GFIELD_MOCK_HW||{}) : (window.GFIELD_MOCK||window.MOCK||{}));
+const MAXR=(SET==='hw'?9:8);
+const RD = (()=>{ const n=parseInt(P.get('round'),10); return (n>=1&&n<=MAXR)?n:1; })();
 /* $32\frac{8}{11}$ → 32 8/11 (mock.html의 latexToPlain과 동일) */
 function latexToPlain(s){ return (s||'').replace(/\$(.*?)\$/g, function(m,x){
   var t=x.replace(/\\d?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g, function(_,a,b){ return ' '+a+'/'+b; });
@@ -98,8 +103,9 @@ const rounds = (M.rounds)||{};
 /* 회차 이동 버튼 없음 — 링크로 받은 회차만 열립니다 (다른 회차 답안 노출 방지) */
 document.getElementById('nav').innerHTML =
   '<span class="sp"></span><button onclick="window.print()">🖨 인쇄 / PDF 저장</button>';
-document.getElementById('ttl').textContent = `중급 모의고사 ${RD}회  ·  답안 및 교재 연결표`;
-document.getElementById('ft1').textContent = `지필드 영재교육 · 중급 모의고사 ${RD}회 답안 및 교재 연결표`;
+document.title = `${SETNAME} 모의고사 · 답안 및 교재 연결표 | 지필드 영재교육`;
+document.getElementById('ttl').textContent = `${SETNAME} 모의고사 ${RD}회  ·  답안 및 교재 연결표`;
+document.getElementById('ft1').textContent = `지필드 영재교육 · ${SETNAME} 모의고사 ${RD}회 답안 및 교재 연결표`;
 
 const items = ((rounds[RD]||rounds[String(RD)]||{}).items)||[];
 document.getElementById('body').innerHTML = items.map(it=>{
