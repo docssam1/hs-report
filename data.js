@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 19. 오후 1:47:05
+ * 생성: 2026. 7. 19. 오후 5:05:46
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -65,7 +65,7 @@ window.GFIELD_DATA = {
       "type": "week",
       "track": "exam",
       "date": "7월 2주차",
-      "title": "THINKING CORE CH1",
+      "title": "THINKING CORE CH1 (1)",
       "desc": "NUMBERS (1) + 중급 모의고사 1회",
       "focus": "수업 시간 30분 연장 시작 · 실전 개념 병행"
     },
@@ -74,8 +74,8 @@ window.GFIELD_DATA = {
       "type": "week",
       "track": "exam",
       "date": "7월 3주차",
-      "title": "THINKING CORE CH2",
-      "desc": "Algebra (1) + 중급 모의고사 2회",
+      "title": "THINKING CORE CH1 (2)",
+      "desc": "NUMBERS (2) + 중급 모의고사 2회",
       "focus": "개념 적용 및 오답 제로 훈련"
     },
     {
@@ -83,8 +83,8 @@ window.GFIELD_DATA = {
       "type": "week",
       "track": "exam",
       "date": "7월 4주차",
-      "title": "THINKING CORE CH3",
-      "desc": "Numbers & Case + 중급 모의고사 3회",
+      "title": "THINKING CORE CH2",
+      "desc": "Algebra (1) + 중급 모의고사 3회",
       "focus": "주차별 출석생 두 영상 동시 권한"
     },
     {
@@ -92,8 +92,8 @@ window.GFIELD_DATA = {
       "type": "week",
       "track": "exam",
       "date": "7월 5주차",
-      "title": "THINKING CORE CH4",
-      "desc": "Geometry + 중급 모의고사 4회",
+      "title": "THINKING CORE CH3",
+      "desc": "Numbers & Case + 중급 모의고사 4회",
       "focus": "도형/기하 파트 실전 적응"
     },
     {
@@ -104,6 +104,15 @@ window.GFIELD_DATA = {
       "title": "[선택] 방학 특강 모의고사 집중반",
       "desc": "월·수·금 09:30 ~ 12:00",
       "focus": "특강 수강생 전용 · 정규 진도와 별개로 신청"
+    },
+    {
+      "id": "aug-w1",
+      "type": "week",
+      "track": "exam",
+      "date": "8월 1주차",
+      "title": "THINKING CORE CH4",
+      "desc": "Geometry (중급 모의고사 없음)",
+      "focus": "8월 1주차 수업 · 개념 다지기"
     },
     {
       "id": "aug-w2",
@@ -357,6 +366,11 @@ window.GFIELD_DATA = {
       ]
     },
     "special-summer": {
+      "notice": "",
+      "homework": "",
+      "textbooks": []
+    },
+    "aug-w1": {
       "notice": "",
       "homework": "",
       "textbooks": []
