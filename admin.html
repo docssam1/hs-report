@@ -723,6 +723,7 @@ successfully downloaded text file (SHA: 2923598be5ba048ea802a108062fcc98f457e6ad
         <div class="field"><label>제목</label><input type="text" value="${esc(it.title)}" oninput="setBook(${i},'title',this.value)" placeholder="교재 제목"></div>
         <div class="field"><label>교재 PDF</label><label class="dz" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" accept="application/pdf" onchange="uploadBookPdf(${i},this)"><span>또는 드래그</span></label> &nbsp; ${pdfState}</div>
         <div class="field"><label>PDF 링크</label><input type="url" value="${esc(it.pdf)}" oninput="setBook(${i},'pdf',this.value)" placeholder="업로드하면 자동 입력 / 직접 링크도 가능"></div>
+        <div class="field"><label>이미지 뷰어</label><button class="btn add sm" onclick="splitBook(${i})">🖼 PDF를 이미지로 분할</button> &nbsp; <span id="bspl-${i}" style="font-size:12px;color:var(--muted)">${it.imgdir&&it.pages?('✅ 이미지 '+it.pages+'p 준비됨'):'PDF 업로드 시 자동 분할'}</span></div>
         <div class="field"><label>영상 주소(선택)</label><input type="url" value="${esc(it.video)}" oninput="setBook(${i},'video',this.value)" placeholder="유튜브 단일영상이면 좌우 배치(강의+교재)"></div>
         <label class="flbl">🔗 링크 버튼(선택) — 영상 재생목록 · 답안 파일 등</label>
         <div class="tb-list">${linkRows}</div>
@@ -739,6 +740,34 @@ successfully downloaded text file (SHA: 2923598be5ba048ea802a108062fcc98f457e6ad
   function addBookLink(i){ const b=S.books[i]; if(!b) return; (b.links=b.links||[]).push({label:'',url:''}); renderBooks(); dirty(); }
   function setBookLink(i,li,key,v){ const b=S.books[i]; if(b&&b.links&&b.links[li]){ b.links[li][key]=v.trim(); dirty(); } }
   function delBookLink(i,li){ const b=S.books[i]; if(b&&b.links){ b.links.splice(li,1); renderBooks(); dirty(); } }
+  async function splitBook(i){
+    const token=ghToken(); if(!token){ toast('GitHub 토큰이 필요합니다'); return; }
+    const b=S.books[i]; if(!b||!b.pdf){ toast('먼저 PDF를 업로드하세요'); return; }
+    const st=document.getElementById('bspl-'+i); const setp=(m)=>{ if(st) st.textContent=m; };
+    if(!window.pdfjsLib){ toast('PDF 라이브러리 로딩 실패 — 새로고침 후 다시'); return; }
+    try{
+      pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      setp('생성 중… PDF 불러오는 중');
+      const data=await fetch(b.pdf).then(r=>{ if(!r.ok) throw new Error('PDF fetch '+r.status); return r.arrayBuffer(); });
+      const pdf=await pdfjsLib.getDocument({data}).promise; const n=pdf.numPages;
+      const folder='bk_'+Date.now().toString(36);
+      for(let p=1;p<=n;p++){
+        setp('생성 중… '+p+'/'+n+' ('+Math.round(p/n*100)+'%)');
+        const page=await pdf.getPage(p);
+        const s=Math.min(2,1240/page.getViewport({scale:1}).width);
+        const vp=page.getViewport({scale:s});
+        const cv=document.createElement('canvas'); cv.width=Math.round(vp.width); cv.height=Math.round(vp.height);
+        const ctx=cv.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,cv.width,cv.height);
+        await page.render({canvasContext:ctx,viewport:vp}).promise;
+        const b64=cv.toDataURL('image/jpeg',0.82).split(',')[1];
+        const r=await ghPutExact('materials/'+folder+'/'+String(p).padStart(3,'0')+'.jpg', b64);
+        if(r.err){ setp('업로드 실패('+r.err+') — 토큰 Contents 쓰기 권한 확인'); return; }
+      }
+      b.imgdir=folder; b.pages=n; dirty();
+      setp('✅ 분할 완료 '+n+'p — 하단 [GitHub에 저장]도 눌러 목록을 반영하세요');
+      toast('이미지 분할 완료 ✅ ('+n+'p)'); renderBooks();
+    }catch(e){ setp('실패: '+(e&&e.message||e)); toast('분할 실패'); }
+  }
 
   /* ===== GitHub 토큰 (localStorage에 계속 저장) ===== */
   function ghKeyGet(){ try{ return localStorage.getItem('gfield_gh_token')||''; }catch(e){ return ''; } }
@@ -765,7 +794,7 @@ successfully downloaded text file (SHA: 2923598be5ba048ea802a108062fcc98f457e6ad
     if(!/\.pdf$/i.test(f.name)){ toast('PDF 파일만 업로드돼요'); input.value=''; return; }
     toast('PDF 업로드 중…');
     const r=await ghUploadPdf(f,'books');
-    if(r.url){ S.books[i].pdf=r.url; if(!S.books[i].title) S.books[i].title=f.name.replace(/\.pdf$/i,''); renderBooks(); dirty(); toast('업로드 완료 ✅ — 하단 [GitHub에 저장]도 눌러 목록을 반영하세요'); }
+    if(r.url){ S.books[i].pdf=r.url; if(!S.books[i].title) S.books[i].title=f.name.replace(/\.pdf$/i,''); renderBooks(); dirty(); toast('업로드 완료 ✅ 이미지로 변환 중…'); await splitBook(i); }
     else if(r.err==='perm'){ toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents 쓰기 권한 토큰을 넣어주세요'); }
     else if(r.err&&r.err!=='notoken'){ toast('업로드 실패: '+r.err); }
     input.value='';
