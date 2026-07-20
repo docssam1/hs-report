@@ -118,7 +118,7 @@
       condText = ' 이때 색칠된 점(●)이 반드시 포함되는 ' + shapeWord + '만 셉니다.';
     }
 
-    var text = '오른쪽 그림과 같이 ' + sizeDesc + '으로 나누어진 모눈이 있습니다.' + condText +
+    var text = '다음 그림과 같이 ' + sizeDesc + '으로 나누어진 모눈이 있습니다.' + condText +
       ' 크고 작은 ' + shapeWord + '은 모두 몇 개입니까?';
 
     var solution = '가로 선 ' + (cols + 1) + '개 중 2개, 세로 선 ' + (rows + 1) + '개 중 2개를 고르면 하나의 직사각형이 정해집니다. ' +
