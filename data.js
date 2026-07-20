@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 20. 오후 2:34:37
+ * 생성: 2026. 7. 21. 오전 12:44:41
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -342,6 +342,12 @@ window.GFIELD_DATA = {
         {
           "title": "중급 모의고사 2회 · 답안 및 교재 연결표",
           "url": "https://hs.gfieldacademy.net/answer.html?round=2"
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 2회 중급",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784561959203_ga28_________________2____.pdf",
+          "folder": "tb_mrte4fa6",
+          "pages": 6
         }
       ]
     },
@@ -352,6 +358,12 @@ window.GFIELD_DATA = {
         {
           "title": "중급 모의고사 3회 · 답안 및 교재 연결표",
           "url": "https://hs.gfieldacademy.net/answer.html?round=3"
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 3회 중급",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784562012981_ie3r_________________3____.pdf",
+          "folder": "tb_mrte5ijk",
+          "pages": 6
         }
       ]
     },
@@ -362,6 +374,12 @@ window.GFIELD_DATA = {
         {
           "title": "중급 모의고사 4회 · 답안 및 교재 연결표",
           "url": "https://hs.gfieldacademy.net/answer.html?round=4"
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 3회 중급",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784562061531_t8sg_________________3____.pdf",
+          "folder": "tb_mrte6i12",
+          "pages": 6
         }
       ]
     },
@@ -382,6 +400,12 @@ window.GFIELD_DATA = {
         {
           "title": "중급 모의고사 5회 · 답안 및 교재 연결표",
           "url": "https://hs.gfieldacademy.net/answer.html?round=5"
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 5회 중급",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784562102208_j8z8_________________5____.pdf",
+          "folder": "tb_mrte7cci",
+          "pages": 6
         }
       ]
     },
@@ -392,6 +416,12 @@ window.GFIELD_DATA = {
         {
           "title": "중급 모의고사 6회 · 답안 및 교재 연결표",
           "url": "https://hs.gfieldacademy.net/answer.html?round=6"
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 6회 중급",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784562145192_0tgm_________________6____.pdf",
+          "folder": "tb_mrte8a1v",
+          "pages": 6
         }
       ]
     },
@@ -401,7 +431,13 @@ window.GFIELD_DATA = {
       "textbooks": [
         {
           "title": "중급 모의고사 7회 · 답안 및 교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?round=7"
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784562177272_dkr5_________________7____.pdf"
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 7회 중급",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784562201499_cf19_________________7____.pdf",
+          "folder": "tb_mrte9qfe",
+          "pages": 7
         }
       ]
     },
@@ -412,6 +448,12 @@ window.GFIELD_DATA = {
         {
           "title": "중급 모의고사 8회 · 답안 및 교재 연결표",
           "url": "https://hs.gfieldacademy.net/answer.html?round=8"
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 8회 중급",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784562249035_vh1p_________________8____.pdf",
+          "folder": "tb_mrteahd9",
+          "pages": 7
         }
       ]
     },
@@ -1117,5 +1159,26 @@ window.GFIELD_DATA = {
       "video": ""
     }
   ],
-  "examSets": []
+  "examSets": [],
+  "studentTypes": {},
+  "vipAccess": {
+    "report": [
+      "*"
+    ],
+    "ses": [
+      "*"
+    ],
+    "cou": [
+      "*"
+    ],
+    "clinic": [
+      "*"
+    ],
+    "col": [
+      "*"
+    ],
+    "mag": [
+      "*"
+    ]
+  }
 };
