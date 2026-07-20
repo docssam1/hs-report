@@ -158,12 +158,11 @@
 
 <div class="stage-wrap" id="stage"></div>
 
-<script src="bank-core.js"></script>
-<script src="bank-svg.js"></script>
-<script src="gens/g-rect.js"></script>
-<script src="gens/g-tri.js"></script>
-<script src="gens/g-path.js"></script>
-<script src="gens/g-cube.js"></script>
+<script>
+(function(){var v=Date.now();
+ ['bank-core.js','bank-svg.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js'].forEach(function(f){
+   document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
+</script>
 <script>
 (function(){
   'use strict';
