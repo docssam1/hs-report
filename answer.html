@@ -73,9 +73,10 @@ tr.tier td{border-top:2px solid #EA580C}
   <div class="ft"><span id="ft1"></span><span>30문항 · 100점 만점</span></div>
 </div>
 
-<script src="mock-data.js"></script>
-<script src="mock-data-hw.js"></script>
-<script src="mock-rx.js"></script>
+<script>/* 캐시 무효화 — 데이터/처방 갱신이 즉시 반영되도록 */
+(function(){var v=Date.now();
+ ['mock-data.js','mock-data-hw.js','mock-rx.js'].forEach(function(f){
+   document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();</script>
 <script>
 const P  = new URLSearchParams(location.search);
 const SET=((P.get('set')||'').toLowerCase()==='hw')?'hw':'mid';
