@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>황소 문제은행 · GFIELD BULL BANK | 지필드 영재교육</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fff7ed; --card:#ffffff; --soft:#fff3e6;
+    --orange:#f97316; --orange-d:#ea580c; --accent:#c2410c;
+    --ink:#3b2a1d; --ink2:#6f5a49; --dim:#a89684;
+    --line:#f3e3d2; --line2:#efddc9;
+    --navy:#1F3864;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans KR','Malgun Gothic','맑은 고딕',sans-serif;background:var(--bg);color:var(--ink);padding:18px}
+  h1,h2,h3{font-family:'Jua','Noto Sans KR',sans-serif;font-weight:400}
+
+  /* ---------- 화면 UI (인쇄 시 숨김) ---------- */
+  .topbar{max-width:900px;margin:0 auto 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .topbar a.back{font-size:12.5px;font-weight:700;color:var(--orange-d);text-decoration:none;padding:6px 10px;border:1px solid var(--line2);border-radius:8px;background:#fff}
+  .topbar h1{font-size:20px;color:var(--accent)}
+  .topbar .tag{font-size:11px;color:var(--dim);letter-spacing:.06em}
+
+  .panel{max-width:900px;margin:0 auto 20px;background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:16px 18px;box-shadow:0 6px 18px rgba(194,65,12,.07)}
+  .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .row:last-child{margin-bottom:0}
+  .row .label{font-size:12.5px;font-weight:700;color:var(--ink2);min-width:74px}
+  .chip{font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:20px;border:1.5px solid var(--line2);background:#fff;color:var(--ink2);cursor:pointer;transition:.12s}
+  .chip:hover{border-color:var(--orange)}
+  .chip.on{background:var(--orange-d);border-color:var(--orange-d);color:#fff}
+  .chip.mix{border-style:dashed}
+  .toggle{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--ink2);cursor:pointer;user-select:none}
+  .toggle input{width:16px;height:16px;accent-color:var(--orange-d)}
+  .seedbox{display:flex;align-items:center;gap:8px}
+  .seedbox input{font-family:monospace;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;width:100px;padding:7px 9px;border:1.5px solid var(--line2);border-radius:8px;text-align:center;color:var(--accent)}
+  .examno{font-size:11.5px;color:var(--dim)}
+  .spacer{flex:1}
+  .btn{font-size:13.5px;font-weight:800;padding:9px 18px;border-radius:10px;border:none;cursor:pointer}
+  .btn.primary{background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;box-shadow:0 6px 14px rgba(234,88,12,.28)}
+  .btn.ghost{background:#fff;border:1.5px solid var(--navy);color:var(--navy)}
+
+  .stage-wrap{max-width:840px;margin:0 auto}
+  .hint{font-size:11.5px;color:var(--dim);text-align:center;margin-bottom:14px}
+
+  /* ---------- 시험지(미리보기 겸 인쇄 영역) ---------- */
+  .page{position:relative;background:#fff;width:210mm;min-height:297mm;margin:0 auto 22px;padding:16mm 14mm;box-shadow:0 6px 24px rgba(0,0,0,.12);overflow:hidden}
+  .wm-layer{position:absolute;inset:0;display:flex;flex-wrap:wrap;align-content:flex-start;justify-content:center;gap:26px 40px;transform:rotate(-24deg) scale(1.35);opacity:0;pointer-events:none;z-index:5;padding:40px 0}
+  .wm-layer.wm-active{opacity:.13}
+  .wm-tile{color:#111;font-size:16px;font-weight:800;white-space:nowrap}
+
+  /* 표지 */
+  .cover{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%;text-align:center;position:relative;z-index:2}
+  .cover .brand{font-size:13px;letter-spacing:.35em;color:var(--orange-d);font-weight:700;margin-top:40px}
+  .cover .brand2{font-family:'Jua';font-size:15px;color:var(--dim);letter-spacing:.1em;margin-bottom:26px}
+  .cover .bull{font-family:'Jua';font-size:44px;color:var(--accent);margin-bottom:6px}
+  .cover .book{font-size:16px;font-weight:900;color:var(--ink);letter-spacing:.04em;margin-bottom:44px}
+  .cover .genname{font-size:24px;font-weight:900;margin-bottom:6px;color:var(--ink)}
+  .cover .sub{font-size:13px;color:var(--ink2);margin-bottom:40px}
+  .cover .infogrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:70%;margin-bottom:50px}
+  .cover .infogrid .cell{border:1.5px solid var(--line2);border-radius:12px;padding:12px;background:var(--soft)}
+  .cover .infogrid .cell .k{font-size:10.5px;color:var(--dim);font-weight:700;letter-spacing:.06em;margin-bottom:4px}
+  .cover .infogrid .cell .v{font-size:16px;font-weight:800;color:var(--accent)}
+  .cover .fillrow{width:80%;display:flex;gap:22px;margin-top:auto;margin-bottom:30px}
+  .cover .fillrow .f{flex:1;text-align:left}
+  .cover .fillrow .f .k{font-size:11.5px;color:var(--ink2);font-weight:700;margin-bottom:6px}
+  .cover .fillrow .f .line{border-bottom:1.5px solid var(--ink2);height:30px}
+  .cover .footer{font-size:10.5px;color:var(--dim);letter-spacing:.05em}
+
+  /* 본문 문항 */
+  .qpage{position:relative;z-index:2}
+  .qhead{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--orange-d);padding-bottom:6px;margin-bottom:14px}
+  .qhead .t{font-size:12px;font-weight:800;color:var(--accent)}
+  .qhead .n{font-size:11px;color:var(--dim)}
+  .qcard{page-break-inside:avoid;min-height:118mm;border-bottom:1px dashed var(--line2);padding-bottom:10px;margin-bottom:14px}
+  .qcard:last-child{border-bottom:none}
+  .qcard .qno{display:inline-block;font-weight:900;font-size:15px;color:#fff;background:var(--accent);border-radius:8px;padding:3px 10px;margin-right:8px}
+  .qcard .qtext{font-size:14.5px;line-height:1.62;display:inline}
+  .qcard .qmeta{font-size:9.5px;color:var(--dim);margin-top:4px}
+  .qcard .qsvg{margin:10px 0;text-align:center}
+  .qcard .qsvg svg{max-width:100%;height:auto}
+  .qcard .answerline{margin-top:8px;font-size:12.5px;color:var(--dim)}
+  .qcard .answerline .blank{display:inline-block;min-width:120px;border-bottom:1.3px solid var(--ink2);margin-left:6px}
+
+  /* 정답지 */
+  .anshead{background:var(--navy);color:#fff;padding:10px 14px;border-radius:10px 10px 0 0;font-size:14px;font-weight:800;display:flex;justify-content:space-between}
+  table.anstable{width:100%;border-collapse:collapse;font-size:11px}
+  table.anstable th{background:var(--soft);color:var(--accent);font-size:10.5px;padding:6px 5px;border:1px solid var(--line2);text-align:left}
+  table.anstable td{padding:6px 5px;border:1px solid var(--line2);vertical-align:top;line-height:1.5}
+  table.anstable td.no{text-align:center;font-weight:800;color:var(--accent)}
+  table.anstable td.ans{font-weight:800;color:var(--accent);text-align:center}
+  table.anstable td.area{font-size:9.5px;color:var(--dim)}
+
+  @media print{
+    body{background:#fff;padding:0}
+    .topbar,.panel,.hint{display:none !important}
+    .page{box-shadow:none;margin:0;width:auto;min-height:0}
+    .page{page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    @page{size:A4 portrait;margin:12mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+  }
+  @media screen and (max-width:880px){
+    .page{width:100%;min-height:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">← 자료실로</a>
+  <h1>🐂 GFIELD BULL BANK</h1>
+  <span class="tag">황소 문제은행 · 무한 생성 연습지</span>
+</div>
+
+<div class="panel">
+  <div class="row">
+    <span class="label">유형</span>
+    <button class="chip" data-role="gen" data-val="rect">직사각형 개수</button>
+    <button class="chip" data-role="gen" data-val="tri">삼각형 개수</button>
+    <button class="chip" data-role="gen" data-val="path">최단 경로</button>
+    <button class="chip" data-role="gen" data-val="cube">쌓기나무</button>
+    <button class="chip mix" data-role="gen" data-val="mix">전체 섞기</button>
+  </div>
+  <div class="row">
+    <span class="label">레벨</span>
+    <button class="chip" data-role="level" data-val="all">전체 혼합</button>
+    <button class="chip" data-role="level" data-val="1">레벨 1</button>
+    <button class="chip" data-role="level" data-val="2">레벨 2</button>
+    <button class="chip" data-role="level" data-val="3">레벨 3</button>
+    <button class="chip" data-role="level" data-val="4">레벨 4</button>
+    <button class="chip" data-role="level" data-val="5">레벨 5</button>
+  </div>
+  <div class="row">
+    <span class="label">문항 수</span>
+    <button class="chip" data-role="n" data-val="5">5문제</button>
+    <button class="chip" data-role="n" data-val="10">10문제</button>
+    <button class="chip" data-role="n" data-val="20">20문제</button>
+    <span class="spacer"></span>
+    <label class="toggle"><input type="checkbox" id="optCover" checked> 표지 포함</label>
+    <label class="toggle"><input type="checkbox" id="optAnswer" checked> 정답지 포함</label>
+  </div>
+  <div class="row">
+    <span class="label">시험지 번호</span>
+    <div class="seedbox">
+      <input id="seedInput" maxlength="4" placeholder="A3F2">
+      <span class="examno" id="examNoLabel"></span>
+    </div>
+    <span class="spacer"></span>
+    <button class="btn ghost" id="btnNew">🎲 새 문제</button>
+    <button class="btn primary" id="btnPrint">🖨 인쇄</button>
+  </div>
+</div>
+
+<div class="hint">같은 시험지 번호를 입력하면 동일한 문제지·정답지가 그대로 재현됩니다 · 인쇄 시 브라우저 설정에서 '배경 그래픽'을 켜주세요</div>
+
+<div class="stage-wrap" id="stage"></div>
+
+<script src="bank-core.js"></script>
+<script src="bank-svg.js"></script>
+<script src="gens/g-rect.js"></script>
+<script src="gens/g-tri.js"></script>
+<script src="gens/g-path.js"></script>
+<script src="gens/g-cube.js"></script>
+<script>
+(function(){
+  'use strict';
+  var CORE = window.BANK_CORE;
+
+  var GEN_NAMES = { rect:'크고 작은 직사각형 개수', tri:'크고 작은 삼각형 개수', path:'최단 경로 가짓수', cube:'쌓기나무', mix:'전체 섞기(4유형 랜덤)' };
+  var LEVEL_NAMES = { all:'전체 혼합', '1':'레벨 1', '2':'레벨 2', '3':'레벨 3', '4':'레벨 4', '5':'레벨 5' };
+
+  var q = CORE.parseQuery();
+  var state = {
+    genId: q.gen && GEN_NAMES[q.gen] ? q.gen : 'rect',
+    level: q.level && LEVEL_NAMES[q.level] ? q.level : 'all',
+    n: [5,10,20].indexOf(parseInt(q.n,10))>=0 ? parseInt(q.n,10) : 10,
+    seed: q.seed || '',
+    cover: true,
+    answer: true
+  };
+
+  function syncChips(){
+    document.querySelectorAll('.chip[data-role="gen"]').forEach(function(b){ b.classList.toggle('on', b.dataset.val===state.genId); });
+    document.querySelectorAll('.chip[data-role="level"]').forEach(function(b){ b.classList.toggle('on', b.dataset.val===state.level); });
+    document.querySelectorAll('.chip[data-role="n"]').forEach(function(b){ b.classList.toggle('on', b.dataset.val===String(state.n)); });
+    document.getElementById('optCover').checked = state.cover;
+    document.getElementById('optAnswer').checked = state.answer;
+    document.getElementById('seedInput').value = state.seed;
+  }
+
+  function updateUrl(seedStr){
+    try{
+      var url = new URL(location.href);
+      url.searchParams.set('gen', state.genId);
+      url.searchParams.set('level', state.level);
+      url.searchParams.set('n', state.n);
+      url.searchParams.set('seed', seedStr);
+      history.replaceState(null,'',url.toString());
+    }catch(e){}
+  }
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+
+  function chunk(arr, size){
+    var out = [];
+    for (var i=0;i<arr.length;i+=size) out.push(arr.slice(i,i+size));
+    return out;
+  }
+
+  function buildCoverHtml(paper, examNo){
+    var genLabel = GEN_NAMES[paper.genId] || '전체 섞기';
+    var levelLabel = LEVEL_NAMES[String(paper.level)] || '전체 혼합';
+    return '' +
+      '<div class="wm-layer"></div>' +
+      '<div class="cover">' +
+        '<div class="brand">GFIELD PROBLEM LAB</div>' +
+        '<div class="brand2">문제은행 시리즈</div>' +
+        '<div class="bull">GFIELD BULL BANK</div>' +
+        '<div class="book">황소 문제은행 연습지</div>' +
+        '<div class="genname">' + esc(genLabel) + '</div>' +
+        '<div class="sub">경우의 수 · 도형 감각을 키우는 무한 생성 연습지</div>' +
+        '<div class="infogrid">' +
+          '<div class="cell"><div class="k">유형</div><div class="v">' + esc(genLabel) + '</div></div>' +
+          '<div class="cell"><div class="k">레벨</div><div class="v">' + esc(levelLabel) + '</div></div>' +
+          '<div class="cell"><div class="k">문항 수</div><div class="v">' + paper.questions.length + '문항</div></div>' +
+          '<div class="cell"><div class="k">시험지 번호</div><div class="v">' + esc(examNo) + '</div></div>' +
+        '</div>' +
+        '<div class="fillrow">' +
+          '<div class="f"><div class="k">이름</div><div class="line"></div></div>' +
+          '<div class="f"><div class="k">시작한 날</div><div class="line"></div></div>' +
+        '</div>' +
+        '<div class="footer">DOCSSAM\'S MATH LAB · GFIELD BULL BANK</div>' +
+      '</div>';
+  }
+
+  function buildQPageHtml(group, examNo, pageIdx, pageTotal){
+    var body = '<div class="wm-layer"></div><div class="qpage">' +
+      '<div class="qhead"><span class="t">GFIELD BULL BANK · 문제</span><span class="n">' + esc(examNo) + ' · ' + pageIdx + '/' + pageTotal + '</span></div>';
+    group.forEach(function(qq){
+      body += '<div class="qcard">' +
+        '<span class="qno">' + qq.index + '</span><span class="qtext">' + esc(qq.text) + '</span>' +
+        '<div class="qmeta">[' + esc(qq.area||'') + ' · Lv.' + qq.level + ']</div>' +
+        (qq.svg ? '<div class="qsvg">' + qq.svg + '</div>' : '') +
+        '<div class="answerline">답 <span class="blank"></span></div>' +
+        '</div>';
+    });
+    body += '</div>';
+    return body;
+  }
+
+  function buildAnswerPagesHtml(questions, examNo){
+    var rowsHtml = questions.map(function(qq){
+      return '<tr><td class="no">' + qq.index + '</td><td class="ans">' + esc(qq.answer) + '</td>' +
+        '<td class="area">' + esc(qq.genName||'') + ' · Lv.' + qq.level + '</td><td>' + esc(qq.solution||'') + '</td></tr>';
+    });
+    var rowChunks = chunk(rowsHtml, 14);
+    return rowChunks.map(function(rows, i){
+      return '<div class="wm-layer"></div>' +
+        '<div class="anshead">정답 및 해설<span>' + esc(examNo) + ' · ' + (i+1) + '/' + rowChunks.length + '</span></div>' +
+        '<table class="anstable"><thead><tr><th style="width:8%">번호</th><th style="width:12%">정답</th><th style="width:22%">유형</th><th>해설</th></tr></thead>' +
+        '<tbody>' + rows.join('') + '</tbody></table>';
+    }).join('');
+  }
+
+  function render(){
+    syncChips();
+    var paper = CORE.buildPaper({ genId: state.genId, level: state.level, n: state.n, seedStr: state.seed });
+    state.seed = paper.seedStr;
+    var examNo = CORE.examNumber(paper.seedStr);
+    document.getElementById('examNoLabel').textContent = examNo;
+    document.getElementById('seedInput').value = paper.seedStr;
+    updateUrl(paper.seedStr);
+
+    var pages = [];
+    if (state.cover) pages.push('<div class="page">' + buildCoverHtml(paper, examNo) + '</div>');
+
+    var groups = chunk(paper.questions, 2);
+    groups.forEach(function(g, i){
+      pages.push('<div class="page">' + buildQPageHtml(g, examNo, i+1, groups.length) + '</div>');
+    });
+
+    if (state.answer && paper.questions.length){
+      var ansHtml = buildAnswerPagesHtml(paper.questions, examNo);
+      // 정답지 페이지들을 하나의 page 컨테이너들로 다시 분리(2개 chunk 단위와 무관하게 자체 페이지)
+      var wrapDiv = document.createElement('div');
+      wrapDiv.innerHTML = ansHtml;
+      var tmp = [];
+      var cur = [];
+      wrapDiv.childNodes.forEach(function(node){
+        if (node.nodeType===1 && node.classList.contains('wm-layer')){
+          if (cur.length) tmp.push(cur);
+          cur = [node.outerHTML];
+        } else if (node.nodeType===1){
+          cur.push(node.outerHTML);
+        }
+      });
+      if (cur.length) tmp.push(cur);
+      tmp.forEach(function(parts){ pages.push('<div class="page">' + parts.join('') + '</div>'); });
+    }
+
+    document.getElementById('stage').innerHTML = pages.join('');
+    CORE.initWatermarks('.wm-layer');
+  }
+
+  document.querySelectorAll('.chip').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var role = btn.dataset.role, val = btn.dataset.val;
+      if (role==='gen') state.genId = val;
+      else if (role==='level') state.level = val;
+      else if (role==='n') state.n = parseInt(val,10);
+      render();
+    });
+  });
+  document.getElementById('optCover').addEventListener('change', function(e){ state.cover = e.target.checked; render(); });
+  document.getElementById('optAnswer').addEventListener('change', function(e){ state.answer = e.target.checked; render(); });
+  document.getElementById('seedInput').addEventListener('change', function(e){ state.seed = e.target.value; render(); });
+  document.getElementById('btnNew').addEventListener('click', function(){ state.seed = CORE.encodeSeed(CORE.randomSeedNum()); render(); });
+  document.getElementById('btnPrint').addEventListener('click', function(){ window.print(); });
+
+  render();
+})();
+</script>
+</body>
+</html>
