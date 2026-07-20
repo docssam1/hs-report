@@ -509,7 +509,7 @@
     renderStatus(); renderBriefing(); renderHome(); renderTimeline(); renderArchive(); renderVip();
     if(briefTimer) clearInterval(briefTimer);
     if(!isDemo) briefTimer=setInterval(renderBriefing, 600000);
-    nav('home'); window.scrollTo(0,0);
+    applyMemberTabs(); nav(isOnline()?'archive':'home'); window.scrollTo(0,0);
     if(!isDemo) showCheer(given);
   }
   function logout(){
@@ -786,6 +786,18 @@
   document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
 
   function canSeeFolder(folder){ const acc=(D.archiveAccess||{})[folder]; if(!Array.isArray(acc)) return false; /* 권한 정보 없으면 비공개 */ return acc.includes('*')||acc.includes(currentStudent); }
+  function isOnline(){ return ((D.studentTypes||{})[currentStudent])==='online'; }
+  /* VIP 메뉴 권한: 키가 없으면 재원생만(온라인 회원은 비공개) */
+  function canSeeVipMenu(k){ const a=(D.vipAccess||{})[k]; if(!Array.isArray(a)) return !isOnline(); return a.includes('*')||a.includes(currentStudent); }
+  function visibleVipKeys(){ return ['report','ses','cou','clinic','col','mag'].filter(canSeeVipMenu); }
+  function applyMemberTabs(){
+    const on=isOnline();
+    document.querySelectorAll('.nav-btn').forEach(b=>{
+      const v=b.dataset.v;
+      if(v==='home'||v==='roadmap') b.style.display=on?'none':'';
+      if(v==='vip') b.style.display=(on&&!visibleVipKeys().length)?'none':'';
+    });
+  }
 
   function renderArchive(){
     const wrap=document.getElementById('archive-list'); wrap.innerHTML='';
@@ -894,18 +906,22 @@
     const col=(V.columns||[]).filter(c=>c&&c.title).length;
     const mag=(V.magazine||[]).filter(m=>m&&m.title).length;
     const rep=((D.reports&&D.reports[currentStudent])||[]).length;
-    wrap.innerHTML=`<div class="vip-menu">
-      <button class="vip-mbtn full" data-k="report" style="border:1.5px solid #fcd3a3;background:#fff7ec"><span class="mi">📊</span><span><span class="mt">진단 결과 · 코멘트</span><span class="mc" style="display:block">모의고사 진단 · 본인 확인 ${rep?`(${rep})`:''} ›</span></span></button>
-      <button class="vip-mbtn" data-k="ses"><span class="mi">🎬</span><span class="mt">프리미엄 설명회</span><span class="mc">${ses}개 영상 ›</span></button>
-      <button class="vip-mbtn" data-k="cou"><span class="mi">📣</span><span class="mt">신규 강좌 공지</span><span class="mc">${cou}건 ›</span></button>
-      <button class="vip-mbtn" data-k="clinic"><span class="mi">🩺</span><span class="mt">결석·클리닉 신청</span><span class="mc">바로 신청 ›</span></button>
-      <button class="vip-mbtn" data-k="col"><span class="mi">✒️</span><span class="mt">DOCSSAM 칼럼</span><span class="mc">${col}편 ›</span></button>
-      <button class="vip-mbtn full" data-k="mag"><span class="mi">📰</span><span><span class="mt">교육 매거진</span><span class="mc" style="display:block">${mag}건 · 매일 업데이트 ›</span></span></button>
-    </div>`;
+    const BTN={
+      report:`<button class="vip-mbtn full" data-k="report" style="border:1.5px solid #fcd3a3;background:#fff7ec"><span class="mi">📊</span><span><span class="mt">진단 결과 · 코멘트</span><span class="mc" style="display:block">모의고사 진단 · 본인 확인 ${rep?`(${rep})`:''} ›</span></span></button>`,
+      ses:`<button class="vip-mbtn" data-k="ses"><span class="mi">🎬</span><span class="mt">프리미엄 설명회</span><span class="mc">${ses}개 영상 ›</span></button>`,
+      cou:`<button class="vip-mbtn" data-k="cou"><span class="mi">📣</span><span class="mt">신규 강좌 공지</span><span class="mc">${cou}건 ›</span></button>`,
+      clinic:`<button class="vip-mbtn" data-k="clinic"><span class="mi">🩺</span><span class="mt">결석·클리닉 신청</span><span class="mc">바로 신청 ›</span></button>`,
+      col:`<button class="vip-mbtn" data-k="col"><span class="mi">✒️</span><span class="mt">DOCSSAM 칼럼</span><span class="mc">${col}편 ›</span></button>`,
+      mag:`<button class="vip-mbtn full" data-k="mag"><span class="mi">📰</span><span><span class="mt">교육 매거진</span><span class="mc" style="display:block">${mag}건 · 매일 업데이트 ›</span></span></button>`
+    };
+    const keys=visibleVipKeys();
+    if(!keys.length){ wrap.innerHTML='<div class="empty-note">열람 가능한 메뉴가 없습니다.</div>'; return; }
+    wrap.innerHTML=`<div class="vip-menu">${keys.map(k=>BTN[k]).join('')}</div>`;
     wrap.querySelectorAll('.vip-mbtn[data-k]').forEach(b=>b.onclick=()=>openVipSection(b.dataset.k));
   }
   function openVipSection(k){
     const wrap=document.getElementById('vip-list'); if(!wrap) return;
+    if(!canSeeVipMenu(k)){ vipMenu(); return; }
     const V=D.vip||{};
     const back='<button class="vip-back" onclick="vipMenu()">‹ VIP 라운지</button>';
     if(k==='report'){

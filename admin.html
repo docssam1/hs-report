@@ -104,6 +104,7 @@
   .modal-bg .row{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;}
   .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#2d3436;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:60;opacity:0;transition:.25s;pointer-events:none;max-width:90%;text-align:center;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+.mini{border:1px solid #d8d5cc;background:#fff;border-radius:7px;padding:3px 8px;font-size:12px;cursor:pointer;line-height:1;} .mini:hover{background:#f3f1ea;}
 </style>
 </head>
 <body>
@@ -217,6 +218,11 @@
     </section>
 
     <section id="tab-vip" class="hidden">
+      <div class="card">
+        <h3>🔑 VIP 메뉴별 열람 권한</h3>
+        <div class="hint">‘전체공개’가 켜지면(초록) 로그인한 모든 학생이 그 메뉴를 봅니다. 끄면 체크한 학생만 봅니다. <b>모두 체크(☑)</b>를 누르면 전원이 개별 체크로 풀리므로, 빼고 싶은 사람만 해제하면 됩니다. 온라인 회원은 이름 아래 배지로 표시됩니다. (학생 유형은 ② 학생 명단에서 전환)</div>
+        <div class="matrix-scroll"><table id="vip-acc-matrix"></table></div>
+      </div>
       <div class="card">
         <h3>🎬 프리미엄 설명회 (영상)</h3>
         <div class="hint">유튜브/Vimeo 단일영상 링크를 넣으면 학생 화면에 썸네일 캐러셀 + 목록으로 누적됩니다. 썸네일은 비우면 유튜브에서 자동 추출돼요. (재생목록 링크는 임베드가 안 되니 단일영상 권장)</div>
@@ -353,6 +359,8 @@
   S.specialStudents = S.specialStudents || [];
   S.archiveFolders = S.archiveFolders || [];
   S.archiveAccess = S.archiveAccess || {};
+  S.studentTypes = S.studentTypes || {};
+  S.vipAccess = S.vipAccess || {};
   S.books = S.books || [];
   S.info = S.info || [];
   S.vip = S.vip || {};
@@ -487,11 +495,15 @@
 
   function renderStudents(){
     let html='';
-    S.students.forEach(name=>{ html+=`<span class="chip">${name}<button onclick="removeStudent('${name}')">×</button></span>`; });
+    S.students.forEach(name=>{
+      const on=(S.studentTypes[name]==='online');
+      html+=`<span class="chip">${name}<b onclick="toggleType('${name}')" style="cursor:pointer;margin-left:5px;font-size:10px;font-weight:800;padding:2px 7px;border-radius:9px;${on?'background:#faeeda;color:#854f0b':'background:#e6f1fb;color:#185fa5'}" title="클릭하면 유형 전환">${on?'온라인':'재원생'}</b><button onclick="removeStudent('${name}')">×</button></span>`;
+    });
     document.getElementById('student-chips').innerHTML=html||'<span class="hint">등록된 학생이 없습니다.</span>';
   }
+  function toggleType(name){ if(S.studentTypes[name]==='online') delete S.studentTypes[name]; else S.studentTypes[name]='online'; renderStudents(); renderAccMatrix(); dirty(); }
   function addStudent(){ const inp=document.getElementById('new-student'); const name=inp.value.trim(); if(!name) return; if(S.students.includes(name)){ toast('이미 있는 학생입니다'); return; } S.students.push(name); ensureStudent(name); inp.value=''; renderStudents(); renderMatrix(); renderAccMatrix(); renderReportAdmin(); dirty(); }
-  function removeStudent(name){ if(!confirm(`'${name}' 학생을 삭제할까요?`)) return; S.students=S.students.filter(s=>s!==name); delete S.attendance[name]; S.specialStudents=S.specialStudents.filter(s=>s!==name); if(S.reports) delete S.reports[name]; if(S.pins) delete S.pins[name]; renderStudents(); renderMatrix(); renderAccMatrix(); renderReportAdmin(); dirty(); }
+  function removeStudent(name){ if(!confirm(`'${name}' 학생을 삭제할까요?`)) return; S.students=S.students.filter(s=>s!==name); delete S.attendance[name]; S.specialStudents=S.specialStudents.filter(s=>s!==name); if(S.reports) delete S.reports[name]; if(S.pins) delete S.pins[name]; delete S.studentTypes[name]; Object.keys(S.vipAccess).forEach(k=>{ if(Array.isArray(S.vipAccess[k])) S.vipAccess[k]=S.vipAccess[k].filter(x=>x!==name); }); Object.keys(S.archiveAccess).forEach(k=>{ if(Array.isArray(S.archiveAccess[k])) S.archiveAccess[k]=S.archiveAccess[k].filter(x=>x!==name); }); renderStudents(); renderMatrix(); renderAccMatrix(); renderReportAdmin(); dirty(); }
 
   function cObj(id){ let c=S.content[id]; if(!c){ c={notice:'',homework:'',textbooks:[]}; S.content[id]=c; } if(typeof c.notice!=='string') c.notice=''; if(typeof c.homework!=='string') c.homework=''; if(!Array.isArray(c.textbooks)) c.textbooks=[]; return c; }
   function renderContent(){
@@ -694,20 +706,45 @@
   function addFolder(){ const inp=document.getElementById('new-folder'); const name=inp.value.trim(); if(!name) return; if(S.archiveFolders.includes(name)){ toast('이미 있는 폴더입니다'); return; } S.archiveFolders.push(name); S.archiveAccess[name]=[];  /* 새 폴더는 비공개로 시작 — 판매용 책장 오노출 방지 */ inp.value=''; renderArchiveAdmin(); dirty(); }
   function renameFolder(i,val){ const v=val.trim(); const old=S.archiveFolders[i]; if(!v||v===old){ renderFolders(); return; } if(S.archiveFolders.includes(v)){ toast('이미 있는 폴더입니다'); renderFolders(); return; } S.archiveFolders[i]=v; S.archiveAccess[v]=S.archiveAccess[old]||["*"]; delete S.archiveAccess[old]; (S.books||[]).forEach(a=>{ if(a.folder===old) a.folder=v; }); renderArchiveAdmin(); dirty(); }
   function delFolder(i){ const f=S.archiveFolders[i]; const cnt=(S.books||[]).filter(a=>a.folder===f).length; if(!confirm(`'${f}' 폴더를 삭제할까요?`+(cnt?`\n이 폴더의 교재 ${cnt}권도 함께 삭제됩니다.`:''))) return; S.archiveFolders.splice(i,1); delete S.archiveAccess[f]; S.books=(S.books||[]).filter(a=>a.folder!==f); renderArchiveAdmin(); dirty(); }
+  function stuTh(s){ const on=(S.studentTypes[s]==='online'); return `<th>${s}${on?'<br><span style="font-size:9px;font-weight:800;color:#854f0b;background:#faeeda;padding:1px 5px;border-radius:7px">온라인</span>':''}</th>`; }
   function renderAccMatrix(){
-    if(!S.archiveFolders.length){ document.getElementById('acc-matrix').innerHTML='<tbody><tr><td class="hint" style="padding:14px">폴더를 먼저 추가하세요.</td></tr></tbody>'; return; }
-    let html='<thead><tr><th>폴더</th><th>전체공개</th>';
-    S.students.forEach(s=>{ html+=`<th>${s}</th>`; });
+    if(!S.archiveFolders.length){ document.getElementById('acc-matrix').innerHTML='<tbody><tr><td class="hint" style="padding:14px">폴더를 먼저 추가하세요.</td></tr></tbody>'; }
+    else{
+      let html='<thead><tr><th>폴더</th><th>전체공개</th><th>모두<br>체크</th>';
+      S.students.forEach(s=>{ html+=stuTh(s); });
+      html+='</tr></thead><tbody>';
+      S.archiveFolders.forEach((f,fi)=>{
+        const acc=accArr(f); const open=acc.includes('*');
+        html+=`<tr><th>${f}</th><td class="cell ${open?'on':'off'}" onclick="toggleOpen(${fi},this)"></td><td style="text-align:center"><button class="mini" onclick="accAll(${fi})" title="전원 개별 체크로 전환">☑</button></td>`;
+        S.students.forEach((s,si)=>{ const on=!open&&acc.includes(s); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="toggleAcc(${fi},'${s}',this)"></td>`; });
+        html+='</tr>';
+      });
+      html+='</tbody>';
+      document.getElementById('acc-matrix').innerHTML=html;
+    }
+    renderVipAccMatrix();
+  }
+  function accAll(fi){ const f=S.archiveFolders[fi]; S.archiveAccess[f]=S.students.slice(); renderAccMatrix(); dirty(); }
+  /* ── VIP 라운지 메뉴별 열람 권한 ── */
+  const VIP_MENUS=[['report','진단 결과·코멘트'],['ses','프리미엄 설명회'],['cou','신규 강좌 공지'],['clinic','결석·클리닉 신청'],['col','DOCSSAM 칼럼'],['mag','교육 매거진']];
+  function vipArr(k){ if(!Array.isArray(S.vipAccess[k])) S.vipAccess[k]=["*"]; return S.vipAccess[k]; }
+  function renderVipAccMatrix(){
+    const el=document.getElementById('vip-acc-matrix'); if(!el) return;
+    let html='<thead><tr><th>메뉴</th><th>전체공개</th><th>모두<br>체크</th>';
+    S.students.forEach(s=>{ html+=stuTh(s); });
     html+='</tr></thead><tbody>';
-    S.archiveFolders.forEach((f,fi)=>{
-      const acc=accArr(f); const open=acc.includes('*');
-      html+=`<tr><th>${f}</th><td class="cell ${open?'on':'off'}" onclick="toggleOpen(${fi},this)"></td>`;
-      S.students.forEach((s,si)=>{ const on=!open&&acc.includes(s); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="toggleAcc(${fi},'${s}',this)"></td>`; });
+    VIP_MENUS.forEach(([k,label])=>{
+      const acc=vipArr(k); const open=acc.includes('*');
+      html+=`<tr><th>${label}</th><td class="cell ${open?'on':'off'}" onclick="vipToggleOpen('${k}')"></td><td style="text-align:center"><button class="mini" onclick="vipAll('${k}')" title="전원 개별 체크로 전환">☑</button></td>`;
+      S.students.forEach(st=>{ const on=!open&&acc.includes(st); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="vipToggleAcc('${k}','${st}')"></td>`; });
       html+='</tr>';
     });
     html+='</tbody>';
-    document.getElementById('acc-matrix').innerHTML=html;
+    el.innerHTML=html;
   }
+  function vipToggleOpen(k){ const acc=vipArr(k); S.vipAccess[k]=acc.includes('*')?[]:["*"]; renderVipAccMatrix(); dirty(); }
+  function vipToggleAcc(k,st){ let acc=vipArr(k); if(acc.includes('*')) acc=S.vipAccess[k]=[]; const i=acc.indexOf(st); if(i>=0) acc.splice(i,1); else acc.push(st); renderVipAccMatrix(); dirty(); }
+  function vipAll(k){ S.vipAccess[k]=S.students.slice(); renderVipAccMatrix(); dirty(); }
   function toggleOpen(fi){ const f=S.archiveFolders[fi]; const acc=accArr(f); if(acc.includes('*')) S.archiveAccess[f]=[]; else S.archiveAccess[f]=["*"]; renderAccMatrix(); dirty(); }
   function toggleAcc(fi,s){ const f=S.archiveFolders[fi]; let acc=accArr(f); if(acc.includes('*')) acc=S.archiveAccess[f]=[]; const i=acc.indexOf(s); if(i>=0) acc.splice(i,1); else acc.push(s); renderAccMatrix(); dirty(); }
 
