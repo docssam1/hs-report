@@ -523,7 +523,7 @@
           <span id="spl-${w.id}-${i}" class="hint" style="flex-basis:100%"></span>
         </div>`;
       });
-      html+=`<div class="content-week">
+      html+=`<div class="content-week" data-wk="${w.id}">
         <div class="wt">${w.date} · ${w.title}</div>
         <div class="wd">${w.desc}</div>
         <label class="flbl">📘 학습 내용 (안내문 붙여넣기 · 드래그해서 꾸미기)</label>
@@ -1264,6 +1264,9 @@
 </style>
 <script>
 (function(){
+  /* 주차별 콘텐츠는 파일 업로드·이미지 분할 뒤 renderContent()가 전체를 다시 그리므로,
+     data-wk(주차 id) 기준으로 열림 상태를 별도 저장해 재렌더에도 펼친 상태가 유지되게 함 */
+  var openWk={};
   function labelFor(cw){
     var t=cw.querySelector('input[type="text"]')||cw.querySelector('input:not([type="file"]):not([type="checkbox"]):not([type="date"])')||cw.querySelector('input,textarea,select');
     var v=t&&t.value?t.value.trim():'';
@@ -1278,8 +1281,12 @@
     var body=document.createElement('div'); body.className='cw-body';
     while(cw.firstChild){ body.appendChild(cw.firstChild); }
     cw.appendChild(head); cw.appendChild(body);
-    cw.classList.add('acc-collapsed');
-    head.addEventListener('click',function(){ cw.classList.toggle('acc-collapsed'); title.textContent=labelFor(cw); });
+    var wk=cw.dataset.wk;
+    if(wk && openWk[wk]){ /* 이전에 펼쳐뒀던 주차면 그대로 유지 */ } else { cw.classList.add('acc-collapsed'); }
+    head.addEventListener('click',function(){
+      cw.classList.toggle('acc-collapsed'); title.textContent=labelFor(cw);
+      if(wk) openWk[wk]=!cw.classList.contains('acc-collapsed');
+    });
     body.addEventListener('input',function(){ title.textContent=labelFor(cw); });
   }
   function scan(){ document.querySelectorAll('.content-week:not([data-acc])').forEach(apply); }
