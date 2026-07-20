@@ -174,6 +174,11 @@
 
     <section id="tab-content" class="hidden">
       <div class="card">
+        <h3>🌟 특강(활용 모의고사) 회차별 수강 권한</h3>
+        <div class="hint">특강은 <b>일부 회차만 신청한 학생</b>이 있을 수 있어, 회차별로 볼 수 있는 학생을 따로 정합니다. 전체공개를 끄면 체크한 학생만 그 회차를 봅니다. <b>모두 체크(☑)</b>를 누르면 전원이 개별 체크로 풀리므로 빼고 싶은 사람만 해제하면 됩니다. (특강 자체를 볼 수 있는지는 ② 학생 명단의 [선택] 특강 등록 여부가 먼저 결정하고, 여기서는 그중 어떤 회차인지를 정합니다)</div>
+        <div class="matrix-scroll"><table id="sp-acc-matrix"></table></div>
+      </div>
+      <div class="card">
         <h3>주차별 콘텐츠 (학습내용 · 과제 · 교재)</h3>
         <div class="hint">안내문을 그대로 붙여넣으면 학생 화면에서 유튜브/링크가 자동 변환됩니다. · <b>텍스트를 드래그하면 꾸미기 버튼</b>(굵게·형광펜·색·별)이 떠요. · 교재 PDF는 <b>웹 링크</b> 또는 <b>로컬 PDF 파일 선택/드래그</b>로 자동 업로드됩니다. (업로드엔 GitHub 토큰 필요)</div>
         <div id="content-list"></div>
@@ -723,6 +728,7 @@
       document.getElementById('acc-matrix').innerHTML=html;
     }
     renderVipAccMatrix();
+    renderSpAccMatrix();
   }
   function accAll(fi){ const f=S.archiveFolders[fi]; S.archiveAccess[f]=S.students.slice(); renderAccMatrix(); dirty(); }
   /* ── VIP 라운지 메뉴별 열람 권한 ── */
@@ -745,6 +751,29 @@
   function vipToggleOpen(k){ const acc=vipArr(k); S.vipAccess[k]=acc.includes('*')?[]:["*"]; renderVipAccMatrix(); dirty(); }
   function vipToggleAcc(k,st){ let acc=vipArr(k); if(acc.includes('*')) acc=S.vipAccess[k]=[]; const i=acc.indexOf(st); if(i>=0) acc.splice(i,1); else acc.push(st); renderVipAccMatrix(); dirty(); }
   function vipAll(k){ S.vipAccess[k]=S.students.slice(); renderVipAccMatrix(); dirty(); }
+  /* ── 특강(활용 모의고사) 회차별 수강 권한 ── */
+  function spTBs(){ return cObj('special-summer').textbooks||[]; }
+  function spArr(i){ const t=spTBs()[i]; if(!t) return ["*"]; if(!Array.isArray(t.access)) t.access=["*"]; return t.access; }
+  function renderSpAccMatrix(){
+    const el=document.getElementById('sp-acc-matrix'); if(!el) return;
+    const tbs=spTBs();
+    if(!tbs.length){ el.innerHTML='<tbody><tr><td class="hint" style="padding:14px">특강 노드에 활용 모의고사 항목이 아직 없습니다.</td></tr></tbody>'; return; }
+    let html='<thead><tr><th>회차</th><th>전체공개</th><th>모두<br>체크</th>';
+    S.students.forEach(s=>{ html+=stuTh(s); });
+    html+='</tr></thead><tbody>';
+    tbs.forEach((t,i)=>{
+      const acc=spArr(i); const open=acc.includes('*');
+      const label=(t.title||('항목 '+(i+1))).replace(/\s*[·|].*$/,'');
+      html+=`<tr><th>${label}</th><td class="cell ${open?'on':'off'}" onclick="spToggleOpen(${i})"></td><td style="text-align:center"><button class="mini" onclick="spAll(${i})" title="전원 개별 체크로 전환">☑</button></td>`;
+      S.students.forEach(st=>{ const on=!open&&acc.includes(st); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="spToggleAcc(${i},'${st}')"></td>`; });
+      html+='</tr>';
+    });
+    html+='</tbody>';
+    el.innerHTML=html;
+  }
+  function spToggleOpen(i){ const acc=spArr(i); spTBs()[i].access=acc.includes('*')?[]:["*"]; renderSpAccMatrix(); dirty(); }
+  function spToggleAcc(i,st){ let acc=spArr(i); if(acc.includes('*')){ acc=[]; spTBs()[i].access=acc; } const idx=acc.indexOf(st); if(idx>=0) acc.splice(idx,1); else acc.push(st); renderSpAccMatrix(); dirty(); }
+  function spAll(i){ spTBs()[i].access=S.students.slice(); renderSpAccMatrix(); dirty(); }
   function toggleOpen(fi){ const f=S.archiveFolders[fi]; const acc=accArr(f); if(acc.includes('*')) S.archiveAccess[f]=[]; else S.archiveAccess[f]=["*"]; renderAccMatrix(); dirty(); }
   function toggleAcc(fi,s){ const f=S.archiveFolders[fi]; let acc=accArr(f); if(acc.includes('*')) acc=S.archiveAccess[f]=[]; const i=acc.indexOf(s); if(i>=0) acc.splice(i,1); else acc.push(s); renderAccMatrix(); dirty(); }
 
