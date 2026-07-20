@@ -56,10 +56,10 @@
     if (variant === 'layer' && maxUsed >= 2) {
       k = R(rng, 1, maxUsed);
       answer = countLayer(heights, k);
-      text = '쌓기나무를 오른쪽 그림과 같이 쌓았습니다. 위에서부터 세어 ' + k + '층에 놓여 있는 쌓기나무는 모두 몇 개입니까?';
+      text = '쌓기나무를 다음 그림과 같이 쌓았습니다. 위에서부터 세어 ' + k + '층에 놓여 있는 쌓기나무는 모두 몇 개입니까?';
     } else {
       answer = countTotal(heights);
-      text = '쌓기나무를 오른쪽 그림과 같이 쌓았습니다. 사용된 쌓기나무는 모두 몇 개입니까?';
+      text = '쌓기나무를 다음 그림과 같이 쌓았습니다. 사용된 쌓기나무는 모두 몇 개입니까?';
     }
 
     var iso = SVG.drawIsoCubes(heights, { unit: 26 });
@@ -233,7 +233,7 @@
     var totalW = Math.max(nx, ny) * cs + 40;
     var svgStr = SVG.svgWrap(totalW, totalH, parts.join(''));
 
-    var text = '쌓기나무로 어떤 모양을 만들었더니, 위·앞·옆에서 본 모양이 오른쪽 그림과 같았습니다. ' +
+    var text = '쌓기나무로 어떤 모양을 만들었더니, 위·앞·옆에서 본 모양이 다음 그림과 같았습니다. ' +
       '이 모양을 만드는 데 사용한 쌓기나무 개수가 가장 많을 때와 가장 적을 때의 개수의 차는 얼마입니까?';
 
     var solution = '위에서 본 모양으로 쌓기나무가 있는 자리를 알 수 있고, 각 자리의 높이는 앞·옆에서 본 모양의 최댓값을 넘을 수 없습니다. ' +
