@@ -785,7 +785,7 @@
   function closeModal(){ document.getElementById('overlay').classList.add('hidden'); document.getElementById('videoiframe').src=''; }
   document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
 
-  function canSeeFolder(folder){ const acc=(D.archiveAccess||{})[folder]; if(!acc) return true; return acc.includes('*')||acc.includes(currentStudent); }
+  function canSeeFolder(folder){ const acc=(D.archiveAccess||{})[folder]; if(!Array.isArray(acc)) return false; /* 권한 정보 없으면 비공개 */ return acc.includes('*')||acc.includes(currentStudent); }
 
   function renderArchive(){
     const wrap=document.getElementById('archive-list'); wrap.innerHTML='';
