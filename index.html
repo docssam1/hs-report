@@ -942,7 +942,7 @@
       let h=back+`<div class="vip-h disp">🎬 프리미엄 설명회</div>`;
       if(ses.length){
         h+='<div class="carousel" id="sessCar">';
-        ses.forEach((s,i)=>{ const th=sessThumb(s); h+=`<button class="vid-card" data-ses="${i}"><span class="vid-thumb">${th?`<img loading="lazy" src="${escAttr(th)}" onerror="this.style.display='none'">`:''}<span class="vid-play">�▶</span></span><span class="vc-t">${escHtml(s.title||'설명회 영상')}</span></button>`; });
+        ses.forEach((s,i)=>{ const th=sessThumb(s); h+=`<button class="vid-card" data-ses="${i}"><span class="vid-thumb">${th?`<img loading="lazy" src="${escAttr(th)}" onerror="this.style.display='none'">`:''}<span class="vid-play">▶</span></span><span class="vc-t">${escHtml(s.title||'설명회 영상')}</span></button>`; });
         h+='</div><div class="sess-list">';
         ses.forEach((s,i)=>{ h+=`<button class="sess-row" data-ses="${i}"><span class="sr-t">${escHtml(s.title||'설명회 영상')}</span><span class="sr-d">${escHtml(s.date||'')} ›</span></button>`; });
         h+='</div>';
