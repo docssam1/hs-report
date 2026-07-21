@@ -474,9 +474,36 @@ async function supaUpsert(student,r,ox,source){
   const oxs=ox.join?ox.join(''):ox; const sc=scoreOf(oxs.split(''));
   try{
     const res=await fetch(SUPA_URL+"/rest/v1/mock_results",{method:"POST",headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates"},body:JSON.stringify({student:student,round:rkey(r),ox:oxs,score:sc.score,wrong:sc.wrong,source:source||'parent'})});
-    return res.ok;
-  }catch(e){ return false; }
+    if(res.ok) return true;
+    queuePending(student,r,oxs,source); return false;
+  }catch(e){ queuePending(student,r,oxs,source); return false; }
 }
+/* ─ 전송 실패분 자동 재시도 큐 (학부모가 따로 할 일 없음) ─ */
+const PQ_KEY='gfield_pending_results';
+function pendingList(){ try{ return JSON.parse(localStorage.getItem(PQ_KEY)||'[]'); }catch(e){ return []; } }
+function pendingSave(a){ try{ localStorage.setItem(PQ_KEY, JSON.stringify(a.slice(-30))); }catch(e){} }
+function queuePending(student,r,oxs,source){
+  const a=pendingList().filter(x=>!(x.student===student&&String(x.r)===String(r)));
+  a.push({student:student,r:r,ox:oxs,source:source||'parent',at:Date.now()});
+  pendingSave(a);
+}
+async function flushPending(){
+  const a=pendingList(); if(!a.length) return;
+  const left=[];
+  for(const it of a){
+    const sc=scoreOf(it.ox.split(''));
+    let ok=false;
+    try{
+      const res=await fetch(SUPA_URL+"/rest/v1/mock_results",{method:"POST",headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates"},body:JSON.stringify({student:it.student,round:rkey(it.r),ox:it.ox,score:sc.score,wrong:sc.wrong,source:it.source})});
+      ok=res.ok;
+    }catch(e){ ok=false; }
+    if(!ok) left.push(it);
+  }
+  pendingSave(left);
+  if(a.length && !left.length){ try{ toast('이전에 저장하지 못한 결과가 전송됐어요 ✅'); }catch(e){} }
+}
+/* 페이지 로드·온라인 복귀 시 자동 재시도 */
+window.addEventListener('online', function(){ flushPending(); });
 async function supaLoadAll(){
   try{
     const r=await fetch(SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,source,updated_at",{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
@@ -498,6 +525,7 @@ function enter(){
   if(window._pendingRound && M.rounds[window._pendingRound]){ openMark(window._pendingRound); window._pendingRound=null; }
 }
 function boot(){ try{applySetName();}catch(e){}
+  setTimeout(function(){ try{ flushPending(); }catch(e){} }, 1500);
   document.getElementById('gate').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('h-sub').textContent = mode==='teacher'?'원장 분석':(me+' 학생');
@@ -639,7 +667,7 @@ async function submitAttempt(){
   const prev = at.length? at[at.length-1].ox.slice() : null;
   pushAttempt(me,curRound,markOx,'parent'); saveLocal();
   const ok=await supaUpsert(me,curRound,markOx,'parent');
-  toast(ok?'제출 완료 · 원장님께 자동 전송됐어요 ✅':'제출 저장됨(자동전송 실패) — 코드로 보내주세요');
+  toast(ok?'제출 완료 · 원장님께 전송됐어요 ✅':'제출 완료 · 저장했어요. 전송은 자동으로 다시 시도합니다');
   renderReport(me,curRound,prev,ok);
 }
 
@@ -664,7 +692,7 @@ function renderReport(student,r,prevOx,sent){
         <b>${esc(gName)} · ${esc(M.rounds[r].title||r+'회')} 분석 결과</b>
       </div>
       <div class="row-inline" style="gap:6px;margin-bottom:0">
-        ${sent!==undefined?`<span class="pill ${sent?'on':'off'}">${sent?'원장님께 전송됨':'전송 대기'}</span>`:''}
+        ${sent!==undefined?`<span class="pill ${sent?'on':'off'}">${sent?'원장님께 전송됨':'저장됨 · 전송 대기중'}</span>`:''}
         <button class="btn navy sm" onclick="printReport('${esc(M.rounds[r].title||r+'회')} 진단 결과')">🖨 인쇄</button>
       </div>
     </div>
@@ -783,21 +811,16 @@ function renderReport(student,r,prevOx,sent){
     </div>`;
   }
 
-  /* ── 전송 실패 시 코드 ── */
+  /* 전송이 지연되면 자동으로 재시도합니다 (학부모가 따로 할 일 없음) */
   if(sent===false){
-    const code=btoa(unescape(encodeURIComponent(JSON.stringify({s:student,r:r,ox:ox.join('')}))));
-    h+=`<div class="card"><h3>💬 자동 전송이 안 됐어요</h3>
-      <div class="hint">아래 코드를 복사해 원장님께 카톡으로 보내주세요.</div>
-      <textarea id="sendcode" rows="2" readonly>${code}</textarea>
-      <div class="row-inline" style="margin-top:8px">
-        <button class="btn navy sm" onclick="copyCode()">코드 복사</button>
-        <a class="btn pri sm" style="text-decoration:none" href="https://open.kakao.com/me/gfield" target="_blank" rel="noopener">카톡으로 열기</a>
-      </div></div>`;
+    h+=`<div class="card" style="padding:12px 14px;background:#f8fafc">
+      <div class="hint" style="margin:0">💾 결과가 이 기기에 안전하게 저장됐어요. 인터넷 연결이 회복되면 <b>원장님께 자동으로 전송</b>됩니다. 따로 하실 일은 없어요.</div>
+    </div>`;
   }
 
   document.getElementById('main').innerHTML=h;
+  try{ flushPending(); }catch(e){}
 }
-function copyCode(){ const t=document.getElementById('sendcode'); t.select(); try{ navigator.clipboard.writeText(t.value); }catch(e){ document.execCommand('copy'); } toast('코드가 복사됐어요.'); }
 
 
 
