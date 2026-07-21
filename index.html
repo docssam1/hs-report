@@ -538,7 +538,7 @@
     if(isDemo) return false;
     if(node.type==='special') return (D.specialStudents||[]).includes(currentStudent);
     const att=D.attendance?D.attendance[currentStudent]:null;
-    if(att&&att.length) return att.includes(node.id);
+    if(Array.isArray(att)) return att.includes(node.id);
     return weekIds().indexOf(node.id)<=currentIndex();
   }
 
@@ -548,7 +548,7 @@
     document.getElementById('now-text').textContent=cur?`현재 학습: ${cur.date} · ${cur.title}`:'진행 중인 주차 정보 없음';
     const ids=weekIds(); const total=ids.length;
     const att=D.attendance?D.attendance[currentStudent]:null;
-    const done=att&&att.length?att.filter(id=>ids.includes(id)).length:(currentIndex()+1);
+    const done=Array.isArray(att)?att.filter(id=>ids.includes(id)).length:(currentIndex()+1);
     const pct=Math.round(done/total*100);
     document.getElementById('progressbar').style.width=pct+'%';
     document.getElementById('progress-label').textContent=`전체 ${total}주차 중 ${done}주차 진행 (${pct}%)`;
@@ -942,7 +942,7 @@
       let h=back+`<div class="vip-h disp">🎬 프리미엄 설명회</div>`;
       if(ses.length){
         h+='<div class="carousel" id="sessCar">';
-        ses.forEach((s,i)=>{ const th=sessThumb(s); h+=`<button class="vid-card" data-ses="${i}"><span class="vid-thumb">${th?`<img loading="lazy" src="${escAttr(th)}" onerror="this.style.display='none'">`:''}<span class="vid-play">▶</span></span><span class="vc-t">${escHtml(s.title||'설명회 영상')}</span></button>`; });
+        ses.forEach((s,i)=>{ const th=sessThumb(s); h+=`<button class="vid-card" data-ses="${i}"><span class="vid-thumb">${th?`<img loading="lazy" src="${escAttr(th)}" onerror="this.style.display='none'">`:''}<span class="vid-play">�▶</span></span><span class="vc-t">${escHtml(s.title||'설명회 영상')}</span></button>`; });
         h+='</div><div class="sess-list">';
         ses.forEach((s,i)=>{ h+=`<button class="sess-row" data-ses="${i}"><span class="sr-t">${escHtml(s.title||'설명회 영상')}</span><span class="sr-d">${escHtml(s.date||'')} ›</span></button>`; });
         h+='</div>';
