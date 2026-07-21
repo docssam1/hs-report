@@ -61,6 +61,14 @@
   .qgrid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:10px 0;}
   @media(max-width:560px){.qgrid{grid-template-columns:repeat(6,1fr);}}
   .qbtn{aspect-ratio:1;border:1.5px solid var(--line);border-radius:9px;background:#fff;font-size:14px;font-weight:800;color:#334;display:flex;align-items:center;justify-content:center;position:relative;user-select:none;}
+  /* 오답 체크 안내 */
+  .mk-guide{background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:12px 14px;margin-bottom:10px;}
+  .mk-guide .g1{font-size:15px;font-weight:800;color:#1e3a8a;line-height:1.5;}
+  .mk-guide .g1 b{color:#dc2626;}
+  .mk-guide .g2{font-size:12.5px;color:#475569;margin-top:6px;line-height:1.6;}
+  .mk-guide .g3{font-size:11.5px;color:#94a3b8;margin-top:6px;}
+  .mk-guide .exq{display:inline-flex;width:22px;height:22px;border-radius:6px;border:1.5px solid #e5e7eb;background:#fff;color:#334;font-size:12px;font-weight:800;align-items:center;justify-content:center;vertical-align:-5px;}
+  .mk-guide .exq.x{background:#fee2e2;border-color:#f6a6a6;color:#dc2626;}
   .qbtn.wrong{background:#fee2e2;border-color:#f6a6a6;color:#dc2626;}
   .qbtn.wrong::after{content:'✕';}
   .qbtn.wrong span{display:none;}
@@ -252,11 +260,12 @@ const SETNAME=(SET==='hw'?'활용':'중급');
 function applySetName(){
   if(SETNAME==='중급') return;
   document.title=document.title.replace('중급','활용');
-  document.querySelectorAll('h2,.t,.pt,.hint,b').forEach(function(el){
-    if(el.children.length===0 && el.textContent.indexOf('중급')>=0)
-      el.textContent=el.textContent.split('중급').join('활용');
-  });
-  var sub=document.getElementById('h-sub');
+  /* 텍스트 노드를 직접 순회 — 자식 요소가 있는 헤더(.t 등)도 정확히 치환됨 */
+  try{
+    var w=document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), n, list=[];
+    while(n=w.nextNode()){ if(n.nodeValue && n.nodeValue.indexOf('중급')>=0) list.push(n); }
+    list.forEach(function(t){ t.nodeValue=t.nodeValue.split('중급').join('활용'); });
+  }catch(e){}
   var intro=document.getElementById('setIntro'); if(intro) intro.textContent=INTRO_HW;
 }
 const INTRO_HW='활용 모의고사는 배운 사고력을 실제 문제에 적용해 보는 과정입니다. 조건을 정확히 읽고 풀이 방법을 스스로 고르는 연습에 초점을 둡니다. 점수보다 틀린 유형을 이해했는지를 봐 주세요.';
@@ -442,7 +451,7 @@ function startParent(){ boot(); loadLocal(); renderRoundPick(); }
 function renderRoundPick(){
   let h=`<div class="card">
     <h3>📝 진단할 회차를 선택하세요</h3>
-    <div class="hint">집에서 푼 <b>중급 모의고사</b>의 회차를 고르고, <b>틀린 문제 번호만</b> 체크하면 점수·약점 유형·처방 교재가 바로 나옵니다. 제출하면 <b>원장님께 자동 전송</b>돼요.</div>
+    <div class="hint">집에서 푼 <b>${SETNAME} 모의고사</b>의 회차를 고르고, <b>틀린 문제 번호만</b> 체크하면 점수·약점 유형·처방 교재가 바로 나옵니다. 제출하면 <b>원장님께 자동 전송</b>돼요.</div>
     <div class="round-grid">`;
   roundKeys().forEach(r=>{
     const at=attemptsOf(me,r).length;
@@ -482,7 +491,7 @@ function renderMark(){
   const sc=scoreOf(markOx);
   let attemptBtns='';
   if(at.length){ attemptBtns='<div class="row-inline"><span class="hint" style="margin:0">이전 응시 불러오기:</span>'; at.forEach((a,i)=>{ attemptBtns+=`<button class="btn gray sm" onclick="loadAttempt(${i})">${i+1}회차 (${a.ts})</button>`; }); attemptBtns+='</div>'; }
-  const hint='<div class="hint" style="margin-bottom:6px">🔴 경계 빨강=4.2점 · 🟡 노랑=3.4점 · 흰색=2.7점 · <b>틀린 번호만</b> 눌러 ✕ 표시하세요</div>';
+  const hint='<div class="mk-guide"><div class="g1">집에서 푼 시험지를 채점한 뒤, <b>틀린 문제의 번호만</b> 눌러 주세요.</div><div class="g2">번호를 누르면 <span class="exq">7</span> → <span class="exq x">✕</span> 로 바뀝니다. 맞은 문제는 그대로 두시고, 잘못 눌렀으면 한 번 더 누르면 취소됩니다.</div><div class="g3">칸 테두리 색은 배점입니다 — 🔴 4.2점 · 🟡 3.4점 · ⚪ 2.7점</div></div>';
   document.getElementById('main').innerHTML=`
     <div class="card">
       <div class="row-inline"><button class="btn gray sm" onclick="renderRoundPick()">‹ 회차 선택</button><b>${esc(M.rounds[r].title||r+'회')} 진단</b></div>
@@ -655,7 +664,7 @@ function printReport(subtitle){
   const ymd=d.getFullYear()+'. '+(d.getMonth()+1)+'. '+d.getDate();
   const t=document.getElementById('phTitle');
   const m=document.getElementById('phMeta');
-  if(t) t.textContent=(givenName(me)||'')+' · '+(subtitle||'중급 모의고사 진단 결과');
+  if(t) t.textContent=(givenName(me)||'')+' · '+(subtitle||(SETNAME+' 모의고사 진단 결과'));
   if(m) m.innerHTML='지필드 영재교육 &nbsp;G!FIELD<br>출력일 '+ymd;
   window.print();
 }
@@ -715,8 +724,8 @@ function renderCumulative(){
     </div>
     <div class="hint" style="margin:8px 0 0">총 ${totQ}문항 중 ${totW}문항 오답 · 누적 정답률 ${Math.round((totQ-totW)/totQ*100)}%</div>
     <div class="mock-note">
-      <b>📌 중급 모의고사는 이런 과정입니다</b>
-      중급 모의고사는 가정에서 학습하며 파이널 대비에 익숙하게 만들기 위한 과정입니다. 이미 배웠던 사고력을 복습하고 지문에서의 조건을 놓치지 않는 연습을 합니다. 계산으로 가능한 실제 황소 기출 유형을 경험할 수 있지만 아직은 정확한 기준이라고 할 수 없습니다.
+      <b>📌 ${SETNAME} 모의고사는 이런 과정입니다</b>
+      ${SETNAME} 모의고사는 가정에서 학습하며 파이널 대비에 익숙하게 만들기 위한 과정입니다. 이미 배웠던 사고력을 복습하고 지문에서의 조건을 놓치지 않는 연습을 합니다. 계산으로 가능한 실제 황소 기출 유형을 경험할 수 있지만 아직은 정확한 기준이라고 할 수 없습니다.
       <em>반드시 점수보다는 발전하는 모습을 봐주세요.</em>
     </div>
   </div>`;
