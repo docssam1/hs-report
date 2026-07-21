@@ -799,7 +799,8 @@ window.GFIELD_DATA = {
   "archiveFolders": [
     "보충학습",
     "약점 유형",
-    "사고력 교재"
+    "사고력 교재",
+    "활용 모의고사"
   ],
   "archiveAccess": {
     "보충학습": [
@@ -871,6 +872,10 @@ window.GFIELD_DATA = {
       "김서율",
       "김지유",
       "김소라"
+    ],
+    "활용 모의고사": [
+      "김소라",
+      "노관호"
     ]
   },
   "books": [
@@ -909,6 +914,186 @@ window.GFIELD_DATA = {
       "cover": "",
       "date": "2026-07-18",
       "links": []
+    },
+    {
+      "folder": "활용 모의고사",
+      "title": "활용 모의고사 1회",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%201%ED%9A%8C.pdf",
+      "imgdir": "tb_mrtzu34y",
+      "pages": 6,
+      "video": "https://youtu.be/JOsHbTIG_dU",
+      "cover": "",
+      "date": "2026-07-21",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=hw&round=1"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=1"
+        }
+      ]
+    },
+    {
+      "folder": "활용 모의고사",
+      "title": "활용 모의고사 2회",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%202%ED%9A%8C.pdf",
+      "imgdir": "tb_mrtzugei",
+      "pages": 6,
+      "video": "https://youtu.be/tSfYVTY0AGM",
+      "cover": "",
+      "date": "2026-07-21",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=hw&round=2"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=2"
+        }
+      ]
+    },
+    {
+      "folder": "활용 모의고사",
+      "title": "활용 모의고사 3회",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%203%ED%9A%8C.pdf",
+      "imgdir": "tb_mrtzurqf",
+      "pages": 7,
+      "video": "https://youtu.be/U5Kk7reqz4Q",
+      "cover": "",
+      "date": "2026-07-21",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=hw&round=3"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=3"
+        }
+      ]
+    },
+    {
+      "folder": "활용 모의고사",
+      "title": "활용 모의고사 4회",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%204%ED%9A%8C.pdf",
+      "imgdir": "tb_mrtzv6i3",
+      "pages": 6,
+      "video": "https://youtu.be/pkEr88j3Maw",
+      "cover": "",
+      "date": "2026-07-21",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=hw&round=4"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=4"
+        }
+      ]
+    },
+    {
+      "folder": "활용 모의고사",
+      "title": "활용 모의고사 5회",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%ED%99%9C%EC%9A%A9%205%ED%9A%8C.pdf",
+      "imgdir": "tb_mrtzvimx",
+      "pages": 6,
+      "video": "https://youtu.be/SiCBlLYhCwg",
+      "cover": "",
+      "date": "2026-07-21",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=hw&round=5"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=5"
+        }
+      ]
+    },
+    {
+      "folder": "활용 모의고사",
+      "title": "활용 모의고사 6회",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%206%ED%9A%8C.pdf",
+      "imgdir": "tb_mrtzvuxi",
+      "pages": 6,
+      "video": "https://youtu.be/vpRzTRnmecQ",
+      "cover": "",
+      "date": "2026-07-21",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=hw&round=6"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=6"
+        }
+      ]
+    },
+    {
+      "folder": "활용 모의고사",
+      "title": "활용 모의고사 7회",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%ED%99%9C%EC%9A%A9%207%ED%9A%8C.pdf",
+      "imgdir": "tb_mrtzw64s",
+      "pages": 8,
+      "video": "https://youtu.be/m2pH2zbcwGY",
+      "cover": "",
+      "date": "2026-07-21",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=hw&round=7"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=7"
+        }
+      ]
+    },
+    {
+      "folder": "활용 모의고사",
+      "title": "활용 모의고사 8회",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%ED%99%9C%EC%9A%A9%208%ED%9A%8C.pdf",
+      "imgdir": "tb_mrtzwmjr",
+      "pages": 6,
+      "video": "https://youtu.be/TyjjNoGEPkA",
+      "cover": "",
+      "date": "2026-07-21",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=hw&round=8"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=8"
+        }
+      ]
+    },
+    {
+      "folder": "활용 모의고사",
+      "title": "활용 모의고사 9회",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%209%ED%9A%8C.pdf",
+      "imgdir": "tb_mrtzxgsf",
+      "pages": 6,
+      "video": "https://youtu.be/rfKAgd4d0zo",
+      "cover": "",
+      "date": "2026-07-21",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=hw&round=9"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=9"
+        }
+      ]
     }
   ],
   "pins": {},
