@@ -217,11 +217,12 @@
   .bv-doc.scroll .bv-pg{position:relative;width:820px;max-width:94%;margin:0 auto 14px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4);}
   .bv-doc.scroll .bv-pg img{width:100%;display:block;-webkit-user-drag:none;user-select:none;}
   .bv-doc.scroll .wm3{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
-  .bv-doc.scroll .wm3 span{position:absolute;left:-10%;width:120%;text-align:center;color:#000;opacity:.12;font-size:26px;font-weight:800;white-space:nowrap;transform:rotate(-30deg);}
+  .bv-doc.scroll .wm3 span{position:absolute;left:-10%;width:120%;text-align:center;color:#000;opacity:0;font-size:26px;font-weight:800;white-space:nowrap;transform:rotate(-30deg);}
   .bv-doc.scroll .wm3 span:nth-child(1){top:22%}.bv-doc.scroll .wm3 span:nth-child(2){top:50%}.bv-doc.scroll .wm3 span:nth-child(3){top:78%}
-  .bv-wm{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:22px 34px;transform:rotate(-24deg) scale(1.4);opacity:.16;}
+  .bv-wm{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:22px 34px;transform:rotate(-24deg) scale(1.4);opacity:0;}
   .bv-wm span{color:#111;font-size:17px;font-weight:800;white-space:nowrap;}
   @media(max-width:760px){ .bv-stage.split{flex-direction:column;} .bv-vid{height:36vh;flex:none;} }
+  @media print{ .bv-doc.scroll .wm3 span{opacity:.12!important} .bv-wm{opacity:.16!important} }
 
   /* VIP 라운지 — 글래스 + 스택 카드 */
   .vip-hero{position:relative;border-radius:24px;padding:16px 14px 18px;margin-bottom:18px;overflow:hidden;
