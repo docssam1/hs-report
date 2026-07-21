@@ -146,6 +146,43 @@
   .cmp .solved{background:#dcfce7;color:#166534;}
   .cmp .still{background:#fee2e2;color:#991b1b;}
   .cmp .newx{background:#fef3c7;color:#92400e;}
+  /* ── 응시 이력 (최대 3회) ── */
+  .at-wrap{background:#f8fafc;border:1px solid var(--line);border-radius:13px;padding:11px 13px;margin-bottom:10px;}
+  .at-h{display:flex;align-items:center;justify-content:space-between;font-size:11.5px;font-weight:800;color:var(--navy);margin-bottom:8px;}
+  .at-h .cap{font-weight:700;color:var(--muted);font-size:11px;}
+  .at-list{display:flex;gap:8px;flex-wrap:wrap;}
+  .at-card{flex:1;min-width:118px;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:9px 11px;cursor:pointer;transition:.12s;text-align:left;}
+  .at-card:hover{border-color:var(--orange);transform:translateY(-1px);box-shadow:0 4px 12px rgba(16,24,40,.08);}
+  .at-card .n{font-size:10.5px;font-weight:800;color:var(--muted);}
+  .at-card .s{font-size:19px;font-weight:900;color:var(--navy);line-height:1.2;}
+  .at-card .s small{font-size:11px;font-weight:700;color:var(--muted);}
+  .at-card .d{font-size:10px;color:#9aa4b2;margin-top:1px;}
+  .at-card.empty{border-style:dashed;background:#fbfcfe;cursor:default;opacity:.7;}
+  .at-card.empty:hover{transform:none;box-shadow:none;border-color:var(--line);}
+  .at-card.empty .s{color:#cbd5e1;font-size:15px;}
+  .at-delta{font-size:10.5px;font-weight:800;margin-top:2px;}
+  .at-delta.up{color:var(--ok);} .at-delta.down{color:var(--danger);} .at-delta.same{color:#9aa4b2;}
+
+  /* ── 지난 응시 대비 변화 (강화) ── */
+  .chg{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(16,24,40,.05);}
+  .chg-h{font-size:14px;font-weight:900;color:var(--navy);margin-bottom:3px;}
+  .chg-s{font-size:11.5px;color:var(--muted);margin-bottom:12px;}
+  .chg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  @media(max-width:620px){ .chg-grid{grid-template-columns:1fr;} }
+  .chg-box{border-radius:12px;padding:12px;border:1px solid;}
+  .chg-box .cb-t{font-size:11.5px;font-weight:800;display:flex;align-items:center;gap:5px;}
+  .chg-box .cb-n{font-size:26px;font-weight:900;line-height:1.15;margin:3px 0 2px;}
+  .chg-box .cb-l{font-size:11px;font-weight:700;line-height:1.5;word-break:keep-all;}
+  .chg-box.s1{background:#f0fdf4;border-color:#bbf7d0;} .chg-box.s1 .cb-t,.chg-box.s1 .cb-n{color:#15803d;} .chg-box.s1 .cb-l{color:#3f8b5c;}
+  .chg-box.s2{background:#fff1f2;border-color:#fecdd3;} .chg-box.s2 .cb-t,.chg-box.s2 .cb-n{color:#be123c;} .chg-box.s2 .cb-l{color:#a4566a;}
+  .chg-box.s3{background:#fffbeb;border-color:#fde68a;} .chg-box.s3 .cb-t,.chg-box.s3 .cb-n{color:#b45309;} .chg-box.s3 .cb-l{color:#9a7038;}
+  .chg-trend{display:flex;align-items:flex-end;gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);}
+  .chg-trend .tb{flex:1;text-align:center;}
+  .chg-trend .tb .bar{background:#eef1f6;border-radius:7px 7px 4px 4px;position:relative;height:64px;display:flex;align-items:flex-end;overflow:hidden;}
+  .chg-trend .tb .bar > i{display:block;width:100%;background:linear-gradient(180deg,#fb923c,#ea580c);border-radius:7px 7px 0 0;}
+  .chg-trend .tb.cur .bar > i{background:linear-gradient(180deg,#2a5298,#1e3c72);}
+  .chg-trend .tb .v{font-size:12.5px;font-weight:900;color:var(--ink);margin-top:5px;}
+  .chg-trend .tb .k{font-size:10px;color:var(--muted);font-weight:700;}
 
   /* 원장 테이블 */
   .mtable-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;}
@@ -535,7 +572,24 @@ function renderMark(){
   }
   const sc=scoreOf(markOx);
   let attemptBtns='';
-  if(at.length){ attemptBtns='<div class="row-inline"><span class="hint" style="margin:0">이전 응시 불러오기:</span>'; at.forEach((a,i)=>{ attemptBtns+=`<button class="btn gray sm" onclick="loadAttempt(${i})">${i+1}회차 (${a.ts})</button>`; }); attemptBtns+='</div>'; }
+  {
+    let cards='';
+    for(let i=0;i<3;i++){
+      const a=at[i];
+      if(a){
+        const asc=scoreOf(a.ox);
+        let dl='';
+        if(i>0&&at[i-1]){
+          const d=Math.round((asc.score-scoreOf(at[i-1].ox).score)*10)/10;
+          dl = d>0 ? `<div class="at-delta up">▲ ${d}점 상승</div>` : d<0 ? `<div class="at-delta down">▼ ${Math.abs(d)}점 하락</div>` : `<div class="at-delta same">– 변화 없음</div>`;
+        }
+        cards+=`<button class="at-card" onclick="loadAttempt(${i})" title="이 회차 기록 불러오기"><div class="n">${i+1}회 응시</div><div class="s">${asc.score}<small>점</small></div><div class="d">${a.ts} · 오답 ${asc.wrong}개</div>${dl}</button>`;
+      }else{
+        cards+=`<div class="at-card empty"><div class="n">${i+1}회 응시</div><div class="s">–</div><div class="d">아직 기록 없음</div></div>`;
+      }
+    }
+    attemptBtns=`<div class="at-wrap"><div class="at-h"><span>📗 응시 기록 (${at.length}/3회)</span><span class="cap">한 회차당 3번까지 응시할 수 있어요 · 카드를 누르면 그때 기록을 불러옵니다</span></div><div class="at-list">${cards}</div></div>`;
+  }
   const hint='<div class="mk-guide"><div class="g1">집에서 푼 시험지를 채점한 뒤, <b>틀린 문제의 번호만</b> 눌러 주세요.</div><div class="g2">번호를 누르면 <span class="exq">7</span> → <span class="exq x">✕</span> 로 바뀝니다. 맞은 문제는 그대로 두시고, 잘못 눌렀으면 한 번 더 누르면 취소됩니다.</div><div class="g3">칸 테두리 색은 배점입니다 — 🔴 4.2점 · 🟡 3.4점 · ⚪ 2.7점</div></div>';
   document.getElementById('main').innerHTML=`
     <div class="mk-hero">
@@ -591,6 +645,8 @@ async function submitAttempt(){
 
 /* ─── 학부모용 분석 리포트 (전면 개선) ──────────────────── */
 function renderReport(student,r,prevOx,sent){
+  /* 제출 직후가 아니어도(다시 열람 시) 직전 응시를 자동으로 찾아 비교 */
+  if(!prevOx){ const _a=attemptsOf(student,r); if(_a.length>=2) prevOx=_a[_a.length-2].ox; }
   const at=attemptsOf(student,r);
   const ox=at[at.length-1].ox;
   const sc=scoreOf(ox);
@@ -636,13 +692,28 @@ function renderReport(student,r,prevOx,sent){
       const p=prevOx[n-1]==='X', c=ox[n-1]==='X';
       if(p&&!c) solved.push(n); else if(p&&c) still.push(n); else if(!p&&c) neo.push(n);
     }
-    h+=`<div class="card" style="padding:12px 14px">
-      <div style="font-size:13px;font-weight:700;margin-bottom:6px">📊 지난 응시 대비 변화</div>
-      <div class="cmp">
-        <span class="chip solved">✅ 새로 맞힘 ${solved.length}개: ${solved.join(', ')||'-'}</span>
-        <span class="chip still">🔁 반복 오답 ${still.length}개: ${still.join(', ')||'-'}</span>
-        <span class="chip newx">⚠️ 새로 틀림 ${neo.length}개: ${neo.join(', ')||'-'}</span>
+    const _at=attemptsOf(student,r);
+    let trend='';
+    if(_at.length>=2){
+      const scs=_at.map(a=>scoreOf(a.ox).score);
+      const mx=Math.max(100,...scs);
+      let bars='';
+      for(let i=0;i<3;i++){
+        if(scs[i]==null){ bars+=`<div class="tb"><div class="bar"></div><div class="v" style="color:#cbd5e1">–</div><div class="k">${i+1}회</div></div>`; continue; }
+        const hgt=Math.max(4,Math.round(scs[i]/mx*64));
+        bars+=`<div class="tb ${i===scs.length-1?'cur':''}"><div class="bar"><i style="height:${hgt}px"></i></div><div class="v">${scs[i]}점</div><div class="k">${i+1}회</div></div>`;
+      }
+      trend=`<div class="chg-trend">${bars}</div>`;
+    }
+    h+=`<div class="chg">
+      <div class="chg-h">📊 지난 응시 대비 변화</div>
+      <div class="chg-s">같은 회차를 다시 풀었을 때, 무엇이 해결되고 무엇이 남았는지 보여드립니다.</div>
+      <div class="chg-grid">
+        <div class="chg-box s1"><div class="cb-t">✅ 해결된 문제</div><div class="cb-n">${solved.length}<span style="font-size:14px">개</span></div><div class="cb-l">${solved.length?solved.join(', ')+'번':'아직 없어요'}</div></div>
+        <div class="chg-box s2"><div class="cb-t">🔁 반복 오답</div><div class="cb-n">${still.length}<span style="font-size:14px">개</span></div><div class="cb-l">${still.length?still.join(', ')+'번 — 집중 보완이 필요해요':'반복 오답이 없어요 👏'}</div></div>
+        <div class="chg-box s3"><div class="cb-t">⚠️ 새로 틀린 문제</div><div class="cb-n">${neo.length}<span style="font-size:14px">개</span></div><div class="cb-l">${neo.length?neo.join(', ')+'번 — 실수인지 확인해 주세요':'새로 틀린 문제가 없어요'}</div></div>
       </div>
+      ${trend}
     </div>`;
   }
 
