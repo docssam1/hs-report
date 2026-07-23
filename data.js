@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 21. 오전 11:01:49
+ * 생성: 2026. 7. 23. 오후 5:03:18
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -646,7 +646,8 @@ window.GFIELD_DATA = {
     "허유민": [
       "jul-w1",
       "jul-w2",
-      "jun-w4"
+      "jun-w4",
+      "jul-w3"
     ],
     "김현우": [
       "may-w34",
@@ -654,7 +655,8 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4",
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "김유준": [
       "may-w34",
@@ -662,7 +664,8 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4",
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "이하린": [
       "may-w34",
@@ -670,12 +673,14 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4",
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "정지안": [
       "jul-w1",
       "jul-w2",
-      "jun-w4"
+      "jun-w4",
+      "jul-w3"
     ],
     "안채연": [
       "may-w34",
@@ -683,7 +688,8 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4",
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "박서진": [
       "may-w34",
@@ -691,7 +697,8 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4",
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "민준기": [
       "may-w34",
@@ -699,7 +706,8 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4",
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "김서연": [
       "may-w34",
@@ -707,7 +715,8 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4",
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "김명서": [
       "may-w34",
@@ -715,7 +724,8 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4",
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "임유준": [
       "may-w34",
@@ -723,17 +733,20 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4",
       "jul-w2",
-      "jul-w1"
+      "jul-w1",
+      "jul-w3"
     ],
     "안태하": [
       "jul-w1",
       "jul-w2",
-      "jun-w4"
+      "jun-w4",
+      "jul-w3"
     ],
     "김시후": [
       "jul-w1",
       "jul-w2",
-      "jun-w4"
+      "jun-w4",
+      "jul-w3"
     ],
     "노관호": [
       "may-w34",
@@ -763,32 +776,35 @@ window.GFIELD_DATA = {
       "jun-w3",
       "jun-w4",
       "jul-w1",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "DEMO": [
       "jul-w2",
       "jul-w1",
-      "may-w34"
+      "may-w34",
+      "jul-w3"
     ],
     "문선우": [
-      "may-w34",
-      "jul-w2",
-      "jul-w1"
+      "may-w34"
     ],
     "체험": [
       "jul-w2",
       "may-w34"
     ],
     "유호연": [
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "김서율": [
       "may-w34",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "김지유": [
       "may-w34",
-      "jul-w2"
+      "jul-w2",
+      "jul-w3"
     ],
     "김소라": []
   },
