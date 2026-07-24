@@ -1,0 +1,68 @@
+name: Fix online and special permissions
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-online-permissions.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Separate online archive and resident special access
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p=Path('answer.html')
+          s=p.read_text(encoding='utf-8')
+          old="""  if((((D.archiveAccess||{})['활용 모의고사'])||[]).includes(name))return true;
+  if(!((D.specialStudents||[]).includes(name)))return false;"""
+          new="""  const online=((D.studentTypes||{})[name])==='online';
+  if(online&&((((D.archiveAccess||{})['활용 모의고사'])||[]).includes(name)))return true;
+  if(online)return false;
+  if(!((D.specialStudents||[]).includes(name)))return false;"""
+          if old not in s:
+              raise SystemExit('answer permission pattern not found')
+          s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('index-enhancements.js')
+          s=p.read_text(encoding='utf-8')
+          needle="""  function currentNode(){return (D.nodes||[]).find(n=>n.id===D.meta.currentWeekId)||null;}
+"""
+          add="""  function currentNode(){return (D.nodes||[]).find(n=>n.id===D.meta.currentWeekId)||null;}
+
+  /* 활용 모의고사 전체 책장은 온라인 외부학생 전용.
+     재원생은 로드맵 특강에서 승인된 회차만 이용합니다. */
+  if(typeof canSeeFolder==='function'){
+    const originalCanSeeFolder=canSeeFolder;
+    canSeeFolder=function(folder){
+      if(folder==='활용 모의고사'&&((D.studentTypes||{})[currentStudent])!=='online')return false;
+      return originalCanSeeFolder(folder);
+    };
+  }
+"""
+          if "originalCanSeeFolder" not in s:
+              if needle not in s:
+                  raise SystemExit('enhancement insertion point not found')
+              s=s.replace(needle,add,1)
+              p.write_text(s,encoding='utf-8')
+          PY
+      - name: Validate permissions
+        run: |
+          grep -q "const online=((D.studentTypes||{})\[name\])==='online'" answer.html
+          grep -q "folder==='활용 모의고사'" index-enhancements.js
+          grep -q "originalCanSeeFolder" index-enhancements.js
+      - name: Commit permission correction
+        run: |
+          rm -f .github/workflows/fix-online-permissions.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add answer.html index-enhancements.js .github/workflows/fix-online-permissions.yml
+          git commit -m '외부생 전체 공개와 재원생 특강 권한 분리'
+          git push origin HEAD:${GITHUB_REF_NAME}
