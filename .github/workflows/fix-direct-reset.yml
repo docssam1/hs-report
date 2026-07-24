@@ -1,0 +1,33 @@
+name: Fix direct reset mode
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-direct-reset.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('mock.html')
+          s=p.read_text(encoding='utf-8')
+          a=s.index('async function deleteStored(student,r,slot){')
+          b=s.index('\nfunction enter(){',a)
+          new="""async function deleteStored(student,r,slot){
+  const raw=storedKey(r,slot);
+  const res=await fetch(SUPA_URL+'/rest/v1/mock_results',{method:'POST',headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates'},body:JSON.stringify({student:student,round:raw,ox:'RESET',score:0,wrong:0,source:'reset'})});
+  return res.ok;
+}"""
+          s=s[:a]+new+s[b:]
+          p.write_text(s,encoding='utf-8')
+          PY
+          rm -f .github/workflows/fix-direct-reset.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add mock.html .github/workflows/fix-direct-reset.yml
+          git commit -m '원장 직접 모드도 차수 초기화 표식 사용'
+          git push origin HEAD:${GITHUB_REF_NAME}
