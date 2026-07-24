@@ -6,7 +6,7 @@
   style.textContent=`
     .special-viewer-panel{margin:12px 0 4px;padding:14px;border-radius:17px;background:linear-gradient(135deg,#f5f3ff,#fff);border:1px solid #ddd6fe;box-shadow:0 8px 22px rgba(109,40,217,.1)}
     .special-viewer-title{font-size:13px;font-weight:900;color:#6d28d9;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-    .special-viewer-link{display:flex;align-items:center;gap:9px;width:100%;padding:12px 14px;margin-top:7px;border-radius:13px;background:linear-gradient(135deg,#315b9a,#183968);color:#fff;text-decoration:none;font-size:14px;font-weight:900;box-shadow:0 7px 16px rgba(30,60,114,.2);transition:.16s}
+    .special-viewer-link{display:flex;align-items:center;gap:9px;width:100%;padding:12px 14px;margin-top:7px;border:0;border-radius:13px;background:linear-gradient(135deg,#315b9a,#183968);color:#fff;text-decoration:none;font-size:14px;font-weight:900;box-shadow:0 7px 16px rgba(30,60,114,.2);transition:.16s;cursor:pointer;text-align:left}
     .special-viewer-link:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(30,60,114,.25)}
     .special-viewer-link small{margin-left:auto;font-size:10.5px;font-weight:700;color:#cfe0f7}
     .timeline{padding-left:74px}
@@ -113,6 +113,22 @@
     };
   }
 
+  /* 재원생 특강도 외부생과 동일한 책 뷰어를 사용 */
+  window.openSpecialHwBook=function(round){
+    const r=String(round);
+    const rx=new RegExp('활용\\s*모의고사\\s*'+r+'\\s*회');
+    const original=(D.books||[]).find(b=>b&&b.folder==='활용 모의고사'&&rx.test(String(b.title||'')));
+    if(!original){if(typeof toast==='function')toast('활용 모의고사 '+r+'회 뷰어를 찾지 못했습니다.');return;}
+    const book=Object.assign({},original,{links:(original.links||[]).map(l=>{
+      if(!l||!l.url)return l;
+      let u=l.url;
+      if(/mock\.html/i.test(u))u+=(u.includes('?')?'&':'?')+'name='+encodeURIComponent(currentStudent||'');
+      return Object.assign({},l,{url:u});
+    })});
+    if(typeof closeModal==='function')closeModal();
+    if(typeof openBook==='function')openBook(book);
+  };
+
   if(typeof sectionsHTML==='function'){
     const originalSectionsHTML=sectionsHTML;
     sectionsHTML=function(c,node){
@@ -126,8 +142,8 @@
       });
       const unique=[...new Set(rounds)].sort((a,b)=>+a-+b);
       if(!unique.length)return base;
-      const links=unique.map(r=>`<a class="special-viewer-link" href="mock.html?set=hw&round=${r}&name=${encodeURIComponent(currentStudent)}"><span>📝</span> 활용 모의고사 ${r}회 시험지·오답 분석 <small>워터마크 뷰어 ›</small></a>`).join('');
-      return `<div class="special-viewer-panel"><div class="special-viewer-title">⭐ 방학특강 승인 회차</div>${links}<div style="margin-top:8px;font-size:11px;color:#74668c;line-height:1.55">승인된 회차만 표시됩니다. 외부 수강생과 같은 JPG 워터마크 뷰어와 오답 분석을 사용합니다.</div></div>`+base;
+      const links=unique.map(r=>`<button type="button" class="special-viewer-link" onclick="openSpecialHwBook('${r}')"><span>📝</span> 활용 모의고사 ${r}회 강의·시험지 뷰어 <small>오답분석 포함 ›</small></button>`).join('');
+      return `<div class="special-viewer-panel"><div class="special-viewer-title">⭐ 방학특강 승인 회차</div>${links}<div style="margin-top:8px;font-size:11px;color:#74668c;line-height:1.55">승인된 회차만 표시됩니다. 외부 수강생과 같은 강의·JPG 워터마크 뷰어와 별도 오답 분석을 사용합니다.</div></div>`+base;
     };
   }
 
