@@ -90,6 +90,7 @@ function roundAttempts(r){return(readLocal()[String(r)]||[]).slice().sort((a,b)=
 function findAttempt(r,slot){return roundAttempts(r).find(x=>x.slot===Number(slot))}
 function nextSlot(r){const used=new Set(roundAttempts(r).map(x=>x.slot));for(let i=1;i<=3;i++)if(!used.has(i))return i;return null}
 function examBook(r){
+  if(SET!=='hw')return null;
   const rx=new RegExp('활용\\s*모의고사\\s*'+r+'\\s*회');
   const books=(D.books||[]).filter(b=>rx.test(String(b.title||'')));
   let b=books.find(x=>x.folder==='활용 모의고사'&&(x.imgdir||x.pages))||books.find(x=>x.imgdir||x.pages);
