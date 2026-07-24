@@ -35,8 +35,19 @@
   `;
   document.head.appendChild(style);
 
-  function esc2(s){return String(s||'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));}
+  function esc2(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
   function currentNode(){return (D.nodes||[]).find(n=>n.id===D.meta.currentWeekId)||null;}
+
+  /* 활용 모의고사 전체 책장은 온라인 외부학생 전용입니다.
+     재원생은 로드맵 특강에서 승인된 회차만 이용합니다. */
+  if(typeof canSeeFolder==='function'){
+    const originalCanSeeFolder=canSeeFolder;
+    canSeeFolder=function(folder){
+      if(folder==='활용 모의고사'&&((D.studentTypes||{})[currentStudent])!=='online')return false;
+      return originalCanSeeFolder(folder);
+    };
+  }
+
   function dayGreeting(){
     const h=new Date().getHours();
     if(h<6)return'늦은 시간이야. 오늘은 충분히 쉬고 내일 다시 만나자';
