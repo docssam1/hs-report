@@ -1,3 +1,4 @@
+# trigger 2
 name: Patch restored mock UI
 
 on:
@@ -66,7 +67,6 @@ jobs:
               'function boot(){\n  const gh=document.querySelector(\'#gate h2\'); if(gh) gh.textContent=SETNAME+" 모의고사 진단";\n  const hh=document.querySelector(\'header .t\'); if(hh) hh.firstChild.nodeValue=SETNAME+" 모의고사 진단";\n  document.title="지필드 영재교육 | "+SETNAME+" 모의고사 진단";\n  document.getElementById(\'gate\').classList.add(\'hidden\');',
               'dynamic title')
           s=s.replace('<b>중급 모의고사</b>','<b>${SETNAME} 모의고사</b>',1)
-          s=s.replace('<h2>중급 모의고사 '+"'+ti+'"+' 정답</h2>','<h2>'+"'+SETNAME+'"+' 모의고사 '+"'+ti+'"+' 정답</h2>',1)
 
           old="""  const at=attemptsOf(me,curRound);
   if(at.length>=3){ if(!confirm('이미 3회 응시했어요. 가장 오래된 기록을 지우고 새로 저장할까요?')) return; }
@@ -82,8 +82,6 @@ jobs:
   const ok=await supaUpsert(me,curRound,markOx,'parent',slot);"""
           rep(old,new,'attempt slots')
 
-          # 활용 데이터 저장 시 올바른 파일/전역명 사용
-          s=s.replace('window.GFIELD_MOCK = "+JSON.stringify(out,null,2)+";\\n";', 'window."+(SET==="hw"?"GFIELD_MOCK_HW":"GFIELD_MOCK")+" = "+JSON.stringify(out,null,2)+";\\n";',1)
           s=s.replace("message:'Update mock-data.js (types/answers)'","message:'Update '+FILE+' (types/answers)'",1)
 
           p.write_text(s,encoding='utf-8')
@@ -93,7 +91,7 @@ jobs:
           grep -q '단계별 분석' mock.html
           grep -q '약점 유형별 처방 교재' mock.html
           grep -q 'mock-data-hw.js' mock.html
-          grep -q 'gfield_mock_.*SET' mock.html
+          grep -q "gfield_mock_'+SET" mock.html
       - name: Commit compatibility patch
         run: |
           git config user.name 'github-actions[bot]'
