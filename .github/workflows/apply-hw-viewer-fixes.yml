@@ -1,0 +1,119 @@
+name: Apply HW viewer fixes
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-hw-viewer-fixes.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ github.token }}
+      - name: Patch viewer and roadmap
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace_once(text, old, new, label):
+              if old not in text:
+                  raise SystemExit(f'pattern not found: {label}')
+              return text.replace(old, new, 1)
+
+          # 1) 로드맵 방학특강: 회차별 승인 학생에게 활용 뷰어 버튼 제공
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = """      tbs.forEach(t=>{ if(t.folder&&t.pages){ h+=`<button class=\"tb-btn\" data-tbf=\"${escAttr(t.folder)}\" data-tbp=\"${t.pages}\" data-tbt=\"${escAttr(t.title)}\"><span class=\"ico\">🖨</span> ${escHtml(t.title||'교재 자료')} 인쇄</button>`; } else { h+=`<button class=\"tb-btn\" data-tb=\"${encodeURIComponent(t.url)}\" data-tbt=\"${escAttr(t.title)}\"><span class=\"ico\">📕</span> ${escHtml(t.title||'교재 자료')} 받기</button>`; } });"""
+          new = """      tbs.forEach(t=>{
+        /* 방학특강 활용 모의고사는 승인된 회차만 뷰어·오답 분석으로 연결 */
+        const hw=(node&&node.type==='special')?String(t.title||'').match(/활용\\s*모의고사\\s*(\\d+)\\s*회/):null;
+        if(hw){ const rn=hw[1]; h+=`<a class=\"tb-btn\" href=\"mock.html?set=hw&round=${rn}&name=${encodeURIComponent(currentStudent||'')}\" style=\"display:flex;text-decoration:none;background:linear-gradient(135deg,#1e3c72,#2a5298);color:#fff;border-color:#1e3c72\"><span class=\"ico\">📝</span> 활용 모의고사 ${rn}회 뷰어 · 오답 분석</a>`; }
+        if(t.folder&&t.pages){ h+=`<button class=\"tb-btn\" data-tbf=\"${escAttr(t.folder)}\" data-tbp=\"${t.pages}\" data-tbt=\"${escAttr(t.title)}\"><span class=\"ico\">🖨</span> ${escHtml(t.title||'교재 자료')} 인쇄</button>`; }
+        else { h+=`<button class=\"tb-btn\" data-tb=\"${encodeURIComponent(t.url)}\" data-tbt=\"${escAttr(t.title)}\"><span class=\"ico\">📕</span> ${escHtml(t.title||'교재 자료')} 받기</button>`; }
+      });"""
+          s = replace_once(s, old, new, 'roadmap textbook loop')
+          old = """    (b.links||[]).forEach(l=>{ if(l&&l.url) acts+=`<a class=\"bv-act\" href=\"${escAttr(l.url)}\" target=\"_blank\" rel=\"noopener\">🔗 ${escHtml(l.label||'링크')}</a>`; });"""
+          new = """    (b.links||[]).forEach(l=>{ if(l&&l.url){ let u=l.url; if(/mock\\.html/i.test(u)){ u+=(u.includes('?')?'&':'?')+'name='+encodeURIComponent(currentStudent||''); } acts+=`<a class=\"bv-act\" href=\"${escAttr(u)}\" target=\"_blank\" rel=\"noopener\">🔗 ${escHtml(l.label||'링크')}</a>`; } });"""
+          s = replace_once(s, old, new, 'archive viewer name')
+          p.write_text(s, encoding='utf-8')
+
+          # 2) 활용/중급 기록 분리 + 회차 권한 + 원장 초기화
+          p = Path('mock.html')
+          s = p.read_text(encoding='utf-8')
+
+          old = """function roundKeys(){ return Object.keys(M.rounds).sort((a,b)=>+a-+b); }"""
+          new = """function hwAllowedRounds(student){
+  const keys=Object.keys(M.rounds).sort((a,b)=>+a-+b);
+  if(SET!=='hw'||mode==='teacher') return keys;
+  if(!student) return [];
+  const full=(((D.archiveAccess||{})['활용 모의고사'])||[]).includes(student);
+  if(full) return keys;
+  const tbs=((((D.content||{})['special-summer'])||{}).textbooks)||[];
+  const ok=[];
+  tbs.forEach(t=>{ const m=String(t.title||'').match(/활용\\s*모의고사\\s*(\\d+)\\s*회/); if(m&&Array.isArray(t.access)&&t.access.includes(student)) ok.push(String(+m[1])); });
+  return [...new Set(ok)].filter(r=>M.rounds[r]).sort((a,b)=>+a-+b);
+}
+function roundKeys(){ return hwAllowedRounds(me); }
+function canUseRound(r){ return roundKeys().includes(String(r)); }"""
+          s = replace_once(s, old, new, 'round access')
+
+          s = replace_once(s, "function lsKey(){ return 'gfield_mock_'+me; }", "function lsKey(){ return 'gfield_mock_'+SET+'_'+me; }", 'local storage separation')
+
+          old = """function startParent(){ boot(); loadLocal(); renderRoundPick(); }"""
+          new = """async function supaLoadStudent(student){
+  try{
+    const url=SUPA_URL+'/rest/v1/mock_results?select=student,round,ox,source,updated_at&student=eq.'+encodeURIComponent(student);
+    const r=await fetch(url,{headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY}});
+    if(!r.ok) return false;
+    const rows=await r.json(), fresh={};
+    rows.forEach(row=>{ if(!row.ox||row.ox.length!==Q()) return; const rn=unkey(row.round); if(rn===null||!M.rounds[rn]) return; fresh[rn]=[{ox:row.ox.split(''),ts:(row.updated_at||'').slice(0,10),by:row.source||'db'}]; });
+    M.results[student]=fresh; saveLocal(); return true;
+  }catch(e){ return false; }
+}
+async function startParent(){ boot(); loadLocal(); await supaLoadStudent(me); renderRoundPick(); }"""
+          s = replace_once(s, old, new, 'student server refresh')
+
+          s = replace_once(s, "function openMark(r){", "function openMark(r){ if(!canUseRound(r)){ toast('이 회차는 아직 승인되지 않았어요.'); renderRoundPick(); return; }", 'open round guard')
+          s = s.replace("if(window._pendingRound && M.rounds[window._pendingRound]){ openMark(window._pendingRound);", "if(window._pendingRound && M.rounds[window._pendingRound] && canUseRound(window._pendingRound)){ openMark(window._pendingRound);", 1)
+          s = s.replace("if(rd && M.rounds[rd]) openMark(rd);", "if(rd && M.rounds[rd] && canUseRound(rd)) openMark(rd);", 1)
+
+          s = replace_once(s, "h+='<th>틀린수</th><th>점수</th><th>레벨</th></tr></thead><tbody>';", "h+='<th>틀린수</th><th>점수</th><th>레벨</th><th>기록</th></tr></thead><tbody>';", 'teacher reset header')
+          old = """    h+='</tr>';
+  });
+  h+='</tbody></table></div><div class=\"hint\" style=\"margin-top:6px\">학부모 제출 결과 자동 반영. 안 푼 회차(·)는 클릭해 직접 입력하세요.</div></div>';"""
+          new = """    h+=`<td class=\"wc\"><button class=\"btn gray sm\" onclick=\"resetAttempt('${r}')\" ${ox?'':'disabled'}>초기화</button></td></tr>`;
+  });
+  h+='</tbody></table></div><div class=\"hint\" style=\"margin-top:6px\">학부모 제출 결과 자동 반영. 안 푼 회차(·)는 클릭해 직접 입력하세요. 원장 확인으로 기록이 생긴 경우 해당 회차를 초기화할 수 있습니다.</div></div>';"""
+          s = replace_once(s, old, new, 'teacher reset cell')
+
+          old = """function tToggle(r,n){ const ox=latestOx(tSel,r); if(!ox) return; ox[n-1]= ox[n-1]==='X'?'O':'X'; tStudent(); supaUpsert(tSel,r,ox,'teacher').then(ok=>{ document.getElementById('save-status').textContent= ok?'✅ 저장됨':'저장 실패'; }); }"""
+          new = """function tToggle(r,n){ const ox=latestOx(tSel,r); if(!ox) return; ox[n-1]= ox[n-1]==='X'?'O':'X'; tStudent(); supaUpsert(tSel,r,ox,'teacher').then(ok=>{ document.getElementById('save-status').textContent= ok?'✅ 저장됨':'저장 실패'; }); }
+async function resetAttempt(r){
+  if(!tSel||!confirm(tSel+' 학생의 '+(M.rounds[r]?.title||r+'회')+' 기록을 초기화할까요?')) return;
+  const st=document.getElementById('save-status'); st.textContent='초기화 중…';
+  try{
+    const url=SUPA_URL+'/rest/v1/mock_results?student=eq.'+encodeURIComponent(tSel)+'&round=eq.'+encodeURIComponent(rkey(r));
+    const res=await fetch(url,{method:'DELETE',headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,Prefer:'return=minimal'}});
+    if(!res.ok) throw new Error('delete failed');
+    if(M.results[tSel]) delete M.results[tSel][r];
+    const left=pendingList().filter(x=>!(x.student===tSel&&String(x.r)===String(r))); pendingSave(left);
+    st.textContent='✅ 초기화됨'; tStudent();
+  }catch(e){ st.textContent='초기화 실패'; toast('기록 초기화에 실패했습니다.'); }
+}"""
+          s = replace_once(s, old, new, 'reset function')
+
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit applied fixes
+        run: |
+          rm -f .github/workflows/apply-hw-viewer-fixes.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html mock.html .github/workflows/apply-hw-viewer-fixes.yml
+          git commit -m '활용 모의고사 뷰어 권한과 기록 초기화 개선'
+          git push
