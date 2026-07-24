@@ -46,8 +46,10 @@ function allowedRounds(student){
   const all=allRounds();
   if(SET!=='hw'||mode==='teacher')return all;
   if(!student)return[];
-  if((((D.archiveAccess||{})['활용 모의고사'])||[]).includes(student))return all;
-  if(!((D.specialStudents||[]).includes(student)))return[];
+  const online=((D.studentTypes||{})[student])==='online';
+  if(online&&((((D.archiveAccess||{})['활용 모의고사'])||[]).includes(student)))return all;
+  if(!online&&!((D.specialStudents||[]).includes(student)))return[];
+  if(online)return[];
   const tbs=((D.content||{})['special-summer']||{}).textbooks||[],a=[];
   tbs.forEach(t=>{const m=String(t.title||'').match(/활용\s*모의고사\s*(\d+)\s*회/);if(m&&Array.isArray(t.access)&&t.access.includes(student))a.push(String(+m[1]))});
   return[...new Set(a)].filter(r=>(M.rounds||{})[r]).sort((a,b)=>+a-+b);
