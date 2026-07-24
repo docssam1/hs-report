@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 24. 오후 10:28:21
+ * 생성: 2026. 7. 24. 오후 10:35:43
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -375,7 +375,9 @@ window.GFIELD_DATA = {
       "textbooks": [
         {
           "title": "중급 모의고사 3회 · 답안 및 교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?round=3"
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784900104181_jkfe_________________3____.pdf",
+          "folder": "tb_mryzfxq5",
+          "pages": 6
         }
       ]
     },
@@ -738,8 +740,7 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3",
-      "jul-w4"
+      "jul-w3"
     ],
     "김명서": [
       "may-w34",
