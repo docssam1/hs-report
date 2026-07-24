@@ -1080,8 +1080,7 @@
     for(let i=1;i<=pages;i++){ const nm=String(i).padStart(3,'0')+'.jpg'; imgs+='<div class="pg"><img src="'+base+nm+'"><div class="wm"><span></span><span></span><span></span></div></div>'; }
     const css='*{margin:0;padding:0;box-sizing:border-box}body{font-family:sans-serif;background:#525659}#bar{position:fixed;top:0;left:0;right:0;background:#1e3c72;color:#fff;padding:12px;text-align:center;font-weight:700;z-index:10}#wrap{padding:56px 0 40px}.pg{position:relative;width:820px;max-width:96%;margin:0 auto 16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4)}.pg img{width:100%;display:block}.wm{position:absolute;inset:0;pointer-events:none;overflow:hidden}.wm span{position:absolute;left:-10%;width:120%;text-align:center;color:#000;opacity:.13;font-size:28px;font-weight:800;white-space:nowrap;transform:rotate(-30deg)}.wm span:nth-child(1){top:24%}.wm span:nth-child(2){top:50%}.wm span:nth-child(3){top:76%}@media print{#bar{display:none}body{background:#fff}#wrap{padding:0}.pg{width:100%;max-width:100%;margin:0;box-shadow:none;page-break-after:always}}';
     const js='(function(){var name='+JSON.stringify(name)+';var sp=document.querySelectorAll(".wm span");for(var k=0;k<sp.length;k++)sp[k].textContent=name;var ims=[].slice.call(document.images),total=ims.length,done=0,bar=document.getElementById("bar"),pct=document.getElementById("pct");function up(){done++;pct.textContent=Math.round(done/total*100)+"%";if(done>=total){bar.textContent="인쇄 준비 완료";setTimeout(function(){window.print();},400);}}ims.forEach(function(im){if(im.complete)up();else{im.onload=up;im.onerror=up;}});})();';
-    w.document.write('<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>'+(title||'교재')+'</title><style>'+css+'</style></head><body><div id="bar">생성 중입니다… <span id="pct">0%</span></div><div id="wrap">'+imgs+'</div><scr'+'ipt>'+js+'</scr'+'ipt><script src="index-enhancements.js?v=20260724"></script>
-</body></html>');
+    w.document.write('<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>'+(title||'교재')+'</title><style>'+css+'</style></head><body><div id="bar">생성 중입니다… <span id="pct">0%</span></div><div id="wrap">'+imgs+'</div><scr'+'ipt>'+js+'</scr'+'ipt></body></html>');
     w.document.close();
   }
 
@@ -1106,5 +1105,6 @@
 
   (function init(){ if(D&&D.meta){ document.getElementById('login-title').textContent=D.meta.title; document.getElementById('brand-sub').textContent=D.meta.title; document.title=`${D.meta.academy} | ${D.meta.title}`; } })();
 </script>
+<script src="index-enhancements.js?v=20260724"></script>
 </body>
 </html>
