@@ -6,47 +6,241 @@
 <title>지필드 영재교육 | 모의고사 뷰어·오답 분석</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
-:root{--navy:#1e3c72;--navy2:#2a5298;--orange:#f97316;--orange2:#ea580c;--bg:#eef1f6;--card:#fff;--line:#dfe5ed;--ink:#27313f;--muted:#697586;--ok:#159957;--bad:#dc2626}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,'Noto Sans KR',sans-serif}.hidden{display:none!important}button,a{font:inherit}.gate{position:fixed;inset:0;z-index:30;background:linear-gradient(135deg,#10203f,#294b88);display:flex;align-items:center;justify-content:center;padding:20px}.gatebox{width:min(390px,100%);padding:34px 28px;border-radius:22px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;text-align:center;backdrop-filter:blur(12px)}.gatebox h1{font-size:22px;margin:0 0 8px}.gatebox p{font-size:13px;line-height:1.6;opacity:.8}.gatebox input{width:100%;padding:14px;border:0;border-radius:11px;text-align:center;font-size:16px;margin:12px 0}.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:800;cursor:pointer}.btn.pri{background:linear-gradient(135deg,var(--orange),var(--orange2));color:#fff}.btn.navy{background:var(--navy);color:#fff}.btn.gray{background:#eef1f6;color:#354052}.btn.bad{background:#fee2e2;color:#b91c1c}.btn:disabled{opacity:.45;cursor:not-allowed}.gatebox .btn{width:100%}.err{min-height:20px;color:#ffe1bc;font-size:12px;margin-top:8px}header{position:sticky;top:0;z-index:15;background:var(--navy);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}header b{font-size:16px}header small{display:block;opacity:.7;margin-top:2px}header a,header button{color:#fff;background:rgba(255,255,255,.14);border:0;border-radius:8px;padding:8px 10px;text-decoration:none;cursor:pointer}.wrap{max-width:1050px;margin:auto;padding:16px 14px 90px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px rgba(30,45,65,.05)}h2,h3{margin:0 0 10px}.hint{font-size:13px;color:var(--muted);line-height:1.65}.rounds{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;margin-top:12px}.round{padding:15px 10px;border:1px solid var(--line);border-radius:13px;background:#fff;text-align:center;cursor:pointer}.round:hover{border-color:#f9b47c}.round .n{font-size:18px;font-weight:900;color:var(--orange2)}.round .s{font-size:11px;color:var(--muted);margin-top:4px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar .sp{flex:1}.viewer{display:grid;grid-template-columns:1.25fr .75fr;gap:14px}.pages{max-height:72vh;overflow:auto;background:#dfe5ed;border-radius:13px;padding:10px}.page{position:relative;margin:0 auto 10px;background:#fff;max-width:760px}.page img{display:block;width:100%;user-select:none}.wm{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;pointer-events:none;overflow:hidden}.wm span{transform:rotate(-25deg);color:rgba(30,60,114,.12);font-weight:900;text-align:center;font-size:16px}.side{min-width:0}.qgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:12px 0}.q{aspect-ratio:1;border:1.5px solid var(--line);border-radius:9px;background:#fff;font-weight:900;cursor:pointer}.q.x{background:#fee2e2;color:var(--bad);border-color:#f4a6a6}.score{display:flex;gap:14px;align-items:end;padding:12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px}.score strong{font-size:34px;color:var(--orange2)}.analysis .row{margin:9px 0}.bar{height:9px;background:#edf1f5;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#fb923c,#ea580c)}.wrong{border:1px solid #fee2e2;border-radius:10px;padding:9px 11px;margin:7px 0;background:#fff8f8;font-size:13px}.admin-table{overflow:auto}.admin-table table{border-collapse:collapse;width:100%;min-width:760px}.admin-table th,.admin-table td{border:1px solid var(--line);padding:7px;text-align:center;font-size:12px}.admin-table th{background:#f4f6f9}.select{padding:10px;border:1px solid var(--line);border-radius:9px}.toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%);background:#182235;color:#fff;padding:10px 17px;border-radius:999px;opacity:0;pointer-events:none;transition:.2s;z-index:50}.toast.show{opacity:1}@media(max-width:780px){.viewer{grid-template-columns:1fr}.pages{max-height:58vh}.qgrid{grid-template-columns:repeat(10,1fr)}}@media(max-width:520px){.qgrid{grid-template-columns:repeat(6,1fr)}}
+:root{--navy:#183968;--navy2:#2b5ca8;--orange:#f97316;--orange2:#ea580c;--violet:#7c3aed;--bg:#edf2f8;--card:#fff;--line:#dce4ef;--ink:#253142;--muted:#68768a;--ok:#159957;--bad:#dc2626;--soft:#fff7ed}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#f6f9fd 0,#edf2f8 360px);color:var(--ink);font-family:Pretendard,'Noto Sans KR',sans-serif;-webkit-tap-highlight-color:transparent}.hidden{display:none!important}button,a{font:inherit}.gate{position:fixed;inset:0;z-index:30;background:radial-gradient(circle at 50% 18%,#3768ad 0,#17345f 48%,#0d203d 100%);display:flex;align-items:center;justify-content:center;padding:20px}.gatebox{width:min(410px,100%);padding:38px 30px;border-radius:26px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;text-align:center;backdrop-filter:blur(16px);box-shadow:0 24px 70px rgba(0,0,0,.28)}.gate-characters{font-size:40px;letter-spacing:8px;margin-bottom:7px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.2))}.gatebox h1{font-size:23px;margin:0 0 8px}.gatebox p{font-size:13px;line-height:1.7;opacity:.82}.gatebox input{width:100%;padding:15px;border:0;border-radius:13px;text-align:center;font-size:16px;margin:14px 0 11px;outline:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}.btn{border:0;border-radius:11px;padding:11px 14px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:5px}.btn.pri{background:linear-gradient(135deg,var(--orange),var(--orange2));color:#fff;box-shadow:0 8px 18px rgba(234,88,12,.25)}.btn.navy{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}.btn.gray{background:#edf2f7;color:#354052}.btn.bad{background:#fee2e2;color:#b91c1c}.btn.ghost{background:#fff;border:1px solid var(--line);color:#435169}.btn:disabled{opacity:.45;cursor:not-allowed}.gatebox .btn{width:100%}.err{min-height:20px;color:#ffe1bc;font-size:12px;margin-top:8px}header{position:sticky;top:0;z-index:15;background:rgba(24,57,104,.97);backdrop-filter:blur(12px);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 6px 18px rgba(24,57,104,.18)}header b{font-size:16px}header small{display:block;opacity:.72;margin-top:2px}header a,header button{color:#fff;background:rgba(255,255,255,.14);border:0;border-radius:9px;padding:8px 10px;text-decoration:none;cursor:pointer}.preview-banner{background:linear-gradient(90deg,#ede9fe,#f5f3ff);border-bottom:1px solid #c4b5fd;color:#5b21b6;text-align:center;padding:9px 12px;font-size:13px;font-weight:800}.wrap{max-width:1120px;margin:auto;padding:18px 14px 94px}.card{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:14px;box-shadow:0 6px 20px rgba(30,52,80,.06)}h2,h3{margin:0 0 10px}.hint{font-size:13px;color:var(--muted);line-height:1.65}.rounds{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:11px;margin-top:14px}.round{padding:16px 11px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(180deg,#fff,#fbfcfe);text-align:center;cursor:pointer;transition:.16s;box-shadow:0 3px 10px rgba(30,52,80,.04)}.round:hover{border-color:#f9b47c;transform:translateY(-2px);box-shadow:0 8px 20px rgba(234,88,12,.12)}.round .n{font-size:18px;font-weight:900;color:var(--orange2)}.round .s{font-size:11.5px;color:var(--muted);margin-top:5px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar .sp{flex:1}.viewer{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);gap:15px}.pages{max-height:74vh;overflow:auto;background:#d8e0ea;border-radius:15px;padding:11px;box-shadow:inset 0 1px 8px rgba(30,52,80,.12)}.page{position:relative;margin:0 auto 11px;background:#fff;max-width:780px;box-shadow:0 3px 14px rgba(0,0,0,.18)}.page img{display:block;width:100%;user-select:none;-webkit-user-drag:none}.wm{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;pointer-events:none;overflow:hidden}.wm span{transform:rotate(-25deg);color:rgba(30,60,114,.115);font-weight:900;text-align:center;font-size:15px;white-space:nowrap}.side{min-width:0}.attempt-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:11px}.attempt-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800;cursor:pointer;color:#46566e}.attempt-chip.on{background:var(--navy);border-color:var(--navy);color:#fff}.attempt-chip.empty{border-style:dashed;color:#8b98aa}.attempt-mode{font-size:12px;color:var(--muted);margin-left:auto}.qgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:12px 0}.q{aspect-ratio:1;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-weight:900;cursor:pointer;box-shadow:0 2px 5px rgba(30,52,80,.04)}.q.x{background:#fee2e2;color:var(--bad);border-color:#f4a6a6}.q:disabled{cursor:default}.score{display:flex;gap:14px;align-items:end;padding:13px;background:linear-gradient(135deg,#fff7ed,#fff);border:1px solid #fed7aa;border-radius:13px}.score strong{font-size:36px;color:var(--orange2)}.analysis .row{margin:10px 0}.bar{height:9px;background:#edf1f5;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#fb923c,#ea580c)}.wrong{border:1px solid #fee2e2;border-radius:11px;padding:10px 12px;margin:7px 0;background:#fff8f8;font-size:13px}.submit-note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:7px}.admin-table{overflow:auto}.admin-table table{border-collapse:collapse;width:100%;min-width:860px}.admin-table th,.admin-table td{border:1px solid var(--line);padding:8px;text-align:center;font-size:12px}.admin-table th{background:#f4f7fb}.admin-actions{display:flex;gap:5px;justify-content:center;flex-wrap:wrap}.select{padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff}.set-switch{display:flex;gap:6px}.set-switch a{padding:8px 12px;border-radius:9px;background:#edf2f7;color:#435169;text-decoration:none;font-size:12px;font-weight:800}.set-switch a.on{background:var(--navy);color:#fff}.toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%);background:#182235;color:#fff;padding:10px 17px;border-radius:999px;opacity:0;pointer-events:none;transition:.2s;z-index:50}.toast.show{opacity:1}
+@media(max-width:820px){.viewer{grid-template-columns:1fr}.pages{max-height:58vh}.qgrid{grid-template-columns:repeat(10,1fr)}}@media(max-width:540px){.qgrid{grid-template-columns:repeat(6,1fr)}.toolbar b{width:100%;order:-1}.attempt-mode{width:100%;margin-left:0}}
+@media print{header,.toolbar,.side,.preview-banner{display:none!important}.wrap{max-width:none;padding:0}.viewer{display:block}.pages{max-height:none;overflow:visible;background:#fff;padding:0}.page{box-shadow:none;break-after:page}.wm span{color:rgba(30,60,114,.13)!important}}
 </style>
 </head>
 <body>
-<div id="gate" class="gate"><div class="gatebox"><h1>모의고사 뷰어·오답 분석</h1><p>학생 이름을 입력하세요.<br>원장 모드는 <b>docssam</b>으로 입장합니다.</p><input id="pw" placeholder="학생 이름" autocomplete="off"><button class="btn pri" onclick="enter()">입장하기</button><div class="err" id="err"></div></div></div>
-<div id="app" class="hidden"><header><div><b id="headTitle">모의고사</b><small id="headSub">지필드 영재교육</small></div><div><a href="index.html">← 아카이브</a> <button onclick="logout()">나가기</button></div></header><main class="wrap" id="main"></main></div>
+<div id="gate" class="gate"><div class="gatebox"><div class="gate-characters">👧🏻 🧒🏻</div><h1>모의고사 뷰어·오답 분석</h1><p>학생 이름을 입력하세요.<br>원장 모드는 <b>docssam</b>으로 입장합니다.</p><input id="pw" placeholder="학생 이름" autocomplete="off"><button class="btn pri" onclick="enter()">입장하기</button><div class="err" id="err"></div></div></div>
+<div id="app" class="hidden"><header><div><b id="headTitle">모의고사</b><small id="headSub">지필드 영재교육</small></div><div><a href="index.html">← 아카이브</a> <button onclick="logout()">나가기</button></div></header><div id="previewBanner" class="preview-banner hidden">🔎 관리자 미리보기입니다. 체크해도 응시 기록과 횟수에 저장되지 않습니다.</div><main class="wrap" id="main"></main></div>
 <div class="toast" id="toast"></div>
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
 <script src="mock-data.js"></script><script src="mock-data-hw.js"></script><script src="mock-rx.js"></script>
 <script>
-const P=new URLSearchParams(location.search),SET=(P.get('set')||'').toLowerCase()==='hw'?'hw':'mid';
-const SETNAME=SET==='hw'?'활용':'중급',D=window.GFIELD_DATA||{},M=SET==='hw'?(window.GFIELD_MOCK_HW||{}):(window.GFIELD_MOCK||{});
-const SUPA_URL='https://fgahqumaldheqettmvqg.supabase.co',SUPA_KEY='sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I';
-M.results=M.results||{};let me='',mode='parent',cur='',ox=[];
-function esc(s){return String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function toast(s){const e=document.getElementById('toast');e.textContent=s;e.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove('show'),2200)}
-function rkey(r){return (SET==='hw'?'hw':'')+r} function unkey(r){r=String(r);return SET==='hw'?(r.startsWith('hw')?r.slice(2):null):(r.startsWith('hw')?null:r)}
+const P=new URLSearchParams(location.search);
+const SET=(P.get('set')||'').toLowerCase()==='hw'?'hw':'mid';
+const SETNAME=SET==='hw'?'활용':'중급';
+const D=window.GFIELD_DATA||{};
+const M=SET==='hw'?(window.GFIELD_MOCK_HW||{}):(window.GFIELD_MOCK||{});
+const SUPA_URL='https://fgahqumaldheqettmvqg.supabase.co';
+const SUPA_KEY='sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I';
+const PREVIEW=P.get('preview')==='1';
+M.results=M.results||{};
+let me='',mode='parent',cur='',ox=[],activeSlot=1,viewOnly=false;
+
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function toast(s){const e=document.getElementById('toast');e.textContent=s;e.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove('show'),2400)}
+function baseRoundKey(r){return(SET==='hw'?'hw':'')+String(r)}
+function storedKey(r,slot){return baseRoundKey(r)+(Number(slot)===1?'':'@'+slot)}
+function parseStoredRound(raw){
+  raw=String(raw||''); const isHw=raw.startsWith('hw');
+  if((SET==='hw')!==isHw)return null;
+  const body=isHw?raw.slice(2):raw;
+  const m=body.match(/^(\d+)(?:@([123]))?$/);
+  return m?{round:String(+m[1]),slot:+(m[2]||1),raw}:null;
+}
 function allRounds(){return Object.keys(M.rounds||{}).sort((a,b)=>+a-+b)}
-function allowedRounds(student){const all=allRounds();if(SET!=='hw'||mode==='teacher')return all;if(!student)return[];if((((D.archiveAccess||{})['활용 모의고사'])||[]).includes(student))return all;const tbs=((D.content||{})['special-summer']||{}).textbooks||[],a=[];tbs.forEach(t=>{const m=String(t.title||'').match(/활용\s*모의고사\s*(\d+)\s*회/);if(m&&Array.isArray(t.access)&&t.access.includes(student))a.push(String(+m[1]))});return[...new Set(a)].filter(r=>(M.rounds||{})[r]).sort((a,b)=>+a-+b)}
+function allowedRounds(student){
+  const all=allRounds();
+  if(SET!=='hw'||mode==='teacher')return all;
+  if(!student)return[];
+  if((((D.archiveAccess||{})['활용 모의고사'])||[]).includes(student))return all;
+  if(!((D.specialStudents||[]).includes(student)))return[];
+  const tbs=((D.content||{})['special-summer']||{}).textbooks||[],a=[];
+  tbs.forEach(t=>{const m=String(t.title||'').match(/활용\s*모의고사\s*(\d+)\s*회/);if(m&&Array.isArray(t.access)&&t.access.includes(student))a.push(String(+m[1]))});
+  return[...new Set(a)].filter(r=>(M.rounds||{})[r]).sort((a,b)=>+a-+b);
+}
 function canRound(r){return allowedRounds(me).includes(String(r))}
-function lsKey(){return'gfield_mock_'+SET+'_'+me} function attempts(){try{return JSON.parse(localStorage.getItem(lsKey())||'{}')}catch(e){return{}}} function saveAttempts(x){localStorage.setItem(lsKey(),JSON.stringify(x))}
-function questions(){return M.questions||30} function items(r){return ((M.rounds||{})[r]||{}).items||[]} function item(r,n){return items(r).find(x=>+x.no===+n)||{no:n,type:'',answer:''}}
+function localKey(){return'gfield_mock_v3_'+SET+'_'+me}
+function oldLocalKey(){return'gfield_mock_'+SET+'_'+me}
+function migrationKey(){return'gfield_mock_v3_migrated_'+SET+'_'+me}
+function normalizeAttempts(obj){
+  const out={};
+  Object.entries(obj||{}).forEach(([r,list])=>{
+    if(!Array.isArray(list))return;
+    const used=new Set();
+    out[String(r)]=list.slice(0,3).map((x,i)=>{
+      let slot=Number(x&&x.slot)||i+1; while(used.has(slot)&&slot<3)slot++; if(slot<1||slot>3||used.has(slot))return null; used.add(slot);
+      const raw=Array.isArray(x&&x.ox)?x.ox.join(''):String((x&&x.ox)||'');
+      return{slot,ox:raw,at:(x&&x.at)||(x&&x.ts)||'',by:(x&&x.by)||'local'};
+    }).filter(x=>x&&x.ox.length===questions()).sort((a,b)=>a.slot-b.slot);
+  });
+  return out;
+}
+function readLocal(){
+  try{
+    const now=localStorage.getItem(localKey());
+    if(now)return normalizeAttempts(JSON.parse(now));
+    const old=localStorage.getItem(oldLocalKey());
+    return old?normalizeAttempts(JSON.parse(old)):{};
+  }catch(e){return{}}
+}
+function writeLocal(x){try{localStorage.setItem(localKey(),JSON.stringify(normalizeAttempts(x)))}catch(e){}}
+function questions(){return M.questions||30}
+function items(r){return((M.rounds||{})[r]||{}).items||[]}
+function item(r,n){return items(r).find(x=>+x.no===+n)||{no:n,type:'',answer:''}}
 function points(n){if(M.blueprint){const b=M.blueprint.find(x=>+x.no===+n);if(b&&b.pts!=null)return+b.pts}return n<=12?2.7:n<=22?3.4:4.2}
 function area(n){const b=(M.blueprint||[]).find(x=>+x.no===+n);return b?b.area:'기타'}
 function calc(a){let score=0,wrong=0;for(let n=1;n<=questions();n++){if(a[n-1]==='X')wrong++;else score+=points(n)}return{score:Math.round(score*10)/10,wrong}}
-function bookFor(r){return(D.books||[]).find(b=>b.folder==='활용 모의고사'&&new RegExp('활용\\s*모의고사\\s*'+r+'\\s*회').test(b.title||''))}
-async function loadServerStudent(){try{const u=SUPA_URL+'/rest/v1/mock_results?select=round,ox,source,updated_at&student=eq.'+encodeURIComponent(me),res=await fetch(u,{headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY}});if(!res.ok)return;const rows=await res.json(),a=attempts();allowedRounds(me).forEach(r=>delete a[r]);rows.forEach(x=>{const r=unkey(x.round);if(r&&canRound(r)&&x.ox&&x.ox.length===questions())a[r]=[{ox:x.ox,at:x.updated_at||'',by:x.source||'db'}]});saveAttempts(a)}catch(e){}}
-async function upsert(r,a,source){const c=calc(a);const res=await fetch(SUPA_URL+'/rest/v1/mock_results',{method:'POST',headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates'},body:JSON.stringify({student:me,round:rkey(r),ox:a.join(''),score:c.score,wrong:c.wrong,source:source||'parent'})});return res.ok}
-function enter(){const v=document.getElementById('pw').value.trim();if(!v)return;if(v.toLowerCase()==='docssam'){me='원장';mode='teacher';openApp();renderTeacher();return}if(!(D.students||[]).includes(v)){document.getElementById('err').textContent='등록된 학생 이름을 정확히 입력해 주세요.';return}me=v;mode='parent';localStorage.setItem('gfield_student',v);openApp();startParent()}
-function openApp(){document.getElementById('gate').classList.add('hidden');document.getElementById('app').classList.remove('hidden');document.getElementById('headTitle').textContent=SETNAME+' 모의고사 뷰어·오답 분석';document.getElementById('headSub').textContent=mode==='teacher'?'원장 관리 모드':me+' 학생'}
+function roundAttempts(r){return(readLocal()[String(r)]||[]).slice().sort((a,b)=>a.slot-b.slot)}
+function findAttempt(r,slot){return roundAttempts(r).find(x=>x.slot===Number(slot))}
+function nextSlot(r){const used=new Set(roundAttempts(r).map(x=>x.slot));for(let i=1;i<=3;i++)if(!used.has(i))return i;return null}
+function examBook(r){
+  const rx=new RegExp('활용\\s*모의고사\\s*'+r+'\\s*회');
+  const books=(D.books||[]).filter(b=>rx.test(String(b.title||'')));
+  let b=books.find(x=>x.folder==='활용 모의고사'&&(x.imgdir||x.pages))||books.find(x=>x.imgdir||x.pages);
+  if(!b){
+    const tbs=(((D.content||{})['special-summer']||{}).textbooks)||[];
+    b=tbs.find(x=>(x.folder||x.imgdir)&&x.pages&&new RegExp('(?:모의고사\\s*)?'+r+'\\s*회.*활용\\s*시험지|활용.*'+r+'\\s*회').test(String(x.title||'')));
+  }
+  if(!b)return null;
+  return Object.assign({},b,{imgdir:b.imgdir||b.folder});
+}
+async function fetchRows(student){
+  const u=SUPA_URL+'/rest/v1/mock_results?select=round,ox,score,wrong,source,updated_at&student=eq.'+encodeURIComponent(student);
+  const res=await fetch(u,{headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY}});
+  return res.ok?await res.json():[];
+}
+function groupRows(rows){
+  const out={};
+  (rows||[]).forEach(x=>{
+    const p=parseStoredRound(x.round);
+    if(!p||!canRound(p.round)||!x.ox||String(x.ox).length!==questions())return;
+    out[p.round]=out[p.round]||[];
+    const rec={slot:p.slot,ox:String(x.ox),at:x.updated_at||'',by:x.source||'db',raw:p.raw};
+    const old=out[p.round].findIndex(v=>v.slot===p.slot);
+    if(old<0)out[p.round].push(rec);else if((rec.at||'')>(out[p.round][old].at||''))out[p.round][old]=rec;
+  });
+  Object.values(out).forEach(a=>a.sort((x,y)=>x.slot-y.slot));
+  return out;
+}
+async function upsertSlot(r,slot,a,source,student){
+  const c=calc(a),who=student||me;
+  const res=await fetch(SUPA_URL+'/rest/v1/mock_results',{method:'POST',headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates'},body:JSON.stringify({student:who,round:storedKey(r,slot),ox:a.join?a.join(''):String(a),score:c.score,wrong:c.wrong,source:source||'parent'})});
+  return res.ok;
+}
+async function loadServerStudent(){
+  try{
+    let rows=await fetchRows(me);
+    const local=readLocal();
+    let migrated=false;
+    if(mode!=='preview'&&!localStorage.getItem(migrationKey())){
+      const server=groupRows(rows);
+      for(const r of allowedRounds(me)){
+        const ll=(local[r]||[]).filter(x=>x.ox&&x.ox.length===questions());
+        const ss=server[r]||[];
+        if(ll.length>=2&&ss.length<=1){
+          for(const rec of ll){await upsertSlot(r,rec.slot,rec.ox.split(''),rec.by||'migration',me)}
+          migrated=true;
+        }
+      }
+      localStorage.setItem(migrationKey(),'1');
+      if(migrated)rows=await fetchRows(me);
+    }
+    writeLocal(groupRows(rows));
+  }catch(e){toast('기록을 불러오지 못해 이 기기의 저장 내용을 표시합니다.')}
+}
+async function deleteStored(student,r,slot){
+  const raw=storedKey(r,slot);
+  const u=SUPA_URL+'/rest/v1/mock_results?student=eq.'+encodeURIComponent(student)+'&round=eq.'+encodeURIComponent(raw);
+  const res=await fetch(u,{method:'DELETE',headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,Prefer:'return=minimal'}});
+  return res.ok;
+}
+function enter(){
+  const v=document.getElementById('pw').value.trim();if(!v)return;
+  if(v.toLowerCase()==='docssam'){me='원장';mode='teacher';openApp();renderTeacher();return}
+  if(!(D.students||[]).includes(v)){document.getElementById('err').textContent='등록된 학생 이름을 정확히 입력해 주세요.';return}
+  me=v;mode=PREVIEW?'preview':'parent';localStorage.setItem('gfield_student',v);openApp();startParent();
+}
+function openApp(){
+  document.getElementById('gate').classList.add('hidden');document.getElementById('app').classList.remove('hidden');
+  document.getElementById('headTitle').textContent=SETNAME+' 모의고사 뷰어·오답 분석';
+  document.getElementById('headSub').textContent=mode==='teacher'?'원장 관리 모드':me+(mode==='preview'?' · 관리자 미리보기':' 학생');
+  document.getElementById('previewBanner').classList.toggle('hidden',mode!=='preview');
+}
 function logout(){localStorage.removeItem('gfield_student');location.href='mock.html'+(SET==='hw'?'?set=hw':'')}
 async function startParent(){await loadServerStudent();const rd=P.get('round');if(rd&&canRound(rd))openRound(rd);else renderRounds()}
-function renderRounds(){const rs=allowedRounds(me);let h='<div class="card"><h2>📝 '+SETNAME+' 모의고사</h2><div class="hint">열람 승인된 회차만 표시됩니다. 시험지를 보고 푼 뒤 틀린 번호를 체크하면 점수와 약점 분석이 저장됩니다.</div><div class="rounds">';if(!rs.length)h+='<div class="hint">현재 승인된 회차가 없습니다.</div>';rs.forEach(r=>{const a=attempts()[r]||[],last=a[a.length-1],sc=last?calc(String(last.ox).split('')):null;h+='<button class="round" onclick="openRound(\''+r+'\')"><div class="n">'+esc(((M.rounds||{})[r]||{}).title||r+'회')+'</div><div class="s">'+(sc?'최근 '+sc.score+'점 · 제출 '+a.length+'/3':'미응시 · 최대 3회')+'</div></button>'});h+='</div></div>';document.getElementById('main').innerHTML=h}
-function openRound(r){r=String(r);if(!canRound(r)){toast('이 회차는 아직 승인되지 않았습니다.');return renderRounds()}cur=r;const a=attempts()[r]||[],last=a[a.length-1];ox=last?String(last.ox).split(''):Array(questions()).fill('O');const b=bookFor(r),title=esc(((M.rounds||{})[r]||{}).title||r+'회');let pages='';if(b&&b.imgdir&&b.pages){for(let i=1;i<=b.pages;i++){let w='';for(let k=0;k<9;k++)w+='<span>'+esc(me)+' · 지필드</span>';pages+='<div class="page"><img draggable="false" src="materials/'+esc(b.imgdir)+'/'+String(i).padStart(3,'0')+'.jpg"><div class="wm">'+w+'</div></div>'}}else pages='<div class="card hint">시험지 이미지가 등록되지 않았습니다.</div>';document.getElementById('main').innerHTML='<div class="toolbar card"><button class="btn gray" onclick="renderRounds()">‹ 회차 목록</button><b>'+title+'</b><span class="sp"></span>'+(b&&b.video?'<a class="btn navy" target="_blank" rel="noopener" href="'+esc(b.video)+'">▶ 풀이 영상</a>':'')+'<a class="btn gray" target="_blank" href="answer.html?set='+SET+'&round='+r+'">답안·교재표</a></div><div class="viewer"><div class="pages">'+pages+'</div><div class="side"><div class="card"><h3>틀린 문제만 선택하세요</h3><div class="hint">빨간색 ✕가 오답입니다. 제출은 회차별 최대 3번 가능합니다.</div><div class="qgrid" id="qgrid"></div><div id="score"></div><button class="btn pri" style="width:100%;margin-top:12px" onclick="submitResult()">오답 제출·분석</button></div><div id="analysis"></div></div></div>';drawQ();drawAnalysis()}
-function drawQ(){const g=document.getElementById('qgrid');if(!g)return;g.innerHTML='';for(let n=1;n<=questions();n++){const b=document.createElement('button');b.className='q '+(ox[n-1]==='X'?'x':'');b.textContent=ox[n-1]==='X'?'✕':n;b.onclick=()=>{ox[n-1]=ox[n-1]==='X'?'O':'X';drawQ();drawAnalysis()};g.appendChild(b)}}
-function drawAnalysis(){const c=calc(ox),e=document.getElementById('score');if(e)e.innerHTML='<div class="score"><strong>'+c.score+'</strong><span>점<br><b>오답 '+c.wrong+'문항</b></span></div>';const box=document.getElementById('analysis');if(!box)return;const agg={},wr=[];for(let n=1;n<=questions();n++){const ar=area(n);agg[ar]=agg[ar]||{tot:0,ok:0};agg[ar].tot++;if(ox[n-1]!=='X')agg[ar].ok++;else wr.push(item(cur,n))}let h='<div class="card analysis"><h3>영역별 분석</h3>';Object.entries(agg).forEach(([k,v])=>{const p=Math.round(v.ok/v.tot*100);h+='<div class="row"><div>'+esc(k)+' <b style="float:right">'+p+'%</b></div><div class="bar"><i style="width:'+p+'%"></i></div></div>'});if(wr.length){h+='<h3 style="margin-top:16px">오답 유형</h3>';wr.forEach(w=>h+='<div class="wrong"><b>'+w.no+'번</b> '+esc(w.type||'유형 확인 필요')+'</div>')}h+='</div>';box.innerHTML=h}
-async function submitResult(){const a=attempts(),list=a[cur]||[];if(list.length>=3){toast('이 회차는 3회 채점을 모두 사용했습니다. 원장님께 초기화를 요청하세요.');return}const ok=await upsert(cur,ox,'parent');if(!ok){toast('저장에 실패했습니다. 다시 시도해 주세요.');return}list.push({ox:ox.join(''),at:new Date().toISOString(),by:'parent'});a[cur]=list;saveAttempts(a);toast('저장되었습니다. '+list.length+'/3회');drawAnalysis()}
-async function loadAll(){M.results={};try{const res=await fetch(SUPA_URL+'/rest/v1/mock_results?select=student,round,ox,source,updated_at',{headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY}}),rows=await res.json();rows.forEach(x=>{const r=unkey(x.round);if(!r||!x.ox||x.ox.length!==questions())return;M.results[x.student]=M.results[x.student]||{};M.results[x.student][r]=x})}catch(e){}}
-async function renderTeacher(){await loadAll();const students=D.students||[];let sel=window.tsel||students[0]||'';window.tsel=sel;let h='<div class="card"><div class="toolbar"><h2>원장 모드 · '+SETNAME+'</h2><span class="sp"></span><select class="select" onchange="window.tsel=this.value;renderTeacher()">'+students.map(s=>'<option '+(s===sel?'selected':'')+'>'+esc(s)+'</option>').join('')+'</select></div><div class="hint">학생별 회차 기록을 확인하고, 원장 확인으로 생긴 기록이나 재응시가 필요한 회차를 초기화할 수 있습니다.</div></div><div class="card admin-table"><table><thead><tr><th>회차</th><th>점수</th><th>오답</th><th>저장 주체</th><th>초기화</th></tr></thead><tbody>';allRounds().forEach(r=>{const x=((M.results[sel]||{})[r]),c=x?calc(String(x.ox).split('')):null;h+='<tr><td>'+esc(((M.rounds||{})[r]||{}).title||r+'회')+'</td><td>'+(c?c.score:'-')+'</td><td>'+(c?c.wrong:'-')+'</td><td>'+(x?esc(x.source||''):'-')+'</td><td><button class="btn bad" '+(x?'':'disabled')+' onclick="resetRound(\''+esc(sel)+'\',\''+r+'\')">초기화</button></td></tr>'});h+='</tbody></table></div>';document.getElementById('main').innerHTML=h}
-async function resetRound(student,r){if(!confirm(student+' 학생의 '+(((M.rounds||{})[r]||{}).title||r+'회')+' 기록을 초기화할까요?'))return;try{const u=SUPA_URL+'/rest/v1/mock_results?student=eq.'+encodeURIComponent(student)+'&round=eq.'+encodeURIComponent(rkey(r)),res=await fetch(u,{method:'DELETE',headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,Prefer:'return=minimal'}});if(!res.ok)throw 0;if(M.results[student])delete M.results[student][r];toast('초기화되었습니다. 학생이 다시 접속하면 재응시할 수 있습니다.');renderTeacher()}catch(e){toast('초기화에 실패했습니다.')}}
-(function boot(){const n=(P.get('name')||localStorage.getItem('gfield_student')||'').trim();if(n&&n.toLowerCase()==='docssam'){me='원장';mode='teacher';openApp();renderTeacher()}else if(n&&(D.students||[]).includes(n)){me=n;mode='parent';localStorage.setItem('gfield_student',n);openApp();startParent()}document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')enter()})})();
+function renderRounds(){
+  const rs=allowedRounds(me);
+  let h='<div class="card"><h2>📝 '+SETNAME+' 모의고사</h2><div class="hint">열람 승인된 회차만 표시됩니다. 시험지를 보고 푼 뒤 틀린 번호를 체크하면 점수와 약점 분석이 저장됩니다. 각 회차는 최대 3번 채점할 수 있습니다.</div><div class="rounds">';
+  if(!rs.length)h+='<div class="hint">현재 승인된 회차가 없습니다.</div>';
+  rs.forEach(r=>{const a=roundAttempts(r),last=a[a.length-1],sc=last?calc(last.ox.split('')):null;h+='<button class="round" onclick="openRound(\''+r+'\')"><div class="n">'+esc(((M.rounds||{})[r]||{}).title||r+'회')+'</div><div class="s">'+(sc?'최근 '+sc.score+'점 · 저장 '+a.length+'/3':'미응시 · 최대 3회')+'</div></button>'});
+  h+='</div></div>';document.getElementById('main').innerHTML=h;
+}
+function openRound(r){
+  r=String(r);if(!canRound(r)){toast('이 회차는 아직 승인되지 않았습니다.');return renderRounds()}
+  cur=r;const ns=nextSlot(r),history=roundAttempts(r);
+  if(ns){activeSlot=ns;ox=Array(questions()).fill('O');viewOnly=false}else{const last=history[history.length-1];activeSlot=last.slot;ox=last.ox.split('');viewOnly=true}
+  renderRoundScreen();
+}
+function attemptHeader(){
+  const a=roundAttempts(cur),ns=nextSlot(cur);let h='<div class="attempt-head">';
+  for(let s=1;s<=3;s++){const rec=a.find(x=>x.slot===s);h+='<button class="attempt-chip '+(activeSlot===s?'on ':'')+(rec?'':'empty')+'" onclick="'+(rec?'viewAttempt('+s+')':(s===ns?'newAttempt()':'void 0'))+'">'+s+'차 '+(rec?'기록':'비어 있음')+'</button>'}
+  h+='<span class="attempt-mode">'+(viewOnly?'저장된 기록 보기':mode==='preview'?'미리보기 체크':'새 채점 입력')+'</span></div>';return h;
+}
+function viewAttempt(slot){const rec=findAttempt(cur,slot);if(!rec)return;activeSlot=slot;ox=rec.ox.split('');viewOnly=true;renderRoundScreen()}
+function newAttempt(){const s=nextSlot(cur);if(!s){toast('3회 채점을 모두 사용했습니다.');return}activeSlot=s;ox=Array(questions()).fill('O');viewOnly=false;renderRoundScreen()}
+function renderRoundScreen(){
+  const b=examBook(cur),title=esc(((M.rounds||{})[cur]||{}).title||cur+'회');let pages='';
+  if(b&&b.imgdir&&b.pages){for(let i=1;i<=b.pages;i++){let w='';for(let k=0;k<9;k++)w+='<span>'+esc(me)+' · '+(mode==='preview'?'관리자 미리보기':'지필드')+'</span>';pages+='<div class="page"><img draggable="false" src="materials/'+esc(b.imgdir)+'/'+String(i).padStart(3,'0')+'.jpg" alt="'+title+' '+i+'쪽"><div class="wm">'+w+'</div></div>'}}
+  else pages='<div class="card hint">시험지 이미지가 등록되지 않았습니다. 관리자 콘텐츠에서 PDF를 이미지 분할해 주세요.</div>';
+  const answer='answer.html?set='+SET+'&round='+cur+'&name='+encodeURIComponent(me)+(mode==='preview'?'&preview=1':'');
+  document.getElementById('main').innerHTML='<div class="toolbar card"><button class="btn gray" onclick="renderRounds()">‹ 회차 목록</button><b>'+title+'</b><span class="sp"></span><button class="btn ghost" onclick="window.print()">🖨 워터마크 인쇄</button>'+(b&&b.video?'<a class="btn navy" target="_blank" rel="noopener" href="'+esc(b.video)+'">▶ 풀이 영상</a>':'')+'<a class="btn gray" target="_blank" href="'+answer+'">답안·교재표</a></div><div class="viewer"><div class="pages">'+pages+'</div><div class="side"><div class="card">'+attemptHeader()+'<h3>틀린 번호만 눌러 주세요</h3><div class="hint">맞은 문제는 번호 그대로, 틀린 문제는 빨간 ✕로 표시합니다.</div><div id="qgrid" class="qgrid"></div><div id="score"></div><button id="submitBtn" class="btn pri" style="width:100%;margin-top:12px" onclick="submitResult()" '+((viewOnly||mode==='preview')?'disabled':'')+'>'+(mode==='preview'?'미리보기 — 저장되지 않음':viewOnly?'저장된 기록':'이 채점 결과 저장')+'</button><div class="submit-note">'+(viewOnly?'새 채점을 하려면 비어 있는 차수를 눌러 주세요.':'저장하면 '+activeSlot+'차 기록으로 남습니다.')+'</div></div><div id="analysis"></div></div></div>';
+  drawQ();drawAnalysis();
+}
+function drawQ(){const g=document.getElementById('qgrid');if(!g)return;g.innerHTML='';for(let n=1;n<=questions();n++){const b=document.createElement('button');b.className='q '+(ox[n-1]==='X'?'x':'');b.textContent=ox[n-1]==='X'?'✕':n;b.disabled=viewOnly;b.onclick=()=>{ox[n-1]=ox[n-1]==='X'?'O':'X';drawQ();drawAnalysis()};g.appendChild(b)}}
+function drawAnalysis(){
+  const c=calc(ox),e=document.getElementById('score');if(e)e.innerHTML='<div class="score"><strong>'+c.score+'</strong><span>점<br><b>오답 '+c.wrong+'문항</b></span></div>';
+  const box=document.getElementById('analysis');if(!box)return;const agg={},wr=[];
+  for(let n=1;n<=questions();n++){const ar=area(n);agg[ar]=agg[ar]||{tot:0,ok:0};agg[ar].tot++;if(ox[n-1]!=='X')agg[ar].ok++;else wr.push(item(cur,n))}
+  let h='<div class="card analysis"><h3>영역별 분석</h3>';Object.entries(agg).forEach(([k,v])=>{const p=Math.round(v.ok/v.tot*100);h+='<div class="row"><div>'+esc(k)+' <b style="float:right">'+p+'%</b></div><div class="bar"><i style="width:'+p+'%"></i></div></div>'});
+  if(wr.length){h+='<h3 style="margin-top:16px">오답 유형</h3>';wr.forEach(w=>h+='<div class="wrong"><b>'+w.no+'번</b> '+esc(w.type||'유형 확인 필요')+'</div>')}h+='</div>';box.innerHTML=h;
+}
+async function submitResult(){
+  if(mode==='preview'){toast('관리자 미리보기에서는 저장되지 않습니다.');return}
+  if(viewOnly){toast('저장된 기록입니다. 비어 있는 차수에서 새 채점을 시작하세요.');return}
+  if(!activeSlot||findAttempt(cur,activeSlot)){toast('저장할 빈 차수를 찾지 못했습니다.');return}
+  const btn=document.getElementById('submitBtn');if(btn)btn.disabled=true;
+  const ok=await upsertSlot(cur,activeSlot,ox,'parent',me);
+  if(!ok){if(btn)btn.disabled=false;toast('저장에 실패했습니다. 다시 시도해 주세요.');return}
+  const a=readLocal(),list=a[cur]||[];list.push({slot:activeSlot,ox:ox.join(''),at:new Date().toISOString(),by:'parent'});a[cur]=list;writeLocal(a);
+  viewOnly=true;toast(activeSlot+'차 기록으로 저장되었습니다.');renderRoundScreen();
+}
+async function loadAll(){
+  M.results={};try{
+    const res=await fetch(SUPA_URL+'/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at',{headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY}});
+    const rows=res.ok?await res.json():[];
+    rows.forEach(x=>{const p=parseStoredRound(x.round);if(!p||!x.ox||String(x.ox).length!==questions())return;M.results[x.student]=M.results[x.student]||{};M.results[x.student][p.round]=M.results[x.student][p.round]||[];M.results[x.student][p.round].push(Object.assign({},x,{slot:p.slot,raw:p.raw}))});
+    Object.values(M.results).forEach(rs=>Object.values(rs).forEach(a=>a.sort((x,y)=>x.slot-y.slot)));
+  }catch(e){}
+}
+async function renderTeacher(){
+  await loadAll();const students=D.students||[];let sel=window.tsel||students[0]||'';window.tsel=sel;
+  const setLink='<div class="set-switch"><a class="'+(SET==='mid'?'on':'')+'" href="mock.html">중급</a><a class="'+(SET==='hw'?'on':'')+'" href="mock.html?set=hw">활용</a></div>';
+  let h='<div class="card"><div class="toolbar"><h2>원장 모드 · '+SETNAME+'</h2><span class="sp"></span>'+setLink+'<select class="select" onchange="window.tsel=this.value;renderTeacher()">'+students.map(s=>'<option '+(s===sel?'selected':'')+'>'+esc(s)+'</option>').join('')+'</select></div><div class="hint">차수별 기록을 따로 삭제할 수 있습니다. “미리보기”는 학생 기록과 응시 횟수를 만들지 않습니다.</div></div><div class="card admin-table"><table><thead><tr><th>회차</th><th>차수</th><th>점수</th><th>오답</th><th>저장 주체</th><th>관리</th></tr></thead><tbody>';
+  allRounds().forEach(r=>{
+    const list=(((M.results[sel]||{})[r])||[]);
+    if(!list.length)h+='<tr><td>'+esc(((M.rounds||{})[r]||{}).title||r+'회')+'</td><td colspan="4">기록 없음</td><td><a class="btn ghost" target="_blank" href="mock.html?set='+SET+'&round='+r+'&name='+encodeURIComponent(sel)+'&preview=1">미리보기</a></td></tr>';
+    list.forEach((x,i)=>{const c=calc(String(x.ox).split(''));h+='<tr><td>'+esc(((M.rounds||{})[r]||{}).title||r+'회')+'</td><td><b>'+x.slot+'차</b></td><td>'+c.score+'</td><td>'+c.wrong+'</td><td>'+esc(x.source||'')+'</td><td><div class="admin-actions"><a class="btn ghost" target="_blank" href="mock.html?set='+SET+'&round='+r+'&name='+encodeURIComponent(sel)+'&preview=1">미리보기</a><button class="btn bad" onclick="resetAttempt(\''+esc(sel)+'\',\''+r+'\','+x.slot+')">'+x.slot+'차 삭제</button>'+(i===0?'<button class="btn gray" onclick="resetRound(\''+esc(sel)+'\',\''+r+'\')">회차 전체</button>':'')+'</div></td></tr>'});
+  });
+  h+='</tbody></table></div>';document.getElementById('main').innerHTML=h;
+}
+async function resetAttempt(student,r,slot){
+  if(!confirm(student+' 학생의 '+(((M.rounds||{})[r]||{}).title||r+'회')+' '+slot+'차 기록만 삭제할까요?'))return;
+  try{if(!await deleteStored(student,r,slot))throw 0;toast(slot+'차 기록을 삭제했습니다.');renderTeacher()}catch(e){toast('삭제에 실패했습니다.')}
+}
+async function resetRound(student,r){
+  if(!confirm(student+' 학생의 '+(((M.rounds||{})[r]||{}).title||r+'회')+' 1~3차 기록을 모두 초기화할까요?'))return;
+  try{for(let slot=1;slot<=3;slot++)await deleteStored(student,r,slot);toast('회차 전체를 초기화했습니다.');renderTeacher()}catch(e){toast('초기화에 실패했습니다.')}
+}
+(function boot(){
+  const n=(P.get('name')||localStorage.getItem('gfield_student')||'').trim();
+  if(n&&n.toLowerCase()==='docssam'){me='원장';mode='teacher';openApp();renderTeacher()}
+  else if(n&&(D.students||[]).includes(n)){me=n;mode=PREVIEW?'preview':'parent';localStorage.setItem('gfield_student',n);openApp();startParent()}
+  document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')enter()});
+})();
 </script>
-</body></html>
+</body>
+</html>
