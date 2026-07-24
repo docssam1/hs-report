@@ -1,0 +1,2 @@
+DELETE_HTTP=401
+BODY={"code":"42501","details":null,"hint":"Grant the required privileges to the current role with: GRANT DELETE ON public.mock_results TO anon;","message":"permission denied for table mock_results"}
