@@ -24,7 +24,9 @@ function allowed(name){
   if(name.toLowerCase()==='docssam')return true;
   if(!(D.students||[]).includes(name))return false;
   if(SET!=='hw')return true;
-  if((((D.archiveAccess||{})['활용 모의고사'])||[]).includes(name))return true;
+  const online=((D.studentTypes||{})[name])==='online';
+  if(online&&((((D.archiveAccess||{})['활용 모의고사'])||[]).includes(name)))return true;
+  if(online)return false;
   if(!((D.specialStudents||[]).includes(name)))return false;
   const tbs=(((D.content||{})['special-summer']||{}).textbooks)||[];
   return tbs.some(t=>{const m=String(t.title||'').match(/활용\s*모의고사\s*(\d+)\s*회/);return m&&+m[1]===RD&&Array.isArray(t.access)&&t.access.includes(name)});
