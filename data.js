@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 24. 오후 1:32:36
+ * 생성: 2026. 7. 24. 오후 2:51:39
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -362,6 +362,10 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784858858811_qdaf_________________2____.pdf",
           "folder": "tb_mryavtk6",
           "pages": 6
+        },
+        {
+          "title": "모의고사 오답 입력방법",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784872289382_nf7a_____________.pdf"
         }
       ]
     },
