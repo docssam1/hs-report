@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 23. 오후 5:08:33
+ * 생성: 2026. 7. 24. 오전 11:10:24
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -308,7 +308,7 @@ window.GFIELD_DATA = {
       ]
     },
     "jul-w2": {
-      "notice": "[[hlp:문제푸는 방법 찾기(2) DT]]\n   학습영상) https://youtu.be/vNIxPPswm4c\n\n지금까지 공부한  THINKING BASIC 3는 왕수학 올림피아드3, 왕수학 응용 4의 황소 관련 중요 개념이었습니다.\n금주부터는 실전 훈련으로 Thinking Core — 생각하는 황소 대비 심화 개념을 진행합니다.\n이 교재는 모의고사 전 진행하는 핵심 심화 개념 교재로 개념 학습 후 관련 유형에 대한 SEMI 테스트로 시험에 적응 훈련을 진행합니다.\n\nCH1 - NUMBERS(1)\n학습영상) https://youtu.be/r6NRdZudWks\n• 배수 판정법\n• 소인수분해의 이용\n\n",
+      "notice": "[[hlp:문제푸는 방법 찾기(2) DT]]\n   학습영상) https://youtu.be/vNIxPPswm4c\n\n지금까지 공부한  THINKING BASIC 3는 왕수학 올림피아드3, 왕수학 응용 4의 황소 관련 중요 개념이었습니다.\n금주부터는 실전 훈련으로 Thinking Core — 생각하는 황소 대비 심화 개념을 진행합니다.\n이 교재는 모의고사 전 진행하는 핵심 심화 개념 교재로 개념 학습 후 관련 유형에 대한 SEMI 테스트로 시험에 적응 훈련을 진행합니다.\n\nTHINKING CORE CH1 - NUMBERS(1)\n학습영상) https://youtu.be/r6NRdZudWks\n• 배수 판정법\n• 소인수분해의 이용\n\n",
       "homework": "[[hlp:문제푸는 방법 찾기(2) DT]] 다시 풀기\n   https://youtu.be/vNIxPPswm4c\n\n[[hlp:황소 대비 모의고사 중급 1회]]\n학습영상) https://youtu.be/_DDz_JTccso\n앞으로 있을 실전 모의고사에 익숙해지는 훈련입니다. 조건을 조금 줄인 시험지이며, 너무 심화 문제까지 완벽히 이해할 필요는 없습니다(100점이 목표가 아닙니다).\n단, 반드시 시험을 본 후 영상을 보고 이해하고, 여러 번 봐도 이해되지 않는(실수가 아닌) 유형을 질문하도록 해주세요.\n수업 시간에 중요 유형 설명 후 유사 문제로 테스트를 진행합니다.\n\n선택)  THINKING CORE CH1 배운 부분 공부하기",
       "textbooks": [
         {
@@ -332,20 +332,36 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784333982911_5uve_________________1_______.pdf",
           "folder": "tb_mrpmdvy0",
           "pages": 2
+        },
+        {
+          "title": "초등과정 선발 대비 모의고사 1회 중급 손글씨 답안",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784858930016_k7z5_________________1_______.pdf"
         }
       ]
     },
     "jul-w3": {
-      "notice": "",
-      "homework": "",
+      "notice": "과제로 해온 중급 모의고사를 중요 문제와 질문을 천천히 다시 한번 설명한 후 유사문제 테스트를 진행하고 있습니다. 질문 시에는 최대한 아이들에 맞춰 다양한 풀이로 이해 시키고\n있습니다. 가장 중요한 것은 칠판에 집중하며 같이 풀이를 하며 내가 알고있는지 모르는지 판단하는 연습인 것 같습니다. 개념이 부족하기 보다는 지금까지 그냥 알고 있다 생각하고 넘어간 문제들이 많았던 것 같습니다. 지금까지 배웠던 사고력 내용을 이와 같이 정리 한다면 파이널 시에는 조금 더 개녀이 정리 될고 시험을 볼수 있는 힘도 생길겁니다.\n\n[[hlb:1. 초등 선발대비 중급 모의고사 1회 중요문제 및 질문 풀이]]\n      학습영상)https://youtu.be/fSDUh7mphZE\n\n    [[hl:유형별 영상]]\n\n      #1 직사각형에서 특정 도형을 포함하거나 포함하지 않는 도형의 개수\n               https://youtu.be/fSDUh7mphZE?si=jpLgBBUlG-189Lsw&t=61\n      #5  배수 판정법을 이용한 성질을 이용한 수의 개수 (기출문제)\n                 https://youtu.be/fSDUh7mphZE?si=ZPRYsNhyQKMm-WLU&t=125\n    #6 고장난 시계\n           https://youtu.be/fSDUh7mphZE?si=r-l4p42a7Lxb14y1&t=230\n     #7 달력에 관한 문제\n          https://youtu.be/fSDUh7mphZE?si=SzyH2wQo6eK3thbj&t=394\n    #11 몫과 나머지의 성질(검산식으로 쓰기) [[red: [기출문제]]]\n           https://youtu.be/fSDUh7mphZE?si=wofSbysRFgjH4OgQ&t=661\n    #13 연산에서의 짝수와 홀수의 성질[[red: [기출문제]]]\n           https://youtu.be/fSDUh7mphZE?si=TITUYF4eYJo4i6nP&t=763\n    #15 묶음 수열(군수열) \n          https://youtu.be/fSDUh7mphZE?si=c2lmwvSavaSod4B7&t=885\n   #20 반복마디(주기)가 있는 수 배열표 [[red: [기출문제]]]\n        https://youtu.be/fSDUh7mphZE?si=RMA-r75hcz4lIBZo&t=1117\n #21 덧셈,뺄셈 넣어 올바른 식 만들기\n       https://youtu.be/fSDUh7mphZE?si=Sz9d6TPUSw5N9G4u&t=1207\n#23 거울에 비친 디지털 수 [[red: [기출문제]]]\n      https://youtu.be/fSDUh7mphZE?si=B6SOPLckAhcgQIUV&t=1426\n#29 재치있게 계산하기  [[red: [기출문제]]]\n    https://youtu.be/fSDUh7mphZE?si=YfNxVa02UsIQEI0X&t=1542\n  \n  \n[[hlb:2. 초등 선발대비 중급 모의고사 1회 리뷰 테스트]]\n\n     학습영상 ) https://youtu.be/C13i84JC520        \n\n\n[[hlb:THINKING CORE CH1 - NUMBERS(2)]]\n학습영상)  https://youtu.be/DXyQQgBKtSg?si=BAxl8OwLV08-qlNp&t=1161\n    • 소인수분해를 이용한 곱의 성질 \n             -> 소인수분해는 최후의 수단으로 사용하자는 겁니다. 이 유형의 수의 감을 높이는 유형입니다.\n   \n    * 재치있게 계산하기           \n                ",
+      "homework": "초등과정 대비 실전 모의고사 2회 중급 풀고 답 입력하기\n",
       "textbooks": [
         {
           "title": "중급 모의고사 2회 · 답안 및 교재 연결표",
           "url": "https://hs.gfieldacademy.net/answer.html?round=2"
         },
         {
-          "title": "",
-          "url": ""
+          "title": "초등과정 대비 실전 모의고사 1회 중급 리뷰",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784333982911_5uve_________________1_______.pdf",
+          "folder": "tb_mry9ga7q",
+          "pages": 2
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 2회 중급 손글씨 답안",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784856816406_94n0_________________2___________.pdf"
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 2회 중급",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784858858811_qdaf_________________2____.pdf",
+          "folder": "tb_mryavtk6",
+          "pages": 6
         }
       ]
     },
@@ -378,7 +394,8 @@ window.GFIELD_DATA = {
           "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=1",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ]
         },
         {
@@ -386,7 +403,8 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%201%ED%9A%8C.pdf",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ],
           "folder": "tb_mrtzu34y",
           "pages": 6
