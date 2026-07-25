@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 25. 오후 3:00:45
+ * 생성: 2026. 7. 25. 오후 3:10:57
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -677,7 +677,8 @@ window.GFIELD_DATA = {
       "jul-w1",
       "jul-w2",
       "jun-w4",
-      "jul-w3"
+      "jul-w3",
+      "jul-w4"
     ],
     "김현우": [
       "may-w34",
@@ -686,7 +687,8 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3"
+      "jul-w3",
+      "jul-w4"
     ],
     "김유준": [
       "may-w34",
@@ -704,7 +706,8 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3"
+      "jul-w3",
+      "jul-w4"
     ],
     "정지안": [
       "jul-w1",
@@ -774,9 +777,7 @@ window.GFIELD_DATA = {
     ],
     "김시후": [
       "jul-w1",
-      "jul-w2",
-      "jun-w4",
-      "jul-w3"
+      "jun-w4"
     ],
     "노관호": [
       "may-w34",
@@ -825,7 +826,8 @@ window.GFIELD_DATA = {
     ],
     "유호연": [
       "jul-w2",
-      "jul-w3"
+      "jul-w3",
+      "jul-w4"
     ],
     "김서율": [
       "may-w34",
@@ -1178,7 +1180,9 @@ window.GFIELD_DATA = {
       "video": "https://youtu.be/nwCH6H9rGK4",
       "cover": "",
       "date": "2026-07-25",
-      "links": []
+      "links": [],
+      "imgdir": "bk_mrzymgt0",
+      "pages": 23
     }
   ],
   "pins": {},
