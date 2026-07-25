@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 25. 오후 1:56:56
+ * 생성: 2026. 7. 25. 오후 2:51:15
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1143,6 +1143,22 @@ window.GFIELD_DATA = {
           "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=9"
         }
       ]
+    },
+    {
+      "folder": "보충학습",
+      "title": "고장난 시계",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1784958521556_120e__________.pdf",
+      "video": "",
+      "cover": "",
+      "date": "2026-07-25",
+      "links": [
+        {
+          "label": "고장난 시계 답안",
+          "url": "https://naver.me/FkL9vul6"
+        }
+      ],
+      "imgdir": "bk_mrzy7zn9",
+      "pages": 22
     }
   ],
   "pins": {},
