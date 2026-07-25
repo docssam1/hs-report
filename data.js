@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 25. 오후 2:51:15
+ * 생성: 2026. 7. 25. 오후 2:54:44
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1159,6 +1159,17 @@ window.GFIELD_DATA = {
       ],
       "imgdir": "bk_mrzy7zn9",
       "pages": 22
+    },
+    {
+      "folder": "약점 유형",
+      "title": "3% 1과정 30장 묶음 수열",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1784958857341_xzkj_3__1___30_______.pdf",
+      "video": "https://youtu.be/Mrd5nwR6GBQ",
+      "cover": "",
+      "date": "2026-07-25",
+      "links": [],
+      "imgdir": "bk_mrzyf29h",
+      "pages": 2
     }
   ],
   "pins": {},
