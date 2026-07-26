@@ -1,14 +1,14 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 26. 오후 9:05:31
+ * 생성: 2026. 7. 26. 오후 9:06:39
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
     "academy": "지필드 영재교육",
     "title": "생각하는 황소 대비 아카이브",
     "year": "2026 하반기",
-    "currentWeekId": "jul-w3",
+    "currentWeekId": "jul-w4",
     "examDate": "2026-11-01",
     "examLabel": "생각하는 황소 입학시험",
     "lat": 37.4996,
@@ -731,8 +731,7 @@ window.GFIELD_DATA = {
       "jul-w1",
       "jul-w2",
       "jun-w4",
-      "jul-w3",
-      "jul-w4"
+      "jul-w3"
     ],
     "안채연": [
       "may-w34",
@@ -759,8 +758,7 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3",
-      "jul-w4"
+      "jul-w3"
     ],
     "김서연": [
       "may-w34",
@@ -769,8 +767,7 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3",
-      "jul-w4"
+      "jul-w3"
     ],
     "김명서": [
       "may-w34",
@@ -779,8 +776,7 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3",
-      "jul-w4"
+      "jul-w3"
     ],
     "임유준": [
       "may-w34",
@@ -789,15 +785,13 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w2",
       "jul-w1",
-      "jul-w3",
-      "jul-w4"
+      "jul-w3"
     ],
     "안태하": [
       "jul-w1",
       "jul-w2",
       "jun-w4",
-      "jul-w3",
-      "jul-w4"
+      "jul-w3"
     ],
     "김시후": [
       "jul-w1",
@@ -833,8 +827,7 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3",
-      "jul-w4"
+      "jul-w3"
     ],
     "DEMO": [
       "jul-w2",
