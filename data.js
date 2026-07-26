@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 26. 오후 9:06:39
+ * 생성: 2026. 7. 26. 오후 9:30:43
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -715,7 +715,8 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3"
+      "jul-w3",
+      "jul-w4"
     ],
     "이하린": [
       "may-w34",
@@ -731,7 +732,8 @@ window.GFIELD_DATA = {
       "jul-w1",
       "jul-w2",
       "jun-w4",
-      "jul-w3"
+      "jul-w3",
+      "jul-w4"
     ],
     "안채연": [
       "may-w34",
@@ -740,7 +742,8 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3"
+      "jul-w3",
+      "jul-w4"
     ],
     "박서진": [
       "may-w34",
@@ -758,7 +761,8 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3"
+      "jul-w3",
+      "jul-w4"
     ],
     "김서연": [
       "may-w34",
@@ -767,7 +771,8 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3"
+      "jul-w3",
+      "jul-w4"
     ],
     "김명서": [
       "may-w34",
@@ -776,7 +781,8 @@ window.GFIELD_DATA = {
       "jun-w4",
       "jul-w1",
       "jul-w2",
-      "jul-w3"
+      "jul-w3",
+      "jul-w4"
     ],
     "임유준": [
       "may-w34",
