@@ -519,12 +519,13 @@
     if(!isDemo) showCheer(given);
   }
   function logout(){
+    const keep=currentStudent&&!isDemo?currentStudent:'';
     currentStudent=null; isDemo=false; reportUnlocked=false;
-    try{ localStorage.removeItem('gfield_student'); }catch(e){}
+    /* 로그인 정보는 유지 — 다음 방문 시 이름 입력 없이 바로 입장 */
     if(briefTimer){ clearInterval(briefTimer); briefTimer=null; }
     document.getElementById('dashboard').classList.add('hidden');
     document.getElementById('login').classList.remove('hidden');
-    document.getElementById('name-input').value='';
+    document.getElementById('name-input').value=keep;
   }
 
   function nav(view){
@@ -1103,8 +1104,17 @@
   let toastTimer=null;
   function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2200); }
 
-  (function init(){ if(D&&D.meta){ document.getElementById('login-title').textContent=D.meta.title; document.getElementById('brand-sub').textContent=D.meta.title; document.title=`${D.meta.academy} | ${D.meta.title}`; } })();
+  (function init(){ if(D&&D.meta){ document.getElementById('login-title').textContent=D.meta.title; document.getElementById('brand-sub').textContent=D.meta.title; document.title=`${D.meta.academy} | ${D.meta.title}`; }
+    /* 저장된 학생 이름이 있으면 자동 입장 (나가기 후 재방문 포함) */
+    try{
+      const saved=(localStorage.getItem('gfield_student')||'').trim();
+      if(saved && saved.toLowerCase()!=='docssam' && (D.students||[]).includes(saved)){
+        document.getElementById('name-input').value=saved;
+        doLogin();
+      }
+    }catch(e){}
+  })();
 </script>
-<script src="index-enhancements.js?v=20260724"></script>
+<script src="index-enhancements.js?v=20260727a"></script>
 </body>
 </html>
