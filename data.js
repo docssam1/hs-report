@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 27. 오후 7:23:42
+ * 생성: 2026. 7. 27. 오후 7:27:04
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1226,6 +1226,28 @@ window.GFIELD_DATA = {
       "links": [],
       "imgdir": "bk_ms32wrw1",
       "pages": 6
+    },
+    {
+      "folder": "약점 유형",
+      "title": "요일에 관한 문제",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1785147921338_9cba_____________.pdf",
+      "video": "https://youtu.be/6_yxsP6_0XM?si=KlyTmQRgL4ub80lg&t=988",
+      "cover": "",
+      "date": "2026-07-27",
+      "links": [],
+      "imgdir": "bk_ms32zd7s",
+      "pages": 3
+    },
+    {
+      "folder": "보충학습",
+      "title": "요일에 관한 문제(2)",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1785147996139_ag80_11______________.pdf",
+      "video": "https://youtu.be/uGFRQfbXJ2U",
+      "cover": "",
+      "date": "2026-07-27",
+      "links": [],
+      "imgdir": "bk_ms330yqs",
+      "pages": 2
     }
   ],
   "pins": {},
