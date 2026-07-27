@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 27. 오후 5:35:55
+ * 생성: 2026. 7. 27. 오후 7:21:33
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -380,8 +380,8 @@ window.GFIELD_DATA = {
       ]
     },
     "jul-w4": {
-      "notice": "1. 초등 선발대비 중급 모의고사 2회 중요문제 및 질문 풀이\nhttps://youtu.be/CIxkEfGMVQw\n    #3 쌓기나무 구멍 뚷기\n              바탕 그림을 그리는 귀찮음을 이겨내고  좌표만  알면 쉽게 풉니다.\n              https://youtu.be/CIxkEfGMVQw?si=iV5vB4yGxrEW3zQJ&t=22\n     #4 소인수분해를 이용한 두 수 \n               https://youtu.be/CIxkEfGMVQw?si=XGkTDqn96t8mVZhD&t=194\n    #5 정사각형이 아닌 직사각형의 개수\n               https://youtu.be/CIxkEfGMVQw?si=9pWS3EhKa1c9h5lx&t=277\n    #6  같은 수의 곱의 일의 자리\n              https://youtu.be/CIxkEfGMVQw?si=09PgnGLweMTIp3QY&t=451\n    #7 선으로 나뉜 교점과 영역의 개수\n                https://youtu.be/CIxkEfGMVQw?si=HCcxFTmveW2t9vVC&t=586\n    #10 겉면을 제외한 쌓기나무의 개수\n               https://youtu.be/CIxkEfGMVQw?si=3UZRo6KAd698KLhX&t=676\n    # 13 만들수 있는 동전의 개수\n                https://youtu.be/CIxkEfGMVQw?si=yjAfcamqk7FMnbYn&t=721\n    #14 시침과 분침이 직각의 횟수\n             https://youtu.be/CIxkEfGMVQw?si=Yyg1YHtBjqtFgzHn&t=844\n    #16 곱의 최대 최소\n            https://youtu.be/CIxkEfGMVQw?si=cR_vshVUxxR1aqs1&t=929\n\n\n",
-      "homework": "",
+      "notice": "1. [[hl:초등 선발대비 중급 모의고사 2회 중요문제 및 질문 풀이]]\nhttps://youtu.be/CIxkEfGMVQw\n    #3 쌓기나무 구멍 뚷기\n              바탕 그림을 그리는 귀찮음을 이겨내고  좌표만  알면 쉽게 풉니다.\n              https://youtu.be/CIxkEfGMVQw?si=iV5vB4yGxrEW3zQJ&t=22\n     #4 소인수분해를 이용한 두 수 \n               https://youtu.be/CIxkEfGMVQw?si=XGkTDqn96t8mVZhD&t=194\n    #5 정사각형이 아닌 직사각형의 개수\n               https://youtu.be/CIxkEfGMVQw?si=9pWS3EhKa1c9h5lx&t=277\n    #6  같은 수의 곱의 일의 자리\n              https://youtu.be/CIxkEfGMVQw?si=09PgnGLweMTIp3QY&t=451\n    #7 선으로 나뉜 교점과 영역의 개수\n                https://youtu.be/CIxkEfGMVQw?si=HCcxFTmveW2t9vVC&t=586\n    #10 겉면을 제외한 쌓기나무의 개수\n               https://youtu.be/CIxkEfGMVQw?si=3UZRo6KAd698KLhX&t=676\n    # 13 만들수 있는 동전의 개수\n                https://youtu.be/CIxkEfGMVQw?si=yjAfcamqk7FMnbYn&t=721\n    #14 시침과 분침이 직각의 횟수\n             https://youtu.be/CIxkEfGMVQw?si=Yyg1YHtBjqtFgzHn&t=844\n    #16 곱의 최대 최소\n            https://youtu.be/CIxkEfGMVQw?si=cR_vshVUxxR1aqs1&t=929\n    #18 수와 숫자의 개수의 활용\n             https://youtu.be/CIxkEfGMVQw?si=He6vzg13iIZM4XYD&t=1037\n    #20 수 배열표에서의 규칙\n             https://youtu.be/CIxkEfGMVQw?si=GD3LjQYJnXJ62heY&t=1391\n    #30 일방통행에서의 최단거리\n             https://youtu.be/CIxkEfGMVQw?si=TKxeEBnXI2fnA3-W&t=1955\n\n2.  [[hl:초등과정 대비 실전 모의고사 2회 중급 리뷰 테스트]]\n     https://youtu.be/Ax0R3oKGz50\n\n\n",
+      "homework": "* 복습하기\n* 초등과정 대비 실전 모의고사 3회 중급\n     https://youtu.be/U5Kk7reqz4Q",
       "textbooks": [
         {
           "title": "초등과정 대비 실전 모의고사 3회 중급",
