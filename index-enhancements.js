@@ -38,31 +38,43 @@
   function esc2(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
   function currentNode(){return (D.nodes||[]).find(n=>n.id===D.meta.currentWeekId)||null;}
 
-  /* 활용 모의고사 전체 책장은 온라인 외부학생 전용입니다.
-     재원생은 로드맵 특강에서 승인된 회차만 이용합니다. */
-  if(typeof canSeeFolder==='function'){
-    const originalCanSeeFolder=canSeeFolder;
-    canSeeFolder=function(folder){
-      if(folder==='활용 모의고사'&&((D.studentTypes||{})[currentStudent])!=='online')return false;
-      return originalCanSeeFolder(folder);
-    };
-  }
+  /* 활용 모의고사 책장: 관리자 콘솔의 폴더 권한(archiveAccess) 체크를 그대로 따른다.
+     온라인 외부생·재원생 구분 없이, 체크된 학생에게만 보인다. */
 
   function dayGreeting(){
     const h=new Date().getHours();
-    if(h<6)return'늦은 시간이야. 오늘은 충분히 쉬고 내일 다시 만나자';
-    if(h<11)return'좋은 아침! 머리가 맑을 때 정확하게 한 문제씩 시작하자';
-    if(h<17)return'반가워! 오늘 배울 내용을 차분하게 정복해 보자';
-    if(h<21)return'오늘도 수고했어. 마지막까지 서두르지 말고 정확하게 가자';
-    return'오늘 하루도 고생 많았어. 짧게 복습하고 푹 쉬자';
+    if(h<6)return'아직 깜깜한 시간이야. 푹 자고 내일 만나자';
+    if(h<11)return'좋은 아침이야! 머리가 제일 맑을 때야';
+    if(h<17)return'오늘도 만나서 반가워!';
+    if(h<21)return'저녁 먹었어? 오늘의 마지막 한 문제까지 힘내자';
+    return'오늘 하루 열심히 보냈구나. 조금만 하고 푹 쉬자';
+  }
+  function seasonLine(){
+    const m=new Date().getMonth()+1;
+    if(m===7||m===8)return'여름방학은 실력이 쑥 크는 시간이야';
+    if(m===12||m===1)return'겨울방학은 실력을 단단히 다지는 시간이야';
+    return'';
   }
   function weatherLine(w){
-    if(!w||!w.current)return'날씨와 상관없이 마음은 가볍게, 문제는 꼼꼼하게!';
+    const season=seasonLine();
+    if(!w||!w.current)return season?season+'. 오늘도 한 문제씩 차근차근!':'오늘도 한 문제씩 차근차근 해보자!';
     const t=Math.round(w.current.temperature_2m),c=Number(w.current.weather_code);
-    if([51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(c))return`지금 ${t}도, 비 소식이 있어. 우산 챙기고 차분하게 집중하자`;
-    if(t>=30)return`지금 ${t}도야. 물 한 모금 마시고 시원하게 시작하자`;
-    if(t<=5)return`지금 ${t}도로 쌀쌀해. 손을 따뜻하게 하고 시작하자`;
-    return`지금 ${t}도야. 편안한 마음으로 오늘의 한 칸을 채워 보자`;
+    const rainy=[51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(c);
+    if(rainy)return`밖에 비가 와(지금 ${t}도). 비 오는 날은 집중이 잘 되는 날이야. 우산 꼭 챙기고!`;
+    if(t>=33)return`오늘 ${t}도, 정말 덥다! 시원한 물 옆에 두고 천천히 해보자`;
+    if(t>=28)return`오늘 ${t}도로 더운 날이야. 시원한 곳에서 한 문제씩 해보자`;
+    if(t<=0)return`오늘 ${t}도, 꽁꽁 어는 날씨야! 손 따뜻하게 하고 시작하자`;
+    if(t<=8)return`오늘 ${t}도로 쌀쌀해. 따뜻하게 입고 공부하자`;
+    return season?`오늘 ${t}도, 공부하기 딱 좋은 날씨야. ${season}!`:`오늘 ${t}도, 공부하기 딱 좋은 날씨야!`;
+  }
+  function weatherLineParent(w){
+    if(!w||!w.current)return'오늘도 아이의 한 걸음을 응원해 주세요.';
+    const t=Math.round(w.current.temperature_2m),c=Number(w.current.weather_code);
+    const rainy=[51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(c);
+    if(rainy)return`오늘은 비 소식이 있습니다(현재 ${t}도). 등하원 시 우산을 챙겨 주세요.`;
+    if(t>=30)return`현재 ${t}도로 무더운 날씨입니다. 아이가 시원한 환경에서 학습할 수 있도록 살펴 주세요.`;
+    if(t<=5)return`현재 ${t}도로 쌀쌀합니다. 따뜻하게 입혀 보내 주세요.`;
+    return`현재 ${t}도입니다. 오늘도 아이의 한 걸음을 응원해 주세요.`;
   }
   function roadmapBubble(node){
     const w=window.GFIELD_WEATHER;
@@ -94,8 +106,8 @@
       const given=givenName(currentStudent),node=currentNode(),mode=audienceMode();
       const w=window.GFIELD_WEATHER;
       const detail=mode==='parent'
-        ? `${esc2(given)} 학생은 현재 <b>${esc2(node?node.title:'오늘의 학습')}</b> 구간을 지나고 있습니다. ${esc2(weatherLine(w))}`
-        : `<b>${esc2(given)}${esc2(josa(given))}</b>, ${esc2(dayGreeting())}. 오늘의 위치는 <b>${esc2(node?node.title:'학습 준비')}</b>야. ${esc2(weatherLine(w))}`;
+        ? `${esc2(given)} 학생은 현재 <b>${esc2(node?node.title:'오늘의 학습')}</b> 구간을 지나고 있습니다. ${esc2(weatherLineParent(w))}`
+        : `<b>${esc2(given)}${esc2(josa(given))}</b>, ${esc2(dayGreeting())}. 지금 우리는 <b>${esc2(node?node.title:'학습 준비')}</b>를 하고 있어. ${esc2(weatherLine(w))}`;
       mood.innerHTML=(mode==='parent'?'<b>💛 DOCSSAM의 오늘 안내</b>':'<b>💛 DOCSSAM이 보내는 오늘의 인사</b>')+`<span class="brief-personal">${detail}</span>`;
       if(typeof renderTimeline==='function')renderTimeline();
     };
@@ -105,7 +117,7 @@
     showCheer=function(given){
       const el=document.getElementById('cheer'),t=document.getElementById('cheer-text'),node=currentNode();
       if(!el||!t)return;
-      const main=`${esc2(given)}${esc2(josa(given))}, 반가워!<br>${esc2(dayGreeting())}`;
+      const main=`${esc2(given)}${esc2(josa(given))}, 어서 와!<br>${esc2(dayGreeting())}`;
       const sub=`${esc2(node?node.title:'오늘의 학습')} · ${esc2(weatherLine(window.GFIELD_WEATHER))}`;
       t.innerHTML=`${main}<small>${sub}</small>`;
       el.classList.remove('hidden');
