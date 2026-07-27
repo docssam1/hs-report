@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 27. 오후 7:21:33
+ * 생성: 2026. 7. 27. 오후 7:23:42
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1215,6 +1215,17 @@ window.GFIELD_DATA = {
       "links": [],
       "imgdir": "bk_mrzymgt0",
       "pages": 23
+    },
+    {
+      "folder": "약점 유형",
+      "title": "필즈 중급하 교점과 영역의 개수",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1785147799253_3qi4__________________.pdf",
+      "video": "https://youtu.be/9hhKQIU0QE8",
+      "cover": "",
+      "date": "2026-07-27",
+      "links": [],
+      "imgdir": "bk_ms32wrw1",
+      "pages": 6
     }
   ],
   "pins": {},
