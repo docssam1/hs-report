@@ -85,7 +85,7 @@ window.GFIELD_DATA = {
       "date": "7월 4주차",
       "title": "THINKING CORE CH2",
       "desc": "Algebra (1) + 중급 모의고사 3회",
-      "focus": "주차별 출석생 두 영상 동시 권한"
+      "focus": ""
     },
     {
       "id": "jul-w5",
