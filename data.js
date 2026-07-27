@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 26. 오후 9:37:03
+ * 생성: 2026. 7. 27. 오후 12:21:07
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -444,7 +444,9 @@ window.GFIELD_DATA = {
           "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=2",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우",
+            "유호연"
           ]
         },
         {
@@ -452,7 +454,9 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%202%ED%9A%8C.pdf",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우",
+            "유호연"
           ],
           "folder": "tb_mrtzugei",
           "pages": 6
@@ -947,8 +951,8 @@ window.GFIELD_DATA = {
     ],
     "활용 모의고사": [
       "김소라",
-      "노관호",
-      "김현우"
+      "김현우",
+      "노관호"
     ]
   },
   "books": [
