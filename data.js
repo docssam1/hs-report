@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 28. 오후 3:45:48
+ * 생성: 2026. 7. 28. 오후 3:47:27
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1259,6 +1259,17 @@ window.GFIELD_DATA = {
       "links": [],
       "imgdir": "bk_ms4ajjzu",
       "pages": 3
+    },
+    {
+      "folder": "약점 유형",
+      "title": "3% 올림피아드 1과정 CH2 수와 숫자의 개수 개념 및 유제",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1785221231124_aqo1_02_______________1.pdf",
+      "video": "https://youtu.be/qFh5q6OInok",
+      "cover": "",
+      "date": "2026-07-28",
+      "links": [],
+      "imgdir": "bk_ms4amncc",
+      "pages": 2
     }
   ],
   "pins": {},
