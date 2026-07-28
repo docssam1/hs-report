@@ -138,90 +138,90 @@ window.GFIELD_DATA = {
       "focus": "모의고사 집중 훈련 체제 전환"
     },
     {
+      "id": "div-final",
+      "type": "divider",
+      "label": "Phase 3 · 파이널 · 최종 실전 과정 진입"
+    },
+    {
       "id": "aug-w4",
       "type": "week",
-      "track": "mock",
+      "track": "final",
       "date": "8월 4주차",
-      "title": "중급 모의고사 7회",
-      "desc": "실전 풀이 및 오답 리뷰",
-      "focus": "약점 유형 변형 문제 풀이"
+      "title": "파이널 실전 모의고사 1회",
+      "desc": "성대 선행 문제로 조건 연습 · 실전 전 단계",
+      "focus": "파이널 과정 시작 · 누적 진단지 제공 시작"
     },
     {
       "id": "sep-w1",
       "type": "week",
-      "track": "mock",
-      "date": "9월 1주차",
-      "title": "중급 모의고사 8회",
-      "desc": "실전 풀이 및 오답 리뷰",
-      "focus": "중급 단계 최종 마무리 · 분석 리포트"
-    },
-    {
-      "id": "div-final",
-      "type": "divider",
-      "label": "Phase 3 · 파이널 과정 진입 (실전 리허설)"
+      "track": "final",
+      "date": "8월 5주차",
+      "title": "파이널 실전 모의고사 2회",
+      "desc": "성대 선행 문제로 조건 연습 · 실전 전 단계",
+      "focus": "조건 해석 훈련 · 누적 진단 반영"
     },
     {
       "id": "sep-14",
       "type": "week",
       "track": "final",
-      "date": "9월 14일 주차",
-      "title": "파이널 실전 모의고사 1회",
-      "desc": "신유형 지문 분석",
-      "focus": "파이널 과정 OT"
+      "date": "9월 1주차",
+      "title": "파이널 실전 모의고사 3회",
+      "desc": "성대 선행 문제로 조건 연습 · 실전 전 단계",
+      "focus": "OMR 마킹 훈련 도입"
     },
     {
       "id": "sep-21",
       "type": "week",
       "track": "final",
-      "date": "9월 21일 주차",
-      "title": "파이널 실전 모의고사 2회",
-      "desc": "영재성 검사 대비",
-      "focus": "OMR 마킹 훈련 도입"
+      "date": "9월 2주차",
+      "title": "파이널 실전 모의고사 4회",
+      "desc": "성대 선행 문제로 조건 연습 · 실전 전 단계",
+      "focus": "파이널 단계 마무리 · 중간 분석 리포트"
     },
     {
       "id": "sep-28",
       "type": "week",
       "track": "final",
-      "date": "9월 28일 주차",
-      "title": "파이널 실전 모의고사 3회",
-      "desc": "고난도 킬러 문항",
-      "focus": "3단계 가정 학습 수행률 점검"
+      "date": "9월 3주차",
+      "title": "최종 실전 모의고사 1회",
+      "desc": "실수 유발 조건 · 멘사 퍼즐/영재성 검사 유형",
+      "focus": "낯선 유형 적응 훈련 시작"
     },
     {
       "id": "oct-5",
       "type": "week",
       "track": "final",
-      "date": "10월 5일 주차",
-      "title": "파이널 실전 모의고사 4회",
-      "desc": "오답 변형 무한 반복",
-      "focus": "OMR 마킹 및 80분 시간 배분 전략"
+      "date": "9월 4주차",
+      "title": "최종 실전 모의고사 2회",
+      "desc": "실수 유발 조건 · 멘사 퍼즐/영재성 검사 유형",
+      "focus": "80분 시간 배분 전략"
     },
     {
       "id": "oct-12",
       "type": "week",
       "track": "final",
-      "date": "10월 12일 주차",
-      "title": "파이널 실전 모의고사 5회",
-      "desc": "실전 훈련",
-      "focus": "중간 성적 분석 리포트 배부"
+      "date": "10월 1주차",
+      "title": "최종 실전 모의고사 3회",
+      "desc": "실수 유발 조건 · 멘사 퍼즐/영재성 검사 유형",
+      "focus": "목표 레벨(경시/심화/실력/일품) 기준선 제시"
     },
     {
       "id": "oct-19",
       "type": "week",
       "track": "final",
-      "date": "10월 19일 주차",
-      "title": "파이널 실전 모의고사 6회",
-      "desc": "실전 시간 배분 훈련",
-      "focus": "목표 레벨(경시/심화/실력/일품) 기준선 제시"
+      "date": "10월 2주차",
+      "title": "최종 실전 모의고사 4회",
+      "desc": "실수 유발 조건 · 멘사 퍼즐/영재성 검사 유형",
+      "focus": "실전 리허설 · 누적 성적 최종 확인"
     },
     {
       "id": "oct-26",
       "type": "week",
       "track": "final",
-      "date": "10월 26일 주차",
-      "title": "파이널 실전 모의고사 7회 (최종 리허설)",
-      "desc": "실전 대비 총정리",
-      "focus": "종강 및 학부모 최종 상담"
+      "date": "10월 3·4주차",
+      "title": "최종 정리 및 학부모 상담",
+      "desc": "누적 진단 기반 약점 총정리",
+      "focus": "종강 · 시험 직전 컨디션 조절"
     },
     {
       "id": "goal-exam",
@@ -616,58 +616,39 @@ window.GFIELD_DATA = {
     },
     "aug-w4": {
       "notice": "",
-      "homework": "",
-      "textbooks": [
-        {
-          "title": "중급 모의고사 7회 · 답안 및 교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?round=7"
-        }
-      ]
+      "homework": ""
     },
     "sep-w1": {
       "notice": "",
-      "homework": "",
-      "textbooks": [
-        {
-          "title": "중급 모의고사 8회 · 답안 및 교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?round=8"
-        }
-      ]
+      "homework": ""
     },
     "sep-14": {
       "notice": "",
-      "homework": "",
-      "textbooks": []
+      "homework": ""
     },
     "sep-21": {
       "notice": "",
-      "homework": "",
-      "textbooks": []
+      "homework": ""
     },
     "sep-28": {
       "notice": "",
-      "homework": "",
-      "textbooks": []
+      "homework": ""
     },
     "oct-5": {
       "notice": "",
-      "homework": "",
-      "textbooks": []
+      "homework": ""
     },
     "oct-12": {
       "notice": "",
-      "homework": "",
-      "textbooks": []
+      "homework": ""
     },
     "oct-19": {
       "notice": "",
-      "homework": "",
-      "textbooks": []
+      "homework": ""
     },
     "oct-26": {
       "notice": "",
-      "homework": "",
-      "textbooks": []
+      "homework": ""
     }
   },
   "students": [
@@ -883,7 +864,8 @@ window.GFIELD_DATA = {
     "보충학습",
     "약점 유형",
     "사고력 교재",
-    "활용 모의고사"
+    "활용 모의고사",
+    "추가 모의고사"
   ],
   "archiveAccess": {
     "보충학습": [
@@ -960,7 +942,8 @@ window.GFIELD_DATA = {
       "김소라",
       "김현우",
       "노관호"
-    ]
+    ],
+    "추가 모의고사": []
   },
   "books": [
     {
@@ -1302,6 +1285,125 @@ window.GFIELD_DATA = {
       "cover": "",
       "date": "2026-07-28",
       "links": []
+    },
+    {
+      "folder": "추가 모의고사",
+      "title": "중급 모의고사 7회",
+      "pdf": "",
+      "cover": "",
+      "date": "2026-07-28",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?round=7"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=7"
+        }
+      ]
+    },
+    {
+      "folder": "추가 모의고사",
+      "title": "중급 모의고사 8회",
+      "pdf": "",
+      "cover": "",
+      "date": "2026-07-28",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?round=8"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=8"
+        }
+      ]
+    },
+    {
+      "folder": "추가 모의고사",
+      "title": "최종 실전 모의고사 5회",
+      "pdf": "",
+      "cover": "",
+      "date": "2026-07-28",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=5"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=5"
+        }
+      ]
+    },
+    {
+      "folder": "추가 모의고사",
+      "title": "최종 실전 모의고사 6회",
+      "pdf": "",
+      "cover": "",
+      "date": "2026-07-28",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=6"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=6"
+        }
+      ]
+    },
+    {
+      "folder": "추가 모의고사",
+      "title": "최종 실전 모의고사 7회",
+      "pdf": "",
+      "cover": "",
+      "date": "2026-07-28",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=7"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=7"
+        }
+      ]
+    },
+    {
+      "folder": "추가 모의고사",
+      "title": "최종 실전 모의고사 8회",
+      "pdf": "",
+      "cover": "",
+      "date": "2026-07-28",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=8"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=8"
+        }
+      ]
+    },
+    {
+      "folder": "추가 모의고사",
+      "title": "최종 실전 모의고사 9회",
+      "pdf": "",
+      "cover": "",
+      "date": "2026-07-28",
+      "links": [
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=9"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=9"
+        }
+      ]
     }
   ],
   "pins": {},
