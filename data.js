@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 27. 오후 7:44:43
+ * 생성: 2026. 7. 28. 오후 3:26:30
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1284,6 +1284,24 @@ window.GFIELD_DATA = {
         "url": "https://youtu.be/wqucrYE7v6I?si=2FjtY6_NrHAKwyaC",
         "thumb": "",
         "date": "2026-07-01"
+      },
+      {
+        "title": "바뀌는 입시 제도, 우리 아이의 수학 공부는?",
+        "url": "https://www.youtube.com/live/aa__1xeIYIo?si=VwoeCZ2X9wCwjDUk",
+        "thumb": "",
+        "date": "2026-07-28"
+      },
+      {
+        "title": "대학부설 영재교육원 대비 전략 - 3,4학년",
+        "url": "https://www.youtube.com/live/Gy0I_Mqocg8?si=n8yN7yiy2gw2tXzz",
+        "thumb": "",
+        "date": "2026-07-28"
+      },
+      {
+        "title": "초등 과학 학습 로드맵",
+        "url": "https://www.youtube.com/live/u1aHwQ9TCXE?si=7Nq3CsD9WG4IHkaM",
+        "thumb": "",
+        "date": "2026-07-28"
       }
     ],
     "courses": [],
