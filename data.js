@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 28. 오후 3:41:58
+ * 생성: 2026. 7. 28. 오후 3:45:48
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1250,13 +1250,15 @@ window.GFIELD_DATA = {
       "pages": 2
     },
     {
-      "folder": "보충학습",
-      "title": "",
-      "pdf": "",
-      "video": "",
+      "folder": "약점 유형",
+      "title": "3% 올림피아드 1과정 CH1 우기기 개념 및 유제",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1785221087332_7ewv_______.pdf",
+      "video": "https://youtu.be/Za4J85dRu2o",
       "cover": "",
       "date": "2026-07-27",
-      "links": []
+      "links": [],
+      "imgdir": "bk_ms4ajjzu",
+      "pages": 3
     }
   ],
   "pins": {},
