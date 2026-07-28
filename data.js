@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 28. 오후 3:47:27
+ * 생성: 2026. 7. 28. 오후 3:49:53
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1270,6 +1270,17 @@ window.GFIELD_DATA = {
       "links": [],
       "imgdir": "bk_ms4amncc",
       "pages": 2
+    },
+    {
+      "folder": "약점 유형",
+      "title": "3% 1과정 CH8 길찾기(최단거리) 개념",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1785221377932_4gy6_08_____.pdf",
+      "video": "https://youtu.be/SyoVuoiL2Hg",
+      "cover": "",
+      "date": "2026-07-28",
+      "links": [],
+      "imgdir": "bk_ms4apt7a",
+      "pages": 3
     }
   ],
   "pins": {},
