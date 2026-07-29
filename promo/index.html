@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>지필드 영재교육 | 생각하는 황소 초등대비 프로그램</title>
+<meta name="description" content="생각하는 황소 대비 모의고사의 원조, 지필드 영재교육. 2026년 11월 생각하는 황소 합격을 위한 온라인 강좌 개강 확정.">
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#d4af37;--gold-l:#f8dd83;--blue:#60a5fa;--navy:#07111f;--ink:#02050b;--muted:#cbd5e1;--muted2:#94a3b8;--card:rgba(2,6,23,.5);--line:rgba(255,255,255,.12)}
+html,body{background:var(--ink);color:#fff;font-family:Pretendard,sans-serif;scroll-behavior:smooth}
+body{overflow-x:hidden}
+h1,h2,h3,h4,strong,b{word-break:keep-all;overflow-wrap:anywhere}
+p,span,a,small,li{word-break:keep-all;overflow-wrap:anywhere}
+img{max-width:100%;display:block}
+.gold{color:var(--gold);text-shadow:0 0 32px rgba(212,175,55,.34)}
+
+/* ================= 인트로 ================= */
+.intro{position:fixed;inset:0;z-index:100;overflow:hidden;background:var(--ink);display:grid;place-items:center;transition:opacity 1.1s ease}
+.intro.done{opacity:0;pointer-events:none}
+.intro video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
+.fallback-bg{position:absolute;inset:0;background:radial-gradient(circle at 16% 10%,rgba(22,65,124,.62),transparent 34%),radial-gradient(circle at 82% 16%,rgba(212,175,55,.22),transparent 30%),radial-gradient(circle at 50% 88%,rgba(124,58,237,.18),transparent 36%),linear-gradient(135deg,#02050b,#07111f 60%,#010205)}
+.fallback-bg::before{content:"";position:absolute;inset:0;background-image:linear-gradient(to right,rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.035) 1px,transparent 1px);background-size:36px 36px;mask-image:radial-gradient(circle at center,#000,transparent 82%)}
+.intro::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at center,rgba(2,5,11,.03),rgba(2,5,11,.55) 56%,rgba(2,5,11,.92));pointer-events:none}
+.skip{position:absolute;top:22px;right:22px;z-index:30;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);backdrop-filter:blur(14px);color:#fff;border-radius:999px;padding:10px 16px;font-size:12px;font-weight:1000;letter-spacing:.14em;cursor:pointer}
+.scene{position:absolute;inset:0;z-index:10;display:grid;place-items:center;text-align:center;padding:28px;opacity:0;transform:translateY(26px) scale(.975);filter:blur(10px);transition:opacity 1.15s ease,transform 1.15s cubic-bezier(.16,1,.3,1),filter 1.15s ease;pointer-events:none;will-change:opacity,transform,filter}
+.scene.on{opacity:1;transform:none;filter:none;pointer-events:auto}
+.kicker{font-size:12px;font-weight:1000;letter-spacing:.34em;color:var(--gold-l)}
+.opening-kicker{font-size:clamp(16px,2vw,26px);letter-spacing:.38em;text-shadow:0 8px 34px rgba(0,0,0,.45)}
+.opening-title{font-size:clamp(30px,5vw,66px);line-height:1.1;letter-spacing:-.06em;font-weight:1000;text-shadow:0 16px 48px rgba(0,0,0,.5)}
+.opening-brand{display:block;color:var(--gold-l);font-size:clamp(42px,6.6vw,94px);line-height:1;letter-spacing:-.07em;margin-bottom:18px}
+.opening-copy{font-size:clamp(17px,2.1vw,25px);color:#e5e7eb;font-weight:700;text-shadow:0 10px 34px rgba(0,0,0,.45)}
+.archive-title{font-size:clamp(36px,6.6vw,88px);font-weight:1000;line-height:1.04;letter-spacing:-.07em}
+.subtitle{font-size:clamp(22px,3.8vw,44px);font-weight:1000;line-height:1.18;letter-spacing:-.06em}
+.copy{color:#d1d5db;font-size:clamp(16px,2vw,22px);line-height:1.72;font-weight:700}
+.mt-2{margin-top:8px}.mt-5{margin-top:20px}.mt-6{margin-top:24px}
+/* 전광판 */
+.records{width:min(1120px,calc(100% - 32px));margin:0 auto;display:grid;grid-template-columns:1fr minmax(270px,.8fr) 1fr;gap:16px;align-items:center;justify-items:center}
+.stack{display:grid;gap:12px;width:100%;max-width:330px;margin:0 auto}
+.record{width:100%;border:1px solid rgba(255,255,255,.14);background:rgba(2,6,23,.52);backdrop-filter:blur(16px);border-radius:26px;padding:18px;text-align:left;box-shadow:0 24px 70px rgba(0,0,0,.36);opacity:0;transform:translateY(16px) scale(.97);transition:.52s cubic-bezier(.22,1,.36,1)}
+.record.on{opacity:1;transform:translateY(0) scale(1);border-color:rgba(212,175,55,.38)}
+.record.pop{animation:pop .36s cubic-bezier(.22,1,.36,1)}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.055);box-shadow:0 0 60px rgba(212,175,55,.24)}100%{transform:scale(1)}}
+.recordTitle{display:flex;justify-content:space-between;gap:10px;font-size:15px;font-weight:1000;letter-spacing:-.045em}
+.recordTitle small{font-size:10px;color:var(--gold);letter-spacing:.08em}
+.year{display:grid;grid-template-columns:52px 1fr 46px;gap:8px;align-items:center;margin-top:8px;color:var(--muted);font-size:12px}
+.bar{height:6px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#60a5fa,#d4af37);border-radius:999px;transition:.55s cubic-bezier(.22,1,.36,1)}
+.ynum{text-align:right;color:#fff;font-weight:1000}
+.total{text-align:right;margin-top:12px;color:var(--gold);font-weight:1000;letter-spacing:-.06em}
+.total b{font-size:34px}
+.grand{width:100%;max-width:360px;min-height:330px;border:1px solid rgba(212,175,55,.28);border-radius:36px;background:radial-gradient(circle at 50% 45%,rgba(212,175,55,.24),transparent 64%),rgba(0,0,0,.26);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 100px rgba(212,175,55,.13);position:relative;overflow:hidden}
+.grand::before{content:"";position:absolute;inset:14px;border-radius:28px;border:1px solid rgba(255,255,255,.08)}
+.glabel{position:relative;color:#e5e7eb;font-size:15px;font-weight:1000}
+.gnum{position:relative;margin-top:8px;font-size:clamp(86px,12vw,152px);line-height:.82;font-weight:1000;letter-spacing:-.095em;transition:.34s cubic-bezier(.22,1,.36,1)}
+.gnum.hit{transform:scale(1.1);color:var(--gold);text-shadow:0 0 52px rgba(212,175,55,.38)}
+.gunit{position:relative;margin-top:10px;font-size:28px;font-weight:1000;color:var(--gold)}
+.gnote{position:relative;margin-top:12px;color:var(--muted);font-size:12px;line-height:1.55}
+.pang-strip{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:22px auto 0}
+.pang{opacity:0;transform:translateY(12px) scale(.92);border:1px solid rgba(212,175,55,.28);background:rgba(212,175,55,.1);color:#fde68a;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:1000}
+.pang.on{animation:pang .46s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes pang{0%{opacity:0;transform:translateY(12px) scale(.92)}60%{opacity:1;transform:translateY(0) scale(1.08)}100%{opacity:1;transform:translateY(0) scale(1)}}
+
+/* ================= 본문 공통 ================= */
+main{position:relative;z-index:1}
+.section{max-width:1120px;margin:0 auto;padding:92px 22px}
+.section-head{text-align:center;margin-bottom:50px}
+.section-kicker{font-size:12px;font-weight:1000;letter-spacing:.3em;color:var(--gold-l)}
+.section-title{margin-top:14px;font-size:clamp(25px,3.8vw,40px);font-weight:1000;letter-spacing:-.055em;line-height:1.24}
+.section-desc{margin-top:14px;color:var(--muted2);font-size:clamp(15px,1.8vw,18px);line-height:1.75;font-weight:600}
+.shot{border:1px solid rgba(212,175,55,.25);border-radius:22px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.45);background:#fff}
+.shot-cap{margin-top:14px;text-align:center;color:var(--muted2);font-size:14px;font-weight:700}
+.cta{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 34px;border:0;border-radius:16px;background:linear-gradient(135deg,#d4af37,#f8dd83);color:#02050b;font-size:17px;font-weight:1000;text-decoration:none;box-shadow:0 14px 40px rgba(212,175,55,.28);transition:.25s;cursor:pointer}
+.cta:hover{transform:translateY(-2px)}
+.cta.ghost{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.22);color:#fff;box-shadow:none}
+.cta.kakao{background:#fee500;color:#191919}
+.cta-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:34px}
+
+/* 히어로 */
+.hero{position:relative;padding:120px 22px 90px;text-align:center;background:radial-gradient(circle at 50% 0%,rgba(212,175,55,.14),transparent 55%),linear-gradient(180deg,#050a14,#02050b)}
+.hero-badge{display:inline-block;border:1px solid rgba(212,175,55,.45);background:rgba(212,175,55,.12);color:var(--gold-l);border-radius:999px;padding:9px 20px;font-size:13px;font-weight:1000;letter-spacing:.08em}
+.hero h1{margin-top:26px;font-size:clamp(28px,4.4vw,50px);font-weight:1000;letter-spacing:-.06em;line-height:1.28}
+.hero h1 .gold{display:block}
+.hero-copy{max-width:760px;margin:26px auto 0;color:#d7dce4;font-size:clamp(16px,2vw,19px);line-height:1.9;font-weight:600;text-align:left;border:1px solid rgba(255,255,255,.1);background:rgba(15,23,42,.55);backdrop-filter:blur(12px);border-radius:24px;padding:28px 30px}
+.hero-copy strong{color:var(--gold-l)}
+.hero-copy .warn{display:block;margin-top:14px;color:#fca5a5;font-weight:800}
+
+/* 실적/후기 */
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.result-card{border:1px solid var(--line);background:var(--card);border-radius:24px;padding:26px 24px;transition:.3s}
+.result-card:hover{border-color:rgba(212,175,55,.4);transform:translateY(-4px)}
+.result-year{color:var(--gold);font-size:13px;font-weight:1000;letter-spacing:.1em}
+.result-main{margin-top:10px;font-size:21px;font-weight:1000;letter-spacing:-.05em;line-height:1.3}
+.result-sub{margin-top:10px;color:var(--muted2);font-size:14px;line-height:1.6;font-weight:600}
+.result-note{margin-top:30px;text-align:center;color:var(--gold-l);font-size:clamp(17px,2.2vw,22px);font-weight:900;letter-spacing:-.04em;line-height:1.6}
+/* 학부모 후기 — 눈에 확 띄게 */
+.review-section{padding:100px 22px 108px;background:radial-gradient(circle at 50% 0%,rgba(212,175,55,.18),transparent 58%),linear-gradient(180deg,#050a14,#02050b)}
+.review-inner{max-width:1180px;margin:0 auto;text-align:center}
+.review-title{margin-top:16px;font-size:clamp(34px,6vw,64px);font-weight:1000;letter-spacing:-.06em;line-height:1.14}
+.review-desc{margin-top:16px;color:var(--muted2);font-size:clamp(15px,1.9vw,18px);font-weight:600;line-height:1.75}
+.review-shot{margin:42px auto 0;max-width:1080px;border-radius:26px;overflow:hidden;background:#fff;border:2px solid rgba(212,175,55,.5);box-shadow:0 34px 100px rgba(0,0,0,.6),0 0 90px rgba(212,175,55,.16);cursor:zoom-in;transition:.35s cubic-bezier(.22,1,.36,1)}
+.review-shot:hover{transform:translateY(-6px) scale(1.012);border-color:rgba(212,175,55,.85);box-shadow:0 40px 120px rgba(0,0,0,.66),0 0 130px rgba(212,175,55,.26)}
+.review-shot img{width:100%}
+.review-shot figcaption{padding:15px;background:rgba(2,5,11,.94);color:#fde68a;font-size:13px;font-weight:900;letter-spacing:-.02em}
+.br-m{display:none}
+@media(max-width:600px){.br-m{display:inline}}
+/* 이미지 확대 라이트박스 */
+.lightbox{position:fixed;inset:0;z-index:300;display:none;place-items:center;background:rgba(2,5,11,.93);backdrop-filter:blur(8px);padding:26px;cursor:zoom-out}
+.lightbox.on{display:grid}
+.lightbox img{max-width:min(1400px,96vw);max-height:92vh;border-radius:16px;box-shadow:0 30px 100px rgba(0,0,0,.7);object-fit:contain;background:#fff}
+.lightbox-close{position:fixed;top:20px;right:24px;z-index:301;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.1);color:#fff;border-radius:999px;width:46px;height:46px;font-size:22px;font-weight:900;cursor:pointer}
+.shot{cursor:zoom-in}
+/* 사용법 안내 배너 */
+.manual-band{margin-top:44px;border:1px solid rgba(96,165,250,.4);background:linear-gradient(135deg,rgba(12,40,80,.5),rgba(0,0,0,.4));border-radius:26px;padding:26px 28px;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap}
+.manual-left{display:flex;gap:16px;align-items:center}
+.manual-icon{font-size:32px}
+.manual-band h3{font-size:19px;font-weight:1000;letter-spacing:-.05em;color:#93c5fd}
+.manual-band p{margin-top:8px;color:var(--muted);font-size:14px;line-height:1.7;font-weight:600}
+.manual-band .cta{min-height:50px;padding:0 26px;font-size:15px;flex:none}
+
+/* 동일 과정 */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.product-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(11,18,32,.7),rgba(8,12,22,.4));border-radius:26px;padding:30px 26px;transition:.3s}
+.product-card:hover{border-color:rgba(212,175,55,.4);transform:translateY(-4px)}
+.product-icon{font-size:30px}
+.product-card h3{margin-top:14px;font-size:20px;font-weight:1000;letter-spacing:-.045em;color:var(--gold-l)}
+.product-card p{margin-top:12px;color:var(--muted);font-size:15px;line-height:1.75;font-weight:600}
+.same-note{max-width:760px;margin:30px auto 0;text-align:center;color:var(--muted);font-size:14px;line-height:1.8;font-weight:600;border:1px dashed rgba(212,175,55,.35);border-radius:20px;padding:18px 24px;background:rgba(212,175,55,.05)}
+
+/* 개념 교재 */
+.book-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px}
+.book-card{display:grid;grid-template-columns:150px 1fr;gap:20px;border:1px solid var(--line);background:var(--card);border-radius:26px;padding:24px;align-items:start}
+.book-cover{border-radius:12px;overflow:hidden;border:1px solid rgba(212,175,55,.3);box-shadow:0 14px 36px rgba(0,0,0,.4);background:#fff}
+.book-info h3{font-size:19px;font-weight:1000;letter-spacing:-.045em;line-height:1.35}
+.book-info .book-tag{display:inline-block;margin-top:8px;border:1px solid rgba(96,165,250,.4);background:rgba(96,165,250,.12);color:#93c5fd;border-radius:999px;padding:4px 11px;font-size:11px;font-weight:1000}
+.book-info p{margin-top:12px;color:var(--muted);font-size:14px;line-height:1.75;font-weight:600}
+@media(max-width:480px){.book-card{grid-template-columns:1fr}.book-cover{max-width:180px}}
+
+/* 모의고사 4종 */
+.mock-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:18px}
+.mock-card{position:relative;border:1px solid var(--line);background:var(--card);border-radius:26px;padding:28px 24px;transition:.3s}
+.mock-card:hover{border-color:rgba(212,175,55,.4);transform:translateY(-4px)}
+.mock-step{font-size:12px;font-weight:1000;letter-spacing:.16em;color:var(--blue)}
+.mock-card.goldstep .mock-step{color:var(--gold-l)}
+.mock-card h3{margin-top:10px;font-size:20px;font-weight:1000;letter-spacing:-.05em}
+.mock-count{display:inline-block;margin-top:8px;color:var(--gold);font-size:13px;font-weight:1000}
+.mock-card p{margin-top:12px;color:var(--muted);font-size:14px;line-height:1.75;font-weight:600}
+.secret-card{margin-top:22px;border:1px solid rgba(212,175,55,.4);background:linear-gradient(135deg,rgba(52,36,8,.5),rgba(0,0,0,.4));border-radius:26px;padding:28px 26px;display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.secret-card .lock{font-size:34px}
+.secret-card h3{font-size:20px;font-weight:1000;letter-spacing:-.05em;color:var(--gold-l)}
+.secret-card p{margin-top:10px;color:var(--muted);font-size:14px;line-height:1.75;font-weight:600;max-width:720px}
+
+/* 자료실/분석 */
+.two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;align-items:start}
+.scroll-frame{position:relative;height:520px;overflow:hidden;border:1px solid rgba(212,175,55,.25);border-radius:22px;background:#fff;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.scroll-frame .scroll-inner{animation:reportScroll 26s linear infinite}
+.scroll-frame:hover .scroll-inner{animation-play-state:paused}
+@keyframes reportScroll{0%{transform:translateY(0)}8%{transform:translateY(0)}46%{transform:translateY(calc(-50% + 260px))}54%{transform:translateY(calc(-50% + 260px))}92%{transform:translateY(calc(-100% + 520px))}100%{transform:translateY(calc(-100% + 520px))}}
+.scroll-hint{position:absolute;right:12px;bottom:12px;z-index:2;background:rgba(2,5,11,.72);color:#fde68a;border:1px solid rgba(212,175,55,.4);border-radius:999px;padding:6px 13px;font-size:11px;font-weight:1000;backdrop-filter:blur(8px)}
+
+/* 3회 응시 밴드 */
+.retry-band{margin-top:22px;border:1px solid rgba(96,165,250,.4);background:linear-gradient(135deg,rgba(12,40,80,.5),rgba(0,0,0,.4));border-radius:26px;padding:28px 26px;display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.retry-band .retry-icon{font-size:34px}
+.retry-band h3{font-size:20px;font-weight:1000;letter-spacing:-.05em;color:#93c5fd}
+.retry-band h3 b{color:var(--gold-l)}
+.retry-band p{margin-top:10px;color:var(--muted);font-size:14px;line-height:1.85;font-weight:600;max-width:760px}
+.retry-band p b{color:#fff}
+
+/* 성적표 placeholder */
+.report-placeholder{max-width:760px;margin:0 auto;border:1px dashed rgba(212,175,55,.4);border-radius:24px;padding:44px 28px;text-align:center;color:var(--muted2);background:rgba(212,175,55,.04);font-size:15px;line-height:1.8;font-weight:600}
+
+/* 체험존 */
+.try-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px}
+.try-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(11,18,32,.7),rgba(8,12,22,.4));border-radius:26px;padding:30px 26px;text-align:center}
+.try-card h3{font-size:21px;font-weight:1000;letter-spacing:-.05em;color:var(--gold-l)}
+.try-card p{margin:14px auto 22px;color:var(--muted);font-size:14px;line-height:1.75;font-weight:600;max-width:420px}
+/* 타이머 데모 */
+.timer-demo{display:none;margin-top:22px;border:1px solid rgba(212,175,55,.3);border-radius:22px;padding:26px 20px;background:rgba(0,0,0,.3)}
+.timer-demo.on{display:block}
+.td-clock{font-size:clamp(44px,7vw,72px);font-weight:1000;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.td-phase{margin-top:6px;color:var(--gold-l);font-size:15px;font-weight:1000}
+.td-bar{height:10px;margin-top:16px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden}
+.td-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#60a5fa,#d4af37);border-radius:999px}
+.td-note{margin-top:12px;color:var(--muted2);font-size:12px;font-weight:700}
+/* 큐 팝업 */
+.cue-modal{position:fixed;inset:0;z-index:200;display:none;place-items:center;background:rgba(2,5,11,.78);backdrop-filter:blur(10px);padding:24px}
+.cue-modal.on{display:grid}
+.cue-box{max-width:680px;text-align:center;border:1px solid rgba(212,175,55,.45);background:linear-gradient(180deg,rgba(15,23,42,.96),rgba(8,12,22,.96));border-radius:30px;padding:44px 36px;box-shadow:0 0 120px rgba(212,175,55,.2);animation:cuein .5s cubic-bezier(.22,1,.36,1)}
+@keyframes cuein{0%{opacity:0;transform:translateY(24px) scale(.95)}100%{opacity:1;transform:none}}
+.cue-ph{color:var(--gold);font-size:14px;font-weight:1000;letter-spacing:.22em}
+.cue-msg{margin-top:16px;font-size:clamp(20px,3vw,30px);font-weight:1000;letter-spacing:-.045em;line-height:1.5}
+/* 우기기 뷰어 */
+.viewer-demo{display:none;margin-top:22px;text-align:left}
+.viewer-demo.on{display:block}
+.viewer-shell{display:grid;grid-template-columns:1fr 1fr;gap:14px;border:1px solid rgba(212,175,55,.3);border-radius:22px;padding:16px;background:rgba(0,0,0,.35)}
+@media(max-width:760px){.viewer-shell{grid-template-columns:1fr}}
+.viewer-video{position:relative;border-radius:14px;overflow:hidden;background:#000;aspect-ratio:16/10}
+.viewer-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.viewer-pages{height:420px;overflow-y:auto;border-radius:14px;background:#fff;padding:8px}
+.viewer-pages img{margin-bottom:8px;border:1px solid #e2e8f0;border-radius:6px}
+
+/* VIP 설명회 */
+.vip-panel{max-width:880px;margin:0 auto;border:1px solid rgba(212,175,55,.35);border-radius:28px;padding:40px 30px;text-align:center;background:linear-gradient(135deg,rgba(52,36,8,.4),rgba(0,0,0,.4))}
+.vip-locked p{color:var(--muted);font-size:15px;line-height:1.8;font-weight:600;max-width:560px;margin:16px auto 0}
+.vip-locked .lock-icon{font-size:44px}
+.vip-open{display:none}
+.vip-open.on{display:block}
+.vip-locked.off{display:none}
+.video-wrap{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:16/9;background:#000;margin-top:24px}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* 저작권 */
+.copyright-band{border:1px solid rgba(212,175,55,.35);border-radius:28px;padding:38px 30px;background:linear-gradient(135deg,rgba(52,36,8,.4),rgba(0,0,0,.4));display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:28px;align-items:center}
+@media(max-width:760px){.copyright-band{grid-template-columns:1fr}}
+.cert-frame{border:1px dashed rgba(212,175,55,.5);border-radius:18px;min-height:220px;display:grid;place-items:center;color:var(--muted2);font-size:13px;font-weight:700;text-align:center;padding:18px;background:rgba(212,175,55,.05)}
+.cert-frame img{border-radius:12px}
+/* 저작권 등록 통지 문서 */
+.cert-doc{background:#fff;color:#1e293b;border-radius:18px;padding:26px 24px;box-shadow:0 20px 56px rgba(0,0,0,.42);border:1px solid rgba(212,175,55,.35)}
+.cert-head{display:flex;gap:12px;align-items:flex-start}
+.cert-mark{flex:none;width:9px;height:22px;border-radius:3px 3px 8px 3px;background:#f4611f;margin-top:3px}
+.cert-head p{font-size:14px;line-height:1.65;font-weight:600;color:#475569;letter-spacing:-.03em}
+.cert-head p b{color:#0f172a;font-weight:900}
+.cert-list{margin-top:22px;border-top:1px solid #e2e8f0;padding-top:18px;display:grid;gap:11px}
+.cert-list>div{display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:start}
+.cert-list dt{font-size:13px;font-weight:900;color:#0f172a;letter-spacing:-.03em}
+.cert-list dd{font-size:13px;font-weight:700;color:#334155;line-height:1.5;letter-spacing:-.03em}
+.cert-list dd b{color:#b45309;font-weight:900}
+.cert-cap{margin-top:14px;text-align:center;color:var(--muted2);font-size:12px;font-weight:700}
+.copyright-band h3{font-size:clamp(20px,2.6vw,26px);font-weight:1000;letter-spacing:-.05em;line-height:1.4}
+.copyright-band p{margin-top:14px;color:var(--muted);font-size:15px;line-height:1.85;font-weight:600}
+.copyright-band .reg{display:inline-block;margin-top:14px;border:1px solid rgba(212,175,55,.4);background:rgba(212,175,55,.12);color:var(--gold-l);border-radius:999px;padding:7px 16px;font-size:13px;font-weight:1000}
+
+/* 상품/가격 */
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;align-items:stretch}
+.price-card{display:flex;flex-direction:column;border:1px solid var(--line);background:var(--card);border-radius:28px;padding:34px 28px;transition:.3s;position:relative;overflow:hidden}
+.price-thumb{margin:-34px -28px 22px;height:170px;overflow:hidden;position:relative;background:#fff;border-bottom:1px solid rgba(212,175,55,.3)}
+.price-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.price-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(2,6,23,.55))}
+.price-card.best .price-thumb{margin-top:-34px}
+.price-card:hover{border-color:rgba(212,175,55,.45);transform:translateY(-5px)}
+.price-card.best{border-color:rgba(212,175,55,.55);background:linear-gradient(180deg,rgba(52,36,8,.35),rgba(2,6,23,.5))}
+.best-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#d4af37,#f8dd83);color:#02050b;border-radius:999px;padding:6px 18px;font-size:12px;font-weight:1000;white-space:nowrap}
+.price-name{font-size:20px;font-weight:1000;letter-spacing:-.05em;color:var(--gold-l)}
+.price-target{margin-top:6px;color:var(--muted2);font-size:13px;font-weight:700}
+.price-amount{margin-top:18px;font-size:30px;font-weight:1000;letter-spacing:-.05em}
+.price-amount small{font-size:14px;color:var(--muted2);font-weight:700}
+.price-feats{list-style:none;margin:20px 0 26px;flex:1}
+.price-feats li{position:relative;padding-left:22px;margin-bottom:10px;color:var(--muted);font-size:14px;line-height:1.6;font-weight:600}
+.price-feats li::before{content:"✓";position:absolute;left:0;color:var(--gold);font-weight:1000}
+.price-feats li.no{color:#64748b}
+.price-feats li.no::before{content:"—";color:#475569}
+.apply-btn{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:14px;background:linear-gradient(135deg,#d4af37,#f8dd83);color:#02050b;font-size:16px;font-weight:1000;text-decoration:none;transition:.25s}
+.apply-btn:hover{transform:translateY(-2px)}
+.price-note{margin-top:26px;text-align:center;color:var(--muted2);font-size:13px;font-weight:600;line-height:1.8}
+.price-group{margin:52px 0 22px;text-align:center}
+.price-group:first-of-type{margin-top:0}
+.group-title{display:inline-block;font-size:clamp(19px,2.4vw,24px);font-weight:1000;letter-spacing:-.05em;border-bottom:2px solid rgba(212,175,55,.55);padding-bottom:8px}
+.group-desc{margin-top:12px;color:var(--muted2);font-size:14px;font-weight:600;line-height:1.7}
+.price-lv{display:inline-block;border:1px solid rgba(96,165,250,.45);background:rgba(96,165,250,.14);color:#93c5fd;border-radius:999px;padding:5px 13px;font-size:11px;font-weight:1000;letter-spacing:.1em;margin-bottom:12px}
+.price-lv.gold-lv{border-color:rgba(212,175,55,.5);background:rgba(212,175,55,.14);color:var(--gold-l)}
+.secret-price{margin-top:26px;border:1px solid rgba(212,175,55,.45);background:linear-gradient(135deg,rgba(52,36,8,.5),rgba(0,0,0,.42));border-radius:28px;padding:30px 28px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.secret-left{display:flex;gap:16px;align-items:center}
+.secret-lock{font-size:34px}
+.secret-right{text-align:right}
+.secret-cond{margin-top:8px;color:var(--muted2);font-size:13px;font-weight:700}
+.secret-cond b{color:var(--gold-l)}
+@media(max-width:600px){.secret-price{flex-direction:column;align-items:flex-start}.secret-right{text-align:left}}
+.consult-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.consult-card{display:flex;flex-direction:column;border:1px solid var(--line);background:var(--card);border-radius:28px;padding:32px 28px;transition:.3s}
+.consult-card:hover{border-color:rgba(212,175,55,.45);transform:translateY(-5px)}
+.consult-card.free{border-color:rgba(96,165,250,.4);background:linear-gradient(180deg,rgba(12,40,80,.4),rgba(2,6,23,.5))}
+.consult-badge{display:inline-block;align-self:flex-start;border:1px solid rgba(96,165,250,.45);background:rgba(96,165,250,.14);color:#93c5fd;border-radius:999px;padding:5px 14px;font-size:11px;font-weight:1000;letter-spacing:.12em}
+.consult-badge.paid{border-color:rgba(212,175,55,.5);background:rgba(212,175,55,.14);color:var(--gold-l)}
+.consult-card h4{margin-top:14px;font-size:21px;font-weight:1000;letter-spacing:-.05em}
+.consult-card p{margin-top:12px;flex:1;color:var(--muted);font-size:14px;line-height:1.8;font-weight:600}
+.consult-card .apply-btn{margin-top:24px}
+
+/* 클로징/푸터 */
+.closing{text-align:center;padding:110px 22px;background:radial-gradient(circle at 50% 100%,rgba(212,175,55,.16),transparent 60%),linear-gradient(180deg,#02050b,#050a14)}
+.closing h2{font-size:clamp(26px,4vw,44px);font-weight:1000;letter-spacing:-.055em;line-height:1.3}
+.closing p{max-width:640px;margin:20px auto 0;color:var(--muted2);font-size:16px;line-height:1.8;font-weight:600}
+footer{border-top:1px solid rgba(255,255,255,.08);padding:44px 22px 60px;text-align:center;color:#64748b;font-size:13px;line-height:2}
+footer strong{color:#94a3b8}
+/* 스크롤 리빌 */
+@media(prefers-reduced-motion:no-preference){
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= 인트로 ================= -->
+<div class="intro" id="intro">
+  <div class="fallback-bg"></div>
+  <video id="introVideo" autoplay muted playsinline preload="auto" poster="assets/gfield-on-poster.jpg">
+    <source src="assets/gfield-on-intro.mp4" type="video/mp4">
+  </video>
+  <button class="skip" id="skipIntro" type="button">SKIP</button>
+
+  <section class="scene on" id="scene0">
+    <div>
+      <p class="kicker opening-kicker">G-FIELD OPENING</p>
+      <h1 class="opening-title mt-6"><span class="opening-brand">지필드 영재교육</span>생각하는 황소 초등대비 프로그램</h1>
+      <p class="copy opening-copy mt-6">빠른 선행보다 중요한 것은 흔들리지 않는 학습의 기준입니다.</p>
+    </div>
+  </section>
+
+  <section class="scene" id="scene1">
+    <div>
+      <h2 class="subtitle">선행은 빠른데<br>학습의 깊이가 걱정된다면</h2>
+      <p class="copy mt-5">우리 아이의 실력이 비어 있지는 않은지</p>
+      <p class="copy mt-2 gold">이제, 학습의 깊이를 확인해야 합니다.</p>
+    </div>
+  </section>
+
+  <section class="scene" id="scene2">
+    <div>
+      <h2 class="archive-title">생각하는 황소 대비<br><span class="gold">모의고사의 원조</span></h2>
+      <p class="subtitle mt-6">성공하는 공부 습관을 만드는<br>지필드 영재교육</p>
+    </div>
+  </section>
+
+  <section class="scene" id="scene3">
+    <div style="width:100%">
+      <div class="records">
+        <div class="stack" id="leftStack"></div>
+        <div class="grand">
+          <div class="glabel">연도별 누적 실적</div>
+          <div class="gnum" id="grandNum">0</div>
+          <div class="gunit">명</div>
+          <div class="gnote">대표 실적은 일부입니다.<br>가운데 숫자는 실제 전체 누적 실적입니다.</div>
+        </div>
+        <div class="stack" id="rightStack"></div>
+      </div>
+      <div class="pang-strip">
+        <span class="pang">영재</span><span class="pang">테마</span><span class="pang">황소 경시</span><span class="pang">영재원</span><span class="pang">특목 경시</span><span class="pang">누적 실적</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="scene4">
+    <div>
+      <p class="kicker gold">2026 HS PROGRAM</p>
+      <h2 class="subtitle mt-5">2026년 11월, 생각하는 황소 합격.<br>지필드가 함께합니다.</h2>
+    </div>
+  </section>
+</div>
+
+<!-- ================= 본문 ================= -->
+<main>
+
+  <!-- 개강 확정 -->
+  <section class="hero" id="open">
+    <span class="hero-badge">2026년 11월 생각하는 황소 대비 · 개강 확정</span>
+    <h1>합격의 패스워드,<span class="gold">관리력과 성과가 다른 지필드 영재교육</span></h1>
+    <div class="hero-copy">
+      <p><strong>2026년 11월 생각하는 황소 합격</strong>을 위한 강좌 개강을 확정합니다.
+      꾸준히 믿고 함께 한다면 반드시 좋은 결과가 있습니다.</p>
+      <p style="margin-top:14px">지필드의 수업은 <strong>조건 이해와 사고력 확장</strong>에 중점을 두기 때문에 과제가 많지는 않습니다.
+      원하시면 얼마든지 더 드립니다.</p>
+      <span class="warn">단, 복습을 챙겨주실 학부모님만 지원해 주세요.</span>
+    </div>
+    <div class="cta-row">
+      <a class="cta" href="#price">대비 과정 보기</a>
+      <a class="cta ghost" href="https://naver.me/x2YLLf8Y" target="_blank" rel="noopener">무료 상담 신청</a>
+      <a class="cta kakao" href="https://open.kakao.com/me/gfield" target="_blank" rel="noopener">💬 카카오톡 상담하기</a>
+    </div>
+  </section>
+
+  <!-- 합격 실적 + 후기 -->
+  <section class="section" id="results">
+    <div class="section-head">
+      <p class="section-kicker">RECORDS</p>
+      <h2 class="section-title">합격은 시작일 뿐입니다</h2>
+      <p class="section-desc">합격 후에도 단단하게 공부하도록 만드는 지필드 영재교육 —<br>10년의 기록은 함부로 따라할 수 없습니다.</p>
+    </div>
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="result-year">2021 초2 황소 경시</div>
+        <div class="result-main">대치 경시 15명 합격</div>
+        <div class="result-sub">황소 경시 트랙 본격 성과 시작</div>
+      </div>
+      <div class="result-card">
+        <div class="result-year">2022 초2 황소 경시</div>
+        <div class="result-main">대치 경시 14명 합격</div>
+        <div class="result-sub">10등 이내 5명 · 과정 완료 45명 중 41명 합격</div>
+      </div>
+      <div class="result-card">
+        <div class="result-year">2023 초2 황소 경시</div>
+        <div class="result-main">대치 경시 18명 합격</div>
+        <div class="result-sub">과정 완료 60명 중 56명 합격</div>
+      </div>
+      <div class="result-card">
+        <div class="result-year">2024 12월 황소 경시</div>
+        <div class="result-main">대치 경시 15명 합격</div>
+        <div class="result-sub">과정 완료 54명 중 48명 합격</div>
+      </div>
+    </div>
+    <p class="result-note">생각하는 황소에 입학하는 것만으로는 충분하지 않습니다.<br>진정한 성공은 입학 후 최상위권에서 흔들리지 않는 실력입니다.</p>
+  </section>
+
+  <!-- 학부모 후기 -->
+  <section class="review-section" id="review">
+    <div class="review-inner">
+      <p class="section-kicker">REAL REVIEW</p>
+      <h2 class="review-title">학부모님의<br class="br-m"> <span class="gold">생생한 후기</span></h2>
+      <p class="review-desc">지필드를 거쳐 간 학부모님들이 직접 남겨주신 이야기입니다.</p>
+      <figure class="review-shot zoomable">
+        <img src="https://cdn.gamma.app/iw0nmj1c8mj81fk/4cb1614d6e7d423dba7bba5286c9229f/original/image.png" alt="학부모님의 생생한 후기" loading="lazy">
+        <figcaption>🔍 클릭하면 크게 볼 수 있어요</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 재원생 동일 과정 -->
+  <section class="section" id="program">
+    <div class="section-head">
+      <p class="section-kicker">ONLINE PROGRAM</p>
+      <h2 class="section-title">지필드 재원생과 완전히 동일한 수업</h2>
+      <p class="section-desc">온라인이라고 요약본을 드리지 않습니다.<br>재원생이 밟는 로드맵 그대로, 같은 진도 · 같은 수업 · 같은 데이터 관리를 받습니다.</p>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-icon">🗺️</div>
+        <h3>재원생 동일 로드맵 · 동일 진도</h3>
+        <p>지필드 재원생이 진행하는 주차별 로드맵을 온라인에서 그대로 따라갑니다. 개념 → 중급 → 파이널 → 최종까지 같은 시점, 같은 자료로 학습합니다.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🎥</div>
+        <h3>실시간 ZOOM 라이브 수업</h3>
+        <p>지필드 강의실의 긴장감과 상호작용, 피드백을 실시간 줌 라이브로 동일하게 구현합니다. 전국 어디서나 지필드 수업에 그대로 참여하세요.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">📚</div>
+        <h3>모든 자료실 오픈</h3>
+        <p>강의 영상이 연결된 교재 서재, 약점 유형 보충 교재, 오답 입력·분석, 실전 타이머까지 — 재원생이 쓰는 지필드 아카이브를 그대로 이용합니다.</p>
+      </div>
+    </div>
+    <p class="same-note">※ <b>온라인 정규 수업</b>(정규 줌수업 · 온라인 재원생 과정) 등록 시 오프라인 수업과 동일한 관리와 혜택이 그대로 제공됩니다.<br>모의고사만 단과로 신청하신 경우에는 해당 과정의 시험지 · 풀이 강의 · 진단 분석이 제공됩니다.</p>
+    <div class="two-col" style="margin-top:44px">
+      <div>
+        <div class="shot"><img src="img/roadmap.jpg" alt="지필드 주차별 로드맵 화면" loading="lazy"></div>
+        <p class="shot-cap">재원생과 동일하게 제공되는 주차별 로드맵 화면</p>
+      </div>
+      <div>
+        <div class="shot"><img src="img/archive1.jpg" alt="지필드 자료실 서재 화면" loading="lazy"></div>
+        <p class="shot-cap">교재 서재 — 표지를 누르면 교재가 펼쳐지고 강의 영상과 함께 보입니다</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 개념 과정 -->
+  <section class="section" id="concept">
+    <div class="section-head">
+      <p class="section-kicker">CONCEPT COURSE</p>
+      <h2 class="section-title">시험을 향한 개념, 두 권으로 완성</h2>
+      <p class="section-desc">단원별 강의 영상이 연결된 지필드 자체 제작 개념 교재입니다.</p>
+    </div>
+    <div class="book-grid">
+      <div class="book-card">
+        <div class="book-cover"><img src="https://raw.githubusercontent.com/docssam1/hs-report/main/materials/tb_mrho8522/001.jpg" alt="THINKING BASIC 표지" loading="lazy"></div>
+        <div class="book-info">
+          <h3>HS 대비 응용 개념서<br>THINKING BASIC</h3>
+          <span class="book-tag">필수 개념 정리 · 40쪽 · 단원별 강의 연동</span>
+          <p>문제 푸는 방법 찾기(1)·(2), 규칙 찾아 해결하기까지 — 황소 시험에 반드시 나오는 응용 개념을 유형별로 정리했습니다. 간격과 둘레, 마방진, 우기기, 거리·속력·시간 등 핵심 유형마다 개념 → 필수유형 강의가 붙어 있어 혼자서도 완성할 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-cover"><img src="https://raw.githubusercontent.com/docssam1/hs-report/main/materials/tb_mrhqq399/001.jpg" alt="Thinking Core 표지" loading="lazy"></div>
+        <div class="book-info">
+          <h3>Thinking Core<br>생각하는 황소 대비 심화 개념</h3>
+          <span class="book-tag">실전 심화 개념 · 92쪽 · CH1~CH5 강의 연동</span>
+          <p>모의고사 전 진행하는 핵심 심화 개념 교재입니다. NUMBERS, Algebra, Numbers &amp; Case, Geometry, 활용까지 다섯 챕터로, 개념 학습 후 관련 유형 SEMI 테스트로 시험 적응 훈련까지 이어집니다. 챕터별 강의 영상이 모두 연결되어 있습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 모의고사 4종 특징 -->
+  <section class="section" id="mock">
+    <div class="section-head">
+      <p class="section-kicker">MOCK EXAM SYSTEM</p>
+      <h2 class="section-title">4단계 모의고사, 시험일까지 설계된 훈련</h2>
+      <p class="section-desc">저작권 등록된 지필드 모의고사가 단계별로 아이를 실전에 올려놓습니다.</p>
+    </div>
+    <div class="mock-grid">
+      <div class="mock-card">
+        <div class="mock-step">LEVEL 1</div>
+        <h3>활용 모의고사</h3>
+        <span class="mock-count">시험 9회</span>
+        <p>조건을 많이 꼬지 않아 <b style="color:#fff">대비 초기에 공부하기 좋은</b> 단계입니다. 실제 시험의 70% 수준 난이도로, 배운 개념을 문제에 활용하는 힘을 기릅니다.</p>
+      </div>
+      <div class="mock-card">
+        <div class="mock-step">LEVEL 2</div>
+        <h3>중급 모의고사</h3>
+        <span class="mock-count">시험 연습용 4회</span>
+        <p>시험에 익숙하게 만들고 <b style="color:#fff">수행률을 높이는</b> 단계입니다. 회차마다 중요 문제 풀이 영상과 <b style="color:#f8dd83">핵심 유사문제 테스트</b>가 제공되어, 틀린 유형을 그 주에 바로 잡습니다.</p>
+      </div>
+      <div class="mock-card goldstep">
+        <div class="mock-step">LEVEL 3</div>
+        <h3>온라인 파이널 모의고사</h3>
+        <span class="mock-count">모의고사 + 진단 + 풀이 4회분</span>
+        <p><b style="color:#f8dd83">5년 이상의 누적 데이터를 통한 합격 예측</b>이 시작되는 단계입니다. 90분 실전 타이머로 시험을 보고, 합격생과 비교한 누적 진단지를 받습니다.</p>
+      </div>
+      <div class="mock-card goldstep">
+        <div class="mock-step">LEVEL 4</div>
+        <h3>온라인 최종 모의고사</h3>
+        <span class="mock-count">모의고사 + 누적 진단 + 풀이 4회분</span>
+        <p><b style="color:#f8dd83">실제 시험 난이도</b>의 문제로 낯선 환경을 이기면서 실전 훈련을 하는 마지막 리허설입니다. 시험 직전, 실전 그 자체를 훈련합니다.</p>
+      </div>
+    </div>
+    <div class="secret-card">
+      <div class="lock">🤫</div>
+      <div>
+        <h3>시크릿 추가 모의고사 · 총 8회분</h3>
+        <p>중급 유형 4회 + 최종·파이널 유형 4회로 구성된, 어디에도 공개되지 않는 추가 모의고사입니다.
+        <b style="color:#f8dd83">재원생 과정 또는 2개 이상 수업을 등록한 학생</b>에게만 제공되는 마지막 한 걸음입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 오답 입력 → 분석지 -->
+  <section class="section" id="data">
+    <div class="section-head">
+      <p class="section-kicker">DATA REPORT</p>
+      <h2 class="section-title">오답만 입력하면, 분석은 지필드가 합니다</h2>
+      <p class="section-desc">틀린 번호만 체크하면 영역별 약점, 유형별 처방, 어느 교재의 어느 단원에서 개념이 비었는지까지<br>한 장의 분석지로 정리되어 즉시 도착합니다.</p>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="shot"><img src="img/grading1.jpg" alt="오답 입력 화면" loading="lazy"></div>
+        <p class="shot-cap">① 틀린 번호만 누르면 채점 끝 — 한 회차당 <b style="color:#f8dd83">3회까지 응시</b> 기록이 남습니다</p>
+      </div>
+      <div>
+        <div class="scroll-frame">
+          <div class="scroll-inner">
+            <img src="img/report2.jpg" alt="분석지 — 단계별 정답률과 점수 추이">
+            <img src="img/report3.jpg" alt="분석지 — 오답 문항 상세 분석과 연결 교재">
+          </div>
+          <span class="scroll-hint">실제 분석지 미리보기 · 마우스를 올리면 멈춰요</span>
+        </div>
+        <p class="shot-cap">② 단계별 정답률 → 영역별 수행률 → 문항별 원인과 연결 교재(4개 카테고리)까지</p>
+      </div>
+    </div>
+    <p class="same-note" style="margin-top:36px">문항마다 <b>시중교재 · 소마 · 필즈더클래식 · 지필드 교재</b>의 정확한 단원이 연결됩니다.<br>"어디를 다시 공부해야 하는지"를 지필드가 대신 찾아드립니다.</p>
+    <div class="retry-band">
+      <div class="retry-icon">🔁</div>
+      <div>
+        <h3>한 회차를 <b>3번까지</b> 응시할 수 있습니다</h3>
+        <p>한 번 풀고 끝내지 않습니다. <b>시험지 풀이 → 영상 복습 → 재도전</b>의 흐름대로 같은 회차를 최대 3회까지 응시할 수 있고,
+        회차별 1·2·3회 응시 기록이 모두 따로 저장되어 <b>점수가 얼마나 올라갔는지</b>를 눈으로 확인합니다.
+        <br>단, 누적 성적과 석차 백분율은 <b>첫 응시 기록</b>만으로 계산되어 실전 그대로의 실력을 공정하게 진단합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 파이널 누적 성적표 -->
+  <section class="section" id="cumulative">
+    <div class="section-head">
+      <p class="section-kicker">CUMULATIVE REPORT</p>
+      <h2 class="section-title">파이널부터는 합격생과 비교합니다</h2>
+      <p class="section-desc">파이널 과정부터 이전 연도 합격생 데이터 위에서 내 아이의 위치를 석차 백분율 평균으로 추적합니다.</p>
+    </div>
+    <div class="report-placeholder" id="cumulativeShot">
+      📊 실제 누적 성적표 샘플 이미지가 이 자리에 들어갑니다.<br>(개인정보를 가린 실제 양식 캡처 준비 중)
+    </div>
+  </section>
+
+  <!-- 체험존 -->
+  <section class="section" id="try">
+    <div class="section-head">
+      <p class="section-kicker">EXPERIENCE</p>
+      <h2 class="section-title">말보다 체험이 빠릅니다</h2>
+      <p class="section-desc">재원생이 실제로 쓰는 시스템을 지금 바로 만나보세요.<br>체험을 마치면 VIP 설명회 영상이 열립니다.</p>
+    </div>
+    <div class="try-grid">
+      <div class="try-card">
+        <h3>⏱️ 실전 타이머 체험하기</h3>
+        <p>90분 실전 모의고사 타이머를 200배속으로 압축 체험합니다. 원장님의 실제 육성 안내가 구간마다 흘러나옵니다.</p>
+        <button class="cta" type="button" id="tryTimerBtn">200배속으로 체험 시작</button>
+        <div class="timer-demo" id="timerDemo">
+          <div class="td-clock" id="tdClock">90:00</div>
+          <div class="td-phase" id="tdPhase">시험 시작 전</div>
+          <div class="td-bar"><span id="tdBar"></span></div>
+          <p class="td-note">실제 시험은 90분 · 구간마다 육성 안내가 나옵니다 (체험은 약 30초)</p>
+        </div>
+      </div>
+      <div class="try-card">
+        <h3>📖 자료실 강의 체험하기</h3>
+        <p>자료실 서재에서 교재를 펼치면 이렇게 보입니다. 약점 유형 교재 '우기기' 개념 강의를 그대로 체험해 보세요.</p>
+        <button class="cta" type="button" id="tryViewerBtn">우기기 강의 열어보기</button>
+        <div class="viewer-demo" id="viewerDemo">
+          <div class="viewer-shell">
+            <div class="viewer-video"><iframe data-src="https://www.youtube.com/embed/Za4J85dRu2o" title="우기기 개념 강의" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="viewer-pages">
+              <img src="https://raw.githubusercontent.com/docssam1/hs-report/main/materials/bk_ms4ajjzu/001.jpg" alt="우기기 교재 1쪽" loading="lazy">
+              <img src="https://raw.githubusercontent.com/docssam1/hs-report/main/materials/bk_ms4ajjzu/002.jpg" alt="우기기 교재 2쪽" loading="lazy">
+              <img src="https://raw.githubusercontent.com/docssam1/hs-report/main/materials/bk_ms4ajjzu/003.jpg" alt="우기기 교재 3쪽" loading="lazy">
+            </div>
+          </div>
+          <p class="shot-cap">왼쪽은 강의 영상, 오른쪽은 교재 — 실제 자료실 뷰어와 같은 구성입니다</p>
+        </div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top:44px">
+      <div>
+        <div class="shot"><img src="img/archive2.jpg" alt="자료실 영상 뷰어 화면" loading="lazy"></div>
+        <p class="shot-cap">실제 자료실 뷰어 — 강의 영상과 교재가 나란히 열립니다</p>
+      </div>
+    </div>
+
+    <div class="manual-band">
+      <div class="manual-left">
+        <span class="manual-icon">📘</span>
+        <div>
+          <h3>지필드 아카이브 사용법</h3>
+          <p>접속부터 오답 입력, 로드맵, 자료실 활용까지 —<br class="br-m">학부모님을 위한 안내서를 미리 읽어보실 수 있습니다.</p>
+        </div>
+      </div>
+      <a class="cta ghost" href="https://hs.gfieldacademy.net/manual" target="_blank" rel="noopener">사용법 보기 →</a>
+    </div>
+  </section>
+
+  <!-- VIP 설명회 -->
+  <section class="section" id="vip">
+    <div class="vip-panel">
+      <div class="vip-locked" id="vipLocked">
+        <div class="lock-icon">🔒</div>
+        <h2 class="section-title" style="margin-top:14px">VIP 설명회</h2>
+        <p>위 체험(타이머 또는 강의)을 한 가지라도 마치면<br>지필드 대비 과정 설명회 영상이 이 자리에서 열립니다.</p>
+      </div>
+      <div class="vip-open" id="vipOpen">
+        <p class="section-kicker">VIP BRIEFING</p>
+        <h2 class="section-title" style="margin-top:12px">지필드 대비 과정 설명회</h2>
+        <div class="video-wrap"><iframe data-src="https://www.youtube.com/embed/ZS8UauLBwbQ" title="지필드 생각하는 황소 대비 설명회" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 저작권 -->
+  <section class="section" id="copyright">
+    <div class="copyright-band">
+      <div>
+      <div class="cert-doc" id="certFrame">
+        <div class="cert-head">
+          <span class="cert-mark"></span>
+          <p><b>한국저작권위원회 등록임치팀입니다.</b><br>귀하의 일반저작물 저작권 등록에 이를 알려드립니다.</p>
+        </div>
+        <dl class="cert-list">
+          <div><dt>가. 접수번호</dt><dd>2025-038073</dd></div>
+          <div><dt>나. 등록번호</dt><dd><b>제C-2025-032626호</b></dd></div>
+          <div><dt>다. 제호</dt><dd>지필드 영재교육 초등과정 대비 실전 온라인 모의고사</dd></div>
+          <div><dt>라. 등록일자</dt><dd>2025. 08. 22</dd></div>
+          <div><dt>마. 신청종류</dt><dd>일반저작물 저작권 등록</dd></div>
+        </dl>
+      </div>
+      <p class="cert-cap">한국저작권위원회 저작권 등록 통지 내용</p>
+      </div>
+      <div>
+        <h3>따라할 수는 있어도, 원조가 될 수는 없습니다</h3>
+        <p>지필드 모의고사는 창의적 문제해결력을 측정하기 위해 자체 개발되어 <b style="color:#f8dd83">한국저작권위원회에 정식 등록</b>된 콘텐츠입니다. 실제로 지필드의 모의고사를 모방한 업체로부터 저작권 침해에 대한 배상을 받은 사례가 있는, 명실상부한 원조 콘텐츠입니다.</p>
+        <span class="reg">한국저작권위원회 등록 제C-2025-032626호</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 상품 / 가격 -->
+  <section class="section" id="price">
+    <div class="section-head">
+      <p class="section-kicker">COURSE &amp; PRICE</p>
+      <h2 class="section-title">과정 안내 및 신청</h2>
+      <p class="section-desc">필요한 과정만 골라 신청하실 수 있습니다. 모든 신청은 설문지 작성 후 순차 안내되며,<br>정원제로 운영되어 조기 마감될 수 있습니다.</p>
+    </div>
+
+    <!-- 온라인 정규 수업 -->
+    <div class="price-group">
+      <h3 class="group-title">온라인 정규 수업</h3>
+      <p class="group-desc">오프라인 수업과 <b>동일한 관리와 혜택</b>을 그대로 제공합니다.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card best">
+        <span class="best-badge">가장 완전한 대비</span>
+        <div class="price-thumb"><img src="img/weekly.jpg" alt="이번 주 수업 화면" loading="lazy"></div>
+        <div class="price-name">정규 줌수업</div>
+        <div class="price-target">실시간 ZOOM 라이브 + 전 과정 관리</div>
+        <div class="price-amount">32<small>만원</small></div>
+        <ul class="price-feats">
+          <li>지필드 재원생과 동일한 실시간 줌 라이브 수업</li>
+          <li>재원생 동일 로드맵 · 동일 진도</li>
+          <li>모든 자료실(서재 · 약점 유형 · 보충학습) 오픈</li>
+          <li>모의고사 오답 분석 · 실전 타이머 · 누적 진단지</li>
+          <li>회차당 3회까지 응시 · 성장 추이 기록</li>
+          <li>시크릿 추가 모의고사 제공 대상</li>
+        </ul>
+        <a class="apply-btn" target="_blank" rel="noopener" href="https://naver.me/x2YLLf8Y" data-apply="zoom">신청 설문지 작성하기</a>
+      </div>
+      <div class="price-card">
+        <div class="price-thumb"><img src="img/archive1.jpg" alt="지필드 자료실 서재" loading="lazy"></div>
+        <div class="price-name">온라인 재원생 과정</div>
+        <div class="price-target">재원생과 동일한 자료실 · 관리</div>
+        <div class="price-amount">24<small>만원</small></div>
+        <ul class="price-feats">
+          <li>재원생 동일 로드맵 · 동일 진도 자료</li>
+          <li>모든 자료실(서재 · 약점 유형 · 보충학습) 오픈</li>
+          <li>모의고사 오답 분석 · 실전 타이머 · 누적 진단지</li>
+          <li>회차당 3회까지 응시 · 성장 추이 기록</li>
+          <li>시크릿 추가 모의고사 제공 대상</li>
+          <li class="no">실시간 줌 라이브 수업 미포함</li>
+        </ul>
+        <a class="apply-btn" target="_blank" rel="noopener" href="https://naver.me/x2YLLf8Y" data-apply="member">신청 설문지 작성하기</a>
+      </div>
+    </div>
+
+    <!-- 개념 강의 -->
+    <div class="price-group">
+      <h3 class="group-title">개념 강의</h3>
+      <p class="group-desc">단원별 강의 영상이 연결된 지필드 자체 제작 개념 교재입니다.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-thumb"><img src="https://raw.githubusercontent.com/docssam1/hs-report/main/materials/tb_mrho8522/001.jpg" alt="HS BASIC 표지" loading="lazy"></div>
+        <div class="price-name">HS 대비 필수 개념정리<br>HS BASIC</div>
+        <div class="price-target">응용 개념 완성 · 40쪽</div>
+        <div class="price-amount">14<small>만원</small></div>
+        <ul class="price-feats">
+          <li>문제 푸는 방법 찾기 (1) · (2)</li>
+          <li>규칙 찾아 문제 해결하기</li>
+          <li>단원별 개념 + 필수유형 강의 전체 연동</li>
+          <li>자료실 뷰어로 어디서나 학습</li>
+        </ul>
+        <a class="apply-btn" target="_blank" rel="noopener" href="https://naver.me/x2YLLf8Y" data-apply="basic">신청 설문지 작성하기</a>
+      </div>
+      <div class="price-card">
+        <div class="price-thumb"><img src="https://raw.githubusercontent.com/docssam1/hs-report/main/materials/tb_mrhqq399/001.jpg" alt="Thinking Core 표지" loading="lazy"></div>
+        <div class="price-name">Thinking Core<br>생각하는 황소 대비 심화 개념</div>
+        <div class="price-target">실전 심화 개념 · 92쪽</div>
+        <div class="price-amount">24<small>만원</small></div>
+        <ul class="price-feats">
+          <li>CH1 NUMBERS / CH2 Algebra</li>
+          <li>CH3 Numbers &amp; Case / CH4 Geometry / CH5 활용</li>
+          <li>개념 학습 후 SEMI 테스트로 시험 적응</li>
+          <li>챕터별 강의 영상 전체 연동</li>
+        </ul>
+        <a class="apply-btn" target="_blank" rel="noopener" href="https://naver.me/x2YLLf8Y" data-apply="core">신청 설문지 작성하기</a>
+      </div>
+    </div>
+
+    <!-- 모의고사 -->
+    <div class="price-group">
+      <h3 class="group-title">생각하는 황소 초등 선발 모의고사</h3>
+      <p class="group-desc">저작권 등록된 지필드 모의고사 — 레벨별로 골라 신청하실 수 있습니다.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-thumb"><img src="https://raw.githubusercontent.com/docssam1/hs-report/main/materials/tb_mrtzu34y/001.jpg" alt="활용 모의고사 시험지" loading="lazy"></div>
+        <div class="price-lv">LEVEL 1</div>
+        <div class="price-name">활용 모의고사</div>
+        <div class="price-target">시험 9회 · 대비 초기용</div>
+        <div class="price-amount">36<small>만원</small></div>
+        <ul class="price-feats">
+          <li>조건을 많이 꼬지 않아 대비 초기에 공부하기 좋음</li>
+          <li>실제 시험의 70% 수준 난이도</li>
+          <li>회차별 풀이 강의 + 오답 입력·분석</li>
+          <li>회차당 3회까지 응시 가능</li>
+        </ul>
+        <a class="apply-btn" target="_blank" rel="noopener" href="https://naver.me/x2YLLf8Y" data-apply="lv1">신청 설문지 작성하기</a>
+      </div>
+      <div class="price-card">
+        <div class="price-thumb"><img src="https://raw.githubusercontent.com/docssam1/hs-report/main/materials/bk_ms6emb3e/001.jpg" alt="중급 모의고사 시험지" loading="lazy"></div>
+        <div class="price-lv">LEVEL 2</div>
+        <div class="price-name">중급 모의고사</div>
+        <div class="price-target">시험 연습용 4회</div>
+        <div class="price-amount">20<small>만원</small></div>
+        <ul class="price-feats">
+          <li>시험에 익숙하게 만들고 수행률을 높이는 단계</li>
+          <li><b style="color:#f8dd83">핵심 유사문제 테스트 제공</b></li>
+          <li>중요 문제 풀이 강의 + 리뷰 테스트</li>
+          <li>회차당 3회까지 응시 가능</li>
+        </ul>
+        <a class="apply-btn" target="_blank" rel="noopener" href="https://naver.me/x2YLLf8Y" data-apply="lv2">신청 설문지 작성하기</a>
+      </div>
+      <div class="price-card">
+        <div class="price-thumb"><img src="img/report2.jpg" alt="파이널 진단 분석지" loading="lazy"></div>
+        <div class="price-lv gold-lv">LEVEL 3</div>
+        <div class="price-name">온라인 파이널 모의고사</div>
+        <div class="price-target">모의고사 + 진단 + 풀이 4회분</div>
+        <div class="price-amount">22<small>만원</small></div>
+        <ul class="price-feats">
+          <li>5년 이상의 누적 데이터를 통한 합격 예측</li>
+          <li>합격생 비교 누적 진단지 제공 시작</li>
+          <li>90분 실전 타이머 · 육성 구간 안내</li>
+          <li>회차당 3회까지 응시 가능</li>
+        </ul>
+        <a class="apply-btn" target="_blank" rel="noopener" href="https://naver.me/x2YLLf8Y" data-apply="lv3">신청 설문지 작성하기</a>
+      </div>
+      <div class="price-card">
+        <div class="price-thumb"><img src="img/report3.jpg" alt="오답 문항 상세 분석" loading="lazy"></div>
+        <div class="price-lv gold-lv">LEVEL 4</div>
+        <div class="price-name">온라인 최종 모의고사</div>
+        <div class="price-target">모의고사 + 누적 진단 + 풀이 4회분</div>
+        <div class="price-amount">24<small>만원</small></div>
+        <ul class="price-feats">
+          <li>실제 시험 난이도의 문제로 구성</li>
+          <li>낯선 환경을 이기면서 실전 훈련</li>
+          <li>누적 진단 · 석차 백분율 평균 추적</li>
+          <li>회차당 3회까지 응시 가능</li>
+        </ul>
+        <a class="apply-btn" target="_blank" rel="noopener" href="https://naver.me/x2YLLf8Y" data-apply="lv4">신청 설문지 작성하기</a>
+      </div>
+    </div>
+
+    <!-- 시크릿 -->
+    <div class="secret-price">
+      <div class="secret-left">
+        <span class="secret-lock">🤫</span>
+        <div>
+          <div class="price-name" style="color:#f8dd83">시크릿 추가 모의고사</div>
+          <div class="price-target">중급 유형 4회 + 최종·파이널 유형 4회 = 총 8회분</div>
+        </div>
+      </div>
+      <div class="secret-right">
+        <div class="price-amount" style="margin:0">20<small>만원</small></div>
+        <p class="secret-cond">재원생 과정 또는 <b>2개 이상 수업 등록</b> 학생에게만 제공</p>
+      </div>
+    </div>
+
+    <!-- 상담 -->
+    <div class="price-group">
+      <h3 class="group-title">상담 안내</h3>
+      <p class="group-desc">어떤 과정이 맞는지 모르시겠다면, 먼저 상담부터 받아보세요.</p>
+    </div>
+    <div class="consult-grid">
+      <div class="consult-card free">
+        <div class="consult-badge">FREE</div>
+        <h4>무료 상담</h4>
+        <p>다니는 학원, 목표, 지금까지의 진행 과정을 자세히 적어 주시면
+        아이에게 맞는 과정과 시작 지점을 원장이 직접 확인해 안내해 드립니다.</p>
+        <a class="apply-btn" target="_blank" rel="noopener" href="https://naver.me/x2YLLf8Y" data-apply="free">무료 상담 신청하기</a>
+      </div>
+      <div class="consult-card">
+        <div class="consult-badge paid">1:1 PREMIUM</div>
+        <h4>방문 및 전화 컨설팅</h4>
+        <div class="price-amount" style="margin-top:14px">15<small>만원</small></div>
+        <p style="margin-top:14px">현재 실력과 학습 이력을 정밀하게 진단하고,
+        시험일까지의 학습 로드맵을 아이 한 명에 맞춰 설계해 드리는 1:1 심층 컨설팅입니다.</p>
+        <a class="apply-btn" target="_blank" rel="noopener" href="https://naver.me/x2YLLf8Y" data-apply="consult">컨설팅 신청하기</a>
+      </div>
+    </div>
+
+    <p class="price-note">모든 신청은 <b style="color:#f8dd83">하나의 신청 설문지</b>에서 원하는 과정을 선택해 진행됩니다 · 궁금한 점은 카카오톡으로 편하게 문의해 주세요.</p>
+    <div class="cta-row">
+      <a class="cta kakao" href="https://open.kakao.com/me/gfield" target="_blank" rel="noopener">💬 카카오톡 1:1 상담</a>
+    </div>
+  </section>
+
+  <!-- 클로징 -->
+  <section class="closing">
+    <h2>꾸준히 믿고 함께 한다면<br><span class="gold">반드시 좋은 결과가 있습니다.</span></h2>
+    <p>2026년 11월 생각하는 황소 합격을 위한 여정, 지필드 영재교육이 끝까지 함께합니다.</p>
+    <div class="cta-row">
+      <a class="cta" href="https://naver.me/x2YLLf8Y" target="_blank" rel="noopener">과정 신청하기</a>
+      <a class="cta kakao" href="https://open.kakao.com/me/gfield" target="_blank" rel="noopener">💬 카카오톡 상담</a>
+    </div>
+  </section>
+
+  <footer>
+    <p><a href="https://hs.gfieldacademy.net/manual" target="_blank" rel="noopener" style="color:#93c5fd;font-weight:800">지필드 아카이브 사용법</a> · <a href="https://open.kakao.com/me/gfield" target="_blank" rel="noopener" style="color:#93c5fd;font-weight:800">카카오톡 상담</a></p>
+    <p><strong>지필드 영재교육</strong> · 서울시 강남구 역삼로 460-2 4층 · 상담 02-3453-7772</p>
+    <p>지필드 모의고사 : 한국저작권위원회 등록 제C-2025-032626호</p>
+    <p>&copy; 2026 G-FIELD Gifted Education. All Rights Reserved.</p>
+  </footer>
+</main>
+
+<!-- 이미지 확대 -->
+<div class="lightbox" id="lightbox"><button class="lightbox-close" type="button" aria-label="닫기">×</button><img id="lightboxImg" src="" alt=""></div>
+
+<!-- 타이머 큐 팝업 -->
+<div class="cue-modal" id="cueModal">
+  <div class="cue-box">
+    <p class="cue-ph" id="cuePh">훑어보기</p>
+    <p class="cue-msg" id="cueMsg"></p>
+  </div>
+</div>
+
+<script>
+/* ================= 인트로 시퀀스 ================= */
+const scenes=['scene0','scene1','scene2','scene3','scene4'];
+const times=[0,2000,3800,5800,10600];
+const data={
+  left:[
+    {title:'영재 클래스',years:[['2023',6],['2024',4],['2025',6]],total:40},
+    {title:'생각하는 황소 경시',years:[['2021',15],['2022',14],['2023',18],['2024',15]],total:62}
+  ],
+  right:[
+    {title:'테마 프리미어',years:[['2023',6],['2024',4],['2025',4]],total:87},
+    {title:'영재원ㆍ특목 경시',years:[['대비',8],['누적',12]],total:120}
+  ],
+  grand:400
+};
+function showScene(n){
+  scenes.forEach((id,i)=>document.getElementById(id).classList.toggle('on',i===n));
+  if(n===3) runRecords();
+}
+function panel(item){
+  const max=Math.max(...item.years.map(y=>y[1]),1);
+  return `<div class="record">
+    <div class="recordTitle"><span>${item.title}</span><small>RECORD</small></div>
+    ${item.years.map(y=>`<div class="year" data-count="${y[1]}" data-max="${max}"><span>${y[0]}</span><div class="bar"><span></span></div><b class="ynum">0</b></div>`).join('')}
+    <div class="total"><b data-total="${item.total}">0</b><span>명</span></div>
+  </div>`;
+}
+function countTo(el,target,duration=700){
+  const start=performance.now();
+  const from=parseInt((el.textContent||'0').replace(/[^0-9]/g,''),10)||0;
+  const diff=target-from;
+  function frame(now){
+    const p=Math.min((now-start)/duration,1);
+    const e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(from+diff*e).toLocaleString('ko-KR');
+    if(p<1)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+function runRecords(){
+  if(window.recordsStarted)return;
+  window.recordsStarted=true;
+  leftStack.innerHTML=data.left.map(panel).join('');
+  rightStack.innerHTML=data.right.map(panel).join('');
+  [...document.querySelectorAll('.record')].forEach((card,i)=>{
+    setTimeout(()=>{
+      card.classList.add('on','pop');
+      card.querySelectorAll('.year').forEach((row,j)=>{
+        setTimeout(()=>{
+          const c=+row.dataset.count,m=+row.dataset.max;
+          row.querySelector('.bar span').style.width=Math.max(18,Math.round(c/m*100))+'%';
+          countTo(row.querySelector('.ynum'),c,430);
+        },j*135);
+      });
+      setTimeout(()=>countTo(card.querySelector('[data-total]'),+card.querySelector('[data-total]').dataset.total,720),420);
+      setTimeout(()=>card.classList.remove('pop'),500);
+    },i*360);
+  });
+  setTimeout(()=>countTo(grandNum,data.grand,1850),680);
+  setTimeout(()=>grandNum.classList.add('hit'),2600);
+  setTimeout(()=>grandNum.classList.remove('hit'),3200);
+  [...document.querySelectorAll('.pang')].forEach((p,i)=>setTimeout(()=>p.classList.add('on'),1900+i*120));
+}
+let introDone=false;
+function endIntro(){
+  if(introDone)return;
+  introDone=true;
+  const intro=document.getElementById('intro');
+  intro.classList.add('done');
+  document.body.style.overflow='';
+  setTimeout(()=>{
+    const v=document.getElementById('introVideo');
+    try{v.pause()}catch(e){}
+    intro.style.display='none';
+  },1200);
+  window.scrollTo(0,0);
+}
+times.forEach((t,i)=>setTimeout(()=>showScene(i),t));
+setTimeout(endIntro,13400);
+document.getElementById('skipIntro').addEventListener('click',endIntro);
+document.getElementById('introVideo').addEventListener('error',()=>{document.getElementById('introVideo').style.display='none'});
+document.body.style.overflow='hidden';
+
+/* ================= 체험: 실전 타이머 (200배속) ================= */
+const CUES=[
+  { at:0,    ph:"훑어보기", msg:"자, 시작하자. 5분 동안 시험지를 쭉 넘겨보면서 풀 수 있을 것 같은 문제를 체크해 보자." },
+  { at:300,  ph:"1~12번",  msg:"다 체크했니? 그럼 12번까지 30분 동안 먼저 푸는 거야. 할 수 있지? 만약 모르는 문제가 있으면 우선 표시해 놓고 넘어가야 돼." },
+  { at:1200, ph:"1~12번",  msg:"절반 지났어. 지금쯤 6번은 넘어갔으면 좋겠다." },
+  { at:2100, ph:"13~30번", msg:"35분 지났어. 아직 10번을 넘어가지 못한 친구는 얼른 13번 문제로 넘어가자. 한두 문제 남은 친구는 계속 더 풀어봐." },
+  { at:3300, ph:"13~30번", msg:"55분이야. 남은 시간을 생각하면서 한 문제에 너무 오래 붙잡고 있지 말자." },
+  { at:4500, ph:"마무리",   msg:"75분이 지났어. 이제 15분이 남았어. 할 수 있을 것 같은 문제를 골라서 풀어봐." },
+  { at:5100, ph:"마무리",   msg:"5분 남았어. 답을 옮겨 적지 않은 게 있는지 확인하자." },
+  { at:5400, ph:"종료",     msg:"자, 90분이 다 됐어. 펜 내려놓자. 수고했어." }
+];
+const SPEED=200, TOTAL=5400;
+let demoRunning=false, demoStart=0, demoRAF=null, cueIdx=0, cueTimer=null, cueAudio=null;
+const cueModal=document.getElementById('cueModal');
+function showCue(c){
+  document.getElementById('cuePh').textContent=c.ph;
+  document.getElementById('cueMsg').textContent=c.msg;
+  cueModal.classList.add('on');
+  if(cueTimer)clearTimeout(cueTimer);
+  cueTimer=setTimeout(()=>cueModal.classList.remove('on'),Math.min(2600,1200+c.msg.length*22));
+  try{
+    if(cueAudio){cueAudio.pause()}
+    const n=CUES.indexOf(c);
+    cueAudio=new Audio('https://hs.gfieldacademy.net/voice/cue-'+n+'.mp3');
+    cueAudio.play().catch(()=>{});
+  }catch(e){}
+}
+cueModal.addEventListener('click',()=>cueModal.classList.remove('on'));
+function fmt(s){s=Math.max(0,Math.round(s));const m=Math.floor(s/60),ss=s%60;return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0')}
+function demoFrame(now){
+  const simSec=(now-demoStart)/1000*SPEED;
+  const remain=TOTAL-simSec;
+  document.getElementById('tdClock').textContent=fmt(remain);
+  document.getElementById('tdBar').style.width=Math.min(100,simSec/TOTAL*100)+'%';
+  while(cueIdx<CUES.length&&simSec>=CUES[cueIdx].at){
+    document.getElementById('tdPhase').textContent=CUES[cueIdx].ph;
+    showCue(CUES[cueIdx]);
+    cueIdx++;
+  }
+  if(simSec<TOTAL){demoRAF=requestAnimationFrame(demoFrame)}
+  else{
+    document.getElementById('tdClock').textContent='00:00';
+    document.getElementById('tdPhase').textContent='시험 종료 — 수고했어!';
+    demoRunning=false;
+    document.getElementById('tryTimerBtn').textContent='다시 체험하기';
+  }
+}
+document.getElementById('tryTimerBtn').addEventListener('click',()=>{
+  document.getElementById('timerDemo').classList.add('on');
+  if(demoRAF)cancelAnimationFrame(demoRAF);
+  demoRunning=true;cueIdx=0;demoStart=performance.now();
+  demoRAF=requestAnimationFrame(demoFrame);
+  unlockVip();
+});
+
+/* ================= 체험: 우기기 강의 ================= */
+document.getElementById('tryViewerBtn').addEventListener('click',()=>{
+  const d=document.getElementById('viewerDemo');
+  d.classList.add('on');
+  const f=d.querySelector('iframe');
+  if(f&&!f.src)f.src=f.dataset.src;
+  unlockVip();
+});
+
+/* ================= VIP 설명회 잠금 해제 ================= */
+let vipUnlocked=false;
+function unlockVip(){
+  if(vipUnlocked)return;
+  vipUnlocked=true;
+  document.getElementById('vipLocked').classList.add('off');
+  const open=document.getElementById('vipOpen');
+  open.classList.add('on');
+  const f=open.querySelector('iframe');
+  if(f&&!f.src)f.src=f.dataset.src;
+}
+
+/* ================= 스크롤 리빌 ================= */
+(function(){
+  const targets=document.querySelectorAll('.section-head,.result-card,.product-card,.book-card,.mock-card,.price-card,.consult-card,.try-card,.two-col>div,.secret-card,.retry-band,.manual-band,.secret-price,.copyright-band,.review-shot,.hero-copy,.report-placeholder');
+  targets.forEach(el=>el.classList.add('rv'));
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  targets.forEach(el=>io.observe(el));
+})();
+
+/* ================= 이미지 확대 ================= */
+const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lightboxImg');
+document.querySelectorAll('.review-shot img, .shot img').forEach(img=>{
+  img.addEventListener('click',()=>{
+    lbImg.src=img.currentSrc||img.src;
+    lbImg.alt=img.alt||'';
+    lb.classList.add('on');
+    document.body.style.overflow='hidden';
+  });
+});
+function closeLb(){lb.classList.remove('on');document.body.style.overflow='';lbImg.src=''}
+lb.addEventListener('click',closeLb);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('on'))closeLb()});
+
+/* ================= 신청 버튼 ================= */
+/* 모든 신청은 동일한 네이버 설문지로 연결됩니다. */
+</script>
+</body>
+</html>
