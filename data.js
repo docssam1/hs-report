@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 28. 오후 6:41:02
+ * 생성: 2026. 7. 29. 오전 10:22:35
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -616,39 +616,48 @@ window.GFIELD_DATA = {
     },
     "aug-w4": {
       "notice": "",
-      "homework": ""
+      "homework": "",
+      "textbooks": []
     },
     "sep-w1": {
       "notice": "",
-      "homework": ""
+      "homework": "",
+      "textbooks": []
     },
     "sep-14": {
       "notice": "",
-      "homework": ""
+      "homework": "",
+      "textbooks": []
     },
     "sep-21": {
       "notice": "",
-      "homework": ""
+      "homework": "",
+      "textbooks": []
     },
     "sep-28": {
       "notice": "",
-      "homework": ""
+      "homework": "",
+      "textbooks": []
     },
     "oct-5": {
       "notice": "",
-      "homework": ""
+      "homework": "",
+      "textbooks": []
     },
     "oct-12": {
       "notice": "",
-      "homework": ""
+      "homework": "",
+      "textbooks": []
     },
     "oct-19": {
       "notice": "",
-      "homework": ""
+      "homework": "",
+      "textbooks": []
     },
     "oct-26": {
       "notice": "",
-      "homework": ""
+      "homework": "",
+      "textbooks": []
     }
   },
   "students": [
@@ -673,7 +682,8 @@ window.GFIELD_DATA = {
     "유호연",
     "김서율",
     "김지유",
-    "김소라"
+    "김소라",
+    "유현우"
   ],
   "attendance": {
     "허유민": [
@@ -852,7 +862,12 @@ window.GFIELD_DATA = {
       "jul-w3",
       "jul-w4"
     ],
-    "김소라": []
+    "김소라": [],
+    "유현우": [
+      "jul-w2",
+      "jul-w3",
+      "jul-w4"
+    ]
   },
   "specialStudents": [
     "노관호",
@@ -936,12 +951,14 @@ window.GFIELD_DATA = {
       "유호연",
       "김서율",
       "김지유",
-      "김소라"
+      "김소라",
+      "유현우"
     ],
     "활용 모의고사": [
       "김소라",
       "김현우",
-      "노관호"
+      "노관호",
+      "유현우"
     ],
     "추가 모의고사": []
   },
@@ -1877,7 +1894,8 @@ window.GFIELD_DATA = {
   ],
   "examSets": [],
   "studentTypes": {
-    "김소라": "online"
+    "김소라": "online",
+    "유현우": "online"
   },
   "vipAccess": {
     "report": [
