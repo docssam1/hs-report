@@ -317,6 +317,18 @@
         <div class="hint">학생이 제출한 중급 모의고사 진단이 자동으로 모입니다. 학생을 고르면 회차별 O/X와 약점을 봅니다.</div>
         <div id="mock-body">🔄 새로고침을 눌러 결과를 불러오세요.</div>
       </div>
+      <div class="card">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <h3 style="margin:0">🧩 학생별 약점 유형</h3>
+          <button class="btn" onclick="loadWeakTypes()">🔄 새로고침</button>
+          <span id="wt-status" class="hint" style="margin:0"></span>
+        </div>
+        <div class="hint">학생이 진단(final.html)에서 "이 유형 어려워요"로 표시해 둔 문항 유형입니다. 학생을 고르면 상세 목록이, 아래에는 아직 해결되지 않은 유형이 있는 학생 전체 현황이 나옵니다. 체크하면 해결 처리됩니다.</div>
+        <div class="field"><label>학생 선택</label><select class="select" id="wt-student" onchange="wtSelect(this.value)"></select></div>
+        <div id="wt-body">🔄 새로고침을 눌러 불러오세요.</div>
+        <h4 style="margin:16px 0 6px">👀 전체 학생 미해결 현황</h4>
+        <div id="wt-overview"></div>
+      </div>
     </section>
   </div>
 
@@ -473,6 +485,7 @@
     ['attend','students','content','settings','archive','vip','mag','report','exam','mock'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
     if(name==='mock' && window.loadMockResults) loadMockResults();
+    if(name==='mock' && window.loadWeakTypes) loadWeakTypes();
   }
 
   function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderExam(); renderGhStat(); }
@@ -663,6 +676,72 @@
     body.innerHTML=h;
   }
   window.loadMockResults=loadMockResults;
+
+  /* ===== 학생별 약점 유형 (weak_types, 학생 진단에서 "이 유형 어려워요" 표시) ===== */
+  const WT_URL="https://fgahqumaldheqettmvqg.supabase.co";
+  const WT_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
+  let WT_ROWS=null, wtSel='', wtErr='';
+  function fmtWt(t){ if(!t) return '-'; try{ return new Date(t).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}); }catch(e){ return t; } }
+  async function loadWeakTypes(){
+    const st=document.getElementById('wt-status');
+    if(st) st.textContent='불러오는 중…';
+    wtErr='';
+    try{
+      const r=await fetch(WT_URL+"/rest/v1/weak_types?select=student,type,area,round,qno,resolved,updated_at&order=updated_at.desc",{headers:{apikey:WT_KEY,Authorization:'Bearer '+WT_KEY}});
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      WT_ROWS=await r.json();
+      if(st) st.textContent='✅ '+WT_ROWS.length+'건 불러옴';
+    }catch(e){ WT_ROWS=null; wtErr=(e&&e.message)||'네트워크 오류'; if(st) st.textContent='불러오기 실패'; }
+    renderWeakTypes();
+  }
+  function wtSelect(name){ wtSel=name; renderWeakDetail(); }
+  function renderWeakTypes(){
+    const body=document.getElementById('wt-body'), ov=document.getElementById('wt-overview'), sel=document.getElementById('wt-student');
+    if(!body||!ov) return;
+    if(WT_ROWS===null){
+      body.innerHTML='<div class="hint" style="color:#dc2626">약점 유형을 불러오지 못했습니다'+(wtErr?(' ('+esc(wtErr)+')'):'')+'. 🔄 새로고침을 눌러 다시 시도하세요.</div>';
+      ov.innerHTML='';
+      return;
+    }
+    const studs=mkStudents();
+    if(!wtSel||!studs.includes(wtSel)) wtSel=studs[0]||'';
+    if(sel) sel.innerHTML=studs.map(s=>`<option ${s===wtSel?'selected':''}>${esc(s)}</option>`).join('');
+    renderWeakDetail();
+    const cnt={};
+    WT_ROWS.forEach(r=>{ if(!r.resolved) cnt[r.student]=(cnt[r.student]||0)+1; });
+    const names=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
+    if(!names.length){ ov.innerHTML='<div class="hint">미해결 약점 유형이 있는 학생이 없습니다.</div>'; return; }
+    let h='<div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:13px"><thead><tr><th style="border:1px solid #ddd;padding:6px 12px">학생</th><th style="border:1px solid #ddd;padding:6px 12px">미해결</th></tr></thead><tbody>';
+    names.forEach(s=>{ h+=`<tr style="cursor:pointer" onclick="wtSelect('${s.replace(/'/g,"\\'")}')"><th style="border:1px solid #ddd;padding:6px 12px;text-align:left;color:#2563eb;text-decoration:underline">${esc(s)}</th><td style="border:1px solid #ddd;padding:6px 12px;text-align:center;font-weight:800;color:#dc2626">${cnt[s]}</td></tr>`; });
+    h+='</tbody></table></div>';
+    ov.innerHTML=h;
+  }
+  function renderWeakDetail(){
+    const body=document.getElementById('wt-body'); if(!body||WT_ROWS===null) return;
+    const rows=WT_ROWS.filter(r=>r.student===wtSel);
+    const total=rows.length, unresolved=rows.filter(r=>!r.resolved).length;
+    let h=`<div style="margin:8px 0;font-size:13px"><b>미해결 ${unresolved}개 / 전체 ${total}개</b></div>`;
+    if(!rows.length){ h+='<div class="hint">표시된 약점 유형이 없습니다.</div>'; body.innerHTML=h; return; }
+    h+='<div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:13px"><thead><tr><th style="border:1px solid #ddd;padding:6px 10px">해결</th><th style="border:1px solid #ddd;padding:6px 10px">유형</th><th style="border:1px solid #ddd;padding:6px 10px">영역</th><th style="border:1px solid #ddd;padding:6px 10px">표시한 회차</th><th style="border:1px solid #ddd;padding:6px 10px">마지막 업데이트</th></tr></thead><tbody>';
+    rows.forEach(r=>{
+      const done=!!r.resolved;
+      const rowStyle=done?'color:#bbb;text-decoration:line-through':'';
+      h+=`<tr style="${rowStyle}"><td style="border:1px solid #ddd;padding:6px 10px;text-align:center"><input type="checkbox" ${done?'checked':''} onchange="wtToggle('${String(r.student).replace(/'/g,"\\'")}','${String(r.type).replace(/'/g,"\\'")}',this.checked)"></td><td style="border:1px solid #ddd;padding:6px 10px">${esc(r.type)}</td><td style="border:1px solid #ddd;padding:6px 10px">${esc(r.area||'-')}</td><td style="border:1px solid #ddd;padding:6px 10px;text-align:center">${esc(r.round||'-')}</td><td style="border:1px solid #ddd;padding:6px 10px;text-align:center">${fmtWt(r.updated_at)}</td></tr>`;
+    });
+    h+='</tbody></table></div>';
+    body.innerHTML=h;
+  }
+  async function wtToggle(student,type,resolved){
+    try{
+      const url=WT_URL+"/rest/v1/weak_types?student=eq."+encodeURIComponent(student)+"&type=eq."+encodeURIComponent(type);
+      const r=await fetch(url,{method:'PATCH',headers:{apikey:WT_KEY,Authorization:'Bearer '+WT_KEY,'Content-Type':'application/json'},body:JSON.stringify({resolved:resolved})});
+      if(!r.ok){ toast('저장 실패'); return; }
+      const row=WT_ROWS&&WT_ROWS.find(x=>x.student===student&&x.type===type);
+      if(row) row.resolved=resolved;
+      renderWeakTypes();
+    }catch(e){ toast('네트워크 오류'); }
+  }
+  window.loadWeakTypes=loadWeakTypes;
 
   /* ===== 학생 접속 기록 ===== */
   const AL_URL="https://fgahqumaldheqettmvqg.supabase.co";
