@@ -249,6 +249,7 @@ td.weak-cell{white-space:nowrap}
   var roundNum = parseInt(params.get('round')||'1',10); if(!roundNum || roundNum<1) roundNum=1;
   var preview = params.get('preview')==='1';
   var urlName = (params.get('name')||'').trim();
+  var goParam = (params.get('go')||'').trim();
 
   function BP(no){ return M.blueprint.filter(function(b){return b.no===no;})[0] || {no:no,area:'',pts:0}; }
   function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -784,6 +785,18 @@ td.weak-cell{white-space:nowrap}
     };
   }
 
+  /* go=answer / go=timer let a student land past the 시작 화면 once identified;
+     any other value (or none) keeps the existing 시작 화면-first behaviour. The
+     round-readiness check is delegated to renderStart so there is one place that
+     owns the "회차가 아직 준비되지 않았습니다" message. */
+  function enterFlow(){
+    var R = getRound();
+    if(!R){ renderStart(); return; }
+    if(goParam==='answer'){ renderAnswer(); return; }
+    if(goParam==='timer'){ renderTimer(); return; }
+    renderStart();
+  }
+
   function renderGate(){
     showPrint(false);
     app.innerHTML =
@@ -804,7 +817,7 @@ td.weak-cell{white-space:nowrap}
       if(!v){ document.getElementById('gerr').textContent='이름을 입력해 주세요.'; return; }
       state.name=v;
       if(!preview){ try{ localStorage.setItem('gfield_student', v); }catch(e){} }
-      renderStart();
+      enterFlow();
     }
   }
 
@@ -1000,10 +1013,12 @@ td.weak-cell{white-space:nowrap}
       '<div class="agrid" id="agrid"></div>'+
       '<div class="countbar">선택된 오답: <b id="wcount">0</b>개</div>'+
       '<div class="answerbtns"><button class="btn-secondary" id="btnClear">모두 지우기</button><button class="btn-primary" id="btnGrade">채점하고 분석 보기</button></div>'+
+      '<div class="no-print" style="text-align:center;margin-top:12px"><a href="#" id="toTimerLink" style="color:var(--dim);font-size:12px;text-decoration:underline">⏱ 시간 재고 풀어볼까요? 타이머로 이동</a></div>'+
       '</section></div>';
     paintGrid();
     document.getElementById('btnClear').onclick=function(){ state.oxArr=Array(M.questions).fill('O'); paintGrid(); };
     document.getElementById('btnGrade').onclick=function(){ gradeAndShowReport(); };
+    document.getElementById('toTimerLink').onclick=function(e){ e.preventDefault(); renderTimer(); };
     function paintGrid(){
       var g=document.getElementById('agrid'); g.innerHTML='';
       for(var n=1;n<=M.questions;n++){
@@ -1152,7 +1167,7 @@ td.weak-cell{white-space:nowrap}
     if(!M || !M.rounds){ app.innerHTML='<div class="doc"><section><h2>데이터를 불러오지 못했습니다</h2></section></div>'; return; }
     var student = urlName;
     if(!student){ try{ student = localStorage.getItem('gfield_student')||''; }catch(e){ student=''; } }
-    if(student){ state.name=student; renderStart(); }
+    if(student){ state.name=student; enterFlow(); }
     else { renderGate(); }
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
