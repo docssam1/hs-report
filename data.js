@@ -969,6 +969,7 @@ window.GFIELD_DATA = {
     "보충학습",
     "약점 유형",
     "사고력 교재",
+    "개념 교재",
     "활용 모의고사",
     "중급 모의고사",
     "파이널 모의고사",
@@ -1073,7 +1074,8 @@ window.GFIELD_DATA = {
     ],
     "최종 모의고사": [
       "노관호"
-    ]
+    ],
+    "개념 교재": []
   },
   "books": [
     {
@@ -1822,6 +1824,104 @@ window.GFIELD_DATA = {
       "video": "https://youtu.be/cBZ7iS4keIo",
       "imgdir": "bk_ms6f4ue6",
       "pages": 6
+    },
+    {
+      "folder": "개념 교재",
+      "title": "HS 대비 응용 개념서 · THINKING BASIC",
+      "desc": "문제 푸는 방법 찾기 (1)(2) · 규칙 찾아 해결하기 (1)",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753689111_1mbr_HS___________-HS___4.pdf",
+      "imgdir": "tb_mrho8522",
+      "pages": 40,
+      "video": "https://youtu.be/20OIED2hezI",
+      "cover": "",
+      "date": "2026-07-30",
+      "links": [
+        {
+          "label": "1단원 개념",
+          "url": "https://youtu.be/20OIED2hezI"
+        },
+        {
+          "label": "1단원 필수유형",
+          "url": "https://youtu.be/20OIED2hezI?t=1875"
+        },
+        {
+          "label": "2단원 개념",
+          "url": "https://youtu.be/HtSd564pCpw"
+        },
+        {
+          "label": "2단원 필수유형",
+          "url": "https://youtu.be/hDPKx7cQtIw"
+        },
+        {
+          "label": "3단원 개념",
+          "url": "https://youtu.be/8Wz-g95UGVg"
+        },
+        {
+          "label": "3단원 필수유형",
+          "url": "https://youtu.be/PYHnn1x2dlM?t=843"
+        }
+      ]
+    },
+    {
+      "folder": "개념 교재",
+      "title": "Thinking Core · 생각하는 황소 대비 심화 개념",
+      "desc": "CH1 NUMBERS · CH2 Algebra · CH3 Numbers & Case · CH4 Geometry · CH5 활용",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783857450970_tjse_Thinking_Core_____________________2_.pdf",
+      "imgdir": "tb_mrhqq399",
+      "pages": 92,
+      "video": "https://youtu.be/r6NRdZudWks",
+      "cover": "",
+      "date": "2026-07-30",
+      "links": [
+        {
+          "label": "CH1 학습영상",
+          "url": "https://youtu.be/r6NRdZudWks"
+        },
+        {
+          "label": "CH1 Semi 1회",
+          "url": "https://youtu.be/rJKaRm6utcE"
+        },
+        {
+          "label": "CH2 학습영상 1",
+          "url": "https://youtu.be/TxEkE7zNu8I"
+        },
+        {
+          "label": "CH2 학습영상 2",
+          "url": "https://youtu.be/jYu8jXkawrA"
+        },
+        {
+          "label": "CH2 Semi 2회",
+          "url": "https://youtu.be/W6GnRtzez24"
+        },
+        {
+          "label": "CH2 Semi 2회 14·15·16번",
+          "url": "https://youtu.be/AT5xxcA0DSU"
+        },
+        {
+          "label": "CH3 학습영상",
+          "url": "https://youtu.be/J_YeCnQpJ5o"
+        },
+        {
+          "label": "CH3 Semi 3회",
+          "url": "https://youtu.be/doFnLZ2P0jc"
+        },
+        {
+          "label": "CH4 학습영상",
+          "url": "https://youtu.be/JEo6Gy0xY3o"
+        },
+        {
+          "label": "CH4 Semi 4회",
+          "url": "https://youtu.be/D_PtkZ0WMf8"
+        },
+        {
+          "label": "CH5 학습영상",
+          "url": "https://youtu.be/Ou3ng5mFmuo"
+        },
+        {
+          "label": "CH5 Semi 5회",
+          "url": "https://youtu.be/-d8FB2id0l0"
+        }
+      ]
     }
   ],
   "pins": {},
