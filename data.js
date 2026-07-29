@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 29. 오후 12:28:15
+ * 생성: 2026. 7. 29. 오후 1:39:02
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -467,7 +467,8 @@ window.GFIELD_DATA = {
           "access": [
             "김소라",
             "노관호",
-            "정유현"
+            "정유현",
+            "김현우"
           ]
         },
         {
@@ -476,7 +477,8 @@ window.GFIELD_DATA = {
           "access": [
             "김소라",
             "노관호",
-            "정유현"
+            "정유현",
+            "김현우"
           ],
           "folder": "tb_mrtzurqf",
           "pages": 7
@@ -486,7 +488,8 @@ window.GFIELD_DATA = {
           "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=4",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ]
         },
         {
@@ -494,7 +497,8 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%204%ED%9A%8C.pdf",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ],
           "folder": "tb_mrtzv6i3",
           "pages": 6
@@ -504,7 +508,8 @@ window.GFIELD_DATA = {
           "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=5",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ]
         },
         {
@@ -512,7 +517,8 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%ED%99%9C%EC%9A%A9%205%ED%9A%8C.pdf",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ],
           "folder": "tb_mrtzvimx",
           "pages": 6
@@ -522,7 +528,8 @@ window.GFIELD_DATA = {
           "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=6",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ]
         },
         {
@@ -530,7 +537,8 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%206%ED%9A%8C.pdf",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ],
           "folder": "tb_mrtzvuxi",
           "pages": 6
@@ -540,7 +548,8 @@ window.GFIELD_DATA = {
           "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=7",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ]
         },
         {
@@ -548,7 +557,8 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%ED%99%9C%EC%9A%A9%207%ED%9A%8C.pdf",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ],
           "folder": "tb_mrtzw64s",
           "pages": 8
@@ -558,7 +568,8 @@ window.GFIELD_DATA = {
           "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=8",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ]
         },
         {
@@ -566,7 +577,8 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%ED%99%9C%EC%9A%A9%208%ED%9A%8C.pdf",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ],
           "folder": "tb_mrtzwmjr",
           "pages": 6
@@ -576,7 +588,8 @@ window.GFIELD_DATA = {
           "url": "https://hs.gfieldacademy.net/answer.html?set=hw&round=9",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ]
         },
         {
@@ -584,7 +597,8 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%8B%A4%EC%A0%84%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%20%ED%99%9C%EC%9A%A9%209%ED%9A%8C.pdf",
           "access": [
             "김소라",
-            "노관호"
+            "노관호",
+            "김현우"
           ],
           "folder": "tb_mrtzxgsf",
           "pages": 6
