@@ -1373,8 +1373,19 @@
 <script>
 (function(){
   /* 주차별 콘텐츠는 파일 업로드·이미지 분할 뒤 renderContent()가 전체를 다시 그리므로,
-     data-wk(주차 id) 기준으로 열림 상태를 별도 저장해 재렌더에도 펼친 상태가 유지되게 함 */
+     data-wk(주차 id) 기준으로 열림 상태를 별도 저장해 재렌더에도 펼친 상태가 유지되게 함.
+     data-wk가 없는 블록(교재/자료 보관함, VIP 라운지, 칼럼·매거진, 성적표 등)은 같은 컨테이너
+     안에서의 순서(인덱스)를 키로 써서 상태를 기억한다 — 재렌더 때 컨테이너의 innerHTML을
+     통째로 새로 채워도 항목 순서는 그대로이므로 이 키가 안정적으로 유지된다 */
   var openWk={};
+  function keyFor(cw){
+    if(cw.dataset.wk) return 'wk:'+cw.dataset.wk;
+    var parent=cw.parentElement;
+    var pid=(parent&&parent.id)||'noid';
+    var idx=0, sib=cw;
+    while((sib=sib.previousElementSibling)){ if(sib.classList.contains('content-week')) idx++; }
+    return 'ix:'+pid+':'+idx;
+  }
   function labelFor(cw){
     var t=cw.querySelector('input[type="text"]')||cw.querySelector('input:not([type="file"]):not([type="checkbox"]):not([type="date"])')||cw.querySelector('input,textarea,select');
     var v=t&&t.value?t.value.trim():'';
@@ -1389,11 +1400,16 @@
     var body=document.createElement('div'); body.className='cw-body';
     while(cw.firstChild){ body.appendChild(cw.firstChild); }
     cw.appendChild(head); cw.appendChild(body);
-    var wk=cw.dataset.wk;
-    if(wk && openWk[wk]){ /* 이전에 펼쳐뒀던 주차면 그대로 유지 */ } else { cw.classList.add('acc-collapsed'); }
-    head.addEventListener('click',function(){
+    var key=keyFor(cw);
+    if(Object.prototype.hasOwnProperty.call(openWk,key)){
+      if(!openWk[key]) cw.classList.add('acc-collapsed'); /* 이전 상태(열림/닫힘)를 그대로 복원 */
+    } else {
+      cw.classList.add('acc-collapsed'); openWk[key]=false; /* 처음 보는 블록만 기본 접힘 */
+    }
+    head.addEventListener('click',function(e){
+      if(e.target && e.target.closest && e.target.closest('input,button,select,textarea,a,label')) return; /* 헤더 안 조작 요소 클릭은 토글 제외 */
       cw.classList.toggle('acc-collapsed'); title.textContent=labelFor(cw);
-      if(wk) openWk[wk]=!cw.classList.contains('acc-collapsed');
+      openWk[key]=!cw.classList.contains('acc-collapsed');
     });
     body.addEventListener('input',function(){ title.textContent=labelFor(cw); });
   }
