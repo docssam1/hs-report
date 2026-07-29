@@ -198,6 +198,26 @@
   .book .cover.noimg{background:linear-gradient(135deg,#fdba74,#fb923c);display:flex;align-items:center;justify-content:center;border:1px solid #f5b06a;}
   .book .cover.noimg .cv-title{color:#7a2e06;font-weight:800;font-size:12px;line-height:1.35;padding:10px 8px;text-align:center;}
 
+  /* 자료실 책장 소개 (archive-info.js) */
+  .arc-info{background:var(--soft);border:1px solid #fcd3a3;border-radius:14px;margin:0 0 12px;overflow:hidden;}
+  .arc-info-head{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:none;border:none;width:100%;text-align:left;}
+  .arc-info-head-main{flex:1;min-width:0;}
+  .arc-info-eyebrow{display:inline-block;font-size:11.5px;font-weight:800;color:var(--orange-d);letter-spacing:.02em;}
+  .arc-info-badge{display:inline-block;background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:1px;}
+  .arc-info-tagline{margin-top:4px;font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.5;}
+  .arc-info-toggle{flex:none;width:26px;height:26px;border-radius:50%;background:#fff;border:1px solid #fcd3a3;color:var(--orange-d);font-size:12px;display:flex;align-items:center;justify-content:center;transition:transform .25s ease;margin-top:2px;}
+  .arc-info.open .arc-info-toggle{transform:rotate(180deg);}
+  .arc-info-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease;}
+  .arc-info.open .arc-info-body{grid-template-rows:1fr;}
+  .arc-info-body-in{overflow:hidden;padding:0 14px;}
+  .arc-info.open .arc-info-body-in{padding:0 14px 14px;}
+  .arc-info-p{font-size:13px;color:var(--ink2);line-height:1.65;margin-top:8px;}
+  .arc-info-p b{color:var(--orange-d);}
+  .arc-info-who{margin-top:10px;font-size:12.5px;font-weight:700;color:var(--accent);background:#fff;border:1px solid var(--line2);border-radius:10px;padding:8px 11px;line-height:1.5;}
+  .arc-info-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;}
+  .arc-info-tag{font-size:11px;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--ink2);}
+  .arc-info-foot{font-size:12px;color:var(--dim);text-align:center;padding:14px 6px 4px;line-height:1.6;}
+
   /* 책 뷰어 */
   #bookviewer{position:fixed;inset:0;z-index:75;display:none;flex-direction:column;background:#eef1f4;}
   #bookviewer.open{display:flex;}
@@ -454,6 +474,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
+<script src="archive-info.js?v=20260729a"></script>
 <script>
   const D = window.GFIELD_DATA;
   let currentStudent = null;
@@ -808,6 +829,31 @@
     });
   }
 
+  /* 자료실 책장 소개 (archive-info.js, window.GFIELD_ARCHIVE_INFO) - 있으면 책장 위에 소개 블록을 붙인다 */
+  function arcInfoOpenKey(folder){ return 'gfield_arcinfo_open__'+folder; }
+  function isArcInfoOpen(folder){ try{ return localStorage.getItem(arcInfoOpenKey(folder))==='1'; }catch(e){ return false; } }
+  function setArcInfoOpen(folder,open){ try{ localStorage.setItem(arcInfoOpenKey(folder), open?'1':'0'); }catch(e){} }
+  function arcInfoHtml(folder){
+    const info=(window.GFIELD_ARCHIVE_INFO||{})[folder];
+    if(!info) return '';
+    const open=isArcInfoOpen(folder);
+    const eyebrow=[info.step,info.count].filter(Boolean).join(' · ');
+    const badge=info.badge ? `<span class="arc-info-badge">${escHtml(info.badge)}</span>` : '';
+    const body=(info.body||[]).map(p=>`<p class="arc-info-p">${p}</p>`).join('');
+    const who=info.who ? `<div class="arc-info-who">💡 이런 학생에게 맞습니다: ${escHtml(info.who)}</div>` : '';
+    const tags=(info.tags&&info.tags.length) ? `<div class="arc-info-tags">${info.tags.map(t=>`<span class="arc-info-tag">#${escHtml(t)}</span>`).join('')}</div>` : '';
+    return `<div class="arc-info${open?' open':''}" data-folder="${escAttr(folder)}">
+      <button type="button" class="arc-info-head">
+        <span class="arc-info-head-main">
+          <span class="arc-info-eyebrow">${escHtml(eyebrow)}</span>${badge}
+          <div class="arc-info-tagline">${escHtml(info.tagline||'')}</div>
+        </span>
+        <span class="arc-info-toggle">▾</span>
+      </button>
+      <div class="arc-info-body"><div class="arc-info-body-in">${body}${who}${tags}</div></div>
+    </div>`;
+  }
+
   function renderArchive(){
     const wrap=document.getElementById('archive-list'); wrap.innerHTML='';
     if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 자료실이 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
@@ -818,6 +864,7 @@
       const books=(D.books||[]).filter(b=>b&&b.folder===folder&&(b.pdf||b.video||(b.links&&b.links.length)));
       const sec=document.createElement('div'); sec.className='shelf-sec';
       let inner=`<div class="shelf-h disp">📚 ${escHtml(folder)}<span class="c">${books.length}권</span></div>`;
+      inner+=arcInfoHtml(folder);
       if(books.length){
         total+=books.length;
         inner+='<div class="shelf">';
@@ -838,10 +885,18 @@
       sec.innerHTML=inner; wrap.appendChild(sec);
     });
     if(!total){ const n=document.createElement('div'); n.className='empty-note'; n.textContent='아직 책장에 교재가 없습니다.'; wrap.appendChild(n); }
+    const arcFooter=(window.GFIELD_ARCHIVE_INFO||{})._footer;
+    if(arcFooter){ const f=document.createElement('div'); f.className='arc-info-foot'; f.textContent=arcFooter; wrap.appendChild(f); }
     wrap.querySelectorAll('.book[data-bi]').forEach(btn=>btn.onclick=()=>{
       const bk=(D.books||[])[+btn.dataset.bi];
       if(isPlainPdfBook(bk)) downloadWatermarked(pdfHref(bk.pdf), bk.title||'교재');
       else openBook(bk);
+    });
+    wrap.querySelectorAll('.arc-info > .arc-info-head').forEach(btn=>btn.onclick=()=>{
+      const box=btn.parentElement; const folder=box.dataset.folder;
+      const open=!box.classList.contains('open');
+      box.classList.toggle('open', open);
+      setArcInfoOpen(folder, open);
     });
   }
 
