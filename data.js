@@ -631,24 +631,44 @@ window.GFIELD_DATA = {
       ]
     },
     "aug-w4": {
-      "notice": "공식 암기는 되어 있지만 개념 심화가 되어 있지 않았다면, 설명은 이해하지만 문제를 못 읽고 이해하지 못하는 경우가 많습니다.\n\n오늘 시험을 보는 것을 살펴보니 유형은 인지되어 있으나 풀이 과정 70% 이후에서 해결을 못하거나 실수를 하는 경우, 시험에 대한 시간 관리가 안 되는 경우가 많았습니다. 그러다 보니 마무리가 안 되어 점수 하락이 되었을 것입니다.\n\n이번 테스트는 몇 차례 타 학원이라도 모의고사를 경험한 경우 45점 이상이면 심화 상위권, 경시반 목표를 바라볼 수 있을 것 같으며, 20점 이상은 되어야 황소 합격을 바라볼 수 있습니다. 자세한 예상 결과는 아직 다른 반 시험이 끝나지 않아 취합 후 연락드리겠습니다.\n\n당부드리고 싶은 말은, 황소 결과를 떠나 어린 나이에 배웠던 사고력 수학을 전체적으로 점검하고 기억에 오래 남기를 희망하신다면 답보다는 풀이 과정에 맞춰 학습하시기를 추천드립니다.\n\n다음 주 시험은 오늘 진행한 모의고사를 꼼꼼히 복습한다면 더 나은 성적이 될 수 있을 것입니다. 마지막 시험 때 얼마나 성장할지 벌써부터 기대가 되네요. 파이팅!\n\n[[hl:초등과정 대비 파이널 모의고사 1회 풀이 영상]]\nhttps://youtu.be/bA-ddeRW-mM",
+      "notice": "절대 결과를 보고 꾸중하지는 마세요. 지금부터라도 집중하여 제대로 공부하면 됩니다. 오늘 진행한 문제 중 80% 이상은 어디서든 다 배웠던 내용입니다.\n\n하지만 공식 암기는 되어 있지만 개념 심화가 되어 있지 않았다면, 설명은 이해하지만 문제를 못 읽고 이해하지 못하는 경우가 많습니다. 이제부터라도 틀린 답만 체크하지 말고 제 영상을 5번 이상 필기하며 보면서 유형과 개념을 익혀 주세요.\n\n오늘 시험을 보는 것을 살펴보니 유형은 인지되어 있으나 풀이 과정 70% 이후에서 해결을 못하거나 실수를 하는 경우, 시험에 대한 시간 관리가 안 되는 경우가 많았습니다. 그러다 보니 마무리가 안 되어 점수 하락이 되었을 것입니다.\n\n이번 주 모의고사부터는 성적 취합 후 이전 연도 합격자와 비교하여 누적 성적표를 제공해 드립니다.\n\n당부드리고 싶은 말은, 황소 결과를 떠나 어린 나이에 배웠던 사고력 수학을 전체적으로 점검하고 기억에 오래 남기를 희망하신다면 답보다는 풀이 과정에 맞춰 학습하시기를 추천드리며, 부족한 유형은 언제든 제 톡으로 사진 찍어 보내주세요.\n\n다음 주 시험은 오늘 진행한 모의고사를 꼼꼼히 복습한다면 더 나은 성적이 될 수 있을 것입니다. 마지막 시험 때 얼마나 성장할지 벌써부터 기대가 되네요. 파이팅!\n\n[[hl:초등과정 대비 파이널 모의고사 1회 풀이 영상]]\nhttps://youtu.be/bA-ddeRW-mM",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "파이널 모의고사 1회 · 오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/final.html?round=1"
+        }
+      ]
     },
     "sep-w1": {
-      "notice": "이번 주는 대수 문제와 경우의 수 문항을 늘리고, 기본적인 도형 문제를 배제하고 도형을 활용한 가짓수 문제를 출제하다 보니 도형이 강점이었던 학생들의 점수 하락이 있었습니다.\n\n그런데 길찾기는 왜 자꾸 틀리는지 ㅠㅠ 자주 안 나오기는 한데 안 나오길 기도해야겠어요.\n\n아마 2점대 문제부터 어렵지는 않지만 패턴에 익숙하지 않아 당황했을 겁니다.\n\n아직 어린 나이라 주위 환경과 마음가짐에 따라 편차가 심한 경우도 있으니 더욱 꼼꼼히 관리해 주세요.\n\n이번 주도 줌 수업으로 진행한 학생은 꼭~~ 시험지 전체 사진을 보내주세요.\n\n[[hl:초등선발 대비 파이널 모의고사 2회 풀이 영상]]\nhttps://youtu.be/_dEhSC9ZaKo",
+      "notice": "이번 주는 대수 문제와 경우의 수 문항을 늘리고, 기본적인 도형 문제를 배제하고 도형을 활용한 가짓수 문제를 출제하다 보니 도형이 강점이었던 학생들의 점수 하락이 있었습니다.\n\n그런데 길찾기는 왜 자꾸 틀리는지 ㅠㅠ 자주 안 나오기는 하는데 안 나오길 기도해야겠어요.\n\n아마 2점대 문제부터 어렵지는 않지만 패턴에 익숙하지 않아 당황했을 겁니다.\n\n4.2점대에서는 25번, 26번, 30번은 충분히 풀 수 있는 유형이니 이 부분도 복습 더 해주세요.\n\n아직 어린 나이라 주위 환경과 마음가짐에 따라 편차가 심한 경우도 있으니 더욱 꼼꼼히 관리해 주세요.\n\n[[hl:초등선발 대비 파이널 모의고사 2회 풀이 영상]]\nhttps://youtu.be/_dEhSC9ZaKo",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "파이널 모의고사 2회 · 오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/final.html?round=2"
+        }
+      ]
     },
     "sep-14": {
-      "notice": "문제의 풀이 과정은 대부분 이해하고 있습니다. 다만 글을 읽고 자신이 아는 유형인지 모르는 경우가 많습니다. 풀이를 할 때면 \"아~ 아는 문제였는데\" 하는 한숨과 한탄이 여기저기 들립니다.\n\n지금은 개념을 공부할 때는 아닌 것 같아요. 하지만 심화 개념이나 부족한 개념이 있다면 언제든 연락 주세요.\n\n마지막 1달 반, 더욱 꼼꼼히 지도하겠습니다.\n\n[[hl:초등선발 대비 파이널 모의고사 3회 풀이 영상]]\nhttps://youtu.be/W7J1DnR6W4Y",
+      "notice": "제의 풀이 과정은 대부분 이해하고 있습니다. 다만 글을 읽고 자신이 아는 유형인지 모르는 경우가 많습니다. 풀이를 할 때면 \"아~ 아는 문제였는데\" 하는 한숨과 한탄이 여기저기 들립니다.\n\n지금은 개념을 공부할 때는 아닌 것 같아요. 하지만 심화 개념이나 부족한 개념이 있다면 언제든 연락 주세요.\n\n마지막 1달 반, 더욱 꼼꼼히 지도하겠습니다.\n\n[[hl:초등선발 대비 파이널 모의고사 3회 풀이 영상]]\nhttps://youtu.be/W7J1DnR6W4Y",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "파이널 모의고사 3회 · 오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/final.html?round=3"
+        }
+      ]
     },
     "sep-21": {
       "notice": "이번 4회는 2, 3점대의 난이도는 어려워 보이지 않지만, 읽는 시간이 오래 걸리거나 조건이나 공식을 생각하지 않고 무작정 노가다로 푼 경우가 많아 시간 관리가 안 되어 점수가 내려간 학생들이 많을 겁니다.\n\n풀이 접근은 쉽지만 글을 읽는 것이 쉽지 않아 저도 이번 회차는 풀이하는 데 시간이 오래 걸렸습니다. (그래도 60점 이상의 학생들도 있습니다 ㅜㅜ)\n\n[[hl:초등선발 대비 파이널 모의고사 4회 풀이 영상]]\nhttps://youtu.be/VqHjNHMYVs8",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "파이널 모의고사 4회 · 오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/final.html?round=4"
+        }
+      ]
     },
     "sep-28": {
       "notice": "",
@@ -1462,72 +1482,56 @@ window.GFIELD_DATA = {
     {
       "folder": "파이널 모의고사",
       "title": "파이널 실전 모의고사 1회",
-      "pdf": "",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%201%ED%9A%8C.pdf",
       "video": "https://youtu.be/bA-ddeRW-mM",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
           "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=1"
-        },
-        {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=1"
+          "url": "https://hs.gfieldacademy.net/final.html?round=1"
         }
       ]
     },
     {
       "folder": "파이널 모의고사",
       "title": "파이널 실전 모의고사 2회",
-      "pdf": "",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%202%ED%9A%8C.pdf",
       "video": "https://youtu.be/_dEhSC9ZaKo",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
           "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=2"
-        },
-        {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=2"
+          "url": "https://hs.gfieldacademy.net/final.html?round=2"
         }
       ]
     },
     {
       "folder": "파이널 모의고사",
       "title": "파이널 실전 모의고사 3회",
-      "pdf": "",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%203%ED%9A%8C.pdf",
       "video": "https://youtu.be/W7J1DnR6W4Y",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
           "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=3"
-        },
-        {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=3"
+          "url": "https://hs.gfieldacademy.net/final.html?round=3"
         }
       ]
     },
     {
       "folder": "파이널 모의고사",
       "title": "파이널 실전 모의고사 4회",
-      "pdf": "",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%204%ED%9A%8C.pdf",
       "video": "https://youtu.be/VqHjNHMYVs8",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
           "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=4"
-        },
-        {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=4"
+          "url": "https://hs.gfieldacademy.net/final.html?round=4"
         }
       ]
     },
@@ -1541,11 +1545,7 @@ window.GFIELD_DATA = {
       "links": [
         {
           "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/mock.html?set=last&round=1"
-        },
-        {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=last&round=1"
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1"
         }
       ]
     },
@@ -1559,11 +1559,7 @@ window.GFIELD_DATA = {
       "links": [
         {
           "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/mock.html?set=last&round=2"
-        },
-        {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=last&round=2"
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=2"
         }
       ]
     },
@@ -1577,11 +1573,7 @@ window.GFIELD_DATA = {
       "links": [
         {
           "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/mock.html?set=last&round=3"
-        },
-        {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=last&round=3"
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=3"
         }
       ]
     },
@@ -1595,11 +1587,7 @@ window.GFIELD_DATA = {
       "links": [
         {
           "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/mock.html?set=last&round=4"
-        },
-        {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=last&round=4"
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=4"
         }
       ]
     },
