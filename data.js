@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 30. 오전 3:55:03
+ * 생성: 2026. 7. 30. 오후 2:17:07
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -402,6 +402,12 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784944439216_1kne_________________2_______.pdf",
           "folder": "tb_ms15m3rp",
           "pages": 2
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 3회 중급 리뷰",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1785388604464_06e7_________________3_______.pdf",
+          "folder": "tb_ms728dfs",
+          "pages": 6
         }
       ]
     },
