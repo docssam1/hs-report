@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시험 타이머 음성 안내</title>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
+:root {
+  --bg: #071018;
+  --panel: rgba(255,255,255,.08);
+  --panel-strong: rgba(255,255,255,.12);
+  --line: rgba(255,255,255,.16);
+  --gold: #d4af37;
+  --gold-light: #f8dd83;
+  --blue: #60a5fa;
+  --green: #2dd4bf;
+  --text: #f8fafc;
+  --muted: #aeb8c7;
+  --danger: #fb7185;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 15% 8%, rgba(96,165,250,.22), transparent 28rem),
+    radial-gradient(circle at 90% 18%, rgba(212,175,55,.18), transparent 24rem),
+    linear-gradient(135deg, #050911, var(--bg) 58%, #0d1722);
+  color: var(--text);
+  font-family: Pretendard, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 28px 16px;
+}
+
+button {
+  font: inherit;
+}
+
+.app {
+  width: min(880px, 100%);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(5, 12, 21, .78);
+  box-shadow: 0 28px 100px rgba(0,0,0,.45);
+  overflow: hidden;
+}
+
+.header {
+  padding: 26px 24px 18px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--gold-light);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 42px);
+  line-height: 1.18;
+  letter-spacing: 0;
+}
+
+.subtitle {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.timer {
+  padding: 30px 24px 24px;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.phase {
+  min-width: 170px;
+}
+
+.phase-label,
+.mode-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.phase-name {
+  margin-top: 6px;
+  color: var(--gold-light);
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.voice-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--muted);
+  background: rgba(255,255,255,.05);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.voice-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--danger);
+  box-shadow: 0 0 20px rgba(251,113,133,.45);
+}
+
+.voice-state.on .voice-dot {
+  background: var(--green);
+  box-shadow: 0 0 20px rgba(45,212,191,.55);
+}
+
+.clock {
+  display: grid;
+  place-items: center;
+  min-height: 172px;
+  border: 1px solid rgba(212,175,55,.24);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(212,175,55,.13), transparent 62%),
+    rgba(0,0,0,.22);
+}
+
+.time {
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(62px, 13vw, 126px);
+  font-weight: 950;
+  line-height: .9;
+  letter-spacing: 0;
+}
+
+.progress {
+  height: 12px;
+  margin-top: 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--blue), var(--gold));
+  transition: width .16s linear;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.btn {
+  min-height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  background: var(--panel);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.btn:hover {
+  background: var(--panel-strong);
+}
+
+.btn.primary {
+  border: 0;
+  color: #061018;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 50px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 14px;
+  background: rgba(255,255,255,.05);
+}
+
+.select,
+.toggle {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  background: #101a26;
+  min-height: 34px;
+  padding: 0 10px;
+  font-weight: 800;
+}
+
+.toggle {
+  min-width: 74px;
+  cursor: pointer;
+}
+
+.toggle.on {
+  color: #061018;
+  border-color: transparent;
+  background: var(--green);
+}
+
+.cue-list {
+  border-top: 1px solid var(--line);
+  padding: 18px 24px 24px;
+  display: grid;
+  gap: 8px;
+}
+
+.cue {
+  display: grid;
+  grid-template-columns: 72px 92px 1fr;
+  gap: 10px;
+  align-items: center;
+  min-height: 48px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: var(--muted);
+  background: rgba(255,255,255,.04);
+}
+
+.cue.active {
+  color: var(--text);
+  border-color: rgba(212,175,55,.38);
+  background: rgba(212,175,55,.10);
+}
+
+.cue-time,
+.cue-phase {
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.cue-msg {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: none;
+  place-items: center;
+  padding: 20px;
+  background: rgba(5, 10, 18, .78);
+  backdrop-filter: blur(10px);
+}
+
+.modal.on {
+  display: grid;
+}
+
+.modal-box {
+  width: min(680px, 100%);
+  border: 1px solid rgba(212,175,55,.45);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(19,31,47,.98), rgba(9,15,25,.98));
+  padding: clamp(28px, 6vw, 46px);
+  text-align: center;
+  box-shadow: 0 0 120px rgba(212,175,55,.18);
+}
+
+.modal-phase {
+  margin: 0;
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: .14em;
+}
+
+.modal-msg {
+  margin: 16px 0 0;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 950;
+  line-height: 1.45;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 12px;
+  }
+
+  .header,
+  .timer,
+  .cue-list {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .controls,
+  .options {
+    grid-template-columns: 1fr;
+  }
+
+  .cue {
+    grid-template-columns: 60px 78px 1fr;
+  }
+}
+</style>
+</head>
+<body>
+<main class="app" aria-label="시험 타이머 음성 안내">
+  <header class="header">
+    <p class="eyebrow">90분 시험 타이머</p>
+    <h1>구간마다 음성으로 알려주는 실전 타이머</h1>
+    <p class="subtitle">시작 버튼을 누르면 타이머가 진행되고, 정해진 시간마다 안내 문구와 음성이 함께 나옵니다.</p>
+  </header>
+
+  <section class="timer">
+    <div class="status-row">
+      <div class="phase">
+        <div class="phase-label">현재 구간</div>
+        <div class="phase-name" id="phaseName">대기 중</div>
+      </div>
+      <div class="voice-state on" id="voiceState">
+        <span class="voice-dot" aria-hidden="true"></span>
+        <span id="voiceStateText">음성 켜짐</span>
+      </div>
+    </div>
+
+    <div class="clock" aria-live="polite">
+      <div class="time" id="clock">90:00</div>
+    </div>
+
+    <div class="progress" aria-hidden="true">
+      <span id="bar"></span>
+    </div>
+
+    <div class="controls">
+      <button class="btn primary" type="button" id="startBtn">시작</button>
+      <button class="btn" type="button" id="pauseBtn">일시정지</button>
+      <button class="btn" type="button" id="resetBtn">처음으로</button>
+    </div>
+
+    <div class="options">
+      <div class="option">
+        <span class="mode-label">진행 속도</span>
+        <select class="select" id="speedSelect" aria-label="진행 속도">
+          <option value="1">실제 90분</option>
+          <option value="200" selected>200배속 체험</option>
+        </select>
+      </div>
+      <div class="option">
+        <span class="mode-label">음성 안내</span>
+        <button class="toggle on" type="button" id="voiceToggle" aria-pressed="true">켜짐</button>
+      </div>
+    </div>
+
+    <p class="note">브라우저 정책 때문에 음성은 사용자가 시작 버튼을 누른 뒤부터 재생됩니다. MP3 재생이 막히면 기기의 한국어 음성 읽기로 대신 안내합니다.</p>
+  </section>
+
+  <section class="cue-list" id="cueList" aria-label="안내 순서"></section>
+</main>
+
+<div class="modal" id="cueModal" role="dialog" aria-modal="true" aria-labelledby="cuePhase" aria-describedby="cueMessage">
+  <div class="modal-box">
+    <p class="modal-phase" id="cuePhase">훑어보기</p>
+    <p class="modal-msg" id="cueMessage"></p>
+  </div>
+</div>
+
+<script>
+const CUES = [
+  { at: 0,    ph: "훑어보기", msg: "자, 시작하자. 5분 동안 시험지를 쭉 넘겨보면서 풀 수 있을 것 같은 문제를 체크해 보자." },
+  { at: 300,  ph: "1~12번",  msg: "다 체크했니? 그럼 12번까지 30분 동안 먼저 푸는 거야. 할 수 있지? 만약 모르는 문제가 있으면 우선 표시해 놓고 넘어가야 돼." },
+  { at: 1200, ph: "1~12번",  msg: "절반 지났어. 지금쯤 6번은 넘어갔으면 좋겠다." },
+  { at: 2100, ph: "13~30번", msg: "35분 지났어. 아직 10번을 넘어가지 못한 친구는 얼른 13번 문제로 넘어가자. 한두 문제 남은 친구는 계속 더 풀어봐." },
+  { at: 3300, ph: "13~30번", msg: "55분이야. 남은 시간을 생각하면서 한 문제에 너무 오래 붙잡고 있지 말자." },
+  { at: 4500, ph: "마무리",   msg: "75분이 지났어. 이제 15분이 남았어. 할 수 있을 것 같은 문제를 골라서 풀어봐." },
+  { at: 5100, ph: "마무리",   msg: "5분 남았어. 답을 옮겨 적지 않은 게 있는지 확인하자." },
+  { at: 5400, ph: "종료",     msg: "자, 90분이 다 됐어. 펜 내려놓자. 수고했어." }
+];
+
+const TOTAL = 5400;
+let running = false;
+let startedAt = 0;
+let elapsedBeforeStart = 0;
+let frameId = null;
+let cueIdx = 0;
+let cueTimer = null;
+let cueAudio = null;
+let voiceEnabled = true;
+let activeSpeed = 200;
+
+const clock = document.getElementById("clock");
+const bar = document.getElementById("bar");
+const phaseName = document.getElementById("phaseName");
+const startBtn = document.getElementById("startBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const resetBtn = document.getElementById("resetBtn");
+const speedSelect = document.getElementById("speedSelect");
+const voiceToggle = document.getElementById("voiceToggle");
+const voiceState = document.getElementById("voiceState");
+const voiceStateText = document.getElementById("voiceStateText");
+const cueModal = document.getElementById("cueModal");
+const cuePhase = document.getElementById("cuePhase");
+const cueMessage = document.getElementById("cueMessage");
+const cueList = document.getElementById("cueList");
+
+function fmt(seconds) {
+  const safe = Math.max(0, Math.round(seconds));
+  const minutes = Math.floor(safe / 60);
+  const remain = safe % 60;
+  return String(minutes).padStart(2, "0") + ":" + String(remain).padStart(2, "0");
+}
+
+function renderCueList() {
+  cueList.innerHTML = CUES.map((cue, index) => (
+    `<div class="cue" data-cue-index="${index}">
+      <div class="cue-time">${fmt(cue.at)}</div>
+      <div class="cue-phase">${cue.ph}</div>
+      <div class="cue-msg">${cue.msg}</div>
+    </div>`
+  )).join("");
+}
+
+function setActiveCue(index) {
+  document.querySelectorAll("[data-cue-index]").forEach((row) => {
+    row.classList.toggle("active", Number(row.dataset.cueIndex) === index);
+  });
+}
+
+function speakFallback(text) {
+  if (!("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "ko-KR";
+  utterance.rate = 1;
+  utterance.pitch = 1;
+  window.speechSynthesis.speak(utterance);
+}
+
+function playCueAudio(cue) {
+  if (!voiceEnabled) return;
+  const index = CUES.indexOf(cue);
+
+  try {
+    if (cueAudio) {
+      cueAudio.pause();
+      cueAudio.currentTime = 0;
+    }
+
+    cueAudio = new Audio(`https://hs.gfieldacademy.net/voice/cue-${index}.mp3`);
+    cueAudio.play().catch(() => speakFallback(cue.msg));
+  } catch (error) {
+    speakFallback(cue.msg);
+  }
+}
+
+function showCue(cue) {
+  cuePhase.textContent = cue.ph;
+  cueMessage.textContent = cue.msg;
+  cueModal.classList.add("on");
+  phaseName.textContent = cue.ph;
+  setActiveCue(CUES.indexOf(cue));
+  playCueAudio(cue);
+
+  if (cueTimer) clearTimeout(cueTimer);
+  cueTimer = setTimeout(() => {
+    cueModal.classList.remove("on");
+  }, Math.min(3600, 1500 + cue.msg.length * 24));
+}
+
+function currentElapsed(now = performance.now()) {
+  if (!running) return elapsedBeforeStart;
+  return elapsedBeforeStart + ((now - startedAt) / 1000) * activeSpeed;
+}
+
+function updateDisplay(elapsed) {
+  const clamped = Math.min(elapsed, TOTAL);
+  clock.textContent = fmt(TOTAL - clamped);
+  bar.style.width = Math.min(100, (clamped / TOTAL) * 100) + "%";
+}
+
+function tick(now) {
+  const elapsed = currentElapsed(now);
+  updateDisplay(elapsed);
+
+  while (cueIdx < CUES.length && elapsed >= CUES[cueIdx].at) {
+    showCue(CUES[cueIdx]);
+    cueIdx += 1;
+  }
+
+  if (elapsed < TOTAL) {
+    frameId = requestAnimationFrame(tick);
+  } else {
+    running = false;
+    elapsedBeforeStart = TOTAL;
+    phaseName.textContent = "시험 종료 - 수고했어!";
+    startBtn.textContent = "다시 시작";
+    if (frameId) cancelAnimationFrame(frameId);
+  }
+}
+
+function startTimer() {
+  if (running) return;
+
+  if (elapsedBeforeStart >= TOTAL) {
+    resetTimer();
+  }
+
+  running = true;
+  startedAt = performance.now();
+  activeSpeed = Number(speedSelect.value);
+  startBtn.textContent = "진행 중";
+  frameId = requestAnimationFrame(tick);
+}
+
+function pauseTimer() {
+  if (!running) return;
+  elapsedBeforeStart = currentElapsed();
+  running = false;
+  startBtn.textContent = "계속";
+  if (frameId) cancelAnimationFrame(frameId);
+}
+
+function resetTimer() {
+  running = false;
+  elapsedBeforeStart = 0;
+  cueIdx = 0;
+  phaseName.textContent = "대기 중";
+  startBtn.textContent = "시작";
+  cueModal.classList.remove("on");
+  setActiveCue(-1);
+  updateDisplay(0);
+
+  if (cueTimer) clearTimeout(cueTimer);
+  if (frameId) cancelAnimationFrame(frameId);
+  if (cueAudio) {
+    cueAudio.pause();
+    cueAudio.currentTime = 0;
+  }
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+}
+
+function syncVoiceToggle() {
+  voiceToggle.classList.toggle("on", voiceEnabled);
+  voiceToggle.textContent = voiceEnabled ? "켜짐" : "꺼짐";
+  voiceToggle.setAttribute("aria-pressed", String(voiceEnabled));
+  voiceState.classList.toggle("on", voiceEnabled);
+  voiceStateText.textContent = voiceEnabled ? "음성 켜짐" : "음성 꺼짐";
+
+  if (!voiceEnabled) {
+    if (cueAudio) cueAudio.pause();
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  }
+}
+
+startBtn.addEventListener("click", startTimer);
+pauseBtn.addEventListener("click", pauseTimer);
+resetBtn.addEventListener("click", resetTimer);
+cueModal.addEventListener("click", () => cueModal.classList.remove("on"));
+
+voiceToggle.addEventListener("click", () => {
+  voiceEnabled = !voiceEnabled;
+  syncVoiceToggle();
+});
+
+speedSelect.addEventListener("change", () => {
+  if (!running) return;
+  elapsedBeforeStart = currentElapsed();
+  activeSpeed = Number(speedSelect.value);
+  startedAt = performance.now();
+});
+
+renderCueList();
+syncVoiceToggle();
+updateDisplay(0);
+</script>
+</body>
+</html>
