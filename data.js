@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 7. 30. 오후 2:18:14
+ * 생성: 2026. 7. 30. 오후 2:19:50
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -405,9 +405,9 @@ window.GFIELD_DATA = {
         },
         {
           "title": "초등과정 대비 실전 모의고사 3회 중급 리뷰",
-          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1785388604464_06e7_________________3_______.pdf",
-          "folder": "tb_ms728dfs",
-          "pages": 6
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1785388773797_8kkw_________________3_______.pdf",
+          "folder": "tb_ms72dsdp",
+          "pages": 2
         }
       ]
     },
@@ -1081,10 +1081,7 @@ window.GFIELD_DATA = {
     "최종 모의고사": [
       "노관호"
     ],
-    "개념 교재": [
-      "정유현",
-      "노관호"
-    ]
+    "개념 교재": []
   },
   "books": [
     {
