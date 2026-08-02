@@ -195,6 +195,7 @@
   .book:hover .cover{transform:rotateY(-10deg) translateY(-6px);}
   .book .label{font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.3;text-align:center;}
   .book .pages{font-size:11px;color:var(--orange-d);font-weight:600;}
+  .book .desc{font-size:10.5px;color:var(--ink2);line-height:1.3;text-align:center;}
   .book .cover.noimg{background:linear-gradient(135deg,#fdba74,#fb923c);display:flex;align-items:center;justify-content:center;border:1px solid #f5b06a;}
   .book .cover.noimg .cv-title{color:#7a2e06;font-weight:800;font-size:12px;line-height:1.35;padding:10px 8px;text-align:center;}
 
@@ -878,7 +879,7 @@
           else if(isPlainPdfBook(b)) tag='📥 PDF 받기';
           else if(b.links&&b.links.length) tag='🔗 링크 포함';
           else if(b.pdf && !(b.imgdir&&b.pages) && !isRealPdf(b.pdf)) tag='🔗 외부 링크';
-          inner+=`<button class="book" data-bi="${i}">${cover}<span class="label">${escHtml(b.title||'교재')}</span><span class="pages">${tag}</span></button>`;
+          inner+=`<button class="book" data-bi="${i}">${cover}<span class="label">${escHtml(b.title||'교재')}</span>${b.desc?`<span class="desc">${escHtml(b.desc)}</span>`:''}<span class="pages">${tag}</span></button>`;
         });
         inner+='</div>';
       } else inner+='<div class="empty-note" style="text-align:left;padding:8px 0">등록된 교재가 없습니다.</div>';
@@ -890,6 +891,7 @@
     wrap.querySelectorAll('.book[data-bi]').forEach(btn=>btn.onclick=()=>{
       const bk=(D.books||[])[+btn.dataset.bi];
       if(isPlainPdfBook(bk)) downloadWatermarked(pdfHref(bk.pdf), bk.title||'교재');
+      else if(isDirectLinkBook(bk)) window.open(bookLinkUrl(bk, bk.links[0].url), '_blank');
       else openBook(bk);
     });
     wrap.querySelectorAll('.arc-info > .arc-info-head').forEach(btn=>btn.onclick=()=>{
@@ -911,6 +913,16 @@
   function isRealPdf(u){ return /\.pdf(\?|#|$)/i.test(pdfHref(u)); }
   /* 강의도 없고 이미지 분할도 안 된 순수 PDF 교재 → 뷰어 대신 바로 워터마크 다운로드 */
   function isPlainPdfBook(b){ return !!(b && b.pdf && !b.video && !(b.imgdir && b.pages) && isRealPdf(b.pdf)); }
+  /* 교재 파일·영상 없이 외부 링크 1개만 있는 순수 링크형 카드 → 모달 없이 바로 새 창으로 연결 */
+  function isDirectLinkBook(b){ return !!(b && !b.pdf && !b.video && b.links && b.links.length===1 && b.links[0] && b.links[0].url); }
+  /* GFIELD APPLICATION 외부 링크에 gname(학생명) 자동 로그인 파라미터 부착 */
+  function bookLinkUrl(b, url){
+    let lurl=url;
+    if(b.folder==='GFIELD APPLICATION' && lurl.includes('lete-on.gfieldacademy.net')){
+      lurl += (lurl.includes('?')?'&':'?') + 'gname=' + encodeURIComponent(currentStudent||'');
+    }
+    return lurl;
+  }
   function openBook(b){
     if(!b) return;
     document.getElementById('bv-name').textContent=b.title||'교재';
@@ -948,7 +960,7 @@
     let acts = (mode==='link'&&b.video)
       ? `<a class="bv-act" href="${escAttr(b.video)}" target="_blank" rel="noopener">▶ 영상 보기</a>` : '';
     if(b.imgdir && b.pages) acts += `<button class="bv-act" onclick="printBvBook()">🖨 인쇄</button>`;
-    (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=l.url; if(b.folder==='GFIELD APPLICATION' && lurl.includes('lete-on.gfieldacademy.net')){ lurl += (lurl.includes('?')?'&':'?') + 'gname=' + encodeURIComponent(currentStudent||''); } acts+=`<a class="bv-act" href="${escAttr(lurl)}" target="_blank" rel="noopener">🔗 ${escHtml(l.label||'링크')}</a>`; } });
+    (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=bookLinkUrl(b, l.url); acts+=`<a class="bv-act" href="${escAttr(lurl)}" target="_blank" rel="noopener">🔗 ${escHtml(l.label||'링크')}</a>`; } });
     document.getElementById('bv-actions').innerHTML = acts;
     document.getElementById('bookviewer').classList.add('open');
   }
