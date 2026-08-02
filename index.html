@@ -948,7 +948,7 @@
     let acts = (mode==='link'&&b.video)
       ? `<a class="bv-act" href="${escAttr(b.video)}" target="_blank" rel="noopener">▶ 영상 보기</a>` : '';
     if(b.imgdir && b.pages) acts += `<button class="bv-act" onclick="printBvBook()">🖨 인쇄</button>`;
-    (b.links||[]).forEach(l=>{ if(l&&l.url) acts+=`<a class="bv-act" href="${escAttr(l.url)}" target="_blank" rel="noopener">🔗 ${escHtml(l.label||'링크')}</a>`; });
+    (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=l.url; if(b.folder==='GFIELD APPLICATION' && lurl.includes('lete-on.gfieldacademy.net')){ lurl += (lurl.includes('?')?'&':'?') + 'gname=' + encodeURIComponent(currentStudent||''); } acts+=`<a class="bv-act" href="${escAttr(lurl)}" target="_blank" rel="noopener">🔗 ${escHtml(l.label||'링크')}</a>`; } });
     document.getElementById('bv-actions').innerHTML = acts;
     document.getElementById('bookviewer').classList.add('open');
   }
