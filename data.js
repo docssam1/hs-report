@@ -975,6 +975,7 @@ window.GFIELD_DATA = {
     "보충학습",
     "약점 유형",
     "사고력 교재",
+    "GFIELD APPLICATION",
     "개념 교재",
     "활용 모의고사",
     "중급 모의고사",
@@ -1034,6 +1035,31 @@ window.GFIELD_DATA = {
       "정유현"
     ],
     "사고력 교재": [
+      "허유민",
+      "김현우",
+      "김유준",
+      "이하린",
+      "정지안",
+      "안채연",
+      "박서진",
+      "민준기",
+      "김서연",
+      "김명서",
+      "임유준",
+      "김시후",
+      "노관호",
+      "윤하영",
+      "DEMO",
+      "문선우",
+      "체험",
+      "유호연",
+      "김서율",
+      "김지유",
+      "김소라",
+      "유현우",
+      "정유현"
+    ],
+    "GFIELD APPLICATION": [
       "허유민",
       "김현우",
       "김유준",
@@ -1925,6 +1951,20 @@ window.GFIELD_DATA = {
         {
           "label": "CH5 Semi 5회",
           "url": "https://youtu.be/-d8FB2id0l0"
+        }
+      ]
+    },
+    {
+      "folder": "GFIELD APPLICATION",
+      "title": "프리미어 하이퍼포커스 · 소마 프리미어 합격 진단",
+      "pdf": "",
+      "video": "",
+      "cover": "",
+      "date": "2026-08-02",
+      "links": [
+        {
+          "label": "진단 프로그램 시작하기",
+          "url": "https://lete-on.gfieldacademy.net/hyper-focus/"
         }
       ]
     }
