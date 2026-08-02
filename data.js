@@ -1960,6 +1960,7 @@ window.GFIELD_DATA = {
       "pdf": "",
       "video": "",
       "cover": "",
+      "desc": "학습 유형과 취약 개념을 분석하는 진단 프로그램",
       "date": "2026-08-02",
       "links": [
         {
