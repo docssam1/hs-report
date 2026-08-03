@@ -91,7 +91,7 @@ window.GFIELD_DATA = {
       "id": "jul-w5",
       "type": "week",
       "track": "exam",
-      "date": "7월 5주차",
+      "date": "8월 1주차",
       "title": "THINKING CORE CH3",
       "desc": "Numbers & Case + 중급 모의고사 4회",
       "focus": "도형/기하 파트 실전 적응"
@@ -109,7 +109,7 @@ window.GFIELD_DATA = {
       "id": "aug-w1",
       "type": "week",
       "track": "exam",
-      "date": "8월 1주차",
+      "date": "8월 2주차",
       "title": "THINKING CORE CH4",
       "desc": "Geometry (중급 모의고사 없음)",
       "focus": "8월 1주차 수업 · 개념 다지기"
@@ -118,7 +118,7 @@ window.GFIELD_DATA = {
       "id": "aug-w2",
       "type": "week",
       "track": "exam",
-      "date": "8월 2주차",
+      "date": "8월 3주차",
       "title": "THINKING CORE CH5",
       "desc": "활용 + 중급 모의고사 5회",
       "focus": "실전 개념 단원 종료"
@@ -132,7 +132,7 @@ window.GFIELD_DATA = {
       "id": "aug-w3",
       "type": "week",
       "track": "mock",
-      "date": "8월 3주차",
+      "date": "8월 4주차",
       "title": "중급 모의고사 6회",
       "desc": "실전 풀이 및 오답 리뷰",
       "focus": "모의고사 집중 훈련 체제 전환"
@@ -146,7 +146,7 @@ window.GFIELD_DATA = {
       "id": "aug-w4",
       "type": "week",
       "track": "final",
-      "date": "8월 4주차",
+      "date": "8월 5주차",
       "title": "파이널 실전 모의고사 1회",
       "desc": "성대 선행 문제로 조건 연습 · 실전 전 단계",
       "focus": "파이널 과정 시작 · 누적 진단지 제공 시작"
@@ -155,7 +155,7 @@ window.GFIELD_DATA = {
       "id": "sep-w1",
       "type": "week",
       "track": "final",
-      "date": "8월 5주차",
+      "date": "9월 1주차",
       "title": "파이널 실전 모의고사 2회",
       "desc": "성대 선행 문제로 조건 연습 · 실전 전 단계",
       "focus": "조건 해석 훈련 · 누적 진단 반영"
@@ -164,7 +164,7 @@ window.GFIELD_DATA = {
       "id": "sep-14",
       "type": "week",
       "track": "final",
-      "date": "9월 1주차",
+      "date": "9월 2주차",
       "title": "파이널 실전 모의고사 3회",
       "desc": "성대 선행 문제로 조건 연습 · 실전 전 단계",
       "focus": "OMR 마킹 훈련 도입"
@@ -173,7 +173,7 @@ window.GFIELD_DATA = {
       "id": "sep-21",
       "type": "week",
       "track": "final",
-      "date": "9월 2주차",
+      "date": "9월 3주차",
       "title": "파이널 실전 모의고사 4회",
       "desc": "성대 선행 문제로 조건 연습 · 실전 전 단계",
       "focus": "파이널 단계 마무리 · 중간 분석 리포트"
@@ -182,7 +182,7 @@ window.GFIELD_DATA = {
       "id": "sep-28",
       "type": "week",
       "track": "final",
-      "date": "9월 3주차",
+      "date": "9월 4주차",
       "title": "최종 실전 모의고사 1회",
       "desc": "실수 유발 조건 · 멘사 퍼즐/영재성 검사 유형",
       "focus": "낯선 유형 적응 훈련 시작"
@@ -191,7 +191,7 @@ window.GFIELD_DATA = {
       "id": "oct-5",
       "type": "week",
       "track": "final",
-      "date": "9월 4주차",
+      "date": "10월 1주차",
       "title": "최종 실전 모의고사 2회",
       "desc": "실수 유발 조건 · 멘사 퍼즐/영재성 검사 유형",
       "focus": "80분 시간 배분 전략"
@@ -200,7 +200,7 @@ window.GFIELD_DATA = {
       "id": "oct-12",
       "type": "week",
       "track": "final",
-      "date": "10월 1주차",
+      "date": "10월 2주차",
       "title": "최종 실전 모의고사 3회",
       "desc": "실수 유발 조건 · 멘사 퍼즐/영재성 검사 유형",
       "focus": "목표 레벨(경시/심화/실력/일품) 기준선 제시"
@@ -209,7 +209,7 @@ window.GFIELD_DATA = {
       "id": "oct-19",
       "type": "week",
       "track": "final",
-      "date": "10월 2주차",
+      "date": "10월 3주차",
       "title": "최종 실전 모의고사 4회",
       "desc": "실수 유발 조건 · 멘사 퍼즐/영재성 검사 유형",
       "focus": "실전 리허설 · 누적 성적 최종 확인"
@@ -218,10 +218,11 @@ window.GFIELD_DATA = {
       "id": "oct-26",
       "type": "week",
       "track": "final",
-      "date": "10월 3·4주차",
+      "date": "10월 4주차",
       "title": "최종 정리 및 학부모 상담",
       "desc": "누적 진단 기반 약점 총정리",
-      "focus": "종강 · 시험 직전 컨디션 조절"
+      "focus": "종강 · 시험 직전 컨디션 조절",
+      "link": "https://open.kakao.com/me/gfield"
     },
     {
       "id": "goal-exam",
