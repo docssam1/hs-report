@@ -1,14 +1,14 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 9. 오후 5:27:16
+ * 생성: 2026. 8. 9. 오후 5:31:08
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
     "academy": "지필드 영재교육",
     "title": "생각하는 황소 대비 아카이브",
     "year": "2026 하반기",
-    "currentWeekId": "jul-w5",
+    "currentWeekId": "aug-w1",
     "examDate": "2026-11-01",
     "examLabel": "생각하는 황소 입학시험",
     "lat": 37.4996,
@@ -414,7 +414,7 @@ window.GFIELD_DATA = {
     },
     "jul-w5": {
       "notice": "[[red:[[red:-]]-----------------------------------------------------------------------------------]]\n[[hlp:저와의 약속 어머님과 같이 90일만 집중하고 수학 공부하기 잘 지킬수 있을까요?]]\n그래도 이제 서서히 적응하고 있고 실수에 안 속으려 하는 모습이 보입니다. \n우기기 문제를 풀 떄 표로도 못 풀었는데 1,2,3,4 쓰며 푸는 모습이나 요일 문제를 이제는 해결한 모습, 틀렸을 떄 너무 아쉬워 하는 모습을\n보면 너무 기특하네요.\n\n이해가 안된다면 영상을 보고 따라쓰기를 정말 여러번 해 봐주세요.\n우선 황소가 목표라면 지금 기간에는 잠시 수학 선행 쉬어도 큰 문제없습니다. 단, 심화라면 꾸준히 해도 됩니다.\n전 점프 왕수학을 추천해요^^ 황소 대비하는 모든 어머님들 파이팅입니다. 11월 분명히 좋은 결과과 있을겁니다.\n[[red:-------------------------------------------------------------------------------------------------------]]\n[[hl:[아카이브] 상단을 보면 시험 타이머와 제 톡으로 바로 연결되로록 유형 요청 버튼을 만들었으니 언제는 사진만 찍어 부족한 유형 보내주세요.]]\n\n\n[[hl:초등 선발대비 중급 모의고사 3회 중요문제 및 질문 풀이]]\nhttps://youtu.be/bbb4N1DUWcs\n * 약점유형\n    ⭐ - 나머지가 가장 큰 경우의 검산식 \n       풀이에 한자리 수를 곱하여 세 자리가 되는 경우가 빠져 있어 수정하였습니다.\n       https://youtu.be/bbb4N1DUWcs?si=pLX9cegiyRq7R7Iz&t=346\n   ⭐  - 시침과 분침이 직각인 경우의 횟수\n      https://youtu.be/bbb4N1DUWcs?si=0AB5tvDCcl0VMWJn&t=586\n    ⭐ - 변형된 크고 작은 입체 도형의 개수\n       https://youtu.be/bbb4N1DUWcs?si=PkguwaQcozpyW85l&t=1246    - 표로 나타낸 길 수직선으로 구하기(성대경시 단골 문제)\n        https://youtu.be/bbb4N1DUWcs?si=Fi0IRGHjoGHFNiJj&t=772\n  ⭐  - 요일 \n       https://youtu.be/bbb4N1DUWcs?si=gtjdEWz-TPJidnxL&t=832\n   - 숫자 카드로 만들수 있는 세 자리수의 합 ( 1031 초급 문제인데 계속 틀림)\n        리뷰에서의 같은 숫자카드를 여러번 사용하는 경우와 한 번씩 사용하는 경우도 나누어 봐주세요.\n            https://youtu.be/bbb4N1DUWcs?si=H8VnlInGetmGdAYD&t=972\n   ⭐ - 나이계산\n      https://youtu.be/bbb4N1DUWcs?si=-p6Au20nJJDqAoZu&t=1400\n\n[[hlp:초등과정 대비 실전 모의고사 3회 중급 리뷰]]\nhttps://youtu.be/wG_S51SQOLE\n\n\n[[hl:Thinking Core NUMBERS(1) 수와 숫자의 개수]]\nhttps://youtu.be/DXyQQgBKtSg?si=CLzjzRMSRy0vqmWJ&t=1843\n\n⭐ Thinking Core 1 NUMBERS(1) 개념  \nhttps://youtu.be/r6NRdZudWks?si=ubhMpCmkPWF__9lQ\n              \n[[green:이번 주 노트 정리를 하며 풀어 보기를 권해 드립니다.]]\n              - 합이 일정한 경우의 수 \n              - 배수 판정법\n              - 재치 있게 계산하기\n               - 수와 숫자의 개수\n\n",
-      "homework": "Thinking Core 1 NUMBERS(1) semi Test\n     검은색 책 1단원 뒤에 있습니다. \n     https://youtu.be/r6NRdZudWks?si=SLwKBHiZ0EDnkRJ8\n\n[[green:이번주는 강제적인 중급 모의고사 과제는 없습니다.  2주 동안은 thinking core 개념에 집중할 예정입니다.\n하지만 선택 과제로 4,5,6회를 드리고 리뷰 테스트를 마지막에 진행합니다/]]\n\n    [[hlg:초등과정 대비 실전 모의고사 4회 중급 영상   ]]\n    https://youtu.be/cBZ7iS4keIo\n  \n       [[hlg:초등과정 대비 실전 모의고사 4회 중급 리뷰 영상   ]]\n      .https://youtu.be/4-N-oN_fSe8\n\n\n  자료실 아래 어플리케이션 메뉴 쪽을 보면 프리미어 하이퍼 포커스라는 버튼이 있습니다. 이건 프리미어 선발 시험의 주요 문제를 정리 해 놓은 것입니다.\n  황소 재원생은 개인 전화번호 만으로 무료로 누적 관리 하도록 만들어 놓았으니 사고력 기억을 살리는 의미로 공부해주세요/.",
+      "homework": "Thinking Core 1 NUMBERS(1) semi Test\n     검은색 책 1단원 뒤에 있습니다. \n     https://youtu.be/rJKaRm6utcE\n\n[[green:이번주는 강제적인 중급 모의고사 과제는 없습니다.  2주 동안은 thinking core 개념에 집중할 예정입니다.\n하지만 선택 과제로 4,5,6회를 드리고 리뷰 테스트를 마지막에 진행합니다/]]\n\n    [[hlg:초등과정 대비 실전 모의고사 4회 중급 영상   ]]\n    https://youtu.be/cBZ7iS4keIo\n  \n       [[hlg:초등과정 대비 실전 모의고사 4회 중급 리뷰 영상   ]]\n      https://youtu.be/4-N-oN_fSe8\n\n\n  자료실 아래 어플리케이션 메뉴 쪽을 보면 프리미어 하이퍼 포커스라는 버튼이 있습니다. 이건 프리미어 선발 시험의 주요 문제를 정리 해 놓은 것입니다.\n  황소 재원생은 개인 전화번호 만으로 무료로 누적 관리 하도록 만들어 놓았으니 사고력 기억을 살리는 의미로 공부해주세요/.",
       "textbooks": [
         {
           "title": "중급 모의고사 4회 · 답안 및 교재 연결표",
