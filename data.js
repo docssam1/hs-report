@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 9. 오후 5:41:09
+ * 생성: 2026. 8. 9. 오후 6:42:18
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -647,9 +647,16 @@ window.GFIELD_DATA = {
       ]
     },
     "aug-w1": {
-      "notice": "",
-      "homework": "",
-      "textbooks": []
+      "notice": "[[green:초등과정 대비 실전 모의고사 중급 4회 질문 및 중요문항]]\n   https://youtu.be/AumfJZ3jH8c\n\n#1 숫카카드로 만든 수의 합\n   https://youtu.be/AumfJZ3jH8c?si=Bltlq6DtwJR_ZWAU&t=40\n#2 도형이 포험된 크고 작은 사각형의 개수\n  https://youtu.be/AumfJZ3jH8c?si=-igugUPDNAEf6dwE&t=360\n#14 등비수열의 합\n https://youtu.be/AumfJZ3jH8c?si=BJDTtrEzto82e26S&t=1353\n#17 도형 채우기\nhttps://youtu.be/AumfJZ3jH8c?si=Vlp5aM2YbfbNkAZN&t=1641\n#24 네 변위의 점에서 선택하여 만든 삼각형의 개수\nhttps://youtu.be/AumfJZ3jH8c?si=Q07WUgOrd1z-PR1-&t=2087\n#25 블록으로 수 만기\nhttps://youtu.be/AumfJZ3jH8c?si=GCmvHDqUwcAOXUgD&t=2163\n#27 물 채우기 (구멍 뚫린 배수구)\nhttps://youtu.be/AumfJZ3jH8c?si=x7NJyHZGtV_hwETB&t=2476\n\n[[green:THINKING CORE CH2  Algebra(1) 나이,속력]]\nhttps://youtu.be/TxEkE7zNu8I\n\n[[green:속력 조금 더 친절 한 설명]]\nhttps://youtu.be/xbo9h8rBIW0?si=6GH2O24-Xx4so2k0&t=170\n\n* 방정식만으로 해결이 안되는 경우들이 많습니다.\n* 반드시 그림으로 이해한 후 풀이 해야 합니다.\n",
+      "homework": "[[red:초등과정 대비 실전 모의고사 중급 4회 리뷰]]\n   https://youtu.be/4-N-oN_fSe8\n\n[[red:초등과정 대비 실전 모의고사  SEMI 모의고사 1회(검은색 1단원 뒤)]]\n 지난주 링크가 잘못 되어 있었습니다.\nhttps://youtu.be/rJKaRm6utcE\n",
+      "textbooks": [
+        {
+          "title": "초등과정 대비 실전 모의고사 4회 중급 리뷰",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1785345783456_q145_________________4_______.pdf",
+          "folder": "tb_mslm1w7u",
+          "pages": 2
+        }
+      ]
     },
     "aug-w2": {
       "notice": "",
