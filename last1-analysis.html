@@ -120,7 +120,7 @@ const TB=[[76.7,0.8,'경시 가능'],[69.8,1.7,'경시 가능'],[69.5,2.5,'경�
 
 /* 등급 컷 점수 (최종 1회) — 높은 순 */
 const CUTS=[['경시 가능',54.2],['경시컷,심화안정권',40.9],['심화컷,실력안정권',35.0],['심화컷,실력가능',32.5],['실력컷,일품안정권',23.2],['일품컷',17.2],['노력요함',0]];
-/* 누적 기준 코호트 (파이널 1회부터 응시생 92명의 누적 백분율) */
+/* 누적 기준 코호트 (파이널 1회부터 누적 백분율 분포) */
 const REF=[2.9,6.9,8.0,12.0,11.8,12.4,13.6,14.3,14.3,15.8,17.5,17.8,18.6,20.0,23.9,25.5,24.2,26.6,27.0,29.4,29.8,31.5,32.1,33.2,30.8,34.2,37.0,36.8,35.1,36.9,32.5,40.2,35.0,39.8,38.3,44.7,46.0,47.9,48.6,45.8,46.7,50.0,50.4,50.7,51.2,48.3,51.7,40.8,40.8,53.5,52.1,54.6,55.2,52.5,56.5,59.0,57.5,55.8,59.2,62.3,65.6,63.8,66.4,67.0,69.2,67.1,70.8,71.3,67.5,74.5,72.5,75.0,74.7,70.0,70.0,75.0,76.7,75.6,78.9,78.7,75.8,76.7,82.0,83.6,83.9,82.2,84.0,87.7,91.7,84.2,90.4,100.0];
 /* 누적 백분율 → 예상 레벨 (상한 기준) */
 const CUM=[[19.0,'경시 가능'],[33.2,'경시컷,심화안정권'],[44.7,'심화컷,실력안정권'],[51.7,'실력컷,일품안정권'],[59.0,'일품 가능'],[75.0,'일품컷'],[101,'노력요함']];
@@ -204,7 +204,6 @@ function render(){
   const allP=[...fps, pct];
   const cumAvg=R1(allP.reduce((s,v)=>s+v,0)/allP.length);
   const cumLv=cumLevel(cumAvg);
-  const cumRank=REF.filter(v=>v<cumAvg).length+1;
 
   /* 멘트 */
   const wt=wrong.length?`[${wrong.map(n=>n+'번').join(', ')}]`:'없습니다';
@@ -216,7 +215,7 @@ function render(){
   if(miss.length) c+=`특히 아이의 실력으로 충분히 맞출 수 있는 문항은 ${kt} 입니다. 반드시 풀이 과정과 해설 영상을 복습해 보세요.\n`;
   if(miss.length) c+=`이 문항들만 잡았다면 ${newScore.toFixed(1)}점, 석차 ${newPct.toFixed(1)}%까지 올라갑니다.\n`;
   if(path) c+=`다음 목표인 [${path.grade}]까지는 ${path.need.toFixed(1)}점이 부족합니다. 정답률이 높은 ${path.pick.map(n=>n+'번').join(', ')}만 잡으면 컷(${path.cut}점)을 넘습니다.\n`;
-  if(fps.length) c+=`파이널 ${fps.length}회와 이번 회차를 합한 누적 석차 백분율 평균은 ${cumAvg.toFixed(2)}%로, 파이널 1회부터 응시한 ${REF.length}명 중 ${cumRank}등, [${cumLv}] 수준입니다.\n`;
+  if(fps.length) c+=`파이널 ${fps.length}회와 이번 회차를 합한 누적 석차 백분율 평균은 ${cumAvg.toFixed(2)}%로, 누적 데이터 기준 [${cumLv}] 수준입니다.\n`;
   c+=`풀이 강의와 반복 학습을 통해 문제의 유형과 해설을 정확히 익히는 것이 중요합니다. 황소 경시 실전에도 큰 도움이 됩니다.\n`;
   c+=`최종 1회 모의고사는 기존에 배웠던 내용과 선행없이 풀 수 있는 영재성검사 유형들을 추가하면서 실제 시험의 난이도와 유사하다고 할 수 있습니다. 경우에 따라 더 어렵게 느껴지는 아이들도 있고 오히려 쉽다고 생각하는 친구들이 있지만 항상 평균은 똑같아요^^ 오히려 쉽게 느껴지만 다 맞은 것 같은데 실수가 많더라구요. 정말 초등팩토와 pre 1031에 배웠던 내용도 많았는데 읽기가 잘못되어 있는 경우가 많았습니다. 오늘 시험 성적이 지난 번보다 높았던 친구들은 아마 유형에 대한 이해도와 지문의 중간까지의 해석능력이 좋았던 학생입니다. 결국 지난 시험까지 마무리 조건이 부족했다고도 할수 있습니다."`;
   LAST_CMT=c;
@@ -267,7 +266,7 @@ ${trow('수행률', g=>g.perf.toFixed(1)+'%', score.toFixed(1)+'%')}
 <h2 class="sec-t">누적 성적 결과</h2>
 <table class="cum">
 <tr><th style="width:96px"></th><th>파이널1회</th><th>파이널2회</th><th>파이널3회</th><th>파이널4회</th><th>최종1회</th><th>최종2회</th><th>최종3회</th><th>최종4회</th><th style="width:170px">누적</th></tr>
-<tr><td class="k">석차</td>${[1,2,3,4].map(k=>{const v=parseFloat(document.getElementById('f'+k).value);return `<td class="${isNaN(v)?'':'on'}">${isNaN(v)?'':v.toFixed(1)+'%'}</td>`;}).join('')}<td class="on">${pct.toFixed(1)}%</td><td></td><td></td><td></td><td class="tot" rowspan="2">${cumAvg.toFixed(2)}%<br><span style="font-size:11px;font-weight:700;color:#8a5a20">${REF.length}명 중 ${cumRank}등</span></td></tr>
+<tr><td class="k">석차</td>${[1,2,3,4].map(k=>{const v=parseFloat(document.getElementById('f'+k).value);return `<td class="${isNaN(v)?'':'on'}">${isNaN(v)?'':v.toFixed(1)+'%'}</td>`;}).join('')}<td class="on">${pct.toFixed(1)}%</td><td></td><td></td><td></td><td class="tot" rowspan="2">${cumAvg.toFixed(2)}%</td></tr>
 <tr><td class="k">예상 레벨</td><td colspan="4" style="color:#aaa;font-size:11px">파이널 기록</td><td class="on">${grade}</td><td></td><td></td><td></td></tr>
 <tr><td class="k">누적 판정</td><td colspan="8" style="text-align:right;color:#8a94a6;font-size:11px">석차 백분율 평균 · 파이널 1회부터 누적 ${allP.length}회 기준</td><td class="tot lv">${cumLv}</td></tr>
 </table>
