@@ -182,3 +182,60 @@
     }
   },80);
 })();
+
+/* ===== 최종 모의고사 진단 분석지 연결 (자료실 카드 + 로드맵 버튼) ===== */
+(function(){
+  if(!window.GFIELD_DATA) return;
+  var LAST1_URL='last1-analysis.html';
+
+  var st=document.createElement('style');
+  st.textContent='.last1-node-btn{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:8px 14px;border:0;border-radius:10px;background:linear-gradient(135deg,#315b9a,#183968);color:#fff;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:0 5px 12px rgba(30,60,114,.22)}.last1-node-btn:hover{transform:translateY(-1px)}';
+  document.head.appendChild(st);
+
+  function last1Card(){
+    return '<div class="folder" style="border:1px solid #c7d7f0">'+
+      '<div class="folder-h" style="background:linear-gradient(135deg,#2a5298,#1e3c72)"><span class="folder-ic">📊</span>최종 모의고사 진단 분석지<span class="folder-c">NEW</span></div>'+
+      '<div class="folder-b" style="padding:14px 16px 16px">'+
+        '<div style="font-size:13px;color:#54607a;line-height:1.6;margin-bottom:10px">최종 모의고사를 본 후 <b>틀린 번호만 입력</b>하면 점수·석차·예상 결과와 약점 유형 분석지가 바로 만들어져요. 결과는 선생님께 자동으로 전달됩니다.</div>'+
+        '<button class="tb-btn" style="background:linear-gradient(135deg,#315b9a,#183968);box-shadow:0 6px 16px rgba(30,60,114,.25)" onclick="window.open(\''+LAST1_URL+'\',\'_blank\')"><span class="ico">📊</span>최종 1회 분석지 만들기</button>'+
+      '</div></div>';
+  }
+
+  if(typeof renderArchive==='function'){
+    var oa=renderArchive;
+    renderArchive=function(){
+      oa();
+      var list=document.getElementById('archive-list');
+      if(list && !document.getElementById('last1-arc')){
+        var w=document.createElement('div'); w.id='last1-arc'; w.innerHTML=last1Card();
+        list.insertBefore(w, list.firstChild);
+      }
+    };
+  }
+
+  if(typeof renderTimeline==='function'){
+    var ot=renderTimeline;
+    renderTimeline=function(){
+      ot();
+      try{
+        document.querySelectorAll('#timeline .node').forEach(function(el){
+          var h=el.querySelector('h3'); if(!h) return;
+          var t=h.textContent||'';
+          if(!(/최종/.test(t)&&/모의고사/.test(t)&&/1\s*회/.test(t))) return;
+          if(el.querySelector('.last1-node-btn')) return;
+          var b=document.createElement('button');
+          b.type='button'; b.className='last1-node-btn';
+          b.innerHTML='📊 시험 본 후 분석지 만들기';
+          b.onclick=function(ev){ ev.stopPropagation(); window.open(LAST1_URL,'_blank'); };
+          el.appendChild(b);
+        });
+      }catch(e){}
+    };
+  }
+
+  setTimeout(function(){
+    try{
+      if(typeof currentStudent!=='undefined'&&currentStudent){renderArchive();renderTimeline();}
+    }catch(e){}
+  },140);
+})();
