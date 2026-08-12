@@ -239,3 +239,75 @@
     }catch(e){}
   },140);
 })();
+
+/* ===== 책 뷰어: 단원 버튼을 새 창 대신 화면 안에서 전환 =====
+   - 유튜브 링크는 왼쪽 영상칸을 그 자리에서 바꿔 재생
+   - 라벨이나 URL에 쪽수가 있으면(예: "1단원 개념 p5", 또는 URL 끝 #p5) 교재를 그 쪽으로 스크롤
+   - 유튜브가 아닌 링크(모의고사 채점 등)는 기존처럼 새 창 유지 */
+(function(){
+  var stx=document.createElement('style');
+  stx.textContent='.bv-act.on{outline:2px solid #fff;outline-offset:-2px;box-shadow:0 0 0 3px rgba(255,255,255,.35)}'+
+    'button.bv-act{border:0;cursor:pointer;font-family:inherit}';
+  document.head.appendChild(stx);
+
+  function ytId(u){
+    var m=String(u||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([A-Za-z0-9_-]{6,})/);
+    return m?m[1]:'';
+  }
+  function ytStart(u){
+    var m=String(u||'').match(/[?&](?:t|start)=(\d+)/);
+    return m?+m[1]:0;
+  }
+  function pageOf(label,url){
+    var m=String(url||'').match(/#p(?:age)?=?(\d+)/i); if(m) return +m[1];
+    m=String(label||'').match(/(\d+)\s*(?:쪽|페이지)/); if(m) return +m[1];
+    m=String(label||'').match(/\bp\.?\s*(\d+)\b/i); return m?+m[1]:0;
+  }
+  function vidFrame(){ return document.querySelector('#bv-stage .bv-vid iframe'); }
+  function swapVideo(url){
+    var f=vidFrame(); if(!f) return false;
+    var id=ytId(url); if(!id) return false;
+    var s=ytStart(url);
+    f.src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1'+(s?('&start='+s):'');
+    return true;
+  }
+  function goPage(n){
+    if(!n) return;
+    var doc=document.querySelector('#bv-stage .bv-doc.scroll');
+    if(doc){
+      var pgs=doc.querySelectorAll('.bv-pg'), pg=pgs[n-1];
+      if(pg){ doc.scrollTo({top:pg.offsetTop-doc.offsetTop-8,behavior:'smooth'}); return; }
+    }
+    var pf=document.querySelector('#bv-stage .bv-doc iframe');
+    if(pf && /\.pdf/i.test(pf.src||'')){
+      pf.src=String(pf.src).split('#')[0]+'#page='+n+'&toolbar=0&navpanes=0&view=FitH';
+    }
+  }
+  function enhance(){
+    var box=document.getElementById('bv-actions'); if(!box) return;
+    if(!vidFrame()) return;                    /* 영상칸이 없으면 손대지 않음 */
+    Array.prototype.slice.call(box.querySelectorAll('a.bv-act')).forEach(function(a){
+      var url=a.getAttribute('href')||'';
+      if(!ytId(url)) return;                   /* 유튜브가 아니면 그대로 새 창 */
+      var label=(a.textContent||'').replace(/^\s*[🔗▶]\s*/,'').trim();
+      var pg=pageOf(label,url);
+      var b=document.createElement('button');
+      b.type='button'; b.className='bv-act';
+      b.textContent='▶ '+label;
+      b.title=pg?(label+' · 교재 '+pg+'쪽으로 이동'):label;
+      b.addEventListener('click',function(){
+        swapVideo(url); goPage(pg);
+        Array.prototype.slice.call(box.querySelectorAll('.bv-act')).forEach(function(x){x.classList.remove('on');});
+        b.classList.add('on');
+      });
+      a.parentNode.replaceChild(b,a);
+    });
+  }
+  function hook(){
+    if(typeof window.openBook!=='function') return false;
+    var ob=window.openBook;
+    window.openBook=function(b){ var r=ob.apply(this,arguments); setTimeout(enhance,30); return r; };
+    return true;
+  }
+  if(!hook()) setTimeout(hook,300);
+})();
