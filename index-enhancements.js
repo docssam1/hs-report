@@ -242,9 +242,19 @@
 
 /* ===== 책 뷰어: 단원 버튼을 새 창 대신 화면 안에서 전환 =====
    - 유튜브 링크는 왼쪽 영상칸을 그 자리에서 바꿔 재생
-   - 라벨이나 URL에 쪽수가 있으면(예: "1단원 개념 p5", 또는 URL 끝 #p5) 교재를 그 쪽으로 스크롤
+   - 교재는 해당 단원 시작 쪽으로 자동 스크롤
+   - 쪽수는 아래 PAGEMAP > 라벨/URL의 쪽수 표기(p8, 8쪽, #p8) 순으로 찾음
    - 유튜브가 아닌 링크(모의고사 채점 등)는 기존처럼 새 창 유지 */
 (function(){
+  /* 교재별 단원 시작 쪽 (교재 제목 일부 → 라벨 → 쪽) */
+  var PAGEMAP=[
+    { match:/THINKING\s*BASIC|응용\s*개념/i, pages:{
+      '1단원개념':4,  '1단원필수유형':8,
+      '2단원개념':16, '2단원필수유형':22,
+      '3단원개념':30, '3단원필수유형':35
+    }}
+  ];
+
   var stx=document.createElement('style');
   stx.textContent='.bv-act.on{outline:2px solid #fff;outline-offset:-2px;box-shadow:0 0 0 3px rgba(255,255,255,.35)}'+
     'button.bv-act{border:0;cursor:pointer;font-family:inherit}';
@@ -258,7 +268,18 @@
     var m=String(u||'').match(/[?&](?:t|start)=(\d+)/);
     return m?+m[1]:0;
   }
-  function pageOf(label,url){
+  function mapPage(title,label){
+    var key=String(label||'').replace(/\s+/g,'');
+    for(var i=0;i<PAGEMAP.length;i++){
+      if(!PAGEMAP[i].match.test(String(title||''))) continue;
+      var t=PAGEMAP[i].pages;
+      if(t[key]) return t[key];
+      for(var k in t){ if(key.indexOf(k)>=0) return t[k]; }
+    }
+    return 0;
+  }
+  function pageOf(title,label,url){
+    var p=mapPage(title,label); if(p) return p;
     var m=String(url||'').match(/#p(?:age)?=?(\d+)/i); if(m) return +m[1];
     m=String(label||'').match(/(\d+)\s*(?:쪽|페이지)/); if(m) return +m[1];
     m=String(label||'').match(/\bp\.?\s*(\d+)\b/i); return m?+m[1]:0;
@@ -286,11 +307,12 @@
   function enhance(){
     var box=document.getElementById('bv-actions'); if(!box) return;
     if(!vidFrame()) return;                    /* 영상칸이 없으면 손대지 않음 */
+    var title=(document.getElementById('bv-name')||{}).textContent||'';
     Array.prototype.slice.call(box.querySelectorAll('a.bv-act')).forEach(function(a){
       var url=a.getAttribute('href')||'';
       if(!ytId(url)) return;                   /* 유튜브가 아니면 그대로 새 창 */
       var label=(a.textContent||'').replace(/^\s*[🔗▶]\s*/,'').trim();
-      var pg=pageOf(label,url);
+      var pg=pageOf(title,label,url);
       var b=document.createElement('button');
       b.type='button'; b.className='bv-act';
       b.textContent='▶ '+label;
