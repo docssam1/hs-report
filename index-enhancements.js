@@ -243,16 +243,34 @@
 /* ===== 책 뷰어: 단원 버튼을 새 창 대신 화면 안에서 전환 =====
    - 유튜브 링크는 왼쪽 영상칸을 그 자리에서 바꿔 재생
    - 교재는 해당 단원 시작 쪽으로 자동 스크롤
-   - 쪽수는 PAGEMAP > 라벨/URL의 쪽수 표기(p8, 8쪽, #p8) 순으로 찾음
+   - 쪽수는 PAGEMAP(고정표 → 정규식) > 라벨/URL의 쪽수 표기(p8, 8쪽, #p8) 순으로 찾음
    - 유튜브가 아닌 링크(모의고사 채점 등)는 기존처럼 새 창 유지 */
 (function(){
   /* 교재별 단원 시작 쪽 — 뷰어에 실제로 보이는 쪽 번호 기준 */
   var PAGEMAP=[
-    { match:/THINKING\s*BASIC|응용\s*개념/i, pages:{
-      '1단원개념':3,  '1단원필수유형':6,
-      '2단원개념':14, '2단원필수유형':19,
-      '3단원개념':29, '3단원필수유형':33
-    }}
+    /* HS 대비 응용 개념서 · THINKING BASIC (40쪽) */
+    { match:/THINKING\s*BASIC|응용\s*개념|필수\s*개념정리/i,
+      pages:{
+        '1단원개념':3,  '1단원필수유형':6,
+        '2단원개념':14, '2단원필수유형':19,
+        '3단원개념':29, '3단원필수유형':33
+      },
+      rx:[
+        [/([1-3])\s*단원.*필수/, {1:6, 2:19, 3:33}],
+        [/([1-3])\s*단원/,       {1:3, 2:14, 3:29}]
+      ]
+    },
+    /* Thinking Core · 생각하는 황소 대비 심화 개념 (92쪽) */
+    { match:/THINKING\s*CORE|심화\s*개념/i,
+      pages:{
+        'CH1':4,  'CH2':20, 'CH3':43, 'CH4':60, 'CH5':82,
+        'NUMBERS(1)':4, 'ALGEBRA':20, 'NUMBERS(2)':43, 'GEOMETRY':60
+      },
+      rx:[
+        [/SEMI[^0-9]*([1-5])/i,          {1:13, 2:35, 3:52, 4:73, 5:88}],
+        [/CH\s*([1-5])|([1-5])\s*단원/i, {1:4, 2:20, 3:43, 4:60, 5:82}]
+      ]
+    }
   ];
 
   var stx=document.createElement('style');
@@ -269,12 +287,18 @@
     return m?+m[1]:0;
   }
   function mapPage(title,label){
-    var key=String(label||'').replace(/\s+/g,'');
+    var raw=String(label||''), key=raw.replace(/\s+/g,'').toUpperCase();
     for(var i=0;i<PAGEMAP.length;i++){
-      if(!PAGEMAP[i].match.test(String(title||''))) continue;
-      var t=PAGEMAP[i].pages;
+      var e=PAGEMAP[i];
+      if(!e.match.test(String(title||''))) continue;
+      var t=e.pages||{}, k;
       if(t[key]) return t[key];
-      for(var k in t){ if(key.indexOf(k)>=0) return t[k]; }
+      for(k in t){ if(key.indexOf(k.toUpperCase())>=0) return t[k]; }
+      var rl=e.rx||[];
+      for(var j=0;j<rl.length;j++){
+        var m=raw.match(rl[j][0]);
+        if(m){ var num=+(m[1]||m[2]); if(num && rl[j][1][num]) return rl[j][1][num]; }
+      }
     }
     return 0;
   }
