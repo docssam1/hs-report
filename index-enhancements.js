@@ -240,11 +240,10 @@
   },140);
 })();
 
-/* ===== 책 뷰어: 단원 버튼을 새 창 대신 화면 안에서 전환 =====
-   - 유튜브 링크는 왼쪽 영상칸을 그 자리에서 바꿔 재생
+/* ===== 책 뷰어: 단원 버튼 화면 내 전환 + 교재 쪽 이동 + 영상 이어보기 =====
+   - 유튜브 링크는 왼쪽 영상칸을 그 자리에서 바꿔 재생 (새 창 X)
    - 교재는 해당 단원 시작 쪽으로 자동 스크롤
-   - 쪽수는 PAGEMAP(고정표 → 정규식) > 라벨/URL의 쪽수 표기(p8, 8쪽, #p8) 순으로 찾음
-   - 유튜브가 아닌 링크(모의고사 채점 등)는 기존처럼 새 창 유지 */
+   - CHAIN에 등록된 영상은 지정 시각에서 다음 영상으로 자동 연속 재생 */
 (function(){
   /* 교재별 단원 시작 쪽 — 뷰어에 실제로 보이는 쪽 번호 기준 */
   var PAGEMAP=[
@@ -262,10 +261,7 @@
     },
     /* Thinking Core · 생각하는 황소 대비 심화 개념 (92쪽) */
     { match:/THINKING\s*CORE|심화\s*개념/i,
-      pages:{
-        'CH1':4,  'CH2':20, 'CH3':43, 'CH4':60, 'CH5':82,
-        'NUMBERS(1)':4, 'ALGEBRA':20, 'NUMBERS(2)':43, 'GEOMETRY':60
-      },
+      pages:{},
       rx:[
         [/SEMI[^0-9]*([1-5])/i,          {1:13, 2:35, 3:52, 4:73, 5:88}],
         [/CH\s*([1-5])|([1-5])\s*단원/i, {1:4, 2:20, 3:43, 4:60, 5:82}]
@@ -273,10 +269,20 @@
     }
   ];
 
+  /* 영상 이어보기: 이 영상이 at(초)에 도달하면 next 영상을 start(초)부터 이어서 재생 */
+  var CHAIN={
+    'r6NRdZudWks': { at: 38*60+14, next:'DXyQQgBKtSg', start:11 }   /* Thinking Core CH1 */
+  };
+
   var stx=document.createElement('style');
   stx.textContent='.bv-act.on{outline:2px solid #fff;outline-offset:-2px;box-shadow:0 0 0 3px rgba(255,255,255,.35)}'+
-    'button.bv-act{border:0;cursor:pointer;font-family:inherit}';
+    'button.bv-act{border:0;cursor:pointer;font-family:inherit}'+
+    '.bv-chain{position:absolute;left:12px;bottom:12px;z-index:5;background:rgba(0,0,0,.72);color:#fff;font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:8px;pointer-events:none;opacity:0;transition:opacity .3s}'+
+    '.bv-chain.on{opacity:1}'+
+    '.bv-vid{position:relative}';
   document.head.appendChild(stx);
+
+  var player=null, timer=null, apiPending=[];
 
   function ytId(u){
     var m=String(u||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([A-Za-z0-9_-]{6,})/);
@@ -309,13 +315,78 @@
     m=String(label||'').match(/\bp\.?\s*(\d+)\b/i); return m?+m[1]:0;
   }
   function vidFrame(){ return document.querySelector('#bv-stage .bv-vid iframe'); }
-  function swapVideo(url){
+
+  /* --- YouTube IFrame API --- */
+  function loadApi(cb){
+    if(window.YT && window.YT.Player) return cb();
+    apiPending.push(cb);
+    if(document.getElementById('gf-yt-api')) return;
+    var prev=window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady=function(){
+      if(prev){ try{prev();}catch(e){} }
+      var q=apiPending.slice(); apiPending=[];
+      q.forEach(function(f){ try{f();}catch(e){} });
+    };
+    var s=document.createElement('script'); s.id='gf-yt-api';
+    s.src='https://www.youtube.com/iframe_api';
+    document.head.appendChild(s);
+  }
+  function stopWatch(){ if(timer){ clearInterval(timer); timer=null; } hideChainNote(); }
+  function chainNote(txt){
+    var box=document.querySelector('#bv-stage .bv-vid'); if(!box) return;
+    var el=box.querySelector('.bv-chain');
+    if(!el){ el=document.createElement('div'); el.className='bv-chain'; box.appendChild(el); }
+    el.textContent=txt; el.classList.add('on');
+    setTimeout(function(){ if(el) el.classList.remove('on'); }, 4000);
+  }
+  function hideChainNote(){
+    var el=document.querySelector('#bv-stage .bv-vid .bv-chain');
+    if(el) el.classList.remove('on');
+  }
+  function watch(id){
+    stopWatch();
+    var rule=CHAIN[id]; if(!rule || !player) return;
+    timer=setInterval(function(){
+      try{
+        if(!player || typeof player.getCurrentTime!=='function') return;
+        var t=player.getCurrentTime();
+        if(t && t>=rule.at){
+          stopWatch();
+          chainNote('이어지는 강의로 넘어갑니다 ▶');
+          player.loadVideoById({videoId:rule.next, startSeconds:rule.start||0});
+          setTimeout(function(){ watch(rule.next); },1200);
+        }
+      }catch(e){}
+    },500);
+  }
+  function play(id,start){
     var f=vidFrame(); if(!f) return false;
-    var id=ytId(url); if(!id) return false;
-    var s=ytStart(url);
-    f.src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1'+(s?('&start='+s):'');
+    if(player && typeof player.loadVideoById==='function'){
+      try{ player.loadVideoById({videoId:id, startSeconds:start||0}); watch(id); return true; }catch(e){}
+    }
+    f.src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1&enablejsapi=1&origin='+
+      encodeURIComponent(location.origin)+(start?('&start='+start):'');
     return true;
   }
+  /* 뷰어를 열 때 iframe을 API 제어 가능한 상태로 만들어 둔다 */
+  function initPlayer(){
+    var f=vidFrame(); if(!f) return;
+    try{ if(player && player.destroy) player.destroy(); }catch(e){}
+    player=null; stopWatch();
+    var src=f.getAttribute('src')||'';
+    var id=ytId(src)|| (src.match(/embed\/([A-Za-z0-9_-]{6,})/)||[])[1] ||'';
+    if(!id) return;
+    if(src.indexOf('enablejsapi=1')<0){
+      f.setAttribute('src', src+(src.indexOf('?')>=0?'&':'?')+'enablejsapi=1&origin='+encodeURIComponent(location.origin));
+    }
+    f.id='gf-bv-yt';
+    loadApi(function(){
+      try{
+        player=new YT.Player('gf-bv-yt',{ events:{ 'onReady':function(){ watch(id); } } });
+      }catch(e){ player=null; }
+    });
+  }
+
   function goPage(n){
     if(!n) return;
     var doc=document.querySelector('#bv-stage .bv-doc.scroll');
@@ -331,18 +402,20 @@
   function enhance(){
     var box=document.getElementById('bv-actions'); if(!box) return;
     if(!vidFrame()) return;                    /* 영상칸이 없으면 손대지 않음 */
+    initPlayer();
     var title=(document.getElementById('bv-name')||{}).textContent||'';
     Array.prototype.slice.call(box.querySelectorAll('a.bv-act')).forEach(function(a){
       var url=a.getAttribute('href')||'';
-      if(!ytId(url)) return;                   /* 유튜브가 아니면 그대로 새 창 */
+      var vid=ytId(url);
+      if(!vid) return;                         /* 유튜브가 아니면 그대로 새 창 */
       var label=(a.textContent||'').replace(/^\s*[🔗▶]\s*/,'').trim();
-      var pg=pageOf(title,label,url);
+      var pg=pageOf(title,label,url), st=ytStart(url);
       var b=document.createElement('button');
       b.type='button'; b.className='bv-act';
       b.textContent='▶ '+label;
       b.title=pg?(label+' · 교재 '+pg+'쪽으로 이동'):label;
       b.addEventListener('click',function(){
-        swapVideo(url); goPage(pg);
+        play(vid,st); goPage(pg);
         Array.prototype.slice.call(box.querySelectorAll('.bv-act')).forEach(function(x){x.classList.remove('on');});
         b.classList.add('on');
       });
@@ -352,7 +425,11 @@
   function hook(){
     if(typeof window.openBook!=='function') return false;
     var ob=window.openBook;
-    window.openBook=function(b){ var r=ob.apply(this,arguments); setTimeout(enhance,30); return r; };
+    window.openBook=function(b){ var r=ob.apply(this,arguments); setTimeout(enhance,60); return r; };
+    if(typeof window.closeBook==='function'){
+      var cb=window.closeBook;
+      window.closeBook=function(){ stopWatch(); try{ if(player&&player.destroy) player.destroy(); }catch(e){} player=null; return cb.apply(this,arguments); };
+    }
     return true;
   }
   if(!hook()) setTimeout(hook,300);
