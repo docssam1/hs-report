@@ -82,6 +82,8 @@
     .brief-card::after{content:'✦';position:absolute;right:14px;top:5px;font-size:56px;color:rgba(249,115,22,.07);transform:rotate(12deg);pointer-events:none}
     .brief-mood{position:relative;z-index:1}
     .brief-personal{display:block;margin-top:5px;color:#5a4432;font-weight:600}
+    .cheer .ch-inner{font-size:38px;line-height:1.34}
+    .cheer .ch-inner small{font-size:18px;margin-top:16px}
     .promo-node{position:relative;margin:6px 0 18px;padding:16px 18px;border:1.5px dashed #fb923c !important;border-radius:16px;
       background:linear-gradient(135deg,#fff7ed,#ffedd5);box-shadow:0 4px 14px rgba(249,115,22,.12);cursor:default}
     .promo-node:hover{transform:none;box-shadow:0 4px 14px rgba(249,115,22,.12)}
@@ -98,6 +100,8 @@
       .companion-marker{left:-65px;transform:scale(.82);transform-origin:left bottom}
       .companion-bubble{left:61px;max-width:150px;font-size:10.5px}
       .promo-node .pico{left:-40px}
+      .cheer .ch-inner{font-size:27px}
+      .cheer .ch-inner small{font-size:15px;margin-top:12px}
     }
   `;
   document.head.appendChild(style);
@@ -180,15 +184,41 @@
     };
   }
 
+  /* ===== 로그인 응원 멘트 (친근하게, 매번 다르게) ===== */
+  const CHEERS=[
+    '지금의 노력이 앞으로<br>너의 실력을 쭉쭉 높여 줄 거야<br>아잣!!!',
+    '오늘도 와줘서 고마워!<br>딱 한 문제만 더 해보자',
+    '천천히 가도 괜찮아<br>멈추지만 않으면 되는 거야',
+    '어제의 너보다<br>딱 한 걸음만 앞으로!',
+    '머리가 아프다는 건<br>지금 쑥쑥 크고 있다는 뜻이야',
+    '실수해도 괜찮아<br>왜 틀렸는지 알면 그게 실력이 돼',
+    '오늘 푼 한 문제가<br>시험날의 자신감이 된다!',
+    '집중 모드 ON 🔥<br>딱 30분만 몰입해보자',
+    '잘하고 있어, 정말이야<br>선생님이 다 보고 있어',
+    '포기하고 싶은 그 순간이<br>제일 많이 크는 순간이야',
+    '오늘도 씩씩하게!<br>아잣아잣 파이팅!!',
+    '틀린 문제는 보물이야<br>하나 찾으면 하나 더 강해져',
+    '황소까지 같이 달리자<br>우리는 한 팀이야 🐂',
+    '머리보다 엉덩이!<br>오래 앉아 있는 사람이 이긴다',
+    '숨 한 번 크게 쉬고<br>자, 오늘도 시작해볼까?'
+  ];
+  const CHEER_TAGS=[
+    'DOCSSAM이 응원한다 🔥','DOCSSAM이 지켜본다 🙌','오늘도 파이팅! 💪',
+    '선생님이 믿는다 ✨','우리 같이 가자 🐂','천천히, 그러나 확실하게 👊',
+    '꾸준함이 재능을 이긴다 💛'
+  ];
   if(typeof showCheer==='function'){
     showCheer=function(given){
       const el=document.getElementById('cheer'),t=document.getElementById('cheer-text'),node=currentNode();
       if(!el||!t)return;
-      const main=`${esc2(given)}${esc2(josa(given))}, 어서 와!<br>${esc2(dayGreeting())}`;
-      const sub=`${esc2(node?node.title:'오늘의 학습')} · ${esc2(weatherLine(window.GFIELD_WEATHER))}`;
+      const day=Math.floor((Date.now()+9*3600000)/86400000);
+      const msg=CHEERS[(day+Math.floor(Math.random()*CHEERS.length))%CHEERS.length];
+      const tag=CHEER_TAGS[Math.floor(Math.random()*CHEER_TAGS.length)];
+      const main=`${esc2(given)}${esc2(josa(given))}, 어서 와!<br>${msg}`;
+      const sub=`${tag}${node?' · '+esc2(node.title):''}`;
       t.innerHTML=`${main}<small>${sub}</small>`;
       el.classList.remove('hidden');
-      setTimeout(()=>el.classList.add('hidden'),3900);
+      setTimeout(()=>el.classList.add('hidden'),4300);
     };
   }
 
@@ -509,28 +539,4 @@
     return true;
   }
   if(!hook()) setTimeout(hook,300);
-})();
-
-/* ===== 로드맵 모달: 잘못 붙는 중급 진단 버튼 숨기기 =====
-   index.html은 노드 제목·설명·공지·과제 텍스트에서 "중급 모의고사 N회"를 찾아
-   진단 버튼을 자동 생성한다. 아래 목록의 (주차, 회차)에 해당하면 그 버튼만 제거한다. */
-(function(){
-  if(!window.GFIELD_DATA) return;
-  var HIDE=[];   /* 예: { date:/8\s*월\s*2\s*주차/, round:4 } */
-  function hideRound(node){
-    if(!node) return 0;
-    var d=String(node.date||'');
-    for(var i=0;i<HIDE.length;i++){ if(HIDE[i].date.test(d)) return HIDE[i].round; }
-    return 0;
-  }
-  if(HIDE.length && typeof sectionsHTML==='function'){
-    var orig=sectionsHTML;
-    sectionsHTML=function(c,node){
-      var html=orig.apply(this,arguments);
-      var r=hideRound(node);
-      if(!r) return html;
-      var rx=new RegExp('<div class="m-sec"><a href="mock\\.html\\?round='+r+'[\\s\\S]*?<\\/div><\\/div>','g');
-      return String(html).replace(rx,'');
-    };
-  }
 })();
