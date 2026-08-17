@@ -436,3 +436,29 @@
   }
   if(!hook()) setTimeout(hook,300);
 })();
+
+/* ===== 로드맵 모달: 잘못 붙는 중급 진단 버튼 숨기기 =====
+   index.html은 노드 제목·설명·공지·과제 텍스트에서 "중급 모의고사 N회"를 찾아
+   진단 버튼을 자동 생성한다. 아래 목록의 (주차, 회차)에 해당하면 그 버튼만 제거한다. */
+(function(){
+  if(!window.GFIELD_DATA) return;
+  var HIDE=[
+    { date:/8\s*월\s*2\s*주차/, round:4 }   /* 8월 2주차의 중급 4회 버튼 — 4회는 1주차 소관 */
+  ];
+  function hideRound(node){
+    if(!node) return 0;
+    var d=String(node.date||'');
+    for(var i=0;i<HIDE.length;i++){ if(HIDE[i].date.test(d)) return HIDE[i].round; }
+    return 0;
+  }
+  if(typeof sectionsHTML==='function'){
+    var orig=sectionsHTML;
+    sectionsHTML=function(c,node){
+      var html=orig.apply(this,arguments);
+      var r=hideRound(node);
+      if(!r) return html;
+      var rx=new RegExp('<div class="m-sec"><a href="mock\\.html\\?round='+r+'[\\s\\S]*?<\\/div><\\/div>','g');
+      return String(html).replace(rx,'');
+    };
+  }
+})();
