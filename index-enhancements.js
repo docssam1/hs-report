@@ -1,33 +1,60 @@
 /* GFIELD 학생 화면 v2: 특강 뷰어 연결 + 날씨 인사 + 두 캐릭터 로드맵 */
 
-/* ===== 로드맵 문구 갱신 (data.js를 건드리지 않고 화면 표시만 교체) =====
+/* ===== 로드맵 구조·문구 갱신 (data.js를 건드리지 않고 화면 표시만 교체) =====
    관리자 콘솔에서 같은 내용으로 저장하면 이 블록은 지워도 됩니다. */
 (function(){
   var D=window.GFIELD_DATA; if(!D||!Array.isArray(D.nodes)) return;
+  var N=D.nodes;
+  function find(rx){ for(var i=0;i<N.length;i++){ var n=N[i]; if(n&&n.date&&rx.test(String(n.date))) return i; } return -1; }
+
+  /* 8월 5주차가 없으면 8월 4주차 뒤에 새로 만들어 넣는다 */
+  if(find(/8\s*월\s*5\s*주차/)<0){
+    var i4=find(/8\s*월\s*4\s*주차/);
+    if(i4>=0) N.splice(i4+1,0,{id:'aug-w5',type:'week',track:'exam',date:'8월 5주차',title:'',desc:'',focus:''});
+  }
+
   var OVERRIDE=[
     { date:/7\s*월\s*4\s*주차/, title:'중급 모의고사 2회 리뷰 테스트',
       desc:'중급 2회 리뷰 테스트 + 중급 모의고사 3회' },
     { date:/8\s*월\s*1\s*주차/, title:'THINKING CORE CH1 (3)',
-      desc:'Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 5회' },
+      desc:'Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 4회' },
     { date:/8\s*월\s*2\s*주차/, title:'THINKING CORE CH2 (1)',
       desc:'THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트' },
     { date:/8\s*월\s*3\s*주차/, title:'THINKING CORE CH2 (2)',
       desc:'THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회' },
     { date:/8\s*월\s*4\s*주차/, title:'THINKING CORE CH3',
-      desc:'THINKING CORE CH3 Numbers & Case + 중급 모의고사 5회' },
-    { date:/9\s*월\s*1\s*주차/, title:'THINKING CORE CH4',
-      desc:'THINKING CORE CH4 Geometry + 중급 5회 리뷰테스트' }
+      desc:'THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회' },
+    { date:/8\s*월\s*5\s*주차/, title:'THINKING CORE CH4',
+      desc:'THINKING CORE CH4 Geometry + 중급 모의고사 5·6회 리뷰테스트', track:'exam' },
+    { date:/9\s*월\s*1\s*주차/, title:'파이널 실전 모의고사 1회',
+      desc:'파이널 과정 시작 · 신유형 지문 분석', track:'final' },
+    { date:/10\s*월\s*4\s*주차/, title:'최종 실전 모의고사 4회 및 최종 정리',
+      desc:'최종 4회 + 총정리 · 학부모 최종 상담', track:'final' }
   ];
-  D.nodes.forEach(function(n){
+  N.forEach(function(n){
     if(!n || !n.date || n.type==='divider' || n.type==='goal') return;
     for(var i=0;i<OVERRIDE.length;i++){
-      if(OVERRIDE[i].date.test(String(n.date))){
-        if(OVERRIDE[i].title) n.title=OVERRIDE[i].title;
-        if(OVERRIDE[i].desc)  n.desc =OVERRIDE[i].desc;
+      var o=OVERRIDE[i];
+      if(o.date.test(String(n.date))){
+        if(o.title) n.title=o.title;
+        if(o.desc)  n.desc =o.desc;
+        if(o.track) n.track=o.track;
         break;
       }
     }
   });
+
+  /* 8월 5주차 ↔ 9월 1주차(파이널 진입) 사이에 추가 모의고사 추천 배너 */
+  if(!N.some(function(n){return n && n.id==='promo-final-prep';})){
+    var i9=find(/9\s*월\s*1\s*주차/);
+    if(i9>=0) N.splice(i9,0,{
+      id:'promo-final-prep', type:'promo',
+      label:'파이널 진입 전 · 추가 모의고사 추천',
+      title:'파이널 전에 실전 감각을 더 쌓고 싶다면',
+      desc:'중급 8회와 시크릿 추가 모의고사로 파이널 난이도에 미리 적응할 수 있어요. 한 주라도 더 실전을 겪은 학생이 파이널에서 흔들리지 않습니다.',
+      cta:'추가 모의고사 문의하기', url:'https://open.kakao.com/me/gfield'
+    });
+  }
 })();
 
 (function(){
@@ -55,6 +82,14 @@
     .brief-card::after{content:'✦';position:absolute;right:14px;top:5px;font-size:56px;color:rgba(249,115,22,.07);transform:rotate(12deg);pointer-events:none}
     .brief-mood{position:relative;z-index:1}
     .brief-personal{display:block;margin-top:5px;color:#5a4432;font-weight:600}
+    .promo-node{position:relative;margin:6px 0 18px;padding:16px 18px;border:1.5px dashed #fb923c !important;border-radius:16px;
+      background:linear-gradient(135deg,#fff7ed,#ffedd5);box-shadow:0 4px 14px rgba(249,115,22,.12);cursor:default}
+    .promo-node:hover{transform:none;box-shadow:0 4px 14px rgba(249,115,22,.12)}
+    .promo-node .ptag{display:inline-block;background:#ea580c;color:#fff;font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+    .promo-node h3{font-size:16px;color:#c2410c;margin:0 0 4px}
+    .promo-node p{font-size:13px;color:#6f5a49;line-height:1.6;margin:0}
+    .promo-node a.pcta{display:inline-flex;align-items:center;gap:6px;margin-top:11px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-size:13px;font-weight:800;padding:9px 16px;border-radius:11px;text-decoration:none;box-shadow:0 5px 13px rgba(234,88,12,.28)}
+    .promo-node .pico{position:absolute;left:-46px;top:16px;width:32px;height:32px;background:#fff;border:2px solid #fb923c;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px}
     @keyframes friendLead{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
     @keyframes friendFollow{0%,100%{transform:translateY(-2px) rotate(2deg)}50%{transform:translateY(3px) rotate(-2deg)}}
     @keyframes bubbleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
@@ -62,6 +97,7 @@
       .timeline{padding-left:58px}.timeline::before{left:18px}.icon-status{left:-48px}
       .companion-marker{left:-65px;transform:scale(.82);transform-origin:left bottom}
       .companion-bubble{left:61px;max-width:150px;font-size:10.5px}
+      .promo-node .pico{left:-40px}
     }
   `;
   document.head.appendChild(style);
@@ -195,6 +231,13 @@
       const tl=document.getElementById('timeline');if(!tl)return;tl.innerHTML='';
       D.nodes.forEach(node=>{
         if(node.type==='divider'){const d=document.createElement('div');d.className='divider';d.innerHTML=`<span>${esc2(node.label)}</span>`;tl.appendChild(d);return}
+        if(node.type==='promo'){
+          const p=document.createElement('div');p.className='node promo-node';
+          p.innerHTML=`<div class="pico">✨</div><span class="ptag">${esc2(node.label||'추천')}</span>`+
+            `<h3 class="disp">${esc2(node.title)}</h3><p>${esc2(node.desc)}</p>`+
+            (node.url?`<a class="pcta" href="${esc2(node.url)}" target="_blank" rel="noopener">💬 ${esc2(node.cta||'문의하기')}</a>`:'');
+          tl.appendChild(p);return;
+        }
         if(node.type==='goal'){const g=document.createElement('div');g.className='node goal';g.innerHTML=`<div class="date">${esc2(node.date)}</div><h3 class="disp">${esc2(node.title)}</h3><div class="desc">${esc2(node.desc)}</div>`;tl.appendChild(g);return}
         const unlocked=isUnlocked(node),isCurrent=node.id===D.meta.currentWeekId,el=document.createElement('div');
         el.className=`node ${node.track}${unlocked?'':' locked'}${isCurrent?' current':''}`;
@@ -473,16 +516,14 @@
    진단 버튼을 자동 생성한다. 아래 목록의 (주차, 회차)에 해당하면 그 버튼만 제거한다. */
 (function(){
   if(!window.GFIELD_DATA) return;
-  var HIDE=[
-    { date:/8\s*월\s*2\s*주차/, round:4 }   /* 8월 2주차의 중급 4회 버튼 — 4회는 1주차 소관 */
-  ];
+  var HIDE=[];   /* 예: { date:/8\s*월\s*2\s*주차/, round:4 } */
   function hideRound(node){
     if(!node) return 0;
     var d=String(node.date||'');
     for(var i=0;i<HIDE.length;i++){ if(HIDE[i].date.test(d)) return HIDE[i].round; }
     return 0;
   }
-  if(typeof sectionsHTML==='function'){
+  if(HIDE.length && typeof sectionsHTML==='function'){
     var orig=sectionsHTML;
     sectionsHTML=function(c,node){
       var html=orig.apply(this,arguments);
