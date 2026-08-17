@@ -94,14 +94,15 @@
 
 /* =========================================================================
    로드맵 주차 구조·문구 패치 (어드민용)
-   index-enhancements.js 의 같은 블록은 학생 화면(index.html)에만 적용된다.
-   admin.html 은 data.js 를 그대로 읽으므로 여기서 동일하게 맞춰 준다.
-   - 콘텐츠 탭 / 출결 매트릭스 / 설정 탭 '현재 주차'에 새 제목이 보인다.
-   - [💾 GitHub에 저장]을 누르면 data.js 에 그대로 굳어지고,
+   admin.html 은 data.js 를 그대로 읽으므로 여기서 최신 구성으로 맞춰 준다.
+   9~10월은 실제 진단지 구성(파이널 1~4회 + 최종 1~4회, 총 8주)에 맞춘다.
+
+   ※ [💾 GitHub에 저장]을 누르면 data.js 에 그대로 굳어지고,
      그 뒤에는 이 블록과 index-enhancements.js 의 패치 블록을 지워도 된다.
    ========================================================================= */
 (function(){
   var OVERRIDE=[
+    /* ── Phase 1·2 : 개념 + 중급 모의고사 ── */
     { date:/7\s*월\s*4\s*주차/, title:'중급 모의고사 2회 리뷰 테스트',
       desc:'중급 2회 리뷰 테스트 + 중급 모의고사 3회' },
     { date:/8\s*월\s*1\s*주차/, title:'THINKING CORE CH1 (3)',
@@ -114,8 +115,24 @@
       desc:'THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회' },
     { date:/8\s*월\s*5\s*주차/, title:'THINKING CORE CH4',
       desc:'THINKING CORE CH4 Geometry + 중급 모의고사 5·6회 리뷰테스트', track:'exam' },
+
+    /* ── Phase 3 : 파이널 실전 4주 ── */
     { date:/9\s*월\s*1\s*주차/, title:'파이널 실전 모의고사 1회',
       desc:'파이널 과정 시작 · 신유형 지문 분석', track:'final' },
+    { date:/9\s*월\s*2\s*주차/, title:'파이널 실전 모의고사 2회',
+      desc:'파이널 1회 오답 리뷰 + 파이널 2회 응시', track:'final' },
+    { date:/9\s*월\s*3\s*주차/, title:'파이널 실전 모의고사 3회',
+      desc:'파이널 2회 오답 리뷰 + 파이널 3회 응시', track:'final' },
+    { date:/9\s*월\s*4\s*주차/, title:'파이널 실전 모의고사 4회',
+      desc:'파이널 3회 오답 리뷰 + 파이널 4회 응시 · 누적 백분율 중간 점검', track:'final' },
+
+    /* ── Phase 4 : 최종 실전 4주 (약점 유형 분석지 연동) ── */
+    { date:/10\s*월\s*1\s*주차/, title:'최종 실전 모의고사 1회',
+      desc:'파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공', track:'final' },
+    { date:/10\s*월\s*2\s*주차/, title:'최종 실전 모의고사 2회',
+      desc:'최종 1회 오답 리뷰 + 최종 2회 응시', track:'final' },
+    { date:/10\s*월\s*3\s*주차/, title:'최종 실전 모의고사 3회',
+      desc:'최종 2회 오답 리뷰 + 최종 3회 응시', track:'final' },
     { date:/10\s*월\s*4\s*주차/, title:'최종 실전 모의고사 4회 및 최종 정리',
       desc:'최종 4회 + 총정리 · 학부모 최종 상담', track:'final' }
   ];
@@ -125,7 +142,7 @@
     var N=D.nodes, changed=false;
     function find(rx){ for(var i=0;i<N.length;i++){ var n=N[i]; if(n&&n.date&&rx.test(String(n.date))) return i; } return -1; }
 
-    /* 8월 5주차 신설 — 8월 4주차 바로 뒤 */
+    /* 8월 5주차가 없을 때만 신설 (이미 있으면 건드리지 않음) */
     if(find(/8\s*월\s*5\s*주차/)<0){
       var i4=find(/8\s*월\s*4\s*주차/);
       if(i4>=0){
