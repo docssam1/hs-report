@@ -91,6 +91,102 @@
   setTimeout(function(){if(document.getElementById('tab-mock')&&!document.getElementById('tab-mock').classList.contains('hidden')&&MK_ROWS)renderMock()},100);
 })();
 
+
+/* =========================================================================
+   로드맵 주차 구조·문구 패치 (어드민용)
+   index-enhancements.js 의 같은 블록은 학생 화면(index.html)에만 적용된다.
+   admin.html 은 data.js 를 그대로 읽으므로 여기서 동일하게 맞춰 준다.
+   - 콘텐츠 탭 / 출결 매트릭스 / 설정 탭 '현재 주차'에 새 제목이 보인다.
+   - [💾 GitHub에 저장]을 누르면 data.js 에 그대로 굳어지고,
+     그 뒤에는 이 블록과 index-enhancements.js 의 패치 블록을 지워도 된다.
+   ========================================================================= */
+(function(){
+  var OVERRIDE=[
+    { date:/7\s*월\s*4\s*주차/, title:'중급 모의고사 2회 리뷰 테스트',
+      desc:'중급 2회 리뷰 테스트 + 중급 모의고사 3회' },
+    { date:/8\s*월\s*1\s*주차/, title:'THINKING CORE CH1 (3)',
+      desc:'Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 4회' },
+    { date:/8\s*월\s*2\s*주차/, title:'THINKING CORE CH2 (1)',
+      desc:'THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트' },
+    { date:/8\s*월\s*3\s*주차/, title:'THINKING CORE CH2 (2)',
+      desc:'THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회' },
+    { date:/8\s*월\s*4\s*주차/, title:'THINKING CORE CH3',
+      desc:'THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회' },
+    { date:/8\s*월\s*5\s*주차/, title:'THINKING CORE CH4',
+      desc:'THINKING CORE CH4 Geometry + 중급 모의고사 5·6회 리뷰테스트', track:'exam' },
+    { date:/9\s*월\s*1\s*주차/, title:'파이널 실전 모의고사 1회',
+      desc:'파이널 과정 시작 · 신유형 지문 분석', track:'final' },
+    { date:/10\s*월\s*4\s*주차/, title:'최종 실전 모의고사 4회 및 최종 정리',
+      desc:'최종 4회 + 총정리 · 학부모 최종 상담', track:'final' }
+  ];
+
+  function patch(D){
+    if(!D || !Array.isArray(D.nodes)) return false;
+    var N=D.nodes, changed=false;
+    function find(rx){ for(var i=0;i<N.length;i++){ var n=N[i]; if(n&&n.date&&rx.test(String(n.date))) return i; } return -1; }
+
+    /* 8월 5주차 신설 — 8월 4주차 바로 뒤 */
+    if(find(/8\s*월\s*5\s*주차/)<0){
+      var i4=find(/8\s*월\s*4\s*주차/);
+      if(i4>=0){
+        N.splice(i4+1,0,{id:'aug-w5',type:'week',track:'exam',date:'8월 5주차',title:'',desc:'',focus:''});
+        changed=true;
+      }
+    }
+
+    /* 제목·설명·트랙 갱신 */
+    N.forEach(function(n){
+      if(!n || !n.date || n.type==='divider' || n.type==='goal') return;
+      for(var i=0;i<OVERRIDE.length;i++){
+        var o=OVERRIDE[i];
+        if(o.date.test(String(n.date))){
+          if(o.title && n.title!==o.title){ n.title=o.title; changed=true; }
+          if(o.desc  && n.desc !==o.desc ){ n.desc =o.desc;  changed=true; }
+          if(o.track && n.track!==o.track){ n.track=o.track; changed=true; }
+          break;
+        }
+      }
+    });
+
+    /* 8월 5주차 ↔ 9월 1주차 사이 추가 모의고사 추천 배너 */
+    if(!N.some(function(n){return n && n.id==='promo-final-prep';})){
+      var i9=find(/9\s*월\s*1\s*주차/);
+      if(i9>=0){
+        N.splice(i9,0,{
+          id:'promo-final-prep', type:'promo',
+          label:'파이널 진입 전 · 추가 모의고사 추천',
+          title:'파이널 전에 실전 감각을 더 쌓고 싶다면',
+          desc:'중급 8회와 시크릿 추가 모의고사로 파이널 난이도에 미리 적응할 수 있어요. 한 주라도 더 실전을 겪은 학생이 파이널에서 흔들리지 않습니다.',
+          cta:'추가 모의고사 문의하기', url:'https://open.kakao.com/me/gfield'
+        });
+        changed=true;
+      }
+    }
+    return changed;
+  }
+
+  /* 원본과 어드민 작업본(S) 양쪽에 적용.
+     S 는 admin.html 인라인 스크립트의 top-level let 이라 여기서 참조 가능하다. */
+  var touched=false;
+  try{ if(patch(window.GFIELD_DATA)) touched=true; }catch(e){}
+  var adminS=null;
+  try{ adminS=(typeof S!=='undefined')?S:null; }catch(e){ adminS=null; }
+  if(adminS){ try{ if(patch(adminS)) touched=true; }catch(e){} }
+
+  /* 이미 잠금 해제된 뒤라면 즉시 다시 그린다 */
+  if(touched){
+    try{
+      var app=document.getElementById('app');
+      if(app && !app.classList.contains('hidden') && typeof renderAll==='function') renderAll();
+    }catch(e){}
+  }
+
+  if(touched && !adminS){
+    console.warn('[GFIELD] 로드맵 패치: 어드민 작업본(S)에 접근하지 못했습니다. 새로고침 후에도 주차 제목이 그대로면 알려주세요.');
+  }
+})();
+
+
 /* ===== 주차별 콘텐츠: 접힘 헤더에 '몇 주차'인지 표시 =====
    기존 아코디언은 헤더 제목을 블록 안 첫 입력칸(교재 제목) 값에서 가져와서,
    접으면 "(제목 없음)"만 보여 어느 주차인지 알 수 없었다.
@@ -117,7 +213,7 @@
   function paint(cw){
     var t=cw.querySelector('.cw-title'); if(!t) return;
     var p=labelParts(cw); if(!p) return;                 /* 주차 블록이 아니면 건드리지 않음 */
-    var want=p.week+' '+p.name;
+    var want=p.week+' '+p.name;
     if(t.dataset.wkLabel===want) return;                 /* 이미 반영됨 */
     t.dataset.wkLabel=want;
     t.innerHTML='<span class="wk-chip"></span><span class="wk-name"></span>';
