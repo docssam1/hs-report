@@ -23,6 +23,7 @@ input:focus{border-color:#2a5298}
 button{border:none;border-radius:9px;padding:10px 18px;font-size:13px;font-weight:800;font-family:inherit;cursor:pointer}
 .pri{background:linear-gradient(135deg,#2a5298,#1e3c72);color:#fff}
 .sec{background:#f1f4f9;color:#5b6474;border:1px solid #e3e8ef}
+.adm{background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;border-radius:10px;padding:10px 13px;font-size:12px;font-weight:700;margin-bottom:14px;line-height:1.6}
 
 /* ===== 분석지 ===== */
 #sheet{max-width:1180px;margin:0 auto;background:#fff;padding:26px 30px 34px;box-shadow:0 6px 22px rgba(30,60,114,.10);border-radius:6px}
@@ -33,6 +34,7 @@ button{border:none;border-radius:9px;padding:10px 18px;font-size:13px;font-weigh
 .idbar .k{background:#f2f5fa;font-weight:800;padding:7px 10px;min-width:60px;text-align:center;border-right:1px solid #dbe2ec;white-space:nowrap}
 .idbar .v{flex:1;padding:7px 10px;text-align:center}
 .idbar .v.hl{background:#ffff00;font-weight:800}
+tbl{}
 .res{width:100%;border-collapse:collapse;margin-top:12px;font-size:12.5px}
 .res th{background:#f2f5fa;border:1px solid #b9c4d4;padding:7px;font-weight:800}
 .res td{border:1px solid #b9c4d4;padding:9px 7px;text-align:center}
@@ -77,9 +79,10 @@ h2.sec-t{font-size:19px;font-weight:800;color:#2f6fb5;margin:22px 0 8px}
 </style></head><body>
 
 <div class="panel">
-<h3>① 학생 정보와 오답 입력 <span style="font-weight:600;font-size:12px;color:#8a94a6">— 학생이 직접 입력해도 됩니다. 이름 쓰고 틀린 번호만 누르세요.</span></h3>
+<div class="adm">🔒 선생님 전용 화면입니다. 학생에게는 이 분석지가 보이지 않고, <b>[✅ 학생에게 성적 공개]</b>를 누른 뒤 <b>점수 · 백분율 · 예상 결과</b>만 공개됩니다.</div>
+<h3>① 학생 정보와 오답 입력</h3>
 <div class="row">
-  <div><label>이름</label><input id="nm" placeholder="이름"></div>
+  <div><label>이름</label><input id="nm" placeholder="김규빈2"></div>
   <div><label>학교</label><input id="sch" placeholder="0"></div>
   <div><label>학년</label><input id="grd" placeholder="0"></div>
   <div><label>담임</label><input id="tch" value="노관호"></div>
@@ -98,7 +101,8 @@ h2.sec-t{font-size:19px;font-weight:800;color:#2f6fb5;margin:22px 0 8px}
   <button class="pri" onclick="render()">분석지 만들기</button>
   <button class="sec" onclick="window.print()">인쇄 / PDF 저장</button>
   <button class="sec" onclick="copyCmt()">멘트만 복사</button>
-  <button class="sec" style="background:#fee500;color:#3b1e1e;border-color:#f5d800" onclick="sendTeacher()">📩 선생님께 결과 보내기</button>
+  <button class="sec" style="background:#fee500;color:#3b1e1e;border-color:#f5d800" onclick="sendTeacher()">📩 카톡으로 멘트 보내기</button>
+  <button class="sec" style="background:#dcfce7;color:#166534;border-color:#bbf7d0" onclick="publish()">✅ 학생에게 성적 공개</button>
   <button class="sec" onclick="reset()">초기화</button>
 </div>
 </div>
@@ -118,11 +122,11 @@ const AREAS=['수,규칙찾기','도형','경우의 수','식의 계산'];
 /* 점수 → 상위 백분율 → 예상 결과 */
 const TB=[[76.7,0.8,'경시 가능'],[69.8,1.7,'경시 가능'],[69.5,2.5,'경시 가능'],[67.8,3.3,'경시 가능'],[67.7,4.2,'경시 가능'],[66.3,5.0,'경시 가능'],[60.8,5.8,'경시 가능'],[60.2,6.7,'경시 가능'],[58,7.5,'경시 가능'],[57.9,8.3,'경시 가능'],[56.9,9.2,'경시 가능'],[56.1,10.0,'경시 가능'],[56,10.8,'경시 가능'],[55.7,11.7,'경시 가능'],[54.2,12.5,'경시 가능'],[52.7,13.3,'경시컷,심화안정권'],[52.6,15.0,'경시컷,심화안정권'],[52.5,15.8,'경시컷,심화안정권'],[51.1,16.7,'경시컷,심화안정권'],[49.9,17.5,'경시컷,심화안정권'],[49.1,18.3,'경시컷,심화안정권'],[48.4,20.0,'경시컷,심화안정권'],[47.7,20.8,'경시컷,심화안정권'],[46.5,21.7,'경시컷,심화안정권'],[45.8,22.5,'경시컷,심화안정권'],[43.9,24.2,'경시컷,심화안정권'],[42.4,25.0,'경시컷,심화안정권'],[40.9,25.8,'경시컷,심화안정권'],[40.4,26.7,'심화컷,실력안정권'],[40.1,27.5,'심화컷,실력안정권'],[38.9,28.3,'심화컷,실력안정권'],[38.2,29.2,'심화컷,실력안정권'],[36.3,30.0,'심화컷,실력안정권'],[35.5,30.8,'심화컷,실력안정권'],[35,32.5,'심화컷,실력안정권'],[34.7,33.3,'심화컷,실력가능'],[34.3,34.2,'심화컷,실력가능'],[34,35.0,'심화컷,실력가능'],[33.6,35.8,'심화컷,실력가능'],[32.5,37.5,'심화컷,실력가능'],[32.1,38.3,'실력컷,일품안정권'],[32,40.0,'실력컷,일품안정권'],[31.9,40.8,'실력컷,일품안정권'],[31.2,41.7,'실력컷,일품안정권'],[30.6,42.5,'실력컷,일품안정권'],[30.5,44.2,'실력컷,일품안정권'],[30.2,45.8,'실력컷,일품안정권'],[29.4,46.7,'실력컷,일품안정권'],[29.3,47.5,'실력컷,일품안정권'],[28.6,48.3,'실력컷,일품안정권'],[25.9,50.0,'실력컷,일품안정권'],[25.2,50.8,'실력컷,일품안정권'],[25.1,51.7,'실력컷,일품안정권'],[24.8,52.5,'실력컷,일품안정권'],[24.5,55.0,'실력컷,일품안정권'],[24.4,55.8,'실력컷,일품안정권'],[24,58.3,'실력컷,일품안정권'],[23.8,59.2,'실력컷,일품안정권'],[23.3,60.0,'실력컷,일품안정권'],[23.2,60.8,'실력컷,일품안정권'],[22.4,61.7,'일품컷'],[21.8,62.5,'일품컷'],[21.7,64.2,'일품컷'],[20.3,65.0,'일품컷'],[19.9,65.8,'일품컷'],[19.8,67.5,'일품컷'],[19.7,69.2,'일품컷'],[19.1,70.0,'일품컷'],[19,72.5,'일품컷'],[18.3,73.3,'일품컷'],[17.7,74.2,'일품컷'],[17.6,75.0,'일품컷'],[17.2,75.8,'일품컷'],[16.9,76.7,'노력요함'],[15.7,77.5,'노력요함'],[14.9,78.3,'노력요함'],[13,79.2,'노력요함'],[12.9,80.0,'노력요함'],[12.2,80.8,'노력요함'],[11.5,82.5,'노력요함'],[9.6,84.2,'노력요함'],[9.5,85.0,'노력요함'],[8.8,85.8,'노력요함'],[2.7,86.7,'노력요함'],[0,87.5,'노력요함']];
 
+/* 누적 백분율 → 예상 레벨 (상한 기준) */
 /* 등급 컷 점수 (최종 1회) — 높은 순 */
 const CUTS=[['경시 가능',54.2],['경시컷,심화안정권',40.9],['심화컷,실력안정권',35.0],['심화컷,실력가능',32.5],['실력컷,일품안정권',23.2],['일품컷',17.2],['노력요함',0]];
-/* 누적 기준 코호트 (파이널 1회부터 누적 백분율 분포) */
+/* 누적 기준 코호트 (파이널 1회부터의 누적 백분율 기준 코호트) */
 const REF=[2.9,6.9,8.0,12.0,11.8,12.4,13.6,14.3,14.3,15.8,17.5,17.8,18.6,20.0,23.9,25.5,24.2,26.6,27.0,29.4,29.8,31.5,32.1,33.2,30.8,34.2,37.0,36.8,35.1,36.9,32.5,40.2,35.0,39.8,38.3,44.7,46.0,47.9,48.6,45.8,46.7,50.0,50.4,50.7,51.2,48.3,51.7,40.8,40.8,53.5,52.1,54.6,55.2,52.5,56.5,59.0,57.5,55.8,59.2,62.3,65.6,63.8,66.4,67.0,69.2,67.1,70.8,71.3,67.5,74.5,72.5,75.0,74.7,70.0,70.0,75.0,76.7,75.6,78.9,78.7,75.8,76.7,82.0,83.6,83.9,82.2,84.0,87.7,91.7,84.2,90.4,100.0];
-/* 누적 백분율 → 예상 레벨 (상한 기준) */
 const CUM=[[19.0,'경시 가능'],[33.2,'경시컷,심화안정권'],[44.7,'심화컷,실력안정권'],[51.7,'실력컷,일품안정권'],[59.0,'일품 가능'],[75.0,'일품컷'],[101,'노력요함']];
 
 const R1=n=>Math.round(n*10)/10;
@@ -134,6 +138,29 @@ for(let i=1;i<=30;i++){
   d.innerHTML=`<span class="n">${i}</span><span class="r">${Math.round(RATE[i-1]*100)}%</span>`;
   d.onclick=()=>{ X[i]=!X[i]; d.classList.toggle('x',X[i]); };
   grid.appendChild(d);
+}
+/* ===== 학생 성적 공개 =====
+   mock_results 테이블에 round='last1' 로 저장한다.
+   학생은 last1-result.html?name=이름 에서 읽기 전용으로 확인한다.
+   (round 가 숫자 형식이 아니라 중급/활용 관리 화면에는 잡히지 않는다) */
+async function publish(){
+  const nm=document.getElementById('nm').value.trim();
+  if(!nm){ alert('먼저 학생 이름을 입력해 주세요.'); return; }
+  let score=0, ox='';
+  for(let i=1;i<=30;i++){ if(X[i]) ox+='X'; else { ox+='O'; score+=PTS[i-1]; } }
+  score=R1(score);
+  const wrong=Object.keys(X).filter(k=>X[k]).length;
+  if(!confirm(nm+' 학생의 성적을 공개할까요?\n\n점수 '+score+'점 · 오답 '+wrong+'개\n\n공개하면 학생이 로드맵에서 바로 확인할 수 있습니다.')) return;
+  try{
+    const r=await fetch(AL_URL+'/rest/v1/mock_results',{method:'POST',
+      headers:{apikey:AL_KEY,Authorization:'Bearer '+AL_KEY,'Content-Type':'application/json',
+               Prefer:'resolution=merge-duplicates'},
+      body:JSON.stringify({student:nm,round:'last1',ox:ox,score:score,wrong:wrong,source:'admin'})});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    alert(nm+' 학생의 성적이 공개되었습니다.\n학생 화면 → 로드맵 10월 1주차 → [성적 확인]에서 볼 수 있어요.');
+  }catch(e){
+    alert('성적 공개에 실패했습니다. 잠시 후 다시 시도해 주세요.\n('+e.message+')');
+  }
 }
 function reset(){ X={}; document.querySelectorAll('.q').forEach(d=>d.classList.remove('x')); document.getElementById('sheet').innerHTML=''; }
 function lookup(s){ for(const r of TB) if(s>=r[0]) return [r[1],r[2]]; return [87.5,'노력요함']; }
@@ -204,6 +231,7 @@ function render(){
   const allP=[...fps, pct];
   const cumAvg=R1(allP.reduce((s,v)=>s+v,0)/allP.length);
   const cumLv=cumLevel(cumAvg);
+  const cumRank=REF.filter(v=>v<cumAvg).length+1;
 
   /* 멘트 */
   const wt=wrong.length?`[${wrong.map(n=>n+'번').join(', ')}]`:'없습니다';
@@ -318,4 +346,9 @@ function sendTeacher(){
   alert(nm+' 결과가 복사되었습니다.\n카카오톡 채팅방이 열리면 붙여넣기(길게 누르기 → 붙여넣기)해서 보내주세요.');
   window.open('https://open.kakao.com/me/gfield','_blank');
 }
+/* 어드민에서 학생을 지정해 열면 이름을 자동으로 채운다 */
+(function(){
+  const n=(new URLSearchParams(location.search).get('name')||'').trim();
+  if(n) document.getElementById('nm').value=n;
+})();
 </script></body></html>
