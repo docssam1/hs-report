@@ -38,6 +38,21 @@
     const body=document.getElementById('mock-body');if(!body)return;
     const students=mkStudents(),student=mkSel||students[0]||'';
     const rows=rowsFor(student,window.mkSet);
+
+    /* 최종 모의고사 진단 분석지 — 어드민 전용 */
+    let last1=`<div style="border:1px solid #c7d7f0;border-radius:14px;padding:14px;margin:4px 0 12px;background:linear-gradient(135deg,#2a5298,#1e3c72);color:#fff">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <b style="font-size:14px">📊 최종 모의고사 진단 분석지</b>
+        <span style="font-size:11.5px;opacity:.85">선생님 전용 · 학생 화면에는 성적만 공개됩니다</span>
+        <a class="btn sm" style="margin-left:auto;background:#fff;color:#1e3c72;text-decoration:none;font-weight:800" target="_blank"
+           href="last1-analysis.html${student?('?name='+encodeURIComponent(student)):''}">분석지 만들기 ›</a>
+      </div>
+      <div style="margin-top:8px;font-size:11.5px;opacity:.9;line-height:1.6">
+        틀린 번호를 입력해 분석지를 만든 뒤 <b>[✅ 학생에게 성적 공개]</b>를 누르면,
+        학생이 로드맵 10월 1주차의 <b>[성적 확인]</b>에서 점수·백분율·예상 결과를 볼 수 있습니다.
+      </div>
+    </div>`;
+
     let panel=`<div style="border:1px solid #dce4ef;border-radius:14px;padding:14px;margin:4px 0 16px;background:linear-gradient(135deg,#f8fbff,#fff)">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <b style="font-size:14px">🧾 응시 차수 관리</b>
@@ -67,6 +82,7 @@
     });
     panel+='</tbody></table></div></div>';
     body.insertAdjacentHTML('afterbegin',panel);
+    body.insertAdjacentHTML('afterbegin',last1);
     const hint=document.querySelector('#tab-mock .hint');
     if(hint)hint.textContent='중급·활용 모의고사 결과를 분리해 확인합니다. 각 회차의 1·2·3차 기록을 개별 초기화하거나 저장되지 않는 관리자 미리보기로 들어갈 수 있습니다.';
   };
@@ -96,6 +112,7 @@
    로드맵 주차 구조·문구 패치 (어드민용)
    admin.html 은 data.js 를 그대로 읽으므로 여기서 최신 구성으로 맞춰 준다.
    9~10월은 실제 진단지 구성(파이널 1~4회 + 최종 1~4회, 총 8주)에 맞춘다.
+   focus(노드 세 번째 줄)도 새 커리큘럼에 맞게 다시 쓴다.
 
    ※ [💾 GitHub에 저장]을 누르면 data.js 에 그대로 굳어지고,
      그 뒤에는 이 블록과 index-enhancements.js 의 패치 블록을 지워도 된다.
@@ -104,37 +121,51 @@
   var OVERRIDE=[
     /* ── Phase 1·2 : 개념 + 중급 모의고사 ── */
     { date:/7\s*월\s*4\s*주차/, title:'중급 모의고사 2회 리뷰 테스트',
-      desc:'중급 2회 리뷰 테스트 + 중급 모의고사 3회' },
+      desc:'중급 2회 리뷰 테스트 + 중급 모의고사 3회',
+      focus:'오답 원인 찾기 훈련 시작' },
     { date:/8\s*월\s*1\s*주차/, title:'THINKING CORE CH1 (3)',
-      desc:'Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 4회' },
+      desc:'Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 4회',
+      focus:'수와 숫자의 개수 마무리' },
     { date:/8\s*월\s*2\s*주차/, title:'THINKING CORE CH2 (1)',
-      desc:'THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트' },
+      desc:'THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트',
+      focus:'나이·속력 문장제 집중' },
     { date:/8\s*월\s*3\s*주차/, title:'THINKING CORE CH2 (2)',
-      desc:'THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회' },
+      desc:'THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회',
+      focus:'시계와 각 · 수배열표 훈련' },
     { date:/8\s*월\s*4\s*주차/, title:'THINKING CORE CH3',
-      desc:'THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회' },
+      desc:'THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회',
+      focus:'수 · 경우의 수 통합 적용' },
     { date:/8\s*월\s*5\s*주차/, title:'THINKING CORE CH4',
-      desc:'THINKING CORE CH4 Geometry + 중급 모의고사 5·6회 리뷰테스트', track:'exam' },
+      desc:'THINKING CORE CH4 Geometry + 중급 모의고사 5·6회 리뷰테스트',
+      focus:'기하 마무리 · 심화 개념 종료', track:'exam' },
 
     /* ── Phase 3 : 파이널 실전 4주 ── */
     { date:/9\s*월\s*1\s*주차/, title:'파이널 실전 모의고사 1회',
-      desc:'파이널 과정 시작 · 신유형 지문 분석', track:'final' },
+      desc:'파이널 과정 시작 · 신유형 지문 분석',
+      focus:'파이널 난이도 적응 · 조건 해석 훈련', track:'final' },
     { date:/9\s*월\s*2\s*주차/, title:'파이널 실전 모의고사 2회',
-      desc:'파이널 1회 오답 리뷰 + 파이널 2회 응시', track:'final' },
+      desc:'파이널 1회 오답 리뷰 + 파이널 2회 응시',
+      focus:'OMR 마킹 · 시간 배분 훈련', track:'final' },
     { date:/9\s*월\s*3\s*주차/, title:'파이널 실전 모의고사 3회',
-      desc:'파이널 2회 오답 리뷰 + 파이널 3회 응시', track:'final' },
+      desc:'파이널 2회 오답 리뷰 + 파이널 3회 응시',
+      focus:'낯선 유형 적응 훈련', track:'final' },
     { date:/9\s*월\s*4\s*주차/, title:'파이널 실전 모의고사 4회',
-      desc:'파이널 3회 오답 리뷰 + 파이널 4회 응시 · 누적 백분율 중간 점검', track:'final' },
+      desc:'파이널 3회 오답 리뷰 + 파이널 4회 응시 · 누적 백분율 중간 점검',
+      focus:'파이널 마무리 · 누적 백분율 점검', track:'final' },
 
     /* ── Phase 4 : 최종 실전 4주 (약점 유형 분석지 연동) ── */
     { date:/10\s*월\s*1\s*주차/, title:'최종 실전 모의고사 1회',
-      desc:'파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공', track:'final' },
+      desc:'파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공',
+      focus:'80분 시간 배분 전략 · 약점 유형 확인', track:'final' },
     { date:/10\s*월\s*2\s*주차/, title:'최종 실전 모의고사 2회',
-      desc:'최종 1회 오답 리뷰 + 최종 2회 응시', track:'final' },
+      desc:'최종 1회 오답 리뷰 + 최종 2회 응시',
+      focus:'목표 레벨 기준선 점검', track:'final' },
     { date:/10\s*월\s*3\s*주차/, title:'최종 실전 모의고사 3회',
-      desc:'최종 2회 오답 리뷰 + 최종 3회 응시', track:'final' },
+      desc:'최종 2회 오답 리뷰 + 최종 3회 응시',
+      focus:'실전 리허설 · 누적 성적 최종 확인', track:'final' },
     { date:/10\s*월\s*4\s*주차/, title:'최종 실전 모의고사 4회 및 최종 정리',
-      desc:'최종 4회 + 총정리 · 학부모 최종 상담', track:'final' }
+      desc:'최종 4회 + 총정리 · 학부모 최종 상담',
+      focus:'종강 · 시험 직전 컨디션 조절', track:'final' }
   ];
 
   function patch(D){
@@ -151,7 +182,7 @@
       }
     }
 
-    /* 제목·설명·트랙 갱신 */
+    /* 제목·설명·핵심훈련(focus)·트랙 갱신 */
     N.forEach(function(n){
       if(!n || !n.date || n.type==='divider' || n.type==='goal') return;
       for(var i=0;i<OVERRIDE.length;i++){
@@ -159,6 +190,7 @@
         if(o.date.test(String(n.date))){
           if(o.title && n.title!==o.title){ n.title=o.title; changed=true; }
           if(o.desc  && n.desc !==o.desc ){ n.desc =o.desc;  changed=true; }
+          if(o.focus && n.focus!==o.focus){ n.focus=o.focus; changed=true; }
           if(o.track && n.track!==o.track){ n.track=o.track; changed=true; }
           break;
         }
