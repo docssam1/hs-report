@@ -112,7 +112,7 @@
    로드맵 주차 구조·문구 패치 (어드민용)
    admin.html 은 data.js 를 그대로 읽으므로 여기서 최신 구성으로 맞춰 준다.
    9~10월은 실제 진단지 구성(파이널 1~4회 + 최종 1~4회, 총 8주)에 맞춘다.
-   focus(노드 세 번째 줄)도 새 커리큘럼에 맞게 다시 쓴다.
+   focus(노드 세 번째 줄)와 Phase 구분선 위치도 함께 정리한다.
 
    ※ [💾 GitHub에 저장]을 누르면 data.js 에 그대로 굳어지고,
      그 뒤에는 이 블록과 index-enhancements.js 의 패치 블록을 지워도 된다.
@@ -172,6 +172,7 @@
     if(!D || !Array.isArray(D.nodes)) return false;
     var N=D.nodes, changed=false;
     function find(rx){ for(var i=0;i<N.length;i++){ var n=N[i]; if(n&&n.date&&rx.test(String(n.date))) return i; } return -1; }
+    function idx(id){ for(var i=0;i<N.length;i++){ if(N[i]&&N[i].id===id) return i; } return -1; }
 
     /* 8월 5주차가 없을 때만 신설 (이미 있으면 건드리지 않음) */
     if(find(/8\s*월\s*5\s*주차/)<0){
@@ -211,6 +212,23 @@
         changed=true;
       }
     }
+
+    /* Phase 구분선 위치 정리
+       Phase 2(중급 집중) → 중급 모의고사가 전면에 나오는 7월 4주차 앞
+       Phase 3(파이널 진입) → 개념이 끝난 뒤, 배너 다음 · 9월 1주차 바로 앞 */
+    function moveBefore(id, rx){
+      var i=idx(id); if(i<0) return false;
+      var j=find(rx); if(j<0) return false;
+      if(j===i+1) return false;                 /* 이미 바로 앞이면 그대로 */
+      var node=N.splice(i,1)[0];
+      var t=find(rx);
+      if(t<0){ N.splice(i,0,node); return false; }   /* 안전 복구 */
+      N.splice(t,0,node);
+      return true;
+    }
+    if(moveBefore('div-mock',  /7\s*월\s*4\s*주차/)) changed=true;
+    if(moveBefore('div-final', /9\s*월\s*1\s*주차/)) changed=true;
+
     return changed;
   }
 
