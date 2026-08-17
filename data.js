@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 17. 오후 7:21:13
+ * 생성: 2026. 8. 17. 오후 7:37:00
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -670,8 +670,8 @@ window.GFIELD_DATA = {
       ]
     },
     "aug-w2": {
-      "notice": "교재 안의 문제 외 문제를 바꿔서 계속 질문하며 수행률을 높이고 있습니다.\n함정에 빠지지 않도록 속을 수 있는 조건을 바꿔가며 진행했는데 역시....  하지만 이제 한번 더 생각하는 버릇이 생긴것 같습니다.\n\nTHINKING CORE CH2  Algebra(1) 시계와 각·수배열표\n     - [[red:시계와 각]] \n       복습 영상 ) https://youtu.be/RJVDpfkWQUI?si=0USB6HLXBb09iWz8&t=2618\n    시계 파트 중 각에 대한 부분은 4학년 편입 시에만 나오고 이제 출제가 되지 않습니다. \n    하지만 \n      [[blue:겹치는 시각의 수]]\n      [[blue:고장난 시계]]는 2년에 한번 꼴로 꾸준히 출제 되고 있으니 꼭 복습해주세요.\n\n     - [[red:수 배열표]]\n       복습영상 ) https://youtu.be/jYu8jXkawrA?si=syi-QdVQpqLB3Guf&t=1176\n      분명히 어디에선가 들어봤지만 수열의 종류부터 바로 대답 못 하는 경우도 많았습니다.\n        - 여러 가지 수열의 종류 (자료실에 수열에 관한 문제들 업로드 해 놓겠습니다.\n        -  파스칼의 삼각형에서의 규칙\n        -  수 배열표에서의 행과 열 찾기\n\n[[red:초등과정 대비 실전 모의고사 중급 4회 질문 및 중요문항]]\n    수업 시간에 진행하지 않았지만 아래 내용도 체크 해주세요. 4회 중 많이 질문했던 유형입니다.\n    복습영상) https://youtu.be/AumfJZ3jH8c\n       \n    #1 숫자카드로 만든 수의 합\n           https://youtu.be/AumfJZ3jH8c?si=8GLvT3i-0n-9MwVm&t=32\n\n   #3 특정 도형이 포함된 도형의 개수  \n           https://youtu.be/AumfJZ3jH8c?si=8rjFMpPQ50i8Y2z5&t=360\n\n    #14 등비수열의 합\n           https://youtu.be/AumfJZ3jH8c?si=FobbpEhhVQvXlSdC&t=1357   \n\n   #22 곱한 값에 이어진 0의 개수\n            https://youtu.be/AumfJZ3jH8c?si=fLCewdkQsqzCQ_bI&t=1955\n\n    #27 일에 관한 문제\n          https://youtu.be/AumfJZ3jH8c?si=z8Dq6Xi4PMbNSP9M&t=2483\n     \n     \n    \n",
-      "homework": "THINKING CORE CH2 semi 모의고사",
+      "notice": "교재 안의 문제 외 문제를 바꿔서 계속 질문하며 수행률을 높이고 있습니다.\n함정에 빠지지 않도록 속을 수 있는 조건을 바꿔가며 진행했는데 역시....  하지만 이제 한번 더 생각하는 버릇이 생긴것 같습니다.\n연휴로 인해 결석 한 친구들은 꼭 영상을 보고 부족한 유형들은 클리닉 잡아주세요. \n\nTHINKING CORE CH2  Algebra(1) 시계와 각·수배열표\n     - [[red:시계와 각]] \n      복습 영상 ) https://youtu.be/RJVDpfkWQUI?si=0USB6HLXBb09iWz8&t=2618\n       시계 파트 중 각에 대한 부분은 4학년 편입 시에만 나오고 이제 출제가 되지 않습니다. \n    \n     하지만 \n      [[blue:겹치는 시각의 수]]\n      [[blue:고장난 시계]]는 2년에 한번 꼴로 꾸준히 출제 되고 있으니 꼭 복습해주세요.\n\n     - [[red:수 배열표]]\n       복습영상 ) https://youtu.be/jYu8jXkawrA?si=syi-QdVQpqLB3Guf&t=1176\n      분명히 어디에선가 들어봤지만 수열의 종류부터 바로 대답 못 하는 경우도 많았습니다.\n        - 여러 가지 수열의 종류 (자료실에 수열에 관한 문제들 업로드 해 놓겠습니다.\n        -  파스칼의 삼각형에서의 규칙\n        -  수 배열표에서의 행과 열 찾기\n\n[[red:초등과정 대비 실전 모의고사 중급 4회 질문 및 중요문항]]\n    수업 시간에 진행하지 않았지만 아래 내용도 체크 해주세요. 4회 중 많이 질문했던 유형입니다.\n    복습영상) https://youtu.be/AumfJZ3jH8c\n       \n    #1 숫자카드로 만든 수의 합\n           https://youtu.be/AumfJZ3jH8c?si=8GLvT3i-0n-9MwVm&t=32\n\n   #3 특정 도형이 포함된 도형의 개수  \n           https://youtu.be/AumfJZ3jH8c?si=8rjFMpPQ50i8Y2z5&t=360\n\n    #14 등비수열의 합\n           https://youtu.be/AumfJZ3jH8c?si=FobbpEhhVQvXlSdC&t=1357   \n\n   #22 곱한 값에 이어진 0의 개수\n            https://youtu.be/AumfJZ3jH8c?si=fLCewdkQsqzCQ_bI&t=1955\n\n    #27 일에 관한 문제\n          https://youtu.be/AumfJZ3jH8c?si=z8Dq6Xi4PMbNSP9M&t=2483 \n ",
+      "homework": " ⭐ THINKING CORE CH2 semi 2회  모의고사\n         학습영상 1번 - 13번  https://youtu.be/W6GnRtzez24\n                    14,15,16번 https://youtu.be/AT5xxcA0DSU\n\n⭐ 선택과제  \n      1.    [[hlb:초등 선발 모의고사 중급 5회]]  \n      2.   [[hlb:초등 선발 모의고사 중급 4회 리뷰]] ",
       "textbooks": [
         {
           "title": "중급 모의고사 5회 · 답안 및 교재 연결표",
