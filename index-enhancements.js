@@ -1,4 +1,35 @@
 /* GFIELD 학생 화면 v2: 특강 뷰어 연결 + 날씨 인사 + 두 캐릭터 로드맵 */
+
+/* ===== 로드맵 문구 갱신 (data.js를 건드리지 않고 화면 표시만 교체) =====
+   관리자 콘솔에서 같은 내용으로 저장하면 이 블록은 지워도 됩니다. */
+(function(){
+  var D=window.GFIELD_DATA; if(!D||!Array.isArray(D.nodes)) return;
+  var OVERRIDE=[
+    { date:/7\s*월\s*4\s*주차/, title:'중급 모의고사 2회 리뷰 테스트',
+      desc:'중급 2회 리뷰 테스트 + 중급 모의고사 3회' },
+    { date:/8\s*월\s*1\s*주차/, title:'THINKING CORE CH1 (3)',
+      desc:'Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 5회' },
+    { date:/8\s*월\s*2\s*주차/, title:'THINKING CORE CH2 (1)',
+      desc:'THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트' },
+    { date:/8\s*월\s*3\s*주차/, title:'THINKING CORE CH2 (2)',
+      desc:'THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회' },
+    { date:/8\s*월\s*4\s*주차/, title:'THINKING CORE CH3',
+      desc:'THINKING CORE CH3 Numbers & Case + 중급 모의고사 5회' },
+    { date:/9\s*월\s*1\s*주차/, title:'THINKING CORE CH4',
+      desc:'THINKING CORE CH4 Geometry + 중급 5회 리뷰테스트' }
+  ];
+  D.nodes.forEach(function(n){
+    if(!n || !n.date || n.type==='divider' || n.type==='goal') return;
+    for(var i=0;i<OVERRIDE.length;i++){
+      if(OVERRIDE[i].date.test(String(n.date))){
+        if(OVERRIDE[i].title) n.title=OVERRIDE[i].title;
+        if(OVERRIDE[i].desc)  n.desc =OVERRIDE[i].desc;
+        break;
+      }
+    }
+  });
+})();
+
 (function(){
   if(!window.GFIELD_DATA) return;
 
