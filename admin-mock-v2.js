@@ -90,3 +90,54 @@
 
   setTimeout(function(){if(document.getElementById('tab-mock')&&!document.getElementById('tab-mock').classList.contains('hidden')&&MK_ROWS)renderMock()},100);
 })();
+
+/* ===== 주차별 콘텐츠: 접힘 헤더에 '몇 주차'인지 표시 =====
+   기존 아코디언은 헤더 제목을 블록 안 첫 입력칸(교재 제목) 값에서 가져와서,
+   접으면 "(제목 없음)"만 보여 어느 주차인지 알 수 없었다.
+   블록 안에 이미 있는 .wt("7월 4주차 · 제목")를 헤더 제목으로 덮어써 준다. */
+(function(){
+  var css=document.createElement('style');
+  css.textContent=
+    '.content-week .cw-title .wk-chip{display:inline-block;background:#f2681c;color:#fff;font-size:11px;font-weight:800;'+
+    'padding:2px 9px;border-radius:999px;margin-right:8px;vertical-align:1px;letter-spacing:-.01em}'+
+    '.content-week .cw-title .wk-name{color:#222;font-weight:700}'+
+    '.content-week .cw-head{background:#fafbfd;border-radius:8px}'+
+    '.content-week.acc-collapsed .cw-head{background:#fff}';
+  document.head.appendChild(css);
+
+  function labelParts(cw){
+    var wt=cw.querySelector('.wt');
+    if(!wt) return null;
+    var txt=(wt.textContent||'').trim();
+    if(!txt) return null;
+    var i=txt.indexOf('·');
+    if(i<0) return {week:txt, name:''};
+    return { week:txt.slice(0,i).trim(), name:txt.slice(i+1).trim() };
+  }
+  function paint(cw){
+    var t=cw.querySelector('.cw-title'); if(!t) return;
+    var p=labelParts(cw); if(!p) return;                 /* 주차 블록이 아니면 건드리지 않음 */
+    var want=p.week+' '+p.name;
+    if(t.dataset.wkLabel===want) return;                 /* 이미 반영됨 */
+    t.dataset.wkLabel=want;
+    t.innerHTML='<span class="wk-chip"></span><span class="wk-name"></span>';
+    t.querySelector('.wk-chip').textContent=p.week;
+    t.querySelector('.wk-name').textContent=p.name;
+  }
+  function scan(){
+    var list=document.querySelectorAll('.content-week[data-acc]');
+    for(var i=0;i<list.length;i++) paint(list[i]);
+  }
+  var pending=null;
+  function schedule(){ if(pending) return; pending=setTimeout(function(){ pending=null; scan(); },60); }
+
+  function boot(){
+    scan();
+    new MutationObserver(schedule).observe(document.body,{childList:true,subtree:true});
+    /* 아코디언이 입력·토글 때마다 제목을 되돌리므로 그 뒤에 다시 칠한다 */
+    document.addEventListener('input',schedule,true);
+    document.addEventListener('click',schedule,true);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
+  else boot();
+})();
