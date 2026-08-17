@@ -1,14 +1,14 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 17. 오후 3:01:26
+ * 생성: 2026. 8. 17. 오후 6:43:31
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
     "academy": "지필드 영재교육",
     "title": "생각하는 황소 대비 아카이브",
     "year": "2026 하반기",
-    "currentWeekId": "aug-w1",
+    "currentWeekId": "aug-w2",
     "examDate": "2026-11-01",
     "examLabel": "생각하는 황소 입학시험",
     "lat": 37.4996,
@@ -83,8 +83,8 @@ window.GFIELD_DATA = {
       "type": "week",
       "track": "exam",
       "date": "7월 4주차",
-      "title": "THINKING CORE CH2",
-      "desc": "Algebra (1) + 중급 모의고사 3회",
+      "title": "중급 모의고사 2회 리뷰 테스트",
+      "desc": "중급 2회 리뷰 테스트 + 중급 모의고사 3회",
       "focus": ""
     },
     {
@@ -92,8 +92,8 @@ window.GFIELD_DATA = {
       "type": "week",
       "track": "exam",
       "date": "8월 1주차",
-      "title": "THINKING CORE CH3",
-      "desc": "Numbers & Case + 중급 모의고사 4회",
+      "title": "THINKING CORE CH1 (3)",
+      "desc": "Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 4회",
       "focus": "도형/기하 파트 실전 적응"
     },
     {
@@ -110,8 +110,8 @@ window.GFIELD_DATA = {
       "type": "week",
       "track": "exam",
       "date": "8월 2주차",
-      "title": "THINKING CORE CH4",
-      "desc": "Geometry (중급 모의고사 없음)",
+      "title": "THINKING CORE CH2 (1)",
+      "desc": "THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트",
       "focus": "8월 1주차 수업 · 개념 다지기"
     },
     {
@@ -119,8 +119,8 @@ window.GFIELD_DATA = {
       "type": "week",
       "track": "exam",
       "date": "8월 3주차",
-      "title": "THINKING CORE CH5",
-      "desc": "활용 + 중급 모의고사 5회",
+      "title": "THINKING CORE CH2 (2)",
+      "desc": "THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회",
       "focus": "실전 개념 단원 종료"
     },
     {
@@ -133,8 +133,8 @@ window.GFIELD_DATA = {
       "type": "week",
       "track": "mock",
       "date": "8월 4주차",
-      "title": "중급 모의고사 6회",
-      "desc": "실전 풀이 및 오답 리뷰",
+      "title": "THINKING CORE CH3",
+      "desc": "THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회",
       "focus": "모의고사 집중 훈련 체제 전환"
     },
     {
@@ -145,19 +145,28 @@ window.GFIELD_DATA = {
     {
       "id": "aug-w4",
       "type": "week",
-      "track": "final",
+      "track": "exam",
       "date": "8월 5주차",
-      "title": "파이널 실전 모의고사 1회",
-      "desc": "성대 선행 문제로 조건 연습 · 실전 전 단계",
+      "title": "THINKING CORE CH4",
+      "desc": "THINKING CORE CH4 Geometry + 중급 모의고사 5·6회 리뷰테스트",
       "focus": "파이널 과정 시작 · 누적 진단지 제공 시작"
+    },
+    {
+      "id": "promo-final-prep",
+      "type": "promo",
+      "label": "파이널 진입 전 · 추가 모의고사 추천",
+      "title": "파이널 전에 실전 감각을 더 쌓고 싶다면",
+      "desc": "중급 8회와 시크릿 추가 모의고사로 파이널 난이도에 미리 적응할 수 있어요. 한 주라도 더 실전을 겪은 학생이 파이널에서 흔들리지 않습니다.",
+      "cta": "추가 모의고사 문의하기",
+      "url": "https://open.kakao.com/me/gfield"
     },
     {
       "id": "sep-w1",
       "type": "week",
       "track": "final",
       "date": "9월 1주차",
-      "title": "파이널 실전 모의고사 2회",
-      "desc": "성대 선행 문제로 조건 연습 · 실전 전 단계",
+      "title": "파이널 실전 모의고사 1회",
+      "desc": "파이널 과정 시작 · 신유형 지문 분석",
       "focus": "조건 해석 훈련 · 누적 진단 반영"
     },
     {
@@ -219,8 +228,8 @@ window.GFIELD_DATA = {
       "type": "week",
       "track": "final",
       "date": "10월 4주차",
-      "title": "최종 정리 및 학부모 상담",
-      "desc": "누적 진단 기반 약점 총정리",
+      "title": "최종 실전 모의고사 4회 및 최종 정리",
+      "desc": "최종 4회 + 총정리 · 학부모 최종 상담",
       "focus": "종강 · 시험 직전 컨디션 조절",
       "link": "https://open.kakao.com/me/gfield"
     },
