@@ -1,11 +1,13 @@
 /* GFIELD 학생 화면 v2: 특강 뷰어 연결 + 날씨 인사 + 두 캐릭터 로드맵 */
 
 /* ===== 로드맵 구조·문구 갱신 (data.js를 건드리지 않고 화면 표시만 교체) =====
-   관리자 콘솔에서 같은 내용으로 저장하면 이 블록은 지워도 됩니다. */
+   관리자 콘솔에서 같은 내용으로 저장하면 이 블록은 지워도 됩니다.
+   ※ 어드민(admin-mock-v2.js)의 같은 블록과 내용을 맞춰 두었습니다. */
 (function(){
   var D=window.GFIELD_DATA; if(!D||!Array.isArray(D.nodes)) return;
   var N=D.nodes;
   function find(rx){ for(var i=0;i<N.length;i++){ var n=N[i]; if(n&&n.date&&rx.test(String(n.date))) return i; } return -1; }
+  function idx(id){ for(var i=0;i<N.length;i++){ if(N[i]&&N[i].id===id) return i; } return -1; }
 
   /* 8월 5주차가 없으면 8월 4주차 뒤에 새로 만들어 넣는다 */
   if(find(/8\s*월\s*5\s*주차/)<0){
@@ -15,21 +17,47 @@
 
   var OVERRIDE=[
     { date:/7\s*월\s*4\s*주차/, title:'중급 모의고사 2회 리뷰 테스트',
-      desc:'중급 2회 리뷰 테스트 + 중급 모의고사 3회' },
+      desc:'중급 2회 리뷰 테스트 + 중급 모의고사 3회',
+      focus:'오답 원인 찾기 훈련 시작' },
     { date:/8\s*월\s*1\s*주차/, title:'THINKING CORE CH1 (3)',
-      desc:'Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 4회' },
+      desc:'Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 4회',
+      focus:'수와 숫자의 개수 마무리' },
     { date:/8\s*월\s*2\s*주차/, title:'THINKING CORE CH2 (1)',
-      desc:'THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트' },
+      desc:'THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트',
+      focus:'나이·속력 문장제 집중' },
     { date:/8\s*월\s*3\s*주차/, title:'THINKING CORE CH2 (2)',
-      desc:'THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회' },
+      desc:'THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회',
+      focus:'시계와 각 · 수배열표 훈련' },
     { date:/8\s*월\s*4\s*주차/, title:'THINKING CORE CH3',
-      desc:'THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회' },
+      desc:'THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회',
+      focus:'수 · 경우의 수 통합 적용' },
     { date:/8\s*월\s*5\s*주차/, title:'THINKING CORE CH4',
-      desc:'THINKING CORE CH4 Geometry + 중급 모의고사 5·6회 리뷰테스트', track:'exam' },
+      desc:'THINKING CORE CH4 Geometry + 중급 모의고사 5·6회 리뷰테스트',
+      focus:'기하 마무리 · 심화 개념 종료', track:'exam' },
     { date:/9\s*월\s*1\s*주차/, title:'파이널 실전 모의고사 1회',
-      desc:'파이널 과정 시작 · 신유형 지문 분석', track:'final' },
+      desc:'파이널 과정 시작 · 신유형 지문 분석',
+      focus:'파이널 난이도 적응 · 조건 해석 훈련', track:'final' },
+    { date:/9\s*월\s*2\s*주차/, title:'파이널 실전 모의고사 2회',
+      desc:'파이널 1회 오답 리뷰 + 파이널 2회 응시',
+      focus:'OMR 마킹 · 시간 배분 훈련', track:'final' },
+    { date:/9\s*월\s*3\s*주차/, title:'파이널 실전 모의고사 3회',
+      desc:'파이널 2회 오답 리뷰 + 파이널 3회 응시',
+      focus:'낯선 유형 적응 훈련', track:'final' },
+    { date:/9\s*월\s*4\s*주차/, title:'파이널 실전 모의고사 4회',
+      desc:'파이널 3회 오답 리뷰 + 파이널 4회 응시 · 누적 백분율 중간 점검',
+      focus:'파이널 마무리 · 누적 백분율 점검', track:'final' },
+    { date:/10\s*월\s*1\s*주차/, title:'최종 실전 모의고사 1회',
+      desc:'파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공',
+      focus:'80분 시간 배분 전략 · 약점 유형 확인', track:'final' },
+    { date:/10\s*월\s*2\s*주차/, title:'최종 실전 모의고사 2회',
+      desc:'최종 1회 오답 리뷰 + 최종 2회 응시',
+      focus:'목표 레벨 기준선 점검', track:'final' },
+    { date:/10\s*월\s*3\s*주차/, title:'최종 실전 모의고사 3회',
+      desc:'최종 2회 오답 리뷰 + 최종 3회 응시',
+      focus:'실전 리허설 · 누적 성적 최종 확인', track:'final' },
     { date:/10\s*월\s*4\s*주차/, title:'최종 실전 모의고사 4회 및 최종 정리',
-      desc:'최종 4회 + 총정리 · 학부모 최종 상담', track:'final' }
+      desc:'최종 4회 + 총정리 · 학부모 최종 상담',
+      focus:'종강 · 시험 직전 컨디션 조절', track:'final' }
   ];
   N.forEach(function(n){
     if(!n || !n.date || n.type==='divider' || n.type==='goal') return;
@@ -38,6 +66,7 @@
       if(o.date.test(String(n.date))){
         if(o.title) n.title=o.title;
         if(o.desc)  n.desc =o.desc;
+        if(o.focus) n.focus=o.focus;
         if(o.track) n.track=o.track;
         break;
       }
@@ -55,6 +84,19 @@
       cta:'추가 모의고사 문의하기', url:'https://open.kakao.com/me/gfield'
     });
   }
+
+  /* Phase 구분선 위치 정리 */
+  function moveBefore(id, rx){
+    var i=idx(id); if(i<0) return;
+    var j=find(rx); if(j<0) return;
+    if(j===i+1) return;
+    var node=N.splice(i,1)[0];
+    var t=find(rx);
+    if(t<0){ N.splice(i,0,node); return; }
+    N.splice(t,0,node);
+  }
+  moveBefore('div-mock',  /7\s*월\s*4\s*주차/);
+  moveBefore('div-final', /9\s*월\s*1\s*주차/);
 })();
 
 (function(){
@@ -287,34 +329,20 @@
   },80);
 })();
 
-/* ===== 최종 모의고사 진단 분석지 연결 (자료실 카드 + 로드맵 버튼) ===== */
+/* ===== 최종 모의고사 성적 확인 (학생용 · 읽기 전용) =====
+   약점 유형 분석지(last1-analysis.html)는 선생님 전용이라 학생 화면에 노출하지 않는다.
+   학생은 로드맵의 [성적 확인] 버튼으로 점수·백분율·예상 결과만 본다. */
 (function(){
   if(!window.GFIELD_DATA) return;
-  var LAST1_URL='last1-analysis.html';
+  var RESULT_URL='last1-result.html';
 
   var st=document.createElement('style');
   st.textContent='.last1-node-btn{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:8px 14px;border:0;border-radius:10px;background:linear-gradient(135deg,#315b9a,#183968);color:#fff;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:0 5px 12px rgba(30,60,114,.22)}.last1-node-btn:hover{transform:translateY(-1px)}';
   document.head.appendChild(st);
 
-  function last1Card(){
-    return '<div class="folder" style="border:1px solid #c7d7f0">'+
-      '<div class="folder-h" style="background:linear-gradient(135deg,#2a5298,#1e3c72)"><span class="folder-ic">📊</span>최종 모의고사 진단 분석지<span class="folder-c">NEW</span></div>'+
-      '<div class="folder-b" style="padding:14px 16px 16px">'+
-        '<div style="font-size:13px;color:#54607a;line-height:1.6;margin-bottom:10px">최종 모의고사를 본 후 <b>틀린 번호만 입력</b>하면 점수·석차·예상 결과와 약점 유형 분석지가 바로 만들어져요. 결과는 선생님께 자동으로 전달됩니다.</div>'+
-        '<button class="tb-btn" style="background:linear-gradient(135deg,#315b9a,#183968);box-shadow:0 6px 16px rgba(30,60,114,.25)" onclick="window.open(\''+LAST1_URL+'\',\'_blank\')"><span class="ico">📊</span>최종 1회 분석지 만들기</button>'+
-      '</div></div>';
-  }
-
-  if(typeof renderArchive==='function'){
-    var oa=renderArchive;
-    renderArchive=function(){
-      oa();
-      var list=document.getElementById('archive-list');
-      if(list && !document.getElementById('last1-arc')){
-        var w=document.createElement('div'); w.id='last1-arc'; w.innerHTML=last1Card();
-        list.insertBefore(w, list.firstChild);
-      }
-    };
+  function openResult(){
+    var nm=(typeof currentStudent!=='undefined'&&currentStudent)?currentStudent:'';
+    window.open(RESULT_URL+(nm?('?name='+encodeURIComponent(nm)):''),'_blank');
   }
 
   if(typeof renderTimeline==='function'){
@@ -329,8 +357,8 @@
           if(el.querySelector('.last1-node-btn')) return;
           var b=document.createElement('button');
           b.type='button'; b.className='last1-node-btn';
-          b.innerHTML='📊 시험 본 후 분석지 만들기';
-          b.onclick=function(ev){ ev.stopPropagation(); window.open(LAST1_URL,'_blank'); };
+          b.innerHTML='📊 성적 확인';
+          b.onclick=function(ev){ ev.stopPropagation(); openResult(); };
           el.appendChild(b);
         });
       }catch(e){}
@@ -339,7 +367,7 @@
 
   setTimeout(function(){
     try{
-      if(typeof currentStudent!=='undefined'&&currentStudent){renderArchive();renderTimeline();}
+      if(typeof currentStudent!=='undefined'&&currentStudent){renderTimeline();}
     }catch(e){}
   },140);
 })();
