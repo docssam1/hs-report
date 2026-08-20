@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 18. 오전 1:19:26
+ * 생성: 2026. 8. 20. 오후 1:15:53
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -79,13 +79,18 @@ window.GFIELD_DATA = {
       "focus": "개념 적용 및 오답 제로 훈련"
     },
     {
+      "id": "div-mock",
+      "type": "divider",
+      "label": "Phase 2 · 중급 모의고사 집중 훈련 진입"
+    },
+    {
       "id": "jul-w4",
       "type": "week",
       "track": "exam",
       "date": "7월 4주차",
       "title": "중급 모의고사 2회 리뷰 테스트",
       "desc": "중급 2회 리뷰 테스트 + 중급 모의고사 3회",
-      "focus": ""
+      "focus": "오답 원인 찾기 훈련 시작"
     },
     {
       "id": "jul-w5",
@@ -94,7 +99,7 @@ window.GFIELD_DATA = {
       "date": "8월 1주차",
       "title": "THINKING CORE CH1 (3)",
       "desc": "Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 4회",
-      "focus": "도형/기하 파트 실전 적응"
+      "focus": "수와 숫자의 개수 마무리"
     },
     {
       "id": "special-summer",
@@ -112,7 +117,7 @@ window.GFIELD_DATA = {
       "date": "8월 2주차",
       "title": "THINKING CORE CH2 (1)",
       "desc": "THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트",
-      "focus": "8월 1주차 수업 · 개념 다지기"
+      "focus": "나이·속력 문장제 집중"
     },
     {
       "id": "aug-w2",
@@ -121,12 +126,7 @@ window.GFIELD_DATA = {
       "date": "8월 3주차",
       "title": "THINKING CORE CH2 (2)",
       "desc": "THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회",
-      "focus": "실전 개념 단원 종료"
-    },
-    {
-      "id": "div-mock",
-      "type": "divider",
-      "label": "Phase 2 · 중급 모의고사 집중 훈련 진입"
+      "focus": "시계와 각 · 수배열표 훈련"
     },
     {
       "id": "aug-w3",
@@ -135,12 +135,7 @@ window.GFIELD_DATA = {
       "date": "8월 4주차",
       "title": "THINKING CORE CH3",
       "desc": "THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회",
-      "focus": "모의고사 집중 훈련 체제 전환"
-    },
-    {
-      "id": "div-final",
-      "type": "divider",
-      "label": "Phase 3 · 파이널 · 최종 실전 과정 진입"
+      "focus": "수 · 경우의 수 통합 적용"
     },
     {
       "id": "aug-w4",
@@ -149,7 +144,7 @@ window.GFIELD_DATA = {
       "date": "8월 5주차",
       "title": "THINKING CORE CH4",
       "desc": "THINKING CORE CH4 Geometry + 중급 모의고사 5·6회 리뷰테스트",
-      "focus": "파이널 과정 시작 · 누적 진단지 제공 시작"
+      "focus": "기하 마무리 · 심화 개념 종료"
     },
     {
       "id": "promo-final-prep",
@@ -161,13 +156,18 @@ window.GFIELD_DATA = {
       "url": "https://open.kakao.com/me/gfield"
     },
     {
+      "id": "div-final",
+      "type": "divider",
+      "label": "Phase 3 · 파이널 · 최종 실전 과정 진입"
+    },
+    {
       "id": "sep-w1",
       "type": "week",
       "track": "final",
       "date": "9월 1주차",
       "title": "파이널 실전 모의고사 1회",
       "desc": "파이널 과정 시작 · 신유형 지문 분석",
-      "focus": "조건 해석 훈련 · 누적 진단 반영"
+      "focus": "파이널 난이도 적응 · 조건 해석 훈련"
     },
     {
       "id": "sep-14",
@@ -176,7 +176,7 @@ window.GFIELD_DATA = {
       "date": "9월 2주차",
       "title": "파이널 실전 모의고사 2회",
       "desc": "파이널 1회 오답 리뷰 + 파이널 2회 응시",
-      "focus": "OMR 마킹 훈련 도입"
+      "focus": "OMR 마킹 · 시간 배분 훈련"
     },
     {
       "id": "sep-21",
@@ -185,7 +185,7 @@ window.GFIELD_DATA = {
       "date": "9월 3주차",
       "title": "파이널 실전 모의고사 3회",
       "desc": "파이널 2회 오답 리뷰 + 파이널 3회 응시",
-      "focus": "파이널 단계 마무리 · 중간 분석 리포트"
+      "focus": "낯선 유형 적응 훈련"
     },
     {
       "id": "sep-28",
@@ -194,7 +194,7 @@ window.GFIELD_DATA = {
       "date": "9월 4주차",
       "title": "파이널 실전 모의고사 4회",
       "desc": "파이널 3회 오답 리뷰 + 파이널 4회 응시 · 누적 백분율 중간 점검",
-      "focus": "낯선 유형 적응 훈련 시작"
+      "focus": "파이널 마무리 · 누적 백분율 점검"
     },
     {
       "id": "oct-5",
@@ -203,7 +203,7 @@ window.GFIELD_DATA = {
       "date": "10월 1주차",
       "title": "최종 실전 모의고사 1회",
       "desc": "파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공",
-      "focus": "80분 시간 배분 전략"
+      "focus": "80분 시간 배분 전략 · 약점 유형 확인"
     },
     {
       "id": "oct-12",
@@ -212,7 +212,7 @@ window.GFIELD_DATA = {
       "date": "10월 2주차",
       "title": "최종 실전 모의고사 2회",
       "desc": "최종 1회 오답 리뷰 + 최종 2회 응시",
-      "focus": "목표 레벨(경시/심화/실력/일품) 기준선 제시"
+      "focus": "목표 레벨 기준선 점검"
     },
     {
       "id": "oct-19",
@@ -463,7 +463,8 @@ window.GFIELD_DATA = {
           "access": [
             "김현우",
             "노관호",
-            "김소라"
+            "김소라",
+            "정유현"
           ]
         },
         {
@@ -472,7 +473,8 @@ window.GFIELD_DATA = {
           "access": [
             "김소라",
             "노관호",
-            "김현우"
+            "김현우",
+            "정유현"
           ],
           "folder": "tb_mrtzu34y",
           "pages": 6
