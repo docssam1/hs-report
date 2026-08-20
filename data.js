@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 20. 오후 6:30:13
+ * 생성: 2026. 8. 20. 오후 7:54:12
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -2132,6 +2132,26 @@ window.GFIELD_DATA = {
       "links": [],
       "imgdir": "bk_mt1bkrir",
       "pages": 2
+    },
+    {
+      "folder": "규칙 보충학습",
+      "title": "GM 중급 MISSION 6-1 수열과 규칙(여러가지 수열의 활용)",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1787218609646_8kl9_GM___MISSION_6-1_______.pdf",
+      "video": "https://youtu.be/XrIXFLWuyuM?si=9d0vzrST8jjc58Ys",
+      "cover": "",
+      "date": "2026-08-20",
+      "links": [],
+      "imgdir": "bk_mt1btfy6",
+      "pages": 14
+    },
+    {
+      "folder": "규칙 보충학습",
+      "title": "1031 초급 C CH5 수배열표",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1787223229518_0138_1031____C_CH5_____.pdf",
+      "video": "https://youtu.be/4wE1jYCEk3g",
+      "cover": "",
+      "date": "2026-08-20",
+      "links": []
     }
   ],
   "pins": {},
