@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 20. 오후 6:27:48
+ * 생성: 2026. 8. 20. 오후 6:30:13
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -2121,6 +2121,17 @@ window.GFIELD_DATA = {
       "links": [],
       "imgdir": "bk_mt1b099z",
       "pages": 228
+    },
+    {
+      "folder": "규칙 보충학습",
+      "title": "3% 1과정 묶음수열,군수열 개념",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1787218206320_bk6h_30_______.pdf",
+      "video": "https://youtu.be/Mrd5nwR6GBQ?si=SZs0bz3lZHVGTU7H",
+      "cover": "",
+      "date": "2026-08-20",
+      "links": [],
+      "imgdir": "bk_mt1bkrir",
+      "pages": 2
     }
   ],
   "pins": {},
