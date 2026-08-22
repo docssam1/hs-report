@@ -1859,7 +1859,7 @@ window.GFIELD_DATA = {
         },
         {
           "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=last&round=1"
+          "url": "https://hs.gfieldacademy.net/last1-answer.html"
         }
       ]
     },
@@ -1881,7 +1881,7 @@ window.GFIELD_DATA = {
         },
         {
           "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=last&round=2"
+          "url": "https://hs.gfieldacademy.net/last-answer.html?round=2"
         }
       ]
     },

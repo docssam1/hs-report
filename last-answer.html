@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>최종 모의고사 답안지 | 지필드 영재교육</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Pretendard,'Malgun Gothic',sans-serif;background:#f4f6fa;color:#1f2430;padding:28px 18px;line-height:1.55}.sheet{max-width:980px;margin:auto;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(30,60,114,.1);overflow:hidden}.head{background:linear-gradient(135deg,#1e3c72,#2a5298);color:#fff;padding:22px 26px}.brand{font-size:12.5px;opacity:.85;letter-spacing:.5px}.head h1{font-size:23px;font-weight:800;margin-top:4px}.sub{font-size:12.5px;opacity:.85;margin-top:6px}.meta{display:flex;gap:8px;flex-wrap:wrap;padding:14px 26px;background:#fff7ec;border-bottom:1px solid #f0e3d2;font-size:12px}.meta span,.meta a{background:#fff;border:1px solid #f0ddc4;border-radius:999px;padding:4px 11px;font-weight:700;color:#8a5a20;text-decoration:none}.meta a{background:#fee2e2;border-color:#fbcaca;color:#dc2626}table{width:100%;border-collapse:collapse}thead th{background:#f7f9fc;border-bottom:2px solid #e3e8ef;padding:10px 8px;font-size:12px;color:#5b6474;font-weight:700}tbody td{border-bottom:1px solid #eef1f6;padding:11px 8px;font-size:12.5px;vertical-align:top}.no{text-align:center;font-weight:800;color:#1e3c72;width:42px}.area{text-align:center;width:100px;white-space:nowrap}.area b{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:6px;color:#fff}.pts{display:block;font-size:10px;color:#98a1b0;margin-top:3px}.type{width:175px;font-weight:700;color:#334}.ans{width:165px;font-weight:800;color:#c2410c}.exp{color:#54607a;font-size:12px}.rate{width:94px;text-align:center;color:#98a1b0;font-size:11px;font-weight:700}.rate i{display:block;font-size:15px;font-style:normal;color:#64748b;margin-bottom:3px}tbody tr:nth-child(even){background:#fcfdff}.foot{padding:14px 26px;font-size:11.5px;color:#8a94a6;background:#fafbfd;border-top:1px solid #eef1f6}.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:9px;background:#1e3c72;color:#fff;padding:11px 14px;font-weight:800;cursor:pointer;box-shadow:0 5px 15px rgba(30,60,114,.25)}@media print{body{background:#fff;padding:0}.sheet{box-shadow:none;border-radius:0;max-width:100%}.print{display:none}thead{display:table-header-group}tbody tr{page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="head"><div class="brand">대치 지필드 영재교육 · 성공하는 공부습관을 만드는</div><h1 id="title"></h1><div class="sub">정답과 한 줄 해설 · 30문항 100점 (1~12번 2.7점 / 13~22번 3.4점 / 23~30번 4.2점)</div></header>
+  <div class="meta"><span>총 30문항</span><span>만점 100점</span><span>제한시간 80분</span><span>정답률 집계 전</span><a id="video" target="_blank" rel="noopener">▶ 전체 풀이영상 보기</a></div>
+  <table><thead><tr><th>번호</th><th>영역·배점</th><th>세부유형</th><th>정답</th><th>정답률</th><th>간단 설명</th></tr></thead><tbody id="rows"></tbody></table>
+  <footer class="foot">© 지필드 영재교육 · 학습용 답안지입니다. 브라우저에서 <b>Ctrl+P</b>로 인쇄하거나 PDF로 저장할 수 있습니다. 정답률은 응시 데이터 누적 후 반영됩니다.</footer>
+</main>
+<button class="print" onclick="print()">🖨 인쇄 / PDF 저장</button>
+<script>
+const round=Number(new URLSearchParams(location.search).get('round'))||2;
+const rounds={
+  2:{video:'https://youtu.be/YiKvaYUlIp4',items:[
+    ['식의 계산','일의 양과 작업률','9일','일의 전체 양을 720으로 통일하면 어른 5명은 하루 45, 어린이 9명은 하루 36만큼 일해 하루 81만큼 처리합니다.'],
+    ['수·규칙찾기','조건에 맞는 세 자리 홀수 세기','144개','백의 자리를 2·3·4·5로 나누고, 이미 쓴 숫자를 제외한 홀수 자리를 차례로 세어 더합니다.'],
+    ['수·규칙찾기','달력과 요일의 규칙','월요일','3월 22일에서 7월 22일까지의 날짜 차이를 7로 나눈 나머지만큼 요일을 이동합니다.'],
+    ['식의 계산','등차수열로 나이 구하기','12살','7명의 나이는 2살씩 차이 나므로 막내를 기준으로 식을 세워 셋째의 나이를 구합니다.'],
+    ['도형','쌓기나무의 최소 개수','16개','위·앞·옆에서 본 모양이 모두 만족되도록 겹치는 칸의 높이를 먼저 정해 최소로 쌓습니다.'],
+    ['도형','직사각형의 개수','108개','가로·세로 길이별로 만들 수 있는 직사각형을 빠짐없이 나누어 더합니다.'],
+    ['수·규칙찾기','반복 배열의 번째 찾기','31번째','흰 돌이 16개 더 많아지는 규칙을 단계별 차이로 정리해 해당 그림의 번호를 찾습니다.'],
+    ['식의 계산','간격과 걸린 시간','65분','시작점과 끝점에도 빵조각이 있다는 조건을 포함해 간격 수와 시간을 계산합니다.'],
+    ['수·규칙찾기','반복마디의 활용','시','실로폰 음계의 왕복 규칙을 한 주기로 정리한 뒤 2023번째 위치를 찾습니다.'],
+    ['수·규칙찾기','쪽수에 쓰인 숫자 세기','136쪽','1~540의 일·십·백의 자리에서 숫자 5가 등장하는 횟수를 각각 셉니다.'],
+    ['식의 계산','수 배열표의 합','1,000,000','배열의 규칙을 이용해 행·열 또는 묶음의 합으로 바꾸어 계산합니다.'],
+    ['수·규칙찾기','숫자 카드의 최대·최소','11,064','네 장을 골라 두 수를 만드는 모든 조건에서 최댓값과 최솟값을 찾아 더합니다.'],
+    ['식의 계산','거울 시계','5시 10분, 6시 50분','거울에 비친 시작·끝 모양이 같다는 조건과 1시간 40분을 함께 적용합니다.'],
+    ['식의 계산','부족한 돈과 합','주연 3,300원 · 유준 3,150원 · 유빈 3,600원','축구공 가격을 기준으로 각자의 돈을 나타내고 세 사람의 합 조건을 사용합니다.'],
+    ['식의 계산','도형 연산 규칙','4','보기의 도형 조각이 나타내는 연산 규칙을 먼저 복원한 뒤 같은 방식으로 계산합니다.'],
+    ['수·규칙찾기','몫과 나머지가 같은 나눗셈','23개','나누는 수를 27로 두고 몫과 나머지를 같은 수로 놓아 범위를 만족하는 값을 셉니다.'],
+    ['수·규칙찾기','수 배열표의 좌표','275','배열이 꺾이며 커지는 규칙을 따라 (15,17)의 행과 열에 해당하는 수를 찾습니다.'],
+    ['수·규칙찾기','카드 건너뛰어 집기','77','한 장 걸러 집는 구간과 두 장 걸러 집는 구간을 나누어 마지막 카드를 추적합니다.'],
+    ['수·규칙찾기','자연수 삼각 배열','7번째 줄 58번째','1부터의 누적합으로 2023이 들어가는 줄을 찾고, 그 줄 안의 위치를 계산합니다.'],
+    ['식의 계산','물길의 양','104L','각 갈림길에서 오른쪽이 왼쪽의 3배가 되는 규칙을 역으로 적용해 빠져나오는 양을 비교합니다.'],
+    ['식의 계산','조건에 맞는 사탕 나누기','갑 36개 · 을 12개 · 병 24개','나누기 전후의 변화를 표로 정리해 세 사람이 같아지는 조건을 풉니다.'],
+    ['경우의 수','소수의 자릿수와 0의 개수','180번','5보다 크고 6보다 작은 세 자리 소수를 한 번씩 쓸 때 각 자리의 0 등장 횟수를 나눠 셉니다.'],
+    ['식의 계산','시간과 문제 수','250문제','세 사람의 시간당 풀이 수를 변수로 두고 시간 차이·문제 수 차이 조건을 연립합니다.'],
+    ['경우의 수','인접한 숫자가 있는 수','76개','0·1·2·4·8·9로 네 자리 이하 수를 만들며 4와 8이 이웃하는 경우를 나눠 셉니다.'],
+    ['식의 계산','연속한 두 수의 곱의 합','343,400','각 항을 세 수의 곱으로 바꾸어 망원경처럼 소거되는 규칙을 이용합니다.'],
+    ['식의 계산','O·X 답안표 분석','9문제','갑·을·병의 정답 수와 같은 문항·다른 문항 조건을 표로 비교해 정답 수를 찾습니다.'],
+    ['수·규칙찾기','달력이 같은 해','2017년','윤년을 포함한 요일 이동 규칙으로 2023년과 달력이 같은 가장 가까운 과거 연도를 찾습니다.'],
+    ['식의 계산','넓이가 다른 잔디 깎기','4명','큰 잔디밭과 작은 잔디밭의 넓이 비를 작업량으로 바꾸어 날짜별 인원을 맞춥니다.'],
+    ['도형','쌓기나무 모양 만들기','102개','성냥개비 20개로 만든 두 쌓기나무의 면·모서리를 분해해 필요한 성냥개비 수를 계산합니다.'],
+    ['식의 계산','속력과 추격','12.5초','노관호가 땅에 착륙하는 시점부터 악당이 차에 타기 전까지의 거리를 시간으로 바꾸어 구합니다.']
+  ]}
+};
+const data=rounds[round]||rounds[2], color={'수·규칙찾기':'#2563eb','식의 계산':'#ea580c','도형':'#7c3aed','경우의 수':'#0d9488'};
+document.title='최종 모의고사 '+round+'회 답안지 | 지필드 영재교육';document.getElementById('title').textContent='초등과정 대비 최종 모의고사 '+round+'회 · 답안지';document.getElementById('video').href=data.video;
+document.getElementById('rows').innerHTML=data.items.map((x,i)=>{const no=i+1,pts=no<=12?'2.7':no<=22?'3.4':'4.2';return '<tr><td class="no">'+no+'</td><td class="area"><b style="background:'+color[x[0]]+'">'+x[0]+'</b><span class="pts">'+pts+'점</span></td><td class="type">'+x[1]+'</td><td class="ans">'+x[2]+'</td><td class="rate"><i>—</i>집계 전</td><td class="exp">'+x[3]+'</td></tr>'}).join('');
+</script>
+</body>
+</html>
