@@ -909,7 +909,11 @@
 
   function wmTiles(){ let s=''; const t=escHtml((currentStudent||'')+' · 지필드'); for(let i=0;i<60;i++) s+=`<span>${t}</span>`; return s; }
   let _bvBook=null;
-  function printBvBook(){ const b=_bvBook; if(b&&b.imgdir&&b.pages) printMaterial(b.imgdir,b.pages,b.title||'교재'); }
+  function printBvBook(){
+    const b=_bvBook; if(!b) return;
+    if(b.imgdir&&b.pages) printMaterial(b.imgdir,b.pages,b.title||'교재');
+    else if(b.pdf&&isRealPdf(b.pdf)) downloadWatermarked(pdfHref(b.pdf),b.title||'교재');
+  }
   /* 저장소 raw 링크를 같은 도메인 경로로 (브라우저 내장 뷰어·CORS 없는 fetch 용) */
   function pdfHref(u){
     let src=String(u||'').replace(/^https:\/\/raw\.githubusercontent\.com\/docssam1\/hs-report\/(?:main|master)\//,'/');
@@ -965,6 +969,7 @@
     let acts = (mode==='link'&&b.video)
       ? `<a class="bv-act" href="${escAttr(b.video)}" target="_blank" rel="noopener">▶ 영상 보기</a>` : '';
     if(b.imgdir && b.pages) acts += `<button class="bv-act" onclick="printBvBook()">🖨 인쇄</button>`;
+    else if(b.pdf && isRealPdf(b.pdf)) acts += `<button class="bv-act" onclick="printBvBook()">🖨 시험지 인쇄 / PDF 저장</button>`;
     (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=bookLinkUrl(b, l.url); acts+=`<a class="bv-act" href="${escAttr(lurl)}" target="_blank" rel="noopener">🔗 ${escHtml(l.label||'링크')}</a>`; } });
     document.getElementById('bv-actions').innerHTML = acts;
     document.getElementById('bookviewer').classList.add('open');
@@ -1160,7 +1165,7 @@
   /* PDF 워터마크 다운로드 */
   async function downloadWatermarked(url, title){
     if(!currentStudent){ toast('로그인이 필요합니다'); return; }
-    toast('자료를 준비하고 있어요…');
+    toast('인쇄용 PDF를 준비하고 있어요…');
     try{
       const bytes=await fetch(url).then(r=>{ if(!r.ok) throw new Error('fetch'); return r.arrayBuffer(); });
       const { PDFDocument, rgb, degrees }=PDFLib;
@@ -1169,8 +1174,8 @@
       pdf.getPages().forEach(p=>{ const {width,height}=p.getSize(); for(let y=40;y<height;y+=150){ for(let x=-40;x<width;x+=240){ p.drawText(stamp,{x,y,size:14,color:rgb(0.6,0.6,0.6),opacity:0.22,rotate:degrees(35)}); }} });
       const out=await pdf.save(); const blob=new Blob([out],{type:'application/pdf'});
       const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${(title||'자료')}_${currentStudent}.pdf`;
-      document.body.appendChild(a); a.click(); a.remove(); toast('다운로드를 시작합니다 ✅');
-    }catch(e){ window.open(url,'_blank'); toast('원본 자료를 새 창에서 엽니다'); }
+      document.body.appendChild(a); a.click(); a.remove(); toast('인쇄용 PDF를 다운로드했습니다. 열어서 인쇄해 주세요 ✅');
+    }catch(e){ window.open(url,'_blank'); toast('인쇄용 PDF 준비에 실패해 원본을 새 창에서 엽니다'); }
   }
 
   let toastTimer=null;
