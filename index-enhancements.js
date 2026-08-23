@@ -48,7 +48,7 @@
       focus:'파이널 마무리 · 누적 백분율 점검', track:'final' },
     { date:/10\s*월\s*1\s*주차/, title:'최종 실전 모의고사 1회',
       desc:'파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공',
-      focus:'80분 시간 배분 전략 · 약점 유형 확인', track:'final' },
+      focus:'90분 시간 배분 전략 · 약점 유형 확인', track:'final' },
     { date:/10\s*월\s*2\s*주차/, title:'최종 실전 모의고사 2회',
       desc:'최종 1회 오답 리뷰 + 최종 2회 응시',
       focus:'목표 레벨 기준선 점검', track:'final' },
@@ -97,6 +97,30 @@
   }
   moveBefore('div-mock',  /7\s*월\s*4\s*주차/);
   moveBefore('div-final', /9\s*월\s*1\s*주차/);
+})();
+
+/* ===== 10월 최종 1회 · PDF가 아닌 HTML/SVG 시험지 흐름 =====
+   data.js는 관리자 저장 때 다시 만들어지므로, 학생 화면에서만 안전하게 링크를
+   보정한다. 시험지·타이머·답안 모두 final.html의 준비 상태 검사를 먼저 거친다. */
+(function(){
+  var data=window.GFIELD_DATA;
+  if(!data||!Array.isArray(data.books)) return;
+  var book=data.books.find(function(b){
+    return b && b.folder==='최종 모의고사' && /최종\s*실전\s*모의고사\s*1\s*회/.test(String(b.title||''));
+  });
+  if(!book) return;
+  var base='https://hs.gfieldacademy.net/final.html?set=last&round=1';
+  book.pdf='';
+  book.links=[
+    {label:'시험지 보기·인쇄',url:base+'&go=paper'},
+    {label:'실전 타이머',url:base+'&go=timer'},
+    {label:'답안·해설',url:base+'&go=answer'}
+  ];
+  setTimeout(function(){
+    try{
+      if(typeof currentStudent!=='undefined'&&currentStudent&&typeof renderArchive==='function') renderArchive();
+    }catch(e){}
+  },60);
 })();
 
 (function(){

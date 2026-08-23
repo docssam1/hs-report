@@ -203,7 +203,7 @@ window.GFIELD_DATA = {
       "date": "10월 1주차",
       "title": "최종 실전 모의고사 1회",
       "desc": "파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공",
-      "focus": "80분 시간 배분 전략 · 약점 유형 확인"
+      "focus": "90분 시간 배분 전략 · 약점 유형 확인"
     },
     {
       "id": "oct-12",
@@ -1858,8 +1858,8 @@ window.GFIELD_DATA = {
           "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1&go=timer"
         },
         {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/last1-answer.html"
+          "label": "답안·해설",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1&go=answer"
         }
       ]
     },
