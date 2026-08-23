@@ -39,6 +39,12 @@ function inspectRound(no) {
   const round = model.rounds[no];
   assert.ok(round, `round ${no} missing`);
   assert.ok(round.paper, `round ${no} paper missing`);
+  assert.equal(round.paper.imageDir, `last_final_${no}`, `round ${no} image directory`);
+  assert.equal(round.paper.imagePages, 6, `round ${no} image page count`);
+  const imageRoot = path.join(ROOT, 'materials', round.paper.imageDir);
+  const pageImages = fs.readdirSync(imageRoot).filter(name => /^\d{3}\.jpg$/i.test(name)).sort();
+  assert.deepEqual(pageImages, Array.from({ length: 6 }, (_, index) => `${String(index + 1).padStart(3, '0')}.jpg`));
+  pageImages.forEach(name => assert.ok(fs.statSync(path.join(imageRoot, name)).size > 50000, `round ${no} ${name} is too small`));
   const questions = round.paper.questions;
   assert.equal(questions.length, 30, `round ${no} question count`);
   assert.deepEqual(Array.from(questions, item => item.no), Array.from({ length: 30 }, (_, index) => index + 1));
@@ -77,7 +83,7 @@ function inspectRound(no) {
   return { figureKeys };
 }
 
-check('최종 시험지는 공통 90분이며 PDF 뷰어를 사용하지 않음', () => {
+check('최종 시험지는 공통 90분 JPG 뷰어이며 PDF 뷰어를 사용하지 않음', () => {
   assert.equal(model.exam.minutes, 90);
   const finalPage = fs.readFileSync(path.join(ROOT, 'final.html'), 'utf8');
   assert.match(finalPage, /\^\[1-4\]\$/);
@@ -88,6 +94,7 @@ check('최종 시험지는 공통 90분이며 PDF 뷰어를 사용하지 않음'
     .map(name => fs.readFileSync(path.join(ROOT, name), 'utf8'))
     .join('\n');
   assert.doesNotMatch(sources, /\.pdf(?:[?#'"\s]|$)|application\/pdf|pdfjs|pdf\.js/i);
+  assert.match(finalPage, /paper-image-page/);
 });
 
 check('최종 1회 시험지 구조', () => inspectRound('1'));

@@ -163,6 +163,8 @@
     title:'초등과정 대비 최종 모의고사 4회',
     sourceRevision:'2026-08-23-pdf-only-30q-q19-ambiguity-lock-90min',
     paper:{
+      imageDir:'last_final_4',
+      imagePages:6,
       questions:questions,
       pages:[
         {page:1,left:[1,2],right:[3,4],leftRows:'1.05fr .95fr',rightRows:'.82fr 1.18fr',band:'1번부터 12번까지는 [2.7점]짜리 문제입니다.'},

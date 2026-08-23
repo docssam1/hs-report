@@ -157,6 +157,8 @@
     title:'초등과정 대비 최종 모의고사 3회',
     sourceRevision:'2026-08-23-pdf-only-30q-90min-locked-q06-q08-q11-q25',
     paper:{
+      imageDir:'last_final_3',
+      imagePages:6,
       questions:questions,
       pages:[
         {page:1,left:[1,2],right:[3,4],leftRows:'1.2fr .8fr',rightRows:'.72fr 1.28fr',band:'1번부터 12번까지는 [2.7점] 짜리 문제입니다.'},

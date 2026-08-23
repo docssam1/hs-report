@@ -314,6 +314,8 @@
         video:'https://youtu.be/T9LbJLG2BRQ',
         sourceRevision:'2026-08-23-q24-correction-q27-q29-approved',
         paper:{
+          imageDir:'last_final_1',
+          imagePages:6,
           questions:questions,
           pages:[
             {page:1,left:[1,2,3],right:[4,5,6],leftRows:'1fr 1fr 1fr',rightRows:'.82fr 1fr 1.65fr',band:'1번부터 12번까지는 [2.7점]짜리 문제입니다.'},
@@ -330,8 +332,10 @@
         lockedQuestions:[],
         title:'초등과정 대비 최종 모의고사 2회',
         video:'https://youtu.be/YiKvaYUlIp4',
-        sourceRevision:'2026-08-23-hwp-direct-30q-answers-verified-90min',
+        sourceRevision:'2026-08-23-pdf-clean-6pages-answers-verified-90min',
         paper:{
+          imageDir:'last_final_2',
+          imagePages:6,
           questions:round2Questions,
           pages:[
             {page:1,left:[1,2,3],right:[4,5,6],leftRows:'1.05fr .62fr 1.2fr',rightRows:'.92fr 1.25fr 1.15fr',band:'1번부터 12번까지는 [2.7점]짜리 문제입니다.'},

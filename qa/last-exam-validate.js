@@ -423,7 +423,7 @@ check('최종 1~4회 90분 표기가 공용 화면과 관리자 저장 경로에
   }
 });
 
-check('최종 HTML/SVG 시험지·인쇄·준비상태 라우팅', () => {
+check('최종 JPG 시험지·HTML 답지·인쇄·준비상태 라우팅', () => {
   assert.match(finalSource, /isLast\?'mock-data-last\.js':'mock-data-final\.js'/);
   for (const name of [
     'mock-data-last3.js',
@@ -434,11 +434,13 @@ check('최종 HTML/SVG 시험지·인쇄·준비상태 라우팅', () => {
   ]) assert.match(finalSource, new RegExp(name.replaceAll('.', '\\.')));
   assert.match(finalSource, /goParam==='paper'/);
   assert.match(finalSource, /function renderPaper\(\)/);
+  assert.match(finalSource, /function paperImagePageHTML\(/);
+  assert.match(finalSource, /R\.paper\.imageDir&&imageCount/);
+  assert.match(finalSource, /\.paper-image-page\{[^}]*width:210mm/);
   assert.match(finalSource, /window\.print\(\)/);
   assert.match(finalSource, /R\.ready===false && !preview/);
   assert.match(finalSource, /params\.get\('preview'\)==='1' && localPreviewHost/);
   assert.match(finalSource, /location\.hostname==='127\.0\.0\.1'/);
-  assert.match(finalSource, /\.paper-columns\{[^}]*height:239mm/);
   assert.match(finalSource, /M\.mode==='paper-only'/);
   assert.match(finalSource, /roundNum===1\?'last1-answer\.html'/);
   assert.match(finalSource, /if\(preview\) query\.push\('preview=1'\)/);
@@ -446,7 +448,7 @@ check('최종 HTML/SVG 시험지·인쇄·준비상태 라우팅', () => {
   assert.match(finalSource, /async function supaWeakUpsert\([^)]*\)\{\s*if\(isLast\) return false;/);
   assert.match(finalSource, /async function supaWeakDelete\([^)]*\)\{\s*if\(isLast\) return false;/);
   assert.match(finalSource, /@page\{size:A4 portrait;margin:0\}/);
-  assert.match(finalSource, /\.exam-paper-page:last-child\{break-after:auto/);
+  assert.match(finalSource, /\.paper-image-page:last-child\{break-after:auto/);
 });
 
 check('학생 홈페이지의 최종 1회 링크가 시험지·타이머·답안으로 분리됨', () => {
