@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>최종 모의고사 1회 성적 확인 | 지필드 영재교육</title>
+<title>최종 모의고사 성적 확인 | 지필드 영재교육</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>*{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;color:#1f2430;line-height:1.6;padding:24px 14px}
@@ -44,7 +44,7 @@ button{border:none;border-radius:11px;padding:12px 20px;font-size:14px;font-weig
 </style></head><body><div class="wrap">
 <div class="card">
   <div class="hd"><div class="b">대치 지필드 영재교육 · LETE-ON 성적 분석</div>
-  <h1>최종 모의고사 1회 성적 확인</h1></div>
+  <h1 id="pageTitle">최종 모의고사 성적 확인</h1></div>
   <div class="bd">
     <div id="ask" class="ask hide">
       <label>이름을 입력하세요</label>
@@ -58,41 +58,47 @@ button{border:none;border-radius:11px;padding:12px 20px;font-size:14px;font-weig
   <div class="ft">© 지필드 영재교육 · 회차별 최초 성적을 기준으로 표시합니다.</div>
 </div></div>
 <script src="mock-data-final.js"></script>
+<script src="mock-data-last.js?v=20260823c"></script>
+<script src="mock-data-last3.js?v=20260823c"></script>
+<script src="mock-data-last4.js?v=20260823c"></script>
+<script src="last-score-data.js?v=20260823c"></script>
 <script>
 const SB_URL="https://fgahqumaldheqettmvqg.supabase.co";
 const SB_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
-const ROUND="last1";
-const AVG=32.4;
-const TB=[
-  [76.7,0.9],[69.8,1.8],[69.5,2.7],[67.8,3.6],[67.7,4.5],[66.3,5.5],
-  [60.8,6.4],[60.2,7.3],[58,8.2],[57.9,9.1],[56.9,10.0],[56.1,10.9],
-  [56,11.8],[55.7,12.7],[54.2,13.6],[52.7,14.5],[52.6,16.4],[52.5,17.3],
-  [51.1,18.2],[49.9,19.1],[49.1,20.0],[48.4,21.8],[47.7,22.7],[46.5,23.6],
-  [45.8,24.5],[43.9,26.4],[42.4,27.3],[40.9,28.2],[40.4,29.1],[40.1,30.0],
-  [38.9,30.9],[38.2,31.8],[36.3,32.7],[35.5,33.6],[35,35.5],[34.7,36.4],
-  [34.3,37.3],[34,38.2],[33.6,39.1],[32.5,40.9],[32.1,41.8],[32,43.6],
-  [31.9,44.5],[31.2,45.5],[30.6,46.4],[30.5,48.2],[30.2,50.0],
-  [29.4,50.9],[29.3,51.8],[28.6,52.7],[25.9,54.5],[25.2,55.5],
-  [25.1,56.4],[24.8,57.3],[24.5,60.0],[24.4,60.9],[24,63.6],
-  [23.8,64.5],[23.3,65.5],[23.2,66.4],[22.4,67.3],[21.8,68.2],
-  [21.7,70.0],[20.3,70.9],[19.9,71.8],[19.8,73.6],[19.7,75.5],
-  [19.1,76.4],[19,79.1],[18.3,80.0],[17.7,80.9],[17.6,81.8],
-  [17.2,82.7],[16.9,83.6],[15.7,84.5],[14.9,85.5],[13,86.4],
-  [12.9,87.3],[12.2,88.2],[11.5,90.0],[9.6,91.8],[9.5,92.7],
-  [8.8,93.6],[2.7,94.5],[0,95.5]
-];
-const CUTS=[['경시 가능',54.2],['경시컷,심화안정권',40.9],['심화컷,실력안정권',35.0],['심화컷,실력가능',32.5],['실력컷,일품안정권',23.2],['일품컷',17.2],['노력요함',0]];
-const CUM=[[19.1,'경시 가능'],[36.1,'경시컷,심화안정권'],[46.2,'심화컷,실력안정권'],[53.3,'실력컷,일품안정권'],[60.0,'일품 가능'],[76.4,'일품컷'],[101,'노력요함']];
+const params=new URLSearchParams(location.search);
+const rawRound=params.get('round');
+const roundNo=rawRound==null||rawRound===''?1:(/^[1-4]$/.test(rawRound)?Number(rawRound):0);
+const SCORE_MODEL=window.GFIELD_LAST_SCORE_DATA||{rounds:{}};
+const ROUND_DATA=SCORE_MODEL.rounds[String(roundNo)];
+const PAPER_ROUND=window.GFIELD_MOCK_LAST&&window.GFIELD_MOCK_LAST.rounds&&window.GFIELD_MOCK_LAST.rounds[String(roundNo)];
+const ROUND_OPEN=!!(PAPER_ROUND&&PAPER_ROUND.ready===true);
+const ROUND=ROUND_DATA&&ROUND_DATA.key||('last'+roundNo);
+const AVG=ROUND_DATA&&ROUND_DATA.average||0;
+const CUTS=ROUND_DATA&&ROUND_DATA.scoreBands||[];
+const CUM=ROUND_DATA&&ROUND_DATA.cumulativeBands||[];
+const DATA_READY=!!(roundNo&&ROUND_DATA&&Array.isArray(ROUND_DATA.items)&&ROUND_DATA.items.length===30&&
+  Array.isArray(ROUND_DATA.rates)&&ROUND_DATA.rates.length===30&&Array.isArray(CUTS)&&CUTS.length&&Array.isArray(CUM)&&CUM.length);
 
 function round1(x){return Math.round(x*10)/10}
+function percentileForLast(rNo,score){
+  const data=SCORE_MODEL.rounds&&SCORE_MODEL.rounds[String(rNo)];
+  if(!data||!Number.isFinite(score)) return null;
+  if(Array.isArray(data.percentileTable)){
+    for(let i=0;i<data.percentileTable.length;i++) if(score>=data.percentileTable[i][0]) return data.percentileTable[i][1];
+    return data.percentileTable.length?data.percentileTable[data.percentileTable.length-1][1]:null;
+  }
+  if(!Array.isArray(data.scoreDist)||!Number.isFinite(data.cohortSize)||data.cohortSize<=0) return null;
+  const higher=data.scoreDist.filter(v=>v>score).length;
+  return round1((higher+1)/data.cohortSize*100);
+}
 /* 점수 → 상위 백분율 · 예상 결과 (표에서 그 점수 이하의 첫 구간) */
 function gradeForScore(score){
   for(let i=0;i<CUTS.length;i++){ if(score>=CUTS[i][1]) return CUTS[i][0]; }
   return '노력요함';
 }
 function lookup(score){
-  for(let i=0;i<TB.length;i++){ if(score>=TB[i][0]) return {pct:TB[i][1], gd:gradeForScore(score)}; }
-  return {pct:95.5, gd:'노력요함'};
+  const pct=percentileForLast(roundNo,score);
+  return {pct:pct==null?100:pct, gd:gradeForScore(score)};
 }
 const COLOR={'경시 가능':'#7f1d1d','경시컷,심화안정권':'#b91c1c','심화컷,실력안정권':'#c2410c',
   '심화컷,실력가능':'#d97706','실력컷,일품안정권':'#0d9488','일품 가능':'#0d9488','일품컷':'#2563eb','노력요함':'#64748b'};
@@ -110,12 +116,21 @@ function cumulativeGrade(avgPct){
 }
 function cumulativeInfo(rows,currentPct){
   const entries=[];
-  [1,2,3,4].forEach(roundNo=>{
-    const row=(rows||[]).filter(r=>r.round==='final'+roundNo&&r.source!=='reset').pop();
-    const pct=row&&finalRoundPercentile(roundNo,Number(row.score));
-    if(pct!=null) entries.push({label:'파이널 '+roundNo+'회',pct:pct});
-  });
-  entries.push({label:'최종 1회',pct:currentPct});
+  if(roundNo===1){
+    [1,2,3,4].forEach(finalNo=>{
+      const row=(rows||[]).filter(r=>r.round==='final'+finalNo&&r.source!=='reset').shift();
+      const pct=row&&finalRoundPercentile(finalNo,Number(row.score));
+      if(pct!=null) entries.push({label:'파이널 '+finalNo+'회',pct:pct});
+    });
+    entries.push({label:'최종 1회',pct:currentPct});
+  }else{
+    for(let lastNo=1;lastNo<=roundNo;lastNo++){
+      const key='last'+lastNo;
+      const row=(rows||[]).filter(r=>r.round===key&&r.source!=='reset').shift();
+      const pct=lastNo===roundNo?currentPct:(row&&percentileForLast(lastNo,Number(row.score)));
+      if(pct!=null) entries.push({label:'최종 '+lastNo+'회',pct:pct});
+    }
+  }
   const avg=round1(entries.reduce((sum,item)=>sum+item.pct,0)/entries.length);
   return {entries:entries,avg:avg,grade:cumulativeGrade(avg)};
 }
@@ -131,6 +146,16 @@ function sourceLabel(source){
 }
 
 async function load(){
+  if(!ROUND_OPEN){
+    hide('loading'); show('ask');
+    document.getElementById('err').textContent='최종 '+roundNo+'회는 현재 검수 대기 중입니다. 시험 공개 후 성적을 확인할 수 있습니다.';
+    show('err'); return;
+  }
+  if(!DATA_READY){
+    hide('loading'); show('ask');
+    document.getElementById('err').textContent='회차별 성적 기준을 불러오지 못했습니다. 주소의 회차를 확인한 뒤 새로고침해 주세요.';
+    show('err'); return;
+  }
   const nm=(document.getElementById('nm').value||qs('name')).trim();
   if(!nm){ document.getElementById('err').textContent='이름을 입력해 주세요.'; show('err'); return; }
   hide('err'); hide('ask'); hide('res'); show('loading');
@@ -148,7 +173,8 @@ async function load(){
     show('err'); return;
   }
   hide('loading');
-  const current=(rows||[]).filter(row=>row.round===ROUND).pop()||null;
+  const current=(rows||[]).filter(row=>row.round===ROUND&&row.source!=='reset').shift()||
+    (rows||[]).filter(row=>row.round===ROUND).shift()||null;
   render(nm,current,rows||[]);
 }
 
@@ -156,7 +182,7 @@ function render(nm,row,rows){
   const box=document.getElementById('res');
   if(!row || row.score==null || row.ox==='RESET'){
     box.innerHTML='<div class="who">'+esc(nm)+' 학생</div>'+
-      '<div class="none"><span class="e">📮</span>아직 <b>최종 모의고사 1회</b> 성적이 등록되지 않았어요.<br>'+
+      '<div class="none"><span class="e">📮</span>아직 <b>최종 모의고사 '+roundNo+'회</b> 성적이 등록되지 않았어요.<br>'+
       '채점이 끝나면 이 화면에서 바로 확인할 수 있어요.</div>'+
       '<div class="msg">이름이 정확한지 한 번 확인해 주세요. 계속 안 보이면 선생님께 말해 주세요.</div>';
     show('res'); return;
@@ -169,7 +195,7 @@ function render(nm,row,rows){
     '<div class="cum-trend">'+cumulative.entries.map(item=>esc(item.label)+' '+item.pct+'%').join(' · ')+'<br>각 회차의 상위 백분율을 평균했으며 연습 재응시는 제외했습니다.</div></div>';
   const ok=(row.ox&&row.ox.length)?(row.ox.split('').filter(c=>c==='O'||c==='1').length):null;
   box.innerHTML=
-    '<div class="who">'+esc(nm)+' 학생 · <b>최종 모의고사 1회</b></div>'+
+    '<div class="who">'+esc(nm)+' 학생 · <b>최종 모의고사 '+roundNo+'회</b></div>'+
     '<div class="origin">'+esc(sourceLabel(row.source))+'</div>'+
     '<div class="big"><span class="n">'+round1(sc)+'</span><span class="u">점</span>'+
       '<div class="t">100점 만점</div></div>'+
@@ -180,7 +206,7 @@ function render(nm,row,rows){
     '</div>'+
     '<div class="grade" style="background:'+col+'"><div class="k">예상 결과</div><div class="v">'+esc(L.gd)+'</div></div>'+
     cumulativeHTML+
-    '<div class="data-proof">상위 백분율과 예상 결과는 <b>400명 이상의 학생들의 문항과 성적 그리고 실제 결과를 반영한 데이터</b>입니다.</div>'+
+    '<div class="data-proof">상위 백분율과 예상 결과는 <b>'+esc(SCORE_MODEL.dataProof||'누적 성적 데이터')+'</b>입니다.</div>'+
     '<div class="msg">'+cheer(L.gd,dv)+'</div>';
   show('res');
 }
@@ -190,11 +216,24 @@ function cheer(gd,dv){
   if(gd.indexOf('경시컷')===0) return '아주 잘하고 있어. 여기서 한 문제만 더 맞히면 최상위권이야. 실수로 놓친 문제부터 다시 보자.';
   if(gd.indexOf('심화컷')===0) return '기본기는 탄탄해. 어려운 문제에서 한 발짝만 더 나아가면 돼. 조건 정리하는 연습을 해보자!';
   if(gd.indexOf('실력컷')===0) return '차근차근 오르고 있어. 맞힐 수 있었는데 놓친 문제부터 챙기면 점수가 확 올라가.';
+  if(gd==='일품 가능') return '기본 문항부터 정확히 마무리하면 충분히 올라갈 수 있어. 오늘 놓친 조건을 다시 표시해 보자!';
   if(gd==='일품컷') return '아직 시간 충분해. 정답률 높은 문제부터 확실하게 잡아 나가자. 한 문제씩이면 충분해!';
   return dv>=0?'평균보다 잘했어! 여기서 조금씩만 더 쌓아가자.':'괜찮아, 지금부터가 진짜야. 쉬운 문제부터 하나씩 확실하게 만들어 가자!';
 }
 
 (function(){
+  if(!ROUND_OPEN){
+    hide('loading'); show('ask');
+    document.getElementById('err').textContent=roundNo?'최종 '+roundNo+'회는 현재 검수 대기 중입니다. 시험 공개 후 성적을 확인할 수 있습니다.':'주소의 회차가 올바르지 않습니다. 최종 모의고사 1~4회 중 하나를 선택해 주세요.';
+    show('err'); return;
+  }
+  if(!DATA_READY){
+    hide('loading'); show('ask');
+    document.getElementById('err').textContent=roundNo?'성적 기준을 완전하게 불러오지 못했습니다. 잠시 후 새로고침해 주세요.':'주소의 회차가 올바르지 않습니다. 최종 모의고사 1~4회 중 하나를 선택해 주세요.';
+    show('err'); return;
+  }
+  document.title='최종 모의고사 '+roundNo+'회 성적 확인 | 지필드 영재교육';
+  document.getElementById('pageTitle').textContent='최종 모의고사 '+roundNo+'회 성적 확인';
   const n=qs('name').trim();
   if(n){ document.getElementById('nm').value=n; load(); }
   else { hide('loading'); show('ask'); }

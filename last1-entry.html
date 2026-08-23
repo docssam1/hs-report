@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>최종 모의고사 1회 성적 입력 | 지필드 영재교육</title>
+<title>최종 모의고사 성적 입력 | 지필드 영재교육</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -22,7 +22,7 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
 </head>
 <body>
 <div class="wrap"><div class="card">
-  <header class="hd"><div class="tag">온라인 회원 직접 입력</div><h1>최종 모의고사 1회 성적 입력</h1><p>90분 시험을 마치고 채점한 뒤, 틀린 문항만 눌러 주세요.</p></header>
+  <header class="hd"><div class="tag">온라인 회원 직접 입력</div><h1 id="pageTitle">최종 모의고사 성적 입력</h1><p>90분 시험을 마치고 채점한 뒤, 틀린 문항만 눌러 주세요.</p></header>
   <main class="bd">
     <div id="member" class="member hide"><span>입력 학생</span><b id="studentName"></b></div>
     <div id="loading" class="state"><span class="ico">⏳</span>최초 성적 기록을 확인하고 있어요…</div>
@@ -38,20 +38,28 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
   <footer class="ft">온라인 회원은 직접 입력 · 재원생은 선생님이 기록 · 누적에는 회차별 최초 성적만 반영</footer>
 </div></div>
 <script src="data.js"></script>
-<script src="mock-data-last.js"></script>
+<script src="mock-data-last.js?v=20260823c"></script>
+<script src="mock-data-last3.js?v=20260823c"></script>
+<script src="mock-data-last4.js?v=20260823c"></script>
+<script src="last-score-data.js?v=20260823c"></script>
 <script>
 (function(){
   'use strict';
   var SB_URL='https://fgahqumaldheqettmvqg.supabase.co';
   var SB_KEY='sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I';
-  var ROUND='last1';
   var params=new URLSearchParams(location.search);
-  var student=(params.get('name')||'').trim();
-  if(!student){ try{ student=(localStorage.getItem('gfield_student')||'').trim(); }catch(e){} }
+  var rawRound=params.get('round');
+  var roundNo=rawRound==null||rawRound===''?1:(/^[1-4]$/.test(rawRound)?Number(rawRound):0);
+  var scoreModel=window.GFIELD_LAST_SCORE_DATA||{};
+  var round=scoreModel.rounds&&scoreModel.rounds[String(roundNo)];
+  var paperRound=window.GFIELD_MOCK_LAST&&window.GFIELD_MOCK_LAST.rounds&&window.GFIELD_MOCK_LAST.rounds[String(roundNo)];
+  var ROUND=round&&round.key||('last'+roundNo);
+  var requestedStudent=(params.get('name')||'').trim();
+  var student='';
+  try{ student=(localStorage.getItem('gfield_student')||'').trim(); }catch(e){}
+  var identityMismatch=!!(student&&requestedStudent&&student!==requestedStudent);
   var D=window.GFIELD_DATA||{};
-  var model=window.GFIELD_MOCK_LAST||{};
-  var round=model.rounds&&model.rounds['1'];
-  var questions=round&&round.paper&&Array.isArray(round.paper.questions)?round.paper.questions.slice().sort(function(a,b){return a.no-b.no;}):[];
+  var questions=round&&Array.isArray(round.items)?round.items.slice().sort(function(a,b){return a.no-b.no;}):[];
   var wrong={};
   var existing=null;
 
@@ -63,7 +71,7 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
   function isOnlineMember(name){return !!(name&&D.studentTypes&&D.studentTypes[name]==='online');}
   function isReset(row){return !!(row&&row.source==='reset'&&row.ox==='RESET');}
   function isActive(row){return !!(row&&!isReset(row));}
-  function resultUrl(){return 'last1-result.html?name='+encodeURIComponent(student);}
+  function resultUrl(){return 'last1-result.html?round='+roundNo+'&name='+encodeURIComponent(student);}
   function block(icon,html,withResult){
     hide('loading'); hide('entry');
     var box=byId('blocked');
@@ -93,7 +101,7 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
   }
   async function fetchOfficial(){
     var url=SB_URL+'/rest/v1/mock_results?student=eq.'+encodeURIComponent(student)
-      +'&round=eq.'+ROUND+'&select=student,round,ox,score,wrong,source,updated_at&limit=1';
+      +'&round=eq.'+ROUND+'&select=student,round,ox,score,wrong,source,updated_at&order=updated_at.asc&limit=1';
     var response=await fetch(url,{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}});
     if(!response.ok) throw new Error('조회 HTTP '+response.status);
     var rows=await response.json(); return rows[0]||null;
@@ -126,10 +134,15 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
     finally{ button.disabled=false; }
   }
   async function boot(){
+    if(!roundNo){ block('🔒','주소의 회차가 올바르지 않습니다.<br>최종 모의고사 1~4회 중 하나를 선택해 주세요.',false); return; }
+    document.title='최종 모의고사 '+roundNo+'회 성적 입력 | 지필드 영재교육';
+    byId('pageTitle').textContent='최종 모의고사 '+roundNo+'회 성적 입력';
+    if(!paperRound||paperRound.ready!==true){ block('🔒','최종 '+roundNo+'회는 현재 검수 대기 중입니다.<br>시험 공개 후 최초 성적을 입력할 수 있습니다.',false); return; }
     if(!student){ block('🔐','홈페이지에서 온라인 회원 이름으로 로그인한 뒤 다시 열어 주세요.',false); return; }
+    if(identityMismatch){ block('🔒','현재 로그인한 학생과 요청한 이름이 다릅니다.<br>홈페이지에서 본인 계정으로 다시 열어 주세요.',false); return; }
     byId('studentName').textContent=student+' 학생'; show('member');
     if(!isOnlineMember(student)){ block('🧑‍🏫','이 화면은 온라인 회원 직접 입력 전용입니다.<br>재원생 성적은 선생님이 대신 기록합니다.',false); return; }
-    if(!round||round.ready!==true||questions.length!==30){ block('🔒','아직 최종 1회 입력이 열리지 않았습니다.',false); return; }
+    if(!round||questions.length!==30){ block('🔒','아직 최종 '+roundNo+'회 입력이 열리지 않았습니다.',false); return; }
     try{
       existing=await fetchOfficial();
       if(isActive(existing)){ block('📌','이미 최초 성적이 기록되어 있습니다.<br>누적에는 먼저 저장된 성적이 반영됩니다.',true); return; }

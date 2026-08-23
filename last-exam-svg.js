@@ -221,6 +221,48 @@
       '<div class="crypt-line"></div>'+boxes(8,0)+'</div>';
   }
 
+  function last2Asset(title, file, cls){
+    return '<img class="exam-figure '+(cls||'')+'" src="mock-assets/last2/'+esc(file)+'" alt="'+esc(title)+'" loading="eager">';
+  }
+
+  function last2OperationRule(){
+    return '<div class="figure-html" role="img" aria-label="숫자판과 사칙연산 보기로 도형식을 계산하는 규칙">'+
+      '<img src="mock-assets/last2/q15-rule.png" alt="가와 나의 숫자판 규칙 및 보기" style="display:block;width:100%;max-height:128px;object-fit:contain">'+
+      '<img src="mock-assets/last2/q15-expression.png" alt="계산할 도형식" style="display:block;width:100%;max-height:42px;object-fit:contain;margin-top:5px">'+
+      '</div>';
+  }
+
+  function last2ProductSum(){
+    return '<div class="figure-html repeat-sum" role="img" aria-label="1 곱하기 2부터 100 곱하기 101까지의 합">'+
+      '1 × 2 + 2 × 3 + 3 × 4 + ··· + 100 × 101</div>';
+  }
+
+  function last2OxTable(){
+    var rows=[
+      ['갑','○','×','×','×','○','○','○','×','×','○','7'],
+      ['을','×','×','○','×','○','×','×','○','○','○','7'],
+      ['병','○','×','○','○','×','×','○','×','○','×','7'],
+      ['정','○','×','○','×','○','×','○','○','○','○','']
+    ];
+    var h='<div class="figure-html binary-code" role="img" aria-label="갑, 을, 병, 정의 열 문제 OX 답안표"><table><thead><tr><th></th>';
+    for(var n=1;n<=10;n++) h+='<th>'+n+'</th>';
+    h+='<th>정답수</th></tr></thead><tbody>';
+    rows.forEach(function(row){
+      h+='<tr><th>'+row[0]+'</th>';
+      for(var i=1;i<row.length;i++) h+='<td>'+row[i]+'</td>';
+      h+='</tr>';
+    });
+    return h+'</tbody></table></div>';
+  }
+
+  function last2MatchstickBlocks(){
+    return '<div class="figure-html" role="img" aria-label="쌓기나무 13개 모양과 성냥개비로 만든 두 쌓기나무의 보기">'+
+      '<div style="display:grid;grid-template-columns:minmax(80px,.34fr) minmax(0,1.66fr);gap:9px;align-items:center">'+
+      '<img src="mock-assets/last2/q29-small-blocks.png" alt="쌓기나무 13개의 입체 모양" style="display:block;width:100%;max-height:105px;object-fit:contain">'+
+      '<img src="mock-assets/last2/q29-matchstick-blocks.png" alt="쌓기나무 두 개의 성냥개비 보기와 목표 모양" style="display:block;width:100%;max-height:125px;object-fit:contain">'+
+      '</div></div>';
+  }
+
   window.GFIELD_LAST_FIGURES = {
     'paper-fold':paperFold,
     'rectangle-grid':rectangleGrid,
@@ -235,6 +277,21 @@
     'binary-table':binaryTable,
     'repeated-three-sum':repeatedThreeSum,
     'job-clues':jobClues,
-    'cryptarithm':cryptarithm
+    'cryptarithm':cryptarithm,
+    'last2-calendar':function(){return last2Asset('3월 1일이 금요일인 달력의 일부','q03-calendar.png');},
+    'last2-block-views':function(){return last2Asset('쌓기나무를 위, 앞, 오른쪽 옆에서 본 모양','q05-block-views.png','wide');},
+    'last2-rectangles':function(){return last2Asset('겹친 직사각형과 가로세로선으로 이루어진 그림','q06-rectangles.png');},
+    'last2-stones':function(){return last2Asset('흰 돌과 검은 돌을 번갈아 늘어놓은 첫 네 그림','q07-stones.png','wide');},
+    'last2-breadcrumb-conditions':function(){return last2Asset('빵 조각 간격 25미터, 간격 수 221개, 1분 이동 거리 85미터','q08-conditions.png','wide');},
+    'last2-number-array':function(){return last2Asset('1부터 199까지 한 칸씩 밀려 배열된 백 행의 수 배열표','q11-number-array.png','wide');},
+    'last2-number-cards':function(){return last2Asset('4, 6, 8, 7, 9가 적힌 숫자 카드','q12-number-cards.png','wide');},
+    'last2-operation-rule':last2OperationRule,
+    'last2-number-grid':function(){return last2Asset('1부터 25까지 바깥에서 안쪽으로 휘어 배열된 수 배열표','q17-number-grid.png');},
+    'last2-diagonal-array':function(){return last2Asset('자연수를 대각선 방향으로 배열한 표','q19-diagonal-array.png');},
+    'last2-salt-field':function(){return last2Asset('A와 B의 물이 다섯 갈림길을 거쳐 네 출구로 흐르는 염전 물길','q20-salt-field.png');},
+    'last2-digit-cards':function(){return last2Asset('0, 1, 2, 4, 8, 9가 적힌 숫자 카드','q24-digit-cards.png','wide');},
+    'last2-product-sum':last2ProductSum,
+    'last2-ox-table':last2OxTable,
+    'last2-matchstick-blocks':last2MatchstickBlocks
   };
 })();

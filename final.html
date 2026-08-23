@@ -302,7 +302,13 @@ td.weak-cell{white-space:nowrap}
   var p=new URLSearchParams(location.search);
   var isLast=p.get('set')==='last';
   var files=['data.js',isLast?'mock-data-last.js':'mock-data-final.js'];
-  if(isLast) files.push('last-exam-svg.js');
+  if(isLast) files.push(
+    'mock-data-last3.js',
+    'mock-data-last4.js',
+    'last-exam-svg.js',
+    'last-exam-svg3.js',
+    'last-exam-svg4.js'
+  );
   files.push('exam-cues.js');
   files.forEach(function(f){
     document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');
@@ -323,7 +329,8 @@ td.weak-cell{white-space:nowrap}
   var SUPA_URL = "https://fgahqumaldheqettmvqg.supabase.co";
   var SUPA_KEY = "sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
 
-  var roundNum = parseInt(params.get('round')||'1',10); if(!roundNum || roundNum<1) roundNum=1;
+  var rawRound = params.get('round');
+  var roundNum = rawRound==null||rawRound==='' ? 1 : (/^[1-4]$/.test(rawRound) ? Number(rawRound) : 0);
   /* 잠긴 시험의 미리보기는 개발자 로컬 서버에서만 허용한다.
      정적 배포 주소에서는 preview=1만으로 ready:false를 우회할 수 없다. */
   var localPreviewHost = location.protocol==='file:' || location.hostname==='localhost' || location.hostname==='127.0.0.1' || location.hostname==='::1';
@@ -1374,6 +1381,11 @@ td.weak-cell{white-space:nowrap}
 
   /* ===================== boot ===================== */
   function boot(){
+    if(!roundNum){
+      document.title='회차 확인 · 지필드 영재교육';
+      app.innerHTML='<div class="doc"><section><h2>회차를 확인해 주세요</h2><div class="lead">최종 모의고사 1~4회 중 올바른 회차를 선택해 주세요.</div></section></div>';
+      return;
+    }
     if(!M || !M.rounds){ app.innerHTML='<div class="doc"><section><h2>데이터를 불러오지 못했습니다</h2></section></div>'; return; }
     document.title=roundLabel(roundNum)+' · 지필드 영재교육';
     var student = urlName;

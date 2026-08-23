@@ -18,6 +18,7 @@ const ANALYSIS_FILE = path.join(ROOT, 'last1-analysis.html');
 const RESULT_FILE = path.join(ROOT, 'last1-result.html');
 const ENTRY_FILE = path.join(ROOT, 'last1-entry.html');
 const ADMIN_FILE = path.join(ROOT, 'admin.html');
+const SCORE_DATA_FILE = path.join(ROOT, 'last-score-data.js');
 
 const sandbox = { window: {} };
 vm.createContext(sandbox);
@@ -30,6 +31,7 @@ function loadScript(file) {
 
 const dataSource = loadScript(DATA_FILE);
 const figureSource = loadScript(FIGURE_FILE);
+const scoreDataSource = loadScript(SCORE_DATA_FILE);
 const finalSource = fs.readFileSync(FINAL_FILE, 'utf8');
 const indexEnhancementsSource = fs.readFileSync(INDEX_ENHANCEMENTS_FILE, 'utf8');
 const adminEnhancementsSource = fs.readFileSync(ADMIN_ENHANCEMENTS_FILE, 'utf8');
@@ -42,6 +44,7 @@ const entrySource = fs.readFileSync(ENTRY_FILE, 'utf8');
 const adminSource = fs.readFileSync(ADMIN_FILE, 'utf8');
 const M = sandbox.window.GFIELD_MOCK_LAST;
 const FIGURES = sandbox.window.GFIELD_LAST_FIGURES;
+const SCORE_MODEL = sandbox.window.GFIELD_LAST_SCORE_DATA;
 
 const EXPECTED_RATES = [
   .323809524,.6,.904761905,.228571429,.238095238,.133333333,.380952381,.352380952,.285714286,.114285714,
@@ -297,7 +300,7 @@ check('14개 도형 문항과 renderer 일대일 대응', () => {
   const rendererKeys = Object.keys(FIGURES);
   assert.equal(figureKeys.length, 14);
   assert.equal(new Set(figureKeys).size, 14);
-  assert.deepEqual(rendererKeys.sort(), figureKeys.slice().sort());
+  figureKeys.forEach((key) => assert.ok(rendererKeys.includes(key), `${key} renderer key`));
   for (const key of figureKeys) {
     assert.equal(typeof FIGURES[key], 'function', `${key} renderer`);
     const markup = FIGURES[key]();
@@ -422,7 +425,13 @@ check('최종 1~4회 90분 표기가 공용 화면과 관리자 저장 경로에
 
 check('최종 HTML/SVG 시험지·인쇄·준비상태 라우팅', () => {
   assert.match(finalSource, /isLast\?'mock-data-last\.js':'mock-data-final\.js'/);
-  assert.match(finalSource, /files\.push\('last-exam-svg\.js'\)/);
+  for (const name of [
+    'mock-data-last3.js',
+    'mock-data-last4.js',
+    'last-exam-svg.js',
+    'last-exam-svg3.js',
+    'last-exam-svg4.js',
+  ]) assert.match(finalSource, new RegExp(name.replaceAll('.', '\\.')));
   assert.match(finalSource, /goParam==='paper'/);
   assert.match(finalSource, /function renderPaper\(\)/);
   assert.match(finalSource, /window\.print\(\)/);
@@ -457,7 +466,9 @@ check('온라인 회원 직접 입력과 재원생 교사 기록 경로 분리',
   assert.match(indexEnhancementsSource, /b\.innerHTML='📊 성적 확인'/);
 
   assert.match(entrySource, /<script src="data\.js"><\/script>/);
-  assert.match(entrySource, /<script src="mock-data-last\.js"><\/script>/);
+  assert.match(entrySource, /<script src="last-score-data\.js(?:\?v=[^"]+)?"><\/script>/);
+  assert.match(entrySource, /var paperRound=.*GFIELD_MOCK_LAST/);
+  assert.match(entrySource, /paperRound\.ready!==true/);
   assert.match(entrySource, /D\.studentTypes\[name\]==='online'/);
   assert.match(entrySource, /round:ROUND,ox:ox,score:t\.score,wrong:t\.wrong,source:'online'/);
   assert.match(entrySource, /function isReset\(row\)\{return !!\(row&&row\.source==='reset'&&row\.ox==='RESET'\);\}/);
@@ -469,7 +480,7 @@ check('온라인 회원 직접 입력과 재원생 교사 기록 경로 분리',
   assert.doesNotMatch(entrySource, /source:'admin'|source:'teacher'/);
 
   assert.match(analysisSource, /source:'admin'/);
-  assert.match(analysisSource, /async function loadOfficialLast1\(nm\)/);
+  assert.match(analysisSource, /async function loadOfficialRound\(nm\)/);
   assert.match(analysisSource, /if\(isActiveOfficial\(existing\)\)/);
   assert.match(analysisSource, /function isResetOfficial\(row\)\{ return !!\(row&&row\.source==='reset'&&row\.ox==='RESET'\); \}/);
   assert.match(analysisSource, /let method='POST', prefer='return=minimal'/);
@@ -477,7 +488,7 @@ check('온라인 회원 직접 입력과 재원생 교사 기록 경로 분리',
   assert.match(analysisSource, /source=eq\.reset&ox=eq\.RESET&select=round/);
   assert.match(analysisSource, /r\.status===409/);
   assert.equal((analysisSource.match(/id="f[1-4]"[^>]*readonly/g)||[]).length, 4);
-  assert.match(analysisSource, /어드민 → 모의고사 결과 → 파이널 모의고사에서 재원생 성적을 기록/);
+  assert.match(analysisSource, /연결할.*최초 응시 기록이 없습니다/);
   assert.doesNotMatch(analysisSource, /Prefer:'resolution=merge-duplicates'\},\s*body:JSON\.stringify\(\{student:nm,round:'last1'/);
 
   assert.match(finalSource, /var teacherEntry = params\.get\('entry'\)==='teacher'/);
@@ -513,7 +524,7 @@ check('승인 문항 교정과 30문항 통계 반영 후 공개 잠금 해제',
   assert.match(answerSource, /var ready=!!\(round&&round\.ready===true\)/);
   assert.match(answerSource, /평균 정답률 33\.5%/);
   assert.match(answerSource, /가중 평균 32\.4점/);
-  assert.match(analysisSource, /const VALIDATION_LOCK=Object\.freeze\(\{\s*active:false/);
+  assert.match(analysisSource, /const VALIDATION_LOCK=Object\.freeze\(\{\s*active:!PAPER_ROUND\|\|PAPER_ROUND\.ready!==true/);
   assert.match(analysisSource, /const ITEM_STATUS=Object\.freeze\(\{\}\)/);
   assert.doesNotMatch(analysisSource, /24번 정답률·평균 재산출 대기|27번 조건·정답 확정 대기|29번 원문 예시 오류 교정 승인 대기|27:'판정 보류'|29:'예시 오류'/);
   assert.match(analysisSource, /publishBtn\.disabled=VALIDATION_LOCK\.active/);
@@ -526,17 +537,20 @@ check('승인 문항 교정과 30문항 통계 반영 후 공개 잠금 해제',
   const guard = analysisSource.indexOf('if(VALIDATION_LOCK.active)', publishStart);
   const fetchCall = analysisSource.indexOf('fetch(', publishStart);
   assert.ok(publishStart >= 0 && guard > publishStart && fetchCall > guard, '공개 함수 guard가 fetch보다 먼저여야 함');
+  assert.match(genericAnswerSource, /paperRound\.ready!==true/);
+  assert.match(resultSource, /const ROUND_OPEN=!!\(PAPER_ROUND&&PAPER_ROUND\.ready===true\)/);
 });
 
 check('정답률 30개·평균 정답률·가중 평균점수 정확성', () => {
-  const rates = extractConstArray(analysisSource, 'RATE');
+  const rates = hostArray(SCORE_MODEL.rounds['1'].rates);
   assert.equal(rates.length, 30);
   rates.forEach((rate, index) => assert.ok(Math.abs(rate - EXPECTED_RATES[index]) < 1e-12, `${index + 1}번 정답률`));
   const unweighted = rates.reduce((sum, rate) => sum + rate, 0) / rates.length * 100;
   const weighted = rates.reduce((sum, rate, index) => sum + rate * EXPECTED_POINTS[index], 0);
   assert.ok(Math.abs(unweighted - 33.46031746) < 1e-8, `비가중 평균 ${unweighted}`);
   assert.ok(Math.abs(weighted - 32.3780952376) < 1e-9, `가중 평균 ${weighted}`);
-  assert.match(analysisSource, /const AVG=32\.4/);
+  assert.equal(SCORE_MODEL.rounds['1'].average, 32.4);
+  assert.match(analysisSource, /const AVG=ROUND_DATA\.average/);
 
   const rows = extractAnswerRows();
   assert.equal(rows.length, 30);
@@ -575,8 +589,8 @@ check('최종 1회 이원 목적 분류표 30행 원본 대조', () => {
 });
 
 check('최종 1회 점수별 석차 백분율과 공통 등급 기준', () => {
-  const analysisTable = extractConstArray(analysisSource, 'TB');
-  const resultTable = extractConstArray(resultSource, 'TB');
+  const analysisTable = hostArray(SCORE_MODEL.rounds['1'].percentileTable).map(hostArray);
+  const resultTable = hostArray(SCORE_MODEL.rounds['1'].percentileTable).map(hostArray);
   assert.deepEqual(analysisTable, EXPECTED_TB);
   assert.deepEqual(resultTable, EXPECTED_TB);
   assert.equal(analysisTable.length, 85);
@@ -586,7 +600,7 @@ check('최종 1회 점수별 석차 백분율과 공통 등급 기준', () => {
   }
   assert.match(analysisSource, /function gradeForScore\(s\)/);
   assert.match(resultSource, /function gradeForScore\(score\)/);
-  assert.match(resultSource, /const AVG=32\.4/);
+  assert.match(resultSource, /const AVG=ROUND_DATA&&ROUND_DATA\.average/);
   assert.doesNotMatch(`${analysisSource}\n${resultSource}`, /\[76\.7,0\.8|\[0,87\.5/);
   const percentileAt = (score) => EXPECTED_TB.find((row) => score >= row[0])[1];
   assert.equal(percentileAt(76.7), 0.9);
@@ -598,13 +612,13 @@ check('최종 1회 점수별 석차 백분율과 공통 등급 기준', () => {
 });
 
 check('통합 백분율은 파이널 최초 응시부터 최종 1회까지 평균', () => {
-  assert.deepEqual(extractConstArray(analysisSource, 'CUM'), EXPECTED_CUM);
-  assert.deepEqual(extractConstArray(resultSource, 'CUM'), EXPECTED_CUM);
-  assert.match(analysisSource, /\^final\(\[1-4\]\)\$/);
+  assert.deepEqual(hostArray(SCORE_MODEL.rounds['1'].cumulativeBands).map(hostArray), EXPECTED_CUM);
+  assert.deepEqual(hostArray(SCORE_MODEL.rounds['1'].cumulativeBands).map(hostArray), EXPECTED_CUM);
+  assert.match(analysisSource, /key:'final'\+k/);
   assert.match(analysisSource, /row\.source!=='reset'/);
-  assert.match(analysisSource, /finalRoundPercentile\(k,Number\(row\.score\)\)/);
-  assert.match(analysisSource, /const allP=\[\.\.\.fps, pct\]/);
-  assert.match(resultSource, /r\.round==='final'\+roundNo&&r\.source!=='reset'/);
+  assert.match(analysisSource, /finalRoundPercentile\(k,score\)/);
+  assert.match(analysisSource, /const allP=cumulativeAvailable\?\[\.\.\.fps, pct\]:\[\]/);
+  assert.match(resultSource, /r\.round==='final'\+finalNo&&r\.source!=='reset'/);
   assert.match(resultSource, /entries\.push\(\{label:'최종 1회',pct:currentPct\}\)/);
   assert.match(resultSource, /entries\.reduce\(\(sum,item\)=>sum\+item\.pct,0\)\/entries\.length/);
   assert.match(answerSource, /각 회차 최초 응시의 상위 백분율을 평균/);

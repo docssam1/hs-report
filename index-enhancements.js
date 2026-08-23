@@ -99,23 +99,27 @@
   moveBefore('div-final', /9\s*월\s*1\s*주차/);
 })();
 
-/* ===== 10월 최종 1회 · PDF가 아닌 HTML/SVG 시험지 흐름 =====
+/* ===== 10월 최종 1~4회 · PDF가 아닌 HTML/SVG 시험지 흐름 =====
    data.js는 관리자 저장 때 다시 만들어지므로, 학생 화면에서만 안전하게 링크를
    보정한다. 시험지·타이머·답안 모두 final.html의 준비 상태 검사를 먼저 거친다. */
 (function(){
   var data=window.GFIELD_DATA;
   if(!data||!Array.isArray(data.books)) return;
-  var book=data.books.find(function(b){
-    return b && b.folder==='최종 모의고사' && /최종\s*실전\s*모의고사\s*1\s*회/.test(String(b.title||''));
+  var books=data.books.filter(function(b){
+    return b && b.folder==='최종 모의고사' && /최종\s*실전\s*모의고사\s*[1-4]\s*회/.test(String(b.title||''));
   });
-  if(!book) return;
-  var base='https://hs.gfieldacademy.net/final.html?set=last&round=1';
-  book.pdf='';
-  book.links=[
-    {label:'시험지 보기·인쇄',url:base+'&go=paper'},
-    {label:'실전 타이머',url:base+'&go=timer'},
-    {label:'답안·해설',url:base+'&go=answer'}
-  ];
+  if(!books.length) return;
+  books.forEach(function(book){
+    var match=String(book.title||'').match(/([1-4])\s*회/);
+    if(!match) return;
+    var base='https://hs.gfieldacademy.net/final.html?set=last&round='+match[1];
+    book.pdf='';
+    book.links=[
+      {label:'시험지 보기·인쇄',url:base+'&go=paper'},
+      {label:'실전 타이머',url:base+'&go=timer'},
+      {label:'답안·해설',url:base+'&go=answer'}
+    ];
+  });
   setTimeout(function(){
     try{
       if(typeof currentStudent!=='undefined'&&currentStudent&&typeof renderArchive==='function') renderArchive();
@@ -367,13 +371,13 @@
 
   function studentName(){return (typeof currentStudent!=='undefined'&&currentStudent)?currentStudent:'';}
   function onlineMember(){var nm=studentName();return !!(nm&&window.GFIELD_DATA.studentTypes&&window.GFIELD_DATA.studentTypes[nm]==='online');}
-  function openResult(){
+  function openResult(round){
     var nm=studentName();
-    window.open(RESULT_URL+(nm?('?name='+encodeURIComponent(nm)):''),'_blank');
+    window.open(RESULT_URL+'?round='+round+(nm?('&name='+encodeURIComponent(nm)):''),'_blank');
   }
-  function openEntry(){
+  function openEntry(round){
     var nm=studentName();
-    window.open(ENTRY_URL+(nm?('?name='+encodeURIComponent(nm)):''),'_blank');
+    window.open(ENTRY_URL+'?round='+round+(nm?('&name='+encodeURIComponent(nm)):''),'_blank');
   }
 
   if(typeof renderTimeline==='function'){
@@ -384,18 +388,21 @@
         document.querySelectorAll('#timeline .node').forEach(function(el){
           var h=el.querySelector('h3'); if(!h) return;
           var t=h.textContent||'';
-          if(!(/최종/.test(t)&&/모의고사/.test(t)&&/1\s*회/.test(t))) return;
+          var match=t.match(/최종(?:\s*실전)?\s*모의고사\s*([1-4])\s*회/);
+          if(!match) return;
+          var round=Number(match[1]);
+          if(el.classList.contains('locked')) return;
           if(el.querySelector('.last1-node-actions')) return;
           var actions=document.createElement('div'); actions.className='last1-node-actions';
           if(onlineMember()){
             var e=document.createElement('button');
             e.type='button'; e.className='last1-node-btn entry'; e.innerHTML='✍️ 성적 입력';
-            e.onclick=function(ev){ev.stopPropagation();openEntry();}; actions.appendChild(e);
+            e.onclick=function(ev){ev.stopPropagation();openEntry(round);}; actions.appendChild(e);
           }
           var b=document.createElement('button');
           b.type='button'; b.className='last1-node-btn';
           b.innerHTML='📊 성적 확인';
-          b.onclick=function(ev){ ev.stopPropagation(); openResult(); };
+          b.onclick=function(ev){ ev.stopPropagation(); openResult(round); };
           actions.appendChild(b); el.appendChild(actions);
         });
       }catch(e){}

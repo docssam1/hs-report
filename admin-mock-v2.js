@@ -49,12 +49,13 @@
     const rows=rowsFor(student,window.mkSet);
 
     /* 최종 모의고사 진단 분석지 — 어드민 전용 */
+    const lastLinks=[1,2,3,4].map(r=>`<a class="btn sm" style="background:#fff;color:#1e3c72;text-decoration:none;font-weight:800" target="_blank"
+      href="last1-analysis.html?round=${r}&mode=teacher${student?('&name='+encodeURIComponent(student)):''}">최종 ${r}회</a>`).join('');
     let last1=`<div style="border:1px solid #c7d7f0;border-radius:14px;padding:14px;margin:4px 0 12px;background:linear-gradient(135deg,#2a5298,#1e3c72);color:#fff">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <b style="font-size:14px">📊 최종 모의고사 진단 분석지</b>
         <span style="font-size:11.5px;opacity:.85">선생님 전용 · 학생 화면에는 성적만 공개됩니다</span>
-        <a class="btn sm" style="margin-left:auto;background:#fff;color:#1e3c72;text-decoration:none;font-weight:800" target="_blank"
-           href="last1-analysis.html${student?('?mode=teacher&name='+encodeURIComponent(student)):'?mode=teacher'}">재원생 성적 기록 ›</a>
+        <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap">${lastLinks}</div>
       </div>
       <div style="margin-top:8px;font-size:11.5px;opacity:.9;line-height:1.6">
         재원생은 선생님이 틀린 번호를 입력해 최초 성적을 기록합니다. 온라인 회원은 학생 화면에서 직접 입력하며,

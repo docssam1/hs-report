@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>최종 1회 약점 유형 분석지 | 지필드 영재교육</title>
+<title>최종 모의고사 약점 유형 분석지 | 지필드 영재교육</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -80,6 +80,15 @@ h2.sec-t{font-size:19px;font-weight:800;color:#2f6fb5;margin:22px 0 8px}
 .btm{display:flex;gap:20px;margin-top:18px;align-items:flex-start;flex-wrap:wrap}
 .radar{flex:0 0 340px}
 .cmt{flex:1;min-width:320px;font-size:11.8px;line-height:1.62;white-space:pre-wrap;color:#1f2430}
+@media(max-width:640px){
+  body{padding:10px 6px}.panel{padding:16px 12px}.row{gap:8px}.row>div{min-width:132px}
+  #sheet{padding:14px 8px;overflow:hidden}.rpt-h{font-size:16px;padding:10px 6px}
+  .idbar{display:grid;grid-template-columns:1fr 1fr}.idbar>div{min-width:0;border-bottom:1px solid #dbe2ec}.idbar>div:nth-child(2n){border-right:none}.idbar .k{min-width:48px;padding:6px 5px}.idbar .v{min-width:0;padding:6px 5px}
+  .res,.qt,.dt,.cum{table-layout:fixed}.res{font-size:10px}.res th,.res td{padding:5px 3px}.res td.big{font-size:13px}.res td.nm{font-size:11px;word-break:keep-all}
+  .qt{font-size:9px}.qt th{font-size:8.5px;padding:4px 2px}.qt td{padding:3px 2px}.qt .no{width:29px}.qt .ox{width:28px}.qt .rate{width:58px}.qt .cat{width:53px;word-break:keep-all}.qt .pt{width:28px}.qt .typ{word-break:keep-all}.qt .rb{gap:2px}.qt .rb i{display:none}.qt .rb b{font-size:8.5px}
+  h2.sec-t{font-size:16px}.dt{font-size:9px}.dt th,.dt td{padding:4px 2px;word-break:keep-all}.cum{font-size:8px}.cum th,.cum td{padding:5px 2px;word-break:keep-all}.cum td.k{width:auto}.cum td.tot{font-size:12px}.cum td.tot.lv{font-size:10px}
+  .radar{flex:1 1 100%;max-width:340px;margin:0 auto}.cmt{min-width:0;font-size:10.5px}.btm{gap:8px}
+}
 @media print{body{background:#fff;padding:0}.panel{display:none}#sheet{box-shadow:none;border-radius:0;padding:10px}}
 </style></head><body>
 
@@ -87,17 +96,17 @@ h2.sec-t{font-size:19px;font-weight:800;color:#2f6fb5;margin:22px 0 8px}
 <div class="adm">🧑‍🏫 재원생 성적 기록 화면입니다. 온라인 회원은 학생 화면에서 직접 입력하고, 재원생은 선생님이 대신 기록할 수 있습니다. 누적에는 입력 주체와 관계없이 회차별 최초 성적만 반영됩니다.</div>
 <h3>① 학생 정보와 오답 입력</h3>
 <div class="row">
-  <div><label>이름</label><input id="nm" placeholder="김규빈2" onchange="loadPriorFinalPercentiles(true)"></div>
+  <div><label>이름</label><input id="nm" placeholder="학생 이름" onchange="loadPriorPercentiles(true)"></div>
   <div><label>학교</label><input id="sch" placeholder="0"></div>
   <div><label>학년</label><input id="grd" placeholder="0"></div>
   <div><label>담임</label><input id="tch" value="노관호"></div>
 </div>
-<label class="cum-label"><span>파이널 최초 응시 석차 백분율 (중앙 기록 자동 연결 · 단위 %)</span><button type="button" class="sync-btn" onclick="loadPriorFinalPercentiles(true)">🔄 최초 성적 연결</button></label>
+<label class="cum-label"><span id="cumSourceLabel">이전 최초 응시 석차 백분율 (중앙 기록 자동 연결 · 단위 %)</span><button type="button" class="sync-btn" onclick="loadPriorPercentiles(true)">🔄 최초 성적 연결</button></label>
 <div class="row" style="margin-bottom:10px">
-  <div><label style="font-weight:600">파이널 1회</label><input id="f1" type="number" min="0" max="100" step="0.1" readonly></div>
-  <div><label style="font-weight:600">파이널 2회</label><input id="f2" type="number" min="0" max="100" step="0.1" readonly></div>
-  <div><label style="font-weight:600">파이널 3회</label><input id="f3" type="number" min="0" max="100" step="0.1" readonly></div>
-  <div><label style="font-weight:600">파이널 4회</label><input id="f4" type="number" min="0" max="100" step="0.1" readonly></div>
+  <div id="priorBox1"><label id="priorLabel1" style="font-weight:600">파이널 1회</label><input id="f1" type="number" min="0" max="100" step="0.1" readonly></div>
+  <div id="priorBox2"><label id="priorLabel2" style="font-weight:600">파이널 2회</label><input id="f2" type="number" min="0" max="100" step="0.1" readonly></div>
+  <div id="priorBox3"><label id="priorLabel3" style="font-weight:600">파이널 3회</label><input id="f3" type="number" min="0" max="100" step="0.1" readonly></div>
+  <div id="priorBox4"><label id="priorLabel4" style="font-weight:600">파이널 4회</label><input id="f4" type="number" min="0" max="100" step="0.1" readonly></div>
 </div>
 <div id="priorStatus" class="sync-status">학생 이름이 있으면 중앙 기록의 파이널 최초 응시 성적을 자동으로 연결합니다. 없는 회차는 어드민의 파이널 모의고사에서 선생님이 기록할 수 있습니다.</div>
 <label>틀린 문항 (누르면 오답)</label>
@@ -116,50 +125,44 @@ h2.sec-t{font-size:19px;font-weight:800;color:#2f6fb5;margin:22px 0 8px}
 <div id="sheet"></div>
 
 <script src="mock-data-final.js"></script>
+<script src="mock-data-last.js?v=20260823c"></script>
+<script src="mock-data-last3.js?v=20260823c"></script>
+<script src="mock-data-last4.js?v=20260823c"></script>
+<script src="last-score-data.js?v=20260823c"></script>
 <script>
-/* ===== 최종 1회 데이터 ===== */
-const TITLE='초등선발 대비 최종 모의고사 1회';
-const AVG=32.4;
-const TYPES=['특정 숫자가 들어있는 수의 개수','요일','순환소수의 자릿수','가우스 덧셈의 활용','고장난 시계의 시간 차','종이 접기','표에서의 특정 칸을 포함하는 사각형의 개수','원에서 마주보고 있는 수 구하기','합이 일정한 수','두 수의 합을 보고 원래의 수 구하기','도형이 나타내는 수','도형을 이용한 계차수열의 활용','자리 수하기','곱과 합이 일정한 수 구하기','연속으로 이웃하는 칸의 합이 같은 수 구하기','바둑돌 채우기(그림그려 해결하기)','간격의 활용','깃발의 가짓수','서랍원리','주사위 움직이기','상자에 구슬을 서로 다르게 담기','그림그려 해결하기','반복마디의 활용','조건에 맞는 수의 활용','이진법','재치있게 계산하기(덧셈)','논리추리(이중조건)','줄 세우기(활용)','두 종류의 수로 만든 수의 가짓수','복면산'];
-const AREA=['수,규칙찾기','식의 계산','수,규칙찾기','수,규칙찾기','식의 계산','도형','도형','수,규칙찾기','수,규칙찾기','식의 계산','수,규칙찾기','수,규칙찾기','수,규칙찾기','수,규칙찾기','수,규칙찾기','식의 계산','식의 계산','경우의 수','경우의 수','도형','경우의 수','식의 계산','수,규칙찾기','수,규칙찾기','수,규칙찾기','식의 계산','경우의 수','경우의 수','수,규칙찾기','식의 계산'];
-const RATE=[.323809524,.6,.904761905,.228571429,.238095238,.133333333,.380952381,.352380952,.285714286,.114285714,.714285714,.152380952,.076190476,.514285714,.447619048,.247619048,.428571429,.580952381,.40952381,.485714286,.371428571,.361904762,.428571429,0,.257142857,.133333333,.39047619,.2,.095238095,.180952381];
-const PTS=[...Array(12).fill(2.7),...Array(10).fill(3.4),...Array(8).fill(4.2)];
-const AREAS=['수,규칙찾기','도형','경우의 수','식의 계산'];
+/* ===== 최종 1~4회 공통 데이터 ===== */
+const pageParams=new URLSearchParams(location.search);
+const rawRound=pageParams.get('round');
+const roundNo=rawRound==null||rawRound===''?1:(/^[1-4]$/.test(rawRound)?Number(rawRound):null);
+const SCORE_MODEL=window.GFIELD_LAST_SCORE_DATA;
+const ROUND_DATA=roundNo&&SCORE_MODEL&&SCORE_MODEL.rounds&&SCORE_MODEL.rounds[String(roundNo)];
+const PAPER_ROUND=roundNo&&window.GFIELD_MOCK_LAST&&window.GFIELD_MOCK_LAST.rounds&&window.GFIELD_MOCK_LAST.rounds[String(roundNo)];
+if(!ROUND_DATA||!Array.isArray(ROUND_DATA.items)||ROUND_DATA.items.length!==30||!Array.isArray(ROUND_DATA.rates)||ROUND_DATA.rates.length!==30){
+  document.body.innerHTML='<div style="max-width:620px;margin:80px auto;background:#fff;border-radius:16px;padding:32px;text-align:center;box-shadow:0 8px 28px rgba(30,60,114,.12)"><h1 style="font-size:22px;color:#1e3c72;margin-bottom:10px">🔒 회차를 확인해 주세요</h1><p style="color:#64748b">최종 모의고사 1~4회 중 올바른 회차를 지정해 주세요.</p></div>';
+  throw new Error('유효하지 않거나 불완전한 최종 모의고사 성적 기준입니다.');
+}
+const ROUND_KEY=ROUND_DATA.key;
+const TITLE=ROUND_DATA.title;
+const AVG=ROUND_DATA.average;
+const TYPES=ROUND_DATA.items.map(item=>item.type);
+const AREA=ROUND_DATA.items.map(item=>item.area);
+const RATE=ROUND_DATA.rates;
+const PTS=ROUND_DATA.items.map(item=>item.pts);
+const AREAS=['수·규칙찾기','도형','경우의 수','식의 계산'];
+const TB=ROUND_DATA.percentileTable||null;
+const CUTS=ROUND_DATA.scoreBands;
+const CUM=ROUND_DATA.cumulativeBands;
+const REVIEW_NOTE=ROUND_DATA.reviewNote;
 const VALIDATION_LOCK=Object.freeze({
-  active:false,
-  reasons:Object.freeze([])
+  active:!PAPER_ROUND||PAPER_ROUND.ready!==true,
+  reasons:Object.freeze((PAPER_ROUND&&PAPER_ROUND.lockedQuestions||[]).map(no=>no+'번 문항 검수 대기'))
 });
 const ITEM_STATUS=Object.freeze({});
 
-/* 점수 → 상위 백분율 → 예상 결과 */
-const TB=[
-  [76.7,0.9],[69.8,1.8],[69.5,2.7],[67.8,3.6],[67.7,4.5],[66.3,5.5],
-  [60.8,6.4],[60.2,7.3],[58,8.2],[57.9,9.1],[56.9,10.0],[56.1,10.9],
-  [56,11.8],[55.7,12.7],[54.2,13.6],[52.7,14.5],[52.6,16.4],[52.5,17.3],
-  [51.1,18.2],[49.9,19.1],[49.1,20.0],[48.4,21.8],[47.7,22.7],[46.5,23.6],
-  [45.8,24.5],[43.9,26.4],[42.4,27.3],[40.9,28.2],[40.4,29.1],[40.1,30.0],
-  [38.9,30.9],[38.2,31.8],[36.3,32.7],[35.5,33.6],[35,35.5],[34.7,36.4],
-  [34.3,37.3],[34,38.2],[33.6,39.1],[32.5,40.9],[32.1,41.8],[32,43.6],
-  [31.9,44.5],[31.2,45.5],[30.6,46.4],[30.5,48.2],[30.2,50.0],
-  [29.4,50.9],[29.3,51.8],[28.6,52.7],[25.9,54.5],[25.2,55.5],
-  [25.1,56.4],[24.8,57.3],[24.5,60.0],[24.4,60.9],[24,63.6],
-  [23.8,64.5],[23.3,65.5],[23.2,66.4],[22.4,67.3],[21.8,68.2],
-  [21.7,70.0],[20.3,70.9],[19.9,71.8],[19.8,73.6],[19.7,75.5],
-  [19.1,76.4],[19,79.1],[18.3,80.0],[17.7,80.9],[17.6,81.8],
-  [17.2,82.7],[16.9,83.6],[15.7,84.5],[14.9,85.5],[13,86.4],
-  [12.9,87.3],[12.2,88.2],[11.5,90.0],[9.6,91.8],[9.5,92.7],
-  [8.8,93.6],[2.7,94.5],[0,95.5]
-];
-
-/* 누적 백분율 → 예상 레벨 (상한 기준) */
-/* 등급 컷 점수 (최종 1회) — 높은 순 */
-const CUTS=[['경시 가능',54.2],['경시컷,심화안정권',40.9],['심화컷,실력안정권',35.0],['심화컷,실력가능',32.5],['실력컷,일품안정권',23.2],['일품컷',17.2],['노력요함',0]];
-/* 파이널 최초 응시부터 최종 1회까지, 각 회차 석차 백분율의 평균 기준.
-   개인 조정으로 보이는 교차값은 등급 경계에서 제외하고 다수 구간의 경계를 사용한다. */
-const CUM=[[19.1,'경시 가능'],[36.1,'경시컷,심화안정권'],[46.2,'심화컷,실력안정권'],[53.3,'실력컷,일품안정권'],[60.0,'일품 가능'],[76.4,'일품컷'],[101,'노력요함']];
-
 const R1=n=>Math.round(n*10)/10;
 let X={};
+let priorLoadVersion=0;
+let priorLoadState='idle';
 
 const publishBtn=document.getElementById('publishBtn');
 publishBtn.disabled=VALIDATION_LOCK.active;
@@ -176,15 +179,15 @@ for(let i=1;i<=30;i++){
   const itemStatus=ITEM_STATUS[i];
   if(itemStatus) d.classList.add('pending');
   d.innerHTML=`<span class="n">${i}</span><span class="r">${itemStatus||(RATE[i-1]*100).toFixed(1)+'%'}</span>`;
-  d.onclick=()=>{ X[i]=!X[i]; d.classList.toggle('x',X[i]); };
+  d.onclick=()=>{ X[i]=!X[i]; d.classList.toggle('x',X[i]); invalidateComment(); };
   grid.appendChild(d);
 }
 /* ===== 재원생 최초 성적 기록 =====
-   mock_results 테이블의 round='last1' 기본 키를 최초 한 번만 생성한다.
+   mock_results 테이블의 회차별 기본 키를 최초 한 번만 생성한다.
    이미 유효한 기록은 덮지 않고, 정확한 reset 행만 조건부 PATCH로 다시 연다. */
-async function loadOfficialLast1(nm){
+async function loadOfficialRound(nm){
   const url=AL_URL+'/rest/v1/mock_results?student=eq.'+encodeURIComponent(nm)
-    +'&round=eq.last1&select=student,round,ox,score,wrong,source,updated_at&limit=1';
+    +'&round=eq.'+ROUND_KEY+'&select=student,round,ox,score,wrong,source,updated_at&order=updated_at.asc&limit=1';
   const response=await fetch(url,{headers:{apikey:AL_KEY,Authorization:'Bearer '+AL_KEY}});
   if(!response.ok) throw new Error('조회 HTTP '+response.status);
   const rows=await response.json();
@@ -204,18 +207,18 @@ async function publish(){
   score=R1(score);
   const wrong=Object.keys(X).filter(k=>X[k]).length;
   try{
-    const existing=await loadOfficialLast1(nm);
+    const existing=await loadOfficialRound(nm);
     if(isActiveOfficial(existing)){
-      alert(nm+' 학생의 최종 1회 최초 성적이 이미 기록되어 있습니다.\n\n기존 최초 성적은 덮어쓰지 않았습니다. 정정이 필요한 경우 먼저 해당 기록을 초기화해 주세요.');
+      alert(nm+' 학생의 최종 '+roundNo+'회 최초 성적이 이미 기록되어 있습니다.\n\n기존 최초 성적은 덮어쓰지 않았습니다. 정정이 필요한 경우 먼저 해당 기록을 초기화해 주세요.');
       return;
     }
     if(!confirm(nm+' 학생의 최초 성적을 기록할까요?\n\n점수 '+score+'점 · 오답 '+wrong+'개\n\n기록 후에는 일반 저장으로 덮어쓸 수 없습니다.')) return;
-    const payload={student:nm,round:'last1',ox:ox,score:score,wrong:wrong,source:'admin',updated_at:new Date().toISOString()};
+    const payload={student:nm,round:ROUND_KEY,ox:ox,score:score,wrong:wrong,source:'admin',updated_at:new Date().toISOString()};
     let saveUrl=AL_URL+'/rest/v1/mock_results';
     let method='POST', prefer='return=minimal';
     if(isResetOfficial(existing)){
       method='PATCH'; prefer='return=representation';
-      saveUrl+='?student=eq.'+encodeURIComponent(nm)+'&round=eq.last1&source=eq.reset&ox=eq.RESET&select=round';
+      saveUrl+='?student=eq.'+encodeURIComponent(nm)+'&round=eq.'+ROUND_KEY+'&source=eq.reset&ox=eq.RESET&select=round';
     }
     const r=await fetch(saveUrl,{method:method,
       headers:{apikey:AL_KEY,Authorization:'Bearer '+AL_KEY,'Content-Type':'application/json',
@@ -227,18 +230,33 @@ async function publish(){
       const changed=await r.json();
       if(!Array.isArray(changed)||changed.length!==1){ alert('다른 입력이 먼저 최초 성적으로 기록되었습니다. 기존 기록을 유지했습니다.'); return; }
     }
-    alert(nm+' 학생의 최초 성적이 기록되었습니다.\n학생 화면 → 로드맵 10월 1주차 → [성적 확인]에서 볼 수 있어요.');
+    alert(nm+' 학생의 최종 '+roundNo+'회 최초 성적이 기록되었습니다.\n학생 화면의 해당 최종 모의고사 [성적 확인]에서 볼 수 있어요.');
   }catch(e){
     alert('성적 기록에 실패했습니다. 잠시 후 다시 시도해 주세요.\n('+e.message+')');
   }
 }
-function reset(){ X={}; document.querySelectorAll('.q').forEach(d=>d.classList.remove('x')); document.getElementById('sheet').innerHTML=''; }
+function reset(){ X={}; LAST_CMT=''; document.querySelectorAll('.q').forEach(d=>d.classList.remove('x')); document.getElementById('sheet').innerHTML=''; }
 function gradeForScore(s){ for(const c of CUTS) if(s>=c[1]) return c[0]; return '노력요함'; }
-function lookup(s){ for(const r of TB) if(s>=r[0]) return [r[1],gradeForScore(s)]; return [95.5,'노력요함']; }
+function percentileForLast(targetRound,score){
+  const data=SCORE_MODEL&&SCORE_MODEL.rounds&&SCORE_MODEL.rounds[String(targetRound)];
+  if(!data||!Number.isFinite(score)) return null;
+  if(Array.isArray(data.percentileTable)){
+    for(const row of data.percentileTable) if(score>=row[0]) return R1(row[1]);
+    return R1(data.percentileTable[data.percentileTable.length-1][1]);
+  }
+  if(!Array.isArray(data.scoreDist)||!Number.isFinite(data.cohortSize)||data.cohortSize<=0) return null;
+  return R1((data.scoreDist.filter(value=>value>score).length+1)/data.cohortSize*100);
+}
+function lookup(s){ return [percentileForLast(roundNo,s)??100,gradeForScore(s)]; }
 function cumLevel(p){ for(const c of CUM) if(p<=c[0]) return c[1]; return '노력요함'; }
 function esc(s){return String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
 
 let LAST_CMT='';
+function invalidateComment(){ LAST_CMT=''; }
+['nm','sch','grd','tch','f1','f2','f3','f4'].forEach(id=>{
+  const input=document.getElementById(id);
+  if(input) input.addEventListener('input',invalidateComment);
+});
 function render(){
   if(VALIDATION_LOCK.active){
     alert('검수 완료 전에는 점수·석차·수행률 분석을 산출하지 않습니다.');
@@ -254,7 +272,7 @@ function render(){
   score=R1(score);
   const [pct,grade]=lookup(score);
   const wrong=[]; for(let i=1;i<=30;i++) if(X[i]) wrong.push(i);
-  /* 충분히 맞출 수 있는 문항: 오답 & 정답률(%) > 본인 석차 백분율 */
+  /* 우선 복습 권장 문항: 오답 중 전체 정답률이 현재 상위 백분율보다 높은 문항 */
   const miss=wrong.filter(i=>Number.isFinite(RATE[i-1])&&RATE[i-1]*100>pct);
 
   /* 문항표 */
@@ -301,29 +319,50 @@ function render(){
     if(acc>=need) path={grade:target[0], cut:target[1], need, pick, acc};
   }
 
-  /* 누적: 파이널 1~4회 최초 응시 백분율 + 이번 최종 1회 백분율 */
-  const fps=[1,2,3,4].map(k=>parseFloat(document.getElementById('f'+k).value)).filter(v=>Number.isFinite(v)&&v>=0&&v<=100);
-  const allP=[...fps, pct];
-  const cumAvg=R1(allP.reduce((s,v)=>s+v,0)/allP.length);
-  const cumLv=cumLevel(cumAvg);
+  /* 누적: 최종 1회는 파이널 1~4회 포함, 최종 2회부터는 최종 모의고사 최초 성적만 반영 */
+  const priorCount=roundNo===1?4:roundNo-1;
+  const priorEntries=[...Array(priorCount)].map((_,index)=>({index,value:parseFloat(document.getElementById('f'+(index+1)).value)}))
+    .filter(entry=>Number.isFinite(entry.value)&&entry.value>=0&&entry.value<=100);
+  const fps=priorEntries.map(entry=>entry.value);
+  const cumulativeAvailable=priorLoadState==='loaded';
+  const allP=cumulativeAvailable?[...fps, pct]:[];
+  const cumAvg=cumulativeAvailable?R1(allP.reduce((s,v)=>s+v,0)/allP.length):null;
+  const cumLv=cumulativeAvailable?cumLevel(cumAvg):'판정 보류';
+
+  const cumulativeCells=Array(8).fill(null);
+  if(roundNo===1){
+    priorEntries.forEach(entry=>{ cumulativeCells[entry.index]=entry.value; });
+    cumulativeCells[4]=pct;
+  }else{
+    priorEntries.forEach(entry=>{ cumulativeCells[4+entry.index]=entry.value; });
+    cumulativeCells[3+roundNo]=pct;
+  }
+  const currentCellIndex=roundNo===1?4:3+roundNo;
+  const cumulativeScoreCells=cumulativeCells.map(value=>`<td class="${value==null?'':'on'}">${value==null?'':value.toFixed(1)+'%'}</td>`).join('');
+  const cumulativeGradeCells=cumulativeCells.map((value,index)=>`<td class="${index===currentCellIndex?'on':''}">${index===currentCellIndex?grade:''}</td>`).join('');
+  const cumulativeSource=!cumulativeAvailable
+    ?'이전 성적 연결이 완료되지 않아 누적 판정을 보류합니다.'
+    :roundNo===1
+    ?`파이널 최초 성적 ${fps.length}회와 최종 1회 최초 성적`
+    :`최종 1회부터 ${roundNo}회까지 확인된 최초 성적 ${allP.length}회`;
 
   /* 멘트 */
   const wt=wrong.length?`[${wrong.map(n=>n+'번').join(', ')}]`:'없습니다';
   const kt=miss.length?`[${miss.map(n=>n+'번').join(', ')}]`:'';
-  let c=`"${nm} 학생이 응시한 모의고사는 [${TITLE}] 입니다.\n`;
+  let c=`${nm} 학생이 응시한 모의고사는 [${TITLE}]입니다.\n`;
   c+=`${nm} 학생은 이번 모의고사에서 ${score.toFixed(1)}점을 획득했고, 총 30문항 중 ${ncorr}개를 맞추었습니다.\n`;
-  c+=`실제 응시자 데이터와 점수대 분석을 바탕으로 석차는 ${pct.toFixed(1)}%로 [${grade}] 정도가 예상됩니다.\n`;
-  c+=`오답문항은 ${wt} 입니다.\n`;
-  if(miss.length) c+=`특히 아이의 실력으로 충분히 맞출 수 있는 문항은 ${kt} 입니다. 반드시 풀이 과정과 해설 영상을 복습해 보세요.\n`;
-  if(miss.length) c+=`이 문항들만 잡았다면 ${newScore.toFixed(1)}점, 석차 ${newPct.toFixed(1)}%까지 올라갑니다.\n`;
-  if(path) c+=`다음 목표인 [${path.grade}]까지는 ${path.need.toFixed(1)}점이 부족합니다. 정답률이 높은 ${path.pick.map(n=>n+'번').join(', ')}만 잡으면 컷(${path.cut}점)을 넘습니다.\n`;
-  if(fps.length) c+=`파이널 최초 응시 ${fps.length}회와 이번 최종 1회를 합한 누적 석차 백분율 평균은 ${cumAvg.toFixed(1)}%로, 누적 데이터 기준 [${cumLv}] 수준입니다.\n`;
-  c+=`풀이 강의와 반복 학습을 통해 문제의 유형과 해설을 정확히 익히는 것이 중요합니다. 황소 경시 실전에도 큰 도움이 됩니다.\n`;
-  c+=`최종 1회 모의고사는 기존에 배웠던 내용과 선행없이 풀 수 있는 영재성검사 유형들을 추가하면서 실제 시험의 난이도와 유사하다고 할 수 있습니다. 경우에 따라 더 어렵게 느껴지는 아이들도 있고 오히려 쉽다고 생각하는 친구들이 있지만 항상 평균은 똑같아요^^ 오히려 쉽게 느껴지만 다 맞은 것 같은데 실수가 많더라구요. 정말 초등팩토와 pre 1031에 배웠던 내용도 많았는데 읽기가 잘못되어 있는 경우가 많았습니다. 오늘 시험 성적이 지난 번보다 높았던 친구들은 아마 유형에 대한 이해도와 지문의 중간까지의 해석능력이 좋았던 학생입니다. 결국 지난 시험까지 마무리 조건이 부족했다고도 할수 있습니다."`;
+  c+=`${SCORE_MODEL.dataProof}를 기준으로 예상 상위 백분율은 ${pct.toFixed(1)}%이며, [${grade}] 구간입니다.\n`;
+  c+=`오답 문항은 ${wt}입니다.\n`;
+  if(miss.length) c+=`전체 정답률을 기준으로 우선 복습할 문항은 ${kt}입니다. 이 문항들은 정답만 확인하지 말고 풀이 과정과 해설 영상을 함께 복습해 주세요.\n`;
+  if(miss.length) c+=`해당 문항을 보완하면 산술상 ${newScore.toFixed(1)}점, 상위 ${newPct.toFixed(1)}%까지 향상될 수 있습니다.\n`;
+  if(path) c+=`다음 목표 구간인 [${path.grade}]까지는 ${path.need.toFixed(1)}점이 필요합니다. 우선 복습 순서는 ${path.pick.map(n=>n+'번').join(', ')}이며, 목표 기준 점수는 ${path.cut}점입니다.\n`;
+  if(cumulativeAvailable&&fps.length) c+=`${cumulativeSource}의 상위 백분율 평균은 ${cumAvg.toFixed(1)}%로, 누적 기준 [${cumLv}] 구간입니다.\n`;
+  c+=`풀이 강의와 반복 학습을 통해 문제의 조건, 풀이 순서, 검산 과정을 정확히 익히는 것이 중요합니다. 황소 경시 실전 대비에도 도움이 됩니다.\n`;
+  c+=REVIEW_NOTE;
   LAST_CMT=c;
 
   document.getElementById('sheet').innerHTML=`
-<div class="rpt-h">G-FIELD 영재교육 약점 유형 분석<br>11월 HS 초등 선발 대비 모의고사</div>
+<div class="rpt-h">G-FIELD 영재교육 약점 유형 분석<br>${TITLE}</div>
 <div class="idbar">
   <div><span class="k">학 교</span><span class="v">${esc(sch)}</span></div>
   <div><span class="k">학 년</span><span class="v">${esc(grd)}</span></div>
@@ -357,7 +396,7 @@ ${trow('수행률', g=>g.perf.toFixed(1)+'%', score.toFixed(1)+'%')}
 
 <h2 class="sec-t">목표 시뮬레이션</h2>
 <table class="dt">
-<tr><th style="width:33%">충분히 맞출 수 있었던 문항을 잡았다면</th><th style="width:33%">다음 등급까지 최단 경로</th><th>현재 위치</th></tr>
+<tr><th style="width:33%">우선 복습 권장 문항을 보완한다면</th><th style="width:33%">다음 구간까지 복습 경로</th><th>현재 위치</th></tr>
 <tr>
 <td>${miss.length?`<b>${miss.map(n=>n+'번').join(', ')}</b> (+${gain}점)<br>→ <b style="font-size:15px;color:#1f3864">${newScore.toFixed(1)}점 · 석차 ${newPct.toFixed(1)}%</b>`:'해당 문항 없음'}</td>
 <td>${path?`<b>[${path.grade}]</b>까지 ${path.need.toFixed(1)}점 부족<br>→ <b style="color:#c2410c">${path.pick.map(n=>n+'번').join(', ')}</b>만 잡으면 진입`:'최상위 구간입니다'}</td>
@@ -368,9 +407,9 @@ ${trow('수행률', g=>g.perf.toFixed(1)+'%', score.toFixed(1)+'%')}
 <h2 class="sec-t">누적 성적 결과</h2>
 <table class="cum">
 <tr><th style="width:96px"></th><th>파이널1회</th><th>파이널2회</th><th>파이널3회</th><th>파이널4회</th><th>최종1회</th><th>최종2회</th><th>최종3회</th><th>최종4회</th><th style="width:170px">누적</th></tr>
-<tr><td class="k">석차</td>${[1,2,3,4].map(k=>{const v=parseFloat(document.getElementById('f'+k).value);return `<td class="${isNaN(v)?'':'on'}">${isNaN(v)?'':v.toFixed(1)+'%'}</td>`;}).join('')}<td class="on">${pct.toFixed(1)}%</td><td></td><td></td><td></td><td class="tot" rowspan="2">${cumAvg.toFixed(1)}%</td></tr>
-<tr><td class="k">예상 레벨</td><td colspan="4" style="color:#aaa;font-size:11px">파이널 최초 응시 기록</td><td class="on">${grade}</td><td></td><td></td><td></td></tr>
-<tr><td class="k">누적 판정</td><td colspan="8" style="text-align:right;color:#8a94a6;font-size:11px">각 회차 최초 성적의 석차 백분율 평균 · 파이널 1회부터 누적 ${allP.length}회 기준</td><td class="tot lv">${cumLv}</td></tr>
+<tr><td class="k">상위 백분율</td>${cumulativeScoreCells}<td class="tot" rowspan="2">${cumAvg==null?'—':cumAvg.toFixed(1)+'%'}</td></tr>
+<tr><td class="k">예상 구간</td>${cumulativeGradeCells}</tr>
+<tr><td class="k">누적 판정</td><td colspan="8" style="text-align:right;color:#8a94a6;font-size:11px">${cumulativeAvailable?'각 회차 최초 성적의 상위 백분율 평균 · ':''}${cumulativeSource}</td><td class="tot lv">${cumLv}</td></tr>
 </table>
 
 <div class="btm">
@@ -410,7 +449,7 @@ const AL_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
 function logSubmit(nm, score, pct, wrong){
   try{
     fetch(AL_URL+"/rest/v1/access_log",{method:"POST",headers:{apikey:AL_KEY,Authorization:"Bearer "+AL_KEY,"Content-Type":"application/json",Prefer:"return=minimal"},
-      body:JSON.stringify({student:nm,page:"last1:"+score+"점/"+pct+"%/오답["+wrong.join(",")+"]"})}).catch(function(){});
+      body:JSON.stringify({student:nm,page:ROUND_KEY+":"+score+"점/"+pct+"%/오답["+wrong.join(",")+"]"})}).catch(function(){});
   }catch(e){}
 }
 function sendTeacher(){
@@ -427,45 +466,78 @@ function finalRoundPercentile(roundNo, score){
   const higher=stats.dist.filter(v=>v>score).length;
   return R1((higher+1)/stats.n*100);
 }
-async function loadPriorFinalPercentiles(clearFirst){
+function configurePriorInputs(){
+  document.title=`최종 ${roundNo}회 약점 유형 분석지 | 지필드 영재교육`;
+  const sourceLabel=document.getElementById('cumSourceLabel');
+  const status=document.getElementById('priorStatus');
+  for(let k=1;k<=4;k++){
+    const box=document.getElementById('priorBox'+k);
+    const label=document.getElementById('priorLabel'+k);
+    const visible=roundNo===1||k<roundNo;
+    box.style.display=visible?'':'none';
+    if(visible) label.textContent=roundNo===1?`파이널 ${k}회`:`최종 ${k}회`;
+  }
+  sourceLabel.textContent=roundNo===1
+    ?'파이널 1~4회 최초 응시 상위 백분율 (중앙 기록 자동 연결 · 단위 %)'
+    :'이전 최종 모의고사 최초 응시 상위 백분율 (중앙 기록 자동 연결 · 단위 %)';
+  status.textContent=roundNo===1
+    ?'학생 이름이 있으면 중앙 기록의 파이널 최초 응시 성적을 연결합니다.'
+    :`학생 이름이 있으면 중앙 기록의 최종 1~${roundNo-1}회 최초 성적을 연결합니다.`;
+}
+async function loadPriorPercentiles(clearFirst){
+  const requestVersion=++priorLoadVersion;
   const nm=document.getElementById('nm').value.trim();
   const status=document.getElementById('priorStatus');
   const inputs=[1,2,3,4].map(k=>document.getElementById('f'+k));
   if(clearFirst) inputs.forEach(input=>{ input.value=''; delete input.dataset.auto; });
-  if(!nm){ status.textContent='학생 이름을 입력하면 중앙 기록의 파이널 최초 응시 성적을 연결합니다.'; return; }
-  status.textContent='파이널 최초 응시 기록을 불러오는 중입니다…';
+  invalidateComment();
+  if(!nm){ priorLoadState='idle'; configurePriorInputs(); return; }
+  const targets=roundNo===1
+    ?[1,2,3,4].map(k=>({key:'final'+k,inputIndex:k-1,label:`파이널 ${k}회`,percentile:score=>finalRoundPercentile(k,score)}))
+    :[...Array(roundNo-1)].map((_,index)=>{
+      const k=index+1;
+      return {key:'last'+k,inputIndex:index,label:`최종 ${k}회`,percentile:score=>percentileForLast(k,score)};
+    });
+  priorLoadState='loading';
+  status.textContent=(roundNo===1?'파이널':'이전 최종 모의고사')+' 최초 응시 기록을 불러오는 중입니다…';
   try{
-    const url=AL_URL+'/rest/v1/mock_results?student=eq.'+encodeURIComponent(nm)+'&select=round,score,source,updated_at';
+    const url=AL_URL+'/rest/v1/mock_results?student=eq.'+encodeURIComponent(nm)+'&select=round,score,source,ox,updated_at&order=updated_at.asc';
     const response=await fetch(url,{headers:{apikey:AL_KEY,Authorization:'Bearer '+AL_KEY}});
     if(!response.ok) throw new Error('HTTP '+response.status);
     const rows=await response.json();
+    if(requestVersion!==priorLoadVersion||document.getElementById('nm').value.trim()!==nm) return;
     const firstByRound={};
     rows.forEach(row=>{
-      const match=/^final([1-4])$/.exec(String(row.round||''));
-      if(match&&row.source!=='reset'&&Number.isFinite(Number(row.score))) firstByRound[match[1]]=row;
+      const key=String(row.round||'');
+      if(!firstByRound[key]&&row.source!=='reset'&&row.ox!=='RESET'&&Number.isFinite(Number(row.score))) firstByRound[key]=row;
     });
     let connected=0;
-    [1,2,3,4].forEach(k=>{
-      const row=firstByRound[k];
-      const pct=row&&finalRoundPercentile(k,Number(row.score));
+    targets.forEach(target=>{
+      const row=firstByRound[target.key];
+      const pct=row&&target.percentile(Number(row.score));
       if(pct==null) return;
-      inputs[k-1].value=pct.toFixed(1);
-      inputs[k-1].dataset.auto='1';
+      inputs[target.inputIndex].value=pct.toFixed(1);
+      inputs[target.inputIndex].dataset.auto='1';
       connected++;
     });
+    priorLoadState='loaded';
+    invalidateComment();
     status.textContent=connected
-      ?'중앙 기록에서 파이널 최초 응시 '+connected+'회를 연결했습니다. 연습 재응시 기록은 누적에서 제외합니다.'
-      :'연결할 파이널 최초 응시 기록이 없습니다. 어드민 → 모의고사 결과 → 파이널 모의고사에서 재원생 성적을 기록해 주세요.';
+      ?`중앙 기록에서 ${targets.length===4?'파이널':'최종 모의고사'} 최초 응시 ${connected}회를 연결했습니다. 재응시 기록은 누적에서 제외합니다.`
+      :`연결할 ${targets.length===4?'파이널':'이전 최종 모의고사'} 최초 응시 기록이 없습니다.`;
   }catch(error){
+    if(requestVersion!==priorLoadVersion||document.getElementById('nm').value.trim()!==nm) return;
+    priorLoadState='error';
     status.textContent='이전 성적을 자동으로 불러오지 못했습니다. 네트워크를 확인한 뒤 [최초 성적 연결]을 다시 눌러 주세요.';
   }
 }
 /* 어드민에서 학생을 지정해 열면 이름과 중앙의 최초 응시 기록을 자동으로 채운다. */
 (async function(){
-  const n=(new URLSearchParams(location.search).get('name')||'').trim();
+  configurePriorInputs();
+  const n=(pageParams.get('name')||'').trim();
   if(n){
     document.getElementById('nm').value=n;
-    await loadPriorFinalPercentiles(true);
+    await loadPriorPercentiles(true);
   }
 })();
 </script></body></html>
