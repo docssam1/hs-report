@@ -110,7 +110,7 @@ check('최종 2회 시험지 구조·그림 자산', () => {
 check('최종 3회 PDF 대조 잠금·그림 자산', () => {
   const result = inspectRound('3');
   assert.equal(model.rounds['3'].ready, false);
-  assert.deepEqual(Array.from(model.rounds['3'].lockedQuestions), [6, 8, 11, 25]);
+  assert.deepEqual(Array.from(model.rounds['3'].lockedQuestions), [8, 11]);
   assert.equal(result.figureKeys.length, 9);
   const assets = fs.readdirSync(path.join(ROOT, 'mock-assets', 'last3')).filter(name => /\.png$/i.test(name));
   assert.equal(assets.length, 7);

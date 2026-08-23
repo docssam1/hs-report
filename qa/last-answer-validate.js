@@ -30,7 +30,7 @@ check('답안 데이터는 최종 2~4회 각각 30문항', () => {
 });
 
 check('검수 대기 문항은 정답 값을 저장하지 않음', () => {
-  const expected = { '2': [], '3': [6, 8, 11, 25], '4': [19] };
+  const expected = { '2': [], '3': [8, 11], '4': [19] };
   for (const no of ['2', '3', '4']) {
     const pending = [];
     answerModel.rounds[no].forEach((item, index) => {
@@ -52,14 +52,88 @@ check('검수 대기 문항은 정답 값을 저장하지 않음', () => {
 check('확정 교정값과 단일 답 표시가 보존됨', () => {
   assert.equal(answerModel.rounds['2'][18].answer, '7번째 줄 58번째');
   assert.equal(answerModel.rounds['2'][25].answer, '9문제');
-  assert.equal(answerModel.rounds['3'][5].answer, null);
+  assert.equal(answerModel.rounds['3'][5].answer, '34가지');
   assert.equal(answerModel.rounds['3'][7].answer, null);
+  assert.equal(answerModel.rounds['3'][10].answer, null);
+  assert.equal(answerModel.rounds['3'][24].answer, '39,366개');
   assert.equal(answerModel.rounds['3'][9].answer, '목요일');
   assert.equal(answerModel.rounds['3'][25].answer, '0');
   assert.equal(answerModel.rounds['4'][1].answer, '539−468=71');
   assert.equal(answerModel.rounds['4'][9].answer, '진미가 2초 먼저');
   assert.equal(answerModel.rounds['4'][18].answer, null);
   assert.equal(answerModel.rounds['4'][26].answer, '120명');
+});
+
+check('교정 문항과 복수해 문항을 독립 전수검산', () => {
+  const denominations = [10, 50, 100, 500, 1000];
+  const sums = new Set();
+  let selections = 0;
+  for (let first = 0; first < denominations.length; first += 1) {
+    for (let second = first; second < denominations.length; second += 1) {
+      for (let third = second; third < denominations.length; third += 1) {
+        selections += 1;
+        sums.add(denominations[first] + denominations[second] + denominations[third]);
+      }
+    }
+  }
+  assert.equal(selections, 35);
+  assert.equal(sums.size, 34);
+
+  let trees = 1;
+  let tenthHarvest = 0;
+  for (let year = 1; year <= 10; year += 1) {
+    tenthHarvest = trees * 2;
+    trees += tenthHarvest;
+  }
+  assert.equal(tenthHarvest, 39366);
+
+  const clockDisplayGapMinutes = 120;
+  const relativeClockDriftPerHour = 1 + 2;
+  const elapsedHours = clockDisplayGapMinutes / relativeClockDriftPerHour;
+  assert.equal(elapsedHours, 40);
+  assert.ok(elapsedHours > 24, '다음날 아침 조건 안에서는 두 시계가 2시간 차이 날 수 없음');
+
+  const supplementPairs = [1, 2].map(daysBeforeSharing => ({
+    sister: 4 * daysBeforeSharing + 2,
+    sibling: 3 * daysBeforeSharing + 138,
+  }));
+  assert.deepEqual(supplementPairs, [
+    { sister: 6, sibling: 141 },
+    { sister: 10, sibling: 144 },
+  ]);
+  supplementPairs.forEach(({ sister, sibling }, index) => {
+    const daysBeforeSharing = index + 1;
+    assert.equal(sister - 4 * daysBeforeSharing, 2);
+    assert.equal(2 + sibling - 3 * daysBeforeSharing, 7 * 20);
+  });
+
+  const equationSolutions = [];
+  const digits = [1, 2, 3, 4, 5, 6, 7, 8];
+  function permute(values, used, output) {
+    if (output.length === values.length) {
+      const [topLeft, topMiddle, topRight, rightMiddle, bottomRight, bottomMiddle, bottomLeft, leftMiddle] = output;
+      if (
+        topLeft - topMiddle === topRight &&
+        topLeft === leftMiddle * bottomLeft &&
+        topRight + rightMiddle === bottomRight &&
+        bottomLeft * bottomMiddle === bottomRight
+      ) equationSolutions.push(output.slice());
+      return;
+    }
+    values.forEach(value => {
+      if (used.has(value)) return;
+      used.add(value);
+      output.push(value);
+      permute(values, used, output);
+      output.pop();
+      used.delete(value);
+    });
+  }
+  permute(digits, new Set(), []);
+  assert.deepEqual(equationSolutions, [
+    [6, 5, 1, 7, 8, 4, 2, 3],
+    [8, 7, 1, 5, 6, 3, 2, 4],
+  ]);
 });
 
 check('답안 화면은 엄격한 회차와 90분 규격을 사용', () => {
@@ -69,7 +143,8 @@ check('답안 화면은 엄격한 회차와 90분 규격을 사용', () => {
   assert.match(page, /scoreRoot\.minutes/);
   assert.match(page, /mock-data-last3\.js/);
   assert.match(page, /mock-data-last4\.js/);
-  assert.match(page, /paperRound\.ready!==true/);
+  assert.match(page, /paperRound\.ready!==true&&!preview/);
+  assert.match(page, /params\.get\('preview'\)==='1'&&localHost/);
   assert.match(page, /status==='pending'/);
   assert.match(page, /🔒 검수 대기/);
 });
