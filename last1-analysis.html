@@ -25,6 +25,9 @@ button:disabled{cursor:not-allowed;opacity:.72}
 .pri{background:linear-gradient(135deg,#2a5298,#1e3c72);color:#fff}
 .sec{background:#f1f4f9;color:#5b6474;border:1px solid #e3e8ef}
 .adm{background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;border-radius:10px;padding:10px 13px;font-size:12px;font-weight:700;margin-bottom:14px;line-height:1.6}
+.cum-label{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sync-btn{padding:5px 10px;border:1px solid #c7d2fe;background:#eef2ff;color:#3730a3;font-size:11px;border-radius:7px}
+.sync-status{font-size:11px;color:#64748b;margin:-5px 0 10px;min-height:17px}
 
 /* ===== 분석지 ===== */
 #sheet{max-width:1180px;margin:0 auto;background:#fff;padding:26px 30px 34px;box-shadow:0 6px 22px rgba(30,60,114,.10);border-radius:6px}
@@ -80,60 +83,79 @@ h2.sec-t{font-size:19px;font-weight:800;color:#2f6fb5;margin:22px 0 8px}
 </style></head><body>
 
 <div class="panel">
-<div class="adm">⚠ 검수 중입니다. <b>24번 정답률·평균 재산출</b>, <b>27번 조건·정답 확정</b>, <b>29번 원문 예시 오류 교정 승인</b> 전까지 분석 산출·인쇄·학생 성적 공개가 잠겨 있습니다. 오답 문항 입력만 미리 준비할 수 있습니다.</div>
+<div class="adm">✅ 최종 1회 30문항의 정답률과 이원 목적 분류표를 반영했습니다. 27번 조건과 29번 예시 교정도 완료되어 분석·인쇄·학생 성적 공개를 사용할 수 있습니다.</div>
 <h3>① 학생 정보와 오답 입력</h3>
 <div class="row">
-  <div><label>이름</label><input id="nm" placeholder="김규빈2"></div>
+  <div><label>이름</label><input id="nm" placeholder="김규빈2" onchange="loadPriorFinalPercentiles(true)"></div>
   <div><label>학교</label><input id="sch" placeholder="0"></div>
   <div><label>학년</label><input id="grd" placeholder="0"></div>
   <div><label>담임</label><input id="tch" value="노관호"></div>
 </div>
-<label>파이널 석차 백분율 (누적 계산용 · 있는 회차만 입력, 단위 %)</label>
+<label class="cum-label"><span>파이널 최초 응시 석차 백분율 (누적 계산용 · 있는 회차만, 단위 %)</span><button type="button" class="sync-btn" onclick="loadPriorFinalPercentiles(true)">🔄 최초 성적 연결</button></label>
 <div class="row" style="margin-bottom:10px">
-  <div><label style="font-weight:600">파이널 1회</label><input id="f1" type="number" step="0.1" placeholder="예: 40.8"></div>
-  <div><label style="font-weight:600">파이널 2회</label><input id="f2" type="number" step="0.1"></div>
-  <div><label style="font-weight:600">파이널 3회</label><input id="f3" type="number" step="0.1"></div>
-  <div><label style="font-weight:600">파이널 4회</label><input id="f4" type="number" step="0.1"></div>
+  <div><label style="font-weight:600">파이널 1회</label><input id="f1" type="number" min="0" max="100" step="0.1" placeholder="예: 40.8"></div>
+  <div><label style="font-weight:600">파이널 2회</label><input id="f2" type="number" min="0" max="100" step="0.1"></div>
+  <div><label style="font-weight:600">파이널 3회</label><input id="f3" type="number" min="0" max="100" step="0.1"></div>
+  <div><label style="font-weight:600">파이널 4회</label><input id="f4" type="number" min="0" max="100" step="0.1"></div>
 </div>
+<div id="priorStatus" class="sync-status">학생 이름이 있으면 중앙 기록의 파이널 최초 응시 성적을 자동으로 연결합니다. 빈 회차는 직접 입력할 수 있습니다.</div>
 <label>틀린 문항 (누르면 오답)</label>
 <div class="grid" id="grid"></div>
-<div class="hint">24·27·29번 통계와 정답 판정이 확정되기 전에는 점수·석차·수행률을 산출하지 않습니다.</div>
+<div class="hint">숫자 아래는 제공받은 최종 정답률입니다. 오답만 고르면 점수·석차·수행률·누적·멘트가 자동 계산됩니다.</div>
 <div class="btns">
-  <button id="analysisBtn" class="pri" onclick="render()" disabled>🔒 분석지 산출 잠금</button>
-  <button id="analysisPrintBtn" class="sec" onclick="window.print()" disabled>인쇄 / PDF 저장</button>
-  <button id="copyBtn" class="sec" onclick="copyCmt()" disabled>멘트만 복사</button>
-  <button id="sendBtn" class="sec" style="background:#fee500;color:#3b1e1e;border-color:#f5d800" onclick="sendTeacher()" disabled>📩 카톡으로 멘트 보내기</button>
-  <button id="publishBtn" class="sec" style="background:#fff7ed;color:#9a3412;border-color:#fed7aa" onclick="publish()" disabled>🔒 학생 성적 공개 잠금</button>
+  <button id="analysisBtn" class="pri" onclick="render()">분석지 만들기</button>
+  <button id="analysisPrintBtn" class="sec" onclick="window.print()">인쇄 / PDF 저장</button>
+  <button id="copyBtn" class="sec" onclick="copyCmt()">멘트만 복사</button>
+  <button id="sendBtn" class="sec" style="background:#fee500;color:#3b1e1e;border-color:#f5d800" onclick="sendTeacher()">📩 카톡으로 멘트 보내기</button>
+  <button id="publishBtn" class="sec" style="background:#dcfce7;color:#166534;border-color:#bbf7d0" onclick="publish()">✅ 학생에게 성적 공개</button>
   <button class="sec" onclick="reset()">초기화</button>
 </div>
 </div>
 
 <div id="sheet"></div>
 
+<script src="mock-data-final.js"></script>
 <script>
 /* ===== 최종 1회 데이터 ===== */
 const TITLE='초등선발 대비 최종 모의고사 1회';
-const AVG=28.1;
+const AVG=32.4;
 const TYPES=['특정 숫자가 들어있는 수의 개수','요일','순환소수의 자릿수','가우스 덧셈의 활용','고장난 시계의 시간 차','종이 접기','표에서의 특정 칸을 포함하는 사각형의 개수','원에서 마주보고 있는 수 구하기','합이 일정한 수','두 수의 합을 보고 원래의 수 구하기','도형이 나타내는 수','도형을 이용한 계차수열의 활용','자리 수하기','곱과 합이 일정한 수 구하기','연속으로 이웃하는 칸의 합이 같은 수 구하기','바둑돌 채우기(그림그려 해결하기)','간격의 활용','깃발의 가짓수','서랍원리','주사위 움직이기','상자에 구슬을 서로 다르게 담기','그림그려 해결하기','반복마디의 활용','조건에 맞는 수의 활용','이진법','재치있게 계산하기(덧셈)','논리추리(이중조건)','줄 세우기(활용)','두 종류의 수로 만든 수의 가짓수','복면산'];
 const AREA=['수,규칙찾기','식의 계산','수,규칙찾기','수,규칙찾기','식의 계산','도형','도형','수,규칙찾기','수,규칙찾기','식의 계산','수,규칙찾기','수,규칙찾기','수,규칙찾기','수,규칙찾기','수,규칙찾기','식의 계산','식의 계산','경우의 수','경우의 수','도형','경우의 수','식의 계산','수,규칙찾기','수,규칙찾기','수,규칙찾기','식의 계산','경우의 수','경우의 수','수,규칙찾기','식의 계산'];
-const RATE=[.326923077,.596153846,.913461538,.230769231,.240384615,.134615385,.384615385,.355769231,.288461538,.115384615,.711538462,.153846154,.076923077,.519230769,.442307692,.25,.432692308,.586538462,.413461538,.480769231,.375,.365384615,.423076923,null,.25,.134615385,null,.201923077,null,.067307692];
+const RATE=[.323809524,.6,.904761905,.228571429,.238095238,.133333333,.380952381,.352380952,.285714286,.114285714,.714285714,.152380952,.076190476,.514285714,.447619048,.247619048,.428571429,.580952381,.40952381,.485714286,.371428571,.361904762,.428571429,0,.257142857,.133333333,.39047619,.2,.095238095,.180952381];
 const PTS=[...Array(12).fill(2.7),...Array(10).fill(3.4),...Array(8).fill(4.2)];
 const AREAS=['수,규칙찾기','도형','경우의 수','식의 계산'];
 const VALIDATION_LOCK=Object.freeze({
-  active:true,
-  reasons:Object.freeze(['24번 정답률 재산출 대기','27번 조건·정답 확정 대기','29번 원문 예시 오류 교정 승인 대기'])
+  active:false,
+  reasons:Object.freeze([])
 });
-const ITEM_STATUS=Object.freeze({24:'재산출 대기',27:'판정 보류',29:'예시 오류'});
+const ITEM_STATUS=Object.freeze({});
 
 /* 점수 → 상위 백분율 → 예상 결과 */
-const TB=[[76.7,0.8,'경시 가능'],[69.8,1.7,'경시 가능'],[69.5,2.5,'경시 가능'],[67.8,3.3,'경시 가능'],[67.7,4.2,'경시 가능'],[66.3,5.0,'경시 가능'],[60.8,5.8,'경시 가능'],[60.2,6.7,'경시 가능'],[58,7.5,'경시 가능'],[57.9,8.3,'경시 가능'],[56.9,9.2,'경시 가능'],[56.1,10.0,'경시 가능'],[56,10.8,'경시 가능'],[55.7,11.7,'경시 가능'],[54.2,12.5,'경시 가능'],[52.7,13.3,'경시컷,심화안정권'],[52.6,15.0,'경시컷,심화안정권'],[52.5,15.8,'경시컷,심화안정권'],[51.1,16.7,'경시컷,심화안정권'],[49.9,17.5,'경시컷,심화안정권'],[49.1,18.3,'경시컷,심화안정권'],[48.4,20.0,'경시컷,심화안정권'],[47.7,20.8,'경시컷,심화안정권'],[46.5,21.7,'경시컷,심화안정권'],[45.8,22.5,'경시컷,심화안정권'],[43.9,24.2,'경시컷,심화안정권'],[42.4,25.0,'경시컷,심화안정권'],[40.9,25.8,'경시컷,심화안정권'],[40.4,26.7,'심화컷,실력안정권'],[40.1,27.5,'심화컷,실력안정권'],[38.9,28.3,'심화컷,실력안정권'],[38.2,29.2,'심화컷,실력안정권'],[36.3,30.0,'심화컷,실력안정권'],[35.5,30.8,'심화컷,실력안정권'],[35,32.5,'심화컷,실력안정권'],[34.7,33.3,'심화컷,실력가능'],[34.3,34.2,'심화컷,실력가능'],[34,35.0,'심화컷,실력가능'],[33.6,35.8,'심화컷,실력가능'],[32.5,37.5,'심화컷,실력가능'],[32.1,38.3,'실력컷,일품안정권'],[32,40.0,'실력컷,일품안정권'],[31.9,40.8,'실력컷,일품안정권'],[31.2,41.7,'실력컷,일품안정권'],[30.6,42.5,'실력컷,일품안정권'],[30.5,44.2,'실력컷,일품안정권'],[30.2,45.8,'실력컷,일품안정권'],[29.4,46.7,'실력컷,일품안정권'],[29.3,47.5,'실력컷,일품안정권'],[28.6,48.3,'실력컷,일품안정권'],[25.9,50.0,'실력컷,일품안정권'],[25.2,50.8,'실력컷,일품안정권'],[25.1,51.7,'실력컷,일품안정권'],[24.8,52.5,'실력컷,일품안정권'],[24.5,55.0,'실력컷,일품안정권'],[24.4,55.8,'실력컷,일품안정권'],[24,58.3,'실력컷,일품안정권'],[23.8,59.2,'실력컷,일품안정권'],[23.3,60.0,'실력컷,일품안정권'],[23.2,60.8,'실력컷,일품안정권'],[22.4,61.7,'일품컷'],[21.8,62.5,'일품컷'],[21.7,64.2,'일품컷'],[20.3,65.0,'일품컷'],[19.9,65.8,'일품컷'],[19.8,67.5,'일품컷'],[19.7,69.2,'일품컷'],[19.1,70.0,'일품컷'],[19,72.5,'일품컷'],[18.3,73.3,'일품컷'],[17.7,74.2,'일품컷'],[17.6,75.0,'일품컷'],[17.2,75.8,'일품컷'],[16.9,76.7,'노력요함'],[15.7,77.5,'노력요함'],[14.9,78.3,'노력요함'],[13,79.2,'노력요함'],[12.9,80.0,'노력요함'],[12.2,80.8,'노력요함'],[11.5,82.5,'노력요함'],[9.6,84.2,'노력요함'],[9.5,85.0,'노력요함'],[8.8,85.8,'노력요함'],[2.7,86.7,'노력요함'],[0,87.5,'노력요함']];
+const TB=[
+  [76.7,0.9],[69.8,1.8],[69.5,2.7],[67.8,3.6],[67.7,4.5],[66.3,5.5],
+  [60.8,6.4],[60.2,7.3],[58,8.2],[57.9,9.1],[56.9,10.0],[56.1,10.9],
+  [56,11.8],[55.7,12.7],[54.2,13.6],[52.7,14.5],[52.6,16.4],[52.5,17.3],
+  [51.1,18.2],[49.9,19.1],[49.1,20.0],[48.4,21.8],[47.7,22.7],[46.5,23.6],
+  [45.8,24.5],[43.9,26.4],[42.4,27.3],[40.9,28.2],[40.4,29.1],[40.1,30.0],
+  [38.9,30.9],[38.2,31.8],[36.3,32.7],[35.5,33.6],[35,35.5],[34.7,36.4],
+  [34.3,37.3],[34,38.2],[33.6,39.1],[32.5,40.9],[32.1,41.8],[32,43.6],
+  [31.9,44.5],[31.2,45.5],[30.6,46.4],[30.5,48.2],[30.2,50.0],
+  [29.4,50.9],[29.3,51.8],[28.6,52.7],[25.9,54.5],[25.2,55.5],
+  [25.1,56.4],[24.8,57.3],[24.5,60.0],[24.4,60.9],[24,63.6],
+  [23.8,64.5],[23.3,65.5],[23.2,66.4],[22.4,67.3],[21.8,68.2],
+  [21.7,70.0],[20.3,70.9],[19.9,71.8],[19.8,73.6],[19.7,75.5],
+  [19.1,76.4],[19,79.1],[18.3,80.0],[17.7,80.9],[17.6,81.8],
+  [17.2,82.7],[16.9,83.6],[15.7,84.5],[14.9,85.5],[13,86.4],
+  [12.9,87.3],[12.2,88.2],[11.5,90.0],[9.6,91.8],[9.5,92.7],
+  [8.8,93.6],[2.7,94.5],[0,95.5]
+];
 
 /* 누적 백분율 → 예상 레벨 (상한 기준) */
 /* 등급 컷 점수 (최종 1회) — 높은 순 */
 const CUTS=[['경시 가능',54.2],['경시컷,심화안정권',40.9],['심화컷,실력안정권',35.0],['심화컷,실력가능',32.5],['실력컷,일품안정권',23.2],['일품컷',17.2],['노력요함',0]];
-/* 누적 기준 코호트 (파이널 1회부터의 누적 백분율 기준 코호트) */
-const REF=[2.9,6.9,8.0,12.0,11.8,12.4,13.6,14.3,14.3,15.8,17.5,17.8,18.6,20.0,23.9,25.5,24.2,26.6,27.0,29.4,29.8,31.5,32.1,33.2,30.8,34.2,37.0,36.8,35.1,36.9,32.5,40.2,35.0,39.8,38.3,44.7,46.0,47.9,48.6,45.8,46.7,50.0,50.4,50.7,51.2,48.3,51.7,40.8,40.8,53.5,52.1,54.6,55.2,52.5,56.5,59.0,57.5,55.8,59.2,62.3,65.6,63.8,66.4,67.0,69.2,67.1,70.8,71.3,67.5,74.5,72.5,75.0,74.7,70.0,70.0,75.0,76.7,75.6,78.9,78.7,75.8,76.7,82.0,83.6,83.9,82.2,84.0,87.7,91.7,84.2,90.4,100.0];
-const CUM=[[19.0,'경시 가능'],[33.2,'경시컷,심화안정권'],[44.7,'심화컷,실력안정권'],[51.7,'실력컷,일품안정권'],[59.0,'일품 가능'],[75.0,'일품컷'],[101,'노력요함']];
+/* 파이널 최초 응시부터 최종 1회까지, 각 회차 석차 백분율의 평균 기준.
+   개인 조정으로 보이는 교차값은 등급 경계에서 제외하고 다수 구간의 경계를 사용한다. */
+const CUM=[[19.1,'경시 가능'],[36.1,'경시컷,심화안정권'],[46.2,'심화컷,실력안정권'],[53.3,'실력컷,일품안정권'],[60.0,'일품 가능'],[76.4,'일품컷'],[101,'노력요함']];
 
 const R1=n=>Math.round(n*10)/10;
 let X={};
@@ -152,7 +174,7 @@ for(let i=1;i<=30;i++){
   const d=document.createElement('div'); d.className='q'; d.dataset.i=i;
   const itemStatus=ITEM_STATUS[i];
   if(itemStatus) d.classList.add('pending');
-  d.innerHTML=`<span class="n">${i}</span><span class="r">${itemStatus||Math.round(RATE[i-1]*100)+'%'}</span>`;
+  d.innerHTML=`<span class="n">${i}</span><span class="r">${itemStatus||(RATE[i-1]*100).toFixed(1)+'%'}</span>`;
   d.onclick=()=>{ X[i]=!X[i]; d.classList.toggle('x',X[i]); };
   grid.appendChild(d);
 }
@@ -162,7 +184,7 @@ for(let i=1;i<=30;i++){
    (round 가 숫자 형식이 아니라 중급/활용 관리 화면에는 잡히지 않는다) */
 async function publish(){
   if(VALIDATION_LOCK.active){
-    alert('학생 성적 공개가 잠겨 있습니다.\n\n- '+VALIDATION_LOCK.reasons.join('\n- ')+'\n\n분석 미리보기와 인쇄는 계속 사용할 수 있습니다.');
+    alert('학생 성적 공개가 잠겨 있습니다.\n\n- '+VALIDATION_LOCK.reasons.join('\n- ')+'\n\n오답 문항 입력만 미리 준비할 수 있습니다.');
     return;
   }
   const nm=document.getElementById('nm').value.trim();
@@ -184,7 +206,8 @@ async function publish(){
   }
 }
 function reset(){ X={}; document.querySelectorAll('.q').forEach(d=>d.classList.remove('x')); document.getElementById('sheet').innerHTML=''; }
-function lookup(s){ for(const r of TB) if(s>=r[0]) return [r[1],r[2]]; return [87.5,'노력요함']; }
+function gradeForScore(s){ for(const c of CUTS) if(s>=c[1]) return c[0]; return '노력요함'; }
+function lookup(s){ for(const r of TB) if(s>=r[0]) return [r[1],gradeForScore(s)]; return [95.5,'노력요함']; }
 function cumLevel(p){ for(const c of CUM) if(p<=c[0]) return c[1]; return '노력요함'; }
 function esc(s){return String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
 
@@ -213,7 +236,7 @@ function render(){
     const x=!!X[i], r=RATE[i-1], itemStatus=ITEM_STATUS[i];
     qrows+=`<tr class="${i%2?'odd':''}"><td class="no">${i}</td>`+
       `<td class="ox ${x?'x':''}">${x?'X':'O'}</td>`+
-      `<td class="rate">${itemStatus?`<span class="rb"><b>${itemStatus}</b></span>`:`<span class="rb"><i style="width:${Math.max(2,r*88)}px"></i><b>${Math.round(r*100)}%</b></span>`}</td>`+
+      `<td class="rate">${itemStatus?`<span class="rb"><b>${itemStatus}</b></span>`:`<span class="rb"><i style="width:${Math.max(2,r*88)}px"></i><b>${(r*100).toFixed(1)}%</b></span>`}</td>`+
       `<td class="cat">${AREA[i-1]}</td><td class="typ">${TYPES[i-1]}</td><td class="pt">${PTS[i-1]}</td></tr>`;
   }
 
@@ -251,12 +274,11 @@ function render(){
     if(acc>=need) path={grade:target[0], cut:target[1], need, pick, acc};
   }
 
-  /* 누적: 파이널 1~4회 입력 + 이번 회차 */
-  const fps=[1,2,3,4].map(k=>parseFloat(document.getElementById('f'+k).value)).filter(v=>!isNaN(v)&&v>0);
+  /* 누적: 파이널 1~4회 최초 응시 백분율 + 이번 최종 1회 백분율 */
+  const fps=[1,2,3,4].map(k=>parseFloat(document.getElementById('f'+k).value)).filter(v=>Number.isFinite(v)&&v>=0&&v<=100);
   const allP=[...fps, pct];
   const cumAvg=R1(allP.reduce((s,v)=>s+v,0)/allP.length);
   const cumLv=cumLevel(cumAvg);
-  const cumRank=REF.filter(v=>v<cumAvg).length+1;
 
   /* 멘트 */
   const wt=wrong.length?`[${wrong.map(n=>n+'번').join(', ')}]`:'없습니다';
@@ -268,7 +290,7 @@ function render(){
   if(miss.length) c+=`특히 아이의 실력으로 충분히 맞출 수 있는 문항은 ${kt} 입니다. 반드시 풀이 과정과 해설 영상을 복습해 보세요.\n`;
   if(miss.length) c+=`이 문항들만 잡았다면 ${newScore.toFixed(1)}점, 석차 ${newPct.toFixed(1)}%까지 올라갑니다.\n`;
   if(path) c+=`다음 목표인 [${path.grade}]까지는 ${path.need.toFixed(1)}점이 부족합니다. 정답률이 높은 ${path.pick.map(n=>n+'번').join(', ')}만 잡으면 컷(${path.cut}점)을 넘습니다.\n`;
-  if(fps.length) c+=`파이널 ${fps.length}회와 이번 회차를 합한 누적 석차 백분율 평균은 ${cumAvg.toFixed(2)}%로, 누적 데이터 기준 [${cumLv}] 수준입니다.\n`;
+  if(fps.length) c+=`파이널 최초 응시 ${fps.length}회와 이번 최종 1회를 합한 누적 석차 백분율 평균은 ${cumAvg.toFixed(1)}%로, 누적 데이터 기준 [${cumLv}] 수준입니다.\n`;
   c+=`풀이 강의와 반복 학습을 통해 문제의 유형과 해설을 정확히 익히는 것이 중요합니다. 황소 경시 실전에도 큰 도움이 됩니다.\n`;
   c+=`최종 1회 모의고사는 기존에 배웠던 내용과 선행없이 풀 수 있는 영재성검사 유형들을 추가하면서 실제 시험의 난이도와 유사하다고 할 수 있습니다. 경우에 따라 더 어렵게 느껴지는 아이들도 있고 오히려 쉽다고 생각하는 친구들이 있지만 항상 평균은 똑같아요^^ 오히려 쉽게 느껴지만 다 맞은 것 같은데 실수가 많더라구요. 정말 초등팩토와 pre 1031에 배웠던 내용도 많았는데 읽기가 잘못되어 있는 경우가 많았습니다. 오늘 시험 성적이 지난 번보다 높았던 친구들은 아마 유형에 대한 이해도와 지문의 중간까지의 해석능력이 좋았던 학생입니다. 결국 지난 시험까지 마무리 조건이 부족했다고도 할수 있습니다."`;
   LAST_CMT=c;
@@ -319,9 +341,9 @@ ${trow('수행률', g=>g.perf.toFixed(1)+'%', score.toFixed(1)+'%')}
 <h2 class="sec-t">누적 성적 결과</h2>
 <table class="cum">
 <tr><th style="width:96px"></th><th>파이널1회</th><th>파이널2회</th><th>파이널3회</th><th>파이널4회</th><th>최종1회</th><th>최종2회</th><th>최종3회</th><th>최종4회</th><th style="width:170px">누적</th></tr>
-<tr><td class="k">석차</td>${[1,2,3,4].map(k=>{const v=parseFloat(document.getElementById('f'+k).value);return `<td class="${isNaN(v)?'':'on'}">${isNaN(v)?'':v.toFixed(1)+'%'}</td>`;}).join('')}<td class="on">${pct.toFixed(1)}%</td><td></td><td></td><td></td><td class="tot" rowspan="2">${cumAvg.toFixed(2)}%</td></tr>
-<tr><td class="k">예상 레벨</td><td colspan="4" style="color:#aaa;font-size:11px">파이널 기록</td><td class="on">${grade}</td><td></td><td></td><td></td></tr>
-<tr><td class="k">누적 판정</td><td colspan="8" style="text-align:right;color:#8a94a6;font-size:11px">석차 백분율 평균 · 파이널 1회부터 누적 ${allP.length}회 기준</td><td class="tot lv">${cumLv}</td></tr>
+<tr><td class="k">석차</td>${[1,2,3,4].map(k=>{const v=parseFloat(document.getElementById('f'+k).value);return `<td class="${isNaN(v)?'':'on'}">${isNaN(v)?'':v.toFixed(1)+'%'}</td>`;}).join('')}<td class="on">${pct.toFixed(1)}%</td><td></td><td></td><td></td><td class="tot" rowspan="2">${cumAvg.toFixed(1)}%</td></tr>
+<tr><td class="k">예상 레벨</td><td colspan="4" style="color:#aaa;font-size:11px">파이널 최초 응시 기록</td><td class="on">${grade}</td><td></td><td></td><td></td></tr>
+<tr><td class="k">누적 판정</td><td colspan="8" style="text-align:right;color:#8a94a6;font-size:11px">각 회차 최초 성적의 석차 백분율 평균 · 파이널 1회부터 누적 ${allP.length}회 기준</td><td class="tot lv">${cumLv}</td></tr>
 </table>
 
 <div class="btm">
@@ -371,9 +393,52 @@ function sendTeacher(){
   alert(nm+' 결과가 복사되었습니다.\n카카오톡 채팅방이 열리면 붙여넣기(길게 누르기 → 붙여넣기)해서 보내주세요.');
   window.open('https://open.kakao.com/me/gfield','_blank');
 }
-/* 어드민에서 학생을 지정해 열면 이름을 자동으로 채운다 */
-(function(){
+function finalRoundPercentile(roundNo, score){
+  const model=window.GFIELD_MOCK_FINAL;
+  const stats=model&&model.rounds&&model.rounds[String(roundNo)]&&model.rounds[String(roundNo)].stats;
+  if(!stats||!Array.isArray(stats.dist)||!Number.isFinite(stats.n)||stats.n<=0||!Number.isFinite(score)) return null;
+  const higher=stats.dist.filter(v=>v>score).length;
+  return R1((higher+1)/stats.n*100);
+}
+async function loadPriorFinalPercentiles(clearFirst){
+  const nm=document.getElementById('nm').value.trim();
+  const status=document.getElementById('priorStatus');
+  const inputs=[1,2,3,4].map(k=>document.getElementById('f'+k));
+  if(clearFirst) inputs.forEach(input=>{ input.value=''; delete input.dataset.auto; });
+  if(!nm){ status.textContent='학생 이름을 입력하면 중앙 기록의 파이널 최초 응시 성적을 연결합니다.'; return; }
+  status.textContent='파이널 최초 응시 기록을 불러오는 중입니다…';
+  try{
+    const url=AL_URL+'/rest/v1/mock_results?student=eq.'+encodeURIComponent(nm)+'&select=round,score,source,updated_at';
+    const response=await fetch(url,{headers:{apikey:AL_KEY,Authorization:'Bearer '+AL_KEY}});
+    if(!response.ok) throw new Error('HTTP '+response.status);
+    const rows=await response.json();
+    const firstByRound={};
+    rows.forEach(row=>{
+      const match=/^final([1-4])$/.exec(String(row.round||''));
+      if(match&&row.source!=='reset'&&Number.isFinite(Number(row.score))) firstByRound[match[1]]=row;
+    });
+    let connected=0;
+    [1,2,3,4].forEach(k=>{
+      const row=firstByRound[k];
+      const pct=row&&finalRoundPercentile(k,Number(row.score));
+      if(pct==null) return;
+      inputs[k-1].value=pct.toFixed(1);
+      inputs[k-1].dataset.auto='1';
+      connected++;
+    });
+    status.textContent=connected
+      ?'중앙 기록에서 파이널 최초 응시 '+connected+'회를 연결했습니다. 연습 재응시 기록은 누적에서 제외합니다.'
+      :'연결할 파이널 최초 응시 기록이 없습니다. 있는 회차의 백분율만 직접 입력해 주세요.';
+  }catch(error){
+    status.textContent='이전 성적을 자동으로 불러오지 못했습니다. 있는 회차의 백분율을 직접 입력해 주세요.';
+  }
+}
+/* 어드민에서 학생을 지정해 열면 이름과 중앙의 최초 응시 기록을 자동으로 채운다. */
+(async function(){
   const n=(new URLSearchParams(location.search).get('name')||'').trim();
-  if(n) document.getElementById('nm').value=n;
+  if(n){
+    document.getElementById('nm').value=n;
+    await loadPriorFinalPercentiles(true);
+  }
 })();
 </script></body></html>

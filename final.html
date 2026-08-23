@@ -369,17 +369,12 @@ td.weak-cell{white-space:nowrap}
     var nearDn = (score-dn[1])<=3;
     return {grade:dn[0], dn:dn, up:up, near:(nearUp||nearDn)};
   }
-  /* 누적 성적: 석차 백분율 평균 -> 등급(band)과, 기준 코호트(refValues) 내 등수를 구합니다.
-     낮을수록 상위이므로 등수 = (나보다 값이 작은 인원 수) + 1. */
+  /* 누적 성적: 최초 응시 회차별 석차 백분율 평균 -> 등급(band).
+     학생 화면에는 참여 인원과 절대 등수를 표시하지 않습니다. */
   function cumulativeGrade(avgPct, bands){
     var bb = (bands||[]).slice().sort(function(a,b){return a[1]-b[1];});
     if(!bb.length) return null;
     return bb.filter(function(b){return avgPct<=b[1];})[0] || bb[bb.length-1];
-  }
-  function cumulativeRank(avgPct, refValues){
-    if(!refValues || !refValues.length) return null;
-    var rank = refValues.filter(function(v){return v<avgPct;}).length + 1;
-    return {rank:rank, n:refValues.length};
   }
   /* 비교 기준(코호트) 안내: 석차/등급을 보여줄 때마다 함께 붙는 보조 설명입니다.
      온라인 학생이면서 완료한 회차가 compare.onlineMinRounds 미만이면 강조(주황 박스)로,
@@ -727,7 +722,7 @@ td.weak-cell{white-space:nowrap}
   window.GF_TEST = { M:M, BP:BP, round1:round1, computeScore:computeScore, percentileOf:percentileOf,
     cutInfo:cutInfo, areaAgg:areaAgg, ptsAgg:ptsAgg, missItems:missItems, causeGroups:causeGroups,
     buildContext:buildContext, radarSVG:radarSVG,
-    cumulativeGrade:cumulativeGrade, cumulativeRank:cumulativeRank,
+    cumulativeGrade:cumulativeGrade,
     isOnlineStudent:isOnlineStudent, buildCompareNote:buildCompareNote, compareNoteHTML:compareNoteHTML,
     deriveAttemptNo:deriveAttemptNo, computeCumulativeConsidered:computeCumulativeConsidered,
     attemptClassify:attemptClassify, attemptSectionHTML:attemptSectionHTML,
@@ -1253,7 +1248,6 @@ td.weak-cell{white-space:nowrap}
       } else {
         var avgPct = round1(considered.reduce(function(s,c){return s+c.pct;},0)/considered.length);
         var band = cumulativeGrade(avgPct, M.cumulative.bands) || ['-', 0];
-        var rankInfo = cumulativeRank(avgPct, M.cumulative.refValues);
         var trend = considered.map(function(c){ return '<tr><td>파이널 '+c.n+'회</td><td class="c">'+c.pct+'%</td></tr>'; }).join('');
         var repMap = {};
         considered.forEach(function(c){
@@ -1267,15 +1261,8 @@ td.weak-cell{white-space:nowrap}
           ? repEntries.map(function(e){ return '<div class="repwk"><b>'+esc(e.type)+'</b> — '+repeatLabel(e.rounds)+'</div>'; }).join('')
           : '<div class="repwk">회차를 건너 반복해서 틀린 유형은 아직 없습니다.</div>';
         var cumLabel = esc(M.cumulative.label || M.cumulative.method || '석차 백분율 평균');
-        var rankBadge = rankInfo ? (' · <b>'+rankInfo.n+'명 중 '+rankInfo.rank+'등</b>') : '';
-        var thruMm = /^final(\d+)$/.exec(M.cumulative.through||'');
-        var thruLabel = thruMm ? ('파이널 '+thruMm[1]+'회') : esc(M.cumulative.through||'');
-        var rankNoteHTML = rankInfo
-          ? '<div class="lead" style="margin-top:8px">이 등수는 '+thruLabel+'까지 <b>같은 회차를 응시한 학생 '+rankInfo.n+'명</b>을 기준으로 계산한 순위입니다. 학원 전체 순위가 아닙니다.</div>'
-          : '';
         cumHTML = '<table><tr><th>회차</th><th>석차 백분율</th></tr>'+trend+'</table>'+
-          '<div class="cause-sum" style="margin-top:14px">'+cumLabel+' <b>'+avgPct+'%</b>'+rankBadge+' → <b>'+esc(band[0])+'</b></div>'+
-          rankNoteHTML+
+          '<div class="cause-sum" style="margin-top:14px">'+cumLabel+' <b>'+avgPct+'%</b> → <b>'+esc(band[0])+'</b></div>'+
           cmpNoteHTML+
           '<h2 style="margin-top:22px;font-size:16px">회차를 건너 반복되는 약점 유형</h2>'+
           repHTML;

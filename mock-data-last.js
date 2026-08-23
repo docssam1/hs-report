@@ -127,9 +127,7 @@
     {
       no:27, pts:4.2,
       body:'갑, 을, 병 세 사람은 각자 직업을 두 가지씩 가지고 있는데, 이들의 직업은 가수, 이발사, 배우, 감독, 약사, 주방장으로 모두 다릅니다. 다음에 주어진 조건을 보고 갑, 을, 병 세 사람의 두 가지 직업을 각각 알아보시오.',
-      figure:'job-clues',
-      status:'review',
-      reviewReason:'원문 조건만으로 두 답이 성립합니다.'
+      figure:'job-clues'
     },
     {
       no:28, pts:4.2,
@@ -137,9 +135,7 @@
     },
     {
       no:29, pts:4.2,
-      body:'1부터 5까지의 숫자를 사용하여 4자리로 된 비밀번호를 만들려고 합니다. 4자리 비밀번호 중에서 8878과 같이 두 종류의 숫자로만 된 비밀번호는 모두 몇 가지인지 구하시오. (단, 각 자리에 쓰인 숫자는 여러 번 사용 가능합니다.)',
-      status:'review',
-      reviewReason:'원문의 예시 8878이 사용 숫자 1~5 조건과 모순됩니다.'
+      body:'1부터 5까지의 숫자를 사용하여 4자리로 된 비밀번호를 만들려고 합니다. 4자리 비밀번호 중에서 1211과 같이 두 종류의 숫자로만 된 비밀번호는 모두 몇 가지인지 구하시오. (단, 각 자리에 쓰인 숫자는 여러 번 사용 가능합니다.)'
     },
     {
       no:30, pts:4.2,
@@ -175,15 +171,10 @@
     },
     rounds:{
       '1':{
-        ready:false,
-        lockedQuestions:[27,29],
-        reviewNote:{
-          27:'원문 조건만으로 두 답이 성립합니다.',
-          29:'원문의 예시 8878이 사용 숫자 1~5 조건과 모순됩니다.'
-        },
+        ready:true,
         title:'초등과정 대비 최종 모의고사 1회',
         video:'https://youtu.be/T9LbJLG2BRQ',
-        sourceRevision:'2026-08-23-q24-correction-q27-q29-review',
+        sourceRevision:'2026-08-23-q24-correction-q27-q29-approved',
         paper:{
           questions:questions,
           pages:[

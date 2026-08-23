@@ -192,9 +192,10 @@
   }
 
   function jobClues(){
-    return '<div class="figure-html clue-box" role="img" aria-label="세 사람의 직업을 찾기 위한 여섯 조건"><ul>'+
+    return '<div class="figure-html clue-box" role="img" aria-label="세 사람의 직업을 찾기 위한 일곱 조건"><ul>'+
       '<li>약사는 가수에게 노래를 불러 달라고 부탁하였습니다.</li>'+
       '<li>감독과 이발사는 갑을 좋아합니다.</li>'+
+      '<li>감독과 이발사는 서로 다른 사람입니다.</li>'+
       '<li>가수는 배우와 친구입니다.</li>'+
       '<li>약사는 감독에게 약을 지어주었습니다.</li>'+
       '<li>을은 이발사의 이웃에 삽니다.</li>'+
