@@ -5,14 +5,23 @@
 
   function parseRoundKey(raw){
     raw=String(raw||'');
-    const set=raw.startsWith('hw')?'hw':'mid';
-    const body=set==='hw'?raw.slice(2):raw;
+    const set=raw.startsWith('final')?'final':(raw.startsWith('hw')?'hw':'mid');
+    const body=set==='final'?raw.slice(5):(set==='hw'?raw.slice(2):raw);
     const m=body.match(/^(\d+)(?:@([123]))?$/);
     return m?{set,round:String(+m[1]),slot:+(m[2]||1),raw}:null;
   }
-  function dataFor(set){return set==='hw'?(window.GFIELD_MOCK_HW||{}):(window.GFIELD_MOCK||{})}
+  function dataFor(set){
+    if(set==='final') return window.GFIELD_MOCK_FINAL||{};
+    return set==='hw'?(window.GFIELD_MOCK_HW||{}):(window.GFIELD_MOCK||{});
+  }
   function roundTitle(set,r){const M=dataFor(set);return((M.rounds||{})[r]||{}).title||r+'회'}
-  function rawKey(set,r,slot){return(set==='hw'?'hw':'')+r+(Number(slot)===1?'':'@'+slot)}
+  function rawKey(set,r,slot){return(set==='final'?'final':(set==='hw'?'hw':''))+r+(Number(slot)===1?'':'@'+slot)}
+  function teacherFinalUrl(r,student){return 'final.html?round='+r+'&go=answer&entry=teacher&name='+encodeURIComponent(student)}
+  function previewUrl(set,r,student){return 'mock.html?set='+set+'&round='+r+'&name='+encodeURIComponent(student)+'&preview=1'}
+  function sourceLabel(source){
+    return ({online:'온라인 회원',admin:'선생님',teacher:'선생님',parent:'학생·학부모',practice:'연습',
+      'practice-admin':'선생님 연습',reset:'초기화'})[source]||source||'-';
+  }
   function validRow(x){return !!(x&&x.source!=='reset'&&typeof x.ox==='string'&&x.ox.length===mkQ())}
   function rowsFor(student,set,r){
     return(MK_ROWS||[]).filter(validRow).map(x=>({x,p:parseRoundKey(x.round)})).filter(o=>o.p&&o.p.set===set&&o.x.student===student&&(!r||o.p.round===String(r))).sort((a,b)=>+a.p.round-+b.p.round||a.p.slot-b.p.slot);
@@ -40,16 +49,17 @@
     const rows=rowsFor(student,window.mkSet);
 
     /* 최종 모의고사 진단 분석지 — 어드민 전용 */
+    const lastLinks=[1,2,3,4].map(r=>`<a class="btn sm" style="background:#fff;color:#1e3c72;text-decoration:none;font-weight:800" target="_blank"
+      href="last1-analysis.html?round=${r}&mode=teacher${student?('&name='+encodeURIComponent(student)):''}">최종 ${r}회</a>`).join('');
     let last1=`<div style="border:1px solid #c7d7f0;border-radius:14px;padding:14px;margin:4px 0 12px;background:linear-gradient(135deg,#2a5298,#1e3c72);color:#fff">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <b style="font-size:14px">📊 최종 모의고사 진단 분석지</b>
         <span style="font-size:11.5px;opacity:.85">선생님 전용 · 학생 화면에는 성적만 공개됩니다</span>
-        <a class="btn sm" style="margin-left:auto;background:#fff;color:#1e3c72;text-decoration:none;font-weight:800" target="_blank"
-           href="last1-analysis.html${student?('?name='+encodeURIComponent(student)):''}">분석지 만들기 ›</a>
+        <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap">${lastLinks}</div>
       </div>
       <div style="margin-top:8px;font-size:11.5px;opacity:.9;line-height:1.6">
-        틀린 번호를 입력해 분석지를 만든 뒤 <b>[✅ 학생에게 성적 공개]</b>를 누르면,
-        학생이 로드맵 10월 1주차의 <b>[성적 확인]</b>에서 점수·백분율·예상 결과를 볼 수 있습니다.
+        재원생은 선생님이 틀린 번호를 입력해 최초 성적을 기록합니다. 온라인 회원은 학생 화면에서 직접 입력하며,
+        두 경로 모두 같은 최초 성적 누적 기준을 사용합니다.
       </div>
     </div>`;
 
@@ -58,6 +68,7 @@
         <b style="font-size:14px">🧾 응시 차수 관리</b>
         <button class="btn sm ${window.mkSet==='mid'?'add':''}" onclick="setMockSetV2('mid')">중급 모의고사</button>
         <button class="btn sm ${window.mkSet==='hw'?'ai':''}" onclick="setMockSetV2('hw')">활용 모의고사</button>
+        <button class="btn sm ${window.mkSet==='final'?'add':''}" onclick="setMockSetV2('final')">파이널 모의고사</button>
         <span style="margin-left:auto;font-size:11.5px;color:#6b7280">2차만 초기화하면 1·3차는 그대로 유지됩니다.</span>
       </div>
       <div style="overflow-x:auto;margin-top:10px"><table style="min-width:760px"><thead><tr><th>회차</th><th>차수</th><th>점수</th><th>오답</th><th>저장 주체</th><th>저장 시각</th><th>관리</th></tr></thead><tbody>`;
@@ -66,15 +77,21 @@
     mkRoundKeys().forEach(r=>{
       const list=grouped[r]||[];
       if(!list.length){
-        panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td colspan="5" style="color:#a0a8b3">기록 없음</td><td><a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="mock.html?set=${window.mkSet}&round=${r}&name=${encodeURIComponent(student)}&preview=1">🔎 미리보기</a></td></tr>`;
+        const action=window.mkSet==='final'
+          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherFinalUrl(r,student)}">✍️ 교사 기록</a>`
+          :`<a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="${previewUrl(window.mkSet,r,student)}">🔎 미리보기</a>`;
+        panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td colspan="5" style="color:#a0a8b3">기록 없음</td><td>${action}</td></tr>`;
         return;
       }
       list.forEach((o,i)=>{
         const x=o.x,p=o.p,score=x.score!=null?x.score:(x.ox?mkScore(x.ox.split('')).score:'-'),wrong=x.wrong!=null?x.wrong:(x.ox?mkScore(x.ox.split('')).wrong:'-');
         const at=x.updated_at?new Date(x.updated_at).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'-';
-        panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b></td><td>${wrong}</td><td>${esc(x.source||'-')}</td><td>${esc(at)}</td><td>
+        const openAction=window.mkSet==='final'
+          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherFinalUrl(r,student)}">✍️ 교사 기록</a>`
+          :`<a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="${previewUrl(window.mkSet,r,student)}">🔎 미리보기</a>`;
+        panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b></td><td>${wrong}</td><td>${esc(sourceLabel(x.source))}</td><td>${esc(at)}</td><td>
           <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">
-            <a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="mock.html?set=${window.mkSet}&round=${r}&name=${encodeURIComponent(student)}&preview=1">🔎 미리보기</a>
+            ${openAction}
             <button class="btn del sm" onclick="deleteMockAttemptV2('${esc(student)}','${window.mkSet}','${r}',${p.slot})">${p.slot}차 초기화</button>
             ${i===0?`<button class="btn sm" style="background:#fff3e0;color:#b45309" onclick="deleteMockRoundV2('${esc(student)}','${window.mkSet}','${r}')">회차 전체</button>`:''}
           </div></td></tr>`;
@@ -84,10 +101,10 @@
     body.insertAdjacentHTML('afterbegin',panel);
     body.insertAdjacentHTML('afterbegin',last1);
     const hint=document.querySelector('#tab-mock .hint');
-    if(hint)hint.textContent='중급·활용 모의고사 결과를 분리해 확인합니다. 각 회차의 1·2·3차 기록을 개별 초기화하거나 저장되지 않는 관리자 미리보기로 들어갈 수 있습니다.';
+    if(hint)hint.textContent='중급·활용·파이널 모의고사 결과를 분리해 확인합니다. 파이널은 온라인 회원이 직접 입력하거나 선생님이 재원생 답안을 대신 기록할 수 있으며, 1차 기록만 누적에 반영됩니다.';
   };
 
-  window.setMockSetV2=function(set){window.mkSet=set==='hw'?'hw':'mid';renderMock()};
+  window.setMockSetV2=function(set){window.mkSet=set==='final'?'final':(set==='hw'?'hw':'mid');renderMock()};
 
   async function resetSlot(student,set,r,slot){
     const key=rawKey(set,r,slot);
@@ -156,7 +173,7 @@
     /* ── Phase 4 : 최종 실전 4주 (약점 유형 분석지 연동) ── */
     { date:/10\s*월\s*1\s*주차/, title:'최종 실전 모의고사 1회',
       desc:'파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공',
-      focus:'80분 시간 배분 전략 · 약점 유형 확인', track:'final' },
+      focus:'90분 시간 배분 전략 · 약점 유형 확인', track:'final' },
     { date:/10\s*월\s*2\s*주차/, title:'최종 실전 모의고사 2회',
       desc:'최종 1회 오답 리뷰 + 최종 2회 응시',
       focus:'목표 레벨 기준선 점검', track:'final' },

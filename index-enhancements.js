@@ -48,7 +48,7 @@
       focus:'파이널 마무리 · 누적 백분율 점검', track:'final' },
     { date:/10\s*월\s*1\s*주차/, title:'최종 실전 모의고사 1회',
       desc:'파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공',
-      focus:'80분 시간 배분 전략 · 약점 유형 확인', track:'final' },
+      focus:'90분 시간 배분 전략 · 약점 유형 확인', track:'final' },
     { date:/10\s*월\s*2\s*주차/, title:'최종 실전 모의고사 2회',
       desc:'최종 1회 오답 리뷰 + 최종 2회 응시',
       focus:'목표 레벨 기준선 점검', track:'final' },
@@ -97,6 +97,34 @@
   }
   moveBefore('div-mock',  /7\s*월\s*4\s*주차/);
   moveBefore('div-final', /9\s*월\s*1\s*주차/);
+})();
+
+/* ===== 10월 최종 1~4회 · JPG 시험지 + HTML 답지 흐름 =====
+   data.js는 관리자 저장 때 다시 만들어지므로, 학생 화면에서만 안전하게 링크를
+   보정한다. 시험지·타이머·답안 모두 final.html의 준비 상태 검사를 먼저 거친다. */
+(function(){
+  var data=window.GFIELD_DATA;
+  if(!data||!Array.isArray(data.books)) return;
+  var books=data.books.filter(function(b){
+    return b && b.folder==='최종 모의고사' && /최종\s*실전\s*모의고사\s*[1-4]\s*회/.test(String(b.title||''));
+  });
+  if(!books.length) return;
+  books.forEach(function(book){
+    var match=String(book.title||'').match(/([1-4])\s*회/);
+    if(!match) return;
+    var base='https://hs.gfieldacademy.net/final.html?set=last&round='+match[1];
+    book.pdf='';
+    book.links=[
+      {label:'시험지 보기·인쇄',url:base+'&go=paper'},
+      {label:'실전 타이머',url:base+'&go=timer'},
+      {label:'답안·해설',url:base+'&go=answer'}
+    ];
+  });
+  setTimeout(function(){
+    try{
+      if(typeof currentStudent!=='undefined'&&currentStudent&&typeof renderArchive==='function') renderArchive();
+    }catch(e){}
+  },60);
 })();
 
 (function(){
@@ -329,20 +357,27 @@
   },80);
 })();
 
-/* ===== 최종 모의고사 성적 확인 (학생용 · 읽기 전용) =====
-   약점 유형 분석지(last1-analysis.html)는 선생님 전용이라 학생 화면에 노출하지 않는다.
-   학생은 로드맵의 [성적 확인] 버튼으로 점수·백분율·예상 결과만 본다. */
+/* ===== 최종 모의고사 성적 입력·확인 =====
+   온라인 회원은 본인이 O/X를 입력하고, 재원생은 선생님이 어드민에서 기록한다.
+   성적 확인은 두 유형 모두 동일한 읽기 전용 결과 화면을 사용한다. */
 (function(){
   if(!window.GFIELD_DATA) return;
   var RESULT_URL='last1-result.html';
+  var ENTRY_URL='last1-entry.html';
 
   var st=document.createElement('style');
-  st.textContent='.last1-node-btn{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:8px 14px;border:0;border-radius:10px;background:linear-gradient(135deg,#315b9a,#183968);color:#fff;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:0 5px 12px rgba(30,60,114,.22)}.last1-node-btn:hover{transform:translateY(-1px)}';
+  st.textContent='.last1-node-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.last1-node-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border:0;border-radius:10px;background:linear-gradient(135deg,#315b9a,#183968);color:#fff;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:0 5px 12px rgba(30,60,114,.22)}.last1-node-btn.entry{background:linear-gradient(135deg,#16a34a,#15803d)}.last1-node-btn:hover{transform:translateY(-1px)}';
   document.head.appendChild(st);
 
-  function openResult(){
-    var nm=(typeof currentStudent!=='undefined'&&currentStudent)?currentStudent:'';
-    window.open(RESULT_URL+(nm?('?name='+encodeURIComponent(nm)):''),'_blank');
+  function studentName(){return (typeof currentStudent!=='undefined'&&currentStudent)?currentStudent:'';}
+  function onlineMember(){var nm=studentName();return !!(nm&&window.GFIELD_DATA.studentTypes&&window.GFIELD_DATA.studentTypes[nm]==='online');}
+  function openResult(round){
+    var nm=studentName();
+    window.open(RESULT_URL+'?round='+round+(nm?('&name='+encodeURIComponent(nm)):''),'_blank');
+  }
+  function openEntry(round){
+    var nm=studentName();
+    window.open(ENTRY_URL+'?round='+round+(nm?('&name='+encodeURIComponent(nm)):''),'_blank');
   }
 
   if(typeof renderTimeline==='function'){
@@ -353,13 +388,22 @@
         document.querySelectorAll('#timeline .node').forEach(function(el){
           var h=el.querySelector('h3'); if(!h) return;
           var t=h.textContent||'';
-          if(!(/최종/.test(t)&&/모의고사/.test(t)&&/1\s*회/.test(t))) return;
-          if(el.querySelector('.last1-node-btn')) return;
+          var match=t.match(/최종(?:\s*실전)?\s*모의고사\s*([1-4])\s*회/);
+          if(!match) return;
+          var round=Number(match[1]);
+          if(el.classList.contains('locked')) return;
+          if(el.querySelector('.last1-node-actions')) return;
+          var actions=document.createElement('div'); actions.className='last1-node-actions';
+          if(onlineMember()){
+            var e=document.createElement('button');
+            e.type='button'; e.className='last1-node-btn entry'; e.innerHTML='✍️ 성적 입력';
+            e.onclick=function(ev){ev.stopPropagation();openEntry(round);}; actions.appendChild(e);
+          }
           var b=document.createElement('button');
           b.type='button'; b.className='last1-node-btn';
           b.innerHTML='📊 성적 확인';
-          b.onclick=function(ev){ ev.stopPropagation(); openResult(); };
-          el.appendChild(b);
+          b.onclick=function(ev){ ev.stopPropagation(); openResult(round); };
+          actions.appendChild(b); el.appendChild(actions);
         });
       }catch(e){}
     };
