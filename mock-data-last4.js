@@ -100,9 +100,7 @@
     {
       no:19, pts:3.4,
       body:'다음 그림에서 ㉠~㉧은 1부터 8까지의 서로 다른 숫자입니다. 가로, 세로의 계산식이 모두 성립하도록 ㉠~㉧에 알맞은 숫자를 구하세요.',
-      figure:'last4-equation-grid',
-      status:'review',
-      reviewReason:'1부터 8까지를 한 번씩 쓰고 네 식을 모두 적용해 전수 열거해도 서로 다른 두 숫자 배치가 성립하므로 단일 정답으로 확정할 수 없습니다.'
+      figure:'last4-equation-grid'
     },
     {
       no:20, pts:3.4,
@@ -158,13 +156,21 @@
   ];
 
   var round4={
-    ready:false,
-    lockedQuestions:[19],
+    ready:true,
+    lockedQuestions:[],
     title:'초등과정 대비 최종 모의고사 4회',
-    sourceRevision:'2026-08-23-pdf-only-30q-q19-ambiguity-lock-90min',
+    sourceRevision:'2026-08-24-correction-sheet-q19-unique-90min',
     paper:{
       imageDir:'last_final_4',
       imagePages:6,
+      corrections:[
+        {
+          qno:19,
+          heading:'조건 추가',
+          instruction:'아래 조건을 추가하여 풉니다.',
+          text:'㉠은 ㉤보다 큽니다.'
+        }
+      ],
       questions:questions,
       pages:[
         {page:1,left:[1,2],right:[3,4],leftRows:'1.05fr .95fr',rightRows:'.82fr 1.18fr',band:'1번부터 12번까지는 [2.7점]짜리 문제입니다.'},

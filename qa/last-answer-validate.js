@@ -30,7 +30,7 @@ check('답안 데이터는 최종 2~4회 각각 30문항', () => {
 });
 
 check('검수 대기 문항은 정답 값을 저장하지 않음', () => {
-  const expected = { '2': [], '3': [8, 11], '4': [19] };
+  const expected = { '2': [], '3': [], '4': [] };
   for (const no of ['2', '3', '4']) {
     const pending = [];
     answerModel.rounds[no].forEach((item, index) => {
@@ -53,14 +53,14 @@ check('확정 교정값과 단일 답 표시가 보존됨', () => {
   assert.equal(answerModel.rounds['2'][18].answer, '7번째 줄 58번째');
   assert.equal(answerModel.rounds['2'][25].answer, '9문제');
   assert.equal(answerModel.rounds['3'][5].answer, '34가지');
-  assert.equal(answerModel.rounds['3'][7].answer, null);
-  assert.equal(answerModel.rounds['3'][10].answer, null);
+  assert.equal(answerModel.rounds['3'][7].answer, '오후 3시 20분');
+  assert.equal(answerModel.rounds['3'][10].answer, '546알');
   assert.equal(answerModel.rounds['3'][24].answer, '39,366개');
   assert.equal(answerModel.rounds['3'][9].answer, '목요일');
   assert.equal(answerModel.rounds['3'][25].answer, '0');
   assert.equal(answerModel.rounds['4'][1].answer, '539−468=71');
   assert.equal(answerModel.rounds['4'][9].answer, '진미가 2초 먼저');
-  assert.equal(answerModel.rounds['4'][18].answer, null);
+  assert.equal(answerModel.rounds['4'][18].answer, '㉠ 8 · ㉡ 7 · ㉢ 1 · ㉣ 5 · ㉤ 6 · ㉥ 3 · ㉦ 2 · ㉧ 4');
   assert.equal(answerModel.rounds['4'][26].answer, '120명');
 });
 
@@ -87,25 +87,33 @@ check('교정 문항과 복수해 문항을 독립 전수검산', () => {
   }
   assert.equal(tenthHarvest, 39366);
 
-  const clockDisplayGapMinutes = 120;
-  const relativeClockDriftPerHour = 1 + 2;
-  const elapsedHours = clockDisplayGapMinutes / relativeClockDriftPerHour;
-  assert.equal(elapsedHours, 40);
-  assert.ok(elapsedHours > 24, '다음날 아침 조건 안에서는 두 시계가 2시간 차이 날 수 없음');
+  const correctedClockHours = [];
+  for (let elapsed = 1; elapsed <= 72; elapsed += 1) {
+    if ((3 * elapsed - 120) % 720 === 0) correctedClockHours.push(elapsed);
+  }
+  assert.deepEqual(correctedClockHours, [40], '다다음 날 범위에서 가능한 경과 시간');
+  const elapsedHours = correctedClockHours[0];
+  const observationMinutes = 8 * 60 - elapsedHours;
+  const wrapDay = minutes => ((minutes % 1440) + 1440) % 1440;
+  const wrapClock = minutes => ((minutes % 720) + 720) % 720;
+  const startMinutes = wrapDay(observationMinutes - elapsedHours * 60);
+  assert.equal(observationMinutes, 7 * 60 + 20);
+  assert.equal(startMinutes, 15 * 60 + 20);
+  assert.equal(wrapClock(startMinutes + elapsedHours * 61), 8 * 60);
+  assert.equal(wrapClock(startMinutes + elapsedHours * 58), 6 * 60);
 
-  const supplementPairs = [1, 2].map(daysBeforeSharing => ({
-    sister: 4 * daysBeforeSharing + 2,
-    sibling: 3 * daysBeforeSharing + 138,
-  }));
-  assert.deepEqual(supplementPairs, [
-    { sister: 6, sibling: 141 },
-    { sister: 10, sibling: 144 },
+  const supplementSolutions = [];
+  for (let daysBeforeSharing = 1; daysBeforeSharing <= 1000; daysBeforeSharing += 1) {
+    const initial = 4 * daysBeforeSharing + 2;
+    const sisterRemaining = initial - 4 * daysBeforeSharing;
+    const siblingRemaining = initial - 3 * daysBeforeSharing;
+    if (sisterRemaining + siblingRemaining === 7 * 20) {
+      supplementSolutions.push({ daysBeforeSharing, initial, sisterRemaining, siblingRemaining });
+    }
+  }
+  assert.deepEqual(supplementSolutions, [
+    { daysBeforeSharing: 136, initial: 546, sisterRemaining: 2, siblingRemaining: 138 },
   ]);
-  supplementPairs.forEach(({ sister, sibling }, index) => {
-    const daysBeforeSharing = index + 1;
-    assert.equal(sister - 4 * daysBeforeSharing, 2);
-    assert.equal(2 + sibling - 3 * daysBeforeSharing, 7 * 20);
-  });
 
   const equationSolutions = [];
   const digits = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -134,6 +142,10 @@ check('교정 문항과 복수해 문항을 독립 전수검산', () => {
     [6, 5, 1, 7, 8, 4, 2, 3],
     [8, 7, 1, 5, 6, 3, 2, 4],
   ]);
+  assert.deepEqual(
+    equationSolutions.filter(([topLeft, , , , bottomRight]) => topLeft > bottomRight),
+    [[8, 7, 1, 5, 6, 3, 2, 4]],
+  );
 });
 
 check('답안 화면은 엄격한 회차와 90분 규격을 사용', () => {

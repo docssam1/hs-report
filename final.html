@@ -230,6 +230,22 @@ td.weak-cell{white-space:nowrap}
 .paper-toolbar button,.paper-toolbar a{border:0;border-radius:9px;padding:9px 13px;background:#334155;color:#fff;text-decoration:none;font:700 12px 'Noto Sans KR';cursor:pointer;white-space:nowrap}
 .paper-toolbar .paper-print{background:linear-gradient(135deg,#fb923c,#ea580c)}
 .paper-stack{display:flex;flex-direction:column;gap:22px;align-items:center}
+.paper-correction-page{position:relative;width:210mm;min-height:297mm;background:#fff;padding:18mm 17mm 15mm;box-shadow:0 7px 24px rgba(15,23,42,.22);overflow:hidden;color:#172033}
+.paper-correction-page .paper-watermark{top:53%;font-size:24px}
+.correction-head{position:relative;z-index:1;border-bottom:3px solid #1f3864;padding-bottom:10mm}
+.correction-eyebrow{font-size:10px;font-weight:900;letter-spacing:.12em;color:#c2410c;text-transform:uppercase}
+.correction-head h1{font-family:'Jua','Noto Sans KR';font-size:30px;font-weight:400;color:#1f3864;margin:5mm 0 2mm}
+.correction-head p{font-size:12px;line-height:1.75;color:#475569;word-break:keep-all}
+.correction-meta{display:flex;justify-content:space-between;gap:12px;margin-top:6mm;font-size:11px;font-weight:800;color:#334155}
+.correction-meta .paper-name{display:inline-block;min-width:72px;border-bottom:1px solid #64748b;text-align:center}
+.correction-list{position:relative;z-index:1;display:grid;gap:8mm;margin-top:11mm}
+.correction-item{border:2px solid #fdba74;border-radius:15px;background:#fffaf4;padding:7mm 8mm;break-inside:avoid}
+.correction-item-head{display:flex;align-items:center;gap:10px;margin-bottom:4mm}
+.correction-qno{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:31px;padding:0 12px;border-radius:999px;background:#ea580c;color:#fff;font:400 16px 'Jua','Noto Sans KR'}
+.correction-item h2{font-size:15px;color:#1f3864;margin:0}
+.correction-instruction{font-size:11px;font-weight:800;color:#9a3412;margin-bottom:3mm}
+.correction-text{font-size:12.5px;line-height:1.9;color:#111827;word-break:keep-all}
+.correction-foot{position:absolute;left:17mm;right:17mm;bottom:10mm;z-index:1;border-top:1px solid #cbd5e1;padding-top:4mm;display:flex;justify-content:space-between;gap:12px;font-size:9px;color:#64748b}
 .paper-image-page{position:relative;width:210mm;background:#fff;box-shadow:0 7px 24px rgba(15,23,42,.22);overflow:hidden;line-height:0;user-select:none}
 .paper-image-page>img{display:block;width:100%;height:auto;pointer-events:none}
 .paper-image-watermark{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:3}
@@ -283,6 +299,7 @@ td.weak-cell{white-space:nowrap}
 @media(max-width:760px){
   .paper-screen{padding:92px 8px 26px}.paper-toolbar{justify-content:center;overflow:visible;flex-wrap:wrap;padding:7px 6px;gap:5px}.paper-toolbar .paper-title{display:none}
   .paper-toolbar input{width:86px;padding:7px 8px}.paper-toolbar button,.paper-toolbar a{padding:7px 9px;font-size:10.5px}
+  .paper-correction-page{width:100%;min-height:0;padding:28px 20px 34px}.correction-head h1{font-size:26px}.correction-meta{flex-direction:column}.correction-list{gap:18px;margin-top:24px}.correction-item{padding:20px 18px}.correction-text{font-size:14px}.correction-foot{position:static;margin-top:26px}
   .paper-image-page{width:100%}.paper-image-watermark span{font-size:15px}
   .exam-paper-page{width:100%;min-height:0;padding:22px 17px 28px}.paper-columns{display:block;height:auto}.paper-full{display:block;height:auto;padding:0}
   .paper-column{display:block!important;padding:0}.paper-column+.paper-column{border-left:0;border-top:2px solid #cbd5e1;padding:14px 0 0;margin-top:10px}
@@ -292,6 +309,7 @@ td.weak-cell{white-space:nowrap}
 @page{size:A4 portrait;margin:0}
 @media print{
   body{background:#fff}.paper-screen{padding:0;background:#fff}.paper-toolbar,.print-btn{display:none!important}.paper-stack{display:block}
+  .paper-correction-page{width:210mm;height:297mm;min-height:297mm;margin:0;padding:18mm 17mm 15mm;box-shadow:none;break-after:page;page-break-after:always;overflow:hidden}.correction-foot{position:absolute;margin-top:0}
   .paper-image-page{width:210mm;height:297mm;margin:0;box-shadow:none;break-after:page;page-break-after:always;overflow:hidden}.paper-image-page>img{width:210mm;height:297mm;object-fit:fill}.paper-image-page:last-child{break-after:auto;page-break-after:auto}
   .exam-paper-page{width:210mm;height:297mm;min-height:297mm;margin:0;padding:11mm 10mm 9mm;box-shadow:none;break-after:page;page-break-after:always;overflow:hidden}
   .exam-paper-page:last-child{break-after:auto;page-break-after:auto}.paper-columns{display:grid;grid-template-columns:1fr 1fr;height:239mm}.paper-full{display:grid;height:239mm;padding:0 4mm}
@@ -1031,6 +1049,22 @@ td.weak-cell{white-space:nowrap}
       '<div class="paper-image-watermark"><span>'+stamp+'</span><span>'+stamp+'</span><span>'+stamp+'</span></div></section>';
   }
 
+  function paperCorrectionsHTML(R){
+    var corrections=R&&R.paper&&Array.isArray(R.paper.corrections)?R.paper.corrections:[];
+    if(!corrections.length) return '';
+    var student=state.name||'';
+    return '<section class="paper-correction-page" data-page="corrections">'+
+      '<div class="paper-watermark">G-FIELD · '+esc(student||'최종 모의고사')+'</div>'+
+      '<header class="correction-head"><div class="correction-eyebrow">IMPORTANT CORRECTION NOTICE</div><h1>문항 정정 안내</h1>'+
+      '<p>원본 시험지는 그대로 보존합니다. 아래 문항은 정정된 내용을 기준으로 풀어 주세요. 이 안내지는 화면과 A4 인쇄물의 첫 장에 함께 제공됩니다.</p>'+
+      '<div class="correction-meta"><span>'+esc(R.title||roundLabel(roundNum))+'</span><span>이름 <span class="paper-name">'+esc(student)+'</span></span></div></header>'+
+      '<div class="correction-list">'+corrections.map(function(item){return '<article class="correction-item" data-correction-qno="'+Number(item.qno)+'">'+
+        '<div class="correction-item-head"><span class="correction-qno">'+Number(item.qno)+'번</span><h2>'+esc(item.heading||'정정된 문항')+'</h2></div>'+
+        '<div class="correction-instruction">'+esc(item.instruction||'아래 문장으로 읽고 풉니다.')+'</div>'+
+        '<div class="correction-text">'+esc(item.text||'').replace(/\n/g,'<br>')+'</div></article>';}).join('')+'</div>'+
+      '<footer class="correction-foot"><span>지필드 영재교육 · 문항 검수본</span><span>시험 시간은 90분입니다.</span></footer></section>';
+  }
+
   function printPaperWhenReady(){
     var images=Array.prototype.slice.call(document.querySelectorAll('.paper-image-page img'));
     Promise.all(images.map(function(img){
@@ -1046,9 +1080,10 @@ td.weak-cell{white-space:nowrap}
     if(R.ready===false && !preview){ renderStart(); return; }
     var byNo={}; (R.paper.questions||[]).forEach(function(q){byNo[q.no]=q;});
     var imageCount=Number(R.paper.imagePages)||0;
-    var paperHTML=(R.paper.imageDir&&imageCount)
+    var correctionHTML=paperCorrectionsHTML(R);
+    var paperHTML=correctionHTML+((R.paper.imageDir&&imageCount)
       ? Array.from({length:imageCount},function(_,i){return paperImagePageHTML(i+1,R);}).join('')
-      : R.paper.pages.map(function(p){return paperPageHTML(p,R,byNo);}).join('');
+      : R.paper.pages.map(function(p){return paperPageHTML(p,R,byNo);}).join(''));
     app.innerHTML='<div class="paper-screen"><div class="paper-toolbar no-print">'+
       '<span class="paper-title">'+esc(R.title||roundLabel(roundNum))+'</span><input id="paperNameInput" value="'+esc(state.name)+'" placeholder="이름" aria-label="학생 이름">'+
       '<button type="button" id="paperBack">← 시작 화면</button><button type="button" id="paperTimer">⏱ 타이머</button><button type="button" id="paperAnswer">✅ 답안·해설</button><button type="button" class="paper-print" id="paperPrint">🖨 A4 인쇄</button>'+
