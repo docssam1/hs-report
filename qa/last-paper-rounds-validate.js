@@ -66,6 +66,17 @@ function inspectRound(no) {
   });
   assert.equal(new Set(figureKeys).size, figureKeys.length, `round ${no} duplicate figure keys`);
 
+  const corrections = Array.from(round.paper.corrections || []);
+  corrections.forEach(item => {
+    assert.ok(Number.isInteger(item.qno) && item.qno >= 1 && item.qno <= 30, `round ${no} correction qno`);
+    assert.equal(typeof item.text, 'string', `round ${no} correction text`);
+    assert.ok(item.text.trim().length > 0, `round ${no} empty correction`);
+    for (const forbidden of ['answer', 'answers', 'solution', 'solutions', 'correct', 'correctAnswer']) {
+      assert.equal(Object.hasOwn(item, forbidden), false, `round ${no} correction ${item.qno} ${forbidden}`);
+    }
+  });
+  assert.equal(new Set(corrections.map(item => item.qno)).size, corrections.length, `round ${no} duplicate corrections`);
+
   figureKeys.forEach(key => {
     assert.equal(typeof figures[key], 'function', `round ${no} renderer ${key}`);
     const markup = figures[key]();
@@ -80,7 +91,7 @@ function inspectRound(no) {
 
   if (round.ready === true) assert.deepEqual(Array.from(round.lockedQuestions || []), [], `round ${no} ready with locks`);
   if ((round.lockedQuestions || []).length) assert.notEqual(round.ready, true, `round ${no} locked but ready`);
-  return { figureKeys };
+  return { figureKeys, corrections };
 }
 
 check('최종 시험지는 공통 90분 JPG 뷰어이며 PDF 뷰어를 사용하지 않음', () => {
@@ -95,6 +106,9 @@ check('최종 시험지는 공통 90분 JPG 뷰어이며 PDF 뷰어를 사용하
     .join('\n');
   assert.doesNotMatch(sources, /\.pdf(?:[?#'"\s]|$)|application\/pdf|pdfjs|pdf\.js/i);
   assert.match(finalPage, /paper-image-page/);
+  assert.match(finalPage, /paperCorrectionsHTML/);
+  assert.match(finalPage, /var paperHTML=correctionHTML\+\(\(R\.paper\.imageDir/);
+  assert.match(finalPage, /\.paper-correction-page\{width:210mm;height:297mm/);
 });
 
 check('최종 1회 시험지 구조', () => inspectRound('1'));
@@ -107,19 +121,24 @@ check('최종 2회 시험지 구조·그림 자산', () => {
   assert.equal(assets.length, 15);
 });
 
-check('최종 3회 PDF 대조 잠금·그림 자산', () => {
+check('최종 3회 정정 안내 공개·그림 자산', () => {
   const result = inspectRound('3');
-  assert.equal(model.rounds['3'].ready, false);
-  assert.deepEqual(Array.from(model.rounds['3'].lockedQuestions), [8, 11]);
+  assert.equal(model.rounds['3'].ready, true);
+  assert.deepEqual(Array.from(model.rounds['3'].lockedQuestions), []);
+  assert.deepEqual(result.corrections.map(item => item.qno), [8, 11]);
+  assert.match(result.corrections[0].text, /다다음 날 아침/);
+  assert.match(result.corrections[1].text, /영양제의 수는 같았습니다/);
   assert.equal(result.figureKeys.length, 9);
   const assets = fs.readdirSync(path.join(ROOT, 'mock-assets', 'last3')).filter(name => /\.png$/i.test(name));
   assert.equal(assets.length, 7);
 });
 
-check('최종 4회 PDF 대조 잠금·그림 자산', () => {
+check('최종 4회 정정 안내 공개·그림 자산', () => {
   const result = inspectRound('4');
-  assert.equal(model.rounds['4'].ready, false);
-  assert.deepEqual(Array.from(model.rounds['4'].lockedQuestions), [19]);
+  assert.equal(model.rounds['4'].ready, true);
+  assert.deepEqual(Array.from(model.rounds['4'].lockedQuestions), []);
+  assert.deepEqual(result.corrections.map(item => item.qno), [19]);
+  assert.equal(result.corrections[0].text, '㉠은 ㉤보다 큽니다.');
   assert.equal(result.figureKeys.length, 21);
   const assets = fs.readdirSync(path.join(ROOT, 'mock-assets', 'last4')).filter(name => /\.png$/i.test(name));
   assert.equal(assets.length, 21);
