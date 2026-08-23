@@ -1,2 +1,5 @@
 # Local browser, PDF and source-review scratch files must never be published.
 /tmp/
+
+# Private copyrighted-source drafts are kept local and must not be published.
+/.private-work/
