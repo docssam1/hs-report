@@ -353,20 +353,27 @@
   },80);
 })();
 
-/* ===== 최종 모의고사 성적 확인 (학생용 · 읽기 전용) =====
-   약점 유형 분석지(last1-analysis.html)는 선생님 전용이라 학생 화면에 노출하지 않는다.
-   학생은 로드맵의 [성적 확인] 버튼으로 점수·백분율·예상 결과만 본다. */
+/* ===== 최종 모의고사 성적 입력·확인 =====
+   온라인 회원은 본인이 O/X를 입력하고, 재원생은 선생님이 어드민에서 기록한다.
+   성적 확인은 두 유형 모두 동일한 읽기 전용 결과 화면을 사용한다. */
 (function(){
   if(!window.GFIELD_DATA) return;
   var RESULT_URL='last1-result.html';
+  var ENTRY_URL='last1-entry.html';
 
   var st=document.createElement('style');
-  st.textContent='.last1-node-btn{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:8px 14px;border:0;border-radius:10px;background:linear-gradient(135deg,#315b9a,#183968);color:#fff;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:0 5px 12px rgba(30,60,114,.22)}.last1-node-btn:hover{transform:translateY(-1px)}';
+  st.textContent='.last1-node-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.last1-node-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border:0;border-radius:10px;background:linear-gradient(135deg,#315b9a,#183968);color:#fff;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:0 5px 12px rgba(30,60,114,.22)}.last1-node-btn.entry{background:linear-gradient(135deg,#16a34a,#15803d)}.last1-node-btn:hover{transform:translateY(-1px)}';
   document.head.appendChild(st);
 
+  function studentName(){return (typeof currentStudent!=='undefined'&&currentStudent)?currentStudent:'';}
+  function onlineMember(){var nm=studentName();return !!(nm&&window.GFIELD_DATA.studentTypes&&window.GFIELD_DATA.studentTypes[nm]==='online');}
   function openResult(){
-    var nm=(typeof currentStudent!=='undefined'&&currentStudent)?currentStudent:'';
+    var nm=studentName();
     window.open(RESULT_URL+(nm?('?name='+encodeURIComponent(nm)):''),'_blank');
+  }
+  function openEntry(){
+    var nm=studentName();
+    window.open(ENTRY_URL+(nm?('?name='+encodeURIComponent(nm)):''),'_blank');
   }
 
   if(typeof renderTimeline==='function'){
@@ -378,12 +385,18 @@
           var h=el.querySelector('h3'); if(!h) return;
           var t=h.textContent||'';
           if(!(/최종/.test(t)&&/모의고사/.test(t)&&/1\s*회/.test(t))) return;
-          if(el.querySelector('.last1-node-btn')) return;
+          if(el.querySelector('.last1-node-actions')) return;
+          var actions=document.createElement('div'); actions.className='last1-node-actions';
+          if(onlineMember()){
+            var e=document.createElement('button');
+            e.type='button'; e.className='last1-node-btn entry'; e.innerHTML='✍️ 성적 입력';
+            e.onclick=function(ev){ev.stopPropagation();openEntry();}; actions.appendChild(e);
+          }
           var b=document.createElement('button');
           b.type='button'; b.className='last1-node-btn';
           b.innerHTML='📊 성적 확인';
           b.onclick=function(ev){ ev.stopPropagation(); openResult(); };
-          el.appendChild(b);
+          actions.appendChild(b); el.appendChild(actions);
         });
       }catch(e){}
     };

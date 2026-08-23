@@ -17,6 +17,7 @@ button{border:none;border-radius:11px;padding:12px 20px;font-size:14px;font-weig
   background:linear-gradient(135deg,#2a5298,#1e3c72);color:#fff;width:100%;margin-top:10px}
 .who{font-size:13px;color:#5b6474;margin-bottom:14px}
 .who b{color:#1f3864;font-size:15px}
+.origin{margin:-7px 0 12px;color:#7b8798;font-size:10.8px;text-align:center}
 .big{text-align:center;padding:18px 0 6px}
 .big .n{font-size:52px;font-weight:800;color:#1f3864;line-height:1}
 .big .u{font-size:15px;font-weight:800;color:#8a94a6;margin-left:3px}
@@ -54,7 +55,7 @@ button{border:none;border-radius:11px;padding:12px 20px;font-size:14px;font-weig
     <div id="loading" class="none"><span class="e">⏳</span>성적을 불러오는 중이에요…</div>
     <div id="res" class="hide"></div>
   </div>
-  <div class="ft">© 지필드 영재교육 · 성적은 선생님이 채점한 결과입니다.</div>
+  <div class="ft">© 지필드 영재교육 · 회차별 최초 성적을 기준으로 표시합니다.</div>
 </div></div>
 <script src="mock-data-final.js"></script>
 <script>
@@ -123,6 +124,11 @@ function qs(k){ return new URLSearchParams(location.search).get(k)||''; }
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function show(id){document.getElementById(id).classList.remove('hide')}
 function hide(id){document.getElementById(id).classList.add('hide')}
+function sourceLabel(source){
+  if(source==='online') return '온라인 회원이 직접 입력한 최초 성적';
+  if(source==='admin'||source==='teacher') return '선생님이 기록한 최초 성적';
+  return '학생·학부모가 입력한 최초 성적';
+}
 
 async function load(){
   const nm=(document.getElementById('nm').value||qs('name')).trim();
@@ -164,6 +170,7 @@ function render(nm,row,rows){
   const ok=(row.ox&&row.ox.length)?(row.ox.split('').filter(c=>c==='O'||c==='1').length):null;
   box.innerHTML=
     '<div class="who">'+esc(nm)+' 학생 · <b>최종 모의고사 1회</b></div>'+
+    '<div class="origin">'+esc(sourceLabel(row.source))+'</div>'+
     '<div class="big"><span class="n">'+round1(sc)+'</span><span class="u">점</span>'+
       '<div class="t">100점 만점</div></div>'+
     '<div class="rowz">'+

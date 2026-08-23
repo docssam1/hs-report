@@ -16,6 +16,8 @@ const ANSWER_FILE = path.join(ROOT, 'last1-answer.html');
 const GENERIC_ANSWER_FILE = path.join(ROOT, 'last-answer.html');
 const ANALYSIS_FILE = path.join(ROOT, 'last1-analysis.html');
 const RESULT_FILE = path.join(ROOT, 'last1-result.html');
+const ENTRY_FILE = path.join(ROOT, 'last1-entry.html');
+const ADMIN_FILE = path.join(ROOT, 'admin.html');
 
 const sandbox = { window: {} };
 vm.createContext(sandbox);
@@ -36,6 +38,8 @@ const answerSource = fs.readFileSync(ANSWER_FILE, 'utf8');
 const genericAnswerSource = fs.readFileSync(GENERIC_ANSWER_FILE, 'utf8');
 const analysisSource = fs.readFileSync(ANALYSIS_FILE, 'utf8');
 const resultSource = fs.readFileSync(RESULT_FILE, 'utf8');
+const entrySource = fs.readFileSync(ENTRY_FILE, 'utf8');
+const adminSource = fs.readFileSync(ADMIN_FILE, 'utf8');
 const M = sandbox.window.GFIELD_MOCK_LAST;
 const FIGURES = sandbox.window.GFIELD_LAST_FIGURES;
 
@@ -429,7 +433,7 @@ check('최종 HTML/SVG 시험지·인쇄·준비상태 라우팅', () => {
   assert.match(finalSource, /M\.mode==='paper-only'/);
   assert.match(finalSource, /roundNum===1\?'last1-answer\.html'/);
   assert.match(finalSource, /if\(preview\) query\.push\('preview=1'\)/);
-  assert.match(finalSource, /async function supaUpsert\([^)]*\)\{\s*if\(isLast\) return false;/);
+  assert.match(finalSource, /async function supaUpsert\([^)]*\)\{\s*if\(isLast\) return \{ok:false, conflict:false\};/);
   assert.match(finalSource, /async function supaWeakUpsert\([^)]*\)\{\s*if\(isLast\) return false;/);
   assert.match(finalSource, /async function supaWeakDelete\([^)]*\)\{\s*if\(isLast\) return false;/);
   assert.match(finalSource, /@page\{size:A4 portrait;margin:0\}/);
@@ -443,6 +447,54 @@ check('학생 홈페이지의 최종 1회 링크가 시험지·타이머·답안
   assert.match(indexEnhancementsSource, /book\.pdf=''/);
   assert.match(generatedDataSource, /final\.html\?set=last&round=1&go=answer/);
   assert.doesNotMatch(generatedDataSource, /hs\.gfieldacademy\.net\/last1-answer\.html/);
+});
+
+check('온라인 회원 직접 입력과 재원생 교사 기록 경로 분리', () => {
+  assert.match(indexEnhancementsSource, /var ENTRY_URL='last1-entry\.html'/);
+  assert.match(indexEnhancementsSource, /studentTypes\[nm\]==='online'/);
+  assert.match(indexEnhancementsSource, /if\(onlineMember\(\)\)/);
+  assert.match(indexEnhancementsSource, /e\.innerHTML='✍️ 성적 입력'/);
+  assert.match(indexEnhancementsSource, /b\.innerHTML='📊 성적 확인'/);
+
+  assert.match(entrySource, /<script src="data\.js"><\/script>/);
+  assert.match(entrySource, /<script src="mock-data-last\.js"><\/script>/);
+  assert.match(entrySource, /D\.studentTypes\[name\]==='online'/);
+  assert.match(entrySource, /round:ROUND,ox:ox,score:t\.score,wrong:t\.wrong,source:'online'/);
+  assert.match(entrySource, /function isReset\(row\)\{return !!\(row&&row\.source==='reset'&&row\.ox==='RESET'\);\}/);
+  assert.match(entrySource, /var method='POST',prefer='return=minimal'/);
+  assert.match(entrySource, /method='PATCH'; prefer='return=representation'/);
+  assert.match(entrySource, /source=eq\.reset&ox=eq\.RESET&select=round/);
+  assert.match(entrySource, /if\(isActive\(existing\)\)\{ block\('🔒'/);
+  assert.match(entrySource, /response\.status===409/);
+  assert.doesNotMatch(entrySource, /source:'admin'|source:'teacher'/);
+
+  assert.match(analysisSource, /source:'admin'/);
+  assert.match(analysisSource, /async function loadOfficialLast1\(nm\)/);
+  assert.match(analysisSource, /if\(isActiveOfficial\(existing\)\)/);
+  assert.match(analysisSource, /function isResetOfficial\(row\)\{ return !!\(row&&row\.source==='reset'&&row\.ox==='RESET'\); \}/);
+  assert.match(analysisSource, /let method='POST', prefer='return=minimal'/);
+  assert.match(analysisSource, /method='PATCH'; prefer='return=representation'/);
+  assert.match(analysisSource, /source=eq\.reset&ox=eq\.RESET&select=round/);
+  assert.match(analysisSource, /r\.status===409/);
+  assert.equal((analysisSource.match(/id="f[1-4]"[^>]*readonly/g)||[]).length, 4);
+  assert.match(analysisSource, /어드민 → 모의고사 결과 → 파이널 모의고사에서 재원생 성적을 기록/);
+  assert.doesNotMatch(analysisSource, /Prefer:'resolution=merge-duplicates'\},\s*body:JSON\.stringify\(\{student:nm,round:'last1'/);
+
+  assert.match(finalSource, /var teacherEntry = params\.get\('entry'\)==='teacher'/);
+  assert.match(finalSource, /return isOnlineStudent\(name\) \? 'online' : 'parent'/);
+  assert.match(finalSource, /teacherEntry\?'practice-admin':'practice'/);
+  const finalSaveBlock=finalSource.slice(finalSource.indexOf('async function supaUpsert'),finalSource.indexOf('async function supaLoadRows'));
+  assert.match(finalSaveBlock, /Prefer:"return=minimal"/);
+  assert.match(finalSaveBlock, /if\(res\.status!==409\)/);
+  assert.match(finalSaveBlock, /method:"PATCH"/);
+  assert.match(finalSaveBlock, /source=eq\.reset&ox=eq\.RESET&select=round/);
+  assert.match(finalSaveBlock, /Prefer:"return=representation"/);
+  assert.doesNotMatch(finalSaveBlock, /resolution=merge-duplicates/);
+  assert.match(adminEnhancementsSource, /set==='final'/);
+  assert.match(adminEnhancementsSource, /final\.html\?round='\+r\+'&go=answer&entry=teacher/);
+  assert.match(adminSource, /<script src="mock-data-final\.js\?v=20260823"><\/script>/);
+  assert.match(resultSource, /source==='online'.*온라인 회원이 직접 입력한 최초 성적/);
+  assert.match(resultSource, /source==='admin'\|\|source==='teacher'/);
 });
 
 check('승인 문항 교정과 30문항 통계 반영 후 공개 잠금 해제', () => {

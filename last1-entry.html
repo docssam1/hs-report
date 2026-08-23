@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>최종 모의고사 1회 성적 입력 | 지필드 영재교육</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;color:#1f2430;line-height:1.55;padding:22px 14px}
+.wrap{max-width:720px;margin:0 auto}.card{background:#fff;border-radius:18px;box-shadow:0 8px 28px rgba(30,60,114,.11);overflow:hidden}
+.hd{background:linear-gradient(135deg,#1e3c72,#2a5298);color:#fff;padding:21px 23px}.hd .tag{font-size:11.5px;opacity:.86;font-weight:700}.hd h1{font-size:21px;margin-top:4px}.hd p{font-size:12px;opacity:.88;margin-top:6px}
+.bd{padding:22px}.member{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;border:1px solid #dbe4f0;border-radius:13px;background:#f8fafc;margin-bottom:16px}.member span{font-size:12px;color:#64748b}.member b{font-size:16px;color:#1f3864}
+.notice{padding:12px 14px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;color:#9a4b14;font-size:12px;line-height:1.7;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.q{min-height:58px;border:1.5px solid #dfe6ef;border-radius:11px;background:#fff;color:#1f3864;font:800 14px inherit;cursor:pointer}.q small{display:block;color:#94a3b8;font-size:9.5px;margin-top:2px}.q.wrong{background:#fee2e2;border-color:#dc2626;color:#b91c1c}.q.wrong small{color:#dc2626}
+.summary{display:flex;gap:10px;margin-top:17px}.sum{flex:1;text-align:center;background:#f7f9fc;border:1px solid #e5eaf1;border-radius:12px;padding:11px}.sum span{display:block;font-size:10.5px;color:#8792a2}.sum b{display:block;font-size:20px;color:#1f3864;margin-top:2px}
+.save{width:100%;border:0;border-radius:12px;padding:13px 18px;margin-top:14px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;font:800 14px inherit;cursor:pointer}.save:disabled{cursor:not-allowed;opacity:.65}
+.state{text-align:center;padding:25px 12px;color:#64748b;font-size:13px;line-height:1.8}.state .ico{display:block;font-size:38px;margin-bottom:7px}.state b{color:#1f3864}.link{display:inline-flex;margin-top:13px;padding:10px 16px;border-radius:10px;background:#1f3864;color:#fff;text-decoration:none;font-weight:800}
+.err{color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;border-radius:11px;padding:12px 14px;font-size:12px;margin-top:12px}.hide{display:none}.ft{text-align:center;padding:13px 18px;background:#fafbfd;border-top:1px solid #edf1f5;color:#94a3b8;font-size:10.5px}
+@media(max-width:520px){body{padding:12px 9px}.bd{padding:17px 14px}.hd{padding:18px}.grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.q{min-height:55px}.member{align-items:flex-start;flex-direction:column}.summary{gap:7px}.sum{padding:9px 4px}}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+  <header class="hd"><div class="tag">온라인 회원 직접 입력</div><h1>최종 모의고사 1회 성적 입력</h1><p>90분 시험을 마치고 채점한 뒤, 틀린 문항만 눌러 주세요.</p></header>
+  <main class="bd">
+    <div id="member" class="member hide"><span>입력 학생</span><b id="studentName"></b></div>
+    <div id="loading" class="state"><span class="ico">⏳</span>최초 성적 기록을 확인하고 있어요…</div>
+    <div id="blocked" class="state hide"></div>
+    <section id="entry" class="hide">
+      <div class="notice">한 번 저장된 <b>최초 성적은 누적 기준으로 유지</b>됩니다. O는 맞은 문항이고, 아래에서 눌러 빨간 X로 바꾼 문항만 오답으로 저장됩니다.</div>
+      <div id="grid" class="grid" aria-label="문항별 정오 입력"></div>
+      <div class="summary"><div class="sum"><span>예상 점수</span><b id="score">100.0점</b></div><div class="sum"><span>맞은 문항</span><b id="correct">30개</b></div><div class="sum"><span>틀린 문항</span><b id="wrong">0개</b></div></div>
+      <button id="saveBtn" class="save" type="button">✅ 내 최초 성적 저장</button>
+      <div id="error" class="err hide"></div>
+    </section>
+  </main>
+  <footer class="ft">온라인 회원은 직접 입력 · 재원생은 선생님이 기록 · 누적에는 회차별 최초 성적만 반영</footer>
+</div></div>
+<script src="data.js"></script>
+<script src="mock-data-last.js"></script>
+<script>
+(function(){
+  'use strict';
+  var SB_URL='https://fgahqumaldheqettmvqg.supabase.co';
+  var SB_KEY='sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I';
+  var ROUND='last1';
+  var params=new URLSearchParams(location.search);
+  var student=(params.get('name')||'').trim();
+  if(!student){ try{ student=(localStorage.getItem('gfield_student')||'').trim(); }catch(e){} }
+  var D=window.GFIELD_DATA||{};
+  var model=window.GFIELD_MOCK_LAST||{};
+  var round=model.rounds&&model.rounds['1'];
+  var questions=round&&round.paper&&Array.isArray(round.paper.questions)?round.paper.questions.slice().sort(function(a,b){return a.no-b.no;}):[];
+  var wrong={};
+  var existing=null;
+
+  function byId(id){return document.getElementById(id);}
+  function show(id){byId(id).classList.remove('hide');}
+  function hide(id){byId(id).classList.add('hide');}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function round1(n){return Math.round(n*10)/10;}
+  function isOnlineMember(name){return !!(name&&D.studentTypes&&D.studentTypes[name]==='online');}
+  function isReset(row){return !!(row&&row.source==='reset'&&row.ox==='RESET');}
+  function isActive(row){return !!(row&&!isReset(row));}
+  function resultUrl(){return 'last1-result.html?name='+encodeURIComponent(student);}
+  function block(icon,html,withResult){
+    hide('loading'); hide('entry');
+    var box=byId('blocked');
+    box.innerHTML='<span class="ico">'+icon+'</span>'+html+(withResult?'<br><a class="link" href="'+resultUrl()+'">📊 최초 성적 확인</a>':'');
+    show('blocked');
+  }
+  function totals(){
+    var score=0,wrongCount=0;
+    questions.forEach(function(q){ if(wrong[q.no]) wrongCount++; else score+=Number(q.pts)||0; });
+    return {score:round1(score),wrong:wrongCount,correct:questions.length-wrongCount};
+  }
+  function paintSummary(){
+    var t=totals();
+    byId('score').textContent=t.score.toFixed(1)+'점';
+    byId('correct').textContent=t.correct+'개';
+    byId('wrong').textContent=t.wrong+'개';
+  }
+  function renderGrid(){
+    byId('grid').innerHTML=questions.map(function(q){return '<button type="button" class="q" data-no="'+q.no+'" aria-pressed="false"><span>'+q.no+'번</span><small>'+Number(q.pts).toFixed(1)+'점 · O</small></button>';}).join('');
+    byId('grid').addEventListener('click',function(event){
+      var button=event.target.closest('.q'); if(!button)return;
+      var no=Number(button.dataset.no); wrong[no]=!wrong[no];
+      button.classList.toggle('wrong',!!wrong[no]); button.setAttribute('aria-pressed',wrong[no]?'true':'false');
+      button.querySelector('small').textContent=Number(questions[no-1].pts).toFixed(1)+'점 · '+(wrong[no]?'X':'O');
+      paintSummary();
+    });
+  }
+  async function fetchOfficial(){
+    var url=SB_URL+'/rest/v1/mock_results?student=eq.'+encodeURIComponent(student)
+      +'&round=eq.'+ROUND+'&select=student,round,ox,score,wrong,source,updated_at&limit=1';
+    var response=await fetch(url,{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}});
+    if(!response.ok) throw new Error('조회 HTTP '+response.status);
+    var rows=await response.json(); return rows[0]||null;
+  }
+  async function save(){
+    var button=byId('saveBtn'),error=byId('error'); hide('error'); button.disabled=true;
+    try{
+      existing=await fetchOfficial();
+      if(isActive(existing)){ block('🔒','이미 최초 성적이 기록되어 있어요.<br>기존 기록은 덮어쓰지 않았습니다.',true); return; }
+      var t=totals();
+      var wrongNos=questions.filter(function(q){return !!wrong[q.no];}).map(function(q){return q.no;});
+      if(!confirm(student+' 학생의 최초 성적을 저장할까요?\n\n점수 '+t.score.toFixed(1)+'점 · 오답 '+t.wrong+'개'+(wrongNos.length?'\n오답: '+wrongNos.join(', ')+'번':'')+'\n\n저장 후에는 일반 입력으로 바꿀 수 없습니다.')) return;
+      var ox=questions.map(function(q){return wrong[q.no]?'X':'O';}).join('');
+      var payload={student:student,round:ROUND,ox:ox,score:t.score,wrong:t.wrong,source:'online',updated_at:new Date().toISOString()};
+      var saveUrl=SB_URL+'/rest/v1/mock_results';
+      var method='POST',prefer='return=minimal';
+      if(isReset(existing)){
+        method='PATCH'; prefer='return=representation';
+        saveUrl+='?student=eq.'+encodeURIComponent(student)+'&round=eq.'+ROUND+'&source=eq.reset&ox=eq.RESET&select=round';
+      }
+      var response=await fetch(saveUrl,{method:method,headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json',Prefer:prefer},body:JSON.stringify(payload)});
+      if(response.status===409){ block('🔒','다른 입력이 먼저 최초 성적으로 기록됐어요.<br>먼저 저장된 기록을 유지했습니다.',true); return; }
+      if(!response.ok) throw new Error('저장 HTTP '+response.status);
+      if(method==='PATCH'){
+        var changed=await response.json();
+        if(!Array.isArray(changed)||changed.length!==1){ block('🔒','다른 입력이 먼저 최초 성적으로 기록됐어요.<br>먼저 저장된 기록을 유지했습니다.',true); return; }
+      }
+      block('✅','최초 성적을 안전하게 저장했습니다.<br>이 기록이 통합 석차 백분율에 반영됩니다.',true);
+    }catch(e){ error.textContent='성적을 저장하지 못했습니다. 잠시 후 다시 시도해 주세요. ('+e.message+')'; show('error'); }
+    finally{ button.disabled=false; }
+  }
+  async function boot(){
+    if(!student){ block('🔐','홈페이지에서 온라인 회원 이름으로 로그인한 뒤 다시 열어 주세요.',false); return; }
+    byId('studentName').textContent=student+' 학생'; show('member');
+    if(!isOnlineMember(student)){ block('🧑‍🏫','이 화면은 온라인 회원 직접 입력 전용입니다.<br>재원생 성적은 선생님이 대신 기록합니다.',false); return; }
+    if(!round||round.ready!==true||questions.length!==30){ block('🔒','아직 최종 1회 입력이 열리지 않았습니다.',false); return; }
+    try{
+      existing=await fetchOfficial();
+      if(isActive(existing)){ block('📌','이미 최초 성적이 기록되어 있습니다.<br>누적에는 먼저 저장된 성적이 반영됩니다.',true); return; }
+    }catch(e){ block('⚠️','최초 성적을 확인하지 못했습니다.<br>네트워크 상태를 확인한 뒤 새로고침해 주세요.',false); return; }
+    hide('loading'); renderGrid(); paintSummary(); show('entry');
+  }
+  byId('saveBtn').addEventListener('click',save);
+  boot();
+})();
+</script>
+</body>
+</html>

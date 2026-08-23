@@ -152,7 +152,7 @@ td.weak-cell{white-space:nowrap}
 
 .print-btn{position:fixed;right:18px;bottom:18px;background:var(--navy);color:#fff;border:none;border-radius:50px;padding:13px 20px;font-size:14px;font-weight:800;box-shadow:0 6px 20px rgba(0,0,0,.25);cursor:pointer;z-index:50;font-family:inherit}
 @media print{.no-print,.print-btn{display:none!important}}
-@media(max-width:700px){.kpi{grid-template-columns:repeat(2,1fr)}section{padding:26px 18px}.cover{padding:32px 22px 26px}.cmp-band{padding:14px 18px 0}}
+@media(max-width:700px){.kpi{grid-template-columns:repeat(2,1fr)}section{padding:26px 18px}.cover{padding:32px 22px 26px}.cmp-band{padding:14px 18px 0}th.weak-cell,td.weak-cell{display:none}}
 
 /* timer screen (ported from final_timer_demo.html; redesigned for hierarchy/decluttering) */
 .timer-wrap{max-width:520px;margin:0 auto;padding:20px 16px 56px;display:flex;flex-direction:column;gap:14px}
@@ -330,6 +330,9 @@ td.weak-cell{white-space:nowrap}
   var preview = params.get('preview')==='1' && localPreviewHost;
   var urlName = (params.get('name')||'').trim();
   var goParam = (params.get('go')||'').trim();
+  /* 관리자 화면에서 연 링크만 입력 주체를 '선생님'으로 표시한다.
+     이 값은 저장 출처를 구분하기 위한 메타데이터이며 인증 수단으로 사용하지 않는다. */
+  var teacherEntry = params.get('entry')==='teacher';
 
   function BP(no){ return M.blueprint.filter(function(b){return b.no===no;})[0] || {no:no,area:'',pts:0}; }
   function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -382,6 +385,10 @@ td.weak-cell{white-space:nowrap}
   function isOnlineStudent(name){
     var st = (D && D.studentTypes) || {};
     return st[name] === 'online';
+  }
+  function firstAttemptSource(name){
+    if(teacherEntry) return 'admin';
+    return isOnlineStudent(name) ? 'online' : 'parent';
   }
   function buildCompareNote(round, cmp, online, roundsCompleted){
     if(!cmp) return null;
@@ -547,7 +554,7 @@ td.weak-cell{white-space:nowrap}
     }).join('');
   }
   function detailTableHTML(ctx){
-    return '<table><tr><th>번호</th><th>정오</th><th>유형 / 영역</th><th>배점</th><th>정답</th><th>전체 정답률</th><th>판정</th><th>영상</th><th class="no-print">약점 표시</th></tr>'+detailRowsHTML(ctx)+'</table>';
+    return '<table><tr><th>번호</th><th>정오</th><th>유형 / 영역</th><th>배점</th><th>정답</th><th>전체 정답률</th><th>판정</th><th>영상</th><th class="weak-cell no-print">약점 표시</th></tr>'+detailRowsHTML(ctx)+'</table>';
   }
   function buildComment(ctx, weakMap){
     var nw=ctx.wrongList.length, nc=ctx.g["조건"].length, npr=ctx.g["절차"].length, ncp=ctx.g["개념"].length;
@@ -731,28 +738,41 @@ td.weak-cell{white-space:nowrap}
 
   /* ===================== Supabase ===================== */
   function scoreOfOx(oxArr){ return computeScore(oxArr); }
+  /* 새 응시 슬롯은 insert-only로 저장해 동시에 제출되어도 먼저 도착한 기록을 보존한다.
+     관리자가 명시적으로 RESET한 슬롯만 조건부 PATCH로 다시 열 수 있다. */
   async function supaUpsert(student, roundKey, oxArr, source){
-    if(isLast) return false;
+    if(isLast) return {ok:false, conflict:false};
     var oxs = oxArr.join(''); var sc = scoreOfOx(oxArr);
+    var payload={student:student, round:roundKey, ox:oxs, score:sc.score, wrong:sc.wrong, source:source||'parent', updated_at:new Date().toISOString()};
     try{
       var res = await fetch(SUPA_URL+"/rest/v1/mock_results", {
         method:"POST",
-        headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY, "Content-Type":"application/json", Prefer:"resolution=merge-duplicates"},
-        body: JSON.stringify({student:student, round:roundKey, ox:oxs, score:sc.score, wrong:sc.wrong, source:source||'parent'})
+        headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY, "Content-Type":"application/json", Prefer:"return=minimal"},
+        body:JSON.stringify(payload)
       });
-      return res.ok;
-    }catch(e){ return false; }
+      if(res.ok) return {ok:true, conflict:false};
+      if(res.status!==409) return {ok:false, conflict:false};
+
+      var resetUrl=SUPA_URL+"/rest/v1/mock_results?student=eq."+encodeURIComponent(student)
+        +"&round=eq."+encodeURIComponent(roundKey)+"&source=eq.reset&ox=eq.RESET&select=round";
+      var reopened=await fetch(resetUrl,{
+        method:"PATCH",
+        headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY, "Content-Type":"application/json", Prefer:"return=representation"},
+        body:JSON.stringify(payload)
+      });
+      if(!reopened.ok) return {ok:false, conflict:false};
+      var changed=await reopened.json();
+      return {ok:Array.isArray(changed)&&changed.length===1, conflict:!Array.isArray(changed)||changed.length!==1};
+    }catch(e){ return {ok:false, conflict:false}; }
   }
   async function supaLoadRows(student){
-    try{
-      var url = SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq."+encodeURIComponent(student);
-      var res = await fetch(url, {headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY}});
-      if(!res.ok) return {};
-      var rows = await res.json();
-      var map={};
-      rows.forEach(function(r){ if(r.source==='reset') return; map[r.round]=r; });
-      return map;
-    }catch(e){ return {}; }
+    var url = SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq."+encodeURIComponent(student);
+    var res = await fetch(url, {headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY}});
+    if(!res.ok) throw new Error('성적 조회 HTTP '+res.status);
+    var rows = await res.json();
+    var map={};
+    rows.forEach(function(r){ if(r.source==='reset') return; map[r.round]=r; });
+    return map;
   }
 
   /* ---- weak_types (나만의 약점 유형): PK (student,type) ---- */
@@ -1181,7 +1201,8 @@ td.weak-cell{white-space:nowrap}
     var R = getRound();
     if(!state.oxArr) state.oxArr = Array(M.questions).fill('O');
     var previewBanner = preview ? '<div class="banner preview no-print">🔎 관리자 미리보기 — 저장되지 않습니다</div>' : '';
-    app.innerHTML = previewBanner+
+    var teacherInputBanner = (!preview && teacherEntry) ? '<div class="banner preview no-print">🧑‍🏫 선생님 대리 입력 — 재원생의 실제 최초 답안을 입력해 주세요.</div>' : '';
+    app.innerHTML = previewBanner+teacherInputBanner+
       '<div class="doc start-doc">'+
       '<div class="cover small-cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>'+esc(R.title||('파이널 '+roundNum+'회'))+'</h1><div class="sub">틀린 문제 번호를 눌러 체크하세요</div></div>'+
       '<section>'+
@@ -1213,23 +1234,43 @@ td.weak-cell{white-space:nowrap}
 
   async function gradeAndShowReport(){
     app.innerHTML = '<div class="doc"><section><div class="lead">채점 중입니다…</div></section></div>';
-    var ctx = buildContext(state.name, roundNum, state.oxArr);
 
-    var priorRows = {};
-    try{ priorRows = await supaLoadRows(state.name); }catch(e){ priorRows={}; }
+    var priorRows = null;
+    try{ priorRows = await supaLoadRows(state.name); }catch(e){}
+    if(!priorRows && !preview){
+      app.innerHTML='<div class="doc"><section><div class="banner saveerr no-print">기존 성적을 확인하지 못해 저장하지 않았습니다.</div><p class="lead">네트워크 상태를 확인한 뒤 다시 시도해 주세요. 최초 성적은 변경되지 않았습니다.</p><button class="btn-primary" id="retryGrade">다시 입력하기</button></section></div>';
+      document.getElementById('retryGrade').onclick=renderAnswer;
+      return;
+    }
+    if(!priorRows) priorRows={};
     try{ state.weak = await supaWeakLoad(state.name); }catch(e){ state.weak = {}; }
 
     var fk = finalKey();
     var fk2 = fk+'@2', fk3 = fk+'@3';
     var attemptNo = deriveAttemptNo(priorRows, fk, fk2);
     var saveKey = attemptNo===1 ? fk : (attemptNo===2 ? fk2 : fk3);
-    var saveSource = attemptNo===1 ? 'parent' : 'practice';
+    var saveSource = attemptNo===1 ? firstAttemptSource(state.name) : (teacherEntry?'practice-admin':'practice');
 
-    var saveErr = false, saved = false;
+    var saveErr = false, saveConflict = false, saved = false;
     if(!preview){
-      saved = await supaUpsert(state.name, saveKey, state.oxArr, saveSource);
+      var saveResult = await supaUpsert(state.name, saveKey, state.oxArr, saveSource);
+      saved = !!saveResult.ok;
+      saveConflict = !!saveResult.conflict;
       if(!saved) saveErr = true;
     }
+    if(saveConflict){
+      try{
+        var refreshedRows=await supaLoadRows(state.name);
+        var winningRow=refreshedRows&&refreshedRows[saveKey];
+        if(!winningRow||typeof winningRow.ox!=='string'||winningRow.ox.length!==M.questions) throw new Error('최초 기록 재조회 실패');
+        priorRows=refreshedRows;
+        state.oxArr=winningRow.ox.split('');
+      }catch(e){
+        app.innerHTML='<div class="doc"><section><div class="banner saveerr no-print">다른 입력이 먼저 저장되어 현재 입력은 반영하지 않았습니다.</div><p class="lead">기존 최초 기록은 그대로 유지됩니다. 네트워크 상태를 확인한 뒤 다시 열어 주세요.</p></section></div>';
+        return;
+      }
+    }
+    var ctx = buildContext(state.name, roundNum, state.oxArr);
 
     /* 누적 성적 계산 (round>=2에서만 의미가 있음, final 라운드만 지원) */
     /* completed-rounds count는 '누적 성적' 계산과 같은 방식(1차 응시만, 회차별 1건)으로
@@ -1272,10 +1313,11 @@ td.weak-cell{white-space:nowrap}
     var attemptHTML = attemptSectionHTML(roundNum, priorRows, attemptNo, fk, fk2, fk3, state.oxArr);
 
     var previewBanner = preview ? '<div class="banner preview no-print">🔎 관리자 미리보기 — 저장되지 않습니다</div>' : '';
+    var teacherBanner = (!preview && teacherEntry) ? '<div class="banner preview no-print">🧑‍🏫 선생님 대리 입력 — 재원생의 답안을 대신 기록합니다. 회차별 최초 성적만 누적에 반영됩니다.</div>' : '';
     var practiceBanner = (!preview && attemptNo>=2) ? '<div class="banner practice no-print">연습 응시 — 기록은 남지만 누적 성적에는 반영되지 않습니다 ('+attemptNo+'회차 시도)</div>' : '';
-    var saveErrBanner = saveErr ? '<div class="banner saveerr no-print">저장 실패, 네트워크 확인</div>' : '';
+    var saveErrBanner = saveErr ? '<div class="banner saveerr no-print">'+(saveConflict?'다른 입력이 먼저 저장되어 기존 최초 기록을 유지했습니다.':'저장 실패, 네트워크 확인')+'</div>' : '';
 
-    app.innerHTML = previewBanner+practiceBanner+saveErrBanner+
+    app.innerHTML = previewBanner+teacherBanner+practiceBanner+saveErrBanner+
       '<div class="doc">'+
       '<div class="cover">'+
         '<div class="brand">G-FIELD GIFTED EDUCATION</div>'+
