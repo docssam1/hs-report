@@ -129,7 +129,7 @@ check('최종 3회 정정 안내 공개·그림 자산', () => {
   assert.match(result.corrections[0].text, /다다음 날 아침/);
   assert.match(result.corrections[1].text, /영양제의 수는 같았습니다/);
   assert.equal(result.figureKeys.length, 9);
-  const assets = fs.readdirSync(path.join(ROOT, 'mock-assets', 'last3')).filter(name => /\.png$/i.test(name));
+  const assets = fs.readdirSync(path.join(ROOT, 'mock-assets', 'last3')).filter(name => /^q\d{2}-.*\.png$/i.test(name));
   assert.equal(assets.length, 7);
 });
 
@@ -140,7 +140,7 @@ check('최종 4회 정정 안내 공개·그림 자산', () => {
   assert.deepEqual(result.corrections.map(item => item.qno), [19]);
   assert.equal(result.corrections[0].text, '㉠은 ㉤보다 큽니다.');
   assert.equal(result.figureKeys.length, 21);
-  const assets = fs.readdirSync(path.join(ROOT, 'mock-assets', 'last4')).filter(name => /\.png$/i.test(name));
+  const assets = fs.readdirSync(path.join(ROOT, 'mock-assets', 'last4')).filter(name => /^q\d{2}-.*\.png$/i.test(name));
   assert.equal(assets.length, 21);
 });
 

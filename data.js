@@ -1759,12 +1759,19 @@ window.GFIELD_DATA = {
       "folder": "파이널 모의고사",
       "title": "파이널 실전 모의고사 1회",
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%201%ED%9A%8C.pdf",
+      "imgdir": "final_1",
+      "pages": 8,
+      "copyrightMissingPages": [1, 2, 3, 4, 5, 6],
       "video": "https://youtu.be/bA-ddeRW-mM",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
-          "label": "오답 입력·분석",
+          "label": "시험지 보기·인쇄",
+          "url": "https://hs.gfieldacademy.net/final.html?round=1&go=paper"
+        },
+        {
+          "label": "오답 입력·진단",
           "url": "https://hs.gfieldacademy.net/final.html?round=1&go=answer"
         },
         {
@@ -1781,12 +1788,19 @@ window.GFIELD_DATA = {
       "folder": "파이널 모의고사",
       "title": "파이널 실전 모의고사 2회",
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%202%ED%9A%8C.pdf",
+      "imgdir": "final_2",
+      "pages": 6,
+      "copyrightMissingPages": [1, 2, 3, 4, 5],
       "video": "https://youtu.be/_dEhSC9ZaKo",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
-          "label": "오답 입력·분석",
+          "label": "시험지 보기·인쇄",
+          "url": "https://hs.gfieldacademy.net/final.html?round=2&go=paper"
+        },
+        {
+          "label": "오답 입력·진단",
           "url": "https://hs.gfieldacademy.net/final.html?round=2&go=answer"
         },
         {
@@ -1803,12 +1817,19 @@ window.GFIELD_DATA = {
       "folder": "파이널 모의고사",
       "title": "파이널 실전 모의고사 3회",
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%203%ED%9A%8C.pdf",
+      "imgdir": "final_3",
+      "pages": 7,
+      "copyrightMissingPages": [],
       "video": "https://youtu.be/W7J1DnR6W4Y",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
-          "label": "오답 입력·분석",
+          "label": "시험지 보기·인쇄",
+          "url": "https://hs.gfieldacademy.net/final.html?round=3&go=paper"
+        },
+        {
+          "label": "오답 입력·진단",
           "url": "https://hs.gfieldacademy.net/final.html?round=3&go=answer"
         },
         {
@@ -1825,12 +1846,19 @@ window.GFIELD_DATA = {
       "folder": "파이널 모의고사",
       "title": "파이널 실전 모의고사 4회",
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%204%ED%9A%8C.pdf",
+      "imgdir": "final_4",
+      "pages": 6,
+      "copyrightMissingPages": [1, 2, 3, 4, 5],
       "video": "https://youtu.be/VqHjNHMYVs8",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
-          "label": "오답 입력·분석",
+          "label": "시험지 보기·인쇄",
+          "url": "https://hs.gfieldacademy.net/final.html?round=4&go=paper"
+        },
+        {
+          "label": "오답 입력·진단",
           "url": "https://hs.gfieldacademy.net/final.html?round=4&go=answer"
         },
         {
@@ -1847,13 +1875,15 @@ window.GFIELD_DATA = {
       "folder": "최종 모의고사",
       "title": "최종 실전 모의고사 1회",
       "pdf": "",
+      "imgdir": "last_final_1",
+      "pages": 6,
       "video": "",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
-          "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1&go=answer"
+          "label": "시험지 보기·인쇄",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1&go=paper"
         },
         {
           "label": "실전 타이머",
@@ -1862,6 +1892,10 @@ window.GFIELD_DATA = {
         {
           "label": "답안·해설",
           "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1&go=answer"
+        },
+        {
+          "label": "성적 확인·진단",
+          "url": "https://hs.gfieldacademy.net/last1-result.html?round=1"
         }
       ]
     },
@@ -1869,21 +1903,27 @@ window.GFIELD_DATA = {
       "folder": "최종 모의고사",
       "title": "최종 실전 모의고사 2회",
       "pdf": "",
+      "imgdir": "last_final_2",
+      "pages": 6,
       "video": "",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
-          "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=2&go=answer"
+          "label": "시험지 보기·인쇄",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=2&go=paper"
         },
         {
           "label": "실전 타이머",
           "url": "https://hs.gfieldacademy.net/final.html?set=last&round=2&go=timer"
         },
         {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/last-answer.html?round=2"
+          "label": "답안·해설",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=2&go=answer"
+        },
+        {
+          "label": "성적 확인·진단",
+          "url": "https://hs.gfieldacademy.net/last1-result.html?round=2"
         }
       ]
     },
@@ -1891,21 +1931,27 @@ window.GFIELD_DATA = {
       "folder": "최종 모의고사",
       "title": "최종 실전 모의고사 3회",
       "pdf": "",
+      "imgdir": "last_final_3",
+      "pages": 6,
       "video": "",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
-          "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=3&go=answer"
+          "label": "시험지 보기·인쇄",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=3&go=paper"
         },
         {
           "label": "실전 타이머",
           "url": "https://hs.gfieldacademy.net/final.html?set=last&round=3&go=timer"
         },
         {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/last-answer.html?round=3"
+          "label": "답안·해설",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=3&go=answer"
+        },
+        {
+          "label": "성적 확인·진단",
+          "url": "https://hs.gfieldacademy.net/last1-result.html?round=3"
         }
       ]
     },
@@ -1913,21 +1959,27 @@ window.GFIELD_DATA = {
       "folder": "최종 모의고사",
       "title": "최종 실전 모의고사 4회",
       "pdf": "",
+      "imgdir": "last_final_4",
+      "pages": 6,
       "video": "",
       "cover": "",
       "date": "2026-07-28",
       "links": [
         {
-          "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=4&go=answer"
+          "label": "시험지 보기·인쇄",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=4&go=paper"
         },
         {
           "label": "실전 타이머",
           "url": "https://hs.gfieldacademy.net/final.html?set=last&round=4&go=timer"
         },
         {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/last-answer.html?round=4"
+          "label": "답안·해설",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=4&go=answer"
+        },
+        {
+          "label": "성적 확인·진단",
+          "url": "https://hs.gfieldacademy.net/last1-result.html?round=4"
         }
       ]
     },

@@ -242,6 +242,7 @@
   .bv-doc.scroll{display:block;overflow:auto;background:#525659;padding:16px 0;}
   .bv-doc.scroll .bv-pg{position:relative;width:820px;max-width:94%;margin:0 auto 14px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4);}
   .bv-doc.scroll .bv-pg img{width:100%;display:block;-webkit-user-drag:none;user-select:none;}
+  .bv-doc.scroll .bv-copyright{position:absolute;right:6.5%;bottom:5.1%;z-index:2;width:34%;color:#111827;text-align:right;font-size:8px;font-weight:500;line-height:1.45;pointer-events:none;}
   .bv-doc.scroll .wm3{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
   .bv-doc.scroll .wm3 span{position:absolute;left:-10%;width:120%;text-align:center;color:#000;opacity:0;font-size:26px;font-weight:800;white-space:nowrap;transform:rotate(-30deg);}
   .bv-doc.scroll .wm3 span:nth-child(1){top:22%}.bv-doc.scroll .wm3 span:nth-child(2){top:50%}.bv-doc.scroll .wm3 span:nth-child(3){top:78%}
@@ -911,7 +912,7 @@
   let _bvBook=null;
   function printBvBook(){
     const b=_bvBook; if(!b) return;
-    if(b.imgdir&&b.pages) printMaterial(b.imgdir,b.pages,b.title||'교재');
+    if(b.imgdir&&b.pages) printMaterial(b.imgdir,b.pages,b.title||'교재',b.copyrightMissingPages||[]);
     else if(b.pdf&&isRealPdf(b.pdf)) downloadWatermarked(pdfHref(b.pdf),b.title||'교재');
   }
   /* 저장소 raw 링크를 같은 도메인 경로로 (브라우저 내장 뷰어·CORS 없는 fetch 용) */
@@ -943,7 +944,11 @@
       const base=new URL('materials/'+b.imgdir+'/', location.href).href;
       const nm=escHtml((currentStudent||'')+' · 지필드 영재교육');
       let imgs='';
-      for(let i=1;i<=b.pages;i++){ imgs+=`<div class="bv-pg"><img src="${base}${String(i).padStart(3,'0')}.jpg" loading="lazy" draggable="false" oncontextmenu="return false"><div class="wm3"><span>${nm}</span><span>${nm}</span><span>${nm}</span></div></div>`; }
+      const copyrightPages=Array.isArray(b.copyrightMissingPages)?b.copyrightMissingPages:[];
+      for(let i=1;i<=b.pages;i++){
+        const copyright=copyrightPages.includes(i)?'<div class="bv-copyright">이 시험지의 전부 또는 일부의 무단전재와 무단복제를<br>금합니다. 저작권 등록번호 C-2025-032626</div>':'';
+        imgs+=`<div class="bv-pg"><img src="${base}${String(i).padStart(3,'0')}.jpg" loading="lazy" draggable="false" oncontextmenu="return false">${copyright}<div class="wm3"><span>${nm}</span><span>${nm}</span><span>${nm}</span></div></div>`;
+      }
       docPane=`<div class="bv-doc scroll" oncontextmenu="return false">${imgs}</div>`;
     } else if(b.pdf){
       const wm = currentStudent ? `<div class="bv-wm">${wmTiles()}</div>` : '';
@@ -1149,14 +1154,15 @@
   })();
 
   /* 이미지 분할 교재 인쇄 (이름 워터마크) */
-  function printMaterial(folder, pages, title){
+  function printMaterial(folder, pages, title, copyrightMissingPages){
     if(!currentStudent){ toast('로그인이 필요합니다'); return; }
     const base=new URL('materials/'+folder+'/', location.href).href;
     const name=currentStudent+' · 지필드 영재교육';
+    const copyrightPages=Array.isArray(copyrightMissingPages)?copyrightMissingPages:[];
     const w=window.open('','_blank'); if(!w){ toast('팝업을 허용해 주세요'); return; }
     let imgs='';
-    for(let i=1;i<=pages;i++){ const nm=String(i).padStart(3,'0')+'.jpg'; imgs+='<div class="pg"><img src="'+base+nm+'"><div class="wm"><span></span><span></span><span></span></div></div>'; }
-    const css='*{margin:0;padding:0;box-sizing:border-box}body{font-family:sans-serif;background:#525659}#bar{position:fixed;top:0;left:0;right:0;background:#1e3c72;color:#fff;padding:12px;text-align:center;font-weight:700;z-index:10}#wrap{padding:56px 0 40px}.pg{position:relative;width:820px;max-width:96%;margin:0 auto 16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4)}.pg img{width:100%;display:block}.wm{position:absolute;inset:0;pointer-events:none;overflow:hidden}.wm span{position:absolute;left:-10%;width:120%;text-align:center;color:#000;opacity:.13;font-size:28px;font-weight:800;white-space:nowrap;transform:rotate(-30deg)}.wm span:nth-child(1){top:24%}.wm span:nth-child(2){top:50%}.wm span:nth-child(3){top:76%}@media print{#bar{display:none}body{background:#fff}#wrap{padding:0}.pg{width:100%;max-width:100%;margin:0;box-shadow:none;page-break-after:always}}';
+    for(let i=1;i<=pages;i++){ const nm=String(i).padStart(3,'0')+'.jpg'; const copyright=copyrightPages.includes(i)?'<div class="copy">이 시험지의 전부 또는 일부의 무단전재와 무단복제를<br>금합니다. 저작권 등록번호 C-2025-032626</div>':''; imgs+='<div class="pg"><img src="'+base+nm+'">'+copyright+'<div class="wm"><span></span><span></span><span></span></div></div>'; }
+    const css='*{margin:0;padding:0;box-sizing:border-box}body{font-family:sans-serif;background:#525659}#bar{position:fixed;top:0;left:0;right:0;background:#1e3c72;color:#fff;padding:12px;text-align:center;font-weight:700;z-index:10}#wrap{padding:56px 0 40px}.pg{position:relative;width:820px;max-width:96%;margin:0 auto 16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4)}.pg img{width:100%;display:block}.copy{position:absolute;right:6.5%;bottom:5.1%;z-index:2;width:34%;color:#111827;text-align:right;font-size:8px;font-weight:500;line-height:1.45}.wm{position:absolute;inset:0;pointer-events:none;overflow:hidden}.wm span{position:absolute;left:-10%;width:120%;text-align:center;color:#000;opacity:.13;font-size:28px;font-weight:800;white-space:nowrap;transform:rotate(-30deg)}.wm span:nth-child(1){top:24%}.wm span:nth-child(2){top:50%}.wm span:nth-child(3){top:76%}@media print{#bar{display:none}body{background:#fff}#wrap{padding:0}.pg{width:100%;max-width:100%;margin:0;box-shadow:none;page-break-after:always}}';
     const js='(function(){var name='+JSON.stringify(name)+';var sp=document.querySelectorAll(".wm span");for(var k=0;k<sp.length;k++)sp[k].textContent=name;var ims=[].slice.call(document.images),total=ims.length,done=0,bar=document.getElementById("bar"),pct=document.getElementById("pct");function up(){done++;pct.textContent=Math.round(done/total*100)+"%";if(done>=total){bar.textContent="인쇄 준비 완료";setTimeout(function(){window.print();},400);}}ims.forEach(function(im){if(im.complete)up();else{im.onload=up;im.onerror=up;}});})();';
     w.document.write('<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>'+(title||'교재')+'</title><style>'+css+'</style></head><body><div id="bar">생성 중입니다… <span id="pct">0%</span></div><div id="wrap">'+imgs+'</div><scr'+'ipt>'+js+'</scr'+'ipt></body></html>');
     w.document.close();
@@ -1192,6 +1198,6 @@
     }catch(e){}
   })();
 </script>
-<script src="index-enhancements.js?v=20260823b"></script>
+<script src="index-enhancements.js?v=20260824b"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@ const { chromium } = require(process.env.GFIELD_QA_PLAYWRIGHT || 'playwright');
 
 const BASE_URL = process.env.GFIELD_QA_BASE_URL || 'http://127.0.0.1:8765';
 const SCREENSHOT_DIR = process.env.GFIELD_QA_SCREENSHOT_DIR || '';
+const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
 
 function pageMonitor(page) {
   const failures = [];
@@ -23,7 +24,10 @@ async function waitForPaperImages(page) {
 }
 
 (async () => {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({
+    headless: true,
+    ...(BROWSER_EXECUTABLE ? { executablePath: BROWSER_EXECUTABLE } : {}),
+  });
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
 
   try {

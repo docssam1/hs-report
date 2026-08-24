@@ -99,27 +99,74 @@
   moveBefore('div-final', /9\s*월\s*1\s*주차/);
 })();
 
-/* ===== 10월 최종 1~4회 · JPG 시험지 + HTML 답지 흐름 =====
-   data.js는 관리자 저장 때 다시 만들어지므로, 학생 화면에서만 안전하게 링크를
-   보정한다. 시험지·타이머·답안 모두 final.html의 준비 상태 검사를 먼저 거친다. */
+/* ===== 파이널·최종 1~4회 · 서재 이미지 뷰어 + 진단 흐름 =====
+   원본 PDF는 보존하고, 서재/인쇄에는 PDF에서 변환한 페이지 JPG를 쓴다.
+   data.js는 관리자 저장 때 다시 만들어질 수 있어 학생 화면에서 매번 링크를
+   보정하며, 현재 로그인한 학생 이름도 각 화면으로 함께 전달한다. */
 (function(){
   var data=window.GFIELD_DATA;
   if(!data||!Array.isArray(data.books)) return;
-  var books=data.books.filter(function(b){
-    return b && b.folder==='최종 모의고사' && /최종\s*실전\s*모의고사\s*[1-4]\s*회/.test(String(b.title||''));
-  });
-  if(!books.length) return;
-  books.forEach(function(book){
-    var match=String(book.title||'').match(/([1-4])\s*회/);
-    if(!match) return;
-    var base='https://hs.gfieldacademy.net/final.html?set=last&round='+match[1];
-    book.pdf='';
-    book.links=[
-      {label:'시험지 보기·인쇄',url:base+'&go=paper'},
-      {label:'실전 타이머',url:base+'&go=timer'},
-      {label:'답안·해설',url:base+'&go=answer'}
-    ];
-  });
+  var finalPages={1:8,2:6,3:7,4:6};
+  var finalCopyrightPages={1:[1,2,3,4,5,6],2:[1,2,3,4,5],3:[],4:[1,2,3,4,5]};
+
+  function studentName(){
+    return (typeof currentStudent!=='undefined'&&currentStudent)?String(currentStudent):'';
+  }
+  function withName(url){
+    var name=studentName();
+    return name ? url+(url.indexOf('?')>=0?'&':'?')+'name='+encodeURIComponent(name) : url;
+  }
+  function onlineMember(){
+    var name=studentName();
+    return !!(name&&data.studentTypes&&data.studentTypes[name]==='online');
+  }
+  function roundOf(book){
+    var match=String(book&&book.title||'').match(/([1-4])\s*회/);
+    return match?Number(match[1]):0;
+  }
+  function syncMockLibraryBooks(){
+    data.books.forEach(function(book){
+      if(!book) return;
+      var round=roundOf(book);
+      if(!round) return;
+
+      if(book.folder==='파이널 모의고사'&&/파이널\s*실전\s*모의고사/.test(String(book.title||''))){
+        var finalBase='final.html?round='+round;
+        book.imgdir='final_'+round;
+        book.pages=finalPages[round];
+        book.copyrightMissingPages=finalCopyrightPages[round].slice();
+        book.links=[
+          {label:'시험지 보기·인쇄',url:withName(finalBase+'&go=paper')},
+          {label:'실전 타이머',url:withName(finalBase+'&go=timer')},
+          {label:'오답 입력·진단',url:withName(finalBase+'&go=answer')},
+          {label:'답안·교재 연결표',url:withName('answer.html?set=final&round='+round)}
+        ];
+      }
+
+      if(book.folder==='최종 모의고사'&&/최종\s*실전\s*모의고사/.test(String(book.title||''))){
+        var lastBase='final.html?set=last&round='+round;
+        book.pdf='';
+        book.imgdir='last_final_'+round;
+        book.pages=6;
+        book.links=[
+          {label:'시험지 보기·인쇄',url:withName(lastBase+'&go=paper')},
+          {label:'실전 타이머',url:withName(lastBase+'&go=timer')},
+          {label:'답안·해설',url:withName(lastBase+'&go=answer')}
+        ];
+        if(onlineMember()) book.links.push({label:'성적 입력',url:withName('last1-entry.html?round='+round)});
+        book.links.push({label:'성적 확인·진단',url:withName('last1-result.html?round='+round)});
+      }
+    });
+  }
+
+  syncMockLibraryBooks();
+  if(typeof renderArchive==='function'){
+    var originalRenderArchive=renderArchive;
+    renderArchive=function(){
+      syncMockLibraryBooks();
+      return originalRenderArchive.apply(this,arguments);
+    };
+  }
   setTimeout(function(){
     try{
       if(typeof currentStudent!=='undefined'&&currentStudent&&typeof renderArchive==='function') renderArchive();

@@ -451,11 +451,15 @@ check('최종 JPG 시험지·HTML 답지·인쇄·준비상태 라우팅', () =>
   assert.match(finalSource, /\.paper-image-page:last-child\{break-after:auto/);
 });
 
-check('학생 홈페이지의 최종 1회 링크가 시험지·타이머·답안으로 분리됨', () => {
-  assert.match(indexEnhancementsSource, /label:'시험지 보기·인쇄',url:base\+'&go=paper'/);
-  assert.match(indexEnhancementsSource, /label:'실전 타이머',url:base\+'&go=timer'/);
-  assert.match(indexEnhancementsSource, /label:'답안·해설',url:base\+'&go=answer'/);
+check('학생 홈페이지의 최종 1~4회가 이미지 시험지·타이머·답안·진단으로 분리됨', () => {
+  assert.match(indexEnhancementsSource, /book\.imgdir='last_final_'\+round/);
+  assert.match(indexEnhancementsSource, /book\.pages=6/);
+  assert.match(indexEnhancementsSource, /label:'시험지 보기·인쇄',url:withName\(lastBase\+'&go=paper'\)/);
+  assert.match(indexEnhancementsSource, /label:'실전 타이머',url:withName\(lastBase\+'&go=timer'\)/);
+  assert.match(indexEnhancementsSource, /label:'답안·해설',url:withName\(lastBase\+'&go=answer'\)/);
+  assert.match(indexEnhancementsSource, /label:'성적 확인·진단',url:withName\('last1-result\.html\?round='\+round\)/);
   assert.match(indexEnhancementsSource, /book\.pdf=''/);
+  assert.match(generatedDataSource, /"imgdir": "last_final_1"/);
   assert.match(generatedDataSource, /final\.html\?set=last&round=1&go=answer/);
   assert.doesNotMatch(generatedDataSource, /hs\.gfieldacademy\.net\/last1-answer\.html/);
 });

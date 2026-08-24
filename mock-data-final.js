@@ -170,6 +170,11 @@ window.GFIELD_MOCK_FINAL = {
       "title": "파이널 1회",
       "video": "https://youtu.be/bA-ddeRW-mM",
       "script": "",
+      "paper": {
+        "imageDir": "final_1",
+        "imagePages": 8,
+        "copyrightMissingPages": [1, 2, 3, 4, 5, 6]
+      },
       "items": [
         {
           "no": 1,
@@ -613,6 +618,11 @@ window.GFIELD_MOCK_FINAL = {
       "title": "파이널 2회",
       "video": "https://youtu.be/_dEhSC9ZaKo",
       "script": "",
+      "paper": {
+        "imageDir": "final_2",
+        "imagePages": 6,
+        "copyrightMissingPages": [1, 2, 3, 4, 5]
+      },
       "items": [
         {
           "no": 1,
@@ -1076,6 +1086,11 @@ window.GFIELD_MOCK_FINAL = {
       "title": "파이널 3회",
       "video": "https://youtu.be/W7J1DnR6W4Y",
       "script": "",
+      "paper": {
+        "imageDir": "final_3",
+        "imagePages": 7,
+        "copyrightMissingPages": []
+      },
       "items": [
         {
           "no": 1,
@@ -1527,6 +1542,11 @@ window.GFIELD_MOCK_FINAL = {
       "title": "파이널 4회",
       "video": "https://youtu.be/VqHjNHMYVs8",
       "script": "",
+      "paper": {
+        "imageDir": "final_4",
+        "imagePages": 6,
+        "copyrightMissingPages": [1, 2, 3, 4, 5]
+      },
       "week": "9월 2주차",
       "items": [
         {
