@@ -10,10 +10,17 @@ const DATA_FILE = path.join(ROOT, 'data.js');
 const ENHANCEMENTS_FILE = path.join(ROOT, 'index-enhancements.js');
 const FINAL_DATA_FILE = path.join(ROOT, 'mock-data-final.js');
 const FINAL_PAGE_FILE = path.join(ROOT, 'final.html');
+const INDEX_FILE = path.join(ROOT, 'index.html');
 
 const FINAL_PAGE_COUNTS = [8, 6, 7, 6];
 const FINAL_COPYRIGHT_MISSING = [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5], [], [1, 2, 3, 4, 5]];
 const LAST_PAGE_COUNTS = [6, 6, 6, 6];
+const LAST_VIDEOS = [
+  'https://youtu.be/T9LbJLG2BRQ',
+  'https://youtu.be/YiKvaYUlIp4',
+  'https://youtu.be/M4EHgd42ReU',
+  'https://youtu.be/ZiOpTckV_wM',
+];
 const ONLINE_STUDENT = '검수온라인';
 const ONSITE_STUDENT = '검수재원';
 
@@ -91,6 +98,11 @@ function linkFor(book, label) {
   return matches[0];
 }
 
+function assertNoLink(book, label) {
+  const matches = (book.links || []).filter((link) => link && link.label === label);
+  assert.equal(matches.length, 0, `${book.title}: 중복 '${label}' 링크가 없어야 함`);
+}
+
 function assertRoute(link, pathname, params, description) {
   const url = new URL(link.url, 'https://hs.gfieldacademy.net/');
   assert.equal(url.pathname, pathname, `${description} 경로`);
@@ -123,12 +135,7 @@ function assertFinalLibraryBooks(data) {
     assert.equal(book.pages, pageCount, `파이널 ${round}회 pages`);
     assert.deepEqual(book.copyrightMissingPages, FINAL_COPYRIGHT_MISSING[index], `파이널 ${round}회 저작권 꼬리말 보정 쪽`);
 
-    assertRoute(
-      linkFor(book, '시험지 보기·인쇄'),
-      '/final.html',
-      { round, go: 'paper' },
-      `파이널 ${round}회 시험지`,
-    );
+    assertNoLink(book, '시험지 보기·인쇄');
     assertRoute(
       linkFor(book, '실전 타이머'),
       '/final.html',
@@ -156,13 +163,9 @@ function assertLastLibraryBooks(data, online) {
     const book = bookFor(data, '최종 모의고사', round);
     assert.equal(book.imgdir, `last_final_${round}`, `최종 ${round}회 imgdir`);
     assert.equal(book.pages, pageCount, `최종 ${round}회 pages`);
+    assert.equal(book.video, LAST_VIDEOS[index], `최종 ${round}회 전체 풀이 영상`);
 
-    assertRoute(
-      linkFor(book, '시험지 보기·인쇄'),
-      '/final.html',
-      { set: 'last', round, go: 'paper' },
-      `최종 ${round}회 시험지`,
-    );
+    assertNoLink(book, '시험지 보기·인쇄');
     assertRoute(
       linkFor(book, '실전 타이머'),
       '/final.html',
@@ -195,7 +198,7 @@ function assertLastLibraryBooks(data, online) {
   });
 }
 
-check('파이널 1~4회 서재 JPG 메타데이터와 네 링크', () => {
+check('파이널 1~4회 서재 JPG 메타데이터와 중복 없는 세 링크', () => {
   assertFinalLibraryBooks(configuredData(ONSITE_STUDENT));
 });
 
@@ -245,6 +248,16 @@ check('final.html 시작 화면은 파이널 paper 데이터가 있으면 시험
   assert.match(source, /paper-time-correction/, '첫 쪽 90분 인쇄 보정 누락');
   assert.match(source, /Number\(M\.exam\.minutes\|\|90\)\+'분<\/div>'/, '시험 시간 보정이 공용 90분 설정을 사용하지 않음');
   assert.match(source, /paper-image-watermark/, '이미지 시험지 워터마크 누락');
+  assert.match(source, /\.paper-image-page\{[^}]*margin:0 auto;[^}]*padding:0;[^}]*border:0;/, '시험지 화면 가운데 정렬·여백 초기화 누락');
+  assert.match(source, /\.paper-stack\{display:block;width:210mm;margin:0 auto\}/, '인쇄용 A4 스택 가운데 정렬 누락');
+});
+
+check('모든 영상 교재 뷰어는 화면 한 줄·인쇄 세 줄 워터마크', () => {
+  const source = fs.readFileSync(INDEX_FILE, 'utf8');
+  assert.match(source, /function wmLines\(\)[\s\S]*?<span>\$\{t\}<\/span><span>\$\{t\}<\/span><span>\$\{t\}<\/span>/, 'PDF 교재 워터마크 세 줄 구성 누락');
+  assert.match(source, /\.bv-wm span:nth-child\(2\)\{top:50%;opacity:\.075\}/, 'PDF 교재 화면 한 줄 워터마크 누락');
+  assert.match(source, /@media print\{ \.bv-doc\.scroll \.wm3 span,\.bv-wm span\{opacity:\.12!important\}/, '교재 인쇄 세 줄 워터마크 누락');
+  assert.match(source, /\[0\.22,0\.49,0\.76\]\.forEach\(ratio=>p\.drawImage\(stampImage,/, 'PDF 저장 시 세 줄 워터마크 위치 누락');
 });
 
 if (failures.length) {

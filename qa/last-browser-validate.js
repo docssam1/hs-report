@@ -75,6 +75,26 @@ async function waitForPaperImages(page) {
       assert.ok(printStyle.height >= 1121 && printStyle.height <= 1124, `round ${round} A4 height`);
       assert.ok(printStyle.breakAfter === 'page' || printStyle.pageBreakAfter === 'always', `round ${round} page break`);
 
+      const printImageStyle = await page.locator('.paper-image-page').first().evaluate(node => {
+        const style = getComputedStyle(node);
+        const rect = node.getBoundingClientRect();
+        return {
+          width: rect.width,
+          left: rect.left,
+          rightGap: window.innerWidth - rect.right,
+          paddingLeft: parseFloat(style.paddingLeft),
+          paddingRight: parseFloat(style.paddingRight),
+          borderLeft: parseFloat(style.borderLeftWidth),
+          borderRight: parseFloat(style.borderRightWidth),
+        };
+      });
+      assert.ok(printImageStyle.width >= 792 && printImageStyle.width <= 795, `round ${round} image A4 width`);
+      assert.equal(printImageStyle.paddingLeft, 0, `round ${round} image left padding`);
+      assert.equal(printImageStyle.paddingRight, 0, `round ${round} image right padding`);
+      assert.equal(printImageStyle.borderLeft, 0, `round ${round} image left border`);
+      assert.equal(printImageStyle.borderRight, 0, `round ${round} image right border`);
+      assert.ok(Math.abs(printImageStyle.left - printImageStyle.rightGap) <= 1, `round ${round} image print centering`);
+
       await page.emulateMedia({ media: 'screen' });
       await page.setViewportSize({ width: 390, height: 844 });
       const mobile = await page.evaluate(() => ({

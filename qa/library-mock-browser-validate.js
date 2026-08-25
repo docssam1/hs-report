@@ -33,7 +33,7 @@ function expectedHref(locator, pattern, label) {
       const source = fs.readFileSync(path.join(ROOT, 'data.js'), 'utf8');
       const qaData = `\n;(function(){var D=window.GFIELD_DATA;var n=${JSON.stringify(STUDENT)};`+
         `if(!D.students.includes(n))D.students.push(n);D.studentTypes[n]='online';`+
-        `['파이널 모의고사','최종 모의고사'].forEach(function(f){if(!Array.isArray(D.archiveAccess[f]))D.archiveAccess[f]=[];if(!D.archiveAccess[f].includes(n))D.archiveAccess[f].push(n);});})();`;
+        `['파이널 모의고사','최종 모의고사','약점 유형'].forEach(function(f){if(!Array.isArray(D.archiveAccess[f]))D.archiveAccess[f]=[];if(!D.archiveAccess[f].includes(n))D.archiveAccess[f].push(n);});})();`;
       await route.fulfill({ status: 200, contentType: 'application/javascript; charset=utf-8', body: source + qaData });
     });
 
@@ -49,9 +49,11 @@ function expectedHref(locator, pattern, label) {
     await page.waitForSelector('#bookviewer.open');
     assert.equal(await page.locator('#bookviewer .bv-pg').count(), 8, '파이널 1회 서재 이미지 쪽수');
     assert.equal(await page.locator('#bookviewer .wm3 span').count(), 24, '파이널 1회 워터마크 수');
+    assert.equal(await page.locator('#bookviewer .wm3 span').evaluateAll(nodes => nodes.filter(node => Number(getComputedStyle(node).opacity) > 0).length), 8, '파이널 화면은 쪽마다 흐린 워터마크 한 줄');
     assert.equal(await page.locator('#bookviewer .bv-copyright').count(), 6, '파이널 1회 누락 꼬리말 보정 수');
     assert.equal(await page.getByRole('button', { name: /인쇄/ }).count(), 1, '파이널 1회 서재 인쇄 버튼');
-    await expectedHref(page.getByRole('link', { name: /시험지 보기·인쇄/ }), /final\.html\?round=1&go=paper/, '파이널 시험지');
+    assert.equal(await page.getByRole('link', { name: /시험지 보기·인쇄/ }).count(), 0, '파이널 중복 시험지 링크 제거');
+    assert.equal(await page.locator('#bookviewer .bv-stage.split .bv-vid iframe').count(), 1, '파이널 시험지·영상 결합 뷰어');
     await expectedHref(page.getByRole('link', { name: /오답 입력·진단/ }), /final\.html\?round=1&go=answer/, '파이널 진단');
     await expectedHref(page.getByRole('link', { name: /답안·교재 연결표/ }), /answer\.html\?set=final&round=1/, '파이널 답안');
     const popupPromise = page.waitForEvent('popup');
@@ -70,9 +72,13 @@ function expectedHref(locator, pattern, label) {
     await page.waitForSelector('#bookviewer.open');
     assert.equal(await page.locator('#bookviewer .bv-pg').count(), 6, '최종 1회 서재 이미지 쪽수');
     assert.equal(await page.locator('#bookviewer .wm3 span').count(), 18, '최종 1회 워터마크 수');
+    assert.equal(await page.locator('#bookviewer .wm3 span').evaluateAll(nodes => nodes.filter(node => Number(getComputedStyle(node).opacity) > 0).length), 6, '최종 화면은 쪽마다 흐린 워터마크 한 줄');
     assert.equal(await page.locator('#bookviewer .bv-copyright').count(), 0, '최종 1회 원본 꼬리말 중복 방지');
     assert.equal(await page.getByRole('button', { name: /인쇄/ }).count(), 1, '최종 1회 서재 인쇄 버튼');
-    await expectedHref(page.getByRole('link', { name: /시험지 보기·인쇄/ }), /final\.html\?set=last&round=1&go=paper/, '최종 시험지');
+    assert.equal(await page.getByRole('link', { name: /시험지 보기·인쇄/ }).count(), 0, '최종 중복 시험지 링크 제거');
+    const lastVideo = page.locator('#bookviewer .bv-stage.split .bv-vid iframe');
+    assert.equal(await lastVideo.count(), 1, '최종 시험지·영상 결합 뷰어');
+    assert.match(await lastVideo.getAttribute('src'), /youtube\.com\/embed\/T9LbJLG2BRQ/, '최종 1회 전체 풀이 영상');
     await expectedHref(page.getByRole('link', { name: /답안·해설/ }), /final\.html\?set=last&round=1&go=answer/, '최종 답안');
     await expectedHref(page.getByRole('link', { name: /성적 입력/ }), /last1-entry\.html\?round=1/, '최종 성적 입력');
     await expectedHref(page.getByRole('link', { name: /성적 확인·진단/ }), /last1-result\.html\?round=1/, '최종 성적 진단');
@@ -86,7 +92,16 @@ function expectedHref(locator, pattern, label) {
     assert.ok(mobile.documentWidth <= mobile.viewport + 1, '서재 모바일 가로 넘침');
     assert.ok(mobile.viewerRight <= mobile.viewport + 1, '서재 뷰어 모바일 너비');
 
-    console.log('PASS library final/last viewer, watermark, print, diagnosis, online result links');
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.click('#bookviewer .bv-back');
+    await page.getByRole('button', { name: /필즈 중급 상 CH2 수와 숫자의 개수/ }).click();
+    await page.waitForSelector('#bookviewer.open');
+    assert.equal(await page.locator('#bookviewer .bv-stage.split .bv-vid iframe').count(), 1, 'PDF 교재 영상 결합 뷰어');
+    assert.equal(await page.locator('#bookviewer .bv-doc iframe').count(), 1, 'PDF 교재 iframe');
+    assert.equal(await page.locator('#bookviewer .bv-doc .bv-wm span').count(), 3, 'PDF 교재 워터마크 세 줄 구성');
+    assert.equal(await page.locator('#bookviewer .bv-doc .bv-wm span').evaluateAll(nodes => nodes.filter(node => Number(getComputedStyle(node).opacity) > 0).length), 1, 'PDF 교재 화면은 흐린 워터마크 한 줄');
+
+    console.log('PASS library final/last/PDF viewer, watermark, print, diagnosis, online result links');
   } finally {
     await page.close();
     await context.close();

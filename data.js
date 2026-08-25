@@ -1767,10 +1767,6 @@ window.GFIELD_DATA = {
       "date": "2026-07-28",
       "links": [
         {
-          "label": "시험지 보기·인쇄",
-          "url": "https://hs.gfieldacademy.net/final.html?round=1&go=paper"
-        },
-        {
           "label": "오답 입력·진단",
           "url": "https://hs.gfieldacademy.net/final.html?round=1&go=answer"
         },
@@ -1795,10 +1791,6 @@ window.GFIELD_DATA = {
       "cover": "",
       "date": "2026-07-28",
       "links": [
-        {
-          "label": "시험지 보기·인쇄",
-          "url": "https://hs.gfieldacademy.net/final.html?round=2&go=paper"
-        },
         {
           "label": "오답 입력·진단",
           "url": "https://hs.gfieldacademy.net/final.html?round=2&go=answer"
@@ -1825,10 +1817,6 @@ window.GFIELD_DATA = {
       "date": "2026-07-28",
       "links": [
         {
-          "label": "시험지 보기·인쇄",
-          "url": "https://hs.gfieldacademy.net/final.html?round=3&go=paper"
-        },
-        {
           "label": "오답 입력·진단",
           "url": "https://hs.gfieldacademy.net/final.html?round=3&go=answer"
         },
@@ -1854,10 +1842,6 @@ window.GFIELD_DATA = {
       "date": "2026-07-28",
       "links": [
         {
-          "label": "시험지 보기·인쇄",
-          "url": "https://hs.gfieldacademy.net/final.html?round=4&go=paper"
-        },
-        {
           "label": "오답 입력·진단",
           "url": "https://hs.gfieldacademy.net/final.html?round=4&go=answer"
         },
@@ -1877,14 +1861,10 @@ window.GFIELD_DATA = {
       "pdf": "",
       "imgdir": "last_final_1",
       "pages": 6,
-      "video": "",
+      "video": "https://youtu.be/T9LbJLG2BRQ",
       "cover": "",
       "date": "2026-07-28",
       "links": [
-        {
-          "label": "시험지 보기·인쇄",
-          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1&go=paper"
-        },
         {
           "label": "실전 타이머",
           "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1&go=timer"
@@ -1905,14 +1885,10 @@ window.GFIELD_DATA = {
       "pdf": "",
       "imgdir": "last_final_2",
       "pages": 6,
-      "video": "",
+      "video": "https://youtu.be/YiKvaYUlIp4",
       "cover": "",
       "date": "2026-07-28",
       "links": [
-        {
-          "label": "시험지 보기·인쇄",
-          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=2&go=paper"
-        },
         {
           "label": "실전 타이머",
           "url": "https://hs.gfieldacademy.net/final.html?set=last&round=2&go=timer"
@@ -1933,14 +1909,10 @@ window.GFIELD_DATA = {
       "pdf": "",
       "imgdir": "last_final_3",
       "pages": 6,
-      "video": "",
+      "video": "https://youtu.be/M4EHgd42ReU",
       "cover": "",
       "date": "2026-07-28",
       "links": [
-        {
-          "label": "시험지 보기·인쇄",
-          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=3&go=paper"
-        },
         {
           "label": "실전 타이머",
           "url": "https://hs.gfieldacademy.net/final.html?set=last&round=3&go=timer"
@@ -1961,14 +1933,10 @@ window.GFIELD_DATA = {
       "pdf": "",
       "imgdir": "last_final_4",
       "pages": 6,
-      "video": "",
+      "video": "https://youtu.be/ZiOpTckV_wM",
       "cover": "",
       "date": "2026-07-28",
       "links": [
-        {
-          "label": "시험지 보기·인쇄",
-          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=4&go=paper"
-        },
         {
           "label": "실전 타이머",
           "url": "https://hs.gfieldacademy.net/final.html?set=last&round=4&go=timer"

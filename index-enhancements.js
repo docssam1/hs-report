@@ -108,6 +108,12 @@
   if(!data||!Array.isArray(data.books)) return;
   var finalPages={1:8,2:6,3:7,4:6};
   var finalCopyrightPages={1:[1,2,3,4,5,6],2:[1,2,3,4,5],3:[],4:[1,2,3,4,5]};
+  var lastVideos={
+    1:'https://youtu.be/T9LbJLG2BRQ',
+    2:'https://youtu.be/YiKvaYUlIp4',
+    3:'https://youtu.be/M4EHgd42ReU',
+    4:'https://youtu.be/ZiOpTckV_wM'
+  };
 
   function studentName(){
     return (typeof currentStudent!=='undefined'&&currentStudent)?String(currentStudent):'';
@@ -136,7 +142,6 @@
         book.pages=finalPages[round];
         book.copyrightMissingPages=finalCopyrightPages[round].slice();
         book.links=[
-          {label:'시험지 보기·인쇄',url:withName(finalBase+'&go=paper')},
           {label:'실전 타이머',url:withName(finalBase+'&go=timer')},
           {label:'오답 입력·진단',url:withName(finalBase+'&go=answer')},
           {label:'답안·교재 연결표',url:withName('answer.html?set=final&round='+round)}
@@ -148,8 +153,8 @@
         book.pdf='';
         book.imgdir='last_final_'+round;
         book.pages=6;
+        book.video=lastVideos[round];
         book.links=[
-          {label:'시험지 보기·인쇄',url:withName(lastBase+'&go=paper')},
           {label:'실전 타이머',url:withName(lastBase+'&go=timer')},
           {label:'답안·해설',url:withName(lastBase+'&go=answer')}
         ];
