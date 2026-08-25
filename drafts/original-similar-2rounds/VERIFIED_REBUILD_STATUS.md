@@ -1,7 +1,7 @@
 # 원본형·유사형 모의고사 재구성 상태
 
 작성일: 2026-08-25
-상태: 원본형 1회 HTML 문항·답안 재구성 및 1차 화면 검수 완료, PDF와 유사형 1회는 잠금
+상태: 원본형·유사형 각 1회 학생용/정답·풀이 PDF 제작 및 PDF 재렌더 검수 완료, 홈페이지 연결은 잠금
 
 ## 이번에 폐기한 초안
 
@@ -9,13 +9,17 @@
 - `ROUND1_SOURCE_MAP.md`의 종전 완료 판정은 취소한다.
 - 기존 PDF 두 개는 이력 보존용이며 배포·뷰어 연결 대상이 아니다.
 
-## 원본형 1회 현재 산출물
+## 현재 산출물
 
 - 학생용 HTML: `.private-work/original-similar-2rounds/verified-original-exam.html`
 - 정답·풀이 HTML: `.private-work/original-similar-2rounds/verified-original-answer.html`
 - 문항 데이터: `.private-work/original-similar-2rounds/verified-original-data.json`
 - 독립 검산: `.private-work/original-similar-2rounds/verified-original-checks.py`
-- 상태: `locked-visual-review`
+- 원본형 학생용 PDF: `output/pdf/hwangso-verified-original-mock-01.pdf`
+- 원본형 정답·풀이 PDF: `output/pdf/hwangso-verified-original-mock-01-answer.pdf`
+- 유사형 학생용 PDF: `output/pdf/hwangso-verified-similar-mock-01.pdf`
+- 유사형 정답·풀이 PDF: `output/pdf/hwangso-verified-similar-mock-01-answer.pdf`
+- 상태: 파일 검수 완료, 홈페이지·학생 뷰어 연결 전 잠금
 
 원본 그림을 통째로 붙이지 않고 문장, 표, 시계, 수 배열, 도형을 HTML/SVG로 다시 만들었다. 30문항과 별도 정답·풀이 30개가 있으며 시험 시간은 90분, 배점 합계는 100점이다.
 
@@ -31,10 +35,15 @@
 
 ## 검증 결과
 
-- 파이썬 독립 계산·전수 열거: 36개 검사 통과
+- 원본형 파이썬 독립 계산·전수 열거: 36개 검사 통과
+- 유사형 파이썬 독립 계산·전수 열거: 34개 검사 통과
 - HTML 문법: Node 구문 검사 통과
 - 학생용 화면: 8쪽, 30문항, 잘림 0, 브라우저 오류 0
 - 정답·풀이 화면: 8쪽, 30문항, 잘림 0, 브라우저 오류 0
+- 원본형·유사형 HTML의 `<image>` 태그: 각각 0개
+- 별 도식 실제 문자 수: 원본형 102개, 유사형 87개
+- 최종 PDF: 4개 모두 A4 8쪽
+- PDF→PNG 재렌더: 총 32쪽 전수 시각 검사 완료
 - 원본형에 남은 신규 보완 문항: 12번 요일, 30번 자리 추리. 두 문항 모두 독립 검산을 통과했지만 원본 복기 문항은 아니므로 표시했다.
 
 ## 잠금 문항과 제외 원본
@@ -46,11 +55,8 @@
 - 2019 색종이 접기: 접는 방향과 절단층 대조 불가
 - 2019 원·사각형 수 배치: 회전·반사에 따른 위치 답이 여러 개
 
-## 다음 완료 조건
+## 공개 전 남은 조건
 
-1. 원본형 30문항을 원본과 나란히 최종 시각 대조한다.
-2. 답안 풀이 문장을 초등 표현 기준으로 교정한다.
-3. 유사형 30문항을 숫자만 바꾸지 않고 조건·보기 구조까지 변형해 만든다.
-4. 유사형 정답 유일성·난수 검산을 원본형과 별도로 수행한다.
-5. 두 회차 학생용 PDF와 정답·풀이 PDF를 만든 뒤 PDF→PNG 렌더로 다시 검사한다.
-6. 검수 완료 전까지 홈페이지와 뷰어에는 연결하지 않는다.
+1. 운영자가 문제·정답 내용을 승인한다.
+2. 승인 후 뷰어 파일명과 공개 회차를 확정한다.
+3. 홈페이지 연결 시 워터마크·인쇄·모바일 회귀 검사를 다시 수행한다.
