@@ -125,7 +125,8 @@
       video:'',
       date:'2026-08-25',
       links:[
-        {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-01-rebuilt-answer.pdf'}
+        {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-01-rebuilt-answer.pdf'},
+        {label:'성적·약점 진단',url:'final.html?set=original&round=1&go=answer'}
       ]
     },
     {
@@ -133,12 +134,13 @@
       title:'초등선발 대비 원본형 모의고사 2회',
       desc:'90분 · 30문항 · 100점',
       pdf:'output/pdf/hwangso-original-form-mock-02-rebuilt.pdf',
-      imgdir:'original_form_2',
+      imgdir:'original_form_2_v2',
       pages:6,
       video:'',
       date:'2026-08-25',
       links:[
-        {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf'}
+        {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf'},
+        {label:'성적·약점 진단',url:'final.html?set=original&round=2&go=answer'}
       ]
     }
   ];
@@ -197,6 +199,17 @@
         ];
         if(onlineMember()) book.links.push({label:'성적 입력',url:withName('last1-entry.html?round='+round)});
         book.links.push({label:'성적 확인·진단',url:withName('last1-result.html?round='+round)});
+      }
+
+      if(book.folder==='추가 모의고사'&&/초등선발\s*대비\s*원본형\s*모의고사/.test(String(book.title||''))){
+        book.pdf='output/pdf/hwangso-original-form-mock-0'+round+'-rebuilt.pdf';
+        book.imgdir=round===2?'original_form_2_v2':'original_form_1';
+        book.pages=6;
+        book.desc='90분 · 30문항 · 100점';
+        book.links=[
+          {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-0'+round+'-rebuilt-answer.pdf'},
+          {label:'성적·약점 진단',url:withName('final.html?set=original&round='+round+'&go=answer')}
+        ];
       }
     });
   }

@@ -9,6 +9,7 @@ const ROOT = path.resolve(__dirname, '..');
 const DATA_FILE = path.join(ROOT, 'data.js');
 const ENHANCEMENTS_FILE = path.join(ROOT, 'index-enhancements.js');
 const FINAL_DATA_FILE = path.join(ROOT, 'mock-data-final.js');
+const ORIGINAL_DATA_FILE = path.join(ROOT, 'mock-data-original.js');
 const FINAL_PAGE_FILE = path.join(ROOT, 'final.html');
 const INDEX_FILE = path.join(ROOT, 'index.html');
 
@@ -32,7 +33,7 @@ const ORIGINAL_FORM_BOOKS = [
   {
     round: 2,
     title: '초등선발 대비 원본형 모의고사 2회',
-    imageDir: 'original_form_2',
+    imageDir: 'original_form_2_v2',
     pdf: 'output/pdf/hwangso-original-form-mock-02-rebuilt.pdf',
     answer: 'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf',
   },
@@ -112,6 +113,16 @@ function linkFor(book, label) {
   assert.equal(typeof matches[0].url, 'string', `${book.title}: '${label}' URL 누락`);
   assert.ok(matches[0].url.trim(), `${book.title}: '${label}' URL이 비어 있음`);
   return matches[0];
+}
+
+function originalMockData() {
+  const sandbox = { window: {} };
+  vm.createContext(sandbox);
+  vm.runInContext(fs.readFileSync(ORIGINAL_DATA_FILE, 'utf8'), sandbox, {
+    filename: 'mock-data-original.js',
+    timeout: 2000,
+  });
+  return hostValue(sandbox.window.GFIELD_MOCK_ORIGINAL);
 }
 
 function assertNoLink(book, label) {
@@ -227,6 +238,12 @@ function assertOriginalFormBooks(data) {
     assert.equal(book.desc, '90분 · 30문항 · 100점', `${expected.title} 시험 정보`);
     const answer = linkFor(book, '정답지 PDF');
     assert.equal(answer.url, expected.answer, `${expected.title} 정답 PDF`);
+    assertRoute(
+      linkFor(book, '성적·약점 진단'),
+      '/final.html',
+      { set: 'original', round: String(expected.round), go: 'answer' },
+      `${expected.title} 성적·약점 진단`,
+    );
     assertImageSet(expected.imageDir, 6);
     assert.equal(fs.existsSync(path.join(ROOT, expected.pdf)), true, `${expected.title} 원본 PDF 파일`);
     assert.equal(fs.existsSync(path.join(ROOT, expected.answer)), true, `${expected.title} 정답 PDF 파일`);
@@ -247,6 +264,15 @@ check('최종 1~4회 온라인 회원 성적 입력 링크', () => {
 
 check('추가 모의고사 원본형 1·2회 이미지·PDF·정답 연결', () => {
   assertOriginalFormBooks(configuredData(ONSITE_STUDENT));
+});
+
+check('원본형 진단 데이터와 서재 이미지 경로 일치', () => {
+  const model = originalMockData();
+  assert.equal(model.roundCount, 2);
+  ORIGINAL_FORM_BOOKS.forEach((expected) => {
+    assert.equal(model.rounds[String(expected.round)].paper.imageDir, expected.imageDir);
+    assert.equal(model.rounds[String(expected.round)].paper.imagePages, 6);
+  });
 });
 
 check('파이널·최종 JPG 자산이 메타데이터와 일치', () => {

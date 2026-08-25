@@ -51,6 +51,8 @@
     /* 최종 모의고사 진단 분석지 — 어드민 전용 */
     const lastLinks=[1,2,3,4].map(r=>`<a class="btn sm" style="background:#fff;color:#1e3c72;text-decoration:none;font-weight:800" target="_blank"
       href="last1-analysis.html?round=${r}&mode=teacher${student?('&name='+encodeURIComponent(student)):''}">최종 ${r}회</a>`).join('');
+    const originalLinks=[1,2].map(r=>`<a class="btn sm" style="background:#fff;color:#7c3aed;text-decoration:none;font-weight:800" target="_blank"
+      href="final.html?set=original&round=${r}&go=answer&entry=teacher${student?('&name='+encodeURIComponent(student)):''}">원본형 ${r}회</a>`).join('');
     let last1=`<div style="border:1px solid #c7d7f0;border-radius:14px;padding:14px;margin:4px 0 12px;background:linear-gradient(135deg,#2a5298,#1e3c72);color:#fff">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <b style="font-size:14px">📊 최종 모의고사 진단 분석지</b>
@@ -61,6 +63,14 @@
         재원생은 선생님이 틀린 번호를 입력해 최초 성적을 기록합니다. 온라인 회원은 학생 화면에서 직접 입력하며,
         두 경로 모두 같은 최초 성적 누적 기준을 사용합니다.
       </div>
+    </div>`;
+    let originalPanel=`<div style="border:1px solid #ddd6fe;border-radius:14px;padding:14px;margin:4px 0 12px;background:linear-gradient(135deg,#f5f3ff,#fff);color:#4c1d95">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <b style="font-size:14px">🧭 원본형 성적·약점 진단</b>
+        <span style="font-size:11.5px;opacity:.8">대영역·소영역·세부유형 자동 분석</span>
+        <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap">${originalLinks}</div>
+      </div>
+      <div style="margin-top:8px;font-size:11.5px;opacity:.9;line-height:1.6">재원생은 선생님이 오답 번호를 대신 입력할 수 있고, 온라인 회원은 학생 서재에서 직접 입력합니다. 두 경로 모두 원본형 전용 최초 기록을 사용합니다.</div>
     </div>`;
 
     let panel=`<div style="border:1px solid #dce4ef;border-radius:14px;padding:14px;margin:4px 0 16px;background:linear-gradient(135deg,#f8fbff,#fff)">
@@ -99,6 +109,7 @@
     });
     panel+='</tbody></table></div></div>';
     body.insertAdjacentHTML('afterbegin',panel);
+    body.insertAdjacentHTML('afterbegin',originalPanel);
     body.insertAdjacentHTML('afterbegin',last1);
     const hint=document.querySelector('#tab-mock .hint');
     if(hint)hint.textContent='중급·활용·파이널 모의고사 결과를 분리해 확인합니다. 파이널은 온라인 회원이 직접 입력하거나 선생님이 재원생 답안을 대신 기록할 수 있으며, 1차 기록만 누적에 반영됩니다.';

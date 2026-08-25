@@ -97,7 +97,8 @@ function inspectRound(no) {
 check('최종 시험지는 공통 90분 JPG 뷰어이며 PDF 뷰어를 사용하지 않음', () => {
   assert.equal(model.exam.minutes, 90);
   const finalPage = fs.readFileSync(path.join(ROOT, 'final.html'), 'utf8');
-  assert.match(finalPage, /\^\[1-4\]\$/);
+  assert.match(finalPage, /var maxRound = isOriginal \? 2 : 4/);
+  assert.match(finalPage, /Number\(rawRound\)>=1 && Number\(rawRound\)<=maxRound/);
   assert.match(finalPage, /회차를 확인해 주세요/);
   assert.doesNotMatch(finalPage, /parseInt\(params\.get\('round'/);
   const sources = ['mock-data-last.js', 'last-exam-svg.js', 'final.html']

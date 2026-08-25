@@ -424,7 +424,7 @@ check('최종 1~4회 90분 표기가 공용 화면과 관리자 저장 경로에
 });
 
 check('최종 JPG 시험지·HTML 답지·인쇄·준비상태 라우팅', () => {
-  assert.match(finalSource, /isLast\?'mock-data-last\.js':'mock-data-final\.js'/);
+  assert.match(finalSource, /mockFile=isLast\?'mock-data-last\.js':\(isOriginal\?'mock-data-original\.js':'mock-data-final\.js'\)/);
   for (const name of [
     'mock-data-last3.js',
     'mock-data-last4.js',
