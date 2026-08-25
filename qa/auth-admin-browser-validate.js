@@ -42,7 +42,7 @@ const adminSession = {
     if (url.includes('/functions/v1/hs-admin-session') && body.action === 'login') {
       assert.equal(body.name, 'DOCSSAM');
       assert.equal(body.approvalCode, '01020837265');
-      return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ session: adminSession, deviceToken: 'qa-device-token' }) });
+      return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ session: adminSession, deviceToken: 'D'.repeat(48) }) });
     }
     if (url.includes('/functions/v1/hs-approval-admin') && body.action === 'list') {
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ accounts: [], resultStudents: [], unownedStudents: [] }) });
@@ -84,8 +84,80 @@ const adminSession = {
     await page.goto(`${BASE_URL}/admin.html`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#app:not(.hidden)');
     assert.equal(await page.locator('#gate.hidden').count(), 1, 'main admin console restores the same saved session');
+    const pdfPages = await page.evaluate(async () => {
+      if (!window.pdfjsLib) return 0;
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdfjs/3.11.174/pdf.worker.min.js';
+      const response = await fetch('books/1787223229518_0138_1031____C_CH5_____.pdf');
+      const bytes = await response.arrayBuffer();
+      const pdf = await window.pdfjsLib.getDocument({ data: bytes }).promise;
+      const count = pdf.numPages;
+      await pdf.destroy();
+      return count;
+    });
+    assert.ok(pdfPages > 0, 'self-hosted PDF.js and worker parse an existing admin PDF');
+
+    const activationContext = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    try {
+      const activationPage = await activationContext.newPage();
+      const activationFailures = [];
+      const activationToken = 'A'.repeat(48);
+      activationPage.on('pageerror', error => activationFailures.push(`pageerror: ${error.message}`));
+      activationPage.on('console', message => { if (message.type() === 'error') activationFailures.push(`console: ${message.text()}`); });
+      await activationPage.route('https://fgahqumaldheqettmvqg.supabase.co/**', async route => {
+        const request = route.request();
+        const url = request.url();
+        let body = {};
+        try { body = request.postDataJSON() || {}; } catch {}
+        if (url.includes('/functions/v1/hs-admin-session') && body.action === 'redeem') {
+          assert.equal(request.headers()['x-bootstrap-token'], activationToken);
+          return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ session: adminSession, deviceToken: 'E'.repeat(48) }) });
+        }
+        if (url.includes('/auth/v1/user')) {
+          return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(adminSession.user) });
+        }
+        return route.abort();
+      });
+
+      await activationPage.goto(`${BASE_URL}/admin-activate.html#activate=${activationToken}`, { waitUntil: 'domcontentloaded' });
+      await activationPage.waitForSelector('#app:not(.hidden)');
+      assert.ok(activationPage.url().endsWith('/admin.html'), 'dedicated activation page redirects to the admin console');
+      assert.equal(activationPage.url().includes('#activate='), false, 'activation token removed from the address immediately');
+      const activatedStored = await activationPage.evaluate(() => ({ ...localStorage }));
+      assert.ok(activatedStored.gfield_hs_admin_session_v1, 'activation stores admin session');
+      assert.ok(activatedStored.gfield_hs_admin_device_v1, 'activation stores device key');
+      assert.equal(JSON.stringify(activatedStored).includes(activationToken), false, 'activation token is never stored');
+
+      await activationPage.reload({ waitUntil: 'domcontentloaded' });
+      await activationPage.waitForSelector('#app:not(.hidden)');
+      assert.equal(await activationPage.locator('#gate.hidden').count(), 1, 'activated admin session restores after reload');
+      assert.equal(activationFailures.length, 0, activationFailures.join('\n'));
+    } finally {
+      await activationContext.close();
+    }
+
+    const expiredContext = await browser.newContext({ viewport: { width: 800, height: 700 } });
+    try {
+      const expiredPage = await expiredContext.newPage();
+      const expiredToken = 'F'.repeat(48);
+      await expiredPage.route('https://fgahqumaldheqettmvqg.supabase.co/**', async route => {
+        const request = route.request();
+        let body = {};
+        try { body = request.postDataJSON() || {}; } catch {}
+        if (body.action === 'redeem') {
+          return route.fulfill({ status: 401, contentType: 'application/json', body: JSON.stringify({ error: 'INVALID_CREDENTIALS' }) });
+        }
+        return route.abort();
+      });
+      await expiredPage.goto(`${BASE_URL}/admin-activate.html#activate=${expiredToken}`, { waitUntil: 'domcontentloaded' });
+      await expiredPage.waitForSelector('#state.error');
+      assert.equal(expiredPage.url().includes('#activate='), false, 'expired activation token is removed from the address');
+      assert.equal(await expiredPage.locator('#adminLink').isVisible(), true, 'expired activation keeps normal admin login available');
+    } finally {
+      await expiredContext.close();
+    }
+
     assert.equal(failures.length, 0, failures.join('\n'));
-    console.log('PASS auth admin browser persistence, main console restore, session separation, roster, issue modal');
+    console.log('PASS auth admin browser persistence, one-time activation, main console restore, session separation, roster, issue modal');
   } finally {
     await browser.close();
   }

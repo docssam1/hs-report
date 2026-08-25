@@ -10,6 +10,7 @@ const ALLOWED_ORIGINS = new Set([
 const ADMIN_NAME = "DOCSSAM";
 const ADMIN_APPROVAL_HASH = "8f38d96f81dbb8ff4551c1ca05503f6cc5187faa4b861b3220d3dd8816c7b5d1";
 const ADMIN_EMAIL = "docssam@auth.gfield.invalid";
+const ENROLLMENT_TOKEN_PATTERN = /^[23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{48}$/;
 
 class HttpError extends Error {
   status: number;
@@ -86,7 +87,7 @@ const service = createClient(url, serviceKey, { auth: { autoRefreshToken: false,
 const publicAuth = createClient(url, anonKey, { auth: { autoRefreshToken: false, persistSession: false } });
 
 async function consumeRateLimit(req: Request, action: string): Promise<void> {
-  const forwarded = req.headers.get("x-forwarded-for") || req.headers.get("cf-connecting-ip") || "unknown";
+  const forwarded = req.headers.get("cf-connecting-ip") || req.headers.get("x-forwarded-for") || "unknown";
   const ip = forwarded.split(",")[0].trim().slice(0, 96);
   const keyHash = await sha256(`hs-admin:${action}:${ip}`);
   const limit = action === "enroll" ? 3 : 8;
@@ -181,14 +182,7 @@ async function requireAdmin(req: Request) {
   return data.user;
 }
 
-async function enroll(req: Request, body: Record<string, unknown>) {
-  await consumeRateLimit(req, "enroll");
-  const approvalHash = await sha256(String(body.approvalCode ?? "").trim());
-  const validCredentials = constantEqual(normalizeName(body.name), normalizeName(ADMIN_NAME))
-    && constantEqual(approvalHash, ADMIN_APPROVAL_HASH);
-  const enrollmentToken = req.headers.get("x-bootstrap-token") || "";
-  if (!validCredentials || enrollmentToken.length < 24) throw new HttpError(401, "INVALID_CREDENTIALS");
-
+async function completeEnrollment(enrollmentToken: string) {
   const account = await ensureAdmin();
   const tokenHash = await sha256(enrollmentToken);
   const now = new Date().toISOString();
@@ -201,18 +195,43 @@ async function enroll(req: Request, body: Record<string, unknown>) {
     .maybeSingle();
   if (consumeError || !consumed) throw new HttpError(401, "INVALID_CREDENTIALS");
 
-  const session = await issueSession(account.login_email);
-  const deviceToken = randomToken(48);
-  const deviceHash = await sha256(deviceToken);
-  const { error: deviceError } = await service.from("hs_admin_devices").insert({
-    admin_user_id: account.user_id,
-    token_hash: deviceHash,
-    label: "관리자 브라우저",
-    active: true,
-    last_used_at: now,
-  });
-  if (deviceError) throw new HttpError(500, "DEVICE_ENROLL_FAILED");
-  return { session, deviceToken, admin: { name: ADMIN_NAME } };
+  try {
+    const session = await issueSession(account.login_email);
+    const deviceToken = randomToken(48);
+    const deviceHash = await sha256(deviceToken);
+    const { error: deviceError } = await service.from("hs_admin_devices").insert({
+      admin_user_id: account.user_id,
+      token_hash: deviceHash,
+      label: "관리자 브라우저",
+      active: true,
+      last_used_at: now,
+    });
+    if (deviceError) throw new HttpError(500, "DEVICE_ENROLL_FAILED");
+    return { session, deviceToken, admin: { name: ADMIN_NAME } };
+  } catch (error) {
+    await service.from("hs_admin_enrollments")
+      .update({ used_at: null })
+      .eq("token_hash", tokenHash)
+      .eq("used_at", now);
+    throw error;
+  }
+}
+
+async function enroll(req: Request, body: Record<string, unknown>) {
+  await consumeRateLimit(req, "enroll");
+  const approvalHash = await sha256(String(body.approvalCode ?? "").trim());
+  const validCredentials = constantEqual(normalizeName(body.name), normalizeName(ADMIN_NAME))
+    && constantEqual(approvalHash, ADMIN_APPROVAL_HASH);
+  const enrollmentToken = req.headers.get("x-bootstrap-token") || "";
+  if (!validCredentials || !ENROLLMENT_TOKEN_PATTERN.test(enrollmentToken)) throw new HttpError(401, "INVALID_CREDENTIALS");
+  return completeEnrollment(enrollmentToken);
+}
+
+async function redeem(req: Request) {
+  await consumeRateLimit(req, "enroll");
+  const enrollmentToken = req.headers.get("x-bootstrap-token") || "";
+  if (!ENROLLMENT_TOKEN_PATTERN.test(enrollmentToken)) throw new HttpError(401, "INVALID_CREDENTIALS");
+  return completeEnrollment(enrollmentToken);
 }
 
 async function login(req: Request, body: Record<string, unknown>) {
@@ -260,6 +279,7 @@ Deno.serve(async (req: Request) => {
     const body = await req.json().catch(() => ({})) as Record<string, unknown>;
     const action = String(body.action || "");
     if (action === "enroll") return json(req, await enroll(req, body));
+    if (action === "redeem") return json(req, await redeem(req));
     if (action === "login") return json(req, await login(req, body));
     if (action === "createEnrollment") return json(req, await createEnrollment(req));
     throw new HttpError(400, "INVALID_ACTION");

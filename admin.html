@@ -363,10 +363,10 @@
   <button type="button" onclick="richStar()" title="별표">⭐</button>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="vendor/pdfjs/3.11.174/pdf.min.js"></script>
 <script src="data.js"></script>
 <script src="mock-data.js"></script>
-<script src="hs-auth.js?v=20260825b"></script>
+<script src="hs-auth.js?v=20260825c"></script>
 <script>
   const REPO = "docssam1/hs-report";
   const FILE_PATH = "data.js";
@@ -611,7 +611,7 @@
     const st=document.getElementById('spl-'+id+'-'+i); const setp=(m)=>{ if(st) st.textContent=m; };
     if(!window.pdfjsLib){ toast('PDF 라이브러리 로딩 실패 — 새로고침 후 다시'); return; }
     try{
-      pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      pdfjsLib.GlobalWorkerOptions.workerSrc='vendor/pdfjs/3.11.174/pdf.worker.min.js';
       setp('생성 중입니다… PDF 불러오는 중');
       const data=await fetch(t.url).then(r=>{ if(!r.ok) throw new Error('PDF fetch '+r.status); return r.arrayBuffer(); });
       const pdf=await pdfjsLib.getDocument({data}).promise; const n=pdf.numPages;
@@ -916,7 +916,7 @@
     const st=document.getElementById('bspl-'+i); const setp=(m)=>{ if(st) st.textContent=m; };
     if(!window.pdfjsLib){ toast('PDF 라이브러리 로딩 실패 — 새로고침 후 다시'); return; }
     try{
-      pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      pdfjsLib.GlobalWorkerOptions.workerSrc='vendor/pdfjs/3.11.174/pdf.worker.min.js';
       setp('생성 중… PDF 불러오는 중');
       const data=await fetch(b.pdf).then(r=>{ if(!r.ok) throw new Error('PDF fetch '+r.status); return r.arrayBuffer(); });
       const pdf=await pdfjsLib.getDocument({data}).promise; const n=pdf.numPages;

@@ -80,16 +80,44 @@ function jsonResponse(body, status = 200) {
     expires_in: 3600,
     user: { id: 'admin-1', app_metadata: { role: 'admin', admin_id: 'DOCSSAM' } },
   };
-  auth = load(storage, async (url) => {
+  auth = load(storage, async (url, options) => {
     if (String(url).includes('/functions/v1/hs-admin-session')) {
+      assert.equal(JSON.parse(options.body).action, 'enroll');
       return jsonResponse({ session: adminSession, deviceToken: 'device-token-which-is-long-enough' });
     }
     throw new Error(`unexpected request ${url}`);
   });
-  await auth.signIn('DOCSSAM', '01020837265', { enrollmentToken: 'bootstrap-token-which-is-long-enough' });
+  await auth.signIn('DOCSSAM', '01020837265', { enrollmentToken: 'B'.repeat(48) });
   assert.ok(storage.getItem('gfield_hs_admin_session_v1'));
   assert.ok(storage.getItem('gfield_hs_student_session_v1'), 'admin login must not erase student session');
   assert.equal(JSON.stringify(storage.dump()).includes('01020837265'), false, 'admin approval number must not be stored');
+
+  const activationToken = 'A'.repeat(48);
+  const activationStorage = makeStorage();
+  auth = load(activationStorage, async (url, options) => {
+    assert.ok(String(url).includes('/functions/v1/hs-admin-session'));
+    assert.equal(JSON.parse(options.body).action, 'redeem');
+    assert.equal(options.headers['X-Bootstrap-Token'], activationToken);
+    return jsonResponse({ session: adminSession, deviceToken: 'activated-device-token-which-is-long-enough' });
+  });
+  await auth.redeemAdminEnrollment(activationToken);
+  assert.ok(activationStorage.getItem('gfield_hs_admin_session_v1'), 'activation must store the admin session');
+  assert.ok(activationStorage.getItem('gfield_hs_admin_device_v1'), 'activation must store the device key');
+  assert.equal(JSON.stringify(activationStorage.dump()).includes(activationToken), false, 'one-time activation token must not be stored');
+
+  const invalidRoleStorage = makeStorage();
+  auth = load(invalidRoleStorage, async () => jsonResponse({
+    session: { ...adminSession, user: { id: 'not-admin', app_metadata: { role: 'student' } } },
+    deviceToken: 'R'.repeat(48),
+  }));
+  await assert.rejects(() => auth.redeemAdminEnrollment('C'.repeat(48)), error => error.code === 'FORBIDDEN');
+  assert.equal(invalidRoleStorage.getItem('gfield_hs_admin_session_v1'), null, 'non-admin activation must not store a session');
+  assert.equal(invalidRoleStorage.getItem('gfield_hs_admin_device_v1'), null, 'non-admin activation must not store a device key');
+
+  const blockedStorage = makeStorage();
+  blockedStorage.setItem = () => { throw new Error('blocked'); };
+  auth = load(blockedStorage, async () => jsonResponse({ session: adminSession, deviceToken: 'S'.repeat(48) }));
+  await assert.rejects(() => auth.redeemAdminEnrollment('D'.repeat(48)), error => error.code === 'STORAGE_UNAVAILABLE');
 
   const expired = JSON.parse(storage.getItem('gfield_hs_student_session_v1'));
   expired.expires_at = Math.floor(Date.now() / 1000) - 1;
@@ -99,7 +127,7 @@ function jsonResponse(body, status = 200) {
   assert.equal(offline, null);
   assert.ok(storage.getItem('gfield_hs_student_session_v1'), 'network errors must not erase the stored session');
 
-  console.log('PASS hs-auth persistent, separated, no-raw-code, offline-safe');
+  console.log('PASS hs-auth persistent, separated, one-time activation, role/storage guarded, no-raw-code, offline-safe');
 })().catch((error) => {
   console.error(error);
   process.exitCode = 1;

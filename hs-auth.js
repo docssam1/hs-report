@@ -61,8 +61,11 @@
   }
 
   function storeAdminDevice(value){
-    if(!value)return;
-    try{localStorage.setItem(ADMIN_DEVICE_KEY,String(value))}catch(e){}
+    if(!value)return false;
+    try{
+      localStorage.setItem(ADMIN_DEVICE_KEY,String(value));
+      return localStorage.getItem(ADMIN_DEVICE_KEY)===String(value);
+    }catch(e){return false}
   }
 
   function forgetAdminDevice(){
@@ -157,6 +160,33 @@
     return store(session,normalized,'student');
   }
 
+  function storeAdminResult(result,name){
+    var session=result&&result.session;
+    var role=session&&session.user&&session.user.app_metadata&&session.user.app_metadata.role;
+    if(role!=='admin'&&role!=='teacher'){
+      var forbidden=new Error('관리자 권한을 확인하지 못했습니다.');
+      forbidden.code='FORBIDDEN';throw forbidden;
+    }
+    var issuedDevice=result&&result.deviceToken?String(result.deviceToken):'';
+    var deviceToken=issuedDevice||readAdminDevice();
+    if(deviceToken.length<32){
+      var missing=new Error('관리자 기기 정보를 받지 못했습니다.');
+      missing.code='DEVICE_NOT_ENROLLED';throw missing;
+    }
+    try{
+      if(issuedDevice&&!storeAdminDevice(issuedDevice))throw new Error('device-storage');
+      var saved=store(session,normalizeName(name),'admin');
+      var verified=readStored('admin');
+      if(!verified||verified.access_token!==saved.access_token||readAdminDevice()!==deviceToken)throw new Error('session-storage');
+      return saved;
+    }catch(error){
+      clear('admin');
+      if(issuedDevice)forgetAdminDevice();
+      var storageError=new Error('이 브라우저가 로그인 정보 저장을 차단했습니다. 일반 창에서 다시 등록해 주세요.');
+      storageError.code='STORAGE_UNAVAILABLE';throw storageError;
+    }
+  }
+
   async function adminSessionRequest(name,approvalCode,enrollmentToken){
     var deviceToken=readAdminDevice();
     var action=enrollmentToken?'enroll':'login';
@@ -171,8 +201,23 @@
       var error=new Error((result&&(result.message||result.error))||'관리자 로그인을 확인해 주세요.');
       error.status=response.status;error.code=result&&result.error;throw error;
     }
-    if(result.deviceToken)storeAdminDevice(result.deviceToken);
-    return store(result.session,normalizeName(name),'admin');
+    return storeAdminResult(result,name);
+  }
+
+  async function redeemAdminEnrollment(enrollmentToken){
+    var token=String(enrollmentToken||'');
+    if(token.length<24)throw new Error('관리자 기기 등록 링크가 올바르지 않습니다.');
+    var response=await fetch(SUPABASE_URL+'/functions/v1/hs-admin-session',{
+      method:'POST',
+      headers:{apikey:PUBLISHABLE_KEY,'Content-Type':'application/json','X-Bootstrap-Token':token},
+      body:JSON.stringify({action:'redeem'})
+    });
+    var result=null;try{result=await response.json()}catch(e){}
+    if(!response.ok){
+      var error=new Error((result&&(result.message||result.error))||'관리자 기기를 등록하지 못했습니다.');
+      error.status=response.status;error.code=result&&result.error;throw error;
+    }
+    return storeAdminResult(result,'DOCSSAM');
   }
 
   async function signIn(name,approvalCode,options){
@@ -236,6 +281,7 @@
     normalizeLoginName:normalizeLoginName,
     loginEmail:loginEmail,
     signIn:signIn,
+    redeemAdminEnrollment:redeemAdminEnrollment,
     signOut:signOut,
     getSession:getSession,
     getUser:getUser,
