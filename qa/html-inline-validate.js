@@ -5,6 +5,7 @@ const vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const FILES = [
   'admin.html',
+  'auth-admin.html',
   'final.html',
   'index.html',
   'last-answer.html',
