@@ -21,6 +21,22 @@ const LAST_VIDEOS = [
   'https://youtu.be/M4EHgd42ReU',
   'https://youtu.be/ZiOpTckV_wM',
 ];
+const ORIGINAL_FORM_BOOKS = [
+  {
+    round: 1,
+    title: '초등선발 대비 원본형 모의고사 1회',
+    imageDir: 'original_form_1',
+    pdf: 'output/pdf/hwangso-original-form-mock-01-rebuilt.pdf',
+    answer: 'output/pdf/hwangso-original-form-mock-01-rebuilt-answer.pdf',
+  },
+  {
+    round: 2,
+    title: '초등선발 대비 원본형 모의고사 2회',
+    imageDir: 'original_form_2',
+    pdf: 'output/pdf/hwangso-original-form-mock-02-rebuilt.pdf',
+    answer: 'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf',
+  },
+];
 const ONLINE_STUDENT = '검수온라인';
 const ONSITE_STUDENT = '검수재원';
 
@@ -198,6 +214,25 @@ function assertLastLibraryBooks(data, online) {
   });
 }
 
+function assertOriginalFormBooks(data) {
+  ORIGINAL_FORM_BOOKS.forEach((expected) => {
+    const matches = (data.books || []).filter((book) => (
+      book && book.folder === '추가 모의고사' && book.title === expected.title
+    ));
+    assert.equal(matches.length, 1, `${expected.title} 책은 정확히 하나여야 함`);
+    const book = matches[0];
+    assert.equal(book.imgdir, expected.imageDir, `${expected.title} imgdir`);
+    assert.equal(book.pages, 6, `${expected.title} pages`);
+    assert.equal(book.pdf, expected.pdf, `${expected.title} 원본 PDF`);
+    assert.equal(book.desc, '90분 · 30문항 · 100점', `${expected.title} 시험 정보`);
+    const answer = linkFor(book, '정답지 PDF');
+    assert.equal(answer.url, expected.answer, `${expected.title} 정답 PDF`);
+    assertImageSet(expected.imageDir, 6);
+    assert.equal(fs.existsSync(path.join(ROOT, expected.pdf)), true, `${expected.title} 원본 PDF 파일`);
+    assert.equal(fs.existsSync(path.join(ROOT, expected.answer)), true, `${expected.title} 정답 PDF 파일`);
+  });
+}
+
 check('파이널 1~4회 서재 JPG 메타데이터와 중복 없는 세 링크', () => {
   assertFinalLibraryBooks(configuredData(ONSITE_STUDENT));
 });
@@ -208,6 +243,10 @@ check('최종 1~4회 일반 회원 서재 링크', () => {
 
 check('최종 1~4회 온라인 회원 성적 입력 링크', () => {
   assertLastLibraryBooks(configuredData(ONLINE_STUDENT), true);
+});
+
+check('추가 모의고사 원본형 1·2회 이미지·PDF·정답 연결', () => {
+  assertOriginalFormBooks(configuredData(ONSITE_STUDENT));
 });
 
 check('파이널·최종 JPG 자산이 메타데이터와 일치', () => {

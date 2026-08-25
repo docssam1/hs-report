@@ -114,6 +114,34 @@
     3:'https://youtu.be/M4EHgd42ReU',
     4:'https://youtu.be/ZiOpTckV_wM'
   };
+  var originalFormBooks=[
+    {
+      folder:'추가 모의고사',
+      title:'초등선발 대비 원본형 모의고사 1회',
+      desc:'90분 · 30문항 · 100점',
+      pdf:'output/pdf/hwangso-original-form-mock-01-rebuilt.pdf',
+      imgdir:'original_form_1',
+      pages:6,
+      video:'',
+      date:'2026-08-25',
+      links:[
+        {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-01-rebuilt-answer.pdf'}
+      ]
+    },
+    {
+      folder:'추가 모의고사',
+      title:'초등선발 대비 원본형 모의고사 2회',
+      desc:'90분 · 30문항 · 100점',
+      pdf:'output/pdf/hwangso-original-form-mock-02-rebuilt.pdf',
+      imgdir:'original_form_2',
+      pages:6,
+      video:'',
+      date:'2026-08-25',
+      links:[
+        {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf'}
+      ]
+    }
+  ];
 
   function studentName(){
     return (typeof currentStudent!=='undefined'&&currentStudent)?String(currentStudent):'';
@@ -130,7 +158,16 @@
     var match=String(book&&book.title||'').match(/([1-4])\s*회/);
     return match?Number(match[1]):0;
   }
+  function ensureOriginalFormBooks(){
+    originalFormBooks.forEach(function(source){
+      var exists=data.books.some(function(book){
+        return book&&book.folder===source.folder&&book.title===source.title;
+      });
+      if(!exists) data.books.push(Object.assign({},source,{links:source.links.map(function(link){return Object.assign({},link);})}));
+    });
+  }
   function syncMockLibraryBooks(){
+    ensureOriginalFormBooks();
     data.books.forEach(function(book){
       if(!book) return;
       var round=roundOf(book);

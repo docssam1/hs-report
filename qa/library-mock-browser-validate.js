@@ -8,7 +8,15 @@ const { chromium } = require(process.env.GFIELD_QA_PLAYWRIGHT || 'playwright');
 const ROOT = path.resolve(__dirname, '..');
 const BASE_URL = process.env.GFIELD_QA_BASE_URL || 'http://127.0.0.1:8765';
 const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
+const SCREENSHOT_DIR = process.env.GFIELD_QA_SCREENSHOT_DIR || '';
 const STUDENT = '검수학생';
+
+async function capture(page, filename) {
+  if (!SCREENSHOT_DIR) return;
+  const directory = path.resolve(ROOT, SCREENSHOT_DIR);
+  fs.mkdirSync(directory, { recursive: true });
+  await page.screenshot({ path: path.join(directory, filename), fullPage: false });
+}
 
 function expectedHref(locator, pattern, label) {
   return locator.getAttribute('href').then((href) => {
@@ -33,7 +41,7 @@ function expectedHref(locator, pattern, label) {
       const source = fs.readFileSync(path.join(ROOT, 'data.js'), 'utf8');
       const qaData = `\n;(function(){var D=window.GFIELD_DATA;var n=${JSON.stringify(STUDENT)};`+
         `if(!D.students.includes(n))D.students.push(n);D.studentTypes[n]='online';`+
-        `['파이널 모의고사','최종 모의고사','약점 유형'].forEach(function(f){if(!Array.isArray(D.archiveAccess[f]))D.archiveAccess[f]=[];if(!D.archiveAccess[f].includes(n))D.archiveAccess[f].push(n);});})();`;
+        `['파이널 모의고사','최종 모의고사','추가 모의고사','약점 유형'].forEach(function(f){if(!Array.isArray(D.archiveAccess[f]))D.archiveAccess[f]=[];if(!D.archiveAccess[f].includes(n))D.archiveAccess[f].push(n);});})();`;
       await route.fulfill({ status: 200, contentType: 'application/javascript; charset=utf-8', body: source + qaData });
     });
 
@@ -83,6 +91,23 @@ function expectedHref(locator, pattern, label) {
     await expectedHref(page.getByRole('link', { name: /성적 입력/ }), /last1-entry\.html\?round=1/, '최종 성적 입력');
     await expectedHref(page.getByRole('link', { name: /성적 확인·진단/ }), /last1-result\.html\?round=1/, '최종 성적 진단');
 
+    await page.click('#bookviewer .bv-back');
+    await page.getByRole('button', { name: /초등선발 대비 원본형 모의고사 1회/ }).click();
+    await page.waitForSelector('#bookviewer.open');
+    assert.equal(await page.locator('#bookviewer .bv-pg').count(), 6, '원본형 1회 서재 이미지 쪽수');
+    assert.equal(await page.locator('#bookviewer .wm3 span').count(), 18, '원본형 1회 워터마크 수');
+    assert.equal(await page.locator('#bookviewer .wm3 span').evaluateAll(nodes => nodes.filter(node => Number(getComputedStyle(node).opacity) > 0).length), 6, '원본형 화면은 쪽마다 흐린 워터마크 한 줄');
+    assert.equal(await page.getByRole('link', { name: /정답지 PDF/ }).getAttribute('href'), 'output/pdf/hwangso-original-form-mock-01-rebuilt-answer.pdf', '원본형 1회 정답 링크');
+    await capture(page, 'original-form-viewer-desktop.png');
+    const originalPopupPromise = page.waitForEvent('popup');
+    await page.getByRole('button', { name: /인쇄/ }).click();
+    const originalPrintPage = await originalPopupPromise;
+    await originalPrintPage.waitForSelector('.pg', { state: 'attached' });
+    assert.equal(await originalPrintPage.locator('.pg').count(), 6, '원본형 1회 인쇄 창 쪽수');
+    assert.equal(await originalPrintPage.locator('.wm span').count(), 18, '원본형 1회 인쇄 워터마크 수');
+    assert.equal(await originalPrintPage.locator('.wm span').first().textContent(), `${STUDENT} · 지필드 영재교육`, '원본형 인쇄 학생 워터마크');
+    await originalPrintPage.close();
+
     await page.setViewportSize({ width: 390, height: 844 });
     const mobile = await page.evaluate(() => ({
       viewport: window.innerWidth,
@@ -91,6 +116,7 @@ function expectedHref(locator, pattern, label) {
     }));
     assert.ok(mobile.documentWidth <= mobile.viewport + 1, '서재 모바일 가로 넘침');
     assert.ok(mobile.viewerRight <= mobile.viewport + 1, '서재 뷰어 모바일 너비');
+    await capture(page, 'original-form-viewer-mobile.png');
 
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.click('#bookviewer .bv-back');
