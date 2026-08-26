@@ -91,13 +91,16 @@ check('유사형은 셋째 칸 앞이 벽', () => assert.strictEqual(similar.sig
 const sandbox = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(repo, 'mock-data-original.js'), 'utf8'), sandbox);
 const data = sandbox.window.GFIELD_MOCK_ORIGINAL;
-const originalItem = data.rounds['1'].items[27];
+const originalItem = data.rounds['1'].items[29];
 const similarItem = data.rounds['2'].items[29];
-check('1회 28번 진단 정답 H1', () => assert.strictEqual(originalItem.answer, 'H1'));
+check('1회 30번 진단 정답 H1', () => assert.strictEqual(originalItem.answer, 'H1'));
 check('2회 30번 진단 정답 D6', () => assert.strictEqual(similarItem.answer, 'D6'));
 check('두 문항 대영역은 도형', () => assert.deepStrictEqual([originalItem.area, similarItem.area], ['도형', '도형']));
 check('두 문항 소영역은 공간지각', () => assert.deepStrictEqual([originalItem.subarea, similarItem.subarea], ['공간지각', '공간지각']));
-check('두 문항 세부유형이 같아 반복 약점 진단 가능', () => assert.strictEqual(originalItem.type, similarItem.type));
+check('두 문항 세부유형은 원문형·회전 유사형으로 구분', () => assert.deepStrictEqual(
+  [originalItem.type, similarItem.type],
+  ['평면 미로와 입체 시야', '회전한 시점의 미로'],
+));
 
 const restoredHtml = path.resolve(repo, '..', '메뉴얼', '영재성_미로입체_복원문제.html');
 if (fs.existsSync(restoredHtml)) {

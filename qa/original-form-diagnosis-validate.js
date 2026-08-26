@@ -90,27 +90,28 @@ check('공개 점수컷 2개년 산술평균과 경계값', () => {
   });
 });
 
-check('자동차·별 정정 답과 버전 이미지 경로', () => {
+check('새 2회 자동차·두 동물 키 차 정답과 버전 이미지 경로', () => {
   assert.equal(model.rounds['2'].items[1].answer, '8m');
-  assert.equal(model.rounds['2'].items[4].answer, '102개');
+  assert.equal(model.rounds['2'].items[4].answer, '25cm');
   assert.equal(model.rounds['2'].paper.imageDir, 'original_form_2_v2');
 });
 
-check('24번 반복 분할은 등비 규칙으로 분류', () => {
+check('25번 반복 분할은 마디수열·규칙찾기로 분류', () => {
   for (const roundNo of ['1', '2']) {
-    const item = model.rounds[roundNo].items[23];
+    const item = model.rounds[roundNo].items[24];
     assert.equal(item.area, '수·규칙찾기');
     assert.equal(item.subarea, '마디수열·규칙찾기');
-    assert.equal(item.type, '등비 규칙의 활용(도형 분할)');
   }
+  assert.equal(model.rounds['1'].items[24].type, '반복 분할 선 길이');
+  assert.equal(model.rounds['2'].items[24].type, '3등분 반복 선 길이');
 });
 
-check('도형이 나타내는 수는 기존 수·규칙찾기·복면산 기준', () => {
-  for (const [roundNo, index] of [['1', 4], ['2', 0]]) {
-    const item = model.rounds[roundNo].items[index];
-    assert.equal(item.area, '수·규칙찾기');
-    assert.equal(item.subarea, '복면산');
-    assert.equal(item.type, '도형이 나타내는 수');
+check('23번 제한된 수의 최소합은 식의 계산·식의 완성 기준', () => {
+  for (const roundNo of ['1', '2']) {
+    const item = model.rounds[roundNo].items[22];
+    assert.equal(item.area, '식의 계산');
+    assert.equal(item.subarea, '식의 완성');
+    assert.equal(item.type, '제한된 수의 최소합');
   }
 });
 
@@ -133,10 +134,10 @@ check('소영역 수행률과 1문항 확인 필요 판정', () => {
   const ox = Array(30).fill('O');
   ox[8] = 'X';
   const stats = core.subareaAgg(model.rounds['2'].items, ox);
-  const ven = stats.find((row) => row.k === '벤다이어그램');
-  assert.equal(ven.n, 1);
-  assert.equal(ven.wrongNos[0], 9);
-  assert.equal(core.originalWeakStatus(ven), '확인 필요');
+  const interval = stats.find((row) => row.k === '간격 문제');
+  assert.equal(interval.n, 1);
+  assert.equal(interval.wrongNos[0], 9);
+  assert.equal(core.originalWeakStatus(interval), '확인 필요');
 });
 
 check('두 회차 같은 소영역 반복 오답 감지', () => {
