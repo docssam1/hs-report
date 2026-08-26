@@ -5,6 +5,10 @@ const vm = require('node:vm');
 const { webcrypto } = require('node:crypto');
 
 const source = fs.readFileSync(path.join(__dirname, '..', 'hs-auth.js'), 'utf8');
+const adminFunctionSource = fs.readFileSync(
+  path.join(__dirname, '..', 'supabase', 'functions', 'hs-admin-session', 'index.ts'),
+  'utf8',
+);
 
 function makeStorage() {
   const values = new Map();
@@ -92,6 +96,30 @@ function jsonResponse(body, status = 200) {
   assert.ok(storage.getItem('gfield_hs_student_session_v1'), 'admin login must not erase student session');
   assert.equal(JSON.stringify(storage.dump()).includes('01020837265'), false, 'admin approval number must not be stored');
 
+  const regularAdminStorage = makeStorage();
+  const issuedDeviceToken = 'new-device-token-which-is-long-enough-for-login';
+  let regularLoginCount = 0;
+  auth = load(regularAdminStorage, async (url, options) => {
+    assert.ok(String(url).includes('/functions/v1/hs-admin-session'));
+    const body = JSON.parse(options.body);
+    assert.equal(body.action, 'login');
+    regularLoginCount += 1;
+    if (regularLoginCount === 1) {
+      assert.equal(body.deviceToken, '', 'first approval-code login starts without a device key');
+      return jsonResponse({ session: adminSession, deviceToken: issuedDeviceToken });
+    }
+    assert.equal(body.deviceToken, issuedDeviceToken, 'later logins reuse the stored device key');
+    return jsonResponse({ session: adminSession });
+  });
+  await auth.signIn('DOCSSAM', '01020837265');
+  assert.equal(
+    regularAdminStorage.getItem('gfield_hs_admin_device_v1'),
+    issuedDeviceToken,
+    'approval-code login must persist the automatically issued device key',
+  );
+  await auth.signIn('DOCSSAM', '01020837265');
+  assert.equal(regularLoginCount, 2);
+
   const activationToken = 'A'.repeat(48);
   const activationStorage = makeStorage();
   auth = load(activationStorage, async (url, options) => {
@@ -127,7 +155,19 @@ function jsonResponse(body, status = 200) {
   assert.equal(offline, null);
   assert.ok(storage.getItem('gfield_hs_student_session_v1'), 'network errors must not erase the stored session');
 
-  console.log('PASS hs-auth persistent, separated, one-time activation, role/storage guarded, no-raw-code, offline-safe');
+  const loginStart = adminFunctionSource.indexOf('async function login(');
+  const loginEnd = adminFunctionSource.indexOf('async function createEnrollment(', loginStart);
+  const loginSource = adminFunctionSource.slice(loginStart, loginEnd);
+  assert.ok(loginStart >= 0 && loginEnd > loginStart, 'admin login source must be discoverable');
+  assert.ok(adminFunctionSource.includes('async function issueDeviceSession('), 'device-session issuer must exist');
+  assert.equal(
+    loginSource.includes('if (deviceToken.length < 32) throw new HttpError(403, "DEVICE_NOT_ENROLLED")'),
+    false,
+    'a valid approval code must not be rejected only because this browser has no stored device key',
+  );
+  assert.ok(loginSource.includes('return issueDeviceSession(account);'), 'missing or stale devices must be re-enrolled');
+
+  console.log('PASS hs-auth persistent, separated, auto-device enrollment, one-time activation, role/storage guarded, no-raw-code, offline-safe');
 })().catch((error) => {
   console.error(error);
   process.exitCode = 1;

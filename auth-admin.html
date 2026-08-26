@@ -134,8 +134,9 @@
      var button=$('enrollmentBtn');setBusy(button,true,'새 기기 등록');
      try{
        var result=await A.functionCall('hs-admin-session',{action:'createEnrollment'},'admin');
-       var link=location.origin+location.pathname+'#enroll='+encodeURIComponent(result.enrollmentToken);
-       showCode('새 관리자 기기 등록 링크',link);
+       var activationUrl=new URL('admin-activate.html',location.href);
+       activationUrl.hash='activate='+encodeURIComponent(result.enrollmentToken);
+       showCode('새 관리자 기기 등록 링크',activationUrl.href);
      }catch(error){alert(error.message||'등록 링크를 만들지 못했습니다.')}finally{setBusy(button,false,'새 기기 등록')}
    }
    async function boot(){

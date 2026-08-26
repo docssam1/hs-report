@@ -165,6 +165,24 @@ async function issueSession(email: string) {
   return data.session;
 }
 
+async function issueDeviceSession(
+  account: { user_id: string; login_email: string },
+  now = new Date().toISOString(),
+) {
+  const session = await issueSession(account.login_email);
+  const deviceToken = randomToken(48);
+  const deviceHash = await sha256(deviceToken);
+  const { error: deviceError } = await service.from("hs_admin_devices").insert({
+    admin_user_id: account.user_id,
+    token_hash: deviceHash,
+    label: "관리자 브라우저",
+    active: true,
+    last_used_at: now,
+  });
+  if (deviceError) throw new HttpError(500, "DEVICE_ENROLL_FAILED");
+  return { session, deviceToken, admin: { name: ADMIN_NAME } };
+}
+
 async function requireAdmin(req: Request) {
   const header = req.headers.get("authorization") || "";
   const token = header.startsWith("Bearer ") ? header.slice(7) : "";
@@ -196,18 +214,7 @@ async function completeEnrollment(enrollmentToken: string) {
   if (consumeError || !consumed) throw new HttpError(401, "INVALID_CREDENTIALS");
 
   try {
-    const session = await issueSession(account.login_email);
-    const deviceToken = randomToken(48);
-    const deviceHash = await sha256(deviceToken);
-    const { error: deviceError } = await service.from("hs_admin_devices").insert({
-      admin_user_id: account.user_id,
-      token_hash: deviceHash,
-      label: "관리자 브라우저",
-      active: true,
-      last_used_at: now,
-    });
-    if (deviceError) throw new HttpError(500, "DEVICE_ENROLL_FAILED");
-    return { session, deviceToken, admin: { name: ADMIN_NAME } };
+    return await issueDeviceSession(account, now);
   } catch (error) {
     await service.from("hs_admin_enrollments")
       .update({ used_at: null })
@@ -241,20 +248,28 @@ async function login(req: Request, body: Record<string, unknown>) {
     && constantEqual(approvalHash, ADMIN_APPROVAL_HASH);
   const deviceToken = String(body.deviceToken ?? "");
   if (!validCredentials) throw new HttpError(401, "INVALID_CREDENTIALS");
-  if (deviceToken.length < 32) throw new HttpError(403, "DEVICE_NOT_ENROLLED");
 
   const account = await ensureAdmin();
-  const deviceHash = await sha256(deviceToken);
-  const { data: device, error: deviceError } = await service.from("hs_admin_devices")
-    .select("id,admin_user_id,active")
-    .eq("token_hash", deviceHash)
-    .eq("admin_user_id", account.user_id)
-    .eq("active", true)
-    .maybeSingle();
-  if (deviceError || !device) throw new HttpError(403, "DEVICE_NOT_ENROLLED");
-  const session = await issueSession(account.login_email);
-  await service.from("hs_admin_devices").update({ last_used_at: new Date().toISOString() }).eq("id", device.id);
-  return { session, admin: { name: ADMIN_NAME } };
+  if (deviceToken.length >= 32) {
+    const deviceHash = await sha256(deviceToken);
+    const { data: device, error: deviceError } = await service.from("hs_admin_devices")
+      .select("id,admin_user_id,active")
+      .eq("token_hash", deviceHash)
+      .eq("admin_user_id", account.user_id)
+      .eq("active", true)
+      .maybeSingle();
+    if (deviceError) throw new HttpError(500, "DEVICE_LOOKUP_FAILED");
+    if (device) {
+      const session = await issueSession(account.login_email);
+      const { error: updateError } = await service.from("hs_admin_devices")
+        .update({ last_used_at: new Date().toISOString() })
+        .eq("id", device.id);
+      if (updateError) throw new HttpError(500, "DEVICE_UPDATE_FAILED");
+      return { session, admin: { name: ADMIN_NAME } };
+    }
+  }
+
+  return issueDeviceSession(account);
 }
 
 async function createEnrollment(req: Request) {

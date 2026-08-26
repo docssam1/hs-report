@@ -49,7 +49,11 @@ const adminSession = {
     if (url.includes('/functions/v1/hs-admin-session') && body.action === 'login') {
       assert.equal(body.name, 'DOCSSAM');
       assert.equal(body.approvalCode, '01020837265');
+      assert.equal(body.deviceToken, '', 'a browser without a device key must be allowed to request automatic enrollment');
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ session: adminSession, deviceToken: 'D'.repeat(48) }) });
+    }
+    if (url.includes('/functions/v1/hs-admin-session') && body.action === 'createEnrollment') {
+      return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ enrollmentToken: 'A'.repeat(48), expiresAt: '2026-08-26T12:00:00.000Z' }) });
     }
     if (url.includes('/functions/v1/hs-approval-admin') && body.action === 'list') {
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ accounts: [], resultStudents: [], unownedStudents: [] }) });
@@ -92,12 +96,22 @@ const adminSession = {
 
     const stored = await page.evaluate(() => ({ ...localStorage }));
     assert.ok(stored.gfield_hs_admin_session_v1, 'admin session stored');
+    assert.equal(stored.gfield_hs_admin_device_v1, 'D'.repeat(48), 'automatically issued device key stored');
     assert.ok(stored.gfield_hs_student_session_v1, 'student session remains separate');
     assert.equal(JSON.stringify(stored).includes('01020837265'), false, 'raw admin approval number not stored');
 
     await page.reload({ waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#dashboard:not(.hidden)');
     assert.equal(await page.locator('#loginPanel.hidden').count(), 1, 'saved session restores without another login');
+
+    await page.click('#enrollmentBtn');
+    await page.waitForSelector('#codeModal:not(.hidden)');
+    assert.equal(
+      await page.locator('#codeValue').textContent(),
+      `${BASE_URL}/admin-activate.html#activate=${'A'.repeat(48)}`,
+      'new-device link points to the dedicated one-time activation page',
+    );
+    await page.click('#closeModalBtn');
 
     const firstIssue = page.locator('[data-issue]').first();
     await firstIssue.click();
