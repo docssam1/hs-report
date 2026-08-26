@@ -34,8 +34,11 @@ function pngInfo(name, expectedColorTypes = [2, 6]) {
   'gpt-frog-side-v1.png',
   'gpt-palm-tree-v1.png',
   'gpt-imp-head-v1.png',
-  'gpt-overlap-digits-dense-a-v1.png',
-  'gpt-overlap-digits-dense-b-v1.png',
+  'gpt-overlap-digits-original-style-a-v1.png',
+  'gpt-overlap-digits-original-style-b-v1.png',
+  'gpt-island-maze-mono-a-v1.png',
+  'gpt-island-maze-mono-b-v1.png',
+  // The colored versions are retained only as private topology truth masks.
   'gpt-island-maze-dense-a-v1.png',
   'gpt-island-maze-dense-b-v1.png',
 ].forEach((name) => pngInfo(name));
@@ -47,12 +50,19 @@ const slipperFunction = renderer.match(/function slippersFigure\(variant = 1\) \
 const islandFunction = renderer.match(/function islandFigure\(variant = 1\) \{[\s\S]*?\n\}/)[0];
 check(dogFunction.includes('gpt-puppy-side-v1.png'), 'dog figure consumes GPT raster puppy');
 check(!dogFunction.includes('<svg') && !dogFunction.includes('<ellipse'), 'dog figure has no SVG placeholder dog');
-check(digitFunction.includes('gpt-overlap-digits-dense-a-v1.png') && digitFunction.includes('gpt-overlap-digits-dense-b-v1.png'), 'both used digit variants consume dense GPT raster assets');
+check(digitFunction.includes('gpt-overlap-digits-original-style-a-v1.png') && digitFunction.includes('gpt-overlap-digits-original-style-b-v1.png'), 'both used digit variants preserve the original handwritten raster style');
 check(!digitFunction.includes('return svg'), 'digit figure has no SVG text tangle');
 check(leadFunction.includes('gpt-pencil-lead-horizontal-v3.png'), 'lead figures consume one consistent horizontal GPT raster lead');
 check(slipperFunction.includes('gpt-left-slipper-top-v2.png') && slipperFunction.includes('gpt-left-slipper-sole-v1.png'), 'slipper figures consume GPT raster top and sole views');
-check(islandFunction.includes('gpt-island-maze-dense-a-v1.png') && islandFunction.includes('gpt-island-maze-dense-b-v1.png'), 'both island variants consume maze-like GPT raster backgrounds');
+check(islandFunction.includes('gpt-island-maze-mono-a-v1.png') && islandFunction.includes('gpt-island-maze-mono-b-v1.png'), 'both island variants consume monochrome maze-like raster backgrounds');
+check(!islandFunction.includes('gpt-island-maze-dense-'), 'colored topology masks are never exposed in the exam renderer');
+check(!islandFunction.includes('island-tag'), 'island art has no answer-guiding A/B tags');
 check(!islandFunction.includes('return svg'), 'island figure no longer uses an SVG land diagram');
+
+const islandMapStyle = renderer.match(/\.island-maze-map\{[^}]+\}/)?.[0] || '';
+const islandFrogStyle = renderer.match(/\.island-frog\{[^}]+\}/)?.[0] || '';
+check(/background\s*:\s*(?:#fff(?:fff)?|white)\b/i.test(islandMapStyle), 'island map uses a white, unfilled background');
+check(/filter\s*:[^;}]*grayscale\(1\)[^;}]*brightness\(/i.test(islandFrogStyle), 'frog artwork is filtered to a monochrome silhouette');
 
 function questionHtml(html, number) {
   const marker = `<h2>${number}.`;
@@ -69,10 +79,11 @@ const round2Html = fs.readFileSync(path.join(privateRoot, 'original-form-round2-
 const r1q12 = questionHtml(round1Html, 12);
 check((r1q12.match(/gpt-puppy-side-v1\.png/g) || []).length === 5, 'round 1 q12 shows exactly five puppies');
 check(['2m', '4m', '2m', '3m', '5m', '6m', '3m'].every((label) => r1q12.includes(`>${label}<`)), 'round 1 q12 retains all seven distance labels');
-check(questionHtml(round1Html, 7).includes('gpt-overlap-digits-dense-a-v1.png'), 'round 1 q7 uses neutral-filename dense digit art');
-check(questionHtml(round2Html, 1).includes('gpt-overlap-digits-dense-b-v1.png'), 'round 2 q1 uses neutral-filename dense digit art');
-check(questionHtml(round1Html, 4).includes('gpt-island-maze-dense-a-v1.png'), 'round 1 q4 uses maze-like raster island art');
-check(questionHtml(round2Html, 10).includes('gpt-island-maze-dense-b-v1.png'), 'round 2 q10 uses maze-like raster island art');
+check(questionHtml(round1Html, 7).includes('gpt-overlap-digits-original-style-a-v1.png'), 'round 1 q7 uses original-style digit art');
+check(questionHtml(round2Html, 1).includes('gpt-overlap-digits-original-style-b-v1.png'), 'round 2 q1 uses original-style digit art');
+check(questionHtml(round1Html, 4).includes('gpt-island-maze-mono-a-v1.png'), 'round 1 q4 uses monochrome maze-like raster island art');
+check(questionHtml(round2Html, 10).includes('gpt-island-maze-mono-b-v1.png'), 'round 2 q10 uses monochrome maze-like raster island art');
+check(!questionHtml(round1Html, 4).includes('island-tag') && !questionHtml(round2Html, 10).includes('island-tag'), 'rendered island questions contain no answer-guiding tags');
 check((questionHtml(round1Html, 2).match(/class="lead-piece whole"/g) || []).length === 14, 'round 1 q2 has fourteen equal-size lead instances');
 check((questionHtml(round1Html, 2).match(/--w:40%/g) || []).length === 14, 'round 1 q2 keeps all fourteen leads at one physical length');
 check((questionHtml(round2Html, 6).match(/class="lead-piece whole"/g) || []).length === 9, 'round 2 q6 has nine whole lead instances');

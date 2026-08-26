@@ -8,11 +8,16 @@ ROOT = Path(__file__).resolve().parents[1]
 ASSET_DIR = ROOT / "assets" / "original-form"
 
 
-def land_labels(asset_name: str, minimum_area: int = 30_000):
+def read_image(asset_name: str):
     asset_path = ASSET_DIR / asset_name
     image = cv2.imdecode(np.fromfile(asset_path, dtype=np.uint8), cv2.IMREAD_COLOR)
     if image is None:
         raise AssertionError(f"missing raster asset: {asset_name}")
+    return image
+
+
+def stable_land_mask(asset_name: str, minimum_area: int = 30_000):
+    image = read_image(asset_name)
 
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     land = (hsv[:, :, 0] < 50).astype(np.uint8)
@@ -25,10 +30,80 @@ def land_labels(asset_name: str, minimum_area: int = 30_000):
         if stats[index, cv2.CC_STAT_AREA] >= minimum_area:
             stable[labels == index] = 1
 
+    return image, stable
+
+
+def land_labels(asset_name: str, minimum_area: int = 30_000):
+    _, stable = stable_land_mask(asset_name, minimum_area)
+
     component_count, components, _, _ = cv2.connectedComponentsWithStats(stable, 8)
     land_distance = cv2.distanceTransform(stable, cv2.DIST_L2, 5)
     water_distance = cv2.distanceTransform(1 - stable, cv2.DIST_L2, 5)
     return components, land_distance, water_distance, component_count - 1
+
+
+def validate_monochrome_alignment(
+    source_name: str, mono_name: str, minimum_area: int = 30_000
+):
+    """Verify that public art is unfilled monochrome art over the source topology."""
+    source, land = stable_land_mask(source_name, minimum_area)
+    mono = read_image(mono_name)
+
+    source_height, source_width = source.shape[:2]
+    mono_height, mono_width = mono.shape[:2]
+    width_error = abs(mono_width / source_width - 1.0)
+    height_error = abs(mono_height / source_height - 1.0)
+    if width_error > 0.02 or height_error > 0.02:
+        raise AssertionError(
+            f"{mono_name} changed the topology canvas size too much: "
+            f"source={source_width}x{source_height}, mono={mono_width}x{mono_height}"
+        )
+
+    gray = cv2.cvtColor(mono, cv2.COLOR_BGR2GRAY)
+    hsv = cv2.cvtColor(mono, cv2.COLOR_BGR2HSV)
+    white_ratio = float(np.mean(gray >= 245))
+    black_ratio = float(np.mean(gray <= 96))
+    colored_ratio = float(np.mean(hsv[:, :, 1] > 20))
+    if white_ratio < 0.90:
+        raise AssertionError(
+            f"{mono_name} must remain mostly white with no land/sea fill: {white_ratio:.3f}"
+        )
+    if not 0.015 <= black_ratio <= 0.12:
+        raise AssertionError(
+            f"{mono_name} needs visible but unfilled black linework: {black_ratio:.3f}"
+        )
+    if colored_ratio > 0.03:
+        raise AssertionError(
+            f"{mono_name} contains too much colored fill: {colored_ratio:.3f}"
+        )
+
+    # The generated monochrome drawing can be antialiased and shifted slightly, so
+    # compare coast coverage after resizing and dilating both edge masks. This is
+    # deliberately tolerant of line thickness while still rejecting a new topology.
+    resized = cv2.resize(mono, (source_width, source_height), interpolation=cv2.INTER_AREA)
+    resized_gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
+    mono_lines = (resized_gray < 190).astype(np.uint8)
+    coastline = cv2.morphologyEx(
+        land, cv2.MORPH_GRADIENT, np.ones((5, 5), dtype=np.uint8)
+    )
+    tolerance = max(24, round(min(source_height, source_width) * 0.07))
+    kernel = cv2.getStructuringElement(
+        cv2.MORPH_ELLIPSE, (2 * tolerance + 1, 2 * tolerance + 1)
+    )
+    near_mono_line = cv2.dilate(mono_lines, kernel)
+    near_source_coast = cv2.dilate(coastline, kernel)
+    coast_pixels = coastline.astype(bool)
+    line_pixels = mono_lines.astype(bool)
+    coast_coverage = float(np.mean(near_mono_line[coast_pixels] > 0))
+    line_alignment = float(np.mean(near_source_coast[line_pixels] > 0))
+    if coast_coverage < 0.90 or line_alignment < 0.90:
+        raise AssertionError(
+            f"{mono_name} coastline no longer aligns with {source_name}: "
+            f"coast coverage={coast_coverage:.3f}, line alignment={line_alignment:.3f}, "
+            f"tolerance={tolerance}px"
+        )
+
+    return white_ratio, black_ratio, coast_coverage, line_alignment
 
 
 def sample(components, land_distance, water_distance, point):
@@ -47,6 +122,9 @@ def assert_margin(name, values, minimum=40.0):
 
 
 def validate_round_one():
+    mono_metrics = validate_monochrome_alignment(
+        "gpt-island-maze-dense-a-v1.png", "gpt-island-maze-mono-a-v1.png"
+    )
     components, land_distance, water_distance, component_count = land_labels(
         "gpt-island-maze-dense-a-v1.png"
     )
@@ -65,10 +143,15 @@ def validate_round_one():
         raise AssertionError("round 1 has a non-answer frog on the palm island")
     assert_margin("round 1 connected", connected_samples)
     assert_margin("round 1 disconnected", disconnected_samples)
-    return len(connected), len(disconnected)
+    return len(connected), len(disconnected), mono_metrics
 
 
 def validate_round_two():
+    mono_metrics = validate_monochrome_alignment(
+        "gpt-island-maze-dense-b-v1.png",
+        "gpt-island-maze-mono-b-v1.png",
+        minimum_area=50_000,
+    )
     components, land_distance, water_distance, component_count = land_labels(
         "gpt-island-maze-dense-b-v1.png", minimum_area=50_000
     )
@@ -93,7 +176,7 @@ def validate_round_two():
     assert_margin("round 2 island A", a_samples)
     assert_margin("round 2 island B", b_samples)
     assert_margin("round 2 water", water_samples)
-    return len(island_a), len(island_b), len(water)
+    return len(island_a), len(island_b), len(water), mono_metrics
 
 
 def main():
@@ -102,7 +185,8 @@ def main():
     print(
         "original-form island mask validation: pass "
         f"(round1 connected/disconnected={round_one[0]}/{round_one[1]}, "
-        f"round2 A/B/water={round_two[0]}/{round_two[1]}/{round_two[2]})"
+        f"round2 A/B/water={round_two[0]}/{round_two[1]}/{round_two[2]}, "
+        f"mono coastline coverage={round_one[2][2]:.3f}/{round_two[3][2]:.3f})"
     )
 
 
