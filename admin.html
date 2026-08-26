@@ -642,7 +642,7 @@
   function mkBp(no){ const M=mkM(); return (M&&M.blueprint.find(b=>b.no===no))||{no:no,area:'',pts:0}; }
   function mkItem(r,no){ const M=mkM(); const it=((M&&M.rounds[r]&&M.rounds[r].items)||[]).find(i=>i.no===no); return it||{type:'',comment:''}; }
   function mkScore(ox){ let s=0,w=0; for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X') w++; else s+=mkBp(n).pts; } return {score:Math.round(s*10)/10,wrong:w,correct:mkQ()-w}; }
-  function mkArea(ox){ const M=mkM(); const map={}; (M.areas||[]).forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=mkQ();n++){ const b=mkBp(n); if(!map[b.area])map[b.area]={tot:0,got:0,cnt:0,ok:0}; map[b.area].tot+=b.pts; map[b.area].cnt++; if(ox[n-1]!=='X'){map[b.area].got+=b.pts;map[b.area].ok++;} } return map; }
+  function mkArea(ox,round){ const M=mkM(); const map={}; (M.areas||[]).forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=mkQ();n++){ const b=mkBp(n),it=round?mkItem(round,n):null,area=b.area||(it&&it.area)||''; if(!map[area])map[area]={tot:0,got:0,cnt:0,ok:0}; map[area].tot+=b.pts; map[area].cnt++; if(ox[n-1]!=='X'){map[area].got+=b.pts;map[area].ok++;} } return map; }
   function mkStudents(){ return (window.GFIELD_DATA.students||[]); }
   function mkRoundKeys(){ const M=mkM(); return Object.keys((M&&M.rounds)||{}).sort((a,b)=>+a-+b); }
   function mkLatest(student,round){ if(!MK_ROWS) return null; const rows=MK_ROWS.filter(x=>x.student===student&&String(x.round)===String(round)); if(!rows.length) return null; rows.sort((a,b)=>(a.updated_at||'').localeCompare(b.updated_at||'')); const ox=rows[rows.length-1].ox; return (ox&&ox.length===mkQ())? ox.split(''):null; }
@@ -673,7 +673,7 @@
     if(!any){ h+='<div class="hint" style="margin-top:8px">이 학생의 제출 기록이 없습니다.</div>'; }
     else {
       const aA={}; (mkM().areas||[]).forEach(a=>aA[a]={tot:0,got:0}); const tC={};
-      mkRoundKeys().forEach(r=>{ const ox=mkLatest(mkSel,r); if(!ox)return; const as=mkArea(ox); (mkM().areas||[]).forEach(a=>{aA[a].tot+=as[a].tot;aA[a].got+=as[a].got;}); for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X'){ const it=mkItem(r,n); const key=it.type||('('+mkBp(n).area+')'); tC[key]=(tC[key]||0)+1; } } });
+      mkRoundKeys().forEach(r=>{ const ox=mkLatest(mkSel,r); if(!ox)return; const as=mkArea(ox,r); (mkM().areas||[]).forEach(a=>{aA[a].tot+=as[a].tot;aA[a].got+=as[a].got;}); for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X'){ const it=mkItem(r,n); const key=it.type||('('+mkBp(n).area+')'); tC[key]=(tC[key]||0)+1; } } });
       h+='<h4 style="margin:14px 0 6px">영역별 수행률</h4>';
       (mkM().areas||[]).forEach(a=>{ const s=aA[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div style="display:flex;justify-content:space-between;font-size:13px"><span>${esc(a)}</span><span>${pct}%</span></div><div style="height:8px;background:#eef1f6;border-radius:9px;margin:2px 0 6px"><div style="height:100%;width:${pct}%;background:${pct<50?'#dc2626':'#f97316'};border-radius:9px"></div></div>`; });
       const top=Object.entries(tC).sort((a,b)=>b[1]-a[1]).slice(0,10);
@@ -681,7 +681,7 @@
     }
     h+='<h4 style="margin:16px 0 6px">👥 반 전체 약점</h4>';
     const cA={}; (mkM().areas||[]).forEach(a=>cA[a]={tot:0,got:0}); const cT={}; let cnt=0;
-    studs.forEach(s=>{ mkRoundKeys().forEach(r=>{ const ox=mkLatest(s,r); if(!ox)return; cnt++; const as=mkArea(ox); (mkM().areas||[]).forEach(a=>{cA[a].tot+=as[a].tot;cA[a].got+=as[a].got;}); for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X'){ const it=mkItem(r,n); const key=it.type||('('+mkBp(n).area+')'); cT[key]=(cT[key]||0)+1; } } }); });
+    studs.forEach(s=>{ mkRoundKeys().forEach(r=>{ const ox=mkLatest(s,r); if(!ox)return; cnt++; const as=mkArea(ox,r); (mkM().areas||[]).forEach(a=>{cA[a].tot+=as[a].tot;cA[a].got+=as[a].got;}); for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X'){ const it=mkItem(r,n); const key=it.type||('('+mkBp(n).area+')'); cT[key]=(cT[key]||0)+1; } } }); });
     if(!cnt){ h+='<div class="hint">아직 제출이 없습니다.</div>'; }
     else { (mkM().areas||[]).forEach(a=>{ const s=cA[a]; const pct=s.tot?Math.round(s.got/s.tot*100):0; h+=`<div style="display:flex;justify-content:space-between;font-size:13px"><span>${esc(a)}</span><span>${pct}%</span></div><div style="height:8px;background:#eef1f6;border-radius:9px;margin:2px 0 6px"><div style="height:100%;width:${pct}%;background:${pct<50?'#dc2626':'#f97316'};border-radius:9px"></div></div>`; }); const tt=Object.entries(cT).sort((a,b)=>b[1]-a[1]).slice(0,10); tt.forEach(([t,c])=>{ h+=`<div style="border:1px solid #eee;border-radius:8px;padding:6px 10px;margin-bottom:5px;font-size:13px"><b style="color:#dc2626">${c}회</b> ${esc(t)}</div>`; }); }
     mkRoundKeys().forEach(r=>{
@@ -1447,6 +1447,7 @@ restoreAdminSession();
 </script>
 <script src="mock-data-hw.js?v=20260724"></script>
 <script src="mock-data-final.js?v=20260823"></script>
-<script src="admin-mock-v2.js?v=20260823b"></script>
+<script src="mock-data-original.js?v=20260826"></script>
+<script src="admin-mock-v2.js?v=20260826a"></script>
 </body>
 </html>

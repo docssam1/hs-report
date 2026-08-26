@@ -22,8 +22,13 @@ const adminSession = {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const page = await context.newPage();
   const failures = [];
+  let resetRound = '';
   page.on('pageerror', error => failures.push(`pageerror: ${error.message}`));
-  page.on('console', message => { if (message.type() === 'error') failures.push(`console: ${message.text()}`); });
+  page.on('console', message => {
+    if (message.type() !== 'error') return;
+    const location = message.location();
+    failures.push(`console: ${message.text()}${location.url ? ` @ ${location.url}` : ''}`);
+  });
 
   await page.addInitScript(() => {
     localStorage.setItem('gfield_hs_student_session_v1', JSON.stringify({
@@ -32,6 +37,8 @@ const adminSession = {
       expires_at: Math.floor(Date.now() / 1000) + 3600,
     }));
   });
+
+  await page.route('https://cdn.jsdelivr.net/**', route => route.fulfill({ status: 200, contentType: 'text/css', body: '' }));
 
   await page.route('https://fgahqumaldheqettmvqg.supabase.co/**', async route => {
     const request = route.request();
@@ -49,6 +56,22 @@ const adminSession = {
     }
     if (url.includes('/functions/v1/hs-approval-admin') && body.action === 'issue') {
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ student: body.student, approvalCode: '1234-5678-9012', canSelfEnter: false }) });
+    }
+    if (url.includes('/rest/v1/mock_results')) {
+      if (request.method() === 'POST') {
+        resetRound = body.round || '';
+        return route.fulfill({ status: 201, contentType: 'application/json', body: '' });
+      }
+      return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify([
+        { student: '허유민', round: 'original1', ox: `X${'O'.repeat(29)}`, score: 97.3, wrong: 1, source: 'admin', updated_at: '2026-08-26T10:00:00.000Z' },
+        { student: '허유민', round: 'original1@2', ox: `XX${'O'.repeat(28)}`, score: 94.6, wrong: 2, source: 'practice-admin', updated_at: '2026-08-26T11:00:00.000Z' },
+        { student: '허유민', round: 'original1@3', ox: `X${'O'.repeat(29)}`, score: 97.3, wrong: 1, source: 'practice-admin', updated_at: '2026-08-26T12:00:00.000Z' },
+        { student: '온라인테스트', round: 'original2', ox: `${'O'.repeat(29)}X`, score: 95.8, wrong: 1, source: 'online', updated_at: '2026-08-26T13:00:00.000Z' },
+        { student: '허유민', round: 'final1', ox: `X${'O'.repeat(29)}`, score: 97.3, wrong: 1, source: 'admin', updated_at: '2026-08-26T09:00:00.000Z' },
+      ]) });
+    }
+    if (url.includes('/rest/v1/weak_types')) {
+      return route.fulfill({ status: 200, contentType: 'application/json', body: '[]' });
     }
     if (url.includes('/auth/v1/user')) {
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(adminSession.user) });
@@ -96,6 +119,59 @@ const adminSession = {
     });
     assert.ok(pdfPages > 0, 'self-hosted PDF.js and worker parse an existing admin PDF');
 
+    await page.getByRole('button', { name: '⑩ 모의고사 결과' }).click();
+    await page.waitForSelector('#mock-body select');
+    await page.getByRole('button', { name: '파이널 모의고사' }).click();
+    assert.match(await page.locator('#mock-body').textContent(), /92%/, 'existing final-set area classification stays on the shared blueprint');
+    await page.getByRole('button', { name: '원본형 모의고사' }).click();
+    const mockBody = page.locator('#mock-body');
+    await mockBody.getByText('초등선발 대비 원본형 모의고사 1회').first().waitFor();
+    const originalAdminText = await mockBody.textContent();
+    assert.match(originalAdminText, /97\.3/, 'saved original-form score rendered in the admin result table');
+    assert.match(originalAdminText, /100%/, 'original-form item areas drive nonzero admin performance rates');
+    assert.match(originalAdminText, /공식 누적 기준은 회차별 1차 기록/, 'official first attempt and latest practice statistics are labelled separately');
+    assert.ok(await mockBody.locator('select option', { hasText: '온라인테스트' }).count(), 'online submitter outside data.js can be selected in admin results');
+    const teacherEntry = mockBody.locator('a', { hasText: '오답 입력·진단' }).first();
+    assert.equal(
+      await teacherEntry.getAttribute('href'),
+      'final.html?set=original&round=1&go=answer&entry=teacher&name=%ED%97%88%EC%9C%A0%EB%AF%BC',
+      'original-form teacher entry keeps set, round, and selected student',
+    );
+
+    const teacherPage = await context.newPage();
+    const teacherFailures = [];
+    teacherPage.on('pageerror', error => teacherFailures.push(`pageerror: ${error.message}`));
+    teacherPage.on('console', message => { if (message.type() === 'error') teacherFailures.push(`console: ${message.text()}`); });
+    await teacherPage.route('https://fonts.googleapis.com/**', route => route.fulfill({ status: 200, contentType: 'text/css', body: '' }));
+    await teacherPage.route('https://fonts.gstatic.com/**', route => route.fulfill({ status: 200, contentType: 'font/woff2', body: '' }));
+    await teacherPage.route('https://fgahqumaldheqettmvqg.supabase.co/**', async route => {
+      const request = route.request();
+      if (request.url().includes('/rest/v1/mock_results')) {
+        return route.fulfill({ status: request.method() === 'POST' ? 201 : 200, contentType: 'application/json', body: request.method() === 'POST' ? '' : '[]' });
+      }
+      if (request.url().includes('/rest/v1/weak_types')) {
+        return route.fulfill({ status: 200, contentType: 'application/json', body: '[]' });
+      }
+      return route.abort();
+    });
+    await teacherPage.goto(`${BASE_URL}/${await teacherEntry.getAttribute('href')}`, { waitUntil: 'domcontentloaded' });
+    await teacherPage.waitForSelector('.agrid');
+    assert.equal(await teacherPage.locator('.agrid .abtn').count(), 30, 'teacher entry opens all 30 original-form answer buttons');
+    await teacherPage.click('#btnGrade');
+    await teacherPage.getByRole('heading', { name: '원본형 모의고사 성적·약점 진단' }).waitFor();
+    assert.equal(await teacherPage.locator('.who b').textContent(), '허유민', 'selected admin student carries into the original-form report');
+    assert.equal(teacherFailures.length, 0, teacherFailures.join('\n'));
+    await teacherPage.close();
+
+    if (process.env.GFIELD_QA_SCREENSHOT) await page.screenshot({ path: process.env.GFIELD_QA_SCREENSHOT, fullPage: true });
+    const resetButton = mockBody.getByRole('button', { name: '2차 초기화' }).first();
+    page.once('dialog', dialog => dialog.accept());
+    await resetButton.click();
+    await page.waitForFunction(() => !document.querySelector('#mock-body')?.textContent?.includes('2차 초기화'));
+    assert.equal(resetRound, 'original1@2', 'original-form reset uses the selected retry round key');
+    assert.match(await mockBody.textContent(), /1차 초기화/, 'resetting attempt 2 keeps attempt 1');
+    assert.match(await mockBody.textContent(), /3차 초기화/, 'resetting attempt 2 keeps attempt 3');
+
     const activationContext = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     try {
       const activationPage = await activationContext.newPage();
@@ -103,6 +179,7 @@ const adminSession = {
       const activationToken = 'A'.repeat(48);
       activationPage.on('pageerror', error => activationFailures.push(`pageerror: ${error.message}`));
       activationPage.on('console', message => { if (message.type() === 'error') activationFailures.push(`console: ${message.text()}`); });
+      await activationPage.route('https://cdn.jsdelivr.net/**', route => route.fulfill({ status: 200, contentType: 'text/css', body: '' }));
       await activationPage.route('https://fgahqumaldheqettmvqg.supabase.co/**', async route => {
         const request = route.request();
         const url = request.url();
@@ -157,7 +234,7 @@ const adminSession = {
     }
 
     assert.equal(failures.length, 0, failures.join('\n'));
-    console.log('PASS auth admin browser persistence, one-time activation, main console restore, session separation, roster, issue modal');
+    console.log('PASS auth admin browser persistence, one-time activation, main console restore, session separation, roster, issue modal, original-form result management');
   } finally {
     await browser.close();
   }

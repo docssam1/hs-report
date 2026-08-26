@@ -29,6 +29,9 @@ async function waitForPaperImages(page) {
     ...(BROWSER_EXECUTABLE ? { executablePath: BROWSER_EXECUTABLE } : {}),
   });
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  await context.route('https://cdn.jsdelivr.net/**', route => route.fulfill({ status: 200, contentType: 'text/css', body: '' }));
+  await context.route('https://fonts.googleapis.com/**', route => route.fulfill({ status: 200, contentType: 'text/css', body: '' }));
+  await context.route('https://fonts.gstatic.com/**', route => route.fulfill({ status: 200, contentType: 'font/woff2', body: '' }));
 
   try {
     for (const [round, expectedCorrections] of Object.entries({ '3': [8, 11], '4': [19] })) {

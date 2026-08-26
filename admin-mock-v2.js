@@ -5,18 +5,19 @@
 
   function parseRoundKey(raw){
     raw=String(raw||'');
-    const set=raw.startsWith('final')?'final':(raw.startsWith('hw')?'hw':'mid');
-    const body=set==='final'?raw.slice(5):(set==='hw'?raw.slice(2):raw);
+    const set=raw.startsWith('original')?'original':(raw.startsWith('final')?'final':(raw.startsWith('hw')?'hw':'mid'));
+    const body=set==='original'?raw.slice(8):(set==='final'?raw.slice(5):(set==='hw'?raw.slice(2):raw));
     const m=body.match(/^(\d+)(?:@([123]))?$/);
     return m?{set,round:String(+m[1]),slot:+(m[2]||1),raw}:null;
   }
   function dataFor(set){
+    if(set==='original') return window.GFIELD_MOCK_ORIGINAL||{};
     if(set==='final') return window.GFIELD_MOCK_FINAL||{};
     return set==='hw'?(window.GFIELD_MOCK_HW||{}):(window.GFIELD_MOCK||{});
   }
   function roundTitle(set,r){const M=dataFor(set);return((M.rounds||{})[r]||{}).title||r+'회'}
-  function rawKey(set,r,slot){return(set==='final'?'final':(set==='hw'?'hw':''))+r+(Number(slot)===1?'':'@'+slot)}
-  function teacherFinalUrl(r,student){return 'final.html?round='+r+'&go=answer&entry=teacher&name='+encodeURIComponent(student)}
+  function rawKey(set,r,slot){return(set==='original'?'original':(set==='final'?'final':(set==='hw'?'hw':'')))+r+(Number(slot)===1?'':'@'+slot)}
+  function teacherEntryUrl(set,r,student){return 'final.html?'+(set==='original'?'set=original&':'')+'round='+r+'&go=answer&entry=teacher&name='+encodeURIComponent(student)}
   function previewUrl(set,r,student){return 'mock.html?set='+set+'&round='+r+'&name='+encodeURIComponent(student)+'&preview=1'}
   function sourceLabel(source){
     return ({online:'온라인 회원',admin:'선생님',teacher:'선생님',parent:'학생·학부모',practice:'연습',
@@ -36,6 +37,11 @@
   if(typeof mkM==='function') mkM=function(){return dataFor(window.mkSet)};
   if(typeof mkRoundKeys==='function') mkRoundKeys=function(){return Object.keys((dataFor(window.mkSet).rounds)||{}).sort((a,b)=>+a-+b)};
   if(typeof mkLatest==='function') mkLatest=latestOxV2;
+  if(typeof mkStudents==='function') mkStudents=function(){
+    const list=((window.GFIELD_DATA&&window.GFIELD_DATA.students)||[]).slice();
+    (MK_ROWS||[]).forEach(x=>{const name=String((x&&x.student)||'').trim();if(name&&!list.includes(name))list.push(name)});
+    return list;
+  };
 
   const oldRender=typeof renderMock==='function'?renderMock:null;
   renderMock=function(){
@@ -79,6 +85,7 @@
         <button class="btn sm ${window.mkSet==='mid'?'add':''}" onclick="setMockSetV2('mid')">중급 모의고사</button>
         <button class="btn sm ${window.mkSet==='hw'?'ai':''}" onclick="setMockSetV2('hw')">활용 모의고사</button>
         <button class="btn sm ${window.mkSet==='final'?'add':''}" onclick="setMockSetV2('final')">파이널 모의고사</button>
+        <button class="btn sm ${window.mkSet==='original'?'ai':''}" onclick="setMockSetV2('original')">원본형 모의고사</button>
         <span style="margin-left:auto;font-size:11.5px;color:#6b7280">2차만 초기화하면 1·3차는 그대로 유지됩니다.</span>
       </div>
       <div style="overflow-x:auto;margin-top:10px"><table style="min-width:760px"><thead><tr><th>회차</th><th>차수</th><th>점수</th><th>오답</th><th>저장 주체</th><th>저장 시각</th><th>관리</th></tr></thead><tbody>`;
@@ -87,8 +94,8 @@
     mkRoundKeys().forEach(r=>{
       const list=grouped[r]||[];
       if(!list.length){
-        const action=window.mkSet==='final'
-          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherFinalUrl(r,student)}">✍️ 교사 기록</a>`
+        const action=window.mkSet==='final'||window.mkSet==='original'
+          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student)}">✍️ 오답 입력·진단</a>`
           :`<a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="${previewUrl(window.mkSet,r,student)}">🔎 미리보기</a>`;
         panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td colspan="5" style="color:#a0a8b3">기록 없음</td><td>${action}</td></tr>`;
         return;
@@ -96,8 +103,8 @@
       list.forEach((o,i)=>{
         const x=o.x,p=o.p,score=x.score!=null?x.score:(x.ox?mkScore(x.ox.split('')).score:'-'),wrong=x.wrong!=null?x.wrong:(x.ox?mkScore(x.ox.split('')).wrong:'-');
         const at=x.updated_at?new Date(x.updated_at).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'-';
-        const openAction=window.mkSet==='final'
-          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherFinalUrl(r,student)}">✍️ 교사 기록</a>`
+        const openAction=window.mkSet==='final'||window.mkSet==='original'
+          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student)}">✍️ 오답 입력·진단</a>`
           :`<a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="${previewUrl(window.mkSet,r,student)}">🔎 미리보기</a>`;
         panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b></td><td>${wrong}</td><td>${esc(sourceLabel(x.source))}</td><td>${esc(at)}</td><td>
           <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">
@@ -107,15 +114,19 @@
           </div></td></tr>`;
       });
     });
-    panel+='</tbody></table></div></div>';
+    panel+='</tbody></table></div>';
+    if(window.mkSet==='final'||window.mkSet==='original'){
+      panel+='<div style="margin-top:9px;padding:8px 10px;border-radius:8px;background:#fff7ed;color:#9a3412;font-size:11.5px;line-height:1.6"><b>공식 누적 기준은 회차별 1차 기록</b>입니다. 아래 O/X·영역별 수행률은 복습 상태를 확인할 수 있도록 가장 최근에 저장된 차수를 보여줍니다.</div>';
+    }
+    panel+='</div>';
     body.insertAdjacentHTML('afterbegin',panel);
     body.insertAdjacentHTML('afterbegin',originalPanel);
     body.insertAdjacentHTML('afterbegin',last1);
     const hint=document.querySelector('#tab-mock .hint');
-    if(hint)hint.textContent='중급·활용·파이널 모의고사 결과를 분리해 확인합니다. 파이널은 온라인 회원이 직접 입력하거나 선생님이 재원생 답안을 대신 기록할 수 있으며, 1차 기록만 누적에 반영됩니다.';
+    if(hint)hint.textContent='중급·활용·파이널·원본형 모의고사 결과를 분리해 확인합니다. 파이널과 원본형은 온라인 회원이 직접 입력하거나 선생님이 재원생 답안을 대신 기록할 수 있으며, 회차별 최초 기록만 누적에 반영됩니다.';
   };
 
-  window.setMockSetV2=function(set){window.mkSet=set==='final'?'final':(set==='hw'?'hw':'mid');renderMock()};
+  window.setMockSetV2=function(set){window.mkSet=set==='original'?'original':(set==='final'?'final':(set==='hw'?'hw':'mid'));renderMock()};
 
   async function resetSlot(student,set,r,slot){
     const key=rawKey(set,r,slot);
