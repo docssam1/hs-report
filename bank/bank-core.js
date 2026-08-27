@@ -9,6 +9,19 @@
   var BASE36 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   var SEED_LEN = 4;
   var SEED_SPACE = Math.pow(36, SEED_LEN);
+  // Generation levels control variation complexity. The score band is a
+  // separate, explicit exam metadata value used by diagnosis and printing.
+  var POINT_BAND_BY_LEVEL = Object.freeze({
+    1: '2.7',
+    2: '2.7',
+    3: '3.4',
+    4: '3.4',
+    5: '4.2'
+  });
+
+  function pointBandForLevel(level) {
+    return POINT_BAND_BY_LEVEL[parseInt(level, 10)] || null;
+  }
 
   function mulberry32(seed) {
     var a = seed >>> 0;
@@ -124,6 +137,7 @@
       }
       if (q) {
         q.level = qLevel;
+        q.pointBand = q.pointBand || pointBandForLevel(qLevel);
         q.genId = gen.id;
         q.genName = gen.name;
         q.area = gen.area;
@@ -212,7 +226,9 @@
     parseQuery: parseQuery,
     getStudentName: getStudentName,
     buildWatermarkTiles: buildWatermarkTiles,
-    initWatermarks: initWatermarks
+    initWatermarks: initWatermarks,
+    POINT_BAND_BY_LEVEL: POINT_BAND_BY_LEVEL,
+    pointBandForLevel: pointBandForLevel
   };
 
   global.BANK_GENS = global.BANK_GENS || [];

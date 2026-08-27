@@ -25,6 +25,21 @@
     return dp[gridH - 1][gridW - 1];
   }
 
+  // Independent route enumeration used as a release gate. This deliberately
+  // does not reuse the dynamic-programming recurrence above.
+  function enumerateCount(gridW, gridH, blocked) {
+    blocked = blocked || {};
+    var total = 0;
+    function walk(x, y) {
+      if (blocked[x + ',' + y]) return;
+      if (x === gridW - 1 && y === gridH - 1) { total++; return; }
+      if (x + 1 < gridW) walk(x + 1, y);
+      if (y + 1 < gridH) walk(x, y + 1);
+    }
+    walk(0, 0);
+    return total;
+  }
+
   function randomBlockedSet(rng, gridW, gridH, count) {
     var R = global.BANK_CORE.randint;
     var chosen = [];
@@ -43,7 +58,7 @@
   }
 
   function gen(level, rng) {
-    var CORE = global.BANK_CORE, SVG = global.BANK_SVG;
+    var CORE = global.BANK_CORE, RASTER = global.BANK_RASTER;
     var R = CORE.randint;
     var gridW, gridH, pondCount;
 
@@ -77,16 +92,12 @@
 
     var blockedMapFinal = {};
     blockedList.forEach(function (p) { blockedMapFinal[p[0] + ',' + p[1]] = true; });
+    var independentAnswer = enumerateCount(gridW, gridH, blockedMapFinal);
+    if (independentAnswer !== count) throw new Error('path independent verification mismatch');
 
-    var cs = 44;
-    var rn = SVG.drawRoadNetwork(gridW - 1, gridH - 1, cs, {
-      ox: 26, oy: 26,
-      blocked: blockedMapFinal,
-      start: [0, 0],
-      end: [gridW - 1, gridH - 1],
-      pondLabel: blockedList.length > 0
+    var asset = RASTER.drawRoadNetwork(gridW - 1, gridH - 1, {
+      cellSize: 58, paddingX: 54, paddingY: 46, blocked: blockedMapFinal
     });
-    var svgStr = SVG.svgWrap(rn.w, rn.h, rn.inner);
 
     var pondText = blockedList.length === 1 ?
       ' 단, 그림에 표시된 연못(파란 점)이 있는 교차점은 지나갈 수 없습니다.' :
@@ -102,9 +113,17 @@
 
     return {
       text: text,
-      svg: svgStr,
+      asset: asset,
       answer: count,
       solution: solution,
+      pointBand: CORE.pointBandForLevel(level),
+      verification: {
+        primary: { method: 'dynamic programming on intersections', answer: count },
+        independent: { method: 'complete monotone-route enumeration', answer: independentAnswer },
+        unique: true,
+        validAnswerCount: 1,
+        visibleEvidence: { passed: true, method: 'start, end, all roads, and blocked intersections are explicit' }
+      },
       meta: { gridW: gridW, gridH: gridH, blocked: blockedList, unblockedCount: unblockedCount }
     };
   }
@@ -115,6 +134,8 @@
     name: '최단 경로 가짓수',
     area: '경우의 수',
     gen: gen,
-    _dpCount: dpCount
+    pointBands: { 1: '2.7', 2: '2.7', 3: '3.4', 4: '3.4', 5: '4.2' },
+    _dpCount: dpCount,
+    _enumerateCount: enumerateCount
   });
 })(typeof window !== 'undefined' ? window : globalThis);

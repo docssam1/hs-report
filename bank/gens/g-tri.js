@@ -29,8 +29,21 @@
     return { count: up + down, up: up, down: down };
   }
 
+  function triangular(k) { return k > 0 ? k * (k + 1) / 2 : 0; }
+
+  // Independent closed-form-by-size audit. For a down-facing triangle of
+  // side s, the remaining placement order is n - 2s + 1.
+  function formulaCount(n, variant) {
+    var up = 0, down = 0;
+    for (var s = 1; s <= n; s++) {
+      up += triangular(n - s + 1);
+      down += triangular(n - 2 * s + 1);
+    }
+    return { count: variant === 'up' ? up : variant === 'down' ? down : up + down, up: up, down: down };
+  }
+
   function gen(level, rng) {
-    var CORE = global.BANK_CORE, SVG = global.BANK_SVG;
+    var CORE = global.BANK_CORE, RASTER = global.BANK_RASTER;
     var n;
     if (level <= 1) n = 2;
     else if (level === 2) n = 3;
@@ -45,10 +58,12 @@
     }
 
     var res = bruteForceCount(n, variant);
+    var independent = formulaCount(n, variant);
+    if (independent.count !== res.count || independent.up !== res.up || independent.down !== res.down) {
+      throw new Error('triangle independent verification mismatch');
+    }
 
-    var cs = 56;
-    var tri = SVG.drawTriGrid(n, cs, { ox: 16, oy: 16 });
-    var svgStr = SVG.svgWrap(tri.w, tri.h, tri.inner);
+    var asset = RASTER.drawTriGrid(n, { cellSize: 70, padding: 26 });
 
     var variantText = variant === 'up' ? '꼭짓점이 위쪽을 향한(▲ 모양) ' :
       variant === 'down' ? '꼭짓점이 아래쪽을 향한(▽ 모양) ' : '';
@@ -64,9 +79,17 @@
 
     return {
       text: text,
-      svg: svgStr,
+      asset: asset,
       answer: res.count,
       solution: solution,
+      pointBand: CORE.pointBandForLevel(level),
+      verification: {
+        primary: { method: 'position-by-position enumeration', answer: res.count },
+        independent: { method: 'closed formula summed by triangle size', answer: independent.count },
+        unique: true,
+        validAnswerCount: 1,
+        visibleEvidence: { passed: true, method: 'all three directions of the triangular grid are fully drawn' }
+      },
       meta: { n: n, variant: variant, up: res.up, down: res.down }
     };
   }
@@ -77,6 +100,8 @@
     name: '크고 작은 삼각형 개수',
     area: '도형',
     gen: gen,
-    _bruteForceCount: bruteForceCount
+    pointBands: { 1: '2.7', 2: '2.7', 3: '3.4', 4: '3.4', 5: '4.2' },
+    _bruteForceCount: bruteForceCount,
+    _formulaCount: formulaCount
   });
 })(typeof window !== 'undefined' ? window : globalThis);

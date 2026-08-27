@@ -1,0 +1,349 @@
+'use strict';
+
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+
+const ROOT = path.resolve(__dirname, '..');
+const registry = require(path.join(ROOT, 'bank', 'bank-registry.js'));
+
+function loadOriginalModel() {
+  const sandbox = { window: {} };
+  vm.createContext(sandbox);
+  vm.runInContext(
+    fs.readFileSync(path.join(ROOT, 'mock-data-original.js'), 'utf8'),
+    sandbox,
+    { filename: 'mock-data-original.js', timeout: 2000 },
+  );
+  return JSON.parse(JSON.stringify(sandbox.window.GFIELD_MOCK_ORIGINAL));
+}
+
+function loadUnifiedModels() {
+  const sandbox = { window: {} };
+  vm.createContext(sandbox);
+  [
+    'mock-data.js',
+    'mock-data-hw.js',
+    'mock-data-final.js',
+    'last-score-data.js',
+    'mock-data-original.js',
+  ].forEach((filename) => {
+    vm.runInContext(
+      fs.readFileSync(path.join(ROOT, filename), 'utf8'),
+      sandbox,
+      { filename, timeout: 3000 },
+    );
+  });
+  return {
+    middle: JSON.parse(JSON.stringify(sandbox.window.GFIELD_MOCK)),
+    applied: JSON.parse(JSON.stringify(sandbox.window.GFIELD_MOCK_HW)),
+    final: JSON.parse(JSON.stringify(sandbox.window.GFIELD_MOCK_FINAL)),
+    last: JSON.parse(JSON.stringify(sandbox.window.GFIELD_LAST_SCORE_DATA)),
+    original: JSON.parse(JSON.stringify(sandbox.window.GFIELD_MOCK_ORIGINAL)),
+  };
+}
+
+const model = loadOriginalModel();
+const catalog = registry.buildCatalog(model);
+const summary = registry.summarize(model, catalog);
+const unifiedModels = loadUnifiedModels();
+const unified = registry.buildUnifiedCatalog(unifiedModels);
+const tests = [];
+function check(name, fn) { fn(); tests.push(name); }
+
+check('원본형 60문항을 59개 고유유형으로 병합', () => {
+  assert.equal(summary.sourceQuestions, 60);
+  assert.equal(summary.canonicalTypes, 59);
+  assert.equal(summary.canonicalSubareas, 31);
+  const sameLength = catalog.find((type) => type.name === '같은 전체 길이');
+  assert.ok(sameLength);
+  assert.deepEqual(sameLength.sourceRefs.map((ref) => [ref.round, ref.no]), [[1, 12], [2, 2]]);
+});
+
+check('대영역·배점 분포가 원본 데이터와 일치', () => {
+  assert.deepEqual(summary.areaQuestionCounts, {
+    '수·규칙찾기': 15,
+    '도형': 16,
+    '경우의 수': 8,
+    '식의 계산': 21,
+  });
+  assert.deepEqual(summary.pointQuestionCounts, { '2.7': 24, '3.4': 20, '4.2': 16 });
+});
+
+check('8개 생성기는 일반 연습형만 검증 완료하고 원본 복기형은 차단', () => {
+  assert.equal(summary.linkedLegacyGenerators, 8);
+  assert.equal(summary.verifiedPracticeGenerators, 8);
+  assert.equal(summary.sourceFaithfulReleaseReadyTypes, 0);
+  assert.equal(summary.releaseReadyTypes, 0);
+  const links = catalog.filter((type) => type.generator);
+  assert.deepEqual(links.map((type) => type.generator.generatorId).sort(), [
+    'cube', 'inclusion', 'path', 'rect', 'remainder', 'repeat', 'tri', 'weekday'
+  ]);
+  links.forEach((type) => {
+    assert.equal(type.bankStatus, 'verified-practice');
+    assert.equal(type.practiceReleaseReady, true);
+    assert.equal(type.sourceFaithfulReleaseReady, false);
+    assert.equal(type.releaseReady, false);
+    assert.equal(type.generator.status, 'verified-practice');
+    assert.equal(type.generator.generatorId, type.generator.legacyId);
+    assert.deepEqual(type.generator.approvedModes, ['practice']);
+    assert.equal(type.generator.renderer, 'canvas-2d-png');
+    assert.equal(type.generator.assetKind, 'raster');
+    assert.equal(type.generator.answerCheck, 'primary plus independent verifier');
+    assert.equal(type.generator.practiceReleaseReady, true);
+    assert.equal(type.generator.sourceFaithfulReleaseReady, false);
+    assert.ok(type.generator.sourceFaithfulBlockers.length >= 2);
+    assert.equal(type.generator.qaEvidence.generatedQuestions, 40);
+  });
+  ['repeat', 'weekday', 'inclusion', 'remainder'].forEach((generatorId) => {
+    const linked = links.find((type) => type.generator.generatorId === generatorId);
+    assert.ok(linked, `${generatorId} confirmed source link`);
+    assert.equal(linked.generator.gradeBand, '초2~초3');
+    assert.deepEqual(linked.generator.contentConstraints, { latinVariables: false, powers: false });
+    assert.equal(linked.generator.sourceFaithfulReleaseReady, false);
+    assert.ok(linked.generator.sourceFaithfulBlockers.length >= 2);
+  });
+});
+
+check('일반 연습형과 원본 복기형 공개 게이트를 분리', () => {
+  assert.equal(registry.releasePolicy.defaultMode, 'source-faithful');
+  assert.equal(registry.releasePolicy.modes.practice.sourceComparisonRequired, false);
+  assert.equal(registry.releasePolicy.modes['source-faithful'].sourceComparisonRequired, true);
+
+  const type = catalog.find((row) => row.generator && row.generator.legacyId === 'rect');
+  const question = {
+    text: '모눈에서 크고 작은 직사각형의 개수를 구하세요.',
+    answer: 18,
+    asset: {
+      kind: 'raster', mimeType: 'image/png', src: 'data:image/png;base64,AAAA',
+      width: 900, height: 540, renderer: 'canvas-2d',
+    },
+    verification: {
+      primary: { method: 'boundary-pair brute force', answer: 18 },
+      independent: { method: 'size-and-placement enumeration', answer: 18 },
+      unique: true,
+      validAnswerCount: 1,
+      visibleEvidence: { passed: true, method: 'complete grid is visible' },
+    },
+    diagnosis: { typeId: type.id, errorTags: ['크기별 누락'] },
+  };
+  assert.deepEqual(registry.validateGeneratedQuestion(question, type, { releaseMode: 'practice' }), []);
+  const sourceFaithfulErrors = registry.validateGeneratedQuestion(question, type);
+  assert.ok(sourceFaithfulErrors.includes('generator is verified for practice only, not source-faithful release'));
+  assert.ok(sourceFaithfulErrors.includes('source visual audit is unresolved'));
+});
+
+check('여러 원본이 합쳐진 유형은 모든 출처를 감사하기 전에 승인하지 않음', () => {
+  const partial = registry.buildCatalog(model, {
+    '1:12': { visualRequired: false, sourceCompared: false },
+  }).find((row) => row.name === '같은 전체 길이');
+  assert.equal(partial.sourceRefs.length, 2);
+  assert.equal(partial.visual.auditedRefs, 1);
+  assert.equal(partial.visual.status, 'source-audit-required');
+
+  const complete = registry.buildCatalog(model, {
+    '1:12': { visualRequired: false, sourceCompared: false },
+    '2:2': { visualRequired: false, sourceCompared: false },
+  }).find((row) => row.name === '같은 전체 길이');
+  assert.equal(complete.visual.auditedRefs, 2);
+  assert.equal(complete.visual.status, 'text-only-confirmed');
+});
+
+check('카탈로그 스키마 자체 검증 통과', () => {
+  assert.deepEqual(registry.validateCatalog(catalog), []);
+  assert.equal(new Set(catalog.map((type) => type.id)).size, catalog.length);
+  assert.equal(new Set(catalog.map((type) => type.signature)).size, catalog.length);
+});
+
+check('배점 난이도와 생성 변형 레벨을 섞지 않음', () => {
+  assert.deepEqual(Object.keys(registry.difficultyBands), ['2.7', '3.4', '4.2']);
+  assert.equal('level' in registry.difficultyBands['2.7'], false);
+  assert.equal(registry.stagePolicy.sourceStage, null);
+  assert.deepEqual(registry.stagePolicy.allowedStages, ['킨더', '키즈', 'Pre', '입문', '초급', '중급']);
+  catalog.forEach((type) => type.pointBands.forEach((band) => assert.match(band, /^source-(2\.7|3\.4|4\.2)$/)));
+});
+
+check('원본 그림 감사 전에는 생성 문항 공개 차단', () => {
+  const type = catalog.find((row) => row.name === '겹친 선분 추적');
+  const errors = registry.validateGeneratedQuestion({
+    text: '시험 문항', answer: '18개', svg: '<svg></svg>',
+    verification: {
+      primary: { method: 'enumeration', answer: '18개' },
+      independent: { method: 'graph trace', answer: '18개' },
+      unique: true,
+      validAnswerCount: 1,
+      visibleEvidence: { passed: true, method: 'endpoint-by-endpoint trace' },
+    },
+    diagnosis: { typeId: type.id, errorTags: ['끝점 누락'] },
+  }, type);
+  assert.ok(errors.includes('inline SVG is forbidden for release'));
+  assert.ok(errors.includes('source visual audit is unresolved'));
+});
+
+check('래스터·원본대조·독립검산·진단이 모두 있어야 통과', () => {
+  const sourceInventory = {
+    '1:3': { visualRequired: true, sourceCompared: true, sourceAsset: 'original-r1-q03' },
+  };
+  const auditedCatalog = registry.buildCatalog(model, sourceInventory);
+  const type = auditedCatalog.find((row) => row.name === '왼발·오른발 슬리퍼 판별');
+  assert.equal(type.visual.status, 'raster-source-reviewed');
+  const question = {
+    text: '왼쪽 발에 신는 슬리퍼는 몇 개입니까?',
+    answer: '7개',
+    asset: {
+      kind: 'raster', src: 'assets/slippers-variant.png', width: 3200, height: 2400,
+      review: { originalCompared: true, compositionChecked: true },
+    },
+    verification: {
+      primary: { method: 'inventory count', answer: '7개' },
+      independent: { method: 'annotated visual recount', answer: '7개' },
+      unique: true,
+      validAnswerCount: 1,
+      visibleEvidence: { passed: true, method: 'left/right silhouette inventory' },
+    },
+    diagnosis: { typeId: type.id, errorTags: ['좌우 반전', '밑창 오인'] },
+  };
+  assert.deepEqual(registry.validateGeneratedQuestion(question, type), []);
+});
+
+check('도형은 답 하나뿐 아니라 그림에서 확인 가능해야 통과', () => {
+  const sourceInventory = {
+    '1:3': { visualRequired: true, sourceCompared: true, sourceAsset: 'original-r1-q03' },
+  };
+  const type = registry.buildCatalog(model, sourceInventory)
+    .find((row) => row.name === '왼발·오른발 슬리퍼 판별');
+  const question = {
+    text: '왼쪽 발에 신는 슬리퍼는 몇 개입니까?', answer: '7개',
+    asset: {
+      kind: 'raster', src: 'assets/slippers-variant.png', width: 3200, height: 2400,
+      review: { originalCompared: true, compositionChecked: true },
+    },
+    verification: {
+      primary: { method: 'inventory count', answer: '7개' },
+      independent: { method: 'annotated visual recount', answer: '7개' },
+      unique: true, validAnswerCount: 1,
+    },
+    diagnosis: { typeId: type.id, errorTags: ['좌우 반전'] },
+  };
+  assert.ok(registry.validateGeneratedQuestion(question, type)
+    .includes('geometry answer is not proven visible or inferable'));
+});
+
+check('학생용 저장 계약에는 정답을 넣지 않음', () => {
+  const contract = registry.paperManifestContract;
+  assert.deepEqual(contract.publicAnswerFields, []);
+  assert.equal(contract.teacherAnswerKey, 'separate-private-record');
+  assert.ok(contract.itemRequired.includes('generatorVersion'));
+  assert.ok(contract.itemRequired.includes('variationSeed'));
+});
+
+check('진단은 한 문제 오답과 반복 약점을 구분', () => {
+  const policy = registry.diagnosisPolicy;
+  assert.equal(policy.minimumItemsForWeakClaim, 2);
+  assert.equal(policy.singleItemLabel, '확인 필요');
+  assert.equal(policy.repeatedWeakness.minimumRounds, 2);
+  assert.match(policy.repeatedWeakness.rule, /not one isolated wrong answer/);
+  assert.match(policy.populationComparison, /forbidden/);
+});
+
+check('5계열 810문항을 빠짐없이 통합', () => {
+  assert.equal(unified.summary.sets, 5);
+  assert.equal(unified.summary.sourceQuestions, 810);
+  const setCounts = Object.fromEntries(
+    Object.keys(unifiedModels).map((set) => [set, unified.items.filter((item) => item.sourceRef.set === set).length]),
+  );
+  assert.deepEqual(setCounts, { middle: 240, applied: 270, final: 120, last: 120, original: 60 });
+});
+
+check('810문항 모두 canonical 식별자·출처·배점 밴드 보유', () => {
+  unified.items.forEach((item) => {
+    assert.ok(item.areaId, item.sourceKey + ' areaId');
+    assert.ok(item.subareaId, item.sourceKey + ' subareaId');
+    assert.ok(item.canonicalTypeId, item.sourceKey + ' canonicalTypeId');
+    assert.ok(item.sourceRef && item.sourceRef.set && item.sourceRef.round && item.sourceRef.no, item.sourceKey + ' sourceRef');
+    assert.match(item.pointBand, /^source-(2\.7|3\.4|4\.2)$/, item.sourceKey + ' pointBand');
+  });
+  const bandCounts = Object.fromEntries(
+    ['source-2.7', 'source-3.4', 'source-4.2']
+      .map((band) => [band, unified.items.filter((item) => item.pointBand === band).length]),
+  );
+  assert.deepEqual(bandCounts, { 'source-2.7': 324, 'source-3.4': 270, 'source-4.2': 216 });
+});
+
+check('item.area를 권위값으로 보존하고 출처 키 중복 없음', () => {
+  const originals = new Map();
+  Object.entries(unifiedModels).forEach(([set, sourceModel]) => {
+    Object.entries(sourceModel.rounds).forEach(([round, data]) => {
+      data.items.forEach((item) => originals.set([set, +round, +item.no].join('|'), item.area));
+    });
+  });
+  unified.items.forEach((item) => assert.equal(item.area, originals.get(item.sourceKey), item.sourceKey));
+  assert.deepEqual(unified.summary.duplicateSourceKeys, []);
+  assert.equal(new Set(unified.items.map((item) => item.sourceKey)).size, 810);
+});
+
+check('등록 소영역과 규칙 후보를 명시적으로 구분', () => {
+  assert.equal(unified.summary.confirmedItems, 60);
+  assert.equal(unified.summary.candidateItems, 750);
+  unified.items.filter((item) => item.sourceRef.set === 'original').forEach((item) => {
+    assert.equal(item.reviewStatus, 'confirmed');
+    assert.equal(item.reviewRequired, false);
+  });
+  unified.items.filter((item) => item.sourceRef.set !== 'original').forEach((item) => {
+    assert.equal(item.reviewStatus, 'candidate');
+    assert.equal(item.reviewRequired, true);
+    assert.ok(item.reviewReasons.length);
+  });
+});
+
+check('706개 화면 유형을 보존하면서 후보 family로 과분화를 줄임', () => {
+  assert.equal(unified.summary.rawDisplayTypes, 706);
+  assert.ok(unified.summary.canonicalTypes < 150, `canonical types=${unified.summary.canonicalTypes}`);
+  assert.ok(unified.summary.canonicalTypes < unified.summary.rawDisplayTypes / 4);
+  unified.items.forEach((item) => assert.ok(item.displayType));
+  const clockTypes = unified.items.filter((item) => item.area === '도형' && /시침과 분침이 (직각|겹)/.test(item.displayType));
+  assert.ok(clockTypes.length >= 4);
+  assert.equal(new Set(clockTypes.map((item) => item.canonicalTypeId)).size, 1);
+});
+
+check('쌓기나무 Lv5 최소값 오류 수정과 독립 회귀 검산', () => {
+  const sandbox = { window: {}, globalThis: null };
+  sandbox.globalThis = sandbox.window;
+  vm.createContext(sandbox);
+  ['bank/bank-core.js', 'bank/bank-raster.js', 'bank/gens/g-cube.js'].forEach((filename) => {
+    vm.runInContext(fs.readFileSync(path.join(ROOT, filename), 'utf8'), sandbox, { filename, timeout: 3000 });
+  });
+  const cube = sandbox.window.BANK_GENS.find((generator) => generator.id === 'cube');
+  const audit = registry.legacyAudits.cubeLevel5Minimum;
+  const actual = JSON.parse(JSON.stringify(cube._minMaxFromViews(
+    audit.counterexample.top,
+    audit.counterexample.front,
+    audit.counterexample.side,
+  )));
+  const independent = JSON.parse(JSON.stringify(cube._minMaxFromViewsIndependent(
+    audit.counterexample.top,
+    audit.counterexample.front,
+    audit.counterexample.side,
+  )));
+  assert.deepEqual(actual, audit.counterexample.expected);
+  assert.deepEqual(independent, audit.counterexample.expected);
+  assert.deepEqual(audit.counterexample.actual, audit.counterexample.expected);
+  assert.equal(audit.status, 'fixed-verified');
+  assert.equal(audit.historicalIssue.status, 'resolved');
+  assert.deepEqual(audit.historicalIssue.result, { min: 2, max: 4 });
+  assert.deepEqual(audit.sampleAudit, {
+    generatedQuestions: 40,
+    level5Questions: 8,
+    fullBankQuestions: 320,
+    mismatches: 0,
+    independentVerifier: 'silhouette-witness dynamic programming plus external QA enumerator',
+    date: '2026-08-28',
+  });
+});
+
+console.log(
+  `문제은행 canonical registry QA ${tests.length}개 통과 · ` +
+  `원본 ${summary.sourceQuestions}문항/${summary.canonicalTypes}유형/${summary.canonicalSubareas}소영역 · ` +
+  `통합 ${unified.summary.sourceQuestions}문항/${unified.summary.rawDisplayTypes}화면유형→${unified.summary.canonicalTypes}후보family`,
+);

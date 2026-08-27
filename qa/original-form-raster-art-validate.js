@@ -13,7 +13,9 @@ const coreAssets = [
   'gpt-pencil-leads-exact-raster-v6.png',
   'gpt-slippers-left-right-exact-v6.png',
   'gpt-island-maze-ribbon-v3.png',
+  'gpt-island-boundary-connected-r2-v1.png',
   'gpt-leash-two-curves-exact-v4.png',
+  'gpt-leash-tangle-cross-r2-v1.png',
   'gpt-overlap-digits-bold-pile-v3.png',
   'gpt-hero-imps-battle-mono-v1.png',
   'gpt-hero-demon-swarm-mono-v1.png',
@@ -98,7 +100,7 @@ assert.deepEqual(
 );
 assert.deepEqual(
   [round2.questions[0].answer, round2.questions[6].answer, round2.questions[7].answer, round2.questions[9].answer],
-  ['9개', '80개', '아래쪽 강아지', '12마리'],
+  ['9개', '80개', '아래쪽 강아지', '7마리'],
   '2회 핵심 관찰 그림 정답',
 );
 

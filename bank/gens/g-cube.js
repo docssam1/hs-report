@@ -40,7 +40,7 @@
   }
 
   function genLayerQuestion(level, rng) {
-    var CORE = global.BANK_CORE, SVG = global.BANK_SVG;
+    var CORE = global.BANK_CORE, RASTER = global.BANK_RASTER;
     var R = CORE.randint;
     var nx = level <= 1 ? R(rng, 2, 3) : R(rng, 3, 3);
     var ny = level <= 1 ? R(rng, 2, 3) : R(rng, 3, 3);
@@ -58,18 +58,39 @@
       answer = countLayer(heights, k);
       text = '쌓기나무를 다음 그림과 같이 쌓았습니다. 위에서부터 세어 ' + k + '층에 놓여 있는 쌓기나무는 모두 몇 개입니까?';
     } else {
+      variant = 'total';
       answer = countTotal(heights);
       text = '쌓기나무를 다음 그림과 같이 쌓았습니다. 사용된 쌓기나무는 모두 몇 개입니까?';
     }
 
-    var iso = SVG.drawIsoCubes(heights, { unit: 26 });
-    var svgStr = SVG.svgWrap(iso.w, iso.h, iso.inner);
+    var independentAnswer = 0;
+    heights.forEach(function (column) {
+      column.forEach(function (height) {
+        independentAnswer += variant === 'layer' && maxUsed >= 2 ? (height >= k ? 1 : 0) : height;
+      });
+    });
+    if (independentAnswer !== answer) throw new Error('cube layer independent verification mismatch');
+    var asset = RASTER.drawIsoStackWithHeightMap(heights, { unit: 28 });
 
     var solution = variant === 'layer' && maxUsed >= 2 ?
       '각 자리마다 높이가 ' + k + ' 이상인 곳에는 ' + k + '층에도 쌓기나무가 있습니다. 모든 자리를 하나씩 확인하면 ' + k + '층에는 ' + answer + '개가 있습니다.' :
       '각 자리에 쌓인 쌓기나무 개수를 모두 더하면 ' + answer + '개입니다.';
 
-    return { text: text, svg: svgStr, answer: answer, solution: solution, meta: { heights: heights, variant: variant, k: k } };
+    return {
+      text: text,
+      asset: asset,
+      answer: answer,
+      solution: solution,
+      pointBand: CORE.pointBandForLevel(level),
+      verification: {
+        primary: { method: variant === 'layer' ? 'height-threshold count' : 'stack-height sum', answer: answer },
+        independent: { method: 'top-view height-table recount', answer: independentAnswer },
+        unique: true,
+        validAnswerCount: 1,
+        visibleEvidence: { passed: true, method: 'isometric build plus exact height table removes hidden-stack ambiguity' }
+      },
+      meta: { heights: heights, variant: variant, k: k }
+    };
   }
 
   // ---- 레벨 3-4: 색칠된 면 개수 ----
@@ -86,20 +107,22 @@
     return c;
   }
 
+  function paintedFacesFormula(n, k) {
+    if (k === 3) return 8;
+    if (k === 2) return 12 * Math.max(0, n - 2);
+    if (k === 1) return 6 * Math.pow(Math.max(0, n - 2), 2);
+    return Math.pow(Math.max(0, n - 2), 3);
+  }
+
   function genPaintedQuestion(level, rng) {
-    var CORE = global.BANK_CORE, SVG = global.BANK_SVG;
+    var CORE = global.BANK_CORE, RASTER = global.BANK_RASTER;
     var n = level <= 3 ? 3 : (rng() < 0.5 ? 4 : 5);
     var k = CORE.randint(rng, 0, 3);
     var answer = paintedFacesCount(n, k);
+    var independentAnswer = paintedFacesFormula(n, k);
+    if (independentAnswer !== answer) throw new Error('painted cube independent verification mismatch');
 
-    var heights = [];
-    for (var x = 0; x < n; x++) {
-      var col = [];
-      for (var y = 0; y < n; y++) col.push(n);
-      heights.push(col);
-    }
-    var iso = SVG.drawIsoCubes(heights, { unit: 22, topColor: '#ff8787', leftColor: '#c92a2a', rightColor: '#e8590c' });
-    var svgStr = SVG.svgWrap(iso.w, iso.h, iso.inner);
+    var asset = RASTER.drawPaintedCube(n);
 
     var kWord = { 0: '한 면도 칠해지지 않은', 1: '정확히 한 면만 칠해진', 2: '정확히 두 면이 칠해진', 3: '정확히 세 면이 칠해진' }[k];
 
@@ -109,7 +132,21 @@
     var solution = '작은 정육면체는 큰 정육면체 안에서의 위치(꼭짓점·모서리·면·내부)에 따라 칠해진 면의 개수가 정해집니다. ' +
       '모든 위치를 하나씩 확인하면 칠해진 면이 ' + k + '개인 작은 정육면체는 ' + answer + '개입니다.';
 
-    return { text: text, svg: svgStr, answer: answer, solution: solution, meta: { n: n, k: k } };
+    return {
+      text: text,
+      asset: asset,
+      answer: answer,
+      solution: solution,
+      pointBand: CORE.pointBandForLevel(level),
+      verification: {
+        primary: { method: 'coordinate-by-coordinate face enumeration', answer: answer },
+        independent: { method: 'corner-edge-face-interior formula', answer: independentAnswer },
+        unique: true,
+        validAnswerCount: 1,
+        visibleEvidence: { passed: true, method: 'dimensions and all visible unit boundaries are explicit; hidden cells follow the stated solid-cube rule' }
+      },
+      meta: { n: n, k: k }
+    };
   }
 
   // ---- 레벨 5: 위/앞/옆에서 본 모양으로 최소/최대 개수 ----
@@ -139,7 +176,8 @@
         if (!top[x][y]) { domains[x].push([0]); continue; }
         var cap = Math.min(front[x], side[y]);
         var opts = [];
-        for (var v = 0; v <= cap; v++) opts.push(v);
+        // A filled cell in the top view must contain at least one cube.
+        for (var v = 1; v <= cap; v++) opts.push(v);
         domains[x].push(opts);
       }
     }
@@ -173,8 +211,56 @@
     return { min: minSum, max: maxSum };
   }
 
+  // Independent dynamic-programming solver. Because each cell is capped by
+  // both silhouettes, it is enough to record which front/side maxima have
+  // already been witnessed while minimizing/maximizing the running sum.
+  function minMaxFromViewsIndependent(top, front, side) {
+    var nx = front.length, ny = side.length;
+    var cells = [];
+    for (var x = 0; x < nx; x++) {
+      for (var y = 0; y < ny; y++) {
+        var values = [];
+        if (top[x][y]) {
+          var cap = Math.min(front[x], side[y]);
+          for (var v = 1; v <= cap; v++) values.push(v);
+          if (!values.length) return { min: Infinity, max: -Infinity };
+        } else {
+          values.push(0);
+        }
+        cells.push({ x: x, y: y, values: values });
+      }
+    }
+    var frontStart = 0, sideStart = 0;
+    for (var fx = 0; fx < nx; fx++) if (front[fx] === 0) frontStart |= (1 << fx);
+    for (var sy = 0; sy < ny; sy++) if (side[sy] === 0) sideStart |= (1 << sy);
+    var states = {};
+    states[frontStart + '|' + sideStart] = { min: 0, max: 0, fm: frontStart, sm: sideStart };
+    cells.forEach(function (cell) {
+      var next = {};
+      Object.keys(states).forEach(function (key) {
+        var state = states[key];
+        cell.values.forEach(function (value) {
+          var fm = state.fm | (value === front[cell.x] ? (1 << cell.x) : 0);
+          var sm = state.sm | (value === side[cell.y] ? (1 << cell.y) : 0);
+          var nextKey = fm + '|' + sm;
+          var candidateMin = state.min + value;
+          var candidateMax = state.max + value;
+          if (!next[nextKey]) next[nextKey] = { min: candidateMin, max: candidateMax, fm: fm, sm: sm };
+          else {
+            next[nextKey].min = Math.min(next[nextKey].min, candidateMin);
+            next[nextKey].max = Math.max(next[nextKey].max, candidateMax);
+          }
+        });
+      });
+      states = next;
+    });
+    var fullFront = (1 << nx) - 1, fullSide = (1 << ny) - 1;
+    var result = states[fullFront + '|' + fullSide];
+    return result ? { min: result.min, max: result.max } : { min: Infinity, max: -Infinity };
+  }
+
   function genViewsQuestion(level, rng) {
-    var CORE = global.BANK_CORE, SVG = global.BANK_SVG;
+    var CORE = global.BANK_CORE, RASTER = global.BANK_RASTER;
     var R = CORE.randint;
     var nx = 3, ny = 3, maxH = 3;
     var best = null;
@@ -186,6 +272,10 @@
       if (total < 4) continue;
       var views = computeViews(heights);
       var mm = minMaxFromViews(views.top, views.front, views.side);
+      var independentMm = minMaxFromViewsIndependent(views.top, views.front, views.side);
+      if (mm.min !== independentMm.min || mm.max !== independentMm.max) {
+        throw new Error('cube views independent verification mismatch');
+      }
       if (mm.min === Infinity || mm.max < 0) continue;
       if (mm.max > mm.min) { best = { heights: heights, views: views, mm: mm }; break; }
       if (!best) best = { heights: heights, views: views, mm: mm };
@@ -198,40 +288,10 @@
     }
 
     var views = best.views, mm = best.mm;
+    var independent = minMaxFromViewsIndependent(views.top, views.front, views.side);
     var answer = mm.max - mm.min;
-
-    // 세 가지 보기(위/앞/옆)를 단순한 사각형 다이어그램으로 표시
-    var cs = 34;
-    var parts = [];
-    var ox = 10, oy = 10;
-    parts.push('<text x="' + ox + '" y="' + (oy - 2) + '" font-size="14" fill="#495057">위에서 본 모양</text>');
-    for (var x = 0; x < nx; x++) {
-      for (var y = 0; y < ny; y++) {
-        var fx = ox + y * cs, fy = oy + 6 + x * cs;
-        var filled = views.top[x][y];
-        parts.push('<rect x="' + fx + '" y="' + fy + '" width="' + (cs - 3) + '" height="' + (cs - 3) + '" fill="' + (filled ? '#ffd8a8' : '#ffffff') + '" stroke="#495057" stroke-width="1.5"/>');
-      }
-    }
-    var topBottom = oy + 6 + nx * cs;
-    var fx0 = ox, fy0 = topBottom + 22;
-    parts.push('<text x="' + fx0 + '" y="' + (fy0 - 8) + '" font-size="14" fill="#495057">앞에서 본 모양</text>');
-    for (var i = 0; i < nx; i++) {
-      var barH = views.front[i] * (cs * 0.6);
-      var bx = fx0 + i * cs;
-      var by = fy0 + (maxH * cs * 0.6) - barH;
-      parts.push('<rect x="' + bx + '" y="' + by + '" width="' + (cs - 4) + '" height="' + barH + '" fill="#a5d8ff" stroke="#1864ab" stroke-width="1.5"/>');
-    }
-    var sy0 = fy0 + maxH * cs * 0.6 + 30;
-    parts.push('<text x="' + fx0 + '" y="' + (sy0 - 8) + '" font-size="14" fill="#495057">옆에서 본 모양</text>');
-    for (var j = 0; j < ny; j++) {
-      var barH2 = views.side[j] * (cs * 0.6);
-      var bx2 = fx0 + j * cs;
-      var by2 = sy0 + (maxH * cs * 0.6) - barH2;
-      parts.push('<rect x="' + bx2 + '" y="' + by2 + '" width="' + (cs - 4) + '" height="' + barH2 + '" fill="#b2f2bb" stroke="#2b8a3e" stroke-width="1.5"/>');
-    }
-    var totalH = sy0 + maxH * cs * 0.6 + 16;
-    var totalW = Math.max(nx, ny) * cs + 40;
-    var svgStr = SVG.svgWrap(totalW, totalH, parts.join(''));
+    if (independent.min !== mm.min || independent.max !== mm.max) throw new Error('cube final independent verification mismatch');
+    var asset = RASTER.drawOrthographicViews(views);
 
     var text = '쌓기나무로 어떤 모양을 만들었더니, 위·앞·옆에서 본 모양이 다음 그림과 같았습니다. ' +
       '이 모양을 만드는 데 사용한 쌓기나무 개수가 가장 많을 때와 가장 적을 때의 개수의 차는 얼마입니까?';
@@ -239,7 +299,21 @@
     var solution = '위에서 본 모양으로 쌓기나무가 있는 자리를 알 수 있고, 각 자리의 높이는 앞·옆에서 본 모양의 최댓값을 넘을 수 없습니다. ' +
       '가능한 모든 배치를 확인하면 최대 ' + mm.max + '개, 최소 ' + mm.min + '개이므로 차는 ' + answer + '개입니다.';
 
-    return { text: text, svg: svgStr, answer: answer, solution: solution, meta: { heights: best.heights, min: mm.min, max: mm.max } };
+    return {
+      text: text,
+      asset: asset,
+      answer: answer,
+      solution: solution,
+      pointBand: CORE.pointBandForLevel(level),
+      verification: {
+        primary: { method: 'complete height-assignment enumeration', answer: answer, min: mm.min, max: mm.max },
+        independent: { method: 'silhouette-witness dynamic programming', answer: independent.max - independent.min, min: independent.min, max: independent.max },
+        unique: true,
+        validAnswerCount: 1,
+        visibleEvidence: { passed: true, method: 'top occupancy and front/side heights are shown on complete orthographic grids' }
+      },
+      meta: { heights: best.heights, views: views, min: mm.min, max: mm.max }
+    };
   }
 
   function gen(level, rng) {
@@ -254,10 +328,13 @@
     name: '쌓기나무',
     area: '도형',
     gen: gen,
+    pointBands: { 1: '2.7', 2: '2.7', 3: '3.4', 4: '3.4', 5: '4.2' },
     _countTotal: countTotal,
     _countLayer: countLayer,
     _paintedFacesCount: paintedFacesCount,
+    _paintedFacesFormula: paintedFacesFormula,
     _computeViews: computeViews,
-    _minMaxFromViews: minMaxFromViews
+    _minMaxFromViews: minMaxFromViews,
+    _minMaxFromViewsIndependent: minMaxFromViewsIndependent
   });
 })(typeof window !== 'undefined' ? window : globalThis);

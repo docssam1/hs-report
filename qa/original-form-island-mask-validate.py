@@ -6,7 +6,8 @@ from PIL import Image, ImageChops, ImageStat
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET = ROOT / "assets" / "original-form" / "gpt-island-maze-ribbon-v3.png"
+ROUND1_ASSET = ROOT / "assets" / "original-form" / "gpt-island-maze-ribbon-v3.png"
+ROUND2_ASSET = ROOT / "assets" / "original-form" / "gpt-island-boundary-connected-r2-v1.png"
 PRIVATE = ROOT / ".private-work" / "original-similar-2rounds"
 
 
@@ -79,32 +80,61 @@ def surrounding_label(component, labels, width, height):
     return Counter(candidates).most_common(1)[0][0]
 
 
-assert ASSET.exists(), f"섬 그림 누락: {ASSET}"
-rgb = Image.open(ASSET).convert("RGB")
+def assert_monochrome_unfilled(rgb: Image.Image, label: str):
+    red, green, blue = rgb.split()
+    assert ImageStat.Stat(ImageChops.difference(red, green)).mean[0] < 1.0, f"{label}: 무채색"
+    assert ImageStat.Stat(ImageChops.difference(red, blue)).mean[0] < 1.0, f"{label}: 무채색"
+    assert ImageStat.Stat(rgb.convert("L")).mean[0] > 220, f"{label}: 땅과 바다를 미리 색칠하지 않음"
+
+
+assert ROUND1_ASSET.exists(), f"1회 섬 그림 누락: {ROUND1_ASSET}"
+rgb = Image.open(ROUND1_ASSET).convert("RGB")
 width, height = rgb.size
-assert width >= 1200 and height >= 1200, "섬 그림 인쇄 해상도"
-
-red, green, blue = rgb.split()
-assert ImageStat.Stat(ImageChops.difference(red, green)).mean[0] < 1.0
-assert ImageStat.Stat(ImageChops.difference(red, blue)).mean[0] < 1.0
+assert width >= 1200 and height >= 1200, "1회 섬 그림 인쇄 해상도"
+assert_monochrome_unfilled(rgb, "1회")
 gray = rgb.convert("L")
-assert ImageStat.Stat(gray).mean[0] > 220, "땅과 바다를 색이나 짙은 면으로 구분하지 않아야 함"
-
 frogs = [component for component in dark_components(gray) if 800 <= component[0] <= 1600]
-assert len(frogs) == 19, f"개구리 실루엣 수: {len(frogs)}"
-
+assert len(frogs) == 19, f"1회 개구리 실루엣 수: {len(frogs)}"
 labels, sizes = white_labels(gray)
 palm_x = round(width * 0.742)
 palm_y = round(height * 0.175)
 palm_label = labels[palm_y * width + palm_x]
-assert palm_label >= 0 and sizes[palm_label] > 100_000, "야자수 연결 영역을 찾지 못함"
+assert palm_label >= 0 and sizes[palm_label] > 100_000, "1회 야자수 연결 영역을 찾지 못함"
 connected = sum(surrounding_label(frog, labels, width, height) == palm_label for frog in frogs)
-assert connected == 7, f"야자수까지 물 없이 갈 수 있는 개구리 수: {connected}"
-assert len(frogs) - connected == 12, "물을 건너야 하는 개구리 수"
+assert connected == 7, f"1회 야자수까지 물 없이 갈 수 있는 개구리 수: {connected}"
+assert len(frogs) - connected == 12, "1회 물을 건너야 하는 개구리 수"
+
+assert ROUND2_ASSET.exists(), f"2회 섬 그림 누락: {ROUND2_ASSET}"
+rgb2 = Image.open(ROUND2_ASSET).convert("RGB")
+width2, height2 = rgb2.size
+assert width2 >= 1400 and height2 >= 1000, "2회 섬 그림 인쇄 해상도"
+assert_monochrome_unfilled(rgb2, "2회")
+gray2 = rgb2.convert("L")
+components2 = dark_components(gray2)
+frogs2 = [component for component in components2 if 800 <= component[0] <= 1100]
+assert len(frogs2) == 33, f"2회 개구리는 충분히 많이 배치: {len(frogs2)}"
+
+# 바깥 네모와 맞닿은 긴 경계가 하나의 큰 검은 구조가 되어야 한다. 네모만 있을
+# 때보다 훨씬 큰 구조이므로 닫힌 섬 몇 개를 따로 그린 그림은 이 조건을 통과하지 못한다.
+frame_boundary = max(components2, key=lambda component: component[0])
+assert frame_boundary[0] > 60_000, "2회 경계가 네모 테두리와 실제로 연결되어야 함"
+assert frame_boundary[1] < 20 and frame_boundary[2] < 20
+assert frame_boundary[3] > width2 - 20 and frame_boundary[4] > height2 - 30
+
+labels2, sizes2 = white_labels(gray2)
+large_regions = [size for size in sizes2 if size > 100_000]
+assert len(large_regions) == 2, f"2회 색칠·추적으로 구분되는 큰 영역은 정확히 둘: {large_regions}"
+palm_x2 = round(width2 * 0.725)
+palm_y2 = round(height2 * 0.36)
+palm_label2 = labels2[palm_y2 * width2 + palm_x2]
+assert palm_label2 >= 0 and sizes2[palm_label2] > 100_000, "2회 야자수 쪽 영역을 찾지 못함"
+island_frogs2 = sum(surrounding_label(frog, labels2, width2, height2) == palm_label2 for frog in frogs2)
+assert island_frogs2 == 26, f"2회 야자수 쪽 개구리 수: {island_frogs2}"
+assert len(frogs2) - island_frogs2 == 7, "2회 바다 쪽 개구리 수"
 
 round1 = json.loads((PRIVATE / "original-form-round1-data.json").read_text(encoding="utf-8"))
 round2 = json.loads((PRIVATE / "original-form-round2-data.json").read_text(encoding="utf-8"))
 assert round1["questions"][3]["answer"] == "7마리"
-assert round2["questions"][9]["answer"] == "12마리"
+assert round2["questions"][9]["answer"] == "7마리"
 
-print("원본형 무채색 섬·개구리 19마리·연결 7마리·바깥 12마리 QA 통과")
+print("원본형 섬 QA 통과: 무채색, 2회 개구리 33마리, 테두리 연결 경계, 색칠 영역 2개, 바다 7마리")

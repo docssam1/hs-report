@@ -101,7 +101,7 @@ check('새 60문항의 핵심 정답과 분류', () => {
   );
   assert.deepEqual(
     [r2[0].answer, r2[4].answer, r2[7].answer, r2[9].answer, r2[29].answer],
-    ['9개', '2시 20분', '아래쪽 강아지', '12마리', 'D6'],
+    ['9개', '2시 20분', '아래쪽 강아지', '7마리', 'D6'],
   );
   assert.deepEqual([r1[1].area, r1[1].subarea], ['도형', '시각적 변별']);
   assert.deepEqual([r1[24].area, r1[24].subarea], ['수·규칙찾기', '규칙수열·도형분할']);

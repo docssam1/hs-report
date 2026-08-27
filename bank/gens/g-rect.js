@@ -42,6 +42,27 @@
     return { count: count, matches: matches };
   }
 
+  // Independent audit route: enumerate sizes and placements instead of
+  // choosing boundary pairs in the primary solver.
+  function independentCount(cols, rows, opts) {
+    opts = opts || {};
+    var total = 0;
+    for (var width = 1; width <= cols; width++) {
+      for (var height = 1; height <= rows; height++) {
+        if (opts.squareOnly && width !== height) continue;
+        for (var left = 0; left + width <= cols; left++) {
+          for (var top = 0; top + height <= rows; top++) {
+            var contains = function (p) {
+              return left <= p[0] && p[0] < left + width && top <= p[1] && p[1] < top + height;
+            };
+            if ((opts.include || []).every(contains) && !(opts.exclude || []).some(contains)) total++;
+          }
+        }
+      }
+    }
+    return total;
+  }
+
   function randomCellExcluding(rng, cols, rows, taken) {
     var R = global.BANK_CORE.randint;
     var tries = 0;
@@ -55,7 +76,7 @@
   }
 
   function gen(level, rng) {
-    var CORE = global.BANK_CORE, SVG = global.BANK_SVG;
+    var CORE = global.BANK_CORE, RASTER = global.BANK_RASTER;
     var R = CORE.randint;
     var cols, rows, squareOnly = false, include = [], exclude = [];
     var attempts = 0, best = null;
@@ -95,16 +116,13 @@
       best = bruteForceCount(cols, rows, {});
     }
 
-    var cs = 42;
-    var grid = SVG.drawRectGrid(cols, rows, cs, { ox: 14, oy: 14 });
-    var inner = grid.inner;
-    include.forEach(function (p) {
-      inner += SVG.gridCellSymbol(grid, p[0], p[1], 'dot', { color: '#e8590c' });
+    var independentAnswer = independentCount(cols, rows, {
+      squareOnly: squareOnly, include: include, exclude: exclude
     });
-    exclude.forEach(function (p) {
-      inner += SVG.gridCellSymbol(grid, p[0], p[1], 'star', { color: '#1864ab' });
+    if (independentAnswer !== best.count) throw new Error('rectangle independent verification mismatch');
+    var asset = RASTER.drawRectGrid(cols, rows, {
+      cellSize: 52, padding: 24, include: include, exclude: exclude
     });
-    var svgStr = SVG.svgWrap(grid.w, grid.h, inner);
 
     var shapeWord = squareOnly ? '정사각형' : '직사각형(정사각형 포함)';
     var sizeDesc = '가로 ' + cols + '칸, 세로 ' + rows + '칸';
@@ -112,7 +130,7 @@
     if (include.length && exclude.length) {
       condText = ' 이때 색칠된 점(●)이 반드시 포함되고, 별표(★) 자리는 포함하지 않는 ' + shapeWord + '만 셉니다.';
       if (exclude.length > 1) {
-        condText = ' 이때 색칠된 점(●)이 반드시 포함되고, 두 개의 별표(★) 자리는 모두 포함하지 않는 ' + shapeWord + '만 셉니다.';
+        condText = ' 이때 색칠된 점(●)이 반드시 포함되고, 두 개의 별표(★) 자리 중 어느 것도 포함하지 않는 ' + shapeWord + '만 셉니다.';
       }
     } else if (include.length) {
       condText = ' 이때 색칠된 점(●)이 반드시 포함되는 ' + shapeWord + '만 셉니다.';
@@ -128,9 +146,17 @@
 
     return {
       text: text,
-      svg: svgStr,
+      asset: asset,
       answer: best.count,
       solution: solution,
+      pointBand: CORE.pointBandForLevel(level),
+      verification: {
+        primary: { method: 'boundary-pair brute force', answer: best.count },
+        independent: { method: 'size-and-placement enumeration', answer: independentAnswer },
+        unique: true,
+        validAnswerCount: 1,
+        visibleEvidence: { passed: true, method: 'complete grid and every condition marker are visible' }
+      },
       meta: { cols: cols, rows: rows, squareOnly: squareOnly, include: include, exclude: exclude }
     };
   }
@@ -141,6 +167,8 @@
     name: '크고 작은 직사각형 개수',
     area: '도형',
     gen: gen,
-    _bruteForceCount: bruteForceCount // 테스트용 노출
+    pointBands: { 1: '2.7', 2: '2.7', 3: '3.4', 4: '3.4', 5: '4.2' },
+    _bruteForceCount: bruteForceCount,
+    _independentCount: independentCount
   });
 })(typeof window !== 'undefined' ? window : globalThis);

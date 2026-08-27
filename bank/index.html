@@ -23,6 +23,8 @@
   .topbar a.back{font-size:12.5px;font-weight:700;color:var(--orange-d);text-decoration:none;padding:6px 10px;border:1px solid var(--line2);border-radius:8px;background:#fff}
   .topbar h1{font-size:20px;color:var(--accent)}
   .topbar .tag{font-size:11px;color:var(--dim);letter-spacing:.06em}
+  .catalog-link{margin-left:auto;display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:6px 10px;border:1px solid #cbd8ec;border-radius:9px;background:#f4f8ff;color:var(--navy);font-size:11.5px;font-weight:900;text-decoration:none}
+  .catalog-link .status{padding:2px 6px;border-radius:999px;background:#fff3cd;color:#8a5b00;font-size:9.5px}
 
   .panel{max-width:900px;margin:0 auto 20px;background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:16px 18px;box-shadow:0 6px 18px rgba(194,65,12,.07)}
   .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
@@ -79,8 +81,8 @@
   .qcard .qno{display:inline-block;font-weight:900;font-size:15px;color:#fff;background:var(--accent);border-radius:8px;padding:3px 10px;margin-right:8px}
   .qcard .qtext{font-size:14.5px;line-height:1.62;display:inline}
   .qcard .qmeta{font-size:9.5px;color:var(--dim);margin-top:4px}
-  .qcard .qsvg{margin:10px 0;text-align:center}
-  .qcard .qsvg svg{max-width:100%;height:auto}
+  .qcard .qfigure{margin:10px 0;text-align:center}
+  .qcard .qfigure img{display:block;max-width:100%;max-height:72mm;width:auto;height:auto;margin:0 auto;object-fit:contain}
   .qcard .answerline{margin-top:8px;font-size:12.5px;color:var(--dim)}
   .qcard .answerline .blank{display:inline-block;min-width:120px;border-bottom:1.3px solid var(--ink2);margin-left:6px}
 
@@ -104,6 +106,7 @@
   }
   @media screen and (max-width:880px){
     .page{width:100%;min-height:auto}
+    .catalog-link{margin-left:0}
   }
 </style>
 </head>
@@ -113,6 +116,7 @@
   <a class="back" href="../index.html">← 자료실로</a>
   <h1>🐂 GFIELD BULL BANK</h1>
   <span class="tag">황소 문제은행 · 무한 생성 연습지</span>
+  <a class="catalog-link" href="catalog.html">전체 분류·개발 현황 <span class="status">확정·후보 분리</span></a>
 </div>
 
 <div class="panel">
@@ -122,6 +126,10 @@
     <button class="chip" data-role="gen" data-val="tri">삼각형 개수</button>
     <button class="chip" data-role="gen" data-val="path">최단 경로</button>
     <button class="chip" data-role="gen" data-val="cube">쌓기나무</button>
+    <button class="chip" data-role="gen" data-val="repeat">반복 문자 규칙</button>
+    <button class="chip" data-role="gen" data-val="weekday">날짜·요일 이동</button>
+    <button class="chip" data-role="gen" data-val="inclusion">두 모임 겹침</button>
+    <button class="chip" data-role="gen" data-val="remainder">나머지 조건 수</button>
     <button class="chip mix" data-role="gen" data-val="mix">전체 섞기</button>
   </div>
   <div class="row">
@@ -160,7 +168,7 @@
 
 <script>
 (function(){var v=Date.now();
- ['bank-core.js','bank-svg.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js'].forEach(function(f){
+ ['bank-core.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js'].forEach(function(f){
    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
 </script>
 <script>
@@ -168,7 +176,12 @@
   'use strict';
   var CORE = window.BANK_CORE;
 
-  var GEN_NAMES = { rect:'크고 작은 직사각형 개수', tri:'크고 작은 삼각형 개수', path:'최단 경로 가짓수', cube:'쌓기나무', mix:'전체 섞기(4유형 랜덤)' };
+  var GEN_NAMES = {
+    rect:'크고 작은 직사각형 개수', tri:'크고 작은 삼각형 개수',
+    path:'최단 경로 가짓수', cube:'쌓기나무', repeat:'반복 문자 규칙',
+    weekday:'날짜·요일 이동', inclusion:'두 모임 겹침', remainder:'나머지 조건 수',
+    mix:'전체 섞기(8유형 랜덤)'
+  };
   var LEVEL_NAMES = { all:'전체 혼합', '1':'레벨 1', '2':'레벨 2', '3':'레벨 3', '4':'레벨 4', '5':'레벨 5' };
 
   var q = CORE.parseQuery();
@@ -202,6 +215,7 @@
   }
 
   function esc(s){ return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+  function escAttr(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
 
   function chunk(arr, size){
     var out = [];
@@ -239,10 +253,15 @@
     var body = '<div class="wm-layer"></div><div class="qpage">' +
       '<div class="qhead"><span class="t">GFIELD BULL BANK · 문제</span><span class="n">' + esc(examNo) + ' · ' + pageIdx + '/' + pageTotal + '</span></div>';
     group.forEach(function(qq){
+      var asset = qq.asset;
+      if (!asset || asset.kind !== 'raster' || !/^data:image\/png;base64,/.test(asset.src || '')) {
+        throw new Error('공개 문항 그림은 Canvas PNG 래스터만 사용할 수 있습니다.');
+      }
       body += '<div class="qcard">' +
         '<span class="qno">' + qq.index + '</span><span class="qtext">' + esc(qq.text) + '</span>' +
-        '<div class="qmeta">[' + esc(qq.area||'') + ' · Lv.' + qq.level + ']</div>' +
-        (qq.svg ? '<div class="qsvg">' + qq.svg + '</div>' : '') +
+        '<div class="qmeta">[' + esc(qq.area||'') + ' · Lv.' + qq.level + ' · ' + esc(qq.pointBand) + '점]</div>' +
+        '<div class="qfigure"><img src="' + escAttr(asset.src) + '" alt="' + escAttr(asset.description || qq.genName || '문항 그림') +
+          '" width="' + Number(asset.displayWidth || asset.width) + '" height="' + Number(asset.displayHeight || asset.height) + '"></div>' +
         '<div class="answerline">답 <span class="blank"></span></div>' +
         '</div>';
     });
@@ -253,7 +272,7 @@
   function buildAnswerPagesHtml(questions, examNo){
     var rowsHtml = questions.map(function(qq){
       return '<tr><td class="no">' + qq.index + '</td><td class="ans">' + esc(qq.answer) + '</td>' +
-        '<td class="area">' + esc(qq.genName||'') + ' · Lv.' + qq.level + '</td><td>' + esc(qq.solution||'') + '</td></tr>';
+        '<td class="area">' + esc(qq.genName||'') + ' · Lv.' + qq.level + ' · ' + esc(qq.pointBand) + '점</td><td>' + esc(qq.solution||'') + '</td></tr>';
     });
     var rowChunks = chunk(rowsHtml, 14);
     return rowChunks.map(function(rows, i){

@@ -143,6 +143,7 @@
       <button data-tab="report" onclick="tab('report')">⑧ 진단 결과</button>
       <button data-tab="exam" onclick="tab('exam')">⑨ AI 진단</button>
       <button data-tab="mock" onclick="tab('mock')">⑩ 모의고사 결과</button>
+      <a href="bank/index.html" target="_blank" rel="noopener" style="text-decoration:none"><button type="button">⑪ 문제은행 ↗</button></a>
     </div>
 
     <section id="tab-attend">
@@ -641,19 +642,41 @@
   function mkQ(){ const M=mkM(); return (M&&M.questions)||30; }
   function mkBp(no){ const M=mkM(); return (M&&M.blueprint.find(b=>b.no===no))||{no:no,area:'',pts:0}; }
   function mkItem(r,no){ const M=mkM(); const it=((M&&M.rounds[r]&&M.rounds[r].items)||[]).find(i=>i.no===no); return it||{type:'',comment:''}; }
-  function mkScore(ox){ let s=0,w=0; for(let n=1;n<=mkQ();n++){ if(ox[n-1]==='X') w++; else s+=mkBp(n).pts; } return {score:Math.round(s*10)/10,wrong:w,correct:mkQ()-w}; }
-  function mkArea(ox,round){ const M=mkM(); const map={}; (M.areas||[]).forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=mkQ();n++){ const b=mkBp(n),it=round?mkItem(round,n):null,area=b.area||(it&&it.area)||''; if(!map[area])map[area]={tot:0,got:0,cnt:0,ok:0}; map[area].tot+=b.pts; map[area].cnt++; if(ox[n-1]!=='X'){map[area].got+=b.pts;map[area].ok++;} } return map; }
+  function mkOx(value){
+    const raw=Array.isArray(value)?value.join(''):String(value==null?'':value);
+    return raw.length===mkQ()&&/^[OX]+$/.test(raw)?raw.split(''):null;
+  }
+  function mkValidRow(row){return !!(row&&row.source!=='reset'&&mkOx(row.ox))}
+  function mkScore(ox){
+    const checked=mkOx(ox); if(!checked)return null;
+    let s=0,w=0;
+    for(let n=1;n<=mkQ();n++){ if(checked[n-1]==='X')w++; else if(checked[n-1]==='O')s+=mkBp(n).pts; }
+    return {score:Math.round(s*10)/10,wrong:w,correct:mkQ()-w};
+  }
+  function mkArea(ox,round){
+    const checked=mkOx(ox); if(!checked)return {};
+    const M=mkM(),map={}; (M.areas||[]).forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0});
+    for(let n=1;n<=mkQ();n++){
+      const b=mkBp(n),it=round?mkItem(round,n):null,area=(it&&it.area)||b.area||'';
+      if(!map[area])map[area]={tot:0,got:0,cnt:0,ok:0};
+      map[area].tot+=b.pts; map[area].cnt++;
+      if(checked[n-1]==='O'){map[area].got+=b.pts;map[area].ok++;}
+    }
+    return map;
+  }
   function mkStudents(){ return (window.GFIELD_DATA.students||[]); }
   function mkRoundKeys(){ const M=mkM(); return Object.keys((M&&M.rounds)||{}).sort((a,b)=>+a-+b); }
-  function mkLatest(student,round){ if(!MK_ROWS) return null; const rows=MK_ROWS.filter(x=>x.student===student&&String(x.round)===String(round)); if(!rows.length) return null; rows.sort((a,b)=>(a.updated_at||'').localeCompare(b.updated_at||'')); const ox=rows[rows.length-1].ox; return (ox&&ox.length===mkQ())? ox.split(''):null; }
+  function mkLatest(student,round){ if(!MK_ROWS) return null; const rows=MK_ROWS.filter(x=>mkValidRow(x)&&x.student===student&&String(x.round)===String(round)); if(!rows.length) return null; rows.sort((a,b)=>(a.updated_at||'').localeCompare(b.updated_at||'')); return mkOx(rows[rows.length-1].ox); }
   async function loadMockResults(){
     const st=document.getElementById('mock-status'); const body=document.getElementById('mock-body');
     if(!mkM()){ if(body) body.textContent='mock-data.js를 불러오지 못했습니다.'; return; }
     if(st) st.textContent='불러오는 중…';
     try{
       const r=await fetch(MK_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at",{headers:{apikey:MK_KEY,Authorization:'Bearer '+MK_KEY}});
-      MK_ROWS = r.ok ? await r.json() : [];
-      if(st) st.textContent = r.ok ? ('✅ '+MK_ROWS.length+'건 불러옴') : '불러오기 실패';
+      const received=r.ok?await r.json():[];
+      MK_ROWS=received.filter(mkValidRow);
+      const rejected=received.length-MK_ROWS.length;
+      if(st) st.textContent = r.ok ? ('✅ '+MK_ROWS.length+'건 불러옴'+(rejected?' · 잘못된 O/X '+rejected+'건 제외':'')) : '불러오기 실패';
     }catch(e){ MK_ROWS=[]; if(st) st.textContent='네트워크 오류'; }
     renderMock();
   }
@@ -1448,6 +1471,6 @@ restoreAdminSession();
 <script src="mock-data-hw.js?v=20260724"></script>
 <script src="mock-data-final.js?v=20260823"></script>
 <script src="mock-data-original.js?v=20260827"></script>
-<script src="admin-mock-v2.js?v=20260826a"></script>
+<script src="admin-mock-v2.js?v=20260827b"></script>
 </body>
 </html>

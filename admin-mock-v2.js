@@ -23,7 +23,7 @@
     return ({online:'온라인 회원',admin:'선생님',teacher:'선생님',parent:'학생·학부모',practice:'연습',
       'practice-admin':'선생님 연습',reset:'초기화'})[source]||source||'-';
   }
-  function validRow(x){return !!(x&&x.source!=='reset'&&typeof x.ox==='string'&&x.ox.length===mkQ())}
+  function validRow(x){return !!(x&&x.source!=='reset'&&typeof x.ox==='string'&&x.ox.length===mkQ()&&/^[OX]+$/.test(x.ox))}
   function rowsFor(student,set,r){
     return(MK_ROWS||[]).filter(validRow).map(x=>({x,p:parseRoundKey(x.round)})).filter(o=>o.p&&o.p.set===set&&o.x.student===student&&(!r||o.p.round===String(r))).sort((a,b)=>+a.p.round-+b.p.round||a.p.slot-b.p.slot);
   }
@@ -31,7 +31,7 @@
     const rows=rowsFor(student,window.mkSet,round);
     if(!rows.length)return null;
     const x=rows[rows.length-1].x;
-    return x.ox&&x.ox.length===mkQ()?x.ox.split(''):null;
+    return validRow(x)?x.ox.split(''):null;
   }
 
   if(typeof mkM==='function') mkM=function(){return dataFor(window.mkSet)};
@@ -101,7 +101,7 @@
         return;
       }
       list.forEach((o,i)=>{
-        const x=o.x,p=o.p,score=x.score!=null?x.score:(x.ox?mkScore(x.ox.split('')).score:'-'),wrong=x.wrong!=null?x.wrong:(x.ox?mkScore(x.ox.split('')).wrong:'-');
+        const x=o.x,p=o.p,sc=mkScore(x.ox),score=sc?sc.score:'-',wrong=sc?sc.wrong:'-';
         const at=x.updated_at?new Date(x.updated_at).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'-';
         const openAction=window.mkSet==='final'||window.mkSet==='original'
           ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student)}">✍️ 오답 입력·진단</a>`

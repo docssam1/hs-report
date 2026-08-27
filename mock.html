@@ -322,6 +322,8 @@
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
 <script src="mock-data.js"></script>
 <script src="mock-data-hw.js"></script>
+<script src="mock-data-original.js"></script>
+<script src="bank/bank-registry.js"></script>
 <script src="mock-rx.js"></script>
 <script>
 /* =========================================================
@@ -337,6 +339,29 @@ const D=window.GFIELD_DATA||{students:[]};
 const SET=((new URLSearchParams(location.search).get('set')||'').toLowerCase()==='hw')?'hw':'mid';
 const M=(SET==='hw' ? (window.GFIELD_MOCK_HW||window.GFIELD_MOCK) : window.GFIELD_MOCK);
 M.results=M.results||{};
+/* 전체 시험지와 같은 canonical 분류기를 사용한다. 원본형 60문항의
+   확정 소영역을 기준축으로 삼고, 중급·활용 분류는 검토 후보로 표시한다. */
+const TAX_SET_KEY=(SET==='hw'?'applied':'middle');
+const TAXONOMY_INDEX=(function(){
+  try{
+    const R=window.BANK_TYPE_REGISTRY;
+    if(!R||typeof R.buildUnifiedCatalog!=='function') return {};
+    const models={}; models[TAX_SET_KEY]=M;
+    if(window.GFIELD_MOCK_ORIGINAL) models.original=window.GFIELD_MOCK_ORIGINAL;
+    const out={};
+    R.buildUnifiedCatalog(models).items.forEach(x=>{ if(x.sourceRef.set===TAX_SET_KEY) out[x.sourceKey]=x; });
+    return out;
+  }catch(e){ return {}; }
+})();
+function taxonomyOf(r,n,it){
+  const x=TAXONOMY_INDEX[[TAX_SET_KEY,Number(r),Number(n)].join('|')];
+  if(x) return x;
+  it=it||itemOf(r,n);
+  const raw=(it&&it.type)||'';
+  return {area:(it&&it.area)||areaOf(r,n),subarea:'검토 대기',subareaId:'review-other',
+    displayType:raw,typeFamilyLabel:raw||'유형 검토 대기',canonicalTypeId:'raw|'+((it&&it.area)||'')+'|'+raw,
+    reviewStatus:'candidate',reviewRequired:true};
+}
 /* Supabase 저장 키: 활용은 hw 접두사를 붙여 중급 결과와 섞이지 않게 함 */
 function rkey(r){ return (SET==='hw'?'hw':'')+r; }
 const SETNAME=(SET==='hw'?'활용':'중급');
@@ -362,23 +387,30 @@ let mode=null, me=null, curRound="1";
 function findRx(typeText){
   if(!typeText) return null;
   const t=typeText.toLowerCase();
-  for(const rx of PRESCRIPTION){
-    if(rx.kw.some(k=>t.includes(k.toLowerCase()))) return rx;
-  }
-  return null;
+  const matches=PRESCRIPTION.filter(rx=>rx.kw.some(k=>t.includes(k.toLowerCase())));
+  return matches.length===1?matches[0]:null;
 }
 
-/* 레벨 예측 (2026년 3월 황소 기준: 경시55/심화44/실력35/일품25.7) */
+/* 외부 점수컷은 두 개 이상의 출처와 연도별 값·산술평균이 모두 있는 경우에만 쓴다. */
+function verifiedCutBasis(){
+  const b=M&&M.cutBasis, rows=b&&Array.isArray(b.rows)?b.rows:[], sources=b&&Array.isArray(b.sources)?b.sources:[];
+  if(sources.length<2||!sources.every(s=>s&&s.year&&/^https:\/\//.test(s.url||''))||!rows.length) return null;
+  if(!rows.every(r=>Number.isFinite(Number(r.y2024))&&Number.isFinite(Number(r.y2025))&&Math.abs(Number(r.average)-Math.round(((Number(r.y2024)+Number(r.y2025))/2)*10)/10)<0.001)) return null;
+  return {rows:rows.slice().sort((a,b)=>Number(b.average)-Number(a.average)),belowLabel:b.belowLabel||'기준 미달'};
+}
 function levelLabel(score){
-  if(score>=55) return {label:'경시반', cls:'level-kyungsi', icon:'🥇'};
-  if(score>=44) return {label:'심화반', cls:'level-simhwa', icon:'🥈'};
-  if(score>=35) return {label:'실력반', cls:'level-silryeok', icon:'🥉'};
-  if(score>=25.7) return {label:'일품반', cls:'level-ilpum', icon:'📘'};
-  return {label:'입문반', cls:'level-entry', icon:'📗'};
+  const basis=verifiedCutBasis();
+  if(!basis) return {label:'기준 검증 대기',cls:'',icon:'📊',verified:false};
+  const row=basis.rows.find(r=>Number(score)>=Number(r.average));
+  const grade=row?String(row.grade):basis.belowLabel;
+  const map={경시:['level-kyungsi','🥇'],심화:['level-simhwa','🥈'],실력:['level-silryeok','🥉'],일품:['level-ilpum','📘']};
+  const style=map[grade]||['level-entry','📗'];
+  return {label:map[grade]?grade+'반':grade,cls:style[0],icon:style[1],verified:true};
 }
 
 /* 문항별 미니 처방 (오답 상세 아래 삽입) */
-function miniRxHTML(typeText){
+function miniRxHTML(typeText, verifiedMapping){
+  if(verifiedMapping===false) return '';
   const rx=findRx(typeText);
   if(!rx) return '';
   const cats=['시중교재','소마','필즈더클래식','지필드'];
@@ -411,6 +443,7 @@ function miniRxHTML(typeText){
 function prescriptionHTML(wl, limit){
   const rxMap={};
   wl.forEach(w=>{
+    if(w.reviewRequired) return;
     const rx=findRx(w.type);
     if(!rx) return;
     const key=rx.label;
@@ -459,13 +492,14 @@ function roundKeys(){ return Object.keys(M.rounds).sort((a,b)=>+a-+b); }
 function roundItems(r){ return (M.rounds[r]&&M.rounds[r].items)||[]; }
 function itemOf(r,no){ return roundItems(r).find(i=>i.no===no)||{no:no,type:'',answer:'',comment:''}; }
 function Q(){ return M.questions||30; }
+function validOx(ox){ const s=Array.isArray(ox)?ox.join(''):String(ox==null?'':ox); return s.length===Q()&&/^[OX]+$/.test(s); }
 function givenName(n){ return n&&n.length>=2? n.slice(1):n; }
 function latexToPlain(s){ return (s||'').replace(/\$(.*?)\$/g, function(m,x){   var t=x.replace(/\\d?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g, function(_,a,b){ return ' '+a+'/'+b; });   return t.replace(/[{}]/g,'').replace(/\s+/g,' ').trim(); }); }
 function vidUrl(r,t,ov){ var v=ov||((M.rounds[r]&&M.rounds[r].video)||''); if(!v) return ''; if(t&&+t>0){ v += (v.indexOf('?')>=0?'&':'?')+'t='+Math.floor(t); } return v; }
 function openVid(r,t,ov){ var u=vidUrl(r,t,ov); if(u) window.open(u,'_blank','noopener'); else toast('등록된 영상이 없어요.'); }
 function printAnswers(r){
   var items=roundItems(r); if(!items.length){ toast('등록된 정답이 없어요.'); return; }
-  var rows=''; for(var n=1;n<=Q();n++){ var it=itemOf(r,n); var b=bp(n); rows+='<tr><td>'+n+'</td><td>'+esc(b.area)+'</td><td>'+b.pts+'</td><td>'+esc(latexToPlain(it.answer))+'</td></tr>'; }
+  var rows=''; for(var n=1;n<=Q();n++){ var it=itemOf(r,n); var b=bp(n); rows+='<tr><td>'+n+'</td><td>'+esc(areaOf(r,n))+'</td><td>'+b.pts+'</td><td>'+esc(latexToPlain(it.answer))+'</td></tr>'; }
   var w=window.open('','_blank'); if(!w) return;
   var ti=esc((M.rounds[r].title||r+'회'));
   w.document.write('<html><head><meta charset="utf-8"><title>'+ti+' 정답</title><style>body{font-family:sans-serif;padding:20px;}h2{margin:0 0 10px;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #999;padding:6px 8px;font-size:13px;text-align:center;}th{background:#eee;}td:last-child{text-align:left;font-weight:700;}</style></head><body><h2>중급 모의고사 '+ti+' 정답</h2><table><thead><tr><th>번호</th><th>영역</th><th>배점</th><th>정답</th></tr></thead><tbody>'+rows+'</tbody></table><scr'+'ipt>setTimeout(function(){window.print();},350);</scr'+'ipt></body></html>');
@@ -474,7 +508,9 @@ function printAnswers(r){
 
 /* ─── Supabase ──────────────────────────────────────────── */
 async function supaUpsert(student,r,ox,source){
-  const oxs=ox.join?ox.join(''):ox; const sc=scoreOf(oxs.split(''));
+  const oxs=ox.join?ox.join(''):ox;
+  if(!validOx(oxs)) return false;
+  const sc=scoreOf(oxs.split(''));
   try{
     const res=await fetch(SUPA_URL+"/rest/v1/mock_results",{method:"POST",headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates"},body:JSON.stringify({student:student,round:rkey(r),ox:oxs,score:sc.score,wrong:sc.wrong,source:source||'parent'})});
     if(res.ok) return true;
@@ -494,6 +530,7 @@ async function flushPending(){
   const a=pendingList(); if(!a.length) return;
   const left=[];
   for(const it of a){
+    if(!validOx(it.ox)){ left.push(it); continue; }
     const sc=scoreOf(it.ox.split(''));
     let ok=false;
     try{
@@ -509,10 +546,17 @@ async function flushPending(){
 window.addEventListener('online', function(){ flushPending(); });
 async function supaLoadAll(){
   try{
-    const r=await fetch(SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,source,updated_at",{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
+    const r=await fetch(SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at",{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
     if(!r.ok) return false;
     const rows=await r.json();
-    rows.forEach(row=>{ if(!row.ox||row.ox.length!==Q()) return; const rn=unkey(row.round); if(rn===null||!M.rounds[rn]) return; M.results[row.student]=M.results[row.student]||{}; M.results[row.student][rn]=[{ox:row.ox.split(''),ts:(row.updated_at||'').slice(0,10),by:row.source||'db'}]; });
+    rows.forEach(row=>{
+      if(!validOx(row.ox)) return;
+      const rn=unkey(row.round); if(rn===null||!M.rounds[rn]) return;
+      const sc=scoreOf(row.ox);
+      if(!Number.isFinite(Number(row.score))||Math.abs(Number(row.score)-sc.score)>0.001||Number(row.wrong)!==sc.wrong) return;
+      M.results[row.student]=M.results[row.student]||{};
+      M.results[row.student][rn]=[{ox:row.ox.split(''),ts:(row.updated_at||'').slice(0,10),by:row.source||'db'}];
+    });
     return true;
   }catch(e){ return false; }
 }
@@ -536,19 +580,29 @@ function boot(){ try{applySetName();}catch(e){}
 
 /* ─── 채점 계산 ──────────────────────────────────────────── */
 function blankOx(){ const a=[]; for(let i=0;i<Q();i++) a.push('O'); return a; }
-function scoreOf(ox){ let s=0,wrong=0; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X') wrong++; else s+=bp(n).pts; } return {score:Math.round(s*10)/10, wrong:wrong, correct:Q()-wrong}; }
+function scoreOf(ox){ if(!validOx(ox)) throw new Error('정오표는 '+Q()+'자의 O/X만 허용합니다.'); let s=0,wrong=0; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X') wrong++; else s+=bp(n).pts; } return {score:Math.round(s*10)/10, wrong:wrong, correct:Q()-wrong}; }
 /* 영역은 회차별 실제 문항(item.area)을 우선 사용. 없으면 blueprint 영역. */
 function areaOf(r,n){ const it=itemOf(r,n); return (it&&it.area)||bp(n).area||''; }
 function areaStats(ox,r){ const map={}; M.areas.forEach(a=>map[a]={tot:0,got:0,cnt:0,ok:0}); for(let n=1;n<=Q();n++){ const b=bp(n); const a=(r!=null?areaOf(r,n):b.area); if(!map[a]) map[a]={tot:0,got:0,cnt:0,ok:0}; map[a].tot+=b.pts; map[a].cnt++; if(ox[n-1]!=='X'){ map[a].got+=b.pts; map[a].ok++; } } return map; }
-function wrongList(r,ox){ const out=[]; for(let n=1;n<=Q();n++){ if(ox[n-1]==='X'){ const it=itemOf(r,n); const b=bp(n); out.push({no:n, area:b.area, pts:b.pts, type:it.type, comment:it.comment, t:it.t||0, vid:it.video||''}); } } return out; }
+function wrongList(r,ox){
+  const out=[];
+  for(let n=1;n<=Q();n++){
+    if(ox[n-1]!=='X') continue;
+    const it=itemOf(r,n), b=bp(n), tx=taxonomyOf(r,n,it);
+    out.push({no:n,area:areaOf(r,n),pts:b.pts,type:it.type,comment:it.comment,t:it.t||0,vid:it.video||'',
+      subarea:tx.subarea,subareaId:tx.subareaId,canonicalTypeId:tx.canonicalTypeId,
+      familyLabel:tx.typeFamilyLabel||it.type,reviewStatus:tx.reviewStatus,reviewRequired:tx.reviewRequired});
+  }
+  return out;
+}
 function typeComment(it){ if(it.comment&&it.comment.trim()) return it.comment; if(it.type) return "'"+it.type+"' 유형이에요. 풀이 강의를 보며 방법을 익힌 뒤, 며칠 뒤 새 종이에 스스로 다시 풀어보세요."; return "풀이 강의를 보며 방법을 익힌 뒤 스스로 다시 풀어보세요."; }
 
 /* ─── 결과 저장 ──────────────────────────────────────────── */
 function attemptsOf(student,r){ M.results[student]=M.results[student]||{}; M.results[student][r]=M.results[student][r]||[]; return M.results[student][r]; }
 function latestOx(student,r){ const a=attemptsOf(student,r); return a.length? a[a.length-1].ox : null; }
-function pushAttempt(student,r,ox,by){ const a=attemptsOf(student,r); a.push({ox:ox.slice(), ts:new Date().toISOString().slice(0,10), by:by||'parent'}); while(a.length>3) a.shift(); }
+function pushAttempt(student,r,ox,by){ if(!validOx(ox)) throw new Error('잘못된 정오표는 저장할 수 없습니다.'); const a=attemptsOf(student,r); a.push({ox:ox.slice(), ts:new Date().toISOString().slice(0,10), by:by||'parent'}); while(a.length>3) a.shift(); }
 function lsKey(){ return 'gfield_mock_'+(SET==='hw'?'hw:':'')+me; }
-function loadLocal(){ try{ const j=localStorage.getItem(lsKey()); if(j){ M.results[me]=JSON.parse(j); } }catch(e){} }
+function loadLocal(){ try{ const j=localStorage.getItem(lsKey()); if(j){ const raw=JSON.parse(j),clean={}; Object.keys(raw||{}).forEach(r=>{ const attempts=(Array.isArray(raw[r])?raw[r]:[]).filter(a=>a&&validOx(a.ox)).slice(-3); if(attempts.length) clean[r]=attempts; }); M.results[me]=clean; } }catch(e){} }
 function saveLocal(){ try{ localStorage.setItem(lsKey(), JSON.stringify(M.results[me]||{})); }catch(e){} }
 
 /* 코치 메시지 (랜덤) */
@@ -723,8 +777,7 @@ function renderReport(student,r,prevOx,sent){
       <div><div class="big" style="color:#334">${at.length}<span style="font-size:15px;color:#889">회</span></div><div class="lbl">응시</div></div>
     </div>
     <div class="row-inline" style="margin-top:8px">
-      <span class="level-badge ${lv.cls}">${lv.icon} 참고 지표: <b>${lv.label}</b> 점수대</span>
-      <span class="hint" style="margin:0;font-size:11px">황소 실제 시험 기준(경시55·심화44·실력35·일품25.7) · 모의고사와는 다를 수 있어요</span>
+      ${lv.verified?`<span class="level-badge ${lv.cls}">${lv.icon} 공개 점수컷 평균: <b>${lv.label}</b> 점수대</span><span class="hint" style="margin:0;font-size:11px">출처가 확인된 연도별 최저점의 산술평균 · 모의고사와는 다를 수 있어요</span>`:`<span class="level-badge">📊 개인 점수 ${sc.score}점 · 기준 검증 대기</span><span class="hint" style="margin:0;font-size:11px">출처가 연결된 점수컷이 없어 반 수준을 예측하지 않습니다.</span>`}
     </div>
     <div class="mock-note">
       <b>📌 중급 모의고사는 이런 과정입니다</b><span id="setIntro">
@@ -810,7 +863,7 @@ function renderReport(student,r,prevOx,sent){
           ${canV?'<span class="vjump">▶ 영상</span>':''}
         </div>
         <div class="wt-c">${esc(typeComment(it))}</div>
-        ${miniRxHTML(w.type)}
+        ${miniRxHTML(w.type,!w.reviewRequired)}
       </div>`;
     });
   }
@@ -863,6 +916,7 @@ function renderCumulative(){
 
   const areaAgg={}; M.areas.forEach(a=>areaAgg[a]={tot:0,got:0,cnt:0,ok:0});
   const tierAgg={27:{q:0,ok:0,max:0},34:{q:0,ok:0,max:0},42:{q:0,ok:0,max:0}};
+  const subAgg={};               /* canonical 소영역별 전체 출제·정답 */
   const typeAgg={};              /* 세부유형별 오답 */
   const rxAgg={};                /* 처방유형별 오답 */
   const scores=[]; const allWrong=[];
@@ -872,13 +926,21 @@ function renderCumulative(){
     const as=areaStats(ox,r), t=scoreByTier(ox);
     M.areas.forEach(a=>{ const x=as[a]||{tot:0,got:0,cnt:0,ok:0};
       areaAgg[a].tot+=x.tot; areaAgg[a].got+=x.got; areaAgg[a].cnt+=x.cnt; areaAgg[a].ok+=x.ok; });
+    roundItems(r).forEach(it=>{
+      const tx=taxonomyOf(r,it.no,it), k=tx.subareaId||tx.subarea, p=bp(it.no).pts;
+      const sa=(subAgg[k]=subAgg[k]||{label:tx.subarea,n:0,ok:0,tot:0,got:0,reviewRequired:false,wrongNos:[]});
+      sa.n++; sa.tot+=p; sa.reviewRequired=sa.reviewRequired||!!tx.reviewRequired;
+      if(ox[it.no-1]==='X') sa.wrongNos.push((M.rounds[r].title||r+'회')+' '+it.no+'번');
+      else { sa.ok++; sa.got+=p; }
+    });
     [27,34,42].forEach(k=>{ if(t[k]){ tierAgg[k].q+=t[k].q; tierAgg[k].ok+=t[k].ok; tierAgg[k].max+=t[k].max; } });
     scores.push({r:r, sc:scoreOf(ox).score, lbl:M.rounds[r].title||r+'회'});
     wrongList(r,ox).forEach(w=>{
       allWrong.push(Object.assign({round:r}, w));
-      const k=w.type||('('+w.area+')');
-      (typeAgg[k]=typeAgg[k]||{n:0,at:[]}).n++; typeAgg[k].at.push(M.rounds[r].title||r+'회');
-      const rx=findRx(w.type);
+      const k=w.reviewRequired?('raw|'+w.area+'|'+w.type):(w.canonicalTypeId||w.type||('('+w.area+')'));
+      const ta=(typeAgg[k]=typeAgg[k]||{n:0,at:[],label:w.reviewRequired?(w.type||w.area):(w.familyLabel||w.type||w.area),displayType:w.type,subarea:w.subarea,reviewRequired:!!w.reviewRequired});
+      ta.n++; ta.at.push(M.rounds[r].title||r+'회');
+      const rx=w.reviewRequired?null:findRx(w.type);
       if(rx){ (rxAgg[rx.label]=rxAgg[rx.label]||{n:0,rx:rx}).n++; }
     });
   });
@@ -904,9 +966,7 @@ function renderCumulative(){
       <div><div class="big" style="color:#334">${rs.length}<span style="font-size:15px;color:#889">회</span></div><div class="lbl">응시 회차</div></div>
     </div>
     <div class="row-inline" style="margin-top:8px">
-      <span class="level-badge ${lv.cls}">${lv.icon} 평균 → <b>${lv.label}</b> 점수대</span>
-      <span class="level-badge ${lvB.cls}">${lvB.icon} 최고 → <b>${lvB.label}</b> 점수대</span>
-      <span class="hint" style="margin:0;font-size:11px">황소 실제 시험 기준 · 참고용</span>
+      ${lv.verified?`<span class="level-badge ${lv.cls}">${lv.icon} 평균 → <b>${lv.label}</b> 점수대</span><span class="level-badge ${lvB.cls}">${lvB.icon} 최고 → <b>${lvB.label}</b> 점수대</span><span class="hint" style="margin:0;font-size:11px">검증된 공개 점수컷 평균 · 참고용</span>`:`<span class="level-badge">📊 평균 ${avg}점 · 최고 ${best}점 · 기준 검증 대기</span><span class="hint" style="margin:0;font-size:11px">개인 수행만 표시하며 반 수준은 예측하지 않습니다.</span>`}
     </div>
     <div class="hint" style="margin:8px 0 0">총 ${totQ}문항 중 ${totW}문항 오답 · 누적 정답률 ${Math.round((totQ-totW)/totQ*100)}%</div>
     <div class="mock-note">
@@ -935,6 +995,21 @@ function renderCumulative(){
   });
   h+='</div>';
 
+  /* 소영역은 두 문항 이상 근거가 있을 때만 약점으로 판정한다. */
+  const subRows=Object.values(subAgg).filter(x=>x.n>=2).map(x=>{
+    x.perf=x.tot?Math.round(x.got/x.tot*100):0; x.lost=Math.round((x.tot-x.got)*10)/10; return x;
+  }).sort((a,b)=>a.perf-b.perf||b.lost-a.lost||a.label.localeCompare(b.label,'ko'));
+  const singleChecks=Object.values(subAgg).filter(x=>x.n===1&&x.wrongNos.length);
+  h+=`<div class="card"><h3>🧭 소영역별 누적 진단</h3>
+    <div class="hint">문제의 소재가 아니라 풀이 핵심으로 묶었습니다. 두 문항 이상 누적된 소영역만 약점 판정에 쓰고, 자동 분류는 검수 상태를 함께 표시합니다.</div>`;
+  if(!subRows.length) h+='<div class="hint">아직 두 문항 이상 누적된 소영역이 없습니다.</div>';
+  else subRows.slice(0,10).forEach(x=>{
+    const status=x.reviewRequired?'분류 후보':(x.perf<50?'집중 보완':(x.perf<70?'보완 필요':'안정'));
+    h+=`<div class="wt-item"><div class="wt-h"><span class="no">${status}</span>${esc(x.label)}${x.reviewRequired?' <small style="color:#9a3412">(분류 검토 중)</small>':''}<span class="wt-a"> · ${x.ok}/${x.n}문항 · ${x.perf}% · ${x.lost}점 손실</span></div></div>`;
+  });
+  if(singleChecks.length) h+=`<div class="hint">한 문항 오답이라 약점으로 단정하지 않고 확인이 필요한 소영역: ${singleChecks.slice(0,6).map(x=>esc(x.label)).join(', ')}</div>`;
+  h+='</div>';
+
   /* 반복 오답 유형 TOP */
   const rep=Object.entries(typeAgg).sort((a,b)=>b[1].n-a[1].n);
   const rep2=rep.filter(e=>e[1].n>=2);
@@ -945,9 +1020,9 @@ function renderCumulative(){
     h+='<div class="hint">같은 유형을 2회 이상 틀렸어요. 여기부터 잡으면 점수가 가장 많이 오릅니다.</div>';
     rep2.slice(0,8).forEach(([k,v])=>{
       h+=`<div class="wt-item" style="border-color:#fca5a5">
-        <div class="wt-h"><span class="no" style="background:#dc2626">${v.n}회</span>${esc(k)}
+        <div class="wt-h"><span class="no" style="background:#dc2626">${v.n}회</span>${esc(v.subarea)} · ${esc(v.label)}${v.reviewRequired?' <small style="color:#9a3412">(분류 검토 중)</small>':''}
         <span class="wt-a"> · ${esc(v.at.join(', '))}</span></div>
-        ${miniRxHTML(k)}
+        ${miniRxHTML(v.displayType||v.label,!v.reviewRequired)}
       </div>`;
     });
   }
@@ -1075,7 +1150,12 @@ function tAnalysisHTML(student){
     [27,34,42].forEach(k=>{ if(t[k]){tierAgg[k].q+=t[k].q; tierAgg[k].ok+=t[k].ok;} });
     scores.push({r:r,sc:scoreOf(ox).score});
     const wl=wrongList(r,ox);
-    wl.forEach(w=>{ allWrong.push(w); const key=w.type||('('+w.area+')'); typeCnt[key]=(typeCnt[key]||0)+1; });
+    wl.forEach(w=>{
+      allWrong.push(w);
+      const key=w.reviewRequired?('raw|'+w.area+'|'+w.type):(w.canonicalTypeId||w.type||('('+w.area+')'));
+      const x=(typeCnt[key]=typeCnt[key]||{n:0,label:w.reviewRequired?(w.type||w.area):(w.familyLabel||w.type||w.area),subarea:w.subarea,reviewRequired:!!w.reviewRequired});
+      x.n++;
+    });
   });
 
   const gName=givenName(student);
@@ -1114,10 +1194,10 @@ function tAnalysisHTML(student){
   });
 
   /* 자주 틀리는 유형 TOP8 */
-  const top=Object.entries(typeCnt).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const top=Object.values(typeCnt).sort((a,b)=>b.n-a.n).slice(0,8);
   if(top.length){
     h+='<h3 style="margin:12px 0 8px">🔴 자주 틀리는 세부 유형</h3>';
-    top.forEach(([t,c])=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${c}회</span>${esc(t)}</div></div>`; });
+    top.forEach(x=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${x.n}회</span>${esc(x.subarea)} · ${esc(x.label)}${x.reviewRequired?' <small style="color:#9a3412">(분류 검토 중)</small>':''}</div></div>`; });
   }
   h+='</div>';
 
@@ -1144,7 +1224,12 @@ function tClass(){
       M.areas.forEach(a=>{ areaAgg[a].tot+=as[a].tot; areaAgg[a].got+=as[a].got; });
       [27,34,42].forEach(k=>{ if(t[k]){tierAgg[k].q+=t[k].q; tierAgg[k].ok+=t[k].ok;} });
       const wl=wrongList(r,ox);
-      wl.forEach(w=>{ allWrong.push(w); const key=w.type||('('+w.area+')'); typeCnt[key]=(typeCnt[key]||0)+1; });
+      wl.forEach(w=>{
+        allWrong.push(w);
+        const key=w.reviewRequired?('raw|'+w.area+'|'+w.type):(w.canonicalTypeId||w.type||('('+w.area+')'));
+        const x=(typeCnt[key]=typeCnt[key]||{n:0,label:w.reviewRequired?(w.type||w.area):(w.familyLabel||w.type||w.area),subarea:w.subarea,reviewRequired:!!w.reviewRequired});
+        x.n++;
+      });
     });
   });
 
@@ -1160,9 +1245,9 @@ function tClass(){
     h+=`<div class="area-row"><div class="at"><b>${esc(a)}</b><span>${pct}%</span></div><div class="abar"><i class="${pct>=70?'high':pct<50?'low':''}" style="width:${pct}%"></i></div></div>`;
   });
 
-  const top=Object.entries(typeCnt).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  const top=Object.values(typeCnt).sort((a,b)=>b.n-a.n).slice(0,12);
   h+='<h3 style="margin:12px 0 8px">반에서 가장 많이 틀린 유형</h3>';
-  top.forEach(([t,c])=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${c}회</span>${esc(t)}</div></div>`; });
+  top.forEach(x=>{ h+=`<div class="wt-item"><div class="wt-h"><span class="no">${x.n}회</span>${esc(x.subarea)} · ${esc(x.label)}${x.reviewRequired?' <small style="color:#9a3412">(분류 검토 중)</small>':''}</div></div>`; });
   h+='</div>';
 
   const rxHtml=prescriptionHTML(allWrong, 8);
@@ -1182,7 +1267,7 @@ function tImport(){
 async function doImport(){
   const raw=document.getElementById('impcode').value.trim(); if(!raw){ return; }
   const lines=raw.split(/\s+/).filter(Boolean); let ok=0,fail=0,names=[];
-  for(const code of lines){ try{ const o=JSON.parse(decodeURIComponent(escape(atob(code)))); if(o&&o.s&&o.r&&o.ox&&o.ox.length===Q()){ M.results[o.s]=M.results[o.s]||{}; M.results[o.s][o.r]=[{ox:o.ox.split(''),ts:new Date().toISOString().slice(0,10),by:'parent'}]; await supaUpsert(o.s,o.r,o.ox,'parent'); ok++; names.push(o.s+' '+(M.rounds[o.r]?M.rounds[o.r].title:o.r)); } else fail++; }catch(e){ fail++; } }
+  for(const code of lines){ try{ const o=JSON.parse(decodeURIComponent(escape(atob(code)))); if(o&&o.s&&o.r&&M.rounds[o.r]&&validOx(o.ox)){ M.results[o.s]=M.results[o.s]||{}; M.results[o.s][o.r]=[{ox:o.ox.split(''),ts:new Date().toISOString().slice(0,10),by:'parent'}]; await supaUpsert(o.s,o.r,o.ox,'parent'); ok++; names.push(o.s+' '+M.rounds[o.r].title); } else fail++; }catch(e){ fail++; } }
   document.getElementById('imp-res').innerHTML=`✅ ${ok}건 반영${fail?(' · ❌ '+fail+'건 실패'):''}${names.length?('<br>'+names.map(esc).join(', ')):''}`;
   toast(ok+'건 반영 완료');
 }
