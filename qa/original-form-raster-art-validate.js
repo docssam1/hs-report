@@ -11,7 +11,7 @@ const renderer = fs.readFileSync(path.join(PRIVATE, 'render-original-form-two-ro
 
 const coreAssets = [
   'gpt-pencil-leads-exact-raster-v6.png',
-  'gpt-slippers-coherent-pile-v3.png',
+  'gpt-slippers-left-right-exact-v6.png',
   'gpt-island-maze-ribbon-v3.png',
   'gpt-leash-two-curves-exact-v4.png',
   'gpt-overlap-digits-bold-pile-v3.png',
@@ -66,6 +66,18 @@ assert.match(renderer, /blue-car-side\.jpg/, '2회 자동차는 실제 자동차
 assert.match(renderer, /gpt-hero-imps-battle-mono-v1\.png[\s\S]*gpt-hero-demon-swarm-mono-v1\.png/, '두 악마 문항은 서로 다른 GPT 장면 사용');
 assert.match(renderer, /partialOrderFigure\(\)/, '2회 11번은 전용 부분순서 그림 사용');
 
+const slipperComposite = fs.readFileSync(path.join(PRIVATE, 'slipper-composite-v6.html'), 'utf8');
+const slipperTags = [...slipperComposite.matchAll(/<img class="shoe"[^>]+>/g)].map((match) => match[0]);
+assert.equal(slipperTags.length, 16, '슬리퍼는 정확히 16개');
+assert.equal(slipperTags.filter((tag) => /data-foot="L"/.test(tag)).length, 7, '왼발용 슬리퍼 7개');
+assert.equal(slipperTags.filter((tag) => /data-foot="R"/.test(tag)).length, 9, '오른발용 슬리퍼 9개');
+assert.equal(slipperTags.filter((tag) => /data-face="sole"/.test(tag)).length, 5, '뒤집힌 슬리퍼 5개');
+assert.equal(slipperTags.filter((tag) => /data-face="top"/.test(tag)).length, 11, '윗면 슬리퍼 11개');
+for (const tag of slipperTags) {
+  if (/data-foot="L"/.test(tag)) assert.match(tag, /--flip:1(?:;|\")/, '왼발용은 원래 비대칭 실루엣');
+  if (/data-foot="R"/.test(tag)) assert.match(tag, /--flip:-1(?:;|\")/, '오른발용은 정확한 좌우 반전 실루엣');
+}
+
 for (const roundNumber of [1, 2]) {
   const html = fs.readFileSync(path.join(PRIVATE, `original-form-round${roundNumber}-exam.html`), 'utf8');
   assert.equal((html.match(/<svg\b/gi) || []).length, 0, `${roundNumber}회 인라인 SVG 없음`);
@@ -77,9 +89,11 @@ for (const roundNumber of [1, 2]) {
 
 const round1 = JSON.parse(fs.readFileSync(path.join(PRIVATE, 'original-form-round1-data.json'), 'utf8'));
 const round2 = JSON.parse(fs.readFileSync(path.join(PRIVATE, 'original-form-round2-data.json'), 'utf8'));
+assert.match(round1.questions[2].prompt, /왼쪽 발에 신는 슬리퍼/, '1회 3번은 원문형 왼발 판별 문제');
+assert.doesNotMatch(round1.questions[2].prompt, /밑창[^.]*몇 개/, '1회 3번은 밑창 개수 문제가 아님');
 assert.deepEqual(
   [round1.questions[1].answer, round1.questions[2].answer, round1.questions[3].answer, round1.questions[5].answer, round1.questions[6].answer],
-  ['18개', '5개', '7마리', '5곳', '64'],
+  ['18개', '7개', '7마리', '5곳', '64'],
   '1회 핵심 관찰 그림 정답',
 );
 assert.deepEqual(

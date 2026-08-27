@@ -41,7 +41,7 @@ function expectedHref(locator, pattern, label) {
       const source = fs.readFileSync(path.join(ROOT, 'data.js'), 'utf8');
       const qaData = `\n;(function(){var D=window.GFIELD_DATA;var n=${JSON.stringify(STUDENT)};`+
         `if(!D.students.includes(n))D.students.push(n);D.studentTypes[n]='online';`+
-        `['파이널 모의고사','최종 모의고사','추가 모의고사','약점 유형'].forEach(function(f){if(!Array.isArray(D.archiveAccess[f]))D.archiveAccess[f]=[];if(!D.archiveAccess[f].includes(n))D.archiveAccess[f].push(n);});})();`;
+        `['파이널 모의고사','최종 모의고사','추가 모의고사','약점 유형','개념 교재'].forEach(function(f){if(!Array.isArray(D.archiveAccess[f]))D.archiveAccess[f]=[];if(!D.archiveAccess[f].includes(n))D.archiveAccess[f].push(n);});})();`;
       await route.fulfill({ status: 200, contentType: 'application/javascript; charset=utf-8', body: source + qaData });
     });
 
@@ -136,6 +136,61 @@ function expectedHref(locator, pattern, label) {
     await originalRound2PrintPage.waitForSelector('.pg', { state: 'attached' });
     assert.equal(await originalRound2PrintPage.locator('.pg').count(), 6, '원본형 2회 인쇄 창 쪽수');
     await originalRound2PrintPage.close();
+    await page.click('#bookviewer .bv-back');
+
+    await page.getByRole('button', { name: /Thinking Core · 생각하는 황소 대비 심화 개념/ }).click();
+    await page.waitForSelector('#bookviewer.open');
+    await page.waitForFunction(() => document.querySelectorAll('#bv-actions button.bv-act').length === 13);
+    const desktopToolbar = await page.evaluate(() => {
+      const actions = document.querySelector('#bv-actions');
+      const buttons = [...actions.querySelectorAll('.bv-act')];
+      const rects = buttons.map((node) => node.getBoundingClientRect());
+      const rowTops = [];
+      for (const rect of rects) {
+        if (!rowTops.some((top) => Math.abs(top - rect.top) <= 3)) rowTops.push(rect.top);
+      }
+      return {
+        count: buttons.length,
+        rows: rowTops.length,
+        viewport: innerWidth,
+        minLeft: Math.min(...rects.map((rect) => rect.left)),
+        maxRight: Math.max(...rects.map((rect) => rect.right)),
+        actionClientWidth: actions.clientWidth,
+        actionScrollWidth: actions.scrollWidth,
+      };
+    });
+    assert.equal(desktopToolbar.count, 13, '개념 교재 다중 버튼 수');
+    assert.equal(desktopToolbar.rows, 2, '1440px 다중 버튼은 정확히 두 줄');
+    assert.ok(desktopToolbar.minLeft >= -1 && desktopToolbar.maxRight <= desktopToolbar.viewport + 1, '1440px 버튼이 화면 안에 표시됨');
+    assert.ok(desktopToolbar.actionScrollWidth <= desktopToolbar.actionClientWidth + 1, '1440px 버튼 영역 가로 넘침 없음');
+    await capture(page, 'thinking-core-toolbar-desktop.png');
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    const compactToolbar = await page.evaluate(() => {
+      const actions = document.querySelector('#bv-actions');
+      const buttons = [...actions.querySelectorAll('.bv-act')];
+      const rects = buttons.map((node) => node.getBoundingClientRect());
+      return {
+        viewport: innerWidth,
+        documentWidth: document.documentElement.scrollWidth,
+        viewerRight: document.querySelector('#bookviewer').getBoundingClientRect().right,
+        nameDisplay: getComputedStyle(document.querySelector('.bv-name')).display,
+        minLeft: Math.min(...rects.map((rect) => rect.left)),
+        maxRight: Math.max(...rects.map((rect) => rect.right)),
+        maxHeight: Math.max(...rects.map((rect) => rect.height)),
+        maxFontSize: Math.max(...buttons.map((node) => parseFloat(getComputedStyle(node).fontSize))),
+        actionClientWidth: actions.clientWidth,
+        actionScrollWidth: actions.scrollWidth,
+      };
+    });
+    assert.ok(compactToolbar.minLeft >= -1 && compactToolbar.maxRight <= compactToolbar.viewport + 1, '모바일 모든 버튼이 화면 안에 표시됨');
+    assert.ok(compactToolbar.documentWidth <= compactToolbar.viewport + 1 && compactToolbar.viewerRight <= compactToolbar.viewport + 1, '모바일 뷰어 가로 넘침 없음');
+    assert.ok(compactToolbar.actionScrollWidth <= compactToolbar.actionClientWidth + 1, '모바일 버튼 영역 가로 넘침 없음');
+    assert.ok(compactToolbar.maxFontSize <= 10 && compactToolbar.maxHeight <= 24, '모바일 버튼 크기 축소');
+    assert.equal(compactToolbar.nameDisplay, 'none', '모바일에서 교재명 숨김');
+    await capture(page, 'thinking-core-toolbar-mobile.png');
+
+    await page.setViewportSize({ width: 1440, height: 1000 });
     await page.click('#bookviewer .bv-back');
     await page.getByRole('button', { name: /필즈 중급 상 CH2 수와 숫자의 개수/ }).click();
     await page.waitForSelector('#bookviewer.open');
