@@ -356,7 +356,7 @@ td.weak-cell{white-space:nowrap}
   var isLast = params.get('set')==='last';
   var isOriginal = params.get('set')==='original';
   var M = isLast ? window.GFIELD_MOCK_LAST : (isOriginal ? window.GFIELD_MOCK_ORIGINAL : window.GFIELD_MOCK_FINAL);
-  var CUES_DATA = (isLast && M && M.exam && Array.isArray(M.exam.cues)) ? M.exam.cues : (window.GFIELD_EXAM_CUES || []);
+  var CUES_DATA = (M && M.exam && Array.isArray(M.exam.cues)) ? M.exam.cues : (window.GFIELD_EXAM_CUES || []);
   var D = window.GFIELD_DATA || {students:[]};
   var SUPA_URL = "https://fgahqumaldheqettmvqg.supabase.co";
   var SUPA_KEY = "sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
@@ -1211,7 +1211,7 @@ td.weak-cell{white-space:nowrap}
         '<div class="correction-item-head"><span class="correction-qno">'+Number(item.qno)+'번</span><h2>'+esc(item.heading||'정정된 문항')+'</h2></div>'+
         '<div class="correction-instruction">'+esc(item.instruction||'아래 문장으로 읽고 풉니다.')+'</div>'+
         '<div class="correction-text">'+esc(item.text||'').replace(/\n/g,'<br>')+'</div></article>';}).join('')+'</div>'+
-      '<footer class="correction-foot"><span>지필드 영재교육 · 문항 검수본</span><span>시험 시간은 90분입니다.</span></footer></section>';
+      '<footer class="correction-foot"><span>지필드 영재교육 · 문항 검수본</span><span>시험 시간은 '+Number(M.exam.minutes||90)+'분입니다.</span></footer></section>';
   }
 
   function printPaperWhenReady(){
@@ -1254,11 +1254,14 @@ td.weak-cell{white-space:nowrap}
     showPrint(false);
     var TOTAL = (M.exam.minutes||90)*60;
     var CUES = (CUES_DATA.length? CUES_DATA : [{at:0,ph:'시작',msg:'시작하자.'},{at:TOTAL,ph:'종료',msg:'수고했어.'}]).slice().sort(function(a,b){return a.at-b.at;});
+    var examMinutes=Number(M.exam.minutes||90);
+    var middleStart=examMinutes===80?32:35;
+    var reviewStart=examMinutes===80?68:75;
     var fallbackPlan=[
       {from:0,t:"0~5분",  h:"시험지 훑어보기", d:"풀 수 있을 것 같은 문제 체크"},
-      {from:5*60,t:"5~35분", h:"1~12번 (2.7점)", d:"모르는 문제는 표시하고 넘어가기"},
-      {from:35*60,t:"35~75분",h:"13~30번 (3.4·4.2점)", d:"10번을 못 넘겼다면 여기서 13번으로"},
-      {from:75*60,t:"75~90분",h:"마무리", d:"할 수 있을 것 같은 문제 골라 풀기"}
+      {from:5*60,t:"5~"+middleStart+"분", h:"1~12번 (2.7점)", d:"모르는 문제는 표시하고 넘어가기"},
+      {from:middleStart*60,t:middleStart+"~"+reviewStart+"분",h:"13~30번 (3.4·4.2점)", d:"한 문제에 너무 오래 머물지 않기"},
+      {from:reviewStart*60,t:reviewStart+"~"+examMinutes+"분",h:"마무리", d:"빈 답과 옮겨 적은 답 확인"}
     ];
     var PLAN=(Array.isArray(M.exam.plan)&&M.exam.plan.length?M.exam.plan.map(function(p){return {
       from:(Number(p.from)||0)*60,

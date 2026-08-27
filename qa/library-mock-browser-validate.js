@@ -53,6 +53,11 @@ function expectedHref(locator, pattern, label) {
     await page.click('.nav-btn[data-v="archive"]');
     await page.waitForSelector('#view-archive:not(.hidden)');
 
+    const originalRound1Card = page.getByRole('button', { name: /초등선발 대비 원본형 모의고사 1회/ });
+    const originalRound2Card = page.getByRole('button', { name: /초등선발 대비 원본형 모의고사 2회/ });
+    assert.equal(await originalRound1Card.locator('.desc').textContent(), '80분 · 30문항 · 100점', '원본형 1회 카드 시험 정보');
+    assert.equal(await originalRound2Card.locator('.desc').textContent(), '80분 · 30문항 · 100점', '원본형 2회 카드 시험 정보');
+
     await page.getByRole('button', { name: /파이널 실전 모의고사 1회/ }).click();
     await page.waitForSelector('#bookviewer.open');
     assert.equal(await page.locator('#bookviewer .bv-pg').count(), 8, '파이널 1회 서재 이미지 쪽수');
@@ -92,7 +97,7 @@ function expectedHref(locator, pattern, label) {
     await expectedHref(page.getByRole('link', { name: /성적 확인·진단/ }), /last1-result\.html\?round=1/, '최종 성적 진단');
 
     await page.click('#bookviewer .bv-back');
-    await page.getByRole('button', { name: /초등선발 대비 원본형 모의고사 1회/ }).click();
+    await originalRound1Card.click();
     await page.waitForSelector('#bookviewer.open');
     assert.equal(await page.locator('#bookviewer .bv-pg').count(), 6, '원본형 1회 서재 이미지 쪽수');
     assert.equal(await page.locator('#bookviewer .wm3 span').count(), 18, '원본형 1회 워터마크 수');
@@ -120,6 +125,18 @@ function expectedHref(locator, pattern, label) {
 
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.click('#bookviewer .bv-back');
+    await originalRound2Card.click();
+    await page.waitForSelector('#bookviewer.open');
+    assert.equal(await page.locator('#bookviewer .bv-pg').count(), 6, '원본형 2회 서재 이미지 쪽수');
+    assert.equal(await page.locator('#bookviewer .wm3 span').count(), 18, '원본형 2회 워터마크 수');
+    assert.equal(await page.getByRole('link', { name: /정답지 PDF/ }).getAttribute('href'), 'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf', '원본형 2회 정답 링크');
+    const originalRound2PopupPromise = page.waitForEvent('popup');
+    await page.getByRole('button', { name: /인쇄/ }).click();
+    const originalRound2PrintPage = await originalRound2PopupPromise;
+    await originalRound2PrintPage.waitForSelector('.pg', { state: 'attached' });
+    assert.equal(await originalRound2PrintPage.locator('.pg').count(), 6, '원본형 2회 인쇄 창 쪽수');
+    await originalRound2PrintPage.close();
+    await page.click('#bookviewer .bv-back');
     await page.getByRole('button', { name: /필즈 중급 상 CH2 수와 숫자의 개수/ }).click();
     await page.waitForSelector('#bookviewer.open');
     assert.equal(await page.locator('#bookviewer .bv-stage.split .bv-vid iframe').count(), 1, 'PDF 교재 영상 결합 뷰어');
@@ -127,7 +144,7 @@ function expectedHref(locator, pattern, label) {
     assert.equal(await page.locator('#bookviewer .bv-doc .bv-wm span').count(), 3, 'PDF 교재 워터마크 세 줄 구성');
     assert.equal(await page.locator('#bookviewer .bv-doc .bv-wm span').evaluateAll(nodes => nodes.filter(node => Number(getComputedStyle(node).opacity) > 0).length), 1, 'PDF 교재 화면은 흐린 워터마크 한 줄');
 
-    console.log('PASS library final/last/PDF viewer, watermark, print, diagnosis, online result links');
+    console.log('PASS library final/last/original-form-1·2/PDF viewer, watermark, print, diagnosis, online result links');
   } finally {
     await page.close();
     await context.close();

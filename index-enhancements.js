@@ -118,7 +118,7 @@
     {
       folder:'추가 모의고사',
       title:'초등선발 대비 원본형 모의고사 1회',
-      desc:'90분 · 30문항 · 100점',
+      desc:'80분 · 30문항 · 100점',
       pdf:'output/pdf/hwangso-original-form-mock-01-rebuilt.pdf',
       imgdir:'original_form_1',
       pages:6,
@@ -132,7 +132,7 @@
     {
       folder:'추가 모의고사',
       title:'초등선발 대비 원본형 모의고사 2회',
-      desc:'90분 · 30문항 · 100점',
+      desc:'80분 · 30문항 · 100점',
       pdf:'output/pdf/hwangso-original-form-mock-02-rebuilt.pdf',
       imgdir:'original_form_2_v2',
       pages:6,
@@ -205,7 +205,7 @@
         book.pdf='output/pdf/hwangso-original-form-mock-0'+round+'-rebuilt.pdf';
         book.imgdir=round===2?'original_form_2_v2':'original_form_1';
         book.pages=6;
-        book.desc='90분 · 30문항 · 100점';
+        book.desc='80분 · 30문항 · 100점';
         book.links=[
           {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-0'+round+'-rebuilt-answer.pdf'},
           {label:'성적·약점 진단',url:withName('final.html?set=original&round='+round+'&go=answer')}

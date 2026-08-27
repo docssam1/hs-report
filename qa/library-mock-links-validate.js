@@ -235,7 +235,7 @@ function assertOriginalFormBooks(data) {
     assert.equal(book.imgdir, expected.imageDir, `${expected.title} imgdir`);
     assert.equal(book.pages, 6, `${expected.title} pages`);
     assert.equal(book.pdf, expected.pdf, `${expected.title} 원본 PDF`);
-    assert.equal(book.desc, '90분 · 30문항 · 100점', `${expected.title} 시험 정보`);
+    assert.equal(book.desc, '80분 · 30문항 · 100점', `${expected.title} 시험 정보`);
     const answer = linkFor(book, '정답지 PDF');
     assert.equal(answer.url, expected.answer, `${expected.title} 정답 PDF`);
     assertRoute(
@@ -269,9 +269,15 @@ check('추가 모의고사 원본형 1·2회 이미지·PDF·정답 연결', () 
 check('원본형 진단 데이터와 서재 이미지 경로 일치', () => {
   const model = originalMockData();
   assert.equal(model.roundCount, 2);
+  assert.equal(model.exam.minutes, 80);
+  assert.equal(Object.values(model.rounds).reduce((sum, round) => sum + round.items.length, 0), 60);
   ORIGINAL_FORM_BOOKS.forEach((expected) => {
-    assert.equal(model.rounds[String(expected.round)].paper.imageDir, expected.imageDir);
-    assert.equal(model.rounds[String(expected.round)].paper.imagePages, 6);
+    const round = model.rounds[String(expected.round)];
+    assert.equal(round.paper.imageDir, expected.imageDir);
+    assert.equal(round.paper.imagePages, 6);
+    assert.equal(round.items.length, 30);
+    assert.equal(round.items.reduce((sum, item) => sum + item.pts, 0).toFixed(1), '100.0');
+    assert.deepEqual(round.paper.pageRanges, [[1,6],[7,12],[13,18],[19,24],[25,28],[29,30]]);
   });
 });
 
@@ -310,8 +316,9 @@ check('final.html 시작 화면은 파이널 paper 데이터가 있으면 시험
     '시험지 버튼이 renderPaper에 연결되지 않음',
   );
   assert.match(source, /if\s*\(goParam===['"]paper['"]\)\s*\{\s*renderPaper\(\)/, 'go=paper 직접 진입 누락');
-  assert.match(source, /paper-time-correction/, '첫 쪽 90분 인쇄 보정 누락');
-  assert.match(source, /Number\(M\.exam\.minutes\|\|90\)\+'분<\/div>'/, '시험 시간 보정이 공용 90분 설정을 사용하지 않음');
+  assert.match(source, /paper-time-correction/, '첫 쪽 시험 시간 인쇄 보정 누락');
+  assert.match(source, /Number\(M\.exam\.minutes\|\|90\)\+'분<\/div>'/, '시험 시간 보정이 현재 시험 설정을 사용하지 않음');
+  assert.match(source, /시험 시간은 '\+Number\(M\.exam\.minutes\|\|90\)\+'분입니다\./, '정정 안내 시험 시간이 현재 시험 설정을 사용하지 않음');
   assert.match(source, /paper-image-watermark/, '이미지 시험지 워터마크 누락');
   assert.match(source, /\.paper-image-page\{[^}]*margin:0 auto;[^}]*padding:0;[^}]*border:0;/, '시험지 화면 가운데 정렬·여백 초기화 누락');
   assert.match(source, /\.paper-stack\{display:block;width:210mm;margin:0 auto\}/, '인쇄용 A4 스택 가운데 정렬 누락');

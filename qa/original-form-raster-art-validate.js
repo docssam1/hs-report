@@ -1,110 +1,91 @@
-const assert = require('assert');
-const fs = require('fs');
-const path = require('path');
+'use strict';
 
-const repo = path.resolve(__dirname, '..');
-const privateRoot = path.join(repo, '.private-work', 'original-similar-2rounds');
-const renderer = fs.readFileSync(path.join(privateRoot, 'render-original-form-two-rounds.js'), 'utf8');
-let checks = 0;
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 
-function check(condition, message) {
-  assert.ok(condition, message);
-  checks += 1;
-}
+const ROOT = path.resolve(__dirname, '..');
+const ASSET_DIR = path.join(ROOT, 'assets', 'original-form');
+const PRIVATE = path.join(ROOT, '.private-work', 'original-similar-2rounds');
+const renderer = fs.readFileSync(path.join(PRIVATE, 'render-original-form-two-rounds.js'), 'utf8');
 
-function pngInfo(name, expectedColorTypes = [2, 6]) {
-  const file = path.join(repo, 'assets', 'original-form', name);
+const coreAssets = [
+  'gpt-pencil-leads-exact-raster-v6.png',
+  'gpt-slippers-coherent-pile-v3.png',
+  'gpt-island-maze-ribbon-v3.png',
+  'gpt-leash-two-curves-exact-v4.png',
+  'gpt-overlap-digits-bold-pile-v3.png',
+  'gpt-hero-imps-battle-mono-v1.png',
+  'gpt-hero-demon-swarm-mono-v1.png',
+  'gpt-clock-pair-realistic-noon-v1.png',
+];
+
+const exactRound2Assets = [
+  'round2-exact-q01-thumbtacks-v2.png',
+  'round2-exact-q03-two-balances-v2.png',
+  'round2-exact-q05-mirror-clock-v3.png',
+  'round2-exact-q06-date-cards-v2.png',
+  'round2-exact-q07-star-rows-v3.png',
+  'round2-exact-q13-classroom-sums-v2.png',
+  'round2-exact-q14-cryptarithm-double-v2.png',
+  'round2-exact-q15-age-timeline-v2.png',
+  'round2-exact-q16-five-empty-chairs-v2.png',
+  'round2-exact-q17-triangle-grid-v3.png',
+  'round2-exact-q18-blank-calendar-v2.png',
+  'round2-exact-q23-staircase-grid-v2.png',
+  'round2-exact-q24-four-by-three-grid-v2.png',
+  'round2-exact-q25-cryptarithm-reverse-v2.png',
+  'round2-exact-q26-five-chairs-jiwoo-v3.png',
+  'round2-exact-q27-age-table-v2.png',
+  'round2-exact-q28-three-fruit-scales-v2.png',
+];
+
+const rasterizedRound1 = [5,9,10,11,12,13,14,15,17,19,20,21,24,25,26,28,29,30]
+  .map((number) => `original-r1-q${String(number).padStart(2, '0')}-figure-v2.png`);
+const rasterizedRound2 = [2,9,11,19,20,29,30]
+  .map((number) => `original-r2-q${String(number).padStart(2, '0')}-figure-v2.png`);
+
+function pngInfo(name) {
+  const file = path.join(ASSET_DIR, name);
+  assert.ok(fs.existsSync(file), `${name}: 파일 존재`);
   const buffer = fs.readFileSync(file);
-  check(buffer.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), `${name}: PNG signature`);
-  const width = buffer.readUInt32BE(16);
-  const height = buffer.readUInt32BE(20);
-  const colorType = buffer[25];
-  check(width >= 1000 && height >= 700, `${name}: print resolution`);
-  check(expectedColorTypes.includes(colorType), `${name}: expected PNG color type`);
-  return { file, width, height };
+  assert.ok(buffer.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])), `${name}: PNG 형식`);
+  return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
 }
 
-[
-  'gpt-puppy-side-v1.png',
-  'gpt-pencil-lead-horizontal-v3.png',
-  'gpt-left-slipper-top-v2.png',
-  'gpt-left-slipper-sole-v1.png',
-  'gpt-fishbowl-3-v1.png',
-  'gpt-orange-bottles-3-v1.png',
-  'gpt-frog-side-v1.png',
-  'gpt-palm-tree-v1.png',
-  'gpt-imp-head-v1.png',
-  'gpt-overlap-digits-original-style-a-v1.png',
-  'gpt-overlap-digits-original-style-b-v1.png',
-  'gpt-island-maze-mono-a-v1.png',
-  'gpt-island-maze-mono-b-v1.png',
-  // The colored versions are retained only as private topology truth masks.
-  'gpt-island-maze-dense-a-v1.png',
-  'gpt-island-maze-dense-b-v1.png',
-].forEach((name) => pngInfo(name));
-
-const dogFunction = renderer.match(/function dogLengthFigure\(\) \{[\s\S]*?\n\}/)[0];
-const digitFunction = renderer.match(/function overlapDigitsFigure\(missing = 6\) \{[\s\S]*?\n\}/)[0];
-const leadFunction = renderer.match(/function leadFigure\(mode = 'whole'\) \{[\s\S]*?\n\}/)[0];
-const slipperFunction = renderer.match(/function slippersFigure\(variant = 1\) \{[\s\S]*?\n\}/)[0];
-const islandFunction = renderer.match(/function islandFigure\(variant = 1\) \{[\s\S]*?\n\}/)[0];
-check(dogFunction.includes('gpt-puppy-side-v1.png'), 'dog figure consumes GPT raster puppy');
-check(!dogFunction.includes('<svg') && !dogFunction.includes('<ellipse'), 'dog figure has no SVG placeholder dog');
-check(digitFunction.includes('gpt-overlap-digits-original-style-a-v1.png') && digitFunction.includes('gpt-overlap-digits-original-style-b-v1.png'), 'both used digit variants preserve the original handwritten raster style');
-check(!digitFunction.includes('return svg'), 'digit figure has no SVG text tangle');
-check(leadFunction.includes('gpt-pencil-lead-horizontal-v3.png'), 'lead figures consume one consistent horizontal GPT raster lead');
-check(slipperFunction.includes('gpt-left-slipper-top-v2.png') && slipperFunction.includes('gpt-left-slipper-sole-v1.png'), 'slipper figures consume GPT raster top and sole views');
-check(islandFunction.includes('gpt-island-maze-mono-a-v1.png') && islandFunction.includes('gpt-island-maze-mono-b-v1.png'), 'both island variants consume monochrome maze-like raster backgrounds');
-check(!islandFunction.includes('gpt-island-maze-dense-'), 'colored topology masks are never exposed in the exam renderer');
-check(!islandFunction.includes('island-tag'), 'island art has no answer-guiding A/B tags');
-check(!islandFunction.includes('return svg'), 'island figure no longer uses an SVG land diagram');
-
-const islandMapStyle = renderer.match(/\.island-maze-map\{[^}]+\}/)?.[0] || '';
-const islandFrogStyle = renderer.match(/\.island-frog\{[^}]+\}/)?.[0] || '';
-check(/background\s*:\s*(?:#fff(?:fff)?|white)\b/i.test(islandMapStyle), 'island map uses a white, unfilled background');
-check(/filter\s*:[^;}]*grayscale\(1\)[^;}]*brightness\(/i.test(islandFrogStyle), 'frog artwork is filtered to a monochrome silhouette');
-
-function questionHtml(html, number) {
-  const marker = `<h2>${number}.`;
-  const markerIndex = html.indexOf(marker);
-  check(markerIndex >= 0, `question ${number} marker exists`);
-  const start = html.lastIndexOf('<article', markerIndex);
-  const end = html.indexOf('</article>', markerIndex);
-  check(start >= 0 && end >= 0, `question ${number} article bounds exist`);
-  return html.slice(start, end + '</article>'.length);
+for (const name of [...coreAssets, ...exactRound2Assets, ...rasterizedRound1, ...rasterizedRound2]) {
+  const { width, height } = pngInfo(name);
+  assert.ok(width >= 1000, `${name}: 인쇄 폭 1000px 이상`);
+  assert.ok(height >= 250, `${name}: 인쇄 높이 250px 이상`);
 }
 
-const round1Html = fs.readFileSync(path.join(privateRoot, 'original-form-round1-exam.html'), 'utf8');
-const round2Html = fs.readFileSync(path.join(privateRoot, 'original-form-round2-exam.html'), 'utf8');
-const r1q12 = questionHtml(round1Html, 12);
-check((r1q12.match(/gpt-puppy-side-v1\.png/g) || []).length === 5, 'round 1 q12 shows exactly five puppies');
-check(['2m', '4m', '2m', '3m', '5m', '6m', '3m'].every((label) => r1q12.includes(`>${label}<`)), 'round 1 q12 retains all seven distance labels');
-check(questionHtml(round1Html, 7).includes('gpt-overlap-digits-original-style-a-v1.png'), 'round 1 q7 uses original-style digit art');
-check(questionHtml(round2Html, 1).includes('gpt-overlap-digits-original-style-b-v1.png'), 'round 2 q1 uses original-style digit art');
-check(questionHtml(round1Html, 4).includes('gpt-island-maze-mono-a-v1.png'), 'round 1 q4 uses monochrome maze-like raster island art');
-check(questionHtml(round2Html, 10).includes('gpt-island-maze-mono-b-v1.png'), 'round 2 q10 uses monochrome maze-like raster island art');
-check(!questionHtml(round1Html, 4).includes('island-tag') && !questionHtml(round2Html, 10).includes('island-tag'), 'rendered island questions contain no answer-guiding tags');
-check((questionHtml(round1Html, 2).match(/class="lead-piece whole"/g) || []).length === 14, 'round 1 q2 has fourteen equal-size lead instances');
-check((questionHtml(round1Html, 2).match(/--w:40%/g) || []).length === 14, 'round 1 q2 keeps all fourteen leads at one physical length');
-check((questionHtml(round2Html, 6).match(/class="lead-piece whole"/g) || []).length === 9, 'round 2 q6 has nine whole lead instances');
-check((questionHtml(round2Html, 6).match(/class="lead-piece fragment"/g) || []).length === 6, 'round 2 q6 has six paired fragments');
-check((questionHtml(round1Html, 3).match(/class="slipper-piece"/g) || []).length === 16, 'round 1 q3 has sixteen overlapping slippers');
-check((questionHtml(round2Html, 4).match(/class="slipper-piece"/g) || []).length === 16, 'round 2 q4 has sixteen overlapping slippers');
-check((questionHtml(round1Html, 4).match(/class="island-frog"/g) || []).length === 16, 'round 1 q4 has sixteen frogs');
-check((questionHtml(round2Html, 10).match(/class="island-frog"/g) || []).length === 20, 'round 2 q10 has twenty frogs');
-
-for (const [round, html] of [[1, round1Html], [2, round2Html]]) {
-  check((html.match(/\sdata-[\w:-]+\s*=/gi) || []).length === 0, `round ${round} exam has no answer-bearing data attributes`);
-  const forbidden = /(?:aria-label|alt)="[^"]*(?:샤프심\s*14개|(?:왼쪽|오른쪽)\s*슬리퍼|야자수[^"]*6마리|물에\s*8마리|정확히\s*(?:다섯|5)\s*번\s*교차|숫자\s*8을\s*제외)[^"]*"/gi;
-  check(!forbidden.test(html), `round ${round} neutral alt and aria labels do not disclose answers`);
+for (const name of [...coreAssets, ...exactRound2Assets]) {
+  assert.ok(renderer.includes(name), `${name}: 렌더러 사용`);
 }
-check(!/src="[^"]*(?:no[-_]?8|no8)[^"]*"/i.test(round2Html), 'round 2 q1 raster filename does not disclose the missing digit');
+assert.match(renderer, /blue-car-side\.jpg/, '2회 자동차는 실제 자동차 JPG 사용');
+assert.match(renderer, /gpt-hero-imps-battle-mono-v1\.png[\s\S]*gpt-hero-demon-swarm-mono-v1\.png/, '두 악마 문항은 서로 다른 GPT 장면 사용');
+assert.match(renderer, /partialOrderFigure\(\)/, '2회 11번은 전용 부분순서 그림 사용');
 
-const round1 = JSON.parse(fs.readFileSync(path.join(privateRoot, 'original-form-round1-data.json'), 'utf8'));
-const round2 = JSON.parse(fs.readFileSync(path.join(privateRoot, 'original-form-round2-data.json'), 'utf8'));
-check(round1.questions[11].answer === '3m', 'round 1 q12 answer remains 3m');
-check(round1.questions[6].answer === '39', 'round 1 q7 answer remains 39');
-check(round2.questions[0].answer === '8', 'round 2 q1 answer remains 8');
-check(round2.questions[7].answer === '파란색', 'round 2 q8 asks for the endpoint marker color');
+for (const roundNumber of [1, 2]) {
+  const html = fs.readFileSync(path.join(PRIVATE, `original-form-round${roundNumber}-exam.html`), 'utf8');
+  assert.equal((html.match(/<svg\b/gi) || []).length, 0, `${roundNumber}회 인라인 SVG 없음`);
+  assert.equal((html.match(/<article class="question/g) || []).length, 30, `${roundNumber}회 문항 30개`);
+  assert.ok((html.match(/<img\b/gi) || []).length >= 25, `${roundNumber}회 핵심 그림은 래스터 이미지`);
+  assert.doesNotMatch(html, /(?:alt|aria-label)="[^"]*(?:샤프심\s*18개|다섯\s*번\s*교차|아홉\s*꼭짓점|별\s*80개|아래쪽\s*강아지)[^"]*"/i, `${roundNumber}회 대체문구 정답 노출 없음`);
+  assert.doesNotMatch(html, /(?:src|data-[\w:-]+)="[^"]*(?:answer|solution|정답)[^"]*"/i, `${roundNumber}회 그림 경로 정답 노출 없음`);
+}
 
-console.log(`원본형 GPT PNG 삽화 QA ${checks}개 통과`);
+const round1 = JSON.parse(fs.readFileSync(path.join(PRIVATE, 'original-form-round1-data.json'), 'utf8'));
+const round2 = JSON.parse(fs.readFileSync(path.join(PRIVATE, 'original-form-round2-data.json'), 'utf8'));
+assert.deepEqual(
+  [round1.questions[1].answer, round1.questions[2].answer, round1.questions[3].answer, round1.questions[5].answer, round1.questions[6].answer],
+  ['18개', '5개', '7마리', '5곳', '64'],
+  '1회 핵심 관찰 그림 정답',
+);
+assert.deepEqual(
+  [round2.questions[0].answer, round2.questions[6].answer, round2.questions[7].answer, round2.questions[9].answer],
+  ['9개', '80개', '아래쪽 강아지', '12마리'],
+  '2회 핵심 관찰 그림 정답',
+);
+
+console.log(`원본형 최종 GPT·정밀 PNG ${coreAssets.length + exactRound2Assets.length + rasterizedRound1.length + rasterizedRound2.length}개 QA 통과`);

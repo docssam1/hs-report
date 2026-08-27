@@ -62,6 +62,8 @@ function check(name, fn) { fn(); tests.push(name); }
 
 check('원본형 2회·각 30문항·각 100점', () => {
   assert.equal(model.roundCount, 2);
+  assert.equal(model.exam.minutes, 80);
+  assert.equal(Object.values(model.rounds).reduce((sum, round) => sum + round.items.length, 0), 60);
   for (const roundNo of ['1', '2']) {
     const items = model.rounds[roundNo].items;
     assert.equal(items.length, 30);
@@ -90,29 +92,22 @@ check('공개 점수컷 2개년 산술평균과 경계값', () => {
   });
 });
 
-check('새 2회 자동차·두 동물 키 차 정답과 버전 이미지 경로', () => {
-  assert.equal(model.rounds['2'].items[1].answer, '8m');
-  assert.equal(model.rounds['2'].items[4].answer, '25cm');
+check('새 60문항의 핵심 정답과 분류', () => {
+  const r1 = model.rounds['1'].items;
+  const r2 = model.rounds['2'].items;
+  assert.deepEqual(
+    [r1[1].answer, r1[2].answer, r1[3].answer, r1[6].answer, r1[17].answer, r1[25].answer],
+    ['18개', '5개', '7마리', '64', '5시간 뒤', '9771'],
+  );
+  assert.deepEqual(
+    [r2[0].answer, r2[4].answer, r2[7].answer, r2[9].answer, r2[29].answer],
+    ['9개', '2시 20분', '아래쪽 강아지', '12마리', 'D6'],
+  );
+  assert.deepEqual([r1[1].area, r1[1].subarea], ['도형', '시각적 변별']);
+  assert.deepEqual([r1[24].area, r1[24].subarea], ['수·규칙찾기', '규칙수열·도형분할']);
+  assert.deepEqual([r2[22].area, r2[22].subarea], ['도형', '도형의 개수']);
+  assert.deepEqual([r2[24].area, r2[24].subarea], ['수·규칙찾기', '수의 관계']);
   assert.equal(model.rounds['2'].paper.imageDir, 'original_form_2_v2');
-});
-
-check('25번 반복 분할은 마디수열·규칙찾기로 분류', () => {
-  for (const roundNo of ['1', '2']) {
-    const item = model.rounds[roundNo].items[24];
-    assert.equal(item.area, '수·규칙찾기');
-    assert.equal(item.subarea, '마디수열·규칙찾기');
-  }
-  assert.equal(model.rounds['1'].items[24].type, '반복 분할 선 길이');
-  assert.equal(model.rounds['2'].items[24].type, '3등분 반복 선 길이');
-});
-
-check('23번 제한된 수의 최소합은 식의 계산·식의 완성 기준', () => {
-  for (const roundNo of ['1', '2']) {
-    const item = model.rounds[roundNo].items[22];
-    assert.equal(item.area, '식의 계산');
-    assert.equal(item.subarea, '식의 완성');
-    assert.equal(item.type, '제한된 수의 최소합');
-  }
 });
 
 const core = loadCore(model);
@@ -134,7 +129,7 @@ check('소영역 수행률과 1문항 확인 필요 판정', () => {
   const ox = Array(30).fill('O');
   ox[8] = 'X';
   const stats = core.subareaAgg(model.rounds['2'].items, ox);
-  const interval = stats.find((row) => row.k === '간격 문제');
+  const interval = stats.find((row) => row.k === '간격·자르기');
   assert.equal(interval.n, 1);
   assert.equal(interval.wrongNos[0], 9);
   assert.equal(core.originalWeakStatus(interval), '확인 필요');
