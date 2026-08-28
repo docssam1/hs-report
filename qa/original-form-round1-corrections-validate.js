@@ -19,7 +19,7 @@ assert.equal(q(3).answer, '7개');
 assert.match(q(4).prompt, /위와 아래.*섬과 바다.*경계/s);
 assert.match(q(4).prompt, /바다에 있는 개구리/);
 assert.equal(q(4).answer, '7마리');
-assert.match(renderer, /gpt-island-boundary-connected-r2-v1\.png/);
+assert.match(renderer, /gpt-island-boundary-connected-r2-v2\.png/);
 
 assert.match(q(5).prompt, /세모 4개, 네모 3개, 동그라미 1개/);
 assert.equal(q(5).answer, '6');
@@ -79,6 +79,7 @@ assert.equal(q(28).answer, '9801개');
 assert.match(q(28).prompt, /가운데가 빈/);
 assert.match(q(28).prompt, /첫 번째부터 50번째/);
 assert.equal(1 + 8 * (49 * 50 / 2), 9801);
+assert.match(renderer, /original-r1-q28-hollow-rings-imagegen-v4\.png/);
 
 const cells = [];
 for (let column = 0; column < 4; column += 1) {
@@ -98,7 +99,7 @@ assert.equal(q(29).answer, '49개');
 
 assert.equal(q(30).answer, 'H1');
 assert.match(renderer, /original-r1-q30-maze-stacked-source-v3\.png/);
-assert.match(renderer, /justify-content:flex-start/);
+assert.match(renderer, /justify-content:space-evenly/);
 assert.doesNotMatch(renderer, /if\(pageNo===6\)/);
 
 console.log('원본형 1회 사용자 교정 3·4·5·7·9·10·12·14·15·19·20·24·25·27·28·29·30 의미 QA 통과');

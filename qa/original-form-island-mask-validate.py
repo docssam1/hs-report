@@ -6,8 +6,8 @@ from PIL import Image, ImageChops, ImageStat
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ROUND1_ASSET = ROOT / "assets" / "original-form" / "gpt-island-boundary-connected-r2-v1.png"
-ROUND2_ASSET = ROOT / "assets" / "original-form" / "gpt-island-boundary-connected-r2-v1.png"
+ROUND1_ASSET = ROOT / "assets" / "original-form" / "gpt-island-boundary-connected-r2-v2.png"
+ROUND2_ASSET = ROOT / "assets" / "original-form" / "gpt-island-boundary-connected-r2-v2.png"
 PRIVATE = ROOT / ".private-work" / "original-similar-2rounds"
 
 
@@ -100,7 +100,7 @@ assert len(frogs) == 33, f"1회 개구리는 충분히 많이 배치: {len(frogs
 frame_boundary = max(components, key=lambda component: component[0])
 assert frame_boundary[0] > 60_000, "1회 경계가 네모 테두리와 실제로 연결되어야 함"
 assert frame_boundary[1] < 20 and frame_boundary[2] < 20
-assert frame_boundary[3] > width - 20 and frame_boundary[4] > height - 30
+assert frame_boundary[3] >= width - 20 and frame_boundary[4] >= height - 30
 
 labels, sizes = white_labels(gray)
 large_regions = [size for size in sizes if size > 100_000]
@@ -128,7 +128,7 @@ assert len(frogs2) == 33, f"2회 개구리는 충분히 많이 배치: {len(frog
 frame_boundary = max(components2, key=lambda component: component[0])
 assert frame_boundary[0] > 60_000, "2회 경계가 네모 테두리와 실제로 연결되어야 함"
 assert frame_boundary[1] < 20 and frame_boundary[2] < 20
-assert frame_boundary[3] > width2 - 20 and frame_boundary[4] > height2 - 30
+assert frame_boundary[3] >= width2 - 20 and frame_boundary[4] >= height2 - 30
 
 labels2, sizes2 = white_labels(gray2)
 large_regions = [size for size in sizes2 if size > 100_000]

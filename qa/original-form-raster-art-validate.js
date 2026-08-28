@@ -12,7 +12,7 @@ const renderer = fs.readFileSync(path.join(PRIVATE, 'render-original-form-two-ro
 const coreAssets = [
   'gpt-pencil-leads-exact-raster-v6.png',
   'gpt-slippers-left-right-exact-v7.png',
-  'gpt-island-boundary-connected-r2-v1.png',
+  'gpt-island-boundary-connected-r2-v2.png',
   'gpt-leash-two-curves-exact-v4.png',
   'gpt-leash-tangle-cross-r2-v1.png',
   'gpt-overlap-digits-bold-pile-v4.png',
@@ -20,7 +20,7 @@ const coreAssets = [
   'original-r1-q09-pond-imagegen-v4.png',
   'original-r1-q24-cuboid-source-v3.png',
   'original-r1-q25-recursive-source-v4.png',
-  'original-r1-q28-hollow-rings-v3.png',
+  'original-r1-q28-hollow-rings-imagegen-v4.png',
   'original-r1-q29-honeycomb-v3.png',
   'original-r1-q30-maze-stacked-source-v3.png',
   'gpt-hero-imps-battle-mono-v1.png',
@@ -49,9 +49,9 @@ const exactRound2Assets = [
 ];
 
 const rasterizedRound1 = [10,11,12,13,14,15,17,19,20,21,26]
-  .map((number) => `original-r1-q${String(number).padStart(2, '0')}-figure-v5.png`);
+  .map((number) => `original-r1-q${String(number).padStart(2, '0')}-figure-v6.png`);
 const rasterizedRound2 = [2,9,11,19,20,29,30]
-  .map((number) => `original-r2-q${String(number).padStart(2, '0')}-figure-v5.png`);
+  .map((number) => `original-r2-q${String(number).padStart(2, '0')}-figure-v6.png`);
 
 function pngInfo(name) {
   const file = path.join(ASSET_DIR, name);
