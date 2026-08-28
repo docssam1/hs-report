@@ -218,6 +218,11 @@
         <div class="matrix-scroll"><table id="acc-matrix"></table></div>
       </div>
       <div class="card">
+        <h3>별도 판매 과정 승인</h3>
+        <div class="hint"><b>개념 과정 BASIC과 CORE는 서로 다른 상품</b>입니다. 이 표의 승인은 폴더 권한보다 우선하며, 학생별로 각각 따로 열거나 닫을 수 있습니다.</div>
+        <div class="matrix-scroll"><table id="product-acc-matrix"></table></div>
+      </div>
+      <div class="card">
         <h3>교재(책) 등록 — 서재</h3>
         <div class="hint">PDF를 <b>파일 선택 또는 드래그</b>하면 저장소 <b>books/</b> 폴더에 자동으로 올라가고 링크가 자동 입력됩니다. (GitHub 토큰 1회 필요) · 재생목록·답안 파일은 [링크 버튼]으로 넣으세요. 업로드 후 하단 [GitHub에 저장]도 눌러 목록을 반영하세요.</div>
         <div id="book-items"></div>
@@ -379,6 +384,7 @@
   S.specialStudents = S.specialStudents || [];
   S.archiveFolders = S.archiveFolders || [];
   S.archiveAccess = S.archiveAccess || {};
+  S.archiveProductAccess = S.archiveProductAccess || {};
   S.studentTypes = S.studentTypes || {};
   S.vipAccess = S.vipAccess || {};
   S.books = S.books || [];
@@ -547,7 +553,7 @@
   }
   function toggleType(name){ if(S.studentTypes[name]==='online') delete S.studentTypes[name]; else S.studentTypes[name]='online'; renderStudents(); renderAccMatrix(); dirty(); }
   function addStudent(){ const inp=document.getElementById('new-student'); const name=inp.value.trim(); if(!name) return; if(S.students.includes(name)){ toast('이미 있는 학생입니다'); return; } S.students.push(name); ensureStudent(name); inp.value=''; renderStudents(); renderMatrix(); renderAccMatrix(); renderReportAdmin(); dirty(); }
-  function removeStudent(name){ if(!confirm(`'${name}' 학생을 삭제할까요?`)) return; S.students=S.students.filter(s=>s!==name); delete S.attendance[name]; S.specialStudents=S.specialStudents.filter(s=>s!==name); if(S.reports) delete S.reports[name]; if(S.pins) delete S.pins[name]; delete S.studentTypes[name]; Object.keys(S.vipAccess).forEach(k=>{ if(Array.isArray(S.vipAccess[k])) S.vipAccess[k]=S.vipAccess[k].filter(x=>x!==name); }); Object.keys(S.archiveAccess).forEach(k=>{ if(Array.isArray(S.archiveAccess[k])) S.archiveAccess[k]=S.archiveAccess[k].filter(x=>x!==name); }); renderStudents(); renderMatrix(); renderAccMatrix(); renderReportAdmin(); dirty(); }
+  function removeStudent(name){ if(!confirm(`'${name}' 학생을 삭제할까요?`)) return; S.students=S.students.filter(s=>s!==name); delete S.attendance[name]; S.specialStudents=S.specialStudents.filter(s=>s!==name); if(S.reports) delete S.reports[name]; if(S.pins) delete S.pins[name]; delete S.studentTypes[name]; Object.keys(S.vipAccess).forEach(k=>{ if(Array.isArray(S.vipAccess[k])) S.vipAccess[k]=S.vipAccess[k].filter(x=>x!==name); }); Object.keys(S.archiveAccess).forEach(k=>{ if(Array.isArray(S.archiveAccess[k])) S.archiveAccess[k]=S.archiveAccess[k].filter(x=>x!==name); }); Object.keys(S.archiveProductAccess).forEach(k=>{ if(Array.isArray(S.archiveProductAccess[k])) S.archiveProductAccess[k]=S.archiveProductAccess[k].filter(x=>x!==name); }); renderStudents(); renderMatrix(); renderAccMatrix(); renderReportAdmin(); dirty(); }
 
   function cObj(id){ let c=S.content[id]; if(!c){ c={notice:'',homework:'',textbooks:[]}; S.content[id]=c; } if(typeof c.notice!=='string') c.notice=''; if(typeof c.homework!=='string') c.homework=''; if(!Array.isArray(c.textbooks)) c.textbooks=[]; return c; }
   function renderContent(){
@@ -854,6 +860,7 @@
       html+='</tbody>';
       document.getElementById('acc-matrix').innerHTML=html;
     }
+    renderProductAccMatrix();
     renderVipAccMatrix();
     renderSpAccMatrix();
   }
@@ -904,15 +911,37 @@
   function toggleOpen(fi){ const f=S.archiveFolders[fi]; const acc=accArr(f); if(acc.includes('*')) S.archiveAccess[f]=[]; else S.archiveAccess[f]=["*"]; renderAccMatrix(); dirty(); }
   function toggleAcc(fi,s){ const f=S.archiveFolders[fi]; let acc=accArr(f); if(acc.includes('*')) acc=S.archiveAccess[f]=[]; const i=acc.indexOf(s); if(i>=0) acc.splice(i,1); else acc.push(s); renderAccMatrix(); dirty(); }
 
+  /* ── 별도 판매 교재의 독립 승인 ── */
+  const LIBRARY_PRODUCTS=[['concept-basic','개념 과정 BASIC'],['concept-core','개념 과정 CORE']];
+  function productArr(key){ if(!Array.isArray(S.archiveProductAccess[key])) S.archiveProductAccess[key]=[]; return S.archiveProductAccess[key]; }
+  function renderProductAccMatrix(){
+    const el=document.getElementById('product-acc-matrix'); if(!el) return;
+    let html='<thead><tr><th>판매 과정</th><th>전체공개</th><th>모두<br>체크</th>';
+    S.students.forEach(s=>{ html+=stuTh(s); });
+    html+='</tr></thead><tbody>';
+    LIBRARY_PRODUCTS.forEach(p=>{
+      const key=p[0],label=p[1],acc=productArr(key),open=acc.includes('*');
+      html+=`<tr><th>${esc(label)}</th><td class="cell ${open?'on':'off'}" onclick="productToggleOpen('${key}')"></td><td style="text-align:center"><button class="mini" onclick="productAll('${key}')" title="전원 개별 체크로 전환">☑</button></td>`;
+      S.students.forEach(s=>{ const on=!open&&acc.includes(s); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="productToggleAcc('${key}','${s}')"></td>`; });
+      html+='</tr>';
+    });
+    el.innerHTML=html+'</tbody>';
+  }
+  function productToggleOpen(key){ const acc=productArr(key); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderProductAccMatrix(); dirty(); }
+  function productToggleAcc(key,student){ let acc=productArr(key); if(acc.includes('*')) acc=S.archiveProductAccess[key]=[]; const i=acc.indexOf(student); if(i>=0) acc.splice(i,1); else acc.push(student); renderProductAccMatrix(); dirty(); }
+  function productAll(key){ S.archiveProductAccess[key]=S.students.slice(); renderProductAccMatrix(); dirty(); }
+
   function renderBooks(){
     let h='';
     (S.books||[]).forEach((it,i)=>{
       const opts=S.archiveFolders.map(f=>`<option ${f===it.folder?'selected':''}>${esc(f)}</option>`).join('');
       const pdfState = it.pdf ? `<span style="color:var(--ok);font-size:12px">✓ ${esc((it.pdf||'').split('/').pop())}</span>` : `<span style="color:var(--muted);font-size:12px">아직 없음</span>`;
+      const productOpts=[['','폴더 권한 사용']].concat(LIBRARY_PRODUCTS).map(p=>`<option value="${p[0]}" ${p[0]===(it.accessKey||'')?'selected':''}>${esc(p[1])}</option>`).join('');
       let linkRows='';
       (it.links||[]).forEach((l,li)=>{ linkRows+=`<div class="tb-row"><input type="text" value="${esc(l.label)}" oninput="setBookLink(${i},${li},'label',this.value)" placeholder="버튼 이름 (예: 답안 PDF / 재생목록)"><input type="url" value="${esc(l.url)}" oninput="setBookLink(${i},${li},'url',this.value)" placeholder="링크 주소"><button class="btn del" onclick="delBookLink(${i},${li})">삭제</button></div>`; });
       h+=`<div class="content-week">
         <div class="field"><label>폴더(책장)</label><select onchange="setBook(${i},'folder',this.value)">${opts}</select></div>
+        <div class="field"><label>판매 승인 그룹</label><select onchange="setBookAccessKey(${i},this.value)">${productOpts}</select><span class="hint">BASIC·CORE처럼 별도 판매하는 교재만 선택합니다.</span></div>
         <div class="field"><label>제목</label><input type="text" value="${esc(it.title)}" oninput="setBook(${i},'title',this.value)" placeholder="교재 제목"></div>
         <div class="field"><label>교재 PDF</label><label class="dz" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" accept="application/pdf" onchange="uploadBookPdf(${i},this)"><span>또는 드래그</span></label> &nbsp; ${pdfState}</div>
         <div class="field"><label>PDF 링크</label><input type="url" value="${esc(it.pdf)}" oninput="setBook(${i},'pdf',this.value)" placeholder="업로드하면 자동 입력 / 직접 링크도 가능"></div>
@@ -929,6 +958,7 @@
   }
   function addBook(){ (S.books=S.books||[]).push({folder:S.archiveFolders[0]||'', title:'', pdf:'', video:'', cover:'', date:today(), links:[]}); renderBooks(); dirty(); }
   function setBook(i,key,val){ if(S.books[i]){ S.books[i][key]=(key==='date')?val:val.trim(); dirty(); } }
+  function setBookAccessKey(i,val){ if(!S.books[i]) return; if(val) S.books[i].accessKey=val; else delete S.books[i].accessKey; renderProductAccMatrix(); dirty(); }
   function delBook(i){ S.books.splice(i,1); renderBooks(); dirty(); }
   function addBookLink(i){ const b=S.books[i]; if(!b) return; (b.links=b.links||[]).push({label:'',url:''}); renderBooks(); dirty(); }
   function setBookLink(i,li,key,v){ const b=S.books[i]; if(b&&b.links&&b.links[li]){ b.links[li][key]=v.trim(); dirty(); } }

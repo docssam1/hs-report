@@ -1295,6 +1295,56 @@ window.GFIELD_DATA = {
       "박재연"
     ]
   },
+  "archiveProductAccess": {
+    "concept-basic": [
+      "노관호",
+      "변서진",
+      "안채연",
+      "김서연",
+      "김명서",
+      "김시후",
+      "임유준",
+      "윤하영",
+      "DEMO",
+      "문선우",
+      "유호연",
+      "정유현",
+      "김건아",
+      "김주한",
+      "민준기",
+      "박서진",
+      "정지안",
+      "이하린",
+      "김유준",
+      "김현우",
+      "허유민",
+      "박재연"
+    ],
+    "concept-core": [
+      "노관호",
+      "변서진",
+      "안채연",
+      "김서연",
+      "김명서",
+      "김시후",
+      "임유준",
+      "윤하영",
+      "DEMO",
+      "문선우",
+      "유호연",
+      "정유현",
+      "김건아",
+      "김주한",
+      "민준기",
+      "박서진",
+      "정지안",
+      "이하린",
+      "김유준",
+      "김현우",
+      "허유민",
+      "박재연"
+    ]
+  },
   "books": [
     {
       "folder": "사고력 교재",
@@ -2065,6 +2115,7 @@ window.GFIELD_DATA = {
     },
     {
       "folder": "개념 교재",
+      "accessKey": "concept-basic",
       "title": "HS 대비 응용 개념서 · THINKING BASIC",
       "desc": "문제 푸는 방법 찾기 (1)(2) · 규칙 찾아 해결하기 (1)",
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753689111_1mbr_HS___________-HS___4.pdf",
@@ -2102,6 +2153,7 @@ window.GFIELD_DATA = {
     },
     {
       "folder": "개념 교재",
+      "accessKey": "concept-core",
       "title": "Thinking Core · 생각하는 황소 대비 심화 개념",
       "desc": "CH1 NUMBERS · CH2 Algebra · CH3 Numbers & Case · CH4 Geometry · CH5 활용",
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783857450970_tjse_Thinking_Core_____________________2_.pdf",

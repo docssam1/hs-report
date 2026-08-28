@@ -837,6 +837,18 @@
   document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
 
   function canSeeFolder(folder){ const acc=(D.archiveAccess||{})[folder]; if(!Array.isArray(acc)) return false; /* 권한 정보 없으면 비공개 */ return acc.includes('*')||acc.includes(currentStudent); }
+  /* 별도 판매 교재는 책장 권한과 분리한다. accessKey가 없는 기존 교재는 종전 폴더 권한을 그대로 사용한다. */
+  function canSeeBook(book){
+    if(!book) return false;
+    const key=String(book.accessKey||'');
+    if(!key) return canSeeFolder(book.folder);
+    const acc=(D.archiveProductAccess||{})[key];
+    return Array.isArray(acc)&&(acc.includes('*')||acc.includes(currentStudent));
+  }
+  function canSeeArchiveFolder(folder){
+    if(canSeeFolder(folder)) return true;
+    return (D.books||[]).some(book=>book&&book.folder===folder&&book.accessKey&&canSeeBook(book));
+  }
   /* 특강처럼 회차 일부만 신청한 학생을 위한 교재별 열람 권한. access가 없으면 기존과 동일하게 항상 보임(하위호환) */
   function canSeeTB(t){ if(!Array.isArray(t.access)) return true; return t.access.includes('*')||t.access.includes(currentStudent); }
   function isOnline(){ return ((D.studentTypes||{})[currentStudent])==='online'; }
@@ -880,11 +892,11 @@
   function renderArchive(){
     const wrap=document.getElementById('archive-list'); wrap.innerHTML='';
     if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 자료실이 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
-    const folders=(D.archiveFolders||[]).filter(canSeeFolder);
+    const folders=(D.archiveFolders||[]).filter(canSeeArchiveFolder);
     if(!folders.length){ wrap.innerHTML='<div class="empty-note">열람 가능한 자료실이 없습니다.</div>'; return; }
     let total=0;
     folders.forEach(folder=>{
-      const books=(D.books||[]).filter(b=>b&&b.folder===folder&&(b.pdf||b.video||(b.links&&b.links.length)));
+      const books=(D.books||[]).filter(b=>b&&b.folder===folder&&canSeeBook(b)&&(b.pdf||b.video||(b.links&&b.links.length)));
       const sec=document.createElement('div'); sec.className='shelf-sec';
       let inner=`<div class="shelf-h disp">📚 ${escHtml(folder)}<span class="c">${books.length}권</span></div>`;
       inner+=arcInfoHtml(folder);
@@ -951,6 +963,7 @@
   }
   function openBook(b){
     if(!b) return;
+    if(b.accessKey&&!canSeeBook(b)){ toast('이 교재는 별도 승인된 학생만 열람할 수 있습니다.'); return; }
     document.getElementById('bv-name').textContent=b.title||'교재';
     const mode = !b.video ? 'none' : (ytSingle(b.video)?'embed':'link');
     const stage=document.getElementById('bv-stage');

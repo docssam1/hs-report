@@ -41,7 +41,8 @@ function expectedHref(locator, pattern, label) {
       const source = fs.readFileSync(path.join(ROOT, 'data.js'), 'utf8');
       const qaData = `\n;(function(){var D=window.GFIELD_DATA;var n=${JSON.stringify(STUDENT)};`+
         `if(!D.students.includes(n))D.students.push(n);D.studentTypes[n]='online';`+
-        `['파이널 모의고사','최종 모의고사','추가 모의고사','약점 유형','개념 교재'].forEach(function(f){if(!Array.isArray(D.archiveAccess[f]))D.archiveAccess[f]=[];if(!D.archiveAccess[f].includes(n))D.archiveAccess[f].push(n);});})();`;
+        `['파이널 모의고사','최종 모의고사','추가 모의고사','약점 유형','개념 교재'].forEach(function(f){if(!Array.isArray(D.archiveAccess[f]))D.archiveAccess[f]=[];if(!D.archiveAccess[f].includes(n))D.archiveAccess[f].push(n);});`+
+        `D.archiveProductAccess=D.archiveProductAccess||{};['concept-basic','concept-core'].forEach(function(k){if(!Array.isArray(D.archiveProductAccess[k]))D.archiveProductAccess[k]=[];if(!D.archiveProductAccess[k].includes(n))D.archiveProductAccess[k].push(n);});})();`;
       await route.fulfill({ status: 200, contentType: 'application/javascript; charset=utf-8', body: source + qaData });
     });
 

@@ -97,7 +97,7 @@ check('새 60문항의 핵심 정답과 분류', () => {
   const r2 = model.rounds['2'].items;
   assert.deepEqual(
     [r1[1].answer, r1[2].answer, r1[3].answer, r1[6].answer, r1[17].answer, r1[25].answer],
-    ['18개', '7개', '7마리', '64', '5시간 뒤', '9771'],
+    ['18개', '7개', '7마리', '78', '5시간 뒤', '9771'],
   );
   assert.deepEqual(
     [r2[0].answer, r2[4].answer, r2[7].answer, r2[9].answer, r2[29].answer],

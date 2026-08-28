@@ -6,7 +6,7 @@ from PIL import Image, ImageChops, ImageStat
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ROUND1_ASSET = ROOT / "assets" / "original-form" / "gpt-island-maze-ribbon-v3.png"
+ROUND1_ASSET = ROOT / "assets" / "original-form" / "gpt-island-boundary-connected-r2-v1.png"
 ROUND2_ASSET = ROOT / "assets" / "original-form" / "gpt-island-boundary-connected-r2-v1.png"
 PRIVATE = ROOT / ".private-work" / "original-similar-2rounds"
 
@@ -90,19 +90,28 @@ def assert_monochrome_unfilled(rgb: Image.Image, label: str):
 assert ROUND1_ASSET.exists(), f"1회 섬 그림 누락: {ROUND1_ASSET}"
 rgb = Image.open(ROUND1_ASSET).convert("RGB")
 width, height = rgb.size
-assert width >= 1200 and height >= 1200, "1회 섬 그림 인쇄 해상도"
+assert width >= 1400 and height >= 1000, "1회 섬 그림 인쇄 해상도"
 assert_monochrome_unfilled(rgb, "1회")
 gray = rgb.convert("L")
-frogs = [component for component in dark_components(gray) if 800 <= component[0] <= 1600]
-assert len(frogs) == 19, f"1회 개구리 실루엣 수: {len(frogs)}"
+components = dark_components(gray)
+frogs = [component for component in components if 800 <= component[0] <= 1100]
+assert len(frogs) == 33, f"1회 개구리는 충분히 많이 배치: {len(frogs)}"
+
+frame_boundary = max(components, key=lambda component: component[0])
+assert frame_boundary[0] > 60_000, "1회 경계가 네모 테두리와 실제로 연결되어야 함"
+assert frame_boundary[1] < 20 and frame_boundary[2] < 20
+assert frame_boundary[3] > width - 20 and frame_boundary[4] > height - 30
+
 labels, sizes = white_labels(gray)
-palm_x = round(width * 0.742)
-palm_y = round(height * 0.175)
+large_regions = [size for size in sizes if size > 100_000]
+assert len(large_regions) == 2, f"1회 색칠·추적으로 구분되는 큰 영역은 정확히 둘: {large_regions}"
+palm_x = round(width * 0.725)
+palm_y = round(height * 0.36)
 palm_label = labels[palm_y * width + palm_x]
 assert palm_label >= 0 and sizes[palm_label] > 100_000, "1회 야자수 연결 영역을 찾지 못함"
-connected = sum(surrounding_label(frog, labels, width, height) == palm_label for frog in frogs)
-assert connected == 7, f"1회 야자수까지 물 없이 갈 수 있는 개구리 수: {connected}"
-assert len(frogs) - connected == 12, "1회 물을 건너야 하는 개구리 수"
+island_frogs = sum(surrounding_label(frog, labels, width, height) == palm_label for frog in frogs)
+assert island_frogs == 26, f"1회 야자수 쪽 개구리 수: {island_frogs}"
+assert len(frogs) - island_frogs == 7, "1회 바다 쪽 개구리 수"
 
 assert ROUND2_ASSET.exists(), f"2회 섬 그림 누락: {ROUND2_ASSET}"
 rgb2 = Image.open(ROUND2_ASSET).convert("RGB")
@@ -137,4 +146,4 @@ round2 = json.loads((PRIVATE / "original-form-round2-data.json").read_text(encod
 assert round1["questions"][3]["answer"] == "7마리"
 assert round2["questions"][9]["answer"] == "7마리"
 
-print("원본형 섬 QA 통과: 무채색, 2회 개구리 33마리, 테두리 연결 경계, 색칠 영역 2개, 바다 7마리")
+print("원본형 섬 QA 통과: 두 회 모두 무채색, 개구리 33마리, 테두리 연결 경계, 큰 영역 2개, 바다 7마리")

@@ -283,9 +283,9 @@
     'path', 'bank/gens/g-path.js', 'concept only; blocked points differ from forbidden segments',
     ['source condition mismatch: blocked intersections differ from forbidden segments', 'no original-side-by-side art review']
   );
-  GENERATOR_LINKS[signature('도형', '쌓기나무', '보이지 않는 색기둥')] = generatorLink(
-    'cube', 'bank/gens/g-cube.js', 'concept only; legacy variants do not reproduce this source type',
-    ['source condition mismatch: current variants do not reproduce the source color-column type', 'no original-side-by-side art review']
+  GENERATOR_LINKS[signature('도형', '쌓기나무', '세 방향의 검은 기둥')] = generatorLink(
+    'cube', 'bank/gens/g-cube.js', 'concept only; practice variants do not reproduce the source three-view black-column conditions',
+    ['source condition mismatch: current variants do not reproduce the source three-view black-column type', 'no original-side-by-side art review']
   );
   GENERATOR_LINKS[signature('수·규칙찾기', '마디수열·규칙찾기', '큰 위치의 반복문자')] = elementaryTextGeneratorLink(
     'repeat', 'bank/gens/g-repeat.js', 'same repeating-block position skill',
