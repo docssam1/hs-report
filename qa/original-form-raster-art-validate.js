@@ -12,7 +12,7 @@ const renderer = fs.readFileSync(path.join(PRIVATE, 'render-original-form-two-ro
 const coreAssets = [
   'gpt-pencil-leads-exact-raster-v6.png',
   'gpt-slippers-left-right-exact-v7.png',
-  'gpt-island-boundary-connected-r2-v2.png',
+  'rigor-r1-q04-island-33-v2.png',
   'gpt-leash-two-curves-exact-v4.png',
   'gpt-leash-tangle-cross-r2-v1.png',
   'gpt-overlap-digits-bold-pile-v4.png',
@@ -32,7 +32,7 @@ const coreAssets = [
   'gpt-clock-pair-realistic-noon-v1.png',
   'rigor-r1-q05-shape-partition-v1.png',
   'rigor-r1-q14-fish-relations-v1.png',
-  'rigor-r1-q29-triangle-original-18-v1.png',
+  'rigor-r1-q29-triangle-complete-21-imagegen-v2.png',
   'rigor-r2-q01-paper-chain-v1.png',
   'rigor-r2-q03-scale-stack-v1.png',
   'rigor-r2-q05-mirror-810-v1.png',

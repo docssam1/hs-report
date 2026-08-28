@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "hs-report-source-memory",
+  "root": ".",
+  "updated": "2026-08-28",
+  "decisions": [
+    {
+      "id": "original-form-geometry-endpoint-topology-20260828",
+      "status": "verified",
+      "scope": "original-form mock exam geometry and sparse-page layout",
+      "rules": [
+        "Triangle-network questions must not contain a dangling segment: every segment endpoint must meet the outer boundary or another segment.",
+        "Island-boundary questions use a closed outer frame and exactly one simple internal boundary with one top contact, one bottom contact, no left or right contact, and exactly two large regions.",
+        "Sparse final pages use a two-column by two-row quadrant grid, and every question starts at the top of its assigned quadrant."
+      ],
+      "verification": [
+        "qa/original-form-independent-rigor-validate.js",
+        "qa/original-form-island-mask-validate.py",
+        "qa/original-form-layout-validate.js",
+        ".private-work/original-similar-2rounds/render-original-form-two-rounds.js"
+      ]
+    }
+  ]
+}

@@ -723,20 +723,20 @@
     "R1Q29": {
       "difficultyClass": "D4",
       "reasoningSteps": 5,
-      "branchCount": 18,
+      "branchCount": 21,
       "visualTrace": {
         "dependency": "required",
-        "decisionPoints": 18,
-        "verifierId": "visual-r1q29-semantic-v1"
+        "decisionPoints": 21,
+        "verifierId": "visual-r1q29-complete-21-v2"
       },
       "sourceLocator": {
-        "sourceId": "hwangso-2024-rep2-triangle",
+        "sourceId": "hwangso-2024-rep2-triangle-complete-21",
         "kind": "reconstructed-source",
         "year": 2024,
         "page": "대표2",
-        "question": "triangle-count"
+        "question": "triangle-count-complete-21"
       },
-      "solverId": "solver-r1q29-exact-v1",
+      "solverId": "solver-r1q29-complete-21-exact-v2",
       "conditions": {
         "simple": false,
         "conditionCount": 3,

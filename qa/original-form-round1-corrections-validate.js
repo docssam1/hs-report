@@ -16,10 +16,10 @@ assert.deepEqual(slippers.inventory, {
 });
 assert.equal(q(3).answer, '7개');
 
-assert.match(q(4).prompt, /위와 아래.*섬과 바다.*경계/s);
+assert.match(q(4).prompt, /위(?:쪽)?과 아래(?:쪽)?.*섬과 바다.*경계/s);
 assert.match(q(4).prompt, /바다에 있는 개구리/);
 assert.equal(q(4).answer, '7마리');
-assert.match(renderer, /gpt-island-boundary-connected-r2-v2\.png/);
+assert.match(renderer, /rigor-r1-q04-island-33-v2\.png/);
 
 assert.match(q(5).prompt, /1부터 9까지.*세모 3개의 합은 14.*네모 3개의 합은 13.*연속한 세 수/s);
 assert.equal(q(5).answer, '7');
@@ -87,9 +87,9 @@ assert.match(q(28).prompt, /첫 번째부터 50번째/);
 assert.equal(1 + 8 * (49 * 50 / 2), 9801);
 assert.match(renderer, /original-r1-q28-hollow-rings-imagegen-v4\.png/);
 
-assert.equal(q(29).answer, '18개');
+assert.equal(q(29).answer, '21개');
 assert.match(q(29).prompt, /크고 작은 삼각형/);
-assert.match(renderer, /rigor-r1-q29-triangle-original-18-v1\.png/);
+assert.match(renderer, /rigor-r1-q29-triangle-complete-21-imagegen-v2\.png/);
 
 assert.equal(q(30).answer, 'H1');
 assert.match(renderer, /original-r1-q30-maze-stacked-source-v3\.png/);

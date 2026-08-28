@@ -24,7 +24,7 @@ const EXPECTED_ASSET_HASHES = {
   'rigor-r2-q07-stars-102-v1.png': '57ceff967458492300e21333f5c0db2d1f868fe3f3bb57b0ddd202d1aa062a67',
   'rigor-r2-q10-island-37-v1.png': '6ab3839a25bcb42923db32a5ab28781bafe2fea57b760a74aa2861ce56e267d0',
   'rigor-r2-q28-cuboid-5x5-pattern-v1.png': '0ddac6efe1ddfcf79d06d810c6d80708a4d2ed6c4a4dbc58bc30b9570a413b29',
-  'rigor-r1-q29-triangle-original-18-v1.png': '728aad80244f62c291169e016023531f61cdad9d50822054db5d5217e86e83b9',
+  'rigor-r1-q29-triangle-complete-21-imagegen-v2.png': 'e2d3106e7238213aeee144665deaa783bcdcf83f48414adba550bccd05798493',
   'rigor-r2-q17-triangle-variant-14-v1.png': '69c979dbfe4688c43210ce465aa437e04e97582837d16dabbb2d816f0b31ddff',
   'rigor-digital-display-7-four-bars-v1.png': '687166a656f168ec15127311f084c866dd17d00a3db05760698afcf6362537f9',
 };
@@ -281,14 +281,14 @@ function darkComponents(image) {
   return components;
 }
 
-function countTriangleGraph(removeInternalDiagonal = false) {
+function countTriangleGraph(removeInternalDiagonal = false, extendLowerDiagonalToOuterEdge = false) {
   const pointsByName = {
     A: [0, 12], B: [-6, 0], C: [6, 0], L: [-3, 6], R: [3, 6],
-    U: [-1, 10], D: [0, 0], Q: [4, 3], P: [1, 8],
+    U: [-1, 10], D: [0, 0], Q: [4, 3], E: [102 / 23, 72 / 23], P: [1, 8],
   };
   const namedLines = [
     ['A', 'B'], ['A', 'C'], ['B', 'C'], ['L', 'R'], ['U', 'R'],
-    ['P', 'D'], ['L', 'D'], ['D', 'R'], ['B', 'Q'],
+    ['P', 'D'], ['L', 'D'], ['D', 'R'], ['B', extendLowerDiagonalToOuterEdge ? 'E' : 'Q'],
   ].filter((_, index) => !(removeInternalDiagonal && index === 4));
   const lines = namedLines.map(([a, b]) => [pointsByName[a], pointsByName[b]]);
   const epsilon = 1e-8;
@@ -486,12 +486,12 @@ function installSolvers(rounds) {
     return checkAnswer(index, 'R1Q26', '9711', `${valid.length}개 네 자리 수 전수 열거, 7은 4칸`);
   });
 
-  run('R1Q29 · 원본 불규칙 삼각형', () => {
+  run('R1Q29 · 외곽선까지 이어진 불규칙 삼각형', () => {
     const q = requireQuestion(index, 'R1Q29');
-    requireAsset(q, 'R1Q29', 'rigor-r1-q29-triangle-original-18-v1.png', EXPECTED_ASSET_HASHES['rigor-r1-q29-triangle-original-18-v1.png']);
-    const graph = countTriangleGraph(false);
-    same(graph.triangles, 18, 'R1Q29 삼각형 수');
-    return checkAnswer(index, 'R1Q29', '18개', `${graph.lines}선분·${graph.points}교점/끝점 전수 열거`);
+    requireAsset(q, 'R1Q29', 'rigor-r1-q29-triangle-complete-21-imagegen-v2.png', EXPECTED_ASSET_HASHES['rigor-r1-q29-triangle-complete-21-imagegen-v2.png']);
+    const graph = countTriangleGraph(false, true);
+    same(graph.triangles, 21, 'R1Q29 삼각형 수');
+    return checkAnswer(index, 'R1Q29', '21개', `${graph.lines}선분·${graph.points}교점/끝점 전수 열거`);
   });
 
   run('R2Q01 · 카드 50장 공유 꼭짓점', () => {
