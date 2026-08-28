@@ -8,6 +8,7 @@ const vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const DATA_FILE = path.join(ROOT, 'mock-data-original.js');
 const PAGE_FILE = path.join(ROOT, 'final.html');
+const PRIVATE_DIR = path.join(ROOT, '.private-work', 'original-similar-2rounds');
 const allowedAreas = ['수·규칙찾기', '도형', '경우의 수', '식의 계산'];
 
 function loadModel() {
@@ -97,17 +98,56 @@ check('새 60문항의 핵심 정답과 분류', () => {
   const r2 = model.rounds['2'].items;
   assert.deepEqual(
     [r1[1].answer, r1[2].answer, r1[3].answer, r1[6].answer, r1[17].answer, r1[25].answer],
-    ['18개', '7개', '7마리', '78', '5시간 뒤', '9771'],
+    ['18개', '7개', '7마리', '78', '300일', '9711'],
   );
   assert.deepEqual(
     [r2[0].answer, r2[4].answer, r2[7].answer, r2[9].answer, r2[29].answer],
-    ['9개', '2시 20분', '아래쪽 강아지', '7마리', 'D6'],
+    ['151개', '280분', '아래쪽 강아지', '15마리', 'D6'],
+  );
+  assert.deepEqual(
+    [r1[0].difficultyClass, r1[20].difficultyClass, r2[1].difficultyClass, r2[27].difficultyClass],
+    ['D2', 'D5', 'D2', 'D5'],
   );
   assert.deepEqual([r1[1].area, r1[1].subarea], ['도형', '시각적 변별']);
   assert.deepEqual([r1[24].area, r1[24].subarea], ['수·규칙찾기', '규칙수열·도형분할']);
-  assert.deepEqual([r2[22].area, r2[22].subarea], ['도형', '도형의 개수']);
+  assert.deepEqual([r2[22].area, r2[22].subarea], ['수·규칙찾기', '조건에 맞는 수']);
   assert.deepEqual([r2[24].area, r2[24].subarea], ['수·규칙찾기', '수의 관계']);
   assert.equal(model.rounds['2'].paper.imageDir, 'original_form_2_v2');
+});
+
+check('시험지 60문항과 공개 진단 데이터가 문항별로 일치', () => {
+  for (const roundNo of ['1', '2']) {
+    const rendered = JSON.parse(fs.readFileSync(
+      path.join(PRIVATE_DIR, `original-form-round${roundNo}-data.json`),
+      'utf8',
+    )).questions;
+    const diagnostic = model.rounds[roundNo].items;
+    assert.equal(rendered.length, diagnostic.length);
+    rendered.forEach((item, index) => {
+      const publicItem = diagnostic[index];
+      assert.deepEqual(
+        {
+          no: publicItem.no,
+          area: publicItem.area,
+          subarea: publicItem.subarea,
+          type: publicItem.type,
+          answer: publicItem.answer,
+          point: publicItem.pts,
+          difficultyClass: publicItem.difficultyClass,
+        },
+        {
+          no: item.number,
+          area: item.area,
+          subarea: item.subarea,
+          type: item.type,
+          answer: item.answer,
+          point: item.point,
+          difficultyClass: item.difficultyClass,
+        },
+        `원본형 ${roundNo}회 ${item.number}번 진단 데이터`,
+      );
+    });
+  }
 });
 
 const core = loadCore(model);

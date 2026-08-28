@@ -1,0 +1,1733 @@
+{
+  "schemaVersion": 1,
+  "items": {
+    "R1Q01": {
+      "difficultyClass": "D2",
+      "reasoningSteps": 1,
+      "branchCount": 0,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 1,
+        "verifierId": "visual-r1q01-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q01",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q01"
+      },
+      "solverId": "solver-r1q01-exact-v1",
+      "conditions": {
+        "simple": true,
+        "conditionCount": 1,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q02": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 4,
+      "branchCount": 18,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 18,
+        "verifierId": "visual-r1q02-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q02",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q02"
+      },
+      "solverId": "solver-r1q02-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q03": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 22,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 22,
+        "verifierId": "visual-r1q03-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q03",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q03"
+      },
+      "solverId": "solver-r1q03-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q04": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 37,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 37,
+        "verifierId": "visual-r1q04-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q04",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q04"
+      },
+      "solverId": "solver-r1q04-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q05": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r1q05-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q05",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q05",
+        "variantOf": "hwangso-2025-p04-shape-sum"
+      },
+      "solverId": "solver-r1q05-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2025-p04-shape-sum",
+        "changeDimensions": [
+          "numeric-values",
+          "shape-group-sizes",
+          "consecutive-number-condition"
+        ],
+        "preservedInvariants": [
+          "whole-sum-decomposition",
+          "shape-group-inference"
+        ]
+      }
+    },
+    "R1Q06": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 4,
+      "branchCount": 5,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 5,
+        "verifierId": "visual-r1q06-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q06",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q06"
+      },
+      "solverId": "solver-r1q06-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q07": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 18,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 18,
+        "verifierId": "visual-r1q07-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q07",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q07"
+      },
+      "solverId": "solver-r1q07-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q08": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2019-p1-q08",
+        "kind": "reconstructed-source",
+        "year": 2019,
+        "page": 1,
+        "question": 8
+      },
+      "solverId": "solver-r1q08-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": true
+      }
+    },
+    "R1Q09": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 5,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 5,
+        "verifierId": "visual-r1q09-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q09",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q09"
+      },
+      "solverId": "solver-r1q09-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q10": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 3,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 3,
+        "verifierId": "visual-r1q10-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q10",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q10",
+        "variantOf": "hwangso-2025-p11-letter-repeat"
+      },
+      "solverId": "solver-r1q10-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2025-p11-letter-repeat",
+        "changeDimensions": [
+          "row-lengths",
+          "repeat-offsets",
+          "target-letter-count"
+        ],
+        "preservedInvariants": [
+          "cyclic-letter-pattern",
+          "large-position-counting"
+        ]
+      }
+    },
+    "R1Q11": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 4,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 4,
+        "verifierId": "visual-r1q11-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2019-p1-q03",
+        "kind": "reconstructed-source",
+        "year": 2019,
+        "page": 1,
+        "question": 3
+      },
+      "solverId": "solver-r1q11-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q12": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2019-p1-q09",
+        "kind": "reconstructed-source",
+        "year": 2019,
+        "page": 1,
+        "question": 9
+      },
+      "solverId": "solver-r1q12-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q13": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 4,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r1q13-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q13",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q13"
+      },
+      "solverId": "solver-r1q13-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q14": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r1q14-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q14",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q14",
+        "variantOf": "hwangso-2025-p09-fish-bowls"
+      },
+      "solverId": "solver-r1q14-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2025-p09-fish-bowls",
+        "changeDimensions": [
+          "total-fish-count",
+          "pairwise-differences",
+          "asked-bowl"
+        ],
+        "preservedInvariants": [
+          "relative-quantity-chain",
+          "backward-total-reconstruction"
+        ]
+      }
+    },
+    "R1Q15": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r1q15-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q15",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q15"
+      },
+      "solverId": "solver-r1q15-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q16": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r1q16-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q16",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q16"
+      },
+      "solverId": "solver-r1q16-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q17": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r1q17-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q17",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q17"
+      },
+      "solverId": "solver-r1q17-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q18": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 4,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r1q18-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2025-p14-clock-drift",
+        "kind": "reconstructed-source",
+        "year": 2025,
+        "page": 14,
+        "question": "clock-drift"
+      },
+      "solverId": "solver-r1q18-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q19": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 6,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 6,
+        "verifierId": "visual-r1q19-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q19",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q19"
+      },
+      "solverId": "solver-r1q19-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": true
+      }
+    },
+    "R1Q20": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 4,
+      "branchCount": 4,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 4,
+        "verifierId": "visual-r1q20-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q20",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q20"
+      },
+      "solverId": "solver-r1q20-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q21": {
+      "difficultyClass": "D5",
+      "reasoningSteps": 6,
+      "branchCount": 64,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 64,
+        "verifierId": "visual-r1q21-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q21",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q21"
+      },
+      "solverId": "solver-r1q21-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 4,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q22": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q22",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q22"
+      },
+      "solverId": "solver-r1q22-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q23": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 4,
+      "branchCount": 6,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q23",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q23",
+        "variantOf": "hwangso-2025-p16-min-summands"
+      },
+      "solverId": "solver-r1q23-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": true
+      },
+      "similarity": {
+        "variantOf": "hwangso-2025-p16-min-summands",
+        "changeDimensions": [
+          "target-sum",
+          "summand-inventory-limit",
+          "available-values"
+        ],
+        "preservedInvariants": [
+          "minimum-count-proof",
+          "constructive-achievability"
+        ]
+      }
+    },
+    "R1Q24": {
+      "difficultyClass": "D5",
+      "reasoningSteps": 6,
+      "branchCount": 3,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 3,
+        "verifierId": "visual-r1q24-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q24",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q24"
+      },
+      "solverId": "solver-r1q24-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 4,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q25": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 5,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 5,
+        "verifierId": "visual-r1q25-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q25",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q25"
+      },
+      "solverId": "solver-r1q25-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q26": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 4,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 4,
+        "verifierId": "visual-r1q26-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2019-p4-q33",
+        "kind": "reconstructed-source",
+        "year": 2019,
+        "page": 4,
+        "question": 33
+      },
+      "solverId": "solver-r1q26-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": true
+      }
+    },
+    "R1Q27": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 4,
+      "branchCount": 3,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q27",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q27"
+      },
+      "solverId": "solver-r1q27-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q28": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 49,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 49,
+        "verifierId": "visual-r1q28-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q28",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q28"
+      },
+      "solverId": "solver-r1q28-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q29": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 18,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 18,
+        "verifierId": "visual-r1q29-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2024-rep2-triangle",
+        "kind": "reconstructed-source",
+        "year": 2024,
+        "page": "대표2",
+        "question": "triangle-count"
+      },
+      "solverId": "solver-r1q29-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R1Q30": {
+      "difficultyClass": "D5",
+      "reasoningSteps": 7,
+      "branchCount": 10,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 10,
+        "verifierId": "visual-r1q30-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r1q30",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R1Q30"
+      },
+      "solverId": "solver-r1q30-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 4,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q01": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r2q01-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2019-p1-q04",
+        "kind": "reconstructed-source",
+        "year": 2019,
+        "page": 1,
+        "question": 4
+      },
+      "solverId": "solver-r2q01-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q02": {
+      "difficultyClass": "D2",
+      "reasoningSteps": 1,
+      "branchCount": 0,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 1,
+        "verifierId": "visual-r2q02-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q02",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q02",
+        "variantOf": "hwangso-2024-rep1-car-length"
+      },
+      "solverId": "solver-r2q02-exact-v1",
+      "conditions": {
+        "simple": true,
+        "conditionCount": 1,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2024-rep1-car-length",
+        "changeDimensions": [
+          "vehicle-counts",
+          "empty-distance-values",
+          "cancellation-multiplier"
+        ],
+        "preservedInvariants": [
+          "equal-total-length",
+          "common-object-cancellation"
+        ]
+      }
+    },
+    "R2Q03": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r2q03-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2019-p1-q07",
+        "kind": "reconstructed-source",
+        "year": 2019,
+        "page": 1,
+        "question": 7
+      },
+      "solverId": "solver-r2q03-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q04": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 5,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q04",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q04",
+        "variantOf": "hwangso-2019-p1-q08"
+      },
+      "solverId": "solver-r2q04-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": true
+      },
+      "similarity": {
+        "variantOf": "hwangso-2019-p1-q08",
+        "changeDimensions": [
+          "population-totals",
+          "third-set-introduction",
+          "known-intersection"
+        ],
+        "preservedInvariants": [
+          "inclusion-exclusion-bounds",
+          "minimum-maximum-proof"
+        ]
+      }
+    },
+    "R2Q05": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r2q05-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q05",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q05",
+        "variantOf": "hwangso-2024-rep1-mirror-clock"
+      },
+      "solverId": "solver-r2q05-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2024-rep1-mirror-clock",
+        "changeDimensions": [
+          "mirror-display-time",
+          "wake-time",
+          "elapsed-time-question"
+        ],
+        "preservedInvariants": [
+          "twelve-hour-reflection",
+          "time-interval-conversion"
+        ]
+      }
+    },
+    "R2Q06": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q06",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q06",
+        "variantOf": "calendar-date-shift-family"
+      },
+      "solverId": "solver-r2q06-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "calendar-date-shift-family",
+        "changeDimensions": [
+          "cross-month-boundary",
+          "start-date",
+          "target-date"
+        ],
+        "preservedInvariants": [
+          "seven-day-cycle",
+          "elapsed-day-modulo"
+        ]
+      }
+    },
+    "R2Q07": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 12,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 12,
+        "verifierId": "visual-r2q07-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2024-rep1-stars-102",
+        "kind": "reconstructed-source",
+        "year": 2024,
+        "page": "대표1",
+        "question": "star-count"
+      },
+      "solverId": "solver-r2q07-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q08": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 6,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 6,
+        "verifierId": "visual-r2q08-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q08",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q08",
+        "variantOf": "R1Q06"
+      },
+      "solverId": "solver-r2q08-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "R1Q06",
+        "changeDimensions": [
+          "crossing-layout",
+          "endpoint-labels",
+          "asked-connection"
+        ],
+        "preservedInvariants": [
+          "underpass-continuity",
+          "single-path-tracing"
+        ]
+      }
+    },
+    "R2Q09": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 8,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 8,
+        "verifierId": "visual-r2q09-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q09",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q09",
+        "variantOf": "hwangso-2019-p1-q03"
+      },
+      "solverId": "solver-r2q09-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2019-p1-q03",
+        "changeDimensions": [
+          "zigzag-segment-count",
+          "cut-count",
+          "intersection-layout"
+        ],
+        "preservedInvariants": [
+          "discover-intersections-from-figure",
+          "one-plus-intersections-times-cuts"
+        ]
+      }
+    },
+    "R2Q10": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 37,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 37,
+        "verifierId": "visual-r2q10-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q10",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q10",
+        "variantOf": "hwangso-2025-p03-island-frogs"
+      },
+      "solverId": "solver-r2q10-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2025-p03-island-frogs",
+        "changeDimensions": [
+          "boundary-geometry",
+          "frog-count-and-placement",
+          "target-side-anchor"
+        ],
+        "preservedInvariants": [
+          "single-connected-boundary",
+          "two-side-region-tracing"
+        ]
+      }
+    },
+    "R2Q11": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 6,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 6,
+        "verifierId": "visual-r2q11-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q11",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q11"
+      },
+      "solverId": "solver-r2q11-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q12": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q12",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q12",
+        "variantOf": "hwangso-2025-p07-remainder-conditions"
+      },
+      "solverId": "solver-r2q12-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2025-p07-remainder-conditions",
+        "changeDimensions": [
+          "search-range",
+          "divisors-and-remainders",
+          "uniqueness-filter"
+        ],
+        "preservedInvariants": [
+          "simultaneous-congruence-screening",
+          "single-answer-visibility"
+        ]
+      }
+    },
+    "R2Q13": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r2q13-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2019-p3-q22",
+        "kind": "reconstructed-source",
+        "year": 2019,
+        "page": 3,
+        "question": 22
+      },
+      "solverId": "solver-r2q13-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q14": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r2q14-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q14",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q14"
+      },
+      "solverId": "solver-r2q14-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q15": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 4,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2019-p3-q27",
+        "kind": "reconstructed-source",
+        "year": 2019,
+        "page": 3,
+        "question": 27
+      },
+      "solverId": "solver-r2q15-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q16": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r2q16-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q16",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q16"
+      },
+      "solverId": "solver-r2q16-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q17": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 14,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 14,
+        "verifierId": "visual-r2q17-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q17",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q17",
+        "variantOf": "hwangso-2024-rep2-triangle"
+      },
+      "solverId": "solver-r2q17-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2024-rep2-triangle",
+        "changeDimensions": [
+          "removed-interior-segment",
+          "triangle-total",
+          "intersection-adjacency"
+        ],
+        "preservedInvariants": [
+          "all-three-sides-must-exist",
+          "size-and-direction-enumeration"
+        ]
+      }
+    },
+    "R2Q18": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r2q18-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q18",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q18"
+      },
+      "solverId": "solver-r2q18-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q19": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 3,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 3,
+        "verifierId": "visual-r2q19-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q19",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q19",
+        "variantOf": "R1Q19"
+      },
+      "solverId": "solver-r2q19-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": true
+      },
+      "similarity": {
+        "variantOf": "R1Q19",
+        "changeDimensions": [
+          "card-inventory",
+          "numeric-range",
+          "even-number-condition"
+        ],
+        "preservedInvariants": [
+          "inventory-limited-enumeration",
+          "leading-digit-case-split"
+        ]
+      }
+    },
+    "R2Q20": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 3,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 3,
+        "verifierId": "visual-r2q20-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q20",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q20",
+        "variantOf": "hwangso-2025-p11-letter-repeat"
+      },
+      "solverId": "solver-r2q20-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2025-p11-letter-repeat",
+        "changeDimensions": [
+          "three-cycle-lengths",
+          "letter-alphabets",
+          "target-position"
+        ],
+        "preservedInvariants": [
+          "independent-cycle-remainders",
+          "vertical-column-readout"
+        ]
+      }
+    },
+    "R2Q21": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 3,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 3,
+        "verifierId": "visual-r2q21-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q21",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q21",
+        "variantOf": "hwangso-2025-p12-demon-heads"
+      },
+      "solverId": "solver-r2q21-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2025-p12-demon-heads",
+        "changeDimensions": [
+          "two-regrowth-periods",
+          "regrowth-amounts",
+          "terminal-cut-index"
+        ],
+        "preservedInvariants": [
+          "overlapping-cycle-accounting",
+          "first-zero-terminal-check"
+        ]
+      }
+    },
+    "R2Q22": {
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q22",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q22",
+        "variantOf": "R1Q22"
+      },
+      "solverId": "solver-r2q22-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "R1Q22",
+        "changeDimensions": [
+          "flavor-totals",
+          "student-count",
+          "given-pure-flavor-count"
+        ],
+        "preservedInvariants": [
+          "mixed-pair-conservation",
+          "two-category-backward-solve"
+        ]
+      }
+    },
+    "R2Q23": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 4,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 4,
+        "verifierId": "visual-r2q23-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q23",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q23",
+        "variantOf": "hwangso-2019-p4-q33"
+      },
+      "solverId": "solver-r2q23-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": true
+      },
+      "similarity": {
+        "variantOf": "hwangso-2019-p4-q33",
+        "changeDimensions": [
+          "lit-segment-total",
+          "distinct-digit-condition",
+          "divisibility-condition"
+        ],
+        "preservedInvariants": [
+          "nonstandard-seven-segment-map",
+          "largest-number-search"
+        ]
+      }
+    },
+    "R2Q24": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 4,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 4,
+        "verifierId": "visual-r2q24-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q24",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q24",
+        "variantOf": "hwangso-2025-p18-recursive-square"
+      },
+      "solverId": "solver-r2q24-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2025-p18-recursive-square",
+        "changeDimensions": [
+          "outer-side-length",
+          "requested-stage",
+          "number-of-refinements"
+        ],
+        "preservedInvariants": [
+          "upper-left-recursive-quartering",
+          "geometric-line-length-sum"
+        ]
+      }
+    },
+    "R2Q25": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 4,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 4,
+        "verifierId": "visual-r2q25-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q25",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q25"
+      },
+      "solverId": "solver-r2q25-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q26": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 2,
+        "verifierId": "visual-r2q26-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q26",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q26",
+        "variantOf": "R2Q16"
+      },
+      "solverId": "solver-r2q26-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "R2Q16",
+        "changeDimensions": [
+          "person-count",
+          "seat-count",
+          "relative-position-conditions"
+        ],
+        "preservedInvariants": [
+          "adjacent-block-constraint",
+          "exhaustive-unique-arrangement-count"
+        ]
+      }
+    },
+    "R2Q27": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 4,
+      "branchCount": 2,
+      "visualTrace": {
+        "dependency": "none",
+        "decisionPoints": 0
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q27",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q27",
+        "variantOf": "hwangso-2019-p3-q27"
+      },
+      "solverId": "solver-r2q27-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": false,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-2019-p3-q27",
+        "changeDimensions": [
+          "number-of-siblings",
+          "time-offsets",
+          "pair-sum-conditions"
+        ],
+        "preservedInvariants": [
+          "convert-all-relations-to-present",
+          "constant-age-differences"
+        ]
+      }
+    },
+    "R2Q28": {
+      "difficultyClass": "D5",
+      "reasoningSteps": 6,
+      "branchCount": 3,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 3,
+        "verifierId": "visual-r2q28-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-2019-p4-q40",
+        "kind": "reconstructed-source",
+        "year": 2019,
+        "page": 4,
+        "question": 40
+      },
+      "solverId": "solver-r2q28-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 4,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      }
+    },
+    "R2Q29": {
+      "difficultyClass": "D4",
+      "reasoningSteps": 5,
+      "branchCount": 7,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 7,
+        "verifierId": "visual-r2q29-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q29",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q29",
+        "variantOf": "hwangso-structure-hex-honeycomb"
+      },
+      "solverId": "solver-r2q29-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 3,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "hwangso-structure-hex-honeycomb",
+        "changeDimensions": [
+          "stage-index",
+          "number-of-growth-layers",
+          "requested-total"
+        ],
+        "preservedInvariants": [
+          "shared-edge-counting",
+          "hexagonal-layer-increments"
+        ]
+      }
+    },
+    "R2Q30": {
+      "difficultyClass": "D5",
+      "reasoningSteps": 7,
+      "branchCount": 10,
+      "visualTrace": {
+        "dependency": "required",
+        "decisionPoints": 10,
+        "verifierId": "visual-r2q30-semantic-v1"
+      },
+      "sourceLocator": {
+        "sourceId": "hwangso-structure-r2q30",
+        "kind": "internal-structural-source",
+        "year": null,
+        "page": null,
+        "question": "R2Q30",
+        "variantOf": "R1Q30"
+      },
+      "solverId": "solver-r2q30-exact-v1",
+      "conditions": {
+        "simple": false,
+        "conditionCount": 4,
+        "requiresCaseSplit": true,
+        "requiresOptimalityProof": false
+      },
+      "similarity": {
+        "variantOf": "R1Q30",
+        "changeDimensions": [
+          "viewing-direction",
+          "maze-wall-layout",
+          "target-object"
+        ],
+        "preservedInvariants": [
+          "top-view-to-perspective-matching",
+          "unique-three-cell-corridor"
+        ]
+      }
+    }
+  }
+}

@@ -55,18 +55,18 @@ function check(name, fn) { fn(); tests.push(name); }
 check('원본형 60문항을 59개 고유유형으로 병합', () => {
   assert.equal(summary.sourceQuestions, 60);
   assert.equal(summary.canonicalTypes, 59);
-  assert.equal(summary.canonicalSubareas, 31);
-  const sameLength = catalog.find((type) => type.name === '같은 전체 길이');
-  assert.ok(sameLength);
-  assert.deepEqual(sameLength.sourceRefs.map((ref) => [ref.round, ref.no]), [[1, 12], [2, 2]]);
+  assert.equal(summary.canonicalSubareas, 32);
+  const recursiveLength = catalog.find((type) => type.name === '반복 분할선 길이');
+  assert.ok(recursiveLength);
+  assert.deepEqual(recursiveLength.sourceRefs.map((ref) => [ref.round, ref.no]), [[1, 25], [2, 24]]);
 });
 
 check('대영역·배점 분포가 원본 데이터와 일치', () => {
   assert.deepEqual(summary.areaQuestionCounts, {
-    '수·규칙찾기': 15,
-    '도형': 16,
-    '경우의 수': 8,
-    '식의 계산': 21,
+    '수·규칙찾기': 16,
+    '도형': 15,
+    '경우의 수': 9,
+    '식의 계산': 20,
   });
   assert.deepEqual(summary.pointQuestionCounts, { '2.7': 24, '3.4': 20, '4.2': 16 });
 });
@@ -78,7 +78,7 @@ check('8개 생성기는 일반 연습형만 검증 완료하고 원본 복기�
   assert.equal(summary.releaseReadyTypes, 0);
   const links = catalog.filter((type) => type.generator);
   assert.deepEqual(links.map((type) => type.generator.generatorId).sort(), [
-    'cube', 'inclusion', 'path', 'rect', 'remainder', 'repeat', 'tri', 'weekday'
+    'cube', 'inclusion', 'path', 'remainder', 'repeat', 'tri', 'tri-variant', 'weekday'
   ]);
   links.forEach((type) => {
     assert.equal(type.bankStatus, 'verified-practice');
@@ -111,20 +111,20 @@ check('일반 연습형과 원본 복기형 공개 게이트를 분리', () => {
   assert.equal(registry.releasePolicy.modes.practice.sourceComparisonRequired, false);
   assert.equal(registry.releasePolicy.modes['source-faithful'].sourceComparisonRequired, true);
 
-  const type = catalog.find((row) => row.generator && row.generator.legacyId === 'rect');
+  const type = catalog.find((row) => row.generator && row.generator.legacyId === 'tri');
   const question = {
-    text: '모눈에서 크고 작은 직사각형의 개수를 구하세요.',
+    text: '불규칙 선망에서 크고 작은 삼각형의 개수를 구하세요.',
     answer: 18,
     asset: {
       kind: 'raster', mimeType: 'image/png', src: 'data:image/png;base64,AAAA',
       width: 900, height: 540, renderer: 'canvas-2d',
     },
     verification: {
-      primary: { method: 'boundary-pair brute force', answer: 18 },
-      independent: { method: 'size-and-placement enumeration', answer: 18 },
+      primary: { method: 'segment-graph brute force', answer: 18 },
+      independent: { method: 'vertex-triple enumeration', answer: 18 },
       unique: true,
       validAnswerCount: 1,
-      visibleEvidence: { passed: true, method: 'complete grid is visible' },
+      visibleEvidence: { passed: true, method: 'complete segment network is visible' },
     },
     diagnosis: { typeId: type.id, errorTags: ['크기별 누락'] },
   };
@@ -136,18 +136,18 @@ check('일반 연습형과 원본 복기형 공개 게이트를 분리', () => {
 
 check('여러 원본이 합쳐진 유형은 모든 출처를 감사하기 전에 승인하지 않음', () => {
   const partial = registry.buildCatalog(model, {
-    '1:12': { visualRequired: false, sourceCompared: false },
-  }).find((row) => row.name === '같은 전체 길이');
+    '1:25': { visualRequired: true, sourceCompared: true },
+  }).find((row) => row.name === '반복 분할선 길이');
   assert.equal(partial.sourceRefs.length, 2);
   assert.equal(partial.visual.auditedRefs, 1);
   assert.equal(partial.visual.status, 'source-audit-required');
 
   const complete = registry.buildCatalog(model, {
-    '1:12': { visualRequired: false, sourceCompared: false },
-    '2:2': { visualRequired: false, sourceCompared: false },
-  }).find((row) => row.name === '같은 전체 길이');
+    '1:25': { visualRequired: true, sourceCompared: true },
+    '2:24': { visualRequired: true, sourceCompared: true },
+  }).find((row) => row.name === '반복 분할선 길이');
   assert.equal(complete.visual.auditedRefs, 2);
-  assert.equal(complete.visual.status, 'text-only-confirmed');
+  assert.equal(complete.visual.status, 'raster-source-reviewed');
 });
 
 check('카탈로그 스키마 자체 검증 통과', () => {

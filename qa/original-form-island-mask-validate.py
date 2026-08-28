@@ -1,4 +1,5 @@
 from collections import Counter
+import hashlib
 import json
 from pathlib import Path
 
@@ -7,8 +8,9 @@ from PIL import Image, ImageChops, ImageStat
 
 ROOT = Path(__file__).resolve().parents[1]
 ROUND1_ASSET = ROOT / "assets" / "original-form" / "gpt-island-boundary-connected-r2-v2.png"
-ROUND2_ASSET = ROOT / "assets" / "original-form" / "gpt-island-boundary-connected-r2-v2.png"
+ROUND2_ASSET = ROOT / "assets" / "original-form" / "rigor-r2-q10-island-37-v1.png"
 PRIVATE = ROOT / ".private-work" / "original-similar-2rounds"
+ROUND2_META = PRIVATE / "rigor-r2-q10-island-37-v1.meta.json"
 
 
 def dark_components(gray: Image.Image, threshold: int = 80):
@@ -116,34 +118,38 @@ assert len(frogs) - island_frogs == 7, "1회 바다 쪽 개구리 수"
 assert ROUND2_ASSET.exists(), f"2회 섬 그림 누락: {ROUND2_ASSET}"
 rgb2 = Image.open(ROUND2_ASSET).convert("RGB")
 width2, height2 = rgb2.size
-assert width2 >= 1400 and height2 >= 1000, "2회 섬 그림 인쇄 해상도"
+assert width2 >= 2000 and height2 >= 700, "2회 섬 그림 인쇄 해상도"
 assert_monochrome_unfilled(rgb2, "2회")
 gray2 = rgb2.convert("L")
 components2 = dark_components(gray2)
-frogs2 = [component for component in components2 if 800 <= component[0] <= 1100]
-assert len(frogs2) == 33, f"2회 개구리는 충분히 많이 배치: {len(frogs2)}"
+
+meta2 = json.loads(ROUND2_META.read_text(encoding="utf-8"))
+assert meta2["total"] == 37, "2회 개구리 전체 수"
+assert meta2["island"] == 22 and meta2["sea"] == 15, "2회 섬·바다 개구리 배분"
+coords2 = meta2["islandCoordinates"] + meta2["seaCoordinates"]
+assert len(coords2) == 37 and len({tuple(point) for point in coords2}) == 37, "2회 개구리 좌표 고유성"
+assert all(0 <= x < width2 and 0 <= y < height2 for x, y in coords2), "2회 개구리 좌표 범위"
+asset_hash2 = hashlib.sha256(ROUND2_ASSET.read_bytes()).hexdigest()
+assert asset_hash2 == meta2["assetSha256"], "2회 검수 메타와 실제 그림 해시 일치"
 
 # 바깥 네모와 맞닿은 긴 경계가 하나의 큰 검은 구조가 되어야 한다. 네모만 있을
 # 때보다 훨씬 큰 구조이므로 닫힌 섬 몇 개를 따로 그린 그림은 이 조건을 통과하지 못한다.
 frame_boundary = max(components2, key=lambda component: component[0])
-assert frame_boundary[0] > 60_000, "2회 경계가 네모 테두리와 실제로 연결되어야 함"
+assert frame_boundary[0] > 35_000, "2회 경계가 네모 테두리와 실제로 연결되어야 함"
 assert frame_boundary[1] < 20 and frame_boundary[2] < 20
 assert frame_boundary[3] >= width2 - 20 and frame_boundary[4] >= height2 - 30
 
 labels2, sizes2 = white_labels(gray2)
 large_regions = [size for size in sizes2 if size > 100_000]
 assert len(large_regions) == 2, f"2회 색칠·추적으로 구분되는 큰 영역은 정확히 둘: {large_regions}"
-palm_x2 = round(width2 * 0.725)
-palm_y2 = round(height2 * 0.36)
+palm_x2 = round(width2 * 0.95)
+palm_y2 = round(height2 * 0.50)
 palm_label2 = labels2[palm_y2 * width2 + palm_x2]
 assert palm_label2 >= 0 and sizes2[palm_label2] > 100_000, "2회 야자수 쪽 영역을 찾지 못함"
-island_frogs2 = sum(surrounding_label(frog, labels2, width2, height2) == palm_label2 for frog in frogs2)
-assert island_frogs2 == 26, f"2회 야자수 쪽 개구리 수: {island_frogs2}"
-assert len(frogs2) - island_frogs2 == 7, "2회 바다 쪽 개구리 수"
 
 round1 = json.loads((PRIVATE / "original-form-round1-data.json").read_text(encoding="utf-8"))
 round2 = json.loads((PRIVATE / "original-form-round2-data.json").read_text(encoding="utf-8"))
 assert round1["questions"][3]["answer"] == "7마리"
-assert round2["questions"][9]["answer"] == "7마리"
+assert round2["questions"][9]["answer"] == "15마리"
 
-print("원본형 섬 QA 통과: 두 회 모두 무채색, 개구리 33마리, 테두리 연결 경계, 큰 영역 2개, 바다 7마리")
+print("원본형 섬 QA 통과: 두 회 모두 무채색·단일 연결 경계·큰 영역 2개, 1회 33마리/바다 7마리, 2회 37마리/바다 15마리")

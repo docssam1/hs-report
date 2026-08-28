@@ -36,7 +36,7 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.equal(await page.locator('#result-status').textContent(), '현재 표시: 59유형 · 60문항', '원본형 출처 60문항');
     assert.equal(await page.locator('.type-card.candidate').count(), 0, '원본형 출처 소영역은 모두 확정');
 
-    await page.fill('#search', '크고 작은 직사각형');
+    await page.fill('#search', '금지 선분이 있는 경로');
     assert.equal(await page.locator('.type-card').count(), 1, '유형명 검색');
     assert.equal(await page.locator('.badge.practice').count(), 1, '연습형 검증 배지');
     assert.equal(await page.locator('.badge.pending').count(), 1, '연습형 검증과 별도로 원본 대조 대기 표시');

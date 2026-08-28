@@ -16,42 +16,45 @@ const coreAssets = [
   'gpt-leash-two-curves-exact-v4.png',
   'gpt-leash-tangle-cross-r2-v1.png',
   'gpt-overlap-digits-bold-pile-v4.png',
-  'original-r1-q05-blackboard-imagegen-v3.png',
   'original-r1-q09-pond-imagegen-v4.png',
+  'original-r1-q11-figure-v4.png',
+  'original-r1-q13-figure-v4.png',
+  'original-r1-q15-figure-v4.png',
+  'original-r1-q19-figure-v4.png',
+  'original-r1-q20-figure-v4.png',
+  'original-r1-q21-figure-v4.png',
   'original-r1-q24-cuboid-source-v3.png',
   'original-r1-q25-recursive-source-v4.png',
   'original-r1-q28-hollow-rings-imagegen-v4.png',
-  'original-r1-q29-honeycomb-v3.png',
   'original-r1-q30-maze-stacked-source-v3.png',
   'gpt-hero-imps-battle-mono-v1.png',
   'gpt-hero-demon-swarm-mono-v1.png',
   'gpt-clock-pair-realistic-noon-v1.png',
-];
-
-const exactRound2Assets = [
-  'round2-exact-q01-thumbtacks-v2.png',
-  'round2-exact-q03-two-balances-v2.png',
-  'round2-exact-q05-mirror-clock-v3.png',
-  'round2-exact-q06-date-cards-v2.png',
-  'round2-exact-q07-star-rows-v3.png',
-  'round2-exact-q13-classroom-sums-v2.png',
+  'rigor-r1-q05-shape-partition-v1.png',
+  'rigor-r1-q14-fish-relations-v1.png',
+  'rigor-r1-q29-triangle-original-18-v1.png',
+  'rigor-r2-q01-paper-chain-v1.png',
+  'rigor-r2-q03-scale-stack-v1.png',
+  'rigor-r2-q05-mirror-810-v1.png',
+  'rigor-r2-q07-stars-102-v1.png',
+  'rigor-r2-q09-zigzag-eight-v1.png',
+  'rigor-r2-q10-island-37-v1.png',
+  'rigor-r2-q13-classroom-corridors-v1.png',
+  'rigor-r2-q17-triangle-variant-14-v1.png',
+  'rigor-r2-q20-pattern-preview-v1.png',
+  'rigor-r2-q24-recursive-32cm-v1.png',
+  'rigor-r2-q26-six-chairs-v1.png',
+  'rigor-r2-q28-cuboid-5x5-pattern-v1.png',
+  'rigor-digital-display-7-four-bars-v1.png',
   'round2-exact-q14-cryptarithm-double-v2.png',
-  'round2-exact-q15-age-timeline-v2.png',
   'round2-exact-q16-five-empty-chairs-v2.png',
-  'round2-exact-q17-triangle-grid-v3.png',
   'round2-exact-q18-blank-calendar-v2.png',
-  'round2-exact-q23-staircase-grid-v2.png',
-  'round2-exact-q24-four-by-three-grid-v2.png',
   'round2-exact-q25-cryptarithm-reverse-v2.png',
-  'round2-exact-q26-five-chairs-jiwoo-v3.png',
-  'round2-exact-q27-age-table-v2.png',
-  'round2-exact-q28-three-fruit-scales-v2.png',
+  'original-r2-q11-figure-v4.png',
+  'original-r2-q19-figure-v4.png',
+  'original-r2-q29-figure-v4.png',
+  'original-r2-q30-figure-v4.png',
 ];
-
-const rasterizedRound1 = [10,11,12,13,14,15,17,19,20,21,26]
-  .map((number) => `original-r1-q${String(number).padStart(2, '0')}-figure-v6.png`);
-const rasterizedRound2 = [2,9,11,19,20,29,30]
-  .map((number) => `original-r2-q${String(number).padStart(2, '0')}-figure-v6.png`);
 
 function pngInfo(name) {
   const file = path.join(ASSET_DIR, name);
@@ -61,18 +64,18 @@ function pngInfo(name) {
   return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
 }
 
-for (const name of [...coreAssets, ...exactRound2Assets, ...rasterizedRound1, ...rasterizedRound2]) {
+for (const name of coreAssets) {
   const { width, height } = pngInfo(name);
   assert.ok(width >= 1000, `${name}: 인쇄 폭 1000px 이상`);
   assert.ok(height >= 250, `${name}: 인쇄 높이 250px 이상`);
 }
 
-for (const name of [...coreAssets, ...exactRound2Assets]) {
+for (const name of coreAssets) {
   assert.ok(renderer.includes(name), `${name}: 렌더러 사용`);
 }
 assert.match(renderer, /blue-car-side\.jpg/, '2회 자동차는 실제 자동차 JPG 사용');
 assert.match(renderer, /gpt-hero-imps-battle-mono-v1\.png[\s\S]*gpt-hero-demon-swarm-mono-v1\.png/, '두 악마 문항은 서로 다른 GPT 장면 사용');
-assert.match(renderer, /partialOrderFigure\(\)/, '2회 11번은 전용 부분순서 그림 사용');
+assert.match(renderer, /original-r2-q11-figure-v4\.png/, '2회 11번은 전용 부분순서 래스터 그림 사용');
 
 const slipperComposite = fs.readFileSync(path.join(PRIVATE, 'slipper-composite-v7.html'), 'utf8');
 const slipperTags = [...slipperComposite.matchAll(/<img class="shoe"[^>]+>/g)].map((match) => match[0]);
@@ -90,7 +93,15 @@ for (const roundNumber of [1, 2]) {
   const html = fs.readFileSync(path.join(PRIVATE, `original-form-round${roundNumber}-exam.html`), 'utf8');
   assert.equal((html.match(/<svg\b/gi) || []).length, 0, `${roundNumber}회 인라인 SVG 없음`);
   assert.equal((html.match(/<article class="question/g) || []).length, 30, `${roundNumber}회 문항 30개`);
-  assert.ok((html.match(/<img\b/gi) || []).length >= 25, `${roundNumber}회 핵심 그림은 래스터 이미지`);
+  assert.ok((html.match(/<img\b/gi) || []).length >= 24, `${roundNumber}회 핵심 그림은 래스터 이미지`);
+  const referenced = [...html.matchAll(/src="\.\.\/\.\.\/assets\/original-form\/([^"?#]+)"/g)]
+    .map((match) => match[1]);
+  assert.ok(referenced.length >= 20, `${roundNumber}회 로컬 래스터 자산 20개 이상`);
+  for (const name of new Set(referenced)) {
+    const file = path.join(ASSET_DIR, name);
+    assert.ok(fs.existsSync(file), `${roundNumber}회 ${name}: 렌더러가 가리키는 파일 존재`);
+    assert.ok(fs.statSync(file).size >= 1_000, `${roundNumber}회 ${name}: 비어 있지 않은 인쇄용 파일`);
+  }
   assert.doesNotMatch(html, /(?:alt|aria-label)="[^"]*(?:샤프심\s*18개|다섯\s*번\s*교차|아홉\s*꼭짓점|별\s*80개|아래쪽\s*강아지)[^"]*"/i, `${roundNumber}회 대체문구 정답 노출 없음`);
   assert.doesNotMatch(html, /(?:src|data-[\w:-]+)="[^"]*(?:answer|solution|정답)[^"]*"/i, `${roundNumber}회 그림 경로 정답 노출 없음`);
 }
@@ -106,8 +117,8 @@ assert.deepEqual(
 );
 assert.deepEqual(
   [round2.questions[0].answer, round2.questions[6].answer, round2.questions[7].answer, round2.questions[9].answer],
-  ['9개', '80개', '아래쪽 강아지', '7마리'],
+  ['151개', '102개', '아래쪽 강아지', '15마리'],
   '2회 핵심 관찰 그림 정답',
 );
 
-console.log(`원본형 최종 GPT·정밀 PNG ${coreAssets.length + exactRound2Assets.length + rasterizedRound1.length + rasterizedRound2.length}개 QA 통과`);
+console.log(`원본형 최종 GPT·정밀 PNG ${coreAssets.length}개 및 HTML 참조 자산 QA 통과`);

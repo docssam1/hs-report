@@ -37,7 +37,7 @@
     '식의 계산': [
       '합차와 배수', '나눗셈의 몫과 나머지', '거꾸로 생각하기',
       '달력·요일(시계)', '우기기/가정하여 풀기', '식의 완성',
-      '재치 있게 계산하기', '달력·요일', '나이 계산'
+      '재치 있게 계산하기', '달력·요일', '나이 계산', '일·속력·시간'
     ]
   };
 
@@ -275,8 +275,12 @@
     'rect', 'bank/gens/g-rect.js', 'same core skill',
     ['no original-side-by-side art review', 'source-condition equivalence not approved']
   );
-  GENERATOR_LINKS[signature('도형', '도형의 개수', '크고 작은 삼각형')] = generatorLink(
+  GENERATOR_LINKS[signature('도형', '도형의 개수', '불규칙 선망의 삼각형')] = generatorLink(
     'tri', 'bank/gens/g-tri.js', 'same core skill',
+    ['no original-side-by-side art review', 'source-condition equivalence not approved']
+  );
+  GENERATOR_LINKS[signature('도형', '도형의 개수', '불규칙 선망의 삼각형 변형')] = generatorLink(
+    'tri-variant', 'bank/gens/g-tri.js', 'same core skill with a changed internal segment network',
     ['no original-side-by-side art review', 'source-condition equivalence not approved']
   );
   GENERATOR_LINKS[signature('경우의 수', '최단거리', '금지 선분이 있는 경로')] = generatorLink(
@@ -287,19 +291,19 @@
     'cube', 'bank/gens/g-cube.js', 'concept only; practice variants do not reproduce the source three-view black-column conditions',
     ['source condition mismatch: current variants do not reproduce the source three-view black-column type', 'no original-side-by-side art review']
   );
-  GENERATOR_LINKS[signature('수·규칙찾기', '마디수열·규칙찾기', '큰 위치의 반복문자')] = elementaryTextGeneratorLink(
+  GENERATOR_LINKS[signature('수·규칙찾기', '마디수열·규칙찾기', '서로 다른 세 반복마디')] = elementaryTextGeneratorLink(
     'repeat', 'bank/gens/g-repeat.js', 'same repeating-block position skill',
     ['no original-side-by-side art review', 'source wording and sequence composition equivalence not approved']
   );
-  GENERATOR_LINKS[signature('식의 계산', '달력·요일', '날짜 이동')] = elementaryTextGeneratorLink(
+  GENERATOR_LINKS[signature('식의 계산', '달력·요일', '달을 건너는 날짜 이동')] = elementaryTextGeneratorLink(
     'weekday', 'bank/gens/g-weekday.js', 'same date-movement and weekday-cycle skill',
     ['no original-side-by-side art review', 'source date conditions and composition equivalence not approved']
   );
-  GENERATOR_LINKS[signature('경우의 수', '포함과 배제', '겹친 두 모임의 가장 작은 수')] = elementaryTextGeneratorLink(
+  GENERATOR_LINKS[signature('경우의 수', '포함과 배제', '겹치는 두 모임의 최솟값과 최댓값')] = elementaryTextGeneratorLink(
     'inclusion', 'bank/gens/g-inclusion.js', 'same minimum-overlap skill; practice variants also cover exact overlap',
     ['no original-side-by-side art review', 'source story conditions and composition equivalence not approved']
   );
-  GENERATOR_LINKS[signature('식의 계산', '나눗셈의 몫과 나머지', '나머지 조건')] = elementaryTextGeneratorLink(
+  GENERATOR_LINKS[signature('식의 계산', '나눗셈의 몫과 나머지', '서로 다른 세 조건의 교집합')] = elementaryTextGeneratorLink(
     'remainder', 'bank/gens/g-remainder.js', 'same unique-number-from-remainders skill',
     ['no original-side-by-side art review', 'source range and remainder-condition equivalence not approved']
   );
