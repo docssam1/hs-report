@@ -1,14 +1,14 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 24. 오전 10:03:46
+ * 생성: 2026. 8. 29. 오전 11:51:27
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
     "academy": "지필드 영재교육",
     "title": "생각하는 황소 대비 아카이브",
     "year": "2026 하반기",
-    "currentWeekId": "aug-w2",
+    "currentWeekId": "aug-w3",
     "examDate": "2026-11-01",
     "examLabel": "생각하는 황소 입학시험",
     "lat": 37.4996,
@@ -714,12 +714,18 @@ window.GFIELD_DATA = {
       ]
     },
     "aug-w3": {
-      "notice": "",
-      "homework": "",
+      "notice": "HS BASIC 3 numbers(2)\n\n1. 최단거리 \n   개념영상) https://youtu.be/9BRRNjSTxJc\n     팩토리얼(!) 개념도 설명하였지만 공식과 개념이 중요한 것은 아닙니다. \n\n   복습영상) https://youtu.be/mrbiiMvjZ38?si=Op-XfjJ-ezkn4ZxQ&t=63\n  이미 익숙한 단원인데도 연산 실수가 많습니다. \n  단순한 최단거리가 아니라 1,1,1,2,2,3을 배열하는 법, 주어진 칸에 색칠 하는 법 ( 조순열) 까지 연결하여\n  설명하였습니다. \n\n2. 약속\n    복습영상) https://youtu.be/Mz2SwhSUqcM\n     여러 형태의 변형 문제로 출제가 되는 단원입니다.\n\n3. 수배열표\n   지난 시간 배웠는데 아직도 실수가 많아 다시 한번 점검 하였습니다.\n",
+      "homework": "초등과정 semi 모의고사 3회\n     https://youtu.be/doFnLZ2P0jc\n\n선택\n초등과정 대비 실전 모의고사 6회 중급\n   https://youtu.be/43D594kTXP4",
       "textbooks": [
         {
           "title": "중급 모의고사 6회 · 답안 및 교재 연결표",
           "url": "https://hs.gfieldacademy.net/answer.html?round=6"
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 6회 중급",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1787971772103_ys7p_________________6____.pdf",
+          "folder": "tb_mtds8mld",
+          "pages": 6
         }
       ]
     },
@@ -1811,7 +1817,14 @@ window.GFIELD_DATA = {
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%201%ED%9A%8C.pdf",
       "imgdir": "final_1",
       "pages": 8,
-      "copyrightMissingPages": [1, 2, 3, 4, 5, 6],
+      "copyrightMissingPages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "video": "https://youtu.be/bA-ddeRW-mM",
       "cover": "",
       "date": "2026-07-28",
@@ -1836,7 +1849,13 @@ window.GFIELD_DATA = {
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%202%ED%9A%8C.pdf",
       "imgdir": "final_2",
       "pages": 6,
-      "copyrightMissingPages": [1, 2, 3, 4, 5],
+      "copyrightMissingPages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
       "video": "https://youtu.be/_dEhSC9ZaKo",
       "cover": "",
       "date": "2026-07-28",
@@ -1886,7 +1905,13 @@ window.GFIELD_DATA = {
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%204%ED%9A%8C.pdf",
       "imgdir": "final_4",
       "pages": 6,
-      "copyrightMissingPages": [1, 2, 3, 4, 5],
+      "copyrightMissingPages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
       "video": "https://youtu.be/VqHjNHMYVs8",
       "cover": "",
       "date": "2026-07-28",
