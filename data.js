@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 29. 오전 11:44:31
+ * 생성: 2026. 8. 29. 오전 11:51:27
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -714,9 +714,20 @@ window.GFIELD_DATA = {
       ]
     },
     "aug-w3": {
-      "notice": "HS BASIC 3 numbers(2)\n\n1. 최단거리 \n   개념영상) https://youtu.be/9BRRNjSTxJc\n     팩토리얼(!) 개념도 설명하였지만 공식과 개념이 중요한 것은 아닙니다. \n\n   복습영상) https://youtu.be/mrbiiMvjZ38?si=Op-XfjJ-ezkn4ZxQ&t=63\n  이미 익숙한 단원인데도 연산 실수가 많습니다. \n  단순한 최단거리가 아니라 1,1,1,2,2,3을 배열하는 법, 주어진 칸에 색칠 하는 법 ( 조순열) 까지 연결하여\n  설명하였습니다. \n\n2. 약속\n    복습영상) https://youtu.be/Mz2SwhSUqcM\n     여러 형태의 변형 문제로 출제가 되는 단원입니다.\n\n3. 수배열표\n   지난 시간 배웠는데 아직도 실수가 많아 다시 한번 점검 하였습니다.",
-      "homework": " 초등과정 semi 모의고사 3회\n     https://youtu.be/doFnLZ2P0jc\n",
-      "textbooks": []
+      "notice": "HS BASIC 3 numbers(2)\n\n1. 최단거리 \n   개념영상) https://youtu.be/9BRRNjSTxJc\n     팩토리얼(!) 개념도 설명하였지만 공식과 개념이 중요한 것은 아닙니다. \n\n   복습영상) https://youtu.be/mrbiiMvjZ38?si=Op-XfjJ-ezkn4ZxQ&t=63\n  이미 익숙한 단원인데도 연산 실수가 많습니다. \n  단순한 최단거리가 아니라 1,1,1,2,2,3을 배열하는 법, 주어진 칸에 색칠 하는 법 ( 조순열) 까지 연결하여\n  설명하였습니다. \n\n2. 약속\n    복습영상) https://youtu.be/Mz2SwhSUqcM\n     여러 형태의 변형 문제로 출제가 되는 단원입니다.\n\n3. 수배열표\n   지난 시간 배웠는데 아직도 실수가 많아 다시 한번 점검 하였습니다.\n",
+      "homework": "초등과정 semi 모의고사 3회\n     https://youtu.be/doFnLZ2P0jc\n\n선택\n초등과정 대비 실전 모의고사 6회 중급\n   https://youtu.be/43D594kTXP4",
+      "textbooks": [
+        {
+          "title": "중급 모의고사 6회 · 답안 및 교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?round=6"
+        },
+        {
+          "title": "초등과정 대비 실전 모의고사 6회 중급",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1787971772103_ys7p_________________6____.pdf",
+          "folder": "tb_mtds8mld",
+          "pages": 6
+        }
+      ]
     },
     "aug-w4": {
       "notice": "절대 결과를 보고 꾸중하지는 마세요. 지금부터라도 집중하여 제대로 공부하면 됩니다. 오늘 진행한 문제 중 80% 이상은 어디서든 다 배웠던 내용입니다.\n\n하지만 공식 암기는 되어 있지만 개념 심화가 되어 있지 않았다면, 설명은 이해하지만 문제를 못 읽고 이해하지 못하는 경우가 많습니다. 이제부터라도 틀린 답만 체크하지 말고 제 영상을 5번 이상 필기하며 보면서 유형과 개념을 익혀 주세요.\n\n오늘 시험을 보는 것을 살펴보니 유형은 인지되어 있으나 풀이 과정 70% 이후에서 해결을 못하거나 실수를 하는 경우, 시험에 대한 시간 관리가 안 되는 경우가 많았습니다. 그러다 보니 마무리가 안 되어 점수 하락이 되었을 것입니다.\n\n이번 주 모의고사부터는 성적 취합 후 이전 연도 합격자와 비교하여 누적 성적표를 제공해 드립니다.\n\n당부드리고 싶은 말은, 황소 결과를 떠나 어린 나이에 배웠던 사고력 수학을 전체적으로 점검하고 기억에 오래 남기를 희망하신다면 답보다는 풀이 과정에 맞춰 학습하시기를 추천드리며, 부족한 유형은 언제든 제 톡으로 사진 찍어 보내주세요.\n\n다음 주 시험은 오늘 진행한 모의고사를 꼼꼼히 복습한다면 더 나은 성적이 될 수 있을 것입니다. 마지막 시험 때 얼마나 성장할지 벌써부터 기대가 되네요. 파이팅!\n\n[[hl:초등과정 대비 파이널 모의고사 1회 풀이 영상]]\nhttps://youtu.be/bA-ddeRW-mM",
@@ -853,8 +864,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "김현우": [
       "may-w34",
@@ -867,8 +877,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "김유준": [
       "may-w34",
@@ -881,8 +890,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "이하린": [
       "may-w34",
@@ -895,8 +903,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "정지안": [
       "jul-w1",
@@ -916,8 +923,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "박서진": [
       "may-w34",
@@ -930,8 +936,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "민준기": [
       "may-w34",
@@ -944,8 +949,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "김서연": [
       "may-w34",
@@ -958,8 +962,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "김명서": [
       "may-w34",
@@ -972,8 +975,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "임유준": [
       "may-w34",
@@ -986,8 +988,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "aug-w1",
       "jul-w5",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "김시후": [
       "jul-w1",
@@ -1027,22 +1028,19 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "DEMO": [
       "jul-w2",
       "jul-w1",
       "may-w34",
-      "jul-w3",
-      "jul-w4"
+      "jul-w3"
     ],
     "문선우": [
       "jul-w5",
       "jul-w4",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "유호연": [
       "jul-w2",
@@ -1050,8 +1048,7 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "김서율": [
       "may-w34",
@@ -1074,8 +1071,7 @@ window.GFIELD_DATA = {
       "jul-w5",
       "jul-w4",
       "aug-w1",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "김주한": [
       "may-w34",
@@ -1092,8 +1088,7 @@ window.GFIELD_DATA = {
       "aug-w1",
       "jul-w4",
       "jul-w5",
-      "aug-w2",
-      "aug-w3"
+      "aug-w2"
     ],
     "박재연": []
   },
