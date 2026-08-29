@@ -102,7 +102,7 @@ check('새 60문항의 핵심 정답과 분류', () => {
   );
   assert.deepEqual(
     [r2[0].answer, r2[4].answer, r2[7].answer, r2[9].answer, r2[29].answer],
-    ['151개', '280분', '아래쪽 강아지', '15마리', 'D6'],
+    ['151개', '95분', '7곳', '9마리', 'H1'],
   );
   assert.deepEqual(
     [r1[0].difficultyClass, r1[20].difficultyClass, r2[1].difficultyClass, r2[27].difficultyClass],
@@ -111,7 +111,7 @@ check('새 60문항의 핵심 정답과 분류', () => {
   assert.deepEqual([r1[1].area, r1[1].subarea], ['도형', '시각적 변별']);
   assert.deepEqual([r1[24].area, r1[24].subarea], ['수·규칙찾기', '규칙수열·도형분할']);
   assert.deepEqual([r2[22].area, r2[22].subarea], ['수·규칙찾기', '조건에 맞는 수']);
-  assert.deepEqual([r2[24].area, r2[24].subarea], ['수·규칙찾기', '수의 관계']);
+  assert.deepEqual([r2[24].area, r2[24].subarea], ['식의 계산', '재치 있게 계산하기']);
   assert.equal(model.rounds['2'].paper.imageDir, 'original_form_2_v2');
 });
 
