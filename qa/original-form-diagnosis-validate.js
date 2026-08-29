@@ -101,8 +101,8 @@ check('새 60문항의 핵심 정답과 분류', () => {
     ['18개', '7개', '9마리', '55', '300일', '9711'],
   );
   assert.deepEqual(
-    [r2[0].answer, r2[4].answer, r2[7].answer, r2[9].answer, r2[29].answer],
-    ['151개', '95분', '7곳', '9마리', 'H1'],
+    [r2[0].answer, r2[3].answer, r2[4].answer, r2[7].answer, r2[8].answer, r2[9].answer, r2[22].answer, r2[23].answer, r2[24].answer, r2[25].answer, r2[27].answer, r2[28].answer, r2[29].answer],
+    ['151개', '3대', '95분', '4', '97', 'ㄱ=11, ㄴ=7', '11', '11-3-16 / 15-10-5 / 4-17-9', '3개', '1-2-3-4 / 4-3-2-1 / 2-1-4-3 / 3-4-1-2', '8개', '민아', '8'],
   );
   assert.deepEqual(
     [r1[0].difficultyClass, r1[20].difficultyClass, r2[1].difficultyClass, r2[27].difficultyClass],
@@ -110,8 +110,9 @@ check('새 60문항의 핵심 정답과 분류', () => {
   );
   assert.deepEqual([r1[1].area, r1[1].subarea], ['도형', '시각적 변별']);
   assert.deepEqual([r1[24].area, r1[24].subarea], ['수·규칙찾기', '규칙수열·도형분할']);
-  assert.deepEqual([r2[22].area, r2[22].subarea], ['수·규칙찾기', '조건에 맞는 수']);
-  assert.deepEqual([r2[24].area, r2[24].subarea], ['식의 계산', '재치 있게 계산하기']);
+  assert.deepEqual([r2[22].area, r2[22].subarea], ['식의 계산', '합차와 배수']);
+  assert.deepEqual([r2[18].area, r2[18].subarea], ['도형', '도형의 규칙']);
+  assert.deepEqual([r2[24].area, r2[24].subarea], ['경우의 수', '관계와 분류']);
   assert.equal(model.rounds['2'].paper.imageDir, 'original_form_2_v2');
 });
 
@@ -169,10 +170,10 @@ check('소영역 수행률과 1문항 확인 필요 판정', () => {
   const ox = Array(30).fill('O');
   ox[8] = 'X';
   const stats = core.subareaAgg(model.rounds['2'].items, ox);
-  const interval = stats.find((row) => row.k === '간격·자르기');
-  assert.equal(interval.n, 1);
-  assert.equal(interval.wrongNos[0], 9);
-  assert.equal(core.originalWeakStatus(interval), '확인 필요');
+  const numberMaking = stats.find((row) => row.k === '수 만들기');
+  assert.equal(numberMaking.n, 1);
+  assert.equal(numberMaking.wrongNos[0], 9);
+  assert.equal(core.originalWeakStatus(numberMaking), '확인 필요');
 });
 
 check('두 회차 같은 소영역 반복 오답 감지', () => {
