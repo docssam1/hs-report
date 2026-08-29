@@ -9,6 +9,7 @@ const ROOT = path.resolve(__dirname, '..');
 const DATA_FILE = path.join(ROOT, 'mock-data-original.js');
 const PAGE_FILE = path.join(ROOT, 'final.html');
 const PRIVATE_DIR = path.join(ROOT, '.private-work', 'original-similar-2rounds');
+const RIGOR_META_FILE = path.join(ROOT, 'drafts', 'original-similar-2rounds', 'rigor-meta.json');
 const allowedAreas = ['수·규칙찾기', '도형', '경우의 수', '식의 계산'];
 
 function loadModel() {
@@ -149,6 +150,28 @@ check('시험지 60문항과 공개 진단 데이터가 문항별로 일치', ()
       );
     });
   }
+});
+
+check('사용자 제공 실제 기출과 내부 모의고사 출처를 분리', () => {
+  const round2 = JSON.parse(fs.readFileSync(
+    path.join(PRIVATE_DIR, 'original-form-round2-data.json'),
+    'utf8',
+  )).questions;
+  const rigor = JSON.parse(fs.readFileSync(RIGOR_META_FILE, 'utf8')).items;
+  const internalNos = [4, 8, 9, 10, 19, 22, 23, 24, 26, 28, 29, 30];
+
+  internalNos.forEach((no) => {
+    const item = round2[no - 1];
+    const meta = rigor[`R2Q${String(no).padStart(2, '0')}`];
+    assert.match(item.source, /^내부 (파이널|실전) /, `2회 ${no}번 내부 출처 표기`);
+    assert.doesNotMatch(item.source, /실제 기출/, `2회 ${no}번 실제 기출 오표기`);
+    assert.equal(meta.sourceLocator.kind, 'internal-mock-source', `2회 ${no}번 출처 종류`);
+    assert.match(meta.sourceLocator.sourceId, /^internal-(final2|practice)/, `2회 ${no}번 출처 ID`);
+  });
+
+  const userOriginal = rigor.R2Q25.sourceLocator;
+  assert.equal(userOriginal.kind, 'user-supplied-original');
+  assert.match(userOriginal.sourceId, /^user-original-/);
 });
 
 const core = loadCore(model);
