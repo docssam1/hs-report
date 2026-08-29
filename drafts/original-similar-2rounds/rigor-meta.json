@@ -74,12 +74,12 @@
       }
     },
     "R1Q04": {
-      "difficultyClass": "D4",
-      "reasoningSteps": 5,
-      "branchCount": 37,
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
+      "branchCount": 14,
       "visualTrace": {
         "dependency": "required",
-        "decisionPoints": 37,
+        "decisionPoints": 14,
         "verifierId": "visual-r1q04-semantic-v1"
       },
       "sourceLocator": {
@@ -92,18 +92,18 @@
       "solverId": "solver-r1q04-exact-v1",
       "conditions": {
         "simple": false,
-        "conditionCount": 3,
-        "requiresCaseSplit": true,
+        "conditionCount": 2,
+        "requiresCaseSplit": false,
         "requiresOptimalityProof": false
       }
     },
     "R1Q05": {
-      "difficultyClass": "D3",
-      "reasoningSteps": 3,
-      "branchCount": 2,
+      "difficultyClass": "D2",
+      "reasoningSteps": 2,
+      "branchCount": 1,
       "visualTrace": {
         "dependency": "required",
-        "decisionPoints": 2,
+        "decisionPoints": 1,
         "verifierId": "visual-r1q05-semantic-v1"
       },
       "sourceLocator": {
@@ -112,31 +112,31 @@
         "year": null,
         "page": null,
         "question": "R1Q05",
-        "variantOf": "hwangso-2025-p04-shape-sum"
+        "variantOf": "hwangso-original-blackboard-shape-sum"
       },
       "solverId": "solver-r1q05-exact-v1",
       "conditions": {
-        "simple": false,
+        "simple": true,
         "conditionCount": 2,
         "requiresCaseSplit": false,
         "requiresOptimalityProof": false
       },
       "similarity": {
-        "variantOf": "hwangso-2025-p04-shape-sum",
+        "variantOf": "hwangso-original-blackboard-shape-sum",
         "changeDimensions": [
-          "numeric-values",
-          "shape-group-sizes",
-          "consecutive-number-condition"
+          "surface-wording",
+          "blackboard-rendering-style"
         ],
         "preservedInvariants": [
           "whole-sum-decomposition",
-          "shape-group-inference"
+          "shape-group-inference",
+          "four-triangles-three-squares-one-circle"
         ]
       }
     },
     "R1Q06": {
-      "difficultyClass": "D4",
-      "reasoningSteps": 4,
+      "difficultyClass": "D3",
+      "reasoningSteps": 3,
       "branchCount": 5,
       "visualTrace": {
         "dependency": "required",
@@ -160,11 +160,11 @@
     },
     "R1Q07": {
       "difficultyClass": "D4",
-      "reasoningSteps": 5,
-      "branchCount": 18,
+      "reasoningSteps": 4,
+      "branchCount": 12,
       "visualTrace": {
         "dependency": "required",
-        "decisionPoints": 18,
+        "decisionPoints": 12,
         "verifierId": "visual-r1q07-semantic-v1"
       },
       "sourceLocator": {

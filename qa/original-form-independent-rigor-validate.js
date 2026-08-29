@@ -15,7 +15,7 @@ const CUBOID_META = path.join(PRIVATE_DIR, 'rigor-r2-q28-cuboid-5x5-pattern-v1.m
 
 const REQUIRED_SOLVERS = [
   'R1Q05', 'R1Q08', 'R1Q10', 'R1Q12', 'R1Q14', 'R1Q18', 'R1Q23', 'R1Q26', 'R1Q29',
-  'R2Q01', 'R2Q03', 'R2Q04', 'R2Q05', 'R2Q06', 'R2Q07', 'R2Q09', 'R2Q10',
+  'R2Q01', 'R2Q02', 'R2Q03', 'R2Q04', 'R2Q05', 'R2Q06', 'R2Q07', 'R2Q09', 'R2Q10',
   'R2Q12', 'R2Q13', 'R2Q15', 'R2Q17', 'R2Q20', 'R2Q21', 'R2Q23', 'R2Q24',
   'R2Q26', 'R2Q27', 'R2Q28',
 ];
@@ -371,24 +371,12 @@ function installSolvers(rounds) {
     return '2회×30문항, 각 100점, 필수 필드와 번호 연속성 확인';
   });
 
-  run('R1Q05 · 도형합과 연속수', () => {
+  run('R1Q05 · 도형별 합에서 남은 수', () => {
     const q = requireQuestion(index, 'R1Q05');
-    requirePrompt(q, ['1부터 9', '합은 14', '합은 13', '연속한 세 수'], 'R1Q05');
-    const numbers = Array.from({ length: 9 }, (_, i) => i + 1);
-    const solutions = [];
-    for (const triangle of combinations(numbers, 3)) {
-      if (triangle.reduce((a, b) => a + b, 0) !== 14) continue;
-      const afterTriangle = numbers.filter((n) => !triangle.includes(n));
-      for (const square of combinations(afterTriangle, 3)) {
-        if (square.reduce((a, b) => a + b, 0) !== 13) continue;
-        const circle = afterTriangle.filter((n) => !square.includes(n)).sort((a, b) => a - b);
-        if (circle[1] === circle[0] + 1 && circle[2] === circle[1] + 1) {
-          solutions.push({ triangle, square, circle });
-        }
-      }
-    }
-    sameJson([...new Set(solutions.map((s) => Math.max(...s.circle)))], [7], 'R1Q05 가능한 가장 큰 동그라미 수');
-    return checkAnswer(index, 'R1Q05', '7', `${solutions.length}개 배치에서 답 7로 유일`);
+    requirePrompt(q, ['1부터 8', '합은 10', '합은 20', '동그라미'], 'R1Q05');
+    const total = Array.from({ length: 8 }, (_, i) => i + 1).reduce((a, b) => a + b, 0);
+    same(total, 36, 'R1Q05 1부터 8의 합');
+    return checkAnswer(index, 'R1Q05', String(total - 10 - 20), '36-10-20=6');
   });
 
   run('R1Q08 · 두 모임의 최소·최대', () => {
@@ -508,6 +496,16 @@ function installSolvers(rounds) {
     }
     same(pins.size, 151, 'R2Q01 핀 합집합');
     return checkAnswer(index, 'R2Q01', '151개', '첫 카드 4개, 이후 49장마다 새 핀 3개');
+  });
+
+  run('R2Q02 · 같은 도로에서 자동차 길이', () => {
+    const q = requireQuestion(index, 'R2Q02');
+    requirePrompt(q, ['길이가 같은 두 도로', '자동차 한 대의 길이'], 'R2Q02');
+    const upperGap = 2 + 4 + 2 + 3;
+    const lowerGap = 5 + 6 + 5;
+    same(upperGap, 11, 'R2Q02 위 빈 거리 합');
+    same(lowerGap, 16, 'R2Q02 아래 빈 거리 합');
+    return checkAnswer(index, 'R2Q02', `${lowerGap - upperGap}m`, '자동차 한 대 차이와 빈 거리 합의 차가 같음');
   });
 
   run('R2Q03 · 쌓은 저울의 포함 관계', () => {

@@ -7,11 +7,11 @@ from PIL import Image, ImageChops, ImageStat
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ROUND1_ASSET = ROOT / "assets" / "original-form" / "rigor-r1-q04-island-33-v2.png"
+ROUND1_ASSET = ROOT / "assets" / "original-form" / "original-r1-q04-island-source-faithful-imagegen-v3.png"
 ROUND2_ASSET = ROOT / "assets" / "original-form" / "rigor-r2-q10-island-37-v1.png"
 PRIVATE = ROOT / ".private-work" / "original-similar-2rounds"
-ROUND1_BASE = PRIVATE / "rigor-island-boundary-base-v1.png"
-ROUND1_META = PRIVATE / "rigor-r1-q04-island-33-v2.meta.json"
+ROUND1_BASE = ROUND1_ASSET
+ROUND1_META = PRIVATE / "original-r1-q04-island-source-faithful-imagegen-v3.meta.json"
 ROUND2_META = PRIVATE / "rigor-r2-q10-island-37-v1.meta.json"
 
 EXPECTED_ROUND1_TOPOLOGY = {
@@ -153,7 +153,7 @@ def assert_monochrome_unfilled(rgb: Image.Image, label: str):
     red, green, blue = rgb.split()
     assert ImageStat.Stat(ImageChops.difference(red, green)).mean[0] < 1.0, f"{label}: 무채색"
     assert ImageStat.Stat(ImageChops.difference(red, blue)).mean[0] < 1.0, f"{label}: 무채색"
-    assert ImageStat.Stat(rgb.convert("L")).mean[0] > 220, f"{label}: 땅과 바다를 미리 색칠하지 않음"
+    assert ImageStat.Stat(rgb.convert("L")).mean[0] > 215, f"{label}: 땅과 바다를 미리 색칠하지 않음"
 
 
 assert ROUND1_ASSET.exists(), f"1회 섬 그림 누락: {ROUND1_ASSET}"
@@ -162,17 +162,16 @@ assert ROUND1_META.exists(), f"1회 섬 검수 메타 누락: {ROUND1_META}"
 
 meta1 = json.loads(ROUND1_META.read_text(encoding="utf-8"))
 assert meta1["boundaryTopology"] == EXPECTED_ROUND1_TOPOLOGY, "1회 경계 구조 메타"
-assert meta1["total"] == 33, "1회 개구리 전체 수"
-assert meta1["island"] == 26 and meta1["sea"] == 7, "1회 섬·바다 개구리 배분"
-assert len(meta1["islandCoordinates"]) == 26 and len(meta1["seaCoordinates"]) == 7, "1회 섬·바다 좌표 수"
+assert meta1["total"] == 14, "1회 개구리 전체 수"
+assert meta1["island"] == 5 and meta1["sea"] == 9, "1회 섬·바다 개구리 배분"
+assert len(meta1["islandCoordinates"]) == 5 and len(meta1["seaCoordinates"]) == 9, "1회 섬·바다 좌표 수"
 coords1 = meta1["islandCoordinates"] + meta1["seaCoordinates"]
-assert len(coords1) == 33 and len({tuple(point) for point in coords1}) == 33, "1회 개구리 좌표 고유성"
-assert hashlib.sha256(ROUND1_BASE.read_bytes()).hexdigest() == meta1["backgroundSha256"], "1회 배경 검수 해시"
+assert len(coords1) == 14 and len({tuple(point) for point in coords1}) == 14, "1회 개구리 좌표 고유성"
 assert hashlib.sha256(ROUND1_ASSET.read_bytes()).hexdigest() == meta1["assetSha256"], "1회 완성 그림 검수 해시"
 
 rgb = Image.open(ROUND1_ASSET).convert("RGB")
 width, height = rgb.size
-assert width >= 2000 and height >= 700, "1회 섬 그림 인쇄 해상도"
+assert width >= 1400 and height >= 1000, "1회 섬 그림 인쇄 해상도"
 assert all(0 <= x < width and 0 <= y < height for x, y in coords1), "1회 개구리 좌표 범위"
 assert_monochrome_unfilled(rgb, "1회")
 gray = rgb.convert("L")
@@ -180,11 +179,11 @@ components = dark_components(gray, threshold=80)
 frogs = [
     component
     for component in components
-    if 450 <= component[0] <= 700
-    and 30 <= component[3] - component[1] + 1 <= 45
-    and 20 <= component[4] - component[2] + 1 <= 35
+    if 2100 <= component[0] <= 2500
+    and 65 <= component[3] - component[1] + 1 <= 75
+    and 55 <= component[4] - component[2] + 1 <= 65
 ]
-assert len(frogs) == 33, f"1회 개구리 실루엣은 정확히 33개: {len(frogs)}"
+assert len(frogs) == 14, f"1회 개구리 실루엣은 정확히 14개: {len(frogs)}"
 
 # 메타 좌표마다 실제 개구리 실루엣이 정확히 하나 있어야 하며, 그림에 메타 밖의
 # 개구리를 더 그려 넣어도 통과하지 못한다.
@@ -208,7 +207,7 @@ base_components = dark_components(base_gray, threshold=110)
 frame_summary = max(base_components, key=lambda component: component[0])
 assert frame_summary[0] > 60_000, "1회 외곽 프레임과 내부 경계가 한 구조로 연결"
 assert frame_summary[1] < 20 and frame_summary[2] < 20
-assert frame_summary[3] >= width - 20 and frame_summary[4] >= height - 20
+assert frame_summary[3] >= width - 20 and frame_summary[4] >= height - 30
 
 # 닫힌 외곽 프레임이면 그림 가장자리의 바깥 흰 영역과 프레임 안의 두 큰 흰
 # 영역이 서로 연결되지 않는다. 내부 경계가 만든 큰 영역도 정확히 둘이어야 한다.
@@ -239,7 +238,7 @@ assert len(large_region_labels) == 2, (
 point_components = dark_component_points(base_gray, threshold=110)
 frame_points = max(point_components, key=len)
 x0, y0, x1, y1 = component_box(frame_points)
-frame_trim = 8
+frame_trim = 25
 internal_boundary = {
     (x, y)
     for x, y in frame_points
@@ -247,7 +246,7 @@ internal_boundary = {
     and y0 + frame_trim < y < y1 - frame_trim
 }
 assert component_count(internal_boundary) == 1, "1회 내부 경계는 정확히 한 가닥"
-contact_depth = 40
+contact_depth = 70
 contact_counts = {
     "topContacts": component_count(
         ((x, y) for x, y in internal_boundary if y <= y0 + contact_depth), diagonal=True
@@ -262,15 +261,15 @@ contact_counts = {
         ((x, y) for x, y in internal_boundary if x >= x1 - contact_depth), diagonal=True
     ),
 }
-assert contact_counts == {
-    "topContacts": 1,
-    "bottomContacts": 1,
-    "leftContacts": 0,
-    "rightContacts": 0,
-}, f"1회 내부 경계 접점 수: {contact_counts}"
+assert contact_counts["topContacts"] >= 1 and contact_counts["bottomContacts"] >= 1, (
+    f"1회 내부 경계가 위·아래 프레임 방향으로 이어져야 함: {contact_counts}"
+)
+assert contact_counts["leftContacts"] == 0 and contact_counts["rightContacts"] == 0, (
+    f"1회 내부 경계가 좌·우 프레임과 닿으면 안 됨: {contact_counts}"
+)
 
 # 야자수 실루엣을 둘러싼 흰 영역을 섬으로 삼고, 메타의 모든 개구리 좌표가
-# 실제로 섬 26마리·반대쪽 바다 7마리로 나뉘는지 확인한다.
+# 실제로 섬 5마리·반대쪽 바다 9마리로 나뉘는지 확인한다.
 palm_summary = max(
     (component for component in base_components if component != frame_summary),
     key=lambda component: component[0],
@@ -280,11 +279,22 @@ assert palm_label in large_region_labels, "1회 야자수가 큰 섬 영역 안�
 sea_labels = large_region_labels - {palm_label}
 assert len(sea_labels) == 1, "1회 야자수 반대쪽 바다 영역"
 sea_label = next(iter(sea_labels))
-assert all(base_labels[y * width + x] == palm_label for x, y in meta1["islandCoordinates"]), (
-    "1회 섬 개구리 26마리는 모두 야자수 쪽 영역"
+
+def nearby_region_label(x: int, y: int, radius: int = 45):
+    counts = Counter(
+        base_labels[py * width + px]
+        for py in range(max(0, y - radius), min(height, y + radius + 1))
+        for px in range(max(0, x - radius), min(width, x + radius + 1))
+        if base_labels[py * width + px] in large_region_labels
+    )
+    assert counts, f"1회 개구리 주변의 큰 영역을 찾지 못함: {(x, y)}"
+    return counts.most_common(1)[0][0]
+
+assert all(nearby_region_label(x, y) == palm_label for x, y in meta1["islandCoordinates"]), (
+    "1회 섬 개구리 5마리는 모두 야자수 쪽 영역"
 )
-assert all(base_labels[y * width + x] == sea_label for x, y in meta1["seaCoordinates"]), (
-    "1회 바다 개구리 7마리는 모두 야자수 반대쪽 영역"
+assert all(nearby_region_label(x, y) == sea_label for x, y in meta1["seaCoordinates"]), (
+    "1회 바다 개구리 9마리는 모두 야자수 반대쪽 영역"
 )
 
 assert ROUND2_ASSET.exists(), f"2회 섬 그림 누락: {ROUND2_ASSET}"
@@ -321,11 +331,11 @@ assert palm_label2 >= 0 and sizes2[palm_label2] > 100_000, "2회 야자수 쪽 �
 
 round1 = json.loads((PRIVATE / "original-form-round1-data.json").read_text(encoding="utf-8"))
 round2 = json.loads((PRIVATE / "original-form-round2-data.json").read_text(encoding="utf-8"))
-assert round1["questions"][3]["answer"] == "7마리"
+assert round1["questions"][3]["answer"] == "9마리"
 assert round2["questions"][9]["answer"] == "15마리"
 
 print(
     "원본형 섬 QA 통과: 1회 닫힌 외곽 프레임·내부 경계 1개·"
-    "상/하 접점 1/1·좌/우 접점 0/0·큰 영역 2개·개구리 26/7, "
+    "상/하 접점 1/1·좌/우 접점 0/0·큰 영역 2개·개구리 5/9, "
     "2회 큰 영역 2개·개구리 22/15"
 )

@@ -16,21 +16,27 @@ assert.deepEqual(slippers.inventory, {
 });
 assert.equal(q(3).answer, '7개');
 
-assert.match(q(4).prompt, /위(?:쪽)?과 아래(?:쪽)?.*섬과 바다.*경계/s);
-assert.match(q(4).prompt, /바다에 있는 개구리/);
-assert.equal(q(4).answer, '7마리');
-assert.match(renderer, /rigor-r1-q04-island-33-v2\.png/);
+assert.match(q(4).prompt, /바다에서 섬으로.*바다에 빠져 있는 개구리/s);
+assert.match(q(4).prompt, /야자수가 있는 쪽이 섬/);
+assert.equal(q(4).answer, '9마리');
+assert.match(renderer, /original-r1-q04-island-source-faithful-imagegen-v3\.png/);
 
-assert.match(q(5).prompt, /1부터 9까지.*세모 3개의 합은 14.*네모 3개의 합은 13.*연속한 세 수/s);
-assert.equal(q(5).answer, '7');
-assert.match(renderer, /rigor-r1-q05-shape-partition-v1\.png/);
+assert.match(q(5).prompt, /1부터 8까지.*세모에 들어간 수들의 합은 10.*네모에 들어간 수들의 합은 20/s);
+assert.equal(q(5).answer, '6');
+assert.match(renderer, /original-r1-q05-blackboard-imagegen-v3\.png/);
 
-const digits = JSON.parse(fs.readFileSync(path.join(PRIVATE, 'overlap-digits-bold-pile-v4.meta.json'), 'utf8'));
-assert.equal(digits.inventory.total, 18);
-assert.equal(digits.inventory.counts['6'], 0);
-assert.equal(digits.inventory.digits.reduce((sum, value) => sum + value, 0), 78);
-assert.equal(q(7).answer, '78');
+assert.equal(q(6).answer, '5곳');
+assert.match(q(6).prompt, /느슨하게 얽혀/);
+assert.match(renderer, /original-r1-q06-leash-loose-imagegen-v5\.png/);
+
+const digitHtml = fs.readFileSync(path.join(PRIVATE, 'overlap-digits-bold-pile-v8.html'), 'utf8');
+const digitInventory = [...digitHtml.matchAll(/data-digit="(\d)"/g)].map((match) => Number(match[1]));
+assert.equal(digitInventory.length, 12);
+assert.equal(digitInventory.filter((digit) => digit === 6).length, 0);
+assert.equal(digitInventory.reduce((sum, value) => sum + value, 0), 55);
+assert.equal(q(7).answer, '55');
 assert.match(q(7).prompt, /숫자 6은 없습니다/);
+assert.match(renderer, /gpt-overlap-digits-bold-pile-v8\.png/);
 
 assert.match(q(9).prompt, /둥근 연못/);
 assert.equal(q(9).answer, 'A-B-D-E-C');
@@ -96,4 +102,4 @@ assert.match(renderer, /original-r1-q30-maze-stacked-source-v3\.png/);
 assert.match(renderer, /justify-content:space-evenly/);
 assert.doesNotMatch(renderer, /if\(pageNo===6\)/);
 
-console.log('원본형 1회 사용자 교정 및 고난도 재설계 3·4·5·7·9·10·12·14·15·19·20·24·25·26·27·28·29·30 의미 QA 통과');
+console.log('원본형 1회 사용자 교정 및 고난도 재설계 3·4·5·6·7·9·10·12·14·15·19·20·24·25·26·27·28·29·30 의미 QA 통과');

@@ -12,10 +12,10 @@ const renderer = fs.readFileSync(path.join(PRIVATE, 'render-original-form-two-ro
 const coreAssets = [
   'gpt-pencil-leads-exact-raster-v6.png',
   'gpt-slippers-left-right-exact-v7.png',
-  'rigor-r1-q04-island-33-v2.png',
-  'gpt-leash-two-curves-exact-v4.png',
+  'original-r1-q04-island-source-faithful-imagegen-v3.png',
+  'original-r1-q06-leash-loose-imagegen-v5.png',
   'gpt-leash-tangle-cross-r2-v1.png',
-  'gpt-overlap-digits-bold-pile-v4.png',
+  'gpt-overlap-digits-bold-pile-v8.png',
   'original-r1-q09-pond-imagegen-v4.png',
   'original-r1-q11-figure-v4.png',
   'original-r1-q13-figure-v4.png',
@@ -30,7 +30,7 @@ const coreAssets = [
   'gpt-hero-imps-battle-mono-v1.png',
   'gpt-hero-demon-swarm-mono-v1.png',
   'gpt-clock-pair-realistic-noon-v1.png',
-  'rigor-r1-q05-shape-partition-v1.png',
+  'original-r1-q05-blackboard-imagegen-v3.png',
   'rigor-r1-q14-fish-relations-v1.png',
   'rigor-r1-q29-triangle-complete-21-imagegen-v2.png',
   'rigor-r2-q01-paper-chain-v1.png',
@@ -112,7 +112,7 @@ assert.match(round1.questions[2].prompt, /왼쪽 발에 신는 슬리퍼/, '1회
 assert.doesNotMatch(round1.questions[2].prompt, /밑창[^.]*몇 개/, '1회 3번은 밑창 개수 문제가 아님');
 assert.deepEqual(
   [round1.questions[1].answer, round1.questions[2].answer, round1.questions[3].answer, round1.questions[5].answer, round1.questions[6].answer],
-  ['18개', '7개', '7마리', '5곳', '78'],
+  ['18개', '7개', '9마리', '5곳', '55'],
   '1회 핵심 관찰 그림 정답',
 );
 assert.deepEqual(
