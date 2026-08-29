@@ -175,8 +175,7 @@
       desc:'THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회',
       focus:'수 · 경우의 수 통합 적용' },
     { date:/8\s*월\s*5\s*주차/, title:'THINKING CORE CH4',
-      desc:'THINKING CORE CH4 Geometry + 중급 모의고사 5·6회 리뷰테스트',
-      focus:'기하 마무리 · 심화 개념 종료', track:'exam' },
+      desc:'', focus:'', track:'exam' },
 
     /* ── Phase 3 : 파이널 실전 4주 ── */
     { date:/9\s*월\s*1\s*주차/, title:'파이널 실전 모의고사 1회',
@@ -228,9 +227,9 @@
       for(var i=0;i<OVERRIDE.length;i++){
         var o=OVERRIDE[i];
         if(o.date.test(String(n.date))){
-          if(o.title && n.title!==o.title){ n.title=o.title; changed=true; }
-          if(o.desc  && n.desc !==o.desc ){ n.desc =o.desc;  changed=true; }
-          if(o.focus && n.focus!==o.focus){ n.focus=o.focus; changed=true; }
+          if(Object.prototype.hasOwnProperty.call(o,'title') && n.title!==o.title){ n.title=o.title; changed=true; }
+          if(Object.prototype.hasOwnProperty.call(o,'desc') && n.desc!==o.desc){ n.desc=o.desc; changed=true; }
+          if(Object.prototype.hasOwnProperty.call(o,'focus') && n.focus!==o.focus){ n.focus=o.focus; changed=true; }
           if(o.track && n.track!==o.track){ n.track=o.track; changed=true; }
           break;
         }
