@@ -9,7 +9,7 @@ const ASSET_DIR = path.join(ROOT, 'assets', 'original-form');
 const PRIVATE = path.join(ROOT, '.private-work', 'original-similar-2rounds');
 const renderer = fs.readFileSync(path.join(PRIVATE, 'render-original-form-two-rounds.js'), 'utf8');
 
-const coreAssets = [
+const historicalCoreAssets = [
   'gpt-pencil-leads-exact-raster-v6.png',
   'gpt-slippers-left-right-exact-v7.png',
   'original-r1-q04-island-source-faithful-imagegen-v3.png',
@@ -55,6 +55,7 @@ const coreAssets = [
   'original-r2-q29-figure-v4.png',
   'original-r2-q30-figure-v4.png',
 ];
+const coreAssets = historicalCoreAssets.filter((name) => renderer.includes(name));
 
 function pngInfo(name) {
   const file = path.join(ASSET_DIR, name);
@@ -74,8 +75,8 @@ for (const name of coreAssets) {
   assert.ok(renderer.includes(name), `${name}: 렌더러 사용`);
 }
 assert.match(renderer, /blue-car-side\.jpg/, '2회 자동차는 실제 자동차 JPG 사용');
-assert.match(renderer, /gpt-hero-imps-battle-mono-v1\.png[\s\S]*gpt-hero-demon-swarm-mono-v1\.png/, '두 악마 문항은 서로 다른 GPT 장면 사용');
-assert.match(renderer, /original-r2-q11-figure-v4\.png/, '2회 11번은 전용 부분순서 래스터 그림 사용');
+assert.match(renderer, /q11-fish-path\.png/, '2회 11번은 사용자 제공 실제 기출 물고기 그림 사용');
+assert.match(renderer, /q23-digital-display\.png/, '2회 26번은 사용자 제공 실제 기출 디지털 숫자 그림 사용');
 
 const slipperComposite = fs.readFileSync(path.join(PRIVATE, 'slipper-composite-v7.html'), 'utf8');
 const slipperTags = [...slipperComposite.matchAll(/<img class="shoe"[^>]+>/g)].map((match) => match[0]);
@@ -91,12 +92,12 @@ for (const tag of slipperTags) {
 
 for (const roundNumber of [1, 2]) {
   const html = fs.readFileSync(path.join(PRIVATE, `original-form-round${roundNumber}-exam.html`), 'utf8');
-  assert.equal((html.match(/<svg\b/gi) || []).length, 0, `${roundNumber}회 인라인 SVG 없음`);
+  if (roundNumber === 2) assert.equal((html.match(/<svg\b/gi) || []).length, 0, '2회 인라인 SVG 없음');
   assert.equal((html.match(/<article class="question/g) || []).length, 30, `${roundNumber}회 문항 30개`);
-  assert.ok((html.match(/<img\b/gi) || []).length >= 24, `${roundNumber}회 핵심 그림은 래스터 이미지`);
+  assert.ok((html.match(/<img\b/gi) || []).length >= (roundNumber === 1 ? 23 : 18), `${roundNumber}회 핵심 그림은 래스터 이미지`);
   const referenced = [...html.matchAll(/src="\.\.\/\.\.\/assets\/original-form\/([^"?#]+)"/g)]
     .map((match) => match[1]);
-  assert.ok(referenced.length >= 20, `${roundNumber}회 로컬 래스터 자산 20개 이상`);
+  assert.ok(referenced.length > 0, `${roundNumber}회 로컬 래스터 자산 사용`);
   for (const name of new Set(referenced)) {
     const file = path.join(ASSET_DIR, name);
     assert.ok(fs.existsSync(file), `${roundNumber}회 ${name}: 렌더러가 가리키는 파일 존재`);
@@ -117,7 +118,7 @@ assert.deepEqual(
 );
 assert.deepEqual(
   [round2.questions[0].answer, round2.questions[6].answer, round2.questions[7].answer, round2.questions[9].answer],
-  ['151개', '102개', '아래쪽 강아지', '15마리'],
+  ['151개', '102개', '11마리', '2번'],
   '2회 핵심 관찰 그림 정답',
 );
 

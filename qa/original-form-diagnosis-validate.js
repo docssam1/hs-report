@@ -102,8 +102,8 @@ check('새 60문항의 핵심 정답과 분류', () => {
     ['18개', '7개', '9마리', '55', '300일', '9711'],
   );
   assert.deepEqual(
-    [r2[0].answer, r2[3].answer, r2[4].answer, r2[7].answer, r2[8].answer, r2[9].answer, r2[22].answer, r2[23].answer, r2[24].answer, r2[25].answer, r2[27].answer, r2[28].answer, r2[29].answer],
-    ['151개', '3대', '95분', '4', '97', 'ㄱ=11, ㄴ=7', '11', '11-3-16 / 15-10-5 / 4-17-9', '3개', '1-2-3-4 / 4-3-2-1 / 2-1-4-3 / 3-4-1-2', '8개', '민아', '8'],
+    [r2[3].answer, r2[7].answer, r2[8].answer, r2[9].answer, r2[18].answer, r2[21].answer, r2[22].answer, r2[23].answer, r2[25].answer, r2[27].answer, r2[28].answer, r2[29].answer],
+    ['7', '11마리', '171개', '2번', '360일 뒤', '0-2-5-7-4-6-3-1', '186cm', '24개', '1118', '5개', '6장', 'D6'],
   );
   assert.deepEqual(
     [r1[0].difficultyClass, r1[20].difficultyClass, r2[1].difficultyClass, r2[27].difficultyClass],
@@ -111,8 +111,8 @@ check('새 60문항의 핵심 정답과 분류', () => {
   );
   assert.deepEqual([r1[1].area, r1[1].subarea], ['도형', '시각적 변별']);
   assert.deepEqual([r1[24].area, r1[24].subarea], ['수·규칙찾기', '규칙수열·도형분할']);
-  assert.deepEqual([r2[22].area, r2[22].subarea], ['식의 계산', '합차와 배수']);
-  assert.deepEqual([r2[18].area, r2[18].subarea], ['도형', '도형의 규칙']);
+  assert.deepEqual([r2[22].area, r2[22].subarea], ['도형', '도형의 길이']);
+  assert.deepEqual([r2[18].area, r2[18].subarea], ['식의 계산', '달력·요일(시계)']);
   assert.deepEqual([r2[24].area, r2[24].subarea], ['경우의 수', '관계와 분류']);
   assert.equal(model.rounds['2'].paper.imageDir, 'original_form_2_v2');
 });
@@ -152,26 +152,52 @@ check('시험지 60문항과 공개 진단 데이터가 문항별로 일치', ()
   }
 });
 
-check('사용자 제공 실제 기출과 내부 모의고사 출처를 분리', () => {
+check('교체 12문항은 사용자 제공 실제 기출 이미지 구조만 사용', () => {
   const round2 = JSON.parse(fs.readFileSync(
     path.join(PRIVATE_DIR, 'original-form-round2-data.json'),
     'utf8',
   )).questions;
   const rigor = JSON.parse(fs.readFileSync(RIGOR_META_FILE, 'utf8')).items;
-  const internalNos = [4, 8, 9, 10, 19, 22, 23, 24, 26, 28, 29, 30];
+  const expectedSources = new Map([
+    [4, 'user-24-blackboard-shapes'],
+    [8, 'user-29-fish-bowl-pattern'],
+    [9, 'user-36-digit-card-range'],
+    [10, 'user-09-frog-seven-stones'],
+    [19, 'user-35-fast-slow-clocks'],
+    [22, 'user-28-adjacent-digits-line'],
+    [23, 'user-39-recursive-square'],
+    [24, 'user-07-four-problems-a'],
+    [26, 'user-02-digital-display'],
+    [28, 'user-01-long-sum'],
+    [29, 'user-05-square-cover'],
+    [30, 'user-41-maze-perspective-4p2'],
+  ]);
 
-  internalNos.forEach((no) => {
+  expectedSources.forEach((sourceId, no) => {
     const item = round2[no - 1];
     const meta = rigor[`R2Q${String(no).padStart(2, '0')}`];
-    assert.match(item.source, /^내부 (파이널|실전) /, `2회 ${no}번 내부 출처 표기`);
-    assert.doesNotMatch(item.source, /실제 기출/, `2회 ${no}번 실제 기출 오표기`);
-    assert.equal(meta.sourceLocator.kind, 'internal-mock-source', `2회 ${no}번 출처 종류`);
-    assert.match(meta.sourceLocator.sourceId, /^internal-(final2|practice)/, `2회 ${no}번 출처 ID`);
+    assert.match(item.source, /^사용자 제공 실제 기출 이미지 구조 변형/, `2회 ${no}번 사용자 이미지 출처 표기`);
+    assert.equal(meta.sourceLocator.kind, 'user-supplied-source-variant', `2회 ${no}번 출처 종류`);
+    assert.equal(meta.sourceLocator.sourceId, sourceId, `2회 ${no}번 출처 ID`);
   });
+
+  assert.doesNotMatch(JSON.stringify(round2), /internal-(final|practice)|내부 (파이널|실전)/);
 
   const userOriginal = rigor.R2Q25.sourceLocator;
   assert.equal(userOriginal.kind, 'user-supplied-original');
   assert.match(userOriginal.sourceId, /^user-original-/);
+});
+
+check('1회와 2회에 동일 문항이 없음', () => {
+  const normalize = (value) => String(value).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const round1 = JSON.parse(fs.readFileSync(path.join(PRIVATE_DIR, 'original-form-round1-data.json'), 'utf8')).questions;
+  const round2 = JSON.parse(fs.readFileSync(path.join(PRIVATE_DIR, 'original-form-round2-data.json'), 'utf8')).questions;
+  const prompts = new Set(round1.map((item) => normalize(item.prompt)));
+  const signatures = new Set(round1.map((item) => `${normalize(item.type)}|${normalize(item.prompt)}|${normalize(item.answer)}`));
+  round2.forEach((item) => {
+    assert.equal(prompts.has(normalize(item.prompt)), false, `2회 ${item.number}번 문장이 1회와 동일`);
+    assert.equal(signatures.has(`${normalize(item.type)}|${normalize(item.prompt)}|${normalize(item.answer)}`), false, `2회 ${item.number}번이 1회와 동일`);
+  });
 });
 
 const core = loadCore(model);

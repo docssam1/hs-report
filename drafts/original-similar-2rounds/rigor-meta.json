@@ -860,16 +860,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 2,
-        "verifierId": "visual-internal-final2-q13-source-v1"
+        "verifierId": "visual-user-24-blackboard-variant-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-final2-q13",
-        "kind": "internal-mock-source",
+        "sourceId": "user-24-blackboard-shapes",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 7,
-        "question": 13
+        "page": null,
+        "question": "R2Q04"
       },
-      "solverId": "solver-final2-q13-wheel-difference-v1",
+      "solverId": "solver-r2q04-shape-sums-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 2,
@@ -981,16 +981,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 4,
-        "verifierId": "visual-internal-final2-q01-source-v1"
+        "verifierId": "visual-user-29-fish-bowl-variant-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-final2-q01",
-        "kind": "internal-mock-source",
+        "sourceId": "user-29-fish-bowl-pattern",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 3,
-        "question": 1
+        "page": null,
+        "question": "R2Q08"
       },
-      "solverId": "solver-final2-q01-set-intersection-v1",
+      "solverId": "solver-r2q08-fish-bowl-sequence-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 4,
@@ -1005,16 +1005,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 2,
-        "verifierId": "visual-internal-final2-q03-source-v1"
+        "verifierId": "visual-user-36-digit-card-range-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-final2-q03",
-        "kind": "internal-mock-source",
+        "sourceId": "user-36-digit-card-range",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 4,
-        "question": 3
+        "page": null,
+        "question": "R2Q09"
       },
-      "solverId": "solver-final2-q03-nearest-sum-v1",
+      "solverId": "solver-r2q09-digit-card-count-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 2,
@@ -1029,16 +1029,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 2,
-        "verifierId": "visual-internal-final2-q08-source-v1"
+        "verifierId": "visual-user-09-frog-seven-stones-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-final2-q08",
-        "kind": "internal-mock-source",
+        "sourceId": "user-09-frog-seven-stones",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 5,
-        "question": 8
+        "page": null,
+        "question": "R2Q10"
       },
-      "solverId": "solver-final2-q08-interleaved-sequence-v1",
+      "solverId": "solver-r2q10-frog-cycle-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 2,
@@ -1269,16 +1269,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 9,
-        "verifierId": "visual-internal-final2-q09-source-v1"
+        "verifierId": "visual-user-35-clock-drift-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-final2-q09",
-        "kind": "internal-mock-source",
+        "sourceId": "user-35-fast-slow-clocks",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 6,
-        "question": 9
+        "page": null,
+        "question": "R2Q19"
       },
-      "solverId": "solver-final2-q09-three-attribute-matrix-v1",
+      "solverId": "solver-r2q19-clock-drift-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 3,
@@ -1367,16 +1367,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 4,
-        "verifierId": "visual-internal-final2-q17-source-v1"
+        "verifierId": "visual-user-28-adjacent-digits-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-final2-q17",
-        "kind": "internal-mock-source",
+        "sourceId": "user-28-adjacent-digits-line",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 8,
-        "question": 17
+        "page": null,
+        "question": "R2Q22"
       },
-      "solverId": "solver-final2-q17-distinct-grid-sums-v1",
+      "solverId": "solver-r2q22-adjacent-path-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 5,
@@ -1391,16 +1391,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 12,
-        "verifierId": "visual-internal-final2-q19-source-v1"
+        "verifierId": "visual-user-39-recursive-square-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-final2-q19",
-        "kind": "internal-mock-source",
+        "sourceId": "user-39-recursive-square",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 9,
-        "question": 19
+        "page": null,
+        "question": "R2Q23"
       },
-      "solverId": "solver-final2-q19-symbol-system-v1",
+      "solverId": "solver-r2q23-recursive-lines-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 4,
@@ -1415,16 +1415,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 9,
-        "verifierId": "visual-internal-final2-q20-source-v1"
+        "verifierId": "visual-user-07-triangle-count-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-final2-q20",
-        "kind": "internal-mock-source",
+        "sourceId": "user-07-four-problems-a",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 9,
-        "question": 20
+        "page": null,
+        "question": "R2Q24"
       },
-      "solverId": "solver-final2-q20-magic-square-unique-v1",
+      "solverId": "solver-r2q24-triangle-enumeration-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 8,
@@ -1462,16 +1462,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 16,
-        "verifierId": "visual-internal-practice6-q13-source-v1"
+        "verifierId": "visual-user-02-digital-display-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-practice6-q13",
-        "kind": "internal-mock-source",
+        "sourceId": "user-02-digital-display",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 8,
-        "question": 13
+        "page": null,
+        "question": "R2Q26"
       },
-      "solverId": "solver-practice6-q13-sudoku-unique-v1",
+      "solverId": "solver-r2q26-digital-min-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 12,
@@ -1522,16 +1522,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 10,
-        "verifierId": "visual-internal-practice3-q19-source-v1"
+        "verifierId": "visual-user-01-long-sum-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-practice3-q19",
-        "kind": "internal-mock-source",
+        "sourceId": "user-01-long-sum",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 9,
-        "question": 19
+        "page": null,
+        "question": "R2Q28"
       },
-      "solverId": "solver-practice3-q19-alternating-sum-cycle-v1",
+      "solverId": "solver-r2q28-long-sum-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 10,
@@ -1544,17 +1544,18 @@
       "reasoningSteps": 6,
       "branchCount": 5,
       "visualTrace": {
-        "dependency": "none",
-        "decisionPoints": 0
+        "dependency": "required",
+        "decisionPoints": 15,
+        "verifierId": "visual-user-05-square-cover-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-practice5-q17",
-        "kind": "internal-mock-source",
+        "sourceId": "user-05-square-cover",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 8,
-        "question": 17
+        "page": null,
+        "question": "R2Q29"
       },
-      "solverId": "solver-practice5-q17-total-order-v1",
+      "solverId": "solver-r2q29-square-cover-min-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 5,
@@ -1569,16 +1570,16 @@
       "visualTrace": {
         "dependency": "required",
         "decisionPoints": 4,
-        "verifierId": "visual-internal-practice5-q20-source-v1"
+        "verifierId": "visual-user-41-maze-perspective-v1"
       },
       "sourceLocator": {
-        "sourceId": "internal-practice5-q20",
-        "kind": "internal-mock-source",
+        "sourceId": "user-41-maze-perspective-4p2",
+        "kind": "user-supplied-source-variant",
         "year": null,
-        "page": 9,
-        "question": 20
+        "page": null,
+        "question": "R2Q30"
       },
-      "solverId": "solver-practice5-q20-distinct-pair-sums-max-v1",
+      "solverId": "solver-r2q30-maze-perspective-v1",
       "conditions": {
         "simple": false,
         "conditionCount": 4,

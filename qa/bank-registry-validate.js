@@ -52,33 +52,36 @@ const unified = registry.buildUnifiedCatalog(unifiedModels);
 const tests = [];
 function check(name, fn) { fn(); tests.push(name); }
 
-check('원본형 60문항을 59개 고유유형으로 병합', () => {
+check('원본형 60문항을 57개 고유유형으로 병합', () => {
   assert.equal(summary.sourceQuestions, 60);
-  assert.equal(summary.canonicalTypes, 59);
-  assert.equal(summary.canonicalSubareas, 32);
+  assert.equal(summary.canonicalTypes, 57);
+  assert.equal(summary.canonicalSubareas, 41);
   const recursiveLength = catalog.find((type) => type.name === '반복 분할선 길이');
   assert.ok(recursiveLength);
-  assert.deepEqual(recursiveLength.sourceRefs.map((ref) => [ref.round, ref.no]), [[1, 25], [2, 24]]);
+  assert.deepEqual(recursiveLength.sourceRefs.map((ref) => [ref.round, ref.no]), [[1, 25]]);
+  const recursiveTotalLength = catalog.find((type) => type.name === '반복 분할선의 전체 길이');
+  assert.ok(recursiveTotalLength);
+  assert.deepEqual(recursiveTotalLength.sourceRefs.map((ref) => [ref.round, ref.no]), [[2, 23]]);
 });
 
 check('대영역·배점 분포가 원본 데이터와 일치', () => {
   assert.deepEqual(summary.areaQuestionCounts, {
-    '수·규칙찾기': 16,
-    '도형': 15,
-    '경우의 수': 9,
-    '식의 계산': 20,
+    '수·규칙찾기': 17,
+    '도형': 14,
+    '경우의 수': 8,
+    '식의 계산': 21,
   });
   assert.deepEqual(summary.pointQuestionCounts, { '2.7': 24, '3.4': 20, '4.2': 16 });
 });
 
-check('8개 생성기는 일반 연습형만 검증 완료하고 원본 복기형은 차단', () => {
-  assert.equal(summary.linkedLegacyGenerators, 8);
-  assert.equal(summary.verifiedPracticeGenerators, 8);
+check('5개 연결 생성기는 일반 연습형만 검증 완료하고 원본 복기형은 차단', () => {
+  assert.equal(summary.linkedLegacyGenerators, 5);
+  assert.equal(summary.verifiedPracticeGenerators, 5);
   assert.equal(summary.sourceFaithfulReleaseReadyTypes, 0);
   assert.equal(summary.releaseReadyTypes, 0);
   const links = catalog.filter((type) => type.generator);
   assert.deepEqual(links.map((type) => type.generator.generatorId).sort(), [
-    'cube', 'inclusion', 'path', 'remainder', 'repeat', 'tri', 'tri-variant', 'weekday'
+    'cube', 'inclusion', 'path', 'remainder', 'tri'
   ]);
   links.forEach((type) => {
     assert.equal(type.bankStatus, 'verified-practice');
@@ -96,7 +99,7 @@ check('8개 생성기는 일반 연습형만 검증 완료하고 원본 복기�
     assert.ok(type.generator.sourceFaithfulBlockers.length >= 2);
     assert.equal(type.generator.qaEvidence.generatedQuestions, 40);
   });
-  ['repeat', 'weekday', 'inclusion', 'remainder'].forEach((generatorId) => {
+  ['inclusion', 'remainder'].forEach((generatorId) => {
     const linked = links.find((type) => type.generator.generatorId === generatorId);
     assert.ok(linked, `${generatorId} confirmed source link`);
     assert.equal(linked.generator.gradeBand, '초2~초3');
@@ -134,20 +137,20 @@ check('일반 연습형과 원본 복기형 공개 게이트를 분리', () => {
   assert.ok(sourceFaithfulErrors.includes('source visual audit is unresolved'));
 });
 
-check('여러 원본이 합쳐진 유형은 모든 출처를 감사하기 전에 승인하지 않음', () => {
-  const partial = registry.buildCatalog(model, {
+check('두 반복 분할선 유형은 각 실제 출처를 따로 감사', () => {
+  const first = registry.buildCatalog(model, {
     '1:25': { visualRequired: true, sourceCompared: true },
   }).find((row) => row.name === '반복 분할선 길이');
-  assert.equal(partial.sourceRefs.length, 2);
-  assert.equal(partial.visual.auditedRefs, 1);
-  assert.equal(partial.visual.status, 'source-audit-required');
+  assert.equal(first.sourceRefs.length, 1);
+  assert.equal(first.visual.auditedRefs, 1);
+  assert.equal(first.visual.status, 'raster-source-reviewed');
 
-  const complete = registry.buildCatalog(model, {
-    '1:25': { visualRequired: true, sourceCompared: true },
-    '2:24': { visualRequired: true, sourceCompared: true },
-  }).find((row) => row.name === '반복 분할선 길이');
-  assert.equal(complete.visual.auditedRefs, 2);
-  assert.equal(complete.visual.status, 'raster-source-reviewed');
+  const second = registry.buildCatalog(model, {
+    '2:23': { visualRequired: true, sourceCompared: true },
+  }).find((row) => row.name === '반복 분할선의 전체 길이');
+  assert.equal(second.sourceRefs.length, 1);
+  assert.equal(second.visual.auditedRefs, 1);
+  assert.equal(second.visual.status, 'raster-source-reviewed');
 });
 
 check('카탈로그 스키마 자체 검증 통과', () => {
@@ -297,8 +300,8 @@ check('등록 소영역과 규칙 후보를 명시적으로 구분', () => {
   });
 });
 
-check('706개 화면 유형을 보존하면서 후보 family로 과분화를 줄임', () => {
-  assert.equal(unified.summary.rawDisplayTypes, 706);
+check('704개 화면 유형을 보존하면서 후보 family로 과분화를 줄임', () => {
+  assert.equal(unified.summary.rawDisplayTypes, 704);
   assert.ok(unified.summary.canonicalTypes < 150, `canonical types=${unified.summary.canonicalTypes}`);
   assert.ok(unified.summary.canonicalTypes < unified.summary.rawDisplayTypes / 4);
   unified.items.forEach((item) => assert.ok(item.displayType));

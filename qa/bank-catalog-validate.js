@@ -43,7 +43,7 @@ assert.deepEqual(
     confirmedItems: unified.summary.confirmedItems,
     candidateItems: unified.summary.candidateItems,
   },
-  { sourceQuestions: 810, rawDisplayTypes: 706, canonicalTypes: 125, confirmedItems: 60, candidateItems: 750 },
+  { sourceQuestions: 810, rawDisplayTypes: 704, canonicalTypes: 123, confirmedItems: 60, candidateItems: 750 },
   '전체 분류 현황 수치',
 );
 assert.equal(unified.summary.duplicateSourceKeys.length, 0, '출처 문항 키 중복 없음');
@@ -52,11 +52,11 @@ const originalCatalog = registry.buildCatalog(context.GFIELD_MOCK_ORIGINAL);
 const verifiedPractice = originalCatalog.filter((type) =>
   type.generator?.status === 'verified-practice' && type.generator.practiceReleaseReady === true,
 );
-assert.equal(verifiedPractice.length, 8, '독립 검산을 통과한 연습형 생성기 수');
+assert.equal(verifiedPractice.length, 5, '독립 검산을 통과한 연습형 생성기 수');
 assert.deepEqual(
   verifiedPractice.map((type) => type.generator.generatorId).sort(),
-  ['cube', 'inclusion', 'path', 'rect', 'remainder', 'repeat', 'tri', 'weekday'],
-  '확정 원본 유형에 연결된 8개 연습형 생성기',
+  ['cube', 'inclusion', 'path', 'remainder', 'tri'],
+  '확정 원본 유형에 연결된 5개 연습형 생성기',
 );
 assert.ok(verifiedPractice.every((type) => type.sourceFaithfulReleaseReady === false), '연습형 검증을 원본 복기형 승인으로 오인하지 않음');
 
@@ -73,4 +73,4 @@ assert.match(catalogHtml, /연습형 생성기 검증 완료/, '연습형 검증
 assert.match(catalogHtml, /aria-live="polite"/, '필터 결과 접근성 상태 영역');
 assert.match(indexHtml, /class="catalog-link" href="catalog\.html"/, '문제은행 상단 현황 링크');
 
-console.log('PASS bank catalog contract: 810 questions, 706 raw types, 125 groups, 60 confirmed, 750 candidates, 8 verified-practice generators');
+console.log('PASS bank catalog contract: 810 questions, 704 raw types, 123 groups, 60 confirmed, 750 candidates, 5 verified-practice generators');
