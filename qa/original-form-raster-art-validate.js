@@ -20,6 +20,7 @@ const historicalCoreAssets = [
   'original-r1-q11-figure-v4.png',
   'original-r1-q13-figure-v4.png',
   'original-r1-q15-figure-v4.png',
+  'original-r1-q16-figure-v7.png',
   'original-r1-q19-figure-v4.png',
   'original-r1-q20-figure-v4.png',
   'original-r1-q21-figure-v4.png',
