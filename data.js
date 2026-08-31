@@ -1,14 +1,14 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 31. 오후 6:48:18
+ * 생성: 2026. 8. 31. 오후 6:49:37
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
     "academy": "지필드 영재교육",
     "title": "생각하는 황소 대비 아카이브",
     "year": "2026 하반기",
-    "currentWeekId": "aug-w3",
+    "currentWeekId": "aug-w4",
     "examDate": "2026-11-01",
     "examLabel": "생각하는 황소 입학시험",
     "lat": 37.4996,
@@ -810,10 +810,6 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1788169503524_tw1n_________________5_6____.pdf",
           "folder": "tb_mth1yhsr",
           "pages": 4
-        },
-        {
-          "title": "",
-          "url": ""
         }
       ]
     },
