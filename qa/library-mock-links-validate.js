@@ -266,6 +266,25 @@ check('추가 모의고사 원본형 1·2회 이미지·PDF·정답 연결', () 
   assertOriginalFormBooks(configuredData(ONSITE_STUDENT));
 });
 
+check('Thinking Core CH2 강의 버튼 통합과 종료 후 자동 연결', () => {
+  const data = configuredData(ONSITE_STUDENT);
+  const books = (data.books || []).filter((book) => book && book.accessKey === 'concept-core');
+  assert.equal(books.length, 1, 'Thinking Core 교재는 정확히 하나여야 함');
+  assert.equal(books[0].pages, 96, 'Thinking Core 영상 순서 수정본 쪽수');
+  assert.equal(books[0].pdf, 'output/pdf/thinking-core-revised-96p.pdf', 'Thinking Core 영상 순서 수정 PDF 연결');
+  assertImageSet('tb_mrhqq399', 96);
+  const labels = (books[0].links || []).map((link) => link && link.label);
+  assert.equal(labels.filter((label) => label === 'CH2 학습영상').length, 1, 'CH2 학습영상 통합 버튼');
+  assert.equal(labels.filter((label) => label === 'CH2 Semi 2회').length, 1, 'CH2 Semi 2회 통합 버튼');
+  assert.equal(labels.includes('CH2 학습영상 2'), false, 'CH2 학습영상 2 별도 버튼 제거');
+  assert.equal(labels.includes('CH2 Semi 2회 14·15·16번'), false, 'CH2 Semi 14·15·16 별도 버튼 제거');
+
+  const source = fs.readFileSync(ENHANCEMENTS_FILE, 'utf8');
+  assert.match(source, /'TxEkE7zNu8I':\s*\{\s*onEnd:true,\s*next:'jYu8jXkawrA'/, 'CH2 학습영상 1 종료 후 2 연결');
+  assert.match(source, /'W6GnRtzez24':\s*\{\s*onEnd:true,\s*next:'AT5xxcA0DSU'/, 'CH2 Semi 1~13 종료 후 14~16 연결');
+  assert.match(source, /event\.data!==YT\.PlayerState\.ENDED/, 'YouTube 실제 종료 상태 감지');
+});
+
 check('원본형 진단 데이터와 서재 이미지 경로 일치', () => {
   const model = originalMockData();
   assert.equal(model.roundCount, 2);

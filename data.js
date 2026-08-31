@@ -323,9 +323,9 @@ window.GFIELD_DATA = {
       "textbooks": [
         {
           "title": "Thinking Core — 생각하는 황소 대비 심화 개념 (2)",
-          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783857450970_tjse_Thinking_Core_____________________2_.pdf",
+          "url": "output/pdf/thinking-core-revised-96p.pdf",
           "folder": "tb_mrhqq399",
-          "pages": 92
+          "pages": 96
         },
         {
           "title": "중급 모의고사 1회 · 답안 및 교재 연결표",
@@ -2187,9 +2187,9 @@ window.GFIELD_DATA = {
       "accessKey": "concept-core",
       "title": "Thinking Core · 생각하는 황소 대비 심화 개념",
       "desc": "CH1 NUMBERS · CH2 Algebra · CH3 Numbers & Case · CH4 Geometry · CH5 활용",
-      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783857450970_tjse_Thinking_Core_____________________2_.pdf",
+      "pdf": "output/pdf/thinking-core-revised-96p.pdf",
       "imgdir": "tb_mrhqq399",
-      "pages": 92,
+      "pages": 96,
       "video": "https://youtu.be/r6NRdZudWks",
       "cover": "",
       "date": "2026-07-30",
@@ -2203,20 +2203,12 @@ window.GFIELD_DATA = {
           "url": "https://youtu.be/rJKaRm6utcE"
         },
         {
-          "label": "CH2 학습영상 1",
+          "label": "CH2 학습영상",
           "url": "https://youtu.be/TxEkE7zNu8I"
-        },
-        {
-          "label": "CH2 학습영상 2",
-          "url": "https://youtu.be/jYu8jXkawrA"
         },
         {
           "label": "CH2 Semi 2회",
           "url": "https://youtu.be/W6GnRtzez24"
-        },
-        {
-          "label": "CH2 Semi 2회 14·15·16번",
-          "url": "https://youtu.be/AT5xxcA0DSU"
         },
         {
           "label": "CH3 학습영상",

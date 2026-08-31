@@ -520,7 +520,7 @@
 /* ===== 책 뷰어: 단원 버튼 화면 내 전환 + 교재 쪽 이동 + 영상 이어보기 =====
    - 유튜브 링크는 왼쪽 영상칸을 그 자리에서 바꿔 재생 (새 창 X)
    - 교재는 해당 단원 시작 쪽으로 자동 스크롤
-   - CHAIN에 등록된 영상은 지정 시각에서 다음 영상으로 자동 연속 재생 */
+   - CHAIN에 등록된 영상은 지정 시각 또는 영상 종료 시 다음 영상으로 자동 연속 재생 */
 (function(){
   /* 교재별 단원 시작 쪽 — 뷰어에 실제로 보이는 쪽 번호 기준 */
   var PAGEMAP=[
@@ -536,21 +536,23 @@
         [/([1-3])\s*단원/,       {1:3, 2:14, 3:29}]
       ]
     },
-    /* Thinking Core · 생각하는 황소 대비 심화 개념 (92쪽)
-       CH1 4 · SEMI1 13 · CH2 20 · SEMI2 35 · CH3 43 · SEMI3 52
-       CH4 58 · SEMI4 73 · CH5 82 · SEMI5 88 */
+    /* Thinking Core · 생각하는 황소 대비 심화 개념 (96쪽)
+       CH1 4 · SEMI1 13 · CH2 20 · SEMI2 35 · CH3 43 · SEMI3 48
+       CH4 54 · SEMI4 69 · CH5 75 · SEMI5 89 */
     { match:/THINKING\s*CORE|심화\s*개념/i,
       pages:{},
       rx:[
-        [/SEMI[^0-9]*([1-5])|모의고사[^0-9]*([1-5])/i, {1:13, 2:35, 3:52, 4:73, 5:88}],
-        [/CH\s*([1-5])|([1-5])\s*단원/i,               {1:4,  2:20, 3:43, 4:58, 5:82}]
+        [/SEMI[^0-9]*([1-5])|모의고사[^0-9]*([1-5])/i, {1:13, 2:35, 3:48, 4:69, 5:89}],
+        [/CH\s*([1-5])|([1-5])\s*단원/i,               {1:4,  2:20, 3:43, 4:54, 5:75}]
       ]
     }
   ];
 
   /* 영상 이어보기: 이 영상이 at(초)에 도달하면 next 영상을 start(초)부터 이어서 재생 */
   var CHAIN={
-    'r6NRdZudWks': { at: 38*60+14, next:'DXyQQgBKtSg', start:11 }   /* Thinking Core CH1 */
+    'r6NRdZudWks': { at: 38*60+14, next:'DXyQQgBKtSg', start:11 }, /* Thinking Core CH1 */
+    'TxEkE7zNu8I': { onEnd:true, next:'jYu8jXkawrA' },             /* Thinking Core CH2 학습영상 1 → 2 */
+    'W6GnRtzez24': { onEnd:true, next:'AT5xxcA0DSU' }              /* Thinking Core CH2 Semi 1~13 → 14~16 */
   };
 
   var stx=document.createElement('style');
@@ -561,7 +563,7 @@
     '.bv-vid{position:relative}';
   document.head.appendChild(stx);
 
-  var player=null, timer=null, apiPending=[];
+  var player=null, timer=null, activeVideoId='', apiPending=[];
 
   function ytId(u){
     var m=String(u||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([A-Za-z0-9_-]{6,})/);
@@ -622,18 +624,30 @@
     var el=document.querySelector('#bv-stage .bv-vid .bv-chain');
     if(el) el.classList.remove('on');
   }
+  function continueVideo(rule){
+    if(!rule || !player || typeof player.loadVideoById!=='function') return;
+    stopWatch();
+    chainNote('이어지는 강의로 넘어갑니다 ▶');
+    activeVideoId=rule.next;
+    player.loadVideoById({videoId:rule.next, startSeconds:rule.start||0});
+    setTimeout(function(){ watch(rule.next); },1200);
+  }
+  function onPlayerStateChange(event){
+    if(!window.YT || event.data!==YT.PlayerState.ENDED) return;
+    var rule=CHAIN[activeVideoId];
+    if(rule && rule.onEnd) continueVideo(rule);
+  }
   function watch(id){
     stopWatch();
+    activeVideoId=id;
     var rule=CHAIN[id]; if(!rule || !player) return;
+    if(rule.onEnd) return;
     timer=setInterval(function(){
       try{
         if(!player || typeof player.getCurrentTime!=='function') return;
         var t=player.getCurrentTime();
         if(t && t>=rule.at){
-          stopWatch();
-          chainNote('이어지는 강의로 넘어갑니다 ▶');
-          player.loadVideoById({videoId:rule.next, startSeconds:rule.start||0});
-          setTimeout(function(){ watch(rule.next); },1200);
+          continueVideo(rule);
         }
       }catch(e){}
     },500);
@@ -641,7 +655,7 @@
   function play(id,start){
     var f=vidFrame(); if(!f) return false;
     if(player && typeof player.loadVideoById==='function'){
-      try{ player.loadVideoById({videoId:id, startSeconds:start||0}); watch(id); return true; }catch(e){}
+      try{ activeVideoId=id; player.loadVideoById({videoId:id, startSeconds:start||0}); watch(id); return true; }catch(e){}
     }
     f.src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1&enablejsapi=1&origin='+
       encodeURIComponent(location.origin)+(start?('&start='+start):'');
@@ -661,7 +675,10 @@
     f.id='gf-bv-yt';
     loadApi(function(){
       try{
-        player=new YT.Player('gf-bv-yt',{ events:{ 'onReady':function(){ watch(id); } } });
+        player=new YT.Player('gf-bv-yt',{ events:{
+          'onReady':function(){ watch(id); },
+          'onStateChange':onPlayerStateChange
+        } });
       }catch(e){ player=null; }
     });
   }
@@ -707,7 +724,7 @@
     window.openBook=function(b){ var r=ob.apply(this,arguments); setTimeout(enhance,60); return r; };
     if(typeof window.closeBook==='function'){
       var cb=window.closeBook;
-      window.closeBook=function(){ stopWatch(); try{ if(player&&player.destroy) player.destroy(); }catch(e){} player=null; return cb.apply(this,arguments); };
+      window.closeBook=function(){ stopWatch(); try{ if(player&&player.destroy) player.destroy(); }catch(e){} player=null; activeVideoId=''; return cb.apply(this,arguments); };
     }
     return true;
   }

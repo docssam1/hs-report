@@ -32,7 +32,23 @@ function expectedHref(locator, pattern, label) {
     ...(BROWSER_EXECUTABLE ? { executablePath: BROWSER_EXECUTABLE } : {}),
   });
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
-  await context.addInitScript(() => { window.print = () => {}; });
+  await context.addInitScript(() => {
+    window.print = () => {};
+    window.__qaLoadedVideos = [];
+    window.YT = {
+      PlayerState: { ENDED: 0 },
+      Player: function Player(_id, config) {
+        const instance = {
+          loadVideoById(payload) { window.__qaLoadedVideos.push(payload); },
+          getCurrentTime() { return 0; },
+          destroy() {},
+        };
+        window.__qaEndVideo = () => config.events.onStateChange({ data: window.YT.PlayerState.ENDED, target: instance });
+        setTimeout(() => config.events.onReady({ target: instance }), 0);
+        return instance;
+      },
+    };
+  });
   const page = await context.newPage();
 
   try {
@@ -141,7 +157,30 @@ function expectedHref(locator, pattern, label) {
 
     await page.getByRole('button', { name: /Thinking Core · 생각하는 황소 대비 심화 개념/ }).click();
     await page.waitForSelector('#bookviewer.open');
-    await page.waitForFunction(() => document.querySelectorAll('#bv-actions button.bv-act').length === 13);
+    assert.equal(await page.locator('#bookviewer .bv-pg').count(), 96, 'Thinking Core 영상 순서 수정본 쪽수');
+    await page.waitForFunction(() => document.querySelectorAll('#bv-actions button.bv-act').length === 11);
+    const thinkingCoreLabels = await page.locator('#bv-actions button.bv-act').allTextContents();
+    assert.ok(thinkingCoreLabels.some((label) => label.includes('CH2 학습영상')), 'CH2 학습영상 통합 버튼 표시');
+    assert.ok(!thinkingCoreLabels.some((label) => label.includes('CH2 학습영상 2')), 'CH2 학습영상 2 별도 버튼 제거');
+    assert.ok(!thinkingCoreLabels.some((label) => label.includes('14·15·16번')), 'CH2 Semi 14·15·16번 별도 버튼 제거');
+    await page.evaluate(() => { window.__qaLoadedVideos = []; });
+    await page.getByRole('button', { name: /CH2 학습영상$/ }).click();
+    await page.evaluate(() => window.__qaEndVideo());
+    await page.waitForFunction(() => window.__qaLoadedVideos.some((video) => video.videoId === 'jYu8jXkawrA'));
+    assert.deepEqual(
+      await page.evaluate(() => window.__qaLoadedVideos.map((video) => video.videoId)),
+      ['TxEkE7zNu8I', 'jYu8jXkawrA'],
+      'CH2 학습영상 1 종료 후 2 자동 연결',
+    );
+    await page.evaluate(() => { window.__qaLoadedVideos = []; });
+    await page.getByRole('button', { name: /CH2 Semi 2회$/ }).click();
+    await page.evaluate(() => window.__qaEndVideo());
+    await page.waitForFunction(() => window.__qaLoadedVideos.some((video) => video.videoId === 'AT5xxcA0DSU'));
+    assert.deepEqual(
+      await page.evaluate(() => window.__qaLoadedVideos.map((video) => video.videoId)),
+      ['W6GnRtzez24', 'AT5xxcA0DSU'],
+      'CH2 Semi 1~13 종료 후 14~16 자동 연결',
+    );
     const desktopToolbar = await page.evaluate(() => {
       const actions = document.querySelector('#bv-actions');
       const buttons = [...actions.querySelectorAll('.bv-act')];
@@ -160,7 +199,7 @@ function expectedHref(locator, pattern, label) {
         actionScrollWidth: actions.scrollWidth,
       };
     });
-    assert.equal(desktopToolbar.count, 13, '개념 교재 다중 버튼 수');
+    assert.equal(desktopToolbar.count, 11, '개념 교재 통합 버튼 수');
     assert.equal(desktopToolbar.rows, 2, '1440px 다중 버튼은 정확히 두 줄');
     assert.ok(desktopToolbar.minLeft >= -1 && desktopToolbar.maxRight <= desktopToolbar.viewport + 1, '1440px 버튼이 화면 안에 표시됨');
     assert.ok(desktopToolbar.actionScrollWidth <= desktopToolbar.actionClientWidth + 1, '1440px 버튼 영역 가로 넘침 없음');
