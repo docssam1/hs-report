@@ -552,7 +552,8 @@
   var CHAIN={
     'r6NRdZudWks': { at: 38*60+14, next:'DXyQQgBKtSg', start:11 }, /* Thinking Core CH1 */
     'TxEkE7zNu8I': { onEnd:true, next:'jYu8jXkawrA' },             /* Thinking Core CH2 학습영상 1 → 2 */
-    'W6GnRtzez24': { onEnd:true, next:'AT5xxcA0DSU' }              /* Thinking Core CH2 Semi 1~13 → 14~16 */
+    'W6GnRtzez24': { onEnd:true, next:'AT5xxcA0DSU' },             /* Thinking Core CH2 Semi 1~13 → 14~16 */
+    'Ou3ng5mFmuo': { onEnd:true, next:'vLCFnRx7TiU', start:521 }   /* Thinking Core CH5 학습영상 이어보기 */
   };
 
   var stx=document.createElement('style');

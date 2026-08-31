@@ -266,7 +266,7 @@ check('추가 모의고사 원본형 1·2회 이미지·PDF·정답 연결', () 
   assertOriginalFormBooks(configuredData(ONSITE_STUDENT));
 });
 
-check('Thinking Core CH2 강의 버튼 통합과 종료 후 자동 연결', () => {
+check('Thinking Core 강의 버튼 통합과 종료 후 자동 연결', () => {
   const data = configuredData(ONSITE_STUDENT);
   const books = (data.books || []).filter((book) => book && book.accessKey === 'concept-core');
   assert.equal(books.length, 1, 'Thinking Core 교재는 정확히 하나여야 함');
@@ -282,6 +282,7 @@ check('Thinking Core CH2 강의 버튼 통합과 종료 후 자동 연결', () =
   const source = fs.readFileSync(ENHANCEMENTS_FILE, 'utf8');
   assert.match(source, /'TxEkE7zNu8I':\s*\{\s*onEnd:true,\s*next:'jYu8jXkawrA'/, 'CH2 학습영상 1 종료 후 2 연결');
   assert.match(source, /'W6GnRtzez24':\s*\{\s*onEnd:true,\s*next:'AT5xxcA0DSU'/, 'CH2 Semi 1~13 종료 후 14~16 연결');
+  assert.match(source, /'Ou3ng5mFmuo':\s*\{\s*onEnd:true,\s*next:'vLCFnRx7TiU',\s*start:521\s*\}/, 'CH5 학습영상 종료 후 지정 영상 8분 41초부터 연결');
   assert.match(source, /event\.data!==YT\.PlayerState\.ENDED/, 'YouTube 실제 종료 상태 감지');
 });
 

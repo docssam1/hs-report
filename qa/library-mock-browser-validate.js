@@ -181,6 +181,18 @@ function expectedHref(locator, pattern, label) {
       ['W6GnRtzez24', 'AT5xxcA0DSU'],
       'CH2 Semi 1~13 종료 후 14~16 자동 연결',
     );
+    await page.evaluate(() => { window.__qaLoadedVideos = []; });
+    await page.getByRole('button', { name: /CH5 학습영상$/ }).click();
+    await page.evaluate(() => window.__qaEndVideo());
+    await page.waitForFunction(() => window.__qaLoadedVideos.some((video) => video.videoId === 'vLCFnRx7TiU'));
+    assert.deepEqual(
+      await page.evaluate(() => window.__qaLoadedVideos),
+      [
+        { videoId: 'Ou3ng5mFmuo', startSeconds: 0 },
+        { videoId: 'vLCFnRx7TiU', startSeconds: 521 },
+      ],
+      'CH5 학습영상 종료 후 지정 영상 8분 41초부터 자동 연결',
+    );
     const desktopToolbar = await page.evaluate(() => {
       const actions = document.querySelector('#bv-actions');
       const buttons = [...actions.querySelectorAll('.bv-act')];
