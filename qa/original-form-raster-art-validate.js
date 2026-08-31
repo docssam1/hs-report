@@ -79,6 +79,8 @@ assert.match(renderer, /blue-car-side\.jpg/, '2회 자동차는 실제 자동차
 assert.match(renderer, /q11-fish-path\.png/, '2회 11번은 사용자 제공 실제 기출 물고기 그림 사용');
 assert.match(renderer, /cssDigitalSegments = \{[^}]*7:'abcf'/, '2회 26번 숫자 7은 가운데 가로칸 대신 왼쪽 위 세로칸을 켠 네 칸 표시');
 assert.match(renderer, /사용자 제공 실제 기출 이미지 구조 변형 · 디지털 숫자'[\s\S]*?digitalDisplayCssFigure\(\)[\s\S]*?'tall'/, '2회 26번은 같은 7칸 틀의 CSS 디지털 숫자를 사용');
+assert.match(renderer, /function round2MazeStackedFigure\(\)[\s\S]*?round2-maze-crop map[\s\S]*?round2-maze-crop view/, '2회 30번 미로와 통로를 원본 래스터에서 나눠 세로로 크게 배치');
+assert.match(renderer, /사용자 제공 실제 기출 이미지 구조 변형 · 미로'[\s\S]*?round2MazeStackedFigure\(\)[\s\S]*?'maze-column'/, '2회 30번은 전체 세로 지면을 사용하는 큰 미로 배치');
 
 const slipperComposite = fs.readFileSync(path.join(PRIVATE, 'slipper-composite-v7.html'), 'utf8');
 const slipperTags = [...slipperComposite.matchAll(/<img class="shoe"[^>]+>/g)].map((match) => match[0]);
