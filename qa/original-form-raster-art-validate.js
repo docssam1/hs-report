@@ -20,6 +20,7 @@ const historicalCoreAssets = [
   'original-r1-q11-figure-v4.png',
   'original-r1-q13-figure-v4.png',
   'original-r1-q15-figure-v4.png',
+  'original-r1-q16-figure-v7.png',
   'original-r1-q19-figure-v4.png',
   'original-r1-q20-figure-v4.png',
   'original-r1-q21-figure-v4.png',
@@ -76,7 +77,8 @@ for (const name of coreAssets) {
 }
 assert.match(renderer, /blue-car-side\.jpg/, '2회 자동차는 실제 자동차 JPG 사용');
 assert.match(renderer, /q11-fish-path\.png/, '2회 11번은 사용자 제공 실제 기출 물고기 그림 사용');
-assert.match(renderer, /q23-digital-display\.png/, '2회 26번은 사용자 제공 실제 기출 디지털 숫자 그림 사용');
+assert.match(renderer, /cssDigitalSegments = \{[^}]*7:'abcf'/, '2회 26번 숫자 7은 가운데 가로칸 대신 왼쪽 위 세로칸을 켠 네 칸 표시');
+assert.match(renderer, /사용자 제공 실제 기출 이미지 구조 변형 · 디지털 숫자'[\s\S]*?digitalDisplayCssFigure\(\)[\s\S]*?'tall'/, '2회 26번은 같은 7칸 틀의 CSS 디지털 숫자를 사용');
 
 const slipperComposite = fs.readFileSync(path.join(PRIVATE, 'slipper-composite-v7.html'), 'utf8');
 const slipperTags = [...slipperComposite.matchAll(/<img class="shoe"[^>]+>/g)].map((match) => match[0]);
