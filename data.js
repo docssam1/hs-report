@@ -1,14 +1,14 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 31. 오후 2:26:50
+ * 생성: 2026. 8. 31. 오후 6:49:37
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
     "academy": "지필드 영재교육",
     "title": "생각하는 황소 대비 아카이브",
     "year": "2026 하반기",
-    "currentWeekId": "aug-w3",
+    "currentWeekId": "aug-w4",
     "examDate": "2026-11-01",
     "examLabel": "생각하는 황소 입학시험",
     "lat": 37.4996,
@@ -802,9 +802,16 @@ window.GFIELD_DATA = {
       ]
     },
     "aug-w4": {
-      "notice": "",
-      "homework": "",
-      "textbooks": []
+      "notice": "심화 개념의 마지막 시간이었습니다. 마지막 단원은 기존에 배웠던 내용의 활용이고\n자료실에 개념 교재에 Thinking Core의 개편된 5단원 내용을 넣어 놨으니 언제든 공부해주세요\n곧 추가 수업 추석특강 및 이후 계획에 대한 광고 문자가 나갈 예정입니다. 참고해주세요.\nhttps://hs.gfieldacademy.net/\n\n\nHS 대비 Thinking Core CH4 Geometry\n  복습영상)  https://youtu.be/JEo6Gy0xY3o\n\n- 주사위의 이동\n    찌그러진 주사위 그리기.좌회전 원리,전개도의 활용\n\n-  주사위 눈의 최대 최소\n    바탕그림을 그려 보이지 않는 면의 수를 빼도록 하였습니다.\n-  전개도\n    밑면을 회원하여 전개도가 변하는 그림을 그리고 모양의 기준을 잡아 바라본 모양이 어디를 향하는지 보도록 하였습니다.\n-  색종이\n    거꾸로 그리기죠 ㅠㅠ 그런데 왜 틀리는지\n-  측정거리 . 간격  \n    합과 차의 배수의 연결단원입니다. 글이 길다고 포기하지 말고 그림을 잘 보면 풀수 있으며\n    표를 이용한 걸리는 성대경시에도 많이 나오는 빈출 유형입니다.\n\n* 오늘의 교훈 쉽다고 안심하고 넘어가지 말자!!",
+      "homework": "1. Thinking Core CH4 semi 모의고사 4회\n    https://youtu.be/D_PtkZ0WMf8\n\n2. 선택과제\n초등과정 대비 실전 모의고사 5,6회 리뷰\n  https://youtu.be/S_cMNQFw0Eo",
+      "textbooks": [
+        {
+          "title": "초등과정 대비 실전 모의고사 5,6회 리뷰",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1788169503524_tw1n_________________5_6____.pdf",
+          "folder": "tb_mth1yhsr",
+          "pages": 4
+        }
+      ]
     },
     "oct-5": {
       "notice": "",
