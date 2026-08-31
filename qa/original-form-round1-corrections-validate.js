@@ -29,14 +29,14 @@ assert.equal(q(6).answer, '5곳');
 assert.match(q(6).prompt, /느슨하게 얽혀/);
 assert.match(renderer, /original-r1-q06-leash-loose-imagegen-v5\.png/);
 
-const digitHtml = fs.readFileSync(path.join(PRIVATE, 'overlap-digits-bold-pile-v8.html'), 'utf8');
+const digitHtml = fs.readFileSync(path.join(PRIVATE, 'overlap-digits-bold-pile-v9.html'), 'utf8');
 const digitInventory = [...digitHtml.matchAll(/data-digit="(\d)"/g)].map((match) => Number(match[1]));
-assert.equal(digitInventory.length, 12);
+assert.equal(digitInventory.length, 18);
 assert.equal(digitInventory.filter((digit) => digit === 6).length, 0);
-assert.equal(digitInventory.reduce((sum, value) => sum + value, 0), 55);
-assert.equal(q(7).answer, '55');
+assert.equal(digitInventory.reduce((sum, value) => sum + value, 0), 78);
+assert.equal(q(7).answer, '78');
 assert.match(q(7).prompt, /숫자 6은 없습니다/);
-assert.match(renderer, /gpt-overlap-digits-bold-pile-v8\.png/);
+assert.match(renderer, /gpt-overlap-digits-bold-pile-v9\.png/);
 
 assert.match(q(9).prompt, /둥근 연못/);
 assert.equal(q(9).answer, 'A-B-D-E-C');
@@ -55,7 +55,7 @@ assert.match(renderer, /rigor-r1-q14-fish-relations-v1\.png/);
 assert.equal(q(15).answer, '4번');
 
 assert.equal(q(19).answer, '157개');
-const cardFunction = renderer.match(/function digitCardsFigure[\s\S]*?\n}\n\nfunction hexChainFigure/)?.[0] || '';
+const cardFunction = renderer.match(/function digitCardsFigure[\s\S]*?\n}\n\nfunction coverFifteenFigure/)?.[0] || '';
 assert.doesNotMatch(cardFunction, />\$\{c\}장</);
 
 assert.equal(q(20).answer, '4번');
