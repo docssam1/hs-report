@@ -855,14 +855,14 @@ td.weak-cell{white-space:nowrap}
     var weakAreas=ctx.A.filter(function(a){return a.perf<100;}).sort(function(a,b){return a.perf-b.perf || (b.tot-b.got)-(a.tot-a.got);});
     if(!weakAreas.length) weakAreas=ctx.A.slice();
     var weakSubs=ctx.SA.filter(function(x){return x.wrongNos.length;});
-    var repeatHTML=repeated.length?repeated.map(function(x){return '<div class="repwk"><b>'+esc(x.k)+'</b> — 원본형 '+x.rounds.join('·')+'회에서 반복 오답</div>';}).join(''):'<div class="repwk">두 회차에 걸쳐 반복된 소영역 약점은 아직 없습니다.</div>';
-    var historyHTML=attempts.length?'<table><tr><th>최초 응시</th><th>점수</th></tr>'+attempts.map(function(a){return '<tr><td>원본형 '+a.n+'회</td><td class="c"><b>'+a.score+'점</b></td></tr>';}).join('')+'</table>':'<div class="lead">아직 누적할 최초 응시 기록이 없습니다.</div>';
+    var repeatHTML=repeated.length?repeated.map(function(x){return '<div class="repwk"><b>'+esc(x.k)+'</b> — 시그니처 실전 '+x.rounds.join('·')+'회에서 반복 오답</div>';}).join(''):'<div class="repwk">두 회차에 걸쳐 반복된 소영역 약점은 아직 없습니다.</div>';
+    var historyHTML=attempts.length?'<table><tr><th>최초 응시</th><th>점수</th></tr>'+attempts.map(function(a){return '<tr><td>시그니처 실전 '+a.n+'회</td><td class="c"><b>'+a.score+'점</b></td></tr>';}).join('')+'</table>':'<div class="lead">아직 누적할 최초 응시 기록이 없습니다.</div>';
     var teacherBanner=(!preview&&teacherEntry)?'<div class="banner preview no-print">🧑‍🏫 선생님 대리 입력 — 재원생의 답안을 대신 기록했습니다.</div>':'';
     var practiceBanner=(!preview&&attemptNo>=2)?'<div class="banner practice no-print">연습 응시 '+attemptNo+'차 — 최초 성적과 반복 약점 계산에는 1차 기록만 사용합니다.</div>':'';
     var saveErrBanner=saveErr?'<div class="banner saveerr no-print">'+(saveConflict?'다른 입력이 먼저 저장되어 기존 최초 기록을 유지했습니다.':'저장 실패, 네트워크 확인')+'</div>':'';
     var previewBanner=preview?'<div class="banner preview no-print">🔎 관리자 미리보기 — 저장되지 않습니다</div>':'';
     app.innerHTML=previewBanner+teacherBanner+practiceBanner+saveErrBanner+
-      '<div class="doc"><div class="cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>원본형 모의고사 성적·약점 진단</h1>'+
+      '<div class="doc"><div class="cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>시그니처 실전 모의고사 성적·약점 진단</h1>'+
       '<div class="sub">'+esc(ctx.R.title)+' · 생각하는 황소 초등선발 대비</div><div class="who"><b>'+esc(ctx.name)+'</b><span>학생</span></div>'+
       '<div class="kpi"><div><i>점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>판정 기준</i><b style="font-size:15px">2개년 평균 컷</b></div><div><i>예상 결과</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div></div></div>'+
       '<section><h2>성적 판정 기준</h2>'+originalCutBasisHTML()+cutWarnHTML(ctx)+'</section>'+
@@ -1143,7 +1143,7 @@ td.weak-cell{white-space:nowrap}
     } else {
       body = '<table><tr><th>유형</th><th>영역</th><th>표시한 회차</th><th class="no-print"></th></tr>'+
         rows.map(function(r){
-          var mm=/^(final|original)(\d+)$/.exec(r.round||''); var roundLabel = mm? ((mm[1]==='original'?'원본형':'파이널')+' '+mm[2]+'회') : esc(r.round||'-');
+          var mm=/^(final|original)(\d+)$/.exec(r.round||''); var roundLabel = mm? ((mm[1]==='original'?'시그니처 실전':'파이널')+' '+mm[2]+'회') : esc(r.round||'-');
           return '<tr><td>'+esc(r.type)+'</td><td>'+esc(r.area||'-')+'</td><td class="c">'+roundLabel+'</td>'+
             '<td class="c no-print"><button type="button" class="weakbtn on" data-unmark="1" data-type="'+esc(r.type)+'">해제</button></td></tr>';
         }).join('')+'</table>';

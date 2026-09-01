@@ -25,14 +25,14 @@ const LAST_VIDEOS = [
 const ORIGINAL_FORM_BOOKS = [
   {
     round: 1,
-    title: '초등선발 대비 원본형 모의고사 1회',
+    title: '초등선발 대비 시그니처 실전 모의고사 1회',
     imageDir: 'original_form_1',
     pdf: 'output/pdf/hwangso-original-form-mock-01-rebuilt.pdf',
     answer: 'output/pdf/hwangso-original-form-mock-01-rebuilt-answer.pdf',
   },
   {
     round: 2,
-    title: '초등선발 대비 원본형 모의고사 2회',
+    title: '초등선발 대비 시그니처 실전 모의고사 2회',
     imageDir: 'original_form_2_v2',
     pdf: 'output/pdf/hwangso-original-form-mock-02-rebuilt.pdf',
     answer: 'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf',

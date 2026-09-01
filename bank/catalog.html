@@ -104,14 +104,14 @@
   <header class="hero">
     <div class="eyebrow">GFIELD BULL BANK · DEVELOPMENT CATALOG</div>
     <h1>전체 문항 분류·유사문제은행 현황</h1>
-    <p>중급·활용·파이널·최종·원본형 시험의 문항을 같은 기준으로 모아, 대영역 → 소영역 → 유형 순서로 확인합니다. 연습형 생성기 검증과 원본 복기형 대조는 서로 다른 승인 단계로 관리합니다.</p>
+    <p>중급·활용·파이널·최종·시그니처 실전 시험의 문항을 같은 기준으로 모아, 대영역 → 소영역 → 유형 순서로 확인합니다. 연습형 생성기 검증과 원본 복기형 대조는 서로 다른 승인 단계로 관리합니다.</p>
   </header>
 
   <aside class="notice" aria-labelledby="candidate-notice-title">
     <div class="icon" aria-hidden="true">⚠️</div>
     <div>
       <strong id="candidate-notice-title">검토 후보는 확정 분류가 아닙니다.</strong>
-      <p>원본형 <b id="notice-confirmed-count">—</b>문항의 소영역은 출처 문항에 기록된 확정값입니다. 나머지는 기존 유형 문구를 규칙으로 임시 묶은 검토 후보이며, 확정 진단이나 학생 약점 판정에 그대로 사용하지 않습니다.</p>
+      <p>시그니처 실전 <b id="notice-confirmed-count">—</b>문항의 소영역은 출처 문항에 기록된 확정값입니다. 나머지는 기존 유형 문구를 규칙으로 임시 묶은 검토 후보이며, 확정 진단이나 학생 약점 판정에 그대로 사용하지 않습니다.</p>
     </div>
   </aside>
 
@@ -130,7 +130,7 @@
         <div class="field search"><label for="search">유형 검색</label><input id="search" type="search" placeholder="예: 쌓기나무, 달력, 최단거리" autocomplete="off"></div>
         <div class="field"><label for="area-filter">대영역</label><select id="area-filter"><option value="all">전체 대영역</option></select></div>
         <div class="field"><label for="status-filter">분류 상태</label><select id="status-filter"><option value="all">전체 상태</option><option value="confirmed">확정만</option><option value="candidate">검토 후보 포함</option></select></div>
-        <div class="field"><label for="source-filter">출처</label><select id="source-filter"><option value="all">전체 출처</option><option value="mid">중급</option><option value="hw">활용</option><option value="final">파이널</option><option value="last">최종</option><option value="original">원본형</option></select></div>
+        <div class="field"><label for="source-filter">출처</label><select id="source-filter"><option value="all">전체 출처</option><option value="mid">중급</option><option value="hw">활용</option><option value="final">파이널</option><option value="last">최종</option><option value="original">시그니처 실전</option></select></div>
         <div class="field"><label for="dev-filter">개발 상태</label><select id="dev-filter"><option value="all">전체 개발 상태</option><option value="verified">연습형 검증 완료</option><option value="source-pending">원본 대조 대기</option><option value="planned">연습형 생성기 계획</option></select></div>
         <button class="reset" id="reset-filter" type="button">필터 초기화</button>
       </div>
@@ -157,7 +157,7 @@
 (function(){
   'use strict';
   var R=window.BANK_TYPE_REGISTRY;
-  var SOURCE_LABELS={mid:'중급',hw:'활용',final:'파이널',last:'최종',original:'원본형'};
+  var SOURCE_LABELS={mid:'중급',hw:'활용',final:'파이널',last:'최종',original:'시그니처 실전'};
   var AREA_ORDER=['수·규칙찾기','식의 계산','도형','경우의 수'];
   var $=function(id){return document.getElementById(id)};
 

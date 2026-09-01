@@ -70,8 +70,8 @@ function expectedHref(locator, pattern, label) {
     await page.click('.nav-btn[data-v="archive"]');
     await page.waitForSelector('#view-archive:not(.hidden)');
 
-    const originalRound1Card = page.getByRole('button', { name: /초등선발 대비 원본형 모의고사 1회/ });
-    const originalRound2Card = page.getByRole('button', { name: /초등선발 대비 원본형 모의고사 2회/ });
+    const originalRound1Card = page.getByRole('button', { name: /초등선발 대비 시그니처 실전 모의고사 1회/ });
+    const originalRound2Card = page.getByRole('button', { name: /초등선발 대비 시그니처 실전 모의고사 2회/ });
     assert.equal(await originalRound1Card.locator('.desc').textContent(), '80분 · 30문항 · 100점', '원본형 1회 카드 시험 정보');
     assert.equal(await originalRound2Card.locator('.desc').textContent(), '80분 · 30문항 · 100점', '원본형 2회 카드 시험 정보');
 

@@ -116,7 +116,7 @@
   var originalFormBooks=[
     {
       folder:'추가 모의고사',
-      title:'초등선발 대비 원본형 모의고사 1회',
+      title:'초등선발 대비 시그니처 실전 모의고사 1회',
       desc:'80분 · 30문항 · 100점',
       pdf:'output/pdf/hwangso-original-form-mock-01-rebuilt.pdf',
       imgdir:'original_form_1',
@@ -130,7 +130,7 @@
     },
     {
       folder:'추가 모의고사',
-      title:'초등선발 대비 원본형 모의고사 2회',
+      title:'초등선발 대비 시그니처 실전 모의고사 2회',
       desc:'80분 · 30문항 · 100점',
       pdf:'output/pdf/hwangso-original-form-mock-02-rebuilt.pdf',
       imgdir:'original_form_2_v2',
@@ -200,7 +200,7 @@
         book.links.push({label:'성적 확인·진단',url:withName('last1-result.html?round='+round)});
       }
 
-      if(book.folder==='추가 모의고사'&&/초등선발\s*대비\s*원본형\s*모의고사/.test(String(book.title||''))){
+      if(book.folder==='추가 모의고사'&&/초등선발\s*대비\s*시그니처\s*실전\s*모의고사/.test(String(book.title||''))){
         book.pdf='output/pdf/hwangso-original-form-mock-0'+round+'-rebuilt.pdf';
         book.imgdir=round===2?'original_form_2_v2':'original_form_1';
         book.pages=6;

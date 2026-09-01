@@ -137,9 +137,9 @@ const adminSession = {
     await page.waitForSelector('#mock-body select');
     await page.getByRole('button', { name: '파이널 모의고사' }).click();
     assert.match(await page.locator('#mock-body').textContent(), /92%/, 'existing final-set area classification stays on the shared blueprint');
-    await page.getByRole('button', { name: '원본형 모의고사' }).click();
+    await page.getByRole('button', { name: '시그니처 실전 모의고사' }).click();
     const mockBody = page.locator('#mock-body');
-    await mockBody.getByText('초등선발 대비 원본형 모의고사 1회').first().waitFor();
+    await mockBody.getByText('초등선발 대비 시그니처 실전 모의고사 1회').first().waitFor();
     const originalAdminText = await mockBody.textContent();
     assert.match(originalAdminText, /97\.3/, 'saved original-form score rendered in the admin result table');
     assert.match(originalAdminText, /100%/, 'original-form item areas drive nonzero admin performance rates');
@@ -172,7 +172,7 @@ const adminSession = {
     await teacherPage.waitForSelector('.agrid');
     assert.equal(await teacherPage.locator('.agrid .abtn').count(), 30, 'teacher entry opens all 30 original-form answer buttons');
     await teacherPage.click('#btnGrade');
-    await teacherPage.getByRole('heading', { name: '원본형 모의고사 성적·약점 진단' }).waitFor();
+    await teacherPage.getByRole('heading', { name: '시그니처 실전 모의고사 성적·약점 진단' }).waitFor();
     assert.equal(await teacherPage.locator('.who b').textContent(), '허유민', 'selected admin student carries into the original-form report');
     assert.equal(teacherFailures.length, 0, teacherFailures.join('\n'));
     await teacherPage.close();
