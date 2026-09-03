@@ -274,6 +274,38 @@ check('810문항 모두 canonical 식별자·출처·배점 밴드 보유', () =
   assert.deepEqual(bandCounts, { 'source-2.7': 324, 'source-3.4': 270, 'source-4.2': 216 });
 });
 
+check('점수대 우선·실제 정답률·유사문항 기준 정답률 계약', () => {
+  assert.deepEqual(registry.difficultyEvidencePolicy.judgmentOrder, [
+    'paper-score-bands', 'source-item-response-rate', 'source-points', 'independent-authoring-review',
+  ]);
+  assert.equal(registry.difficultyEvidencePolicy.observedRateLabel, '실제 정답률');
+  assert.equal(registry.difficultyEvidencePolicy.inheritedRateLabel, '기준 정답률');
+  assert.match(registry.difficultyEvidencePolicy.generatedVariant.note, /실제 응시 정답률로 표시하지 않는다/);
+
+  const target = unified.items.filter((item) => ['applied', 'final', 'last', 'original'].includes(item.sourceRef.set));
+  assert.equal(target.length, 570);
+  assert.equal(target.filter((item) => item.responseRateStatus === 'measured').length, 240);
+  assert.equal(target.filter((item) => item.difficultyClass).length, 60);
+  assert.deepEqual(Object.fromEntries(
+    ['rate-60-plus', 'rate-40-59', 'rate-20-39', 'rate-under-20', 'unmeasured']
+      .map((band) => [band, target.filter((item) => item.responseRateBand === band).length]),
+  ), {
+    'rate-60-plus': 26,
+    'rate-40-59': 40,
+    'rate-20-39': 71,
+    'rate-under-20': 103,
+    unmeasured: 330,
+  });
+  target.filter((item) => item.responseRateStatus === 'measured').forEach((item) => {
+    assert.equal(item.responseRateUse, 'observed-source-and-variant-benchmark');
+    assert.match(item.paperContextKey, /^(final|last)\|[1-4]$/);
+  });
+  target.filter((item) => item.responseRateStatus === 'unmeasured').forEach((item) => {
+    assert.equal(item.responseRateUse, 'source-link-required');
+  });
+  assert.equal(unified.papers.filter((paper) => ['applied', 'final', 'last', 'original'].includes(paper.set)).length, 19);
+});
+
 check('item.area를 권위값으로 보존하고 출처 키 중복 없음', () => {
   const originals = new Map();
   Object.entries(unifiedModels).forEach(([set, sourceModel]) => {

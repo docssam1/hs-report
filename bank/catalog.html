@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>전체 문항 분류·문제은행 개발 현황 | GFIELD</title>
+<title>황소 초등 문제은행 | GFIELD</title>
 <style>
   :root{
     --bg:#f7f3ea;--paper:#fffefa;--ink:#202938;--muted:#667085;--line:#ded8cb;
@@ -38,7 +38,15 @@
   .stat.practice{border-color:#b7dfc8;background:var(--green-soft)}
   .stat.practice strong{color:var(--green)}
   .filters{position:sticky;top:8px;z-index:10;margin:18px 0;padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(255,254,250,.96);box-shadow:0 10px 28px rgba(15,37,71,.1);backdrop-filter:blur(10px)}
-  .filter-grid{display:grid;grid-template-columns:minmax(220px,1.7fr) repeat(4,minmax(130px,1fr)) auto;gap:10px;align-items:end}
+  .finder-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+  .finder-tab{min-height:48px;border:1px solid #b9c6d8;border-radius:12px;background:#fff;color:var(--navy);font-weight:900;cursor:pointer}
+  .finder-tab.active{border-color:var(--navy);background:var(--navy);color:#fff}
+  .finder-panel[hidden]{display:none}
+  .filter-grid{display:grid;grid-template-columns:repeat(2,minmax(180px,1fr)) auto;gap:10px;align-items:end}
+  .type-search{display:grid;grid-template-columns:minmax(260px,1fr) auto;gap:10px;align-items:end}
+  .area-picks{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+  .area-pick{min-height:36px;padding:7px 11px;border:1px solid #cfc8ba;border-radius:999px;background:#fff;color:#475467;font-size:11px;font-weight:900;cursor:pointer}
+  .area-pick.active{border-color:var(--orange);background:var(--orange-soft);color:#a64000}
   .field{display:grid;gap:5px}
   .field label{font-size:11px;font-weight:900;color:#475467}
   .field input,.field select{width:100%;min-height:42px;border:1px solid #cfc8ba;border-radius:10px;background:#fff;padding:9px 11px;color:var(--ink)}
@@ -49,6 +57,11 @@
   .legend span{display:inline-flex;align-items:center;gap:4px}
   .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
   .dot.candidate{background:#e0a400}
+  .paper-context{margin:0 0 18px;padding:16px 18px;border:1px solid #cbd8ea;border-radius:18px;background:#f7fbff}
+  .paper-context h2{margin:0;color:var(--navy);font-size:16px}
+  .paper-context p{margin:4px 0 0;color:var(--muted);font-size:11.5px}
+  .paper-metrics,.paper-cuts{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+  .paper-cuts span{padding:5px 8px;border:1px solid #d7e1ef;border-radius:8px;background:#fff;color:#344054;font-size:10.5px;font-weight:800}
   .results{display:grid;gap:18px}
   .area-section{overflow:hidden;border:1px solid var(--line);border-radius:20px;background:var(--paper);box-shadow:0 9px 28px rgba(23,52,95,.06)}
   .area-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;background:var(--navy);color:#fff}
@@ -81,14 +94,14 @@
   .raw-single{margin-top:9px}
   .empty{padding:34px;border:1px dashed #cfc8ba;border-radius:16px;background:#fff;text-align:center;color:var(--muted)}
   .error{padding:22px;border:1px solid #f3b4ad;border-radius:16px;background:#fff1f0;color:#912018}
-  @media(max-width:1040px){.stats{grid-template-columns:repeat(3,1fr)}.filter-grid{grid-template-columns:repeat(3,1fr)}.field.search{grid-column:span 2}}
+  @media(max-width:1040px){.stats{grid-template-columns:repeat(3,1fr)}}
   @media(max-width:720px){
     .shell{width:min(100% - 20px,1180px);padding-top:12px}.hero{padding:22px 18px;border-radius:18px}.hero p{font-size:12.5px}
     .stats{grid-template-columns:repeat(2,1fr)}.stat{min-height:104px}.stat strong{font-size:24px}
-    .filters{position:static;padding:13px}.filter-grid{grid-template-columns:1fr 1fr}.field.search{grid-column:1/-1}.reset{width:100%}
-    .type-grid{grid-template-columns:1fr}.area-head,.subarea{padding-left:13px;padding-right:13px}
+    .filters{position:static;padding:13px}.filter-grid,.type-search{grid-template-columns:1fr 1fr}.reset{width:100%}
+    .type-grid{grid-template-columns:1fr}.area-head,.subarea{padding-left:13px;padding-right:13px}.paper-context{padding:13px}
   }
-  @media(max-width:430px){.stats{grid-template-columns:1fr 1fr}.filter-grid{grid-template-columns:1fr}.field.search{grid-column:auto}.notice{grid-template-columns:1fr}.notice .icon{display:none}}
+  @media(max-width:430px){.stats{grid-template-columns:1fr 1fr}.filter-grid,.type-search{grid-template-columns:1fr}.finder-tabs{grid-template-columns:1fr 1fr}.notice{grid-template-columns:1fr}.notice .icon{display:none}}
   @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
   @media print{.screen-only{display:none!important}.shell{width:100%;padding:0}.area-section{break-inside:avoid;box-shadow:none}}
 </style>
@@ -98,47 +111,50 @@
   <nav class="topnav screen-only" aria-label="문제은행 이동">
     <a class="back" href="index.html">← 문제은행 연습지</a>
     <a class="back" href="../index.html">자료실</a>
-    <span class="crumb">문항 분류·개발 현황</span>
+    <span class="crumb">문제은행 유형 선택</span>
   </nav>
 
   <header class="hero">
-    <div class="eyebrow">GFIELD BULL BANK · DEVELOPMENT CATALOG</div>
-    <h1>전체 문항 분류·유사문제은행 현황</h1>
-    <p>중급·활용·파이널·최종·시그니처 실전 시험의 문항을 같은 기준으로 모아, 대영역 → 소영역 → 유형 순서로 확인합니다. 연습형 생성기 검증과 원본 복기형 대조는 서로 다른 승인 단계로 관리합니다.</p>
+    <div class="eyebrow">GFIELD BULL BANK</div>
+    <h1>황소 초등 문제은행</h1>
+    <p>시험지로 찾거나, 지문·유형·영역으로 바로 찾습니다.</p>
   </header>
 
-  <aside class="notice" aria-labelledby="candidate-notice-title">
-    <div class="icon" aria-hidden="true">⚠️</div>
-    <div>
-      <strong id="candidate-notice-title">검토 후보는 확정 분류가 아닙니다.</strong>
-      <p>시그니처 실전 <b id="notice-confirmed-count">—</b>문항의 소영역은 출처 문항에 기록된 확정값입니다. 나머지는 기존 유형 문구를 규칙으로 임시 묶은 검토 후보이며, 확정 진단이나 학생 약점 판정에 그대로 사용하지 않습니다.</p>
+  <section class="filters screen-only" aria-label="문제은행 찾기">
+    <div class="finder-tabs" role="tablist" aria-label="문제 찾는 방법">
+      <button class="finder-tab active" id="paper-tab" type="button" role="tab" aria-selected="true" aria-controls="paper-panel">시험지로 찾기</button>
+      <button class="finder-tab" id="type-tab" type="button" role="tab" aria-selected="false" aria-controls="type-panel">유형으로 찾기</button>
     </div>
-  </aside>
-
-  <section class="stats" aria-label="전체 개발 현황 요약">
-    <article class="stat" data-stat="questions"><strong id="stat-questions">—</strong><span>전체 출처 문항</span><small>5개 시험 계열 합계</small></article>
-    <article class="stat" data-stat="raw-types"><strong id="stat-raw-types">—</strong><span>원문 유형명</span><small>원자료 표기를 합치지 않은 수</small></article>
-    <article class="stat" data-stat="canonical-types"><strong id="stat-canonical-types">—</strong><span>통합 유형·후보 묶음</span><small>확정 유형과 후보군을 함께 센 수</small></article>
-    <article class="stat" data-stat="confirmed"><strong id="stat-confirmed">—</strong><span>확정 분류 문항</span><small>출처 소영역 확인 완료</small></article>
-    <article class="stat" data-stat="candidate"><strong id="stat-candidate">—</strong><span>검토 후보 문항</span><small>규칙 기반 임시 분류</small></article>
-    <article class="stat practice" data-stat="verified-practice"><strong id="stat-verified-practice">—</strong><span>검증된 연습형 생성기</span><small>PNG·독립 답 검산 통과</small></article>
-  </section>
-
-  <section class="filters screen-only" aria-label="분류 현황 검색과 필터">
     <form id="filter-form">
-      <div class="filter-grid">
-        <div class="field search"><label for="search">유형 검색</label><input id="search" type="search" placeholder="예: 쌓기나무, 달력, 최단거리" autocomplete="off"></div>
-        <div class="field"><label for="area-filter">대영역</label><select id="area-filter"><option value="all">전체 대영역</option></select></div>
-        <div class="field"><label for="status-filter">분류 상태</label><select id="status-filter"><option value="all">전체 상태</option><option value="confirmed">확정만</option><option value="candidate">검토 후보 포함</option></select></div>
-        <div class="field"><label for="source-filter">출처</label><select id="source-filter"><option value="all">전체 출처</option><option value="mid">중급</option><option value="hw">활용</option><option value="final">파이널</option><option value="last">최종</option><option value="original">시그니처 실전</option></select></div>
-        <div class="field"><label for="dev-filter">개발 상태</label><select id="dev-filter"><option value="all">전체 개발 상태</option><option value="verified">연습형 검증 완료</option><option value="source-pending">원본 대조 대기</option><option value="planned">연습형 생성기 계획</option></select></div>
-        <button class="reset" id="reset-filter" type="button">필터 초기화</button>
+      <div class="finder-panel" id="paper-panel" role="tabpanel" aria-labelledby="paper-tab">
+        <div class="filter-grid">
+          <div class="field"><label for="source-filter">시험지</label><select id="source-filter"><option value="applied">활용 모의고사</option><option value="final">파이널 모의고사</option><option value="last">최종 모의고사</option><option value="original">시그니처 실전</option><option value="middle">중급 모의고사</option></select></div>
+          <div class="field"><label for="round-filter">회차</label><select id="round-filter"><option value="all">전체 회차</option></select></div>
+          <button class="reset" id="reset-paper" type="button">처음으로</button>
+        </div>
+      </div>
+      <div class="finder-panel" id="type-panel" role="tabpanel" aria-labelledby="type-tab" hidden>
+        <div class="type-search">
+          <div class="field search"><label for="search">지문 또는 유형</label><input id="search" type="search" placeholder="예: 숫자 3이 적힌 쪽, 쌓기나무, 최단거리" autocomplete="off"></div>
+          <button class="reset" id="reset-type" type="button">검색 지우기</button>
+        </div>
+        <div class="area-picks" role="group" aria-label="영역별 전체 유형">
+          <button class="area-pick active" type="button" data-area="all">전체 유형</button>
+          <button class="area-pick" type="button" data-area="수·규칙찾기">수·규칙찾기</button>
+          <button class="area-pick" type="button" data-area="식의 계산">식의 계산</button>
+          <button class="area-pick" type="button" data-area="도형">도형</button>
+          <button class="area-pick" type="button" data-area="경우의 수">경우의 수</button>
+        </div>
       </div>
     </form>
     <div class="filter-foot">
       <div id="result-status" role="status" aria-live="polite">분류 데이터를 불러오는 중입니다.</div>
-      <div class="legend" aria-label="분류 상태 범례"><span><i class="dot" aria-hidden="true"></i>출처 확인 확정</span><span><i class="dot candidate" aria-hidden="true"></i>검토 후보</span></div>
     </div>
+  </section>
+
+  <section id="paper-context" class="paper-context screen-only" aria-live="polite">
+    <h2>시험지 난이도 기준</h2>
+    <p>회차를 선택하면 해당 시험의 평균과 점수 구간을 먼저 확인할 수 있습니다.</p>
   </section>
 
   <section id="results" class="results" aria-label="대영역과 소영역별 유형 목록" aria-busy="true"></section>
@@ -153,7 +169,7 @@
 <script src="../last-score-data.js"></script>
 <script src="../mock-data-original.js"></script>
 <script src="bank-registry.js"></script>
-<script>
+<script type="text/plain" id="legacy-catalog-script">
 (function(){
   'use strict';
   var R=window.BANK_TYPE_REGISTRY;
@@ -324,5 +340,6 @@
   }catch(error){fail(error)}
 })();
 </script>
+<script src="catalog.js"></script>
 </body>
 </html>

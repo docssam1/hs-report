@@ -18,42 +18,51 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
 
   try {
     await page.goto(`${BASE_URL}/bank/catalog.html`, { waitUntil: 'networkidle' });
-    await page.waitForFunction(() => document.querySelector('#stat-questions')?.textContent === '810');
-    assert.deepEqual(await page.locator('.stat strong').allTextContents(), ['810', '706', '125', '60', '750', '8'], '산출된 전체 현황 수치');
+    await page.waitForFunction(() => /270문항$/.test(document.querySelector('#result-status')?.textContent || ''));
+    assert.equal(await page.getByRole('tab', { name: '시험지로 찾기' }).count(), 1, '시험지 찾기 탭');
+    assert.equal(await page.getByRole('tab', { name: '유형으로 찾기' }).count(), 1, '유형 찾기 탭');
+    assert.equal(await page.locator('.stat').count(), 0, '개발 현황 통계 카드 제거');
+    assert.equal(await page.locator('#candidate-notice-title').count(), 0, '검토 현황 안내 제거');
     assert.equal(await page.locator('.area-section').count(), 4, '대영역 4개');
-    assert.equal(await page.locator('.type-card').count(), 125, '통합 유형·후보 묶음 125개');
-    assert.equal(await page.locator('#candidate-notice-title').textContent(), '검토 후보는 확정 분류가 아닙니다.', '후보 비확정 안내');
-    assert.equal(await page.locator('label[for="search"],label[for="area-filter"],label[for="status-filter"],label[for="source-filter"],label[for="dev-filter"]').count(), 5, '모든 필터에 접근 가능한 레이블');
     assert.equal(await page.locator('#result-status[role="status"][aria-live="polite"]').count(), 1, '필터 결과 라이브 상태');
 
-    await page.selectOption('#status-filter', 'candidate');
-    assert.equal(await page.locator('.type-card').count(), 66, '후보 유형군 필터');
-    assert.equal(await page.locator('#result-status').textContent(), '현재 표시: 66유형 · 750문항', '후보 문항은 750문항으로 별도 표시');
-    assert.equal(await page.locator('.type-card:not(.candidate)').count(), 0, '후보 필터에서 확정 전용 카드를 섞지 않음');
+    await page.selectOption('#source-filter', 'final');
+    await page.selectOption('#round-filter', 'final|1');
+    assert.match(await page.locator('#result-status').textContent(), /30문항$/, '파이널 1회 30문항');
+    assert.match(await page.locator('#paper-context').textContent(), /점수대 우선 판단/, '회차 점수대를 1차 판단으로 표시');
+    assert.match(await page.locator('#paper-context').textContent(), /평균 .*점/, '회차 평균 표시');
+    assert.match(await page.locator('#paper-context').textContent(), /경시/, '회차별 실제 점수 구간 표시');
 
-    await page.click('#reset-filter');
-    await page.selectOption('#source-filter', 'original');
-    assert.equal(await page.locator('#result-status').textContent(), '현재 표시: 59유형 · 60문항', '원본형 출처 60문항');
-    assert.equal(await page.locator('.type-card.candidate').count(), 0, '원본형 출처 소영역은 모두 확정');
+    await page.getByRole('tab', { name: '유형으로 찾기' }).click();
+    assert.equal(await page.locator('#type-panel').isVisible(), true, '유형 검색 화면 표시');
+    assert.equal(await page.locator('#paper-panel').isHidden(), true, '시험지 선택 화면 숨김');
+    assert.equal(await page.locator('#paper-context').isHidden(), true, '유형 검색에서는 시험지 점수대 숨김');
+    assert.match(await page.locator('#result-status').textContent(), /570문항$/, '유형 찾기 기본 범위 570문항');
 
-    await page.fill('#search', '금지 선분이 있는 경로');
-    assert.equal(await page.locator('.type-card').count(), 1, '유형명 검색');
-    assert.equal(await page.locator('.badge.practice').count(), 1, '연습형 검증 배지');
-    assert.equal(await page.locator('.badge.pending').count(), 1, '연습형 검증과 별도로 원본 대조 대기 표시');
+    await page.fill('#search', '숫자 3이 적혀 있는 쪽');
+    assert.ok(await page.getByText('특정 숫자가 들어 있는 수의 개수', { exact: true }).count() > 0, '실제 지문 일부로 관련 유형 검색');
+    await page.fill('#search', '쌓기나무');
+    assert.ok(await page.locator('.type-card').count() > 0, '유형명으로 관련 유형 검색');
+
+    await page.click('#reset-type');
+    await page.locator('.area-pick[data-area="도형"]').click();
+    assert.equal(await page.locator('.area-section').count(), 1, '영역별 전체 유형은 한 영역만 표시');
+    assert.equal(await page.locator('.area-head h2').textContent(), '도형', '도형 영역 전체 유형');
+    assert.match(await page.locator('#result-status').textContent(), /119문항$/, '도형 영역 119문항');
 
     await page.setViewportSize({ width: 390, height: 844 });
     const mobile = await page.evaluate(() => ({
       viewport: innerWidth,
       documentWidth: document.documentElement.scrollWidth,
       typeColumns: getComputedStyle(document.querySelector('.type-grid')).gridTemplateColumns.split(' ').length,
-      filterColumns: getComputedStyle(document.querySelector('.filter-grid')).gridTemplateColumns.split(' ').length,
+      finderColumns: getComputedStyle(document.querySelector('.finder-tabs')).gridTemplateColumns.split(' ').length,
     }));
     assert.ok(mobile.documentWidth <= mobile.viewport + 1, '모바일 가로 넘침 없음');
     assert.equal(mobile.typeColumns, 1, '모바일 유형 카드 한 열');
-    assert.equal(mobile.filterColumns, 1, '좁은 모바일 필터 한 열');
+    assert.equal(mobile.finderColumns, 2, '모바일에서도 두 찾기 방식 유지');
     assert.deepEqual(errors, [], '브라우저 오류 없음');
 
-    console.log('PASS bank catalog browser: hierarchy, search, filters, candidate separation, development gates, accessibility labels, mobile overflow');
+    console.log('PASS bank finder browser: paper mode, prompt/type search, area browse, score context, mobile overflow');
   } finally {
     await browser.close();
   }

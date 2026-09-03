@@ -16,8 +16,8 @@
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
 
-  var SCHEMA_VERSION = '0.2.0';
-  var REGISTRY_VERSION = 'original-2026-08-29-source-faithful-round2';
+  var SCHEMA_VERSION = '0.3.0';
+  var REGISTRY_VERSION = 'elementary-bank-2026-09-02-metrics';
 
   /* The taxonomy already used by mock-data-original.js. */
   var TAXONOMY = {
@@ -51,6 +51,28 @@
     '2.7': { id: 'source-2.7', label: '2.7점', sourceNos: [1, 12] },
     '3.4': { id: 'source-3.4', label: '3.4점', sourceNos: [13, 22] },
     '4.2': { id: 'source-4.2', label: '4.2점', sourceNos: [23, 30] }
+  };
+
+  /* Item response rates are real cohort evidence where the source provides
+   * them.  Missing rates stay unmeasured; points are never used as a proxy. */
+  var RESPONSE_RATE_BANDS = {
+    'rate-60-plus': { id: 'rate-60-plus', label: '정답률 60% 이상', min: 0.6, max: 1 },
+    'rate-40-59': { id: 'rate-40-59', label: '정답률 40~59%', min: 0.4, max: 0.6 },
+    'rate-20-39': { id: 'rate-20-39', label: '정답률 20~39%', min: 0.2, max: 0.4 },
+    'rate-under-20': { id: 'rate-under-20', label: '정답률 20% 미만', min: 0, max: 0.2 },
+    unmeasured: { id: 'unmeasured', label: '정답률 미측정' }
+  };
+
+  var DIFFICULTY_EVIDENCE_POLICY = {
+    judgmentOrder: ['paper-score-bands', 'source-item-response-rate', 'source-points', 'independent-authoring-review'],
+    observedRateLabel: '실제 정답률',
+    inheritedRateLabel: '기준 정답률',
+    generatedVariant: {
+      inheritFrom: 'one specifically linked source item',
+      requiredFields: ['benchmarkSourceKey', 'benchmarkResponseRate', 'paperContextKey'],
+      note: '유사문항은 연결한 원문항의 실제 정답률을 기준 정답률로 사용한다. 새 문항의 실제 응시 정답률로 표시하지 않는다.'
+    },
+    noRateRule: '정답률이 없는 문항은 점수만으로 정답률을 추정하지 않고, 실제 정답률이 있는 유사 원문항을 명시적으로 연결한다.'
   };
 
   var STAGE_POLICY = {
@@ -439,6 +461,52 @@
     return row && row.pts != null ? Number(row.pts) : NaN;
   }
 
+  function itemResponseRate(round, item) {
+    var no = Number(item && item.no);
+    var value = null;
+    if (item && item.responseRate != null) value = Number(item.responseRate);
+    else if (round && round.stats && round.stats.rate && round.stats.rate[no] != null) value = Number(round.stats.rate[no]);
+    else if (round && Array.isArray(round.rates) && round.rates[no - 1] != null) value = Number(round.rates[no - 1]);
+    if (!Number.isFinite(value)) return null;
+    if (value > 1 && value <= 100) value /= 100;
+    return value >= 0 && value <= 1 ? value : null;
+  }
+
+  function responseRateBand(rate) {
+    if (rate == null) return RESPONSE_RATE_BANDS.unmeasured;
+    if (rate >= 0.6) return RESPONSE_RATE_BANDS['rate-60-plus'];
+    if (rate >= 0.4) return RESPONSE_RATE_BANDS['rate-40-59'];
+    if (rate >= 0.2) return RESPONSE_RATE_BANDS['rate-20-39'];
+    return RESPONSE_RATE_BANDS['rate-under-20'];
+  }
+
+  function itemDifficultyClass(item) {
+    var value = clean(item && item.difficultyClass).toUpperCase();
+    return /^D[1-5]$/.test(value) ? value : null;
+  }
+
+  function itemSearchEvidence(item) {
+    return ['body', 'question', 'text', 'prompt', 'comment', 'caution', 'tag']
+      .map(function (key) { return clean(item && item[key]); })
+      .filter(function (value) { return !!value; });
+  }
+
+  function paperContext(setKey, model, roundKey, round) {
+    var stats = round && round.stats || {};
+    var scoreBands = round && round.scoreBands || stats.cuts || stats.cutOnly || [];
+    return {
+      set: setKey,
+      round: Number(roundKey),
+      title: clean(round && round.title || model && model.title),
+      average: Number.isFinite(Number(round && round.average)) ? Number(round.average) :
+        (Number.isFinite(Number(stats.mean)) ? Number(stats.mean) : null),
+      cohortSize: Number.isFinite(Number(round && round.cohortSize)) ? Number(round.cohortSize) :
+        (Number.isFinite(Number(stats.n)) ? Number(stats.n) : null),
+      scoreBands: clone(scoreBands),
+      responseRatesMeasured: !!((round && Array.isArray(round.rates)) || (stats && stats.rate))
+    };
+  }
+
   function confirmedAliasMap(entries) {
     var candidates = {};
     entries.forEach(function (entry) {
@@ -470,12 +538,14 @@
     var entries = modelEntries(models);
     var aliases = confirmedAliasMap(entries);
     var items = [];
+    var papers = [];
     var seenSources = {};
 
     entries.forEach(function (entry) {
       var model = entry.model || {};
       Object.keys(model.rounds || {}).sort(function (a, b) { return Number(a) - Number(b); }).forEach(function (roundKey) {
         var round = model.rounds[roundKey] || {};
+        papers.push(paperContext(entry.setKey, model, roundKey, round));
         (round.items || []).forEach(function (item) {
           var area = clean(item.area);
           var displayType = clean(item.type);
@@ -511,6 +581,9 @@
 
           var points = itemPoints(model, item);
           var band = pointBand(points);
+          var rate = itemResponseRate(round, item);
+          var rateBand = responseRateBand(rate);
+          var difficultyClass = itemDifficultyClass(item);
           var sourceKey = [entry.setKey, Number(roundKey), Number(item.no)].join('|');
           var reasons = [];
           if (!AREA_IDS[area]) reasons.push('unregistered area');
@@ -532,6 +605,13 @@
             sourceKey: sourceKey,
             points: points,
             pointBand: band ? band.id : null,
+            responseRate: rate,
+            responseRateBand: rateBand.id,
+            responseRateStatus: rate == null ? 'unmeasured' : 'measured',
+            responseRateUse: rate == null ? 'source-link-required' : 'observed-source-and-variant-benchmark',
+            difficultyClass: difficultyClass,
+            paperContextKey: [entry.setKey, Number(roundKey)].join('|'),
+            searchEvidence: itemSearchEvidence(item),
             reviewStatus: isConfirmed ? 'confirmed' : 'candidate',
             reviewRequired: reasons.length > 0,
             reviewBasis: basis,
@@ -568,6 +648,7 @@
       schemaVersion: SCHEMA_VERSION,
       registryVersion: REGISTRY_VERSION,
       items: items,
+      papers: papers,
       types: Object.keys(typeMap).map(function (key) { return typeMap[key]; }),
       summary: {
         sets: entries.length,
@@ -576,6 +657,8 @@
         canonicalTypes: Object.keys(typeMap).length,
         confirmedItems: items.filter(function (item) { return item.reviewStatus === 'confirmed'; }).length,
         candidateItems: items.filter(function (item) { return item.reviewStatus === 'candidate'; }).length,
+        measuredResponseRateItems: items.filter(function (item) { return item.responseRateStatus === 'measured'; }).length,
+        difficultyClassItems: items.filter(function (item) { return !!item.difficultyClass; }).length,
         duplicateSourceKeys: duplicateSources
       }
     };
@@ -742,6 +825,8 @@
     taxonomy: clone(TAXONOMY),
     areaIds: clone(AREA_IDS),
     difficultyBands: clone(DIFFICULTY_BANDS),
+    responseRateBands: clone(RESPONSE_RATE_BANDS),
+    difficultyEvidencePolicy: clone(DIFFICULTY_EVIDENCE_POLICY),
     stagePolicy: clone(STAGE_POLICY),
     assetPolicy: clone(ASSET_POLICY),
     releasePolicy: clone(RELEASE_POLICY),
