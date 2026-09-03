@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 8. 31. 오후 6:49:37
+ * 생성: 2026. 9. 3. 오후 4:40:24
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -861,7 +861,8 @@ window.GFIELD_DATA = {
     "김주한",
     "변서진",
     "박재연",
-    "김신유"
+    "김신유",
+    "이현서"
   ],
   "attendance": {
     "허유민": [
@@ -872,7 +873,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "김현우": [
       "may-w34",
@@ -885,7 +888,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "김유준": [
       "may-w34",
@@ -898,7 +903,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "이하린": [
       "may-w34",
@@ -911,7 +918,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "정지안": [
       "jul-w1",
@@ -931,7 +940,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "박서진": [
       "may-w34",
@@ -944,7 +955,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "민준기": [
       "may-w34",
@@ -957,7 +970,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "김서연": [
       "may-w34",
@@ -970,7 +985,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "김명서": [
       "may-w34",
@@ -983,7 +1000,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "임유준": [
       "may-w34",
@@ -996,7 +1015,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "aug-w1",
       "jul-w5",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "김시후": [
       "jul-w1",
@@ -1036,7 +1057,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "DEMO": [
       "jul-w2",
@@ -1048,7 +1071,9 @@ window.GFIELD_DATA = {
       "jul-w5",
       "jul-w4",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "유호연": [
       "jul-w2",
@@ -1056,7 +1081,9 @@ window.GFIELD_DATA = {
       "jul-w4",
       "jul-w5",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "김서율": [
       "may-w34",
@@ -1073,13 +1100,17 @@ window.GFIELD_DATA = {
       "jul-w5",
       "jul-w3",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "김건아": [
       "jul-w5",
       "jul-w4",
       "aug-w1",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "김주한": [
       "may-w34",
@@ -1096,10 +1127,13 @@ window.GFIELD_DATA = {
       "aug-w1",
       "jul-w4",
       "jul-w5",
-      "aug-w2"
+      "aug-w2",
+      "aug-w3",
+      "aug-w4"
     ],
     "박재연": [],
-    "김신유": []
+    "김신유": [],
+    "이현서": []
   },
   "specialStudents": [
     "노관호",
@@ -1151,7 +1185,8 @@ window.GFIELD_DATA = {
       "변서진",
       "김지유",
       "박재연",
-      "김신유"
+      "김신유",
+      "이현서"
     ],
     "약점 유형": [
       "허유민",
@@ -1180,7 +1215,8 @@ window.GFIELD_DATA = {
       "변서진",
       "김지유",
       "박재연",
-      "김신유"
+      "김신유",
+      "이현서"
     ],
     "사고력 교재": [
       "허유민",
@@ -1209,7 +1245,8 @@ window.GFIELD_DATA = {
       "변서진",
       "김지유",
       "박재연",
-      "김신유"
+      "김신유",
+      "이현서"
     ],
     "GFIELD APPLICATION": [
       "허유민",
@@ -1284,7 +1321,8 @@ window.GFIELD_DATA = {
       "김유준",
       "김현우",
       "허유민",
-      "박재연"
+      "박재연",
+      "이현서"
     ],
     "규칙 보충학습": [
       "허유민",
@@ -1310,7 +1348,8 @@ window.GFIELD_DATA = {
       "김건아",
       "변서진",
       "김지유",
-      "박재연"
+      "박재연",
+      "이현서"
     ]
   },
   "archiveProductAccess": {
@@ -1336,7 +1375,8 @@ window.GFIELD_DATA = {
       "김유준",
       "김현우",
       "허유민",
-      "박재연"
+      "박재연",
+      "이현서"
     ],
     "concept-core": [
       "노관호",
@@ -1361,7 +1401,8 @@ window.GFIELD_DATA = {
       "김현우",
       "허유민",
       "박재연",
-      "김신유"
+      "김신유",
+      "이현서"
     ]
   },
   "books": [
@@ -2788,7 +2829,8 @@ window.GFIELD_DATA = {
     "김소라": "online",
     "유현우": "online",
     "박재연": "online",
-    "김신유": "online"
+    "김신유": "online",
+    "이현서": "online"
   },
   "vipAccess": {
     "report": [
