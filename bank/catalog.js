@@ -15,13 +15,13 @@
   function unique(values){var seen={};return values.filter(function(value){var key=String(value);if(seen[key])return false;seen[key]=true;return true})}
   function setText(id,value){$(id).textContent=String(value)}
   function filterValue(id){return $(id)?$(id).value:'all'}
-  function percent(value){return Math.round(Number(value)*100)+'%'}
+  function percent(value){return (Math.round(Number(value)*1000)/10)+'%'}
   function countBy(values){return values.reduce(function(map,value){map[value]=(map[value]||0)+1;return map},{})}
   function normalized(value){return String(value||'').toLocaleLowerCase('ko-KR').replace(/[^0-9a-z가-힣]+/g,' ').trim()}
   function queryMatches(item,query){
     var cleanQuery=normalized(query);
     if(!cleanQuery)return true;
-    var fields=[item.area,item.subarea,item.displayType,item.typeFamilyLabel].concat(item.searchEvidence||[]);
+    var fields=[item.area,item.subarea,item.displayType].concat(item.searchEvidence||[]);
     var haystack=normalized(fields.join(' '));
     if(haystack.replace(/ /g,'').indexOf(cleanQuery.replace(/ /g,''))>=0)return true;
     var tokens=unique(cleanQuery.split(/\s+/).filter(function(token){return token.length>=2&&!SEARCH_STOP[token]}));
@@ -59,31 +59,41 @@
     originalCatalog.forEach(function(entry){originalById[entry.id]=entry});
     var map={};
     items.forEach(function(item){
-      var group=map[item.canonicalTypeId];
+      var group=map[item.objectiveTypeId];
       if(!group){
-        group=map[item.canonicalTypeId]={
-          id:item.canonicalTypeId,area:item.area,subarea:item.subarea,familyLabel:item.typeFamilyLabel,
-          displayTypes:[],sourceCounts:{},pointCounts:{},rateBandCounts:{},difficultyCounts:{},
-          rates:[],unmeasuredRateCount:0,confirmedCount:0,candidateCount:0,itemCount:0,reviewBases:[]
+        group=map[item.objectiveTypeId]={
+          id:item.objectiveTypeId,area:item.area,subarea:item.subarea,displayType:item.displayType,
+          sourceCounts:{},pointCounts:{},difficultyCounts:{},canonicalTypeIds:[],
+          rates:[],points:[],unmeasuredRateCount:0,confirmedCount:0,candidateCount:0,itemCount:0,reviewBases:[]
         };
       }
-      if(group.displayTypes.indexOf(item.displayType)<0)group.displayTypes.push(item.displayType);
+      if(group.canonicalTypeIds.indexOf(item.canonicalTypeId)<0)group.canonicalTypeIds.push(item.canonicalTypeId);
       group.sourceCounts[item.sourceRef.set]=(group.sourceCounts[item.sourceRef.set]||0)+1;
       group.pointCounts[item.pointBand]=(group.pointCounts[item.pointBand]||0)+1;
-      group.rateBandCounts[item.responseRateBand]=(group.rateBandCounts[item.responseRateBand]||0)+1;
       if(item.responseRateStatus==='measured')group.rates.push(item.responseRate);else group.unmeasuredRateCount++;
-      if(item.difficultyClass)group.difficultyCounts[item.difficultyClass]=(group.difficultyCounts[item.difficultyClass]||0)+1;
+      if(Number.isFinite(item.points))group.points.push(item.points);
+      if(item.bankDifficulty)group.difficultyCounts[item.bankDifficulty.label]=(group.difficultyCounts[item.bankDifficulty.label]||0)+1;
       group.itemCount++;
       if(item.reviewStatus==='confirmed')group.confirmedCount++;else group.candidateCount++;
       if(group.reviewBases.indexOf(item.reviewBasis)<0)group.reviewBases.push(item.reviewBasis);
     });
     return Object.keys(map).map(function(key){
-      var group=map[key],original=originalById[key]||null;
-      group.displayTypes.sort(function(a,b){return a.localeCompare(b,'ko')});
+      var group=map[key],original=null;
+      group.canonicalTypeIds.some(function(id){
+        if(originalById[id]&&originalById[id].generator){original=originalById[id];return true}
+        return false;
+      });
       group.original=original;
       group.practiceVerified=!!(original&&original.generator&&original.generator.status==='verified-practice'&&original.generator.practiceReleaseReady===true);
       group.sourcePending=!!(original&&original.sourceFaithfulReleaseReady!==true);
-      group.searchText=[group.area,group.subarea,group.familyLabel].concat(group.displayTypes).join(' ').toLocaleLowerCase('ko-KR');
+      if(group.rates.length){
+        group.benchmarkRate=group.rates.reduce(function(sum,value){return sum+value},0)/group.rates.length;
+        group.bankDifficulty=R.bankDifficulty(group.benchmarkRate,null);
+      }else{
+        group.benchmarkRate=null;
+        group.bankDifficulty=R.bankDifficulty(null,Math.max.apply(null,group.points));
+      }
+      group.searchText=[group.area,group.subarea,group.displayType].join(' ').toLocaleLowerCase('ko-KR');
       return group;
     });
   }
@@ -95,35 +105,27 @@
   }
 
   function evidenceBadges(group){
-    var html=Object.keys(POINT_LABELS).filter(function(key){return group.pointCounts[key]}).map(function(key){
+    var difficulty=group.bankDifficulty||{id:'middle',label:'중간',evidenceLabel:''};
+    var html='<span class="badge difficulty '+esc(difficulty.id)+'">난이도 '+esc(difficulty.label)+'</span>';
+    if(group.benchmarkRate!=null){
+      html+='<span class="badge source">기준 정답률 '+percent(group.benchmarkRate)+'</span>';
+    }else{
+      html+='<span class="badge na">'+esc(difficulty.evidenceLabel)+'</span>';
+    }
+    html+=Object.keys(POINT_LABELS).filter(function(key){return group.pointCounts[key]}).map(function(key){
       return '<span class="badge na">'+POINT_LABELS[key]+' '+group.pointCounts[key]+'</span>';
     }).join('');
-    if(group.rates.length){
-      var min=Math.min.apply(null,group.rates),max=Math.max.apply(null,group.rates);
-      var label=min===max?percent(min):(percent(min)+'~'+percent(max));
-      html+='<span class="badge source">실제 정답률 '+label+' · 유사문항 기준</span>';
-    }
-    if(group.unmeasuredRateCount)html+='<span class="badge na">정답률 미측정 '+group.unmeasuredRateCount+'</span>';
-    Object.keys(group.difficultyCounts).sort().forEach(function(key){
-      html+='<span class="badge pending">'+key+' '+group.difficultyCounts[key]+'</span>';
-    });
+    if(group.unmeasuredRateCount)html+='<span class="badge na">정답률 없음 '+group.unmeasuredRateCount+'</span>';
     return html;
   }
 
-  function rawTypesHtml(group){
-    if(group.displayTypes.length===1)return '<div class="raw-single">원문 유형 · '+esc(group.displayTypes[0])+'</div>';
-    return '<details class="raw-types"><summary>원문 유형 '+group.displayTypes.length+'개 보기</summary><ul>'+group.displayTypes.map(function(type){return '<li>'+esc(type)+'</li>'}).join('')+'</ul></details>';
-  }
-
   function typeCardHtml(group){
-    var candidate=group.candidateCount>0;
-    var title=group.displayTypes.length===1?group.displayTypes[0]:group.familyLabel;
     var practice=group.practiceVerified
       ?'<a class="badge practice" href="index.html?gen='+encodeURIComponent(group.original.generator.legacyId)+'">이 유형으로 문제 만들기</a>'
       :'';
-    return '<article class="type-card '+(candidate?'candidate':'confirmed')+'" data-type-id="'+esc(group.id)+'">'+
-      '<h4>'+esc(title)+'</h4><div class="sources" aria-label="출처 문항 수">'+sourceBadges(group)+'</div>'+
-      '<div class="badges" aria-label="난이도 근거">'+evidenceBadges(group)+'</div>'+(practice?'<div class="development">'+practice+'</div>':'')+rawTypesHtml(group)+'</article>';
+    return '<article class="type-card" data-type-id="'+esc(group.id)+'">'+
+      '<h4>'+esc(group.displayType)+'</h4><div class="sources" aria-label="출처 문항 수">'+sourceBadges(group)+'</div>'+
+      '<div class="badges" aria-label="난이도 근거">'+evidenceBadges(group)+'</div>'+(practice?'<div class="development">'+practice+'</div>':'')+'</article>';
   }
 
   function selectedItems(unified){
@@ -194,25 +196,19 @@
   function renderResults(unified,originalCatalog){
     var items=selectedItems(unified);
     var groups=developmentFilter(aggregate(items,originalCatalog));
-    groups.sort(function(a,b){return AREA_ORDER.indexOf(a.area)-AREA_ORDER.indexOf(b.area)||a.subarea.localeCompare(b.subarea,'ko')||a.familyLabel.localeCompare(b.familyLabel,'ko')});
+    groups.sort(function(a,b){return AREA_ORDER.indexOf(a.area)-AREA_ORDER.indexOf(b.area)||a.displayType.localeCompare(b.displayType,'ko')});
     var areas={};
     groups.forEach(function(group){
-      if(!areas[group.area])areas[group.area]={};
-      if(!areas[group.area][group.subarea])areas[group.area][group.subarea]=[];
-      areas[group.area][group.subarea].push(group);
+      if(!areas[group.area])areas[group.area]=[];
+      areas[group.area].push(group);
     });
     var html='';
     AREA_ORDER.concat(Object.keys(areas).filter(function(area){return AREA_ORDER.indexOf(area)<0})).forEach(function(area){
       if(!areas[area])return;
-      var subareas=areas[area];
-      var areaGroups=Object.keys(subareas).reduce(function(all,key){return all.concat(subareas[key])},[]);
+      var areaGroups=areas[area];
       var areaQuestions=areaGroups.reduce(function(sum,group){return sum+group.itemCount},0);
       html+='<section class="area-section" data-area="'+esc(area)+'"><header class="area-head"><h2>'+esc(area)+'</h2><span>'+areaGroups.length+'유형 · '+areaQuestions+'문항</span></header>';
-      Object.keys(subareas).sort(function(a,b){return a.localeCompare(b,'ko')}).forEach(function(subarea){
-        var list=subareas[subarea];
-        var subQuestions=list.reduce(function(sum,group){return sum+group.itemCount},0);
-        html+='<section class="subarea"><div class="subarea-head"><h3>'+esc(subarea)+'</h3><span class="subarea-count">'+list.length+'유형 · '+subQuestions+'문항</span></div><div class="type-grid">'+list.map(typeCardHtml).join('')+'</div></section>';
-      });
+      html+='<div class="type-grid area-grid">'+areaGroups.map(typeCardHtml).join('')+'</div>';
       html+='</section>';
     });
     if(!html)html='<div class="empty">관련 유형을 찾지 못했습니다. 지문의 핵심 낱말이나 유형명을 조금 짧게 입력해 보세요.</div>';

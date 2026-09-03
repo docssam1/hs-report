@@ -47,6 +47,7 @@
   .area-picks{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
   .area-pick{min-height:36px;padding:7px 11px;border:1px solid #cfc8ba;border-radius:999px;background:#fff;color:#475467;font-size:11px;font-weight:900;cursor:pointer}
   .area-pick.active{border-color:var(--orange);background:var(--orange-soft);color:#a64000}
+  .difficulty-rule{margin-top:10px;color:var(--muted);font-size:10.5px}
   .field{display:grid;gap:5px}
   .field label{font-size:11px;font-weight:900;color:#475467}
   .field input,.field select{width:100%;min-height:42px;border:1px solid #cfc8ba;border-radius:10px;background:#fff;padding:9px 11px;color:var(--ink)}
@@ -74,6 +75,7 @@
   .subarea-count{font-size:10.5px;color:var(--muted)}
   .sub-review{padding:2px 7px;border-radius:999px;background:var(--amber-soft);color:var(--amber);font-size:10px;font-weight:900}
   .type-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .area-grid{padding:16px 18px}
   .type-card{min-width:0;padding:14px;border:1px solid #e4dfd5;border-radius:14px;background:#fff}
   .type-card.candidate{border-color:#efd48c;background:#fffdf5}
   .type-card h4{margin:0;font-size:14px;color:#26364e;line-height:1.42;word-break:keep-all}
@@ -86,6 +88,11 @@
   .badge.planned{background:#f2f4f7;color:#667085}
   .badge.pending{background:var(--purple-soft);color:var(--purple)}
   .badge.na{background:#f4f4f2;color:#77746c}
+  .badge.difficulty.highest{background:#fee2e2;color:#991b1b}
+  .badge.difficulty.high{background:#ffedd5;color:#9a3412}
+  .badge.difficulty.middle{background:#fef3c7;color:#854d0e}
+  .badge.difficulty.low{background:#dcfce7;color:#166534}
+  .badge.difficulty.lowest{background:#e0f2fe;color:#075985}
   .type-id{margin-top:8px;color:#98a2b3;font:10px ui-monospace,SFMono-Regular,Consolas,monospace;word-break:break-all}
   .raw-types{margin-top:10px;border-top:1px dashed #ddd5c7;padding-top:8px}
   .raw-types summary{cursor:pointer;color:#475467;font-size:11px;font-weight:800}
@@ -99,7 +106,7 @@
     .shell{width:min(100% - 20px,1180px);padding-top:12px}.hero{padding:22px 18px;border-radius:18px}.hero p{font-size:12.5px}
     .stats{grid-template-columns:repeat(2,1fr)}.stat{min-height:104px}.stat strong{font-size:24px}
     .filters{position:static;padding:13px}.filter-grid,.type-search{grid-template-columns:1fr 1fr}.reset{width:100%}
-    .type-grid{grid-template-columns:1fr}.area-head,.subarea{padding-left:13px;padding-right:13px}.paper-context{padding:13px}
+    .type-grid{grid-template-columns:1fr}.area-head,.subarea,.area-grid{padding-left:13px;padding-right:13px}.paper-context{padding:13px}
   }
   @media(max-width:430px){.stats{grid-template-columns:1fr 1fr}.filter-grid,.type-search{grid-template-columns:1fr}.finder-tabs{grid-template-columns:1fr 1fr}.notice{grid-template-columns:1fr}.notice .icon{display:none}}
   @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
@@ -117,7 +124,7 @@
   <header class="hero">
     <div class="eyebrow">GFIELD BULL BANK</div>
     <h1>황소 초등 문제은행</h1>
-    <p>시험지로 찾거나, 지문·유형·영역으로 바로 찾습니다.</p>
+    <p>시험지로 찾거나, 이원목적분류표의 지문·유형·영역으로 바로 찾습니다.</p>
   </header>
 
   <section class="filters screen-only" aria-label="문제은행 찾기">
@@ -145,6 +152,7 @@
           <button class="area-pick" type="button" data-area="도형">도형</button>
           <button class="area-pick" type="button" data-area="경우의 수">경우의 수</button>
         </div>
+        <div class="difficulty-rule">난이도는 실제 정답률을 우선해 최상·상·중간·하·최하로 표시하며, 정답률이 없을 때만 원문 배점을 사용합니다.</div>
       </div>
     </form>
     <div class="filter-foot">

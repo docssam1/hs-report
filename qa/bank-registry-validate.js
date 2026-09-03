@@ -259,10 +259,12 @@ check('5계열 810문항을 빠짐없이 통합', () => {
   assert.deepEqual(setCounts, { middle: 240, applied: 270, final: 120, last: 120, original: 60 });
 });
 
-check('810문항 모두 canonical 식별자·출처·배점 밴드 보유', () => {
+check('810문항 모두 이원목적표 유형·내부 식별자·출처·배점 밴드 보유', () => {
   unified.items.forEach((item) => {
     assert.ok(item.areaId, item.sourceKey + ' areaId');
     assert.ok(item.subareaId, item.sourceKey + ' subareaId');
+    assert.ok(item.objectiveTypeId, item.sourceKey + ' objectiveTypeId');
+    assert.equal(item.objectiveTypeBasis, 'source item.type / 이원목적분류표 내용(단원)');
     assert.ok(item.canonicalTypeId, item.sourceKey + ' canonicalTypeId');
     assert.ok(item.sourceRef && item.sourceRef.set && item.sourceRef.round && item.sourceRef.no, item.sourceKey + ' sourceRef');
     assert.match(item.pointBand, /^source-(2\.7|3\.4|4\.2)$/, item.sourceKey + ' pointBand');
@@ -274,34 +276,44 @@ check('810문항 모두 canonical 식별자·출처·배점 밴드 보유', () =
   assert.deepEqual(bandCounts, { 'source-2.7': 324, 'source-3.4': 270, 'source-4.2': 216 });
 });
 
-check('점수대 우선·실제 정답률·유사문항 기준 정답률 계약', () => {
+check('실제 정답률 우선·정답률 없으면 배점인 5단계 난이도 계약', () => {
   assert.deepEqual(registry.difficultyEvidencePolicy.judgmentOrder, [
-    'paper-score-bands', 'source-item-response-rate', 'source-points', 'independent-authoring-review',
+    'source-item-response-rate', 'source-points',
   ]);
   assert.equal(registry.difficultyEvidencePolicy.observedRateLabel, '실제 정답률');
   assert.equal(registry.difficultyEvidencePolicy.inheritedRateLabel, '기준 정답률');
   assert.match(registry.difficultyEvidencePolicy.generatedVariant.note, /실제 응시 정답률로 표시하지 않는다/);
+  assert.deepEqual(Object.values(registry.bankDifficultyLevels).map((level) => level.label), [
+    '최상', '상', '중간', '하', '최하',
+  ]);
+  [
+    [0.199, '최상'], [0.2, '상'], [0.4, '중간'], [0.6, '하'], [0.8, '최하'],
+  ].forEach(([rate, label]) => {
+    const difficulty = registry.bankDifficulty(rate, 2.7);
+    assert.equal(difficulty.label, label, `${rate} 정답률 난이도`);
+    assert.equal(difficulty.basis, 'response-rate', `${rate} 정답률 우선`);
+  });
+  [[4.2, '최상'], [3.4, '중간'], [2.7, '최하']].forEach(([points, label]) => {
+    const difficulty = registry.bankDifficulty(null, points);
+    assert.equal(difficulty.label, label, `${points}점 대체 난이도`);
+    assert.equal(difficulty.basis, 'source-points', `${points}점 대체 근거`);
+  });
 
   const target = unified.items.filter((item) => ['applied', 'final', 'last', 'original'].includes(item.sourceRef.set));
   assert.equal(target.length, 570);
   assert.equal(target.filter((item) => item.responseRateStatus === 'measured').length, 240);
-  assert.equal(target.filter((item) => item.difficultyClass).length, 60);
-  assert.deepEqual(Object.fromEntries(
-    ['rate-60-plus', 'rate-40-59', 'rate-20-39', 'rate-under-20', 'unmeasured']
-      .map((band) => [band, target.filter((item) => item.responseRateBand === band).length]),
-  ), {
-    'rate-60-plus': 26,
-    'rate-40-59': 40,
-    'rate-20-39': 71,
-    'rate-under-20': 103,
-    unmeasured: 330,
-  });
+  assert.equal(target.filter((item) => item.bankDifficulty.basis === 'response-rate').length, 240);
+  assert.equal(target.filter((item) => item.bankDifficulty.basis === 'source-points').length, 330);
+  assert.deepEqual(
+    new Set(target.map((item) => item.bankDifficulty.label)),
+    new Set(['최상', '상', '중간', '하', '최하']),
+  );
   target.filter((item) => item.responseRateStatus === 'measured').forEach((item) => {
     assert.equal(item.responseRateUse, 'observed-source-and-variant-benchmark');
     assert.match(item.paperContextKey, /^(final|last)\|[1-4]$/);
   });
   target.filter((item) => item.responseRateStatus === 'unmeasured').forEach((item) => {
-    assert.equal(item.responseRateUse, 'source-link-required');
+    assert.equal(item.responseRateUse, 'source-points-fallback');
   });
   assert.equal(unified.papers.filter((paper) => ['applied', 'final', 'last', 'original'].includes(paper.set)).length, 19);
 });
@@ -332,11 +344,16 @@ check('등록 소영역과 규칙 후보를 명시적으로 구분', () => {
   });
 });
 
-check('704개 화면 유형을 보존하면서 후보 family로 과분화를 줄임', () => {
+check('이원목적표의 영역+세부유형 711개를 화면 권위값으로 그대로 보존', () => {
   assert.equal(unified.summary.rawDisplayTypes, 704);
+  assert.equal(unified.summary.objectiveTypes, 711);
+  assert.equal(new Set(unified.items.map((item) => item.objectiveTypeId)).size, 711);
+  unified.items.forEach((item) => assert.ok(item.displayType));
+});
+
+check('기존 후보 family는 생성기 연결용 내부 값으로만 유지', () => {
   assert.ok(unified.summary.canonicalTypes < 150, `canonical types=${unified.summary.canonicalTypes}`);
   assert.ok(unified.summary.canonicalTypes < unified.summary.rawDisplayTypes / 4);
-  unified.items.forEach((item) => assert.ok(item.displayType));
   const clockTypes = unified.items.filter((item) => item.area === '도형' && /시침과 분침이 (직각|겹)/.test(item.displayType));
   assert.ok(clockTypes.length >= 4);
   assert.equal(new Set(clockTypes.map((item) => item.canonicalTypeId)).size, 1);
@@ -380,5 +397,5 @@ check('쌓기나무 Lv5 최소값 오류 수정과 독립 회귀 검산', () => 
 console.log(
   `문제은행 canonical registry QA ${tests.length}개 통과 · ` +
   `원본 ${summary.sourceQuestions}문항/${summary.canonicalTypes}유형/${summary.canonicalSubareas}소영역 · ` +
-  `통합 ${unified.summary.sourceQuestions}문항/${unified.summary.rawDisplayTypes}화면유형→${unified.summary.canonicalTypes}후보family`,
+  `통합 ${unified.summary.sourceQuestions}문항/${unified.summary.objectiveTypes}이원목적표 영역·유형 · 내부 ${unified.summary.canonicalTypes}후보family`,
 );

@@ -24,6 +24,7 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.equal(await page.locator('.stat').count(), 0, '개발 현황 통계 카드 제거');
     assert.equal(await page.locator('#candidate-notice-title').count(), 0, '검토 현황 안내 제거');
     assert.equal(await page.locator('.area-section').count(), 4, '대영역 4개');
+    assert.equal(await page.locator('.subarea').count(), 0, '이원목적표에 없는 추정 소영역은 표시하지 않음');
     assert.equal(await page.locator('#result-status[role="status"][aria-live="polite"]').count(), 1, '필터 결과 라이브 상태');
 
     await page.selectOption('#source-filter', 'final');
@@ -32,6 +33,23 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.match(await page.locator('#paper-context').textContent(), /점수대 우선 판단/, '회차 점수대를 1차 판단으로 표시');
     assert.match(await page.locator('#paper-context').textContent(), /평균 .*점/, '회차 평균 표시');
     assert.match(await page.locator('#paper-context').textContent(), /경시/, '회차별 실제 점수 구간 표시');
+    assert.equal(
+      await page.locator('.badge.difficulty').count(),
+      await page.locator('.type-card').count(),
+      '각 이원목적표 유형 카드에 난이도 한 개 표시',
+    );
+    const paperFold = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '종이 접기', exact: true }) });
+    assert.match(await paperFold.textContent(), /난이도 최상/, '정답률 2.5% 유형은 최상');
+    assert.match(await paperFold.textContent(), /기준 정답률 2.5%/, '실제 정답률 근거 표시');
+
+    await page.selectOption('#source-filter', 'original');
+    await page.selectOption('#round-filter', 'original|1');
+    assert.match(await page.locator('#result-status').textContent(), /30문항$/, '시그니처 1회 30문항');
+    const highPoint = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '사용 횟수 제한이 있는 최소합', exact: true }) });
+    assert.match(await highPoint.textContent(), /난이도 최상/, '정답률 없는 4.2점 유형은 최상');
+    assert.match(await highPoint.textContent(), /4.2점 기준/, '정답률 없는 유형은 배점 근거 표시');
+    const lowPoint = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '두 상황의 높이', exact: true }) });
+    assert.match(await lowPoint.textContent(), /난이도 최하/, '정답률 없는 2.7점 유형은 최하');
 
     await page.getByRole('tab', { name: '유형으로 찾기' }).click();
     assert.equal(await page.locator('#type-panel').isVisible(), true, '유형 검색 화면 표시');
@@ -62,7 +80,7 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.equal(mobile.finderColumns, 2, '모바일에서도 두 찾기 방식 유지');
     assert.deepEqual(errors, [], '브라우저 오류 없음');
 
-    console.log('PASS bank finder browser: paper mode, prompt/type search, area browse, score context, mobile overflow');
+    console.log('PASS bank finder browser: objective-table types, five difficulty levels, rate/points evidence, search, area browse, mobile overflow');
   } finally {
     await browser.close();
   }

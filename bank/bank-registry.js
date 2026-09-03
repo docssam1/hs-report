@@ -16,8 +16,8 @@
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
 
-  var SCHEMA_VERSION = '0.3.0';
-  var REGISTRY_VERSION = 'elementary-bank-2026-09-02-metrics';
+  var SCHEMA_VERSION = '0.4.0';
+  var REGISTRY_VERSION = 'elementary-bank-2026-09-03-objective-difficulty';
 
   /* The taxonomy already used by mock-data-original.js. */
   var TAXONOMY = {
@@ -53,18 +53,27 @@
     '4.2': { id: 'source-4.2', label: '4.2점', sourceNos: [23, 30] }
   };
 
-  /* Item response rates are real cohort evidence where the source provides
-   * them.  Missing rates stay unmeasured; points are never used as a proxy. */
+  /* The bank uses five difficulty labels.  A measured response rate always
+   * wins; source points are only the fallback when a rate is unavailable. */
   var RESPONSE_RATE_BANDS = {
-    'rate-60-plus': { id: 'rate-60-plus', label: '정답률 60% 이상', min: 0.6, max: 1 },
-    'rate-40-59': { id: 'rate-40-59', label: '정답률 40~59%', min: 0.4, max: 0.6 },
-    'rate-20-39': { id: 'rate-20-39', label: '정답률 20~39%', min: 0.2, max: 0.4 },
-    'rate-under-20': { id: 'rate-under-20', label: '정답률 20% 미만', min: 0, max: 0.2 },
+    'rate-under-20': { id: 'rate-under-20', label: '최상', min: 0, max: 0.2 },
+    'rate-20-39': { id: 'rate-20-39', label: '상', min: 0.2, max: 0.4 },
+    'rate-40-59': { id: 'rate-40-59', label: '중간', min: 0.4, max: 0.6 },
+    'rate-60-79': { id: 'rate-60-79', label: '하', min: 0.6, max: 0.8 },
+    'rate-80-plus': { id: 'rate-80-plus', label: '최하', min: 0.8, max: 1 },
     unmeasured: { id: 'unmeasured', label: '정답률 미측정' }
   };
 
+  var BANK_DIFFICULTY_LEVELS = {
+    highest: { id: 'highest', label: '최상', order: 1 },
+    high: { id: 'high', label: '상', order: 2 },
+    middle: { id: 'middle', label: '중간', order: 3 },
+    low: { id: 'low', label: '하', order: 4 },
+    lowest: { id: 'lowest', label: '최하', order: 5 }
+  };
+
   var DIFFICULTY_EVIDENCE_POLICY = {
-    judgmentOrder: ['paper-score-bands', 'source-item-response-rate', 'source-points', 'independent-authoring-review'],
+    judgmentOrder: ['source-item-response-rate', 'source-points'],
     observedRateLabel: '실제 정답률',
     inheritedRateLabel: '기준 정답률',
     generatedVariant: {
@@ -72,7 +81,8 @@
       requiredFields: ['benchmarkSourceKey', 'benchmarkResponseRate', 'paperContextKey'],
       note: '유사문항은 연결한 원문항의 실제 정답률을 기준 정답률로 사용한다. 새 문항의 실제 응시 정답률로 표시하지 않는다.'
     },
-    noRateRule: '정답률이 없는 문항은 점수만으로 정답률을 추정하지 않고, 실제 정답률이 있는 유사 원문항을 명시적으로 연결한다.'
+    responseRateRule: '20% 미만 최상, 20~39% 상, 40~59% 중간, 60~79% 하, 80% 이상 최하',
+    noRateRule: '정답률이 없을 때만 원문 배점으로 분류한다: 4.2점 최상, 3.4점 중간, 2.7점 최하.'
   };
 
   var STAGE_POLICY = {
@@ -474,10 +484,43 @@
 
   function responseRateBand(rate) {
     if (rate == null) return RESPONSE_RATE_BANDS.unmeasured;
-    if (rate >= 0.6) return RESPONSE_RATE_BANDS['rate-60-plus'];
-    if (rate >= 0.4) return RESPONSE_RATE_BANDS['rate-40-59'];
-    if (rate >= 0.2) return RESPONSE_RATE_BANDS['rate-20-39'];
-    return RESPONSE_RATE_BANDS['rate-under-20'];
+    if (rate < 0.2) return RESPONSE_RATE_BANDS['rate-under-20'];
+    if (rate < 0.4) return RESPONSE_RATE_BANDS['rate-20-39'];
+    if (rate < 0.6) return RESPONSE_RATE_BANDS['rate-40-59'];
+    if (rate < 0.8) return RESPONSE_RATE_BANDS['rate-60-79'];
+    return RESPONSE_RATE_BANDS['rate-80-plus'];
+  }
+
+  function bankDifficulty(rate, points) {
+    if (rate != null) {
+      var rateBand = responseRateBand(rate);
+      var byRate = {
+        'rate-under-20': BANK_DIFFICULTY_LEVELS.highest,
+        'rate-20-39': BANK_DIFFICULTY_LEVELS.high,
+        'rate-40-59': BANK_DIFFICULTY_LEVELS.middle,
+        'rate-60-79': BANK_DIFFICULTY_LEVELS.low,
+        'rate-80-plus': BANK_DIFFICULTY_LEVELS.lowest
+      }[rateBand.id];
+      return {
+        id: byRate.id,
+        label: byRate.label,
+        order: byRate.order,
+        basis: 'response-rate',
+        value: rate,
+        evidenceLabel: '정답률 ' + Math.round(rate * 1000) / 10 + '% 기준'
+      };
+    }
+    var numericPoints = Number(points);
+    var byPoints = numericPoints >= 4.2 ? BANK_DIFFICULTY_LEVELS.highest :
+      (numericPoints >= 3.4 ? BANK_DIFFICULTY_LEVELS.middle : BANK_DIFFICULTY_LEVELS.lowest);
+    return {
+      id: byPoints.id,
+      label: byPoints.label,
+      order: byPoints.order,
+      basis: 'source-points',
+      value: numericPoints,
+      evidenceLabel: numericPoints + '점 기준'
+    };
   }
 
   function itemDifficultyClass(item) {
@@ -583,8 +626,10 @@
           var band = pointBand(points);
           var rate = itemResponseRate(round, item);
           var rateBand = responseRateBand(rate);
+          var bankLevel = bankDifficulty(rate, points);
           var difficultyClass = itemDifficultyClass(item);
           var sourceKey = [entry.setKey, Number(roundKey), Number(item.no)].join('|');
+          var objectiveTypeId = 'objective-' + stableId(area + '|' + displayType).slice(5);
           var reasons = [];
           if (!AREA_IDS[area]) reasons.push('unregistered area');
           if (!isConfirmed) reasons.push(exactAlias ? 'subarea inherited as candidate from exact source alias' : 'subarea inferred from display type');
@@ -598,6 +643,8 @@
             subarea: subarea,
             subareaId: subareaId,
             displayType: displayType,
+            objectiveTypeId: objectiveTypeId,
+            objectiveTypeBasis: 'source item.type / 이원목적분류표 내용(단원)',
             typeFamilyId: familyId,
             typeFamilyLabel: familyLabel,
             canonicalTypeId: canonicalTypeId,
@@ -608,7 +655,8 @@
             responseRate: rate,
             responseRateBand: rateBand.id,
             responseRateStatus: rate == null ? 'unmeasured' : 'measured',
-            responseRateUse: rate == null ? 'source-link-required' : 'observed-source-and-variant-benchmark',
+            responseRateUse: rate == null ? 'source-points-fallback' : 'observed-source-and-variant-benchmark',
+            bankDifficulty: bankLevel,
             difficultyClass: difficultyClass,
             paperContextKey: [entry.setKey, Number(roundKey)].join('|'),
             searchEvidence: itemSearchEvidence(item),
@@ -654,6 +702,7 @@
         sets: entries.length,
         sourceQuestions: items.length,
         rawDisplayTypes: Object.keys(items.reduce(function (map, item) { map[item.displayType] = true; return map; }, {})).length,
+        objectiveTypes: Object.keys(items.reduce(function (map, item) { map[item.objectiveTypeId] = true; return map; }, {})).length,
         canonicalTypes: Object.keys(typeMap).length,
         confirmedItems: items.filter(function (item) { return item.reviewStatus === 'confirmed'; }).length,
         candidateItems: items.filter(function (item) { return item.reviewStatus === 'candidate'; }).length,
@@ -826,6 +875,7 @@
     areaIds: clone(AREA_IDS),
     difficultyBands: clone(DIFFICULTY_BANDS),
     responseRateBands: clone(RESPONSE_RATE_BANDS),
+    bankDifficultyLevels: clone(BANK_DIFFICULTY_LEVELS),
     difficultyEvidencePolicy: clone(DIFFICULTY_EVIDENCE_POLICY),
     stagePolicy: clone(STAGE_POLICY),
     assetPolicy: clone(ASSET_POLICY),
@@ -837,6 +887,7 @@
     stableId: stableId,
     buildCatalog: buildCatalog,
     buildUnifiedCatalog: buildUnifiedCatalog,
+    bankDifficulty: bankDifficulty,
     summarize: summarize,
     validateCatalog: validateCatalog,
     validateGeneratedQuestion: validateGeneratedQuestion
