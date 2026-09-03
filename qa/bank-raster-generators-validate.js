@@ -246,7 +246,7 @@ function independentAnswer(question) {
     const samples = await page.evaluate(() => {
       const output = [];
       const core = window.BANK_CORE;
-      for (const generator of window.BANK_GENS) {
+      for (const generator of window.BANK_GENS.filter((row) => row.reviewOnly !== true)) {
         for (let level = 1; level <= 5; level++) {
           for (let seed = 0; seed < 8; seed++) {
             const rng = core.mulberry32(core.hashString(`${generator.id}:${level}:${seed}`));
@@ -306,8 +306,8 @@ function independentAnswer(question) {
       };
     });
 
-    assert.equal(samples.output.length, 8 * 5 * 8, '8 families × 5 levels × 8 seeds');
-    assert.deepEqual(samples.generatorIds.sort(), ['cube', 'inclusion', 'path', 'rect', 'remainder', 'repeat', 'tri', 'weekday']);
+    assert.equal(samples.output.length, 8 * 5 * 8, '8 public practice families × 5 levels × 8 seeds');
+    assert.deepEqual(samples.generatorIds.sort(), ['cube', 'inclusion', 'overlap-range-sum', 'path', 'rect', 'remainder', 'repeat', 'tri', 'weekday']);
     for (const question of samples.output) {
       assert.equal(question.asset.kind, 'raster', `${question.genId} raster kind`);
       assert.equal(question.asset.mimeType, 'image/png', `${question.genId} PNG MIME`);

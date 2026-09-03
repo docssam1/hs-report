@@ -46,6 +46,7 @@
 
   .stage-wrap{max-width:840px;margin:0 auto}
   .hint{font-size:11.5px;color:var(--dim);text-align:center;margin-bottom:14px}
+  .review-note{max-width:900px;margin:0 auto 14px;padding:11px 14px;border:1px solid #f0b429;border-radius:10px;background:#fff8db;color:#704900;font-size:12.5px;line-height:1.55}
 
   /* ---------- 시험지(미리보기 겸 인쇄 영역) ---------- */
   .page{position:relative;background:#fff;width:210mm;min-height:297mm;margin:0 auto 22px;padding:16mm 14mm;box-shadow:0 6px 24px rgba(0,0,0,.12);overflow:hidden}
@@ -72,18 +73,21 @@
   .cover .footer{font-size:10.5px;color:var(--dim);letter-spacing:.05em}
 
   /* 본문 문항 */
-  .qpage{position:relative;z-index:2}
+  .qpage{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8mm;row-gap:4mm}
   .qhead{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--orange-d);padding-bottom:6px;margin-bottom:14px}
+  .qpage .qhead{grid-column:1/-1}
   .qhead .t{font-size:12px;font-weight:800;color:var(--accent)}
   .qhead .n{font-size:11px;color:var(--dim)}
-  .qcard{page-break-inside:avoid;min-height:118mm;border-bottom:1px dashed var(--line2);padding-bottom:10px;margin-bottom:14px}
+  .qcard{page-break-inside:avoid;min-width:0;min-height:105mm;border-bottom:1px dashed var(--line2);padding-bottom:8px;margin-bottom:0;overflow-wrap:anywhere}
   .qcard:last-child{border-bottom:none}
   .qcard .qno{display:inline-block;font-weight:900;font-size:15px;color:#fff;background:var(--accent);border-radius:8px;padding:3px 10px;margin-right:8px}
   .qcard .qtext{font-size:14.5px;line-height:1.62;display:inline}
   .qcard .qmeta{font-size:9.5px;color:var(--dim);margin-top:4px}
   .qcard .qfigure{margin:10px 0;text-align:center}
-  .qcard .qfigure img{display:block;max-width:100%;max-height:72mm;width:auto;height:auto;margin:0 auto;object-fit:contain}
+  .qcard .qfigure img{display:block;max-width:100%;max-height:48mm;width:auto;height:auto;margin:0 auto;object-fit:contain}
   .qcard .answerline{margin-top:8px;font-size:12.5px;color:var(--dim)}
+  .qcard.text-only{min-height:105mm}
+  .qcard.text-only .answerline{margin-top:24px}
   .qcard .answerline .blank{display:inline-block;min-width:120px;border-bottom:1.3px solid var(--ink2);margin-left:6px}
 
   /* 정답지 */
@@ -97,8 +101,10 @@
 
   @media print{
     body{background:#fff;padding:0}
-    .topbar,.panel,.hint{display:none !important}
-    .page{box-shadow:none;margin:0;width:auto;min-height:0}
+    .topbar,.panel,.hint,.review-note{display:none !important}
+    .page{box-shadow:none;margin:0;width:auto;height:auto;min-height:268mm;padding:0;overflow:visible;break-before:page;break-after:page;break-inside:avoid}
+    .qcard{min-height:105mm}
+    .qcard .qfigure img{max-height:48mm}
     .page{page-break-after:always}
     .page:last-child{page-break-after:auto}
     @page{size:A4 portrait;margin:12mm}
@@ -116,8 +122,10 @@
   <a class="back" href="../index.html">← 자료실로</a>
   <h1>🐂 GFIELD BULL BANK</h1>
   <span class="tag">황소 문제은행 · 무한 생성 연습지</span>
-  <a class="catalog-link" href="catalog.html">전체 분류·개발 현황 <span class="status">확정·후보 분리</span></a>
+  <a class="catalog-link" href="catalog.html">시험지·유형으로 찾기 <span class="status">문제은행</span></a>
 </div>
+
+<div class="review-note" id="reviewNote" hidden></div>
 
 <div class="panel">
   <div class="row">
@@ -130,6 +138,7 @@
     <button class="chip" data-role="gen" data-val="weekday">날짜·요일 이동</button>
     <button class="chip" data-role="gen" data-val="inclusion">두 모임 겹침</button>
     <button class="chip" data-role="gen" data-val="remainder">나머지 조건 수</button>
+    <button class="chip" data-role="gen" data-val="overlap-range-sum">겹침 최솟값·최댓값 검토본</button>
     <button class="chip mix" data-role="gen" data-val="mix">전체 섞기</button>
   </div>
   <div class="row">
@@ -143,8 +152,8 @@
   </div>
   <div class="row">
     <span class="label">문항 수</span>
-    <button class="chip" data-role="n" data-val="5">5문제</button>
-    <button class="chip" data-role="n" data-val="10">10문제</button>
+    <button class="chip" data-role="n" data-val="4">4문제</button>
+    <button class="chip" data-role="n" data-val="8">8문제</button>
     <button class="chip" data-role="n" data-val="20">20문제</button>
     <span class="spacer"></span>
     <label class="toggle"><input type="checkbox" id="optCover" checked> 표지 포함</label>
@@ -168,7 +177,7 @@
 
 <script>
 (function(){var v=Date.now();
- ['bank-core.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js'].forEach(function(f){
+ ['bank-core.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js'].forEach(function(f){
    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
 </script>
 <script>
@@ -180,7 +189,8 @@
     rect:'크고 작은 직사각형 개수', tri:'크고 작은 삼각형 개수',
     path:'최단 경로 가짓수', cube:'쌓기나무', repeat:'반복 문자 규칙',
     weekday:'날짜·요일 이동', inclusion:'두 모임 겹침', remainder:'나머지 조건 수',
-    mix:'전체 섞기(8유형 랜덤)'
+    'overlap-range-sum':'두 모임 겹침의 최솟값·최댓값',
+    mix:'전체 섞기(검증된 일반 연습 8유형)'
   };
   var LEVEL_NAMES = { all:'전체 혼합', '1':'레벨 1', '2':'레벨 2', '3':'레벨 3', '4':'레벨 4', '5':'레벨 5' };
 
@@ -188,11 +198,23 @@
   var state = {
     genId: q.gen && GEN_NAMES[q.gen] ? q.gen : 'rect',
     level: q.level && LEVEL_NAMES[q.level] ? q.level : 'all',
-    n: [5,10,20].indexOf(parseInt(q.n,10))>=0 ? parseInt(q.n,10) : 10,
+    n: [4,8,20].indexOf(parseInt(q.n,10))>=0 ? parseInt(q.n,10) : 8,
     seed: q.seed || '',
     cover: true,
     answer: true
   };
+  var REVIEW_IDS=['overlap-range-sum'];
+  var reviewMode=false;
+  function updateReviewNote(){
+    reviewMode=REVIEW_IDS.indexOf(state.genId)>=0;
+    var reviewNote=document.getElementById('reviewNote');
+    reviewNote.hidden=!reviewMode;
+    if(!reviewMode)return;
+    reviewNote.textContent='출처 구조 기반 유사문제 검토본 · '+(q.type||GEN_NAMES[state.genId])+
+      ' · 기준 '+(q.difficulty||'미정')+(q.points?' ('+q.points+'점)':'')+
+      ' · 아직 공개 승인 전이며, 문장과 문제 구조를 눈으로 확인하는 단계입니다.';
+  }
+  updateReviewNote();
 
   function syncChips(){
     document.querySelectorAll('.chip[data-role="gen"]').forEach(function(b){ b.classList.toggle('on', b.dataset.val===state.genId); });
@@ -210,6 +232,7 @@
       url.searchParams.set('level', state.level);
       url.searchParams.set('n', state.n);
       url.searchParams.set('seed', seedStr);
+      if(reviewMode)url.searchParams.set('review','1');else url.searchParams.delete('review');
       history.replaceState(null,'',url.toString());
     }catch(e){}
   }
@@ -232,9 +255,9 @@
         '<div class="brand">GFIELD PROBLEM LAB</div>' +
         '<div class="brand2">문제은행 시리즈</div>' +
         '<div class="bull">GFIELD BULL BANK</div>' +
-        '<div class="book">황소 문제은행 연습지</div>' +
+        '<div class="book">' + (reviewMode?'출처 구조 기반 유사문제 · 검토본':'황소 문제은행 연습지') + '</div>' +
         '<div class="genname">' + esc(genLabel) + '</div>' +
-        '<div class="sub">경우의 수 · 도형 감각을 키우는 무한 생성 연습지</div>' +
+        '<div class="sub">' + (reviewMode?esc((q.type||genLabel)+' · '+(q.difficulty||'난이도 미정')+(q.points?' · 원문 '+q.points+'점':'')):'경우의 수 · 도형 감각을 키우는 무한 생성 연습지') + '</div>' +
         '<div class="infogrid">' +
           '<div class="cell"><div class="k">유형</div><div class="v">' + esc(genLabel) + '</div></div>' +
           '<div class="cell"><div class="k">레벨</div><div class="v">' + esc(levelLabel) + '</div></div>' +
@@ -254,14 +277,18 @@
       '<div class="qhead"><span class="t">GFIELD BULL BANK · 문제</span><span class="n">' + esc(examNo) + ' · ' + pageIdx + '/' + pageTotal + '</span></div>';
     group.forEach(function(qq){
       var asset = qq.asset;
-      if (!asset || asset.kind !== 'raster' || !/^data:image\/png;base64,/.test(asset.src || '')) {
+      var figure='';
+      if (asset && (asset.kind !== 'raster' || !/^data:image\/png;base64,/.test(asset.src || ''))) {
         throw new Error('공개 문항 그림은 Canvas PNG 래스터만 사용할 수 있습니다.');
       }
-      body += '<div class="qcard">' +
+      if(asset){
+        figure='<div class="qfigure"><img src="' + escAttr(asset.src) + '" alt="' + escAttr(asset.description || qq.genName || '문항 그림') +
+          '" width="' + Number(asset.displayWidth || asset.width) + '" height="' + Number(asset.displayHeight || asset.height) + '"></div>';
+      }
+      body += '<div class="qcard'+(asset?'':' text-only')+'">' +
         '<span class="qno">' + qq.index + '</span><span class="qtext">' + esc(qq.text) + '</span>' +
         '<div class="qmeta">[' + esc(qq.area||'') + ' · Lv.' + qq.level + ' · ' + esc(qq.pointBand) + '점]</div>' +
-        '<div class="qfigure"><img src="' + escAttr(asset.src) + '" alt="' + escAttr(asset.description || qq.genName || '문항 그림') +
-          '" width="' + Number(asset.displayWidth || asset.width) + '" height="' + Number(asset.displayHeight || asset.height) + '"></div>' +
+        figure +
         '<div class="answerline">답 <span class="blank"></span></div>' +
         '</div>';
     });
@@ -295,7 +322,7 @@
     var pages = [];
     if (state.cover) pages.push('<div class="page">' + buildCoverHtml(paper, examNo) + '</div>');
 
-    var groups = chunk(paper.questions, 2);
+    var groups = chunk(paper.questions, 4);
     groups.forEach(function(g, i){
       pages.push('<div class="page">' + buildQPageHtml(g, examNo, i+1, groups.length) + '</div>');
     });
@@ -326,7 +353,7 @@
   document.querySelectorAll('.chip').forEach(function(btn){
     btn.addEventListener('click', function(){
       var role = btn.dataset.role, val = btn.dataset.val;
-      if (role==='gen') state.genId = val;
+      if (role==='gen') { state.genId = val; updateReviewNote(); }
       else if (role==='level') state.level = val;
       else if (role==='n') state.n = parseInt(val,10);
       render();

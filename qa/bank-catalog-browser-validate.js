@@ -50,6 +50,10 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.match(await highPoint.textContent(), /4.2점 기준/, '정답률 없는 유형은 배점 근거 표시');
     const lowPoint = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '두 상황의 높이', exact: true }) });
     assert.match(await lowPoint.textContent(), /난이도 최하/, '정답률 없는 2.7점 유형은 최하');
+    const overlapReview = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '겹치는 두 모임의 최솟값과 최댓값', exact: true }) });
+    const overlapHref = await overlapReview.getByRole('link', { name: '이 유형 유사문제 검토하기' }).getAttribute('href');
+    assert.match(overlapHref, /gen=overlap-range-sum/, '출처 구조 기반 겹침 유사문제 생성기 연결');
+    assert.match(overlapHref, /level=1/, '정답률 없는 2.7점 원문은 최하 난이도 생성 레벨로 연결');
 
     await page.getByRole('tab', { name: '유형으로 찾기' }).click();
     assert.equal(await page.locator('#type-panel').isVisible(), true, '유형 검색 화면 표시');

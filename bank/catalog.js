@@ -85,6 +85,7 @@
       });
       group.original=original;
       group.practiceVerified=!!(original&&original.generator&&original.generator.status==='verified-practice'&&original.generator.practiceReleaseReady===true);
+      group.sourceLinkedReview=!!(original&&original.generator&&original.generator.status==='source-linked-review');
       group.sourcePending=!!(original&&original.sourceFaithfulReleaseReady!==true);
       if(group.rates.length){
         group.benchmarkRate=group.rates.reduce(function(sum,value){return sum+value},0)/group.rates.length;
@@ -120,12 +121,22 @@
   }
 
   function typeCardHtml(group){
-    var practice=group.practiceVerified
-      ?'<a class="badge practice" href="index.html?gen='+encodeURIComponent(group.original.generator.legacyId)+'">이 유형으로 문제 만들기</a>'
-      :'';
+    var generator='';
+    if(group.practiceVerified){
+      generator='<a class="badge practice" href="index.html?gen='+encodeURIComponent(group.original.generator.legacyId)+'">일반 연습문제 만들기</a>';
+    }else if(group.sourceLinkedReview){
+      var sourceRef=group.original.sourceRefs[0]||{};
+      var sourceDifficulty=R.bankDifficulty(null,sourceRef.points);
+      var level={highest:5,high:4,middle:3,low:2,lowest:1}[sourceDifficulty.id]||3;
+      var params='gen='+encodeURIComponent(group.original.generator.generatorId)+
+        '&level='+level+'&n=8&review=1&type='+encodeURIComponent(group.displayType)+
+        '&source='+encodeURIComponent('original|'+sourceRef.round+'|'+sourceRef.no)+
+        '&points='+encodeURIComponent(sourceRef.points)+'&difficulty='+encodeURIComponent(sourceDifficulty.label);
+      generator='<a class="badge practice" href="index.html?'+params+'">이 유형 유사문제 검토하기</a>';
+    }
     return '<article class="type-card" data-type-id="'+esc(group.id)+'">'+
       '<h4>'+esc(group.displayType)+'</h4><div class="sources" aria-label="출처 문항 수">'+sourceBadges(group)+'</div>'+
-      '<div class="badges" aria-label="난이도 근거">'+evidenceBadges(group)+'</div>'+(practice?'<div class="development">'+practice+'</div>':'')+'</article>';
+      '<div class="badges" aria-label="난이도 근거">'+evidenceBadges(group)+'</div>'+(generator?'<div class="development">'+generator+'</div>':'')+'</article>';
   }
 
   function selectedItems(unified){

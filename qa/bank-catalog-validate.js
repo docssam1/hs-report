@@ -64,13 +64,20 @@ const originalCatalog = registry.buildCatalog(context.GFIELD_MOCK_ORIGINAL);
 const verifiedPractice = originalCatalog.filter((type) =>
   type.generator?.status === 'verified-practice' && type.generator.practiceReleaseReady === true,
 );
-assert.equal(verifiedPractice.length, 5, '독립 검산을 통과한 연습형 생성기 수');
+assert.equal(verifiedPractice.length, 4, '공개 가능한 일반 연습형 생성기 수');
 assert.deepEqual(
   verifiedPractice.map((type) => type.generator.generatorId).sort(),
-  ['cube', 'inclusion', 'path', 'remainder', 'tri'],
-  '확정 원본 유형에 연결된 5개 연습형 생성기',
+  ['cube', 'path', 'remainder', 'tri'],
+  '확정 원본 유형에 연결된 4개 일반 연습형 생성기',
 );
 assert.ok(verifiedPractice.every((type) => type.sourceFaithfulReleaseReady === false), '연습형 검증을 원본 복기형 승인으로 오인하지 않음');
+const sourceLinkedReview = originalCatalog.filter((type) => type.generator?.status === 'source-linked-review');
+assert.deepEqual(
+  sourceLinkedReview.map((type) => type.generator.generatorId).sort(),
+  ['overlap-range-sum'],
+  '실제 사용자 원본 문항 구조를 따라 만든 유사문제 검토형',
+);
+assert.ok(sourceLinkedReview.every((type) => !type.practiceReleaseReady && !type.sourceFaithfulReleaseReady), '눈 검수 전 공개 승인 잠금');
 
 const catalogHtml = fs.readFileSync(path.join(ROOT, 'bank', 'catalog.html'), 'utf8');
 const catalogJs = fs.readFileSync(path.join(ROOT, 'bank', 'catalog.js'), 'utf8');
@@ -93,6 +100,7 @@ assert.match(catalogJs, /R\.bankDifficulty\(group\.benchmarkRate,null\)/, '실�
 assert.match(catalogJs, /R\.bankDifficulty\(null,Math\.max/, '정답률 없으면 원문 배점 난이도');
 assert.match(catalogJs, /기준 정답률/, '정답률 근거를 카드에 표시');
 assert.match(catalogJs, /item\.searchEvidence/, '지문 설명까지 검색 근거로 사용');
+assert.match(catalogJs, /이 유형 유사문제 검토하기/, '출처 구조 기반 유사문제 검토 연결');
 assert.match(catalogHtml, /aria-live="polite"/, '필터 결과 접근성 상태 영역');
 assert.match(indexHtml, /class="catalog-link" href="catalog\.html"/, '문제은행 상단 현황 링크');
 

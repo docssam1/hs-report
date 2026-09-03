@@ -46,6 +46,18 @@
     return h >>> 0;
   }
 
+  function stableTypeId(area, subarea, name) {
+    var value = [area, subarea, name].map(function (part) {
+      return String(part == null ? '' : part).replace(/\s+/g, ' ').trim();
+    }).join('|');
+    var h = 0x811c9dc5;
+    for (var i = 0; i < value.length; i++) {
+      h ^= value.charCodeAt(i);
+      h = Math.imul(h, 0x01000193);
+    }
+    return 'type-' + (h >>> 0).toString(36).padStart(7, '0');
+  }
+
   function encodeSeed(num) {
     num = ((num % SEED_SPACE) + SEED_SPACE) % SEED_SPACE;
     var out = '';
@@ -112,7 +124,7 @@
     var masterRng = mulberry32(seedNum);
 
     var candidateGens = gens.filter(function (g) {
-      return genId === 'mix' || g.id === genId;
+      return genId === 'mix' ? g.reviewOnly !== true : g.id === genId;
     });
     if (!candidateGens.length) candidateGens = gens;
 
@@ -141,6 +153,12 @@
         q.genId = gen.id;
         q.genName = gen.name;
         q.area = gen.area;
+        if (!q.diagnosis && gen.typeId) {
+          q.diagnosis = {
+            typeId: gen.typeId,
+            errorTags: (gen.errorTags || []).slice()
+          };
+        }
         q.index = i + 1;
         questions.push(q);
       }
@@ -213,6 +231,7 @@
   global.BANK_CORE = {
     mulberry32: mulberry32,
     hashString: hashString,
+    stableTypeId: stableTypeId,
     encodeSeed: encodeSeed,
     decodeSeed: decodeSeed,
     randomSeedNum: randomSeedNum,
