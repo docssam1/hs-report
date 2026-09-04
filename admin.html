@@ -218,8 +218,8 @@
         <div class="matrix-scroll"><table id="acc-matrix"></table></div>
       </div>
       <div class="card">
-        <h3>별도 판매 과정 승인</h3>
-        <div class="hint"><b>개념 과정 BASIC과 CORE는 서로 다른 상품</b>입니다. 이 표의 승인은 폴더 권한보다 우선하며, 학생별로 각각 따로 열거나 닫을 수 있습니다.</div>
+        <h3>교재·모의고사 개별 승인</h3>
+        <div class="hint">개념 과정과 각 모의고사를 <b>방학 특강처럼 학생별로 각각 승인</b>합니다. 이 표의 승인은 폴더 권한보다 우선합니다.</div>
         <div class="matrix-scroll"><table id="product-acc-matrix"></table></div>
       </div>
       <div class="card">
@@ -911,12 +911,24 @@
   function toggleOpen(fi){ const f=S.archiveFolders[fi]; const acc=accArr(f); if(acc.includes('*')) S.archiveAccess[f]=[]; else S.archiveAccess[f]=["*"]; renderAccMatrix(); dirty(); }
   function toggleAcc(fi,s){ const f=S.archiveFolders[fi]; let acc=accArr(f); if(acc.includes('*')) acc=S.archiveAccess[f]=[]; const i=acc.indexOf(s); if(i>=0) acc.splice(i,1); else acc.push(s); renderAccMatrix(); dirty(); }
 
-  /* ── 별도 판매 교재의 독립 승인 ── */
-  const LIBRARY_PRODUCTS=[['concept-basic','개념 과정 BASIC'],['concept-core','개념 과정 CORE']];
+  /* ── 교재·모의고사의 독립 승인 ── */
+  const LIBRARY_PRODUCTS=[
+    ['concept-basic','개념 과정 BASIC'],
+    ['concept-core','개념 과정 CORE'],
+    ['mock-mid-7','중급 모의고사 7회'],
+    ['mock-mid-8','중급 모의고사 8회'],
+    ['mock-final-5','최종 실전 모의고사 5회'],
+    ['mock-final-6','최종 실전 모의고사 6회'],
+    ['mock-final-7','최종 실전 모의고사 7회'],
+    ['mock-final-8','최종 실전 모의고사 8회'],
+    ['mock-final-9','최종 실전 모의고사 9회'],
+    ['mock-signature-1','초등선발 대비 시그니처 실전 모의고사 1회'],
+    ['mock-signature-2','초등선발 대비 시그니처 실전 모의고사 2회']
+  ];
   function productArr(key){ if(!Array.isArray(S.archiveProductAccess[key])) S.archiveProductAccess[key]=[]; return S.archiveProductAccess[key]; }
   function renderProductAccMatrix(){
     const el=document.getElementById('product-acc-matrix'); if(!el) return;
-    let html='<thead><tr><th>판매 과정</th><th>전체공개</th><th>모두<br>체크</th>';
+    let html='<thead><tr><th>개별 승인 항목</th><th>전체공개</th><th>모두<br>체크</th>';
     S.students.forEach(s=>{ html+=stuTh(s); });
     html+='</tr></thead><tbody>';
     LIBRARY_PRODUCTS.forEach(p=>{
@@ -941,7 +953,7 @@
       (it.links||[]).forEach((l,li)=>{ linkRows+=`<div class="tb-row"><input type="text" value="${esc(l.label)}" oninput="setBookLink(${i},${li},'label',this.value)" placeholder="버튼 이름 (예: 답안 PDF / 재생목록)"><input type="url" value="${esc(l.url)}" oninput="setBookLink(${i},${li},'url',this.value)" placeholder="링크 주소"><button class="btn del" onclick="delBookLink(${i},${li})">삭제</button></div>`; });
       h+=`<div class="content-week">
         <div class="field"><label>폴더(책장)</label><select onchange="setBook(${i},'folder',this.value)">${opts}</select></div>
-        <div class="field"><label>판매 승인 그룹</label><select onchange="setBookAccessKey(${i},this.value)">${productOpts}</select><span class="hint">BASIC·CORE처럼 별도 판매하는 교재만 선택합니다.</span></div>
+        <div class="field"><label>개별 승인 그룹</label><select onchange="setBookAccessKey(${i},this.value)">${productOpts}</select><span class="hint">학생별로 따로 공개할 교재나 모의고사를 선택합니다.</span></div>
         <div class="field"><label>제목</label><input type="text" value="${esc(it.title)}" oninput="setBook(${i},'title',this.value)" placeholder="교재 제목"></div>
         <div class="field"><label>교재 PDF</label><label class="dz" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" accept="application/pdf" onchange="uploadBookPdf(${i},this)"><span>또는 드래그</span></label> &nbsp; ${pdfState}</div>
         <div class="field"><label>PDF 링크</label><input type="url" value="${esc(it.pdf)}" oninput="setBook(${i},'pdf',this.value)" placeholder="업로드하면 자동 입력 / 직접 링크도 가능"></div>

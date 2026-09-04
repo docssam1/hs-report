@@ -1423,7 +1423,16 @@ window.GFIELD_DATA = {
       "김신유",
       "이현서",
       "최지우"
-    ]
+    ],
+    "mock-mid-7": [],
+    "mock-mid-8": [],
+    "mock-final-5": [],
+    "mock-final-6": [],
+    "mock-final-7": [],
+    "mock-final-8": [],
+    "mock-final-9": [],
+    "mock-signature-1": [],
+    "mock-signature-2": []
   },
   "books": [
     {
@@ -1769,6 +1778,7 @@ window.GFIELD_DATA = {
     {
       "folder": "추가 모의고사",
       "title": "중급 모의고사 7회",
+      "accessKey": "mock-mid-7",
       "pdf": "",
       "cover": "",
       "date": "2026-07-28",
@@ -1786,6 +1796,7 @@ window.GFIELD_DATA = {
     {
       "folder": "추가 모의고사",
       "title": "중급 모의고사 8회",
+      "accessKey": "mock-mid-8",
       "pdf": "",
       "cover": "",
       "date": "2026-07-28",
@@ -1803,23 +1814,18 @@ window.GFIELD_DATA = {
     {
       "folder": "추가 모의고사",
       "title": "최종 실전 모의고사 5회",
-      "pdf": "",
+      "accessKey": "mock-final-5",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%B5%9C%EC%A2%85%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%205%ED%9A%8C.pdf",
+      "imgdir": "final_5",
+      "pages": 7,
       "cover": "",
       "date": "2026-07-28",
-      "links": [
-        {
-          "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=5"
-        },
-        {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=5"
-        }
-      ]
+      "links": []
     },
     {
       "folder": "추가 모의고사",
       "title": "최종 실전 모의고사 6회",
+      "accessKey": "mock-final-6",
       "pdf": "",
       "cover": "",
       "date": "2026-07-28",
@@ -1837,6 +1843,7 @@ window.GFIELD_DATA = {
     {
       "folder": "추가 모의고사",
       "title": "최종 실전 모의고사 7회",
+      "accessKey": "mock-final-7",
       "pdf": "",
       "cover": "",
       "date": "2026-07-28",
@@ -1854,6 +1861,7 @@ window.GFIELD_DATA = {
     {
       "folder": "추가 모의고사",
       "title": "최종 실전 모의고사 8회",
+      "accessKey": "mock-final-8",
       "pdf": "",
       "cover": "",
       "date": "2026-07-28",
@@ -1871,6 +1879,7 @@ window.GFIELD_DATA = {
     {
       "folder": "추가 모의고사",
       "title": "최종 실전 모의고사 9회",
+      "accessKey": "mock-final-9",
       "pdf": "",
       "cover": "",
       "date": "2026-07-28",

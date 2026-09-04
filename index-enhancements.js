@@ -117,6 +117,7 @@
     {
       folder:'추가 모의고사',
       title:'초등선발 대비 시그니처 실전 모의고사 1회',
+      accessKey:'mock-signature-1',
       desc:'80분 · 30문항 · 100점',
       pdf:'output/pdf/hwangso-original-form-mock-01-rebuilt.pdf',
       imgdir:'original_form_1',
@@ -131,6 +132,7 @@
     {
       folder:'추가 모의고사',
       title:'초등선발 대비 시그니처 실전 모의고사 2회',
+      accessKey:'mock-signature-2',
       desc:'80분 · 30문항 · 100점',
       pdf:'output/pdf/hwangso-original-form-mock-02-rebuilt.pdf',
       imgdir:'original_form_2_v2',
