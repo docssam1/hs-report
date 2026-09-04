@@ -1818,6 +1818,7 @@ window.GFIELD_DATA = {
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%EC%B5%9C%EC%A2%85%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%205%ED%9A%8C.pdf",
       "imgdir": "final_5",
       "pages": 7,
+      "video": "https://www.youtube.com/watch?v=1uhIx_l04EA",
       "cover": "",
       "date": "2026-07-28",
       "links": []
