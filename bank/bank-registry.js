@@ -16,8 +16,8 @@
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
 
-  var SCHEMA_VERSION = '0.4.0';
-  var REGISTRY_VERSION = 'elementary-bank-2026-09-03-objective-difficulty';
+  var SCHEMA_VERSION = '0.5.0';
+  var REGISTRY_VERSION = 'elementary-bank-2026-09-03-source-linked-review';
 
   /* The taxonomy already used by mock-data-original.js. */
   var TAXONOMY = {
@@ -303,6 +303,32 @@
     return link;
   }
 
+  function sourceLinkedReviewGeneratorLink(generatorId, file, coverage, sourceRefs) {
+    var link = elementaryTextGeneratorLink(generatorId, file, coverage, [
+      'generated variants require user eye review',
+      'source-faithful release approval is still locked'
+    ]);
+    link.status = 'source-linked-review';
+    link.approvedModes = ['review'];
+    link.practiceReleaseReady = false;
+    link.sourceFaithfulReleaseReady = false;
+    link.renderer = 'text-only';
+    link.assetKind = 'none';
+    link.sourceAudit = {
+      sourceRefs: sourceRefs.slice(),
+      visualRequired: false,
+      structureCompared: true
+    };
+    link.qaEvidence = {
+      suite: 'qa/bank-source-linked-generators-validate.js',
+      generatedQuestions: 5000,
+      levels: [1, 2, 3, 4, 5],
+      seedsPerLevel: 1000,
+      date: '2026-09-03'
+    };
+    return link;
+  }
+
   /* These are verified general-practice generators, not claims of
    * source-faithful equivalence.  The second gate stays closed until the
    * source conditions and side-by-side composition have both been approved. */
@@ -335,13 +361,15 @@
     'weekday', 'bank/gens/g-weekday.js', 'same date-movement and weekday-cycle skill',
     ['no original-side-by-side art review', 'source date conditions and composition equivalence not approved']
   );
-  GENERATOR_LINKS[signature('경우의 수', '포함과 배제', '겹치는 두 모임의 최솟값과 최댓값')] = elementaryTextGeneratorLink(
-    'inclusion', 'bank/gens/g-inclusion.js', 'same minimum-overlap skill; practice variants also cover exact overlap',
-    ['no original-side-by-side art review', 'source story conditions and composition equivalence not approved']
+  GENERATOR_LINKS[signature('경우의 수', '포함과 배제', '겹치는 두 모임의 최솟값과 최댓값')] = sourceLinkedReviewGeneratorLink(
+    'overlap-range-sum', 'bank/gens/g-overlap-range-sum.js',
+    'same source structure: two exhaustive groups, one shared property, minimum plus maximum',
+    ['1:8']
   );
-  GENERATOR_LINKS[signature('식의 계산', '나눗셈의 몫과 나머지', '서로 다른 세 조건의 교집합')] = elementaryTextGeneratorLink(
-    'remainder', 'bank/gens/g-remainder.js', 'same unique-number-from-remainders skill',
-    ['no original-side-by-side art review', 'source range and remainder-condition equivalence not approved']
+  GENERATOR_LINKS[signature('식의 계산', '나눗셈의 몫과 나머지', '서로 다른 세 조건의 교집합')] = sourceLinkedReviewGeneratorLink(
+    'remainder-yes-no', 'bank/gens/g-remainder-yes-no.js',
+    'same source structure: three remainder questions with yes/no answers identify one number',
+    ['2:12']
   );
 
   function pointBand(points) {
@@ -733,6 +761,7 @@
       canonicalSubareas: Object.keys(TAXONOMY).reduce(function (sum, area) { return sum + TAXONOMY[area].length; }, 0),
       linkedLegacyGenerators: catalog.filter(function (type) { return !!type.generator; }).length,
       verifiedPracticeGenerators: catalog.filter(function (type) { return !!(type.generator && type.generator.practiceReleaseReady); }).length,
+      sourceLinkedReviewTypes: catalog.filter(function (type) { return !!(type.generator && type.generator.status === 'source-linked-review'); }).length,
       sourceFaithfulReleaseReadyTypes: catalog.filter(function (type) { return type.sourceFaithfulReleaseReady; }).length,
       releaseReadyTypes: catalog.filter(function (type) { return type.releaseReady; }).length,
       areaQuestionCounts: areaCounts,
@@ -763,10 +792,12 @@
       if (type.releaseReady && type.visual && type.visual.inlineSvgAllowed) errors.push(at + ': release cannot allow inline SVG');
       if (type.generator) {
         var generator = type.generator;
-        if (generator.status !== 'verified-practice') errors.push(at + ': linked generator is not practice-verified');
-        if (generator.renderer !== 'canvas-2d-png' || generator.assetKind !== 'raster') errors.push(at + ': practice generator is not raster PNG');
+        if (['verified-practice', 'source-linked-review'].indexOf(generator.status) < 0) errors.push(at + ': linked generator has an unknown status');
+        if (generator.status === 'verified-practice' && (generator.renderer !== 'canvas-2d-png' || generator.assetKind !== 'raster')) errors.push(at + ': practice generator is not raster PNG');
+        if (generator.status === 'source-linked-review' && (generator.renderer !== 'text-only' || generator.assetKind !== 'none')) errors.push(at + ': text-only source review generator has an unexpected asset');
         if (generator.answerCheck !== 'primary plus independent verifier') errors.push(at + ': practice generator lacks an independent answer verifier');
-        if (generator.practiceReleaseReady !== true) errors.push(at + ': practice release gate is closed');
+        if (generator.status === 'verified-practice' && generator.practiceReleaseReady !== true) errors.push(at + ': practice release gate is closed');
+        if (generator.status === 'source-linked-review' && generator.practiceReleaseReady !== false) errors.push(at + ': review generator must remain release-locked');
         if (generator.sourceFaithfulReleaseReady === true && (!Array.isArray(generator.approvedModes) || generator.approvedModes.indexOf('source-faithful') < 0)) {
           errors.push(at + ': source-faithful generator approval is internally inconsistent');
         }

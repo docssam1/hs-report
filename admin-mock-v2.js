@@ -251,6 +251,24 @@
       }
     }
 
+    /* 서재의 동일 승인 키를 사용하는 주 2회 추가 모의고사 */
+    if(!N.some(function(n){return n&&n.id==='extra-mocks';})){
+      var goal=idx('goal-exam');
+      var extraNode={id:'extra-mocks',type:'extra',track:'special',date:'주 2회',title:'[선택] 추가 모의고사',desc:'서재에서 승인한 회차만 개별 제공',focus:'강의 · 시험지 · 오답 분석을 한 번에 연결'};
+      if(goal>=0)N.splice(goal,0,extraNode);else N.push(extraNode);
+      changed=true;
+    }
+    D.content=D.content||{};
+    if(!D.content['extra-mocks']){D.content['extra-mocks']={notice:'',homework:'',textbooks:[]};changed=true;}
+    var extraContent=D.content['extra-mocks'];
+    if(extraContent.notice!=='서재에서 승인된 추가 모의고사만 이곳에 표시됩니다.'){extraContent.notice='서재에서 승인된 추가 모의고사만 이곳에 표시됩니다.';changed=true;}
+    if(extraContent.homework!=='주 2회 실전 응시 후 영상 풀이와 오답 분석까지 마무리하세요.'){extraContent.homework='주 2회 실전 응시 후 영상 풀이와 오답 분석까지 마무리하세요.';changed=true;}
+    if(!Array.isArray(extraContent.textbooks)){extraContent.textbooks=[];changed=true;}
+    if(!extraContent.textbooks.some(function(t){return t&&t.accessKey==='mock-final-5';})){
+      extraContent.textbooks.push({title:'최종 실전 모의고사 5회 · 강의·시험지·진단',accessKey:'mock-final-5'});
+      changed=true;
+    }
+
     /* Phase 구분선 위치 정리
        Phase 2(중급 집중) → 중급 모의고사가 전면에 나오는 7월 4주차 앞
        Phase 3(파이널 진입) → 개념이 끝난 뒤, 배너 다음 · 9월 1주차 바로 앞 */

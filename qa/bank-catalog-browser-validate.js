@@ -50,12 +50,21 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.match(await highPoint.textContent(), /4.2점 기준/, '정답률 없는 유형은 배점 근거 표시');
     const lowPoint = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '두 상황의 높이', exact: true }) });
     assert.match(await lowPoint.textContent(), /난이도 최하/, '정답률 없는 2.7점 유형은 최하');
+    const overlapReview = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '겹치는 두 모임의 최솟값과 최댓값', exact: true }) });
+    const overlapHref = await overlapReview.getByRole('link', { name: '이 유형 유사문제 검토하기' }).getAttribute('href');
+    assert.match(overlapHref, /gen=overlap-range-sum/, '출처 구조 기반 겹침 유사문제 생성기 연결');
+    assert.match(overlapHref, /level=1/, '정답률 없는 2.7점 원문은 최하 난이도 생성 레벨로 연결');
+    await page.selectOption('#round-filter', 'original|2');
+    const remainderReview = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '서로 다른 세 조건의 교집합', exact: true }) });
+    const remainderHref = await remainderReview.getByRole('link', { name: '이 유형 유사문제 검토하기' }).getAttribute('href');
+    assert.match(remainderHref, /gen=remainder-yes-no/, '원본 예·아니요 나머지 조건 생성기 연결');
+    assert.match(remainderHref, /level=1/, '나머지 원문 2.7점은 최하 난이도 생성 레벨로 연결');
 
     await page.getByRole('tab', { name: '유형으로 찾기' }).click();
     assert.equal(await page.locator('#type-panel').isVisible(), true, '유형 검색 화면 표시');
     assert.equal(await page.locator('#paper-panel').isHidden(), true, '시험지 선택 화면 숨김');
     assert.equal(await page.locator('#paper-context').isHidden(), true, '유형 검색에서는 시험지 점수대 숨김');
-    assert.match(await page.locator('#result-status').textContent(), /570문항$/, '유형 찾기 기본 범위 570문항');
+    assert.match(await page.locator('#result-status').textContent(), /600문항$/, '유형 찾기 기본 범위 600문항');
 
     await page.fill('#search', '숫자 3이 적혀 있는 쪽');
     assert.ok(await page.getByText('특정 숫자가 들어 있는 수의 개수', { exact: true }).count() > 0, '실제 지문 일부로 관련 유형 검색');
@@ -66,7 +75,7 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     await page.locator('.area-pick[data-area="도형"]').click();
     assert.equal(await page.locator('.area-section').count(), 1, '영역별 전체 유형은 한 영역만 표시');
     assert.equal(await page.locator('.area-head h2').textContent(), '도형', '도형 영역 전체 유형');
-    assert.match(await page.locator('#result-status').textContent(), /119문항$/, '도형 영역 119문항');
+    assert.match(await page.locator('#result-status').textContent(), /123문항$/, '도형 영역 123문항');
 
     await page.setViewportSize({ width: 390, height: 844 });
     const mobile = await page.evaluate(() => ({

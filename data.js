@@ -234,6 +234,15 @@ window.GFIELD_DATA = {
       "link": "https://open.kakao.com/me/gfield"
     },
     {
+      "id": "extra-mocks",
+      "type": "extra",
+      "track": "special",
+      "date": "주 2회",
+      "title": "[선택] 추가 모의고사",
+      "desc": "서재에서 승인한 회차만 개별 제공",
+      "focus": "강의 · 시험지 · 오답 분석을 한 번에 연결"
+    },
+    {
       "id": "goal-exam",
       "type": "goal",
       "date": "11월 1일(일)",
@@ -832,6 +841,16 @@ window.GFIELD_DATA = {
       "notice": "",
       "homework": "",
       "textbooks": []
+    },
+    "extra-mocks": {
+      "notice": "서재에서 승인된 추가 모의고사만 이곳에 표시됩니다.",
+      "homework": "주 2회 실전 응시 후 영상 풀이와 오답 분석까지 마무리하세요.",
+      "textbooks": [
+        {
+          "title": "최종 실전 모의고사 5회 · 강의·시험지·진단",
+          "accessKey": "mock-final-5"
+        }
+      ]
     }
   },
   "students": [

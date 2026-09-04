@@ -84,7 +84,9 @@ const enhancements = fs.readFileSync(path.join(ROOT, 'index-enhancements.js'), '
 assert.match(index, /function canSeeBook\(book\)/, '학생 서재에 교재별 게이트가 있어야 함');
 assert.match(index, /filter\(b=>b&&b\.folder===folder&&canSeeBook\(b\)/, '렌더 전에 교재별 승인을 검사');
 assert.match(index, /if\(b\.accessKey&&!canSeeBook\(b\)\)/, '직접 열기에도 승인 검사를 적용');
-assert.match(admin, /id="product-acc-matrix"/, '관리자에 별도 판매 승인표가 있어야 함');
+assert.doesNotMatch(admin, /id="product-acc-matrix"/, '교재·모의고사 승인 전용 표를 따로 만들지 않음');
+assert.match(admin, /function bookApprovalHtml\(bookIndex,item\)/, '각 서재 교재 카드 안에서 학생을 승인');
+assert.match(admin, /이 서재 항목에서 바로 승인합니다/, '서재 안 직접 승인 안내');
 assert.match(admin, /\['concept-basic','개념 과정 BASIC'\]/, 'BASIC 승인 행이 있어야 함');
 assert.match(admin, /\['concept-core','개념 과정 CORE'\]/, 'CORE 승인 행이 있어야 함');
 for (const [title, key] of mockItems) {
@@ -95,5 +97,12 @@ assert.match(admin, /\['mock-signature-2','초등선발 대비 시그니처 실�
 assert.match(enhancements, /title:'초등선발 대비 시그니처 실전 모의고사 1회',[\s\S]*?accessKey:'mock-signature-1'/, '시그니처 1회 독립 승인 키');
 assert.match(enhancements, /title:'초등선발 대비 시그니처 실전 모의고사 2회',[\s\S]*?accessKey:'mock-signature-2'/, '시그니처 2회 독립 승인 키');
 assert.match(admin, /Object\.keys\(S\.archiveProductAccess\)/, '학생 삭제 시 상품 승인도 정리');
+const extraNode = data.nodes.find(node => node && node.id === 'extra-mocks');
+assert.ok(extraNode && extraNode.type === 'extra', '로드맵에 주 2회 추가 모의고사 항목');
+assert.match(extraNode.date, /주 2회/, '추가 모의고사 주 2회 표시');
+const extraItems = data.content?.['extra-mocks']?.textbooks || [];
+assert.ok(extraItems.some(item => item.accessKey === 'mock-final-5'), '로드맵 최종 5회가 서재 승인 키를 재사용');
+assert.match(index, /t&&t\.accessKey/, '로드맵 교재가 서재 승인 키를 확인');
+assert.match(index, /data-book-key/, '로드맵에서 승인된 서재 뷰어를 직접 엶');
 
 console.log('PASS independent approvals and final round 5 library assets');

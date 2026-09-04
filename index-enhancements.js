@@ -84,6 +84,26 @@
     });
   }
 
+  /* 서재에서 승인한 회차를 그대로 쓰는 주 2회 추가 모의고사 가지 */
+  if(!N.some(function(n){return n&&n.id==='extra-mocks';})){
+    var goalIndex=idx('goal-exam');
+    var extraNode={
+      id:'extra-mocks',type:'extra',track:'special',date:'주 2회',
+      title:'[선택] 추가 모의고사',desc:'서재에서 승인한 회차만 개별 제공',
+      focus:'강의 · 시험지 · 오답 분석을 한 번에 연결'
+    };
+    if(goalIndex>=0)N.splice(goalIndex,0,extraNode);else N.push(extraNode);
+  }
+  D.content=D.content||{};
+  if(!D.content['extra-mocks'])D.content['extra-mocks']={notice:'',homework:'',textbooks:[]};
+  var extraContent=D.content['extra-mocks'];
+  extraContent.notice='서재에서 승인된 추가 모의고사만 이곳에 표시됩니다.';
+  extraContent.homework='주 2회 실전 응시 후 영상 풀이와 오답 분석까지 마무리하세요.';
+  extraContent.textbooks=Array.isArray(extraContent.textbooks)?extraContent.textbooks:[];
+  if(!extraContent.textbooks.some(function(t){return t&&t.accessKey==='mock-final-5';})){
+    extraContent.textbooks.push({title:'최종 실전 모의고사 5회 · 강의·시험지·진단',accessKey:'mock-final-5'});
+  }
+
   /* Phase 구분선 위치 정리 */
   function moveBefore(id, rx){
     var i=idx(id); if(i<0) return;
@@ -325,6 +345,7 @@
     const c=w&&w.current?Number(w.current.weather_code):null;
     if(c!=null&&[51,53,55,61,63,65,80,81,82].includes(c))return'비 오는 날엔 더 차분하게! ☔';
     if(node&&node.type==='special')return'승인된 특강 회차만 함께 가요 ⭐';
+    if(node&&node.type==='extra')return'서재에서 승인된 추가 모의고사만 보여요 ⭐';
     if(node&&/모의고사/.test((node.title||'')+' '+(node.desc||'')))return'틀린 문제는 성장 지도야! 📝';
     return'우리 둘과 오늘도 한 칸 전진! ✨';
   }
@@ -444,11 +465,11 @@
         if(node.type==='goal'){const g=document.createElement('div');g.className='node goal';g.innerHTML=`<div class="date">${esc2(node.date)}</div><h3 class="disp">${esc2(node.title)}</h3><div class="desc">${esc2(node.desc)}</div>`;tl.appendChild(g);return}
         const unlocked=isUnlocked(node),isCurrent=node.id===D.meta.currentWeekId,el=document.createElement('div');
         el.className=`node ${node.track}${unlocked?'':' locked'}${isCurrent?' current':''}`;
-        const icon=node.type==='special'?(unlocked?'⭐':'🔒'):(unlocked?'🔓':'🔒');
+        const icon=(node.type==='special'||node.type==='extra')?(unlocked?'⭐':'🔒'):(unlocked?'🔓':'🔒');
         const friends=isCurrent?`<div class="companion-marker"><div class="friend boy">${RUNNER_BOY}</div><div class="friend girl">${RUNNER_GIRL}</div><div class="companion-bubble">${esc2(roadmapBubble(node))}</div></div>`:'';
         el.innerHTML=`${friends}<div class="icon-status">${icon}</div><div class="date">${esc2(node.date)}${isCurrent?' · 현재 진행 중':''}</div><h3 class="disp">${esc2(node.title)}</h3><div class="desc">${esc2(node.desc)}</div>${node.focus?`<div class="focus">${esc2(node.focus)}</div>`:''}`;
         el.onclick=()=>openModal(node,unlocked);
-        if(node.type==='special'){const w=document.createElement('div');w.className='special-branch';w.innerHTML='<span class="branch-tag">특강</span>';w.appendChild(el);tl.appendChild(w)}else tl.appendChild(el);
+        if(node.type==='special'||node.type==='extra'){const w=document.createElement('div');w.className='special-branch';w.innerHTML='<span class="branch-tag">'+(node.type==='extra'?'추가':'특강')+'</span>';w.appendChild(el);tl.appendChild(w)}else tl.appendChild(el);
       });
     };
   }

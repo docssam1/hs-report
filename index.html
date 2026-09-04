@@ -587,6 +587,10 @@
     if(!node||node.type==='divider'||node.type==='goal') return true;
     if(isDemo) return false;
     if(node.type==='special') return (D.specialStudents||[]).includes(currentStudent);
+    if(node.type==='extra'){
+      const c=(D.content&&D.content[node.id])||{};
+      return (c.textbooks||[]).some(canSeeTB);
+    }
     const att=D.attendance?D.attendance[currentStudent]:null;
     if(Array.isArray(att)) return att.includes(node.id);
     return weekIds().indexOf(node.id)<=currentIndex();
@@ -769,10 +773,10 @@
     const _rt=((node&&((node.desc||'')+' '+(node.title||'')+' '+(node.focus||'')))||'')+' '+(c.homework||'')+' '+(c.notice||'');
     const _rm=_rt.match(/중급\s*모의고사\s*(\d+)\s*회/)||_rt.match(/모의고사\s*중급\s*(\d+)\s*회/);
     if(_rm){ const rn=_rm[1]; h+=`<div class="m-sec"><a href="mock.html?round=${rn}&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 10px rgba(234,88,12,.3)"><span>📝</span> 중급 모의고사 ${rn}회 진단하기 ›</a><div style="font-size:11.5px;color:#94794f;margin-top:6px">집에서 푼 시험지의 틀린 번호만 체크하면 약점·점수가 바로 나와요.</div></div>`; }
-    const tbs=(c.textbooks||[]).filter(t=>t&&((t.folder&&t.pages)||t.url)&&canSeeTB(t));
+    const tbs=(c.textbooks||[]).filter(t=>t&&((t.folder&&t.pages)||t.url||t.accessKey)&&canSeeTB(t));
     if(tbs.length){
       h+=`<div class="m-sec"><h4>📕 교재 자료 <span class="wm-tag">(이름 워터마크 인쇄)</span></h4>`;
-      tbs.forEach(t=>{ if(t.folder&&t.pages){ h+=`<button class="tb-btn" data-tbf="${escAttr(t.folder)}" data-tbp="${t.pages}" data-tbt="${escAttr(t.title)}"><span class="ico">🖨</span> ${escHtml(t.title||'교재 자료')} 인쇄</button>`; } else { h+=`<button class="tb-btn" data-tb="${encodeURIComponent(t.url)}" data-tbt="${escAttr(t.title)}"><span class="ico">📕</span> ${escHtml(t.title||'교재 자료')} 받기</button>`; } });
+      tbs.forEach(t=>{ if(t.accessKey){ h+=`<button class="tb-btn" data-book-key="${escAttr(t.accessKey)}"><span class="ico">📝</span> ${escHtml(t.title||'추가 모의고사')} 열기</button>`; } else if(t.folder&&t.pages){ h+=`<button class="tb-btn" data-tbf="${escAttr(t.folder)}" data-tbp="${t.pages}" data-tbt="${escAttr(t.title)}"><span class="ico">🖨</span> ${escHtml(t.title||'교재 자료')} 인쇄</button>`; } else { h+=`<button class="tb-btn" data-tb="${encodeURIComponent(t.url)}" data-tbt="${escAttr(t.title)}"><span class="ico">📕</span> ${escHtml(t.title||'교재 자료')} 받기</button>`; } });
       h+=`<div class="watermark-note">🖨 인쇄물에는 ${escHtml(currentStudent)} 님의 이름이 흐린 대각선 워터마크로 새겨집니다. 무단 공유를 삼가주세요.</div></div>`;
     }
     if(!h) h='<div class="empty-note">아직 등록된 학습 자료가 없습니다. 준비되면 열립니다.</div>';
@@ -782,6 +786,10 @@
     scope.querySelectorAll('.lnk.yt[data-embed]').forEach(b=>b.onclick=()=>playInto(target,b.dataset.embed));
     scope.querySelectorAll('.tb-btn[data-tb]').forEach(b=>b.onclick=()=>downloadWatermarked(decodeURIComponent(b.dataset.tb), b.dataset.tbt));
     scope.querySelectorAll('.tb-btn[data-tbf]').forEach(b=>b.onclick=()=>printMaterial(b.dataset.tbf, +b.dataset.tbp, b.dataset.tbt));
+    scope.querySelectorAll('.tb-btn[data-book-key]').forEach(b=>b.onclick=()=>{
+      const book=(D.books||[]).find(item=>item&&item.accessKey===b.dataset.bookKey&&canSeeBook(item));
+      if(book) openBook(book); else toast('서재에서 승인된 모의고사를 찾지 못했습니다.');
+    });
   }
   function playInto(target, url){ target.iframe.src=url; target.frame.style.display='block'; target.frame.scrollIntoView({behavior:'smooth',block:'center'}); }
 
@@ -809,18 +817,18 @@
       const unlocked=isUnlocked(node), isCurrent=(node.id===D.meta.currentWeekId);
       const el=document.createElement('div');
       el.className=`node ${node.track}${unlocked?'':' locked'}${isCurrent?' current':''}`;
-      const icon=node.type==='special'?(unlocked?'⭐':'🔒'):(unlocked?'🔓':'🔒');
+      const icon=(node.type==='special'||node.type==='extra')?(unlocked?'⭐':'🔒'):(unlocked?'🔓':'🔒');
       el.innerHTML=`${isCurrent?'<div class="marker">'+runner+'</div>':''}<div class="icon-status">${icon}</div>`
         +`<div class="date">${node.date}${isCurrent?' · 현재 진행 중':''}</div><h3 class="disp">${escHtml(node.title)}</h3>`
         +`<div class="desc">${escHtml(node.desc)}</div>${node.focus?`<div class="focus">${escHtml(node.focus)}</div>`:''}`;
       el.onclick=()=>openModal(node,unlocked);
-      if(node.type==='special'){ const w=document.createElement('div'); w.className='special-branch'; w.innerHTML='<span class="branch-tag">특강</span>'; w.appendChild(el); tl.appendChild(w); }
+      if(node.type==='special'||node.type==='extra'){ const w=document.createElement('div'); w.className='special-branch'; w.innerHTML='<span class="branch-tag">'+(node.type==='extra'?'추가':'특강')+'</span>'; w.appendChild(el); tl.appendChild(w); }
       else tl.appendChild(el);
     });
   }
 
   function openModal(node, unlocked){
-    if(!unlocked){ toast(isDemo?'🔎 데모에서는 열람할 수 없습니다':(node.type==='special'?'🔒 방학 특강 수강생에게만 열리는 자료입니다':'🔒 아직 오픈되지 않은 수업입니다')); return; }
+    if(!unlocked){ toast(isDemo?'🔎 데모에서는 열람할 수 없습니다':(node.type==='special'?'🔒 방학 특강 수강생에게만 열리는 자료입니다':node.type==='extra'?'🔒 서재에서 승인된 학생에게만 열리는 추가 모의고사입니다':'🔒 아직 오픈되지 않은 수업입니다')); return; }
     const c=Object.assign({notice:'',homework:'',textbooks:[]},(D.content&&D.content[node.id])||{});
     document.getElementById('m-date').textContent=node.date;
     document.getElementById('m-title').textContent=node.title;
@@ -850,7 +858,11 @@
     return (D.books||[]).some(book=>book&&book.folder===folder&&book.accessKey&&canSeeBook(book));
   }
   /* 특강처럼 회차 일부만 신청한 학생을 위한 교재별 열람 권한. access가 없으면 기존과 동일하게 항상 보임(하위호환) */
-  function canSeeTB(t){ if(!Array.isArray(t.access)) return true; return t.access.includes('*')||t.access.includes(currentStudent); }
+  function canSeeTB(t){
+    if(t&&t.accessKey){ const acc=(D.archiveProductAccess||{})[t.accessKey]; return Array.isArray(acc)&&(acc.includes('*')||acc.includes(currentStudent)); }
+    if(!Array.isArray(t.access)) return true;
+    return t.access.includes('*')||t.access.includes(currentStudent);
+  }
   function isOnline(){ return ((D.studentTypes||{})[currentStudent])==='online'; }
   /* VIP 메뉴 권한: 키가 없으면 재원생만(온라인 회원은 비공개) */
   function canSeeVipMenu(k){ const a=(D.vipAccess||{})[k]; if(!Array.isArray(a)) return !isOnline(); return a.includes('*')||a.includes(currentStudent); }

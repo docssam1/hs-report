@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>황소 문제은행 · GFIELD BULL BANK | 지필드 영재교육</title>
+<title>지필드 생각하는 초등 황소 약점 유형 문제은행 | 지필드 영재교육</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -34,6 +34,9 @@
   .chip:hover{border-color:var(--orange)}
   .chip.on{background:var(--orange-d);border-color:var(--orange-d);color:#fff}
   .chip.mix{border-style:dashed}
+  .chip[hidden]{display:none}
+  .selection-summary{font-size:11.5px;font-weight:800;color:var(--accent);padding-left:4px}
+  .ratio-note{font-size:10.5px;color:var(--dim);font-weight:700}
   .toggle{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--ink2);cursor:pointer;user-select:none}
   .toggle input{width:16px;height:16px;accent-color:var(--orange-d)}
   .seedbox{display:flex;align-items:center;gap:8px}
@@ -46,6 +49,7 @@
 
   .stage-wrap{max-width:840px;margin:0 auto}
   .hint{font-size:11.5px;color:var(--dim);text-align:center;margin-bottom:14px}
+  .review-note{max-width:900px;margin:0 auto 14px;padding:11px 14px;border:1px solid #f0b429;border-radius:10px;background:#fff8db;color:#704900;font-size:12.5px;line-height:1.55}
 
   /* ---------- 시험지(미리보기 겸 인쇄 영역) ---------- */
   .page{position:relative;background:#fff;width:210mm;min-height:297mm;margin:0 auto 22px;padding:16mm 14mm;box-shadow:0 6px 24px rgba(0,0,0,.12);overflow:hidden}
@@ -54,37 +58,65 @@
   .wm-tile{color:#111;font-size:16px;font-weight:800;white-space:nowrap}
 
   /* 표지 */
-  .cover{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%;text-align:center;position:relative;z-index:2}
-  .cover .brand{font-size:13px;letter-spacing:.35em;color:var(--orange-d);font-weight:700;margin-top:40px}
-  .cover .brand2{font-family:'Jua';font-size:15px;color:var(--dim);letter-spacing:.1em;margin-bottom:26px}
-  .cover .bull{font-family:'Jua';font-size:44px;color:var(--accent);margin-bottom:6px}
-  .cover .book{font-size:16px;font-weight:900;color:var(--ink);letter-spacing:.04em;margin-bottom:44px}
-  .cover .genname{font-size:24px;font-weight:900;margin-bottom:6px;color:var(--ink)}
-  .cover .sub{font-size:13px;color:var(--ink2);margin-bottom:40px}
-  .cover .infogrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:70%;margin-bottom:50px}
-  .cover .infogrid .cell{border:1.5px solid var(--line2);border-radius:12px;padding:12px;background:var(--soft)}
-  .cover .infogrid .cell .k{font-size:10.5px;color:var(--dim);font-weight:700;letter-spacing:.06em;margin-bottom:4px}
-  .cover .infogrid .cell .v{font-size:16px;font-weight:800;color:var(--accent)}
-  .cover .fillrow{width:80%;display:flex;gap:22px;margin-top:auto;margin-bottom:30px}
-  .cover .fillrow .f{flex:1;text-align:left}
-  .cover .fillrow .f .k{font-size:11.5px;color:var(--ink2);font-weight:700;margin-bottom:6px}
-  .cover .fillrow .f .line{border-bottom:1.5px solid var(--ink2);height:30px}
-  .cover .footer{font-size:10.5px;color:var(--dim);letter-spacing:.05em}
+  .cover{display:flex;flex-direction:column;height:265mm;min-height:265mm;text-align:left;position:relative;z-index:2;border-top:7px solid var(--navy)}
+  .cover-masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:8px 0 10px;border-bottom:1px solid #c9d1dc}
+  .cover-masthead .brand{font-size:12px;font-weight:900;letter-spacing:.18em;color:var(--navy)}
+  .cover-masthead .series{margin-top:3px;font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--dim)}
+  .cover-masthead .issue{text-align:right;color:var(--ink2);font:700 10px/1.5 ui-monospace,Consolas,monospace}
+  .cover-hero{display:grid;grid-template-columns:minmax(0,1fr) 58mm;gap:10mm;align-items:stretch;margin-top:15mm}
+  .cover-title{display:flex;flex-direction:column;justify-content:center;min-width:0;padding:3mm 0}
+  .cover-title .kicker{font-size:12px;font-weight:900;letter-spacing:.12em;color:var(--orange-d)}
+  .cover-title .title-main{font-family:'Jua','Noto Sans KR',sans-serif;font-size:76px;line-height:.95;color:var(--navy);letter-spacing:-.045em;margin:11px 0 7px}
+  .cover-title .title-rest{font-family:'Jua','Noto Sans KR',sans-serif;font-size:31px;line-height:1.18;color:var(--ink);letter-spacing:-.035em;word-break:keep-all}
+  .cover-title .tagline{max-width:94%;margin-top:17px;padding-top:10px;border-top:2px solid var(--orange-d);font-size:12px;font-weight:700;line-height:1.65;color:var(--ink2)}
+  .cover-bull-panel{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:96mm;padding:10mm 7mm 8mm;background:var(--orange-d);color:#fff;border-radius:4px;overflow:hidden}
+  .cover-bull-panel:after{content:'BULL';position:absolute;right:-8px;bottom:-17px;font-size:67px;font-weight:900;letter-spacing:-.08em;color:rgba(255,255,255,.13)}
+  .cover-bull-panel .panel-top{position:relative;z-index:1;font-size:10px;font-weight:900;letter-spacing:.14em}
+  .cover-bull-panel .panel-main{position:relative;z-index:1;font-family:'Jua','Noto Sans KR',sans-serif;font-size:42px;line-height:1;color:#fff}
+  .cover-bull-panel .panel-sub{position:relative;z-index:1;font-size:11px;font-weight:800;line-height:1.55}
+  .cover-focus{margin-top:12mm;padding:6mm 0 6mm 7mm;border-left:6px solid var(--orange-d);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+  .cover-focus .label{font-size:10px;font-weight:900;letter-spacing:.16em;color:var(--orange-d)}
+  .cover-focus .genname{margin-top:5px;font-size:25px;font-weight:900;line-height:1.35;color:var(--ink);word-break:keep-all}
+  .cover-focus .sub{margin-top:6px;font-size:11.5px;line-height:1.55;color:var(--ink2)}
+  .cover-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:9mm;border-top:2px solid var(--navy);border-bottom:1px solid var(--navy)}
+  .cover-meta .cell{min-width:0;padding:9px 12px;border-right:1px solid #c9d1dc}
+  .cover-meta .cell:last-child{border-right:0}
+  .cover-meta .k{font-size:9.5px;font-weight:800;letter-spacing:.06em;color:var(--dim)}
+  .cover-meta .v{margin-top:4px;font-size:13px;font-weight:900;line-height:1.4;color:var(--navy);word-break:keep-all}
+  .cover .fillrow{position:absolute;left:0;right:0;bottom:18mm;display:flex;gap:14mm}
+  .cover .fillrow .f{flex:1}
+  .cover .fillrow .f .k{font-size:10.5px;color:var(--ink2);font-weight:800;margin-bottom:7px}
+  .cover .fillrow .f .line{border-bottom:1.5px solid var(--ink2);height:25px}
+  .cover .footer{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:14px;padding-top:8px;border-top:1px solid #c9d1dc;font-size:9.5px;font-weight:700;color:var(--dim);letter-spacing:.04em}
 
   /* 본문 문항 */
-  .qpage{position:relative;z-index:2}
+  .qpage{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto repeat(3,minmax(0,1fr));column-gap:8mm;row-gap:3.5mm;min-height:265mm}
   .qhead{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--orange-d);padding-bottom:6px;margin-bottom:14px}
+  .qpage .qhead{grid-column:1/-1}
+  .qpage .qcard:nth-child(2){grid-column:1;grid-row:2}
+  .qpage .qcard:nth-child(3){grid-column:2;grid-row:2}
+  .qpage .qcard:nth-child(4){grid-column:1;grid-row:3}
+  .qpage .qcard:nth-child(5){grid-column:2;grid-row:3}
+  .qpage .qcard:nth-child(6){grid-column:1;grid-row:4}
+  .qpage .qcard:nth-child(7){grid-column:2;grid-row:4}
   .qhead .t{font-size:12px;font-weight:800;color:var(--accent)}
   .qhead .n{font-size:11px;color:var(--dim)}
-  .qcard{page-break-inside:avoid;min-height:118mm;border-bottom:1px dashed var(--line2);padding-bottom:10px;margin-bottom:14px}
-  .qcard:last-child{border-bottom:none}
+  .qcard{page-break-inside:avoid;min-width:0;min-height:76mm;border-bottom:1px dashed var(--line2);padding-bottom:6px;margin-bottom:0;overflow-wrap:anywhere}
+  .qpage .qcard:nth-last-child(-n+2){border-bottom:none}
   .qcard .qno{display:inline-block;font-weight:900;font-size:15px;color:#fff;background:var(--accent);border-radius:8px;padding:3px 10px;margin-right:8px}
-  .qcard .qtext{font-size:14.5px;line-height:1.62;display:inline}
+  .qcard .qtext{font-size:13.5px;line-height:1.52;display:inline}
+  .qcard .qconditions{margin:5px 0 0 31px;padding:0;list-style:none;font-size:12.5px;line-height:1.45}
+  .qcard .qconditions li{margin:2px 0}
   .qcard .qmeta{font-size:9.5px;color:var(--dim);margin-top:4px}
-  .qcard .qfigure{margin:10px 0;text-align:center}
-  .qcard .qfigure img{display:block;max-width:100%;max-height:72mm;width:auto;height:auto;margin:0 auto;object-fit:contain}
-  .qcard .answerline{margin-top:8px;font-size:12.5px;color:var(--dim)}
+  .qcard .qfigure{margin:6px 0;text-align:center}
+  .qcard .qfigure img{display:block;max-width:100%;max-height:34mm;width:auto;height:auto;margin:0 auto;object-fit:contain}
+  .qcard .answerline{margin-top:6px;font-size:12px;color:var(--dim)}
+  .qcard.text-only{min-height:76mm}
+  .qcard.text-only .answerline{margin-top:14px}
   .qcard .answerline .blank{display:inline-block;min-width:120px;border-bottom:1.3px solid var(--ink2);margin-left:6px}
+  .qcard[data-index="3"],.qcard[data-index="4"]{transform:translateY(4mm)}
+  .qcard[data-index="6"]{transform:translateY(3mm)}
+  .qcard[data-index="8"]{transform:translateY(10mm)}
 
   /* 정답지 */
   .anshead{background:var(--navy);color:#fff;padding:10px 14px;border-radius:10px 10px 0 0;font-size:14px;font-weight:800;display:flex;justify-content:space-between}
@@ -94,19 +126,25 @@
   table.anstable td.no{text-align:center;font-weight:800;color:var(--accent)}
   table.anstable td.ans{font-weight:800;color:var(--accent);text-align:center}
   table.anstable td.area{font-size:9.5px;color:var(--dim)}
+  .answer-page{break-before:page;page-break-before:always}
 
   @media print{
     body{background:#fff;padding:0}
-    .topbar,.panel,.hint{display:none !important}
-    .page{box-shadow:none;margin:0;width:auto;min-height:0}
+    .topbar,.panel,.hint,.review-note{display:none !important}
+    .page{box-shadow:none;margin:0;width:auto;height:auto;min-height:268mm;padding:0;overflow:visible;break-before:page;break-after:page;break-inside:avoid}
+    .qcard{min-height:76mm}
+    .qpage{min-height:268mm}
+    .qcard .qfigure img{max-height:34mm}
     .page{page-break-after:always}
     .page:last-child{page-break-after:auto}
+    .answer-page{break-before:page!important;page-break-before:always!important}
     @page{size:A4 portrait;margin:12mm}
     *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
   }
   @media screen and (max-width:880px){
     .page{width:100%;min-height:auto}
     .catalog-link{margin-left:0}
+    .cover{height:auto;min-height:850px}.cover-hero{grid-template-columns:minmax(0,1fr) 34%;gap:16px}.cover-title .title-main{font-size:56px}.cover-title .title-rest{font-size:24px}.cover-bull-panel{min-height:320px;padding:28px 18px}.cover-bull-panel .panel-main{font-size:34px}.cover .fillrow,.cover .footer{position:static}.cover .fillrow{margin-top:auto;padding-top:60px}.cover .footer{margin-top:50px}
   }
 </style>
 </head>
@@ -114,37 +152,62 @@
 
 <div class="topbar">
   <a class="back" href="../index.html">← 자료실로</a>
-  <h1>🐂 GFIELD BULL BANK</h1>
-  <span class="tag">황소 문제은행 · 무한 생성 연습지</span>
-  <a class="catalog-link" href="catalog.html">전체 분류·개발 현황 <span class="status">확정·후보 분리</span></a>
+  <h1>지필드 생각하는 초등 황소 약점 유형 문제은행</h1>
+  <span class="tag">배점·영역·난이도 맞춤 연습지</span>
+  <a class="catalog-link" href="catalog.html">시험지·유형으로 찾기 <span class="status">문제은행</span></a>
 </div>
+
+<div class="review-note" id="reviewNote" hidden></div>
 
 <div class="panel">
   <div class="row">
-    <span class="label">유형</span>
-    <button class="chip" data-role="gen" data-val="rect">직사각형 개수</button>
-    <button class="chip" data-role="gen" data-val="tri">삼각형 개수</button>
-    <button class="chip" data-role="gen" data-val="path">최단 경로</button>
-    <button class="chip" data-role="gen" data-val="cube">쌓기나무</button>
-    <button class="chip" data-role="gen" data-val="repeat">반복 문자 규칙</button>
-    <button class="chip" data-role="gen" data-val="weekday">날짜·요일 이동</button>
-    <button class="chip" data-role="gen" data-val="inclusion">두 모임 겹침</button>
-    <button class="chip" data-role="gen" data-val="remainder">나머지 조건 수</button>
-    <button class="chip mix" data-role="gen" data-val="mix">전체 섞기</button>
+    <span class="label">배점대</span>
+    <button class="chip" data-role="points" data-val="all">전체 배점</button>
+    <button class="chip" data-role="points" data-val="2.7">2점대</button>
+    <button class="chip" data-role="points" data-val="3.4">3점대</button>
+    <button class="chip" data-role="points" data-val="4.2">4점대</button>
   </div>
   <div class="row">
-    <span class="label">레벨</span>
-    <button class="chip" data-role="level" data-val="all">전체 혼합</button>
-    <button class="chip" data-role="level" data-val="1">레벨 1</button>
-    <button class="chip" data-role="level" data-val="2">레벨 2</button>
-    <button class="chip" data-role="level" data-val="3">레벨 3</button>
-    <button class="chip" data-role="level" data-val="4">레벨 4</button>
-    <button class="chip" data-role="level" data-val="5">레벨 5</button>
+    <span class="label">난이도 조정</span>
+    <button class="chip" data-role="tune" data-val="easy">더 쉽게</button>
+    <button class="chip" data-role="tune" data-val="standard">기준</button>
+    <button class="chip" data-role="tune" data-val="hard">더 어렵게</button>
+  </div>
+  <div class="row">
+    <span class="label">난이도 비율</span>
+    <button class="chip" data-role="ratio" data-val="single">선택 난이도 100%</button>
+    <button class="chip" data-role="ratio" data-val="easy">쉽게 중심</button>
+    <button class="chip" data-role="ratio" data-val="balanced">균형 혼합</button>
+    <button class="chip" data-role="ratio" data-val="hard">어렵게 중심</button>
+    <span class="ratio-note">쉽게 중심 60·30·10 / 균형 25·50·25 / 어렵게 중심 10·30·60</span>
+  </div>
+  <div class="row">
+    <span class="label">영역</span>
+    <button class="chip" data-role="area" data-val="all">전체 영역</button>
+    <button class="chip" data-role="area" data-val="수·규칙찾기">수·규칙찾기</button>
+    <button class="chip" data-role="area" data-val="도형">도형</button>
+    <button class="chip" data-role="area" data-val="경우의 수">경우의 수</button>
+    <button class="chip" data-role="area" data-val="식의 계산">식의 계산</button>
+  </div>
+  <div class="row">
+    <span class="label">유형 복수선택</span>
+    <button class="chip" data-role="type" data-val="rect">직사각형 개수</button>
+    <button class="chip" data-role="type" data-val="tri">삼각형 개수</button>
+    <button class="chip" data-role="type" data-val="path">최단 경로</button>
+    <button class="chip" data-role="type" data-val="cube">쌓기나무</button>
+    <button class="chip" data-role="type" data-val="repeat">반복 문자 규칙</button>
+    <button class="chip" data-role="type" data-val="weekday">날짜·요일 이동</button>
+    <button class="chip" data-role="type" data-val="inclusion">두 모임 겹침</button>
+    <button class="chip" data-role="type" data-val="remainder">나머지 조건 수</button>
+    <button class="chip" data-role="type" data-val="overlap-range-sum">겹침 최솟값·최댓값 검토본</button>
+    <button class="chip" data-role="type" data-val="remainder-yes-no">나머지 예·아니요 검토본</button>
+    <button class="chip mix" data-role="all-types">현재 영역 전체</button>
+    <span class="selection-summary" id="typeSelectionSummary"></span>
   </div>
   <div class="row">
     <span class="label">문항 수</span>
-    <button class="chip" data-role="n" data-val="5">5문제</button>
-    <button class="chip" data-role="n" data-val="10">10문제</button>
+    <button class="chip" data-role="n" data-val="4">4문제</button>
+    <button class="chip" data-role="n" data-val="8">8문제</button>
     <button class="chip" data-role="n" data-val="20">20문제</button>
     <span class="spacer"></span>
     <label class="toggle"><input type="checkbox" id="optCover" checked> 표지 포함</label>
@@ -168,7 +231,7 @@
 
 <script>
 (function(){var v=Date.now();
- ['bank-core.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js'].forEach(function(f){
+ ['bank-core.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js'].forEach(function(f){
    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
 </script>
 <script>
@@ -180,23 +243,82 @@
     rect:'크고 작은 직사각형 개수', tri:'크고 작은 삼각형 개수',
     path:'최단 경로 가짓수', cube:'쌓기나무', repeat:'반복 문자 규칙',
     weekday:'날짜·요일 이동', inclusion:'두 모임 겹침', remainder:'나머지 조건 수',
-    mix:'전체 섞기(8유형 랜덤)'
+    'overlap-range-sum':'두 모임 겹침의 최솟값·최댓값',
+    'remainder-yes-no':'예·아니요 나머지 조건으로 수 찾기',
+    mix:'전체 섞기(검증된 일반 연습 8유형)'
   };
-  var LEVEL_NAMES = { all:'전체 혼합', '1':'레벨 1', '2':'레벨 2', '3':'레벨 3', '4':'레벨 4', '5':'레벨 5' };
+  var POINT_NAMES = { all:'전체 배점', '2.7':'2점대', '3.4':'3점대', '4.2':'4점대' };
+  var TUNE_NAMES = { easy:'더 쉽게', standard:'기준 난이도', hard:'더 어렵게' };
+  var DIFFICULTY_MIX_NAMES = {
+    single:'선택 난이도 100%',
+    easy:'더 쉽게 60% · 기준 30% · 더 어렵게 10%',
+    balanced:'더 쉽게 25% · 기준 50% · 더 어렵게 25%',
+    hard:'더 쉽게 10% · 기준 30% · 더 어렵게 60%'
+  };
+  var AREA_NAMES = { all:'전체 영역', '수·규칙찾기':'수·규칙찾기', '도형':'도형', '경우의 수':'경우의 수', '식의 계산':'식의 계산' };
+  var GENERATORS = window.BANK_GENS || [];
+  var GEN_BY_ID = {};
+  GENERATORS.forEach(function(generator){ GEN_BY_ID[generator.id]=generator; });
 
   var q = CORE.parseQuery();
+  var queryIds = String(q.gens || (q.gen && q.gen!=='mix' ? q.gen : '')).split(',').filter(function(id){ return !!GEN_BY_ID[id]; });
+  if(!queryIds.length && q.gen==='mix'){
+    queryIds=GENERATORS.filter(function(generator){return generator.reviewOnly!==true;}).map(function(generator){return generator.id;});
+  }
+  if(!queryIds.length)queryIds=['rect'];
+  var queryPointBand = POINT_NAMES[q.points] ? q.points :
+    ((q.level==='1'||q.level==='2')?'2.7':(q.level==='3'||q.level==='4')?'3.4':q.level==='5'?'4.2':'all');
   var state = {
-    genId: q.gen && GEN_NAMES[q.gen] ? q.gen : 'rect',
-    level: q.level && LEVEL_NAMES[q.level] ? q.level : 'all',
-    n: [5,10,20].indexOf(parseInt(q.n,10))>=0 ? parseInt(q.n,10) : 10,
+    genIds: queryIds,
+    pointBand: queryPointBand,
+    difficultyMode: TUNE_NAMES[q.tune] ? q.tune : 'standard',
+    difficultyMix: DIFFICULTY_MIX_NAMES[q.ratio] ? q.ratio : 'single',
+    area: AREA_NAMES[q.area] ? q.area : 'all',
+    n: [4,8,20].indexOf(parseInt(q.n,10))>=0 ? parseInt(q.n,10) : 8,
     seed: q.seed || '',
     cover: true,
     answer: true
   };
+  var REVIEW_IDS=['overlap-range-sum','remainder-yes-no'];
+  var reviewMode=false;
+  function difficultyLabel(){
+    return state.difficultyMix==='single' ? TUNE_NAMES[state.difficultyMode] : DIFFICULTY_MIX_NAMES[state.difficultyMix];
+  }
+  function selectedLabel(){
+    var names=state.genIds.map(function(id){return GEN_NAMES[id]||id;});
+    if(names.length===1)return names[0];
+    if(names.length<=3)return names.join(' · ');
+    return names.length+'개 유형 혼합';
+  }
+  function visibleTypeIds(){
+    return GENERATORS.filter(function(generator){return state.area==='all'||generator.area===state.area;})
+      .map(function(generator){return generator.id;});
+  }
+  function updateReviewNote(){
+    reviewMode=state.genIds.some(function(id){return REVIEW_IDS.indexOf(id)>=0;});
+    var reviewNote=document.getElementById('reviewNote');
+    reviewNote.hidden=!reviewMode;
+    if(!reviewMode)return;
+    reviewNote.textContent='출처 구조 기반 유사문제 포함 · '+selectedLabel()+
+      ' · 선택 '+POINT_NAMES[state.pointBand]+' · '+difficultyLabel()+
+      ' · 아직 공개 승인 전이며, 문장과 문제 구조를 눈으로 확인하는 단계입니다.';
+  }
+  updateReviewNote();
 
   function syncChips(){
-    document.querySelectorAll('.chip[data-role="gen"]').forEach(function(b){ b.classList.toggle('on', b.dataset.val===state.genId); });
-    document.querySelectorAll('.chip[data-role="level"]').forEach(function(b){ b.classList.toggle('on', b.dataset.val===state.level); });
+    var visibleIds=visibleTypeIds();
+    document.querySelectorAll('.chip[data-role="type"]').forEach(function(b){
+      b.hidden=visibleIds.indexOf(b.dataset.val)<0;
+      b.classList.toggle('on',state.genIds.indexOf(b.dataset.val)>=0);
+      b.setAttribute('aria-pressed',state.genIds.indexOf(b.dataset.val)>=0?'true':'false');
+    });
+    document.querySelectorAll('.chip[data-role="area"]').forEach(function(b){ b.classList.toggle('on', b.dataset.val===state.area); });
+    document.querySelectorAll('.chip[data-role="points"]').forEach(function(b){ b.classList.toggle('on', b.dataset.val===state.pointBand); });
+    document.querySelectorAll('.chip[data-role="tune"]').forEach(function(b){ b.classList.toggle('on', state.difficultyMix==='single'&&b.dataset.val===state.difficultyMode); });
+    document.querySelectorAll('.chip[data-role="ratio"]').forEach(function(b){ b.classList.toggle('on', b.dataset.val===state.difficultyMix); });
+    var allVisibleSelected=visibleIds.length>0&&visibleIds.every(function(id){return state.genIds.indexOf(id)>=0;});
+    document.querySelector('.chip[data-role="all-types"]').classList.toggle('on',allVisibleSelected);
+    document.getElementById('typeSelectionSummary').textContent=state.genIds.length+'개 유형 선택';
     document.querySelectorAll('.chip[data-role="n"]').forEach(function(b){ b.classList.toggle('on', b.dataset.val===String(state.n)); });
     document.getElementById('optCover').checked = state.cover;
     document.getElementById('optAnswer').checked = state.answer;
@@ -206,10 +328,16 @@
   function updateUrl(seedStr){
     try{
       var url = new URL(location.href);
-      url.searchParams.set('gen', state.genId);
-      url.searchParams.set('level', state.level);
+      url.searchParams.set('gen', state.genIds.length===1?state.genIds[0]:'mix');
+      url.searchParams.set('gens', state.genIds.join(','));
+      url.searchParams.set('points', state.pointBand);
+      url.searchParams.set('tune', state.difficultyMode);
+      url.searchParams.set('ratio', state.difficultyMix);
+      url.searchParams.set('area', state.area);
+      url.searchParams.delete('level');
       url.searchParams.set('n', state.n);
       url.searchParams.set('seed', seedStr);
+      if(reviewMode)url.searchParams.set('review','1');else url.searchParams.delete('review');
       history.replaceState(null,'',url.toString());
     }catch(e){}
   }
@@ -224,44 +352,71 @@
   }
 
   function buildCoverHtml(paper, examNo){
-    var genLabel = GEN_NAMES[paper.genId] || '전체 섞기';
-    var levelLabel = LEVEL_NAMES[String(paper.level)] || '전체 혼합';
+    var genLabel = selectedLabel();
+    var pointLabel = POINT_NAMES[paper.pointBand] || '전체 배점';
+    var tuneLabel = paper.difficultyMix==='single' ? (TUNE_NAMES[paper.difficultyMode] || '기준 난이도') : DIFFICULTY_MIX_NAMES[paper.difficultyMix];
     return '' +
       '<div class="wm-layer"></div>' +
       '<div class="cover">' +
-        '<div class="brand">GFIELD PROBLEM LAB</div>' +
-        '<div class="brand2">문제은행 시리즈</div>' +
-        '<div class="bull">GFIELD BULL BANK</div>' +
-        '<div class="book">황소 문제은행 연습지</div>' +
-        '<div class="genname">' + esc(genLabel) + '</div>' +
-        '<div class="sub">경우의 수 · 도형 감각을 키우는 무한 생성 연습지</div>' +
-        '<div class="infogrid">' +
-          '<div class="cell"><div class="k">유형</div><div class="v">' + esc(genLabel) + '</div></div>' +
-          '<div class="cell"><div class="k">레벨</div><div class="v">' + esc(levelLabel) + '</div></div>' +
-          '<div class="cell"><div class="k">문항 수</div><div class="v">' + paper.questions.length + '문항</div></div>' +
+        '<div class="cover-masthead">' +
+          '<div><div class="brand">GFIELD THINKING MATH</div><div class="series">생각하는 초등 · 약점 유형 학습 시리즈</div></div>' +
+          '<div class="issue">' + esc(examNo) + '<br>' + paper.questions.length + ' QUESTIONS</div>' +
+        '</div>' +
+        '<div class="cover-hero">' +
+          '<div class="cover-title">' +
+            '<div class="kicker">지필드 생각하는 초등</div>' +
+            '<div class="title-main">황소</div>' +
+            '<div class="title-rest">약점 유형<br>문제은행</div>' +
+            '<div class="tagline">틀린 이유를 유형으로 찾고,<br>같은 사고 구조를 다시 훈련합니다.</div>' +
+          '</div>' +
+          '<div class="cover-bull-panel">' +
+            '<div class="panel-top">WEAKNESS TYPE BANK</div>' +
+            '<div class="panel-main">생각의<br>빈틈을<br>채우다</div>' +
+            '<div class="panel-sub">배점대 · 영역 · 난이도<br>맞춤형 반복 학습</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="cover-focus">' +
+          '<div class="label">SELECTED TYPE</div>' +
+          '<div class="genname">' + esc(genLabel) + '</div>' +
+          '<div class="sub">' + (reviewMode?esc(pointLabel+' · '+tuneLabel+' · 출처 구조 기반 유사문제 검토본'):esc((AREA_NAMES[state.area]||state.area)+' · '+pointLabel+' · '+tuneLabel+' 맞춤 연습지')) + '</div>' +
+        '</div>' +
+        '<div class="cover-meta">' +
+          '<div class="cell"><div class="k">배점대 · 난이도</div><div class="v">' + esc(pointLabel+' · '+tuneLabel) + '</div></div>' +
+          '<div class="cell"><div class="k">문항 구성</div><div class="v">' + paper.questions.length + '문항 · 6문항씩</div></div>' +
           '<div class="cell"><div class="k">시험지 번호</div><div class="v">' + esc(examNo) + '</div></div>' +
         '</div>' +
         '<div class="fillrow">' +
           '<div class="f"><div class="k">이름</div><div class="line"></div></div>' +
           '<div class="f"><div class="k">시작한 날</div><div class="line"></div></div>' +
         '</div>' +
-        '<div class="footer">DOCSSAM\'S MATH LAB · GFIELD BULL BANK</div>' +
+        '<div class="footer"><span>지필드 영재교육</span><span>생각하는 초등 황소 약점 유형 문제은행</span></div>' +
       '</div>';
   }
 
   function buildQPageHtml(group, examNo, pageIdx, pageTotal){
     var body = '<div class="wm-layer"></div><div class="qpage">' +
-      '<div class="qhead"><span class="t">GFIELD BULL BANK · 문제</span><span class="n">' + esc(examNo) + ' · ' + pageIdx + '/' + pageTotal + '</span></div>';
+      '<div class="qhead"><span class="t">지필드 생각하는 초등 황소 약점 유형 문제은행</span><span class="n">' + esc(examNo) + ' · ' + pageIdx + '/' + pageTotal + '</span></div>';
     group.forEach(function(qq){
       var asset = qq.asset;
-      if (!asset || asset.kind !== 'raster' || !/^data:image\/png;base64,/.test(asset.src || '')) {
+      var figure='';
+      var conditionList='';
+      if (asset && (asset.kind !== 'raster' || !/^data:image\/png;base64,/.test(asset.src || ''))) {
         throw new Error('공개 문항 그림은 Canvas PNG 래스터만 사용할 수 있습니다.');
       }
-      body += '<div class="qcard">' +
+      if(asset){
+        figure='<div class="qfigure"><img src="' + escAttr(asset.src) + '" alt="' + escAttr(asset.description || qq.genName || '문항 그림') +
+          '" width="' + Number(asset.displayWidth || asset.width) + '" height="' + Number(asset.displayHeight || asset.height) + '"></div>';
+      }
+      if(Array.isArray(qq.conditionLines)&&qq.conditionLines.length){
+        conditionList='<ol class="qconditions">'+qq.conditionLines.map(function(line,index){
+          return '<li>'+['① ','② ','③ ','④ '][index]+esc(line)+'</li>';
+        }).join('')+'</ol>';
+      }
+      body += '<div class="qcard'+(asset?'':' text-only')+'" data-index="'+escAttr(qq.index||'')+'" data-gen="'+escAttr(qq.genId||'')+'" data-points="'+escAttr(qq.pointBand||'')+'" data-level="'+escAttr(qq.level||'')+'" data-tune="'+escAttr(qq.difficultyMode||'standard')+'" data-score="'+escAttr(qq.difficultyScore||0)+'">' +
         '<span class="qno">' + qq.index + '</span><span class="qtext">' + esc(qq.text) + '</span>' +
-        '<div class="qmeta">[' + esc(qq.area||'') + ' · Lv.' + qq.level + ' · ' + esc(qq.pointBand) + '점]</div>' +
-        '<div class="qfigure"><img src="' + escAttr(asset.src) + '" alt="' + escAttr(asset.description || qq.genName || '문항 그림') +
-          '" width="' + Number(asset.displayWidth || asset.width) + '" height="' + Number(asset.displayHeight || asset.height) + '"></div>' +
+        conditionList +
+        '<div class="qmeta">[' + esc(qq.area||'') + ' · ' + esc(TUNE_NAMES[qq.difficultyMode]||'기준 난이도') + ' · ' + esc(qq.pointBand) + '점]</div>' +
+        figure +
         '<div class="answerline">답 <span class="blank"></span></div>' +
         '</div>';
     });
@@ -272,7 +427,7 @@
   function buildAnswerPagesHtml(questions, examNo){
     var rowsHtml = questions.map(function(qq){
       return '<tr><td class="no">' + qq.index + '</td><td class="ans">' + esc(qq.answer) + '</td>' +
-        '<td class="area">' + esc(qq.genName||'') + ' · Lv.' + qq.level + ' · ' + esc(qq.pointBand) + '점</td><td>' + esc(qq.solution||'') + '</td></tr>';
+        '<td class="area">' + esc(qq.genName||'') + ' · ' + esc(TUNE_NAMES[qq.difficultyMode]||'기준 난이도') + ' · ' + esc(qq.pointBand) + '점</td><td>' + esc(qq.solution||'') + '</td></tr>';
     });
     var rowChunks = chunk(rowsHtml, 14);
     return rowChunks.map(function(rows, i){
@@ -285,7 +440,7 @@
 
   function render(){
     syncChips();
-    var paper = CORE.buildPaper({ genId: state.genId, level: state.level, n: state.n, seedStr: state.seed });
+    var paper = CORE.buildPaper({ genIds: state.genIds, pointBand: state.pointBand, difficultyMode: state.difficultyMode, difficultyMix: state.difficultyMix, n: state.n, seedStr: state.seed });
     state.seed = paper.seedStr;
     var examNo = CORE.examNumber(paper.seedStr);
     document.getElementById('examNoLabel').textContent = examNo;
@@ -293,11 +448,11 @@
     updateUrl(paper.seedStr);
 
     var pages = [];
-    if (state.cover) pages.push('<div class="page">' + buildCoverHtml(paper, examNo) + '</div>');
+    if (state.cover) pages.push('<div class="page cover-page">' + buildCoverHtml(paper, examNo) + '</div>');
 
-    var groups = chunk(paper.questions, 2);
+    var groups = chunk(paper.questions, 6);
     groups.forEach(function(g, i){
-      pages.push('<div class="page">' + buildQPageHtml(g, examNo, i+1, groups.length) + '</div>');
+      pages.push('<div class="page question-page">' + buildQPageHtml(g, examNo, i+1, groups.length) + '</div>');
     });
 
     if (state.answer && paper.questions.length){
@@ -316,7 +471,7 @@
         }
       });
       if (cur.length) tmp.push(cur);
-      tmp.forEach(function(parts){ pages.push('<div class="page">' + parts.join('') + '</div>'); });
+      tmp.forEach(function(parts){ pages.push('<div class="page answer-page">' + parts.join('') + '</div>'); });
     }
 
     document.getElementById('stage').innerHTML = pages.join('');
@@ -326,9 +481,26 @@
   document.querySelectorAll('.chip').forEach(function(btn){
     btn.addEventListener('click', function(){
       var role = btn.dataset.role, val = btn.dataset.val;
-      if (role==='gen') state.genId = val;
-      else if (role==='level') state.level = val;
+      if(role==='type'){
+        var index=state.genIds.indexOf(val);
+        if(index>=0&&state.genIds.length>1)state.genIds.splice(index,1);
+        else if(index<0)state.genIds.push(val);
+        updateReviewNote();
+      }
+      else if(role==='all-types'){
+        state.genIds=visibleTypeIds();
+        updateReviewNote();
+      }
+      else if(role==='area'){
+        state.area=val;
+        state.genIds=visibleTypeIds();
+        updateReviewNote();
+      }
+      else if(role==='points')state.pointBand=val;
+      else if(role==='tune'){state.difficultyMode=val;state.difficultyMix='single';}
+      else if(role==='ratio')state.difficultyMix=val;
       else if (role==='n') state.n = parseInt(val,10);
+      updateReviewNote();
       render();
     });
   });

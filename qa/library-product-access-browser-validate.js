@@ -53,6 +53,23 @@ async function verifyCase(browser, student, basicAllowed, coreAllowed, final5All
     assert.equal(await page.getByRole('link', { name: /실전 타이머/ }).count(), 1, '최종 5회 타이머 연결');
     assert.equal(await page.getByRole('link', { name: /오답 입력·분석/ }).count(), 1, '최종 5회 진단 연결');
     assert.equal(await page.getByRole('link', { name: /답안·교재 연결표/ }).count(), 1, '최종 5회 답안 연결');
+    await page.evaluate(() => closeBook());
+  }
+
+  await page.click('.nav-btn[data-v="roadmap"]');
+  const extraMock = page.locator('.special-branch .node:visible').filter({ hasText: '추가 모의고사' });
+  assert.equal(await extraMock.count(), 1, `${student} 로드맵 추가 모의고사 항목`);
+  assert.equal(await extraMock.evaluate(el => el.classList.contains('locked')), !final5Allowed, `${student} 서재 승인과 로드맵 잠금 연동`);
+  await extraMock.click();
+  if (final5Allowed) {
+    await page.waitForSelector('#overlay:not(.hidden)');
+    const roadmapFinal5 = page.getByRole('button', { name: /최종 실전 모의고사 5회.*열기/ });
+    assert.equal(await roadmapFinal5.count(), 1, '로드맵에 승인된 최종 5회 표시');
+    await roadmapFinal5.click();
+    await page.waitForSelector('#bookviewer.open');
+    assert.equal(await page.locator('#bookviewer .bv-pg img').count(), 7, '로드맵에서도 같은 최종 5회 뷰어 연결');
+  } else {
+    assert.equal(await page.locator('#overlay:not(.hidden)').count(), 0, `${student} 미승인 로드맵 자료 차단`);
   }
   await context.close();
 }

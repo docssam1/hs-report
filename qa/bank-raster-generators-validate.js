@@ -226,13 +226,47 @@ function independentAnswer(question) {
       ['repeat', '반복 문자 규칙'], ['weekday', '날짜·요일 이동'],
       ['inclusion', '두 모임 겹침'], ['remainder', '나머지 조건 수'],
     ]) {
-      const chip = page.locator(`.chip[data-role="gen"][data-val="${id}"]`);
+      await page.goto(`http://127.0.0.1:${port}/bank/index.html?gen=${id}&points=all&n=20&seed=PNG1`, { waitUntil: 'networkidle' });
+      const chip = page.locator(`.chip[data-role="type"][data-val="${id}"]`);
       assert.equal(await chip.count(), 1, `${id} generator button`);
-      await chip.click();
+      assert.equal(await chip.getAttribute('aria-pressed'), 'true', `${id} generator selected`);
       assert.equal(await page.locator('.cover .genname').textContent(), label, `${id} targeted paper cover`);
       assert.equal(new URL(page.url()).searchParams.get('gen'), id, `${id} query state`);
       assert.equal(await page.locator('.qcard').count(), 20, `${id} targeted paper question count`);
     }
+    await page.goto(`http://127.0.0.1:${port}/bank/index.html?gen=rect&points=2.7&n=20&seed=MULT`, { waitUntil: 'networkidle' });
+    await page.locator('.chip[data-role="type"][data-val="tri"]').click();
+    assert.equal(await page.locator('.chip[data-role="type"][aria-pressed="true"]').count(), 2, 'two generator types selected together');
+    assert.deepEqual(new URL(page.url()).searchParams.get('gens').split(',').sort(), ['rect', 'tri'], 'multiple type query state');
+    assert.deepEqual((await page.locator('.qcard').evaluateAll((cards) => [...new Set(cards.map((card) => card.dataset.gen))])).sort(), ['rect', 'tri'], 'both selected types appear');
+    assert.deepEqual(await page.locator('.qcard').evaluateAll((cards) => [...new Set(cards.map((card) => card.dataset.points))]), ['2.7'], '2-point band only');
+    await page.locator('.chip[data-role="tune"][data-val="easy"]').click();
+    assert.deepEqual(await page.locator('.qcard').evaluateAll((cards) => [...new Set(cards.map((card) => Number(card.dataset.level)))]), [1], '2-point easier mode uses the lowest source profile');
+    await page.locator('.chip[data-role="tune"][data-val="hard"]').click();
+    assert.ok((await page.locator('.qcard').evaluateAll((cards) => cards.every((card) => [2, 3].includes(Number(card.dataset.level))))), '2-point harder mode raises the source profile');
+    await page.locator('.chip[data-role="tune"][data-val="standard"]').click();
+    await page.locator('.chip[data-role="points"][data-val="3.4"]').click();
+    assert.deepEqual(await page.locator('.qcard').evaluateAll((cards) => [...new Set(cards.map((card) => card.dataset.points))]), ['3.4'], '3-point band only');
+    await page.locator('.chip[data-role="points"][data-val="4.2"]').click();
+    assert.deepEqual(await page.locator('.qcard').evaluateAll((cards) => [...new Set(cards.map((card) => card.dataset.points))]), ['4.2'], '4-point band only');
+    const standardScores = await page.locator('.qcard').evaluateAll((cards) => cards.map((card) => Number(card.dataset.score)));
+    await page.locator('.chip[data-role="tune"][data-val="hard"]').click();
+    const hardScores = await page.locator('.qcard').evaluateAll((cards) => cards.map((card) => Number(card.dataset.score)));
+    assert.ok(hardScores.reduce((sum, score) => sum + score, 0) > standardScores.reduce((sum, score) => sum + score, 0), '4-point harder mode raises total paper complexity');
+    assert.ok(hardScores.some((score, index) => score > standardScores[index]), '4-point harder mode materially increases at least one question');
+    await page.locator('.chip[data-role="ratio"][data-val="balanced"]').click();
+    assert.deepEqual(
+      await page.locator('.qcard').evaluateAll((cards) => cards.reduce((counts, card) => {
+        counts[card.dataset.tune] = (counts[card.dataset.tune] || 0) + 1;
+        return counts;
+      }, {})),
+      { easy: 5, standard: 10, hard: 5 },
+      '20-question balanced paper uses the requested 25/50/25 ratio'
+    );
+    assert.equal(new URL(page.url()).searchParams.get('ratio'), 'balanced', 'difficulty ratio persists in the paper URL');
+    await page.locator('.chip[data-role="area"][data-val="도형"]').click();
+    assert.equal(await page.locator('#typeSelectionSummary').textContent(), '3개 유형 선택', 'area selects every available type in that area');
+    assert.deepEqual((await page.locator('.qcard').evaluateAll((cards) => [...new Set(cards.map((card) => card.dataset.gen))])).sort(), ['cube', 'rect', 'tri'], 'geometry area paper uses geometry types only');
     if (SCREENSHOT) await page.screenshot({ path: SCREENSHOT, fullPage: true });
 
     for (const [id, filename] of [
@@ -246,7 +280,7 @@ function independentAnswer(question) {
     const samples = await page.evaluate(() => {
       const output = [];
       const core = window.BANK_CORE;
-      for (const generator of window.BANK_GENS) {
+      for (const generator of window.BANK_GENS.filter((row) => row.reviewOnly !== true)) {
         for (let level = 1; level <= 5; level++) {
           for (let seed = 0; seed < 8; seed++) {
             const rng = core.mulberry32(core.hashString(`${generator.id}:${level}:${seed}`));
@@ -306,8 +340,8 @@ function independentAnswer(question) {
       };
     });
 
-    assert.equal(samples.output.length, 8 * 5 * 8, '8 families × 5 levels × 8 seeds');
-    assert.deepEqual(samples.generatorIds.sort(), ['cube', 'inclusion', 'path', 'rect', 'remainder', 'repeat', 'tri', 'weekday']);
+    assert.equal(samples.output.length, 8 * 5 * 8, '8 public practice families × 5 levels × 8 seeds');
+    assert.deepEqual(samples.generatorIds.sort(), ['cube', 'inclusion', 'overlap-range-sum', 'path', 'rect', 'remainder', 'remainder-yes-no', 'repeat', 'tri', 'weekday']);
     for (const question of samples.output) {
       assert.equal(question.asset.kind, 'raster', `${question.genId} raster kind`);
       assert.equal(question.asset.mimeType, 'image/png', `${question.genId} PNG MIME`);

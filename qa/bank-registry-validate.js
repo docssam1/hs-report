@@ -74,16 +74,17 @@ check('대영역·배점 분포가 원본 데이터와 일치', () => {
   assert.deepEqual(summary.pointQuestionCounts, { '2.7': 24, '3.4': 20, '4.2': 16 });
 });
 
-check('5개 연결 생성기는 일반 연습형만 검증 완료하고 원본 복기형은 차단', () => {
+check('3개 일반 연습형과 2개 실제 원본 구조 검토형을 구분하고 공개는 차단', () => {
   assert.equal(summary.linkedLegacyGenerators, 5);
-  assert.equal(summary.verifiedPracticeGenerators, 5);
+  assert.equal(summary.verifiedPracticeGenerators, 3);
+  assert.equal(summary.sourceLinkedReviewTypes, 2);
   assert.equal(summary.sourceFaithfulReleaseReadyTypes, 0);
   assert.equal(summary.releaseReadyTypes, 0);
   const links = catalog.filter((type) => type.generator);
   assert.deepEqual(links.map((type) => type.generator.generatorId).sort(), [
-    'cube', 'inclusion', 'path', 'remainder', 'tri'
+    'cube', 'overlap-range-sum', 'path', 'remainder-yes-no', 'tri'
   ]);
-  links.forEach((type) => {
+  links.filter((type) => type.generator.status === 'verified-practice').forEach((type) => {
     assert.equal(type.bankStatus, 'verified-practice');
     assert.equal(type.practiceReleaseReady, true);
     assert.equal(type.sourceFaithfulReleaseReady, false);
@@ -99,13 +100,20 @@ check('5개 연결 생성기는 일반 연습형만 검증 완료하고 원본 �
     assert.ok(type.generator.sourceFaithfulBlockers.length >= 2);
     assert.equal(type.generator.qaEvidence.generatedQuestions, 40);
   });
-  ['inclusion', 'remainder'].forEach((generatorId) => {
+  ['overlap-range-sum', 'remainder-yes-no'].forEach((generatorId) => {
     const linked = links.find((type) => type.generator.generatorId === generatorId);
     assert.ok(linked, `${generatorId} confirmed source link`);
     assert.equal(linked.generator.gradeBand, '초2~초3');
     assert.deepEqual(linked.generator.contentConstraints, { latinVariables: false, powers: false });
+    assert.equal(linked.generator.status, 'source-linked-review');
+    assert.deepEqual(linked.generator.approvedModes, ['review']);
+    assert.equal(linked.generator.renderer, 'text-only');
+    assert.equal(linked.generator.assetKind, 'none');
+    assert.equal(linked.generator.practiceReleaseReady, false);
     assert.equal(linked.generator.sourceFaithfulReleaseReady, false);
     assert.ok(linked.generator.sourceFaithfulBlockers.length >= 2);
+    assert.equal(linked.generator.qaEvidence.generatedQuestions, 5000);
+    assert.equal(linked.generator.qaEvidence.seedsPerLevel, 1000);
   });
 });
 

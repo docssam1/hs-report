@@ -46,6 +46,18 @@
     return h >>> 0;
   }
 
+  function stableTypeId(area, subarea, name) {
+    var value = [area, subarea, name].map(function (part) {
+      return String(part == null ? '' : part).replace(/\s+/g, ' ').trim();
+    }).join('|');
+    var h = 0x811c9dc5;
+    for (var i = 0; i < value.length; i++) {
+      h ^= value.charCodeAt(i);
+      h = Math.imul(h, 0x01000193);
+    }
+    return 'type-' + (h >>> 0).toString(36).padStart(7, '0');
+  }
+
   function encodeSeed(num) {
     num = ((num % SEED_SPACE) + SEED_SPACE) % SEED_SPACE;
     var out = '';
@@ -101,33 +113,134 @@
     return a;
   }
 
+  function complexityValue(value, depth) {
+    if (depth > 5 || value == null) return 0;
+    if (typeof value === 'number' && isFinite(value)) return Math.log2(Math.abs(value) + 1);
+    if (typeof value === 'boolean') return value ? 0.5 : 0;
+    if (Array.isArray(value)) {
+      return value.length + value.reduce(function (sum, item) {
+        return sum + complexityValue(item, depth + 1);
+      }, 0);
+    }
+    if (typeof value === 'object') {
+      return Object.keys(value).reduce(function (sum, key) {
+        return sum + complexityValue(value[key], depth + 1);
+      }, 0);
+    }
+    return 0;
+  }
+
+  function questionComplexity(question, level) {
+    if (question && typeof question.complexityScore === 'number' && isFinite(question.complexityScore)) {
+      return Number(level || 1) * 10000 + question.complexityScore;
+    }
+    return Number(level || 1) * 10000 + complexityValue(question && question.meta, 0);
+  }
+
+  function questionPromptKey(question) {
+    return String(question && question.text || '') + '|' +
+      (Array.isArray(question && question.conditionLines) ? question.conditionLines.join('|') : '');
+  }
+
+  var DIFFICULTY_MIX_PRESETS = Object.freeze({
+    single: Object.freeze({ easy: 0, standard: 100, hard: 0 }),
+    easy: Object.freeze({ easy: 60, standard: 30, hard: 10 }),
+    balanced: Object.freeze({ easy: 25, standard: 50, hard: 25 }),
+    hard: Object.freeze({ easy: 10, standard: 30, hard: 60 })
+  });
+
+  function difficultySchedule(n, preset, singleMode, rng) {
+    var modes = ['easy', 'standard', 'hard'];
+    if (preset === 'single' || !DIFFICULTY_MIX_PRESETS[preset]) {
+      return Array.from({ length: n }, function () { return singleMode; });
+    }
+    var weights = DIFFICULTY_MIX_PRESETS[preset];
+    var total = modes.reduce(function (sum, mode) { return sum + weights[mode]; }, 0) || 100;
+    var counts = {};
+    var allocated = 0;
+    var fractions = modes.map(function (mode, index) {
+      var exact = n * weights[mode] / total;
+      counts[mode] = Math.floor(exact);
+      allocated += counts[mode];
+      return { mode: mode, fraction: exact - counts[mode], index: index };
+    });
+    fractions.sort(function (a, b) {
+      return b.fraction - a.fraction || a.index - b.index;
+    });
+    for (var remainder = n - allocated, i = 0; i < remainder; i++) {
+      counts[fractions[i % fractions.length].mode]++;
+    }
+    var schedule = [];
+    modes.forEach(function (mode) {
+      for (var i = 0; i < counts[mode]; i++) schedule.push(mode);
+    });
+    return shuffle(rng, schedule);
+  }
+
   function buildPaper(opts) {
     var gens = global.BANK_GENS || [];
     var genId = opts.genId;
+    var requestedGenIds = Array.isArray(opts.genIds) ? opts.genIds.map(String) : [];
     var level = opts.level || 'all';
+    var pointBand = opts.pointBand || 'all';
+    var difficultyMode = ['easy', 'standard', 'hard'].indexOf(opts.difficultyMode) >= 0 ? opts.difficultyMode : 'standard';
+    var difficultyMix = DIFFICULTY_MIX_PRESETS[opts.difficultyMix] ? opts.difficultyMix : 'single';
     var n = opts.n || 10;
 
     var seedStr = normalizeSeedInput(opts.seedStr);
     var seedNum = decodeSeed(seedStr);
     var masterRng = mulberry32(seedNum);
 
-    var candidateGens = gens.filter(function (g) {
-      return genId === 'mix' || g.id === genId;
-    });
-    if (!candidateGens.length) candidateGens = gens;
+    var candidateGens;
+    if (requestedGenIds.length) {
+      candidateGens = gens.filter(function (g) { return requestedGenIds.indexOf(g.id) >= 0; });
+    } else {
+      candidateGens = gens.filter(function (g) {
+        return genId === 'mix' ? g.reviewOnly !== true : g.id === genId;
+      });
+    }
+    if (!candidateGens.length) candidateGens = gens.filter(function (g) { return g.reviewOnly !== true; });
+
+    var pointLevels = {
+      easy: { all: [1, 2], '2.7': [1], '3.4': [2, 3], '4.2': [4] },
+      standard: { all: [1, 2, 3, 4, 5], '2.7': [1, 2], '3.4': [3, 4], '4.2': [5] },
+      hard: { all: [4, 5], '2.7': [2, 3], '3.4': [4, 5], '4.2': [5] }
+    };
 
     var questions = [];
+    var usedPrompts = {};
+    var usedAnswers = {};
+    var generatorQueue = [];
     var guard = 0;
+    var difficultyModes = difficultySchedule(n, difficultyMix, difficultyMode, masterRng);
     for (var i = 0; i < n; i++) {
-      var qLevel = level === 'all' ? randint(masterRng, 1, 5) : parseInt(level, 10);
-      var gen = candidateGens.length > 1 ? pick(masterRng, candidateGens) : candidateGens[0];
+      var questionDifficulty = difficultyModes[i] || difficultyMode;
+      var allowedLevels = pointLevels[questionDifficulty][pointBand] || pointLevels[questionDifficulty].all;
+      var qLevel = allowedLevels ? pick(masterRng, allowedLevels) :
+        (level === 'all' ? randint(masterRng, 1, 5) : parseInt(level, 10));
+      if (!generatorQueue.length) generatorQueue = shuffle(masterRng, candidateGens);
+      var gen = generatorQueue.shift();
       if (!gen) break;
       var qRng = subRng(seedNum, i, gen.id);
       var q = null;
       var attempts = 0;
-      while (!q && attempts < 30) {
+      while (!q && attempts < 60) {
         try {
-          q = gen.gen(qLevel, qRng);
+          var sampleCount = questionDifficulty === 'standard' ? 1 : 4;
+          var variants = [];
+          for (var sample = 0; sample < sampleCount; sample++) {
+            var candidate = gen.gen(qLevel, qRng);
+            candidate.difficultyScore = questionComplexity(candidate, qLevel);
+            variants.push(candidate);
+          }
+          variants.sort(function (a, b) {
+            return questionDifficulty === 'easy' ? a.difficultyScore - b.difficultyScore : b.difficultyScore - a.difficultyScore;
+          });
+          q = variants.find(function (candidate) {
+            var promptKey = questionPromptKey(candidate);
+            var answerKey = String(candidate.answer);
+            return !usedPrompts[promptKey] && !(gen.preferDistinctAnswers === true && !!usedAnswers[answerKey]);
+          }) || (attempts >= 59 ? variants[0] : null);
         } catch (e) {
           q = null;
         }
@@ -136,11 +249,20 @@
         if (guard > n * 200) break;
       }
       if (q) {
+        usedPrompts[questionPromptKey(q)] = true;
+        usedAnswers[String(q.answer)] = true;
         q.level = qLevel;
-        q.pointBand = q.pointBand || pointBandForLevel(qLevel);
+        q.pointBand = pointBand === 'all' ? (q.pointBand || pointBandForLevel(qLevel)) : pointBand;
+        q.difficultyMode = questionDifficulty;
         q.genId = gen.id;
         q.genName = gen.name;
         q.area = gen.area;
+        if (!q.diagnosis && gen.typeId) {
+          q.diagnosis = {
+            typeId: gen.typeId,
+            errorTags: (gen.errorTags || []).slice()
+          };
+        }
         q.index = i + 1;
         questions.push(q);
       }
@@ -150,7 +272,11 @@
       seedStr: seedStr,
       seedNum: seedNum,
       level: level,
-      genId: genId,
+      pointBand: pointBand,
+      difficultyMode: difficultyMode,
+      difficultyMix: difficultyMix,
+      genId: candidateGens.length === 1 ? candidateGens[0].id : 'mix',
+      genIds: candidateGens.map(function (g) { return g.id; }),
       n: n,
       questions: questions
     };
@@ -213,6 +339,7 @@
   global.BANK_CORE = {
     mulberry32: mulberry32,
     hashString: hashString,
+    stableTypeId: stableTypeId,
     encodeSeed: encodeSeed,
     decodeSeed: decodeSeed,
     randomSeedNum: randomSeedNum,
@@ -221,6 +348,7 @@
     randint: randint,
     pick: pick,
     shuffle: shuffle,
+    difficultySchedule: difficultySchedule,
     buildPaper: buildPaper,
     examNumber: examNumber,
     parseQuery: parseQuery,
@@ -228,6 +356,7 @@
     buildWatermarkTiles: buildWatermarkTiles,
     initWatermarks: initWatermarks,
     POINT_BAND_BY_LEVEL: POINT_BAND_BY_LEVEL,
+    DIFFICULTY_MIX_PRESETS: DIFFICULTY_MIX_PRESETS,
     pointBandForLevel: pointBandForLevel
   };
 
