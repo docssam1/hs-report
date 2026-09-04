@@ -50,7 +50,8 @@ const final5 = data.books.find(book => book && book.title === '최종 실전 모
 assert.equal(final5.imgdir, 'final_5', '최종 5회 이미지 폴더 연결');
 assert.equal(final5.pages, 7, '최종 5회는 7쪽');
 assert.match(final5.pdf, /초등|%EC%B4%88/, '최종 5회 PDF 연결');
-assert.deepEqual(Array.from(final5.links || []), [], '준비되지 않은 최종 5회 진단 링크는 노출하지 않음');
+assert.deepEqual(Array.from(final5.links || []).map(link => link.label), ['실전 타이머', '오답 입력·분석', '답안·교재 연결표'], '최종 5회 학습 흐름 연결');
+assert.match(final5.video, /1uhIx_l04EA/, '최종 5회 풀이 영상 연결');
 assert.ok(fs.existsSync(path.join(ROOT, 'materials', '초등과정 대비 최종 모의고사 5회.pdf')), '최종 5회 PDF 파일 필요');
 for (let page = 1; page <= 7; page += 1) {
   assert.ok(fs.existsSync(path.join(ROOT, 'materials', 'final_5', `${String(page).padStart(3, '0')}.jpg`)), `최종 5회 ${page}쪽 이미지 필요`);

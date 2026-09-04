@@ -18,11 +18,12 @@
 <script>(function(){var v=Date.now();['mock-data.js','mock-data-hw.js','mock-data-final.js','mock-rx.js'].forEach(function(f){document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>')})})();</script>
 <script>
 const P=new URLSearchParams(location.search),SETQ=(P.get('set')||'').toLowerCase(),SET=SETQ==='hw'?'hw':SETQ==='final'?'final':'mid',SETNAME=SET==='hw'?'활용':SET==='final'?'파이널':'중급';
-const D=window.GFIELD_DATA||{},M=SET==='hw'?(window.GFIELD_MOCK_HW||{}):SET==='final'?(window.GFIELD_MOCK_FINAL||{}):(window.GFIELD_MOCK||window.MOCK||{}),MAXR=SET==='hw'?9:SET==='final'?4:8,RD=(()=>{const n=parseInt(P.get('round'),10);return n>=1&&n<=MAXR?n:1})(),RX=typeof PRESCRIPTION!=='undefined'?PRESCRIPTION:(window.PRESCRIPTION||[]);
+const D=window.GFIELD_DATA||{},M=SET==='hw'?(window.GFIELD_MOCK_HW||{}):SET==='final'?(window.GFIELD_MOCK_FINAL||{}):(window.GFIELD_MOCK||window.MOCK||{}),MAXR=SET==='hw'?9:SET==='final'?5:8,RD=(()=>{const n=parseInt(P.get('round'),10);return n>=1&&n<=MAXR?n:1})(),RX=typeof PRESCRIPTION!=='undefined'?PRESCRIPTION:(window.PRESCRIPTION||[]);
 let NAME=(P.get('name')||'').trim();try{if(!NAME)NAME=localStorage.getItem('gfield_student')||''}catch(e){}
 function allowed(name){
   if(name.toLowerCase()==='docssam')return true;
   if(!(D.students||[]).includes(name))return false;
+  if(SET==='final'&&RD>=5){const a=((D.archiveProductAccess||{})['mock-final-'+RD])||[];return a.includes('*')||a.includes(name)}
   if(SET==='final')return((((D.archiveAccess||{})['파이널 모의고사'])||[]).includes(name));
   if(SET!=='hw')return true;
   const online=((D.studentTypes||{})[name])==='online';
@@ -41,7 +42,8 @@ function showContent(){
   document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');
   const viewer=(SET==='final'?'final.html?round='+RD:'mock.html?set='+SET+'&round='+RD)+'&name='+encodeURIComponent(NAME)+(P.get('preview')==='1'?'&preview=1':'');
   document.getElementById('nav').innerHTML='<a href="'+viewer+'" class="viewer">📝 '+(SET==='final'?'파이널 진단 뷰어':'시험지 뷰어')+' · 오답 입력·분석</a><span class="sp"></span><button onclick="window.print()">🖨 인쇄 / PDF 저장</button>';
-  document.title=`${SETNAME} 모의고사 · 답안 및 교재 연결표 | 지필드 영재교육`;document.getElementById('ttl').textContent=`${SETNAME} 모의고사 ${RD}회 · 답안 및 교재 연결표`;document.getElementById('ft1').textContent=`지필드 영재교육 · ${SETNAME} 모의고사 ${RD}회 답안 및 교재 연결표`;
+  const roundName=SET==='final'&&RD>=5?'최종 실전':SETNAME;
+  document.title=`${roundName} 모의고사 · 답안 및 교재 연결표 | 지필드 영재교육`;document.getElementById('ttl').textContent=`${roundName} 모의고사 ${RD}회 · 답안 및 교재 연결표`;document.getElementById('ft1').textContent=`지필드 영재교육 · ${roundName} 모의고사 ${RD}회 답안 및 교재 연결표`;
   const items=(((M.rounds||{})[RD]||(M.rounds||{})[String(RD)]||{}).items)||[];
   const BP=Array.isArray(M.blueprint)?M.blueprint:null,BPMAP=BP?Object.fromEntries(BP.map(b=>[b.no,b.pts])):null;
   document.getElementById('body').innerHTML=items.map(it=>{const no=it.no,ptn=(BPMAP&&BPMAP[no]!=null)?+BPMAP[no]:(no<=12?2.7:no<=22?3.4:4.2),pt=String(ptn),cls=ptn<=2.7?'t27':ptn<=3.4?'t34':'t42',tr=no===13||no===23?' class="tier"':'',r=findRx(it.type)||{books:{},pts:[],label:'—'},B=r.books||{},pts=(r.pts||[]).map(p=>`<li>${esc(p)}</li>`).join('');return`<tr${tr}><td class="no">${no}</td><td class="pt ${cls}">${pt}</td><td class="ans">${esc(it.answer)}</td><td>${esc(it.type)}</td><td class="rx">${esc(r.label)}</td><td class="b1">${bk(B['시중교재'])}</td><td class="b2">${bk(B['소마'])}</td><td class="b3">${bk(B['필즈더클래식'])}</td><td class="b4">${bk(B['지필드'])}</td><td class="b5"><ul>${pts}</ul></td></tr>`}).join('');if(!items.length)document.getElementById('body').innerHTML='<tr><td colspan="10" style="padding:24px;text-align:center;color:#888">데이터를 불러오지 못했습니다.</td></tr>';

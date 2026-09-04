@@ -47,7 +47,12 @@ async function verifyCase(browser, student, basicAllowed, coreAllowed, final5All
     const images = page.locator('#bookviewer .bv-pg img');
     assert.equal(await images.count(), 7, '최종 5회 뷰어는 7쪽을 표시');
     await page.waitForFunction(() => [...document.querySelectorAll('#bookviewer .bv-pg img')].every(img => img.complete && img.naturalWidth > 0));
-    assert.equal(await page.getByRole('link', { name: /오답 입력|답안·교재 연결표/ }).count(), 0, '준비되지 않은 진단 링크는 표시하지 않음');
+    const video = page.locator('#bookviewer .bv-stage.split .bv-vid iframe');
+    assert.equal(await video.count(), 1, '최종 5회 시험지·영상 결합 뷰어');
+    assert.match(await video.getAttribute('src'), /youtube\.com\/embed\/1uhIx_l04EA/, '최종 5회 풀이 영상');
+    assert.equal(await page.getByRole('link', { name: /실전 타이머/ }).count(), 1, '최종 5회 타이머 연결');
+    assert.equal(await page.getByRole('link', { name: /오답 입력·분석/ }).count(), 1, '최종 5회 진단 연결');
+    assert.equal(await page.getByRole('link', { name: /답안·교재 연결표/ }).count(), 1, '최종 5회 답안 연결');
   }
   await context.close();
 }

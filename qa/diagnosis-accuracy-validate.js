@@ -338,11 +338,14 @@ check('원본형 확정 소영역과 자동 후보를 약점 판정에서 분리
     final: clone(finalModel),
   });
   const originalItems = catalog.items.filter((item) => item.sourceRef.set === 'original');
-  const candidateItems = catalog.items.filter((item) => item.sourceRef.set === 'final');
+  const candidateItems = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round <= 4);
+  const confirmedFinal5Items = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round === 5);
   assert.equal(originalItems.length, 60);
   assert.ok(originalItems.every((item) => item.reviewStatus === 'confirmed' && !item.reviewRequired));
   assert.ok(candidateItems.length > 0);
   assert.ok(candidateItems.every((item) => item.reviewStatus === 'candidate' && item.reviewRequired));
+  assert.equal(confirmedFinal5Items.length, 30);
+  assert.ok(confirmedFinal5Items.every((item) => item.reviewStatus === 'confirmed' && !item.reviewRequired));
 
   const originalCore = loadFinalCore({ setKey: 'original' }).core;
   const ox = Array(30).fill('O');

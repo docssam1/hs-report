@@ -1821,7 +1821,20 @@ window.GFIELD_DATA = {
       "video": "https://www.youtube.com/watch?v=1uhIx_l04EA",
       "cover": "",
       "date": "2026-07-28",
-      "links": []
+      "links": [
+        {
+          "label": "실전 타이머",
+          "url": "https://hs.gfieldacademy.net/final.html?round=5&go=timer"
+        },
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/final.html?round=5&go=answer"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=5"
+        }
+      ]
     },
     {
       "folder": "추가 모의고사",

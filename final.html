@@ -387,7 +387,7 @@ td.weak-cell{white-space:nowrap}
   var SUPA_KEY = "sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
 
   var rawRound = params.get('round');
-  var maxRound = isOriginal ? 2 : 4;
+  var maxRound = isOriginal ? 2 : (isLast ? 4 : 5);
   var roundNum = rawRound==null||rawRound==='' ? 1 : (/^\d+$/.test(rawRound) && Number(rawRound)>=1 && Number(rawRound)<=maxRound ? Number(rawRound) : 0);
   /* 잠긴 시험의 미리보기는 개발자 로컬 서버에서만 허용한다.
      정적 배포 주소에서는 preview=1만으로 ready:false를 우회할 수 없다. */
@@ -427,6 +427,16 @@ td.weak-cell{white-space:nowrap}
   function seriesLabel(){ return (M&&M.label) || (isLast?'최종':'파이널'); }
   function roundLabel(n){ return seriesLabel()+' '+n+'회'; }
   function setPrefix(){ return isOriginal?'original':'final'; }
+  function allowedForRound(name){
+    name=String(name||'').trim();
+    if(preview||name.toLowerCase()==='docssam') return true;
+    if(!(D.students||[]).includes(name)) return false;
+    if(!isLast&&!isOriginal&&roundNum>=5){
+      var access=((D.archiveProductAccess||{})['mock-final-'+roundNum])||[];
+      return Array.isArray(access)&&(access.indexOf('*')>=0||access.indexOf(name)>=0);
+    }
+    return true;
+  }
 
   /* =====================================================
    * ===GF-CORE-START=== (pure computation, ported from build_report.py)
@@ -728,10 +738,23 @@ td.weak-cell{white-space:nowrap}
     }).join('');
     return '<h2 style="margin-top:30px">소영역 분류·진단</h2><div class="lead">확정 분류에서 두 문항 이상 근거가 있을 때만 약점으로 판정합니다. 자동 후보는 수행률을 참고용으로만 보여 주고 <b>분류 검토 중</b>으로 표시합니다.</div><table><tr><th>소영역</th><th>출제</th><th>정답</th><th>수행률</th><th>오답 번호</th><th>판정</th></tr>'+rows+'</table>';
   }
+  function roundTeacherCommentHTML(ctx){
+    var html='';
+    if(ctx.R&&ctx.R.teacherComment) html+='<p><b>'+esc(ctx.R.title||roundLabel(ctx.roundNum))+' 총평</b><br>'+esc(ctx.R.teacherComment)+'</p>';
+    var guide=(ctx.R&&ctx.R.scoreGuidance)||[];
+    if(guide.length){
+      html+='<p><b>점수 기준</b> · '+guide.map(function(g){
+        var range=g.score!=null?g.score+'점':(g.max!=null?g.min+'~'+g.max+'점':g.min+'점 이상');
+        return esc(range+' '+g.label);
+      }).join(' · ')+'</p>';
+    }
+    return html;
+  }
   function buildComment(ctx, weakMap){
     var nw=ctx.wrongList.length, nc=ctx.g["조건"].length, npr=ctx.g["절차"].length, ncp=ctx.g["개념"].length;
     var weak = ctx.A.reduce(function(a,b){ return b.perf<a.perf? b:a; });
     var weakP = ctx.P.reduce(function(a,b){ return b.perf<a.perf? b:a; });
+    var roundNote=roundTeacherCommentHTML(ctx);
     if(!ctx.populationVerified){
       var subs=ctx.SA.filter(function(x){return x.wrongNos.length&&x.n>=2&&!x.reviewRequired;}).slice(0,3);
       var singles=ctx.SA.filter(function(x){return x.wrongNos.length&&x.n===1&&!x.reviewRequired;}).slice(0,3);
@@ -739,7 +762,10 @@ td.weak-cell{white-space:nowrap}
       var subText=subs.length?subs.map(function(x){return '<b>'+esc(x.k)+'</b>('+x.perf+'%)';}).join(', '):'두 문항 이상 근거가 모인 취약 소영역이 아직 없습니다';
       var singleText=singles.length?(' 한 문항만 출제된 '+singles.map(function(x){return '<b>'+esc(x.k)+'</b>';}).join(', ')+'은 약점으로 단정하지 않고 추가 확인이 필요합니다.') : '';
       var candidateText=candidates.length?(' 자동 분류 후보 '+candidates.map(function(x){return '<b>'+esc(x.k)+'</b>';}).join(', ')+'은 검수 전이라 약점 판정에 사용하지 않았습니다.') : '';
-      return '<p><b>'+esc(ctx.name)+'</b> 학생은 이번 시험에서 <b>'+ctx.score+'점</b>, 30문항 중 <b>'+ctx.ncorr+'문항</b>을 맞혔습니다. 전체 평균·문항 정답률·석차 자료는 검증 전이라 진단에 사용하지 않았습니다.</p>'+
+      var evidenceNote=ctx.R&&Number.isFinite(Number(ctx.R.reportedAverage))
+        ? '제공된 전체 평균은 <b>'+Number(ctx.R.reportedAverage)+'점</b>입니다. 문항별 정답률·전체 점수 분포·석차 자료는 없으므로 임의 추정하지 않았습니다.'
+        : '전체 평균·문항 정답률·석차 자료는 검증 전이라 진단에 사용하지 않았습니다.';
+      return roundNote+'<p><b>'+esc(ctx.name)+'</b> 학생은 이번 시험에서 <b>'+ctx.score+'점</b>, 30문항 중 <b>'+ctx.ncorr+'문항</b>을 맞혔습니다. '+evidenceNote+'</p>'+
         '<p>개인 답안 기준으로 <b>'+weak.k+'</b> 수행률이 '+weak.perf.toFixed(0)+'%로 가장 낮고, 배점대에서는 <b>'+weakP.k+'점 문항</b> 수행률이 '+weakP.perf.toFixed(0)+'%로 가장 낮습니다.</p>'+
         '<p>확정 소영역 기준 우선순위는 '+subText+'입니다.'+singleText+candidateText+'</p>'+
         '<p>문항별 복습 체크 항목은 조건·지문 '+nc+'문항, 풀이 절차 '+npr+'문항, 개념 확인 '+ncp+'문항입니다. 실제 오답 원인은 풀이를 다시 보며 확인하고, 정답만 외우지 말고 같은 풀이 구조의 유사 문제로 다시 확인하세요.</p>'+
@@ -747,7 +773,7 @@ td.weak-cell{white-space:nowrap}
     }
     var crowdLine = (weak.crowd<=weak.perf+8) ? "다른 학생들도 어려워한 영역" : "본인이 특히 약한 영역";
     var missTxt = ctx.miss.length? ctx.miss.map(function(n){return n+'번';}).join(', ') : '없음';
-    return '<p><b>'+esc(ctx.name)+'</b> 학생은 이번 초등선발 대비 실전 파이널 모의고사 '+ctx.roundNum+'회에서 <b>'+ctx.score+'점</b>(응시자 평균 '+ctx.S.mean+'점)을 얻어 30문항 중 <b>'+ctx.ncorr+'문항</b>을 맞혔습니다. 석차는 <b>'+ctx.pct+'%</b>, <b>'+esc(ctx.grade)+'</b> 정도가 예상됩니다.</p>'+
+    return roundNote+'<p><b>'+esc(ctx.name)+'</b> 학생은 이번 초등선발 대비 실전 파이널 모의고사 '+ctx.roundNum+'회에서 <b>'+ctx.score+'점</b>(응시자 평균 '+ctx.S.mean+'점)을 얻어 30문항 중 <b>'+ctx.ncorr+'문항</b>을 맞혔습니다. 석차는 <b>'+ctx.pct+'%</b>, <b>'+esc(ctx.grade)+'</b> 정도가 예상됩니다.</p>'+
       '<p>오답 '+nw+'문항의 복습 체크 항목은 <b>조건·지문 '+nc+'문항</b>, 풀이 절차 '+npr+'문항, 개념 확인 '+ncp+'문항입니다. 이는 문항에 등록한 주의점이며 실제 오답 원인은 풀이 확인 뒤 결정합니다.</p>'+
       '<p>수치로 보면 <b>'+weakP.k+'점 문항의 수행률이 '+weakP.perf.toFixed(0)+'%</b>로 가장 낮습니다. 배점이 낮은 문항과 높은 문항은 풀었는데 그 사이 구간에서 무너졌습니다. 영역으로는 <b>'+esc(weak.k)+'</b>이 '+weak.perf.toFixed(0)+'%이고 전체 평균이 '+weak.crowd.toFixed(0)+'%이니 '+crowdLine+'입니다.</p>'+
       '<p><b>자신의 석차 백분율('+ctx.pct+'%)보다 정답률이 높은 문제는 충분히 맞힐 수 있는 문제</b>입니다. 이번에 그런 문항이 <b>'+ctx.miss.length+'개</b>('+missTxt+') 있었고 배점 합이 <b>'+ctx.gain+'점</b>입니다. 이것만 잡았다면 <b>'+ctx.newScore+'점 · 석차 '+ctx.newPct+'%</b>가 됩니다.</p>'+
@@ -1231,6 +1257,7 @@ td.weak-cell{white-space:nowrap}
     function enter(){
       var v=(inp.value||'').trim();
       if(!v){ document.getElementById('gerr').textContent='이름을 입력해 주세요.'; return; }
+      if(!allowedForRound(v)){ document.getElementById('gerr').textContent='이 회차의 열람 권한이 없습니다.'; return; }
       state.name=v;
       if(!preview){ try{ localStorage.setItem('gfield_student', v); }catch(e){} }
       enterFlow();
@@ -1703,7 +1730,7 @@ td.weak-cell{white-space:nowrap}
     var saveErrBanner = saveErr ? '<div class="banner saveerr no-print">'+(saveConflict?'다른 입력이 먼저 저장되어 기존 최초 기록을 유지했습니다.':'저장 실패, 네트워크 확인')+'</div>' : '';
     var kpiHTML=ctx.populationVerified
       ? '<div><i>점수 / 평균</i><b>'+ctx.score+'<small> / '+ctx.S.mean+'</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>석차</i><b>'+ctx.pct+'%</b></div><div><i>예상 결과</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div>'
-      : '<div><i>개인 점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>오답</i><b>'+ctx.wrong+'<small>문항</small></b></div><div><i>진단 기준</i><b style="font-size:15px">개인 수행</b></div>';
+      : '<div><i>개인 점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>오답</i><b>'+ctx.wrong+'<small>문항</small></b></div>'+(ctx.R&&Number.isFinite(Number(ctx.R.reportedAverage))?'<div><i>제공 평균</i><b>'+Number(ctx.R.reportedAverage)+'<small>점</small></b></div>':'<div><i>진단 기준</i><b style="font-size:15px">개인 수행</b></div>');
     var areaLead=ctx.populationVerified?'주황색이 '+esc(ctx.name)+' 학생, 회색 점선이 검증된 비교집단입니다.':'학생이 맞힌 문항의 배점만으로 계산한 개인 수행률입니다.';
     var areaLegend='<div class="legend"><span><s style="background:rgba(249,115,22,.5);border:1px solid #ea580c"></s>'+esc(ctx.name)+'</span>'+(ctx.populationVerified?'<span><s style="background:rgba(148,163,184,.4);border:1px dashed #94a3b8"></s>검증된 비교집단</span>':'')+'</div>';
     var areaTable=ctx.populationVerified
@@ -1780,7 +1807,7 @@ td.weak-cell{white-space:nowrap}
     document.title=roundLabel(roundNum)+' · 지필드 영재교육';
     var student = urlName;
     if(!student){ try{ student = localStorage.getItem('gfield_student')||''; }catch(e){ student=''; } }
-    if(student){ state.name=student; enterFlow(); }
+    if(student&&allowedForRound(student)){ state.name=student; enterFlow(); }
     else { renderGate(); }
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
