@@ -33,7 +33,7 @@ const byNo = Object.fromEntries(round.items.map(item => [item.no, item]));
 assert.equal(byNo[6].answer, '5가지');
 assert.match(byNo[6].comment, /\(0,0,17\).*\(2,4,1\)/);
 assert.equal(byNo[20].answer, '50번');
-assert.match(byNo[20].comment, /1·3·5번째/);
+assert.match(byNo[20].comment, /3, 3, 1, 3, 3, 1.*3, 2, 1, 2, 3, 4.*홀수.*50/);
 assert.equal(byNo[30].answer, '99999785960');
 
 // 6번: 모든 비음수 해를 열거하고 홀수 발사 횟수만 남긴다.
