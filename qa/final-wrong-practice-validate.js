@@ -8,6 +8,7 @@ const { chromium } = require(process.env.GFIELD_QA_PLAYWRIGHT || 'playwright');
 
 const ROOT = path.resolve(__dirname, '..');
 const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
+const draftLayout = process.argv.includes('--draft-layout');
 
 function mimeType(filename) {
   const ext = path.extname(filename).toLowerCase();
@@ -48,6 +49,11 @@ function startStaticServer() {
   const writeMethods = [];
   await context.route(/^https?:\/\//, async (route) => {
     const url = new URL(route.request().url());
+    if(draftLayout && url.hostname === '127.0.0.1' && url.pathname.endsWith('/final1-fixed90.json')) {
+      const fixture=JSON.parse(fs.readFileSync(path.join(ROOT,'bank/data/final1-fixed90.json'),'utf8'));
+      fixture.items.forEach(item=>{item.reviewStatus='verified';});
+      return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(fixture)});
+    }
     if (url.hostname === '127.0.0.1' || url.hostname === 'localhost') return route.continue();
     if (url.hostname.endsWith('supabase.co')) {
       if (!['GET', 'HEAD'].includes(route.request().method())) writeMethods.push(route.request().method());
@@ -87,19 +93,25 @@ function startStaticServer() {
     const practiceUrl = new URL(practice.url());
     assert.equal(practiceUrl.searchParams.get('practice'), 'wrong');
     assert.equal(practiceUrl.searchParams.get('per'), '3');
-    assert.equal(practiceUrl.searchParams.get('gens'), 'final1-q13,final1-q18');
-    assert.equal(practiceUrl.searchParams.get('sourceNos'), '13,18');
+    assert.equal(practiceUrl.searchParams.get('gens'), 'final1-q04,final1-q13,final1-q18,final1-q23,final1-q26');
+    assert.equal(practiceUrl.searchParams.get('sourceNos'), '4,13,18,23,26');
+    assert.equal(new URLSearchParams(practiceUrl.hash.slice(1)).get('student'), 'docssam');
     assert.equal(await practice.locator('.qcard').count(), 6, '오답 유형마다 정확히 3문제');
     assert.equal(await practice.locator('.qcard[data-source-no="13"]').count(), 3, '13번 유사문제 3개');
     assert.equal(await practice.locator('.qcard[data-source-no="18"]').count(), 3, '18번 유사문제 3개');
     assert.equal(await practice.locator('.question-page').count(), 1, '6문제를 한 페이지에 배치');
-    assert.equal(await practice.locator('.answer-page').count(), 1, '문제 뒤 별도 답안 페이지');
+    assert.equal(await practice.locator('.solution-card').count(), 6, '문제 뒤 별도 문항별 풀이');
+    assert.equal(await practice.locator('.cover-page').count(), 1, '학생 이름과 셀프 체크 표지');
     assert.equal(await practice.locator('.question-page .anstable').count(), 0, '문제 페이지에 정답표 없음');
     assert.match(await practice.locator('.qcard[data-source-no="18"]').first().textContent(), /같은 방법을 한 번 더 반복/);
-    assert.match(await practice.locator('.answer-page').textContent(), /색종이 접기 개념이 아니라/);
-    assert.match(await practice.locator('.qmeta:not(.fixed-item)').first().textContent(), /대영역|›/);
+    assert.match((await practice.locator('.answer-page').allTextContents()).join(' '), /색종이 접기 개념이 아니라/);
     const pageOrder = await practice.locator('.page').evaluateAll((nodes) => nodes.map((node) => node.classList.contains('question-page') ? 'question' : node.classList.contains('answer-page') ? 'answer' : 'other'));
-    assert.deepEqual(pageOrder, ['question', 'answer'], '모든 문제 뒤에 답안 배치');
+    assert.equal(pageOrder[0], 'other', '표지 먼저');
+    assert.equal(pageOrder[1], 'question');
+    assert.ok(pageOrder.slice(2).every(kind=>kind==='answer'), '모든 문제 뒤에 답안 배치');
+    await practice.locator('#final1Worksheet [data-role="points"][data-val="all"]').click();
+    await practice.waitForFunction(()=>document.querySelectorAll('.qcard').length===15);
+    assert.deepEqual(await practice.locator('.qcard').evaluateAll(ns=>[...new Set(ns.map(n=>Number(n.dataset.sourceNo)))].sort((a,b)=>a-b)),[4,13,18,23,26], '배점 전환은 전체 오답으로 복귀하며 정답 문항을 추가하지 않음');
 
     await practice.setViewportSize({ width: 390, height: 844 });
     const overflow = await practice.evaluate(() => document.documentElement.scrollWidth - innerWidth);
@@ -123,7 +135,7 @@ function startStaticServer() {
     await page.getByText('내 성적표 전용 화면입니다', { exact: true }).waitFor();
     assert.equal(await page.locator('.kpi').count(), 0, '로그인 이름과 다른 학생 성적은 표시하지 않음');
     assert.deepEqual(errors, [], '브라우저 오류 없음');
-    console.log('PASS final wrong-practice and personal report: exact wrong items, point filters, 3 per type, read-only own-name report, missing-score notice');
+    console.log((draftLayout?'DRAFT LAYOUT ONLY; ':'')+'PASS final wrong-practice and personal report: exact wrong items, point filters, 3 per type, read-only own-name report, missing-score notice');
   } finally {
     await browser.close();
     server.close();

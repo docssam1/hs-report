@@ -1,10 +1,13 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "sourceSet": "final",
   "sourceRound": 1,
   "reviewedOn": "2026-09-06",
-  "frozenItemSetHash": "9e5ae9014ab3d5b2aa8dc56459fb3370f551b743c516d73fed53df125dc2e8b5",
-  "statusMeaning": "verified는 이 콘텐츠 해시에 묶인 지문·조건·정답·풀이·그림의 검산 완료를 뜻합니다. Git 반영·배포 완료를 뜻하지 않습니다.",
+  "frozenItemSetHash": "e5a4bb8cf6e3ab647c4e684d512a58b0a1ed964805b548c2d4c83f86403bceef",
+  "frozenItemSetHashBasis": "SHA-256 of sorted id:itemContentHash rows joined by LF",
+  "questionIdentitySetHash": "e8a78d3e29732e86ae4519d94ac18875110cdbb14553afd2690b0b7f8f3cf006",
+  "solutionEnricherVersion": "1.0.0",
+  "statusMeaning": "verified는 이 콘텐츠 해시에 묶인 지문·조건·정답·풀이·문제 그림·풀이 그림의 검산 완료를 뜻합니다. Git 반영·배포 완료를 뜻하지 않습니다.",
   "responseRateNote": "파이널 1회 원문 문항에 연결된 난이도 분석용 추정 정답률입니다. 이 고정 변형 문항의 실측 정답률이 아닙니다.",
   "evidence": [
     {
@@ -26,6 +29,26 @@
       "id": "raster-review",
       "result": "PASS all fixed raster assets",
       "method": "PNG 서명·크기와 실제 표시를 확인하고 q05 라벨, q13 우측 여백, q18 접기·절단, q20 절단 단계, q30 예시 3개를 재검토"
+    },
+    {
+      "id": "question-identity-lock",
+      "result": "PASS 90/90",
+      "method": "풀이 필드만 제외한 지문·조건·정답·문제 그림·수치 전제의 SHA-256 집합이 e8a78d3e29732e86ae4519d94ac18875110cdbb14553afd2690b0b7f8f3cf006와 일치"
+    },
+    {
+      "id": "self-study-solutions-q01-q15",
+      "result": "PASS 45/45",
+      "method": "독립 검수자가 원문 001.jpg~004.jpg와 대조하고 각 변형의 중간 계산·학생 재현 가능성·q07 풀이 수직선을 전수 재검토"
+    },
+    {
+      "id": "self-study-solutions-q16-q30",
+      "result": "PASS 45/45",
+      "method": "독립 검수자가 원문 005.jpg~008.jpg와 대조하고 산술·절단·도형식·논리추리·답 계약을 전수 재계산"
+    },
+    {
+      "id": "self-study-solution-assets",
+      "result": "PASS 6/6",
+      "method": "q07 실제 누적거리 수직선 3개와 q18 4×4 펼침 절단망 3개의 PNG 로드·좌표·라벨·조각 수를 실제 화면으로 확인"
     }
   ],
   "reviewSummary": {
@@ -37,1212 +60,1488 @@
       "id": "final1-q01-v1",
       "sourceNo": 1,
       "variantNo": 1,
-      "itemContentHash": "9485a71bfa8da00b3d39174b67e3edaad74ff3b856f26225d0e60a2782a69f53",
+      "questionIdentityHash": "f3957d1d71921ab481fe158f4045dcb71b6db03409d3ab61798f9dfc42d8bda6",
+      "itemContentHash": "37cc1025a73b55562b6f13ff90a37eef42ea86497cda37d1d3cf419506d10581",
       "reviewStatus": "verified",
-      "reviewNotes": "10부터 99까지 자리 합을 다시 열거해 36개=36를 확인했습니다.",
+      "reviewNotes": "10부터 99까지 자리 합을 다시 열거해 36개=36를 확인했습니다. 독학용 순서 풀이에서 십의 자리별 가능한 일의 자리 수와 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q01-v2",
       "sourceNo": 1,
       "variantNo": 2,
-      "itemContentHash": "4ffc148129c99e42e40c970bbccbf3aec8f15da2bfd1a8905bf5c526a51b7d22",
+      "questionIdentityHash": "c2d06e60a84ecb1de02b7b7c8cf865ebfec9f9dc1a58fb262ef35766c2827938",
+      "itemContentHash": "aabbe788ef3979c9d6ea3ca6ae3b8948a745c089f78c2c3f260e702832299639",
       "reviewStatus": "verified",
-      "reviewNotes": "10부터 99까지 자리 합을 다시 열거해 69개=69를 확인했습니다.",
+      "reviewNotes": "10부터 99까지 자리 합을 다시 열거해 69개=69를 확인했습니다. 독학용 순서 풀이에서 십의 자리별 가능한 일의 자리 수와 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q01-v3",
       "sourceNo": 1,
       "variantNo": 3,
-      "itemContentHash": "36658658b302a674a3e714a70c1b7c535ad44b3b203c07d37b3d092429558c0c",
+      "questionIdentityHash": "061b02b43f385b46da654d85bc404441e15f8f4777bc3f6e8a7a8e263a3deaff",
+      "itemContentHash": "7d9555867cf8c3eb5dc84805aa0e2c7f9165c50fb88e6edefbf875e996b7eea8",
       "reviewStatus": "verified",
-      "reviewNotes": "10부터 99까지 자리 합을 다시 열거해 45개=45를 확인했습니다.",
+      "reviewNotes": "10부터 99까지 자리 합을 다시 열거해 45개=45를 확인했습니다. 독학용 순서 풀이에서 십의 자리별 가능한 일의 자리 수와 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q02-v1",
       "sourceNo": 2,
       "variantNo": 1,
-      "itemContentHash": "0e27469bd58926686c470e7a736eb0bba733d1fe1842a6f2bcbdf54a93527a70",
+      "questionIdentityHash": "c65d75f15fd26d0d9a9e4691d34374a12ec6492db83cafb856d17f33ed7c462c",
+      "itemContentHash": "143ba3a839efc1d2488a765c23e96748cf678444e352ce7a6b3d074e507cefd9",
       "reviewStatus": "verified",
-      "reviewNotes": "높이표 좌표의 위·네 옆면 노출을 다시 세어 0면 8개+2면 12개=20를 확인했습니다.",
+      "reviewNotes": "높이표 좌표의 위·네 옆면 노출을 다시 세어 0면 8개+2면 12개=20를 확인했습니다. 독학용 순서 풀이에서 층별 0개 면·2개 면 쌓기나무 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q02-v2",
       "sourceNo": 2,
       "variantNo": 2,
-      "itemContentHash": "6cb379e2e4284eb783db9c3a26d920b44a3d69d591b3ba97b5a064b0e7df6808",
+      "questionIdentityHash": "704caca3706b6c358b0ba7e9935a7a4a6f9c4dd624e8fc2e214b76a5051b0870",
+      "itemContentHash": "8f7177a2ce185b8f6d4314ab67aa39dcbf307cbe54020eede61808e97e03972e",
       "reviewStatus": "verified",
-      "reviewNotes": "높이표 좌표의 위·네 옆면 노출을 다시 세어 0면 3개+2면 12개=15를 확인했습니다.",
+      "reviewNotes": "높이표 좌표의 위·네 옆면 노출을 다시 세어 0면 3개+2면 12개=15를 확인했습니다. 독학용 순서 풀이에서 층별 0개 면·2개 면 쌓기나무 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q02-v3",
       "sourceNo": 2,
       "variantNo": 3,
-      "itemContentHash": "8f8ad70fb5794583786212c36b2d46ec5abdfb31b61045babaf7e169b899ccd5",
+      "questionIdentityHash": "df0806abd0992ec37e88ddc7b6af33f2a8feef50955183a2d017a2d9c7d26160",
+      "itemContentHash": "16fc52e0496fd058d203e34264c4c57e9a02dbd779041f88d7a67a9c66a7c979",
       "reviewStatus": "verified",
-      "reviewNotes": "높이표 좌표의 위·네 옆면 노출을 다시 세어 0면 2개+2면 8개=10를 확인했습니다.",
+      "reviewNotes": "높이표 좌표의 위·네 옆면 노출을 다시 세어 0면 2개+2면 8개=10를 확인했습니다. 독학용 순서 풀이에서 층별 0개 면·2개 면 쌓기나무 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q03-v1",
       "sourceNo": 3,
       "variantNo": 1,
-      "itemContentHash": "2a1db3f7c392b938abd21e815d4eb92fe14f8350ca4a64baae4cb0e6a310587f",
+      "questionIdentityHash": "b110a3d448271236e0bb3a6ce8ff30fbc862d6ab34c4f54b6d48d011188cfaa3",
+      "itemContentHash": "918d6096407c7f0c230a7c5838ba691c231107a35f0dd850fec5f5a30e1e84d1",
       "reviewStatus": "verified",
-      "reviewNotes": "두 끝을 제외한 실제 바늘 겹침 시각 7개를 분수 시각으로 열거해 답 7를 확인했습니다.",
+      "reviewNotes": "두 끝을 제외한 실제 바늘 겹침 시각 7개를 분수 시각으로 열거해 답 7를 확인했습니다. 독학용 순서 풀이에서 두 끝을 제외한 실제 시계 겹침 시각의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q03-v2",
       "sourceNo": 3,
       "variantNo": 2,
-      "itemContentHash": "96f1ada7c254098be7163f0ecfae00cb014cb2db7a71183612f9d1ff1bf17b06",
+      "questionIdentityHash": "731bf84cb7669955a5feac445bbca100524819021fc19869c53955a4cda19704",
+      "itemContentHash": "afae231bde82c8c6af7623209b40e74798d0a43545ff2f0a151d722f1ee417e9",
       "reviewStatus": "verified",
-      "reviewNotes": "두 끝을 제외한 실제 바늘 겹침 시각 9개를 분수 시각으로 열거해 답 9를 확인했습니다.",
+      "reviewNotes": "두 끝을 제외한 실제 바늘 겹침 시각 9개를 분수 시각으로 열거해 답 9를 확인했습니다. 독학용 순서 풀이에서 두 끝을 제외한 실제 시계 겹침 시각의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q03-v3",
       "sourceNo": 3,
       "variantNo": 3,
-      "itemContentHash": "8307c50c93837dc7c07a26ef5a53192b71c06dc047674821f11170907847f14f",
+      "questionIdentityHash": "2cf0fef1525f4ffb76002a1144efb12a7cdc2210d6b400e3e51e369491ef0bc6",
+      "itemContentHash": "ae0304cd7a9b5cfd40a286bf449a4401436c47edc84f45f619a64432f959365d",
       "reviewStatus": "verified",
-      "reviewNotes": "두 끝을 제외한 실제 바늘 겹침 시각 11개를 분수 시각으로 열거해 답 11를 확인했습니다.",
+      "reviewNotes": "두 끝을 제외한 실제 바늘 겹침 시각 11개를 분수 시각으로 열거해 답 11를 확인했습니다. 독학용 순서 풀이에서 두 끝을 제외한 실제 시계 겹침 시각의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q04-v1",
       "sourceNo": 4,
       "variantNo": 1,
-      "itemContentHash": "083f1d621d59a6ef1b6ed17c31385a3d326c8e74d5569abf11910b2359b04335",
+      "questionIdentityHash": "5d98357893682c18dfcb42870f7ba4efb275205d6aca48df9c1d395bc7bd16ff",
+      "itemContentHash": "d3e4c5cc34539ec39d4c20352232fe2ad082a489936f286d265748ca1743a93f",
       "reviewStatus": "verified",
-      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 718, 최대 4876, 차 4158를 확인했습니다.",
+      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 718, 최대 4876, 차 4158를 확인했습니다. 독학용 순서 풀이에서 1자리×3자리와 2자리×2자리의 최소·최대의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q04-v2",
       "sourceNo": 4,
       "variantNo": 2,
-      "itemContentHash": "5b56373564cf4164a67f51122907167af12798e504fb166ace9bd10ad6224511",
+      "questionIdentityHash": "a4c7e476d1baaeac56b87f50f76b315b90374912134384cd094a9e39cbea07a6",
+      "itemContentHash": "046c83e5003189163b77fca45c4896bd75c27e095dae416338b6cea634336a84",
       "reviewStatus": "verified",
-      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 269, 최대 5642, 차 5373를 확인했습니다.",
+      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 269, 최대 5642, 차 5373를 확인했습니다. 독학용 순서 풀이에서 1자리×3자리와 2자리×2자리의 최소·최대의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q04-v3",
       "sourceNo": 4,
       "variantNo": 3,
-      "itemContentHash": "87f670acb50d7d12596c6897c837b978245310b73af6bbe9427b08f1c0197ad9",
+      "questionIdentityHash": "c34a4c6204a9075d2ca3477c84da4e61e82ab67df038ce64e6c9b1c289807d27",
+      "itemContentHash": "26f13c5bcab4510835aa9b7e86dc4b0d1426cc09f3c2920abb925a2d9d2e2be4",
       "reviewStatus": "verified",
-      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 469, 최대 5824, 차 5355를 확인했습니다.",
+      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 469, 최대 5824, 차 5355를 확인했습니다. 독학용 순서 풀이에서 1자리×3자리와 2자리×2자리의 최소·최대의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q05-v1",
       "sourceNo": 5,
       "variantNo": 1,
-      "itemContentHash": "5f2675eef158bf79deada8350785d34966daf81ad63c01a8ab9b69fc8f58d613",
+      "questionIdentityHash": "7c8139e2749f5599ad5d2ae4083be5103af762ce298178f5e8d6e768631d90d4",
+      "itemContentHash": "ba1a16d407ed6d681a7352700a21c23bc97cb85a3ba42aa806679caac3ef3213",
       "reviewStatus": "verified",
-      "reviewNotes": "공유 옆변을 두 번씩 제거하는 계산과 남은 밑변 13개·양 끝 옆변 계산이 모두 94로 일치합니다.",
+      "reviewNotes": "공유 옆변을 두 번씩 제거하는 계산과 남은 밑변 13개·양 끝 옆변 계산이 모두 94로 일치합니다. 독학용 순서 풀이에서 남은 밑변과 양 끝 옆변의 둘레의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q05-v2",
       "sourceNo": 5,
       "variantNo": 2,
-      "itemContentHash": "c12b3191bea8d26d4a04658df225d8485ff76ac4f1f1ac74e85ff47514640f06",
+      "questionIdentityHash": "fb805b670da9f29e7f15881ad3d76c86f10e502d947f9d2bd860b83ecbd2cab7",
+      "itemContentHash": "142f9a6c58095fde3a70f9898d6d0b99f18018c8ea4d67bace04790e810f86ec",
       "reviewStatus": "verified",
-      "reviewNotes": "공유 옆변을 두 번씩 제거하는 계산과 남은 밑변 19개·양 끝 옆변 계산이 모두 90로 일치합니다.",
+      "reviewNotes": "공유 옆변을 두 번씩 제거하는 계산과 남은 밑변 19개·양 끝 옆변 계산이 모두 90로 일치합니다. 독학용 순서 풀이에서 남은 밑변과 양 끝 옆변의 둘레의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q05-v3",
       "sourceNo": 5,
       "variantNo": 3,
-      "itemContentHash": "9564e355a0936c8b17037ed2458b83af57ef58be8941c7ff61dbbd8b65550572",
+      "questionIdentityHash": "cb4b5617cc52f4ffdd1469c3a8f67fccf3e2decdaadde99bfdc60c892fcea70e",
+      "itemContentHash": "1257bd15f6c602aeb61a1c9f3968a2ca01f0056583f2ea60fd2e6754b8b567dc",
       "reviewStatus": "verified",
-      "reviewNotes": "공유 옆변을 두 번씩 제거하는 계산과 남은 밑변 9개·양 끝 옆변 계산이 모두 85로 일치합니다.",
+      "reviewNotes": "공유 옆변을 두 번씩 제거하는 계산과 남은 밑변 9개·양 끝 옆변 계산이 모두 85로 일치합니다. 독학용 순서 풀이에서 남은 밑변과 양 끝 옆변의 둘레의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q06-v1",
       "sourceNo": 6,
       "variantNo": 1,
-      "itemContentHash": "4f50d1cbe89e02279897de9e0c6be3a7374469ce05ed47306855f9bd902f8a38",
+      "questionIdentityHash": "bbf07a01201dd4692c48dc96c4903081203bb39df9cc5943dc381cd39a58f2ce",
+      "itemContentHash": "a8f0c9b6653c5a27c52b60e67174d68d524ba5d6f3ff16cff2426a6464692ac4",
       "reviewStatus": "verified",
-      "reviewNotes": "하루 오차 45분의 누적을 720분 주기로 확인해 최초 재일치 16일을 확인했습니다.",
+      "reviewNotes": "하루 오차 45분의 누적을 720분 주기로 확인해 최초 재일치 16일을 확인했습니다. 독학용 순서 풀이에서 주간 오차를 하루 오차와 720분 주기로 바꾸는 과정의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q06-v2",
       "sourceNo": 6,
       "variantNo": 2,
-      "itemContentHash": "72997998bea365ce775e21bb4503a4f5e66ea239780b1c2aadb28aaee00ee454",
+      "questionIdentityHash": "1816613b18a40e2fcacf7a5d21131bc8790bdbf31fd5d5a0fbd308ee51a5a528",
+      "itemContentHash": "d4520492eed3f16acd3fd172486c30b94a443ea3d4cef1544ab53384223f5337",
       "reviewStatus": "verified",
-      "reviewNotes": "하루 오차 60분의 누적을 720분 주기로 확인해 최초 재일치 12일을 확인했습니다.",
+      "reviewNotes": "하루 오차 60분의 누적을 720분 주기로 확인해 최초 재일치 12일을 확인했습니다. 독학용 순서 풀이에서 주간 오차를 하루 오차와 720분 주기로 바꾸는 과정의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q06-v3",
       "sourceNo": 6,
       "variantNo": 3,
-      "itemContentHash": "3095af613957af9f4c8fc8670288d142a5fdc6f0fc2f3cb179556d59d944509b",
+      "questionIdentityHash": "94d7fd5c553de04c7513f4a302b84891c612e5b056265a0c9f186e88599d778b",
+      "itemContentHash": "92dfd05795f3fe038a9065d1ee7c67cc9de73a9345f0dff64d288d841f1fff90",
       "reviewStatus": "verified",
-      "reviewNotes": "하루 오차 18분의 누적을 720분 주기로 확인해 최초 재일치 40일을 확인했습니다.",
+      "reviewNotes": "하루 오차 18분의 누적을 720분 주기로 확인해 최초 재일치 40일을 확인했습니다. 독학용 순서 풀이에서 주간 오차를 하루 오차와 720분 주기로 바꾸는 과정의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q07-v1",
       "sourceNo": 7,
       "variantNo": 1,
-      "itemContentHash": "a816f2048a8baeaa8afbde25eb75381031524d2c6dabbb70f9516713b80a71a1",
+      "questionIdentityHash": "52ce69b86263da738176a5ac6e5d9ab6ef54842a479851b8eeff349999a91559",
+      "itemContentHash": "d8784256e80c62cfa1074012639b1f202fc1fa7fd60a1fa57d37217ad8478aed",
       "reviewStatus": "verified",
-      "reviewNotes": "역을 수직선에 놓아 전체 121에서 양 끝 27, 27을 빼 답 67를 확인했습니다.",
+      "reviewNotes": "역을 수직선에 놓아 전체 121에서 양 끝 27, 27을 빼 답 67를 확인했습니다. 독학용 순서 풀이에서 실제 누적거리 수직선과 전체 거리에서 양 끝 구간을 빼는 식의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15",
+        "self-study-solution-assets"
       ]
     },
     {
       "id": "final1-q07-v2",
       "sourceNo": 7,
       "variantNo": 2,
-      "itemContentHash": "ee1f8fe1146b0fa2f31601a118ff150885f5f1885debab2b603bddd3edadca7c",
+      "questionIdentityHash": "ee0f68adf9027eb7c1b80e97abcb3dd39f16140e6268e52117ee7032bc23892c",
+      "itemContentHash": "80b63c5fc3f0aba3db107fbdd656a9b0f50b5c81d2068c2d0e73b978b8b91261",
       "reviewStatus": "verified",
-      "reviewNotes": "역을 수직선에 놓아 전체 118에서 양 끝 20, 36을 빼 답 62를 확인했습니다.",
+      "reviewNotes": "역을 수직선에 놓아 전체 118에서 양 끝 20, 36을 빼 답 62를 확인했습니다. 독학용 순서 풀이에서 실제 누적거리 수직선과 전체 거리에서 양 끝 구간을 빼는 식의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15",
+        "self-study-solution-assets"
       ]
     },
     {
       "id": "final1-q07-v3",
       "sourceNo": 7,
       "variantNo": 3,
-      "itemContentHash": "fa85bd6a5c921ed4d4b61631203f204ebef39a65799f53adb6f0705525065d6c",
+      "questionIdentityHash": "2c8b92dc114eaf3bd6b77c1cc4335f1c848b86918f394c640cd5df55a443df14",
+      "itemContentHash": "f281aad69b650906437ee51f4e2da55515896d894ca004646dce9bd90d25ca80",
       "reviewStatus": "verified",
-      "reviewNotes": "역을 수직선에 놓아 전체 146에서 양 끝 23, 20을 빼 답 103를 확인했습니다.",
+      "reviewNotes": "역을 수직선에 놓아 전체 146에서 양 끝 23, 20을 빼 답 103를 확인했습니다. 독학용 순서 풀이에서 실제 누적거리 수직선과 전체 거리에서 양 끝 구간을 빼는 식의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15",
+        "self-study-solution-assets"
       ]
     },
     {
       "id": "final1-q08-v1",
       "sourceNo": 8,
       "variantNo": 1,
-      "itemContentHash": "159cab222a9988ac83ef897e6adda6027d4c01c81b5c27f8660e330e34e1a9e5",
+      "questionIdentityHash": "36c9af0b6b58209c4d66c99feefa9709b3b55cd93414b4c07c2d6e4aed78956c",
+      "itemContentHash": "c21a70a90ab5c87c88540ef781d642e16722ed154aa1dbbc4f1c0d2c67d56f9c",
       "reviewStatus": "verified",
-      "reviewNotes": "가능한 성공 개수를 전부 대입해 조건을 만족하는 값이 135 하나뿐임을 확인했습니다.",
+      "reviewNotes": "가능한 성공 개수를 전부 대입해 조건을 만족하는 값이 135 하나뿐임을 확인했습니다. 독학용 순서 풀이에서 모두 성공한 금액·한 개당 차이·실패 수·성공 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q08-v2",
       "sourceNo": 8,
       "variantNo": 2,
-      "itemContentHash": "65fecddf992f3d94868f55c460916b30d053521bddb3ccb71c9e17a432ef84ef",
+      "questionIdentityHash": "86b03d1d648beba78d61a1242aecd32b72da77b55088ca6f7446126805d449b2",
+      "itemContentHash": "6b1293cfc98baaaaffe9ccb64cc486e563f24b2874c152319ec3a29f96cbfc0f",
       "reviewStatus": "verified",
-      "reviewNotes": "가능한 성공 개수를 전부 대입해 조건을 만족하는 값이 39 하나뿐임을 확인했습니다.",
+      "reviewNotes": "가능한 성공 개수를 전부 대입해 조건을 만족하는 값이 39 하나뿐임을 확인했습니다. 독학용 순서 풀이에서 모두 성공한 금액·한 개당 차이·실패 수·성공 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q08-v3",
       "sourceNo": 8,
       "variantNo": 3,
-      "itemContentHash": "378c8884722671af673b47f062d01dc8a101aa3208d5920a76fc30f3cd816e88",
+      "questionIdentityHash": "39c44be001de7a378cad4cb669f8f5042ffa69f312fb192a09ea1ef4eb9d60c7",
+      "itemContentHash": "49679b62a372dc45a699dc7751f56132aacdb53d44253936ec7c342c5b958991",
       "reviewStatus": "verified",
-      "reviewNotes": "가능한 성공 개수를 전부 대입해 조건을 만족하는 값이 72 하나뿐임을 확인했습니다.",
+      "reviewNotes": "가능한 성공 개수를 전부 대입해 조건을 만족하는 값이 72 하나뿐임을 확인했습니다. 독학용 순서 풀이에서 모두 성공한 금액·한 개당 차이·실패 수·성공 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q09-v1",
       "sourceNo": 9,
       "variantNo": 1,
-      "itemContentHash": "c67a4074966723c1afd8d8e662532e715ff0481378cd87b206921f002e567f17",
+      "questionIdentityHash": "815fd3913f1e145789c820cf380037a91d0c46a3d6b193f9d8a8164404bb7ed0",
+      "itemContentHash": "988025c38258542bcba5dd32ce886f541a962b6d1348a11cf40da879918488f4",
       "reviewStatus": "verified",
-      "reviewNotes": "그림의 단계별 구슬 수 1, 3, 6, 9, 12, 15, 18, 21, 24, 27를 직접 합해 136를 확인했습니다.",
+      "reviewNotes": "그림의 단계별 구슬 수 1, 3, 6, 9, 12, 15, 18, 21, 24, 27를 직접 합해 136를 확인했습니다. 독학용 순서 풀이에서 배열별 구슬 수와 전체 덧셈의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q09-v2",
       "sourceNo": 9,
       "variantNo": 2,
-      "itemContentHash": "22cedc061c9d0ceafc3b31b5fb991f33f20d5ea1a88de7b129033f9f06b51fde",
+      "questionIdentityHash": "5fc8513c0ed150773969107e0063158cfaf24ee383337991b7caa0bc4b1a958e",
+      "itemContentHash": "720da0bb124850e41f1ae6e5ce38a8ca0482c50984f9d64d1fcfae49ece0fbd6",
       "reviewStatus": "verified",
-      "reviewNotes": "그림의 단계별 구슬 수 1, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78를 직접 합해 547를 확인했습니다.",
+      "reviewNotes": "그림의 단계별 구슬 수 1, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78를 직접 합해 547를 확인했습니다. 독학용 순서 풀이에서 배열별 구슬 수와 전체 덧셈의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q09-v3",
       "sourceNo": 9,
       "variantNo": 3,
-      "itemContentHash": "08282f68a1f5fed44e114642127805687a7b08dd584945b5edc32176779e067a",
+      "questionIdentityHash": "b994a9a988b0d8bda45349659e4f18cb301dd14145e0ad36f646edb99221fabb",
+      "itemContentHash": "7440921892b856bf2a78fd9c714e5b4711a135bd9430fd134de2060bac4b8625",
       "reviewStatus": "verified",
-      "reviewNotes": "그림의 단계별 구슬 수 1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33를 직접 합해 199를 확인했습니다.",
+      "reviewNotes": "그림의 단계별 구슬 수 1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33를 직접 합해 199를 확인했습니다. 독학용 순서 풀이에서 배열별 구슬 수와 전체 덧셈의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q10-v1",
       "sourceNo": 10,
       "variantNo": 1,
-      "itemContentHash": "09c5187fd9c8460dd850a97a73992ca5872d8bfea30f8af0f7c0723b8ff17227",
+      "questionIdentityHash": "35a67e0ed065a703b3f9305653db61ce8fe14677c0b2931d276600d84416f66f",
+      "itemContentHash": "aafcd766420504f55078402077637676acf0d31dc9458a02234e5b016a48ee7d",
       "reviewStatus": "verified",
-      "reviewNotes": "16행의 121부터 136까지를 직접 더해 2056를 확인했습니다.",
+      "reviewNotes": "16행의 121부터 136까지를 직접 더해 2056를 확인했습니다. 독학용 순서 풀이에서 해당 행의 첫 수·끝 수와 등차수열 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q10-v2",
       "sourceNo": 10,
       "variantNo": 2,
-      "itemContentHash": "6c407073871ed604edd8ab2fe187512bc6f7bfa1ba7626e194687b76e86c2768",
+      "questionIdentityHash": "d98c15b76b668cb097cacb98f96fccac638dec7d0342e96db6ef435609f12878",
+      "itemContentHash": "2038423c33d81235a0e5b37da0f4efafe8ca227687f4982e812886a6c3e7b562",
       "reviewStatus": "verified",
-      "reviewNotes": "13행의 79부터 91까지를 직접 더해 1105를 확인했습니다.",
+      "reviewNotes": "13행의 79부터 91까지를 직접 더해 1105를 확인했습니다. 독학용 순서 풀이에서 해당 행의 첫 수·끝 수와 등차수열 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q10-v3",
       "sourceNo": 10,
       "variantNo": 3,
-      "itemContentHash": "2bea2da69e4e1dbe0fd79784c7f805370f194c32e62e627953adedaca06c278b",
+      "questionIdentityHash": "0603428bbe431f53a60b3b5d333b48c5506ae0fc07c993be93fff598953bc79c",
+      "itemContentHash": "e5da7aa0cb62284f866116977eba7f2dd5962d2be2c768c24ac25ca54da94f8b",
       "reviewStatus": "verified",
-      "reviewNotes": "14행의 92부터 105까지를 직접 더해 1379를 확인했습니다.",
+      "reviewNotes": "14행의 92부터 105까지를 직접 더해 1379를 확인했습니다. 독학용 순서 풀이에서 해당 행의 첫 수·끝 수와 등차수열 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q11-v1",
       "sourceNo": 11,
       "variantNo": 1,
-      "itemContentHash": "cc76bbf30dea0007c107f22d25fb9ab001842dbb4b4342e366ae006cf45daff1",
+      "questionIdentityHash": "17f74a75f1ffdd8d96353637b538a919b44c2c32846be3b1c218d2775aa3c2cc",
+      "itemContentHash": "7decb64f9a3a553ba080ab79efa5210c3649710d962eb6d70f57427b460b4db1",
       "reviewStatus": "verified",
-      "reviewNotes": "별의 다섯 선 조건을 독립 연립해 빈칸 7, 7, 4, 7, 7 한 조합과 최종 답 851를 확인했습니다.",
+      "reviewNotes": "별의 다섯 선 조건을 독립 연립해 빈칸 7, 7, 4, 7, 7 한 조합과 최종 답 851를 확인했습니다. 독학용 순서 풀이에서 이웃 빈칸 합·연쇄 대입·마지막 두 수의 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q11-v2",
       "sourceNo": 11,
       "variantNo": 2,
-      "itemContentHash": "fbcfcc6db5140e9b7f6e5a278bb63788333426fa3eb6b1a47e8c838e13284aed",
+      "questionIdentityHash": "5f751273abf9eafe0670c51655ad9726a19c94939010b05a5707e011855ffa0f",
+      "itemContentHash": "1e51a30c8fc33de93ea03cf1c0fe9d453479b72f53848f6d28e7e38865ed86e9",
       "reviewStatus": "verified",
-      "reviewNotes": "별의 다섯 선 조건을 독립 연립해 빈칸 7, 5, 7, 7, 4 한 조합과 최종 답 831를 확인했습니다.",
+      "reviewNotes": "별의 다섯 선 조건을 독립 연립해 빈칸 7, 5, 7, 7, 4 한 조합과 최종 답 831를 확인했습니다. 독학용 순서 풀이에서 이웃 빈칸 합·연쇄 대입·마지막 두 수의 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q11-v3",
       "sourceNo": 11,
       "variantNo": 3,
-      "itemContentHash": "8b573e067fd4575d2a11f501e02f585bc25ab84b557ef589271b645effb19ad4",
+      "questionIdentityHash": "ac544f11219d0ad195a13b75ee2f66a8663e5dc81572465e19e40e71768a58a8",
+      "itemContentHash": "6559cb40fca04d6702a74da02e750a7a7b970900f82d478b098502522ec1c76a",
       "reviewStatus": "verified",
-      "reviewNotes": "별의 다섯 선 조건을 독립 연립해 빈칸 4, 4, 4, 7, 2 한 조합과 최종 답 516를 확인했습니다.",
+      "reviewNotes": "별의 다섯 선 조건을 독립 연립해 빈칸 4, 4, 4, 7, 2 한 조합과 최종 답 516를 확인했습니다. 독학용 순서 풀이에서 이웃 빈칸 합·연쇄 대입·마지막 두 수의 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q12-v1",
       "sourceNo": 12,
       "variantNo": 1,
-      "itemContentHash": "267277cab15701620ae5475a03e6389a3a428674b0ce1f6c5b5c8a1e183642bc",
+      "questionIdentityHash": "d1af88447b06ce82f3f5b287a4ac5537d24bfc43d063de3c50c230e434579678",
+      "itemContentHash": "d380f419e5184981842a966eb627eff0fa1b14101285713e9482d0f96dcd7794",
       "reviewStatus": "verified",
-      "reviewNotes": "네 사람의 양의 정수 값을 전수 대입해 1개 유일해와 순서 답 19, 12, 11, 11를 확인했습니다.",
+      "reviewNotes": "네 사람의 양의 정수 값을 전수 대입해 1개 유일해와 순서 답 19, 12, 11, 11를 확인했습니다. 독학용 순서 풀이에서 두 식의 차와 네 사람 수의 역대입의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q12-v2",
       "sourceNo": 12,
       "variantNo": 2,
-      "itemContentHash": "231d612ec2794dcd8bc76b3b0c8f882bedf7d2fdd962429f0c8771a16d4f92cc",
+      "questionIdentityHash": "ecc1af756ee2147364f587de28d1231a678371f843c9f76fd03d7f1d4636c256",
+      "itemContentHash": "c82a156d06d3a92e76832e9991f92ce8720258aaf3e66d52bc0f1861f82f4895",
       "reviewStatus": "verified",
-      "reviewNotes": "네 사람의 양의 정수 값을 전수 대입해 1개 유일해와 순서 답 17, 12, 14, 7를 확인했습니다.",
+      "reviewNotes": "네 사람의 양의 정수 값을 전수 대입해 1개 유일해와 순서 답 17, 12, 14, 7를 확인했습니다. 독학용 순서 풀이에서 두 식의 차와 네 사람 수의 역대입의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q12-v3",
       "sourceNo": 12,
       "variantNo": 3,
-      "itemContentHash": "aceb1d7a2ff19a1393347b2c3fb777f2b2789f14d35a5c52d891c105f3fe2aba",
+      "questionIdentityHash": "07078580e41460d5fad0f3b73af5dde91047e40c722ce8635687bec4b12c5d49",
+      "itemContentHash": "75d97c04ff36ee4f9fd0872ead6339861bcf93fc542cb7a9402c9195918a8482",
       "reviewStatus": "verified",
-      "reviewNotes": "네 사람의 양의 정수 값을 전수 대입해 1개 유일해와 순서 답 15, 17, 14, 10를 확인했습니다.",
+      "reviewNotes": "네 사람의 양의 정수 값을 전수 대입해 1개 유일해와 순서 답 15, 17, 14, 10를 확인했습니다. 독학용 순서 풀이에서 두 식의 차와 네 사람 수의 역대입의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q13-v1",
       "sourceNo": 13,
       "variantNo": 1,
-      "itemContentHash": "dea44c54aa6961afd9cfc27fbc8a94ae9fb2546c5b717bf8d64c5ed65f3fd70c",
+      "questionIdentityHash": "dc2080b2558763d3769065e6d7be7b82da6c3b8fc83884e2b8d1b39f3a3fa6fa",
+      "itemContentHash": "2ed822443fdd9d4b2e2ea4cc7d99877d96774c2342bf4841e3ad1fbebd3f4695",
       "reviewStatus": "verified",
-      "reviewNotes": "세 행 합 전체에서 보이는 두 열 합을 빼 42=42를 확인하고 PNG의 합 표기도 대조했습니다.",
+      "reviewNotes": "세 행 합 전체에서 보이는 두 열 합을 빼 42=42를 확인하고 PNG의 합 표기도 대조했습니다. 독학용 순서 풀이에서 가로 전체합과 세로 전체합이 같은 까닭 및 실제 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q13-v2",
       "sourceNo": 13,
       "variantNo": 2,
-      "itemContentHash": "dfb7c5ea448370c3d8612a9405bd8968c68c89d768e3cccef1007342dcbcf771",
+      "questionIdentityHash": "eea74ddf62f0bb08fa291de031dcae53badbda42854e6373bc7eb274fc195670",
+      "itemContentHash": "686e41a89a7efe9105a44be769f6b3292df91851ce85ad05aa9038f59d5e6215",
       "reviewStatus": "verified",
-      "reviewNotes": "세 행 합 전체에서 보이는 두 열 합을 빼 32=32를 확인하고 PNG의 합 표기도 대조했습니다.",
+      "reviewNotes": "세 행 합 전체에서 보이는 두 열 합을 빼 32=32를 확인하고 PNG의 합 표기도 대조했습니다. 독학용 순서 풀이에서 가로 전체합과 세로 전체합이 같은 까닭 및 실제 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q13-v3",
       "sourceNo": 13,
       "variantNo": 3,
-      "itemContentHash": "4d6486bd358c6bb75beff6b8d51cf3074f3fa9a41fad8e383057f653da3b038a",
+      "questionIdentityHash": "8cef0dfd98201f9ddee3a86a7b88347ef686f5063b4986ab88ded515a60654cd",
+      "itemContentHash": "b787a7ca3ad4f7c8f7a3912edd0968da715391028a20b76d9b7ad5e2733e2733",
       "reviewStatus": "verified",
-      "reviewNotes": "세 행 합 전체에서 보이는 두 열 합을 빼 23=23를 확인하고 PNG의 합 표기도 대조했습니다.",
+      "reviewNotes": "세 행 합 전체에서 보이는 두 열 합을 빼 23=23를 확인하고 PNG의 합 표기도 대조했습니다. 독학용 순서 풀이에서 가로 전체합과 세로 전체합이 같은 까닭 및 실제 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q14-v1",
       "sourceNo": 14,
       "variantNo": 1,
-      "itemContentHash": "edbb95d002d542f218778353064022b2e966c76060d2360496c562faab0f3b80",
+      "questionIdentityHash": "68f140aa90c0726a0514b79191683ac2a12084631bca654795d981d6ea6305af",
+      "itemContentHash": "4e667f392bb8465c58b00b1d69ade44b86f509f4f819b5b3316c156732e696e6",
       "reviewStatus": "verified",
-      "reviewNotes": "전체를 두 배한 9묶음 식과 양의 정수 전수 대입이 토끼 14명 한 값으로 일치합니다.",
+      "reviewNotes": "전체를 두 배한 9묶음 식과 양의 정수 전수 대입이 토끼 14명 한 값으로 일치합니다. 독학용 순서 풀이에서 다섯 집단을 기준 수로 나타내고 전체를 두 배한 식의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q14-v2",
       "sourceNo": 14,
       "variantNo": 2,
-      "itemContentHash": "1235aac123d3738007c5ff9cd8a1cdf6f901676d0521cbdc4d83a5dedf0489d1",
+      "questionIdentityHash": "5f4f65eec51a8481df9663bb60485c7f320a1152adbf57e84ac6bed478e801a9",
+      "itemContentHash": "a76289fc96e0c42c125de1a49110800efdc027677c640c9c2f650b708e5bb474",
       "reviewStatus": "verified",
-      "reviewNotes": "전체를 두 배한 9묶음 식과 양의 정수 전수 대입이 토끼 18명 한 값으로 일치합니다.",
+      "reviewNotes": "전체를 두 배한 9묶음 식과 양의 정수 전수 대입이 토끼 18명 한 값으로 일치합니다. 독학용 순서 풀이에서 다섯 집단을 기준 수로 나타내고 전체를 두 배한 식의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q14-v3",
       "sourceNo": 14,
       "variantNo": 3,
-      "itemContentHash": "2f3ac9fb7b16e6b2530d962433a76073ca3b6b118c2fcb16dd05543e9d0b0a85",
+      "questionIdentityHash": "30d6e7e0435f9252ee6db532f254f05621082d09bcf36200e3d41e3f747ae839",
+      "itemContentHash": "293874ea84788ae1f874ce155cc4a3e611b385a24a23879c2e3c51dad7d23d57",
       "reviewStatus": "verified",
-      "reviewNotes": "전체를 두 배한 9묶음 식과 양의 정수 전수 대입이 토끼 12명 한 값으로 일치합니다.",
+      "reviewNotes": "전체를 두 배한 9묶음 식과 양의 정수 전수 대입이 토끼 12명 한 값으로 일치합니다. 독학용 순서 풀이에서 다섯 집단을 기준 수로 나타내고 전체를 두 배한 식의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q15-v1",
       "sourceNo": 15,
       "variantNo": 1,
-      "itemContentHash": "f1d10535abf0e9ee885beda49b531dfebf2276b973ecffd5f30d08c019cbd76e",
+      "questionIdentityHash": "1e78781d2b190cb5cbd5945635370111b610dcf0179e0dd71eb311d5db70f350",
+      "itemContentHash": "d46dfb2e7efffae6b50758a6d79ee748c96024160a5d71664fe3aec2aded46c4",
       "reviewStatus": "verified",
-      "reviewNotes": "맨 아래 색별 경우 10+10+10를 독립 열거해 30가 되고, 5·6·7개 세 구조를 구분했습니다.",
+      "reviewNotes": "맨 아래 색별 경우 10+10+10를 독립 열거해 30가 되고, 5·6·7개 세 구조를 구분했습니다. 독학용 순서 풀이에서 첫째·둘째 색에 따른 실제 가지 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q15-v2",
       "sourceNo": 15,
       "variantNo": 2,
-      "itemContentHash": "de1f05803ed17928a2152c1a5d923b99fce0bf6f2eb12c1086001fda5f20853a",
+      "questionIdentityHash": "b384c28d6f86a4a56b82783a8699f814febebe63bf1f78cb9301dd52e271cca0",
+      "itemContentHash": "65012f923b1c7bc1b299a93d072614f6403e7d9c7884d52527ffdaef5511399e",
       "reviewStatus": "verified",
-      "reviewNotes": "맨 아래 색별 경우 20+9+9를 독립 열거해 38가 되고, 5·6·7개 세 구조를 구분했습니다.",
+      "reviewNotes": "맨 아래 색별 경우 20+9+9를 독립 열거해 38가 되고, 5·6·7개 세 구조를 구분했습니다. 독학용 순서 풀이에서 첫째·둘째 색에 따른 실제 가지 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q15-v3",
       "sourceNo": 15,
       "variantNo": 3,
-      "itemContentHash": "51d1be228f94df5d6fb443ce1b931b5d95c0c97f3095151579a13d2d0a73b0e8",
+      "questionIdentityHash": "f33213ed47c99d3ac4401f3237c98f90554a249005c6708c0faf981e955c27b3",
+      "itemContentHash": "424b3fa8441db1bda1d06ebabe6fc33c5b0e1a87a27cec14ffe22ac96376509a",
       "reviewStatus": "verified",
-      "reviewNotes": "맨 아래 색별 경우 5+5+2를 독립 열거해 12가 되고, 5·6·7개 세 구조를 구분했습니다.",
+      "reviewNotes": "맨 아래 색별 경우 5+5+2를 독립 열거해 12가 되고, 5·6·7개 세 구조를 구분했습니다. 독학용 순서 풀이에서 첫째·둘째 색에 따른 실제 가지 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q01-q15"
       ]
     },
     {
       "id": "final1-q16-v1",
       "sourceNo": 16,
       "variantNo": 1,
-      "itemContentHash": "688d2c538e700ab14220d86e97754ebc027627ba22a73b8c336ea3e95ee27062",
+      "questionIdentityHash": "9d1a0cb2377ebe6ee861ff3be651862d2210b9bfc940ef2b67e0e8d3291d978b",
+      "itemContentHash": "46ff6ba1e820fbc4b69f3afd1272de56fe462d81125d464acb1ec628d6868e28",
       "reviewStatus": "verified",
-      "reviewNotes": "두 나머지의 합을 9로 다시 나눈 값과 실제 네 수 witness 계산이 답 3로 일치합니다.",
+      "reviewNotes": "두 나머지의 합을 9로 다시 나눈 값과 실제 네 수 witness 계산이 답 3로 일치합니다. 독학용 순서 풀이에서 두 나머지의 합을 제수로 다시 나눈 값의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q16-v2",
       "sourceNo": 16,
       "variantNo": 2,
-      "itemContentHash": "6af01d90e80c9292aad6fa04b98534ee89fc58e09c1c49d0f5ad3e416b9e7f69",
+      "questionIdentityHash": "be94e283306e8d07d8b82802a7a83056a1d9f0b075a7a899ff01c04c0d40d23f",
+      "itemContentHash": "087cbcab5ba266e77db23ee53405ae1c2ba07a734a46ab1e2be00e556d4b7a15",
       "reviewStatus": "verified",
-      "reviewNotes": "두 나머지의 합을 14로 다시 나눈 값과 실제 네 수 witness 계산이 답 1로 일치합니다.",
+      "reviewNotes": "두 나머지의 합을 14로 다시 나눈 값과 실제 네 수 witness 계산이 답 1로 일치합니다. 독학용 순서 풀이에서 두 나머지의 합을 제수로 다시 나눈 값의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q16-v3",
       "sourceNo": 16,
       "variantNo": 3,
-      "itemContentHash": "c661cef79834eaccd37e4c0551d77f96306c0b9a6379c9f9a24a21213ca4bc7f",
+      "questionIdentityHash": "0db689b29ba8b046f589efc376520a339775d8528771a40dcbfc61d49e0598aa",
+      "itemContentHash": "7111c9470c76e06e0d805be25c22c0f1db2667b1c028c50465fe7d938b13a757",
       "reviewStatus": "verified",
-      "reviewNotes": "두 나머지의 합을 15로 다시 나눈 값과 실제 네 수 witness 계산이 답 2로 일치합니다.",
+      "reviewNotes": "두 나머지의 합을 15로 다시 나눈 값과 실제 네 수 witness 계산이 답 2로 일치합니다. 독학용 순서 풀이에서 두 나머지의 합을 제수로 다시 나눈 값의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q17-v1",
       "sourceNo": 17,
       "variantNo": 1,
-      "itemContentHash": "04628132a92279496bff6449722c6a694da3bb0752a6791f28f95ba6ac8947d2",
+      "questionIdentityHash": "9f3892f0f358b2165fc8238b1e2fa8f011efe10c1e41279d24528d63b0fc7b30",
+      "itemContentHash": "756c2409f628f713c6daee7979834e679d5655c58878216d32bc7da0c6994140",
       "reviewStatus": "verified",
-      "reviewNotes": "13개 직선의 최대 92·최소 14 영역을 한 선씩 늘려 합 106를 확인했습니다.",
+      "reviewNotes": "13개 직선의 최대 92·최소 14 영역을 한 선씩 늘려 합 106를 확인했습니다. 독학용 순서 풀이에서 피자 안 교점의 최대와 피자 밖 교점의 최소의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q17-v2",
       "sourceNo": 17,
       "variantNo": 2,
-      "itemContentHash": "8026bf05c6e8e8406718cae6897972ef63bfaadcb5da2bae814f38e0220f5115",
+      "questionIdentityHash": "893381c9f6f7d451084c85bfb5b35fd10814dfce0344a50e08c453869e520f6f",
+      "itemContentHash": "cba627ae7502155b1fe8f0e285b5bc7aef1b9eb74626bea2f8ed35789420ece6",
       "reviewStatus": "verified",
-      "reviewNotes": "11개 직선의 최대 67·최소 12 영역을 한 선씩 늘려 합 79를 확인했습니다.",
+      "reviewNotes": "11개 직선의 최대 67·최소 12 영역을 한 선씩 늘려 합 79를 확인했습니다. 독학용 순서 풀이에서 피자 안 교점의 최대와 피자 밖 교점의 최소의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q17-v3",
       "sourceNo": 17,
       "variantNo": 3,
-      "itemContentHash": "3c694bb9d48224f5c5826b4b6baedca64ea03943fbf62f657dbae1c94574bcec",
+      "questionIdentityHash": "294ab7831e53da44c81066c852bbe01355854a570221ddd4ab34e90192261dab",
+      "itemContentHash": "728d63f58073da5c01a7e795a98cbad4f2aa83638c772d9887bd158b722d4cb1",
       "reviewStatus": "verified",
-      "reviewNotes": "12개 직선의 최대 79·최소 13 영역을 한 선씩 늘려 합 92를 확인했습니다.",
+      "reviewNotes": "12개 직선의 최대 79·최소 13 영역을 한 선씩 늘려 합 92를 확인했습니다. 독학용 순서 풀이에서 피자 안 교점의 최대와 피자 밖 교점의 최소의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q18-v1",
       "sourceNo": 18,
       "variantNo": 1,
-      "itemContentHash": "e46900bd80b64dfa91c611a28cba595d04c04bfedb5ed435762dce73a40177ef",
+      "questionIdentityHash": "a4ec493823110357aef51286bc8da5b17cad54754562eaded7c038f65d50c3b1",
+      "itemContentHash": "c513787dd9bf136b5d4507e44ed183055ac84e21f8216575545d190ed000f5d1",
       "reviewStatus": "verified",
-      "reviewNotes": "mid-cross 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 25조각을 확인했습니다.",
+      "reviewNotes": "mid-cross 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 25조각을 확인했습니다. 독학용 순서 풀이에서 두 번 접기 한 세트를 두 번 반복한 펼침 절단망의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30",
+        "self-study-solution-assets"
       ]
     },
     {
       "id": "final1-q18-v2",
       "sourceNo": 18,
       "variantNo": 2,
-      "itemContentHash": "157b078b4db0afe29d9b13cd96ffd101ec8976fa5ae39b4986f5ccdbfe6ceb3a",
+      "questionIdentityHash": "cb520e81f087a0159aca057021d6a9a7391e0a3e90c8fc638afaaa824f3110ac",
+      "itemContentHash": "7e3db21442568993d26c434b7fce7119f675b7765ac42cddcc6d68b512fdd318",
       "reviewStatus": "verified",
-      "reviewNotes": "single-diagonal 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 12조각을 확인했습니다.",
+      "reviewNotes": "single-diagonal 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 12조각을 확인했습니다. 독학용 순서 풀이에서 두 번 접기 한 세트를 두 번 반복한 펼침 절단망의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30",
+        "self-study-solution-assets"
       ]
     },
     {
       "id": "final1-q18-v3",
       "sourceNo": 18,
       "variantNo": 3,
-      "itemContentHash": "4ee4896ec9ff1b038a278b1f329c5bc7a76beaddec963abc602b90e7e9461f4e",
+      "questionIdentityHash": "54bb8df15363a3afd41f7773f1404f596340f7deeb9f0a8df46864034198a7c5",
+      "itemContentHash": "768e10d89a63d0fc1b04c7316f989e16a4f37c1a5ebf1cdf53081dd4d1fd3258",
       "reviewStatus": "verified",
-      "reviewNotes": "diagonals 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 40조각을 확인했습니다.",
+      "reviewNotes": "diagonals 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 40조각을 확인했습니다. 독학용 순서 풀이에서 두 번 접기 한 세트를 두 번 반복한 펼침 절단망의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30",
+        "self-study-solution-assets"
       ]
     },
     {
       "id": "final1-q19-v1",
       "sourceNo": 19,
       "variantNo": 1,
-      "itemContentHash": "1f513124d3a082b79afb21171da0ca7e505bce05a181b525dfd50daba28aaf77",
+      "questionIdentityHash": "d56051a33da2f9610ff1e24185b3e9b2deff559a52b46e25261097936ddd8e3b",
+      "itemContentHash": "a9d5f511ea5364eebe9f434af5f05b86fee7fe7bb43942a7680d009ea542d559",
       "reviewStatus": "verified",
-      "reviewNotes": "5개 원반의 모든 합법 상태 최단거리와 2의 5제곱−1이 31로 일치합니다.",
+      "reviewNotes": "5개 원반의 모든 합법 상태 최단거리와 2의 5제곱−1이 31로 일치합니다. 독학용 순서 풀이에서 원반 수가 하나 늘 때의 최소 이동 점화 과정의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q19-v2",
       "sourceNo": 19,
       "variantNo": 2,
-      "itemContentHash": "fa8e2cde3b31f42c823487a04332ed8e696778eb5d0b7fc6d1a0292150039e1a",
+      "questionIdentityHash": "a3a6ec5236e47451158ab296c8fff6749ca59951088f2608ace7ec95d9de155c",
+      "itemContentHash": "9b668d5c3ce09648ab274ef3e0ccbe158536a8b1f0f1560a9f17c9ae8d510e7c",
       "reviewStatus": "verified",
-      "reviewNotes": "7개 원반의 모든 합법 상태 최단거리와 2의 7제곱−1이 127로 일치합니다.",
+      "reviewNotes": "7개 원반의 모든 합법 상태 최단거리와 2의 7제곱−1이 127로 일치합니다. 독학용 순서 풀이에서 원반 수가 하나 늘 때의 최소 이동 점화 과정의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q19-v3",
       "sourceNo": 19,
       "variantNo": 3,
-      "itemContentHash": "d39b42f0d0eac6499edbc52f0741ee130e9e4e5fe850b040b957015b66e7486f",
+      "questionIdentityHash": "e17ab305b7eed6b42c66db5d19c55dcc7116fd7a901b940369c14f462ac55a21",
+      "itemContentHash": "12d0edb8583963123d890fee9dc9dc71bfa401a3b316beb3ae85a529e4bb2777",
       "reviewStatus": "verified",
-      "reviewNotes": "4개 원반의 모든 합법 상태 최단거리와 2의 4제곱−1이 15로 일치합니다.",
+      "reviewNotes": "4개 원반의 모든 합법 상태 최단거리와 2의 4제곱−1이 15로 일치합니다. 독학용 순서 풀이에서 원반 수가 하나 늘 때의 최소 이동 점화 과정의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q20-v1",
       "sourceNo": 20,
       "variantNo": 1,
-      "itemContentHash": "430057a9f98cb07f07327c6e3276c1052cdb389dc49957dc2ce86f2d6f435789",
+      "questionIdentityHash": "c5acdf0c09480276b3aa13970f7ca23faf283cbdaced0e36e8c8f2e10bdba960",
+      "itemContentHash": "88bfc3690bbc56e6d958eee981eb797e32cfd180a6b015a5b2c4dea21238c28b",
       "reviewStatus": "verified",
-      "reviewNotes": "현재 6개 절단평면의 가능한 부호 영역을 독립 열거해 24=24조각을 확인했습니다.",
+      "reviewNotes": "현재 6개 절단평면의 가능한 부호 영역을 독립 열거해 24=24조각을 확인했습니다. 독학용 순서 풀이에서 현재 2·3·6회 절단 단계별 조각 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q20-v2",
       "sourceNo": 20,
       "variantNo": 2,
-      "itemContentHash": "948f73028f833a0f03670b0c3beb4ca735bfa5dd04c7abdd617f80b987b76676",
+      "questionIdentityHash": "41358604838e36d07a704d197aaceef51e8bd4eb0d95e33b3514bed3aea38618",
+      "itemContentHash": "455852a350a9a73daa218c6d6858684fe130b3c107c8035e357e8cab2fb9aea4",
       "reviewStatus": "verified",
-      "reviewNotes": "현재 3개 절단평면의 가능한 부호 영역을 독립 열거해 8=8조각을 확인했습니다.",
+      "reviewNotes": "현재 3개 절단평면의 가능한 부호 영역을 독립 열거해 8=8조각을 확인했습니다. 독학용 순서 풀이에서 현재 2·3·6회 절단 단계별 조각 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q20-v3",
       "sourceNo": 20,
       "variantNo": 3,
-      "itemContentHash": "799a3c66437cc0b6f48dea42bdd6f0a9e8e3fbf3c1b6ddf4a8650714d70ec740",
+      "questionIdentityHash": "19e1838f8328d06d5aec2d95a71dd96784d6feaa2d52f165c5cfdcc9e4e92292",
+      "itemContentHash": "ada112968515188760b78642ea1fd3e32f6a221f4d1bbc9e0b1a2744642c096b",
       "reviewStatus": "verified",
-      "reviewNotes": "현재 2개 절단평면의 가능한 부호 영역을 독립 열거해 4=4조각을 확인했습니다.",
+      "reviewNotes": "현재 2개 절단평면의 가능한 부호 영역을 독립 열거해 4=4조각을 확인했습니다. 독학용 순서 풀이에서 현재 2·3·6회 절단 단계별 조각 수의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q21-v1",
       "sourceNo": 21,
       "variantNo": 1,
-      "itemContentHash": "c2f7f3afc69a0edd59cfc1686238249f029bc6457780acb4ab1469dfeb9533b4",
+      "questionIdentityHash": "6a8a2f26c53f2f34d20636b250ea3399434aac6c199f95591c92d2c5f6a3b1d8",
+      "itemContentHash": "ca99f0d0e7bfb9129cc2ae12c7c48ec1e66cd1d9018cd346d05035598777f9a2",
       "reviewStatus": "verified",
-      "reviewNotes": "그림의 보이는 여섯 식을 직접 풀어 도형값 6, 3, 12, 7와 남은 두 합 33, 22를 확인했습니다.",
+      "reviewNotes": "그림의 보이는 여섯 식을 직접 풀어 도형값 6, 3, 12, 7와 남은 두 합 33, 22를 확인했습니다. 독학용 순서 풀이에서 여섯 도형식의 실제 가감과 남은 행·열 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q21-v2",
       "sourceNo": 21,
       "variantNo": 2,
-      "itemContentHash": "997a00dd0c4bc1c0b5ae0a74a2a047f3ad919c36f9230808174ffcd1de951ed8",
+      "questionIdentityHash": "3c10ef52c8ee950289683e5510e914851e70ec0807317c810b2f061f65e3105a",
+      "itemContentHash": "a275ef913d3b92780f3cc5ab6833ae4332846e5862dc8f4634792bb8a365ecce",
       "reviewStatus": "verified",
-      "reviewNotes": "그림의 보이는 여섯 식을 직접 풀어 도형값 5, 8, 9, 10와 남은 두 합 38, 35를 확인했습니다.",
+      "reviewNotes": "그림의 보이는 여섯 식을 직접 풀어 도형값 5, 8, 9, 10와 남은 두 합 38, 35를 확인했습니다. 독학용 순서 풀이에서 여섯 도형식의 실제 가감과 남은 행·열 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q21-v3",
       "sourceNo": 21,
       "variantNo": 3,
-      "itemContentHash": "74fb9eb610e43bb93503bd2ccfa17f60bd2f12a4f4559be284e041121c8fe390",
+      "questionIdentityHash": "b1c4b0baa8be10db51d98076a0dc1b226e1ada8eea4139e38d6061e09bd3aa34",
+      "itemContentHash": "16f6da48f3b98755db854df1a58340a5ab09cea40465f5b6c86b29bee554008f",
       "reviewStatus": "verified",
-      "reviewNotes": "그림의 보이는 여섯 식을 직접 풀어 도형값 8, 3, 2, 11와 남은 두 합 32, 29를 확인했습니다.",
+      "reviewNotes": "그림의 보이는 여섯 식을 직접 풀어 도형값 8, 3, 2, 11와 남은 두 합 32, 29를 확인했습니다. 독학용 순서 풀이에서 여섯 도형식의 실제 가감과 남은 행·열 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q22-v1",
       "sourceNo": 22,
       "variantNo": 1,
-      "itemContentHash": "d7c64283d7bce1391a5c7feba72d76efcc6b827dac529e7b96b4c531ebb32812",
+      "questionIdentityHash": "ee070cce8196b7ddc9b9dc105369ec6a683ec8016329084a480eb40f1dd546e2",
+      "itemContentHash": "c5b52c40fb338d0641310a34944be1c9376f5e93cb0e9ceb97e204f08dd3ab28",
       "reviewStatus": "verified",
-      "reviewNotes": "모든 직사각형 경계를 열거하고 포함·배제 540−162−64+18=332를 확인했습니다.",
+      "reviewNotes": "모든 직사각형 경계를 열거하고 포함·배제 540−162−64+18=332를 확인했습니다. 독학용 순서 풀이에서 표식 포함 직사각형의 포함배제와 도형의 개수 안내의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q22-v2",
       "sourceNo": 22,
       "variantNo": 2,
-      "itemContentHash": "7e1e5a50b85d4ebf137cfb612d5fc9a27cdd23df3b822045e89001daa4352efa",
+      "questionIdentityHash": "b5eef075e0268a49e2448c8d97351ff1f20db65178efe71475020e4ecde8f5c9",
+      "itemContentHash": "2c0462e95304b6ed0d9b7c90d3274f4c89c561fe3ca5920a5c419b6ee9a2c57c",
       "reviewStatus": "verified",
-      "reviewNotes": "모든 직사각형 경계를 열거하고 포함·배제 420−75−63+9=291를 확인했습니다.",
+      "reviewNotes": "모든 직사각형 경계를 열거하고 포함·배제 420−75−63+9=291를 확인했습니다. 독학용 순서 풀이에서 표식 포함 직사각형의 포함배제와 도형의 개수 안내의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q22-v3",
       "sourceNo": 22,
       "variantNo": 3,
-      "itemContentHash": "d68cc5ced8ca6aab84856845398ff958c8b8a6ec75c52dd1783c49f772c5f008",
+      "questionIdentityHash": "75fd0bae2a7ec07f471de40740952f2627ec81d9636df94c308634409cb703d1",
+      "itemContentHash": "21412d00a57dd26b0c2a52dc4a2f692187d356d067d83a07d7f5ff2ddcb0863e",
       "reviewStatus": "verified",
-      "reviewNotes": "모든 직사각형 경계를 열거하고 포함·배제 540−100−180+48=308를 확인했습니다.",
+      "reviewNotes": "모든 직사각형 경계를 열거하고 포함·배제 540−100−180+48=308를 확인했습니다. 독학용 순서 풀이에서 표식 포함 직사각형의 포함배제와 도형의 개수 안내의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q23-v1",
       "sourceNo": 23,
       "variantNo": 1,
-      "itemContentHash": "111b95c147faebbece5e721b5859c6aca0f3a4a8c69bf6e6e5fcb3158166864c",
+      "questionIdentityHash": "74251827501df6af1bf40f7d6322868f66570ca6d86ad0c892ea503977202320",
+      "itemContentHash": "a06f5f233196c97cd6d4b04ac8ff0d57427d8e899ba606add0c3ebcfe56f1ea8",
       "reviewStatus": "verified",
-      "reviewNotes": "사람 120배치×운동 120배치를 단서에 전수 대입해 목표 묶음 윤후, 목요일, 축구 하나만 남음을 확인했습니다.",
+      "reviewNotes": "사람 120배치×운동 120배치를 단서에 전수 대입해 목표 묶음 윤후, 목요일, 축구 하나만 남음을 확인했습니다. 독학용 순서 풀이에서 이름·요일·운동의 유일한 배치 순서의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q23-v2",
       "sourceNo": 23,
       "variantNo": 2,
-      "itemContentHash": "ff24f9cf4f15d83bab995071a71956ae344c77af3e3bd31d01db79249dc0df59",
+      "questionIdentityHash": "4e655473beef1f10137b70d6599f53a6c67788cdb8397f64fb77348f6b437fc4",
+      "itemContentHash": "eaab88e37d5a55c46ae56eee9af549dddf1ff5cc915071d63fe882daea526ef2",
       "reviewStatus": "verified",
-      "reviewNotes": "사람 120배치×운동 120배치를 단서에 전수 대입해 목표 묶음 재현, 목요일, 볼링 하나만 남음을 확인했습니다.",
+      "reviewNotes": "사람 120배치×운동 120배치를 단서에 전수 대입해 목표 묶음 재현, 목요일, 볼링 하나만 남음을 확인했습니다. 독학용 순서 풀이에서 이름·요일·운동의 유일한 배치 순서의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q23-v3",
       "sourceNo": 23,
       "variantNo": 3,
-      "itemContentHash": "e6479843f0b15394ee62fb233151c02e9bb7bcf62e8f594a23577ad470f604c2",
+      "questionIdentityHash": "b6600261d3323f884ae3bd9dd311e1e7c3621e0b7cc526d073c7d19d97b2ed64",
+      "itemContentHash": "fd810d056eca31d27af71884eede898bd60d62cd7ca4f86e942c6ddd3756d34d",
       "reviewStatus": "verified",
-      "reviewNotes": "사람 120배치×운동 120배치를 단서에 전수 대입해 목표 묶음 하은, 목요일, 농구 하나만 남음을 확인했습니다.",
+      "reviewNotes": "사람 120배치×운동 120배치를 단서에 전수 대입해 목표 묶음 하은, 목요일, 농구 하나만 남음을 확인했습니다. 독학용 순서 풀이에서 이름·요일·운동의 유일한 배치 순서의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q24-v1",
       "sourceNo": 24,
       "variantNo": 1,
-      "itemContentHash": "70d9013d1c217786f6ca5bc89139eeeb5279c02d565eb5542496ebaea0ee4406",
+      "questionIdentityHash": "fe2f0ffa890632742c2656bad982016dc58657e631e9f89925539a760f339714",
+      "itemContentHash": "e7e1e5c29e01c09d45e077697595464bfc709d24e951f143dd1a8052e9750774",
       "reviewStatus": "verified",
-      "reviewNotes": "일의 자리 반복마디 8, 4, 2, 6와 직접 반복 곱셈이 답 6로 일치합니다.",
+      "reviewNotes": "일의 자리 반복마디 8, 4, 2, 6와 직접 반복 곱셈이 답 6로 일치합니다. 독학용 순서 풀이에서 일의 자리 반복마디와 지수의 나머지의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q24-v2",
       "sourceNo": 24,
       "variantNo": 2,
-      "itemContentHash": "49b0aba93c20051aabb594bc9217db4f105e771254781c975fd286af9d84c5de",
+      "questionIdentityHash": "46bbf9f70f5c8354e031506902f95d999fba683915367ebe21aa9a2ff0f3e0ab",
+      "itemContentHash": "c9ed82f1b9f6c2501be7812122b405dd382f7d7f832aad4281c5c3374f51ceb7",
       "reviewStatus": "verified",
-      "reviewNotes": "일의 자리 반복마디 7, 9, 3, 1와 직접 반복 곱셈이 답 9로 일치합니다.",
+      "reviewNotes": "일의 자리 반복마디 7, 9, 3, 1와 직접 반복 곱셈이 답 9로 일치합니다. 독학용 순서 풀이에서 일의 자리 반복마디와 지수의 나머지의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q24-v3",
       "sourceNo": 24,
       "variantNo": 3,
-      "itemContentHash": "14db4fa31cf9061f0438f9ddd762017e84346951685a7d7d770e83eb1798bc9b",
+      "questionIdentityHash": "135aa736a99b0ddeccd34fe659d51738b4bee5a07419cb6c0f4f1c67d4f1f353",
+      "itemContentHash": "c90f7eccd044ce5332385ac808f6e947ad9633c50184ee44f21e359cbcbf55bc",
       "reviewStatus": "verified",
-      "reviewNotes": "일의 자리 반복마디 4, 6와 직접 반복 곱셈이 답 6로 일치합니다.",
+      "reviewNotes": "일의 자리 반복마디 4, 6와 직접 반복 곱셈이 답 6로 일치합니다. 독학용 순서 풀이에서 일의 자리 반복마디와 지수의 나머지의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q25-v1",
       "sourceNo": 25,
       "variantNo": 1,
-      "itemContentHash": "a191cd54c46cd56cd6b79059f2b2a5d2d4e89a68e206934e8aac8c6d151ccaf1",
+      "questionIdentityHash": "3d98a319199bfbabcc5bd653edcc58736c2f61ffbae2419b454f2290e1870ccb",
+      "itemContentHash": "4839f4e7ac0b2683a66c5094d47f288977a777cb55cb5e36ec3d2916070c6f61",
       "reviewStatus": "verified",
-      "reviewNotes": "100부터 999까지 직접 나눈 결과와 몫별 나머지 구간 합이 74개로 일치합니다.",
+      "reviewNotes": "100부터 999까지 직접 나눈 결과와 몫별 나머지 구간 합이 74개로 일치합니다. 독학용 순서 풀이에서 몫별 가능한 나머지 범위와 개수 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q25-v2",
       "sourceNo": 25,
       "variantNo": 2,
-      "itemContentHash": "ff155c8bf0dfef36cb7770fac4e1df615874eb19c23225140ce334b898804017",
+      "questionIdentityHash": "fe8ba3aa349f9b5c5534e3eebcc38c06b6b2b957d7de775de03c1a1aec46f8ff",
+      "itemContentHash": "f00fef54142826ba2417e3c02caa203a20026057a38cf67dec6fb4250903fbe1",
       "reviewStatus": "verified",
-      "reviewNotes": "100부터 999까지 직접 나눈 결과와 몫별 나머지 구간 합이 57개로 일치합니다.",
+      "reviewNotes": "100부터 999까지 직접 나눈 결과와 몫별 나머지 구간 합이 57개로 일치합니다. 독학용 순서 풀이에서 몫별 가능한 나머지 범위와 개수 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q25-v3",
       "sourceNo": 25,
       "variantNo": 3,
-      "itemContentHash": "4f8dcfcc174b8cac9d3cba08d25390984897fa9c598bbae7bbaeacf6bb6ff8b7",
+      "questionIdentityHash": "d2cd8e8c1aa22bdcecd81765cfe784d70be5be6b0065ef845f26db6272e4bcdd",
+      "itemContentHash": "ea892b6cd7826a5d828ae8cfd4a0b51fc2cf1a0ad8331849068eb92bdef7f0d5",
       "reviewStatus": "verified",
-      "reviewNotes": "100부터 999까지 직접 나눈 결과와 몫별 나머지 구간 합이 210개로 일치합니다.",
+      "reviewNotes": "100부터 999까지 직접 나눈 결과와 몫별 나머지 구간 합이 210개로 일치합니다. 독학용 순서 풀이에서 몫별 가능한 나머지 범위와 개수 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q26-v1",
       "sourceNo": 26,
       "variantNo": 1,
-      "itemContentHash": "89d2cdb621dbe051f05a6f991cf1b7e091c5efc38dab44d3fd32a5cacb0600da",
+      "questionIdentityHash": "19cf754945aa9d2e10aa73bf5a67673cc04de30a31d110647f46cb5305312939",
+      "itemContentHash": "195535b55e8347b9e18fcc3e7cda5e08ba1a4afafe1f2f9c4d3a9933ac7fa0d3",
       "reviewStatus": "verified",
-      "reviewNotes": "자리 뒤집기·7배·4배·세대 차와 추가 조건 none을 전수 대입해 허용 답 63, 36, 9 / 84, 48, 12를 확인했습니다.",
+      "reviewNotes": "자리 뒤집기·7배·4배·세대 차와 추가 조건 none을 전수 대입해 허용 답 63, 36, 9 / 84, 48, 12를 확인했습니다. 독학용 순서 풀이에서 나이 후보 전수 대입과 any-one·추가 조건 계약의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q26-v2",
       "sourceNo": 26,
       "variantNo": 2,
-      "itemContentHash": "4dad783772a5b499b467ab9c1fc02e0ebfbc881701f79243ac6fa45360f5852b",
+      "questionIdentityHash": "8a6122d116f8615c0da2df550829fad75b7e8e09e7d2db1a21c2f1d04f8a02c0",
+      "itemContentHash": "1b63d3f67a9a6c6afba0bf435ecf615792b8024a778dfb8315ed3e87f678dce7",
       "reviewStatus": "verified",
-      "reviewNotes": "자리 뒤집기·7배·4배·세대 차와 추가 조건 childAge<10을 전수 대입해 허용 답 63, 36, 9를 확인했습니다.",
+      "reviewNotes": "자리 뒤집기·7배·4배·세대 차와 추가 조건 childAge<10을 전수 대입해 허용 답 63, 36, 9를 확인했습니다. 독학용 순서 풀이에서 나이 후보 전수 대입과 any-one·추가 조건 계약의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q26-v3",
       "sourceNo": 26,
       "variantNo": 3,
-      "itemContentHash": "39665275479d913d7291bae2e88a1f0699b5a1eedd3b2a6a2f356abf2ce38cc5",
+      "questionIdentityHash": "4921a1ba648505ba8c5dba2f4e3c5dbaf7e81b780baf1b69f1aff3b7de199048",
+      "itemContentHash": "0ed03832eeb34a5d8410bac6a6ea68775069407d191d4b639c3ad2076aa22394",
       "reviewStatus": "verified",
-      "reviewNotes": "자리 뒤집기·7배·4배·세대 차와 추가 조건 grandfatherAge>=70을 전수 대입해 허용 답 84, 48, 12를 확인했습니다.",
+      "reviewNotes": "자리 뒤집기·7배·4배·세대 차와 추가 조건 grandfatherAge>=70을 전수 대입해 허용 답 84, 48, 12를 확인했습니다. 독학용 순서 풀이에서 나이 후보 전수 대입과 any-one·추가 조건 계약의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q27-v1",
       "sourceNo": 27,
       "variantNo": 1,
-      "itemContentHash": "1c110bf412a9434a0b95692e938aad2ce87015a788bd41497dcc75e152f81c36",
+      "questionIdentityHash": "e85d17dc3e08fc8749d7cb3761497c053efa9ab8e286886d907e02d0a2499b6b",
+      "itemContentHash": "d7ceab2acd8c4cb3d20f49af5d569405c7b98d8e9ec6dfd572a87e2df154c9ed",
       "reviewStatus": "verified",
-      "reviewNotes": "가림 거리 373−3=370를 상대속력 370로 나눠 1분이며 초 단위 위치 모형과 일치합니다.",
+      "reviewNotes": "가림 거리 373−3=370를 상대속력 370로 나눠 1분이며 초 단위 위치 모형과 일치합니다. 독학용 순서 풀이에서 기차 길이−자동차 길이와 반대 방향 상대속력의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q27-v2",
       "sourceNo": 27,
       "variantNo": 2,
-      "itemContentHash": "65b6f899195aea90b6bb2b97426996ef5d416efec6373a8f2de7442c59500278",
+      "questionIdentityHash": "00a48113375fe2b4ad13859985adc5aa31ab408354a357e39162937ff854ee64",
+      "itemContentHash": "3e6355001ab0146ba40182a41d399370436e068365dc98ae77b918d827d0dc41",
       "reviewStatus": "verified",
-      "reviewNotes": "가림 거리 323−3=320를 상대속력 320로 나눠 1분이며 초 단위 위치 모형과 일치합니다.",
+      "reviewNotes": "가림 거리 323−3=320를 상대속력 320로 나눠 1분이며 초 단위 위치 모형과 일치합니다. 독학용 순서 풀이에서 기차 길이−자동차 길이와 반대 방향 상대속력의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q27-v3",
       "sourceNo": 27,
       "variantNo": 3,
-      "itemContentHash": "2dbd46d38ade5eff00294cdf76d6f81fbb5d8c0ce6359cca6003959733d0a855",
+      "questionIdentityHash": "e079fd8cc673bcab783eb9b5ef6be03cd54463ab8f273880851bf060bf7122a4",
+      "itemContentHash": "cc8391bddcff770ffe3290376543419bc7a9b1ae19d33bf529f8d36523ba0124",
       "reviewStatus": "verified",
-      "reviewNotes": "가림 거리 663−3=660를 상대속력 330로 나눠 2분이며 초 단위 위치 모형과 일치합니다.",
+      "reviewNotes": "가림 거리 663−3=660를 상대속력 330로 나눠 2분이며 초 단위 위치 모형과 일치합니다. 독학용 순서 풀이에서 기차 길이−자동차 길이와 반대 방향 상대속력의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q28-v1",
       "sourceNo": 28,
       "variantNo": 1,
-      "itemContentHash": "bbd7b969d2734b6378eb939f5464f5b2e827f9648b742c71a405dc9c2155a6e1",
+      "questionIdentityHash": "50d871f62c027cc029717850c3ec2c23d51c603c2223c290ae4aa82ebd7a7d37",
+      "itemContentHash": "be508fcbfce1f69ea4481c05cddb3bc944789bee45f2fa70490e059209144abc",
       "reviewStatus": "verified",
-      "reviewNotes": "분침 7.5도/분에서 상대속력 7도/분을 빼 시침 속도와 하루 30시간을 도출했습니다.",
+      "reviewNotes": "분침 7.5도/분에서 상대속력 7도/분을 빼 시침 속도와 하루 30시간을 도출했습니다. 독학용 순서 풀이에서 분침·상대·시침 속력과 하루 두 바퀴의 순서 계산의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q28-v2",
       "sourceNo": 28,
       "variantNo": 2,
-      "itemContentHash": "141d9a431c0cf40ed4f13d614fbe27b8d0f0a938cf9543738fbf21e95c295bca",
+      "questionIdentityHash": "6cb59132d4d194d8457bac4ee18dd35017aea7dba271cc74bb7fa0a889561147",
+      "itemContentHash": "4aa5e093ae5dc1daa8af3dd31b2113ad509be1fd1961ad03df43974967f46f20",
       "reviewStatus": "verified",
-      "reviewNotes": "분침 9도/분에서 상대속력 8.25도/분을 빼 시침 속도와 하루 24시간을 도출했습니다.",
+      "reviewNotes": "분침 9도/분에서 상대속력 8.25도/분을 빼 시침 속도와 하루 24시간을 도출했습니다. 독학용 순서 풀이에서 분침·상대·시침 속력과 하루 두 바퀴의 순서 계산의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q28-v3",
       "sourceNo": 28,
       "variantNo": 3,
-      "itemContentHash": "6f6c51ebdc0ff4779bba5a15501fa3888825029b0c67263cbf803c77339f1ad6",
+      "questionIdentityHash": "851086fd357a55ab23c08e191dbaf78e21a981e3f3d844fe0fb42d33ba8747f5",
+      "itemContentHash": "bd61fef2b773124a803b6ceb0a237d1558956a25197ae53e5da091e36259d9a0",
       "reviewStatus": "verified",
-      "reviewNotes": "분침 7.5도/분에서 상대속력 7도/분을 빼 시침 속도와 하루 30시간을 도출했습니다.",
+      "reviewNotes": "분침 7.5도/분에서 상대속력 7도/분을 빼 시침 속도와 하루 30시간을 도출했습니다. 독학용 순서 풀이에서 분침·상대·시침 속력과 하루 두 바퀴의 순서 계산의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
-        "source-content-review"
+        "source-content-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q29-v1",
       "sourceNo": 29,
       "variantNo": 1,
-      "itemContentHash": "49bf20b353ab6d9f2c281167297f6d1ea42add04be81d2d09933dc1a56a42e33",
+      "questionIdentityHash": "cc9a0f316d7847df5a044b3c0ec5f0f9cd6c2751befd361f1acc3ca136e2337d",
+      "itemContentHash": "f018999b1f8d78ef2beec5dfba70c239934682808e79e6235086f6733b5efd91",
       "reviewStatus": "verified",
-      "reviewNotes": "맨 앞자리와 나머지 자리의 등장 횟수를 따로 세어 13770000+1019898=14789898이며 전체 수 생성 합과 일치합니다.",
+      "reviewNotes": "맨 앞자리와 나머지 자리의 등장 횟수를 따로 세어 13770000+1019898=14789898이며 전체 수 생성 합과 일치합니다. 독학용 순서 풀이에서 맨 앞자리와 나머지 자리의 출현 횟수별 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q29-v2",
       "sourceNo": 29,
       "variantNo": 2,
-      "itemContentHash": "0738ec51d7e76943ec73aefdebffdf17ba6f79374f2ecdaa7119fc943023aef6",
+      "questionIdentityHash": "7c12bfba40d9525617a6d1a24532d17a06278ce532b8748f6089efd945b87f15",
+      "itemContentHash": "b8795cd0bb4d28c16a6d9028ec888ba2f712ac9ea8d9e9e251a17ad764943484",
       "reviewStatus": "verified",
-      "reviewNotes": "맨 앞자리와 나머지 자리의 등장 횟수를 따로 세어 8100000+599940=8699940이며 전체 수 생성 합과 일치합니다.",
+      "reviewNotes": "맨 앞자리와 나머지 자리의 등장 횟수를 따로 세어 8100000+599940=8699940이며 전체 수 생성 합과 일치합니다. 독학용 순서 풀이에서 맨 앞자리와 나머지 자리의 출현 횟수별 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q29-v3",
       "sourceNo": 29,
       "variantNo": 3,
-      "itemContentHash": "49ea17bf6c440e7fcec4b96a94eeda913c682f46f969752cbe48fe5aa6393420",
+      "questionIdentityHash": "aa4116f53008b33dfb37f56f4ad02cb148ec150ed3c079f7dab410c835a8cf7e",
+      "itemContentHash": "25ad6ffe9595d4451656609e81d73b0e96b1126c4a6b34f4f4a468b16bde3b9a",
       "reviewStatus": "verified",
-      "reviewNotes": "맨 앞자리와 나머지 자리의 등장 횟수를 따로 세어 3240000+239976=3479976이며 전체 수 생성 합과 일치합니다.",
+      "reviewNotes": "맨 앞자리와 나머지 자리의 등장 횟수를 따로 세어 3240000+239976=3479976이며 전체 수 생성 합과 일치합니다. 독학용 순서 풀이에서 맨 앞자리와 나머지 자리의 출현 횟수별 합의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q30-v1",
       "sourceNo": 30,
       "variantNo": 1,
-      "itemContentHash": "f8cec3f7f9c34c93d3cb76491e3fa39d0aecd1c4a606cb74a88b2da772b48156",
+      "questionIdentityHash": "a2318c828b739877812230fd3ca6d29137ed2521d9f14672e25d713b4e87ba06",
+      "itemContentHash": "3007e0d151c190ac776ab60fba7238cd7b771e5250e30447f9baf35908b447d2",
       "reviewStatus": "verified",
-      "reviewNotes": "완성 예시 3개에서 바깥 자리·두 수의 차 규칙을 모두 확인하고 목표 원을 독립 계산해 6444를 확인했습니다.",
+      "reviewNotes": "완성 예시 3개에서 바깥 자리·두 수의 차 규칙을 모두 확인하고 목표 원을 독립 계산해 6444를 확인했습니다. 독학용 순서 풀이에서 완성 예시 세 개와 질문 원의 이어 쓰기 규칙의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q30-v2",
       "sourceNo": 30,
       "variantNo": 2,
-      "itemContentHash": "ce4cb68110592e6ce37de8983d41eea56744346c218b5d4f195b64cc5a6bca86",
+      "questionIdentityHash": "c2048c1956efec2b46c6b12d5497453335de92c0c1b5c7ffdd1d29753cf1930f",
+      "itemContentHash": "5da102a5015dfe9845f5c9b93078a3cf68f81f7eeaa5bcc9944278399b8385c4",
       "reviewStatus": "verified",
-      "reviewNotes": "완성 예시 3개에서 바깥 자리·두 수의 차 규칙을 모두 확인하고 목표 원을 독립 계산해 8284를 확인했습니다.",
+      "reviewNotes": "완성 예시 3개에서 바깥 자리·두 수의 차 규칙을 모두 확인하고 목표 원을 독립 계산해 8284를 확인했습니다. 독학용 순서 풀이에서 완성 예시 세 개와 질문 원의 이어 쓰기 규칙의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     },
     {
       "id": "final1-q30-v3",
       "sourceNo": 30,
       "variantNo": 3,
-      "itemContentHash": "ebbf92ea4f27acbed2a6377d239f5ade88eff5c99af5ec97394b74aac8e8c683",
+      "questionIdentityHash": "65490930675e592d6fd420b5992b13e7ab0389b342d71cedc3d2849be1f66688",
+      "itemContentHash": "ca0758ed943e5f2f7e768d92848aea4e6aa5417c00e70738eb7332730d618d45",
       "reviewStatus": "verified",
-      "reviewNotes": "완성 예시 3개에서 바깥 자리·두 수의 차 규칙을 모두 확인하고 목표 원을 독립 계산해 8357를 확인했습니다.",
+      "reviewNotes": "완성 예시 3개에서 바깥 자리·두 수의 차 규칙을 모두 확인하고 목표 원을 독립 계산해 8357를 확인했습니다. 독학용 순서 풀이에서 완성 예시 세 개와 질문 원의 이어 쓰기 규칙의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
-        "raster-review"
+        "raster-review",
+        "question-identity-lock",
+        "self-study-solutions-q16-q30"
       ]
     }
   ]

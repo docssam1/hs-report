@@ -6,6 +6,7 @@
 <title>지필드 생각하는 초등 황소 약점 유형 문제은행 | 지필드 영재교육</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="final1-worksheet.css?v=20260906">
 <style>
   :root{
     --bg:#fff7ed; --card:#ffffff; --soft:#fff3e6;
@@ -245,8 +246,22 @@
 </script>
 <script>
 (function(){
+  var q=new URLSearchParams(location.search);
+  var fixed=q.get('bank')==='final1' || (q.get('practice')==='wrong' && String(q.get('source')||'final|1').split('|').slice(0,2).join('|')==='final|1');
+  if(!fixed)return;
+  document.body.classList.add('fixed-bank-mode');
+  var s=document.createElement('script');s.src='final1-worksheet.js?v=20260906';s.onload=function(){
+    var hasGens=q.has('gens'), raw=hasGens?(q.get('gens')||'').split(','):(q.get('practice')==='wrong'?[]:null);
+    if(!hasGens&&q.get('gen')&&q.get('gen')!=='mix')raw=[q.get('gen')];
+    window.FINAL1_WORKSHEET.mount({genIds:raw,pointBand:q.get('points')||'all',wrongPracticeMode:q.get('practice')==='wrong',query:{printMode:q.get('printMode')||q.get('mode')||'both'}});
+  };s.onerror=function(){document.getElementById('stage').textContent='학습지를 불러오지 못했습니다. 페이지를 다시 열어 주세요.';};document.head.appendChild(s);
+})();
+(function(){
   'use strict';
   var CORE = window.BANK_CORE;
+  var fixedQuery = new URLSearchParams(location.search);
+  var fixedEarly = fixedQuery.get('bank')==='final1' || (fixedQuery.get('practice')==='wrong' && String(fixedQuery.get('source')||'final|1').split('|').slice(0,2).join('|')==='final|1');
+  if(fixedEarly)return;
 
   var GEN_NAMES = {
     rect:'크고 작은 직사각형 개수', tri:'크고 작은 삼각형 개수',

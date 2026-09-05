@@ -1,0 +1,78 @@
+:root{--f1-ink:#182230;--f1-muted:#566274;--f1-line:#d8dee8;--f1-soft:#f5f6f8;--f1-blue:#2456c4;--f1-paper:#fff}
+body.fixed-bank-mode{background:#fff;color:var(--f1-ink);padding:0;font-family:Arial,'Noto Sans KR','Malgun Gothic',sans-serif}
+body.fixed-bank-mode{--orange-d:#182230;--accent:#2456c4;--dim:#566274;--line2:#d8dee8;--ink2:#566274}
+body.fixed-bank-mode .topbar,body.fixed-bank-mode .panel,body.fixed-bank-mode .hint,body.fixed-bank-mode #reviewNote{display:none!important}
+#final1Worksheet{max-width:1120px;margin:0 auto;padding:22px 24px 60px}
+.f1-toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;border-bottom:1px solid var(--f1-line);padding:0 0 16px;margin-bottom:24px}
+.f1-back{color:var(--f1-ink);text-decoration:none;font-size:13px;margin-right:8px}.f1-title{font-family:Georgia,'Malgun Gothic',serif;font-size:21px;font-weight:600;margin-right:auto}
+.f1-toolbar button,.f1-toolbar select{font:600 12px Arial,'Noto Sans KR',sans-serif;color:var(--f1-ink);background:#fff;border:1px solid var(--f1-line);padding:8px 11px;min-height:44px;cursor:pointer;border-radius:5px}.f1-toolbar button:focus-visible,.f1-toolbar select:focus-visible,.f1-check:focus-within{outline:3px solid #9db8f4;outline-offset:2px}
+.f1-toolbar button[aria-pressed=true],.f1-toolbar button:hover{border-color:var(--f1-blue);color:var(--f1-blue);background:#f4f6ff}.f1-toolbar button:disabled{opacity:.45;cursor:not-allowed}
+.f1-toolbar label{font-size:12px;color:var(--f1-muted);margin-left:8px}.f1-toolbar select{min-width:138px}
+.f1-status{font-size:12px;color:var(--f1-muted);margin:-10px 0 18px}.f1-error{border:1px solid #c9ced8;background:#f7f8fa;padding:18px;font-size:14px}
+.f1-page{background:var(--f1-paper);width:210mm;min-height:297mm;margin:0 auto 22px;padding:12mm;box-shadow:0 4px 18px #18243b18;position:relative;overflow:hidden}
+.f1-cover{min-height:273mm;border-top:4px solid var(--f1-ink);display:flex;flex-direction:column}.f1-mast{display:flex;justify-content:space-between;border-bottom:1px solid var(--f1-line);padding:12px 0 10px}.f1-brand{font-size:11px;letter-spacing:.14em;font-weight:800}.f1-issue{font-size:10px;color:var(--f1-muted);text-align:right}.f1-cover h1{font:600 46px/1.1 Georgia,'Malgun Gothic',serif;margin:28mm 0 6mm}.f1-cover .lead{font-size:16px;line-height:1.6;color:var(--f1-muted)}
+.f1-name{margin-top:24mm;border-bottom:1px solid var(--f1-ink);padding-bottom:9px;font-size:15px}.f1-name strong{font-size:20px;font-weight:700}.f1-focus{margin-top:14mm;padding:13px 16px;border:1px solid var(--f1-line);background:var(--f1-soft)}.f1-focus b{display:block;font-size:11px;letter-spacing:.1em;color:var(--f1-blue);margin-bottom:6px}.f1-focus span{font-size:19px;font-weight:700}.f1-check-title{font-size:12px;color:var(--f1-muted);margin-top:18mm;padding-bottom:7px;border-bottom:2px solid var(--f1-ink)}.f1-checks{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-top:10px}.f1-check{font-size:11px;line-height:1.45;display:flex;gap:7px}.f1-check input{appearance:none;width:14px;height:14px;border:1px solid #9aa3b2;flex:0 0 auto;margin:1px 0 0;cursor:pointer}.f1-check input:checked{background:var(--f1-blue);box-shadow:inset 0 0 0 3px #fff}.f1-check small{display:block;color:var(--f1-muted)}.f1-rule{margin-top:auto;border-top:1px solid var(--f1-line);padding-top:8px;color:var(--f1-muted);font-size:10px}
+.f1-qpage{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto repeat(3,1fr);column-gap:8mm;row-gap:4mm;min-height:273mm}.f1-qhead{grid-column:1/-1;border-bottom:2px solid var(--f1-ink);padding:0 0 8px;font-family:Georgia,'Malgun Gothic',serif;font-size:16px;display:flex;justify-content:space-between}.f1-qhead small{font:11px Arial;color:var(--f1-muted)}.f1-qcard{min-width:0;min-height:0;border-bottom:1px solid var(--f1-line);padding:0 0 8px;overflow:hidden}.f1-qno{font-weight:800;font-size:15px;color:var(--f1-blue);margin-right:7px}.f1-qtext{font-size:12px;line-height:1.5}.f1-qmeta{font-size:9px;color:var(--f1-muted);margin-top:5px}.f1-qfigure{text-align:center;margin:6px 0}.f1-qfigure img{display:block;max-width:100%;max-height:31mm;width:auto;height:auto;object-fit:contain;margin:0 auto}.f1-answerline{font-size:11px;color:var(--f1-muted);margin-top:5px}.f1-answerline i{display:inline-block;width:90px;border-bottom:1px solid #7e8796;margin-left:5px}
+.f1-answer-page h2{font:600 21px Georgia,'Malgun Gothic',serif;border-bottom:2px solid var(--f1-ink);padding-bottom:8px;margin:0 0 16px}.f1-solution{border-bottom:1px solid var(--f1-line);padding:0 0 13px;margin-bottom:14px;break-inside:avoid}.f1-solution h3{font-size:13px;margin-bottom:5px}.f1-solution .ans{color:var(--f1-blue);font-weight:800;margin-left:8px}.f1-solution p,.f1-solution ol{font-size:11px;line-height:1.55;margin:5px 0}.f1-solution ol{padding-left:20px}.f1-solution .label{font-size:10px;color:var(--f1-muted);margin-top:7px}.f1-solution-asset{display:block;max-width:100%;max-height:48mm;object-fit:contain;margin:8px 0}.f1-quick{font-size:12px;line-height:1.7;columns:3;column-gap:24px}.f1-quick div{break-inside:avoid}.duplex-blank{color:var(--f1-muted);display:flex;align-items:center;justify-content:center;font-size:12px}
+@media screen and (max-width:880px){#final1Worksheet{padding:14px 10px}.f1-toolbar{gap:6px}.f1-title{font-size:18px;flex-basis:100%;order:-1}.f1-page{width:100%;min-height:0;padding:24px 18px}.f1-cover{min-height:680px}.f1-cover h1{margin-top:48px;font-size:38px}.f1-name{margin-top:42px}.f1-qpage{min-height:760px;column-gap:15px;row-gap:12px}.f1-qtext{font-size:11px}.f1-qfigure img{max-height:100px}.f1-quick{columns:2}}
+@media print{body.fixed-bank-mode{padding:0}.f1-toolbar,.f1-status{display:none!important}#final1Worksheet{padding:0;max-width:none}.f1-page{width:auto;min-height:273mm;margin:0;padding:0;box-shadow:none;break-after:page;page-break-after:always}.f1-page:last-child{break-after:auto;page-break-after:auto}.f1-qpage{min-height:273mm}.duplex-blank{color:transparent}.duplex-blank *{visibility:hidden}@page{size:A4 portrait;margin:12mm}}
+.f1-name{margin-top:14mm}.f1-checks{max-height:185mm;overflow:hidden}.f1-check input{width:16px;height:16px;min-width:16px}.f1-check{min-height:22px}
+.fixed-bank-mode #final1Worksheet .qpage{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto repeat(3,minmax(0,1fr));min-height:273mm;column-gap:8mm;row-gap:4mm}.fixed-bank-mode #final1Worksheet .qcard{min-height:0;padding-bottom:8px;overflow:hidden;transform:none!important}.fixed-bank-mode #final1Worksheet .qtext{font-size:12px;line-height:1.5}.fixed-bank-mode #final1Worksheet .qfigure img{max-height:31mm}.fixed-bank-mode #final1Worksheet .qmeta{font-size:9px}.fixed-bank-mode #final1Worksheet .answerline{font-size:11px}
+
+.f1-watermark-clip{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+#final1Worksheet .wm-layer.wm-active{opacity:.1}
+.f1-bands{display:flex;gap:4px;flex-wrap:wrap}
+.f1-toolbar button,.f1-toolbar select{font-size:14px}
+#final1Worksheet .f1-solution p,#final1Worksheet .f1-solution ol{font-size:12px;line-height:1.6}
+#final1Worksheet #btnPrint{background:var(--f1-blue);color:white;border-color:var(--f1-blue);min-width:72px}
+#final1Worksheet .f1-cover-heading{margin:8mm 0 4mm}
+#final1Worksheet .f1-owner{font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+body.fixed-bank-mode #final1Worksheet .f1-cover h1{margin:2mm 0 0;font:700 32px/1.3 Batang,'바탕',serif}
+#final1Worksheet .f1-cover h1 span{display:block}
+#final1Worksheet .f1-check-title{margin-top:3mm;color:var(--f1-ink);font-weight:700}
+#final1Worksheet .f1-cover .lead{font-size:12px;margin:2mm 0}
+#final1Worksheet .f1-check-type{display:block;font-size:11px;line-height:1.4;margin-top:2px;word-break:keep-all;overflow-wrap:anywhere}
+#final1Worksheet .f1-qhead{margin-bottom:0;font-family:'Noto Sans KR','Malgun Gothic',sans-serif}
+#final1Worksheet .f1-answer-page h2{display:flex;justify-content:space-between}
+#final1Worksheet .f1-answer-page h2 small{font:12px 'Malgun Gothic',sans-serif}
+#final1Worksheet .f1-solution h3{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;font-weight:700}
+#final1Worksheet .f1-quick div{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--f1-line)}
+#final1Worksheet .f1-quick b{min-width:20px;color:var(--f1-muted)}
+/* Final 1 print geometry: keep the outer sheet and the readable content box separate. */
+@media screen{
+  body.fixed-bank-mode #final1Worksheet .f1-page,
+  body.fixed-bank-mode #final1Worksheet .f1-page.page{box-sizing:border-box;width:210mm;height:297mm;min-height:297mm;max-height:297mm;padding:12mm;margin:0 auto 22px;overflow:visible;break-before:auto;page-break-before:auto;break-after:page;page-break-after:always}
+  body.fixed-bank-mode #final1Worksheet .f1-page:first-child{break-before:auto!important;page-break-before:auto!important}
+  body.fixed-bank-mode #final1Worksheet .f1-page:last-child{break-after:auto;page-break-after:auto}
+  body.fixed-bank-mode #final1Worksheet .f1-qpage{height:270mm;min-height:270mm;max-height:270mm;grid-template-rows:auto repeat(3,minmax(0,1fr));row-gap:4mm}
+  body.fixed-bank-mode #final1Worksheet .f1-cover{height:297mm;min-height:297mm;max-height:297mm;overflow:visible}
+  body.fixed-bank-mode #final1Worksheet .f1-mast{height:auto;min-height:0;max-height:55mm}
+  body.fixed-bank-mode #final1Worksheet .f1-cover h1{font-family:Batang,'바탕',Georgia,'Malgun Gothic',serif;font-size:30px;line-height:1.2;margin:10mm 0 4mm}
+  body.fixed-bank-mode #final1Worksheet .f1-name{margin-top:8mm;white-space:nowrap}
+  body.fixed-bank-mode #final1Worksheet .f1-checks{grid-template-rows:repeat(15,minmax(10mm,11mm));grid-auto-rows:10mm;max-height:none;overflow:visible;align-content:start;gap:0 20px}
+  body.fixed-bank-mode #final1Worksheet .f1-check{min-height:10mm;max-height:11mm;font-size:11px;line-height:1.25;overflow:visible;align-items:flex-start}
+  body.fixed-bank-mode #final1Worksheet .f1-check small{font-size:10px;line-height:1.25;white-space:normal;overflow:visible;display:block}
+  body.fixed-bank-mode #final1Worksheet .f1-check input{margin-top:1px}
+  body.fixed-bank-mode #final1Worksheet .wm-layer{overflow:hidden;max-height:270mm}
+  body.fixed-bank-mode #final1Worksheet .f1-page + .f1-page{break-before:page;page-break-before:always}
+  body.fixed-bank-mode #final1Worksheet .f1-page + .f1-page.answer-page{break-before:page;page-break-before:always}
+}
+
+@media print{
+  body.fixed-bank-mode #final1Worksheet .f1-page,
+  body.fixed-bank-mode #final1Worksheet .f1-page.page{box-sizing:border-box;width:auto;height:270mm;min-height:270mm;max-height:270mm;padding:0;margin:0;overflow:visible;break-before:page;page-break-before:always;break-after:page;page-break-after:always}
+  body.fixed-bank-mode #final1Worksheet .f1-page:first-child{break-before:auto!important;page-break-before:auto!important}
+  body.fixed-bank-mode #final1Worksheet .f1-page:last-child{break-after:auto;page-break-after:auto}
+  body.fixed-bank-mode #final1Worksheet .f1-qpage{height:270mm;min-height:270mm;max-height:270mm;grid-template-rows:auto repeat(3,minmax(0,1fr));row-gap:4mm}
+  body.fixed-bank-mode #final1Worksheet .f1-cover{height:270mm;min-height:270mm;max-height:270mm;overflow:visible}
+  body.fixed-bank-mode #final1Worksheet .f1-checks{grid-template-rows:repeat(15,minmax(10mm,11mm));max-height:none;overflow:visible}
+  body.fixed-bank-mode #final1Worksheet .f1-page + .f1-page.answer-page{break-before:page!important;page-break-before:always!important}
+  body.fixed-bank-mode #final1Worksheet .wm-layer{overflow:hidden;max-height:270mm}
+}
+
+@media screen and (max-width:880px){
+  body.fixed-bank-mode #final1Worksheet .f1-page,
+  body.fixed-bank-mode #final1Worksheet .f1-page.page{width:100%;height:auto;min-height:0;max-height:none;padding:24px 18px;margin:0 auto 14px;overflow:visible}
+  body.fixed-bank-mode #final1Worksheet .f1-qpage{height:auto;min-height:760px;max-height:none}
+  body.fixed-bank-mode #final1Worksheet .f1-cover{height:auto;min-height:680px;max-height:none}
+}

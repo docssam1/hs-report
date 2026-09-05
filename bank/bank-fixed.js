@@ -36,19 +36,24 @@
     if (!Array.isArray(ids) || !ids.length || new Set(ids).size !== ids.length || ids.some(function (id) {return !/^final1-q(0[1-9]|[12][0-9]|30)$/.test(id);})) {
       throw new Error('학습할 파이널 1회 문항을 선택해 주세요.');
     }
-    var selected = [];
+    var selected = [], groups = [];
     ids.forEach(function (id) {
       var group = data.items.filter(function (item) { return item.genId === id; }).sort(function (a, b) { return a.variantNo - b.variantNo; });
       if (opts.pointBand && opts.pointBand !== 'all' && group[0].pointBand !== opts.pointBand) return;
       if (group.some(function (item) { return item.reviewStatus !== 'verified'; })) {
         throw new Error(group[0].sourceNo + '번 유사문제는 검수 중입니다. 검수가 끝난 뒤 제공됩니다.');
       }
-      group.forEach(function (item) {
+      groups.push(group);
+    });
+    // Interleave the reviewed variants across source types; do not regenerate.
+    for (var variant = 0; variant < 3; variant++) {
+      groups.forEach(function (group) {
+        var item = group[variant];
         var copy = JSON.parse(JSON.stringify(item));
         copy.index = selected.length + 1;
         selected.push(copy);
       });
-    });
+    }
     return {
       bankVersion:data.version, fixed:true, seedStr:'F1V1', seedNum:0,
       genIds:ids.slice(), pointBand:opts.pointBand || 'all', difficultyMode:'standard', difficultyMix:'single',

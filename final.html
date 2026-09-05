@@ -784,10 +784,14 @@ td.weak-cell{white-space:nowrap}
     chips.forEach(function(chip){chip.onclick=function(){selected=chip.getAttribute('data-wp-filter');paint();};});
     document.getElementById('wpStart').onclick=function(){
       var active=rows(); if(!active.length)return;
-      var ids=active.map(function(row){return row.getAttribute('data-wp-gen');});
-      var nos=active.map(function(row){return row.getAttribute('data-wp-no');});
+      // Keep the complete wrong-answer scope so the worksheet band buttons can
+      // switch back to all wrong types, without ever adding a correct source.
+      var scope=Array.prototype.slice.call(root.querySelectorAll('.wp-item'));
+      var ids=scope.map(function(row){return row.getAttribute('data-wp-gen');});
+      var nos=scope.map(function(row){return row.getAttribute('data-wp-no');});
       var query=new URLSearchParams({practice:'wrong',gens:ids.join(','),per:'3',points:selected,source:TAX_SET_KEY+'|'+ctx.roundNum,sourceNos:nos.join(','),seed:''});
-      window.open('bank/index.html?'+query.toString(),'_blank','noopener');
+      // Display-only name in the fragment: not a request parameter or authority.
+      window.open('bank/index.html?'+query.toString()+'#'+new URLSearchParams({student:ctx.name}).toString(),'_blank','noopener');
     };
     paint();
   }
