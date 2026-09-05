@@ -51,6 +51,11 @@
   .hint{font-size:11.5px;color:var(--dim);text-align:center;margin-bottom:14px}
   .review-note{max-width:900px;margin:0 auto 14px;padding:11px 14px;border:1px solid #f0b429;border-radius:10px;background:#fff8db;color:#704900;font-size:12.5px;line-height:1.55}
   body.wrong-practice-mode .panel{display:none}
+  body.fixed-bank-mode .row:has([data-role="tune"]),body.fixed-bank-mode .row:has([data-role="ratio"]),body.fixed-bank-mode [data-role="n"],body.fixed-bank-mode #seedInput,body.fixed-bank-mode #btnNew{display:none}
+  body.fixed-bank-mode .qcard .qtext{font-size:12px;line-height:1.45}
+  body.fixed-bank-mode .qcard .qconditions{font-size:11.5px;line-height:1.4;margin-left:20px}
+  body.fixed-bank-mode .qcard .qconditions li{margin:1px 0}
+  body.fixed-bank-mode .qcard .qmeta{font-size:9px}
   body.wrong-practice-mode .review-note{border-color:#86b7fe;background:#eff6ff;color:#1e3a5f;font-weight:700}
 
   /* ---------- 시험지(미리보기 겸 인쇄 영역) ---------- */
@@ -235,7 +240,7 @@
 
 <script>
 (function(){var v=Date.now();
- ['bank-core.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js'].forEach(function(f){
+ ['bank-core.js','bank-fixed.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js'].forEach(function(f){
    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
 </script>
 <script>
@@ -276,11 +281,16 @@
 
   var q = CORE.parseQuery();
   var wrongPracticeMode = q.practice==='wrong' && q.per==='3';
+  var fixedBankMode = q.bank==='final1' || (wrongPracticeMode && String(q.source||'final|1').split('|').slice(0,2).join('|')==='final|1');
   var queryIds = String(q.gens || (q.gen && q.gen!=='mix' ? q.gen : '')).split(',').filter(function(id){ return !!GEN_BY_ID[id]; });
   if(!queryIds.length && q.gen==='mix'){
     queryIds=GENERATORS.filter(function(generator){return generator.reviewOnly!==true;}).map(function(generator){return generator.id;});
   }
   if(!queryIds.length)queryIds=['rect'];
+  if(fixedBankMode){
+    var rawIds=String(q.gens||q.gen||'').split(',').filter(Boolean);
+    queryIds=rawIds.length ? rawIds : (wrongPracticeMode ? [] : GENERATORS.filter(function(g){return /^final1-q/.test(g.id);}).map(function(g){return g.id;}).sort());
+  }
   var queryPointBand = POINT_NAMES[q.points] ? q.points :
     ((q.level==='1'||q.level==='2')?'2.7':(q.level==='3'||q.level==='4')?'3.4':q.level==='5'?'4.2':'all');
   var state = {
@@ -291,11 +301,18 @@
     area: AREA_NAMES[q.area] ? q.area : 'all',
     n: wrongPracticeMode ? queryIds.length*3 : ([4,8,20].indexOf(parseInt(q.n,10))>=0 ? parseInt(q.n,10) : 8),
     seed: q.seed || '',
-    cover: !wrongPracticeMode,
+    cover: !wrongPracticeMode && !fixedBankMode,
     answer: true
   };
   var REVIEW_IDS=GENERATORS.filter(function(generator){return generator.reviewOnly===true;}).map(function(generator){return generator.id;});
   var reviewMode=false;
+  if(fixedBankMode){
+    document.body.classList.add('fixed-bank-mode');
+    document.querySelector('.topbar h1').textContent='파이널 1회 · 문항별 유사문제 3개';
+    document.querySelector('.topbar .tag').textContent='원문 30문항에 연결된 90문항';
+    document.querySelector('.hint').textContent='원문 번호마다 등록된 유사문제 1·2·3을 공부합니다. 다시 열어도 같은 문항과 풀이가 나옵니다.';
+    document.querySelector('[data-role="n"]').parentNode.querySelector('.label').textContent='인쇄 구성';
+  }
   if(wrongPracticeMode){
     document.body.classList.add('wrong-practice-mode');
     document.querySelector('.topbar h1').textContent='틀린 문제 유사문제 학습';
@@ -316,6 +333,7 @@
   }
   function visibleTypeIds(){
     return GENERATORS.filter(function(generator){
+      if(fixedBankMode)return /^final1-q/.test(generator.id)&&(state.area==='all'||generator.area===state.area);
       return (reviewMode||generator.reviewOnly!==true)&&(state.area==='all'||generator.area===state.area);
     })
       .map(function(generator){return generator.id;});
@@ -323,7 +341,11 @@
   function updateReviewNote(){
     reviewMode=state.genIds.some(function(id){return REVIEW_IDS.indexOf(id)>=0;});
     var reviewNote=document.getElementById('reviewNote');
-    reviewNote.hidden=!(reviewMode||wrongPracticeMode);
+    reviewNote.hidden=!(reviewMode||wrongPracticeMode||fixedBankMode);
+    if(fixedBankMode){
+      reviewNote.textContent='파이널 1회 · '+(POINT_NAMES[state.pointBand]||'전체 배점')+' · 원문 한 문항마다 등록 유사문제 3개';
+      return;
+    }
     if(wrongPracticeMode){
       var source=String(q.source||'final|1').split('|');
       var setLabel=source[0]==='final'?'파이널':source[0]==='last'?'최종':'시그니처 실전';
@@ -371,6 +393,7 @@
       url.searchParams.set('seed', seedStr);
       if(reviewMode)url.searchParams.set('review','1');else url.searchParams.delete('review');
       if(wrongPracticeMode){url.searchParams.set('practice','wrong');url.searchParams.set('per','3');}
+      if(fixedBankMode)url.searchParams.set('bank','final1');
       history.replaceState(null,'',url.toString());
     }catch(e){}
   }
@@ -442,13 +465,14 @@
       }
       if(Array.isArray(qq.conditionLines)&&qq.conditionLines.length){
         conditionList='<ol class="qconditions">'+qq.conditionLines.map(function(line,index){
-          return '<li>'+['① ','② ','③ ','④ '][index]+esc(line)+'</li>';
+          return '<li>'+String.fromCodePoint(0x2460+index)+' '+esc(line)+'</li>';
         }).join('')+'</ol>';
       }
       body += '<div class="qcard'+(asset?'':' text-only')+'" data-index="'+escAttr(qq.index||'')+'" data-gen="'+escAttr(qq.genId||'')+'" data-source-no="'+escAttr(qq.sourceNo||'')+'" data-points="'+escAttr(qq.pointBand||'')+'" data-level="'+escAttr(qq.level||'')+'" data-tune="'+escAttr(qq.difficultyMode||'standard')+'" data-score="'+escAttr(qq.difficultyScore||0)+'">' +
         '<span class="qno">' + qq.index + '</span><span class="qtext">' + esc(qq.text) + '</span>' +
+        (qq.id?'<div class="qmeta fixed-item" data-item-id="'+escAttr(qq.id)+'">파이널 1회 '+qq.sourceNo+'번 → 유사문제 '+qq.variantNo+'</div>':'') +
         conditionList +
-        '<div class="qmeta">[' + esc(qq.area||'') + ' › ' + esc(qq.subarea||'') + ' › ' + esc(qq.detailType||qq.genName||'') + ' · ' + esc(qq.pointBand) + '점]</div>' +
+        '<div class="qmeta">[' + esc(qq.area||'') + ' › ' + esc(qq.subarea||'') + (fixedBankMode?'':' › '+esc(qq.detailType||qq.genName||'')) + ' · ' + esc(qq.pointBand) + '점]</div>' +
         figure +
         '<div class="answerline">답 <span class="blank"></span></div>' +
         '</div>';
@@ -464,7 +488,7 @@
       return '<tr><td class="no">' + qq.index + '</td><td class="ans">' + esc(qq.answer) + '</td>' +
         '<td class="area">' + esc(qq.area||'') + ' › ' + esc(qq.subarea||'') + ' › ' + esc(qq.detailType||qq.genName||'') + ' · ' + esc(qq.pointBand) + '점</td><td>' + method + reading + esc(qq.solution||'') + '</td></tr>';
     });
-    var rowChunks = chunk(rowsHtml, 14);
+    var rowChunks = chunk(rowsHtml, fixedBankMode ? 6 : 14);
     return rowChunks.map(function(rows, i){
       return '<div class="wm-layer"></div>' +
         '<div class="anshead">정답 및 해설<span>' + esc(examNo) + ' · ' + (i+1) + '/' + rowChunks.length + '</span></div>' +
@@ -473,11 +497,23 @@
     }).join('');
   }
 
-  function render(){
+  var renderRevision=0;
+  async function render(){
+    var revision=++renderRevision;
     syncChips();
-    var paper = CORE.buildPaper({ genIds: state.genIds, pointBand: state.pointBand, difficultyMode: state.difficultyMode, difficultyMix: state.difficultyMix, n: state.n, perGenerator: wrongPracticeMode?3:0, seedStr: state.seed });
+    var paper;
+    document.getElementById('btnPrint').disabled=true;
+    try{
+      paper = fixedBankMode ? await window.BANK_FIXED.buildPaper({genIds:state.genIds.slice(),pointBand:state.pointBand}) : CORE.buildPaper({ genIds: state.genIds, pointBand: state.pointBand, difficultyMode: state.difficultyMode, difficultyMix: state.difficultyMix, n: state.n, perGenerator: wrongPracticeMode?3:0, seedStr: state.seed });
+    }catch(error){
+      if(revision===renderRevision)document.getElementById('stage').innerHTML='<div class="review-note" role="alert">'+esc(error.message)+'</div>';
+      return;
+    }
+    if(revision!==renderRevision)return;
+    if(!paper.questions.length){document.getElementById('stage').innerHTML='<div class="review-note">선택한 영역·배점대의 문항이 없습니다.</div>';return;}
+    if(fixedBankMode)state.n=paper.questions.length;
     state.seed = paper.seedStr;
-    var examNo = CORE.examNumber(paper.seedStr);
+    var examNo = fixedBankMode ? '파이널 1회 · 등록 유사문제' : CORE.examNumber(paper.seedStr);
     document.getElementById('examNoLabel').textContent = examNo;
     document.getElementById('seedInput').value = paper.seedStr;
     updateUrl(paper.seedStr);
@@ -510,6 +546,7 @@
     }
 
     document.getElementById('stage').innerHTML = pages.join('');
+    document.getElementById('btnPrint').disabled=false;
     CORE.initWatermarks('.wm-layer');
   }
 

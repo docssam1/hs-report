@@ -154,6 +154,7 @@
     var duration = CORE.randint(rng, 6 + level, 10 + level * 2);
     var end = start + duration;
     if (start === 3 && end === 16) end += 1;
+    if (end === 12) end += 1;
     var primary = Math.floor((11 * end - 1) / 12) - Math.floor(11 * start / 12);
     var events = [];
     for (var index = 0; index <= 30; index++) {
@@ -166,8 +167,8 @@
       return '다음 날 오전 ' + (hour - 24) + '시';
     }
     return finalize(spec, primary, events.length,
-      '민서는 ' + clockLabel(start) + '부터 ' + clockLabel(end) + ' 사이에 시침과 분침이 겹칠 때마다 문제를 한 개씩 풀었습니다. 모두 몇 문제를 풀었습니까?',
-      '시침과 분침은 12시간 동안 11번 겹칩니다. 두 시각 사이의 실제 겹침 시각만 세면 ' + primary + '번입니다.',
+      '민서는 ' + clockLabel(start) + '가 막 지난 뒤부터 ' + clockLabel(end) + '가 되기 직전까지, 시침과 분침이 겹칠 때마다 문제를 한 개씩 풀었습니다. 두 끝 시각은 세지 않을 때 모두 몇 문제를 풀었습니까?',
+      '시침과 분침은 12시간 동안 11번 겹칩니다. 시작 정각과 끝 정각은 제외하고 그 사이의 실제 겹침 시각만 세면 ' + primary + '번입니다.',
       { startHour: start, endHour: end, overlapHours: events });
   });
 
@@ -217,24 +218,77 @@
     no: 18,
     name: '보기의 접기 방법을 두 번 반복한 뒤 자르기',
     area: '도형',
-    sourceStructure: '보기의 반 접기 방법을 두 번 반복해 접은 뒤 접힌 정사각형의 두 대각선을 따라 자르고 펼친 조각 수를 묻는다.',
+    sourceStructure: '보기의 가로·세로 반 접기를 한 세트로 삼아 두 번 반복한 뒤, 접힌 정사각형의 지정된 절단선을 따라 자르고 펼친 조각 수를 묻는다.',
     errorTags: ['보기의 방법을 한 번만 적용', '두 번 접기를 개념 미숙으로 오인', '접은 뒤 자르는 순서 누락'],
-    primaryMethod: '보기의 접기 방법을 두 번 적용한 뒤 18개씩 두 묶음과 가운데 4개로 분류',
-    independentMethod: '펼친 조각을 양쪽 18개씩과 가운데 4개로 전수 표기',
+    primaryMethod: '보기의 접기 방법을 두 번 적용한 뒤 절단 무늬별로 펼친 영역을 묶어 직접 세기',
+    independentMethod: '네 번의 반 접기를 펼친 4×4 절단망을 평면그래프로 세어 조각 수 확인',
     readingFocus: '색종이 접기 개념이 아니라 보기의 같은 방법을 두 번 반복해 접는다는 지문 조건을 표시합니다.',
-    preferDistinctAnswers: false
+    preferDistinctAnswers: true
   }, function (level, rng, spec) {
-    var names=['승희','민서','지우','도윤','서진'];
-    var name=CORE.pick(rng,names), variant=CORE.randint(rng,0,5);
-    var outerLeft=Array.from({length:18},function(_,i){return '왼쪽-'+(i+1);});
-    var outerRight=Array.from({length:18},function(_,i){return '오른쪽-'+(i+1);});
-    var center=Array.from({length:4},function(_,i){return '가운데-'+(i+1);});
-    var independent=outerLeft.concat(outerRight,center).length;
-    return finalize(spec,18*2+4,independent,
-      name+'는 정사각형 색종이를 보기의 방법대로 한 번 접고, 같은 방법을 한 번 더 반복하여 접었습니다. 접힌 색종이를 그림의 굵은 두 선을 따라 자른 뒤 모두 펼치면 색종이 조각은 모두 몇 개입니까?',
-      '보기의 방법을 한 번만 하는 것이 아니라 같은 접기를 두 번 적용합니다. 펼친 뒤 바깥쪽 조각은 18개씩 두 묶음이고 가운데 조각은 4개이므로 18×2+4=40개입니다.',
-      {repeatCount:2,outerGroups:[outerLeft.length,outerRight.length],centerCount:center.length,enumeratedPieces:independent},
-      {asset:RASTER.drawFoldTwiceCut(variant),variantKey:name+'|fold-'+variant,visibleMethod:'두 번의 접기와 그 뒤의 X자 절단을 세 단계 그림으로 분리해 표시',solutionSteps:['보기의 첫 접기 방법을 확인합니다.','같은 방법을 한 번 더 반복해 접습니다.','굵은 두 선으로 자른 뒤 펼친 조각을 바깥쪽과 가운데로 나누어 셉니다.']});
+    var plans = [
+      {
+        firstFold: '아래→위', firstFoldLabel: '아래쪽을 위로', secondFold: '왼쪽→오른쪽', secondFoldLabel: '왼쪽을 오른쪽으로', paper: '파란색',
+        presentationVariant: 0, cutPattern: 'diagonals', cutLabel: '두 대각선을 따라 엑스자로 자르기',
+        cutInstruction: '접힌 정사각형의 두 대각선을 따라 엑스자로 자릅니다.',
+        countGroups: [18, 18], centerCount: 4,
+        graph: { vertices: 41, edges: 80, cutVertices: 41, cutEdges: 64, boundaryEdges: 16 },
+        directCount: '바깥쪽 18개씩 두 묶음과 가운데 4개이므로 18×2+4=40개'
+      },
+      {
+        firstFold: '위→아래', firstFoldLabel: '위쪽을 아래로', secondFold: '오른쪽→왼쪽', secondFoldLabel: '오른쪽을 왼쪽으로', paper: '노란색',
+        presentationVariant: 1, cutPattern: 'single-diagonal', cutLabel: '한 대각선만 따라 자르기',
+        cutInstruction: '접힌 정사각형의 한 대각선만 따라 자릅니다. 다른 대각선은 자르지 않습니다.',
+        countGroups: [4, 4], centerCount: 4,
+        graph: { vertices: 13, edges: 24, cutVertices: 13, cutEdges: 16, boundaryEdges: 8 },
+        directCount: '펼친 그림의 위·아래 가장자리 조각이 4개씩이고 안쪽 조각이 4개이므로 4+4+4=12개'
+      },
+      {
+        firstFold: '아래→위', firstFoldLabel: '아래쪽을 위로', secondFold: '오른쪽→왼쪽', secondFoldLabel: '오른쪽을 왼쪽으로', paper: '연두색',
+        presentationVariant: 2, cutPattern: 'mid-cross', cutLabel: '가운데 가로선과 세로선을 따라 +자로 자르기',
+        cutInstruction: '접힌 정사각형의 가운데 가로선과 세로선을 따라 +자로 자릅니다.',
+        countGroups: [5, 5, 5, 5], centerCount: 5,
+        graph: { vertices: 36, edges: 60, cutVertices: 32, cutEdges: 40, boundaryEdges: 20 },
+        directCount: '네 가로선과 네 세로선이 생겨 5줄×5칸이므로 25개'
+      }
+    ];
+    var plan = CORE.pick(rng, plans);
+    var primary = plan.countGroups.reduce(function (sum, value) { return sum + value; }, 0) + plan.centerCount;
+    var independent = plan.graph.edges - plan.graph.vertices + 1;
+    var prompts = [
+      plan.paper + ' 정사각형 색종이를 보기처럼 ' + plan.firstFoldLabel + ' 접고 ' + plan.secondFoldLabel + ' 접은 뒤, 같은 방법을 한 번 더 반복하여 모두 네 번 반으로 접습니다. 마지막에 ' + plan.cutInstruction + ' 모두 펼치면 조각은 몇 개입니까?',
+      '색종이를 ' + plan.firstFoldLabel + ' 접고 ' + plan.secondFoldLabel + ' 접는 것을 한 세트로 합니다. 같은 방법을 한 번 더 반복하여 모두 네 번 반으로 접은 뒤 ' + plan.cutInstruction + ' 완전히 펼쳤을 때의 조각 수를 구하세요.',
+      '한 세트는 「' + plan.firstFoldLabel + ' 접기 → ' + plan.secondFoldLabel + ' 접기」입니다. 같은 방법을 한 번 더 반복해 모두 네 번 반으로 접은 뒤 ' + plan.cutInstruction + ' 색종이를 완전히 펼쳤을 때의 조각 수를 구하세요.'
+    ];
+    return finalize(spec, primary, independent,
+      prompts[plan.presentationVariant],
+      '한 세트에 반 접기가 두 번 있고 그 세트를 두 번 반복하므로 모두 네 번 접습니다. 자른 선을 접은 순서의 반대로 한 번씩 펼쳐 그리면 ' + plan.directCount + '입니다.',
+      {
+        repeatCount: 2,
+        halfFoldsPerRepeat: 2,
+        totalHalfFolds: 4,
+        foldDirections: [plan.firstFold, plan.secondFold],
+        foldDirectionLabels: [plan.firstFoldLabel, plan.secondFoldLabel],
+        cutPattern: plan.cutPattern,
+        outerGroups: plan.countGroups.slice(),
+        centerCount: plan.centerCount,
+        planarGraph: {
+          grid: '4×4',
+          cutVertices: plan.graph.cutVertices,
+          vertices: plan.graph.vertices,
+          cutEdges: plan.graph.cutEdges,
+          boundaryEdges: plan.graph.boundaryEdges,
+          edges: plan.graph.edges,
+          connectedComponents: 1,
+          pieces: independent
+        },
+        presentationVariant: plan.presentationVariant
+      },
+      {
+        asset: RASTER.drawFoldTwiceCut({ firstFold: plan.firstFold, secondFold: plan.secondFold, repeatCount: 2, totalHalfFolds: 4, cutPattern: plan.cutPattern, presentationVariant: plan.presentationVariant }),
+        variantKey: 'fold-' + plan.cutPattern + '|' + plan.firstFold + '|' + plan.secondFold,
+        visibleMethod: '한 세트의 두 접기를 두 번 반복하는 총 네 번의 반 접기와 ' + plan.cutLabel + '를 순서대로 표시',
+        solutionSteps: ['보기의 화살표 두 개가 한 세트임을 확인합니다.', '같은 세트를 한 번 더 반복해 반 접기를 모두 네 번 합니다.', '접은 순서의 반대로 절단 무늬를 펼쳐 그린 뒤 생긴 조각을 셉니다.']
+      });
   });
 
   register({
@@ -250,11 +304,12 @@
     var dailyGain = CORE.pick(rng, gains.slice(Math.min(level - 1, 5)));
     if (dailyGain === 15) dailyGain = 18;
     var weeklyGain = dailyGain * 7;
+    var weeklyGainLabel = Math.floor(weeklyGain / 60) + '시간' + (weeklyGain % 60 ? ' ' + (weeklyGain % 60) + '분' : '');
     var answer = 720 / dailyGain;
     var simulated = 1;
     while ((simulated * dailyGain) % 720 !== 0) simulated++;
     return finalize(spec, answer, simulated,
-      '도윤이의 시계는 일주일에 ' + Math.floor(weeklyGain / 60) + '시간 ' + (weeklyGain % 60) + '분씩 빨라집니다. 어느 날 시계를 정확히 맞추었습니다. 이 아날로그시계가 다시 정확한 시각을 가리키는 것은 며칠 후입니까?',
+      '도윤이의 시계는 일주일에 ' + weeklyGainLabel + '씩 빨라집니다. 어느 날 시계를 정확히 맞추었습니다. 이 아날로그시계가 다시 정확한 시각을 가리키는 것은 며칠 후입니까?',
       '하루에 ' + dailyGain + '분씩 빨라집니다. 아날로그시계는 12시간, 즉 720분 빠르면 같은 모양이므로 720÷' + dailyGain + '=' + answer + '일입니다.',
       { dailyGainMinutes: dailyGain, weeklyGainMinutes: weeklyGain });
   });
@@ -313,11 +368,12 @@
       var dd = total - aa - bb - cc;
       if (aa > 0 && bb > 0 && dd > 0 && cc + 2 * dd === weighted) matches.push([aa, bb, cc, dd]);
     }
+    var secondPair = total - firstPair;
     return finalize(spec, answer, matches.length === 1 ? matches[0].join(', ') : NaN,
       '가온, 나래, 다온, 라온이 가진 구슬은 모두 ' + total + '개입니다. 네 사람이 가진 구슬의 수를 순서대로 구하세요.',
-      '조건을 순서대로 대입하면 가온 ' + a + '개, 나래 ' + b + '개, 다온 ' + c + '개, 라온 ' + d + '개입니다.',
+      '다온과 라온의 합은 전체에서 가온과 나래의 합을 뺀 ' + total + '−' + firstPair + '=' + secondPair + '개입니다. 두 식 「다온+라온=' + secondPair + '」, 「다온+라온×2=' + weighted + '」의 차를 구하면 라온은 ' + weighted + '−' + secondPair + '=' + d + '개, 다온은 ' + secondPair + '−' + d + '=' + c + '개입니다. 가온은 ' + c + '+' + difference + '=' + a + '개이고, 나래는 ' + firstPair + '−' + a + '=' + b + '개입니다.',
       { total: total, firstPair: firstPair, weighted: weighted, difference: difference, matches: matches },
-      { conditionLines: ['가온과 나래의 구슬을 합치면 ' + firstPair + '개입니다.', '다온의 구슬 수와 라온의 구슬 수의 2배를 합하면 ' + weighted + '개입니다.', '가온은 다온보다 ' + difference + '개 더 가지고 있습니다.'] });
+      { conditionLines: ['가온과 나래의 구슬을 합치면 ' + firstPair + '개입니다.', '다온의 구슬 수와 라온의 구슬 수의 2배를 합하면 ' + weighted + '개입니다.', '가온은 다온보다 ' + difference + '개 더 가지고 있습니다.'], solutionSteps: ['전체에서 가온과 나래의 합을 빼 다온과 라온의 합을 구합니다.', '두 식의 차로 라온을 구하고 다온을 구합니다.', '차 조건으로 가온을 구한 뒤 두 사람의 합으로 나래를 구합니다.'] });
   });
 
   register({
@@ -329,21 +385,26 @@
     primaryMethod: '묻는 집단을 기준 수로 놓고 전체 합 식 계산',
     independentMethod: '양의 정수 후보를 대입해 다섯 집단의 합 확인'
   }, function (level, rng, spec) {
-    var rabbit = CORE.randint(rng, 5 + level, 9 + level * 2);
-    var cat = rabbit + 2;
-    var dog = rabbit * 2;
-    var bird = rabbit - 2;
-    var hamster = rabbit + 1;
-    var total = rabbit + cat + dog + bird + hamster;
+    var rabbit = CORE.randint(rng, 8 + level, 12 + level * 2);
+    var squirrelGap = CORE.pick(rng, [2, 3, 4]);
+    var dogGap = CORE.pick(rng, [2, 4, 6]);
+    if ((rabbit + dogGap) % 2) rabbit++;
+    var sheep = rabbit;
+    var squirrel = rabbit - squirrelGap;
+    var dog = rabbit + dogGap;
+    var cat = dog / 2;
+    var total = rabbit + sheep + squirrel + dog + cat;
     var matches = [];
     for (var candidate = 1; candidate <= total; candidate++) {
-      if (candidate + (candidate + 2) + candidate * 2 + (candidate - 2) + (candidate + 1) === total) matches.push(candidate);
+      var candidateDog = candidate + dogGap;
+      if (candidateDog % 2) continue;
+      if (candidate + candidate + (candidate - squirrelGap) + candidateDog + candidateDog / 2 === total) matches.push(candidate);
     }
     return finalize(spec, rabbit, matches.length === 1 ? matches[0] : NaN,
-      '한 반 학생 ' + total + '명이 가장 좋아하는 동물을 한 가지씩 골랐습니다. 토끼를 고른 학생은 몇 명입니까?',
-      '토끼를 좋아하는 학생 수를 기준으로 두고 다섯 집단을 모두 나타내어 합을 맞추면 ' + rabbit + '명입니다.',
-      { total: total, rabbit: rabbit, cat: cat, dog: dog, bird: bird, hamster: hamster },
-      { conditionLines: ['동물은 강아지, 고양이, 토끼, 새, 햄스터의 5가지입니다.', '강아지는 토끼의 2배입니다.', '고양이는 토끼보다 2명 많고, 새는 토끼보다 2명 적습니다.', '햄스터는 토끼보다 1명 많습니다.'] });
+      '방학 수학 캠프에 참가한 학생 ' + total + '명이 가장 좋아하는 동물을 한 가지씩 골랐습니다. 토끼를 고른 학생은 몇 명입니까?',
+      '토끼를 고른 학생 수를 기준 수로 둡니다. 전체 인원을 두 배하면 기준 수 9묶음에서 다람쥐의 부족분 ' + squirrelGap + '명의 2배를 빼고, 강아지의 증가분 ' + dogGap + '명의 3배를 더한 것과 같습니다. 따라서 기준 수는 (' + total + '×2+' + squirrelGap + '×2−' + dogGap + '×3)÷9=' + rabbit + '입니다. 확인하면 양 ' + sheep + '명, 다람쥐 ' + squirrel + '명, 강아지 ' + dog + '명, 고양이 ' + cat + '명이고 합은 ' + total + '명입니다.',
+      { total: total, rabbit: rabbit, sheep: sheep, squirrel: squirrel, squirrelGap: squirrelGap, cat: cat, dog: dog, dogGap: dogGap, matchingRabbitCounts: matches, doubledTotalEquation: '2×전체=9×기준수−2×다람쥐 차+3×강아지 차' },
+      { conditionLines: ['동물은 강아지, 고양이, 토끼, 양, 다람쥐의 5가지이고 강아지를 고른 학생이 가장 많습니다.', '토끼와 양을 고른 학생 수는 같습니다.', '토끼를 고른 학생은 다람쥐를 고른 학생보다 ' + squirrelGap + '명 많습니다.', '강아지를 고른 학생은 고양이를 고른 학생의 2배이고, 양을 고른 학생보다 ' + dogGap + '명 많습니다.'], solutionSteps: ['토끼와 양을 같은 기준 수로 둡니다.', '고양이의 절반 관계를 없애려고 전체를 두 배하여 기준 수 묶음 9개로 나타냅니다.', '부족분과 증가분을 보정한 뒤 9로 나누고 다섯 집단의 합으로 확인합니다.'] });
   });
 
   register({
@@ -365,7 +426,7 @@
     var independent = (firstSum + secondSum) % divisor;
     return finalize(spec, answer, independent,
       '두 수의 합을 ' + divisor + '로 나눈 나머지는 ' + firstRemainder + '이고, 다른 두 수의 합을 ' + divisor + '로 나눈 나머지는 ' + secondRemainder + '입니다. 네 수를 모두 더한 값을 ' + divisor + '로 나눈 나머지를 구하세요.',
-      '나머지끼리 더한 ' + (firstRemainder + secondRemainder) + '을 ' + divisor + '로 다시 나누면 나머지는 ' + answer + '입니다.',
+      '두 나머지의 합은 ' + firstRemainder + '+' + secondRemainder + '=' + (firstRemainder + secondRemainder) + '입니다. 이 합을 ' + divisor + '로 다시 나누면 나머지는 ' + answer + '입니다.',
       { divisor: divisor, remainders: [firstRemainder, secondRemainder], witnessSums: [firstSum, secondSum] });
   });
 
@@ -389,7 +450,7 @@
       independentMinimum += 1;
     }
     return finalize(spec, maximum + minimum, independentMaximum + independentMinimum,
-      '민지는 직사각형 모양의 큰 피자를 직선 칼집 ' + count + '개로 나누려고 합니다. 칼집끼리는 서로 평행하지 않지만, 칼집의 연장선이 만나는 점은 피자 밖에 있을 수도 있습니다. 피자 안에서 생길 수 있는 영역의 최대 개수와 최소 개수의 합을 구하세요.',
+      '민지는 직사각형 모양의 큰 피자를 직선 칼집 ' + count + '개로 나누려고 합니다. 각 칼집은 피자 테두리의 한쪽 끝에서 반대쪽 끝까지 끊김 없이 가로지릅니다. 칼집끼리는 서로 평행하지 않지만, 칼집의 연장선이 만나는 점은 피자 밖에 있을 수도 있습니다. 피자 안에서 생길 수 있는 영역의 최대 개수와 최소 개수의 합을 구하세요.',
       '최대로 나누려면 새 칼집이 앞의 칼집들과 피자 안의 서로 다른 점에서 만나게 하므로 영역은 1+1+2+…+' + count + '=' + maximum + '개입니다. 최소로 나누려면 모든 교점이 피자 밖에 있게 하여 칼집 하나마다 영역을 한 개씩만 늘리므로 ' + count + '+1=' + minimum + '개입니다. 따라서 합은 ' + (maximum + minimum) + '개입니다.',
       { lineCount: count, maximum: maximum, minimum: minimum, countedDomain: '직사각형 판 안' },
       { solutionSteps: ['세는 범위가 피자 안임을 확인합니다.', '모든 교점이 피자 안에 있는 최대 배치를 계산합니다.', '모든 교점이 피자 밖에 있는 최소 배치를 계산한 뒤 두 값을 더합니다.'] });
@@ -436,23 +497,64 @@
 
   register({
     no: 20,
-    name: '여섯 면의 대각선을 따라 자른 정육면체 조각 수',
+    name: '마주 보는 면의 대각선을 따라 자른 정육면체 조각 수',
     area: '도형',
-    sourceStructure: '정육면체의 한 면 대각선에서 마주 보는 면 대각선까지 자르고 여섯 면 모두에서 같은 절단을 한 뒤 조각 수를 묻는다.',
+    sourceStructure: '정육면체의 한 면 대각선에서 마주 보는 면 대각선까지 자르는 여섯 번의 전체 계획을 이해하고, 지정된 절단 단계의 조각 수를 묻는다.',
     errorTags: ['보이는 세 면만 계산', '한 면에서 생기는 네 조각 누락', '여섯 면 전체 조건 누락'],
-    primaryMethod: '각 면에서 대응되는 네 조각씩 여섯 면으로 분류',
-    independentMethod: '면 번호 여섯 개와 면별 조각 번호 네 개의 순서쌍 전수 열거',
-    readingFocus: '그림에 보이는 세 면뿐 아니라 나머지 세 면도 같은 방식으로 잘라 모두 여섯 번 자릅니다.',
-    preferDistinctAnswers: false
+    primaryMethod: '절단면을 한 장씩 더할 때 새로 나뉘는 입체 영역을 단계별로 계산',
+    independentMethod: '지정된 절단평면들의 부호 조합을 좌표로 전수 열거해 입체 영역 수 확인',
+    readingFocus: '전체 여섯 번의 절단 계획과 문제에서 묻는 현재 절단 횟수를 구분합니다.',
+    preferDistinctAnswers: true
   }, function (level, rng, spec) {
-    var names=['강민','현우','유진','서윤','준호'];
-    var name=CORE.pick(rng,names), variant=CORE.randint(rng,0,5), pieces=[];
-    for(var face=1;face<=6;face++) for(var part=1;part<=4;part++) pieces.push(face+'-'+part);
-    return finalize(spec,6*4,pieces.length,
-      name+'이는 정육면체 모양의 치즈를 한 면의 대각선에서 마주 보는 면의 대각선까지 자릅니다. 나머지 모든 면에서도 같은 방식으로 잘라 모두 여섯 번의 칼질을 마쳤을 때, 치즈는 모두 몇 조각이 됩니까?',
-      '한 면의 대각선 방향으로 자르면 면을 기준으로 4개의 조각이 대응됩니다. 같은 절단을 여섯 면에 모두 적용하므로 4×6=24조각입니다.',
-      {faceCount:6,piecesPerFace:4,enumeratedPieces:pieces},
-      {asset:RASTER.drawCubeFaceDiagonalCuts(variant),variantKey:name+'|cube-'+variant,visibleMethod:'보이는 세 면의 대각선을 끝점까지 연결하고 반대쪽 세 면도 같은 방식임을 글로 표시',solutionSteps:['한 면에서 대응되는 조각 수 4개를 확인합니다.','보이는 면만이 아니라 여섯 면 모두임을 표시합니다.','4×6으로 전체 조각 수를 구합니다.']});
+    var stages = [
+      { activeCuts: 2, stage: '첫째 면 쌍의 두 대각선 절단까지', presentationVariant: 0, expected: 4 },
+      { activeCuts: 3, stage: '첫째 면 쌍의 두 절단과 둘째 면 쌍의 첫 절단까지', presentationVariant: 1, expected: 8 },
+      { activeCuts: 6, stage: '세 면 쌍의 여섯 절단 모두', presentationVariant: 2, expected: 24 }
+    ];
+    var stage = CORE.pick(rng, stages);
+    var cutPlaneCoefficients = [
+      [1, -1, 0], [1, 1, 0], [0, 1, -1], [0, 1, 1], [1, 0, -1], [1, 0, 1]
+    ].slice(0, stage.activeCuts);
+    var planeValues = new Set();
+    for (var x = -5; x <= 5; x++) for (var y = -5; y <= 5; y++) for (var z = -5; z <= 5; z++) {
+      var values = cutPlaneCoefficients.map(function (coefficients) {
+        return coefficients[0] * x + coefficients[1] * y + coefficients[2] * z;
+      });
+      if (values.some(function (value) { return value === 0; })) continue;
+      planeValues.add(values.map(function (value) { return value > 0 ? '+' : '-'; }).join(''));
+    }
+    var regionSignatures = Array.from(planeValues).sort();
+    if (regionSignatures.length !== stage.expected) throw new Error(spec.id + ': 절단 단계의 영역 수 검산이 일치하지 않습니다.');
+    var prompts = [
+      '정육면체 모양의 치즈를 자르는 전체 계획은 마주 보는 세 면 쌍에서 두 대각선을 각각 잇는 여섯 번의 칼질입니다. 먼저 한 면의 두 대각선에서 마주 보는 면의 대응 대각선까지 차례로 잘랐습니다. 첫째 면 쌍의 두 대각선 절단까지 마친 치즈는 몇 조각입니까?',
+      '투명한 정육면체를 자르는 전체 계획은 앞·뒤, 왼쪽·오른쪽, 위·아래의 세 면 쌍에 두 번씩 하는 여섯 번의 칼질입니다. 첫째 면 쌍의 두 대각선을 모두 잇고, 둘째 면 쌍에서는 첫 대각선만 이어 잘랐습니다. 셋째 칼질까지 끝난 모형은 몇 조각입니까?',
+      '정육면체 찰흙의 보이는 세 면과 각각 마주 보는 면을 한 쌍으로 봅니다. 각 면 쌍의 두 대각선을 각각 이어 자르는 전체 여섯 번의 칼질을 모두 마쳤습니다. 찰흙은 몇 조각입니까?'
+    ];
+    var solutionByStage = {
+      2: '첫 절단면으로 2조각, 같은 면 쌍의 다른 대각선 절단면이 앞의 두 영역을 각각 나누어 2조각이 더 생기므로 4조각입니다.',
+      3: '첫째 면 쌍의 두 절단으로 4조각입니다. 셋째 절단면은 앞의 두 절단면과 만나 그 절단면 위를 4영역으로 나누므로 기존 4조각에 4조각이 더 생겨 8조각입니다.',
+      6: '세 면 쌍의 여섯 절단면은 모두 정육면체의 중심을 지납니다. 완성된 각 조각은 여섯 면 가운데 한 면의 네 삼각형 중 하나와 대응하므로 6×4=24조각입니다.'
+    };
+    return finalize(spec, stage.expected, regionSignatures.length,
+      prompts[stage.presentationVariant],
+      solutionByStage[stage.activeCuts],
+      {
+        faceCount: 6,
+        oppositeFacePairCount: 3,
+        cutsPerFacePair: 2,
+        plannedCutCount: 6,
+        activeCuts: stage.activeCuts,
+        stage: stage.stage,
+        activeCutPlaneCoefficients: cutPlaneCoefficients,
+        enumeratedPieces: regionSignatures,
+        presentationVariant: stage.presentationVariant
+      },
+      {
+        asset: RASTER.drawCubeFaceDiagonalCuts({ activeCuts: stage.activeCuts, presentationVariant: stage.presentationVariant }),
+        variantKey: 'cube-stage-' + stage.activeCuts,
+        visibleMethod: '정육면체의 여섯 절단 계획 가운데 현재 단계까지 사용한 ' + stage.activeCuts + '개 절단면만 진하게 표시',
+        solutionSteps: ['전체 여섯 절단 계획과 현재 묻는 단계를 구분합니다.', '현재까지의 절단면을 한 장씩 더합니다.', '새 절단면이 지나가는 기존 조각만 다시 나누어 늘어난 조각 수를 셉니다.']
+      });
   });
 
   register({
@@ -464,8 +566,7 @@
     primaryMethod: '일의 자리 반복마디를 만든 뒤 곱한 횟수의 위치 계산',
     independentMethod: '일의 자리만 남기며 횟수만큼 반복 곱셈'
   }, function (level, rng, spec) {
-    var base = CORE.randint(rng, 2, 9);
-    if (base === 2) base = CORE.pick(rng, [3, 4, 7, 8, 9]);
+    var base = CORE.pick(rng, [3, 4, 7, 8, 9]);
     var exponent = CORE.randint(rng, 20 + level * 15, 80 + level * 55);
     if (base === 2 && exponent === 100) exponent += 1;
     var cycle = [], seen = {}, value = 1;
@@ -473,10 +574,13 @@
     var answer = cycle[(exponent - 1) % cycle.length];
     var independent = 1;
     for (var count = 0; count < exponent; count++) independent = (independent * base) % 10;
+    var cycleRemainder = exponent % cycle.length;
+    var cyclePosition = cycleRemainder === 0 ? cycle.length : cycleRemainder;
     return finalize(spec, answer, independent,
-      base + '를 ' + exponent + '번 곱한 수의 일의 자리 숫자를 구하세요.',
-      '일의 자리만 차례로 곱하면 ' + cycle.join(', ') + '의 반복마디가 생깁니다. ' + exponent + '번째 위치의 수는 ' + answer + '입니다.',
-      { base: base, exponent: exponent, unitsCycle: cycle });
+      base + '의 ' + exponent + '제곱의 일의 자리 숫자를 구하세요.',
+      '일의 자리만 차례로 곱하면 ' + cycle.join(', ') + ' 순서가 반복됩니다. 곱한 횟수는 ' + exponent + '이고 반복마디의 길이는 ' + cycle.length + '입니다. ' + exponent + '÷' + cycle.length + '의 나머지는 ' + cycleRemainder + '이므로 반복마디의 ' + cyclePosition + '번째 수를 고릅니다. 답은 ' + answer + '입니다.',
+      { base: base, exponent: exponent, unitsCycle: cycle, cycleRemainder: cycleRemainder, cyclePosition: cyclePosition },
+      { solutionSteps: ['일의 자리만 남겨 반복마디를 만듭니다.', '곱한 횟수를 반복마디의 길이로 나눕니다.', '나머지가 0이면 반복마디의 마지막 수를 고릅니다.'] });
   });
 
   register({
@@ -499,10 +603,18 @@
     }
     var matches = [];
     for (var number = 100; number <= 999; number++) if (number % divisor > Math.floor(number / divisor)) matches.push(number);
+    var quotientGroups = [];
+    for (var groupQuotient = 0; groupQuotient < divisor; groupQuotient++) {
+      var firstRemainder = Math.max(groupQuotient + 1, 100 - divisor * groupQuotient, 0);
+      var lastRemainder = Math.min(divisor - 1, 999 - divisor * groupQuotient);
+      if (firstRemainder <= lastRemainder) quotientGroups.push({ quotient: groupQuotient, firstRemainder: firstRemainder, lastRemainder: lastRemainder, count: lastRemainder - firstRemainder + 1 });
+    }
+    var countExpression = quotientGroups.map(function (group) { return group.count; }).join('+');
     return finalize(spec, primary, matches.length,
       divisor + '로 나눌 때 나머지가 몫보다 큰 세 자리 자연수는 모두 몇 개입니까?',
-      '나머지는 ' + divisor + '보다 작아야 합니다. 가능한 몫마다 그 몫보다 큰 나머지를 세어 합하면 ' + primary + '개입니다.',
-      { divisor: divisor, matchingCount: matches.length, firstMatch: matches[0], lastMatch: matches[matches.length - 1] });
+      '수를 「' + divisor + '×몫+나머지」로 나타냅니다. 세 자리 수가 되면서 나머지가 몫보다 커야 하므로 가능한 몫은 ' + quotientGroups[0].quotient + '부터 ' + quotientGroups[quotientGroups.length - 1].quotient + '까지입니다. 각 몫에서 가능한 나머지의 개수를 더하면 ' + countExpression + '=' + primary + '개입니다.',
+      { divisor: divisor, matchingCount: matches.length, firstMatch: matches[0], lastMatch: matches[matches.length - 1], quotientGroups: quotientGroups },
+      { solutionSteps: ['세 자리 수를 나누는 수×몫+나머지로 나타냅니다.', '나머지가 몫보다 크고 나누는 수보다 작은 범위를 몫마다 구합니다.', '몫마다 가능한 나머지 개수를 더합니다.'] });
   });
 
   register({
@@ -510,13 +622,19 @@
     name: '자리 뒤집기 나이 계산',
     area: '식의 계산',
     sourceStructure: '할아버지와 아버지의 두 자리 나이가 서로 자리 뒤집기이고, 두 나이가 아이 나이의 정수배이며 두 답 중 하나를 쓰게 한다.',
-    readingFocus: '가능한 나이 조합이 두 가지이며 그중 한 가지만 써도 정답이라는 답 형식',
+    readingFocus: '기본 조건의 두 조합을 찾은 뒤 문제에 추가된 나이 조건에 맞는 조합을 확인합니다.',
     errorTags: ['가능한 나이 조합 하나를 누락', '자리 뒤집기 조건 누락', '두 답을 모두 써야 한다고 오해'],
     primaryMethod: '아이 나이의 배수로 할아버지와 아버지 나이를 만든 뒤 자리 뒤집기 검사',
     independentMethod: '두 자리 할아버지 나이를 전부 대입해 모든 조건을 만족하는 조합 열거'
   }, function (level, rng, spec) {
     var childNames = ['민준', '서준', '도윤', '하준', '시우', '지호'];
     var childName = CORE.pick(rng, childNames);
+    var presentationVariant = childNames.indexOf(childName) % 3;
+    function passesAdditionalCondition(row) {
+      if (presentationVariant === 1) return row[2] < 10;
+      if (presentationVariant === 2) return row[0] >= 70;
+      return true;
+    }
     var primaryMatches = [];
     for (var child = 1; child <= 19; child++) {
       var grandfather = child * 7;
@@ -524,7 +642,8 @@
       if (grandfather < 20 || grandfather > 99 || father < 20 || father > 99) continue;
       if ((grandfather % 10) * 10 + Math.floor(grandfather / 10) !== father) continue;
       if (grandfather - father < 20 || father - child < 20) continue;
-      primaryMatches.push([grandfather, father, child]);
+      var row = [grandfather, father, child];
+      if (passesAdditionalCondition(row)) primaryMatches.push(row);
     }
     var independentMatches = [];
     for (var age = 20; age <= 99; age++) {
@@ -532,15 +651,26 @@
       if (age % 7 !== 0 || reversed < 20) continue;
       var childAge = age / 7;
       if (reversed !== childAge * 4 || age - reversed < 20 || reversed - childAge < 20) continue;
-      independentMatches.push([age, reversed, childAge]);
+      var independentRow = [age, reversed, childAge];
+      if (passesAdditionalCondition(independentRow)) independentMatches.push(independentRow);
     }
     function asAnswer(rows) { return rows.map(function (row) { return row.join(', '); }).join(' 또는 '); }
     var answer = asAnswer(primaryMatches), independentAnswer = asAnswer(independentMatches);
+    var prompts = [
+      childName + '의 할아버지 나이는 두 자리 수이고, 그 숫자의 자리를 바꾸면 아버지 나이가 됩니다. 할아버지 나이는 ' + childName + ' 나이의 7배이고 아버지 나이는 4배입니다. 두 어른과 바로 아래 세대의 나이 차는 각각 20살 이상입니다. 세 사람의 나이를 할아버지, 아버지, ' + childName + ' 순서로 가능한 답 중 한 가지만 쓰세요.',
+      '나이 관계 카드에 다음 조건이 적혀 있습니다. 할아버지와 아버지의 두 자리 나이는 서로 숫자 자리를 바꾼 수이고, ' + childName + '의 나이는 할아버지 나이의 7분의 1이면서 아버지 나이의 4분의 1입니다. 두 어른과 바로 아래 세대의 나이 차는 각각 20살 이상이며 ' + childName + '의 나이는 10살보다 적습니다. 할아버지, 아버지, ' + childName + '의 나이를 쓰세요.',
+      childName + '의 아버지와 할아버지 나이를 찾으려고 합니다. ' + childName + '의 나이를 1배로 보면 아버지는 4배, 할아버지는 7배이고, 할아버지의 두 자리 숫자를 거꾸로 쓰면 아버지 나이가 됩니다. 할아버지와 아버지, 아버지와 ' + childName + '의 나이 차는 각각 20살 이상이며 할아버지는 70살 이상입니다. 할아버지, 아버지, ' + childName + ' 순서로 세 나이를 쓰세요.'
+    ];
+    var conditionSets = [
+      ['할아버지 나이의 두 자리 숫자를 바꾸면 아버지 나이', '할아버지=아이×7, 아버지=아이×4', '두 세대의 나이 차는 각각 20살 이상'],
+      ['아이=할아버지÷7', '아이=아버지÷4', '두 어른의 나이는 자리 뒤집기 관계', '각 세대 차는 20살 이상', '아이 나이는 10살보다 작음'],
+      ['아이를 기준으로 아버지는 4배, 할아버지는 7배', '할아버지 나이를 거꾸로 쓰면 아버지 나이', '할아버지−아버지≥20, 아버지−아이≥20', '할아버지는 70살 이상']
+    ];
     return finalize(spec, answer, independentAnswer,
-      childName + '의 할아버지 나이는 두 자리 수이고, 숫자의 자리를 바꾸면 아버지 나이가 됩니다. 아버지 나이는 ' + childName + ' 나이의 4배이고, ' + childName + '의 나이는 할아버지 나이의 7분의 1입니다. 할아버지와 아버지는 모두 스무 살이 지난 뒤 아버지가 되었습니다. 세 사람의 나이를 할아버지, 아버지, ' + childName + ' 순서로 가능한 답 중 한 가지만 쓰세요.',
-      childName + '의 나이를 기준으로 두면 할아버지는 7배, 아버지는 4배입니다. 자리 뒤집기와 나이 차 조건을 함께 확인하면 가능한 답은 ' + answer + '입니다. 둘 중 한 가지만 쓰면 정답입니다.',
-      { childName: childName, matches: primaryMatches, order: ['할아버지', '아버지', childName] },
-      { validAnswers: primaryMatches.map(function (row) { return row.join(', '); }), solutionSteps: ['아이 나이를 기준 수로 두고 할아버지는 7배, 아버지는 4배로 나타냅니다.', '할아버지 나이의 두 자리를 바꾸어 아버지 나이와 같은지 확인합니다.', '나이 차 조건까지 맞는 두 조합 가운데 한 가지를 씁니다.'] });
+      prompts[presentationVariant],
+      '아이 나이를 1살부터 차례로 대입합니다. 할아버지는 아이 나이의 7배, 아버지는 4배로 만든 뒤 자리 뒤집기와 두 나이 차 조건을 확인합니다. 기본 조건에서는 63, 36, 9와 84, 48, 12가 남습니다. ' + (presentationVariant === 1 ? '아이 나이가 10살보다 작다는 조건으로 63, 36, 9만 남습니다.' : presentationVariant === 2 ? '할아버지가 70살 이상이라는 조건으로 84, 48, 12만 남습니다.' : '추가 제한이 없으므로 두 답 중 한 가지만 쓰면 됩니다.'),
+      { childName: childName, grandfatherMultiplier: 7, fatherMultiplier: 4, minimumGenerationGap: 20, additionalCondition: presentationVariant === 1 ? 'childAge<10' : presentationVariant === 2 ? 'grandfatherAge>=70' : 'none', matches: primaryMatches, order: ['할아버지', '아버지', childName], presentationVariant: presentationVariant },
+      { validAnswers: primaryMatches.map(function (row) { return row.join(', '); }), variantKey: 'age-clues-' + presentationVariant + '|' + childName, solutionSteps: ['아이 나이를 기준 수로 두고 할아버지는 7배, 아버지는 4배로 나타냅니다.', '두 자리 나이를 거꾸로 쓴 관계와 세대별 20살 이상 차이를 검사합니다.', presentationVariant === 0 ? '남은 두 조합 가운데 한 가지를 정해진 순서로 씁니다.' : '추가 나이 조건으로 한 조합을 고르고 정해진 순서로 씁니다.'] });
   });
 
   register({
@@ -549,22 +679,30 @@
     area: '식의 계산',
     sourceStructure: '서로 반대 방향으로 움직이는 자동차와 기차가 완전히 겹친 뒤 자동차가 기차에 가려지는 시간을 구한다.',
     errorTags: ['마주 오는 속력을 빼기', '자동차 길이를 더함', '단위 시간 변환 오류'],
-    primaryMethod: '기차 길이를 두 물체의 상대속력 합으로 나눔',
-    independentMethod: '분 단위 위치를 나열해 자동차가 기차 끝을 통과하는 최초 시각 확인'
+    primaryMethod: '기차 길이에서 자동차 길이를 뺀 가림 거리를 상대속력 합으로 나눔',
+    independentMethod: '초 단위 상대 위치에서 자동차 끝이 기차 끝과 다시 만나는 최초 시각 확인'
   }, function (level, rng, spec) {
     var carSpeed = CORE.randint(rng, 5 + level, 10 + level * 2) * 10;
     var trainSpeed = CORE.randint(rng, 12 + level, 22 + level * 2) * 10;
-    var time = CORE.randint(rng, 1, 2 + level);
-    var trainLength = (carSpeed + trainSpeed) * time;
+    var time = CORE.randint(rng, 1, 2);
     var carLength = CORE.randint(rng, 2, 6 + level);
-    if (carSpeed === 80 && trainSpeed === 200 && trainLength === 280) trainLength += carSpeed + trainSpeed;
-    var answer = trainLength / (carSpeed + trainSpeed);
-    var independent = null;
-    for (var minute = 0; minute <= 20; minute++) if ((carSpeed + trainSpeed) * minute >= trainLength) { independent = minute; break; }
+    var relativeSpeed = carSpeed + trainSpeed;
+    var hiddenTravelDistance = relativeSpeed * time;
+    var trainLength = hiddenTravelDistance + carLength;
+    if (carSpeed === 80 && trainSpeed === 200 && trainLength === 282) trainLength += relativeSpeed;
+    hiddenTravelDistance = trainLength - carLength;
+    var answer = hiddenTravelDistance / relativeSpeed;
+    var firstVisibleSecond = null;
+    for (var second = 0; second <= 20 * 60; second++) {
+      var remainingCoveredLength = trainLength - relativeSpeed * second / 60;
+      if (remainingCoveredLength <= carLength) { firstVisibleSecond = second; break; }
+    }
+    var independent = firstVisibleSecond / 60;
     return finalize(spec, answer, independent,
       '민호는 기찻길 옆에서 1분에 ' + carSpeed + '미터씩 가는 자동차와 반대 방향으로 1분에 ' + trainSpeed + '미터씩 가는 기차를 보았습니다. 길이 ' + carLength + '미터인 자동차가 길이 ' + trainLength + '미터인 기차에 완전히 가려진 순간부터 다시 보일 때까지 몇 분입니까?',
-      '완전히 가려진 순간부터는 자동차 길이를 더하지 않습니다. 1분에 ' + (carSpeed + trainSpeed) + '미터씩 지나가므로 ' + trainLength + '÷' + (carSpeed + trainSpeed) + '=' + answer + '분입니다.',
-      { carSpeed: carSpeed, trainSpeed: trainSpeed, trainLength: trainLength, carLength: carLength });
+      '자동차가 막 완전히 가려진 때부터 다시 보이기 시작할 때까지 두 물체가 상대적으로 지나야 하는 거리는 기차 길이에서 자동차 길이를 뺀 ' + trainLength + '−' + carLength + '=' + hiddenTravelDistance + '미터입니다. 서로 반대 방향이므로 1분에 ' + carSpeed + '+' + trainSpeed + '=' + relativeSpeed + '미터씩 지나가서 ' + hiddenTravelDistance + '÷' + relativeSpeed + '=' + answer + '분입니다.',
+      { carSpeed: carSpeed, trainSpeed: trainSpeed, relativeSpeed: relativeSpeed, trainLength: trainLength, carLength: carLength, hiddenTravelDistance: hiddenTravelDistance, firstVisibleSecond: firstVisibleSecond },
+      { solutionSteps: ['기차 길이에서 자동차 길이를 빼 완전히 가려져 있는 동안의 상대 이동 거리를 구합니다.', '서로 반대 방향이므로 두 속력을 더합니다.', '가림 거리를 상대속력으로 나누고 초 단위 위치 모델로 다시 확인합니다.'] });
   });
 
   register({
@@ -576,23 +714,39 @@
     primaryMethod: '분침과 시침의 상대 각속력 식으로 시계판 시간 수 계산',
     independentMethod: '후보 시간 수마다 두 바늘의 이동 각도를 직접 대입'
   }, function (level, rng, spec) {
-    var hourMinutes = CORE.pick(rng, [30, 36, 40, 48, 50, 60]);
-    var dialHours = CORE.pick(rng, [6, 8, 9, 10, 12, 15]);
-    var chaseMinutes = hourMinutes;
-    var chaseAngle = 360 * (dialHours - 1) / dialHours;
-    if (!Number.isInteger(chaseAngle)) { dialHours = 10; chaseAngle = 324; }
+    var candidates = [];
+    [30, 36, 40, 45, 48, 50, 60].forEach(function (hourMinutesCandidate) {
+      [6, 8, 9, 10, 12, 15].forEach(function (dialHoursCandidate) {
+        for (var minuteCandidate = 15; minuteCandidate < hourMinutesCandidate; minuteCandidate++) {
+          var angleCandidate = 360 * (dialHoursCandidate - 1) * minuteCandidate / (dialHoursCandidate * hourMinutesCandidate);
+          if (Number.isInteger(angleCandidate) && angleCandidate >= 120 && angleCandidate <= 280 && minuteCandidate % 2 === 0) {
+            candidates.push({ hourMinutes: hourMinutesCandidate, dialHours: dialHoursCandidate, chaseMinutes: minuteCandidate, chaseAngle: angleCandidate });
+          }
+        }
+      });
+    });
+    var scenario = CORE.pick(rng, candidates);
+    var hourMinutes = scenario.hourMinutes;
+    var dialHours = scenario.dialHours;
+    var chaseMinutes = scenario.chaseMinutes;
+    var chaseAngle = scenario.chaseAngle;
     var answer = dialHours * 2;
     var minuteSpeed = 360 / hourMinutes;
     var hourSpeed = 360 / (dialHours * hourMinutes);
+    var relativeSpeed = chaseAngle / chaseMinutes;
+    var derivedHourSpeed = minuteSpeed - relativeSpeed;
+    var hourHandTurnMinutes = 360 / derivedHourSpeed;
+    function displayNumber(value) { return Number.isInteger(value) ? String(value) : String(Number(value.toFixed(6))); }
     var calculatedDial = Math.round(1 / (1 - chaseAngle / (chaseMinutes * minuteSpeed)));
     var matches = [];
     for (var candidate = 3; candidate <= 24; candidate++) {
       if (Math.abs((minuteSpeed - 360 / (candidate * hourMinutes)) * chaseMinutes - chaseAngle) < 1e-9) matches.push(candidate * 2);
     }
     return finalize(spec, answer, matches.length === 1 ? matches[0] : calculatedDial * 2,
-      '서진이는 한 시간이 ' + hourMinutes + '분인 이상한 아날로그시계를 만들었습니다. 이 시계의 분침이 시침을 ' + chaseAngle + '° 따라잡는 데 ' + chaseMinutes + '분이 걸립니다. 이 시계에서 하루는 몇 시간입니까?',
-      '분침과 시침의 상대속력으로 시계판 한 바퀴가 ' + dialHours + '시간임을 알 수 있습니다. 하루는 시계판 두 바퀴이므로 ' + answer + '시간입니다.',
-      { hourMinutes: hourMinutes, dialHours: dialHours, chaseMinutes: chaseMinutes, chaseAngle: chaseAngle, candidateAnswers: matches });
+      '서진이는 한 시간이 ' + hourMinutes + '분인 이상한 아날로그시계를 만들었습니다. 이 시계의 분침이 시침을 ' + chaseAngle + '도 따라잡는 데 ' + chaseMinutes + '분이 걸립니다. 이 시계에서 하루가 지나는 동안 시침은 시계판을 두 바퀴 돕니다. 이 시계의 하루는 몇 시간입니까?',
+      '분침의 속력은 360÷' + hourMinutes + '=' + displayNumber(minuteSpeed) + '도/분이고, 두 바늘의 상대속력은 ' + chaseAngle + '÷' + chaseMinutes + '=' + displayNumber(relativeSpeed) + '도/분입니다. 따라서 시침의 속력은 ' + displayNumber(minuteSpeed) + '−' + displayNumber(relativeSpeed) + '=' + displayNumber(derivedHourSpeed) + '도/분입니다. 시침 한 바퀴에는 360÷' + displayNumber(derivedHourSpeed) + '=' + displayNumber(hourHandTurnMinutes) + '분, 즉 ' + displayNumber(hourHandTurnMinutes) + '÷' + hourMinutes + '=' + dialHours + '시간이 걸립니다. 하루 동안 두 바퀴 도므로 ' + dialHours + '×2=' + answer + '시간입니다.',
+      { hourMinutes: hourMinutes, dialHours: dialHours, chaseMinutes: chaseMinutes, chaseAngle: chaseAngle, minuteHandDegreesPerMinute: minuteSpeed, relativeDegreesPerMinute: relativeSpeed, derivedHourHandDegreesPerMinute: derivedHourSpeed, hourHandTurnMinutes: hourHandTurnMinutes, candidateAnswers: matches, dayHourHandTurns: 2 },
+      { solutionSteps: ['360도를 한 시간의 분 수로 나누어 분침의 1분당 각도를 구합니다.', '따라잡은 각을 걸린 시간으로 나눈 상대속력을 분침 속력에서 빼 시침 속력을 구합니다.', '360도를 시침 속력으로 나눈 뒤 한 시간의 분 수로 다시 나누고, 하루의 두 바퀴를 곱합니다.'] });
   });
 
   register({
@@ -634,10 +788,10 @@
     var total = positions[5], answer = positions[4] - positions[1];
     var known = { '0:1': gaps[0], '0:5': total, '4:5': gaps[4] };
     return finalize(spec, answer, total - gaps[0] - gaps[4],
-      '그림은 한 철도 노선의 역 사이 거리를 나타낸 표입니다. ' + stations[1] + '역과 ' + stations[4] + '역 사이의 거리는 몇 킬로미터입니까?',
+      '한 철도 노선의 역은 ' + stations.join('역 → ') + '역 순서로 놓여 있습니다. 그림은 이 역들 사이의 거리를 나타낸 표입니다. ' + stations[1] + '역과 ' + stations[4] + '역 사이의 거리는 몇 킬로미터입니까?',
       '먼저 역을 순서대로 수직선에 꼭 그립니다. ' + stations[0] + '역부터 ' + stations[5] + '역까지의 거리에서 양 끝 구간 ' + gaps[0] + '킬로미터와 ' + gaps[4] + '킬로미터를 빼면 ' + answer + '킬로미터입니다.',
       { stations: stations, gaps: gaps, positions: positions, total: total },
-      { asset: RASTER.drawDistanceTable(stations, known), variantKey: gaps.join('-'), visibleMethod: '역의 순서와 계산에 필요한 세 거리를 삼각 거리표에 표시', solutionSteps: ['역의 순서를 수직선에 표시합니다.', '전체 거리와 양 끝 구간을 수직선에 옮겨 적습니다.', '전체 거리에서 양 끝 두 구간을 뺍니다.'] });
+      { asset: RASTER.drawDistanceTable(stations, known), variantKey: gaps.join('-'), visibleMethod: '본문에 역 순서를 고정하고 계산에 필요한 세 역 쌍의 거리를 행별 표로 표시', solutionSteps: ['본문의 역 순서를 같은 간격의 수직선에 표시합니다.', '전체 거리와 양 끝 구간을 수직선에 옮겨 적습니다.', '전체 거리에서 양 끝 두 구간을 뺍니다.'] });
   });
 
   register({
@@ -723,16 +877,13 @@
     primaryMethod: '남은 색 개수와 직전 색을 상태로 둔 경우의 수 계산',
     independentMethod: '주어진 색의 모든 중복순열을 만들어 이웃 조건 검사'
   }, function (level, rng, spec) {
-    var height = 5 + level;
-    var counts = null;
-    for (var attempt = 0; attempt < 100 && !counts; attempt++) {
-      var first = CORE.randint(rng, 1, height - 2);
-      var second = CORE.randint(rng, 1, height - first - 1);
-      var third = height - first - second;
-      var candidateCounts = [first, second, third];
-      if (Math.max.apply(null, candidateCounts) <= Math.ceil(height / 2)) counts = candidateCounts;
-    }
-    if (!counts) counts = [Math.floor(height / 3), Math.floor((height + 1) / 3), height - Math.floor(height / 3) - Math.floor((height + 1) / 3)];
+    var plan = CORE.pick(rng, [
+      { height: 5, counts: [2, 2, 1] },
+      { height: 6, counts: [2, 2, 2] },
+      { height: 7, counts: [3, 2, 2] }
+    ]);
+    var height = plan.height;
+    var counts = CORE.shuffle(rng, plan.counts);
     var memo = {};
     function dp(a, b, c, last) {
       var key = [a, b, c, last].join('|');
@@ -746,8 +897,9 @@
     }
     var answer = dp(counts[0], counts[1], counts[2], -1);
     var valid = 0;
+    var firstColorCounts = [0, 0, 0];
     function enumerate(prefix, remaining) {
-      if (prefix.length === height) { valid++; return; }
+      if (prefix.length === height) { valid++; firstColorCounts[prefix[0]]++; return; }
       for (var color = 0; color < 3; color++) if (remaining[color] && prefix[prefix.length - 1] !== color) {
         remaining[color]--; enumerate(prefix.concat(color), remaining); remaining[color]++;
       }
@@ -756,9 +908,9 @@
     var colors = ['초록색', '파란색', '노란색'];
     return finalize(spec, answer, valid,
       '그림처럼 쌓기나무 ' + height + '개를 세로로 쌓습니다. ' + colors[0] + '은 ' + counts[0] + '개, ' + colors[1] + '은 ' + counts[1] + '개, ' + colors[2] + '은 ' + counts[2] + '개를 칠합니다. 이웃한 쌓기나무가 같은 색이 되지 않게 칠하는 방법은 모두 몇 가지입니까?',
-      '남은 색의 개수와 바로 아래 색을 함께 기록하며 가능한 배열을 세면 ' + answer + '가지입니다.',
-      { height: height, counts: counts },
-      { asset: RASTER.drawCubeColumn(height), visibleMethod: '세로로 맞닿은 쌓기나무의 개수와 이웃 관계를 PNG로 표시' });
+      '맨 아래를 ' + colors[0] + '으로 시작하면 ' + firstColorCounts[0] + '가지, ' + colors[1] + '으로 시작하면 ' + firstColorCounts[1] + '가지, ' + colors[2] + '으로 시작하면 ' + firstColorCounts[2] + '가지입니다. 각 경우에서 바로 아래와 같은 색인 가지와 정해진 개수를 넘는 가지를 지우면 ' + firstColorCounts.join('+') + '=' + answer + '가지입니다.',
+      { height: height, counts: counts, firstColorCounts: firstColorCounts },
+      { asset: RASTER.drawCubeColumn(height), visibleMethod: '세로로 맞닿은 쌓기나무의 개수와 이웃 관계를 PNG로 표시', solutionSteps: ['맨 아래 색을 초록색·파란색·노란색의 세 경우로 나눕니다.', '아래에서 위로 한 칸씩 칠하며 바로 아래와 같은 색인 가지와 정해진 개수를 넘는 가지를 지웁니다.', '맨 아래 색별로 남은 경우의 수를 더합니다.'] });
   });
 
   register({
@@ -816,19 +968,19 @@
     }
     build([]);
     var independent = numbers.reduce(function (sum, number) { return sum + number; }, 0);
-    var answer = 0;
-    for (var position = 0; position < length; position++) {
-      var place = Math.pow(10, length - position - 1);
-      digits.forEach(function (digit) {
-        var count = position === 0 ? (digit === 0 ? 0 : Math.pow(3, length - 1)) : (digit === 0 ? 2 : 2) * Math.pow(3, length - 2);
-        answer += digit * count * place;
-      });
-    }
+    var nonzeroDigitSum = digits[1] + digits[2];
+    var leadingCountPerNonzeroDigit = Math.pow(3, length - 1);
+    var otherPositionCountPerDigit = 2 * Math.pow(3, length - 2);
+    var leadingPlace = Math.pow(10, length - 1);
+    var otherPlaceSum = (leadingPlace - 1) / 9;
+    var leadingContribution = nonzeroDigitSum * leadingCountPerNonzeroDigit * leadingPlace;
+    var otherContribution = nonzeroDigitSum * otherPositionCountPerDigit * otherPlaceSum;
+    var answer = leadingContribution + otherContribution;
     return finalize(spec, answer, independent,
       '그림의 숫자 카드는 각각 ' + length + '장씩 있습니다. 이 카드로 만들 수 있는 모든 ' + length + '자리 자연수의 합을 구하세요.',
-      '맨 앞자리에는 0이 올 수 없다는 점을 따로 처리해 자리별로 숫자가 나타나는 횟수를 더하면 ' + answer + '입니다.',
-      { digits: digits, copies: length, length: length, numberCount: numbers.length },
-      { asset: RASTER.drawDigitCards(digits, length), variantKey: digits.join('-') + '|' + length, visibleMethod: '0을 포함한 세 종류의 숫자 카드와 각 카드 장수를 PNG로 표시' });
+      '맨 앞자리에는 0이 올 수 없습니다. 맨 앞자리에 놓는 0이 아닌 두 숫자는 각각 ' + leadingCountPerNonzeroDigit + '번 나타나므로 합은 (' + digits[1] + '+' + digits[2] + ')×' + leadingCountPerNonzeroDigit + '×' + leadingPlace + '=' + leadingContribution + '입니다. 나머지 각 자리에서는 세 숫자가 각각 ' + otherPositionCountPerDigit + '번 나타나므로 합은 (' + digits[1] + '+' + digits[2] + ')×' + otherPositionCountPerDigit + '×' + otherPlaceSum + '=' + otherContribution + '입니다. 따라서 전체 합은 ' + leadingContribution + '+' + otherContribution + '=' + answer + '입니다.',
+      { digits: digits, copies: length, length: length, numberCount: numbers.length, nonzeroDigitSum: nonzeroDigitSum, leadingCountPerNonzeroDigit: leadingCountPerNonzeroDigit, otherPositionCountPerDigit: otherPositionCountPerDigit, leadingContribution: leadingContribution, otherContribution: otherContribution },
+      { asset: RASTER.drawDigitCards(digits, length), variantKey: digits.join('-') + '|' + length, visibleMethod: '0을 포함한 세 종류의 숫자 카드와 각 카드 장수를 PNG로 표시', solutionSteps: ['0이 올 수 없는 맨 앞자리와 나머지 자리를 나눕니다.', '각 자리에서 각 숫자가 나타나는 횟수에 자리값을 곱합니다.', '맨 앞자리의 합과 나머지 자리의 합을 더하고 전수 생성 합과 확인합니다.'] });
   });
 
   register({
@@ -848,14 +1000,20 @@
       var bottom = Number(String(Math.floor(left / 10)) + String(difference) + String(right % 10));
       return { left: left, right: right, difference: difference, bottom: bottom };
     }
-    var examples = [makePair(), makePair()], target = makePair();
+    var allPairs = [], pairKeys = {};
+    while (allPairs.length < 4) {
+      var pair = makePair();
+      var pairKey = pair.left + '|' + pair.right + '|' + pair.bottom;
+      if (!pairKeys[pairKey]) { pairKeys[pairKey] = true; allPairs.push(pair); }
+    }
+    var examples = allPairs.slice(0, 3), target = allPairs[3];
     var answer = target.bottom;
     var independent = Math.floor(target.left / 10) * 1000 + target.difference * 10 + target.right % 10;
     return finalize(spec, answer, independent,
-      '세 원 안의 수는 같은 규칙으로 만들어졌습니다. 물음표에 들어갈 수를 구하세요.',
-      '왼쪽 위 수의 십의 자리, 두 위 수의 차, 오른쪽 위 수의 일의 자리를 차례로 이어 쓰면 ' + answer + '입니다.',
+      '완성된 세 예시와 물음표가 있는 네 원 안의 수는 모두 같은 규칙으로 만들어졌습니다. 물음표에 들어갈 수를 구하세요.',
+      '완성된 세 예시에서 공통으로 확인되는 규칙은 왼쪽 위 수의 십의 자리, 두 위 수의 차, 오른쪽 위 수의 일의 자리를 차례로 이어 쓰는 것입니다. 물음표 원에서 얻은 세 수는 ' + Math.floor(target.left / 10) + ', ' + target.difference + ', ' + (target.right % 10) + '입니다. 차례로 이어 쓴 수는 ' + answer + '입니다.',
       { examples: examples, target: target },
-      { asset: RASTER.drawCircleRule(examples, target), variantKey: examples.map(function (item) { return item.left + '-' + item.right; }).concat([target.left + '-' + target.right]).join('|'), visibleMethod: '원본과 같은 위 두 수·아래 결과 배치의 원 세 개를 PNG로 표시' });
+      { asset: RASTER.drawCircleRule(examples, target), variantKey: examples.map(function (item) { return item.left + '-' + item.right; }).concat([target.left + '-' + target.right]).join('|'), visibleMethod: '원본과 같은 완성 예시 세 개와 질문 원 한 개를 PNG로 표시', solutionSteps: ['완성된 세 원에서 왼쪽 위 수의 십의 자리와 오른쪽 위 수의 일의 자리를 찾습니다.', '두 위 수의 차가 아래 수의 가운데 두 자리가 되는지 세 예시에서 확인합니다.', '질문 원의 세 부분을 같은 순서로 이어 씁니다.'] });
   });
 
   register({
@@ -997,14 +1155,20 @@
       var replaced = selectedMatrix.map(function (row, rowIndex) { var copy = row.slice(); copy[symbol] = selectedRhs[rowIndex]; return copy; });
       solved.push(determinant(replaced) / det);
     }
+    var symbols = ['◆', '●', '▲', '■'];
+    function expression(items) { return items.map(function (item) { return symbols[item]; }).join('+'); }
+    var knownEquations = scenario.grid.slice(0, 3).map(function (row, index) { return expression(row) + '=' + scenario.rowSums[index]; });
+    for (var knownColumn = 0; knownColumn < 3; knownColumn++) {
+      knownEquations.push(expression(scenario.grid.map(function (row) { return row[knownColumn]; })) + '=' + scenario.columnSums[knownColumn]);
+    }
     var answer = scenario.rowSums[3] + ', ' + scenario.columnSums[3];
     var independentRow = scenario.grid[3].reduce(function (sum, value) { return sum + solved[value]; }, 0);
     var independentColumn = scenario.grid.reduce(function (sum, row) { return sum + solved[row[3]]; }, 0);
     return finalize(spec, answer, independentRow + ', ' + independentColumn,
       '서로 다른 도형은 각각 서로 다른 하나의 수를 나타냅니다. 그림에 주어진 가로줄 세 개와 세로줄 세 개의 합을 이용해, 남은 가로줄의 합과 세로줄의 합을 차례로 구하세요.',
-      '같은 도형끼리 묶어 가로·세로 식을 가감하면 네 도형값을 구할 수 있습니다. 남은 가로줄과 세로줄의 합은 차례로 ' + answer + '입니다.',
-      { grid: scenario.grid, values: scenario.values, rowSums: scenario.rowSums, columnSums: scenario.columnSums, solvedValues: solved },
-      { asset: RASTER.drawShapeValueGrid(scenario.grid, scenario.rowSums, scenario.columnSums), variantKey: scenario.grid.map(function (row) { return row.join(''); }).join('-') + '|' + rhs.join('-'), visibleMethod: '4×4 도형 배열과 알려진 여섯 합, 남은 두 물음표를 PNG로 표시' });
+      '그림에서 보이는 식은 ' + knownEquations.join(', ') + '입니다. 같은 도형끼리 묶어 이 식들을 가감하면 ◆=' + solved[0] + ', ●=' + solved[1] + ', ▲=' + solved[2] + ', ■=' + solved[3] + '입니다. 남은 가로줄은 ' + expression(scenario.grid[3]) + '=' + independentRow + ', 남은 세로줄은 ' + expression(scenario.grid.map(function (row) { return row[3]; })) + '=' + independentColumn + '이므로 답은 차례로 ' + answer + '입니다.',
+      { grid: scenario.grid, values: scenario.values, rowSums: scenario.rowSums, columnSums: scenario.columnSums, solvedValues: solved, knownEquations: knownEquations },
+      { asset: RASTER.drawShapeValueGrid(scenario.grid, scenario.rowSums, scenario.columnSums), variantKey: scenario.grid.map(function (row) { return row.join(''); }).join('-') + '|' + rhs.join('-'), visibleMethod: '4×4 도형 배열과 알려진 여섯 합, 남은 두 물음표를 PNG로 표시', solutionSteps: ['보이는 가로줄 세 개와 세로줄 세 개를 도형식으로 옮깁니다.', '같은 도형의 수를 묶고 식을 가감해 네 도형값을 구합니다.', '마지막 가로줄과 세로줄에 값을 대입해 두 합을 차례로 씁니다.'] });
   });
 
   register({
@@ -1019,26 +1183,39 @@
   }, function (level, rng, spec) {
     var people = CORE.shuffle(rng, ['재우', '윤후', '재현', '민준', '하은']);
     var sports = CORE.shuffle(rng, ['야구', '축구', '농구', '탁구', '볼링']);
-    var target = people[0], wednesdayPerson = people[1], mondayPerson = people[2], fridayPerson = people[3], tuesdayPerson = people[4];
-    var targetSport = sports[0], fridaySport = sports[1], mondaySport = sports[2], wednesdaySport = sports[3], tuesdaySport = sports[4];
+    var mondayPerson = people[0], tuesdayPerson = people[1], wednesdayPerson = people[2], target = people[3], fridayPerson = people[4];
+    var mondaySport = sports[0], tuesdaySport = sports[1], wednesdaySport = sports[2], targetSport = sports[3], fridaySport = sports[4];
     var answer = target + ', 목요일, ' + targetSport;
     var days = ['월요일', '화요일', '수요일', '목요일', '금요일'];
+    var constraints = [
+      { kind: 'person-day', person: wednesdayPerson, dayIndex: 2 },
+      { kind: 'person-immediately-before-person', first: tuesdayPerson, second: wednesdayPerson },
+      { kind: 'person-before-person', first: mondayPerson, second: tuesdayPerson },
+      { kind: 'person-immediately-after-person', first: fridayPerson, second: target },
+      { kind: 'sport-day', sport: wednesdaySport, dayIndex: 2 },
+      { kind: 'sport-day', sport: fridaySport, dayIndex: 4 },
+      { kind: 'sport-not-day', sport: mondaySport, excludedDayIndexes: [1, 3] },
+      { kind: 'sport-immediately-after-sport', first: tuesdaySport, second: mondaySport }
+    ];
     var matches = [];
     permutations(people).forEach(function (peopleByDay) {
-      if (peopleByDay[0] !== mondayPerson || peopleByDay[1] !== tuesdayPerson || peopleByDay[2] !== wednesdayPerson || peopleByDay[4] !== fridayPerson) return;
+      if (peopleByDay[2] !== wednesdayPerson) return;
+      if (peopleByDay.indexOf(tuesdayPerson) + 1 !== peopleByDay.indexOf(wednesdayPerson)) return;
+      if (peopleByDay.indexOf(mondayPerson) >= peopleByDay.indexOf(tuesdayPerson)) return;
+      if (peopleByDay.indexOf(fridayPerson) !== peopleByDay.indexOf(target) + 1) return;
       permutations(sports).forEach(function (sportsByDay) {
-        if (sportsByDay[0] !== mondaySport || sportsByDay[1] !== tuesdaySport || sportsByDay[2] !== wednesdaySport || sportsByDay[4] !== fridaySport) return;
+        if (sportsByDay[2] !== wednesdaySport || sportsByDay[4] !== fridaySport) return;
+        if ([1, 3].indexOf(sportsByDay.indexOf(mondaySport)) >= 0) return;
+        if (sportsByDay.indexOf(tuesdaySport) !== sportsByDay.indexOf(mondaySport) + 1) return;
         var targetDay = peopleByDay.indexOf(target);
-        var fridaySportDay = sportsByDay.indexOf(fridaySport);
-        if (targetDay + 1 !== fridaySportDay || sportsByDay[targetDay] !== targetSport) return;
         matches.push(target + ', ' + days[targetDay] + ', ' + sportsByDay[targetDay]);
       });
     });
     return finalize(spec, answer, matches.length === 1 ? matches[0] : NaN,
-      people.join(', ') + '는 월요일부터 금요일까지 서로 다른 날에 서로 다른 운동을 한 가지씩 했습니다. 단서를 읽고 ' + target + '의 이름·요일·운동을 한 묶음으로 쓰세요.',
-      '이름·요일·운동의 세 칸을 가진 표를 그리고 확정된 조건부터 채웁니다. ' + fridayPerson + '가 금요일에 ' + fridaySport + '을 했고, ' + target + '는 그 바로 전날 ' + targetSport + '을 했으므로 답은 ' + answer + '입니다.',
-      { people: people, sports: sports, target: target, targetSport: targetSport, matches: matches },
-      { conditionLines: [mondayPerson + '는 월요일에 ' + mondaySport + '을 했고, ' + tuesdayPerson + '는 화요일에 ' + tuesdaySport + '을 했습니다.', wednesdayPerson + '는 수요일에 ' + wednesdaySport + '을 했습니다.', target + '는 ' + fridaySport + '을 한 바로 전날에 ' + targetSport + '을 했습니다.', fridayPerson + '는 금요일에 ' + fridaySport + '을 했습니다.'], solutionSteps: ['아이 이름·요일·운동의 세 열을 가진 표를 그립니다.', '요일과 운동이 함께 확정된 단서부터 채웁니다.', '바로 전날 조건을 연결해 목표 아이의 세 항목을 한 묶음으로 씁니다.'] });
+      '아이: ' + people.join(', ') + '. 운동: ' + sports.join(', ') + '. 월요일부터 금요일까지 한 명씩, 각 운동을 한 번씩 했습니다. 단서를 읽고 ' + target + '의 이름·요일·운동을 한 묶음으로 쓰세요.',
+      '사람 표에서 수요일에 운동한 사람은 ' + wednesdayPerson + '입니다. 그 바로 전날은 ' + tuesdayPerson + '이고, 그보다 앞선 날의 사람은 ' + mondayPerson + '입니다. 따라서 세 사람의 날은 월·화·수요일로 정해집니다. 남은 이틀에서 ' + fridayPerson + '의 바로 전날은 ' + target + '입니다. 따라서 ' + target + '의 날은 목요일입니다. 운동 표에 먼저 놓을 것은 수요일: ' + wednesdaySport + ', 금요일: ' + fridaySport + '입니다. ' + mondaySport + ' 종목은 화요일과 목요일이 아니며 그 다음 날 종목은 ' + tuesdaySport + '입니다. 따라서 두 종목은 월요일과 화요일입니다. 남은 목요일 운동은 ' + targetSport + '입니다. 답은 ' + answer + '입니다.',
+      { people: people, sports: sports, target: target, targetSport: targetSport, matches: matches, constraints: constraints, uniqueScheduleCount: matches.length },
+      { conditionLines: ['수요일: ' + wednesdayPerson, tuesdayPerson + ' → 다음 날 ' + wednesdayPerson, mondayPerson + ': ' + tuesdayPerson + '보다 앞선 날', fridayPerson + ': ' + target + ' 바로 다음 날', '수요일 운동: ' + wednesdaySport + ' / 금요일 운동: ' + fridaySport, mondaySport + ': 화·목요일 아님', tuesdaySport + ': ' + mondaySport + ' 바로 다음 날'], variantKey: people.join('-') + '|' + sports.join('-'), solutionSteps: ['아이 이름·요일·운동의 세 열을 가진 표를 그립니다.', '확정된 수요일과 바로 전날·다음 날 조건으로 사람을 배치합니다.', '운동의 확정·부정·바로 다음 날 조건을 연결하고 남은 목요일 묶음을 씁니다.'] });
   });
 
   global.BANK_FINAL1_REVIEW = {

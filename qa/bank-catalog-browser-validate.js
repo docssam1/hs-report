@@ -33,13 +33,13 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.match(await page.locator('#paper-context').textContent(), /점수대 우선 판단/, '회차 점수대를 1차 판단으로 표시');
     assert.match(await page.locator('#paper-context').textContent(), /평균 .*점/, '회차 평균 표시');
     assert.match(await page.locator('#paper-context').textContent(), /경시/, '회차별 실제 점수 구간 표시');
-    assert.equal(await page.getByRole('link', { name: '이 유형 유사문제 검토하기' }).count(), 30, '파이널 1회 검산 완료 30유형 연결');
+    assert.equal(await page.getByRole('link', { name: '문항별 유사문제 3개 공부하기' }).count(), 30, '파이널 1회 30개 원문별 고정 문항 연결');
     const unrestrictedProduct = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값', exact: true }) });
     assert.equal(await unrestrictedProduct.count(), 1, '4번 세부유형은 범위가 없는 곱 조건까지 표시');
     const finalCube = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '바닥을 제외해 색칠한 쌓기나무의 개수', exact: true }) });
-    assert.match(await finalCube.getByRole('link', { name: '이 유형 유사문제 검토하기' }).getAttribute('href'), /level=5/, '파이널 1회 정답률 5%는 최상 난이도 생성 레벨로 연결');
+    assert.match(await finalCube.getByRole('link', { name: '문항별 유사문제 3개 공부하기' }).getAttribute('href'), /bank=final1&gens=final1-q02/, '정답률 근거는 유지하며 확정 문항 3개로 연결');
     const finalRegions = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '평행하지 않은 직선의 경계 안 최대·최소 영역 수', exact: true }) });
-    assert.match(await finalRegions.getByRole('link', { name: '이 유형 유사문제 검토하기' }).getAttribute('href'), /gen=final1-q17/, '17번은 범위 밖 교점 조건을 명시한 유사문제로 연결');
+    assert.match(await finalRegions.getByRole('link', { name: '문항별 유사문제 3개 공부하기' }).getAttribute('href'), /gens=final1-q17/, '17번은 범위 밖 교점 조건을 명시한 고정 유사문제로 연결');
     assert.equal(
       await page.locator('.badge.difficulty').count(),
       await page.locator('.type-card').count(),

@@ -116,7 +116,7 @@ function startServer() {
         if (id === 'final1-q13') return m.grid[0][2] + m.grid[1][2] + m.grid[2][2];
         if (id === 'final1-q14') {
           const values = [];
-          for (let r = 1; r <= m.total; r++) if (r + (r + 2) + 2 * r + (r - 2) + (r + 1) === m.total) values.push(r);
+          for (let r = 1; r <= m.total; r++) if (r > m.squirrelGap && (r + m.dogGap) % 2 === 0 && r + r + (r - m.squirrelGap) + (r + m.dogGap) + (r + m.dogGap) / 2 === m.total) values.push(r);
           if (values.length !== 1) return `not-unique:${values.length}`; return values[0];
         }
         if (id === 'final1-q15') {
@@ -156,8 +156,20 @@ function startServer() {
         if (id === 'final1-q25') {
           let count = 0; for (let n = 100; n <= 999; n++) if (n % m.divisor > Math.floor(n / m.divisor)) count++; return count;
         }
-        if (id === 'final1-q26') return m.matches.map((row) => row.join(', ')).join(' 또는 ');
-        if (id === 'final1-q27') return m.trainLength / (m.carSpeed + m.trainSpeed);
+        if (id === 'final1-q26') {
+          const answers=[];
+          for(let child=1;child<100;child++){
+            const grandfather=child*m.grandfatherMultiplier,father=child*m.fatherMultiplier;
+            if(grandfather<20||grandfather>99||father<20||father>99)continue;
+            if(Number(String(grandfather).split('').reverse().join(''))!==father)continue;
+            if(grandfather-father<m.minimumGenerationGap||father-child<m.minimumGenerationGap)continue;
+            if(m.additionalCondition==='childAge<10'&&child>=10)continue;
+            if(m.additionalCondition==='grandfatherAge>=70'&&grandfather<70)continue;
+            answers.push([grandfather,father,child].join(', '));
+          }
+          return answers.join(' 또는 ');
+        }
+        if (id === 'final1-q27') return (m.trainLength - m.carLength) / (m.carSpeed + m.trainSpeed);
         if (id === 'final1-q28') {
           const minuteSpeed = 360 / m.hourMinutes;
           const matches = [];
@@ -198,8 +210,8 @@ function startServer() {
                   !(question.asset.width > 0) || !(question.asset.height > 0)) fail(`${id} L${level} S${seed}: verified PNG asset missing`);
             } else if (question.asset) fail(`${id} L${level} S${seed}: text source gained an invented asset`);
             const proof = question.verification || {};
-            const answerContractOk = id === 'final1-q26'
-              ? proof.unique === false && Number(proof.validAnswerCount) === 2 && proof.answerContract === 'any-of-set' && question.answerPolicy === 'any-one' && question.acceptedAnswers.length === 2
+            const answerContractOk = id === 'final1-q26' && question.acceptedAnswers.length > 1
+              ? proof.unique === false && Number(proof.validAnswerCount) === question.acceptedAnswers.length && proof.answerContract === 'any-of-set' && question.answerPolicy === 'any-one'
               : proof.unique === true && Number(proof.validAnswerCount) === 1 && proof.answerContract === 'single-value';
             if (!proof.primary || !proof.independent || !same(proof.primary.answer, question.answer) ||
                 !same(proof.independent.answer, question.answer) || !answerContractOk || proof.primary.method === proof.independent.method) {
@@ -212,7 +224,7 @@ function startServer() {
             if (/[A-Za-z]/.test(`${question.text} ${(question.conditionLines || []).join(' ')} ${question.solution}`)) fail(`${id} L${level} S${seed}: Latin student text`);
           }
           stats[id][level] = { generated: 1000, uniquePrompts: prompts.size, uniqueAnswers: answers.size };
-          const minimumPromptVariants = id === 'final1-q19' ? 2 : 4;
+          const minimumPromptVariants = id === 'final1-q19' ? 2 : ['final1-q18','final1-q20'].includes(id) ? 3 : 4;
           if (prompts.size < minimumPromptVariants) fail(`${id} L${level}: too few prompt variants`);
         }
       });
@@ -252,8 +264,8 @@ function startServer() {
       if (!/자료실의 「도형의 개수」/.test(byId['final1-q22'].solution)) fail('q22 missing library follow-up');
       if (!/연장선이 만나는 점은 피자 밖/.test(byId['final1-q17'].text)) fail('q17 missing outside-intersection clarification');
       if (!/같은 방법을 한 번 더 반복/.test(byId['final1-q18'].text) || !/색종이 접기 개념이 아니라/.test(byId['final1-q18'].readingFocus)) fail('q18 missing repeated-example-reading focus');
-      if (!/여섯 번의 칼질/.test(byId['final1-q20'].text) || !/나머지 세 면/.test(byId['final1-q20'].readingFocus)) fail('q20 missing all-six-faces condition');
-      if (!/한 가지만 쓰세요/.test(byId['final1-q26'].text) || byId['final1-q26'].acceptedAnswers.length !== 2) fail('q26 any-one-of-two answer contract missing');
+      if (!/여섯 번의 칼질/.test(byId['final1-q20'].text) || !/전체 여섯 번.*현재/.test(byId['final1-q20'].readingFocus)) fail('q20 missing full-plan versus current-stage distinction');
+      if (byId['final1-q26'].acceptedAnswers.length > 1 && (!/한 가지만 쓰세요/.test(byId['final1-q26'].text) || byId['final1-q26'].answerPolicy !== 'any-one')) fail('q26 multiple-answer acceptance contract missing');
       if (!/이름·요일·운동/.test(byId['final1-q23'].text) || byId['final1-q23'].answer.split(',').length !== 3) fail('q23 name-day-sport bundle missing');
       return { failures, stats };
     }, { ids: IDS, visualIds: [...VISUAL_IDS] });

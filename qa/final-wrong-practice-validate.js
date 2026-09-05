@@ -97,7 +97,7 @@ function startStaticServer() {
     assert.equal(await practice.locator('.question-page .anstable').count(), 0, '문제 페이지에 정답표 없음');
     assert.match(await practice.locator('.qcard[data-source-no="18"]').first().textContent(), /같은 방법을 한 번 더 반복/);
     assert.match(await practice.locator('.answer-page').textContent(), /색종이 접기 개념이 아니라/);
-    assert.match(await practice.locator('.qmeta').first().textContent(), /대영역|›/);
+    assert.match(await practice.locator('.qmeta:not(.fixed-item)').first().textContent(), /대영역|›/);
     const pageOrder = await practice.locator('.page').evaluateAll((nodes) => nodes.map((node) => node.classList.contains('question-page') ? 'question' : node.classList.contains('answer-page') ? 'answer' : 'other'));
     assert.deepEqual(pageOrder, ['question', 'answer'], '모든 문제 뒤에 답안 배치');
 

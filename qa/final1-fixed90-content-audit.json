@@ -1,0 +1,1249 @@
+{
+  "version": "1.0.0",
+  "sourceSet": "final",
+  "sourceRound": 1,
+  "reviewedOn": "2026-09-06",
+  "frozenItemSetHash": "9e5ae9014ab3d5b2aa8dc56459fb3370f551b743c516d73fed53df125dc2e8b5",
+  "statusMeaning": "verified는 이 콘텐츠 해시에 묶인 지문·조건·정답·풀이·그림의 검산 완료를 뜻합니다. Git 반영·배포 완료를 뜻하지 않습니다.",
+  "responseRateNote": "파이널 1회 원문 문항에 연결된 난이도 분석용 추정 정답률입니다. 이 고정 변형 문항의 실측 정답률이 아닙니다.",
+  "evidence": [
+    {
+      "id": "fixed90-independent-math",
+      "result": "PASS 90/90",
+      "method": "고정 JSON만 읽어 좌표 점유, 보이는 식, 접기 절단망, 입체 절단 부호영역, 산술과 전수열거로 답을 다시 계산"
+    },
+    {
+      "id": "generator-sweep",
+      "result": "PASS 150000/150000",
+      "method": "30유형×5수준×1000시드에서 주 계산과 별도 계산, 단일해·답 계약·학생 문구를 검사"
+    },
+    {
+      "id": "source-content-review",
+      "result": "PASS 90/90",
+      "method": "원문 이미지 001.jpg~008.jpg와 90개 실제 지문·조건·풀이를 읽고 원문 핵심 사고, 조건 명료성, 한국어 표현을 독립 검토"
+    },
+    {
+      "id": "raster-review",
+      "result": "PASS all fixed raster assets",
+      "method": "PNG 서명·크기와 실제 표시를 확인하고 q05 라벨, q13 우측 여백, q18 접기·절단, q20 절단 단계, q30 예시 3개를 재검토"
+    }
+  ],
+  "reviewSummary": {
+    "verified": 90,
+    "pending": 0
+  },
+  "itemReviews": [
+    {
+      "id": "final1-q01-v1",
+      "sourceNo": 1,
+      "variantNo": 1,
+      "itemContentHash": "9485a71bfa8da00b3d39174b67e3edaad74ff3b856f26225d0e60a2782a69f53",
+      "reviewStatus": "verified",
+      "reviewNotes": "10부터 99까지 자리 합을 다시 열거해 36개=36를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q01-v2",
+      "sourceNo": 1,
+      "variantNo": 2,
+      "itemContentHash": "4ffc148129c99e42e40c970bbccbf3aec8f15da2bfd1a8905bf5c526a51b7d22",
+      "reviewStatus": "verified",
+      "reviewNotes": "10부터 99까지 자리 합을 다시 열거해 69개=69를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q01-v3",
+      "sourceNo": 1,
+      "variantNo": 3,
+      "itemContentHash": "36658658b302a674a3e714a70c1b7c535ad44b3b203c07d37b3d092429558c0c",
+      "reviewStatus": "verified",
+      "reviewNotes": "10부터 99까지 자리 합을 다시 열거해 45개=45를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q02-v1",
+      "sourceNo": 2,
+      "variantNo": 1,
+      "itemContentHash": "0e27469bd58926686c470e7a736eb0bba733d1fe1842a6f2bcbdf54a93527a70",
+      "reviewStatus": "verified",
+      "reviewNotes": "높이표 좌표의 위·네 옆면 노출을 다시 세어 0면 8개+2면 12개=20를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q02-v2",
+      "sourceNo": 2,
+      "variantNo": 2,
+      "itemContentHash": "6cb379e2e4284eb783db9c3a26d920b44a3d69d591b3ba97b5a064b0e7df6808",
+      "reviewStatus": "verified",
+      "reviewNotes": "높이표 좌표의 위·네 옆면 노출을 다시 세어 0면 3개+2면 12개=15를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q02-v3",
+      "sourceNo": 2,
+      "variantNo": 3,
+      "itemContentHash": "8f8ad70fb5794583786212c36b2d46ec5abdfb31b61045babaf7e169b899ccd5",
+      "reviewStatus": "verified",
+      "reviewNotes": "높이표 좌표의 위·네 옆면 노출을 다시 세어 0면 2개+2면 8개=10를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q03-v1",
+      "sourceNo": 3,
+      "variantNo": 1,
+      "itemContentHash": "2a1db3f7c392b938abd21e815d4eb92fe14f8350ca4a64baae4cb0e6a310587f",
+      "reviewStatus": "verified",
+      "reviewNotes": "두 끝을 제외한 실제 바늘 겹침 시각 7개를 분수 시각으로 열거해 답 7를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q03-v2",
+      "sourceNo": 3,
+      "variantNo": 2,
+      "itemContentHash": "96f1ada7c254098be7163f0ecfae00cb014cb2db7a71183612f9d1ff1bf17b06",
+      "reviewStatus": "verified",
+      "reviewNotes": "두 끝을 제외한 실제 바늘 겹침 시각 9개를 분수 시각으로 열거해 답 9를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q03-v3",
+      "sourceNo": 3,
+      "variantNo": 3,
+      "itemContentHash": "8307c50c93837dc7c07a26ef5a53192b71c06dc047674821f11170907847f14f",
+      "reviewStatus": "verified",
+      "reviewNotes": "두 끝을 제외한 실제 바늘 겹침 시각 11개를 분수 시각으로 열거해 답 11를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q04-v1",
+      "sourceNo": 4,
+      "variantNo": 1,
+      "itemContentHash": "083f1d621d59a6ef1b6ed17c31385a3d326c8e74d5569abf11910b2359b04335",
+      "reviewStatus": "verified",
+      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 718, 최대 4876, 차 4158를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q04-v2",
+      "sourceNo": 4,
+      "variantNo": 2,
+      "itemContentHash": "5b56373564cf4164a67f51122907167af12798e504fb166ace9bd10ad6224511",
+      "reviewStatus": "verified",
+      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 269, 최대 5642, 차 5373를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q04-v3",
+      "sourceNo": 4,
+      "variantNo": 3,
+      "itemContentHash": "87f670acb50d7d12596c6897c837b978245310b73af6bbe9427b08f1c0197ad9",
+      "reviewStatus": "verified",
+      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 469, 최대 5824, 차 5355를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q05-v1",
+      "sourceNo": 5,
+      "variantNo": 1,
+      "itemContentHash": "5f2675eef158bf79deada8350785d34966daf81ad63c01a8ab9b69fc8f58d613",
+      "reviewStatus": "verified",
+      "reviewNotes": "공유 옆변을 두 번씩 제거하는 계산과 남은 밑변 13개·양 끝 옆변 계산이 모두 94로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q05-v2",
+      "sourceNo": 5,
+      "variantNo": 2,
+      "itemContentHash": "c12b3191bea8d26d4a04658df225d8485ff76ac4f1f1ac74e85ff47514640f06",
+      "reviewStatus": "verified",
+      "reviewNotes": "공유 옆변을 두 번씩 제거하는 계산과 남은 밑변 19개·양 끝 옆변 계산이 모두 90로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q05-v3",
+      "sourceNo": 5,
+      "variantNo": 3,
+      "itemContentHash": "9564e355a0936c8b17037ed2458b83af57ef58be8941c7ff61dbbd8b65550572",
+      "reviewStatus": "verified",
+      "reviewNotes": "공유 옆변을 두 번씩 제거하는 계산과 남은 밑변 9개·양 끝 옆변 계산이 모두 85로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q06-v1",
+      "sourceNo": 6,
+      "variantNo": 1,
+      "itemContentHash": "4f50d1cbe89e02279897de9e0c6be3a7374469ce05ed47306855f9bd902f8a38",
+      "reviewStatus": "verified",
+      "reviewNotes": "하루 오차 45분의 누적을 720분 주기로 확인해 최초 재일치 16일을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q06-v2",
+      "sourceNo": 6,
+      "variantNo": 2,
+      "itemContentHash": "72997998bea365ce775e21bb4503a4f5e66ea239780b1c2aadb28aaee00ee454",
+      "reviewStatus": "verified",
+      "reviewNotes": "하루 오차 60분의 누적을 720분 주기로 확인해 최초 재일치 12일을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q06-v3",
+      "sourceNo": 6,
+      "variantNo": 3,
+      "itemContentHash": "3095af613957af9f4c8fc8670288d142a5fdc6f0fc2f3cb179556d59d944509b",
+      "reviewStatus": "verified",
+      "reviewNotes": "하루 오차 18분의 누적을 720분 주기로 확인해 최초 재일치 40일을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q07-v1",
+      "sourceNo": 7,
+      "variantNo": 1,
+      "itemContentHash": "a816f2048a8baeaa8afbde25eb75381031524d2c6dabbb70f9516713b80a71a1",
+      "reviewStatus": "verified",
+      "reviewNotes": "역을 수직선에 놓아 전체 121에서 양 끝 27, 27을 빼 답 67를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q07-v2",
+      "sourceNo": 7,
+      "variantNo": 2,
+      "itemContentHash": "ee1f8fe1146b0fa2f31601a118ff150885f5f1885debab2b603bddd3edadca7c",
+      "reviewStatus": "verified",
+      "reviewNotes": "역을 수직선에 놓아 전체 118에서 양 끝 20, 36을 빼 답 62를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q07-v3",
+      "sourceNo": 7,
+      "variantNo": 3,
+      "itemContentHash": "fa85bd6a5c921ed4d4b61631203f204ebef39a65799f53adb6f0705525065d6c",
+      "reviewStatus": "verified",
+      "reviewNotes": "역을 수직선에 놓아 전체 146에서 양 끝 23, 20을 빼 답 103를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q08-v1",
+      "sourceNo": 8,
+      "variantNo": 1,
+      "itemContentHash": "159cab222a9988ac83ef897e6adda6027d4c01c81b5c27f8660e330e34e1a9e5",
+      "reviewStatus": "verified",
+      "reviewNotes": "가능한 성공 개수를 전부 대입해 조건을 만족하는 값이 135 하나뿐임을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q08-v2",
+      "sourceNo": 8,
+      "variantNo": 2,
+      "itemContentHash": "65fecddf992f3d94868f55c460916b30d053521bddb3ccb71c9e17a432ef84ef",
+      "reviewStatus": "verified",
+      "reviewNotes": "가능한 성공 개수를 전부 대입해 조건을 만족하는 값이 39 하나뿐임을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q08-v3",
+      "sourceNo": 8,
+      "variantNo": 3,
+      "itemContentHash": "378c8884722671af673b47f062d01dc8a101aa3208d5920a76fc30f3cd816e88",
+      "reviewStatus": "verified",
+      "reviewNotes": "가능한 성공 개수를 전부 대입해 조건을 만족하는 값이 72 하나뿐임을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q09-v1",
+      "sourceNo": 9,
+      "variantNo": 1,
+      "itemContentHash": "c67a4074966723c1afd8d8e662532e715ff0481378cd87b206921f002e567f17",
+      "reviewStatus": "verified",
+      "reviewNotes": "그림의 단계별 구슬 수 1, 3, 6, 9, 12, 15, 18, 21, 24, 27를 직접 합해 136를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q09-v2",
+      "sourceNo": 9,
+      "variantNo": 2,
+      "itemContentHash": "22cedc061c9d0ceafc3b31b5fb991f33f20d5ea1a88de7b129033f9f06b51fde",
+      "reviewStatus": "verified",
+      "reviewNotes": "그림의 단계별 구슬 수 1, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78를 직접 합해 547를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q09-v3",
+      "sourceNo": 9,
+      "variantNo": 3,
+      "itemContentHash": "08282f68a1f5fed44e114642127805687a7b08dd584945b5edc32176779e067a",
+      "reviewStatus": "verified",
+      "reviewNotes": "그림의 단계별 구슬 수 1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33를 직접 합해 199를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q10-v1",
+      "sourceNo": 10,
+      "variantNo": 1,
+      "itemContentHash": "09c5187fd9c8460dd850a97a73992ca5872d8bfea30f8af0f7c0723b8ff17227",
+      "reviewStatus": "verified",
+      "reviewNotes": "16행의 121부터 136까지를 직접 더해 2056를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q10-v2",
+      "sourceNo": 10,
+      "variantNo": 2,
+      "itemContentHash": "6c407073871ed604edd8ab2fe187512bc6f7bfa1ba7626e194687b76e86c2768",
+      "reviewStatus": "verified",
+      "reviewNotes": "13행의 79부터 91까지를 직접 더해 1105를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q10-v3",
+      "sourceNo": 10,
+      "variantNo": 3,
+      "itemContentHash": "2bea2da69e4e1dbe0fd79784c7f805370f194c32e62e627953adedaca06c278b",
+      "reviewStatus": "verified",
+      "reviewNotes": "14행의 92부터 105까지를 직접 더해 1379를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q11-v1",
+      "sourceNo": 11,
+      "variantNo": 1,
+      "itemContentHash": "cc76bbf30dea0007c107f22d25fb9ab001842dbb4b4342e366ae006cf45daff1",
+      "reviewStatus": "verified",
+      "reviewNotes": "별의 다섯 선 조건을 독립 연립해 빈칸 7, 7, 4, 7, 7 한 조합과 최종 답 851를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q11-v2",
+      "sourceNo": 11,
+      "variantNo": 2,
+      "itemContentHash": "fbcfcc6db5140e9b7f6e5a278bb63788333426fa3eb6b1a47e8c838e13284aed",
+      "reviewStatus": "verified",
+      "reviewNotes": "별의 다섯 선 조건을 독립 연립해 빈칸 7, 5, 7, 7, 4 한 조합과 최종 답 831를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q11-v3",
+      "sourceNo": 11,
+      "variantNo": 3,
+      "itemContentHash": "8b573e067fd4575d2a11f501e02f585bc25ab84b557ef589271b645effb19ad4",
+      "reviewStatus": "verified",
+      "reviewNotes": "별의 다섯 선 조건을 독립 연립해 빈칸 4, 4, 4, 7, 2 한 조합과 최종 답 516를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q12-v1",
+      "sourceNo": 12,
+      "variantNo": 1,
+      "itemContentHash": "267277cab15701620ae5475a03e6389a3a428674b0ce1f6c5b5c8a1e183642bc",
+      "reviewStatus": "verified",
+      "reviewNotes": "네 사람의 양의 정수 값을 전수 대입해 1개 유일해와 순서 답 19, 12, 11, 11를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q12-v2",
+      "sourceNo": 12,
+      "variantNo": 2,
+      "itemContentHash": "231d612ec2794dcd8bc76b3b0c8f882bedf7d2fdd962429f0c8771a16d4f92cc",
+      "reviewStatus": "verified",
+      "reviewNotes": "네 사람의 양의 정수 값을 전수 대입해 1개 유일해와 순서 답 17, 12, 14, 7를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q12-v3",
+      "sourceNo": 12,
+      "variantNo": 3,
+      "itemContentHash": "aceb1d7a2ff19a1393347b2c3fb777f2b2789f14d35a5c52d891c105f3fe2aba",
+      "reviewStatus": "verified",
+      "reviewNotes": "네 사람의 양의 정수 값을 전수 대입해 1개 유일해와 순서 답 15, 17, 14, 10를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q13-v1",
+      "sourceNo": 13,
+      "variantNo": 1,
+      "itemContentHash": "dea44c54aa6961afd9cfc27fbc8a94ae9fb2546c5b717bf8d64c5ed65f3fd70c",
+      "reviewStatus": "verified",
+      "reviewNotes": "세 행 합 전체에서 보이는 두 열 합을 빼 42=42를 확인하고 PNG의 합 표기도 대조했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q13-v2",
+      "sourceNo": 13,
+      "variantNo": 2,
+      "itemContentHash": "dfb7c5ea448370c3d8612a9405bd8968c68c89d768e3cccef1007342dcbcf771",
+      "reviewStatus": "verified",
+      "reviewNotes": "세 행 합 전체에서 보이는 두 열 합을 빼 32=32를 확인하고 PNG의 합 표기도 대조했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q13-v3",
+      "sourceNo": 13,
+      "variantNo": 3,
+      "itemContentHash": "4d6486bd358c6bb75beff6b8d51cf3074f3fa9a41fad8e383057f653da3b038a",
+      "reviewStatus": "verified",
+      "reviewNotes": "세 행 합 전체에서 보이는 두 열 합을 빼 23=23를 확인하고 PNG의 합 표기도 대조했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q14-v1",
+      "sourceNo": 14,
+      "variantNo": 1,
+      "itemContentHash": "edbb95d002d542f218778353064022b2e966c76060d2360496c562faab0f3b80",
+      "reviewStatus": "verified",
+      "reviewNotes": "전체를 두 배한 9묶음 식과 양의 정수 전수 대입이 토끼 14명 한 값으로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q14-v2",
+      "sourceNo": 14,
+      "variantNo": 2,
+      "itemContentHash": "1235aac123d3738007c5ff9cd8a1cdf6f901676d0521cbdc4d83a5dedf0489d1",
+      "reviewStatus": "verified",
+      "reviewNotes": "전체를 두 배한 9묶음 식과 양의 정수 전수 대입이 토끼 18명 한 값으로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q14-v3",
+      "sourceNo": 14,
+      "variantNo": 3,
+      "itemContentHash": "2f3ac9fb7b16e6b2530d962433a76073ca3b6b118c2fcb16dd05543e9d0b0a85",
+      "reviewStatus": "verified",
+      "reviewNotes": "전체를 두 배한 9묶음 식과 양의 정수 전수 대입이 토끼 12명 한 값으로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q15-v1",
+      "sourceNo": 15,
+      "variantNo": 1,
+      "itemContentHash": "f1d10535abf0e9ee885beda49b531dfebf2276b973ecffd5f30d08c019cbd76e",
+      "reviewStatus": "verified",
+      "reviewNotes": "맨 아래 색별 경우 10+10+10를 독립 열거해 30가 되고, 5·6·7개 세 구조를 구분했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q15-v2",
+      "sourceNo": 15,
+      "variantNo": 2,
+      "itemContentHash": "de1f05803ed17928a2152c1a5d923b99fce0bf6f2eb12c1086001fda5f20853a",
+      "reviewStatus": "verified",
+      "reviewNotes": "맨 아래 색별 경우 20+9+9를 독립 열거해 38가 되고, 5·6·7개 세 구조를 구분했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q15-v3",
+      "sourceNo": 15,
+      "variantNo": 3,
+      "itemContentHash": "51d1be228f94df5d6fb443ce1b931b5d95c0c97f3095151579a13d2d0a73b0e8",
+      "reviewStatus": "verified",
+      "reviewNotes": "맨 아래 색별 경우 5+5+2를 독립 열거해 12가 되고, 5·6·7개 세 구조를 구분했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q16-v1",
+      "sourceNo": 16,
+      "variantNo": 1,
+      "itemContentHash": "688d2c538e700ab14220d86e97754ebc027627ba22a73b8c336ea3e95ee27062",
+      "reviewStatus": "verified",
+      "reviewNotes": "두 나머지의 합을 9로 다시 나눈 값과 실제 네 수 witness 계산이 답 3로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q16-v2",
+      "sourceNo": 16,
+      "variantNo": 2,
+      "itemContentHash": "6af01d90e80c9292aad6fa04b98534ee89fc58e09c1c49d0f5ad3e416b9e7f69",
+      "reviewStatus": "verified",
+      "reviewNotes": "두 나머지의 합을 14로 다시 나눈 값과 실제 네 수 witness 계산이 답 1로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q16-v3",
+      "sourceNo": 16,
+      "variantNo": 3,
+      "itemContentHash": "c661cef79834eaccd37e4c0551d77f96306c0b9a6379c9f9a24a21213ca4bc7f",
+      "reviewStatus": "verified",
+      "reviewNotes": "두 나머지의 합을 15로 다시 나눈 값과 실제 네 수 witness 계산이 답 2로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q17-v1",
+      "sourceNo": 17,
+      "variantNo": 1,
+      "itemContentHash": "04628132a92279496bff6449722c6a694da3bb0752a6791f28f95ba6ac8947d2",
+      "reviewStatus": "verified",
+      "reviewNotes": "13개 직선의 최대 92·최소 14 영역을 한 선씩 늘려 합 106를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q17-v2",
+      "sourceNo": 17,
+      "variantNo": 2,
+      "itemContentHash": "8026bf05c6e8e8406718cae6897972ef63bfaadcb5da2bae814f38e0220f5115",
+      "reviewStatus": "verified",
+      "reviewNotes": "11개 직선의 최대 67·최소 12 영역을 한 선씩 늘려 합 79를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q17-v3",
+      "sourceNo": 17,
+      "variantNo": 3,
+      "itemContentHash": "3c694bb9d48224f5c5826b4b6baedca64ea03943fbf62f657dbae1c94574bcec",
+      "reviewStatus": "verified",
+      "reviewNotes": "12개 직선의 최대 79·최소 13 영역을 한 선씩 늘려 합 92를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q18-v1",
+      "sourceNo": 18,
+      "variantNo": 1,
+      "itemContentHash": "e46900bd80b64dfa91c611a28cba595d04c04bfedb5ed435762dce73a40177ef",
+      "reviewStatus": "verified",
+      "reviewNotes": "mid-cross 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 25조각을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q18-v2",
+      "sourceNo": 18,
+      "variantNo": 2,
+      "itemContentHash": "157b078b4db0afe29d9b13cd96ffd101ec8976fa5ae39b4986f5ccdbfe6ceb3a",
+      "reviewStatus": "verified",
+      "reviewNotes": "single-diagonal 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 12조각을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q18-v3",
+      "sourceNo": 18,
+      "variantNo": 3,
+      "itemContentHash": "4ee4896ec9ff1b038a278b1f329c5bc7a76beaddec963abc602b90e7e9461f4e",
+      "reviewStatus": "verified",
+      "reviewNotes": "diagonals 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 40조각을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q19-v1",
+      "sourceNo": 19,
+      "variantNo": 1,
+      "itemContentHash": "1f513124d3a082b79afb21171da0ca7e505bce05a181b525dfd50daba28aaf77",
+      "reviewStatus": "verified",
+      "reviewNotes": "5개 원반의 모든 합법 상태 최단거리와 2의 5제곱−1이 31로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q19-v2",
+      "sourceNo": 19,
+      "variantNo": 2,
+      "itemContentHash": "fa8e2cde3b31f42c823487a04332ed8e696778eb5d0b7fc6d1a0292150039e1a",
+      "reviewStatus": "verified",
+      "reviewNotes": "7개 원반의 모든 합법 상태 최단거리와 2의 7제곱−1이 127로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q19-v3",
+      "sourceNo": 19,
+      "variantNo": 3,
+      "itemContentHash": "d39b42f0d0eac6499edbc52f0741ee130e9e4e5fe850b040b957015b66e7486f",
+      "reviewStatus": "verified",
+      "reviewNotes": "4개 원반의 모든 합법 상태 최단거리와 2의 4제곱−1이 15로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q20-v1",
+      "sourceNo": 20,
+      "variantNo": 1,
+      "itemContentHash": "430057a9f98cb07f07327c6e3276c1052cdb389dc49957dc2ce86f2d6f435789",
+      "reviewStatus": "verified",
+      "reviewNotes": "현재 6개 절단평면의 가능한 부호 영역을 독립 열거해 24=24조각을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q20-v2",
+      "sourceNo": 20,
+      "variantNo": 2,
+      "itemContentHash": "948f73028f833a0f03670b0c3beb4ca735bfa5dd04c7abdd617f80b987b76676",
+      "reviewStatus": "verified",
+      "reviewNotes": "현재 3개 절단평면의 가능한 부호 영역을 독립 열거해 8=8조각을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q20-v3",
+      "sourceNo": 20,
+      "variantNo": 3,
+      "itemContentHash": "799a3c66437cc0b6f48dea42bdd6f0a9e8e3fbf3c1b6ddf4a8650714d70ec740",
+      "reviewStatus": "verified",
+      "reviewNotes": "현재 2개 절단평면의 가능한 부호 영역을 독립 열거해 4=4조각을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q21-v1",
+      "sourceNo": 21,
+      "variantNo": 1,
+      "itemContentHash": "c2f7f3afc69a0edd59cfc1686238249f029bc6457780acb4ab1469dfeb9533b4",
+      "reviewStatus": "verified",
+      "reviewNotes": "그림의 보이는 여섯 식을 직접 풀어 도형값 6, 3, 12, 7와 남은 두 합 33, 22를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q21-v2",
+      "sourceNo": 21,
+      "variantNo": 2,
+      "itemContentHash": "997a00dd0c4bc1c0b5ae0a74a2a047f3ad919c36f9230808174ffcd1de951ed8",
+      "reviewStatus": "verified",
+      "reviewNotes": "그림의 보이는 여섯 식을 직접 풀어 도형값 5, 8, 9, 10와 남은 두 합 38, 35를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q21-v3",
+      "sourceNo": 21,
+      "variantNo": 3,
+      "itemContentHash": "74fb9eb610e43bb93503bd2ccfa17f60bd2f12a4f4559be284e041121c8fe390",
+      "reviewStatus": "verified",
+      "reviewNotes": "그림의 보이는 여섯 식을 직접 풀어 도형값 8, 3, 2, 11와 남은 두 합 32, 29를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q22-v1",
+      "sourceNo": 22,
+      "variantNo": 1,
+      "itemContentHash": "d7c64283d7bce1391a5c7feba72d76efcc6b827dac529e7b96b4c531ebb32812",
+      "reviewStatus": "verified",
+      "reviewNotes": "모든 직사각형 경계를 열거하고 포함·배제 540−162−64+18=332를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q22-v2",
+      "sourceNo": 22,
+      "variantNo": 2,
+      "itemContentHash": "7e1e5a50b85d4ebf137cfb612d5fc9a27cdd23df3b822045e89001daa4352efa",
+      "reviewStatus": "verified",
+      "reviewNotes": "모든 직사각형 경계를 열거하고 포함·배제 420−75−63+9=291를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q22-v3",
+      "sourceNo": 22,
+      "variantNo": 3,
+      "itemContentHash": "d68cc5ced8ca6aab84856845398ff958c8b8a6ec75c52dd1783c49f772c5f008",
+      "reviewStatus": "verified",
+      "reviewNotes": "모든 직사각형 경계를 열거하고 포함·배제 540−100−180+48=308를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q23-v1",
+      "sourceNo": 23,
+      "variantNo": 1,
+      "itemContentHash": "111b95c147faebbece5e721b5859c6aca0f3a4a8c69bf6e6e5fcb3158166864c",
+      "reviewStatus": "verified",
+      "reviewNotes": "사람 120배치×운동 120배치를 단서에 전수 대입해 목표 묶음 윤후, 목요일, 축구 하나만 남음을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q23-v2",
+      "sourceNo": 23,
+      "variantNo": 2,
+      "itemContentHash": "ff24f9cf4f15d83bab995071a71956ae344c77af3e3bd31d01db79249dc0df59",
+      "reviewStatus": "verified",
+      "reviewNotes": "사람 120배치×운동 120배치를 단서에 전수 대입해 목표 묶음 재현, 목요일, 볼링 하나만 남음을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q23-v3",
+      "sourceNo": 23,
+      "variantNo": 3,
+      "itemContentHash": "e6479843f0b15394ee62fb233151c02e9bb7bcf62e8f594a23577ad470f604c2",
+      "reviewStatus": "verified",
+      "reviewNotes": "사람 120배치×운동 120배치를 단서에 전수 대입해 목표 묶음 하은, 목요일, 농구 하나만 남음을 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q24-v1",
+      "sourceNo": 24,
+      "variantNo": 1,
+      "itemContentHash": "70d9013d1c217786f6ca5bc89139eeeb5279c02d565eb5542496ebaea0ee4406",
+      "reviewStatus": "verified",
+      "reviewNotes": "일의 자리 반복마디 8, 4, 2, 6와 직접 반복 곱셈이 답 6로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q24-v2",
+      "sourceNo": 24,
+      "variantNo": 2,
+      "itemContentHash": "49b0aba93c20051aabb594bc9217db4f105e771254781c975fd286af9d84c5de",
+      "reviewStatus": "verified",
+      "reviewNotes": "일의 자리 반복마디 7, 9, 3, 1와 직접 반복 곱셈이 답 9로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q24-v3",
+      "sourceNo": 24,
+      "variantNo": 3,
+      "itemContentHash": "14db4fa31cf9061f0438f9ddd762017e84346951685a7d7d770e83eb1798bc9b",
+      "reviewStatus": "verified",
+      "reviewNotes": "일의 자리 반복마디 4, 6와 직접 반복 곱셈이 답 6로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q25-v1",
+      "sourceNo": 25,
+      "variantNo": 1,
+      "itemContentHash": "a191cd54c46cd56cd6b79059f2b2a5d2d4e89a68e206934e8aac8c6d151ccaf1",
+      "reviewStatus": "verified",
+      "reviewNotes": "100부터 999까지 직접 나눈 결과와 몫별 나머지 구간 합이 74개로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q25-v2",
+      "sourceNo": 25,
+      "variantNo": 2,
+      "itemContentHash": "ff155c8bf0dfef36cb7770fac4e1df615874eb19c23225140ce334b898804017",
+      "reviewStatus": "verified",
+      "reviewNotes": "100부터 999까지 직접 나눈 결과와 몫별 나머지 구간 합이 57개로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q25-v3",
+      "sourceNo": 25,
+      "variantNo": 3,
+      "itemContentHash": "4f8dcfcc174b8cac9d3cba08d25390984897fa9c598bbae7bbaeacf6bb6ff8b7",
+      "reviewStatus": "verified",
+      "reviewNotes": "100부터 999까지 직접 나눈 결과와 몫별 나머지 구간 합이 210개로 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q26-v1",
+      "sourceNo": 26,
+      "variantNo": 1,
+      "itemContentHash": "89d2cdb621dbe051f05a6f991cf1b7e091c5efc38dab44d3fd32a5cacb0600da",
+      "reviewStatus": "verified",
+      "reviewNotes": "자리 뒤집기·7배·4배·세대 차와 추가 조건 none을 전수 대입해 허용 답 63, 36, 9 / 84, 48, 12를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q26-v2",
+      "sourceNo": 26,
+      "variantNo": 2,
+      "itemContentHash": "4dad783772a5b499b467ab9c1fc02e0ebfbc881701f79243ac6fa45360f5852b",
+      "reviewStatus": "verified",
+      "reviewNotes": "자리 뒤집기·7배·4배·세대 차와 추가 조건 childAge<10을 전수 대입해 허용 답 63, 36, 9를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q26-v3",
+      "sourceNo": 26,
+      "variantNo": 3,
+      "itemContentHash": "39665275479d913d7291bae2e88a1f0699b5a1eedd3b2a6a2f356abf2ce38cc5",
+      "reviewStatus": "verified",
+      "reviewNotes": "자리 뒤집기·7배·4배·세대 차와 추가 조건 grandfatherAge>=70을 전수 대입해 허용 답 84, 48, 12를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q27-v1",
+      "sourceNo": 27,
+      "variantNo": 1,
+      "itemContentHash": "1c110bf412a9434a0b95692e938aad2ce87015a788bd41497dcc75e152f81c36",
+      "reviewStatus": "verified",
+      "reviewNotes": "가림 거리 373−3=370를 상대속력 370로 나눠 1분이며 초 단위 위치 모형과 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q27-v2",
+      "sourceNo": 27,
+      "variantNo": 2,
+      "itemContentHash": "65b6f899195aea90b6bb2b97426996ef5d416efec6373a8f2de7442c59500278",
+      "reviewStatus": "verified",
+      "reviewNotes": "가림 거리 323−3=320를 상대속력 320로 나눠 1분이며 초 단위 위치 모형과 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q27-v3",
+      "sourceNo": 27,
+      "variantNo": 3,
+      "itemContentHash": "2dbd46d38ade5eff00294cdf76d6f81fbb5d8c0ce6359cca6003959733d0a855",
+      "reviewStatus": "verified",
+      "reviewNotes": "가림 거리 663−3=660를 상대속력 330로 나눠 2분이며 초 단위 위치 모형과 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q28-v1",
+      "sourceNo": 28,
+      "variantNo": 1,
+      "itemContentHash": "bbd7b969d2734b6378eb939f5464f5b2e827f9648b742c71a405dc9c2155a6e1",
+      "reviewStatus": "verified",
+      "reviewNotes": "분침 7.5도/분에서 상대속력 7도/분을 빼 시침 속도와 하루 30시간을 도출했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q28-v2",
+      "sourceNo": 28,
+      "variantNo": 2,
+      "itemContentHash": "141d9a431c0cf40ed4f13d614fbe27b8d0f0a938cf9543738fbf21e95c295bca",
+      "reviewStatus": "verified",
+      "reviewNotes": "분침 9도/분에서 상대속력 8.25도/분을 빼 시침 속도와 하루 24시간을 도출했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q28-v3",
+      "sourceNo": 28,
+      "variantNo": 3,
+      "itemContentHash": "6f6c51ebdc0ff4779bba5a15501fa3888825029b0c67263cbf803c77339f1ad6",
+      "reviewStatus": "verified",
+      "reviewNotes": "분침 7.5도/분에서 상대속력 7도/분을 빼 시침 속도와 하루 30시간을 도출했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review"
+      ]
+    },
+    {
+      "id": "final1-q29-v1",
+      "sourceNo": 29,
+      "variantNo": 1,
+      "itemContentHash": "49bf20b353ab6d9f2c281167297f6d1ea42add04be81d2d09933dc1a56a42e33",
+      "reviewStatus": "verified",
+      "reviewNotes": "맨 앞자리와 나머지 자리의 등장 횟수를 따로 세어 13770000+1019898=14789898이며 전체 수 생성 합과 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q29-v2",
+      "sourceNo": 29,
+      "variantNo": 2,
+      "itemContentHash": "0738ec51d7e76943ec73aefdebffdf17ba6f79374f2ecdaa7119fc943023aef6",
+      "reviewStatus": "verified",
+      "reviewNotes": "맨 앞자리와 나머지 자리의 등장 횟수를 따로 세어 8100000+599940=8699940이며 전체 수 생성 합과 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q29-v3",
+      "sourceNo": 29,
+      "variantNo": 3,
+      "itemContentHash": "49ea17bf6c440e7fcec4b96a94eeda913c682f46f969752cbe48fe5aa6393420",
+      "reviewStatus": "verified",
+      "reviewNotes": "맨 앞자리와 나머지 자리의 등장 횟수를 따로 세어 3240000+239976=3479976이며 전체 수 생성 합과 일치합니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q30-v1",
+      "sourceNo": 30,
+      "variantNo": 1,
+      "itemContentHash": "f8cec3f7f9c34c93d3cb76491e3fa39d0aecd1c4a606cb74a88b2da772b48156",
+      "reviewStatus": "verified",
+      "reviewNotes": "완성 예시 3개에서 바깥 자리·두 수의 차 규칙을 모두 확인하고 목표 원을 독립 계산해 6444를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q30-v2",
+      "sourceNo": 30,
+      "variantNo": 2,
+      "itemContentHash": "ce4cb68110592e6ce37de8983d41eea56744346c218b5d4f195b64cc5a6bca86",
+      "reviewStatus": "verified",
+      "reviewNotes": "완성 예시 3개에서 바깥 자리·두 수의 차 규칙을 모두 확인하고 목표 원을 독립 계산해 8284를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    },
+    {
+      "id": "final1-q30-v3",
+      "sourceNo": 30,
+      "variantNo": 3,
+      "itemContentHash": "ebbf92ea4f27acbed2a6377d239f5ade88eff5c99af5ec97394b74aac8e8c683",
+      "reviewStatus": "verified",
+      "reviewNotes": "완성 예시 3개에서 바깥 자리·두 수의 차 규칙을 모두 확인하고 목표 원을 독립 계산해 8357를 확인했습니다.",
+      "evidenceIds": [
+        "fixed90-independent-math",
+        "generator-sweep",
+        "source-content-review",
+        "raster-review"
+      ]
+    }
+  ]
+}

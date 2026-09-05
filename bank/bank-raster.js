@@ -367,23 +367,23 @@
   }
 
   function drawTriangleChain(count, baseLength, sideLength) {
-    var shown = Math.min(7, count), step = 62, top = 34, bottom = 126, left = 32;
-    var s = surface(left * 2 + shown * step + 72, 174), ctx = s.ctx;
+    var shown = Math.min(7, count), step = 62, top = 34, left = 100;
+    var base = parseFloat(baseLength), side = parseFloat(sideLength);
+    var triangleHeight = step * Math.sqrt(side * side - base * base / 4) / base;
+    var bottom = top + triangleHeight;
+    var chainRight = left + (shown + 1) * step / 2;
+    var s = surface(chainRight + 156, bottom + 42), ctx = s.ctx;
     for (var i = 0; i < shown; i++) {
-      var x = left + i * step;
-      if (i % 2 === 0) {
-        line(ctx, x, top, x + step / 2, bottom, '#263238', 2);
-        line(ctx, x + step / 2, bottom, x + step, top, '#263238', 2);
-        line(ctx, x, top, x + step, top, '#263238', 2);
-      } else {
-        line(ctx, x, top, x + step / 2, bottom, '#263238', 2);
-        line(ctx, x + step / 2, bottom, x + step, top, '#263238', 2);
-        line(ctx, x, bottom, x + step, bottom, '#263238', 2);
-      }
+      var x = left + i * step / 2;
+      var baseY = i % 2 === 0 ? top : bottom;
+      var apexY = i % 2 === 0 ? bottom : top;
+      line(ctx, x, baseY, x + step / 2, apexY, '#263238', 2);
+      line(ctx, x + step / 2, apexY, x + step, baseY, '#263238', 2);
+      line(ctx, x, baseY, x + step, baseY, '#263238', 2);
     }
     label(ctx, '밑변 ' + baseLength, left + step / 2, 17, { size: 13, color: '#0b5c91' });
-    label(ctx, '옆변 ' + sideLength, left - 5, 82, { size: 13, align: 'left', color: '#7c3d00' });
-    if (count > shown) label(ctx, '…  모두 ' + count + '개', left + shown * step + 26, 82, { size: 15, align: 'left' });
+    label(ctx, '옆변 ' + sideLength, left - 12, (top + bottom) / 2, { size: 13, align: 'right', color: '#7c3d00' });
+    if (count > shown) label(ctx, '…  모두 ' + count + '개', chainRight + 18, (top + bottom) / 2, { size: 15, align: 'left' });
     return finish(s, '합동인 이등변삼각형을 변끼리 이어 붙인 띠 모양');
   }
 
@@ -439,7 +439,7 @@
   }
 
   function drawSumGrid(rowSums, columnSums) {
-    var cell = 60, left = 52, top = 24, s = surface(350, 300), ctx = s.ctx;
+    var cell = 60, left = 52, top = 24, s = surface(390, 300), ctx = s.ctx;
     for (var r = 0; r < 4; r++) for (var c = 0; c < 4; c++) {
       var x = left + c * cell, y = top + r * cell;
       if (r < 3 && c < 3) ctx.fillStyle = '#ffffff';
@@ -482,7 +482,7 @@
   }
 
   function drawCircleRule(examples, target) {
-    var s = surface(610, 220), ctx = s.ctx;
+    var s = surface((examples.length + 1) * 170 + 50, 220), ctx = s.ctx;
     function one(item, index, unknown) {
       var cx = 100 + index * 170, cy = 102;
       ctx.beginPath(); ctx.arc(cx, cy, 66, 0, Math.PI * 2); ctx.strokeStyle = '#343a40'; ctx.lineWidth = 1.7; ctx.stroke();
@@ -492,8 +492,9 @@
       label(ctx, String(item.right), cx + 31, cy - 31, { size: 18 });
       label(ctx, unknown ? '?' : String(item.bottom), cx, cy + 28, { size: unknown ? 25 : 18, color: unknown ? '#e8590c' : '#0b5c91' });
     }
-    one(examples[0], 0, false); one(examples[1], 1, false); one(target, 2, true);
-    return finish(s, '두 위쪽 수에서 규칙에 따라 아래쪽 수를 만드는 세 개의 원');
+    examples.forEach(function(example,index){one(example,index,false);});
+    one(target, examples.length, true);
+    return finish(s, '규칙을 확인하는 예시 원 '+examples.length+'개와 물음표가 있는 원 한 개');
   }
 
   function drawMarkedRectGrid(cols, rows, markers) {
@@ -518,7 +519,8 @@
       var oa = -Math.PI / 2 + i * Math.PI * 2 / 5;
       var ia = -Math.PI / 2 + (i + 0.5) * Math.PI * 2 / 5;
       outer.push([cx + Math.cos(oa) * 154, cy + Math.sin(oa) * 154]);
-      inner.push([cx + Math.cos(ia) * 74, cy + Math.sin(ia) * 74]);
+      var innerRadius = 154 * Math.cos(2 * Math.PI / 5) / Math.cos(Math.PI / 5);
+      inner.push([cx + Math.cos(ia) * innerRadius, cy + Math.sin(ia) * innerRadius]);
     }
     for (var lineIndex = 0; lineIndex < 5; lineIndex++) {
       var points = [outer[lineIndex], inner[lineIndex], inner[(lineIndex + 1) % 5], outer[(lineIndex + 2) % 5]];
@@ -547,40 +549,67 @@
   }
 
   function drawFoldTwiceCut(variant) {
-    var s = surface(620, 190), ctx = s.ctx;
+    var spec=typeof variant==='object'?variant:{};
+    var s = surface(740, 220), ctx = s.ctx;
     var ink = '#343a40', fold = '#868e96', accent = '#e8590c';
     function arrow(x1, y1, x2, y2) {
       line(ctx, x1, y1, x2, y2, accent, 2.4);
       var angle = Math.atan2(y2 - y1, x2 - x1), size = 8;
       polygon(ctx, [[x2, y2], [x2 - Math.cos(angle - .55) * size, y2 - Math.sin(angle - .55) * size], [x2 - Math.cos(angle + .55) * size, y2 - Math.sin(angle + .55) * size]], accent, null);
     }
-    ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.strokeRect(28, 25, 128, 128);
-    ctx.save(); ctx.setLineDash([6, 5]); line(ctx, 28, 89, 156, 89, fold, 1.5); ctx.restore();
-    arrow(72, variant % 2 ? 118 : 62, 112, variant % 2 ? 68 : 108);
-    label(ctx, '① 보기의 방법', 92, 171, { size: 14, color: ink });
-    arrow(178, 89, 220, 89);
-    ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.strokeRect(246, 57, 132, 64);
-    ctx.save(); ctx.setLineDash([6, 5]); line(ctx, 312, 57, 312, 121, fold, 1.5); ctx.restore();
-    arrow(variant % 3 ? 278 : 346, 82, variant % 3 ? 340 : 284, 99);
-    label(ctx, '② 같은 방법을 한 번 더', 312, 171, { size: 14, color: ink });
-    arrow(402, 89, 444, 89);
-    ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.strokeRect(480, 57, 74, 64);
-    line(ctx, 480, 57, 554, 121, '#111111', 4);
-    line(ctx, 554, 57, 480, 121, '#111111', 4);
-    label(ctx, '③ 굵은 선을 따라 자르기', 517, 171, { size: 14, color: ink });
-    return finish(s, '보기의 반 접기 방법을 두 번 반복한 뒤 접힌 종이를 두 대각선으로 자르는 과정');
+    function folding(x,y,w,h,horizontal){
+      ctx.strokeStyle=ink;ctx.lineWidth=2;ctx.strokeRect(x,y,w,h);
+      ctx.save();ctx.setLineDash([5,4]);
+      if(horizontal)line(ctx,x,y+h/2,x+w,y+h/2,fold,1.5);
+      else line(ctx,x+w/2,y,x+w/2,y+h,fold,1.5);
+      ctx.restore();
+      if(horizontal){
+        var upward=spec.firstFold!=='위→아래';
+        arrow(x+w*.52,y+h*(upward?.78:.22),x+w*.52,y+h*(upward?.22:.78));
+      }else{
+        var rightward=spec.secondFold!=='오른쪽→왼쪽';
+        arrow(x+w*(rightward?.2:.8),y+h*.55,x+w*(rightward?.8:.2),y+h*.55);
+      }
+    }
+    label(ctx,'보기: 가로로 반 접고 → 세로로 반 접기',202,20,{size:19,color:ink});
+    folding(20,51,92,92,true);arrow(121,97,151,97);folding(164,97,92,46,false);
+    label(ctx,'① 보기의 방법 한 번',140,187,{size:18,color:ink});
+    arrow(274,97,303,97);
+    folding(319,74,68,68,true);arrow(398,108,425,108);folding(440,108,68,34,false);
+    label(ctx,'② 같은 방법을 한 번 더',415,187,{size:18,color:ink});
+    arrow(523,108,552,108);
+    var x=586,y=54,side=96;
+    ctx.strokeStyle=ink;ctx.lineWidth=2;ctx.strokeRect(x,y,side,side);
+    var pattern=spec.cutPattern||'diagonals';
+    if(pattern==='mid-cross'){
+      line(ctx,x,y+side/2,x+side,y+side/2,'#111111',4);
+      line(ctx,x+side/2,y,x+side/2,y+side,'#111111',4);
+    }else{
+      line(ctx,x,y,x+side,y+side,'#111111',4);
+      if(pattern!=='single-diagonal')line(ctx,x+side,y,x,y+side,'#111111',4);
+    }
+    label(ctx,'③ 굵은 선대로 자르기',637,187,{size:18,color:ink});
+    label(ctx,'접힌 종이 확대',634,34,{size:15,color:fold});
+    return finish(s, '가로 반 접기와 세로 반 접기를 한 묶음으로 두 번 반복하는 총 네 번의 접기와 마지막 절단선');
   }
 
   function drawCubeFaceDiagonalCuts(variant) {
-    var s = surface(390, 260), ctx = s.ctx;
-    var A=[85,72], B=[220,45], C=[305,98], D=[168,128], E=[85,187], F=[168,238], G=[305,205];
-    polygon(ctx,[A,B,D,E],'#f8f9fa','#343a40',2);
-    polygon(ctx,[B,C,G,D],'#eef1f4','#343a40',2);
-    polygon(ctx,[E,D,G,F],'#e1e6eb','#343a40',2);
-    [[A,D],[B,E],[B,G],[C,D],[E,G],[D,F]].forEach(function(seg){line(ctx,seg[0][0],seg[0][1],seg[1][0],seg[1][1],variant%2?'#c2410c':'#1f3864',2.4);});
-    label(ctx,'보이는 3면과 반대쪽 3면도',195,18,{size:14,color:'#343a40'});
-    label(ctx,'각 면의 두 대각선을 따라 같은 방식으로 자릅니다.',195,249,{size:13,color:'#5f6970'});
-    return finish(s, '정육면체의 보이는 세 면에 두 대각선이 끝점까지 이어지고 반대쪽 세 면도 같은 방식임을 밝힌 그림');
+    var options=typeof variant==='object'?variant:{};
+    var activeCuts=options.activeCuts||6;
+    var s = surface(390, 290), ctx = s.ctx;
+    function project(x,y,z){return [195+(x-y)*95,150+(x+y)*55-z*110];}
+    var top=[project(0,0,1),project(1,0,1),project(1,1,1),project(0,1,1)];
+    var left=[project(0,1,1),project(1,1,1),project(1,1,0),project(0,1,0)];
+    var right=[project(1,1,1),project(1,0,1),project(1,0,0),project(1,1,0)];
+    [top,right,left].forEach(function(face,index){
+      polygon(ctx,face,['#f8f9fa','#eef1f4','#e1e6eb'][index],'#343a40',2);
+      [[face[0],face[2]],[face[1],face[3]]].forEach(function(seg,diagonal){
+        if(index*2+diagonal<activeCuts)line(ctx,seg[0][0],seg[0][1],seg[1][0],seg[1][1],'#1f3864',2.4);
+      });
+    });
+    label(ctx,'현재까지의 칼질: '+activeCuts+'번',195,18,{size:14,color:'#343a40'});
+    label(ctx,'굵은 선에서 마주 보는 면의 같은 대각선까지 자릅니다.',195,278,{size:12,color:'#5f6970'});
+    return finish(s, '정육면체에서 현재까지 자른 '+activeCuts+'개 대각 절단평면을 굵은 선으로 표시한 그림');
   }
 
   global.BANK_RASTER = {
