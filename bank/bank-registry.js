@@ -329,6 +329,24 @@
     return link;
   }
 
+  function sourceItemReviewGeneratorLink(generatorId, file, coverage, sourceRef, visualRequired) {
+    var link = sourceLinkedReviewGeneratorLink(generatorId, file, coverage, [sourceRef]);
+    link.gradeBand = '초등 선발 대비';
+    if (visualRequired) {
+      link.renderer = 'canvas-2d-png';
+      link.assetKind = 'raster';
+      link.sourceAudit.visualRequired = true;
+    }
+    link.qaEvidence = {
+      suite: 'qa/bank-final1-generators-validate.js',
+      generatedQuestions: 5000,
+      levels: [1, 2, 3, 4, 5],
+      seedsPerLevel: 1000,
+      date: '2026-09-05'
+    };
+    return link;
+  }
+
   /* These are verified general-practice generators, not claims of
    * source-faithful equivalence.  The second gate stays closed until the
    * source conditions and side-by-side composition have both been approved. */
@@ -371,6 +389,52 @@
     'same source structure: three remainder questions with yes/no answers identify one number',
     ['2:12']
   );
+
+  /* 파이널 1회는 아직 원본형 분류표의 확정 세부유형과 합치지 않는다.
+   * 따라서 추정 분류명이 아니라 정확한 시험지·회차·문항 번호에 연결한다. */
+  var SOURCE_ITEM_GENERATOR_LINKS = {};
+  [
+    [1, '합이 일정한 두 자리 수의 개수', false],
+    [2, '색칠된 쌓기나무의 개수', true],
+    [3, '시침과 분침이 겹치는 횟수', false],
+    [4, '두 수의 곱의 최대·최소', false],
+    [5, '규칙이 있는 도형의 둘레', true],
+    [6, '고장난 시계', false],
+    [7, '표를 활용한 거리 구하기', true],
+    [8, '우기기(가정하여 풀기)', false],
+    [9, '규칙 찾아 합 구하기', true],
+    [10, '수 피라미드', true],
+    [11, '별 마방진', true],
+    [12, '조건에 맞게 나누기(합과 차)', false],
+    [13, '도형이 나타내는 수의 활용', true],
+    [14, '기준 정해 인원 구하기', false],
+    [15, '색칠하기 경우의 수', true],
+    [16, '나머지의 성질', false],
+    [19, '하노이 탑', false],
+    [21, '도형이 나타내는 수', true],
+    [22, '조건이 포함된 도형의 개수', true],
+    [23, '논리추리', false],
+    [24, '거듭제곱에서의 일의 자리', false],
+    [25, '나머지가 몫보다 큰 수', false],
+    [27, '거리·속력·시간', false],
+    [28, '이상한 시계', false],
+    [29, '숫자 카드로 만든 수의 합', true],
+    [30, '수 배열에서 가운데 수', true]
+  ].forEach(function (row) {
+    var no = row[0];
+    var sourceKey = ['final', 1, no].join('|');
+    SOURCE_ITEM_GENERATOR_LINKS[sourceKey] = sourceItemReviewGeneratorLink(
+      'final1-q' + String(no).padStart(2, '0'),
+      'bank/gens/g-final1.js',
+      'same Final 1 source condition structure: ' + row[1],
+      'final:1:' + no,
+      row[2] === true
+    );
+  });
+
+  function sourceItemGenerator(sourceKey) {
+    return SOURCE_ITEM_GENERATOR_LINKS[clean(sourceKey)] ? clone(SOURCE_ITEM_GENERATOR_LINKS[clean(sourceKey)]) : null;
+  }
 
   function pointBand(points) {
     return DIFFICULTY_BANDS[String(Number(points))] || null;
@@ -678,6 +742,7 @@
             canonicalTypeId: canonicalTypeId,
             sourceRef: { set: entry.setKey, round: Number(roundKey), no: Number(item.no) },
             sourceKey: sourceKey,
+            generator: sourceItemGenerator(sourceKey),
             points: points,
             pointBand: band ? band.id : null,
             responseRate: rate,
@@ -794,7 +859,11 @@
         var generator = type.generator;
         if (['verified-practice', 'source-linked-review'].indexOf(generator.status) < 0) errors.push(at + ': linked generator has an unknown status');
         if (generator.status === 'verified-practice' && (generator.renderer !== 'canvas-2d-png' || generator.assetKind !== 'raster')) errors.push(at + ': practice generator is not raster PNG');
-        if (generator.status === 'source-linked-review' && (generator.renderer !== 'text-only' || generator.assetKind !== 'none')) errors.push(at + ': text-only source review generator has an unexpected asset');
+        if (generator.status === 'source-linked-review') {
+          var reviewNeedsVisual = !!(generator.sourceAudit && generator.sourceAudit.visualRequired);
+          if (reviewNeedsVisual && (generator.renderer !== 'canvas-2d-png' || generator.assetKind !== 'raster')) errors.push(at + ': visual source review generator lacks a raster asset contract');
+          if (!reviewNeedsVisual && (generator.renderer !== 'text-only' || generator.assetKind !== 'none')) errors.push(at + ': text-only source review generator has an unexpected asset');
+        }
         if (generator.answerCheck !== 'primary plus independent verifier') errors.push(at + ': practice generator lacks an independent answer verifier');
         if (generator.status === 'verified-practice' && generator.practiceReleaseReady !== true) errors.push(at + ': practice release gate is closed');
         if (generator.status === 'source-linked-review' && generator.practiceReleaseReady !== false) errors.push(at + ': review generator must remain release-locked');
@@ -921,6 +990,7 @@
     bankDifficulty: bankDifficulty,
     summarize: summarize,
     validateCatalog: validateCatalog,
-    validateGeneratedQuestion: validateGeneratedQuestion
+    validateGeneratedQuestion: validateGeneratedQuestion,
+    sourceItemGenerator: sourceItemGenerator
   };
 });

@@ -64,7 +64,8 @@
         group=map[item.objectiveTypeId]={
           id:item.objectiveTypeId,area:item.area,subarea:item.subarea,displayType:item.displayType,
           sourceCounts:{},pointCounts:{},difficultyCounts:{},canonicalTypeIds:[],
-          rates:[],points:[],unmeasuredRateCount:0,confirmedCount:0,candidateCount:0,itemCount:0,reviewBases:[]
+          rates:[],points:[],unmeasuredRateCount:0,confirmedCount:0,candidateCount:0,itemCount:0,reviewBases:[],
+          directGenerator:null,directGeneratorRef:null
         };
       }
       if(group.canonicalTypeIds.indexOf(item.canonicalTypeId)<0)group.canonicalTypeIds.push(item.canonicalTypeId);
@@ -76,6 +77,10 @@
       group.itemCount++;
       if(item.reviewStatus==='confirmed')group.confirmedCount++;else group.candidateCount++;
       if(group.reviewBases.indexOf(item.reviewBasis)<0)group.reviewBases.push(item.reviewBasis);
+      if(!group.directGenerator&&item.generator){
+        group.directGenerator=item.generator;
+        group.directGeneratorRef={set:item.sourceRef.set,round:item.sourceRef.round,no:item.sourceRef.no,points:item.points};
+      }
     });
     return Object.keys(map).map(function(key){
       var group=map[key],original=null;
@@ -84,8 +89,10 @@
         return false;
       });
       group.original=original;
-      group.practiceVerified=!!(original&&original.generator&&original.generator.status==='verified-practice'&&original.generator.practiceReleaseReady===true);
-      group.sourceLinkedReview=!!(original&&original.generator&&original.generator.status==='source-linked-review');
+      group.generator=group.directGenerator||(original&&original.generator)||null;
+      group.generatorRef=group.directGeneratorRef||(original&&original.sourceRefs&&original.sourceRefs[0])||null;
+      group.practiceVerified=!!(group.generator&&group.generator.status==='verified-practice'&&group.generator.practiceReleaseReady===true);
+      group.sourceLinkedReview=!!(group.generator&&group.generator.status==='source-linked-review');
       group.sourcePending=!!(original&&original.sourceFaithfulReleaseReady!==true);
       if(group.rates.length){
         group.benchmarkRate=group.rates.reduce(function(sum,value){return sum+value},0)/group.rates.length;
@@ -123,14 +130,14 @@
   function typeCardHtml(group){
     var generator='';
     if(group.practiceVerified){
-      generator='<a class="badge practice" href="index.html?gen='+encodeURIComponent(group.original.generator.legacyId)+'">일반 연습문제 만들기</a>';
+      generator='<a class="badge practice" href="index.html?gen='+encodeURIComponent(group.generator.legacyId)+'">일반 연습문제 만들기</a>';
     }else if(group.sourceLinkedReview){
-      var sourceRef=group.original.sourceRefs[0]||{};
-      var sourceDifficulty=R.bankDifficulty(null,sourceRef.points);
+      var sourceRef=group.generatorRef||{};
+      var sourceDifficulty=group.bankDifficulty||R.bankDifficulty(null,sourceRef.points);
       var level={highest:5,high:4,middle:3,low:2,lowest:1}[sourceDifficulty.id]||3;
-      var params='gen='+encodeURIComponent(group.original.generator.generatorId)+
+      var params='gen='+encodeURIComponent(group.generator.generatorId)+
         '&level='+level+'&n=8&review=1&type='+encodeURIComponent(group.displayType)+
-        '&source='+encodeURIComponent('original|'+sourceRef.round+'|'+sourceRef.no)+
+        '&source='+encodeURIComponent((sourceRef.set||'original')+'|'+sourceRef.round+'|'+sourceRef.no)+
         '&points='+encodeURIComponent(sourceRef.points)+'&difficulty='+encodeURIComponent(sourceDifficulty.label);
       generator='<a class="badge practice" href="index.html?'+params+'">이 유형 유사문제 검토하기</a>';
     }

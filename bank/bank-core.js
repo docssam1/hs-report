@@ -139,7 +139,8 @@
 
   function questionPromptKey(question) {
     return String(question && question.text || '') + '|' +
-      (Array.isArray(question && question.conditionLines) ? question.conditionLines.join('|') : '');
+      (Array.isArray(question && question.conditionLines) ? question.conditionLines.join('|') : '') + '|' +
+      String(question && question.variantKey || '');
   }
 
   var DIFFICULTY_MIX_PRESETS = Object.freeze({

@@ -51,6 +51,15 @@ assert.deepEqual(
   '전체 분류 현황 수치',
 );
 assert.equal(unified.summary.duplicateSourceKeys.length, 0, '출처 문항 키 중복 없음');
+const finalOneItems = unified.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round === 1);
+assert.equal(finalOneItems.length, 30, '파이널 1회 30문항');
+assert.equal(finalOneItems.filter((item) => item.generator?.status === 'source-linked-review').length, 26, '파이널 1회 실제 유사문제 생성기 26문항 연결');
+assert.ok(finalOneItems.filter((item) => item.generator).every((item) => item.generator.practiceReleaseReady === false && item.generator.sourceFaithfulReleaseReady === false), '파이널 1회 눈 검수 전 공개 잠금');
+assert.deepEqual(
+  finalOneItems.filter((item) => item.generator).map((item) => item.sourceRef.no),
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 21, 22, 23, 24, 25, 27, 28, 29, 30],
+  '독립 검산 가능한 파이널 1회 문항만 연결',
+);
 const targetItems = unified.items.filter((item) => ['applied', 'final', 'last', 'original'].includes(item.sourceRef.set));
 assert.equal(targetItems.length, 600, '문제은행 기본 범위는 활용~시그니처 실전 600문항');
 assert.equal(targetItems.filter((item) => item.responseRateStatus === 'measured').length, 240, '파이널·최종 실제 정답률 240문항');

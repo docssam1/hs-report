@@ -33,6 +33,11 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.match(await page.locator('#paper-context').textContent(), /점수대 우선 판단/, '회차 점수대를 1차 판단으로 표시');
     assert.match(await page.locator('#paper-context').textContent(), /평균 .*점/, '회차 평균 표시');
     assert.match(await page.locator('#paper-context').textContent(), /경시/, '회차별 실제 점수 구간 표시');
+    assert.equal(await page.getByRole('link', { name: '이 유형 유사문제 검토하기' }).count(), 26, '파이널 1회 검산 완료 26유형만 연결');
+    const finalCube = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '색칠된 쌓기나무의 개수', exact: true }) });
+    assert.match(await finalCube.getByRole('link', { name: '이 유형 유사문제 검토하기' }).getAttribute('href'), /level=5/, '파이널 1회 정답률 5%는 최상 난이도 생성 레벨로 연결');
+    const finalRegions = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '영역의 개수', exact: true }) });
+    assert.equal(await finalRegions.getByRole('link', { name: '이 유형 유사문제 검토하기' }).count(), 0, '정답 불일치 17번은 연결 잠금');
     assert.equal(
       await page.locator('.badge.difficulty').count(),
       await page.locator('.type-card').count(),

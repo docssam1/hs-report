@@ -366,6 +366,186 @@
     return finish(s, 'Top, front, and side orthographic cube-stack views on exact grids');
   }
 
+  function drawTriangleChain(count, baseLength, sideLength) {
+    var shown = Math.min(7, count), step = 62, top = 34, bottom = 126, left = 32;
+    var s = surface(left * 2 + shown * step + 72, 174), ctx = s.ctx;
+    for (var i = 0; i < shown; i++) {
+      var x = left + i * step;
+      if (i % 2 === 0) {
+        line(ctx, x, top, x + step / 2, bottom, '#263238', 2);
+        line(ctx, x + step / 2, bottom, x + step, top, '#263238', 2);
+        line(ctx, x, top, x + step, top, '#263238', 2);
+      } else {
+        line(ctx, x, top, x + step / 2, bottom, '#263238', 2);
+        line(ctx, x + step / 2, bottom, x + step, top, '#263238', 2);
+        line(ctx, x, bottom, x + step, bottom, '#263238', 2);
+      }
+    }
+    label(ctx, '밑변 ' + baseLength, left + step / 2, 17, { size: 13, color: '#0b5c91' });
+    label(ctx, '옆변 ' + sideLength, left - 5, 82, { size: 13, align: 'left', color: '#7c3d00' });
+    if (count > shown) label(ctx, '…  모두 ' + count + '개', left + shown * step + 26, 82, { size: 15, align: 'left' });
+    return finish(s, '합동인 이등변삼각형을 변끼리 이어 붙인 띠 모양');
+  }
+
+  function drawDistanceTable(stations, knownDistances) {
+    var entries = Object.keys(knownDistances).map(function (key) {
+      var pair = key.split(':').map(Number);
+      return { pair: stations[pair[0]] + '역 ↔ ' + stations[pair[1]] + '역', value: knownDistances[key] };
+    });
+    var width = 430, top = 54, rowHeight = 42, s = surface(width, top + entries.length * rowHeight + 18), ctx = s.ctx;
+    roundedRect(ctx, 8, 8, width - 16, 38, 9, '#fff4e6', '#f08c00', 1.4);
+    label(ctx, '역 사이 거리표', width / 2, 27, { size: 18, color: '#7c3d00' });
+    entries.forEach(function (entry, index) {
+      var y = top + index * rowHeight;
+      ctx.fillStyle = index % 2 ? '#f8f9fa' : '#ffffff'; ctx.fillRect(18, y, width - 36, rowHeight);
+      ctx.strokeStyle = '#adb5bd'; ctx.lineWidth = 1; ctx.strokeRect(18, y, width - 36, rowHeight);
+      line(ctx, 286, y, 286, y + rowHeight, '#adb5bd', 1);
+      label(ctx, entry.pair, 34, y + rowHeight / 2, { size: 14, align: 'left' });
+      label(ctx, entry.value + ' km', 304, y + rowHeight / 2, { size: 15, align: 'left', color: '#0b5c91' });
+    });
+    return finish(s, '계산에 필요한 역 세 쌍의 거리를 행별로 나타낸 표');
+  }
+
+  function drawRingPattern(multiplier) {
+    var s = surface(620, 190), ctx = s.ctx;
+    for (var stage = 1; stage <= 4; stage++) {
+      var cx = 75 + (stage - 1) * 155, cy = 82, count = stage === 1 ? 1 : multiplier * (stage - 1);
+      if (stage === 1) {
+        ctx.beginPath(); ctx.arc(cx, cy, 9, 0, Math.PI * 2); ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.strokeStyle = '#263238'; ctx.stroke();
+      } else {
+        var shown = Math.min(count, 20);
+        for (var i = 0; i < shown; i++) {
+          var angle = -Math.PI / 2 + i * Math.PI * 2 / shown;
+          ctx.beginPath(); ctx.arc(cx + Math.cos(angle) * 38, cy + Math.sin(angle) * 38, 7, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.strokeStyle = '#263238'; ctx.lineWidth = 1.3; ctx.stroke();
+        }
+      }
+      label(ctx, stage + '번째', cx, 154, { size: 13 });
+      label(ctx, count + '개', cx, 174, { size: 12, color: '#0b5c91' });
+    }
+    return finish(s, '첫 번째부터 네 번째까지 원형으로 늘어나는 구슬 배열');
+  }
+
+  function drawNumberPyramid(rows) {
+    rows = Math.max(4, Math.min(6, rows || 5));
+    var s = surface(560, 240), ctx = s.ctx, value = 1;
+    for (var row = 1; row <= rows; row++) {
+      var y = 28 + row * 33, startX = 280 - (row - 1) * 27;
+      label(ctx, row + '행', 82, y, { size: 13, align: 'right', color: '#0b5c91' });
+      for (var col = 0; col < row; col++) label(ctx, String(value++), startX + col * 54, y, { size: 18, weight: 600 });
+    }
+    label(ctx, '⋮', 280, 226, { size: 22, color: '#868e96' });
+    return finish(s, '첫째 행부터 자연수를 행의 수만큼 차례로 놓은 수 피라미드');
+  }
+
+  function drawSumGrid(rowSums, columnSums) {
+    var cell = 60, left = 52, top = 24, s = surface(350, 300), ctx = s.ctx;
+    for (var r = 0; r < 4; r++) for (var c = 0; c < 4; c++) {
+      var x = left + c * cell, y = top + r * cell;
+      if (r < 3 && c < 3) ctx.fillStyle = '#ffffff';
+      else if (r < 3 && c === 3) ctx.fillStyle = '#fff4e6';
+      else if (r === 3 && c < 3) ctx.fillStyle = '#e7f5ff';
+      else continue;
+      ctx.fillRect(x, y, cell, cell); ctx.strokeStyle = '#343a40'; ctx.lineWidth = 1.5; ctx.strokeRect(x, y, cell, cell);
+      if (r < 3 && c === 3) label(ctx, String(rowSums[r]), x + cell / 2, y + cell / 2, { size: 17, color: '#7c3d00' });
+      if (r === 3 && c < 3) label(ctx, c === 2 ? '?' : String(columnSums[c]), x + cell / 2, y + cell / 2, { size: 17, color: '#0b5c91' });
+    }
+    label(ctx, '각 행의 합', left + 4 * cell + 12, top + 90, { size: 12, align: 'left', color: '#7c3d00' });
+    label(ctx, '각 열의 합', left + 90, top + 4 * cell + 18, { size: 12, color: '#0b5c91' });
+    return finish(s, '3×3 빈 수칸의 행 합과 열 합을 나타낸 ㄱ자 합 표');
+  }
+
+  function drawCubeColumn(height) {
+    var cellH = 28, x = 105, y = 22, s = surface(220, 44 + height * cellH), ctx = s.ctx;
+    for (var i = 0; i < height; i++) {
+      var yy = y + i * cellH;
+      ctx.fillStyle = i % 2 ? '#f8f9fa' : '#ffffff'; ctx.fillRect(x - 28, yy, 56, cellH);
+      ctx.strokeStyle = '#343a40'; ctx.lineWidth = 1.6; ctx.strokeRect(x - 28, yy, 56, cellH);
+      line(ctx, x + 28, yy, x + 43, yy - 10, '#343a40', 1.4);
+      line(ctx, x + 28, yy + cellH, x + 43, yy + cellH - 10, '#343a40', 1.4);
+      line(ctx, x + 43, yy - 10, x + 43, yy + cellH - 10, '#343a40', 1.4);
+    }
+    line(ctx, x - 28, y, x - 13, y - 10, '#343a40', 1.4);
+    line(ctx, x - 13, y - 10, x + 43, y - 10, '#343a40', 1.4);
+    return finish(s, '정육면체 쌓기나무 ' + height + '개를 세로로 쌓은 모습');
+  }
+
+  function drawDigitCards(digits, copies) {
+    var s = surface(360, 150), ctx = s.ctx;
+    digits.forEach(function (digit, index) {
+      var x = 38 + index * 104;
+      roundedRect(ctx, x, 24, 72, 84, 5, '#f1f3f5', '#343a40', 1.6);
+      label(ctx, String(digit), x + 36, 66, { size: 34, weight: 600 });
+    });
+    label(ctx, '각 카드 ' + copies + '장씩', 180, 130, { size: 14, color: '#0b5c91' });
+    return finish(s, '서로 다른 숫자 카드 세 종류와 각 카드의 장수');
+  }
+
+  function drawCircleRule(examples, target) {
+    var s = surface(610, 220), ctx = s.ctx;
+    function one(item, index, unknown) {
+      var cx = 100 + index * 170, cy = 102;
+      ctx.beginPath(); ctx.arc(cx, cy, 66, 0, Math.PI * 2); ctx.strokeStyle = '#343a40'; ctx.lineWidth = 1.7; ctx.stroke();
+      line(ctx, cx, cy - 66, cx, cy - 4, '#343a40', 1.3);
+      line(ctx, cx - 66, cy - 4, cx + 66, cy - 4, '#343a40', 1.3);
+      label(ctx, String(item.left), cx - 31, cy - 31, { size: 18 });
+      label(ctx, String(item.right), cx + 31, cy - 31, { size: 18 });
+      label(ctx, unknown ? '?' : String(item.bottom), cx, cy + 28, { size: unknown ? 25 : 18, color: unknown ? '#e8590c' : '#0b5c91' });
+    }
+    one(examples[0], 0, false); one(examples[1], 1, false); one(target, 2, true);
+    return finish(s, '두 위쪽 수에서 규칙에 따라 아래쪽 수를 만드는 세 개의 원');
+  }
+
+  function drawMarkedRectGrid(cols, rows, markers) {
+    var cs = 44, pad = 24, s = surface(cols * cs + pad * 2, rows * cs + pad * 2), ctx = s.ctx;
+    for (var r = 0; r <= rows; r++) line(ctx, pad, pad + r * cs, pad + cols * cs, pad + r * cs, '#263238', 1.8);
+    for (var c = 0; c <= cols; c++) line(ctx, pad + c * cs, pad, pad + c * cs, pad + rows * cs, '#263238', 1.8);
+    (markers || []).forEach(function (marker) {
+      var cx = pad + (marker.col + 0.5) * cs, cy = pad + (marker.row + 0.5) * cs;
+      if (marker.kind === 'triangle') {
+        polygon(ctx, [[cx, cy - 11], [cx - 11, cy + 9], [cx + 11, cy + 9]], '#ffffff', '#e8590c', 2.2);
+      } else {
+        star(ctx, cx, cy, 13, '#1864ab');
+      }
+    });
+    return finish(s, cols + '×' + rows + ' 모눈에 별과 삼각형 위치를 정확히 표시한 그림');
+  }
+
+  function drawMagicStar(outerValues, innerLabels) {
+    var s = surface(430, 390), ctx = s.ctx, cx = 215, cy = 192;
+    var outer = [], inner = [];
+    for (var i = 0; i < 5; i++) {
+      var oa = -Math.PI / 2 + i * Math.PI * 2 / 5;
+      var ia = -Math.PI / 2 + (i + 0.5) * Math.PI * 2 / 5;
+      outer.push([cx + Math.cos(oa) * 154, cy + Math.sin(oa) * 154]);
+      inner.push([cx + Math.cos(ia) * 74, cy + Math.sin(ia) * 74]);
+    }
+    for (var lineIndex = 0; lineIndex < 5; lineIndex++) {
+      var points = [outer[lineIndex], inner[lineIndex], inner[(lineIndex + 1) % 5], outer[(lineIndex + 2) % 5]];
+      for (var p = 0; p < points.length - 1; p++) line(ctx, points[p][0], points[p][1], points[p + 1][0], points[p + 1][1], '#495057', 1.6);
+    }
+    function node(point, text, fill) {
+      ctx.beginPath(); ctx.arc(point[0], point[1], 22, 0, Math.PI * 2); ctx.fillStyle = fill; ctx.fill(); ctx.strokeStyle = '#343a40'; ctx.lineWidth = 1.5; ctx.stroke();
+      label(ctx, String(text), point[0], point[1], { size: 16, color: fill === '#ffffff' ? '#212529' : '#7c3d00' });
+    }
+    outer.forEach(function (point, index) { node(point, outerValues[index], '#fff4e6'); });
+    inner.forEach(function (point, index) { node(point, innerLabels[index], '#ffffff'); });
+    return finish(s, '다섯 바깥 수와 다섯 안쪽 빈칸을 네 수씩 잇는 별 모양 수 퍼즐');
+  }
+
+  function drawShapeValueGrid(grid, rowSums, columnSums) {
+    var symbols = ['◆', '●', '▲', '■'], cell = 47, left = 42, top = 28;
+    var s = surface(304, 290), ctx = s.ctx;
+    for (var r = 0; r < 4; r++) for (var c = 0; c < 4; c++) {
+      var x = left + c * cell, y = top + r * cell;
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(x, y, cell, cell); ctx.strokeStyle = '#868e96'; ctx.lineWidth = 1; ctx.strokeRect(x, y, cell, cell);
+      label(ctx, symbols[grid[r][c]], x + cell / 2, y + cell / 2, { size: 23, color: '#212529' });
+    }
+    for (var rr = 0; rr < 4; rr++) label(ctx, rr === 3 ? '?' : String(rowSums[rr]), left + 4 * cell + 30, top + rr * cell + cell / 2, { size: 16, color: '#7c3d00' });
+    for (var cc = 0; cc < 4; cc++) label(ctx, cc === 3 ? '?' : String(columnSums[cc]), left + cc * cell + cell / 2, top + 4 * cell + 27, { size: 16, color: '#0b5c91' });
+    return finish(s, '네 가지 도형이 놓인 4×4 표와 알려진 가로·세로 합');
+  }
+
   global.BANK_RASTER = {
     drawConditionCard: drawConditionCard,
     drawRectGrid: drawRectGrid,
@@ -373,6 +553,17 @@
     drawRoadNetwork: drawRoadNetwork,
     drawIsoStackWithHeightMap: drawIsoStackWithHeightMap,
     drawPaintedCube: drawPaintedCube,
-    drawOrthographicViews: drawOrthographicViews
+    drawOrthographicViews: drawOrthographicViews,
+    drawTriangleChain: drawTriangleChain,
+    drawDistanceTable: drawDistanceTable,
+    drawRingPattern: drawRingPattern,
+    drawNumberPyramid: drawNumberPyramid,
+    drawSumGrid: drawSumGrid,
+    drawCubeColumn: drawCubeColumn,
+    drawDigitCards: drawDigitCards,
+    drawCircleRule: drawCircleRule,
+    drawMarkedRectGrid: drawMarkedRectGrid,
+    drawMagicStar: drawMagicStar,
+    drawShapeValueGrid: drawShapeValueGrid
   };
 })(typeof window !== 'undefined' ? window : globalThis);

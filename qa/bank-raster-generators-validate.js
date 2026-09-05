@@ -341,7 +341,8 @@ function independentAnswer(question) {
     });
 
     assert.equal(samples.output.length, 8 * 5 * 8, '8 public practice families × 5 levels × 8 seeds');
-    assert.deepEqual(samples.generatorIds.sort(), ['cube', 'inclusion', 'overlap-range-sum', 'path', 'rect', 'remainder', 'remainder-yes-no', 'repeat', 'tri', 'weekday']);
+    assert.deepEqual(samples.generatorIds.filter((id) => !id.startsWith('final1-')).sort(), ['cube', 'inclusion', 'overlap-range-sum', 'path', 'rect', 'remainder', 'remainder-yes-no', 'repeat', 'tri', 'weekday']);
+    assert.equal(samples.generatorIds.filter((id) => id.startsWith('final1-')).length, 26, '파이널 1회 검토 생성기는 별도 대량 검산에서 다룸');
     for (const question of samples.output) {
       assert.equal(question.asset.kind, 'raster', `${question.genId} raster kind`);
       assert.equal(question.asset.mimeType, 'image/png', `${question.genId} PNG MIME`);
@@ -369,7 +370,9 @@ function independentAnswer(question) {
         assert.doesNotMatch(question.asset.description || '', /[A-Za-z]/, `${question.genId} Korean figure description`);
       }
     }
-    for (const bands of Object.values(samples.generatorBands)) assert.deepEqual(bands, POINT_BANDS);
+    for (const [id, bands] of Object.entries(samples.generatorBands)) {
+      if (!id.startsWith('final1-')) assert.deepEqual(bands, POINT_BANDS);
+    }
     assert.deepEqual(samples.coreBands, POINT_BANDS);
     assert.deepEqual(samples.cubeCounterexample, { min: 4, max: 4 }, 'occupied top cells cannot have height zero');
     assert.deepEqual(samples.cubeCounterexampleIndependent, { min: 4, max: 4 }, 'independent cube solver agrees');

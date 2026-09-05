@@ -231,7 +231,7 @@
 
 <script>
 (function(){var v=Date.now();
- ['bank-core.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js'].forEach(function(f){
+ ['bank-core.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js'].forEach(function(f){
    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
 </script>
 <script>
@@ -258,7 +258,17 @@
   var AREA_NAMES = { all:'전체 영역', '수·규칙찾기':'수·규칙찾기', '도형':'도형', '경우의 수':'경우의 수', '식의 계산':'식의 계산' };
   var GENERATORS = window.BANK_GENS || [];
   var GEN_BY_ID = {};
-  GENERATORS.forEach(function(generator){ GEN_BY_ID[generator.id]=generator; });
+  var typeRow=document.querySelector('.chip[data-role="all-types"]');
+  GENERATORS.forEach(function(generator){
+    GEN_BY_ID[generator.id]=generator;
+    GEN_NAMES[generator.id]=GEN_NAMES[generator.id]||generator.name;
+    if(!document.querySelector('.chip[data-role="type"][data-val="'+generator.id+'"]')){
+      var chip=document.createElement('button');
+      chip.className='chip';chip.type='button';chip.dataset.role='type';chip.dataset.val=generator.id;
+      chip.textContent=generator.name;
+      typeRow.parentNode.insertBefore(chip,typeRow);
+    }
+  });
 
   var q = CORE.parseQuery();
   var queryIds = String(q.gens || (q.gen && q.gen!=='mix' ? q.gen : '')).split(',').filter(function(id){ return !!GEN_BY_ID[id]; });
@@ -279,7 +289,7 @@
     cover: true,
     answer: true
   };
-  var REVIEW_IDS=['overlap-range-sum','remainder-yes-no'];
+  var REVIEW_IDS=GENERATORS.filter(function(generator){return generator.reviewOnly===true;}).map(function(generator){return generator.id;});
   var reviewMode=false;
   function difficultyLabel(){
     return state.difficultyMix==='single' ? TUNE_NAMES[state.difficultyMode] : DIFFICULTY_MIX_NAMES[state.difficultyMix];
@@ -291,7 +301,9 @@
     return names.length+'개 유형 혼합';
   }
   function visibleTypeIds(){
-    return GENERATORS.filter(function(generator){return state.area==='all'||generator.area===state.area;})
+    return GENERATORS.filter(function(generator){
+      return (reviewMode||generator.reviewOnly!==true)&&(state.area==='all'||generator.area===state.area);
+    })
       .map(function(generator){return generator.id;});
   }
   function updateReviewNote(){
