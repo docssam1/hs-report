@@ -44,10 +44,16 @@ function startStaticServer() {
     ...(BROWSER_EXECUTABLE ? { executablePath: BROWSER_EXECUTABLE } : {}),
   });
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+  let mockRows = [];
+  const writeMethods = [];
   await context.route(/^https?:\/\//, async (route) => {
     const url = new URL(route.request().url());
     if (url.hostname === '127.0.0.1' || url.hostname === 'localhost') return route.continue();
-    if (url.hostname.endsWith('supabase.co')) return route.fulfill({ status: 200, contentType: 'application/json', body: '[]' });
+    if (url.hostname.endsWith('supabase.co')) {
+      if (!['GET', 'HEAD'].includes(route.request().method())) writeMethods.push(route.request().method());
+      const body = url.pathname.includes('/mock_results') ? JSON.stringify(mockRows) : '[]';
+      return route.fulfill({ status: 200, contentType: 'application/json', body });
+    }
     return route.fulfill({ status: 204, body: '' });
   });
   const page = await context.newPage();
@@ -98,8 +104,26 @@ function startStaticServer() {
     await practice.setViewportSize({ width: 390, height: 844 });
     const overflow = await practice.evaluate(() => document.documentElement.scrollWidth - innerWidth);
     assert.ok(overflow <= 1, `모바일 가로 넘침 없음: ${overflow}px`);
+
+    await page.evaluate(() => localStorage.setItem('gfield_student', 'docssam'));
+    mockRows = [];
+    await page.goto(`http://127.0.0.1:${port}/final.html?round=1&name=docssam&go=report`, { waitUntil: 'domcontentloaded' });
+    await page.getByText('파이널 1회 성적표가 아직 등록되지 않았습니다.', { exact: true }).waitFor();
+    assert.equal(await page.locator('.kpi').count(), 0, '미등록 성적에는 빈 분석표를 표시하지 않음');
+
+    const ox = Array(30).fill('O'); ox[3] = 'X'; ox[17] = 'X';
+    mockRows = [{ student: 'docssam', round: 'final1', ox: ox.join(''), score: 93.9, wrong: 2, source: 'admin', updated_at: '2026-09-05T00:00:00.000Z' }];
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.getByText(/docssam 학생의 공식 1차 성적표 · 읽기 전용/).waitFor();
+    assert.equal(await page.locator('.wp-item').count(), 2, '공식 오답 두 문항의 유사문제만 연결');
+    assert.match(await page.locator('#wpSummary').textContent(), /유사문제 6문제/);
+    assert.deepEqual(writeMethods, [], '개인 성적표 열람은 성적을 다시 저장하지 않음');
+
+    await page.goto(`http://127.0.0.1:${port}/final.html?round=1&name=another-student&go=report`, { waitUntil: 'domcontentloaded' });
+    await page.getByText('내 성적표 전용 화면입니다', { exact: true }).waitFor();
+    assert.equal(await page.locator('.kpi').count(), 0, '로그인 이름과 다른 학생 성적은 표시하지 않음');
     assert.deepEqual(errors, [], '브라우저 오류 없음');
-    console.log('PASS final wrong-practice flow: exact wrong items, point filters, 3 per type, 6/page, answers after questions, mobile');
+    console.log('PASS final wrong-practice and personal report: exact wrong items, point filters, 3 per type, read-only own-name report, missing-score notice');
   } finally {
     await browser.close();
     server.close();

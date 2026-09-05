@@ -14,6 +14,8 @@ assert.match(adminV2, /x\.ox\.length===mkQ\(\)&&\/\^\[OX\]\+\$\/.test\(x\.ox\)/,
 assert.match(admin, /area=\(it&&it\.area\)\|\|b\.area\|\|''/, '영역은 문항 item.area를 먼저 사용해야 함');
 assert.doesNotMatch(admin, /area=b\.area\|\|\(it&&it\.area\)/, 'blueprint.area 우선 판정을 다시 사용하면 안 됨');
 assert.match(adminV2, /sc=mkScore\(x\.ox\),score=sc\?sc\.score:'-',wrong=sc\?sc\.wrong:'-'/, '저장된 점수 대신 검증된 O/X로 점수를 재계산해야 함');
+assert.match(adminV2, /학생 아이디로 다시 로그인할 필요가 없습니다/, '파이널 재원생은 관리자 학생 선택에서 바로 오답 입력');
+assert.match(adminV2, /학생 로드맵의 「내 파이널 성적표」/, '관리자 입력 뒤 학생 개인 성적표 흐름 안내');
 
 const context = { window: {} };
 context.window = context;

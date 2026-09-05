@@ -224,6 +224,23 @@ function startServer() {
           if (!question.diagnosis || !question.diagnosis.typeId || !question.diagnosis.errorTags.length) fail(`${question.genId}: diagnosis missing`);
         });
       });
+      ids.forEach((id) => {
+        for (let seed = 1; seed <= 50; seed++) {
+          const paper = core.buildPaper({ genIds: [id], perGenerator: 3, pointBand: 'all', seedStr: `WP${seed}` });
+          if (paper.questions.length !== 3 || paper.questions.some((question) => question.genId !== id)) {
+            fail(`${id} wrong-practice seed ${seed}: exactly three verified variants required`);
+          }
+          if (new Set(paper.questions.map((question) => `${question.text}|${(question.conditionLines || []).join('|')}|${question.variantKey || ''}`)).size !== 3) {
+            fail(`${id} wrong-practice seed ${seed}: duplicate prompt variant`);
+          }
+        }
+      });
+      try {
+        core.buildPaper({ genIds: ['final1-q01', 'missing-generator'], perGenerator: 3, seedStr: 'FAILCLOSED' });
+        fail('wrong-practice invalid generator list did not fail closed');
+      } catch (error) {
+        if (!/유형 목록이 정확하지 않아/.test(String(error && error.message))) fail('wrong-practice invalid-generator error unclear');
+      }
       const mixed = core.buildPaper({ genId: 'mix', n: 100, seedStr: 'FMIX' });
       if (mixed.questions.some((question) => ids.includes(question.genId))) fail('Final 1 review generator leaked into normal mix');
       if (window.BANK_FINAL1_REVIEW.readyQuestionNos.length !== 30 || window.BANK_FINAL1_REVIEW.blockedQuestionNos.length) fail('Final 1 release gate inventory mismatch');

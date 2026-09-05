@@ -201,11 +201,10 @@
         book.imgdir='final_'+round;
         book.pages=finalPages[round];
         book.copyrightMissingPages=finalCopyrightPages[round].slice();
-        book.links=[
-          {label:'실전 타이머',url:withName(finalBase+'&go=timer')},
-          {label:'오답 입력·진단',url:withName(finalBase+'&go=answer')},
-          {label:'답안·교재 연결표',url:withName('answer.html?set=final&round='+round)}
-        ];
+        book.links=[{label:'실전 타이머',url:withName(finalBase+'&go=timer')}];
+        if(onlineMember()) book.links.push({label:'오답 입력·진단',url:withName(finalBase+'&go=answer')});
+        book.links.push({label:(studentName()?studentName()+' 학생 ':'내 ')+'성적표',url:withName(finalBase+'&go=report')});
+        book.links.push({label:'답안·교재 연결표',url:withName('answer.html?set=final&round='+round)});
       }
 
       if(book.folder==='최종 모의고사'&&/최종\s*실전\s*모의고사/.test(String(book.title||''))){
@@ -503,6 +502,11 @@
     var nm=studentName();
     window.open(ENTRY_URL+'?round='+round+(nm?('&name='+encodeURIComponent(nm)):''),'_blank');
   }
+  function openFinalResult(round){
+    var nm=studentName();
+    if(!nm) return;
+    window.open('final.html?round='+round+'&go=report&name='+encodeURIComponent(nm),'_blank');
+  }
 
   if(typeof renderTimeline==='function'){
     var ot=renderTimeline;
@@ -512,6 +516,16 @@
         document.querySelectorAll('#timeline .node').forEach(function(el){
           var h=el.querySelector('h3'); if(!h) return;
           var t=h.textContent||'';
+          var finalMatch=t.match(/파이널(?:\s*실전)?\s*모의고사\s*([1-5])\s*회/);
+          if(finalMatch&&!el.classList.contains('locked')&&!el.querySelector('.final-report-action')){
+            var finalRound=Number(finalMatch[1]);
+            var finalActions=document.createElement('div'); finalActions.className='last1-node-actions final-report-action';
+            var finalButton=document.createElement('button');
+            finalButton.type='button'; finalButton.className='last1-node-btn';
+            finalButton.textContent='📊 '+studentName()+' 학생 파이널 성적표';
+            finalButton.onclick=function(ev){ev.stopPropagation();openFinalResult(finalRound);};
+            finalActions.appendChild(finalButton); el.appendChild(finalActions);
+          }
           var match=t.match(/최종(?:\s*실전)?\s*모의고사\s*([1-4])\s*회/);
           if(!match) return;
           var round=Number(match[1]);

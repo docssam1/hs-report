@@ -204,6 +204,12 @@
       });
     }
     if (!candidateGens.length) candidateGens = gens.filter(function (g) { return g.reviewOnly !== true; });
+    if (perGenerator) {
+      var distinctRequested = requestedGenIds.filter(function (id, index) { return requestedGenIds.indexOf(id) === index; });
+      if (!requestedGenIds.length || distinctRequested.length !== requestedGenIds.length || candidateGens.length !== requestedGenIds.length) {
+        throw new Error('오답 유사문제 유형 목록이 정확하지 않아 시험지를 만들지 않았습니다.');
+      }
+    }
 
     var pointLevels = {
       easy: { all: [1, 2], '2.7': [1], '3.4': [2, 3], '4.2': [4] },
@@ -249,8 +255,11 @@
           q = variants.find(function (candidate) {
             var promptKey = questionPromptKey(candidate);
             var answerKey = String(candidate.answer);
-            return !usedPrompts[promptKey] && !(gen.preferDistinctAnswers === true && !!usedAnswers[answerKey]);
-          }) || (attempts >= 59 ? variants[0] : null);
+            var promptUnused = !usedPrompts[promptKey];
+            var answerUnused = !(gen.preferDistinctAnswers === true && !!usedAnswers[answerKey]);
+            return promptUnused && (answerUnused || attempts >= 40);
+          });
+          if (!q && attempts >= 59 && !perGenerator) q = variants[0];
         } catch (e) {
           q = null;
         }
@@ -280,6 +289,15 @@
         }
         q.index = i + 1;
         questions.push(q);
+      }
+    }
+
+    if (perGenerator) {
+      var generatedCounts = {};
+      questions.forEach(function (question) { generatedCounts[question.genId] = (generatedCounts[question.genId] || 0) + 1; });
+      var incomplete = candidateGens.some(function (generator) { return generatedCounts[generator.id] !== perGenerator; });
+      if (questions.length !== n || incomplete) {
+        throw new Error('유형마다 검산된 유사문제 ' + perGenerator + '개를 채우지 못해 시험지를 만들지 않았습니다.');
       }
     }
 

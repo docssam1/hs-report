@@ -58,7 +58,7 @@ function expectedHref(locator, pattern, label) {
       const qaData = `\n;(function(){var D=window.GFIELD_DATA;var n=${JSON.stringify(STUDENT)};`+
         `if(!D.students.includes(n))D.students.push(n);D.studentTypes[n]='online';`+
         `['파이널 모의고사','최종 모의고사','추가 모의고사','약점 유형','개념 교재'].forEach(function(f){if(!Array.isArray(D.archiveAccess[f]))D.archiveAccess[f]=[];if(!D.archiveAccess[f].includes(n))D.archiveAccess[f].push(n);});`+
-        `D.archiveProductAccess=D.archiveProductAccess||{};['concept-basic','concept-core'].forEach(function(k){if(!Array.isArray(D.archiveProductAccess[k]))D.archiveProductAccess[k]=[];if(!D.archiveProductAccess[k].includes(n))D.archiveProductAccess[k].push(n);});})();`;
+        `D.archiveProductAccess=D.archiveProductAccess||{};['concept-basic','concept-core','mock-signature-1','mock-signature-2'].forEach(function(k){if(!Array.isArray(D.archiveProductAccess[k]))D.archiveProductAccess[k]=[];if(!D.archiveProductAccess[k].includes(n))D.archiveProductAccess[k].push(n);});})();`;
       await route.fulfill({ status: 200, contentType: 'application/javascript; charset=utf-8', body: source + qaData });
     });
 
@@ -85,6 +85,7 @@ function expectedHref(locator, pattern, label) {
     assert.equal(await page.getByRole('link', { name: /시험지 보기·인쇄/ }).count(), 0, '파이널 중복 시험지 링크 제거');
     assert.equal(await page.locator('#bookviewer .bv-stage.split .bv-vid iframe').count(), 1, '파이널 시험지·영상 결합 뷰어');
     await expectedHref(page.getByRole('link', { name: /오답 입력·진단/ }), /final\.html\?round=1&go=answer/, '파이널 진단');
+    await expectedHref(page.getByRole('link', { name: new RegExp(`${STUDENT} 학생 성적표`) }), /final\.html\?round=1&go=report/, '파이널 개인 성적표');
     await expectedHref(page.getByRole('link', { name: /답안·교재 연결표/ }), /answer\.html\?set=final&round=1/, '파이널 답안');
     const popupPromise = page.waitForEvent('popup');
     await page.getByRole('button', { name: /인쇄/ }).click();

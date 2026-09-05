@@ -1293,6 +1293,10 @@ td.weak-cell{white-space:nowrap}
   function enterFlow(){
     var R = getRound();
     if(!R || (R.ready===false && !preview)){ renderStart(); return; }
+    if(goParam==='report'){
+      if(M.mode==='paper-only'){ openAnswerPage(); return; }
+      gradeAndShowReport({viewOnly:true}); return;
+    }
     if(goParam==='paper'){ renderPaper(); return; }
     if(goParam==='answer'){
       if(M.mode==='paper-only'){ openAnswerPage(); return; }
@@ -1682,7 +1686,8 @@ td.weak-cell{white-space:nowrap}
     }
   }
 
-  async function gradeAndShowReport(){
+  async function gradeAndShowReport(options){
+    var viewOnly=!!(options&&options.viewOnly);
     app.innerHTML = '<div class="doc"><section><div class="lead">채점 중입니다…</div></section></div>';
 
     var priorRows = null;
@@ -1697,12 +1702,20 @@ td.weak-cell{white-space:nowrap}
 
     var fk = finalKey();
     var fk2 = fk+'@2', fk3 = fk+'@3';
-    var attemptNo = deriveAttemptNo(priorRows, fk, fk2);
+    if(viewOnly){
+      var official=priorRows[fk];
+      if(!official||!validOx(official.ox)){
+        app.innerHTML='<div class="doc"><section><h2>'+esc(state.name)+' 학생 파이널 '+roundNum+'회 성적표</h2><div class="lead">파이널 '+roundNum+'회 성적표가 아직 등록되지 않았습니다.</div></section></div>';
+        return;
+      }
+      state.oxArr=String(official.ox).split('');
+    }
+    var attemptNo = viewOnly?1:deriveAttemptNo(priorRows, fk, fk2);
     var saveKey = attemptNo===1 ? fk : (attemptNo===2 ? fk2 : fk3);
     var saveSource = attemptNo===1 ? firstAttemptSource(state.name) : (teacherEntry?'practice-admin':'practice');
 
     var saveErr = false, saveConflict = false, saved = false;
-    if(!preview){
+    if(!preview&&!viewOnly){
       var saveResult = await supaUpsert(state.name, saveKey, state.oxArr, saveSource);
       saved = !!saveResult.ok;
       saveConflict = !!saveResult.conflict;
@@ -1730,7 +1743,7 @@ td.weak-cell{white-space:nowrap}
     /* 누적 성적 계산 (round>=2에서만 의미가 있음, final 라운드만 지원) */
     /* completed-rounds count는 '누적 성적' 계산과 같은 방식(1차 응시만, 회차별 1건)으로
        구해 비교-기준 안내(온라인 학생의 연습 회차 부족 강조)에도 그대로 재사용합니다. */
-    var includeCurrent=preview||saved||saveConflict;
+    var includeCurrent=viewOnly?false:(preview||saved||saveConflict);
     var personalAttempts = computePersonalAttempts(roundNum, priorRows, attemptNo, fk, state.oxArr, includeCurrent);
     var considered = computeCumulativeConsidered(roundNum, priorRows, attemptNo, fk, state.oxArr, includeCurrent);
     var cmpOnline = isOnlineStudent(ctx.name);
@@ -1788,6 +1801,7 @@ td.weak-cell{white-space:nowrap}
     var attemptHTML = attemptSectionHTML(roundNum, priorRows, attemptNo, fk, fk2, fk3, state.oxArr, includeCurrent);
 
     var previewBanner = preview ? '<div class="banner preview no-print">🔎 관리자 미리보기 — 저장되지 않습니다</div>' : '';
+    var personalReportBanner = viewOnly ? '<div class="banner preview no-print">📊 '+esc(ctx.name)+' 학생의 공식 1차 성적표 · 읽기 전용</div>' : '';
     var teacherBanner = (!preview && teacherEntry) ? '<div class="banner preview no-print">🧑‍🏫 선생님 대리 입력 — 재원생의 답안을 대신 기록합니다. 회차별 최초 성적만 누적에 반영됩니다.</div>' : '';
     var practiceBanner = (!preview && attemptNo>=2) ? '<div class="banner practice no-print">연습 응시 — 기록은 남지만 누적 성적에는 반영되지 않습니다 ('+attemptNo+'회차 시도)</div>' : '';
     var saveErrBanner = saveErr ? '<div class="banner saveerr no-print">'+(saveConflict?'다른 입력이 먼저 저장되어 기존 최초 기록을 유지했습니다.':'저장 실패, 네트워크 확인')+'</div>' : '';
@@ -1805,7 +1819,7 @@ td.weak-cell{white-space:nowrap}
     var detailLead=ctx.populationVerified?'검증된 문항 정답률과 함께 문항별 주의점을 표시합니다.':'학생의 정오와 문항별 복습 주의점만 표시합니다.';
     var cumulativeLead=ctx.populationVerified?'검증된 최초 응시 분포가 있는 회차만 누적 비교에 사용합니다.':'최초 응시의 개인 점수와 동일 세부유형 반복만 누적합니다.';
 
-    app.innerHTML = previewBanner+teacherBanner+practiceBanner+saveErrBanner+
+    app.innerHTML = personalReportBanner+previewBanner+teacherBanner+practiceBanner+saveErrBanner+
       '<div class="doc">'+
       '<div class="cover">'+
         '<div class="brand">G-FIELD GIFTED EDUCATION</div>'+
@@ -1870,8 +1884,14 @@ td.weak-cell{white-space:nowrap}
       return;
     }
     document.title=roundLabel(roundNum)+' · 지필드 영재교육';
+    var storedStudent='';
+    try{ storedStudent=(localStorage.getItem('gfield_student')||'').trim(); }catch(e){ storedStudent=''; }
     var student = urlName;
-    if(!student){ try{ student = localStorage.getItem('gfield_student')||''; }catch(e){ student=''; } }
+    if(!student) student=storedStudent;
+    if(goParam==='report'&&!preview&&!teacherEntry&&(!student||!storedStudent||student!==storedStudent)){
+      app.innerHTML='<div class="doc"><section><h2>내 성적표 전용 화면입니다</h2><div class="lead">로드맵에 로그인한 학생 이름과 성적표 이름이 같을 때만 열립니다. 학생 화면으로 돌아가 본인 이름으로 로그인한 뒤 「내 파이널 성적표」를 눌러 주세요.</div></section></div>';
+      return;
+    }
     if(student&&allowedForRound(student)){ state.name=student; enterFlow(); }
     else { renderGate(); }
   }
