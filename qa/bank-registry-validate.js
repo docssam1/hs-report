@@ -352,10 +352,10 @@ check('등록 소영역과 규칙 후보를 명시적으로 구분', () => {
   });
 });
 
-check('이원목적표의 영역+세부유형 741개를 화면 권위값으로 그대로 보존', () => {
-  assert.equal(unified.summary.rawDisplayTypes, 734);
-  assert.equal(unified.summary.objectiveTypes, 741);
-  assert.equal(new Set(unified.items.map((item) => item.objectiveTypeId)).size, 741);
+check('이원목적표의 영역+세부유형 742개를 화면 권위값으로 그대로 보존', () => {
+  assert.equal(unified.summary.rawDisplayTypes, 735);
+  assert.equal(unified.summary.objectiveTypes, 742);
+  assert.equal(new Set(unified.items.map((item) => item.objectiveTypeId)).size, 742);
   unified.items.forEach((item) => assert.ok(item.displayType));
 });
 

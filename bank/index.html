@@ -126,6 +126,8 @@
   table.anstable td.no{text-align:center;font-weight:800;color:var(--accent)}
   table.anstable td.ans{font-weight:800;color:var(--accent);text-align:center}
   table.anstable td.area{font-size:9.5px;color:var(--dim)}
+  .solution-skill{color:var(--accent);font-size:10px}
+  .reading-focus{color:#7c3f13;font-size:9.5px;font-weight:700}
   .answer-page{break-before:page;page-break-before:always}
 
   @media print{
@@ -438,8 +440,10 @@
 
   function buildAnswerPagesHtml(questions, examNo){
     var rowsHtml = questions.map(function(qq){
+      var method = qq.solutionSkill ? '<strong class="solution-skill">핵심 풀이 · ' + esc(qq.solutionSkill) + '</strong><br>' : '';
+      var reading = qq.readingFocus ? '<span class="reading-focus">지문 포인트 · ' + esc(qq.readingFocus) + '</span><br>' : '';
       return '<tr><td class="no">' + qq.index + '</td><td class="ans">' + esc(qq.answer) + '</td>' +
-        '<td class="area">' + esc(qq.genName||'') + ' · ' + esc(TUNE_NAMES[qq.difficultyMode]||'기준 난이도') + ' · ' + esc(qq.pointBand) + '점</td><td>' + esc(qq.solution||'') + '</td></tr>';
+        '<td class="area">' + esc(qq.genName||'') + ' · ' + esc(TUNE_NAMES[qq.difficultyMode]||'기준 난이도') + ' · ' + esc(qq.pointBand) + '점</td><td>' + method + reading + esc(qq.solution||'') + '</td></tr>';
     });
     var rowChunks = chunk(rowsHtml, 14);
     return rowChunks.map(function(rows, i){

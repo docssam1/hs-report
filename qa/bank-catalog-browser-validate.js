@@ -33,17 +33,17 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.match(await page.locator('#paper-context').textContent(), /점수대 우선 판단/, '회차 점수대를 1차 판단으로 표시');
     assert.match(await page.locator('#paper-context').textContent(), /평균 .*점/, '회차 평균 표시');
     assert.match(await page.locator('#paper-context').textContent(), /경시/, '회차별 실제 점수 구간 표시');
-    assert.equal(await page.getByRole('link', { name: '이 유형 유사문제 검토하기' }).count(), 26, '파이널 1회 검산 완료 26유형만 연결');
+    assert.equal(await page.getByRole('link', { name: '이 유형 유사문제 검토하기' }).count(), 28, '파이널 1회 검산 완료 28유형만 연결');
     const finalCube = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '색칠된 쌓기나무의 개수', exact: true }) });
     assert.match(await finalCube.getByRole('link', { name: '이 유형 유사문제 검토하기' }).getAttribute('href'), /level=5/, '파이널 1회 정답률 5%는 최상 난이도 생성 레벨로 연결');
     const finalRegions = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '영역의 개수', exact: true }) });
-    assert.equal(await finalRegions.getByRole('link', { name: '이 유형 유사문제 검토하기' }).count(), 0, '정답 불일치 17번은 연결 잠금');
+    assert.match(await finalRegions.getByRole('link', { name: '이 유형 유사문제 검토하기' }).getAttribute('href'), /gen=final1-q17/, '17번은 범위 밖 교점 조건을 명시한 유사문제로 연결');
     assert.equal(
       await page.locator('.badge.difficulty').count(),
       await page.locator('.type-card').count(),
       '각 이원목적표 유형 카드에 난이도 한 개 표시',
     );
-    const paperFold = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '종이 접기', exact: true }) });
+    const paperFold = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '접기·자르기 과정의 반복', exact: true }) });
     assert.match(await paperFold.textContent(), /난이도 최상/, '정답률 2.5% 유형은 최상');
     assert.match(await paperFold.textContent(), /기준 정답률 2.5%/, '실제 정답률 근거 표시');
 

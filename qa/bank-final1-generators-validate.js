@@ -10,7 +10,7 @@ const ROOT = path.resolve(__dirname, '..');
 const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
 const SCREENSHOT_DIR = process.env.GFIELD_QA_FINAL1_SCREENSHOT_DIR || '';
 const PDF_PATH = process.env.GFIELD_QA_FINAL1_PDF_PATH || '';
-const IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 21, 22, 23, 24, 25, 27, 28, 29, 30]
+const IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
   .map((no) => `final1-q${String(no).padStart(2, '0')}`);
 const VISUAL_IDS = new Set([2, 5, 7, 9, 10, 11, 13, 15, 21, 22, 29, 30].map((no) => `final1-q${String(no).padStart(2, '0')}`));
 
@@ -73,9 +73,14 @@ function startServer() {
         }
         if (id === 'final1-q04') {
           const values = [];
-          for (let a = 0; a < 4; a++) for (let b = 0; b < 4; b++) for (let c = 0; c < 4; c++) for (let d = 0; d < 4; d++) {
-            if (new Set([a, b, c, d]).size === 4) values.push((10 * m.digits[a] + m.digits[b]) * (10 * m.digits[c] + m.digits[d]));
+          function visit(prefix, rest) {
+            if (!rest.length) {
+              for (let split = 1; split <= 3; split++) values.push(Number(prefix.slice(0, split).join('')) * Number(prefix.slice(split).join('')));
+              return;
+            }
+            rest.forEach((digit, index) => visit(prefix.concat(digit), rest.slice(0, index).concat(rest.slice(index + 1))));
           }
+          visit([], m.digits);
           return Math.max(...values) - Math.min(...values);
         }
         if (id === 'final1-q05') return m.count * m.base + 2 * m.side;
@@ -125,6 +130,7 @@ function startServer() {
           visit(-1, m.counts.slice(), 0); return valid;
         }
         if (id === 'final1-q16') return (m.remainders[0] + m.remainders[1]) % m.divisor;
+        if (id === 'final1-q17') return (1 + m.lineCount * (m.lineCount + 1) / 2) + (m.lineCount + 1);
         if (id === 'final1-q19') return Math.pow(2, m.disks) - 1;
         if (id === 'final1-q21') {
           const row = m.grid[3].reduce((sum, symbol) => sum + m.solvedValues[symbol], 0);
@@ -148,6 +154,7 @@ function startServer() {
         if (id === 'final1-q25') {
           let count = 0; for (let n = 100; n <= 999; n++) if (n % m.divisor > Math.floor(n / m.divisor)) count++; return count;
         }
+        if (id === 'final1-q26') return m.matches.map((row) => row.join(', ')).join(' 또는 ');
         if (id === 'final1-q27') return m.trainLength / (m.carSpeed + m.trainSpeed);
         if (id === 'final1-q28') {
           const minuteSpeed = 360 / m.hourMinutes;
@@ -189,14 +196,17 @@ function startServer() {
                   !(question.asset.width > 0) || !(question.asset.height > 0)) fail(`${id} L${level} S${seed}: verified PNG asset missing`);
             } else if (question.asset) fail(`${id} L${level} S${seed}: text source gained an invented asset`);
             const proof = question.verification || {};
+            const answerContractOk = id === 'final1-q26'
+              ? proof.unique === false && Number(proof.validAnswerCount) === 2 && proof.answerContract === 'any-of-set' && question.answerPolicy === 'any-one' && question.acceptedAnswers.length === 2
+              : proof.unique === true && Number(proof.validAnswerCount) === 1 && proof.answerContract === 'single-value';
             if (!proof.primary || !proof.independent || !same(proof.primary.answer, question.answer) ||
-                !same(proof.independent.answer, question.answer) || proof.unique !== true ||
-                Number(proof.validAnswerCount) !== 1 || proof.primary.method === proof.independent.method) {
+                !same(proof.independent.answer, question.answer) || !answerContractOk || proof.primary.method === proof.independent.method) {
               fail(`${id} L${level} S${seed}: verification contract`);
             }
             const external = externalAnswer(id, question);
             if (!same(external, question.answer)) fail(`${id} L${level} S${seed}: external ${external} != ${question.answer}`);
             if (!question.learnerFit || question.learnerFit.learnerStage !== '초등 선발 대비 사고력 수학') fail(`${id}: learner fit missing`);
+            if (!question.solutionSkill) fail(`${id}: handwritten-solution skill missing`);
             if (/[A-Za-z]/.test(`${question.text} ${(question.conditionLines || []).join(' ')} ${question.solution}`)) fail(`${id} L${level} S${seed}: Latin student text`);
           }
           stats[id][level] = { generated: 1000, uniquePrompts: prompts.size, uniqueAnswers: answers.size };
@@ -214,7 +224,16 @@ function startServer() {
       });
       const mixed = core.buildPaper({ genId: 'mix', n: 100, seedStr: 'FMIX' });
       if (mixed.questions.some((question) => ids.includes(question.genId))) fail('Final 1 review generator leaked into normal mix');
-      if (window.BANK_FINAL1_REVIEW.readyQuestionNos.length !== 26 || window.BANK_FINAL1_REVIEW.blockedQuestionNos.join(',') !== '17,18,20,26') fail('Final 1 release gate inventory mismatch');
+      if (window.BANK_FINAL1_REVIEW.readyQuestionNos.length !== 28 || window.BANK_FINAL1_REVIEW.blockedQuestionNos.join(',') !== '18,20') fail('Final 1 release gate inventory mismatch');
+      if (window.BANK_FINAL1_REVIEW.sourceAnswerConnectedQuestionNos.length !== 30 || window.BANK_FINAL1_REVIEW.generatorPendingQuestionNos.join(',') !== '18,20') fail('Final 1 source-answer/generator states are not separated');
+      const byId = Object.fromEntries(ids.map((id) => [id, window.BANK_GENS.find((row) => row.id === id).gen(3, core.mulberry32(core.hashString(`${id}:method`)))]));
+      if (!/두 자리 수×두 자리 수라는 조건이 없/.test(byId['final1-q04'].solution)) fail('q04 missing no-two-digit-condition caution');
+      if (!/수직선에 꼭 그/.test(byId['final1-q07'].solution)) fail('q07 missing number-line instruction');
+      if (!/가로줄의 합 전체와 세로줄의 합 전체는 같/.test(byId['final1-q13'].solution)) fail('q13 missing row-column sum invariant');
+      if (!/자료실의 「도형의 개수」/.test(byId['final1-q22'].solution)) fail('q22 missing library follow-up');
+      if (!/연장선이 만나는 점은 피자 밖/.test(byId['final1-q17'].text)) fail('q17 missing outside-intersection clarification');
+      if (!/한 가지만 쓰세요/.test(byId['final1-q26'].text) || byId['final1-q26'].acceptedAnswers.length !== 2) fail('q26 any-one-of-two answer contract missing');
+      if (!/이름·요일·운동/.test(byId['final1-q23'].text) || byId['final1-q23'].answer.split(',').length !== 3) fail('q23 name-day-sport bundle missing');
       return { failures, stats };
     }, { ids: IDS, visualIds: [...VISUAL_IDS] });
 
@@ -225,7 +244,7 @@ function startServer() {
     assert.deepEqual(await page.locator('.qpage').evaluateAll((pages) => pages.map((item) => item.querySelectorAll('.qcard').length)), [6, 2], 'six questions per page');
     assert.equal(await page.locator('.answer-page').count(), 1, 'answer page isolated');
     assert.equal(await page.locator('.question-page + .answer-page').count(), 1, 'answer starts after all question pages');
-    assert.equal(await page.locator('.chip[data-role="type"][data-val^="final1-"]').count(), 26, 'Final 1 review type chips registered');
+    assert.equal(await page.locator('.chip[data-role="type"][data-val^="final1-"]').count(), 28, 'Final 1 review type chips registered');
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`http://127.0.0.1:${port}/bank/index.html?gen=final1-q11&n=4&seed=MOB1&review=1`, { waitUntil: 'networkidle' });
     const mobile = await page.evaluate(() => ({ viewport: innerWidth, documentWidth: document.documentElement.scrollWidth }));
@@ -245,7 +264,7 @@ function startServer() {
       await page.goto(`http://127.0.0.1:${port}/bank/index.html?gens=${IDS.join(',')}&n=20&seed=F1PV&review=1&points=all`, { waitUntil: 'networkidle' });
       await page.pdf({ path: PDF_PATH, format: 'A4', printBackground: true, preferCSSPageSize: true });
     }
-    console.log('PASS Final 1 source-linked review generators: 26 types x 5 levels x 1000 seeds = 130000 independently checked variants');
+    console.log('PASS Final 1 source-linked review generators: 28 types x 5 levels x 1000 seeds = 140000 independently checked variants');
     console.log(JSON.stringify(audit.stats));
   } finally {
     await browser.close();

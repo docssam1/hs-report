@@ -47,17 +47,17 @@ assert.deepEqual(
     confirmedItems: unified.summary.confirmedItems,
     candidateItems: unified.summary.candidateItems,
   },
-  { sourceQuestions: 840, rawDisplayTypes: 734, objectiveTypes: 741, canonicalTypes: 153, confirmedItems: 90, candidateItems: 750 },
+  { sourceQuestions: 840, rawDisplayTypes: 735, objectiveTypes: 742, canonicalTypes: 153, confirmedItems: 90, candidateItems: 750 },
   '전체 분류 현황 수치',
 );
 assert.equal(unified.summary.duplicateSourceKeys.length, 0, '출처 문항 키 중복 없음');
 const finalOneItems = unified.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round === 1);
 assert.equal(finalOneItems.length, 30, '파이널 1회 30문항');
-assert.equal(finalOneItems.filter((item) => item.generator?.status === 'source-linked-review').length, 26, '파이널 1회 실제 유사문제 생성기 26문항 연결');
+assert.equal(finalOneItems.filter((item) => item.generator?.status === 'source-linked-review').length, 28, '파이널 1회 실제 유사문제 생성기 28문항 연결');
 assert.ok(finalOneItems.filter((item) => item.generator).every((item) => item.generator.practiceReleaseReady === false && item.generator.sourceFaithfulReleaseReady === false), '파이널 1회 눈 검수 전 공개 잠금');
 assert.deepEqual(
   finalOneItems.filter((item) => item.generator).map((item) => item.sourceRef.no),
-  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 21, 22, 23, 24, 25, 27, 28, 29, 30],
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
   '독립 검산 가능한 파이널 1회 문항만 연결',
 );
 const targetItems = unified.items.filter((item) => ['applied', 'final', 'last', 'original'].includes(item.sourceRef.set));
@@ -128,4 +128,4 @@ assert.match(indexHtml, /genIds: state\.genIds/, '선택 유형 목록을 시험
 assert.match(indexHtml, /difficultyMode: state\.difficultyMode/, '난이도 조정을 시험지 생성기로 전달');
 assert.match(indexHtml, /difficultyMix: state\.difficultyMix/, '난이도 혼합 비율을 시험지 생성기로 전달');
 
-console.log('PASS bank catalog contract: 840 questions, 741 objective-table area/type pairs, five difficulty levels, rate-first/points-fallback');
+console.log('PASS bank catalog contract: 840 questions, 742 objective-table area/type pairs, five difficulty levels, rate-first/points-fallback');
