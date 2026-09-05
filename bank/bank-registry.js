@@ -25,17 +25,18 @@
       '마디수열·규칙찾기', '간격·자르기', '수 배열의 규칙',
       '규칙수열·도형분할', '조건에 맞는 수', '규칙수열·사각수',
       '수의 관계', '관찰과 분류', '규칙수열·도형배열',
-      '규칙수열·그림', '주기와 나머지'
+      '규칙수열·그림', '주기와 나머지', '숫자카드로 수 만들기',
+      '나눗셈의 몫과 나머지'
     ],
     '도형': [
       '시각적 변별', '연결과 영역', '선과 위치', '쌓기나무',
       '성냥개비 퍼즐', '공간지각', '도형의 구성·공유', '도형의 개수',
-      '도형의 길이', '도형 덮기'
+      '도형의 길이', '도형 덮기', '시계', '접기·자르기'
     ],
     '경우의 수': [
       '논리추리', '숫자카드로 수 만들기', '최단거리',
       '포함과 배제', '순서 추리', '자리 앉기', '수 만들기',
-      '경로 세기', '관계와 분류'
+      '경로 세기', '관계와 분류', '색칠하기'
     ],
     '식의 계산': [
       '합차와 배수', '나눗셈의 몫과 나머지', '거꾸로 생각하기',
@@ -332,6 +333,8 @@
   function sourceItemReviewGeneratorLink(generatorId, file, coverage, sourceRef, visualRequired) {
     var link = sourceLinkedReviewGeneratorLink(generatorId, file, coverage, [sourceRef]);
     link.gradeBand = '초등 선발 대비';
+    link.approvedModes = ['review', 'student-wrong-practice'];
+    link.studentWrongPracticeReady = true;
     if (visualRequired) {
       link.renderer = 'canvas-2d-png';
       link.assetKind = 'raster';
@@ -397,7 +400,7 @@
     [1, '합이 일정한 두 자리 수의 개수', false],
     [2, '색칠된 쌓기나무의 개수', true],
     [3, '시침과 분침이 겹치는 횟수', false],
-    [4, '두 수의 곱의 최대·최소', false],
+    [4, '범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값', false],
     [5, '규칙이 있는 도형의 둘레', true],
     [6, '고장난 시계', false],
     [7, '표를 활용한 거리 구하기', true],
@@ -411,7 +414,9 @@
     [15, '색칠하기 경우의 수', true],
     [16, '나머지의 성질', false],
     [17, '경계 안 영역의 최대·최소', false],
+    [18, '보기의 접기 방법을 두 번 반복한 뒤 자르기', true],
     [19, '하노이 탑', false],
+    [20, '여섯 면의 대각선을 따라 자른 정육면체 조각 수', true],
     [21, '도형이 나타내는 수', true],
     [22, '조건이 포함된 도형의 개수', true],
     [23, '논리추리', false],
@@ -737,6 +742,8 @@
             subarea: subarea,
             subareaId: subareaId,
             displayType: displayType,
+            detailType: displayType,
+            taxonomyPath: { major: area, minor: subarea, detail: displayType },
             objectiveTypeId: objectiveTypeId,
             objectiveTypeBasis: 'source item.type / 이원목적분류표 내용(단원)',
             typeFamilyId: familyId,

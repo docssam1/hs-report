@@ -186,7 +186,8 @@
     var pointBand = opts.pointBand || 'all';
     var difficultyMode = ['easy', 'standard', 'hard'].indexOf(opts.difficultyMode) >= 0 ? opts.difficultyMode : 'standard';
     var difficultyMix = DIFFICULTY_MIX_PRESETS[opts.difficultyMix] ? opts.difficultyMix : 'single';
-    var n = opts.n || 10;
+    var perGenerator = Math.max(0, Math.min(3, parseInt(opts.perGenerator, 10) || 0));
+    var n = perGenerator ? requestedGenIds.length * perGenerator : (opts.n || 10);
 
     var seedStr = normalizeSeedInput(opts.seedStr);
     var seedNum = decodeSeed(seedStr);
@@ -194,7 +195,9 @@
 
     var candidateGens;
     if (requestedGenIds.length) {
-      candidateGens = gens.filter(function (g) { return requestedGenIds.indexOf(g.id) >= 0; });
+      candidateGens = requestedGenIds.map(function (id) {
+        return gens.filter(function (g) { return g.id === id; })[0];
+      }).filter(Boolean);
     } else {
       candidateGens = gens.filter(function (g) {
         return genId === 'mix' ? g.reviewOnly !== true : g.id === genId;
@@ -212,16 +215,22 @@
     var usedPrompts = {};
     var usedAnswers = {};
     var generatorQueue = [];
+    if (perGenerator) {
+      candidateGens.forEach(function (generator) {
+        for (var copy = 0; copy < perGenerator; copy++) generatorQueue.push(generator);
+      });
+    }
     var guard = 0;
     var difficultyModes = difficultySchedule(n, difficultyMix, difficultyMode, masterRng);
     for (var i = 0; i < n; i++) {
       var questionDifficulty = difficultyModes[i] || difficultyMode;
-      var allowedLevels = pointLevels[questionDifficulty][pointBand] || pointLevels[questionDifficulty].all;
-      var qLevel = allowedLevels ? pick(masterRng, allowedLevels) :
-        (level === 'all' ? randint(masterRng, 1, 5) : parseInt(level, 10));
-      if (!generatorQueue.length) generatorQueue = shuffle(masterRng, candidateGens);
+      if (!generatorQueue.length && !perGenerator) generatorQueue = shuffle(masterRng, candidateGens);
       var gen = generatorQueue.shift();
       if (!gen) break;
+      var generatorPointBand = pointBand === 'all' && gen.sourceLinked && gen.pointBands ? gen.pointBands[1] : pointBand;
+      var allowedLevels = pointLevels[questionDifficulty][generatorPointBand] || pointLevels[questionDifficulty].all;
+      var qLevel = allowedLevels ? pick(masterRng, allowedLevels) :
+        (level === 'all' ? randint(masterRng, 1, 5) : parseInt(level, 10));
       var qRng = subRng(seedNum, i, gen.id);
       var q = null;
       var attempts = 0;
@@ -258,6 +267,11 @@
         q.genId = gen.id;
         q.genName = gen.name;
         q.area = gen.area;
+        q.subarea = gen.subarea || '';
+        q.detailType = gen.detailType || gen.name;
+        q.sourceSet = gen.sourceSet || '';
+        q.sourceRound = gen.sourceRound || null;
+        q.sourceNo = gen.sourceNo || null;
         if (!q.diagnosis && gen.typeId) {
           q.diagnosis = {
             typeId: gen.typeId,
@@ -276,6 +290,7 @@
       pointBand: pointBand,
       difficultyMode: difficultyMode,
       difficultyMix: difficultyMix,
+      perGenerator: perGenerator,
       genId: candidateGens.length === 1 ? candidateGens[0].id : 'mix',
       genIds: candidateGens.map(function (g) { return g.id; }),
       n: n,

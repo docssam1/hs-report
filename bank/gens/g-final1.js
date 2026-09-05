@@ -2,8 +2,7 @@
  * 파이널 1회 실제 원본 구조 기반 유사문제 검토 생성기.
  *
  * 원본 문항의 사고 순서와 조건 관계만 보존하고 원문 수치는 복사하지 않는다.
- * 모든 생성기는 교사용 검토 전용이며, 주 계산과 독립 열거 결과가 일치해야만
- * 문항을 반환한다.
+ * 모든 생성기는 주 계산과 독립 열거 결과가 일치해야만 문항을 반환한다.
  */
 (function (global) {
   'use strict';
@@ -79,6 +78,14 @@
 
   var SPECS = [];
   var HANOI_DISTANCE_CACHE = {};
+  var FINAL1_SUBAREAS = {
+    1:'조건에 맞는 수',2:'쌓기나무',3:'시계',4:'숫자카드로 수 만들기',5:'도형의 길이',
+    6:'달력·요일(시계)',7:'일·속력·시간',8:'우기기/가정하여 풀기',9:'규칙수열·도형배열',10:'수 배열의 규칙',
+    11:'식의 완성',12:'합차와 배수',13:'식의 완성',14:'우기기/가정하여 풀기',15:'색칠하기',
+    16:'주기와 나머지',17:'연결과 영역',18:'접기·자르기',19:'규칙수열·도형분할',20:'도형의 구성·공유',
+    21:'식의 완성',22:'도형의 개수',23:'순서 추리',24:'주기와 나머지',25:'나눗셈의 몫과 나머지',
+    26:'나이 계산',27:'일·속력·시간',28:'달력·요일(시계)',29:'숫자카드로 수 만들기',30:'수 배열의 규칙'
+  };
   function register(spec, gen) {
     spec.id = 'final1-q' + String(spec.no).padStart(2, '0');
     spec.points = spec.no <= 12 ? '2.7' : spec.no <= 22 ? '3.4' : '4.2';
@@ -88,9 +95,11 @@
     global.BANK_GENS = global.BANK_GENS || [];
     global.BANK_GENS.push({
       id: spec.id,
-      version: '1.1.0',
+      version: '1.2.0',
       name: SOURCE + ' ' + spec.no + '번 · ' + spec.name,
       area: spec.area,
+      subarea: spec.subarea || FINAL1_SUBAREAS[spec.no] || '',
+      detailType: spec.name,
       gradeBand: '초등 선발 대비',
       typeId: 'source-final-1-' + String(spec.no).padStart(2, '0'),
       sourceLinked: true,
@@ -98,7 +107,8 @@
       sourceRound: 1,
       sourceNo: spec.no,
       reviewOnly: true,
-      preferDistinctAnswers: true,
+      studentWrongPracticeReady: true,
+      preferDistinctAnswers: spec.preferDistinctAnswers !== false,
       sourceStructure: spec.sourceStructure,
       solutionSkill: spec.primaryMethod,
       readingFocus: spec.readingFocus || '',
@@ -163,7 +173,7 @@
 
   register({
     no: 4,
-    name: '두 수의 곱의 최대·최소',
+    name: '범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값',
     area: '수·규칙찾기',
     sourceStructure: '서로 다른 숫자 카드 네 장을 한 번씩 모두 써서 두 자연수를 만들고, 가능한 곱의 최댓값과 최솟값의 차를 묻는다.',
     errorTags: ['한 자리 수와 세 자리 수의 곱 누락', '숫자 카드 중복 사용', '최대·최소만 쓰고 차 누락'],
@@ -201,6 +211,30 @@
       '두 자리 수×두 자리 수라는 조건이 없으므로 한 자리 수×세 자리 수도 반드시 비교합니다. 카드를 1장과 3장, 2장과 2장, 3장과 1장으로 나누어 보면 가장 큰 곱은 ' + maxCase.left + '×' + maxCase.right + '=' + max + ', 가장 작은 곱은 ' + minCase.left + '×' + minCase.right + '=' + min + '이므로 차는 ' + (max - min) + '입니다.',
       { digits: digits, minimumProduct: min, maximumProduct: max, minimumPair: [minCase.left, minCase.right], maximumPair: [maxCase.left, maxCase.right] },
       { solutionSteps: ['카드를 두 수로 나누는 자리 수를 정합니다.', '각 경우에서 곱이 가장 큰 배치와 가장 작은 배치를 비교합니다.', '가장 큰 곱에서 가장 작은 곱을 뺍니다.'] });
+  });
+
+  register({
+    no: 18,
+    name: '보기의 접기 방법을 두 번 반복한 뒤 자르기',
+    area: '도형',
+    sourceStructure: '보기의 반 접기 방법을 두 번 반복해 접은 뒤 접힌 정사각형의 두 대각선을 따라 자르고 펼친 조각 수를 묻는다.',
+    errorTags: ['보기의 방법을 한 번만 적용', '두 번 접기를 개념 미숙으로 오인', '접은 뒤 자르는 순서 누락'],
+    primaryMethod: '보기의 접기 방법을 두 번 적용한 뒤 18개씩 두 묶음과 가운데 4개로 분류',
+    independentMethod: '펼친 조각을 양쪽 18개씩과 가운데 4개로 전수 표기',
+    readingFocus: '색종이 접기 개념이 아니라 보기의 같은 방법을 두 번 반복해 접는다는 지문 조건을 표시합니다.',
+    preferDistinctAnswers: false
+  }, function (level, rng, spec) {
+    var names=['승희','민서','지우','도윤','서진'];
+    var name=CORE.pick(rng,names), variant=CORE.randint(rng,0,5);
+    var outerLeft=Array.from({length:18},function(_,i){return '왼쪽-'+(i+1);});
+    var outerRight=Array.from({length:18},function(_,i){return '오른쪽-'+(i+1);});
+    var center=Array.from({length:4},function(_,i){return '가운데-'+(i+1);});
+    var independent=outerLeft.concat(outerRight,center).length;
+    return finalize(spec,18*2+4,independent,
+      name+'는 정사각형 색종이를 보기의 방법대로 한 번 접고, 같은 방법을 한 번 더 반복하여 접었습니다. 접힌 색종이를 그림의 굵은 두 선을 따라 자른 뒤 모두 펼치면 색종이 조각은 모두 몇 개입니까?',
+      '보기의 방법을 한 번만 하는 것이 아니라 같은 접기를 두 번 적용합니다. 펼친 뒤 바깥쪽 조각은 18개씩 두 묶음이고 가운데 조각은 4개이므로 18×2+4=40개입니다.',
+      {repeatCount:2,outerGroups:[outerLeft.length,outerRight.length],centerCount:center.length,enumeratedPieces:independent},
+      {asset:RASTER.drawFoldTwiceCut(variant),variantKey:name+'|fold-'+variant,visibleMethod:'두 번의 접기와 그 뒤의 X자 절단을 세 단계 그림으로 분리해 표시',solutionSteps:['보기의 첫 접기 방법을 확인합니다.','같은 방법을 한 번 더 반복해 접습니다.','굵은 두 선으로 자른 뒤 펼친 조각을 바깥쪽과 가운데로 나누어 셉니다.']});
   });
 
   register({
@@ -398,6 +432,27 @@
       '세 기둥 중 한 기둥에 크기가 다른 원반 ' + disks + '개가 큰 것부터 쌓여 있습니다. 한 번에 원반 하나만 옮기고 큰 원반을 작은 원반 위에 놓지 않을 때, 다른 기둥으로 모두 옮기는 최소 횟수를 구하세요.',
       '원반이 하나 늘 때마다 이전 최소 횟수를 두 번 사용하고 가장 큰 원반을 한 번 옮깁니다. 이 규칙을 ' + disks + '개까지 이어 가면 ' + moves + '번입니다.',
       { disks: disks, exploredStates: exploredStates });
+  });
+
+  register({
+    no: 20,
+    name: '여섯 면의 대각선을 따라 자른 정육면체 조각 수',
+    area: '도형',
+    sourceStructure: '정육면체의 한 면 대각선에서 마주 보는 면 대각선까지 자르고 여섯 면 모두에서 같은 절단을 한 뒤 조각 수를 묻는다.',
+    errorTags: ['보이는 세 면만 계산', '한 면에서 생기는 네 조각 누락', '여섯 면 전체 조건 누락'],
+    primaryMethod: '각 면에서 대응되는 네 조각씩 여섯 면으로 분류',
+    independentMethod: '면 번호 여섯 개와 면별 조각 번호 네 개의 순서쌍 전수 열거',
+    readingFocus: '그림에 보이는 세 면뿐 아니라 나머지 세 면도 같은 방식으로 잘라 모두 여섯 번 자릅니다.',
+    preferDistinctAnswers: false
+  }, function (level, rng, spec) {
+    var names=['강민','현우','유진','서윤','준호'];
+    var name=CORE.pick(rng,names), variant=CORE.randint(rng,0,5), pieces=[];
+    for(var face=1;face<=6;face++) for(var part=1;part<=4;part++) pieces.push(face+'-'+part);
+    return finalize(spec,6*4,pieces.length,
+      name+'이는 정육면체 모양의 치즈를 한 면의 대각선에서 마주 보는 면의 대각선까지 자릅니다. 나머지 모든 면에서도 같은 방식으로 잘라 모두 여섯 번의 칼질을 마쳤을 때, 치즈는 모두 몇 조각이 됩니까?',
+      '한 면의 대각선 방향으로 자르면 면을 기준으로 4개의 조각이 대응됩니다. 같은 절단을 여섯 면에 모두 적용하므로 4×6=24조각입니다.',
+      {faceCount:6,piecesPerFace:4,enumeratedPieces:pieces},
+      {asset:RASTER.drawCubeFaceDiagonalCuts(variant),variantKey:name+'|cube-'+variant,visibleMethod:'보이는 세 면의 대각선을 끝점까지 연결하고 반대쪽 세 면도 같은 방식임을 글로 표시',solutionSteps:['한 면에서 대응되는 조각 수 4개를 확인합니다.','보이는 면만이 아니라 여섯 면 모두임을 표시합니다.','4×6으로 전체 조각 수를 구합니다.']});
   });
 
   register({
@@ -987,22 +1042,19 @@
   });
 
   global.BANK_FINAL1_REVIEW = {
-    version: '1.1.0',
+    version: '1.2.0',
     source: SOURCE,
     learnerFit: LEARNER_FIT,
     readyQuestionNos: SPECS.map(function (spec) { return spec.no; }).sort(function (a, b) { return a - b; }),
-    blockedQuestionNos: [18, 20],
-    blockedReasons: {
-      18: '색종이 자체가 아니라 접고 자르는 과정을 두 번 반복하는 구조의 정확한 펼침 모델 및 조각 연결성 검수 필요',
-      20: '정육면체 여섯 면 대각선 절단의 공간 분할 모델과 원본 그림 대조 필요'
-    },
+    blockedQuestionNos: [],
+    blockedReasons: {},
     sourceReadingFocus: {
       17: '직선의 교점이 세는 판 밖에 놓일 수 있음',
-      18: '접고 자르는 과정을 두 번 반복함',
+      18: '색종이 접기 개념이 아니라 보기의 접기 방법을 두 번 반복해 접는 조건을 읽음',
       22: '틀렸다면 자료실의 도형의 개수 학습을 확인함',
       26: '가능한 두 답 가운데 한 가지만 쓰면 됨'
     },
     sourceAnswerConnectedQuestionNos: Array.from({ length: 30 }, function (_, index) { return index + 1; }),
-    generatorPendingQuestionNos: [18, 20]
+    generatorPendingQuestionNos: []
   };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -214,19 +214,24 @@
   function renderResults(unified,originalCatalog){
     var items=selectedItems(unified);
     var groups=developmentFilter(aggregate(items,originalCatalog));
-    groups.sort(function(a,b){return AREA_ORDER.indexOf(a.area)-AREA_ORDER.indexOf(b.area)||a.displayType.localeCompare(b.displayType,'ko')});
+    groups.sort(function(a,b){return AREA_ORDER.indexOf(a.area)-AREA_ORDER.indexOf(b.area)||a.subarea.localeCompare(b.subarea,'ko')||a.displayType.localeCompare(b.displayType,'ko')});
     var areas={};
     groups.forEach(function(group){
-      if(!areas[group.area])areas[group.area]=[];
-      areas[group.area].push(group);
+      if(!areas[group.area])areas[group.area]={};
+      if(!areas[group.area][group.subarea])areas[group.area][group.subarea]=[];
+      areas[group.area][group.subarea].push(group);
     });
     var html='';
     AREA_ORDER.concat(Object.keys(areas).filter(function(area){return AREA_ORDER.indexOf(area)<0})).forEach(function(area){
       if(!areas[area])return;
-      var areaGroups=areas[area];
+      var subareas=areas[area];
+      var areaGroups=Object.keys(subareas).reduce(function(all,key){return all.concat(subareas[key])},[]);
       var areaQuestions=areaGroups.reduce(function(sum,group){return sum+group.itemCount},0);
       html+='<section class="area-section" data-area="'+esc(area)+'"><header class="area-head"><h2>'+esc(area)+'</h2><span>'+areaGroups.length+'유형 · '+areaQuestions+'문항</span></header>';
-      html+='<div class="type-grid area-grid">'+areaGroups.map(typeCardHtml).join('')+'</div>';
+      Object.keys(subareas).sort(function(a,b){return a.localeCompare(b,'ko')}).forEach(function(subarea){
+        var list=subareas[subarea],subQuestions=list.reduce(function(sum,group){return sum+group.itemCount},0);
+        html+='<section class="subarea" data-subarea="'+esc(subarea)+'"><div class="subarea-head"><h3>'+esc(subarea)+'</h3><span class="subarea-count">'+list.length+' 세부유형 · '+subQuestions+'문항</span></div><div class="type-grid">'+list.map(typeCardHtml).join('')+'</div></section>';
+      });
       html+='</section>';
     });
     if(!html)html='<div class="empty">관련 유형을 찾지 못했습니다. 지문의 핵심 낱말이나 유형명을 조금 짧게 입력해 보세요.</div>';

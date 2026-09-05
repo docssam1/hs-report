@@ -137,6 +137,21 @@ td.weak-cell{white-space:nowrap}
 .repwk{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 15px;margin-bottom:8px;font-size:13px;color:var(--ink2)}
 .repwk b{color:var(--orange-d)}
 
+/* ===== 학생별 오답 유사문제 ===== */
+.wrong-practice{background:linear-gradient(145deg,#fff7ed,#fff);border:1.5px solid #fdba74;border-radius:16px;padding:20px;margin-top:14px}
+.wp-filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.wp-chip{border:1.5px solid #fdba74;background:#fff;color:#9a3412;border-radius:999px;padding:8px 14px;font:800 12.5px 'Noto Sans KR';cursor:pointer}
+.wp-chip.on{background:var(--orange-d);border-color:var(--orange-d);color:#fff}
+.wp-summary{font-size:13px;color:var(--ink2);font-weight:700;margin:8px 0 12px}
+.wp-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:14px}
+.wp-item{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-size:12px;line-height:1.55}
+.wp-item b{display:block;color:var(--navy);font-size:13px}.wp-item span{color:var(--dim)}
+.wp-start{width:100%;border:0;border-radius:12px;padding:14px;background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;font-family:'Jua';font-size:17px;cursor:pointer}
+.wp-start:disabled{background:#cbd5e1;cursor:not-allowed}
+.wp-pending{font-size:11.5px;color:#92400e;background:#fffbeb;border-radius:9px;padding:9px 11px;margin-top:10px}
+@media(max-width:600px){.wp-list{grid-template-columns:1fr}.wp-chip{flex:1;min-width:calc(50% - 8px)}}
+@media print{.wrong-practice{display:none!important}}
+
 /* ===== attempt-progress (per-round retake view; personal, not part of ranking) ===== */
 .attempt-progress{margin-top:26px;padding-top:20px;border-top:1px dashed var(--line)}
 .attempt-progress .ap-note{font-size:12px;color:var(--dim);margin:6px 0 14px;padding-left:14px}
@@ -721,14 +736,60 @@ td.weak-cell{white-space:nowrap}
       var tag = ok? '<span class="t-ok">정답</span>' : (ctx.populationVerified?(ctx.miss.indexOf(n)>=0?'<span class="t-miss">충분히 맞힐 수 있었음</span>':'<span class="t-hard">다수가 오답</span>'):'<span class="t-hard">개인 오답</span>');
       var rateHtml=ctx.populationVerified?barHTML(r,r>=ctx.pct?'g':''):'<span class="dim">검증 대기</span>';
       var popCells=ctx.populationVerified?('<td class="rt">'+rateHtml+'</td><td class="c">'+tag+'</td>'):'';
-      var row1='<tr class="'+cl+'"><td class="c">'+n+'</td><td class="c">'+(ok?'○':'✕')+'</td><td class="ty"><b>'+esc(it.type)+'</b><i>'+esc(it.area)+'</i></td><td class="c">'+p+'</td><td class="c mono">'+esc(it.answer)+'</td>'+popCells+'<td class="c"><a href="'+esc(ctx.R.video)+'?t='+it.t+'" target="_blank" rel="noopener">▶</a></td><td class="c weak-cell no-print">'+weakBtnHTML(it.type, it.area, it.no)+'</td></tr>';
+      var tx=taxonomyOf(ctx.roundNum,it);
+      var row1='<tr class="'+cl+'"><td class="c">'+n+'</td><td class="c">'+(ok?'○':'✕')+'</td><td class="ty"><b>'+esc(tx.detailType||tx.displayType||it.type)+'</b><i>'+esc(tx.area||it.area)+' › '+esc(tx.subarea||it.subarea||'분류 확인 중')+'</i></td><td class="c">'+p+'</td><td class="c mono">'+esc(it.answer)+'</td>'+popCells+'<td class="c"><a href="'+esc(ctx.R.video)+'?t='+it.t+'" target="_blank" rel="noopener">▶</a></td><td class="c weak-cell no-print">'+weakBtnHTML(it.type, it.area, it.no)+'</td></tr>';
       var row2='<tr class="cau '+cl+'"><td></td><td class="c"><span class="tg tg-'+GRP[it.tag]+'">'+esc(it.tag)+'</span></td><td colspan="'+(ctx.populationVerified?7:5)+'">'+esc(it.caution)+'</td></tr>';
       return row1+row2;
     }).join('');
   }
   function detailTableHTML(ctx){
     var popHead=ctx.populationVerified?'<th>전체 정답률</th><th>판정</th>':'';
-    return '<table><tr><th>번호</th><th>정오</th><th>유형 / 영역</th><th>배점</th><th>정답</th>'+popHead+'<th>영상</th><th class="weak-cell no-print">약점 표시</th></tr>'+detailRowsHTML(ctx)+'</table>';
+    return '<table><tr><th>번호</th><th>정오</th><th>세부유형 / 대영역 › 소영역</th><th>배점</th><th>정답</th>'+popHead+'<th>영상</th><th class="weak-cell no-print">약점 표시</th></tr>'+detailRowsHTML(ctx)+'</table>';
+  }
+
+  function wrongPracticeModel(ctx){
+    var registry=window.BANK_TYPE_REGISTRY;
+    var ready=[],pending=[];
+    ctx.wrongList.forEach(function(item){
+      var tx=taxonomyOf(ctx.roundNum,item);
+      var sourceKey=[TAX_SET_KEY,Number(ctx.roundNum),Number(item.no)].join('|');
+      var generator=registry&&typeof registry.sourceItemGenerator==='function'?registry.sourceItemGenerator(sourceKey):null;
+      var row={item:item,tx:tx,points:String(BP(item.no).pts),generator:generator};
+      if(generator&&generator.studentWrongPracticeReady===true) ready.push(row); else pending.push(row);
+    });
+    return {ready:ready,pending:pending};
+  }
+  function wrongPracticeHTML(ctx){
+    if(!ctx.wrongList.length) return '<section class="no-print"><h2>틀린 문제 유사문제 학습</h2><div class="wrong-practice">이번 회차는 오답이 없어 별도의 유사문제가 필요하지 않습니다.</div></section>';
+    var model=wrongPracticeModel(ctx);
+    var items=model.ready.map(function(row){
+      return '<article class="wp-item" data-wp-points="'+esc(row.points)+'" data-wp-gen="'+esc(row.generator.generatorId)+'" data-wp-no="'+row.item.no+'"><b>'+row.item.no+'번 · '+esc(row.tx.detailType||row.tx.displayType||row.item.type)+'</b><span>'+esc(row.tx.area||row.item.area)+' › '+esc(row.tx.subarea||row.item.subarea||'분류 확인 중')+' · '+esc(row.points)+'점</span></article>';
+    }).join('');
+    var pending=model.pending.length?'<div class="wp-pending">아직 유사문제 그림 검수가 끝나지 않은 문항: '+model.pending.map(function(row){return row.item.no+'번';}).join(', ')+'</div>':'';
+    return '<section class="no-print"><h2>틀린 문제 유사문제 학습</h2><div class="lead">현재 회차에서 실제로 틀린 문항만 가져옵니다. 배점대를 고르면 각 오답의 같은 세부유형에서 3문제씩 만듭니다.</div><div class="wrong-practice" id="wrongPractice" data-set="'+esc(TAX_SET_KEY)+'" data-round="'+ctx.roundNum+'">'+
+      '<div class="wp-filters" role="group" aria-label="오답 배점대 선택"><button type="button" class="wp-chip on" data-wp-filter="all">전체문제</button><button type="button" class="wp-chip" data-wp-filter="2.7">2점대</button><button type="button" class="wp-chip" data-wp-filter="3.4">3점대</button><button type="button" class="wp-chip" data-wp-filter="4.2">4점대</button></div>'+
+      '<div class="wp-summary" id="wpSummary"></div><div class="wp-list" id="wpList">'+items+'</div>'+pending+'<button type="button" class="wp-start" id="wpStart">선택한 오답 유사문제 시작</button></div></section>';
+  }
+  function wireWrongPractice(ctx){
+    var root=document.getElementById('wrongPractice'); if(!root)return;
+    var selected='all',chips=Array.prototype.slice.call(root.querySelectorAll('.wp-chip'));
+    function rows(){return Array.prototype.slice.call(root.querySelectorAll('.wp-item')).filter(function(row){return selected==='all'||row.getAttribute('data-wp-points')===selected;});}
+    function paint(){
+      chips.forEach(function(chip){chip.classList.toggle('on',chip.getAttribute('data-wp-filter')===selected);});
+      Array.prototype.slice.call(root.querySelectorAll('.wp-item')).forEach(function(row){row.hidden=selected!=='all'&&row.getAttribute('data-wp-points')!==selected;});
+      var active=rows(),count=active.length*3,label=selected==='all'?'전체문제':selected.charAt(0)+'점대';
+      document.getElementById('wpSummary').textContent=label+' · 오답 '+active.length+'개 유형 · 유사문제 '+count+'문제 (유형마다 3문제)';
+      var start=document.getElementById('wpStart'); start.disabled=!active.length; start.textContent=active.length?'유사문제 '+count+'문제 시작':'선택한 배점대의 오답이 없습니다';
+    }
+    chips.forEach(function(chip){chip.onclick=function(){selected=chip.getAttribute('data-wp-filter');paint();};});
+    document.getElementById('wpStart').onclick=function(){
+      var active=rows(); if(!active.length)return;
+      var ids=active.map(function(row){return row.getAttribute('data-wp-gen');});
+      var nos=active.map(function(row){return row.getAttribute('data-wp-no');});
+      var query=new URLSearchParams({practice:'wrong',gens:ids.join(','),per:'3',points:selected,source:TAX_SET_KEY+'|'+ctx.roundNum,sourceNos:nos.join(','),seed:''});
+      window.open('bank/index.html?'+query.toString(),'_blank','noopener');
+    };
+    paint();
   }
   function canonicalSubareaHTML(ctx){
     var rows=ctx.SA.map(function(x){
@@ -736,7 +797,9 @@ td.weak-cell{white-space:nowrap}
       var wrong=x.wrongNos.length?x.wrongNos.map(function(n){return n+'번';}).join(', '):'-';
       return '<tr><td><b>'+esc(x.k)+'</b></td><td class="c">'+x.n+'</td><td class="c">'+x.cor+'</td><td>'+barHTML(x.perf)+'</td><td>'+wrong+'</td><td class="c">'+status+'</td></tr>';
     }).join('');
-    return '<h2 style="margin-top:30px">소영역 분류·진단</h2><div class="lead">확정 분류에서 두 문항 이상 근거가 있을 때만 약점으로 판정합니다. 자동 후보는 수행률을 참고용으로만 보여 주고 <b>분류 검토 중</b>으로 표시합니다.</div><table><tr><th>소영역</th><th>출제</th><th>정답</th><th>수행률</th><th>오답 번호</th><th>판정</th></tr>'+rows+'</table>';
+    var hasReview=ctx.SA.some(function(x){return x.reviewRequired;});
+    var lead=hasReview?'확정 분류에서 두 문항 이상 근거가 있을 때만 약점으로 판정합니다. 자동 후보는 수행률을 참고용으로만 보여 주고 <b>분류 검토 중</b>으로 표시합니다.':'대영역·소영역·세부유형이 확정된 문항만 묶었습니다. 한 문항만 출제된 소영역은 약점으로 단정하지 않고 <b>확인 필요</b>로 표시합니다.';
+    return '<h2 style="margin-top:30px">소영역 분류·진단</h2><div class="lead">'+lead+'</div><table><tr><th>소영역</th><th>출제</th><th>정답</th><th>수행률</th><th>오답 번호</th><th>판정</th></tr>'+rows+'</table>';
   }
   function roundTeacherCommentHTML(ctx){
     var html='';
@@ -1773,6 +1836,7 @@ td.weak-cell{white-space:nowrap}
         '<div class="lead">'+detailLead+'</div>'+
         '<div id="detailWrap">'+detailTableHTML(ctx)+'</div>'+
       '</section>'+
+      wrongPracticeHTML(ctx)+
       '<section>'+
         '<h2>누적 성적</h2>'+
         '<div class="lead">'+cumulativeLead+'</div>'+
@@ -1789,6 +1853,7 @@ td.weak-cell{white-space:nowrap}
     showPrint(true);
     printBtn.onclick = function(){ window.print(); };
     wireWeakToggles(ctx);
+    wireWrongPractice(ctx);
   }
 
   /* ===================== boot ===================== */

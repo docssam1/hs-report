@@ -24,7 +24,7 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.equal(await page.locator('.stat').count(), 0, '개발 현황 통계 카드 제거');
     assert.equal(await page.locator('#candidate-notice-title').count(), 0, '검토 현황 안내 제거');
     assert.equal(await page.locator('.area-section').count(), 4, '대영역 4개');
-    assert.equal(await page.locator('.subarea').count(), 0, '이원목적표에 없는 추정 소영역은 표시하지 않음');
+    assert.ok(await page.locator('.subarea').count() > 0, '대영역 아래 소영역과 세부유형을 계층으로 표시');
     assert.equal(await page.locator('#result-status[role="status"][aria-live="polite"]').count(), 1, '필터 결과 라이브 상태');
 
     await page.selectOption('#source-filter', 'final');
@@ -33,17 +33,19 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
     assert.match(await page.locator('#paper-context').textContent(), /점수대 우선 판단/, '회차 점수대를 1차 판단으로 표시');
     assert.match(await page.locator('#paper-context').textContent(), /평균 .*점/, '회차 평균 표시');
     assert.match(await page.locator('#paper-context').textContent(), /경시/, '회차별 실제 점수 구간 표시');
-    assert.equal(await page.getByRole('link', { name: '이 유형 유사문제 검토하기' }).count(), 28, '파이널 1회 검산 완료 28유형만 연결');
-    const finalCube = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '색칠된 쌓기나무의 개수', exact: true }) });
+    assert.equal(await page.getByRole('link', { name: '이 유형 유사문제 검토하기' }).count(), 30, '파이널 1회 검산 완료 30유형 연결');
+    const unrestrictedProduct = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값', exact: true }) });
+    assert.equal(await unrestrictedProduct.count(), 1, '4번 세부유형은 범위가 없는 곱 조건까지 표시');
+    const finalCube = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '바닥을 제외해 색칠한 쌓기나무의 개수', exact: true }) });
     assert.match(await finalCube.getByRole('link', { name: '이 유형 유사문제 검토하기' }).getAttribute('href'), /level=5/, '파이널 1회 정답률 5%는 최상 난이도 생성 레벨로 연결');
-    const finalRegions = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '영역의 개수', exact: true }) });
+    const finalRegions = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '평행하지 않은 직선의 경계 안 최대·최소 영역 수', exact: true }) });
     assert.match(await finalRegions.getByRole('link', { name: '이 유형 유사문제 검토하기' }).getAttribute('href'), /gen=final1-q17/, '17번은 범위 밖 교점 조건을 명시한 유사문제로 연결');
     assert.equal(
       await page.locator('.badge.difficulty').count(),
       await page.locator('.type-card').count(),
       '각 이원목적표 유형 카드에 난이도 한 개 표시',
     );
-    const paperFold = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '접기·자르기 과정의 반복', exact: true }) });
+    const paperFold = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '보기의 접기 방법을 두 번 반복한 뒤 자르기', exact: true }) });
     assert.match(await paperFold.textContent(), /난이도 최상/, '정답률 2.5% 유형은 최상');
     assert.match(await paperFold.textContent(), /기준 정답률 2.5%/, '실제 정답률 근거 표시');
 

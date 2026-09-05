@@ -10,9 +10,9 @@ const ROOT = path.resolve(__dirname, '..');
 const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
 const SCREENSHOT_DIR = process.env.GFIELD_QA_FINAL1_SCREENSHOT_DIR || '';
 const PDF_PATH = process.env.GFIELD_QA_FINAL1_PDF_PATH || '';
-const IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+const IDS = Array.from({ length: 30 }, (_, index) => index + 1)
   .map((no) => `final1-q${String(no).padStart(2, '0')}`);
-const VISUAL_IDS = new Set([2, 5, 7, 9, 10, 11, 13, 15, 21, 22, 29, 30].map((no) => `final1-q${String(no).padStart(2, '0')}`));
+const VISUAL_IDS = new Set([2, 5, 7, 9, 10, 11, 13, 15, 18, 20, 21, 22, 29, 30].map((no) => `final1-q${String(no).padStart(2, '0')}`));
 
 function startServer() {
   const server = http.createServer((req, res) => {
@@ -59,7 +59,7 @@ function startServer() {
         }
       });
       const fastAsset = () => ({ kind: 'raster', mimeType: 'image/png', src: 'data:image/png;base64,AA==', width: 2, height: 2, displayWidth: 1, displayHeight: 1, description: 'bulk math audit placeholder' });
-      ['drawIsoStackWithHeightMap', 'drawTriangleChain', 'drawDistanceTable', 'drawRingPattern', 'drawNumberPyramid', 'drawMagicStar', 'drawSumGrid', 'drawCubeColumn', 'drawShapeValueGrid', 'drawMarkedRectGrid', 'drawDigitCards', 'drawCircleRule']
+      ['drawIsoStackWithHeightMap', 'drawTriangleChain', 'drawDistanceTable', 'drawRingPattern', 'drawNumberPyramid', 'drawMagicStar', 'drawSumGrid', 'drawCubeColumn', 'drawShapeValueGrid', 'drawMarkedRectGrid', 'drawDigitCards', 'drawCircleRule', 'drawFoldTwiceCut', 'drawCubeFaceDiagonalCuts']
         .forEach((name) => { window.BANK_RASTER[name] = fastAsset; });
 
       function externalAnswer(id, q) {
@@ -131,7 +131,9 @@ function startServer() {
         }
         if (id === 'final1-q16') return (m.remainders[0] + m.remainders[1]) % m.divisor;
         if (id === 'final1-q17') return (1 + m.lineCount * (m.lineCount + 1) / 2) + (m.lineCount + 1);
+        if (id === 'final1-q18') return m.outerGroups.reduce((sum, value) => sum + value, 0) + m.centerCount;
         if (id === 'final1-q19') return Math.pow(2, m.disks) - 1;
+        if (id === 'final1-q20') return m.enumeratedPieces.length;
         if (id === 'final1-q21') {
           const row = m.grid[3].reduce((sum, symbol) => sum + m.solvedValues[symbol], 0);
           const col = m.grid.reduce((sum, gridRow) => sum + m.solvedValues[gridRow[3]], 0);
@@ -224,14 +226,16 @@ function startServer() {
       });
       const mixed = core.buildPaper({ genId: 'mix', n: 100, seedStr: 'FMIX' });
       if (mixed.questions.some((question) => ids.includes(question.genId))) fail('Final 1 review generator leaked into normal mix');
-      if (window.BANK_FINAL1_REVIEW.readyQuestionNos.length !== 28 || window.BANK_FINAL1_REVIEW.blockedQuestionNos.join(',') !== '18,20') fail('Final 1 release gate inventory mismatch');
-      if (window.BANK_FINAL1_REVIEW.sourceAnswerConnectedQuestionNos.length !== 30 || window.BANK_FINAL1_REVIEW.generatorPendingQuestionNos.join(',') !== '18,20') fail('Final 1 source-answer/generator states are not separated');
+      if (window.BANK_FINAL1_REVIEW.readyQuestionNos.length !== 30 || window.BANK_FINAL1_REVIEW.blockedQuestionNos.length) fail('Final 1 release gate inventory mismatch');
+      if (window.BANK_FINAL1_REVIEW.sourceAnswerConnectedQuestionNos.length !== 30 || window.BANK_FINAL1_REVIEW.generatorPendingQuestionNos.length) fail('Final 1 source-answer/generator states are not separated');
       const byId = Object.fromEntries(ids.map((id) => [id, window.BANK_GENS.find((row) => row.id === id).gen(3, core.mulberry32(core.hashString(`${id}:method`)))]));
       if (!/두 자리 수×두 자리 수라는 조건이 없/.test(byId['final1-q04'].solution)) fail('q04 missing no-two-digit-condition caution');
       if (!/수직선에 꼭 그/.test(byId['final1-q07'].solution)) fail('q07 missing number-line instruction');
       if (!/가로줄의 합 전체와 세로줄의 합 전체는 같/.test(byId['final1-q13'].solution)) fail('q13 missing row-column sum invariant');
       if (!/자료실의 「도형의 개수」/.test(byId['final1-q22'].solution)) fail('q22 missing library follow-up');
       if (!/연장선이 만나는 점은 피자 밖/.test(byId['final1-q17'].text)) fail('q17 missing outside-intersection clarification');
+      if (!/같은 방법을 한 번 더 반복/.test(byId['final1-q18'].text) || !/색종이 접기 개념이 아니라/.test(byId['final1-q18'].readingFocus)) fail('q18 missing repeated-example-reading focus');
+      if (!/여섯 번의 칼질/.test(byId['final1-q20'].text) || !/나머지 세 면/.test(byId['final1-q20'].readingFocus)) fail('q20 missing all-six-faces condition');
       if (!/한 가지만 쓰세요/.test(byId['final1-q26'].text) || byId['final1-q26'].acceptedAnswers.length !== 2) fail('q26 any-one-of-two answer contract missing');
       if (!/이름·요일·운동/.test(byId['final1-q23'].text) || byId['final1-q23'].answer.split(',').length !== 3) fail('q23 name-day-sport bundle missing');
       return { failures, stats };
@@ -244,7 +248,7 @@ function startServer() {
     assert.deepEqual(await page.locator('.qpage').evaluateAll((pages) => pages.map((item) => item.querySelectorAll('.qcard').length)), [6, 2], 'six questions per page');
     assert.equal(await page.locator('.answer-page').count(), 1, 'answer page isolated');
     assert.equal(await page.locator('.question-page + .answer-page').count(), 1, 'answer starts after all question pages');
-    assert.equal(await page.locator('.chip[data-role="type"][data-val^="final1-"]').count(), 28, 'Final 1 review type chips registered');
+    assert.equal(await page.locator('.chip[data-role="type"][data-val^="final1-"]').count(), 30, 'Final 1 review type chips registered');
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`http://127.0.0.1:${port}/bank/index.html?gen=final1-q11&n=4&seed=MOB1&review=1`, { waitUntil: 'networkidle' });
     const mobile = await page.evaluate(() => ({ viewport: innerWidth, documentWidth: document.documentElement.scrollWidth }));
@@ -264,7 +268,7 @@ function startServer() {
       await page.goto(`http://127.0.0.1:${port}/bank/index.html?gens=${IDS.join(',')}&n=20&seed=F1PV&review=1&points=all`, { waitUntil: 'networkidle' });
       await page.pdf({ path: PDF_PATH, format: 'A4', printBackground: true, preferCSSPageSize: true });
     }
-    console.log('PASS Final 1 source-linked review generators: 28 types x 5 levels x 1000 seeds = 140000 independently checked variants');
+    console.log('PASS Final 1 source-linked review generators: 30 types x 5 levels x 1000 seeds = 150000 independently checked variants');
     console.log(JSON.stringify(audit.stats));
   } finally {
     await browser.close();

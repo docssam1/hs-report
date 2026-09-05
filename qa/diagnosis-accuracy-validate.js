@@ -338,10 +338,13 @@ check('원본형 확정 소영역과 자동 후보를 약점 판정에서 분리
     final: clone(finalModel),
   });
   const originalItems = catalog.items.filter((item) => item.sourceRef.set === 'original');
-  const candidateItems = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round <= 4);
+  const confirmedFinal1Items = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round === 1);
+  const candidateItems = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round >= 2 && item.sourceRef.round <= 4);
   const confirmedFinal5Items = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round === 5);
   assert.equal(originalItems.length, 60);
   assert.ok(originalItems.every((item) => item.reviewStatus === 'confirmed' && !item.reviewRequired));
+  assert.equal(confirmedFinal1Items.length, 30);
+  assert.ok(confirmedFinal1Items.every((item) => item.reviewStatus === 'confirmed' && !item.reviewRequired));
   assert.ok(candidateItems.length > 0);
   assert.ok(candidateItems.every((item) => item.reviewStatus === 'candidate' && item.reviewRequired));
   assert.equal(confirmedFinal5Items.length, 30);
@@ -354,13 +357,12 @@ check('원본형 확정 소영역과 자동 후보를 약점 판정에서 분리
   assert.ok(confirmed.every((row) => row.reviewRequired === false));
 
   const finalCore = loadFinalCore().core;
-  const candidates = finalCore.subareaAgg(finalModel.rounds['1'].items, ox, 1);
-  assert.ok(candidates.every((row) => row.reviewRequired === true));
-  const candidateContext = finalCore.buildContext('분류학생', 1, ox);
-  const table = finalCore.canonicalSubareaHTML(candidateContext);
-  assert.match(table, /자동 후보는 수행률을 참고용으로만/);
-  assert.match(table, /분류 검토 중/);
-  assert.match(finalCore.buildComment(candidateContext, {}), /검수 전이라 약점 판정에 사용하지 않았습니다/);
+  const finalOneSubareas = finalCore.subareaAgg(finalModel.rounds['1'].items, ox, 1);
+  assert.ok(finalOneSubareas.every((row) => row.reviewRequired === false));
+  const finalOneContext = finalCore.buildContext('분류학생', 1, ox);
+  const table = finalCore.canonicalSubareaHTML(finalOneContext);
+  assert.match(table, /대영역·소영역·세부유형이 확정된 문항만/);
+  assert.doesNotMatch(table, /분류 검토 중/);
 });
 
 check('fixed item tag는 학생의 실제 오답 원인으로 단정하지 않음', () => {

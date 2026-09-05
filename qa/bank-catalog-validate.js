@@ -47,18 +47,21 @@ assert.deepEqual(
     confirmedItems: unified.summary.confirmedItems,
     candidateItems: unified.summary.candidateItems,
   },
-  { sourceQuestions: 840, rawDisplayTypes: 735, objectiveTypes: 742, canonicalTypes: 153, confirmedItems: 90, candidateItems: 750 },
+  { sourceQuestions: 840, rawDisplayTypes: 742, objectiveTypes: 748, canonicalTypes: 183, confirmedItems: 120, candidateItems: 720 },
   '전체 분류 현황 수치',
 );
 assert.equal(unified.summary.duplicateSourceKeys.length, 0, '출처 문항 키 중복 없음');
 const finalOneItems = unified.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round === 1);
 assert.equal(finalOneItems.length, 30, '파이널 1회 30문항');
-assert.equal(finalOneItems.filter((item) => item.generator?.status === 'source-linked-review').length, 28, '파이널 1회 실제 유사문제 생성기 28문항 연결');
+assert.equal(finalOneItems.filter((item) => item.generator?.status === 'source-linked-review').length, 30, '파이널 1회 실제 유사문제 생성기 30문항 연결');
+assert.ok(finalOneItems.every((item) => item.taxonomyPath?.major && item.taxonomyPath?.minor && item.taxonomyPath?.detail), '파이널 1회 대영역·소영역·세부유형 연결');
+assert.equal(finalOneItems.find((item) => item.sourceRef.no === 4).detailType, '범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값', '4번을 두 자리×두 자리 제한형과 분리');
+assert.equal(finalOneItems.find((item) => item.sourceRef.no === 18).detailType, '보기의 접기 방법을 두 번 반복한 뒤 자르기', '18번은 보기 반복 읽기 세부유형');
 assert.ok(finalOneItems.filter((item) => item.generator).every((item) => item.generator.practiceReleaseReady === false && item.generator.sourceFaithfulReleaseReady === false), '파이널 1회 눈 검수 전 공개 잠금');
 assert.deepEqual(
   finalOneItems.filter((item) => item.generator).map((item) => item.sourceRef.no),
-  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
-  '독립 검산 가능한 파이널 1회 문항만 연결',
+  Array.from({ length: 30 }, (_, index) => index + 1),
+  '독립 검산 가능한 파이널 1회 30문항 연결',
 );
 const targetItems = unified.items.filter((item) => ['applied', 'final', 'last', 'original'].includes(item.sourceRef.set));
 assert.equal(targetItems.length, 600, '문제은행 기본 범위는 활용~시그니처 실전 600문항');
@@ -104,7 +107,8 @@ assert.match(catalogHtml, /data-area="수·규칙찾기"/, '영역별 전체 유
 assert.match(catalogHtml, /시험지 난이도 기준/, '선택 회차 점수대 영역');
 assert.match(catalogHtml, /최상·상·중간·하·최하/, '문제은행 5단계 난이도 안내');
 assert.match(catalogJs, /item\.objectiveTypeId/, '이원목적표의 세부유형 식별자로 묶음');
-assert.match(catalogJs, /class="type-grid area-grid"/, '표에 없는 추정 소영역 없이 영역 아래 유형을 바로 표시');
+assert.match(catalogJs, /class="subarea"/, '대영역 아래 소영역을 나누고 세부유형 카드를 표시');
+assert.match(catalogJs, /세부유형/, '세 단계 유형 구조를 화면에 표시');
 assert.match(catalogJs, /R\.bankDifficulty\(group\.benchmarkRate,null\)/, '실제 정답률 우선 난이도');
 assert.match(catalogJs, /R\.bankDifficulty\(null,Math\.max/, '정답률 없으면 원문 배점 난이도');
 assert.match(catalogJs, /기준 정답률/, '정답률 근거를 카드에 표시');

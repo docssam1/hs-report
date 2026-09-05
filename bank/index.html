@@ -50,6 +50,8 @@
   .stage-wrap{max-width:840px;margin:0 auto}
   .hint{font-size:11.5px;color:var(--dim);text-align:center;margin-bottom:14px}
   .review-note{max-width:900px;margin:0 auto 14px;padding:11px 14px;border:1px solid #f0b429;border-radius:10px;background:#fff8db;color:#704900;font-size:12.5px;line-height:1.55}
+  body.wrong-practice-mode .panel{display:none}
+  body.wrong-practice-mode .review-note{border-color:#86b7fe;background:#eff6ff;color:#1e3a5f;font-weight:700}
 
   /* ---------- 시험지(미리보기 겸 인쇄 영역) ---------- */
   .page{position:relative;background:#fff;width:210mm;min-height:297mm;margin:0 auto 22px;padding:16mm 14mm;box-shadow:0 6px 24px rgba(0,0,0,.12);overflow:hidden}
@@ -273,6 +275,7 @@
   });
 
   var q = CORE.parseQuery();
+  var wrongPracticeMode = q.practice==='wrong' && q.per==='3';
   var queryIds = String(q.gens || (q.gen && q.gen!=='mix' ? q.gen : '')).split(',').filter(function(id){ return !!GEN_BY_ID[id]; });
   if(!queryIds.length && q.gen==='mix'){
     queryIds=GENERATORS.filter(function(generator){return generator.reviewOnly!==true;}).map(function(generator){return generator.id;});
@@ -286,13 +289,22 @@
     difficultyMode: TUNE_NAMES[q.tune] ? q.tune : 'standard',
     difficultyMix: DIFFICULTY_MIX_NAMES[q.ratio] ? q.ratio : 'single',
     area: AREA_NAMES[q.area] ? q.area : 'all',
-    n: [4,8,20].indexOf(parseInt(q.n,10))>=0 ? parseInt(q.n,10) : 8,
+    n: wrongPracticeMode ? queryIds.length*3 : ([4,8,20].indexOf(parseInt(q.n,10))>=0 ? parseInt(q.n,10) : 8),
     seed: q.seed || '',
-    cover: true,
+    cover: !wrongPracticeMode,
     answer: true
   };
   var REVIEW_IDS=GENERATORS.filter(function(generator){return generator.reviewOnly===true;}).map(function(generator){return generator.id;});
   var reviewMode=false;
+  if(wrongPracticeMode){
+    document.body.classList.add('wrong-practice-mode');
+    document.querySelector('.topbar h1').textContent='틀린 문제 유사문제 학습';
+    document.querySelector('.topbar .tag').textContent='선택한 오답 세부유형마다 3문제';
+    var back=document.querySelector('.topbar a.back');
+    var source=String(q.source||'final|1').split('|');
+    back.href='../final.html?round='+encodeURIComponent(source[1]||1)+(source[0]==='final'?'':'&set='+encodeURIComponent(source[0]));
+    back.textContent='← 분석지로';
+  }
   function difficultyLabel(){
     return state.difficultyMix==='single' ? TUNE_NAMES[state.difficultyMode] : DIFFICULTY_MIX_NAMES[state.difficultyMix];
   }
@@ -311,7 +323,13 @@
   function updateReviewNote(){
     reviewMode=state.genIds.some(function(id){return REVIEW_IDS.indexOf(id)>=0;});
     var reviewNote=document.getElementById('reviewNote');
-    reviewNote.hidden=!reviewMode;
+    reviewNote.hidden=!(reviewMode||wrongPracticeMode);
+    if(wrongPracticeMode){
+      var source=String(q.source||'final|1').split('|');
+      var setLabel=source[0]==='final'?'파이널':source[0]==='last'?'최종':'시그니처 실전';
+      reviewNote.textContent=setLabel+' '+(source[1]||1)+'회 오답 맞춤 · '+(POINT_NAMES[state.pointBand]||'전체 배점')+' · '+state.genIds.length+'개 세부유형 · 유형마다 3문제';
+      return;
+    }
     if(!reviewMode)return;
     reviewNote.textContent='출처 구조 기반 유사문제 포함 · '+selectedLabel()+
       ' · 선택 '+POINT_NAMES[state.pointBand]+' · '+difficultyLabel()+
@@ -352,6 +370,7 @@
       url.searchParams.set('n', state.n);
       url.searchParams.set('seed', seedStr);
       if(reviewMode)url.searchParams.set('review','1');else url.searchParams.delete('review');
+      if(wrongPracticeMode){url.searchParams.set('practice','wrong');url.searchParams.set('per','3');}
       history.replaceState(null,'',url.toString());
     }catch(e){}
   }
@@ -426,10 +445,10 @@
           return '<li>'+['① ','② ','③ ','④ '][index]+esc(line)+'</li>';
         }).join('')+'</ol>';
       }
-      body += '<div class="qcard'+(asset?'':' text-only')+'" data-index="'+escAttr(qq.index||'')+'" data-gen="'+escAttr(qq.genId||'')+'" data-points="'+escAttr(qq.pointBand||'')+'" data-level="'+escAttr(qq.level||'')+'" data-tune="'+escAttr(qq.difficultyMode||'standard')+'" data-score="'+escAttr(qq.difficultyScore||0)+'">' +
+      body += '<div class="qcard'+(asset?'':' text-only')+'" data-index="'+escAttr(qq.index||'')+'" data-gen="'+escAttr(qq.genId||'')+'" data-source-no="'+escAttr(qq.sourceNo||'')+'" data-points="'+escAttr(qq.pointBand||'')+'" data-level="'+escAttr(qq.level||'')+'" data-tune="'+escAttr(qq.difficultyMode||'standard')+'" data-score="'+escAttr(qq.difficultyScore||0)+'">' +
         '<span class="qno">' + qq.index + '</span><span class="qtext">' + esc(qq.text) + '</span>' +
         conditionList +
-        '<div class="qmeta">[' + esc(qq.area||'') + ' · ' + esc(TUNE_NAMES[qq.difficultyMode]||'기준 난이도') + ' · ' + esc(qq.pointBand) + '점]</div>' +
+        '<div class="qmeta">[' + esc(qq.area||'') + ' › ' + esc(qq.subarea||'') + ' › ' + esc(qq.detailType||qq.genName||'') + ' · ' + esc(qq.pointBand) + '점]</div>' +
         figure +
         '<div class="answerline">답 <span class="blank"></span></div>' +
         '</div>';
@@ -443,7 +462,7 @@
       var method = qq.solutionSkill ? '<strong class="solution-skill">핵심 풀이 · ' + esc(qq.solutionSkill) + '</strong><br>' : '';
       var reading = qq.readingFocus ? '<span class="reading-focus">지문 포인트 · ' + esc(qq.readingFocus) + '</span><br>' : '';
       return '<tr><td class="no">' + qq.index + '</td><td class="ans">' + esc(qq.answer) + '</td>' +
-        '<td class="area">' + esc(qq.genName||'') + ' · ' + esc(TUNE_NAMES[qq.difficultyMode]||'기준 난이도') + ' · ' + esc(qq.pointBand) + '점</td><td>' + method + reading + esc(qq.solution||'') + '</td></tr>';
+        '<td class="area">' + esc(qq.area||'') + ' › ' + esc(qq.subarea||'') + ' › ' + esc(qq.detailType||qq.genName||'') + ' · ' + esc(qq.pointBand) + '점</td><td>' + method + reading + esc(qq.solution||'') + '</td></tr>';
     });
     var rowChunks = chunk(rowsHtml, 14);
     return rowChunks.map(function(rows, i){
@@ -456,7 +475,7 @@
 
   function render(){
     syncChips();
-    var paper = CORE.buildPaper({ genIds: state.genIds, pointBand: state.pointBand, difficultyMode: state.difficultyMode, difficultyMix: state.difficultyMix, n: state.n, seedStr: state.seed });
+    var paper = CORE.buildPaper({ genIds: state.genIds, pointBand: state.pointBand, difficultyMode: state.difficultyMode, difficultyMix: state.difficultyMix, n: state.n, perGenerator: wrongPracticeMode?3:0, seedStr: state.seed });
     state.seed = paper.seedStr;
     var examNo = CORE.examNumber(paper.seedStr);
     document.getElementById('examNoLabel').textContent = examNo;

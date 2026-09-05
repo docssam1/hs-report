@@ -55,7 +55,7 @@ function check(name, fn) { fn(); tests.push(name); }
 check('원본형 60문항을 57개 고유유형으로 병합', () => {
   assert.equal(summary.sourceQuestions, 60);
   assert.equal(summary.canonicalTypes, 57);
-  assert.equal(summary.canonicalSubareas, 41);
+  assert.equal(summary.canonicalSubareas, 46);
   const recursiveLength = catalog.find((type) => type.name === '반복 분할선 길이');
   assert.ok(recursiveLength);
   assert.deepEqual(recursiveLength.sourceRefs.map((ref) => [ref.round, ref.no]), [[1, 25]]);
@@ -339,32 +339,33 @@ check('item.area를 권위값으로 보존하고 출처 키 중복 없음', () =
 });
 
 check('등록 소영역과 규칙 후보를 명시적으로 구분', () => {
-  assert.equal(unified.summary.confirmedItems, 90);
-  assert.equal(unified.summary.candidateItems, 750);
-  unified.items.filter((item) => item.sourceRef.set === 'original' || (item.sourceRef.set === 'final' && item.sourceRef.round === 5)).forEach((item) => {
+  assert.equal(unified.summary.confirmedItems, 120);
+  assert.equal(unified.summary.candidateItems, 720);
+  unified.items.filter((item) => item.sourceRef.set === 'original' || (item.sourceRef.set === 'final' && (item.sourceRef.round === 1 || item.sourceRef.round === 5))).forEach((item) => {
     assert.equal(item.reviewStatus, 'confirmed');
     assert.equal(item.reviewRequired, false);
   });
-  unified.items.filter((item) => item.sourceRef.set !== 'original' && !(item.sourceRef.set === 'final' && item.sourceRef.round === 5)).forEach((item) => {
+  unified.items.filter((item) => item.sourceRef.set !== 'original' && !(item.sourceRef.set === 'final' && (item.sourceRef.round === 1 || item.sourceRef.round === 5))).forEach((item) => {
     assert.equal(item.reviewStatus, 'candidate');
     assert.equal(item.reviewRequired, true);
     assert.ok(item.reviewReasons.length);
   });
 });
 
-check('이원목적표의 영역+세부유형 742개를 화면 권위값으로 그대로 보존', () => {
-  assert.equal(unified.summary.rawDisplayTypes, 735);
-  assert.equal(unified.summary.objectiveTypes, 742);
-  assert.equal(new Set(unified.items.map((item) => item.objectiveTypeId)).size, 742);
+check('이원목적표의 대영역+소영역+세부유형을 화면 권위값으로 보존', () => {
+  assert.equal(unified.summary.rawDisplayTypes, 742);
+  assert.equal(unified.summary.objectiveTypes, 748);
+  assert.equal(new Set(unified.items.map((item) => item.objectiveTypeId)).size, 748);
   unified.items.forEach((item) => assert.ok(item.displayType));
+  unified.items.forEach((item) => assert.deepEqual(item.taxonomyPath, { major: item.area, minor: item.subarea, detail: item.displayType }));
 });
 
 check('기존 후보 family는 생성기 연결용 내부 값으로만 유지', () => {
-  assert.ok(unified.summary.canonicalTypes < 180, `canonical types=${unified.summary.canonicalTypes}`);
+  assert.ok(unified.summary.canonicalTypes < 210, `canonical types=${unified.summary.canonicalTypes}`);
   assert.ok(unified.summary.canonicalTypes < unified.summary.rawDisplayTypes / 4);
   const clockTypes = unified.items.filter((item) => item.area === '도형' && /시침과 분침이 (직각|겹)/.test(item.displayType));
   assert.ok(clockTypes.length >= 4);
-  assert.equal(new Set(clockTypes.map((item) => item.canonicalTypeId)).size, 1);
+  assert.equal(new Set(clockTypes.map((item) => item.canonicalTypeId)).size, 2, '파이널 1회 겹침 횟수 세부유형은 직각·일반 겹침 family와 분리');
 });
 
 check('쌓기나무 Lv5 최소값 오류 수정과 독립 회귀 검산', () => {

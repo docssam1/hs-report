@@ -546,6 +546,43 @@
     return finish(s, '네 가지 도형이 놓인 4×4 표와 알려진 가로·세로 합');
   }
 
+  function drawFoldTwiceCut(variant) {
+    var s = surface(620, 190), ctx = s.ctx;
+    var ink = '#343a40', fold = '#868e96', accent = '#e8590c';
+    function arrow(x1, y1, x2, y2) {
+      line(ctx, x1, y1, x2, y2, accent, 2.4);
+      var angle = Math.atan2(y2 - y1, x2 - x1), size = 8;
+      polygon(ctx, [[x2, y2], [x2 - Math.cos(angle - .55) * size, y2 - Math.sin(angle - .55) * size], [x2 - Math.cos(angle + .55) * size, y2 - Math.sin(angle + .55) * size]], accent, null);
+    }
+    ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.strokeRect(28, 25, 128, 128);
+    ctx.save(); ctx.setLineDash([6, 5]); line(ctx, 28, 89, 156, 89, fold, 1.5); ctx.restore();
+    arrow(72, variant % 2 ? 118 : 62, 112, variant % 2 ? 68 : 108);
+    label(ctx, '① 보기의 방법', 92, 171, { size: 14, color: ink });
+    arrow(178, 89, 220, 89);
+    ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.strokeRect(246, 57, 132, 64);
+    ctx.save(); ctx.setLineDash([6, 5]); line(ctx, 312, 57, 312, 121, fold, 1.5); ctx.restore();
+    arrow(variant % 3 ? 278 : 346, 82, variant % 3 ? 340 : 284, 99);
+    label(ctx, '② 같은 방법을 한 번 더', 312, 171, { size: 14, color: ink });
+    arrow(402, 89, 444, 89);
+    ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.strokeRect(480, 57, 74, 64);
+    line(ctx, 480, 57, 554, 121, '#111111', 4);
+    line(ctx, 554, 57, 480, 121, '#111111', 4);
+    label(ctx, '③ 굵은 선을 따라 자르기', 517, 171, { size: 14, color: ink });
+    return finish(s, '보기의 반 접기 방법을 두 번 반복한 뒤 접힌 종이를 두 대각선으로 자르는 과정');
+  }
+
+  function drawCubeFaceDiagonalCuts(variant) {
+    var s = surface(390, 260), ctx = s.ctx;
+    var A=[85,72], B=[220,45], C=[305,98], D=[168,128], E=[85,187], F=[168,238], G=[305,205];
+    polygon(ctx,[A,B,D,E],'#f8f9fa','#343a40',2);
+    polygon(ctx,[B,C,G,D],'#eef1f4','#343a40',2);
+    polygon(ctx,[E,D,G,F],'#e1e6eb','#343a40',2);
+    [[A,D],[B,E],[B,G],[C,D],[E,G],[D,F]].forEach(function(seg){line(ctx,seg[0][0],seg[0][1],seg[1][0],seg[1][1],variant%2?'#c2410c':'#1f3864',2.4);});
+    label(ctx,'보이는 3면과 반대쪽 3면도',195,18,{size:14,color:'#343a40'});
+    label(ctx,'각 면의 두 대각선을 따라 같은 방식으로 자릅니다.',195,249,{size:13,color:'#5f6970'});
+    return finish(s, '정육면체의 보이는 세 면에 두 대각선이 끝점까지 이어지고 반대쪽 세 면도 같은 방식임을 밝힌 그림');
+  }
+
   global.BANK_RASTER = {
     drawConditionCard: drawConditionCard,
     drawRectGrid: drawRectGrid,
@@ -564,6 +601,8 @@
     drawCircleRule: drawCircleRule,
     drawMarkedRectGrid: drawMarkedRectGrid,
     drawMagicStar: drawMagicStar,
-    drawShapeValueGrid: drawShapeValueGrid
+    drawShapeValueGrid: drawShapeValueGrid,
+    drawFoldTwiceCut: drawFoldTwiceCut,
+    drawCubeFaceDiagonalCuts: drawCubeFaceDiagonalCuts
   };
 })(typeof window !== 'undefined' ? window : globalThis);
