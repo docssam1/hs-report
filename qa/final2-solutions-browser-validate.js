@@ -35,7 +35,7 @@ const server=http.createServer((req,res)=>{
     await page.goto(base+'/final.html?round=2&name=docssam&go=answer&preview=1',{waitUntil:'domcontentloaded'});
     await page.locator('#btnGrade').waitFor();
     assert.equal(await page.locator('.detailed-solution').count(),0,'no worked answer before grading');
-    for(const no of Object.keys(expected))await page.locator('.abtn').nth(Number(no)-1).click();
+    for(let no=1;no<=30;no++)if(!Object.hasOwn(expected,no))await page.locator('.abtn').nth(no-1).click();
     await page.locator('#btnGrade').click();
     await page.locator('.detailed-solution').first().waitFor();
     assert.equal(await page.locator('.detailed-solution').count(),4);

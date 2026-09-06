@@ -26,7 +26,7 @@ const server=http.createServer((req,res)=>{
     for(const round of [1,2]){
       await page.goto(base+`/final.html?round=${round}&name=docssam&go=answer&preview=1`);
       assert.equal(await page.locator('.personal-study-plan').count(),0,'no plan before result');
-      for(const no of [1,4,7,13,18,22,26])await page.locator('.abtn').nth(no-1).click();
+      for(let no=1;no<=30;no++)if(![1,4,7,13,18,22,26].includes(no))await page.locator('.abtn').nth(no-1).click();
       await page.locator('#btnGrade').click();await page.locator('.personal-study-plan').waitFor();
       assert.equal(await page.locator('.personal-plan-stage').count(),3);
       assert.equal(await page.locator('.report-print-cover').isVisible(),false,'no screen cover');

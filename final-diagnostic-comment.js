@@ -118,10 +118,12 @@
       return '<li><b>'+r.no+'번 — '+e(r.confirmed?r.type:'분류 확인 중')+'</b><p>문항별 복습 포인트: '+e(prompt)+'</p><p>해설을 가린 채 조건을 표시하고 식·표·그림으로 다시 풉니다. 막힌 단계만 상세답안과 비교한 뒤, 답을 보지 않고 끝까지 설명하세요.</p></li>';
     }).join('');
     var scenario=a.priority.length?'<h3>우선 복습할 문항과 점수 변화</h3><p>다음 '+a.priority.length+'문항은 <b>우선 점검 후보</b>입니다. 반드시 맞힐 수 있다는 판정이나 정답 확률은 아닙니다. 잘 맞추는 영역 안의 정답률 높은 오답을 먼저 선택합니다. 현재 운영 기준은 영역 수행률 70% 이상(두 문항 이상 출제), 검증 정답률 70% 이상이며 선생님이 조정할 수 있는 추천 기준입니다. 검증 정답률이 없으면 관련 정답과 낮은 배점 등 개인 기록만으로 제시한 후보임을 구분합니다.</p><table class="coaching-priority"><thead><tr><th>문항</th><th>유형과 선정 근거</th></tr></thead><tbody>'+candidates+'</tbody></table>'+scoreGraph(a,e)+'<p><b>'+a.priority.map(function(r){return r.no+'번';}).join(' · ')+'</b>을 모두 맞히고 다른 답안이 그대로라면 <b>'+a.score+' + '+a.gain+' = '+a.target+'점</b>입니다. 새 성적이나 재채점 결과로 저장하지 않는 복습 목표입니다.</p>':'<h3>다음 학습 목표</h3><p>오답이 없으므로 점수 상승 후보를 만들지 않았습니다. 정답을 기억한 것인지 풀이를 이해한 것인지, 새로운 조건에서도 설명할 수 있는지 확인하세요.</p>';
-    var verified=a.verified&&Array.isArray(ctx.S&&ctx.S.dist)&&ctx.S.dist.length===ctx.S.n;
+    var verified=a.verified&&(typeof options.percentile==='function'||(Array.isArray(ctx.S&&ctx.S.dist)&&ctx.S.dist.length===ctx.S.n));
     if(a.priority.length&&verified){
-      var pct=function(score){return round(Math.min(ctx.S.n,ctx.S.dist.filter(function(v){return v>score;}).length+1)/ctx.S.n*100);};
-      scenario+='<p>동일한 검증 성적 분포를 고정하여 비교하면 석차 백분율은 '+pct(a.score)+'% → '+pct(a.target)+'%입니다. 실제 다음 시험의 석차를 예측한 값은 아닙니다.</p>';
+      var pct=function(score){return typeof options.percentile==='function'?options.percentile(score,ctx.S):round(Math.min(ctx.S.n,ctx.S.dist.filter(function(v){return v>score;}).length+1)/ctx.S.n*100);};
+      var fromPct=pct(a.score),toPct=pct(a.target);
+      if(Number.isFinite(fromPct)&&Number.isFinite(toPct)) scenario+='<p>동일한 검증 성적 분포를 고정하여 비교하면 석차 백분율은 '+fromPct+'% → '+toPct+'%입니다. 실제 다음 시험의 석차를 예측한 값은 아닙니다.</p>';
+      else scenario+='<p class="coaching-caution">목표 점수의 석차 백분율은 확인 중입니다. 점수 변화만 표시합니다.</p>';
     }else if(a.priority.length){scenario+='<p class="coaching-caution">석차 변화는 성적 분포 대조가 끝난 뒤 표시합니다. 여기서는 답안과 배점으로 확인되는 점수 변화만 계산했습니다.</p>';}
     return '<div class="diagnostic-coaching"><p><b>'+e(ctx.name)+'</b> 학생의 이번 파이널 '+e(ctx.roundNum)+'회 결과는 <b>'+a.score+'점</b>입니다. 점수만으로 원인을 정하지 않고, 실제 맞힌 문제와 놓친 배점을 나누어 살펴봅니다.</p><div class="coaching-grid"><div class="coaching-block"><h3>이번 시험에서 확인한 강점</h3>'+strength+'</div><div class="coaching-block"><h3>우선 보완할 영역</h3>'+weakness+'</div></div><h3>배점대별 읽기</h3><p>'+e(tierText)+'</p><p>배점대는 시험의 구분 기준입니다. 영역·세부유형이 다를 수 있으므로 낮은 배점의 오답을 곧바로 실수라고 보지는 않습니다.</p>'+scenario+planHTML(a,ctx,options,e)+(review?'<h3>문제별로 이렇게 복습하세요</h3><ol>'+review+'</ol>':'')+'<h3>교재와 연결하는 복습 순서</h3><p>교재 연결표에서 해당 유형의 학습 위치를 확인하세요. 조건을 읽고 표시하기 → 필요한 식·표·그림 만들기 → 상세답안과 막힌 단계 비교하기 → 연결된 유사문제 풀기 → 다음 날 해설 없이 다시 설명하기 순서로 진행합니다. 위치가 확인되지 않은 교재 쪽수는 임의로 지정하지 않습니다.</p><p class="coaching-caution">정오 기록은 결과를 보여 줍니다. 개념 부족, 지문 해석, 계산 실수, 시간 부족 중 실제 원인은 풀이를 보며 학생과 함께 확인해야 합니다.</p></div>';
   }

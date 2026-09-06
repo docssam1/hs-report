@@ -171,6 +171,7 @@ const adminSession = {
     await teacherPage.goto(`${BASE_URL}/${await teacherEntry.getAttribute('href')}`, { waitUntil: 'domcontentloaded' });
     await teacherPage.waitForSelector('.agrid');
     assert.equal(await teacherPage.locator('.agrid .abtn').count(), 30, 'teacher entry opens all 30 original-form answer buttons');
+    for(let no=1;no<=30;no++)await teacherPage.locator('.abtn').nth(no-1).click();
     await teacherPage.click('#btnGrade');
     await teacherPage.getByRole('heading', { name: '시그니처 실전 모의고사 성적·약점 진단' }).waitFor();
     assert.equal(await teacherPage.locator('.who b').textContent(), '허유민', 'selected admin student carries into the original-form report');

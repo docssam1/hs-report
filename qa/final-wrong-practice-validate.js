@@ -70,7 +70,7 @@ function startStaticServer() {
   try {
     await page.goto(`http://127.0.0.1:${port}/final.html?round=1&name=docssam&go=answer&preview=1`, { waitUntil: 'domcontentloaded' });
     await page.locator('.abtn').first().waitFor();
-    for (const no of [4, 13, 18, 23, 26]) await page.locator('.abtn').nth(no - 1).click();
+    for (let no=1;no<=30;no++) if(![4,13,18,23,26].includes(no)) await page.locator('.abtn').nth(no - 1).click();
     await page.locator('#btnGrade').click();
     await page.locator('#wrongPractice').waitFor();
 

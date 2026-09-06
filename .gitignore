@@ -3,3 +3,6 @@
 
 # Private copyrighted-source drafts are kept local and must not be published.
 /.private-work/
+
+# Server-only statistical reference; never publish in Git or GitHub Pages.
+/supabase/functions/hs-final-population/baseline.private.json

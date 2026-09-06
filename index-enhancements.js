@@ -202,7 +202,7 @@
         book.pages=finalPages[round];
         book.copyrightMissingPages=finalCopyrightPages[round].slice();
         book.links=[{label:'실전 타이머',url:withName(finalBase+'&go=timer')}];
-        if(onlineMember()) book.links.push({label:'오답 입력·진단',url:withName(finalBase+'&go=answer')});
+        if(onlineMember()) book.links.push({label:'맞은 문제 체크·진단',url:withName(finalBase+'&go=answer')});
         book.links.push({label:(studentName()?studentName()+' 학생 ':'내 ')+'성적표',url:withName(finalBase+'&go=report')});
         book.links.push({label:'답안·교재 연결표',url:withName('answer.html?set=final&round='+round)});
       }

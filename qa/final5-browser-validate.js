@@ -34,8 +34,7 @@ async function installAccess(page, approvedName) {
     assert.equal(await approved.locator('.paper-image-page img').count(), 7, '5회 진단 뷰어 시험지 7쪽');
     await approved.goto(`${BASE_URL}/final.html?round=5&name=docssam&preview=1&go=answer`, { waitUntil: 'domcontentloaded' });
     await approved.waitForSelector('#btnGrade');
-    await approved.locator('.abtn').nth(0).click();
-    await approved.locator('.abtn').nth(5).click();
+    for(let no=1;no<=30;no++)if(![1,6].includes(no))await approved.locator('.abtn').nth(no-1).click();
     await approved.click('#btnGrade');
     await approved.waitForSelector('#cmtBody');
     assert.match(await approved.locator('#cmtBody').innerText(), /가장 어려웠던 해의 지문 이해가 필요한 시험/);

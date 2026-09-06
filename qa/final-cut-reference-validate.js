@@ -38,6 +38,7 @@ const server=http.createServer((req,res)=>{
     });
     const page=await context.newPage();
     await page.goto(`http://127.0.0.1:${server.address().port}/final.html?round=1&name=docssam&go=answer&preview=1`);
+    for(let no=1;no<=30;no++)await page.locator('.abtn').nth(no-1).click();
     await page.locator('#btnGrade').click();
     const table=page.locator('.cut-reference');await table.waitFor();
     assert.equal(await table.locator('tbody tr').count(),5);

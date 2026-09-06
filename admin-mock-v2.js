@@ -76,7 +76,7 @@
         <span style="font-size:11.5px;opacity:.8">대영역·소영역·세부유형 자동 분석</span>
         <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap">${originalLinks}</div>
       </div>
-      <div style="margin-top:8px;font-size:11.5px;opacity:.9;line-height:1.6">재원생은 선생님이 오답 번호를 대신 입력할 수 있고, 온라인 회원은 학생 서재에서 직접 입력합니다. 두 경로 모두 시그니처 실전 전용 최초 기록을 사용합니다.</div>
+      <div style="margin-top:8px;font-size:11.5px;opacity:.9;line-height:1.6">재원생은 선생님이 맞은 문제 번호를 대신 체크할 수 있고, 온라인 회원은 학생 서재에서 직접 입력합니다. 두 경로 모두 시그니처 실전 전용 최초 기록을 사용합니다.</div>
     </div>`;
 
     let panel=`<div style="border:1px solid #dce4ef;border-radius:14px;padding:14px;margin:4px 0 16px;background:linear-gradient(135deg,#f8fbff,#fff)">
@@ -95,7 +95,7 @@
       const list=grouped[r]||[];
       if(!list.length){
         const action=window.mkSet==='final'||window.mkSet==='original'
-          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student)}">✍️ ${esc(student)} 오답 입력</a>`
+          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student)}">✍️ ${esc(student)} 맞은 문제 체크</a>`
           :`<a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="${previewUrl(window.mkSet,r,student)}">🔎 미리보기</a>`;
         panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td colspan="5" style="color:#a0a8b3">기록 없음</td><td>${action}</td></tr>`;
         return;
@@ -104,7 +104,7 @@
         const x=o.x,p=o.p,sc=mkScore(x.ox),score=sc?sc.score:'-',wrong=sc?sc.wrong:'-';
         const at=x.updated_at?new Date(x.updated_at).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'-';
         const openAction=window.mkSet==='final'||window.mkSet==='original'
-          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student)}">✍️ ${esc(student)} 오답 입력</a>`
+          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student)}">✍️ ${esc(student)} 맞은 문제 체크</a>`
           :`<a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="${previewUrl(window.mkSet,r,student)}">🔎 미리보기</a>`;
         panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b></td><td>${wrong}</td><td>${esc(sourceLabel(x.source))}</td><td>${esc(at)}</td><td>
           <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">
@@ -116,7 +116,7 @@
     });
     panel+='</tbody></table></div>';
     if(window.mkSet==='final'||window.mkSet==='original'){
-      panel+='<div style="margin-top:9px;padding:8px 10px;border-radius:8px;background:#fff7ed;color:#9a3412;font-size:11.5px;line-height:1.6"><b>학생 아이디로 다시 로그인할 필요가 없습니다.</b> 위 학생 선택에서 이름을 고르고 해당 회차의 「학생 이름 오답 입력」을 누르세요. 공식 누적 기준은 회차별 1차 기록이며, 입력이 끝나면 그 학생 로드맵의 「내 파이널 성적표」에서 본인 성적만 열립니다.</div>';
+      panel+='<div style="margin-top:9px;padding:8px 10px;border-radius:8px;background:#fff7ed;color:#9a3412;font-size:11.5px;line-height:1.6"><b>학생 아이디로 다시 로그인할 필요가 없습니다.</b> 위 학생 선택에서 이름을 고르고 해당 회차의 「학생 이름 맞은 문제 체크」을 누르세요. 공식 누적 기준은 회차별 1차 기록이며, 입력이 끝나면 그 학생 로드맵의 「내 파이널 성적표」에서 본인 성적만 열립니다.</div>';
     }
     panel+='</div>';
     body.insertAdjacentHTML('afterbegin',panel);
