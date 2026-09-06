@@ -38,13 +38,14 @@ const server=http.createServer((req,res)=>{
     let text=await page.locator('#app').innerText();
     assert.ok(!/null%|NaN|undefined|응시 인원/.test(text),'no invalid statistics: '+JSON.stringify(text.match(/null%|NaN|undefined|응시 인원/g)));
     assert.doesNotMatch(await page.locator('.cut-reference').innerText(),/\d+명/);
-    assert.match(text,/자동 합산되지 않습니다/);assert.match(text,/전체 정답률/);
+    assert.doesNotMatch(text,/자동 합산/);assert.equal(await page.locator('#detailWrap .bar').count(),30,'all fixed item rates remain visible');
     const current=core.scoreOf(Array.from({length:30},(_,i)=>wrong.includes(i+1)?'X':'O').join(''));
     const expected=core.createResponse(baseline,[current]);
     assert.match(text,new RegExp(expected.percentiles[String(Math.round(current*10))]+'%'));
     assert.equal(await page.locator('.cut-reference .cut-number').filter({hasText:'확인 중'}).count(),0);
-    assert.match(text,/석차 백분율은 .*% → .*%/);
-    assert.match(await page.locator('.report-screen-header').innerText(),/원본 기준 평균.*석차 백분율/s);
+    assert.equal(await page.locator('.cut-reference .cut-number').filter({hasText:'%'}).count(),5,'all fixed cutoff percentiles remain visible');
+    assert.match(text,/현재 위치는 .*%에서 .*%로 달라집니다/);
+    assert.match(await page.locator('.report-screen-header').innerText(),/평균.*석차 백분율/s);
     assert.match(await page.locator('.report-cover-student').innerText(),/석차 백분율/);
     const labelsInside=await page.locator('.radar').evaluate(svg=>{const v=svg.viewBox.baseVal;return [...svg.querySelectorAll('.lb text')].every(t=>{const b=t.getBBox();return b.x>=v.x&&b.x+b.width<=v.x+v.width&&b.y>=v.y&&b.y+b.height<=v.y+v.height;});});
     assert.equal(labelsInside,true,'all radar labels inside viewport');
@@ -54,7 +55,12 @@ const server=http.createServer((req,res)=>{
       if(output){fs.mkdirSync(output,{recursive:true});await page.screenshot({path:path.join(output,'statistics-'+width+'.png'),fullPage:false});}
     }
     if(output){await page.setViewportSize({width:1280,height:900});await page.pdf({path:path.join(output,'statistics-report.pdf'),format:'A4',printBackground:true,preferCSSPageSize:true});}
-    fail=true;await openAndGrade(wrong);text=await page.locator('#app').innerText();assert.doesNotMatch(text,/전체 정답률|석차 백분율은 .*% → .*%|null%/);assert.match(text,/확인 중/);
+    fail=true;await openAndGrade(wrong);text=await page.locator('#app').innerText();
+    assert.equal(await page.locator('#detailWrap .bar').count(),30,'offline keeps all fixed item rates');
+    assert.equal(await page.locator('.cut-reference .cut-number').filter({hasText:'%'}).count(),5,'offline keeps all fixed cutoff percentiles');
+    assert.doesNotMatch(await page.locator('.report-screen-header').innerText(),/석차 백분율/);
+    assert.doesNotMatch(await page.locator('.diagnostic-coaching').innerText(),/현재 위치는 .*%에서 .*%로/);
+    assert.doesNotMatch(text,/null%|NaN|자동 합산/);
     fail=false;await openAndGrade([]);text=await page.locator('#app').innerText();assert.doesNotMatch(text,/null%|NaN/);
     await openAndGrade(Array.from({length:30},(_,i)=>i+1));text=await page.locator('#app').innerText();assert.doesNotMatch(text,/null%|NaN|1\d\d\.\d%/);assert.match(text,/100%/);
     assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);

@@ -4,16 +4,19 @@ const assert=require('node:assert/strict'),vm=require('node:vm');
 const {chromium}=require('playwright');
 const root=path.resolve(__dirname,'..');
 const html=fs.readFileSync(path.join(root,'final.html'),'utf8');
-const part=html.slice(html.indexOf('  function percentileOf('),html.indexOf('  /* 전체 평균·분포·문항 정답률'));
-const sandbox={round1:x=>Math.round(x*10)/10,esc:s=>String(s).replace(/[<>&"]/g,'?'),populationStatsVerified:s=>s.testVerified===true};
+const part=html.slice(html.indexOf('  function percentileOf('),html.indexOf('  function publicCutVerified('));
+const sandbox={M:{questions:30},round1:x=>Math.round(x*10)/10,esc:s=>String(s).replace(/[<>&"]/g,'?'),window:{GFIELD_FINAL_POPULATION:{isVerified:s=>s.testVerified===true,percentile:(score,s)=>(s.cutPercentiles&&s.cutPercentiles[score])??null,cutPercentile:(score,s)=>(s.cutPercentiles&&s.cutPercentiles[score])??null}}};
 vm.createContext(sandbox);vm.runInContext(part,sandbox);
-const sample={testVerified:true,n:5,dist:[90,70,70,40,20],cuts:[['위',70],['중',40],['하',10],['노력요함',0]]};
+const sample={testVerified:true,n:5,dist:[90,70,70,40,20],cuts:[['위',70],['중',40],['하',10],['노력요함',0]],cutPercentiles:{70:40,40:80,10:100}};
 let result=sandbox.cutReferenceHTML({S:sample});
 assert.match(result,/40\.0%/);assert.match(result,/80\.0%/);assert.match(result,/100\.0%/);
 assert.doesNotMatch(result,/120\.0%|5명|응시 인원|노력요함/);
-sample.testVerified=false;
+sample.testVerified=false;sample.rateEvidence={status:'verified-source-aggregate',scope:'provided-original-records'};sample.rate=Object.fromEntries(Array.from({length:30},(_,i)=>[i+1,.5]));
 result=sandbox.cutReferenceHTML({S:sample});
-assert.doesNotMatch(result,/\d+(?:\.\d+)?%/);assert.equal((result.match(/확인 중/g)||[]).length,3);
+assert.match(result,/40\.0%/);assert.match(result,/80\.0%/);assert.match(result,/100\.0%/);
+delete sample.rateEvidence;delete sample.rate;delete sample.cutPercentiles;
+result=sandbox.cutReferenceHTML({S:sample});
+assert.equal((result.match(/—/g)||[]).length,3);assert.doesNotMatch(result,/확인 중/);
 assert.equal(sandbox.cutReferenceHTML({S:{}}),'');
 const output=process.env.GFIELD_CUT_REVIEW_DIR;
 const server=http.createServer((req,res)=>{
@@ -43,7 +46,9 @@ const server=http.createServer((req,res)=>{
     const table=page.locator('.cut-reference');await table.waitFor();
     assert.equal(await table.locator('tbody tr').count(),5);
     assert.match(await table.innerText(),/12\.8점/);
-    assert.doesNotMatch(await table.innerText(),/\d+명|\d+등|\d+(?:\.\d+)?%/);
+    assert.match(await table.innerText(),/92\.9%/);
+    assert.equal((await table.innerText()).match(/\d+(?:\.\d+)?%/g).length,5);
+    assert.doesNotMatch(await table.innerText(),/\d+명|\d+등/);
     assert.equal(await table.locator('.cut-watermark').count(),1);
     for(const width of [1280,390]){
       await page.setViewportSize({width,height:900});

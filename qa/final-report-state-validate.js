@@ -1,0 +1,31 @@
+'use strict';
+const assert=require('node:assert/strict'),core=require('../supabase/functions/hs-final-population/population-core.js'),reports=require('../supabase/functions/hs-final-population/report-service.js');
+const baseline={schemaVersion:1,exam:'final1',scope:'provided-original-records',approved:true,version:'final1-'+'a'.repeat(64),rows:[{id:'a',ox:'O'.repeat(30),score:100},{id:'b',ox:'X'.repeat(30),score:0}]};
+const tables={mock_results:[{student:'qa-one',round:'final1',ox:'O'.repeat(30),score:100,wrong:0,source:'online',owner_id:'one'},{student:'qa-two',round:'final1',ox:'X'.repeat(30),score:0,wrong:30,source:'admin',owner_id:null}],hs_final_report_snapshots:[],hs_final_report_comments:[],hs_final_report_references:[]};
+const writes=[];
+function client(){return {from(table){let filters=[],operation='select',payload,options={},range=null;const q={select(){return q;},eq(k,v){filters.push(r=>r[k]===v);return q;},order(){return q;},range(a,b){range=[a,b];return q;},upsert(v,o){operation='upsert';payload=v;options=o||{};return q;},insert(v){operation='insert';payload=v;return q;},update(v){operation='update';payload=v;return q;},single(){return run(true);},maybeSingle(){return run(true);},then(ok,bad){return run(false).then(ok,bad);}};
+async function run(single){let rows=tables[table];if(!rows)return {error:{message:'unknown table'},data:null};let found=rows.filter(r=>filters.every(f=>f(r)));if(operation!=='select'){writes.push(table);let values=Array.isArray(payload)?payload:[payload],saved=[];for(const value of values){let keys=table==='hs_final_report_references'?['exam']:['student','round'];let existing=operation==='update'?found[0]:rows.find(r=>keys.every(k=>r[k]===value[k]));if(operation==='insert'&&existing)return {data:null,error:{code:'23505'}};if(operation==='update'&&!existing)return {data:null,error:null};if(existing){if(!options.ignoreDuplicates)Object.assign(existing,structuredClone(value));saved.push(existing);}else{let row=structuredClone(value);rows.push(row);saved.push(row);}}found=saved;}else if(range)found=found.slice(range[0],range[1]+1);return {data:single?structuredClone(found[0]||null):structuredClone(found),error:null};}return q;}};}
+const service=client(),student={role:'student',student:'qa-one'},teacher={role:'admin',student:'qa-admin'},user={id:'one'};
+const call=(body,account=student,who=user)=>reports.handle(service,account,who,body,core,baseline);
+(async()=>{
+ const original=JSON.stringify(tables.mock_results),source=JSON.stringify(baseline);
+ await assert.rejects(call({action:'read-report',exam:'final1',student:'qa-two'}),e=>e.status===403);
+ await assert.rejects(call({action:'apply-percentiles',exam:'final1'}),e=>e.status===403);
+ await assert.rejects(call({action:'save-comment',exam:'final1',student:'qa-one',comment:'bad',expectedUpdatedAt:null}),e=>e.status===403);
+ await assert.rejects(call({action:'record-report',exam:'final1',student:'qa-one',score:0}),e=>e.status===400);
+ const blank=await call({action:'read-report',exam:'final1',student:'qa-one'});assert.equal(blank.snapshot,null);assert.equal(writes.length,0);
+ const online=await call({action:'record-report',exam:'final1',student:'qa-one'});assert.equal(online.snapshot.percentiles['1000'],50);assert.equal(online.snapshot.rate[1],.5);assert.equal(online.canEdit,false);
+ const note=await call({action:'save-comment',exam:'final1',student:'qa-one',comment:'<img src=x> 조건을 잘 표시했어요.',expectedUpdatedAt:null},teacher,{id:'teacher'});assert.ok(note.updatedAt);
+ await assert.rejects(call({action:'save-comment',exam:'final1',student:'qa-one',comment:'lost edit',expectedUpdatedAt:null},teacher,{id:'teacher'}),e=>e.status===409);
+ assert.equal((await call({action:'read-report',exam:'final1',student:'qa-one'})).comment,note.comment);
+ const bulk=await call({action:'apply-percentiles',exam:'final1'},teacher,{id:'teacher'});assert.deepEqual(bulk,{applied:true,incomplete:false});
+ assert.equal(tables.hs_final_report_snapshots.length,2);assert.equal(tables.hs_final_report_snapshots.find(r=>r.student==='qa-two').snapshot.percentiles['0'],100);
+ const rates=JSON.stringify(tables.hs_final_report_references);
+ await call({action:'apply-percentiles',exam:'final1'},teacher,{id:'teacher'});assert.equal(JSON.stringify(tables.hs_final_report_references),rates,'reapply cannot overwrite frozen rates');assert.equal(tables.hs_final_report_comments[0].comment,note.comment);
+ tables.mock_results[0].ox='X'.repeat(30);tables.mock_results[0].score=0;tables.mock_results[0].wrong=30;
+ assert.equal((await call({action:'read-report',exam:'final1',student:'qa-one'})).snapshot,null,'stale OX snapshot not shown');
+ tables.mock_results[0].owner_id='somebody-else';await assert.rejects(call({action:'read-report',exam:'final1',student:'qa-one'}),e=>e.status===403);
+ tables.mock_results=JSON.parse(original);assert.equal(JSON.stringify(baseline),source);assert.ok(writes.every(t=>t.startsWith('hs_final_report_')),'no writes to original grades/accounts');
+ assert.doesNotMatch(JSON.stringify(online),/"(?:n|count|denominator|dist|rows|owner_id)"/);
+ console.log('PASS report ownership, student/admin permissions, persisted percentile/rates, immutable reference, comments/CAS, stale snapshot, no source writes/counts');
+})().catch(e=>{console.error(e);process.exitCode=1;});

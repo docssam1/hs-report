@@ -29,5 +29,11 @@
     if(!isVerified(value)||!numeric(score,0,100))return null;
     var key=String(Math.round(score*10));return Object.prototype.hasOwnProperty.call(value.percentiles,key)?value.percentiles[key]:null;
   }
-  root.GFIELD_FINAL_POPULATION={load:load,isVerified:isVerified,percentile:percentile};
+  // Approved cutoff aggregates only. No cohort size or individual scores.
+  var fixedCuts=Object.freeze({'485':16.1,'394':30.4,'286':55.4,'199':73.2,'128':92.9});
+  function cutPercentile(score,value){
+    if(!value||value.protectedReference!=='final1-source-v1')return null;
+    var key=String(Math.round(score*10));return Object.prototype.hasOwnProperty.call(fixedCuts,key)?fixedCuts[key]:null;
+  }
+  root.GFIELD_FINAL_POPULATION={load:load,isVerified:isVerified,percentile:percentile,cutPercentile:cutPercentile,fromSaved:function(payload,score,cuts){return accept(payload,[score],cuts);}};
 })(typeof window==='object'?window:globalThis);

@@ -813,3 +813,30 @@
     display: none !important;
   }
 }
+
+.final-report-package .report-expected-grade { margin:12px 0 0; color:#2456C4; font-size:16px; }
+.final-report-package .report-docssam-note { padding:24px 32px; border-bottom:1px solid #D8DEE8; background:#fff; }
+.final-report-package .docssam-saved-comment { white-space:pre-wrap; line-height:1.85; color:#182230; overflow-wrap:anywhere; }
+.final-report-package .docssam-editor { display:grid; gap:10px; }
+.final-report-package .docssam-editor textarea { width:100%; box-sizing:border-box; font:inherit; font-size:16px; line-height:1.75; padding:12px; border:1px solid #566274; border-radius:5px; resize:vertical; }
+.final-report-package .docssam-editor button { justify-self:start; min-height:44px; padding:8px 18px; border:0; border-radius:5px; background:#2456C4; color:#fff; font:inherit; cursor:pointer; }
+.final-report-package .docssam-editor button:disabled { opacity:.55; cursor:wait; }
+.final-report-package .docssam-editor :focus-visible { outline:3px solid #2456C4; outline-offset:3px; }
+.final-report-package .report-item-section { margin-top:24px; padding:24px 0 0; }
+.final-report-package .report-item-section .r-miss > td { background:#EAF0FF; }
+.final-report-package .report-item-section .r-ok > td { background:#fff; }
+.final-report-package .report-item-section .r-miss > td:first-child { border-left:3px solid #2456C4; }
+.final-report-package .report-item-section .t-miss { color:#174298; font-weight:800; }
+@media(max-width:600px){ .final-report-package .report-docssam-note { padding:20px 16px; } }
+@media print {
+  .final-report-package .report-docssam-note { padding:6mm 0; break-inside:avoid; }
+  .final-report-package .docssam-editor { display:none!important; }
+  .final-report-package .report-item-section { padding:4mm 0 0; break-inside:auto!important; page-break-inside:auto!important; break-before:auto; page-break-before:auto; }
+  .final-report-package .report-item-section tbody { break-inside:avoid; page-break-inside:avoid; }
+  .final-report-package .report-item-section thead { display:table-header-group; }
+  .final-report-package .report-item-section table { width:100%; min-width:0; table-layout:fixed; }
+  .final-report-package .report-item-section th,.final-report-package .report-item-section td { overflow-wrap:anywhere; }
+  .final-report-package .report-item-section th:nth-child(3) { width:27%; }
+  .final-report-package .report-item-section th:nth-child(6) { width:12%; }
+  .final-report-package .report-item-section th:nth-child(7) { width:13%; }
+}

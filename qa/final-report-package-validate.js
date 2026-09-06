@@ -38,11 +38,15 @@ const server=http.createServer((req,res)=>{
       assert.ok(await page.locator('.coaching-chart svg').count()>=2);
       const comment=await page.locator('.diagnostic-coaching').innerText();
       assert.match(comment,/반복 약점|되찾을 점수/);assert.doesNotMatch(comment,/\d+명 중|응시 인원|석차 백분율\([0-9]/);
-      assert.match(comment,/이전 회차의 비교 가능한 기록이 없어/);
+      assert.match(comment,/이전 시험 기록이 없어/);
+      const analysis=page.locator('.report-analysis-section');
+      assert.equal(await page.locator('.report-analysis-section>h2').first().innerText(),'영역별 학습 결과');
+      assert.equal(await analysis.locator('.report-tier-section>h2').innerText(),'배점대별 학습 결과');
+      assert.equal(await analysis.locator('.report-tier-section').evaluate(el=>el.nextElementSibling.classList.contains('report-item-section')),true,'item diagnosis follows the point-tier section');
       const order=await page.evaluate(()=>Array.from(document.querySelector('.final-report-package').children).map(el=>el.className));
       assert.ok(order.findIndex(x=>x.includes('curriculum'))<order.findIndex(x=>x.includes('report-detailed-section')));
       if(round===1){assert.equal(await page.locator('.final1-detailed-card.is-ready').count(),30);assert.equal(await page.locator('.final1-detailed-card.is-pending').count(),0);}
-      if(round===2)assert.match(await page.locator('#detailedAnswersSection>.lead').innerText(),/검수가 끝난 4문항만/);
+      if(round===2)assert.match(await page.locator('#detailedAnswersSection>.lead').innerText(),/4문제의 풀이를 볼 수 있습니다/);
       for(const width of [1280,390]){
         await page.setViewportSize({width,height:900});
         for(const selector of ['.personal-study-plan','.diagnostic-coaching','.report-screen-header']){
