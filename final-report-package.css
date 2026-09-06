@@ -1,0 +1,806 @@
+/* 파이널 진단 화면과 인쇄 패키지에만 적용한다. 기존 원본형/최종 화면은 범위 밖이다. */
+.final-report-package {
+  --report-paper: #ffffff;
+  --report-canvas: #f5f6f8;
+  --report-ink: #182230;
+  --report-muted: #566274;
+  --report-line: #d8dee8;
+  --report-blue: #2456c4;
+  --report-blue-soft: #eaf0ff;
+  color: var(--report-ink);
+  background: var(--report-paper);
+}
+
+.report-print-cover,
+.report-fixed-watermark {
+  display: none;
+}
+
+.report-screen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 34px;
+  border-bottom: 3px solid var(--report-blue);
+  background: #fff;
+}
+
+.report-screen-header span {
+  display: block;
+  color: var(--report-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.report-screen-header .print-btn {
+  position: static;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: var(--report-blue);
+  box-shadow: none;
+  max-width: 100%;
+}
+.report-screen-header .print-btn:focus-visible {
+  outline: 3px solid #2456c4;
+  outline-offset: 4px;
+}
+@media (max-width:700px) {
+  .report-screen-header .print-btn {width:100%;margin-top:16px;}
+}
+
+.report-screen-header h1 {
+  margin-top: 3px;
+  color: var(--report-ink);
+  font-size: 25px;
+  line-height: 1.35;
+}
+
+.report-screen-header dl {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+}
+
+.report-screen-header dl div {
+  min-width: 90px;
+  padding: 10px 12px;
+  border-left: 1px solid var(--report-line);
+  text-align: right;
+}
+
+.report-screen-header dt {
+  color: var(--report-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.report-screen-header dd {
+  color: var(--report-blue);
+  font-size: 22px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-screen-header dd small {
+  margin-left: 3px;
+  color: var(--report-muted);
+  font-size: 11px;
+}
+
+.final-report-package > section,
+.final-report-package .report-coaching {
+  color: var(--report-ink);
+  background: #fff;
+}
+
+.final-report-package h2 {
+  color: var(--report-ink);
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 800;
+}
+
+.final-report-package h2::before {
+  background: var(--report-blue);
+}
+
+.final-report-package .lead,
+.final-report-package .dim {
+  color: var(--report-muted);
+}
+
+.final-report-package th {
+  background: var(--report-blue);
+  color: #fff;
+}
+
+.final-report-package td {
+  border-color: var(--report-line);
+}
+
+.final-report-package a,
+.final-report-package .cause li a,
+.final-report-package td a {
+  color: var(--report-blue);
+}
+
+.final-report-package .bar i.g {
+  background: var(--report-blue);
+}
+
+.final-report-package .radar .plate {
+  fill: #f8faff;
+  stroke: var(--report-line);
+}
+
+.final-report-package .radar .ring,
+.final-report-package .radar .grid line {
+  stroke: var(--report-line);
+}
+
+.final-report-package .radar .me-line,
+.final-report-package .radar .d-me {
+  stroke: var(--report-blue);
+}
+
+.final-report-package .radar .d-me {
+  fill: #fff;
+}
+
+.final-report-package .radar .lb .pv {
+  fill: var(--report-blue);
+}
+
+.final-report-package .radar #gMe stop:first-child {
+  stop-color: #5f83d7;
+  stop-opacity: .65;
+}
+
+.final-report-package .radar #gMe stop:last-child {
+  stop-color: var(--report-blue);
+  stop-opacity: .28;
+}
+
+.final-report-package .legend span:first-child s {
+  border-color: var(--report-blue) !important;
+  background: rgba(36, 86, 196, .36) !important;
+}
+
+.final-report-package .cut-reference th {
+  background: var(--report-canvas);
+  color: var(--report-ink);
+}
+
+.final-report-package .cause {
+  border-color: var(--report-line);
+  background: #fff;
+}
+
+.final-report-package .cause-hd,
+.final-report-package .cause-hd b,
+.final-report-package .repwk b {
+  color: var(--report-blue);
+}
+
+.final-report-package .tg-조건,
+.final-report-package .tg-절차,
+.final-report-package .tg-개념 {
+  background: var(--report-blue);
+}
+
+.final-report-package .cause-sum,
+.final-report-package .wp-start,
+.final-report-package .wp-chip.on,
+.final-report-package .weakbtn.on {
+  background: var(--report-blue);
+  color: #fff;
+}
+
+.final-report-package .weakbtn,
+.final-report-package .wp-chip {
+  border-color: var(--report-blue);
+  color: var(--report-blue);
+}
+
+.final-report-package .wrong-practice,
+.final-report-package .able-box,
+.final-report-package .cut-warn {
+  border-color: #aebbd3;
+  background: var(--report-blue-soft);
+  color: var(--report-ink);
+}
+
+.report-coaching {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 2px solid var(--report-line);
+}
+
+.final-report-package .report-coaching .cmt {
+  padding: 0;
+  border: 0;
+  background: #fff;
+  color: var(--report-ink);
+}
+
+.diagnostic-coaching > p:first-child {
+  margin: 0 0 20px;
+  padding: 16px 18px;
+  border-left: 4px solid var(--report-blue);
+  background: var(--report-blue-soft);
+}
+
+.diagnostic-coaching h3 {
+  margin: 28px 0 8px;
+  color: var(--report-ink);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.diagnostic-coaching p {
+  margin: 0 0 12px;
+  color: var(--report-ink);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.coaching-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.coaching-block {
+  padding: 18px;
+  border: 1px solid var(--report-line);
+  border-top: 3px solid var(--report-blue);
+  background: #fff;
+}
+
+.coaching-block h3 {
+  margin-top: 0;
+}
+
+.coaching-chart {
+  margin: 18px 0;
+  padding: 16px;
+  border: 1px solid var(--report-line);
+  background: #fff;
+}
+
+.coaching-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.coaching-chart figcaption {
+  margin-top: 8px;
+  color: var(--report-muted);
+  font-size: 12px;
+}
+
+.coaching-priority {
+  margin-top: 12px;
+  table-layout: fixed;
+}
+
+.coaching-priority th:first-child,
+.coaching-priority td:first-child {
+  width: 26%;
+  white-space: nowrap;
+}
+
+.coaching-priority th,
+.coaching-priority td {
+  padding: 10px 12px;
+  border: 1px solid var(--report-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.diagnostic-coaching ol {
+  padding-left: 22px;
+}
+
+.diagnostic-coaching li {
+  margin-bottom: 14px;
+  padding-left: 4px;
+}
+
+.coaching-caution {
+  padding: 12px 14px;
+  border-left: 3px solid #8290a7;
+  background: var(--report-canvas);
+  color: var(--report-muted) !important;
+  font-size: 13px !important;
+}
+
+.personal-study-plan {
+  margin: 28px 0 22px;
+  padding: 20px !important;
+  border: 1px solid var(--report-line) !important;
+  border-top: 3px solid var(--report-blue) !important;
+  background: #fff;
+}
+
+.personal-study-plan > h3 {
+  margin-top: 0;
+}
+
+.personal-plan-stage {
+  margin-top: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--report-line);
+  background: var(--report-canvas);
+}
+
+.personal-plan-stage h4 {
+  margin: 0 0 4px;
+  color: var(--report-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.personal-plan-stage .plan-when {
+  margin-bottom: 10px;
+  color: var(--report-blue);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.personal-plan-stage ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.personal-plan-stage li {
+  margin-bottom: 7px;
+  line-height: 1.65;
+}
+
+.personal-plan-stage .plan-score {
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--report-line);
+  color: var(--report-blue);
+  font-weight: 800;
+}
+
+.report-item-section #detailWrap,
+.report-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.report-curriculum-section,
+.report-detailed-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.report-curriculum-section .lead,
+.report-detailed-section .lead {
+  padding-left: 0;
+}
+
+.curriculum-table {
+  min-width: 760px;
+  table-layout: fixed;
+}
+
+.curriculum-table th:nth-child(1) { width: 8%; }
+.curriculum-table th:nth-child(2) { width: 22%; }
+.curriculum-table th:nth-child(3) { width: 40%; }
+.curriculum-table th:nth-child(4) { width: 30%; }
+
+.curriculum-table th,
+.curriculum-table td {
+  padding: 11px 10px;
+  border: 1px solid var(--report-line);
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.curriculum-no {
+  color: var(--report-blue);
+  font-weight: 900;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.curriculum-table td > b,
+.curriculum-table td > small,
+.curriculum-table td > em {
+  display: block;
+}
+
+.curriculum-table td > small {
+  margin-top: 3px;
+  color: var(--report-muted);
+  font-size: 11px;
+}
+
+.curriculum-table td > em {
+  margin-top: 7px;
+  color: var(--report-blue);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.curriculum-books,
+.curriculum-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.curriculum-books li,
+.curriculum-points li {
+  margin-bottom: 7px;
+  line-height: 1.55;
+}
+
+.curriculum-books li:last-child,
+.curriculum-points li:last-child {
+  margin-bottom: 0;
+}
+
+.curriculum-books b {
+  display: inline-block;
+  min-width: 74px;
+  margin-right: 7px;
+  color: var(--report-muted);
+  font-size: 10px;
+}
+
+.curriculum-books span,
+.curriculum-points,
+.curriculum-pending {
+  color: var(--report-ink);
+  font-size: 12px;
+}
+
+.curriculum-pending {
+  color: var(--report-muted);
+}
+
+.report-empty,
+.report-pending {
+  padding: 20px;
+  border: 1px solid var(--report-line);
+  background: var(--report-canvas);
+  color: var(--report-muted);
+  text-align: center;
+}
+
+.report-detailed-section .final1-detailed-solutions {
+  margin-top: 0;
+}
+
+.report-detailed-section .detailed-solution {
+  z-index: 0;
+  padding: 22px 0;
+}
+
+.report-detailed-section .solution-watermark {
+  z-index: 0;
+}
+
+.report-detailed-section .detailed-solution h3,
+.report-detailed-section .detailed-solution p {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 700px) {
+  .report-screen-header {
+    display: block;
+    padding: 20px 18px;
+  }
+
+  .report-screen-header h1 {
+    font-size: 22px;
+  }
+
+  .report-screen-header dl {
+    margin-top: 16px;
+  }
+
+  .report-screen-header dl div {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 10px;
+  }
+
+  .report-screen-header dl div:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .report-screen-header dd {
+    font-size: 19px;
+  }
+
+  .coaching-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .personal-study-plan {
+    padding: 16px !important;
+  }
+
+  .personal-plan-stage {
+    padding: 14px;
+  }
+
+  .coaching-priority th:first-child,
+  .coaching-priority td:first-child {
+    width: 34%;
+    white-space: normal;
+  }
+
+  .report-curriculum-section,
+  .report-detailed-section {
+    padding: 26px 18px;
+  }
+}
+
+@media print {
+  .final-report-package {
+    max-width: none;
+    width: auto;
+    box-shadow: none;
+    color: var(--report-ink);
+  }
+
+  .final-report-package .report-screen-header {
+    display: none !important;
+  }
+
+  .report-print-cover {
+    position: relative;
+    display: flex !important;
+    min-height: 260mm;
+    padding: 22mm 18mm 16mm !important;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    border: 0 !important;
+    break-after: page;
+    page-break-after: always;
+    color: var(--report-ink);
+    background: #fff;
+  }
+
+  .report-cover-mark {
+    position: absolute;
+    top: 39%;
+    left: -12%;
+    width: 125%;
+    transform: rotate(-24deg);
+    color: rgba(36, 86, 196, .045);
+    font-size: 66pt;
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-align: center;
+  }
+
+  .report-cover-brand,
+  .report-cover-main,
+  .report-cover-student,
+  .report-cover-index,
+  .report-print-cover footer {
+    position: relative;
+    z-index: 1;
+  }
+
+  .report-cover-brand {
+    padding-bottom: 7mm;
+    border-bottom: 2px solid var(--report-blue);
+    color: var(--report-blue);
+    font-size: 11pt;
+    font-weight: 900;
+    letter-spacing: .18em;
+  }
+
+  .report-cover-main p {
+    margin-bottom: 5mm;
+    color: var(--report-muted);
+    font-size: 13pt;
+  }
+
+  .report-cover-main h1 {
+    color: var(--report-ink);
+    font-family: "Batang", "Noto Serif KR", serif;
+    font-size: 34pt;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  .report-cover-main strong {
+    display: inline-block;
+    margin-top: 9mm;
+    padding: 3mm 6mm;
+    border: 1px solid var(--report-blue);
+    color: var(--report-blue);
+    font-size: 15pt;
+  }
+
+  .report-cover-student {
+    display: grid;
+    grid-template-columns: 28mm 1fr auto;
+    align-items: end;
+    gap: 6mm;
+    padding: 5mm 0;
+    border-top: 1px solid var(--report-line);
+    border-bottom: 1px solid var(--report-line);
+  }
+
+  .report-cover-student span {
+    color: var(--report-muted);
+    font-size: 8pt;
+    letter-spacing: .14em;
+  }
+
+  .report-cover-student b {
+    font-size: 18pt;
+  }
+
+  .report-cover-student i {
+    color: var(--report-blue);
+    font-size: 18pt;
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .report-cover-index {
+    display: flex;
+    gap: 8mm;
+    color: var(--report-muted);
+    font-size: 9.5pt;
+  }
+
+  .report-print-cover footer {
+    color: var(--report-muted);
+    font-size: 8pt;
+  }
+
+  .report-fixed-watermark {
+    position: fixed;
+    top: 49%;
+    left: 7%;
+    right: 7%;
+    z-index: 4;
+    display: block;
+    transform: rotate(-27deg);
+    color: rgba(36, 86, 196, .052);
+    font-size: 24pt;
+    font-weight: 900;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .final-report-package > section:not(.report-print-cover),
+  .final-report-package > .cmp-band {
+    position: relative;
+    z-index: 1;
+  }
+
+  .final-report-package > section:not(.report-print-cover) {
+    padding: 9mm 11mm;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  .report-analysis-section .split,
+  .coaching-grid {
+    gap: 5mm;
+  }
+
+  .diagnostic-coaching,
+  .report-coaching {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .coaching-block,
+  .coaching-chart,
+  .coaching-priority tr,
+  .diagnostic-coaching li,
+  .personal-plan-stage,
+  .curriculum-table tr,
+  .report-empty,
+  .report-pending {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .diagnostic-coaching h3,
+  .report-curriculum-section h2,
+  .report-detailed-section h2 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .diagnostic-coaching p {
+    font-size: 10.5pt;
+    line-height: 1.65;
+  }
+
+  .coaching-block {
+    padding: 4mm;
+  }
+
+  .coaching-chart {
+    padding: 4mm;
+  }
+
+  .personal-study-plan {
+    padding: 4mm !important;
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .personal-plan-stage {
+    padding: 3.5mm 4mm;
+  }
+
+  .personal-plan-stage h4 {
+    font-size: 11pt;
+  }
+
+  .personal-plan-stage .plan-when,
+  .personal-plan-stage .plan-score {
+    font-size: 9pt;
+  }
+
+  .coaching-priority th,
+  .coaching-priority td {
+    padding: 2.5mm 3mm;
+  }
+
+  .report-curriculum-section,
+  .report-detailed-section {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .report-table-scroll,
+  .report-item-section #detailWrap {
+    overflow: visible;
+  }
+
+  .curriculum-table {
+    min-width: 0;
+    font-size: 8.5pt;
+  }
+
+  .curriculum-table th,
+  .curriculum-table td {
+    padding: 2.5mm 2mm;
+  }
+
+  .curriculum-books span,
+  .curriculum-points,
+  .curriculum-pending {
+    font-size: 8pt;
+  }
+
+  .curriculum-books b {
+    min-width: 19mm;
+    font-size: 7.5pt;
+  }
+
+  .report-detailed-section .final1-detailed-solutions {
+    margin-top: 0;
+  }
+
+  body.print-final1-solutions .report-print-cover,
+  body.print-final1-solutions .report-fixed-watermark,
+  body.print-final1-solutions .report-screen-header {
+    display: none !important;
+  }
+}

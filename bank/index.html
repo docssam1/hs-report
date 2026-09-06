@@ -64,6 +64,7 @@
   .wm-layer{position:absolute;inset:0;display:flex;flex-wrap:wrap;align-content:flex-start;justify-content:center;gap:26px 40px;transform:rotate(-24deg) scale(1.35);opacity:0;pointer-events:none;z-index:5;padding:40px 0}
   .wm-layer.wm-active{opacity:.13}
   .wm-tile{color:#111;font-size:16px;font-weight:800;white-space:nowrap}
+  .bank-watermark-clip{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:5}
 
   /* 표지 */
   .cover{display:flex;flex-direction:column;height:265mm;min-height:265mm;text-align:left;position:relative;z-index:2;border-top:7px solid var(--navy)}
@@ -427,7 +428,7 @@
     var pointLabel = POINT_NAMES[paper.pointBand] || '전체 배점';
     var tuneLabel = paper.difficultyMix==='single' ? (TUNE_NAMES[paper.difficultyMode] || '기준 난이도') : DIFFICULTY_MIX_NAMES[paper.difficultyMix];
     return '' +
-      '<div class="wm-layer"></div>' +
+      '<div class="bank-watermark-clip"><div class="wm-layer"></div></div>' +
       '<div class="cover">' +
         '<div class="cover-masthead">' +
           '<div><div class="brand">GFIELD THINKING MATH</div><div class="series">생각하는 초등 · 약점 유형 학습 시리즈</div></div>' +
@@ -465,7 +466,7 @@
   }
 
   function buildQPageHtml(group, examNo, pageIdx, pageTotal){
-    var body = '<div class="wm-layer"></div><div class="qpage">' +
+    var body = '<div class="bank-watermark-clip"><div class="wm-layer"></div></div><div class="qpage">' +
       '<div class="qhead"><span class="t">지필드 생각하는 초등 황소 약점 유형 문제은행</span><span class="n">' + esc(examNo) + ' · ' + pageIdx + '/' + pageTotal + '</span></div>';
     group.forEach(function(qq){
       var asset = qq.asset;
@@ -505,7 +506,7 @@
     });
     var rowChunks = chunk(rowsHtml, fixedBankMode ? 6 : 14);
     return rowChunks.map(function(rows, i){
-      return '<div class="wm-layer"></div>' +
+      return '<div class="bank-watermark-clip"><div class="wm-layer"></div></div>' +
         '<div class="anshead">정답 및 해설<span>' + esc(examNo) + ' · ' + (i+1) + '/' + rowChunks.length + '</span></div>' +
         '<table class="anstable"><thead><tr><th style="width:8%">번호</th><th style="width:12%">정답</th><th style="width:22%">유형</th><th>해설</th></tr></thead>' +
         '<tbody>' + rows.join('') + '</tbody></table>';
@@ -549,7 +550,7 @@
       var tmp = [];
       var cur = [];
       wrapDiv.childNodes.forEach(function(node){
-        if (node.nodeType===1 && node.classList.contains('wm-layer')){
+        if (node.nodeType===1 && node.classList.contains('bank-watermark-clip')){
           if (cur.length) tmp.push(cur);
           cur = [node.outerHTML];
         } else if (node.nodeType===1){

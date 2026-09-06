@@ -25,12 +25,87 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
 .kpi b{font-family:'Jua';font-size:21px;font-weight:400}
 .kpi b small{font-size:12px;color:#c7d6ef;font-family:'Noto Sans KR'}
 section{padding:34px 46px;border-bottom:1px solid var(--line)}
+.cut-reference{color:#182230;background:#fff;position:relative;isolation:isolate;overflow:hidden}
+.cut-reference h2::before{background:#2456C4}
+.cut-reference .lead{color:#566274;padding-left:0}
+.cut-reference th{background:#F5F6F8;color:#182230;font-weight:700}
+.cut-reference td{border-color:#D8DEE8;overflow-wrap:anywhere}
+.cut-reference th:first-child{width:50%}
+.cut-reference .cut-number{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cut-reference tr{break-inside:avoid}
+.cut-reference .cut-watermark{position:absolute;inset:0;overflow:hidden;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:-1;color:rgba(24,34,48,.045);font-size:24px}
+.cut-reference .cut-watermark span{transform:rotate(-18deg)}
+@media(max-width:480px){.cut-reference{padding:24px 16px}.cut-reference th,.cut-reference td{font-size:12px;padding:9px 6px}}
+@media print{.cut-reference{break-inside:avoid}.cut-reference th{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 h2{font-family:'Jua';font-size:19px;color:var(--navy);font-weight:400;margin-bottom:4px;display:flex;align-items:center;gap:9px}
 h2::before{content:"";width:5px;height:18px;background:linear-gradient(var(--orange),var(--orange-d));border-radius:3px}
 .lead{font-size:13px;color:var(--dim);margin-bottom:16px;padding-left:14px}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{background:var(--navy);color:#fff;font-weight:500;padding:9px 8px;font-size:12px}
 td{padding:8px;border-bottom:1px solid var(--line)}
+.detailed-solutions{margin-top:24px;color:#182230}
+.detailed-solution{position:relative;isolation:isolate;overflow:hidden;padding:20px 0;border-top:1px solid #D8DEE8;background:#fff;break-inside:avoid}
+.detailed-solution h3{font-size:17px;margin-bottom:12px;break-after:avoid}
+.detailed-solution p{white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;line-height:1.9;margin:0 0 12px}
+.solution-watermark{position:absolute;inset:0;z-index:-1;pointer-events:none;display:flex;flex-direction:column;justify-content:space-around;overflow:hidden}
+.solution-watermark span{display:block;text-align:center;transform:rotate(-25deg);font-size:24px;font-weight:800;color:rgba(24,34,48,.08)}
+@media print{.detailed-solution{break-inside:avoid}.detailed-solution p{font-size:11pt;line-height:1.65}}
+.final1-detailed-solutions{--f1-paper:#fff;--f1-bg:#f5f6f8;--f1-ink:#182230;--f1-muted:#566274;--f1-line:#d8dee8;--f1-blue:#2456c4;margin-top:28px;color:var(--f1-ink);font-size:16px;line-height:1.75}
+.final1-solutions-head{padding:24px;border:1px solid var(--f1-line);border-bottom:3px solid var(--f1-blue);background:var(--f1-paper)}
+.final1-solutions-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+.final1-solutions-head h3{margin:0;color:var(--f1-ink);font:700 24px/1.4 'Noto Sans KR',sans-serif}
+.final1-solutions-head p{margin:6px 0 0;color:var(--f1-muted);font-size:14px}
+.final1-print-only{min-height:44px;padding:10px 16px;border:1px solid var(--f1-blue);border-radius:6px;background:var(--f1-blue);color:#fff;font:700 14px 'Noto Sans KR',sans-serif;cursor:pointer;white-space:nowrap}
+.final1-print-only:focus-visible,.final1-jump a:focus-visible{outline:3px solid rgba(36,86,196,.28);outline-offset:3px}
+.final1-jump{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:20px;padding-top:16px;border-top:1px solid var(--f1-line)}
+.final1-jump strong{margin-right:4px;color:var(--f1-muted);font-size:13px}
+.final1-jump a{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;padding:4px 8px;border:1px solid #aebbd3;border-radius:5px;background:#fff;color:var(--f1-blue);font-size:13px;font-weight:700;text-decoration:none}
+.final1-detailed-card{position:relative;isolation:isolate;overflow:hidden;margin:20px 0 0;padding:26px;border:1px solid var(--f1-line);border-left:4px solid var(--f1-blue);background:var(--f1-paper);scroll-margin-top:16px}
+.final1-card-content{position:relative;z-index:1}
+.final1-watermark{position:absolute;inset:0;z-index:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-around;overflow:hidden}
+.final1-watermark span{display:block;text-align:center;transform:rotate(-25deg);color:rgba(36,86,196,.055);font-size:25px;font-weight:900;white-space:nowrap}
+.final1-solution-heading{display:flex;align-items:flex-start;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--f1-line)}
+.final1-no{display:inline-flex;flex:0 0 auto;align-items:center;justify-content:center;min-width:52px;min-height:34px;padding:4px 10px;border-radius:999px;background:var(--f1-blue);color:#fff;font-weight:900;font-size:14px}
+.final1-solution-heading h4{margin:1px 0 0;color:var(--f1-ink);font-size:20px;line-height:1.5}
+.final1-status{display:block;margin-top:3px;color:var(--f1-muted);font-size:12px;font-weight:500}
+.final1-answer{margin:18px 0;padding:13px 16px;border:1px solid #aebbd3;background:#edf3ff;color:var(--f1-ink);font-size:15px}
+.final1-answer strong{color:var(--f1-blue)}
+.final1-solution-block{margin-top:20px}
+.final1-solution-block h5,.final1-step h5{margin:0 0 7px;color:var(--f1-blue);font-size:15px;line-height:1.5}
+.final1-solution-block p,.final1-step p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--f1-ink);font-size:16px;line-height:1.85}
+.final1-steps{margin-top:20px;border-top:1px solid var(--f1-line)}
+.final1-step{padding:18px 0;border-bottom:1px solid var(--f1-line)}
+.final1-step-index{display:inline-flex;align-items:center;justify-content:center;min-width:27px;height:27px;margin-right:8px;border:1px solid var(--f1-blue);border-radius:50%;color:var(--f1-blue);font-size:12px;font-weight:900;vertical-align:1px}
+.final1-data-table-wrap{max-width:100%;margin-top:14px;overflow-x:auto}
+.final1-data-table{min-width:420px;border-collapse:collapse;background:#fff;font-size:14px}
+.final1-data-table caption{padding:0 0 8px;color:var(--f1-muted);font-size:13px;font-weight:700;text-align:left}
+.final1-data-table th{padding:9px 10px;border:1px solid #aebbd3;background:#edf3ff;color:var(--f1-ink);font-size:13px;font-weight:700;text-align:center}
+.final1-data-table td{padding:9px 10px;border:1px solid #aebbd3;color:var(--f1-ink);text-align:center}
+.final1-number-line{margin-top:18px;padding:16px;border:1px solid var(--f1-line);background:#fff}
+.final1-number-line figcaption{margin-bottom:10px;color:var(--f1-muted);font-size:13px;font-weight:700}
+.final1-number-line-scroll{max-width:100%;overflow-x:auto}
+.final1-number-line svg{display:block;width:100%;min-width:620px;height:auto}
+.final1-number-line .axis{stroke:var(--f1-ink);stroke-width:2}
+.final1-number-line .tick{stroke:var(--f1-blue);stroke-width:2}
+.final1-number-line .point{fill:var(--f1-blue)}
+.final1-number-line text{fill:var(--f1-ink);font:700 14px 'Noto Sans KR',sans-serif}
+.final1-number-line .distance-label{fill:var(--f1-muted);font-size:12px;font-weight:500}
+.final1-distance-table{min-width:0;margin-top:12px;font-size:13px}
+.final1-distance-table th,.final1-distance-table td{padding:7px 8px;border:1px solid #aebbd3;text-align:center}
+.final1-distance-table th{background:#edf3ff;color:var(--f1-ink)}
+.final1-check{padding:15px 16px;border-left:3px solid #16734b;background:#f2faf6}
+.final1-caution{padding:15px 16px;border-left:3px solid #b42332;background:#fff5f5}
+.final1-detailed-card.is-pending{border-left-color:#8290a7;background:var(--f1-bg)}
+.final1-detailed-card.is-pending .final1-no{background:#566274}
+.final1-pending-copy{margin:18px 0 0;color:var(--f1-muted);font-size:15px}
+.final1-print-watermark{display:none}
+@media(max-width:700px){
+  .final1-detailed-solutions{font-size:16px}.final1-solutions-head{padding:20px 16px}.final1-solutions-title-row{display:block}.final1-solutions-head h3{font-size:21px}.final1-print-only{width:100%;margin-top:14px}.final1-jump{gap:8px}.final1-jump a{min-width:42px;min-height:42px}.final1-detailed-card{padding:22px 16px}.final1-solution-heading{gap:9px}.final1-solution-heading h4{font-size:18px}.final1-solution-block p,.final1-step p{font-size:16px}.final1-data-table-wrap{margin-right:-16px;padding-right:16px}
+}
+@media print{
+  .detail-section{break-inside:auto!important}.final1-detailed-solutions{margin-top:8mm;font-size:11pt}.final1-solutions-head{padding:0 0 6mm;border-width:0 0 2px}.final1-solutions-head h3{font-size:19pt}.final1-jump,.final1-print-only{display:none!important}.final1-detailed-card{break-inside:auto!important;page-break-inside:auto!important;margin-top:7mm;padding:6mm;border-color:#aebbd3}.final1-solution-heading,.final1-answer,.final1-solution-block,.final1-step,.final1-number-line,.final1-data-table-wrap{break-inside:avoid;page-break-inside:avoid}.final1-solution-block p,.final1-step p{font-size:11pt;line-height:1.72}.final1-data-table-wrap{overflow:visible}.final1-data-table{min-width:0;font-size:9.5pt}.final1-number-line-scroll{overflow:visible}.final1-number-line svg{min-width:0}.final1-watermark span{color:rgba(36,86,196,.07)}.final1-print-watermark{display:block;position:fixed;left:12%;right:12%;top:48%;z-index:0;transform:rotate(-28deg);color:rgba(36,86,196,.055);font-size:26pt;font-weight:900;text-align:center;pointer-events:none}.final1-card-content,.final1-solutions-head{position:relative;z-index:1}
+  body.print-final1-solutions .doc>.cover,body.print-final1-solutions .doc>.cmp-band,body.print-final1-solutions .doc>section:not(.detail-section){display:none!important}body.print-final1-solutions .detail-section{padding:0;border:0}body.print-final1-solutions .detail-section>h2,body.print-final1-solutions .detail-section>.lead,body.print-final1-solutions #detailWrap>table{display:none!important}body.print-final1-solutions .final1-detailed-solutions{margin-top:0}
+}
 td.c{text-align:center} td.dim{color:var(--dim)} .mono{font-family:ui-monospace,monospace;font-size:12px}
 tr.r-ok{background:#f6fbf6} tr.r-miss{background:#fff6ed}
 .ty b{display:block;font-weight:700;font-size:13px} .ty i{font-style:normal;font-size:11px;color:var(--dim)}
@@ -336,6 +411,7 @@ td.weak-cell{white-space:nowrap}
   .paper-foot{position:absolute;margin-top:0}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 }
 </style>
+<link rel="stylesheet" href="final-report-package.css">
 </head>
 <body>
 <div id="app"></div>
@@ -346,10 +422,14 @@ td.weak-cell{white-space:nowrap}
   var p=new URLSearchParams(location.search);
   var isLast=p.get('set')==='last';
   var isOriginal=p.get('set')==='original';
+  var requestedRound=p.get('round');
+  var isFinal1=!isLast&&!isOriginal&&(requestedRound==null||requestedRound===''||(/^\d+$/.test(requestedRound)&&Number(requestedRound)===1));
   var mockFile=isLast?'mock-data-last.js':(isOriginal?'mock-data-original.js':'mock-data-final.js');
   var files=['data.js',mockFile];
   if(!isOriginal) files.push('mock-data-original.js');
   files.push('bank/bank-registry.js');
+  if(!isLast&&!isOriginal) files.push('mock-rx-data.js','final-diagnostic-comment.js');
+  if(isFinal1) files.push('final1-detailed-data.js','final-detailed-solutions.js');
   if(isLast) files.push(
     'mock-data-last3.js',
     'mock-data-last4.js',
@@ -485,6 +565,27 @@ td.weak-cell{white-space:nowrap}
     var nearDn = (score-dn[1])<=3;
     return {grade:dn[0], dn:dn, up:up, near:(nearUp||nearDn)};
   }
+  function cutReferenceHTML(ctx){
+    var S=ctx.S||{}, cuts=(S.cuts||[]).filter(function(c){
+      return Array.isArray(c)&&c[0]!=='노력요함'&&Number.isFinite(c[1])&&c[1]>0&&c[1]<=100;
+    }).slice().sort(function(a,b){return b[1]-a[1];});
+    if(!cuts.length) return '';
+    var verified=populationStatsVerified(S);
+    var rows=cuts.map(function(c){
+      // A cutoff below the lowest observed score is the bottom of the cohort,
+      // not an impossible percentile greater than 100. Ties use shared rank.
+      var pct=verified?Math.min(100,percentileOf(c[1],S.dist,S.n)):null;
+      return '<tr><td>'+esc(c[0])+'</td><td class="cut-number">'+c[1]+'점</td><td class="cut-number">'+(pct===null?'확인 중':pct.toFixed(1)+'%')+'</td></tr>';
+    }).join('');
+    return '<section class="cut-reference" aria-labelledby="cut-reference-title">'+
+      '<div class="cut-watermark" aria-hidden="true"><span>지필드 영재교육 · 개인 학습 자료</span></div>'+
+      '<h2 id="cut-reference-title">등급별 컷 기준</h2>'+
+      '<p class="lead">회차별 참고 기준이며 실제 반 배정을 보장하지 않습니다.</p>'+
+      '<table><thead><tr><th scope="col">구분</th><th scope="col" class="cut-number">컷 점수</th><th scope="col" class="cut-number">컷 백분율</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+      '<p class="lead" style="margin-top:12px;margin-bottom:0">'+(verified?
+        '제공된 동일 회차 성적 기준입니다. 컷 점수의 석차 백분율로, 작을수록 상위 구간입니다. 동점은 공동석차로 계산합니다.':
+        '컷 백분율은 제공 성적 원자료와 점수 분포를 대조한 뒤 표시합니다.')+'</p></section>';
+  }
   /* 전체 평균·분포·문항 정답률은 출처가 명시된 실측 자료만 진단에 쓴다.
      단순 숫자 배열이나 다른 회차에서 비례 복제한 값은 개인 진단에 섞지 않는다. */
   function populationStatsVerified(S){
@@ -605,9 +706,12 @@ td.weak-cell{white-space:nowrap}
   }
   function missItems(items, oxArr, rate, pct){
     if(pct==null) return [];
-    var out=[];
-    items.forEach(function(it){ if(oxArr[it.no-1]==='X' && (rate[it.no]*100)>pct) out.push(it.no); });
-    return out;
+    var strongAreas={};
+    // 70%는 강점 영역과 특히 높은 문항 정답률을 가르는 초기 운영 기준이다.
+    areaAgg(items,oxArr,rate,false).forEach(function(area){if(area.n>=2&&area.perf>=70) strongAreas[area.k]=true;});
+    return items.filter(function(it){
+      return oxArr[it.no-1]==='X'&&strongAreas[it.area]&&Number(rate[it.no])>=0.7;
+    }).sort(function(a,b){return Number(rate[b.no])-Number(rate[a.no])||a.no-b.no;}).map(function(it){return it.no;});
   }
   function causeGroups(items, oxArr){
     var wrongList=[]; var g={"조건":[],"절차":[],"개념":[]};
@@ -713,7 +817,7 @@ td.weak-cell{white-space:nowrap}
     var pts = round1(list.reduce(function(s,i){return s+BP(i.no).pts;},0));
     var li = list.map(function(i){
       var b=BP(i.no); var r=ctx.populationVerified?(' · 전체 정답률 '+(ctx.rate[i.no]*100).toFixed(0)+'%'):'';
-      var able = ctx.populationVerified&&ctx.miss.indexOf(i.no)>=0 ? '<span class="able">충분히 맞힐 수 있었음</span>' : '';
+      var able = ctx.populationVerified&&ctx.miss.indexOf(i.no)>=0 ? '<span class="able">강점 영역 우선 복습 후보</span>' : '';
       return '<li><span class="no">'+i.no+'번</span><b>'+esc(i.type)+'</b><em>'+b.pts+'점'+r+'</em>'+able+
         '<p class="cau-p"><s>조심할 점</s>'+esc(i.caution)+'</p>'+
         '<a href="'+esc(ctx.R.video)+'?t='+i.t+'" target="_blank" rel="noopener">풀이 영상 보기 ▶</a>'+
@@ -723,8 +827,9 @@ td.weak-cell{white-space:nowrap}
   }
   function ableBoxHTML(ctx){
     if(!ctx.populationVerified) return '<div class="able-box">전체 문항 정답률과 석차 비교 자료는 출처·표본·산출 방식 검증이 끝나지 않아 표시하지 않습니다. 현재 진단은 학생의 실제 정오, 배점, 대영역과 소영역 수행만 사용합니다.</div>';
+    if(!ctx.miss.length) return '<div class="able-box">강점 영역 수행률과 문항 정답률을 함께 보는 초기 운영 기준(각 70% 이상)에 맞는 우선 복습 후보는 없습니다. 다른 오답도 실제 풀이를 확인해 학습 순서를 정합니다.</div>';
     var missTxt = ctx.miss.length? ctx.miss.map(function(n){return n+'번';}).join(', ') : '없음';
-    return '<div class="able-box">자신의 석차 백분율('+ctx.pct+'%)보다 정답률이 높았던 문항은 <b>'+ctx.miss.length+'개</b>('+missTxt+'), 배점 합 <b>'+ctx.gain+'점</b>입니다. 이것만 잡았다면 <b>'+ctx.newScore+'점 · 석차 '+ctx.pct+'% → '+ctx.newPct+'%</b>가 됩니다.</div>';
+    return '<div class="able-box">개인 수행률 70% 이상인 강점 영역에서 전체 정답률도 70% 이상인데 놓친 우선 복습 후보는 <b>'+ctx.miss.length+'개</b>('+missTxt+'), 배점 합 <b>'+ctx.gain+'점</b>입니다. 70%는 초기 운영 기준이며, 이 문항만 바로잡고 다른 답안이 같다면 <b>'+ctx.newScore+'점 · 석차 백분율 '+ctx.pct+'% → '+ctx.newPct+'%</b>입니다.</div>';
   }
   function causeWrapHTML(ctx){
     return causeBlock('조건',ctx)+causeBlock('절차',ctx)+causeBlock('개념',ctx)+ableBoxHTML(ctx);
@@ -733,7 +838,7 @@ td.weak-cell{white-space:nowrap}
     return ctx.items.map(function(it){
       var n=it.no, p=BP(n).pts, r=ctx.populationVerified?ctx.rate[n]*100:null, ok=ctx.oxArr[n-1]!=='X';
       var cl = ok? 'r-ok' : (ctx.miss.indexOf(n)>=0? 'r-miss':'');
-      var tag = ok? '<span class="t-ok">정답</span>' : (ctx.populationVerified?(ctx.miss.indexOf(n)>=0?'<span class="t-miss">충분히 맞힐 수 있었음</span>':'<span class="t-hard">다수가 오답</span>'):'<span class="t-hard">개인 오답</span>');
+      var tag = ok? '<span class="t-ok">정답</span>' : (ctx.populationVerified?(ctx.miss.indexOf(n)>=0?'<span class="t-miss">강점 영역 우선 복습 후보</span>':'<span class="t-hard">개인 오답</span>'):'<span class="t-hard">개인 오답</span>');
       var rateHtml=ctx.populationVerified?barHTML(r,r>=ctx.pct?'g':''):'<span class="dim">검증 대기</span>';
       var popCells=ctx.populationVerified?('<td class="rt">'+rateHtml+'</td><td class="c">'+tag+'</td>'):'';
       var tx=taxonomyOf(ctx.roundNum,it);
@@ -745,6 +850,71 @@ td.weak-cell{white-space:nowrap}
   function detailTableHTML(ctx){
     var popHead=ctx.populationVerified?'<th>전체 정답률</th><th>판정</th>':'';
     return '<table><tr><th>번호</th><th>정오</th><th>세부유형 / 대영역 › 소영역</th><th>배점</th><th>정답</th>'+popHead+'<th>영상</th><th class="weak-cell no-print">약점 표시</th></tr>'+detailRowsHTML(ctx)+'</table>';
+  }
+  function detailedAnswersSectionHTML(ctx){
+    if(isLast||isOriginal) return '';
+    if(ctx.roundNum===1&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.render==='function'){
+      return '<section class="detail-section report-detailed-section" id="detailedAnswersSection" aria-label="검수된 상세 답안">'+window.GFIELD_FINAL1_DETAILED_RENDERER.render({data:window.GFIELD_FINAL1_DETAILED,roundItems:ctx.items})+'</section>';
+    }
+    var solutionItems=ctx.items.filter(function(it){return it.detailedSolution===true&&it.comment;});
+    var solutions=solutionItems.map(function(it){
+      var paragraphs=String(it.comment).split(/\n\s*\n/).map(function(p){return '<p>'+esc(p)+'</p>';}).join('');
+      return '<article class="detailed-solution" data-solution-no="'+it.no+'"><div class="solution-watermark" aria-hidden="true"><span>지필드 영재교육</span><span>지필드 영재교육</span><span>지필드 영재교육</span></div><h3>'+it.no+'번 상세 풀이 · 정답 '+esc(it.answer)+'</h3>'+paragraphs+'</article>';
+    }).join('');
+    var lead=solutions
+      ? '현재 원문 대조와 계산 검수가 끝난 '+solutionItems.length+'문항만 표시합니다. 나머지 문항은 확인 중입니다.'
+      : '현재 이 회차에서 검수가 끝난 상세 답안이 없습니다. 확인 전 풀이를 완료된 자료처럼 표시하지 않습니다.';
+    return '<section class="detail-section report-detailed-section" id="detailedAnswersSection" aria-labelledby="detailed-answers-title"><h2 id="detailed-answers-title">검수된 상세 답안</h2><div class="lead">'+lead+'</div>'+(solutions?'<div class="detailed-solutions">'+solutions+'</div>':'<div class="report-pending">상세 답안 확인 중</div>')+'</section>';
+  }
+  function prescriptionRows(){
+    try{return typeof PRESCRIPTION!=='undefined'&&Array.isArray(PRESCRIPTION)?PRESCRIPTION:[];}catch(e){return [];}
+  }
+  function prescriptionOf(type){
+    var best=null,bestLength=0,source=String(type||'');
+    prescriptionRows().forEach(function(row){
+      (row.kw||[]).forEach(function(keyword){
+        keyword=String(keyword||'');
+        if(keyword&&source.indexOf(keyword)>=0&&keyword.length>bestLength){best=row;bestLength=keyword.length;}
+      });
+    });
+    return best;
+  }
+  function curriculumBookRows(rx){
+    var categories=['시중교재','소마','필즈더클래식','지필드'];
+    if(!(rx&&rx.books)) return [];
+    return categories.map(function(category){
+      var book=Array.isArray(rx.books[category])?rx.books[category][0]:null;
+      return book&&book.b&&book.u?{category:category,title:String(book.b),unit:String(book.u)}:null;
+    }).filter(Boolean);
+  }
+  function curriculumBooksForItem(item){ return curriculumBookRows(prescriptionOf(item&&item.type)); }
+  function curriculumBooksHTML(rx){
+    var lines=curriculumBookRows(rx).map(function(book){
+      return '<li><b>'+esc(book.category)+'</b><span>'+esc(book.title)+' · '+esc(book.unit)+'</span></li>';
+    });
+    return lines.length?'<ul class="curriculum-books">'+lines.join('')+'</ul>':'<span class="curriculum-pending">연결 확인 중</span>';
+  }
+  function curriculumConnectionHTML(ctx){
+    if(isLast||isOriginal) return '';
+    var wrong=ctx.wrongList||[];
+    if(!wrong.length){
+      return '<section class="report-curriculum-section" id="curriculumConnection" aria-labelledby="curriculum-title"><h2 id="curriculum-title">오답 기준 교재 연결표</h2><div class="lead">실제 오답 유형의 키워드와 기존 교재 처방 자료를 연결합니다.</div><div class="report-empty">이번 회차는 오답이 없어 자동 권장 교재가 없습니다.</div></section>';
+    }
+    var rows=wrong.map(function(item){
+      var tx=taxonomyOf(ctx.roundNum,item),candidate=!!tx.reviewRequired,rx=prescriptionOf(item.type);
+      var displayType=candidate?'분류 확인 중':(tx.detailType||tx.displayType||item.type);
+      var status=rx?'유형 키워드 기반 추천':'교재 연결 확인 중';
+      if(candidate) status+=' · 유형 분류 확인 중';
+      var points=rx&&Array.isArray(rx.pts)&&rx.pts.length?'<ul class="curriculum-points">'+rx.pts.map(function(point){return '<li>'+esc(point)+'</li>';}).join('')+'</ul>':'<span class="curriculum-pending">학습 포인트 확인 중</span>';
+      return '<tr data-curriculum-no="'+item.no+'"><td class="curriculum-no">'+item.no+'번</td><td><b>'+esc(displayType)+'</b><small>'+esc((tx.area||item.area||'')+(tx.subarea&&!candidate?' › '+tx.subarea:''))+'</small><em>'+esc(status)+'</em></td><td>'+curriculumBooksHTML(rx)+'</td><td>'+points+'</td></tr>';
+    }).join('');
+    return '<section class="report-curriculum-section" id="curriculumConnection" aria-labelledby="curriculum-title"><h2 id="curriculum-title">오답 기준 교재 연결표</h2><div class="lead">학생의 실제 오답만 가져와 기존 교재 처방 자료의 유형 키워드와 연결했습니다. 표의 순서는 등록된 권장 우선순위이며, 확인되지 않은 목차나 쪽수는 만들지 않습니다.</div><div class="report-table-scroll"><table class="curriculum-table"><thead><tr><th scope="col">오답</th><th scope="col">진단 유형</th><th scope="col">권장 학습 위치</th><th scope="col">학습 포인트</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>';
+  }
+  function reportScreenHeaderHTML(ctx){
+    return '<header class="report-screen-header"><div><span>초등선발 대비 파이널 '+ctx.roundNum+'회 진단</span><h1>'+esc(ctx.name)+' 학생</h1></div><dl><div><dt>점수</dt><dd>'+ctx.score+'<small>/100</small></dd></div><div><dt>정답</dt><dd>'+ctx.ncorr+'<small>/30</small></dd></div><div><dt>오답</dt><dd>'+ctx.wrong+'<small>문항</small></dd></div></dl></header>';
+  }
+  function reportPrintCoverHTML(ctx){
+    return '<section class="report-print-cover" aria-label="파이널 진단 학습 패키지 표지"><div class="report-cover-mark" aria-hidden="true">G·FIELD</div><div class="report-cover-brand">지필드 영재교육</div><div class="report-cover-main"><p>초등선발 대비</p><h1>파이널 모의고사<br>진단 학습 패키지</h1><strong>파이널 '+ctx.roundNum+'회</strong></div><div class="report-cover-student"><span>STUDENT</span><b>'+esc(ctx.name)+'</b><i>'+ctx.score+'점</i></div><div class="report-cover-index"><span>01 진단분석</span><span>02 오답 교재 연결</span><span>03 현재 확인된 상세답안</span></div><footer>G·FIELD GIFTED EDUCATION · 개인 학습 자료</footer></section>';
   }
 
   function wrongPracticeModel(ctx){
@@ -818,6 +988,16 @@ td.weak-cell{white-space:nowrap}
     return html;
   }
   function buildComment(ctx, weakMap){
+    if(!isLast&&!isOriginal&&window.GFIELD_DIAGNOSTIC_COMMENT&&typeof window.GFIELD_DIAGNOSTIC_COMMENT.render==='function'){
+      try{
+        var diagnostic=window.GFIELD_DIAGNOSTIC_COMMENT.render(ctx,{escape:esc,taxonomy:taxonomyOf,points:function(no){return BP(no).pts;},verifyPopulation:populationStatsVerified,history:ctx.personalHistory||[],books:function(no){
+          var item=ctx.items.filter(function(row){return Number(row.no)===Number(no);})[0];
+          if(!item||taxonomyOf(ctx.roundNum,item).reviewRequired) return [];
+          return curriculumBooksForItem(item).map(function(book){return {title:book.title,unit:book.unit};});
+        }});
+        if(typeof diagnostic==='string'&&diagnostic.trim()) return roundTeacherCommentHTML(ctx)+diagnostic+weakRepeatCommentHTML(ctx,weakMap);
+      }catch(e){}
+    }
     var nw=ctx.wrongList.length, nc=ctx.g["조건"].length, npr=ctx.g["절차"].length, ncp=ctx.g["개념"].length;
     var weak = ctx.A.reduce(function(a,b){ return b.perf<a.perf? b:a; });
     var weakP = ctx.P.reduce(function(a,b){ return b.perf<a.perf? b:a; });
@@ -843,7 +1023,7 @@ td.weak-cell{white-space:nowrap}
     return roundNote+'<p><b>'+esc(ctx.name)+'</b> 학생은 이번 초등선발 대비 실전 파이널 모의고사 '+ctx.roundNum+'회에서 <b>'+ctx.score+'점</b>(응시자 평균 '+ctx.S.mean+'점)을 얻어 30문항 중 <b>'+ctx.ncorr+'문항</b>을 맞혔습니다. 석차는 <b>'+ctx.pct+'%</b>, <b>'+esc(ctx.grade)+'</b> 정도가 예상됩니다.</p>'+
       '<p>오답 '+nw+'문항의 복습 체크 항목은 <b>조건·지문 '+nc+'문항</b>, 풀이 절차 '+npr+'문항, 개념 확인 '+ncp+'문항입니다. 이는 문항에 등록한 주의점이며 실제 오답 원인은 풀이 확인 뒤 결정합니다.</p>'+
       '<p>수치로 보면 <b>'+weakP.k+'점 문항의 수행률이 '+weakP.perf.toFixed(0)+'%</b>로 가장 낮습니다. 배점이 낮은 문항과 높은 문항은 풀었는데 그 사이 구간에서 무너졌습니다. 영역으로는 <b>'+esc(weak.k)+'</b>이 '+weak.perf.toFixed(0)+'%이고 전체 평균이 '+weak.crowd.toFixed(0)+'%이니 '+crowdLine+'입니다.</p>'+
-      '<p><b>자신의 석차 백분율('+ctx.pct+'%)보다 정답률이 높은 문제는 충분히 맞힐 수 있는 문제</b>입니다. 이번에 그런 문항이 <b>'+ctx.miss.length+'개</b>('+missTxt+') 있었고 배점 합이 <b>'+ctx.gain+'점</b>입니다. 이것만 잡았다면 <b>'+ctx.newScore+'점 · 석차 '+ctx.newPct+'%</b>가 됩니다.</p>'+
+      '<p>개인 수행률과 문항 정답률이 모두 70% 이상인 강점 영역 우선 복습 후보는 <b>'+ctx.miss.length+'개</b>('+missTxt+'), 배점 합 <b>'+ctx.gain+'점</b>입니다. 70%는 초기 운영 기준이며, 이 문항만 바로잡고 다른 답안이 같다면 <b>'+ctx.newScore+'점 · 석차 백분율 '+ctx.newPct+'%</b>입니다.</p>'+
       '<p>다시 풀어 답을 맞춰 보는 것보다 <b>풀이 강의를 들으며 여러 번 공부해야</b> 황소에 가서도 퀵테스트·단원평가에 대비하며 관리할 수 있습니다.</p>'+
       weakRepeatCommentHTML(ctx, weakMap);
   }
@@ -1124,6 +1304,7 @@ td.weak-cell{white-space:nowrap}
     computeScore:computeScore, percentileOf:percentileOf, populationStatsVerified:populationStatsVerified,
     publicCutVerified:publicCutVerified,
     cutInfo:cutInfo, areaAgg:areaAgg, subareaAgg:subareaAgg, ptsAgg:ptsAgg, missItems:missItems, causeGroups:causeGroups,
+    cutReferenceHTML:cutReferenceHTML,
     buildContext:buildContext, radarSVG:radarSVG,
     cumulativeGrade:cumulativeGrade,
     isOnlineStudent:isOnlineStudent, buildCompareNote:buildCompareNote, compareNoteHTML:compareNoteHTML,
@@ -1749,6 +1930,9 @@ td.weak-cell{white-space:nowrap}
        구해 비교-기준 안내(온라인 학생의 연습 회차 부족 강조)에도 그대로 재사용합니다. */
     var includeCurrent=viewOnly?false:(preview||saved||saveConflict);
     var personalAttempts = computePersonalAttempts(roundNum, priorRows, attemptNo, fk, state.oxArr, includeCurrent);
+    ctx.personalHistory=personalAttempts.filter(function(row){return row.n!==roundNum;}).map(function(row){
+      return {round:Number(row.n),oxArr:row.oxArr.slice(),items:M.rounds[String(row.n)].items};
+    });
     var considered = computeCumulativeConsidered(roundNum, priorRows, attemptNo, fk, state.oxArr, includeCurrent);
     var cmpOnline = isOnlineStudent(ctx.name);
     var cmpNoteHTML = ctx.populationVerified?compareNoteHTML(ctx.R, M.compare, cmpOnline, considered.length):'';
@@ -1812,7 +1996,9 @@ td.weak-cell{white-space:nowrap}
     var kpiHTML=ctx.populationVerified
       ? '<div><i>점수 / 평균</i><b>'+ctx.score+'<small> / '+ctx.S.mean+'</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>석차</i><b>'+ctx.pct+'%</b></div><div><i>예상 결과</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div>'
       : '<div><i>개인 점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>오답</i><b>'+ctx.wrong+'<small>문항</small></b></div>'+(ctx.R&&Number.isFinite(Number(ctx.R.reportedAverage))?'<div><i>제공 평균</i><b>'+Number(ctx.R.reportedAverage)+'<small>점</small></b></div>':'<div><i>진단 기준</i><b style="font-size:15px">개인 수행</b></div>');
-    var areaLead=ctx.populationVerified?'주황색이 '+esc(ctx.name)+' 학생, 회색 점선이 검증된 비교집단입니다.':'학생이 맞힌 문항의 배점만으로 계산한 개인 수행률입니다.';
+    var isStandardFinal=!isLast&&!isOriginal;
+    var personalColor=isStandardFinal?'파란색':'주황색';
+    var areaLead=ctx.populationVerified?personalColor+'이 '+esc(ctx.name)+' 학생, 회색 점선이 검증된 비교집단입니다.':'학생이 맞힌 문항의 배점만으로 계산한 개인 수행률입니다.';
     var areaLegend='<div class="legend"><span><s style="background:rgba(249,115,22,.5);border:1px solid #ea580c"></s>'+esc(ctx.name)+'</span>'+(ctx.populationVerified?'<span><s style="background:rgba(148,163,184,.4);border:1px dashed #94a3b8"></s>검증된 비교집단</span>':'')+'</div>';
     var areaTable=ctx.populationVerified
       ? '<table><tr><th>영역</th><th>출제</th><th>정답</th><th>배점</th><th>득점</th><th>수행률</th><th>비교집단</th></tr>'+areaRowsHTML(ctx.A)+'</table>'
@@ -1822,18 +2008,18 @@ td.weak-cell{white-space:nowrap}
       : '<table><tr><th>구분</th><th>출제</th><th>정답</th><th>배점</th><th>득점</th><th>수행률</th></tr>'+ptsRowsPersonalHTML(ctx.P)+'</table>';
     var detailLead=ctx.populationVerified?'검증된 문항 정답률과 함께 문항별 주의점을 표시합니다.':'학생의 정오와 문항별 복습 주의점만 표시합니다.';
     var cumulativeLead=ctx.populationVerified?'검증된 최초 응시 분포가 있는 회차만 누적 비교에 사용합니다.':'최초 응시의 개인 점수와 동일 세부유형 반복만 누적합니다.';
+    var reportHead=isStandardFinal
+      ? reportPrintCoverHTML(ctx)+'<div class="report-fixed-watermark" aria-hidden="true">지필드 영재교육 · '+esc(ctx.name)+' 학생</div>'+reportScreenHeaderHTML(ctx)
+      : '<div class="cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>파이널 모의고사 진단분석지</h1><div class="sub">초등선발 대비 실전 파이널 모의고사 '+roundNum+'회 · 생각하는 황소 대비</div><div class="who"><b>'+esc(ctx.name)+'</b><span>학생</span></div><div class="kpi">'+kpiHTML+'</div></div>';
+    var coachingHTML=isStandardFinal?'<div class="report-coaching"><h2>분석적 상세 조언</h2><div class="cmt" id="cmtBody">'+buildComment(ctx,state.weak)+'</div><div class="sign">지필드 영재교육 원장 <b>DOCSSAM</b></div></div>':'';
+    var legacyCommentHTML=isStandardFinal?'':'<section style="border-bottom:none"><h2>원장 코멘트</h2><div class="cmt" id="cmtBody">'+buildComment(ctx,state.weak)+'</div><div class="sign">지필드 영재교육 원장 <b>DOCSSAM</b></div></section>';
 
     app.innerHTML = personalReportBanner+previewBanner+teacherBanner+practiceBanner+saveErrBanner+
-      '<div class="doc">'+
-      '<div class="cover">'+
-        '<div class="brand">G-FIELD GIFTED EDUCATION</div>'+
-        '<h1>파이널 모의고사 진단분석지</h1>'+
-        '<div class="sub">초등선발 대비 실전 파이널 모의고사 '+roundNum+'회 · 생각하는 황소 대비</div>'+
-        '<div class="who"><b>'+esc(ctx.name)+'</b><span>학생</span></div>'+
-        '<div class="kpi">'+kpiHTML+'</div>'+
-      '</div>'+
+      '<div class="doc'+(isStandardFinal?' final-report-package':'')+'">'+
+      reportHead+
       (cmpNoteHTML ? '<div class="cmp-band">'+cmpNoteHTML+'</div>' : '')+
-      '<section>'+
+      cutReferenceHTML(ctx)+
+      '<section class="report-analysis-section">'+
         '<h2>영역별 수행률</h2>'+
         '<div class="lead">'+areaLead+'</div>'+
         '<div class="split"><div>'+radarSVG(ctx.A,!ctx.populationVerified)+areaLegend+'</div>'+areaTable+'</div>'+
@@ -1842,15 +2028,16 @@ td.weak-cell{white-space:nowrap}
         ptsTable+
         canonicalSubareaHTML(ctx)+
         cutWarnHTML(ctx)+
+        coachingHTML+
       '</section>'+
-      '<section>'+
+      '<section class="report-review-section">'+
         '<h2>오답 복습 점검</h2>'+
         '<div class="lead">문항에 등록된 주의점을 기준으로 묶었습니다. 실제 오답 원인은 풀이를 다시 보며 학생 또는 교사가 확인합니다. <span class="no-print">유형 옆의 <b>이 유형 어려워요</b>를 누르면 아래 목록에 저장됩니다.</span></div>'+
         '<div class="cause-sum">'+causeSumHTML(ctx)+'</div>'+
         '<div id="causeWrap">'+causeWrapHTML(ctx)+'</div>'+
       '</section>'+
-      '<section>'+
-        '<h2>문항별 상세</h2>'+
+      '<section class="report-item-section">'+
+        '<h2>문항별 진단</h2>'+
         '<div class="lead">'+detailLead+'</div>'+
         '<div id="detailWrap">'+detailTableHTML(ctx)+'</div>'+
       '</section>'+
@@ -1862,16 +2049,21 @@ td.weak-cell{white-space:nowrap}
         attemptHTML+
       '</section>'+
       weakSectionHTML(ctx)+
-      '<section style="border-bottom:none">'+
-        '<h2>원장 코멘트</h2>'+
-        '<div class="cmt" id="cmtBody">'+buildComment(ctx, state.weak)+'</div>'+
-        '<div class="sign">지필드 영재교육 원장 <b>DOCSSAM</b></div>'+
-      '</section>'+
+      legacyCommentHTML+
+      curriculumConnectionHTML(ctx)+
+      detailedAnswersSectionHTML(ctx)+
       '</div>';
     showPrint(true);
+    printBtn.textContent=isStandardFinal?'진단 패키지 인쇄 / PDF 저장':'🖨 인쇄';
+    printBtn.setAttribute('aria-label',isStandardFinal?'표지와 진단지, 교재 연결표, 상세 답안을 한 번에 인쇄하거나 PDF로 저장':'인쇄');
     printBtn.onclick = function(){ window.print(); };
+    if(isStandardFinal){
+      var reportHeader=app.querySelector('.report-screen-header');
+      if(reportHeader) reportHeader.appendChild(printBtn);
+    }
     wireWeakToggles(ctx);
     wireWrongPractice(ctx);
+    if(roundNum===1&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.wire==='function') window.GFIELD_FINAL1_DETAILED_RENDERER.wire();
   }
 
   /* ===================== boot ===================== */

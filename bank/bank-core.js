@@ -346,7 +346,8 @@
   function buildWatermarkTiles(container, name) {
     if (!container) return;
     container.innerHTML = '';
-    if (!name) return;
+    // Branding is mandatory even when storage is unavailable or no learner is selected.
+    name = String(name == null ? '' : name).trim() || '학습 자료';
     container.classList.add('wm-active');
     var label = name + ' · 지필드 영재교육';
     var ROWS = 8, COLS = 4;

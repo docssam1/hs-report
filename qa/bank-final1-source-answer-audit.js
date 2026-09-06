@@ -30,7 +30,7 @@ assert.equal(Math.min(...products), 690, '4번은 한 자리 수×세 자리 수
 assert.equal(Math.max(...products), 2236, '4번 전체 자리 나누기의 최댓값');
 assert.equal(Math.max(...products) - Math.min(...products), Number(byNo[4].answer), '4번 등록 답은 두 자연수의 자리 수를 제한하지 않은 계산과 일치');
 assert.match(byNo[4].caution, /두 자리 수×두 자리 수라는 조건이 없습니다/, '4번 지문 조건 주의가 진단에 명시됨');
-assert.match(byNo[7].comment, /수직선을 그리세요/, '7번 수직선 풀이 지침');
+assert.match(byNo[7].comment, /수직선(?:을 그리세요|에 역 순서를 놓습니다)/, '7번 수직선 풀이 지침');
 assert.match(byNo[13].comment, /양쪽 묶음의 합이 같/, '13번 가로·세로 전체 합 불변 풀이');
 assert.equal(byNo[18].answer, '40', '18번 연결 답안');
 assert.match(byNo[18].comment, /두 번 반복/, '18번 반복 횟수 지문 이해');
