@@ -16,10 +16,10 @@
     return target;
   }
   function render(){
-    if(!current)return '';
+    if(!current||current.preview)return '';
     var edit=current.canEdit;
-    if(!edit&&!current.comment&&!current.preview&&current.slot!=='admin')return '';
-    return '<section class="report-docssam-note" aria-labelledby="docssam-note-title"><h2 id="docssam-note-title">docssam 코멘트</h2><div class="docssam-saved-comment"'+(!current.comment?' hidden':'')+'>'+esc(current.comment).replace(/\n/g,'<br>')+'</div>'+(edit?'<div class="docssam-editor no-print"><label for="docssam-comment">수업에서 살펴본 모습과 다음 학습 조언</label><textarea id="docssam-comment" maxlength="3000" rows="4" placeholder="풀이 습관, 잘한 점, 다음에 함께 연습할 내용을 적어 주세요.">'+esc(current.comment)+'</textarea><button type="button" id="docssam-comment-save">코멘트 저장</button><span id="docssam-comment-status" role="status" aria-live="polite"></span></div>':(!current.comment?'<p class="lead no-print">'+(current.preview?'미리보기에서는 코멘트를 저장하지 않습니다.':'코멘트를 불러오지 못했습니다. 관리자 로그인을 확인해 주세요.')+'</p>':''))+'</section>';
+    if(!edit&&!current.comment&&current.slot!=='admin')return '';
+    return '<section class="report-docssam-note" aria-labelledby="docssam-note-title"><h2 id="docssam-note-title">docssam 코멘트</h2><div class="docssam-saved-comment"'+(!current.comment?' hidden':'')+'>'+esc(current.comment).replace(/\n/g,'<br>')+'</div>'+(edit?'<div class="docssam-editor no-print"><label for="docssam-comment">수업에서 살펴본 모습과 다음 학습 조언</label><textarea id="docssam-comment" maxlength="3000" rows="4" placeholder="풀이 습관, 잘한 점, 다음에 함께 연습할 내용을 적어 주세요.">'+esc(current.comment)+'</textarea><button type="button" id="docssam-comment-save">코멘트 저장</button><span id="docssam-comment-status" role="status" aria-live="polite"></span></div>':(!current.comment?'<p class="lead no-print">코멘트를 불러오지 못했습니다. 관리자 로그인을 확인해 주세요.</p>':''))+'</section>';
   }
   function wire(container){
     var button=container.querySelector('#docssam-comment-save');if(!button||!current||!current.canEdit)return;

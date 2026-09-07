@@ -1191,7 +1191,7 @@ td.weak-cell{white-space:nowrap}
         var cls = diff>0?'dlt-up':(diff<0?'dlt-down':'dlt-flat');
         deltaHTML = '<span class="'+cls+'">'+(diff>0?'+':'')+diff+'점</span>';
       }
-      return '<tr><td>'+(LBL[a]||(a+'차'))+'</td><td class="c">'+sc.score+'점</td><td class="c">'+sc.correct+'문항</td>'+(canCompare?'<td class="c">'+pct+'%</td>':'')+'<td class="c">'+deltaHTML+'</td></tr>';
+      return '<tr><td>'+(LBL[a]||(a+'차'))+'</td><td class="c">'+sc.score+'점</td><td class="c">'+sc.correct+'문항</td>'+(canCompare?'<td class="c">'+(Number.isFinite(pct)?pct+'%':'<span aria-label="백분율 자료 없음">—</span>')+'</td>':'')+'<td class="c">'+deltaHTML+'</td></tr>';
     }).join('');
     return '<table><tr><th>응시</th><th>점수</th><th>맞은 개수</th>'+(canCompare?'<th>석차 백분율</th>':'')+'<th>직전 대비</th></tr>'+rows+'</table>';
   }
@@ -1391,8 +1391,12 @@ td.weak-cell{white-space:nowrap}
     state.populationUnavailable=false;
     R.stats=final1BaseStats; // Never reuse a previous student's score lookups.
     if(!api) return;
-    var scores=[],first=priorRows&&priorRows.final1;
-    if(first&&validOx(first.ox)) scores.push(computeScore(first.ox.split('')).score);
+    var scores=[];
+    // 연습 기록도 같은 고정 기준으로 조회한다. 최초 성적이나 비교 기준에 합산하지 않는다.
+    ['final1','final1@2','final1@3'].forEach(function(key){
+      var row=priorRows&&priorRows[key];
+      if(row&&row.source!=='reset'&&validOx(row.ox)) scores.push(computeScore(row.ox.split('')).score);
+    });
     if(roundNum===1) scores.push(computeScore(state.oxArr).score);
     if(!scores.length) return;
     try{
@@ -1987,7 +1991,8 @@ td.weak-cell{white-space:nowrap}
     await refreshFinalPopulation(priorRows);
     var reportState=null;
     if(!isLast&&!isOriginal&&window.GFIELD_FINAL_REPORT_STATE){
-      reportState=await window.GFIELD_FINAL_REPORT_STATE.load(state.name,roundNum,state.oxArr.join(''),teacherEntry?'admin':'student',!!saved&&attemptNo===1,preview||attemptNo>1);
+      // 연습 응시도 같은 학생·회차의 코멘트를 읽는다. 백분율 기록은 최초 성적 저장에만 허용한다.
+      reportState=await window.GFIELD_FINAL_REPORT_STATE.load(state.name,roundNum,state.oxArr.join(''),teacherEntry?'admin':'student',!!saved&&attemptNo===1,preview);
       if(roundNum===1&&reportState&&reportState.snapshot&&reportState.snapshot.version===final1BaseStats.rateEvidence.version){
         try{
           var savedStats=window.GFIELD_FINAL_POPULATION.fromSaved(reportState.snapshot,computeScore(state.oxArr).score,final1BaseStats.cuts);
@@ -2068,7 +2073,7 @@ td.weak-cell{white-space:nowrap}
     var attemptHTML = attemptSectionHTML(roundNum, priorRows, attemptNo, fk, fk2, fk3, state.oxArr, includeCurrent);
 
     var previewBanner = preview ? '<div class="banner preview no-print">🔎 관리자 미리보기 — 저장되지 않습니다</div>' : '';
-    var personalReportBanner = viewOnly ? '<div class="banner preview no-print">📊 '+esc(ctx.name)+' 학생의 공식 1차 성적표 · 읽기 전용</div>' : '';
+    var personalReportBanner = viewOnly ? '<div class="banner preview no-print">📊 '+esc(ctx.name)+' 학생의 공식 1차 성적표</div>' : '';
     var teacherBanner = (!preview && teacherEntry) ? '<div class="banner preview no-print">🧑‍🏫 선생님 대리 입력 — 재원생의 답안을 대신 기록합니다. 회차별 최초 성적만 누적에 반영됩니다.</div>' : '';
     var practiceBanner = (!preview && attemptNo>=2) ? '<div class="banner practice no-print">연습 응시 — 기록은 남지만 누적 성적에는 반영되지 않습니다 ('+attemptNo+'회차 시도)</div>' : '';
     var saveErrBanner = saveErr ? '<div class="banner saveerr no-print">'+(saveConflict?'다른 입력이 먼저 저장되어 기존 최초 기록을 유지했습니다.':'저장 실패, 네트워크 확인')+'</div>' : '';

@@ -6,8 +6,9 @@ const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL
 (async()=>{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch();
  try{
-  let offline=true,teacher=false,comment='',version=null,savedRead=false;const requests=[],externalWrites=[],errors=[];
+  let offline=true,teacher=false,comment='',version=null,savedRead=false,repeatResults=false;const requests=[],resultWrites=[],externalWrites=[],errors=[];
   const resultOx=Array.from({length:30},(_,i)=>i===23?'X':'O').join('');
+  const attemptOxs=[resultOx,'X'+'O'.repeat(29),'O'.repeat(30)];
   const context=await browser.newContext({viewport:{width:1280,height:900}});
   await context.addInitScript(()=>{
    const session={access_token:'qa-only-token',refresh_token:'qa-only-refresh',expires_at:Math.floor(Date.now()/1000)+3600,login_name:'docssam'};
@@ -26,14 +27,16 @@ const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL
     if(body.action==='apply-percentiles')return route.fulfill({json:{applied:true,incomplete:false}});
     return route.fulfill({json:core.createResponse(baseline,body.scores)});
    }
-   if(url.pathname==='/rest/v1/mock_results'&&savedRead)return route.fulfill({json:[{student:'docssam',round:'final1',ox:resultOx,score:95.8,wrong:1,source:'admin'}]});
+   if(url.pathname==='/rest/v1/mock_results'&&savedRead){if(!['GET','HEAD'].includes(req.method()))resultWrites.push(req.postDataJSON());return route.fulfill({json:(repeatResults?attemptOxs:[resultOx]).map((ox,i)=>({student:'docssam',round:i?'final1@'+(i+1):'final1',ox,score:core.scoreOf(ox),wrong:[...ox].filter(v=>v==='X').length,source:i?'practice-admin':'admin'}))});}
    if(!['GET','HEAD'].includes(req.method()))externalWrites.push(url.pathname);
    return route.fulfill({status:200,contentType:'application/json',body:'[]'});
   });
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   const address=`http://127.0.0.1:${server.address().port}/final.html?round=1&name=docssam&go=answer&preview=1`;
-  async function grade(){await page.goto(address);await page.locator('#agrid').waitFor();for(let n=1;n<=30;n++)if(n!==24)await page.locator('.abtn').nth(n-1).click();await page.locator('#btnGrade').click();await page.locator('.report-item-section').waitFor();}
+  async function grade(url=address){await page.goto(url);await page.locator('#agrid').waitFor();for(let n=1;n<=30;n++)if(n!==24)await page.locator('.abtn').nth(n-1).click();await page.locator('#btnGrade').click();await page.locator('.report-item-section').waitFor();}
   await grade();
+  assert.equal(await page.locator('.report-docssam-note').count(),0,'sample preview hides the entire comment section');
+  assert.ok(!requests.some(r=>r.action),'sample preview never reads or writes student comments/snapshots');
   assert.equal(await page.evaluate(()=>typeof GFIELD_AUTH.functionCall),'function','auth module actually loaded; not injected');
   assert.equal(await page.locator('#detailWrap td.rt .bar').count(),30,'offline still shows all fixed rates');
   assert.match(await page.locator('.report-expected-grade').innerText(),/경시/);
@@ -56,10 +59,49 @@ const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL
   if(process.env.GFIELD_REPORT_UI_DIR){await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(process.env.GFIELD_REPORT_UI_DIR,'report-desktop.png')});await page.pdf({path:path.join(process.env.GFIELD_REPORT_UI_DIR,'report-review.pdf'),format:'A4',printBackground:true});}
   assert.ok(requests.some(r=>r.action==='save-comment'));
   savedRead=true;offline=true;teacher=true;
+  const reportRequestsStart=requests.length;
   await page.goto(address.replace('go=answer&preview=1','go=report&entry=teacher'));await page.locator('.report-item-section').waitFor();
   assert.match(await page.locator('.report-screen-header').innerText(),/석차 백분율/,'persisted snapshot works if live lookup unavailable');
   assert.match(await page.locator('.docssam-saved-comment').innerText(),/조건을 잘 표시/);
   assert.equal(await page.locator('#detailWrap td.rt .bar').count(),30);
+  assert.equal(await page.locator('#docssam-comment-save').count(),1,'saved student report has the teacher editor');
+  assert.ok(!(await page.locator('.banner').allTextContents()).some(t=>t.includes('읽기 전용')),'score-only read mode does not imply comments are read-only');
+  await page.locator('#docssam-comment').fill('학생 성적표에서 직접 저장한 학습 조언입니다.');
+  await page.locator('#docssam-comment-save').click();
+  await page.waitForFunction(()=>document.querySelector('#docssam-comment-status').textContent==='저장했습니다.');
+  const reportActions=requests.slice(reportRequestsStart).filter(r=>r.action);
+  assert.deepEqual(reportActions.map(r=>r.action),['read-report','save-comment'],'opening report and saving comment never writes a score or percentile snapshot');
+  assert.equal(reportActions[1].exam,'final1');assert.equal(reportActions[1].student,'docssam');
+  assert.ok(!('ox' in reportActions[1])&&!('score' in reportActions[1]));
+  assert.equal(resultWrites.length,0,'comment save leaves original grades untouched');
+  const practiceRequestsStart=requests.length;
+  await grade(address.replace('preview=1','entry=teacher'));
+  assert.match(await page.locator('.banner.practice').innerText(),/2회차/);
+  assert.equal(await page.locator('#docssam-comment-save').count(),1,'teacher can comment on a real practice result');
+  assert.match(await page.locator('.docssam-saved-comment').innerText(),/직접 저장한 학습 조언/);
+  assert.deepEqual(requests.slice(practiceRequestsStart).filter(r=>r.action).map(r=>r.action),['read-report'],'practice only reads the existing per-round comment, not percentile writes');
+  assert.equal(resultWrites.length,1);assert.equal(resultWrites[0].round,'final1@2','practice grade never overwrites first grade');
+  repeatResults=true;offline=false;
+  const attemptsStart=requests.length;
+  await page.goto(address.replace('go=answer&preview=1','go=report&entry=teacher'));await page.locator('.attempt-progress').waitFor();
+  const scores=attemptOxs.map(ox=>core.scoreOf(ox));
+  const attemptLookups=requests.slice(attemptsStart).filter(r=>!r.action);
+  assert.equal(attemptLookups.length,2);
+  attemptLookups.forEach(r=>scores.forEach(score=>assert.ok(r.scores.includes(score),'every saved attempt score is requested')));
+  const expectedAttempts=core.createResponse(baseline,scores).percentiles;
+  const attemptRows=page.locator('.attempt-progress > table tr');
+  for(let i=0;i<3;i++)assert.equal(await attemptRows.nth(i+1).locator('td').nth(3).innerText(),expectedAttempts[String(Math.round(scores[i]*10))]+'%');
+  assert.doesNotMatch(await page.locator('.attempt-progress').innerText(),/null%|NaN|undefined/);
+  await page.setViewportSize({width:390,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'three-attempt report fits mobile');
+  await page.setViewportSize({width:1280,height:900});
+  offline=true;
+  await page.goto(address.replace('go=answer&preview=1','go=report&entry=teacher'));await page.locator('.attempt-progress').waitFor();
+  assert.equal(await page.locator('.attempt-progress [aria-label="백분율 자료 없음"]').count(),2,'first-score-only fallback does not invent practice percentiles');
+  assert.doesNotMatch(await page.locator('.attempt-progress').innerText(),/null%|NaN|undefined/);
+  assert.equal(await page.locator('#detailWrap td.rt .bar').count(),30,'attempt lookup failure never removes fixed item rates');
+  assert.equal(resultWrites.length,1,'viewing attempt history never updates grades');
+  const finalHTML=fs.readFileSync(path.join(root,'final.html'),'utf8');
+  assert.match(finalHTML,/!!saved&&attemptNo===1,preview\)/,'practice attempts are not treated as sample previews');
   const adminHTML=fs.readFileSync(path.join(root,'admin.html'),'utf8');
   assert.match(adminHTML,/<h3[^>]*>⑩ 모의고사 결과<\/h3>\s*<button[^>]*id="apply-final-percentiles"/);
   const adminJS=fs.readFileSync(path.join(root,'admin-mock-v2.js'),'utf8');
