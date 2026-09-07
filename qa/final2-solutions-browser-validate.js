@@ -39,6 +39,8 @@ const server=http.createServer((req,res)=>{
     await page.locator('#btnGrade').click();
     await page.locator('.detailed-solution').first().waitFor();
     assert.equal(await page.locator('.detailed-solution').count(),4);
+    assert.match(await page.locator('[data-solution-no="7"] p').first().innerText(),/✓ 필기 해설 정정: 200번째 → 199번째/);
+    assert.match(await page.locator('[data-solution-no="7"] p').first().innerText(),/16의 배수는 32개가 아니라 31개/);
     for(const [no,answer] of Object.entries(expected)){
       const card=page.locator(`[data-solution-no="${no}"]`);
       assert.match(await card.locator('h3').innerText(),new RegExp(answer));
@@ -58,7 +60,13 @@ const server=http.createServer((req,res)=>{
     await page.goto(base+'/answer.html?set=final&round=2&name=docssam',{waitUntil:'domcontentloaded'});
     await page.locator('#body tr').first().waitFor();
     assert.equal(await page.locator('#body tr').count(),30);
+    assert.equal(await page.locator('.answer-correction').count(),1);
+    assert.equal(await page.locator('#body tr').nth(6).locator('.answer-correction').innerText(),'✓ 필기 해설 정정: 200번째 → 199번째');
     for(const [no,answer] of Object.entries(expected))assert.equal(await page.locator('#body tr').nth(Number(no)-1).locator('.ans').innerText(),answer);
+    if(output){
+      await page.locator('#body tr').nth(6).screenshot({path:path.join(output,'answer-q7.png')});
+      await page.pdf({path:path.join(output,'final2-answer-table.pdf'),format:'A4',printBackground:true});
+    }
     assert.deepEqual(writes,[],'preview/read-back must never write student results');
     assert.deepEqual(errors,[]);
     console.log('PASS Final2 detailed solutions, answer table, desktop/mobile, pre-attempt boundary, zero student writes');
