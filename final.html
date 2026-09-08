@@ -102,6 +102,11 @@ td{padding:8px;border-bottom:1px solid var(--line)}
 @media(max-width:700px){
   .final1-detailed-solutions{font-size:16px}.final1-solutions-head{padding:20px 16px}.final1-solutions-title-row{display:block}.final1-solutions-head h3{font-size:21px}.final1-print-only{width:100%;margin-top:14px}.final1-jump{gap:8px}.final1-jump a{min-width:42px;min-height:42px}.final1-detailed-card{padding:22px 16px}.final1-solution-heading{gap:9px}.final1-solution-heading h4{font-size:18px}.final1-solution-block p,.final1-step p{font-size:16px}.final1-data-table-wrap{margin-right:-16px;padding-right:16px}
 }
+@media(max-width:600px){
+  #final2DetailedSolutions .final1-data-table-wrap{margin-right:0;padding-right:0;overflow:visible}
+  #final2DetailedSolutions .final1-data-table{width:100%;min-width:0;table-layout:fixed;font-size:12px}
+  #final2DetailedSolutions .final1-data-table th,#final2DetailedSolutions .final1-data-table td{padding:6px 4px;white-space:normal;overflow-wrap:anywhere;word-break:keep-all}
+}
 @media print{
   .detail-section{break-inside:auto!important}.final1-detailed-solutions{margin-top:8mm;font-size:11pt}.final1-solutions-head{padding:0 0 6mm;border-width:0 0 2px}.final1-solutions-head h3{font-size:19pt}.final1-jump,.final1-print-only{display:none!important}.final1-detailed-card{break-inside:auto!important;page-break-inside:auto!important;margin-top:7mm;padding:6mm;border-color:#aebbd3}.final1-solution-heading,.final1-answer,.final1-solution-block,.final1-step,.final1-number-line,.final1-data-table-wrap{break-inside:avoid;page-break-inside:avoid}.final1-solution-block p,.final1-step p{font-size:11pt;line-height:1.72}.final1-data-table-wrap{overflow:visible}.final1-data-table{min-width:0;font-size:9.5pt}.final1-number-line-scroll{overflow:visible}.final1-number-line svg{min-width:0}.final1-watermark span{color:rgba(36,86,196,.07)}.final1-print-watermark{display:block;position:fixed;left:12%;right:12%;top:48%;z-index:0;transform:rotate(-28deg);color:rgba(36,86,196,.055);font-size:26pt;font-weight:900;text-align:center;pointer-events:none}.final1-card-content,.final1-solutions-head{position:relative;z-index:1}
   body.print-final1-solutions .doc>.cover,body.print-final1-solutions .doc>.cmp-band,body.print-final1-solutions .doc>section:not(.detail-section){display:none!important}body.print-final1-solutions .detail-section{padding:0;border:0}body.print-final1-solutions .detail-section>h2,body.print-final1-solutions .detail-section>.lead,body.print-final1-solutions #detailWrap>table{display:none!important}body.print-final1-solutions .final1-detailed-solutions{margin-top:0}body.print-final1-solutions #final2DetailedSolutions .is-pending{display:none!important}
@@ -442,7 +447,13 @@ td.weak-cell{white-space:nowrap}
   #final2DetailedSolutions .final1-data-table-wrap{margin-top:2mm}
   #final2DetailedSolutions .final1-data-table th,#final2DetailedSolutions .final1-data-table td{padding:1mm 2mm;font-size:9pt;line-height:1.3}
   #final2DetailedSolutions .final1-data-table caption{font-size:8pt;padding-bottom:1mm}
-  #final2DetailedSolutions .gfield-final2-solution-diagram{max-width:48mm!important}
+  #final2DetailedSolutions .gfield-final2-solution-diagram--q12{max-width:48mm!important}
+  #final2DetailedSolutions .gfield-final2-solution-diagram:not(.gfield-final2-solution-diagram--q12){max-width:125mm!important}
+  #final2DetailedSolutions #final2-solution-27,#final2DetailedSolutions #final2-solution-28{break-inside:auto!important;page-break-inside:auto!important}
+  #final2DetailedSolutions #final2-solution-27 .final1-step:nth-child(4),#final2DetailedSolutions #final2-solution-28 .final1-steps{break-before:page;page-break-before:always}
+  #final2DetailedSolutions #final2-solution-27 .final1-step:nth-child(4)::before,#final2DetailedSolutions #final2-solution-28 .final1-steps::before{display:block;margin:0 0 3mm;padding:0 0 2mm;border-bottom:1px solid #aebbd3;color:#182230;font-size:12pt;font-weight:800;line-height:1.35;break-after:avoid;page-break-after:avoid}
+  #final2DetailedSolutions #final2-solution-27 .final1-step:nth-child(4)::before{content:'27번 풀이 계속'}
+  #final2DetailedSolutions #final2-solution-28 .final1-steps::before{content:'28번 풀이 계속'}
 }
 </style>
 <link rel="stylesheet" href="final-report-package.css">
@@ -923,7 +934,7 @@ td.weak-cell{white-space:nowrap}
         resolve:window.GFIELD_FINAL2_RESOLVE_SOLUTION,
         renderDiagram:function(solution){
           var diagrams=window.GFIELD_FINAL2_SOLUTION_DIAGRAMS;
-          return solution&&solution.diagram==='top-projection'&&diagrams&&typeof diagrams.render==='function'?diagrams.render(solution.no):'';
+          return solution&&solution.diagram&&diagrams&&typeof diagrams.render==='function'?diagrams.render(solution.no):'';
         }
       })+'</section>';
     }

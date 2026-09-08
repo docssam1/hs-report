@@ -6,6 +6,7 @@ const core=require('../supabase/functions/hs-final-population/population-core.js
 const root=path.resolve(__dirname,'..'),student='회차연결검수학생';
 const baselines=Object.fromEntries([1,2,3,4].map(n=>['final'+n,{schemaVersion:1,exam:'final'+n,scope:'provided-original-records',approved:true,version:'final'+n+'-'+String(n).repeat(64),rows:[{id:'a',ox:'O'.repeat(30),score:100},{id:'b',ox:'X'.repeat(30),score:0}]}]));
 const ox='O'.repeat(20)+'X'.repeat(10),score=core.scoreOf(ox);
+const PRIOR_FINAL2_NOS=[1,3,4,6,7,8,10,11,12,15,25,26];
 const records=[1,2,3,4].map(n=>({student,round:'final'+n,ox,score,wrong:10,source:'admin'}));
 records.push({student,round:'last1',ox,score,wrong:10,source:'admin'});
 records.push({student,round:'final2@2',ox:'O'.repeat(30),score:100,wrong:0,source:'practice-admin'});
@@ -53,17 +54,51 @@ const server=http.createServer((req,res)=>{
    assert.doesNotMatch(text.join(' '),/null%|NaN|undefined|응시\s*인원|\d[\d,]*\s*명/);
    assert.equal(await page.locator('#detailWrap .bar').count(),30,'all item answer rates visible');
    for(const width of [1280,390]){await page.setViewportSize({width,height:900});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'no horizontal overflow');}
+   if(n===2){
+    await page.setViewportSize({width:390,height:900});
+    const mobileTables=await page.locator('#final2DetailedSolutions .final1-data-table').evaluateAll(tables=>tables.map(table=>({
+     no:Number(table.closest('[data-detailed-solution-no]').dataset.detailedSolutionNo),
+     fits:table.scrollWidth<=table.clientWidth+1,
+     fontSize:parseFloat(getComputedStyle(table).fontSize),
+     wrapped:[...table.querySelectorAll('th,td')].every(cell=>getComputedStyle(cell).whiteSpace==='normal'&&getComputedStyle(cell).overflowWrap==='anywhere')
+    })));
+    assert.deepEqual(mobileTables.map(table=>table.no),[4,7,15,18,19,20,21,22,23,24,26,27,28,29],'all reviewed solution tables are audited at 390px');
+    assert.ok(mobileTables.every(table=>table.fits&&table.fontSize>=12&&table.wrapped),'every Final2 table is fully visible, wrapped, and at least 12px on mobile');
+    await page.setViewportSize({width:1280,height:900});
+   }
    if(n===2&&process.env.GFIELD_QA_ARTIFACT_DIR){
     const dir=process.env.GFIELD_QA_ARTIFACT_DIR;fs.mkdirSync(dir,{recursive:true});
-    assert.equal(await page.locator('#final2DetailedSolutions .is-ready').count(),12,'independently reviewed details visible');
-    assert.equal(await page.locator('#final2DetailedSolutions .is-pending').count(),18,'remaining details are not claimed complete');
-    assert.equal(await page.locator('#final2DetailedSolutions .gfield-final2-solution-diagram--q12').count(),1,'source projection included');
+    const detailCoverage=await page.evaluate(priorNos=>{
+     const data=window.GFIELD_FINAL2_DETAILED;
+     const approvedNos=data.contract.expectedNos.slice();
+     return {
+      approvedNos,
+      expectedCount:data.contract.expectedCount,
+      totalQuestions:data.contract.totalQuestions,
+      newNos:approvedNos.filter(no=>!priorNos.includes(no)),
+      diagramNos:data.items.filter(item=>item.diagram).map(item=>item.no)
+     };
+    },PRIOR_FINAL2_NOS);
+    assert.equal(await page.locator('#final2DetailedSolutions .is-ready').count(),detailCoverage.expectedCount,'exact independently reviewed details visible');
+    assert.equal(await page.locator('#final2DetailedSolutions .is-pending').count(),detailCoverage.totalQuestions-detailCoverage.expectedCount,'unreviewed details are not claimed complete');
+    for(const no of detailCoverage.diagramNos){
+     assert.equal(await page.locator(`#final2-solution-${no} .gfield-final2-solution-diagram svg`).count(),1,`Q${no} registered SVG included exactly once`);
+    }
     assert.ok(await page.locator('#final2DetailedSolutions .final1-data-table').count()>=2,'structured solution tables included');
     for(const width of [1280,390]){
      await page.setViewportSize({width,height:900});
      await page.locator('#final2DetailedSolutions .final1-solutions-head').scrollIntoViewIfNeeded();
      await page.screenshot({path:path.join(dir,'final2-detail-'+width+'.png')});
-     await page.locator('#final2-solution-12').screenshot({path:path.join(dir,'final2-projection-'+width+'.png')});
+     for(const no of detailCoverage.newNos){
+      const card=page.locator(`#final2-solution-${no}`);
+      await card.screenshot({path:path.join(dir,`final2-card-${no}-${width}.png`)});
+      assert.ok(await card.evaluate(node=>node.scrollWidth<=node.clientWidth+1),`Q${no} card fits at ${width}px`);
+     }
+     for(const no of detailCoverage.diagramNos){
+      const diagram=page.locator(`#final2-solution-${no} .gfield-final2-solution-diagram`);
+      await diagram.screenshot({path:path.join(dir,`final2-diagram-${no}-${width}.png`)});
+      assert.ok(await diagram.evaluate(node=>node.scrollWidth<=node.clientWidth+1),`Q${no} diagram fits at ${width}px`);
+     }
      assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'details fit mobile');
     }
     await page.setViewportSize({width:1280,height:900});

@@ -6,7 +6,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 
 const ROOT=path.resolve(__dirname,'..');
-const EXPECTED=[1,3,4,6,7,8,10,11,12,15,25,26];
+const EXPECTED=[1,3,4,6,7,8,10,11,12,15,18,19,20,21,22,23,24,25,26,27,28,29,30];
 const REVIEW_ID='final2-detailed-review-20260909';
 const LEARNER_STAGE='초등 선발 대비 파이널 모의고사 수강생';
 
@@ -18,7 +18,10 @@ function load(options={}){
   vm.createContext(sandbox);
   vm.runInContext(read('mock-data-final.js'),sandbox,{filename:'mock-data-final.js'});
   if(options.diagram!==false){
-    vm.runInContext(read('final2-solution-diagrams.js'),sandbox,{filename:'final2-solution-diagrams.js'});
+    const diagramSource=typeof options.transformDiagram==='function'
+      ? options.transformDiagram(read('final2-solution-diagrams.js'))
+      : read('final2-solution-diagrams.js');
+    vm.runInContext(diagramSource,sandbox,{filename:'final2-solution-diagrams.js'});
   }
   const dataSource=typeof options.transformData==='function'
     ? options.transformData(read('final2-detailed-data.js'))
@@ -61,6 +64,16 @@ const nos=data.items.map(item=>item.no);
 assert.deepEqual(plain(nos),EXPECTED);
 assert.equal(new Set(nos).size,nos.length,'reviewed numbers are unique');
 const detailByNo=new Map(data.items.map(item=>[item.no,item]));
+const NEW_SOURCE_PAGES={
+  18:'materials/final_2/003.jpg',
+  19:'materials/final_2/004.jpg',20:'materials/final_2/004.jpg',21:'materials/final_2/004.jpg',
+  22:'materials/final_2/004.jpg',23:'materials/final_2/004.jpg',24:'materials/final_2/004.jpg',
+  27:'materials/final_2/005.jpg',28:'materials/final_2/005.jpg',
+  29:'materials/final_2/006.jpg',30:'materials/final_2/006.jpg'
+};
+for(const [no,page] of Object.entries(NEW_SOURCE_PAGES)){
+  assert.equal(detailByNo.get(Number(no)).sourceLocator.split('#')[0],page,`Q${no} is bound to its exact source page`);
+}
 
 for(const item of data.items){
   const canonical=canonicalByNo.get(item.no);
@@ -106,10 +119,16 @@ for(const item of data.items){
 assert.match(detailByNo.get(7).caution,/200번째.*199번째/,'Q7 keeps the explicit 200-to-199 correction boundary');
 assert.match(detailByNo.get(8).read,/20개씩 든 다발/,'Q8 preserves 20 coins per bundle');
 assert.doesNotMatch(detailByNo.get(8).read,/20원짜리/,'Q8 does not turn the bundle size into a denomination');
+assert.match(detailByNo.get(24).steps.at(-1).body,/100보다 작아서.*10×10=100/,'Q24 explains why all three residual products are impossible');
+assert.equal(detailByNo.get(27).check,'표를 순서대로 합치면 5번째 뒤에 A와 E, 6번째 뒤에 B, 7번째 뒤에 C, 8번째 뒤에 D와 F가 ABCDEF를 압니다.');
+assert.doesNotMatch(detailByNo.get(27).check,/깊이|전수|계산에서도/,'Q27 learner check contains only the concrete state verification');
+assert.equal(detailByNo.get(28).diagram,'q28-weighted-road-graph-v1');
+assert.match(detailByNo.get(29).steps[1].body,/처음 닫힌 상태/,'Q29 keeps the initially closed state');
+assert.ok(detailByNo.get(30).steps[0].body.indexOf('91')>=0&&detailByNo.get(30).steps.at(-1).body.indexOf('2')>=0,'Q30 proves the upper bound before the construction');
 assert.deepEqual(
   plain(data.items.filter(item=>item.steps.some(step=>step.table)).map(item=>item.no)),
-  [4,7,15,26],
-  'only the four reviewed explanations that need compact tabular evidence contain tables'
+  [4,7,15,18,19,20,21,22,23,24,26,27,28,29],
+  'the exact reviewed explanations needing compact tabular evidence contain tables'
 );
 
 for(const canonical of round.items){
@@ -128,10 +147,17 @@ for(const canonical of round.items){
 
 const withoutDiagram=load({diagram:false});
 assert.equal(withoutDiagram.GFIELD_FINAL2_RESOLVE_SOLUTION(canonicalByNo.get(12)),null,'Q12 without reviewed diagram renderer fails closed');
+assert.equal(withoutDiagram.GFIELD_FINAL2_RESOLVE_SOLUTION(canonicalByNo.get(28)),null,'Q28 without reviewed diagram renderer fails closed');
 assert.ok(withoutDiagram.GFIELD_FINAL2_RESOLVE_SOLUTION(canonicalByNo.get(1)),'numeric item does not depend on diagram renderer');
 
+const withoutQ28=load({
+  transformDiagram:source=>source.replace("if(Number(no)===28) return renderGraph();","if(Number(no)===28) return '';")
+});
+assert.ok(withoutQ28.GFIELD_FINAL2_RESOLVE_SOLUTION(canonicalByNo.get(12)),'Q12 remains available when only Q28 rendering is removed');
+assert.equal(withoutQ28.GFIELD_FINAL2_RESOLVE_SOLUTION(canonicalByNo.get(28)),null,'Q28 fails closed when its own reviewed renderer is removed');
+
 const incomplete=load({
-  transformData:source=>source.replace('expectedCount:12','expectedCount:13')
+  transformData:source=>source.replace('expectedCount:23','expectedCount:24')
 });
 assert.equal(incomplete.GFIELD_FINAL2_RESOLVE_SOLUTION(canonicalByNo.get(1)),null,'incomplete contract fails closed');
 
@@ -156,7 +182,9 @@ assert.deepEqual(review.independentReview.sourcePagesViewed,[
   'materials/final_2/001.jpg',
   'materials/final_2/002.jpg',
   'materials/final_2/003.jpg',
-  'materials/final_2/005.jpg'
+  'materials/final_2/004.jpg',
+  'materials/final_2/005.jpg',
+  'materials/final_2/006.jpg'
 ]);
 assert.deepEqual(review.independentReview.verifiedNos,EXPECTED);
 assert.ok(review.independentReview.contentCorrections.some(note=>/Q7.*199 rather than 200/.test(note)));
@@ -175,9 +203,12 @@ for(const item of review.items){
   assert.equal(item.sourceLocator,data.items.find(entry=>entry.no===item.no).sourceLocator,`Q${item.no} source locator matches data`);
 }
 assert.equal(review.items.find(item=>item.no===12).representation.exactMidpointClaim,false);
+assert.equal(review.items.find(item=>item.no===28).representation.edgeCount,18);
+assert.deepEqual(review.items.find(item=>item.no===28).representation.duplicateEdges,['AG','CH','EI']);
+assert.equal(review.items.find(item=>item.no===28).representation.routeLength,216);
 assert.match(review.supersessionBoundary,/independent second-pass gates/);
 assert.match(review.supersessionBoundary,/eligible for post-attempt release/);
 assert.match(review.supersessionBoundary,/published=false makes no deployment claim/);
 assert.doesNotMatch(JSON.stringify(review),/\.private|clipboard|[a-f\d]{64}/i,'public review contains no private locator or fingerprint');
 
-console.log('PASS Final2 selected detail approval: exact 12, canonical-answer binding, independent-review evidence, eligible post-attempt release, and fail-closed negative controls');
+console.log('PASS Final2 selected detail approval: exact 23, canonical-answer binding, independent-review evidence, eligible post-attempt release, and fail-closed negative controls');

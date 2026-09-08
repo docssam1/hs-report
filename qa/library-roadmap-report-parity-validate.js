@@ -63,7 +63,7 @@ const server=http.createServer((req,res)=>{
    const link=page.locator('#bookviewer a.bv-act').filter({hasText:/성적표|진단 분석지|성적 확인/}).first();
    const promise=page.waitForEvent('popup');await link.click();const popup=await promise;await popup.waitForLoadState('domcontentloaded');return popup;
   }
-  const snapshots=[];
+  const snapshots=[];let final2Detailed=0;
   for(const [pattern,title,selector] of [[/파이널.*모의고사\s*1\s*회/,'파이널 실전 모의고사 1회','.final-report-package'],[/파이널.*모의고사\s*2\s*회/,'파이널 실전 모의고사 2회','.final-report-package'],[/최종.*모의고사\s*1\s*회/,'최종 실전 모의고사 1회','#res:not(.hide)'],[/최종.*모의고사\s*2\s*회/,'최종 실전 모의고사 2회','#res:not(.hide)']]){
    const rp=await openRoadmap(pattern);await rp.locator(selector).waitFor({timeout:15000});const url=rp.url(),body=await rp.locator(selector).innerText();
    assert.match(body,/누적|통합 석차/,'existing cumulative results visible');assert.ok(!body.includes('null%')&&!body.includes('NaN'));
@@ -73,7 +73,9 @@ const server=http.createServer((req,res)=>{
    if(title==='파이널 실전 모의고사 2회'){
     const count=await rp.evaluate(()=>GF_TEST.computeCumulativeConsidered(2,{final1:{ox:'O'.repeat(20)+'X'.repeat(10)},'final1@2':{ox:'O'.repeat(30)}},1,'final2',('O'.repeat(20)+'X'.repeat(10)).split(''),true).length);
     assert.equal(count,2,'verified Final1 and current Final2 enter cumulative once; retry stays excluded');
-    assert.equal(await rp.locator('.final1-detailed-card.is-ready').count(),12,'approved Final2 selected detailed solutions kept');
+    final2Detailed=await rp.evaluate(()=>GFIELD_FINAL2_DETAILED.contract.expectedCount);
+    assert.equal(final2Detailed,23,'the exact independently approved Final2 contract is loaded');
+    assert.equal(await rp.locator('.final1-detailed-card.is-ready').count(),final2Detailed,'approved Final2 selected detailed solutions kept');
    }
    const lp=await openLibrary(title);await lp.locator(selector).waitFor({timeout:15000});assert.equal(lp.url(),url,'both entry points use exactly same report');
    assert.equal(await lp.locator(selector).innerText(),body,'same score, percentile, diagnosis, cumulative results and solutions');
@@ -93,6 +95,6 @@ const server=http.createServer((req,res)=>{
   }
   assert.equal(JSON.stringify(rows),originalRows,'first records and retries unchanged');assert.deepEqual(writes,[],'no result, percentile, comment or other writes');
   assert.ok(actions.every(a=>a==='read-report'));
-  console.log(JSON.stringify({pass:true,catalogReportLinks:covered,reportParity:snapshots,verifiedFinalReferences:4,final1Detailed:30,final2Detailed:12,missingNotZero:true,productionWrites:0}));
+  console.log(JSON.stringify({pass:true,catalogReportLinks:covered,reportParity:snapshots,verifiedFinalReferences:4,final1Detailed:30,final2Detailed,missingNotZero:true,productionWrites:0}));
  }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});

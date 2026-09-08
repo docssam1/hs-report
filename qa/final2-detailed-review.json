@@ -10,7 +10,9 @@
     "materials/final_2/001.jpg",
     "materials/final_2/002.jpg",
     "materials/final_2/003.jpg",
+    "materials/final_2/004.jpg",
     "materials/final_2/005.jpg",
+    "materials/final_2/006.jpg",
     "supplied-handwritten-review"
   ],
   "protectedSourcePolicy": "read-only; no source fingerprint or private locator is published",
@@ -23,8 +25,40 @@
     "maximumMeanAbsoluteDifference": 0.55,
     "result": "pass"
   },
-  "selectedNos": [1, 3, 4, 6, 7, 8, 10, 11, 12, 15, 25, 26],
-  "pendingNos": [2, 5, 9, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30],
+  "selectedNos": [
+    1,
+    3,
+    4,
+    6,
+    7,
+    8,
+    10,
+    11,
+    12,
+    15,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "pendingNos": [
+    2,
+    5,
+    9,
+    13,
+    14,
+    16,
+    17
+  ],
   "status": {
     "evidence": "verified",
     "independentSecondPass": "verified",
@@ -40,13 +74,40 @@
       "materials/final_2/001.jpg",
       "materials/final_2/002.jpg",
       "materials/final_2/003.jpg",
-      "materials/final_2/005.jpg"
+      "materials/final_2/004.jpg",
+      "materials/final_2/005.jpg",
+      "materials/final_2/006.jpg"
     ],
-    "verifiedNos": [1, 3, 4, 6, 7, 8, 10, 11, 12, 15, 25, 26],
+    "verifiedNos": [
+      1,
+      3,
+      4,
+      6,
+      7,
+      8,
+      10,
+      11,
+      12,
+      15,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
     "method": [
-      "read each selected question directly from the rendered source page",
-      "recompute all eleven scalar answers independently of the candidate explanations",
+      "read every selected question directly from the rendered source page",
+      "recompute each scalar, ordered-pair, schedule, and construction answer independently of the candidate explanations",
       "trace the Q12 thick path in three dimensions and project it by dropping height only",
+      "verify the Q23 supply schedule, the Q27 eight-call construction and seven-call lower bound, and the Q28 weighted-road lower bound and closed walk",
       "compare each condition, strategy, step, check, caution, table, and drawing boundary with the source"
     ],
     "criticalChecks": {
@@ -54,11 +115,27 @@
       "q12": "the path projection preserves left-right and front-back positions, collapses the closing vertical edge, and makes no midpoint claim",
       "q15": "the twentieth tuple is (20, 211, 191), and the requested sum is 422",
       "q25": "the seventh figure has a 15-triangle top band plus a 64-triangle lower part, totaling 79",
-      "q26": "the only uncle age in the stated range is 46 now, giving current child ages 10 and 4, totaling 14"
+      "q26": "the only uncle age in the stated range is 46 now, giving current child ages 10 and 4, totaling 14",
+      "q18": "the open computer-pass range 229 through 300 gives the ordered extrema 480 and 551",
+      "q19": "the three tournament or league totals are 584, 263, and 7140, so the maximum difference is 6877",
+      "q20": "the only units-digit pairs are (1,3), (3,1), (7,9), and (9,7), each with two B choices",
+      "q21": "the shared distance is 216 km and the required five-hour speed is 43.2 km/h",
+      "q22": "positive integer solutions split by the number of 16U coins as 14, 10, 6, and 2, totaling 32",
+      "q23": "two helpers attain the crossing while one helper cannot cover both the explorer remainder and the helper return supply",
+      "q24": "the unique teen-age multiset is 14, 14, 15, 15, 15, 16, giving six people and sum 89",
+      "q27": "the eight-call schedule finishes all six people, while the first-expert and two-component argument rules out seven",
+      "q28": "the eighteen roads total 201; pairing the six odd vertices along AG, CH, and EI adds the sharp lower bound 15 for total 216",
+      "q29": "exactly the ten perfect-square doors have an odd number of divisors",
+      "q30": "thirteen positive consecutive terms already total at least 91, while 2 through 13 give twelve terms totaling 90"
     },
     "contentCorrections": [
       "Q7 keeps the corrected answer 199 rather than 200 because the product contains 397 factors of 2",
-      "Q8 now says 20 coins per bundle rather than incorrectly describing 20-won coins"
+      "Q8 says 20 coins per bundle rather than turning the bundle size into a denomination",
+      "Q24 explicitly rules out the residual products 24, 36, and 54 as one or several teen ages",
+      "Q27 keeps the complete seven-call impossibility proof while its check reports only the concrete eight-call state verification",
+      "Q28 recomputes the displayed sum as 216 and distinguishes the given roads from the three repeated roads",
+      "Q29 starts from closed doors and includes player 1 as the first state change",
+      "Q30 proves the thirteen-term upper bound before constructing the twelve-term representation"
     ],
     "canonicalAnswerConflicts": [],
     "result": "pass"
@@ -170,6 +247,62 @@
       "gates": "pass"
     },
     {
+      "no": 18,
+      "sourceLocator": "materials/final_2/003.jpg#q18",
+      "answerContract": "480, 551",
+      "evidenceKind": "integer-range-endpoint-recomputation",
+      "teachingFocus": "초과·미만을 229부터 300까지로 바꾸고 반대로 변하는 양끝을 대응하기",
+      "gates": "pass"
+    },
+    {
+      "no": 19,
+      "sourceLocator": "materials/final_2/004.jpg#q19",
+      "answerContract": "6877",
+      "evidenceKind": "tournament-and-league-recomputation",
+      "teachingFocus": "세 대회 방식의 두 단계를 각각 계산한 뒤 최댓값과 최솟값 비교하기",
+      "gates": "pass"
+    },
+    {
+      "no": 20,
+      "sourceLocator": "materials/final_2/004.jpg#q20",
+      "answerContract": "8가지",
+      "evidenceKind": "units-digit-exhaustive-enumeration",
+      "teachingFocus": "곱의 일의 자리 짝 네 종류를 찾고 실제 B 후보 두 개씩 펼치기",
+      "gates": "pass"
+    },
+    {
+      "no": 21,
+      "sourceLocator": "materials/final_2/004.jpg#q21",
+      "answerContract": "43.2km/h",
+      "evidenceKind": "distance-time-equation-recomputation",
+      "teachingFocus": "도착 시각의 2시간 차로 거리와 출발 시각을 구한 뒤 5시간 속력 계산하기",
+      "gates": "pass"
+    },
+    {
+      "no": 22,
+      "sourceLocator": "materials/final_2/004.jpg#q22",
+      "answerContract": "32",
+      "evidenceKind": "positive-integer-solution-enumeration",
+      "teachingFocus": "16U 동전 수를 고정하고 세 종류를 모두 쓰는 양의 정수 해를 표로 세기",
+      "gates": "pass"
+    },
+    {
+      "no": 23,
+      "sourceLocator": "materials/final_2/004.jpg#q23",
+      "answerContract": "2명",
+      "evidenceKind": "capacity-schedule-and-lower-bound",
+      "teachingFocus": "두 도우미의 귀환 몫을 남기는 실제 일정과 한 명으로 부족한 까닭을 함께 확인하기",
+      "gates": "pass"
+    },
+    {
+      "no": 24,
+      "sourceLocator": "materials/final_2/004.jpg#q24",
+      "answerContract": "6명, 89",
+      "evidenceKind": "prime-factorization-and-exhaustive-check",
+      "teachingFocus": "소인수 7과 5로 10대 나이 묶음을 고정하고 남는 곱의 불가능성을 확인하기",
+      "gates": "pass"
+    },
+    {
       "no": 25,
       "sourceLocator": "materials/final_2/005.jpg#q25",
       "answerContract": "79개",
@@ -186,13 +319,58 @@
       "correctionBoundary": "48살은 현재가 아니라 2년 후 삼촌 나이",
       "teachingFocus": "1년 전·현재·2년 후를 같은 표에 맞춘 뒤 현재 나이 합산",
       "gates": "pass"
+    },
+    {
+      "no": 27,
+      "sourceLocator": "materials/final_2/005.jpg#q27",
+      "answerContract": "8번",
+      "evidenceKind": "construction-and-lower-bound-proof",
+      "teachingFocus": "8번 통화표로 가능성을 보이고 첫 완성 시점과 두 무리 논리로 7번을 배제하기",
+      "gates": "pass"
+    },
+    {
+      "no": 28,
+      "sourceLocator": "materials/final_2/005.jpg#q28",
+      "answerContract": "216",
+      "evidenceKind": "weighted-graph-route-review",
+      "teachingFocus": "모든 도로의 합과 홀수점 짝짓기의 최소 추가 길이를 합치고 실제 닫힌 순회로 확인하기",
+      "representation": {
+        "kind": "derived-svg",
+        "graphTopology": "verified",
+        "edgeCount": 18,
+        "baseLength": 201,
+        "duplicateEdges": [
+          "AG",
+          "CH",
+          "EI"
+        ],
+        "routeLength": 216
+      },
+      "gates": "pass"
+    },
+    {
+      "no": 29,
+      "sourceLocator": "materials/final_2/006.jpg#q29",
+      "answerContract": "10개",
+      "evidenceKind": "divisor-parity-recomputation",
+      "teachingFocus": "문 상태가 바뀌는 횟수를 약수 개수로 바꾸고 제곱수만 남기기",
+      "gates": "pass"
+    },
+    {
+      "no": 30,
+      "sourceLocator": "materials/final_2/006.jpg#q30",
+      "answerContract": "2",
+      "evidenceKind": "upper-bound-and-construction",
+      "teachingFocus": "13개 합의 최솟값 91로 상한을 세운 뒤 2부터 13까지의 12개를 구성하기",
+      "gates": "pass"
     }
   ],
   "negativeControls": [
     "canonical answer mismatch is rejected",
     "duplicate or incomplete selected set is rejected",
     "Q12 without its projection renderer is rejected",
+    "Q28 without its reviewed weighted-road renderer is rejected",
     "unreviewed questions resolve to no detailed solution"
   ],
-  "supersessionBoundary": "This record closes the authoring, first-pass, and independent second-pass gates only for the selected 12 details. They are eligible for post-attempt release, but published=false makes no deployment claim. This record does not certify the remaining questions or population statistics."
+  "supersessionBoundary": "This record closes the authoring, first-pass, and independent second-pass gates only for the selected 23 details. They are eligible for post-attempt release, but published=false makes no deployment claim. This record does not certify the seven pending questions or population statistics."
 }
