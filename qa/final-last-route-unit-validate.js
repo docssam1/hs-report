@@ -5,6 +5,12 @@ vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../final-last-routes.js'
 const R=window.GFIELD_FINAL_LAST_ROUTES;
 const U=x=>new URL(x,window.location.href);
 for(let n=1;n<=9;n++){
+ assert.equal(R.reportUrl('final',n,'sample'),R.withStudent(R.route(n>5?'last':'final',n>5?n-5:n,'report'),'sample'),'shared report helper handles legacy aliases');
+}
+for(const [series,n] of [['last',5],['final',10],['mid',1],['final',0],['final',1.5]]){
+ assert.equal(R.reportUrl(series,n,'sample'),'','invalid report round is not guessed');
+}
+for(let n=1;n<=9;n++){
  const u=U(R.normalizeUrl('mock.html?set=final&round='+n+'&name=sample&go=timer&preview=1'));
  assert.equal(u.pathname,'/final.html');assert.equal(u.searchParams.get('round'),String(n>5?n-5:n));
  assert.equal(u.searchParams.get('name'),'sample');assert.equal(u.searchParams.get('preview'),'1');

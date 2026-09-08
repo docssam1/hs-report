@@ -206,7 +206,7 @@ function render(nm,row,rows){
     '</div>'+
     '<div class="grade" style="background:'+col+'"><div class="k">예상 결과</div><div class="v">'+esc(L.gd)+'</div></div>'+
     cumulativeHTML+
-    '<div class="data-proof">상위 백분율과 예상 결과는 <b>'+esc(SCORE_MODEL.dataProof||'누적 성적 데이터')+'</b>입니다.</div>'+
+    '<div class="data-proof">상위 백분율과 예상 결과는 <b>기존 누적 성적 기준</b>으로 표시합니다.</div>'+
     '<div class="msg">'+cheer(L.gd,dv)+'</div>';
   show('res');
 }

@@ -69,6 +69,8 @@ function libraryEnhancementSource() {
 
 function configuredData(student) {
   const sandbox = {
+    URL,
+    location: {href:'https://hs.gfieldacademy.net/index.html',origin:'https://hs.gfieldacademy.net'},
     currentStudent: student,
     setTimeout() { return 0; },
     clearTimeout() {},
@@ -81,6 +83,7 @@ function configuredData(student) {
   });
   sandbox.GFIELD_DATA.studentTypes = sandbox.GFIELD_DATA.studentTypes || {};
   sandbox.GFIELD_DATA.studentTypes[student] = student === ONLINE_STUDENT ? 'online' : 'onsite';
+  vm.runInContext(fs.readFileSync(path.join(ROOT,'final-last-routes.js'),'utf8'),sandbox);
   vm.runInContext(libraryEnhancementSource(), sandbox, {
     filename: 'index-enhancements.library.js',
     timeout: 2000,
@@ -170,11 +173,12 @@ function assertFinalLibraryBooks(data) {
       `파이널 ${round}회 타이머`,
     );
     assertRoute(
-      linkFor(book, '오답 입력·진단'),
+      linkFor(book, ONSITE_STUDENT+' 학생 진단 분석지'),
       '/final.html',
-      { round, go: 'answer' },
-      `파이널 ${round}회 오답 진단`,
+      { round, go: 'report', name:ONSITE_STUDENT },
+      `파이널 ${round}회 저장된 개인 진단`,
     );
+    assert.ok(!(book.links||[]).some(link=>/go=answer/.test(link.url)),'재원생은 입력 화면 대신 저장된 진단을 열어야 함');
     assertRoute(
       linkFor(book, '답안·교재 연결표'),
       '/answer.html',
@@ -201,12 +205,12 @@ function assertLastLibraryBooks(data, online) {
     );
     assertRoute(
       linkFor(book, '답안·해설'),
-      '/final.html',
-      { set: 'last', round, go: 'answer' },
+      round===1?'/last1-answer.html':'/last-answer.html',
+      round===1?{}:{ round },
       `최종 ${round}회 답안`,
     );
     assertRoute(
-      linkFor(book, '성적 확인·진단'),
+      linkFor(book, (online?ONLINE_STUDENT:ONSITE_STUDENT)+' 학생 진단 분석지'),
       '/last1-result.html',
       { round },
       `최종 ${round}회 성적 확인`,

@@ -118,7 +118,7 @@
   moveBefore('div-final', /9\s*월\s*1\s*주차/);
 })();
 
-/* ===== 파이널·최종 1~4회 · 서재 이미지 뷰어 + 진단 흐름 =====
+/* ===== 파이널 1~5회·최종 1~4회(구형 6~9회 별칭 포함) · 서재 진단 흐름 =====
    원본 PDF는 보존하고, 서재/인쇄에는 PDF에서 변환한 페이지 JPG를 쓴다.
    data.js는 관리자 저장 때 다시 만들어질 수 있어 학생 화면에서 매번 링크를
    보정하며, 현재 로그인한 학생 이름도 각 화면으로 함께 전달한다. */
@@ -181,8 +181,59 @@
     return !!(name&&data.studentTypes&&data.studentTypes[name]==='online');
   }
   function roundOf(book){
-    var match=String(book&&book.title||'').match(/([1-4])\s*회/);
+    var match=String(book&&book.title||'').match(/(\d+)\s*회/);
     return match?Number(match[1]):0;
+  }
+  function reportUrl(series,round){
+    var helper=window.GFIELD_FINAL_LAST_ROUTES;
+    if(helper&&helper.reportUrl) return helper.reportUrl(series,round,studentName());
+    var base=series==='last'?'last1-result.html?round='+round:'final.html?round='+round+'&go=report';
+    return withName(base);
+  }
+  function reportLabel(){
+    return (studentName()?studentName()+' 학생':'내')+' 진단 분석지';
+  }
+  function parsedLocalUrl(url,title){
+    var helper=window.GFIELD_FINAL_LAST_ROUTES;
+    var normalized=helper?helper.normalizeUrl(url,{title:title}):String(url||'');
+    try{
+      var here=new URL(location.href),parsed=new URL(normalized,here.href);
+      if(parsed.origin!==here.origin&&!/^(?:www\.)?hs\.gfieldacademy\.net$/i.test(parsed.hostname)) return null;
+      return parsed;
+    }catch(e){return null;}
+  }
+  function isReportLink(book,link){
+    if(!link||!link.url) return false;
+    var url=parsedLocalUrl(link.url,book&&book.title);
+    if(!url) return false;
+    var page=url.pathname.split('/').pop().toLowerCase();
+    return page==='last1-result.html'||(page==='final.html'&&url.searchParams.get('go')==='report');
+  }
+  function isScoreInputLink(book,link){
+    if(!link||!link.url) return false;
+    if(/(?:오답|성적)\s*입력/.test(String(link.label||''))) return true;
+    var url=parsedLocalUrl(link.url,book&&book.title);
+    if(!url) return false;
+    var page=url.pathname.split('/').pop().toLowerCase();
+    return page==='last1-entry.html'||(page==='final.html'&&url.searchParams.get('go')==='answer');
+  }
+  function withReportFirst(book,series,round,links){
+    links=(links||book.links||[]).filter(function(link){return !isReportLink(book,link);});
+    book.links=[{label:reportLabel(),url:reportUrl(series,round)}].concat(links);
+  }
+  function syncAdditionalFinalAlias(book,legacyRound){
+    var series=legacyRound===5?'final':'last';
+    var round=legacyRound===5?5:legacyRound-5;
+    var links=(book.links||[]).filter(function(link){
+      return !isReportLink(book,link)&&!isScoreInputLink(book,link);
+    });
+    if(onlineMember()){
+      var input=series==='final'
+        ? {label:'오답 입력·분석',url:withName(window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('final',round,'answer'):'final.html?round='+round+'&go=answer')}
+        : {label:'성적 입력',url:withName('last1-entry.html?round='+round)};
+      links.unshift(input);
+    }
+    withReportFirst(book,series,round,links);
   }
   function ensureOriginalFormBooks(){
     originalFormBooks.forEach(function(source){
@@ -199,29 +250,35 @@
       var round=roundOf(book);
       if(!round) return;
 
-      if(book.folder==='파이널 모의고사'&&/파이널\s*실전\s*모의고사/.test(String(book.title||''))){
+      if(book.folder==='파이널 모의고사'&&round>=1&&round<=5&&/파이널\s*실전\s*모의고사/.test(String(book.title||''))){
         var finalBase=window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('final',round,''):'final.html?round='+round;
-        book.imgdir='final_'+round;
-        book.pages=finalPages[round];
-        book.copyrightMissingPages=finalCopyrightPages[round].slice();
-        book.links=[{label:'실전 타이머',url:withName(finalBase+'&go=timer')}];
-        if(onlineMember()) book.links.push({label:'맞은 문제 체크·진단',url:withName(finalBase+'&go=answer')});
-        book.links.push({label:(studentName()?studentName()+' 학생 ':'내 ')+'성적표',url:withName(finalBase+'&go=report')});
-        book.links.push({label:'답안·교재 연결표',url:withName('answer.html?set=final&round='+round)});
+        if(finalPages[round]){
+          book.imgdir='final_'+round;
+          book.pages=finalPages[round];
+          book.copyrightMissingPages=finalCopyrightPages[round].slice();
+        }
+        var finalLinks=[{label:'실전 타이머',url:withName(finalBase+'&go=timer')}];
+        if(onlineMember()) finalLinks.push({label:'맞은 문제 체크·진단',url:withName(finalBase+'&go=answer')});
+        finalLinks.push({label:'답안·교재 연결표',url:withName('answer.html?set=final&round='+round)});
+        withReportFirst(book,'final',round,finalLinks);
       }
 
-      if(book.folder==='최종 모의고사'&&/최종\s*실전\s*모의고사/.test(String(book.title||''))){
+      if(book.folder==='최종 모의고사'&&round>=1&&round<=4&&/최종\s*실전\s*모의고사/.test(String(book.title||''))){
         var lastBase=window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('last',round,''):'final.html?set=last&round='+round;
         book.pdf='';
         book.imgdir='last_final_'+round;
         book.pages=6;
         book.video=lastVideos[round];
-        book.links=[
+        var lastLinks=[
           {label:'실전 타이머',url:withName(lastBase+'&go=timer')},
           {label:'답안·해설',url:withName(window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('last',round,'answer-page'):lastBase+'&go=answer')}
         ];
-        if(onlineMember()) book.links.push({label:'성적 입력',url:withName('last1-entry.html?round='+round)});
-        book.links.push({label:'성적 확인·진단',url:withName(window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('last',round,'report'):'last1-result.html?round='+round)});
+        if(onlineMember()) lastLinks.push({label:'성적 입력',url:withName('last1-entry.html?round='+round)});
+        withReportFirst(book,'last',round,lastLinks);
+      }
+
+      if(book.folder==='추가 모의고사'&&round>=5&&round<=9&&/최종\s*실전\s*모의고사/.test(String(book.title||''))){
+        syncAdditionalFinalAlias(book,round);
       }
 
       if(book.folder==='추가 모의고사'&&/초등선발\s*대비\s*시그니처\s*실전\s*모의고사/.test(String(book.title||''))){
@@ -488,7 +545,6 @@
    성적 확인은 두 유형 모두 동일한 읽기 전용 결과 화면을 사용한다. */
 (function(){
   if(!window.GFIELD_DATA) return;
-  var RESULT_URL='last1-result.html';
   var ENTRY_URL='last1-entry.html';
 
   var st=document.createElement('style');
@@ -497,9 +553,14 @@
 
   function studentName(){return (typeof currentStudent!=='undefined'&&currentStudent)?currentStudent:'';}
   function onlineMember(){var nm=studentName();return !!(nm&&window.GFIELD_DATA.studentTypes&&window.GFIELD_DATA.studentTypes[nm]==='online');}
+  function reportUrl(series,round){
+    var nm=studentName(),helper=window.GFIELD_FINAL_LAST_ROUTES;
+    if(helper&&helper.reportUrl) return helper.reportUrl(series,round,nm);
+    var url=series==='last'?'last1-result.html?round='+round:'final.html?round='+round+'&go=report';
+    return url+(nm?('&name='+encodeURIComponent(nm)):'');
+  }
   function openResult(round){
-    var nm=studentName();
-    window.open(RESULT_URL+'?round='+round+(nm?('&name='+encodeURIComponent(nm)):''),'_blank');
+    window.open(reportUrl('last',round),'_blank');
   }
   function openEntry(round){
     var nm=studentName();
@@ -508,7 +569,7 @@
   function openFinalResult(round){
     var nm=studentName();
     if(!nm) return;
-    window.open('final.html?round='+round+'&go=report&name='+encodeURIComponent(nm),'_blank');
+    window.open(reportUrl('final',round),'_blank');
   }
 
   if(typeof renderTimeline==='function'){

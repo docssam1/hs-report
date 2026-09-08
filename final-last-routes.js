@@ -88,6 +88,23 @@
     if(action==='answer-page') return target('answer.html',{set:'final',round:round});
     return target('final.html',{round:round,go:action||''});
   }
+  function canonicalSeriesRound(series,round){
+    series=String(series||'').toLowerCase();
+    round=roundNumber(round);
+    /* The additional-library Final 6~9 names are legacy aliases for Last 1~4. */
+    if(series==='final'&&round>=6&&round<=9){series='last';round-=5;}
+    if(series==='final'&&round>=1&&round<=5) return {series:'final',round:round};
+    if(series==='last'&&round>=1&&round<=4) return {series:'last',round:round};
+    return null;
+  }
+  function reportUrl(series,round,name){
+    var exam=canonicalSeriesRound(series,round);
+    if(!exam) return '';
+    var url=exam.series==='last'
+      ? relative(lastTarget('report',exam.round))
+      : relative(finalTarget('report',exam.round));
+    return String(name||'').trim()?withStudent(url,name):url;
+  }
 
   function normalizeUrl(input,options){
     options=options||{};
@@ -146,8 +163,9 @@
     return true;
   }
   function route(series,round,action){
-    round=Number(round);
-    var url=series==='last'?lastTarget(action,round):finalTarget(action,round);
+    var exam=canonicalSeriesRound(series,round);
+    if(!exam) return '';
+    var url=exam.series==='last'?lastTarget(action,exam.round):finalTarget(action,exam.round);
     return relative(url);
   }
 
@@ -160,6 +178,8 @@
     isKnownHtml:isKnownHtml,
     withStudent:withStudent,
     redirectCurrent:redirectCurrent,
-    route:route
+    route:route,
+    canonicalSeriesRound:canonicalSeriesRound,
+    reportUrl:reportUrl
   };
 })(window);
