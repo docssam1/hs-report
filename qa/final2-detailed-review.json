@@ -27,15 +27,22 @@
   },
   "selectedNos": [
     1,
+    2,
     3,
     4,
+    5,
     6,
     7,
     8,
+    9,
     10,
     11,
     12,
+    13,
+    14,
     15,
+    16,
+    17,
     18,
     19,
     20,
@@ -50,15 +57,7 @@
     29,
     30
   ],
-  "pendingNos": [
-    2,
-    5,
-    9,
-    13,
-    14,
-    16,
-    17
-  ],
+  "pendingNos": [],
   "status": {
     "evidence": "verified",
     "independentSecondPass": "verified",
@@ -80,15 +79,22 @@
     ],
     "verifiedNos": [
       1,
+      2,
       3,
       4,
+      5,
       6,
       7,
       8,
+      9,
       10,
       11,
       12,
+      13,
+      14,
       15,
+      16,
+      17,
       18,
       19,
       20,
@@ -105,10 +111,11 @@
     ],
     "method": [
       "read every selected question directly from the rendered source page",
-      "recompute each scalar, ordered-pair, schedule, and construction answer independently of the candidate explanations",
-      "trace the Q12 thick path in three dimensions and project it by dropping height only",
+      "recompute each scalar, ordered-pair, schedule, construction, path count, and tiling count independently of the candidate explanations",
+      "trace Q2, Q5, Q9, Q12, Q13, Q16, and Q28 against their exact graph, contact, or geometry models",
       "verify the Q23 supply schedule, the Q27 eight-call construction and seven-call lower bound, and the Q28 weighted-road lower bound and closed walk",
-      "compare each condition, strategy, step, check, caution, table, and drawing boundary with the source"
+      "compare each condition, strategy, step, check, caution, table, and drawing boundary with the source",
+      "verify all seven registered diagrams and the integrated 30-question print surface before marking the set eligible"
     ],
     "criticalChecks": {
       "q7": "v2(101 through 500)=397, so 198 exact divisions by 4 precede the first remainder on division 199",
@@ -126,7 +133,14 @@
       "q27": "the eight-call schedule finishes all six people, while the first-expert and two-component argument rules out seven",
       "q28": "the eighteen roads total 201; pairing the six odd vertices along AG, CH, and EI adds the sharp lower bound 15 for total 216",
       "q29": "exactly the ten perfect-square doors have an odd number of divisors",
-      "q30": "thirteen positive consecutive terms already total at least 91, while 2 through 13 give twelve terms totaling 90"
+      "q30": "thirteen positive consecutive terms already total at least 91, while 2 through 13 give twelve terms totaling 90",
+      "q2": "the alternating chain has 20 unit squares and 19 two-cell rectangles, with no larger four-sided outline",
+      "q9": "the cuboid graph has exactly eight simple five-edge paths from the adjacent start to end vertices",
+      "q13": "the exact road graph has four shortest A-to-B paths and four C-avoiding shortest B-to-D paths, giving 16",
+      "q14": "flags 1, 5, 9, through 297 are the 75 removed flags, so 225 remain",
+      "q16": "a center-avoiding L can be fixed at one corner; the six possible second placements form reflection classes {1,2}, {3}, {4,5}, and {6}, giving four",
+      "q17": "only light-ball pair 1 and 7 satisfies all three balance outcomes",
+      "q5": "the point-inclusive meeting contract makes A, R, M, and B a four-country clique at the original central point, and the explicit four-color assignment attains the lower bound"
     },
     "contentCorrections": [
       "Q7 keeps the corrected answer 199 rather than 200 because the product contains 397 factors of 2",
@@ -138,7 +152,40 @@
       "Q30 proves the thirteen-term upper bound before constructing the twelve-term representation"
     ],
     "canonicalAnswerConflicts": [],
-    "result": "pass"
+    "result": "pass",
+    "contentVerifiedNos": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "pendingRepresentationNos": []
   },
   "requiredGates": [
     "sourceMatch",
@@ -156,6 +203,18 @@
     "checkIncluded": true,
     "commonMisreadIncluded": true
   },
+  "learnerFitGate": {
+    "gateId": "learner-fit",
+    "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
+    "criteria": [
+      "language",
+      "representations",
+      "prerequisites",
+      "reasoning-load",
+      "response-mode"
+    ],
+    "status": "pass"
+  },
   "items": [
     {
       "no": 1,
@@ -163,6 +222,20 @@
       "answerContract": "4번",
       "evidenceKind": "numeric-recomputation",
       "teachingFocus": "모두 2점이라고 가정한 뒤 4점 차이로 바꾸기",
+      "gates": "pass"
+    },
+    {
+      "no": 2,
+      "sourceLocator": "materials/final_2/001.jpg#q2",
+      "answerContract": "39개",
+      "evidenceKind": "grid-perimeter-exhaustive-enumeration",
+      "teachingFocus": "작은 정사각형 20개와 두 방향의 이웃한 두 칸 직사각형 10+9개를 분리",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final2-q2-alternating-square-chain-v1",
+        "topology": "model-bound",
+        "status": "verified"
+      },
       "gates": "pass"
     },
     {
@@ -179,6 +252,21 @@
       "answerContract": "15가지",
       "evidenceKind": "complete-enumeration",
       "teachingFocus": "동전 네 종류와 1000원 지폐를 구별하고 15개 합의 중복 확인",
+      "gates": "pass"
+    },
+    {
+      "no": 5,
+      "sourceLocator": "materials/final_2/001.jpg#q5",
+      "answerContract": "4가지",
+      "evidenceKind": "point-contact-inclusive-graph-coloring",
+      "teachingFocus": "중앙 한 점에서 만나는 네 나라로 네 색의 필요성을 보이고 여섯 나라의 실제 네 색 배정으로 충분성을 확인",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final2-q5-point-contact-coloring-v1",
+        "contactContract": "point-contact-inclusive",
+        "addedBoundarySegmentBetweenAAndB": false,
+        "status": "verified"
+      },
       "gates": "pass"
     },
     {
@@ -204,6 +292,29 @@
       "answerContract": "1번",
       "evidenceKind": "six-case-separation",
       "teachingFocus": "1개부터 6개까지 한 번에 달아 부족한 g으로 번호 판별",
+      "gates": "pass"
+    },
+    {
+      "no": 9,
+      "sourceLocator": "materials/final_2/002.jpg#q9",
+      "answerContract": "8가지",
+      "evidenceKind": "cube-graph-simple-path-enumeration",
+      "teachingFocus": "첫걸음을 두 갈래로 나누고 꼭짓점을 되풀이하지 않는 다섯 모서리 길을 4+4로 열거",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final2-q9-five-edge-cuboid-paths-v1",
+        "vertexLabels": [
+          "K",
+          "N",
+          "U0",
+          "U1",
+          "D0",
+          "D1",
+          "F0",
+          "F1"
+        ],
+        "status": "verified"
+      },
       "gates": "pass"
     },
     {
@@ -238,12 +349,56 @@
       "gates": "pass"
     },
     {
+      "no": 13,
+      "sourceLocator": "materials/final_2/003.jpg#q13",
+      "answerContract": "16가지",
+      "evidenceKind": "exact-road-graph-dynamic-count",
+      "teachingFocus": "B에서 두 구간으로 나누고 C를 막은 교차점 수를 4×4로 결합",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final2-q13-road-network-v1",
+        "topology": "exact-eight-level-road-model",
+        "status": "verified"
+      },
+      "gates": "pass"
+    },
+    {
+      "no": 14,
+      "sourceLocator": "materials/final_2/003.jpg#q14",
+      "answerContract": "225개",
+      "evidenceKind": "bounded-arithmetic-progression-enumeration",
+      "teachingFocus": "299개 간격의 전체 거리에서 첫 깃발을 포함한 75개를 뽑고 남은 수 계산",
+      "gates": "pass"
+    },
+    {
       "no": 15,
       "sourceLocator": "materials/final_2/003.jpg#q15",
       "answerContract": "422",
       "evidenceKind": "sequence-recomputation",
       "correctionBoundary": "211은 가운데 수이고 세 수의 합은 422",
       "teachingFocus": "20번째 묶음 (20, 211, 191)의 세 성분을 모두 합하기",
+      "gates": "pass"
+    },
+    {
+      "no": 16,
+      "sourceLocator": "materials/final_2/003.jpg#q16",
+      "answerContract": "4가지",
+      "evidenceKind": "polyomino-placement-and-dihedral-orbit-enumeration",
+      "teachingFocus": "가운데 칸을 피하는 L자를 고정하고 둘째 조각의 여섯 자리를 직접 적어 뒤집기 대칭 네 묶음으로 줄이기",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final2-q16-l-tromino-orbits-v1",
+        "representativeBoards": 4,
+        "status": "verified"
+      },
+      "gates": "pass"
+    },
+    {
+      "no": 17,
+      "sourceLocator": "materials/final_2/003.jpg#q17",
+      "answerContract": "①, ⑦",
+      "evidenceKind": "exhaustive-two-light-ball-outcome-check",
+      "teachingFocus": "세 저울 결과를 차례로 겹쳐 후보 45쌍 중 1번과 7번만 남기기",
       "gates": "pass"
     },
     {
@@ -367,10 +522,10 @@
   ],
   "negativeControls": [
     "canonical answer mismatch is rejected",
-    "duplicate or incomplete selected set is rejected",
-    "Q12 without its projection renderer is rejected",
-    "Q28 without its reviewed weighted-road renderer is rejected",
-    "unreviewed questions resolve to no detailed solution"
+    "duplicate or incomplete thirty-question set is rejected",
+    "Q2, Q5, Q9, Q12, Q13, Q16, and Q28 each fail closed without its exact registered diagram",
+    "demoting either approval status makes every detailed solution fail closed",
+    "the point-inclusive Q5 contract never invents a border segment between A and B"
   ],
-  "supersessionBoundary": "This record closes the authoring, first-pass, and independent second-pass gates only for the selected 23 details. They are eligible for post-attempt release, but published=false makes no deployment claim. This record does not certify the seven pending questions or population statistics."
+  "supersessionBoundary": "This eligible 30-question set preserves the previously released 23 educational explanations and adds the independently reviewed remaining seven. All seven registered diagrams, the final independent integration review, and the actual 36-page detail and 50-page package PDF review passed. published=false makes no deployment claim; population statistics, scores, and learner records remain outside this record."
 }

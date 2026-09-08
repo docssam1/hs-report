@@ -13,7 +13,8 @@ const dataSource=fs.readFileSync(path.join(root,'data.js'),'utf8')+`\n;(()=>{con
 const server=http.createServer((req,res)=>{
  const p=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
  if(!p.startsWith(root+path.sep)||!fs.existsSync(p)||!fs.statSync(p).isFile()){res.writeHead(404);return res.end();}
- res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'application/javascript','.css':'text/css'})[path.extname(p)]||'application/octet-stream');fs.createReadStream(p).pipe(res);
+ res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'application/javascript','.css':'text/css'})[path.extname(p)]||'application/octet-stream');
+ fs.createReadStream(p).pipe(res);
 });
 (async()=>{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
@@ -74,8 +75,8 @@ const server=http.createServer((req,res)=>{
     const count=await rp.evaluate(()=>GF_TEST.computeCumulativeConsidered(2,{final1:{ox:'O'.repeat(20)+'X'.repeat(10)},'final1@2':{ox:'O'.repeat(30)}},1,'final2',('O'.repeat(20)+'X'.repeat(10)).split(''),true).length);
     assert.equal(count,2,'verified Final1 and current Final2 enter cumulative once; retry stays excluded');
     final2Detailed=await rp.evaluate(()=>GFIELD_FINAL2_DETAILED.contract.expectedCount);
-    assert.equal(final2Detailed,23,'the exact independently approved Final2 contract is loaded');
-    assert.equal(await rp.locator('.final1-detailed-card.is-ready').count(),final2Detailed,'approved Final2 selected detailed solutions kept');
+    assert.equal(final2Detailed,30,'the exact reviewed Final2 contract is loaded');
+    assert.equal(await rp.locator('.final1-detailed-card.is-ready').count(),final2Detailed,'reviewed Final2 detail set is complete');
    }
    const lp=await openLibrary(title);await lp.locator(selector).waitFor({timeout:15000});assert.equal(lp.url(),url,'both entry points use exactly same report');
    assert.equal(await lp.locator(selector).innerText(),body,'same score, percentile, diagnosis, cumulative results and solutions');

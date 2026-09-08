@@ -60,6 +60,51 @@ assert.deepEqual(
   'Q4 printed different-type sums match all unordered distinct pairs'
 );
 
+// Q5: point contact counts as meeting; independently find the graph's chromatic number.
+const q5Countries=['가','나','라','바','마','다'];
+const q5Edges=[
+  ['가','나'],['가','라'],['가','마'],['가','다'],['나','라'],
+  ['나','바'],['라','바'],['라','마'],['바','마'],['마','다'],
+  ['가','바']
+];
+const q5Adjacency=new Map(q5Countries.map(country=>[country,new Set()]));
+for(const [first,second] of q5Edges){
+  q5Adjacency.get(first).add(second);
+  q5Adjacency.get(second).add(first);
+}
+function q5ColoringWith(colorCount){
+  const colors=new Map();
+  function assign(index){
+    if(index===q5Countries.length) return new Map(colors);
+    const country=q5Countries[index];
+    for(let color=0;color<colorCount;color++){
+      if([...q5Adjacency.get(country)].every(other=>colors.get(other)!==color)){
+        colors.set(country,color);
+        const result=assign(index+1);
+        if(result) return result;
+        colors.delete(country);
+      }
+    }
+    return null;
+  }
+  return assign(0);
+}
+assert.equal(q5ColoringWith(3),null,'central point makes the four-country clique require four colors');
+const q5FourColoring=q5ColoringWith(4);
+assert.ok(q5FourColoring);
+const q5PrintedColoring=new Map([['가',0],['라',1],['다',1],['나',2],['마',2],['바',3]]);
+for(const [first,second] of q5Edges){
+  assert.notEqual(q5PrintedColoring.get(first),q5PrintedColoring.get(second),'Q5 printed coloring separates '+first+' and '+second);
+}
+assert.deepEqual(
+  JSON.parse(JSON.stringify(byNo.get(5).steps[2].table.rows.map(row=>row[1]))),
+  ['가','라, 다','나, 마','바'],
+  'Q5 table prints the independently checked four color classes'
+);
+assert.match(byNo.get(5).read,/한 점에서 닿는 경우도 포함/);
+assert.match(byNo.get(5).caution,/새 국경선을 그리는 것이 아닙니다/);
+assert.equal(answers.get(5),'4가지');
+
 // Q6: enumerate every integer in the stated range, excluding one-digit values.
 const q6=[];
 for(let n=10;n<500;n++){
@@ -363,9 +408,249 @@ assert.deepEqual(q30Representations.filter(entry=>entry.count===q30MaxCount),[{s
 assert.ok(13*14/2>90,'thirteen positive consecutive integers are impossible');
 assert.equal(answers.get(30),'2');
 
+// Q2: reconstruct every unit segment, then enumerate every rectangular perimeter.
+const q2Model=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.model.q2;
+const q2Horizontal=new Set();
+const q2Vertical=new Set();
+for(const [,x,y] of q2Model.cells){
+  q2Horizontal.add(x+','+y);
+  q2Horizontal.add(x+','+(y+1));
+  q2Vertical.add(x+','+y);
+  q2Vertical.add((x+1)+','+y);
+}
+const q2HasHorizontal=(x1,x2,y)=>{
+  for(let x=x1;x<x2;x++) if(!q2Horizontal.has(x+','+y)) return false;
+  return true;
+};
+const q2HasVertical=(x,y1,y2)=>{
+  for(let y=y1;y<y2;y++) if(!q2Vertical.has(x+','+y)) return false;
+  return true;
+};
+const q2Rectangles=[];
+for(let x1=0;x1<=11;x1++) for(let x2=x1+1;x2<=11;x2++){
+  for(let y1=0;y1<=10;y1++) for(let y2=y1+1;y2<=10;y2++){
+    if(q2HasHorizontal(x1,x2,y1)&&q2HasHorizontal(x1,x2,y2)&&q2HasVertical(x1,y1,y2)&&q2HasVertical(x2,y1,y2)){
+      q2Rectangles.push([x1,x2,y1,y2]);
+    }
+  }
+}
+assert.equal(q2Rectangles.length,39);
+assert.equal(q2Rectangles.filter(([x1,x2,y1,y2])=>(x2-x1)*(y2-y1)===1).length,20);
+assert.equal(q2Rectangles.filter(([x1,x2,y1,y2])=>(x2-x1)*(y2-y1)===2).length,19);
+const q2RenderedModel=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.calculate(2);
+assert.equal(q2RenderedModel.valid,true);
+assert.equal(q2RenderedModel.total,39);
+assert.equal(answers.get(2),'39개');
+
+// Q9: exhaust every simple path of exactly five edges on the cuboid graph.
+const q9Model=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.model.q9;
+const q9Adjacency=new Map(Object.keys(q9Model.vertices).map(id=>[id,[]]));
+for(const [first,second] of q9Model.edges){
+  q9Adjacency.get(first).push(second);
+  q9Adjacency.get(second).push(first);
+}
+const q9Paths=[];
+function walkQ9(node,path){
+  if(path.length===6){
+    if(node===q9Model.end) q9Paths.push(path.slice());
+    return;
+  }
+  for(const next of q9Adjacency.get(node)) if(!path.includes(next)) walkQ9(next,path.concat(next));
+}
+walkQ9(q9Model.start,[q9Model.start]);
+assert.equal(q9Paths.length,8);
+assert.equal(q9Paths.filter(path=>path[1]==='U0').length,4);
+assert.equal(q9Paths.filter(path=>path[1]==='D0').length,4);
+assert.equal(new Set(q9Paths.map(path=>path.join('|'))).size,8);
+const q9RenderedModel=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.calculate(9);
+assert.equal(q9RenderedModel.valid,true);
+assert.equal(q9RenderedModel.paths.length,8);
+assert.equal(answers.get(9),'8가지');
+
+// Q13: rebuild the exact road-junction graph and independently count shortest paths.
+const q13Model=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.model.q13;
+const q13X=new Map(q13Model.axes.x.map(axis=>[axis.id,axis.value]));
+const q13Y=new Map(q13Model.axes.y.map(axis=>[axis.id,axis.value]));
+const q13Horizontal=q13Model.horizontalSegments.map(segment=>({
+  y:q13Y.get(segment.y),from:q13X.get(segment.from),to:q13X.get(segment.to)
+}));
+const q13Vertical=q13Model.verticalSegments.map(segment=>({
+  x:q13X.get(segment.x),from:q13Y.get(segment.from),to:q13Y.get(segment.to)
+}));
+const q13Points=new Map();
+const q13Key=(x,y)=>x+','+y;
+const q13AddPoint=(x,y)=>q13Points.set(q13Key(x,y),{x,y,key:q13Key(x,y)});
+for(const segment of q13Horizontal){
+  q13AddPoint(segment.from,segment.y);
+  q13AddPoint(segment.to,segment.y);
+  for(const crossing of q13Vertical){
+    if(crossing.x>=segment.from&&crossing.x<=segment.to&&segment.y>=crossing.from&&segment.y<=crossing.to){
+      q13AddPoint(crossing.x,segment.y);
+    }
+  }
+}
+for(const segment of q13Vertical){
+  q13AddPoint(segment.x,segment.from);
+  q13AddPoint(segment.x,segment.to);
+}
+const q13Adjacency=new Map([...q13Points.keys()].map(key=>[key,[]]));
+const q13EdgeKeys=new Set();
+function addQ13Edge(first,second){
+  const edgeKey=[first.key,second.key].sort().join('|');
+  if(q13EdgeKeys.has(edgeKey)) return;
+  q13EdgeKeys.add(edgeKey);
+  const weight=Math.abs(first.x-second.x)+Math.abs(first.y-second.y);
+  q13Adjacency.get(first.key).push({to:second.key,weight});
+  q13Adjacency.get(second.key).push({to:first.key,weight});
+}
+for(const segment of q13Horizontal){
+  const points=[...q13Points.values()].filter(point=>point.y===segment.y&&point.x>=segment.from&&point.x<=segment.to).sort((a,b)=>a.x-b.x);
+  for(let index=1;index<points.length;index++) addQ13Edge(points[index-1],points[index]);
+}
+for(const segment of q13Vertical){
+  const points=[...q13Points.values()].filter(point=>point.x===segment.x&&point.y>=segment.from&&point.y<=segment.to).sort((a,b)=>a.y-b.y);
+  for(let index=1;index<points.length;index++) addQ13Edge(points[index-1],points[index]);
+}
+const q13Named=label=>{
+  const point=q13Model.points[label];
+  return q13Key(q13X.get(point.x),q13Y.get(point.y));
+};
+function q13Shortest(start,end,banned=new Set()){
+  const distance=new Map([...q13Points.keys()].map(key=>[key,Infinity]));
+  const ways=new Map([...q13Points.keys()].map(key=>[key,0]));
+  const used=new Set();
+  distance.set(start,0);
+  ways.set(start,1);
+  while(true){
+    let current=null,best=Infinity;
+    for(const [key,value] of distance){
+      if(!used.has(key)&&!banned.has(key)&&value<best){current=key;best=value;}
+    }
+    if(current===null) break;
+    used.add(current);
+    for(const edge of q13Adjacency.get(current)){
+      if(banned.has(edge.to)) continue;
+      const next=best+edge.weight;
+      if(next<distance.get(edge.to)){
+        distance.set(edge.to,next);
+        ways.set(edge.to,ways.get(current));
+      }else if(next===distance.get(edge.to)){
+        ways.set(edge.to,ways.get(edge.to)+ways.get(current));
+      }
+    }
+  }
+  return {distance:distance.get(end),ways:ways.get(end)};
+}
+const q13A=q13Named('A'),q13B=q13Named('B'),q13C=q13Named('C'),q13D=q13Named('D');
+assert.equal(q13Model.horizontalSegments.length,8);
+assert.equal(q13Model.verticalSegments.length,7);
+assert.ok(q13Model.horizontalSegments.some(segment=>segment.y==='Y4'&&segment.from==='X0'&&segment.to==='X1'));
+assert.deepEqual(q13Shortest(q13A,q13B),{distance:9,ways:4});
+assert.deepEqual(q13Shortest(q13B,q13D,new Set([q13C])),{distance:18,ways:4});
+const q13RenderedModel=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.calculate(13);
+assert.equal(q13RenderedModel.valid,true);
+assert.equal(q13RenderedModel.total,16);
+assert.equal(answers.get(13),'16가지');
+
+// Q14: distance and flag-index models independently give the same removal count.
+const q14Removed=[];
+for(let flag=1;flag<=300;flag++) if(((flag-1)*8)%32===0) q14Removed.push(flag);
+assert.equal(299*8,2392);
+assert.deepEqual([Math.floor(2392/32),2392%32],[74,24]);
+assert.equal(q14Removed.length,75);
+assert.equal(q14Removed.at(-1),297);
+assert.equal(300-q14Removed.length,225);
+assert.equal(answers.get(14),'225개');
+
+// Q16: enumerate L placements, disjoint unordered pairs, then quotient by all eight square symmetries.
+const q16Model=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.model.q16;
+const q16PlacementKeys=[];
+for(let row=0;row<2;row++) for(let col=0;col<2;col++){
+  const block=[[row,col],[row,col+1],[row+1,col],[row+1,col+1]];
+  for(let omitted=0;omitted<4;omitted++){
+    q16PlacementKeys.push(block.filter((_,index)=>index!==omitted).map(cell=>cell.join(',')).sort().join(';'));
+  }
+}
+assert.equal(new Set(q16PlacementKeys).size,16);
+const q16Placements=q16PlacementKeys.map(key=>key.split(';').map(cell=>cell.split(',').map(Number)));
+const q16Pairs=[];
+for(let first=0;first<q16Placements.length;first++) for(let second=first+1;second<q16Placements.length;second++){
+  const occupied=new Set(q16Placements[first].map(cell=>cell.join(',')));
+  if(q16Placements[second].every(cell=>!occupied.has(cell.join(',')))) q16Pairs.push([q16Placements[first],q16Placements[second]]);
+}
+assert.equal(q16Pairs.length,22);
+const q16Transform=(cells,reflection,rotation)=>cells.map(([row,col])=>{
+  let nextRow=row,nextCol=col;
+  if(reflection) nextCol=2-nextCol;
+  for(let turn=0;turn<rotation;turn++) [nextRow,nextCol]=[nextCol,2-nextRow];
+  return [nextRow,nextCol];
+});
+const q16PieceKey=cells=>cells.map(cell=>cell.join(',')).sort().join(';');
+function q16OrbitKey([pieceA,pieceB]){
+  const keys=[];
+  for(let reflection=0;reflection<2;reflection++) for(let rotation=0;rotation<4;rotation++){
+    keys.push([
+      q16PieceKey(q16Transform(pieceA,reflection,rotation)),
+      q16PieceKey(q16Transform(pieceB,reflection,rotation))
+    ].sort().join('|'));
+  }
+  return keys.sort()[0];
+}
+const q16Orbits=new Set(q16Pairs.map(q16OrbitKey));
+assert.equal(q16Orbits.size,4);
+const q16Representatives=q16Model.representatives.map(representative=>q16OrbitKey([
+  representative.A.map(([row,col])=>[row-1,col-1]),
+  representative.B.map(([row,col])=>[row-1,col-1])
+]));
+assert.equal(new Set(q16Representatives).size,4);
+assert.deepEqual([...new Set(q16Representatives)].sort(),[...q16Orbits].sort());
+const q16A=[[0,0],[0,1],[1,0]];
+const q16AKey=new Set(q16A.map(cell=>cell.join(',')));
+const q16Compatible=q16Placements.filter(placement=>placement.every(cell=>!q16AKey.has(cell.join(','))));
+assert.equal(q16Compatible.length,6);
+const q16Board=pieceB=>{
+  const b=new Set(pieceB.map(cell=>cell.join(',')));
+  return [0,1,2].map(row=>[0,1,2].map(col=>q16AKey.has(row+','+col)?'A':b.has(row+','+col)?'B':'.').join(''));
+};
+const q16Printed=JSON.parse(JSON.stringify(byNo.get(16).steps[2].table.rows));
+assert.deepEqual(
+  q16Printed.map(row=>row.slice(1,4)).sort(),
+  q16Compatible.map(q16Board).sort(),
+  'Q16 six printed B boards are exactly all placements disjoint from fixed A'
+);
+const q16PrintedByNumber=new Map(q16Printed.map(row=>[row[0],row.slice(1,4)]));
+const q16ReflectMain=board=>[0,1,2].map(row=>[0,1,2].map(col=>board[col][row]).join(''));
+for(const row of q16Printed){
+  assert.deepEqual(q16ReflectMain(row.slice(1,4)),q16PrintedByNumber.get(row[4]),'Q16 printed reflection partner '+row[0]);
+}
+assert.deepEqual(q16Printed.map(row=>row[4]),['2','1','3','5','4','6']);
+const q16RenderedModel=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.calculate(16);
+assert.equal(q16RenderedModel.valid,true);
+assert.equal(q16RenderedModel.orbitCount,4);
+assert.equal(answers.get(16),'4가지');
+
+// Q17: exhaust all 45 unordered pairs against the three source balance outcomes.
+const q17Weighings=[
+  {left:[1,2,3,4,5],right:[6,7,8,9,10],outcome:'balance'},
+  {left:[1,3,5,7,9],right:[2,4,6,8,10],outcome:'left-lighter'},
+  {left:[1,7,10],right:[3,5,9],outcome:'left-lighter'}
+];
+const q17Pairs=[];
+for(let first=1;first<=10;first++) for(let second=first+1;second<=10;second++){
+  const light=new Set([first,second]);
+  const weight=number=>light.has(number)?1:2;
+  if(q17Weighings.every(weighing=>{
+    const left=weighing.left.reduce((sum,number)=>sum+weight(number),0);
+    const right=weighing.right.reduce((sum,number)=>sum+weight(number),0);
+    return weighing.outcome==='balance'?left===right:left<right;
+  })) q17Pairs.push([first,second]);
+}
+assert.deepEqual(q17Pairs,[[1,7]]);
+assert.equal(answers.get(17),'①, ⑦');
+
 // Q12 is a drawing answer and is verified by the independent projection validator.
 assert.equal(answers.get(12),'(그림 답안)');
 assert.equal(byNo.get(12).diagram,'top-projection');
 
-assert.deepEqual([...answers.keys()].filter(no=>no!==12),[1,3,4,6,7,8,10,11,15,18,19,20,21,22,23,24,25,26,27,28,29,30]);
-console.log('PASS Final2 public math checks for 22 non-drawing answers; Q12 is delegated to the source-topology projection validator');
+assert.deepEqual([...answers.keys()].filter(no=>no!==12),[1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]);
+console.log('PASS Final2 public math checks for 29 non-drawing answers; Q12 is delegated to the source-topology projection validator');
