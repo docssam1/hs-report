@@ -104,7 +104,7 @@ td{padding:8px;border-bottom:1px solid var(--line)}
 }
 @media print{
   .detail-section{break-inside:auto!important}.final1-detailed-solutions{margin-top:8mm;font-size:11pt}.final1-solutions-head{padding:0 0 6mm;border-width:0 0 2px}.final1-solutions-head h3{font-size:19pt}.final1-jump,.final1-print-only{display:none!important}.final1-detailed-card{break-inside:auto!important;page-break-inside:auto!important;margin-top:7mm;padding:6mm;border-color:#aebbd3}.final1-solution-heading,.final1-answer,.final1-solution-block,.final1-step,.final1-number-line,.final1-data-table-wrap{break-inside:avoid;page-break-inside:avoid}.final1-solution-block p,.final1-step p{font-size:11pt;line-height:1.72}.final1-data-table-wrap{overflow:visible}.final1-data-table{min-width:0;font-size:9.5pt}.final1-number-line-scroll{overflow:visible}.final1-number-line svg{min-width:0}.final1-watermark span{color:rgba(36,86,196,.07)}.final1-print-watermark{display:block;position:fixed;left:12%;right:12%;top:48%;z-index:0;transform:rotate(-28deg);color:rgba(36,86,196,.055);font-size:26pt;font-weight:900;text-align:center;pointer-events:none}.final1-card-content,.final1-solutions-head{position:relative;z-index:1}
-  body.print-final1-solutions .doc>.cover,body.print-final1-solutions .doc>.cmp-band,body.print-final1-solutions .doc>section:not(.detail-section){display:none!important}body.print-final1-solutions .detail-section{padding:0;border:0}body.print-final1-solutions .detail-section>h2,body.print-final1-solutions .detail-section>.lead,body.print-final1-solutions #detailWrap>table{display:none!important}body.print-final1-solutions .final1-detailed-solutions{margin-top:0}
+  body.print-final1-solutions .doc>.cover,body.print-final1-solutions .doc>.cmp-band,body.print-final1-solutions .doc>section:not(.detail-section){display:none!important}body.print-final1-solutions .detail-section{padding:0;border:0}body.print-final1-solutions .detail-section>h2,body.print-final1-solutions .detail-section>.lead,body.print-final1-solutions #detailWrap>table{display:none!important}body.print-final1-solutions .final1-detailed-solutions{margin-top:0}body.print-final1-solutions #final2DetailedSolutions .is-pending{display:none!important}
 }
 td.c{text-align:center} td.dim{color:var(--dim)} .mono{font-family:ui-monospace,monospace;font-size:12px}
 tr.r-ok{background:#f6fbf6} tr.r-miss{background:#fff6ed}
@@ -416,6 +416,34 @@ td.weak-cell{white-space:nowrap}
   .exam-question{padding:7px 0 9px;overflow:hidden}.exam-question .q-body{font-size:11.1px;line-height:1.75}.exam-question .q-no{font-size:17px}.exam-figure{max-height:150px}.exam-figure.wide{max-height:135px}
   .paper-foot{position:absolute;margin-top:0}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 }
+/* Verified Final 2 explanations: one complete solution per printed sheet. */
+@page final2-solutions {size:A4 portrait;margin:14mm}
+@media print {
+  .report-detailed-section:has(#final2DetailedSolutions){padding:0!important}
+  #final2DetailedSolutions{page:final2-solutions}
+  #final2DetailedSolutions .is-pending{display:none!important}
+  #final2DetailedSolutions .final1-solutions-head{break-after:avoid;padding-bottom:3mm}
+  #final2DetailedSolutions .final1-solutions-head h3{font-size:15pt}
+  #final2DetailedSolutions .final1-solutions-head p{font-size:9pt}
+  #final2DetailedSolutions .is-ready{break-before:page;page-break-before:always;break-inside:avoid!important;page-break-inside:avoid!important;margin:0;padding:4mm;overflow:visible}
+  #final2DetailedSolutions .is-ready:first-of-type{break-before:auto;page-break-before:auto;margin-top:3mm}
+  #final2DetailedSolutions .final1-solution-heading{padding-bottom:2mm}
+  #final2DetailedSolutions .final1-solution-heading h4{font-size:12pt}
+  #final2DetailedSolutions .final1-no{min-width:0;min-height:0;padding:1mm 2mm;font-size:10pt}
+  #final2DetailedSolutions .final1-status{font-size:8pt}
+  #final2DetailedSolutions .final1-answer{margin:3mm 0;padding:2mm 3mm;font-size:10pt}
+  #final2DetailedSolutions .final1-solution-block{margin-top:2mm}
+  #final2DetailedSolutions .final1-solution-block h5,#final2DetailedSolutions .final1-step h5{font-size:10pt;margin-bottom:1mm}
+  #final2DetailedSolutions .final1-solution-block p,#final2DetailedSolutions .final1-step p{font-size:9.5pt;line-height:1.45}
+  #final2DetailedSolutions .final1-steps{margin-top:3mm}
+  #final2DetailedSolutions .final1-step{padding:1.5mm 0}
+  #final2DetailedSolutions .final1-step-index{min-width:5mm;height:5mm;font-size:8pt}
+  #final2DetailedSolutions .final1-check,#final2DetailedSolutions .final1-caution{padding:2mm 3mm}
+  #final2DetailedSolutions .final1-data-table-wrap{margin-top:2mm}
+  #final2DetailedSolutions .final1-data-table th,#final2DetailedSolutions .final1-data-table td{padding:1mm 2mm;font-size:9pt;line-height:1.3}
+  #final2DetailedSolutions .final1-data-table caption{font-size:8pt;padding-bottom:1mm}
+  #final2DetailedSolutions .gfield-final2-solution-diagram{max-width:48mm!important}
+}
 </style>
 <link rel="stylesheet" href="final-report-package.css">
 </head>
@@ -432,12 +460,14 @@ td.weak-cell{white-space:nowrap}
   var isOriginal=p.get('set')==='original';
   var requestedRound=p.get('round');
   var isFinal1=!isLast&&!isOriginal&&(requestedRound==null||requestedRound===''||(/^\d+$/.test(requestedRound)&&Number(requestedRound)===1));
+  var isFinal2=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===2;
   var mockFile=isLast?'mock-data-last.js':(isOriginal?'mock-data-original.js':'mock-data-final.js');
   var files=['hs-auth.js','data.js',mockFile];
   if(!isOriginal) files.push('mock-data-original.js');
   files.push('bank/bank-registry.js');
   if(!isLast&&!isOriginal) files.push('mock-rx-data.js','final-diagnostic-comment.js','final-population.js','final-report-state.js');
   if(isFinal1) files.push('final1-detailed-data.js','final-detailed-solutions.js');
+  if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js');
   if(isLast) files.push(
     'mock-data-last3.js',
     'mock-data-last4.js',
@@ -462,7 +492,13 @@ td.weak-cell{white-space:nowrap}
   var isLast = params.get('set')==='last';
   var isOriginal = params.get('set')==='original';
   var M = isLast ? window.GFIELD_MOCK_LAST : (isOriginal ? window.GFIELD_MOCK_ORIGINAL : window.GFIELD_MOCK_FINAL);
-  var final1BaseStats = !isLast&&!isOriginal&&M.rounds['1'] ? M.rounds['1'].stats : null;
+  var finalBaseStats = {};
+  if(!isLast&&!isOriginal){
+    for(var baseRound=1;baseRound<=4;baseRound++){
+      var baseStats=M.rounds[String(baseRound)]&&M.rounds[String(baseRound)].stats;
+      if(baseStats) finalBaseStats[String(baseRound)]=baseStats;
+    }
+  }
   var TAX_SET_KEY = isOriginal?'original':(isLast?'last':'final');
   var TAXONOMY_INDEX = (function(){
     try{
@@ -878,6 +914,18 @@ td.weak-cell{white-space:nowrap}
     if(isLast||isOriginal) return '';
     if(ctx.roundNum===1&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.render==='function'){
       return '<section class="detail-section report-detailed-section" id="detailedAnswersSection" aria-label="검수된 상세 답안">'+window.GFIELD_FINAL1_DETAILED_RENDERER.render({data:window.GFIELD_FINAL1_DETAILED,roundItems:ctx.items})+'</section>';
+    }
+    if(ctx.roundNum===2&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL2_RESOLVE_SOLUTION==='function'){
+      return '<section class="detail-section report-detailed-section" id="detailedAnswersSection" aria-label="검수된 상세 답안">'+window.GFIELD_FINAL1_DETAILED_RENDERER.render({
+        round:2,
+        data:window.GFIELD_FINAL2_DETAILED,
+        roundItems:ctx.items,
+        resolve:window.GFIELD_FINAL2_RESOLVE_SOLUTION,
+        renderDiagram:function(solution){
+          var diagrams=window.GFIELD_FINAL2_SOLUTION_DIAGRAMS;
+          return solution&&solution.diagram==='top-projection'&&diagrams&&typeof diagrams.render==='function'?diagrams.render(solution.no):'';
+        }
+      })+'</section>';
     }
     var solutionItems=ctx.items.filter(function(it){return it.detailedSolution===true&&it.comment;});
     var solutions=solutionItems.map(function(it){
@@ -1389,33 +1437,41 @@ td.weak-cell{white-space:nowrap}
   }
 
   async function refreshFinalPopulation(priorRows){
-    if(isLast||isOriginal||!final1BaseStats||final1BaseStats.protectedReference!=='final1-source-v1') return;
-    var R=M.rounds['1'], api=window.GFIELD_FINAL_POPULATION;
+    if(isLast||isOriginal) return;
+    var api=window.GFIELD_FINAL_POPULATION;
     state.populationUnavailable=false;
-    R.stats=final1BaseStats; // Never reuse a previous student's score lookups.
-    if(!api) return;
-    var scores=[];
-    // 연습 기록도 같은 고정 기준으로 조회한다. 최초 성적이나 비교 기준에 합산하지 않는다.
-    ['final1','final1@2','final1@3'].forEach(function(key){
-      var row=priorRows&&priorRows[key];
-      if(row&&row.source!=='reset'&&validOx(row.ox)) scores.push(computeScore(row.ox.split('')).score);
+    // Reset every protected round before reading this student's score lookups.
+    // A round with no saved result remains on its frozen aggregate-only baseline.
+    Object.keys(finalBaseStats).forEach(function(key){
+      if(M.rounds[key]) M.rounds[key].stats=finalBaseStats[key];
     });
-    if(roundNum===1) scores.push(computeScore(state.oxArr).score);
-    if(!scores.length) return;
-    try{
-      var initial=await api.load(scores,final1BaseStats.cuts,teacherEntry?'admin':'student');
-      R.stats=initial;
-      if(roundNum===1){
-        var provisional=buildContext(state.name,1,state.oxArr);
-        scores.push(provisional.newScore);
-        var helper=window.GFIELD_DIAGNOSTIC_COMMENT;
-        var plan=helper&&helper.analyze(provisional,{taxonomy:taxonomyOf,points:function(no){return BP(no).pts;},verifyPopulation:populationStatsVerified,history:[]});
-        if(plan) scores.push(plan.target,plan.stage2Target,plan.stage3Target);
-        var complete=await api.load(scores,final1BaseStats.cuts,teacherEntry?'admin':'student');
-        if(complete.version!==initial.version) throw new Error('통계 기준 변경');
-        R.stats=complete;
-      }
-    }catch(e){R.stats=final1BaseStats;state.populationUnavailable=true;}
+    if(!api) return;
+    for(var n=1;n<=4;n++){
+      var exam='final'+n,base=finalBaseStats[String(n)],R=M.rounds[String(n)];
+      if(!base||!R) continue;
+      var scores=[];
+      // Practice attempts use the same frozen reference but never enter cumulative results.
+      [exam,exam+'@2',exam+'@3'].forEach(function(key){
+        var row=priorRows&&priorRows[key];
+        if(row&&row.source!=='reset'&&validOx(row.ox)) scores.push(computeScore(row.ox.split('')).score);
+      });
+      if(roundNum===n&&validOx(state.oxArr)) scores.push(computeScore(state.oxArr).score);
+      if(!scores.length) continue;
+      try{
+        var initial=await api.load(scores,base.cuts,teacherEntry?'admin':'student',exam);
+        R.stats=initial;
+        if(roundNum===n){
+          var provisional=buildContext(state.name,n,state.oxArr);
+          scores.push(provisional.newScore);
+          var helper=window.GFIELD_DIAGNOSTIC_COMMENT;
+          var plan=helper&&helper.analyze(provisional,{taxonomy:taxonomyOf,points:function(no){return BP(no).pts;},verifyPopulation:populationStatsVerified,history:[]});
+          if(plan) scores.push(plan.target,plan.stage2Target,plan.stage3Target);
+          var complete=await api.load(scores,base.cuts,teacherEntry?'admin':'student',exam);
+          if(complete.version!==initial.version) throw new Error('통계 기준 변경');
+          R.stats=complete;
+        }
+      }catch(e){R.stats=base;state.populationUnavailable=true;}
+    }
   }
 
   /* ---- weak_types (나만의 약점 유형): PK (student,type) ---- */
@@ -1996,11 +2052,12 @@ td.weak-cell{white-space:nowrap}
     if(!isLast&&!isOriginal&&window.GFIELD_FINAL_REPORT_STATE){
       // 연습 응시도 같은 학생·회차의 코멘트를 읽는다. 백분율 기록은 최초 성적 저장에만 허용한다.
       reportState=await window.GFIELD_FINAL_REPORT_STATE.load(state.name,roundNum,state.oxArr.join(''),teacherEntry?'admin':'student',!!saved&&attemptNo===1,preview);
-      if(roundNum===1&&reportState&&reportState.snapshot&&reportState.snapshot.version===final1BaseStats.rateEvidence.version){
+      var reportBase=finalBaseStats[String(roundNum)];
+      if(reportBase&&reportState&&reportState.snapshot&&reportBase.rateEvidence&&reportState.snapshot.version===reportBase.rateEvidence.version){
         try{
-          var savedStats=window.GFIELD_FINAL_POPULATION.fromSaved(reportState.snapshot,computeScore(state.oxArr).score,final1BaseStats.cuts);
+          var savedStats=window.GFIELD_FINAL_POPULATION.fromSaved(reportState.snapshot,computeScore(state.oxArr).score,reportBase.cuts,'final'+roundNum);
           // Keep the complete target lookups when the live read succeeded.
-          if(!populationStatsVerified(M.rounds['1'].stats))M.rounds['1'].stats=savedStats;
+          if(!populationStatsVerified(M.rounds[String(roundNum)].stats))M.rounds[String(roundNum)].stats=savedStats;
         }catch(e){}
       }
     }
@@ -2148,7 +2205,7 @@ td.weak-cell{white-space:nowrap}
     wireWeakToggles(ctx);
     wireWrongPractice(ctx);
     if(isStandardFinal&&window.GFIELD_FINAL_REPORT_STATE)window.GFIELD_FINAL_REPORT_STATE.wire(app);
-    if(roundNum===1&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.wire==='function') window.GFIELD_FINAL1_DETAILED_RENDERER.wire();
+    if((roundNum===1||roundNum===2)&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.wire==='function') window.GFIELD_FINAL1_DETAILED_RENDERER.wire();
   }
 
   /* ===================== boot ===================== */

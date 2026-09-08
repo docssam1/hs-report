@@ -11,29 +11,34 @@
     Object.keys(value.rate).forEach(k=>{value.rate[k]=Math.round(value.rate[k]*1000)/1000;});
     return value;
   }
-  async function handle(service,account,user,body,core,baseline){
+  function baselineFor(source,exam){
+    if(source&&source.exam) return source.exam===exam?source:null;
+    return source&&source[exam]||null;
+  }
+  async function handle(service,account,user,body,core,baselines){
     const action=body.action;
     if(!allowed.has(action))fail('INVALID_REQUEST',400);
     const keys=action==='apply-percentiles'?['action','exam']:action==='save-comment'?['action','exam','student','comment','expectedUpdatedAt']:['action','exam','student'];
     if(Object.keys(body).some(k=>!keys.includes(k))||!/^final[1-5]$/.test(body.exam||''))fail('INVALID_REQUEST',400);
+    const baseline=baselineFor(baselines,body.exam);
     const teacher=['admin','teacher'].includes(account.role);
     if((action==='apply-percentiles'||action==='save-comment')&&!teacher)fail('ACCESS_DENIED',403);
     if(action==='apply-percentiles'){
-      if(body.exam!=='final1')fail('REFERENCE_NOT_READY',409);
+      if(!baseline)fail('REFERENCE_NOT_READY',409);
       // Freeze the approved reference once. Applying results cannot update rates.
       const reference=frozenSnapshot(core,baseline,0);
-      const {error:refError}=await service.from('hs_final_report_references').upsert({exam:'final1',version:baseline.version,reference},{onConflict:'exam',ignoreDuplicates:true});
+      const {error:refError}=await service.from('hs_final_report_references').upsert({exam:body.exam,version:baseline.version,reference},{onConflict:'exam',ignoreDuplicates:true});
       if(refError)fail('SAVE_FAILED',503);
-      const {data:ref,error:readError}=await service.from('hs_final_report_references').select('version').eq('exam','final1').single();
+      const {data:ref,error:readError}=await service.from('hs_final_report_references').select('version').eq('exam',body.exam).single();
       if(readError||ref.version!==baseline.version)fail('REFERENCE_CHANGED',409);
       let incomplete=false;
       for(let start=0;;start+=500){
-        const {data:rows,error}=await service.from('mock_results').select('student,round,ox,score,wrong,source').eq('round','final1').order('student').range(start,start+499);
+        const {data:rows,error}=await service.from('mock_results').select('student,round,ox,score,wrong,source').eq('round',body.exam).order('student').range(start,start+499);
         if(error)fail('SAVE_FAILED',503);
         const snapshots=[];
         for(const row of rows||[]){
           if(!validResult(row,core)){if(row.source!=='reset')incomplete=true;continue;}
-          snapshots.push({student:row.student,round:'final1',result_ox:row.ox,result_score:core.scoreOf(row.ox),snapshot:frozenSnapshot(core,baseline,core.scoreOf(row.ox)),applied_at:new Date().toISOString()});
+          snapshots.push({student:row.student,round:body.exam,result_ox:row.ox,result_score:core.scoreOf(row.ox),snapshot:frozenSnapshot(core,baseline,core.scoreOf(row.ox)),applied_at:new Date().toISOString()});
         }
         if(snapshots.length){const {error:saveError}=await service.from('hs_final_report_snapshots').upsert(snapshots,{onConflict:'student,round'});if(saveError)fail('SAVE_FAILED',503);}
         if(!rows||rows.length<500)break;
@@ -59,13 +64,13 @@
     const {data:comment,error:commentError}=await service.from('hs_final_report_comments').select('comment,updated_at').eq('student',body.student).eq('round',body.exam).maybeSingle();
     if(commentError)fail('READ_FAILED',503);
     const response={canEdit:teacher,comment:hasResult?comment?.comment||'':'',commentUpdatedAt:hasResult?comment?.updated_at||null:null,snapshot:null,resultOx:null};
-    if(body.exam!=='final1'||!validResult(result,core))return response;
+    if(!baseline||!validResult(result,core))return response;
     if(action==='record-report'){
       const snapshot=frozenSnapshot(core,baseline,core.scoreOf(result.ox));
-      const {error}=await service.from('hs_final_report_snapshots').upsert({student:body.student,round:'final1',result_ox:result.ox,result_score:core.scoreOf(result.ox),snapshot,applied_at:new Date().toISOString()},{onConflict:'student,round'});
+      const {error}=await service.from('hs_final_report_snapshots').upsert({student:body.student,round:body.exam,result_ox:result.ox,result_score:core.scoreOf(result.ox),snapshot,applied_at:new Date().toISOString()},{onConflict:'student,round'});
       if(error)fail('SAVE_FAILED',503);
     }
-    const {data:saved,error}=await service.from('hs_final_report_snapshots').select('result_ox,result_score,snapshot').eq('student',body.student).eq('round','final1').maybeSingle();
+    const {data:saved,error}=await service.from('hs_final_report_snapshots').select('result_ox,result_score,snapshot').eq('student',body.student).eq('round',body.exam).maybeSingle();
     if(error)fail('READ_FAILED',503);
     // Ignore a snapshot when a result was reset/replaced while applying.
     if(saved&&saved.result_ox===result.ox&&Number(saved.result_score)===core.scoreOf(result.ox)&&saved.snapshot?.version===baseline.version){response.snapshot=saved.snapshot;response.resultOx=result.ox;}

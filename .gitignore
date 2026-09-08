@@ -6,3 +6,9 @@
 
 # Server-only statistical reference; never publish in Git or GitHub Pages.
 /supabase/functions/hs-final-population/baseline.private.json
+/supabase/functions/hs-final-population/baseline-final2.private.json
+/supabase/functions/hs-final-population/baseline-final3.private.json
+/supabase/functions/hs-final-population/baseline-final4.private.json
+
+# Local source-audit bytecode; never publish generated cache files.
+/qa/__pycache__/

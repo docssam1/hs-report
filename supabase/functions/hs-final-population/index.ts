@@ -1,12 +1,21 @@
 import "jsr:@supabase/functions-js@2.5.0/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2.112.4";
 import baseline from "./baseline.private.json" with { type: "json" };
+import final2Baseline from "./baseline-final2.private.json" with { type: "json" };
+import final3Baseline from "./baseline-final3.private.json" with { type: "json" };
+import final4Baseline from "./baseline-final4.private.json" with { type: "json" };
 import "./population-core.js";
 import "./report-service.js";
 
 const origins = new Set(["https://hs.gfieldacademy.net", "https://docssam1.github.io", "http://localhost:8000", "http://127.0.0.1:8000"]);
 const service = createClient(Deno.env.get("SUPABASE_URL") || "", Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "", { auth: { autoRefreshToken: false, persistSession: false } });
 const core = (globalThis as unknown as { GFIELD_POPULATION_CORE: { createResponse: (baseline: unknown, scores: unknown) => unknown } }).GFIELD_POPULATION_CORE;
+const baselines: Record<string, unknown> = Object.freeze({
+  final1: baseline,
+  final2: typeof final2Baseline === "undefined" ? null : final2Baseline,
+  final3: typeof final3Baseline === "undefined" ? null : final3Baseline,
+  final4: typeof final4Baseline === "undefined" ? null : final4Baseline,
+});
 
 Deno.serve(async (req: Request) => {
   const origin = req.headers.get("origin") || "";
@@ -31,14 +40,14 @@ Deno.serve(async (req: Request) => {
     if(body && typeof body.action === 'string'){
       try {
         const reports=(globalThis as unknown as { GFIELD_REPORT_SERVICE: {handle: (...args: unknown[]) => Promise<unknown>} }).GFIELD_REPORT_SERVICE;
-        return reply(await reports.handle(service,account,data.user,body,core,baseline));
+        return reply(await reports.handle(service,account,data.user,body,core,baselines));
       } catch(error) {
         const e=error as {status?:number;message?:string};
         return reply({error:e.status?e.message:'REPORT_UNAVAILABLE'},e.status||503);
       }
     }
-    if (!body || body.exam !== "final1" || Object.keys(body).some(key => !["exam", "scores"].includes(key))) return reply({ error: "INVALID_REQUEST" }, 400);
-    try { return reply(core.createResponse(baseline, body.scores)); }
+    if (!body || !/^final[1-4]$/.test(body.exam || "") || Object.keys(body).some(key => !["exam", "scores"].includes(key))) return reply({ error: "INVALID_REQUEST" }, 400);
+    try { return reply(core.createResponse(baselines[body.exam], body.scores)); }
     catch (error) { return reply({ error: error instanceof Error && error.message === "INVALID_SCORES" ? "INVALID_REQUEST" : "STATISTICS_UNAVAILABLE" }, error instanceof Error && error.message === "INVALID_SCORES" ? 400 : 503); }
   } catch { return reply({ error: "STATISTICS_UNAVAILABLE" }, 503); }
 });

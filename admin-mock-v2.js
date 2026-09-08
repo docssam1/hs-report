@@ -106,7 +106,8 @@
         const openAction=window.mkSet==='final'||window.mkSet==='original'
           ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student)}">✍️ ${esc(student)} 맞은 문제 체크</a>`
           :`<a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="${previewUrl(window.mkSet,r,student)}">🔎 미리보기</a>`;
-        panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b>${window.mkSet==='final'&&r==='1'&&p.slot===1?'<small data-final-percentile style="display:block;color:#2456c4">백분율 미반영</small>':''}</td><td>${wrong}</td><td>${esc(sourceLabel(x.source))}</td><td>${esc(at)}</td><td>
+        const protectedFinalRound=window.mkSet==='final'&&/^[1-4]$/.test(r)&&p.slot===1;
+        panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b>${protectedFinalRound?`<small data-final-percentile="${r}" style="display:block;color:#2456c4">백분율 미반영</small>`:''}</td><td>${wrong}</td><td>${esc(sourceLabel(x.source))}</td><td>${esc(at)}</td><td>
           <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">
             ${openAction}
             ${window.mkSet==='final'&&p.slot===1?`<a class="btn sm" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student).replace('go=answer','go=report')}">성적표·코멘트</a>`:''}
@@ -123,16 +124,21 @@
     body.insertAdjacentHTML('afterbegin',panel);
     body.insertAdjacentHTML('afterbegin',originalPanel);
     body.insertAdjacentHTML('afterbegin',last1);
-    const pctCell=body.querySelector('[data-final-percentile]');
-    if(pctCell&&window.GFIELD_AUTH){
-      const first=rows.find(o=>o.p.round==='1'&&o.p.slot===1);
-      window.GFIELD_AUTH.functionCall('hs-final-population',{action:'read-report',exam:'final1',student},'admin').then(report=>{
-        if(!pctCell.isConnected||!first||!report.snapshot||report.resultOx!==first.x.ox)return;
-        const key=String(Math.round(Number(first.x.score)*10)),pct=report.snapshot.percentiles&&report.snapshot.percentiles[key];
-        if(typeof pct==='number'&&pct>0&&pct<=100)pctCell.textContent='백분율 '+pct.toFixed(1)+'%';
-      }).catch(()=>{if(pctCell.isConnected)pctCell.textContent='백분율 조회 실패';});
+    const pctCells=body.querySelectorAll('[data-final-percentile]');
+    if(pctCells.length&&window.GFIELD_AUTH){
+      pctCells.forEach(pctCell=>{
+        const finalRound=pctCell.getAttribute('data-final-percentile'),exam='final'+finalRound;
+        const first=rows.find(o=>o.p.round===finalRound&&o.p.slot===1);
+        if(!first)return;
+        window.GFIELD_AUTH.functionCall('hs-final-population',{action:'read-report',exam,student},'admin').then(report=>{
+          const computed=mkScore(first.x.ox);
+          if(!pctCell.isConnected||!computed||!report.snapshot||report.snapshot.exam!==exam||!new RegExp('^'+exam+'-[a-f0-9]{64}$').test(report.snapshot.version||'')||report.resultOx!==first.x.ox)return;
+          const key=String(Math.round(computed.score*10)),pct=report.snapshot.percentiles&&report.snapshot.percentiles[key];
+          if(typeof pct==='number'&&pct>0&&pct<=100)pctCell.textContent='백분율 '+pct.toFixed(1)+'%';
+        }).catch(()=>{if(pctCell.isConnected)pctCell.textContent='백분율 조회 실패';});
+      });
     }
-    const hint=document.querySelector('#tab-mock .hint');
+    const hint=document.querySelector('#tab-mock .card > .hint');
     if(hint)hint.textContent='중급·활용·파이널·시그니처 실전 모의고사 결과를 분리해 확인합니다. 파이널과 시그니처 실전은 온라인 회원이 직접 입력하거나 선생님이 재원생 답안을 대신 기록할 수 있으며, 회차별 최초 기록만 누적에 반영됩니다.';
   };
 
@@ -140,13 +146,16 @@
 
   window.applyFinalPercentiles=async function(){
     const button=document.getElementById('apply-final-percentiles'),status=document.getElementById('mock-status');
-    if(!confirm('파이널 1회에 등록된 성적의 학생 백분율과 컷 백분율을 저장할까요?\n정답률과 비교 기준은 바뀌지 않습니다. 다른 회차는 이번 반영에 포함하지 않습니다.'))return;
+    const picker=document.getElementById('apply-final-round'),round=picker&&String(picker.value||'');
+    if(!/^[1-4]$/.test(round)){if(status)status.textContent='반영할 파이널 회차를 다시 선택해 주세요.';return;}
+    const exam='final'+round,label='파이널 '+round+'회';
+    if(!confirm(label+'에 등록된 성적의 학생 백분율과 컷 백분율을 저장할까요?\n정답률과 비교 기준은 바뀌지 않습니다. 다른 회차는 이번 반영에 포함하지 않습니다.'))return;
     if(button)button.disabled=true;
-    if(status)status.textContent='백분율을 반영하고 있습니다…';
+    if(status)status.textContent=label+' 백분율을 반영하고 있습니다…';
     try{
-      const result=await window.GFIELD_AUTH.functionCall('hs-final-population',{action:'apply-percentiles',exam:'final1'},'admin');
+      const result=await window.GFIELD_AUTH.functionCall('hs-final-population',{action:'apply-percentiles',exam},'admin');
       if(!result||result.applied!==true)throw new Error('not-applied');
-      if(status)status.textContent=result.incomplete?'저장했습니다. 답안과 점수가 맞지 않는 기록은 제외했습니다.':'파이널 1회 백분율을 저장했습니다. 정답률은 그대로입니다.';
+      if(status)status.textContent=result.incomplete?label+' 백분율을 저장했습니다. 답안과 점수가 맞지 않는 기록은 제외했습니다.':label+' 백분율을 저장했습니다. 정답률은 그대로입니다.';
       renderMock();
     }catch(e){if(status)status.textContent='저장하지 못했습니다. 관리자 로그인과 연결을 확인한 뒤 다시 눌러 주세요.';}
     finally{if(button)button.disabled=false;}

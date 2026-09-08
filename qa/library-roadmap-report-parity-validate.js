@@ -3,9 +3,9 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),
 const {chromium}=require('playwright');
 const core=require('../supabase/functions/hs-final-population/population-core.js');
 const root=path.resolve(__dirname,'..'),student='연결검수학생';
-const baseline={schemaVersion:1,exam:'final1',scope:'provided-original-records',approved:true,version:'final1-'+'a'.repeat(64),rows:[{id:'one',ox:'O'.repeat(30),score:100},{id:'two',ox:'X'.repeat(30),score:0}]};
+const baselines=Object.fromEntries([1,2,3,4].map(round=>['final'+round,{schemaVersion:1,exam:'final'+round,scope:'provided-original-records',approved:true,version:'final'+round+'-'+String(round).repeat(64),rows:[{id:'one',ox:'O'.repeat(30),score:100},{id:'two',ox:'X'.repeat(30),score:0}]}]));
 const ox='O'.repeat(20)+'X'.repeat(10),score=core.scoreOf(ox);
-const rows=['final1','final2','last1','last2'].map(round=>({student,round,ox,score,wrong:10,source:'admin',updated_at:'2026-09-01T00:00:00Z'}));
+const rows=['final1','final2','final3','final4','last1','last2'].map(round=>({student,round,ox,score,wrong:10,source:'admin',updated_at:'2026-09-01T00:00:00Z'}));
 rows.push({student,round:'final1@2',ox:'O'.repeat(30),score:100,wrong:0,source:'practice-admin',updated_at:'2026-09-02T00:00:00Z'});
 rows.push({student,round:'last1@2',ox:'O'.repeat(30),score:100,wrong:0,source:'practice',updated_at:'2026-09-02T00:00:00Z'});
 const originalRows=JSON.stringify(rows);
@@ -30,7 +30,7 @@ const server=http.createServer((req,res)=>{
   }
   if(u.pathname.endsWith('/hs-final-population')){
    const b=req.postDataJSON();if(b.action){actions.push(b.action);if(b.action!=='read-report')writes.push(b);return route.fulfill({json:{canEdit:false,comment:'조건을 표시하고 풀이를 확인해 보세요.',snapshot:null,resultOx:ox}});}
-   return route.fulfill({json:core.createResponse(baseline,b.scores)});
+   return route.fulfill({json:core.createResponse(baselines[b.exam],b.scores)});
   }
   if(!['GET','HEAD','OPTIONS'].includes(req.method())&&!u.pathname.endsWith('/access_log'))writes.push({path:u.pathname,method:req.method()});
   return route.fulfill({json:[]});
@@ -72,9 +72,8 @@ const server=http.createServer((req,res)=>{
    if(title==='파이널 실전 모의고사 1회')assert.equal(await rp.locator('.final1-detailed-card.is-ready').count(),30,'approved Final1 detailed solutions kept');
    if(title==='파이널 실전 모의고사 2회'){
     const count=await rp.evaluate(()=>GF_TEST.computeCumulativeConsidered(2,{final1:{ox:'O'.repeat(20)+'X'.repeat(10)},'final1@2':{ox:'O'.repeat(30)}},1,'final2',('O'.repeat(20)+'X'.repeat(10)).split(''),true).length);
-    // The current production model has a verified Final1 reference only.
-    // Do not turn missing Final2 evidence into an approved cohort in a routing repair.
-    assert.equal(count,1,'only verified first records enter cumulative; retries and unverified references stay excluded');
+    assert.equal(count,2,'verified Final1 and current Final2 enter cumulative once; retry stays excluded');
+    assert.equal(await rp.locator('.final1-detailed-card.is-ready').count(),12,'approved Final2 selected detailed solutions kept');
    }
    const lp=await openLibrary(title);await lp.locator(selector).waitFor({timeout:15000});assert.equal(lp.url(),url,'both entry points use exactly same report');
    assert.equal(await lp.locator(selector).innerText(),body,'same score, percentile, diagnosis, cumulative results and solutions');
@@ -94,6 +93,6 @@ const server=http.createServer((req,res)=>{
   }
   assert.equal(JSON.stringify(rows),originalRows,'first records and retries unchanged');assert.deepEqual(writes,[],'no result, percentile, comment or other writes');
   assert.ok(actions.every(a=>a==='read-report'));
-  console.log(JSON.stringify({pass:true,catalogReportLinks:covered,reportParity:snapshots,final1Detailed:30,missingNotZero:true,productionWrites:0,knownLimitation:'Final2-4 population evidence is absent in the current public model; this test does not certify complete cumulative coverage'}));
+  console.log(JSON.stringify({pass:true,catalogReportLinks:covered,reportParity:snapshots,verifiedFinalReferences:4,final1Detailed:30,final2Detailed:12,missingNotZero:true,productionWrites:0}));
  }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});

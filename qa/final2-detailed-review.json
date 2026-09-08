@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 2,
+  "reviewId": "final2-detailed-review-20260909",
+  "set": "final",
+  "round": 2,
+  "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
+  "scope": "selected-detail-only",
+  "sourceScope": [
+    "materials/초등과정 대비 파이널 모의고사 2회.pdf",
+    "materials/final_2/001.jpg",
+    "materials/final_2/002.jpg",
+    "materials/final_2/003.jpg",
+    "materials/final_2/005.jpg",
+    "supplied-handwritten-review"
+  ],
+  "protectedSourcePolicy": "read-only; no source fingerprint or private locator is published",
+  "sourceRenderCongruence": {
+    "method": "render the six-page original PDF at 150 dpi and compare normalized grayscale pixels with materials/final_2/001.jpg through 006.jpg",
+    "pdfPages": 6,
+    "sourceJpegPages": 6,
+    "dimensions": "1241x1755",
+    "minimumCorrelation": 0.996221,
+    "maximumMeanAbsoluteDifference": 0.55,
+    "result": "pass"
+  },
+  "selectedNos": [1, 3, 4, 6, 7, 8, 10, 11, 12, 15, 25, 26],
+  "pendingNos": [2, 5, 9, 13, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30],
+  "status": {
+    "evidence": "verified",
+    "independentSecondPass": "verified",
+    "release": "eligible",
+    "published": false,
+    "answerVisibility": "post-attempt-only"
+  },
+  "gateLayer": "independent-second-pass-complete",
+  "independentReview": {
+    "status": "verified",
+    "reviewDate": "2026-09-09",
+    "sourcePagesViewed": [
+      "materials/final_2/001.jpg",
+      "materials/final_2/002.jpg",
+      "materials/final_2/003.jpg",
+      "materials/final_2/005.jpg"
+    ],
+    "verifiedNos": [1, 3, 4, 6, 7, 8, 10, 11, 12, 15, 25, 26],
+    "method": [
+      "read each selected question directly from the rendered source page",
+      "recompute all eleven scalar answers independently of the candidate explanations",
+      "trace the Q12 thick path in three dimensions and project it by dropping height only",
+      "compare each condition, strategy, step, check, caution, table, and drawing boundary with the source"
+    ],
+    "criticalChecks": {
+      "q7": "v2(101 through 500)=397, so 198 exact divisions by 4 precede the first remainder on division 199",
+      "q12": "the path projection preserves left-right and front-back positions, collapses the closing vertical edge, and makes no midpoint claim",
+      "q15": "the twentieth tuple is (20, 211, 191), and the requested sum is 422",
+      "q25": "the seventh figure has a 15-triangle top band plus a 64-triangle lower part, totaling 79",
+      "q26": "the only uncle age in the stated range is 46 now, giving current child ages 10 and 4, totaling 14"
+    },
+    "contentCorrections": [
+      "Q7 keeps the corrected answer 199 rather than 200 because the product contains 397 factors of 2",
+      "Q8 now says 20 coins per bundle rather than incorrectly describing 20-won coins"
+    ],
+    "canonicalAnswerConflicts": [],
+    "result": "pass"
+  },
+  "requiredGates": [
+    "sourceMatch",
+    "lectureNoteMatch",
+    "independentAnswer",
+    "learnerFit",
+    "instructionSequence",
+    "representationFidelity",
+    "answerBoundary"
+  ],
+  "learnerFitCriteria": {
+    "conditionFirst": true,
+    "strategyBeforeCalculation": true,
+    "explicitSteps": true,
+    "checkIncluded": true,
+    "commonMisreadIncluded": true
+  },
+  "items": [
+    {
+      "no": 1,
+      "sourceLocator": "materials/final_2/001.jpg#q1",
+      "answerContract": "4번",
+      "evidenceKind": "numeric-recomputation",
+      "teachingFocus": "모두 2점이라고 가정한 뒤 4점 차이로 바꾸기",
+      "gates": "pass"
+    },
+    {
+      "no": 3,
+      "sourceLocator": "materials/final_2/001.jpg#q3",
+      "answerContract": "4승 1패",
+      "evidenceKind": "league-total-recomputation",
+      "teachingFocus": "전체 15승에서 두 반의 합과 차를 사용하고 패수까지 쓰기",
+      "gates": "pass"
+    },
+    {
+      "no": 4,
+      "sourceLocator": "materials/final_2/001.jpg#q4",
+      "answerContract": "15가지",
+      "evidenceKind": "complete-enumeration",
+      "teachingFocus": "동전 네 종류와 1000원 지폐를 구별하고 15개 합의 중복 확인",
+      "gates": "pass"
+    },
+    {
+      "no": 6,
+      "sourceLocator": "materials/final_2/001.jpg#q6",
+      "answerContract": "55개",
+      "evidenceKind": "bounded-enumeration",
+      "teachingFocus": "두 자리 45개와 500 미만 세 자리 10개를 분리",
+      "gates": "pass"
+    },
+    {
+      "no": 7,
+      "sourceLocator": "materials/final_2/002.jpg#q7",
+      "answerContract": "199번째",
+      "evidenceKind": "valuation-recomputation",
+      "correctionBoundary": "200번째가 아님: 198번 완전 나눗셈 뒤 199번째에 처음 나머지",
+      "teachingFocus": "인수 2의 개수 397과 질문의 차례를 구별",
+      "gates": "pass"
+    },
+    {
+      "no": 8,
+      "sourceLocator": "materials/final_2/002.jpg#q8",
+      "answerContract": "1번",
+      "evidenceKind": "six-case-separation",
+      "teachingFocus": "1개부터 6개까지 한 번에 달아 부족한 g으로 번호 판별",
+      "gates": "pass"
+    },
+    {
+      "no": 10,
+      "sourceLocator": "materials/final_2/002.jpg#q10",
+      "answerContract": "오전 10시 40분",
+      "evidenceKind": "elapsed-time-recomputation",
+      "teachingFocus": "매시간 3분의 상대 오차로 20시간을 구하고 날짜까지 역산",
+      "gates": "pass"
+    },
+    {
+      "no": 11,
+      "sourceLocator": "materials/final_2/002.jpg#q11",
+      "answerContract": "9시 11분 30초",
+      "evidenceKind": "pair-count-and-batching",
+      "teachingFocus": "276쌍을 12쌍씩 23묶음으로 진행해 끝나는 시각 쓰기",
+      "gates": "pass"
+    },
+    {
+      "no": 12,
+      "sourceLocator": "materials/final_2/002.jpg#q12",
+      "answerContract": "(그림 답안)",
+      "evidenceKind": "source-topology-and-projection-review",
+      "teachingFocus": "앞뒤 방향을 고정하고 높이만 없애며 수직선을 한 점으로 겹치기",
+      "representation": {
+        "kind": "derived-svg",
+        "projection": "drop-z",
+        "pathContinuity": "verified",
+        "verticalCollapse": "verified",
+        "exactMidpointClaim": false
+      },
+      "gates": "pass"
+    },
+    {
+      "no": 15,
+      "sourceLocator": "materials/final_2/003.jpg#q15",
+      "answerContract": "422",
+      "evidenceKind": "sequence-recomputation",
+      "correctionBoundary": "211은 가운데 수이고 세 수의 합은 422",
+      "teachingFocus": "20번째 묶음 (20, 211, 191)의 세 성분을 모두 합하기",
+      "gates": "pass"
+    },
+    {
+      "no": 25,
+      "sourceLocator": "materials/final_2/005.jpg#q25",
+      "answerContract": "79개",
+      "evidenceKind": "pattern-decomposition",
+      "correctionBoundary": "아래쪽 64개에 위쪽 띠 15개를 더함",
+      "teachingFocus": "위쪽 띠와 아래쪽 8층 삼각형을 분리한 뒤 합하기",
+      "gates": "pass"
+    },
+    {
+      "no": 26,
+      "sourceLocator": "materials/final_2/005.jpg#q26",
+      "answerContract": "14살",
+      "evidenceKind": "bounded-age-enumeration",
+      "correctionBoundary": "48살은 현재가 아니라 2년 후 삼촌 나이",
+      "teachingFocus": "1년 전·현재·2년 후를 같은 표에 맞춘 뒤 현재 나이 합산",
+      "gates": "pass"
+    }
+  ],
+  "negativeControls": [
+    "canonical answer mismatch is rejected",
+    "duplicate or incomplete selected set is rejected",
+    "Q12 without its projection renderer is rejected",
+    "unreviewed questions resolve to no detailed solution"
+  ],
+  "supersessionBoundary": "This record closes the authoring, first-pass, and independent second-pass gates only for the selected 12 details. They are eligible for post-attempt release, but published=false makes no deployment claim. This record does not certify the remaining questions or population statistics."
+}

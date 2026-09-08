@@ -57,11 +57,13 @@ button{border:none;border-radius:11px;padding:12px 20px;font-size:14px;font-weig
   </div>
   <div class="ft">© 지필드 영재교육 · 회차별 최초 성적을 기준으로 표시합니다.</div>
 </div></div>
-<script src="mock-data-final.js"></script>
+<script src="mock-data-final.js?v=20260909d"></script>
 <script src="mock-data-last.js?v=20260823c"></script>
 <script src="mock-data-last3.js?v=20260823c"></script>
 <script src="mock-data-last4.js?v=20260823c"></script>
 <script src="last-score-data.js?v=20260823c"></script>
+<script src="hs-auth.js?v=20260909c"></script>
+<script src="final-population.js?v=20260909c"></script>
 <script>
 const SB_URL="https://fgahqumaldheqettmvqg.supabase.co";
 const SB_KEY="sb_publishable_OsjJG92BLMaZrc2jTClt0g_ecdTtf_I";
@@ -78,6 +80,12 @@ const CUTS=ROUND_DATA&&ROUND_DATA.scoreBands||[];
 const CUM=ROUND_DATA&&ROUND_DATA.cumulativeBands||[];
 const DATA_READY=!!(roundNo&&ROUND_DATA&&Array.isArray(ROUND_DATA.items)&&ROUND_DATA.items.length===30&&
   Array.isArray(ROUND_DATA.rates)&&ROUND_DATA.rates.length===30&&Array.isArray(CUTS)&&CUTS.length&&Array.isArray(CUM)&&CUM.length);
+const FINAL_BASE_STATS={};
+for(let finalNo=1;finalNo<=4;finalNo++){
+  const stats=window.GFIELD_MOCK_FINAL&&window.GFIELD_MOCK_FINAL.rounds&&window.GFIELD_MOCK_FINAL.rounds[String(finalNo)]&&window.GFIELD_MOCK_FINAL.rounds[String(finalNo)].stats;
+  if(stats&&Array.isArray(stats.cuts)) FINAL_BASE_STATS[String(finalNo)]=stats;
+}
+let finalPopulationByRound={},loadGeneration=0;
 
 function round1(x){return Math.round(x*10)/10}
 function percentileForLast(rNo,score){
@@ -103,12 +111,35 @@ function lookup(score){
 const COLOR={'경시 가능':'#7f1d1d','경시컷,심화안정권':'#b91c1c','심화컷,실력안정권':'#c2410c',
   '심화컷,실력가능':'#d97706','실력컷,일품안정권':'#0d9488','일품 가능':'#0d9488','일품컷':'#2563eb','노력요함':'#64748b'};
 
-function finalRoundPercentile(roundNo,score){
-  const model=window.GFIELD_MOCK_FINAL;
-  const stats=model&&model.rounds&&model.rounds[String(roundNo)]&&model.rounds[String(roundNo)].stats;
-  if(!stats||!Array.isArray(stats.dist)||!Number.isFinite(stats.n)||stats.n<=0||!Number.isFinite(score)) return null;
-  const higher=stats.dist.filter(v=>v>score).length;
-  return round1((higher+1)/stats.n*100);
+function validFinalOx(ox){return typeof ox==='string'&&/^[OX]{30}$/.test(ox)}
+function finalScoreFromOx(ox){
+  if(!validFinalOx(ox)) return null;
+  return round1(ox.split('').reduce((sum,value,index)=>sum+(value==='O'?(index<12?2.7:index<22?3.4:4.2):0),0));
+}
+function finalRoundPercentile(finalNo,row){
+  const api=window.GFIELD_FINAL_POPULATION,stats=finalPopulationByRound[String(finalNo)];
+  const score=row&&finalScoreFromOx(row.ox);
+  return api&&api.isVerified(stats)&&score!=null?api.percentile(score,stats):null;
+}
+async function refreshFinalPopulation(rows,generation){
+  finalPopulationByRound={};
+  if(roundNo!==1) return;
+  const api=window.GFIELD_FINAL_POPULATION;
+  if(!api) return;
+  for(let finalNo=1;finalNo<=4;finalNo++){
+    const exam='final'+finalNo,base=FINAL_BASE_STATS[String(finalNo)];
+    const row=(rows||[]).filter(value=>value.round===exam&&value.source!=='reset'&&validFinalOx(value.ox)).shift();
+    const score=row&&finalScoreFromOx(row.ox);
+    if(!base||score==null) continue;
+    try{
+      const stats=await api.load([score],base.cuts,'student',exam);
+      if(generation!==loadGeneration) return;
+      finalPopulationByRound[String(finalNo)]=stats;
+    }catch(error){
+      if(generation!==loadGeneration) return;
+      delete finalPopulationByRound[String(finalNo)];
+    }
+  }
 }
 function cumulativeGrade(avgPct){
   for(let i=0;i<CUM.length;i++){ if(avgPct<=CUM[i][0]) return CUM[i][1]; }
@@ -119,7 +150,7 @@ function cumulativeInfo(rows,currentPct){
   if(roundNo===1){
     [1,2,3,4].forEach(finalNo=>{
       const row=(rows||[]).filter(r=>r.round==='final'+finalNo&&r.source!=='reset').shift();
-      const pct=row&&finalRoundPercentile(finalNo,Number(row.score));
+      const pct=row&&finalRoundPercentile(finalNo,row);
       if(pct!=null) entries.push({label:'파이널 '+finalNo+'회',pct:pct});
     });
     entries.push({label:'최종 1회',pct:currentPct});
@@ -146,6 +177,8 @@ function sourceLabel(source){
 }
 
 async function load(){
+  const generation=++loadGeneration;
+  finalPopulationByRound={};
   if(!ROUND_OPEN){
     hide('loading'); show('ask');
     document.getElementById('err').textContent='최종 '+roundNo+'회는 현재 검수 대기 중입니다. 시험 공개 후 성적을 확인할 수 있습니다.';
@@ -167,11 +200,14 @@ async function load(){
     if(!r.ok) throw new Error('HTTP '+r.status);
     rows=await r.json();
   }catch(e){
+    if(generation!==loadGeneration) return;
     hide('loading'); show('ask');
     document.getElementById('nm').value=nm;
     document.getElementById('err').textContent='성적을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.';
     show('err'); return;
   }
+  await refreshFinalPopulation(rows||[],generation);
+  if(generation!==loadGeneration) return;
   hide('loading');
   const current=(rows||[]).filter(row=>row.round===ROUND&&row.source!=='reset').shift()||
     (rows||[]).filter(row=>row.round===ROUND).shift()||null;

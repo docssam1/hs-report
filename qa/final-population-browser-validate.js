@@ -62,7 +62,10 @@ const server=http.createServer((req,res)=>{
     assert.doesNotMatch(await page.locator('.diagnostic-coaching').innerText(),/현재 위치는 .*%에서 .*%로/);
     assert.doesNotMatch(text,/null%|NaN|자동 합산/);
     fail=false;await openAndGrade([]);text=await page.locator('#app').innerText();assert.doesNotMatch(text,/null%|NaN/);
-    await openAndGrade(Array.from({length:30},(_,i)=>i+1));text=await page.locator('#app').innerText();assert.doesNotMatch(text,/null%|NaN|1\d\d\.\d%/);assert.match(text,/100%/);
+    await openAndGrade(Array.from({length:30},(_,i)=>i+1));text=await page.locator('#app').innerText();
+    assert.doesNotMatch(text,/null%|NaN/);assert.match(text,/100%/);
+    const renderedPercents=Array.from(text.matchAll(/(-?\d+(?:\.\d+)?)%/g),match=>Number(match[1]));
+    assert.ok(renderedPercents.length>0&&renderedPercents.every(value=>value>=0&&value<=100),'all rendered percentages stay within 0-100');
     assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);
     console.log('PASS secure report/cuts/target percentiles, offline fail-closed, zero/full score, mobile, no learner writes');
   }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
