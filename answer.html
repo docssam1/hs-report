@@ -15,6 +15,8 @@
 <div class="sheet"><div class="hd"><h1 id="ttl">모의고사 · 답안 및 교재 연결표</h1><div class="br">지필드 영재교육&nbsp; G!FIELD</div></div><div class="leg"><span><b class="t27">★2.7</b> 기본 1~12번</span><span><b class="t34">★3.4</b> 중심 13~22번</span><span><b class="t42">★4.2</b> 고난도 23~30번</span><span style="color:#999">A4 가로 인쇄 기준 · 브라우저 인쇄에서 '배경 그래픽' 켜기</span></div><table><colgroup><col style="width:2.6%"><col style="width:3.2%"><col style="width:8.6%"><col style="width:12%"><col style="width:8.6%"><col style="width:12.3%"><col style="width:13.5%"><col style="width:11.3%"><col style="width:11.3%"><col style="width:16.6%"></colgroup><thead><tr><th class="c">번호</th><th class="c">배점</th><th>정답</th><th>세부유형</th><th>처방유형</th><th>📗 시중교재</th><th>🔵 소마(프리미어)</th><th>📙 필즈더클래식</th><th>🟣 지필드</th><th>📌 추가 학습 포인트</th></tr></thead><tbody id="body"></tbody></table><div class="ft"><span id="ft1"></span><span>30문항 · 100점 만점</span></div></div>
 </div>
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
+<script src="final-last-routes.js?v=20260909a"></script>
+<script>if(window.GFIELD_FINAL_LAST_ROUTES)window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('answer.html');</script>
 <script>(function(){var v=Date.now();['mock-data.js','mock-data-hw.js','mock-data-final.js','mock-rx.js'].forEach(function(f){document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>')})})();</script>
 <script>
 const P=new URLSearchParams(location.search),SETQ=(P.get('set')||'').toLowerCase(),SET=SETQ==='hw'?'hw':SETQ==='final'?'final':'mid',SETNAME=SET==='hw'?'활용':SET==='final'?'파이널':'중급';
@@ -23,6 +25,7 @@ let NAME=(P.get('name')||'').trim();try{if(!NAME)NAME=localStorage.getItem('gfie
 function allowed(name){
   if(name.toLowerCase()==='docssam')return true;
   if(!(D.students||[]).includes(name))return false;
+  if(SET==='final'&&window.GFIELD_FINAL_LAST_ROUTES)return window.GFIELD_FINAL_LAST_ROUTES.accessAllowed(D,name,'final',RD);
   if(SET==='final'&&RD>=5){const a=((D.archiveProductAccess||{})['mock-final-'+RD])||[];return a.includes('*')||a.includes(name)}
   if(SET==='final')return((((D.archiveAccess||{})['파이널 모의고사'])||[]).includes(name));
   if(SET!=='hw')return true;
@@ -57,6 +60,6 @@ function showContent(){
     note.appendChild(label);cell.appendChild(note);
   });
 }
-if(allowed(NAME))showContent();else{document.getElementById('gate').classList.remove('hidden');document.getElementById('nameInput').value=NAME;document.getElementById('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')gateEnter()})}
+if(!window.GFIELD_ROUTE_REDIRECTING){if(allowed(NAME))showContent();else{document.getElementById('gate').classList.remove('hidden');document.getElementById('nameInput').value=NAME;document.getElementById('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')gateEnter()})}}
 </script>
 </body></html>

@@ -320,6 +320,8 @@
 <div class="toast" id="toast"></div>
 
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
+<script src="final-last-routes.js?v=20260909a"></script>
+<script>if(window.GFIELD_FINAL_LAST_ROUTES)window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('mock.html');</script>
 <script src="mock-data.js"></script>
 <script src="mock-data-hw.js"></script>
 <script src="mock-data-original.js"></script>
@@ -1325,6 +1327,7 @@ function typeset(){ if(!window.renderMathInElement) return; clearTimeout(_mathT)
 
 /* ─── URL 직접 진입 ──────────────────────────────────────── */
 (function initFromUrl(){
+  if(window.GFIELD_ROUTE_REDIRECTING) return;
   const p=new URLSearchParams(location.search); const rd=p.get('round');
   /* 1순위: URL name 파라미터 (index.html 로그인 상태에서 링크 타고 온 경우) */
   const urlName=(p.get('name')||'').trim();

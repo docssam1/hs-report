@@ -497,6 +497,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
+<script src="final-last-routes.js?v=20260909a"></script>
 <script src="archive-info.js?v=20260825b"></script>
 <script>
   const D = window.GFIELD_DATA;
@@ -968,6 +969,11 @@
   /* GFIELD APPLICATION 외부 링크에 gname(학생명) 자동 로그인 파라미터 부착 */
   function bookLinkUrl(b, url){
     let lurl=url;
+    const routeHelper=window.GFIELD_FINAL_LAST_ROUTES;
+    if(routeHelper){
+      lurl=routeHelper.normalizeUrl(lurl,{title:b&&b.title});
+      if(routeHelper.isKnownHtml(lurl,{title:b&&b.title})) lurl=routeHelper.withStudent(lurl,currentStudent);
+    }
     if(b.folder==='GFIELD APPLICATION' && lurl.includes('lete-on.gfieldacademy.net')){
       lurl += (lurl.includes('?')?'&':'?') + 'gname=' + encodeURIComponent(currentStudent||'');
     }
@@ -1212,6 +1218,14 @@
   /* PDF 워터마크 다운로드 */
   async function downloadWatermarked(url, title){
     if(!currentStudent){ toast('로그인이 필요합니다'); return; }
+    const routeHelper=window.GFIELD_FINAL_LAST_ROUTES;
+    if(routeHelper){
+      const routed=routeHelper.normalizeUrl(url,{title:title});
+      if(routeHelper.isKnownHtml(routed,{title:title})){
+        window.open(routeHelper.withStudent(routed,currentStudent),'_blank','noopener');
+        return;
+      }
+    }
     toast('인쇄용 PDF를 준비하고 있어요…');
     try{
       const bytes=await fetch(url).then(r=>{ if(!r.ok) throw new Error('fetch'); return r.arrayBuffer(); });
@@ -1249,6 +1263,6 @@
     }catch(e){}
   })();
 </script>
-<script src="index-enhancements.js?v=20260905a"></script>
+<script src="index-enhancements.js?v=20260909a"></script>
 </body>
 </html>

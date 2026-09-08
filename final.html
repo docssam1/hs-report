@@ -423,7 +423,9 @@ td.weak-cell{white-space:nowrap}
 <div id="app"></div>
 <button class="print-btn no-print" id="printBtn" style="display:none">🖨 인쇄</button>
 
+<script src="final-last-routes.js?v=20260909a"></script>
 <script>(function(){
+  if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   var v=Date.now();
   var p=new URLSearchParams(location.search);
   var isLast=p.get('set')==='last';
@@ -455,6 +457,7 @@ td.weak-cell{white-space:nowrap}
  * ========================================================= */
 (function(){
   "use strict";
+  if(window.GFIELD_ROUTE_REDIRECTING) return;
   var params = new URLSearchParams(location.search);
   var isLast = params.get('set')==='last';
   var isOriginal = params.get('set')==='original';
@@ -528,7 +531,7 @@ td.weak-cell{white-space:nowrap}
   function mmss(s){ s=Math.max(0,s); var m=Math.floor(s/60), ss=Math.floor(s%60); return (m<10?'0'+m:''+m)+':'+(ss<10?'0'+ss:''+ss); }
   function seriesLabel(){ return (M&&M.label) || (isLast?'최종':'파이널'); }
   function roundLabel(n){ return seriesLabel()+' '+n+'회'; }
-  function setPrefix(){ return isOriginal?'original':'final'; }
+  function setPrefix(){ return isOriginal?'original':(isLast?'last':'final'); }
   function allowedForRound(name){
     name=String(name||'').trim();
     if(preview||name.toLowerCase()==='docssam') return true;

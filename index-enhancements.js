@@ -169,9 +169,12 @@
   function studentName(){
     return (typeof currentStudent!=='undefined'&&currentStudent)?String(currentStudent):'';
   }
-  function withName(url){
+  function withName(url,title){
     var name=studentName();
-    return name ? url+(url.indexOf('?')>=0?'&':'?')+'name='+encodeURIComponent(name) : url;
+    var helper=window.GFIELD_FINAL_LAST_ROUTES;
+    var routed=helper?helper.normalizeUrl(url,{title:title}):url;
+    if(!name) return routed;
+    return helper?helper.withStudent(routed,name):routed+(routed.indexOf('?')>=0?'&':'?')+'name='+encodeURIComponent(name);
   }
   function onlineMember(){
     var name=studentName();
@@ -197,7 +200,7 @@
       if(!round) return;
 
       if(book.folder==='파이널 모의고사'&&/파이널\s*실전\s*모의고사/.test(String(book.title||''))){
-        var finalBase='final.html?round='+round;
+        var finalBase=window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('final',round,''):'final.html?round='+round;
         book.imgdir='final_'+round;
         book.pages=finalPages[round];
         book.copyrightMissingPages=finalCopyrightPages[round].slice();
@@ -208,17 +211,17 @@
       }
 
       if(book.folder==='최종 모의고사'&&/최종\s*실전\s*모의고사/.test(String(book.title||''))){
-        var lastBase='final.html?set=last&round='+round;
+        var lastBase=window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('last',round,''):'final.html?set=last&round='+round;
         book.pdf='';
         book.imgdir='last_final_'+round;
         book.pages=6;
         book.video=lastVideos[round];
         book.links=[
           {label:'실전 타이머',url:withName(lastBase+'&go=timer')},
-          {label:'답안·해설',url:withName(lastBase+'&go=answer')}
+          {label:'답안·해설',url:withName(window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('last',round,'answer-page'):lastBase+'&go=answer')}
         ];
         if(onlineMember()) book.links.push({label:'성적 입력',url:withName('last1-entry.html?round='+round)});
-        book.links.push({label:'성적 확인·진단',url:withName('last1-result.html?round='+round)});
+        book.links.push({label:'성적 확인·진단',url:withName(window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('last',round,'report'):'last1-result.html?round='+round)});
       }
 
       if(book.folder==='추가 모의고사'&&/초등선발\s*대비\s*시그니처\s*실전\s*모의고사/.test(String(book.title||''))){
