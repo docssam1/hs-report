@@ -195,14 +195,15 @@ const server=http.createServer((req,res)=>{
     assert.equal(await page.evaluate(()=>document.body.classList.contains('print-final1-solutions')),false,'print mode cleaned up');
    }
    if(n===3){
-    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').count(),15,'reviewed Final3 front half is public without a preview flag');
-    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').count(),15,'unreviewed Q16-Q30 remain pending on the public report');
+    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').count(),30,'all reviewed Final3 solutions are public without a preview flag');
+    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').count(),0,'no reviewed Final3 item remains pending on the public report');
     await page.goto(base+'/final.html?round=3&go=report&preview=1&name='+encodeURIComponent(student));
     await page.locator('.final-report-package').waitFor();
-    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').count(),15,'local preview uses the same reviewed front half');
-    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').count(),15,'unreviewed Q16-Q30 remain pending on screen');
-    assert.match(await page.locator('#final3DetailedSolutions .final1-solutions-head').innerText(),/15문항 \/ 전체 30문항/);
-    assert.equal(await page.locator('#final3DetailedSolutions .final1-data-table').count(),11,'all reviewed Final3 teaching tables render');
+    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').count(),30,'local preview uses the same reviewed 30-item set');
+    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').count(),0,'no reviewed Final3 item remains pending on screen');
+    assert.match(await page.locator('#final3DetailedSolutions .final1-solutions-head').innerText(),/30문항 \/ 전체 30문항/);
+    assert.ok(await page.locator('#final3DetailedSolutions .final1-data-table').count()>=25,'all reviewed Final3 teaching tables render');
+    assert.equal(await page.locator('#final3DetailedSolutions .f3-back-diagram').count(),7,'seven reviewed back-half diagrams render');
     for(const [no,svgCount] of Object.entries(FINAL3_DIAGRAM_SVG_COUNTS)){
      const figure=page.locator('#final3-solution-'+no+' .gfield-final3-solution-diagram');
      assert.equal(await figure.count(),1,'Q'+no+' has one source-bound diagram wrapper');
@@ -222,8 +223,8 @@ const server=http.createServer((req,res)=>{
     }));
     assert.deepEqual(mobile,{fits:true,cards:true,diagrams:true,tables:true},'Final3 reviewed cards fit at 390px');
     await page.emulateMedia({media:'print'});
-    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').evaluateAll(nodes=>nodes.every(node=>getComputedStyle(node).display==='none')),true,'Q16-Q30 are excluded from print');
-    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').evaluateAll(nodes=>nodes.every(node=>getComputedStyle(node).display!=='none')),true,'Q1-Q15 remain printable');
+    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').count(),0,'no pending Final3 placeholders enter print');
+    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').evaluateAll(nodes=>nodes.every(node=>getComputedStyle(node).display!=='none')),true,'Q1-Q30 remain printable');
     await page.emulateMedia({media:'screen'});
     await page.setViewportSize({width:1280,height:900});
    }

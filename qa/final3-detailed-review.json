@@ -1,14 +1,18 @@
 {
   "schemaVersion": 1,
-  "reviewId": "final3-detailed-review-20260909",
+  "reviewId": "final3-detailed-review-all30-20260909",
   "set": "final",
   "round": 3,
   "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
-  "scope": "front-half-detail-only",
+  "scope": "all-30-detailed-solutions",
   "sourceScope": [
     "materials/final_3/001.jpg",
     "materials/final_3/002.jpg",
-    "materials/final_3/003.jpg"
+    "materials/final_3/003.jpg",
+    "materials/final_3/004.jpg",
+    "materials/final_3/005.jpg",
+    "materials/final_3/006.jpg",
+    "materials/final_3/007.jpg"
   ],
   "protectedSourcePolicy": "read-only; no source fingerprint or private locator is published",
   "selectedNos": [
@@ -26,9 +30,7 @@
     12,
     13,
     14,
-    15
-  ],
-  "pendingNos": [
+    15,
     16,
     17,
     18,
@@ -45,6 +47,7 @@
     29,
     30
   ],
+  "pendingNos": [],
   "status": {
     "evidence": "verified",
     "independentSecondPass": "verified",
@@ -65,6 +68,16 @@
     ],
     "status": "pass"
   },
+  "corrections": [
+    {
+      "no": 28,
+      "summary": "48 뒤의 글자를 숫자 0으로 보지 않고 원문 조건에 따라 72로 재검산했습니다."
+    },
+    {
+      "no": 30,
+      "summary": "점에서만 닿는 곳은 제외하고 짧은 공유 변을 포함해 이웃 42쌍으로 재검산했습니다."
+    }
+  ],
   "items": [
     {
       "no": 1,
@@ -205,14 +218,146 @@
       "canonicalAnswer": "13",
       "displayAnswer": "13",
       "gates": "pass"
+    },
+    {
+      "no": 16,
+      "sourceLocator": "materials/final_3/004.jpg#q16",
+      "canonicalAnswer": "964",
+      "displayAnswer": "964",
+      "gates": "pass"
+    },
+    {
+      "no": 17,
+      "sourceLocator": "materials/final_3/004.jpg#q17",
+      "canonicalAnswer": "240",
+      "displayAnswer": "240",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q17-fixed-rectangles-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 18,
+      "sourceLocator": "materials/final_3/004.jpg#q18",
+      "canonicalAnswer": "4",
+      "displayAnswer": "4m",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q18-river-rods-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 19,
+      "sourceLocator": "materials/final_3/004.jpg#q19",
+      "canonicalAnswer": "14",
+      "displayAnswer": "14개",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q19-seven-cells-squares-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 20,
+      "sourceLocator": "materials/final_3/005.jpg#q20",
+      "canonicalAnswer": "12",
+      "displayAnswer": "12가지",
+      "gates": "pass"
+    },
+    {
+      "no": 21,
+      "sourceLocator": "materials/final_3/005.jpg#q21",
+      "canonicalAnswer": "7행 16열",
+      "displayAnswer": "7행 16열",
+      "gates": "pass"
+    },
+    {
+      "no": 22,
+      "sourceLocator": "materials/final_3/005.jpg#q22",
+      "canonicalAnswer": "150",
+      "displayAnswer": "150",
+      "gates": "pass"
+    },
+    {
+      "no": 23,
+      "sourceLocator": "materials/final_3/005.jpg#q23",
+      "canonicalAnswer": "49",
+      "displayAnswer": "49번째",
+      "gates": "pass"
+    },
+    {
+      "no": 24,
+      "sourceLocator": "materials/final_3/005.jpg#q24",
+      "canonicalAnswer": "614",
+      "displayAnswer": "ㄱ=6, ㄴ=1, ㄷ=4, ㄹ=2, ㅁ=5, ㅂ=3, ㅅ=8, ㅇ=9",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q24-cryptarithm-layout-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 25,
+      "sourceLocator": "materials/final_3/006.jpg#q25",
+      "canonicalAnswer": "19",
+      "displayAnswer": "19가지",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q25-seven-segment-mirror-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 26,
+      "sourceLocator": "materials/final_3/006.jpg#q26",
+      "canonicalAnswer": "5",
+      "displayAnswer": "5가지",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q26-seven-hex-fold-patterns-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 27,
+      "sourceLocator": "materials/final_3/006.jpg#q27",
+      "canonicalAnswer": "12,4,1",
+      "displayAnswer": "친구 12명, 한 사람당 사과 4개와 귤 1개",
+      "gates": "pass"
+    },
+    {
+      "no": 28,
+      "sourceLocator": "materials/final_3/006.jpg#q28",
+      "canonicalAnswer": "72",
+      "displayAnswer": "72",
+      "gates": "pass"
+    },
+    {
+      "no": 29,
+      "sourceLocator": "materials/final_3/007.jpg#q29",
+      "canonicalAnswer": "18분",
+      "displayAnswer": "18분",
+      "gates": "pass"
+    },
+    {
+      "no": 30,
+      "sourceLocator": "materials/final_3/007.jpg#q30",
+      "canonicalAnswer": "4",
+      "displayAnswer": "4색",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q30-map-four-colors-v1",
+        "status": "verified"
+      }
     }
-  ],
-  "negativeControls": [
-    "canonical answer mismatch is rejected",
-    "display answer mismatch is rejected without fuzzy or digit-only comparison",
-    "Q1, Q3, Q4, Q6, Q7, Q8, and Q13 each fail closed without its exact registered diagram",
-    "only independently reviewed items are available on the public report",
-    "Q16 through Q30 remain pending on screen and are excluded from print"
-  ],
-  "boundary": "This record covers only Final3 Q1-Q15. It makes no deployment claim and does not change canonical answers, grading, scores, statistics, learner records, or Q16-Q30."
+  ]
 }

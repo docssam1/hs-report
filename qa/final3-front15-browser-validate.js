@@ -14,7 +14,7 @@ assert.ok(artifactDir,'GFIELD_FINAL3_ARTIFACT_DIR is required');
 assert.equal(fs.existsSync(artifactDir),false,'artifact directory already exists; choose a new versioned folder');
 fs.mkdirSync(artifactDir,{recursive:true});
 
-const student='Final3앞15통합검수학생';
+const student='Final3전체통합검수학생';
 const ox='O'.repeat(20)+'X'.repeat(10);
 const score=core.scoreOf(ox);
 const records=[1,2,3,4].map(n=>({student,round:'final'+n,ox,score,wrong:10,source:'admin'}));
@@ -68,11 +68,12 @@ const server=http.createServer((req,res)=>{
   try{
     await page.goto(base+'/final.html?round=3&go=report&name='+encodeURIComponent(student));
     await page.locator('#final3DetailedSolutions').waitFor();
-    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').count(),15);
-    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').count(),15);
+    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').count(),30);
+    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').count(),0);
     assert.equal(await page.locator('#final3DetailedSolutions .gfield-final3-solution-diagram').count(),7);
-    assert.equal(await page.locator('#final3DetailedSolutions .final1-data-table').count(),11);
-    assert.match(await page.locator('#final3DetailedSolutions .final1-solutions-head').innerText(),/15문항 \/ 전체 30문항/);
+    assert.equal(await page.locator('#final3DetailedSolutions .f3-back-diagram').count(),7);
+    assert.ok(await page.locator('#final3DetailedSolutions .final1-data-table').count()>=25);
+    assert.match(await page.locator('#final3DetailedSolutions .final1-solutions-head').innerText(),/30문항 \/ 전체 30문항/);
 
     const layout={screen:{},print:{}};
     for(const width of [1280,390]){
@@ -87,17 +88,21 @@ const server=http.createServer((req,res)=>{
       }));
       assert.equal(layout.screen[width].sectionFits,true,'section fits '+width);
       assert.ok(layout.screen[width].readyCards.every(card=>card.fits),'all cards fit '+width);
-      assert.deepEqual(layout.screen[width].pendingNos,Array.from({length:15},(_,i)=>i+16));
+      assert.deepEqual(layout.screen[width].pendingNos,[]);
       assert.ok(layout.screen[width].tables.every(table=>table.fits&&table.fontSize>=12),'all tables fit and remain readable '+width);
-      for(let no=1;no<=15;no++){
+      for(let no=1;no<=30;no++){
         await page.locator('#final3-solution-'+no).screenshot({path:path.join(artifactDir,'final3-card-'+no+'-'+width+'.png')});
       }
-      for(const no of [1,3,4,6,7,8,13]){
-        const figure=page.locator('#final3-solution-'+no+' .gfield-final3-solution-diagram');
+      for(const no of [1,3,4,6,7,8,13,17,18,19,24,25,26,30]){
+        const figure=page.locator('#final3-solution-'+no+' [data-diagram-id]');
         assert.equal(await figure.evaluate(node=>node.scrollWidth<=node.clientWidth+1),true,'diagram fits Q'+no+' at '+width);
         await figure.screenshot({path:path.join(artifactDir,'final3-diagram-'+no+'-'+width+'.png')});
       }
     }
+
+    assert.match(await page.locator('#final3-solution-24').innerText(),/ㄱ=6, ㄴ=1, ㄷ=4, ㄹ=2, ㅁ=5, ㅂ=3, ㅅ=8, ㅇ=9/);
+    assert.match(await page.locator('#final3-solution-30').innerText(),/4색/);
+    assert.match(await page.locator('#final3-solution-30').innerText(),/42쌍/);
 
     await page.setViewportSize({width:1280,height:900});
     await page.emulateMedia({media:'print'});
@@ -119,7 +124,7 @@ const server=http.createServer((req,res)=>{
     assert.deepEqual(writes,[],'productionWrites0');
     assert.deepEqual(errors,[],'no browser page errors');
     fs.writeFileSync(path.join(artifactDir,'browser-summary.json'),JSON.stringify({pass:true,productionWrites:0,layout},null,2));
-    console.log(JSON.stringify({pass:true,artifactDir,ready:15,pending:15,diagrams:7,tables:11,productionWrites:0}));
+    console.log(JSON.stringify({pass:true,artifactDir,ready:30,pending:0,diagrams:14,tables:await page.locator('#final3DetailedSolutions .final1-data-table').count(),productionWrites:0}));
   }finally{
     await browser.close();
     server.close();
