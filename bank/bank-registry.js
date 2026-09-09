@@ -46,11 +46,81 @@
     ]
   };
 
-  /* Source-specific taxonomy decisions live in this registry so every
-   * buildUnifiedCatalog consumer sees the same reviewed result.  Keep this
-   * list empty until the complete public projection has independent review. */
-  var REVIEWED_TAXONOMY_OVERRIDES = Object.freeze([]);
-  var REVIEWED_ADDITIONAL_SUBAREAS = Object.freeze([]);
+  function eligibleTaxonomyOverride(sourceKey, area, displayType, subarea, detailTypeKey, studentDisplayName, canonicalTypeId) {
+    return Object.freeze({
+      sourceKey: sourceKey,
+      area: area,
+      displayType: displayType,
+      subarea: subarea,
+      detailTypeKey: detailTypeKey,
+      studentDisplayName: studentDisplayName,
+      canonicalTypeId: canonicalTypeId,
+      detailTypeScope: 'reusable',
+      itemSpecificNumericIdentity: false,
+      workStatus: 'complete',
+      evidenceStatus: 'verified',
+      releaseStatus: 'eligible'
+    });
+  }
+
+  function eligibleAdditionalSubarea(area, subarea) {
+    return Object.freeze({
+      area: area,
+      subarea: subarea,
+      workStatus: 'complete',
+      evidenceStatus: 'verified',
+      releaseStatus: 'eligible'
+    });
+  }
+
+  /* Source-specific decisions are bound to one exact public sourceKey and
+   * preserve the source area and display type.  Labels are learner-facing;
+   * stable keys remain independent from wording changes. */
+  /* reviewed-taxonomy-overrides:start */
+  var REVIEWED_TAXONOMY_OVERRIDES = Object.freeze([
+    eligibleTaxonomyOverride('final|2|1', '식의 계산', '우기기', '우기기/가정하여 풀기', 'assumption-two-score-total', '두 가지 점수의 총점에서 높은 점수 횟수 구하기', 'type-0ygyy8e'),
+    eligibleTaxonomyOverride('final|2|2', '도형', '크고 작은 도형의 개수(수열의 활용)', '도형의 개수', 'alternating-square-chain-rectangle-count', '번갈아 꺾인 정사각형 연결의 사각형 개수 세기', 'type-1asjoqy'),
+    eligibleTaxonomyOverride('final|2|3', '식의 계산', '리그전', '합차와 배수', 'round-robin-total-wins-record', '단일 리그 전체 승수와 승수 차로 전적 구하기', 'type-01vpgcx'),
+    eligibleTaxonomyOverride('final|2|4', '수·규칙찾기', '서로 다른 금액의 합', '관찰과 분류', 'distinct-sums-two-denominations-with-repetition', '중복 선택 가능한 두 화폐의 서로 다른 합 분류하기', 'type-0uodwvl'),
+    eligibleTaxonomyOverride('final|2|5', '경우의 수', '4색정리', '색칠하기', 'map-coloring-point-contact-minimum', '점 접촉을 포함한 지도 최소 색칠', 'type-11ztzpw'),
+    eligibleTaxonomyOverride('final|2|6', '수·규칙찾기', '점점 작아지는 수의 개수', '조건에 맞는 수', 'strictly-decreasing-digits-in-range', '범위 안에서 자리 숫자가 차례로 작아지는 수 세기', 'type-0yi8hf8'),
+    eligibleTaxonomyOverride('final|2|7', '식의 계산', '나머지가 나올때까지 나누기', '나눗셈의 몫과 나머지', 'repeated-division-consecutive-product', '연속곱을 거듭 나눌 때 처음 나머지가 생기는 차례', 'type-0pqn1vr'),
+    eligibleTaxonomyOverride('final|2|8', '수·규칙찾기', '가짜 동전 구별하기', '수의 관계', 'coded-sampling-one-weighing-counterfeit-group', '표본 개수와 무게 차로 한 번에 가짜 다발 찾기', 'type-1r4snvn'),
+    eligibleTaxonomyOverride('final|2|9', '경우의 수', '입체도형의 최단거리', '경로 세기', 'cuboid-exact-edge-simple-paths', '직육면체 모서리에서 이동 수가 정해진 재방문 없는 경로 세기', 'type-1obyr97'),
+    eligibleTaxonomyOverride('final|2|10', '식의 계산', '고장난 시계의 시간 차', '달력·요일(시계)', 'two-clock-relative-drift-backsolve', '빠른 시계와 느린 시계의 표시 차로 맞춘 시각 역산하기', 'type-1a3um2w'),
+    eligibleTaxonomyOverride('final|2|11', '수·규칙찾기', '악수하기', '수의 관계', 'all-pairs-handshake-parallel-rounds-time', '전원 악수의 짝 수와 동시 진행 수로 종료 시각 구하기', 'type-0xlwudq'),
+    eligibleTaxonomyOverride('final|2|12', '도형', '위에서 바라본 선의 모양', '공간지각', 'solid-surface-path-top-view-projection', '입체 표면 경로의 높이를 없애 윗모습으로 그리기', 'type-15v2g55'),
+    eligibleTaxonomyOverride('final|2|13', '경우의 수', '최단거리', '최단거리', 'grid-shortest-path-required-forbidden-vertices', '필수점과 금지점이 있는 격자 최단경로 세기', 'type-1f1ex41'),
+    eligibleTaxonomyOverride('final|2|14', '식의 계산', '간격문제', '간격·자르기', 'periodic-removal-evenly-spaced-markers', '같은 간격의 표지에서 일정 주기마다 제거한 뒤 남은 수 구하기', 'type-0rroq5n'),
+    eligibleTaxonomyOverride('final|2|15', '수·규칙찾기', '묶음 수열의 활용', '수 배열의 규칙', 'tuple-sequence-cumulative-prior-link-sum-response', '여러 수 묶음의 누적·앞 묶음 연결 규칙으로 묶음의 합 구하기', 'type-07g7zwy'),
+    eligibleTaxonomyOverride('final|2|16', '도형', '도형 채우기', '도형 덮기', 'l-tromino-square-tiling-symmetry-classes', 'L자 조각으로 정사각형을 덮는 배치의 회전·뒤집기 중복 세기', 'type-03arvhe'),
+    eligibleTaxonomyOverride('final|2|17', '수·규칙찾기', '무게가 다른 구슬 찾기(저울)', '수의 관계', 'balance-outcomes-common-candidate-pair', '여러 양팔저울 결과의 공통 조건으로 가벼운 구슬 찾기', 'type-07w048o'),
+    eligibleTaxonomyOverride('final|2|18', '식의 계산', '포함과 배제(최대,최소)', '포함과 배제', 'exhaustive-partition-open-range-extrema', '전체를 여러 부류로 나누고 정해진 두 수 사이 조건에서 한 부류의 최댓값·최솟값 구하기', 'type-1yhugzn'),
+    eligibleTaxonomyOverride('final|2|19', '식의 계산', '리그와 토너먼트', '경기 수 계산', 'mixed-league-tournament-game-count-extrema', '리그·토너먼트 혼합 방식의 경기 수 최댓값·최솟값 비교', 'type-1ichp8w'),
+    eligibleTaxonomyOverride('final|2|20', '수·규칙찾기', '일의 자리가 일정한 두 수의 곱', '주기와 나머지', 'units-digit-product-ordered-pairs-ranges', '두 범위에서 곱의 일의 자리 조건을 만족하는 순서쌍 세기', 'type-0vurr8x'),
+    eligibleTaxonomyOverride('final|2|21', '식의 계산', '거리,속력,시간', '일·속력·시간', 'arrival-gap-distance-target-speed', '서로 다른 속력의 도착 시각 차로 거리와 목표 속력 구하기', 'type-0i1qqpo'),
+    eligibleTaxonomyOverride('final|2|22', '수·규칙찾기', '금액만들기', '조건에 맞는 수', 'all-denominations-positive-coin-combinations', '여러 동전을 모두 사용해 목표 금액을 만드는 개수 조합 세기', 'type-13niffi'),
+    eligibleTaxonomyOverride('final|2|23', '수·규칙찾기', '식량 관리', '운반과 소비', 'desert-crossing-return-aware-resource-minimum', '되돌아오는 도우미의 소비량까지 포함해 사막 횡단 최소 인원 구하기', 'type-1s30d87'),
+    eligibleTaxonomyOverride('final|2|24', '수·규칙찾기', '작은수로 쪼개기', '조건에 맞는 수', 'bounded-age-product-factor-multiset', '나이 범위가 정해진 사람들의 곱에서 인원수와 나이 합 구하기', 'type-0lu0mlg'),
+    eligibleTaxonomyOverride('final|2|25', '수·규칙찾기', '성냥개비 도형의 개수', '규칙수열·도형배열', 'composite-figure-layer-sequence-triangle-count', '단계별 도형을 부분 수열로 나누어 작은 삼각형 세기', 'type-0q6gg27'),
+    eligibleTaxonomyOverride('final|2|26', '수·규칙찾기', '나이 계산', '나이 계산', 'age-ratios-at-different-times', '서로 다른 시점의 배수 조건과 나이 범위로 현재 나이 구하기', 'type-1a8q8vu'),
+    eligibleTaxonomyOverride('final|2|27', '경우의 수', '소식 주고 받기', '관계와 분류', 'gossip-union-minimum-calls', '통화마다 합쳐지는 소식 상태로 전원 공유 최소 횟수 구하기', 'type-1728912'),
+    eligibleTaxonomyOverride('final|2|28', '경우의 수', '헤밀턴 경로', '모든 도로 지나기', 'weighted-all-edges-closed-route-minimum', '모든 도로를 지나 출발점으로 돌아오는 가장 짧은 길 찾기', 'type-0ewdfoi'),
+    eligibleTaxonomyOverride('final|2|29', '수·규칙찾기', '약수의 활용', '조건에 맞는 수', 'divisor-parity-toggle-open-count', '배수 차례로 상태를 바꿀 때 약수 홀짝으로 열린 것 세기', 'type-1j8flar'),
+    eligibleTaxonomyOverride('final|2|30', '수·규칙찾기', '연속하는 자연수', '조건에 맞는 수', 'longest-positive-consecutive-sum-representation', '자연수를 가장 긴 연속 자연수의 합으로 나타내기', 'type-1tarp8q')
+  ]);
+  /* reviewed-taxonomy-overrides:end */
+
+  /* reviewed-additional-subareas:start */
+  var REVIEWED_ADDITIONAL_SUBAREAS = Object.freeze([
+    eligibleAdditionalSubarea('식의 계산', '간격·자르기'),
+    eligibleAdditionalSubarea('식의 계산', '포함과 배제'),
+    eligibleAdditionalSubarea('식의 계산', '경기 수 계산'),
+    eligibleAdditionalSubarea('수·규칙찾기', '운반과 소비'),
+    eligibleAdditionalSubarea('수·규칙찾기', '나이 계산'),
+    eligibleAdditionalSubarea('경우의 수', '모든 도로 지나기')
+  ]);
+  /* reviewed-additional-subareas:end */
 
   var REVIEWED_TAXONOMY_OVERRIDE_CONTRACT = {
     sourceIdentityFields: ['sourceKey', 'area', 'displayType'],

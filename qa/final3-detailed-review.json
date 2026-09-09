@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "reviewId": "final3-detailed-review-20260909",
+  "set": "final",
+  "round": 3,
+  "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
+  "scope": "front-half-detail-only",
+  "sourceScope": [
+    "materials/final_3/001.jpg",
+    "materials/final_3/002.jpg",
+    "materials/final_3/003.jpg"
+  ],
+  "protectedSourcePolicy": "read-only; no source fingerprint or private locator is published",
+  "selectedNos": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "pendingNos": [
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "status": {
+    "evidence": "verified",
+    "independentSecondPass": "verified",
+    "release": "eligible",
+    "published": true,
+    "answerVisibility": "post-attempt-only"
+  },
+  "gateLayer": "integrated-render-review-verified",
+  "learnerFitGate": {
+    "gateId": "learner-fit",
+    "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
+    "criteria": [
+      "language",
+      "representations",
+      "prerequisites",
+      "reasoning-load",
+      "response-mode"
+    ],
+    "status": "pass"
+  },
+  "items": [
+    {
+      "no": 1,
+      "sourceLocator": "materials/final_3/001.jpg#q1",
+      "canonicalAnswer": "144,233",
+      "displayAnswer": "바나나 144개, 사과 233개",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q1-fruit-branch-recurrence-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 2,
+      "sourceLocator": "materials/final_3/001.jpg#q2",
+      "canonicalAnswer": "성은",
+      "displayAnswer": "성은",
+      "gates": "pass"
+    },
+    {
+      "no": 3,
+      "sourceLocator": "materials/final_3/001.jpg#q3",
+      "canonicalAnswer": "188",
+      "displayAnswer": "검은 타일 188개",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q3-alternating-tile-rings-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 4,
+      "sourceLocator": "materials/final_3/001.jpg#q4",
+      "canonicalAnswer": "오른손 중지",
+      "displayAnswer": "오른손 중지",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q4-finger-cycle-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 5,
+      "sourceLocator": "materials/final_3/002.jpg#q5",
+      "canonicalAnswer": "목요일",
+      "displayAnswer": "목요일",
+      "gates": "pass"
+    },
+    {
+      "no": 6,
+      "sourceLocator": "materials/final_3/002.jpg#q6",
+      "canonicalAnswer": "21",
+      "displayAnswer": "21개",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q6-folded-paper-five-layers-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 7,
+      "sourceLocator": "materials/final_3/002.jpg#q7",
+      "canonicalAnswer": "원, 1",
+      "displayAnswer": "동그라미 1개",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q7-balance-equations-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 8,
+      "sourceLocator": "materials/final_3/002.jpg#q8",
+      "canonicalAnswer": "5544",
+      "displayAnswer": "5544가지",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q8-stepped-mountain-paths-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 9,
+      "sourceLocator": "materials/final_3/002.jpg#q9",
+      "canonicalAnswer": "15,9,36,4",
+      "displayAnswer": "15, 9, 36, 4",
+      "gates": "pass"
+    },
+    {
+      "no": 10,
+      "sourceLocator": "materials/final_3/003.jpg#q10",
+      "canonicalAnswer": "124",
+      "displayAnswer": "124개",
+      "gates": "pass"
+    },
+    {
+      "no": 11,
+      "sourceLocator": "materials/final_3/003.jpg#q11",
+      "canonicalAnswer": "118",
+      "displayAnswer": "118",
+      "gates": "pass"
+    },
+    {
+      "no": 12,
+      "sourceLocator": "materials/final_3/003.jpg#q12",
+      "canonicalAnswer": "9",
+      "displayAnswer": "9개",
+      "gates": "pass"
+    },
+    {
+      "no": 13,
+      "sourceLocator": "materials/final_3/003.jpg#q13",
+      "canonicalAnswer": "377",
+      "displayAnswer": "377가지",
+      "gates": "pass",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final3-q13-honeycomb-forward-paths-v1",
+        "status": "verified"
+      }
+    },
+    {
+      "no": 14,
+      "sourceLocator": "materials/final_3/003.jpg#q14",
+      "canonicalAnswer": "35,21",
+      "displayAnswer": "관호 35살, 주연 21살",
+      "gates": "pass"
+    },
+    {
+      "no": 15,
+      "sourceLocator": "materials/final_3/003.jpg#q15",
+      "canonicalAnswer": "13",
+      "displayAnswer": "13",
+      "gates": "pass"
+    }
+  ],
+  "negativeControls": [
+    "canonical answer mismatch is rejected",
+    "display answer mismatch is rejected without fuzzy or digit-only comparison",
+    "Q1, Q3, Q4, Q6, Q7, Q8, and Q13 each fail closed without its exact registered diagram",
+    "only independently reviewed items are available on the public report",
+    "Q16 through Q30 remain pending on screen and are excluded from print"
+  ],
+  "boundary": "This record covers only Final3 Q1-Q15. It makes no deployment claim and does not change canonical answers, grading, scores, statistics, learner records, or Q16-Q30."
+}

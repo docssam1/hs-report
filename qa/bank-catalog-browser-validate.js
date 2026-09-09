@@ -1,10 +1,13 @@
 'use strict';
 
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const { chromium } = require(process.env.GFIELD_QA_PLAYWRIGHT || 'playwright');
 
 const BASE_URL = process.env.GFIELD_QA_BASE_URL || 'http://127.0.0.1:8765';
 const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
+const ARTIFACT_DIR = process.env.GFIELD_QA_ARTIFACT_DIR || '';
 
 (async () => {
   const browser = await chromium.launch({
@@ -46,8 +49,60 @@ const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
       '각 이원목적표 유형 카드에 난이도 한 개 표시',
     );
     const paperFold = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '보기의 접기 방법을 두 번 반복한 뒤 자르기', exact: true }) });
-    assert.match(await paperFold.textContent(), /난이도 최상/, '정답률 2.5% 유형은 최상');
-    assert.match(await paperFold.textContent(), /기준 정답률 2.5%/, '실제 정답률 근거 표시');
+    assert.match(await paperFold.textContent(), /난이도 최상/, '정답률 3.6% 유형은 최상');
+    assert.match(await paperFold.textContent(), /기준 정답률 3.6%/, '실제 정답률 근거 표시');
+
+    await page.selectOption('#round-filter', 'final|2');
+    assert.match(await page.locator('#result-status').textContent(), /30문항$/, '파이널 2회 30문항');
+    const final2Assumption = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '두 가지 점수의 총점에서 높은 점수 횟수 구하기', exact: true }) });
+    assert.equal(await final2Assumption.count(), 1, '파이널 2회 검수된 학생 표시명을 카드 제목으로 사용');
+    assert.match(await final2Assumption.textContent(), /기존 유형명 · 우기기/, '기존 이원목적 유형명은 별도로 보존');
+    assert.equal(await page.getByRole('heading', { name: '여러 수 묶음의 누적·앞 묶음 연결 규칙으로 묶음의 합 구하기', exact: true }).count(), 1, '15번은 묶음 전체 합 응답을 표시');
+    assert.equal(await page.getByRole('heading', { name: '모든 도로를 지나 출발점으로 돌아오는 가장 짧은 길 찾기', exact: true }).count(), 1, '28번은 모든 도로와 출발점 복귀 조건을 표시');
+    assert.equal(await page.locator('.type-card').count(), 30, '파이널 2회 승인 문항을 안정 유형별 카드 30개로 분리');
+
+    async function inspectFinal2Cards(width, height, screenshotName) {
+      await page.setViewportSize({ width, height });
+      const observed = await page.evaluate(() => ({
+        viewport: innerWidth,
+        documentWidth: document.documentElement.scrollWidth,
+        cards: Array.from(document.querySelectorAll('.type-card')).map((card) => {
+          const heading = card.querySelector('h4');
+          const cardBox = card.getBoundingClientRect();
+          const headingBox = heading.getBoundingClientRect();
+          const style = getComputedStyle(heading);
+          return {
+            cardLeft: cardBox.left,
+            cardRight: cardBox.right,
+            headingLeft: headingBox.left,
+            headingRight: headingBox.right,
+            headingHeight: headingBox.height,
+            fontSize: parseFloat(style.fontSize),
+            overflowX: heading.scrollWidth - heading.clientWidth,
+            overflowY: heading.scrollHeight - heading.clientHeight,
+          };
+        }),
+      }));
+      assert.equal(observed.cards.length, 30, `${width}px Final2 카드 30개`);
+      assert.ok(observed.documentWidth <= observed.viewport + 1, `${width}px Final2 문서 가로 넘침 없음`);
+      assert.ok(observed.cards.every((card) => card.cardLeft >= -1 && card.cardRight <= observed.viewport + 1), `${width}px Final2 카드가 화면 안에 있음`);
+      assert.ok(observed.cards.every((card) => card.headingLeft >= -1 && card.headingRight <= observed.viewport + 1), `${width}px Final2 제목이 화면 안에 있음`);
+      assert.ok(observed.cards.every((card) => card.fontSize >= 14), `${width}px Final2 제목 글자 14px 이상`);
+      assert.ok(observed.cards.every((card) => card.headingHeight >= card.fontSize && card.overflowX <= 1 && card.overflowY <= 1), `${width}px Final2 긴 제목 가림 없음`);
+      if (ARTIFACT_DIR) {
+        fs.mkdirSync(ARTIFACT_DIR, { recursive: true });
+        await page.screenshot({ path: path.join(ARTIFACT_DIR, screenshotName), fullPage: true });
+      }
+    }
+    await inspectFinal2Cards(1280, 900, 'catalog-final2-1280.png');
+    await inspectFinal2Cards(390, 844, 'catalog-final2-390.png');
+    await page.setViewportSize({ width: 1440, height: 1000 });
+
+    await page.selectOption('#round-filter', 'final|3');
+    assert.match(await page.locator('#result-status').textContent(), /30문항$/, '파이널 3회 30문항');
+    assert.equal(await page.getByRole('heading', { name: '우기기', exact: true }).count(), 1, '같은 기존 유형명의 미승인 타회차는 기존 제목 유지');
+    assert.equal(await page.getByRole('heading', { name: '두 가지 점수의 총점에서 높은 점수 횟수 구하기', exact: true }).count(), 0, 'Final2 학생 표시명이 타회차에 전파되지 않음');
+    assert.equal(await page.getByRole('heading', { name: '점 접촉을 포함한 지도 최소 색칠', exact: true }).count(), 0, 'Final2 지도 조건명이 타회차 4색정리에 전파되지 않음');
 
     await page.selectOption('#source-filter', 'original');
     await page.selectOption('#round-filter', 'original|1');

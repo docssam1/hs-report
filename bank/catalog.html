@@ -244,13 +244,13 @@
   }
 
   function rawTypesHtml(group){
-    if(group.displayTypes.length===1)return '<div class="raw-single">원문 유형 · '+esc(group.displayTypes[0])+'</div>';
-    return '<details class="raw-types"><summary>원문 유형 '+group.displayTypes.length+'개 보기</summary><ul>'+group.displayTypes.map(function(type){return '<li>'+esc(type)+'</li>'}).join('')+'</ul></details>';
+    if(group.displayTypes.length===1)return '<div class="raw-single">기존 유형명 · '+esc(group.displayTypes[0])+'</div>';
+    return '<details class="raw-types"><summary>기존 유형명 '+group.displayTypes.length+'개 보기</summary><ul>'+group.displayTypes.map(function(type){return '<li>'+esc(type)+'</li>'}).join('')+'</ul></details>';
   }
 
   function typeCardHtml(group){
     var candidate=group.candidateCount>0;
-    var title=candidate?(group.familyLabel+' · 검토 후보 묶음'):(group.displayTypes[0]||group.familyLabel);
+    var title=candidate?(group.familyLabel+' · 검토 후보 묶음'):(group.familyLabel||group.displayTypes[0]);
     var status='';
     if(group.confirmedCount)status+='<span class="badge confirmed">확정 '+group.confirmedCount+'문항</span>';
     if(group.candidateCount)status+='<span class="badge candidate">검토 후보 '+group.candidateCount+'문항</span>';
@@ -350,6 +350,6 @@
   }catch(error){fail(error)}
 })();
 </script>
-<script src="catalog.js?v=20260905-fixed1"></script>
+<script src="catalog.js?v=20260909-final2-taxonomy"></script>
 </body>
 </html>

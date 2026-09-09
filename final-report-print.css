@@ -1,0 +1,27 @@
+.gfield-final-report-print-frame {
+  position: fixed;
+  top: 0;
+  left: -240mm;
+  width: 210mm;
+  height: 297mm;
+  border: 0;
+  background: #fff;
+  pointer-events: none;
+  opacity: .01;
+  z-index: -1;
+}
+
+.gfield-final-report-print-button[aria-busy="true"] {
+  cursor: wait;
+  opacity: .72;
+}
+
+.gfield-final-report-print-button[data-print-state="error"] {
+  cursor: pointer;
+}
+
+@media print {
+  .gfield-final-report-print-frame {
+    display: none !important;
+  }
+}

@@ -259,25 +259,26 @@ check('mock: 입력·DB·수동 등록에서 O/X 30자와 점수 무결성을 �
   assert.equal(core.M.results['수동변조'], undefined, '수동 등록이 OX 외 문자를 승인함');
 });
 
-check('검증되지 않은 모집단 평균·백분위·문항률·점수컷은 진단에서 숨김', () => {
+check('고정 문항 정답률은 유지하고 확인되지 않은 석차 백분율만 숨김', () => {
   const { core } = loadFinalCore();
   const allCorrect = Array(30).fill('O');
   const ctx = core.buildContext('검증학생', 1, allCorrect);
   assert.equal(ctx.populationVerified, false);
-  assert.equal(ctx.cutVerified, false);
+  assert.equal(ctx.cutVerified, true);
   assert.equal(ctx.pct, null);
-  assert.equal(ctx.grade, '기준 검증 대기');
-  assert.equal(Object.keys(ctx.rate).length, 0);
+  assert.ok(ctx.grade && ctx.grade !== '기준 검증 대기');
+  assert.equal(Object.keys(ctx.rate).length, 30);
   assert.equal(ctx.miss.length, 0);
-  assert.ok(ctx.A.every((row) => row.crowd === null));
-  assert.ok(ctx.P.every((row) => row.crowd === null));
+  assert.ok(ctx.A.every((row) => Number.isFinite(row.crowd)));
+  assert.ok(ctx.P.every((row) => Number.isFinite(row.crowd)));
 
   const details = core.detailTableHTML(ctx);
-  assert.doesNotMatch(details, /<th>전체 정답률<\/th>|<th>판정<\/th>/);
+  assert.match(details, /<th>정답률<\/th>|<th>복습<\/th>/);
   const trend = core.attemptTrendHTML(ctx.R, ctx.S, { 1: allCorrect }, [1]);
   assert.doesNotMatch(trend, /석차 백분율/);
   const comment = core.buildComment(ctx, {});
-  assert.match(comment, /전체 평균·문항 정답률·석차 자료는 검증 전/);
+  assert.match(comment, /문항별 정답률은 이번 진단에 반영했습니다/);
+  assert.match(comment, /석차 백분율은 표시하지 않습니다/);
   assert.doesNotMatch(comment, new RegExp(`응시자 평균\\s*${ctx.S.mean}`));
 });
 
@@ -332,19 +333,22 @@ check('모집단 검증 게이트는 출처·표본·분포·문항별 분모가
   );
 });
 
-check('원본형 확정 소영역과 자동 후보를 약점 판정에서 분리', () => {
+check('검수 완료 회차와 자동 후보 회차를 약점 판정에서 분리', () => {
   const catalog = registry.buildUnifiedCatalog({
     original: clone(originalModel),
     final: clone(finalModel),
   });
   const originalItems = catalog.items.filter((item) => item.sourceRef.set === 'original');
   const confirmedFinal1Items = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round === 1);
-  const candidateItems = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round >= 2 && item.sourceRef.round <= 4);
+  const confirmedFinal2Items = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round === 2);
+  const candidateItems = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round >= 3 && item.sourceRef.round <= 4);
   const confirmedFinal5Items = catalog.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round === 5);
   assert.equal(originalItems.length, 60);
   assert.ok(originalItems.every((item) => item.reviewStatus === 'confirmed' && !item.reviewRequired));
   assert.equal(confirmedFinal1Items.length, 30);
   assert.ok(confirmedFinal1Items.every((item) => item.reviewStatus === 'confirmed' && !item.reviewRequired));
+  assert.equal(confirmedFinal2Items.length, 30);
+  assert.ok(confirmedFinal2Items.every((item) => item.reviewStatus === 'confirmed' && !item.reviewRequired));
   assert.ok(candidateItems.length > 0);
   assert.ok(candidateItems.every((item) => item.reviewStatus === 'candidate' && item.reviewRequired));
   assert.equal(confirmedFinal5Items.length, 30);
@@ -361,11 +365,11 @@ check('원본형 확정 소영역과 자동 후보를 약점 판정에서 분리
   assert.ok(finalOneSubareas.every((row) => row.reviewRequired === false));
   const finalOneContext = finalCore.buildContext('분류학생', 1, ox);
   const table = finalCore.canonicalSubareaHTML(finalOneContext);
-  assert.match(table, /대영역·소영역·세부유형이 확정된 문항만/);
+  assert.match(table, /유형별로 잘한 점과 더 연습할 부분/);
   assert.doesNotMatch(table, /분류 검토 중/);
 });
 
-check('fixed item tag는 학생의 실제 오답 원인으로 단정하지 않음', () => {
+check('문항별 복습 안내는 학생을 탓하지 않고 다시 볼 내용을 알려 줌', () => {
   const { core } = loadFinalCore();
   const ox = Array(30).fill('O');
   ox[0] = 'X';
@@ -373,12 +377,11 @@ check('fixed item tag는 학생의 실제 오답 원인으로 단정하지 않�
   const summary = core.causeSumHTML(ctx);
   const blocks = core.causeWrapHTML(ctx);
   const comment = core.buildComment(ctx, {});
-  assert.match(summary, /문항별 주의점 분류/);
-  assert.match(summary, /실제 오답 원인 판정은 아닙니다/);
-  assert.match(blocks, /문항에 미리 등록된 주의점/);
-  assert.match(blocks, /실제로 틀린 원인은 학생 또는 교사가 풀이를 확인한 뒤 결정/);
+  assert.match(summary, /다시 풀 때/);
+  assert.match(summary, /먼저 살펴보세요/);
+  assert.match(blocks, /풀이를 다시 보며 놓친 조건과 계산 과정을 하나씩 확인하세요/);
   assert.doesNotMatch(blocks, /조건을 놓쳐 틀린 문제|풀이 절차를 밟지 않아 틀린 문제|개념이 없어 풀지 못한 문제/);
-  assert.match(comment, /실제 오답 원인은 풀이를 다시 보며 확인/);
+  assert.match(comment, /막힌 곳을 찾고/);
 });
 
 check('저장되지 않은 현재 응시는 개인·누적 최초 기록에서 제외', () => {

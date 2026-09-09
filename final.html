@@ -103,9 +103,9 @@ td{padding:8px;border-bottom:1px solid var(--line)}
   .final1-detailed-solutions{font-size:16px}.final1-solutions-head{padding:20px 16px}.final1-solutions-title-row{display:block}.final1-solutions-head h3{font-size:21px}.final1-print-only{width:100%;margin-top:14px}.final1-jump{gap:8px}.final1-jump a{min-width:42px;min-height:42px}.final1-detailed-card{padding:22px 16px}.final1-solution-heading{gap:9px}.final1-solution-heading h4{font-size:18px}.final1-solution-block p,.final1-step p{font-size:16px}.final1-data-table-wrap{margin-right:-16px;padding-right:16px}
 }
 @media(max-width:600px){
-  #final2DetailedSolutions .final1-data-table-wrap{margin-right:0;padding-right:0;overflow:visible}
-  #final2DetailedSolutions .final1-data-table{width:100%;min-width:0;table-layout:fixed;font-size:12px}
-  #final2DetailedSolutions .final1-data-table th,#final2DetailedSolutions .final1-data-table td{padding:6px 4px;white-space:normal;overflow-wrap:anywhere;word-break:keep-all}
+  #final2DetailedSolutions .final1-data-table-wrap,#final3DetailedSolutions .final1-data-table-wrap{margin-right:0;padding-right:0;overflow:visible}
+  #final2DetailedSolutions .final1-data-table,#final3DetailedSolutions .final1-data-table{width:100%;min-width:0;table-layout:fixed;font-size:12px}
+  #final2DetailedSolutions .final1-data-table th,#final2DetailedSolutions .final1-data-table td,#final3DetailedSolutions .final1-data-table th,#final3DetailedSolutions .final1-data-table td{padding:6px 4px;white-space:normal;overflow-wrap:anywhere;word-break:keep-all}
 }
 @media print{
   .detail-section{break-inside:auto!important}.final1-detailed-solutions{margin-top:8mm;font-size:11pt}.final1-solutions-head{padding:0 0 6mm;border-width:0 0 2px}.final1-solutions-head h3{font-size:19pt}.final1-jump,.final1-print-only{display:none!important}.final1-detailed-card{break-inside:auto!important;page-break-inside:auto!important;margin-top:7mm;padding:6mm;border-color:#aebbd3}.final1-solution-heading,.final1-answer,.final1-solution-block,.final1-step,.final1-number-line,.final1-data-table-wrap{break-inside:avoid;page-break-inside:avoid}.final1-solution-block p,.final1-step p{font-size:11pt;line-height:1.72}.final1-data-table-wrap{overflow:visible}.final1-data-table{min-width:0;font-size:9.5pt}.final1-number-line-scroll{overflow:visible}.final1-number-line svg{min-width:0}.final1-watermark span{color:rgba(36,86,196,.07)}.final1-print-watermark{display:block;position:fixed;left:12%;right:12%;top:48%;z-index:3;transform:rotate(-28deg);color:rgba(36,86,196,.055);font-size:26pt;font-weight:900;text-align:center;pointer-events:none}.final1-card-content,.final1-solutions-head{position:relative;z-index:1}
@@ -464,8 +464,50 @@ td.weak-cell{white-space:nowrap}
   #final2DetailedSolutions #final2-solution-27 .final1-step:nth-child(4)::before{content:'27번 풀이 계속'}
   #final2DetailedSolutions #final2-solution-28 .final1-steps::before{content:'28번 풀이 계속'}
 }
+/* Final 3 reviewed-front-half print layout; pending Q16-Q30 stay off paper. */
+@page final3-solutions {size:A4 portrait;margin:14mm}
+@media print {
+  .report-detailed-section:has(#final3DetailedSolutions){padding:0!important}
+  #final3DetailedSolutions{page:final3-solutions}
+  #final3DetailedSolutions .is-pending{display:none!important}
+  #final3DetailedSolutions .final1-solutions-head{break-after:avoid;padding-bottom:3mm}
+  #final3DetailedSolutions .final1-solutions-head h3{font-size:15pt}
+  #final3DetailedSolutions .final1-solutions-head p{font-size:9.5pt}
+  #final3DetailedSolutions .is-ready{break-before:page;page-break-before:always;break-inside:avoid!important;page-break-inside:avoid!important;margin:0;padding:4mm;overflow:visible}
+  #final3DetailedSolutions .is-ready:first-of-type{break-before:auto;page-break-before:auto;margin-top:3mm}
+  #final3DetailedSolutions .final1-solution-heading{padding-bottom:2mm}
+  #final3DetailedSolutions .final1-solution-heading h4{font-size:12pt}
+  #final3DetailedSolutions .final1-no{min-width:0;min-height:0;padding:1mm 2mm;font-size:10pt}
+  #final3DetailedSolutions .final1-status{font-size:8pt}
+  #final3DetailedSolutions .final1-answer{margin:3mm 0;padding:2mm 3mm;font-size:10pt}
+  #final3DetailedSolutions .final1-solution-block{margin-top:2mm}
+  #final3DetailedSolutions .final1-solution-block h5,#final3DetailedSolutions .final1-step h5{font-size:10pt;margin-bottom:1mm}
+  #final3DetailedSolutions .final1-solution-block p,#final3DetailedSolutions .final1-step p{font-size:9.5pt;line-height:1.45}
+  #final3DetailedSolutions .final1-steps{margin-top:3mm}
+  #final3DetailedSolutions .final1-step{padding:1.5mm 0}
+  #final3DetailedSolutions .final1-step-index{min-width:5mm;height:5mm;font-size:8pt}
+  #final3DetailedSolutions .final1-check,#final3DetailedSolutions .final1-caution{padding:2mm 3mm}
+  #final3DetailedSolutions .final1-data-table-wrap{margin-top:2mm}
+  #final3DetailedSolutions .final1-data-table th,#final3DetailedSolutions .final1-data-table td{padding:1mm 2mm;font-size:9.5pt;line-height:1.3}
+  #final3DetailedSolutions .final1-data-table caption{font-size:9.5pt;padding-bottom:1mm}
+  #final3DetailedSolutions .gfield-final3-solution-diagram{max-width:170mm!important;break-inside:avoid!important;page-break-inside:avoid!important}
+  #final3DetailedSolutions .gfield-final3-solution-diagram--q6{max-width:135mm!important}
+  #final3DetailedSolutions #final3-solution-1,#final3DetailedSolutions #final3-solution-2,#final3DetailedSolutions #final3-solution-3,#final3DetailedSolutions #final3-solution-4,#final3DetailedSolutions #final3-solution-6,#final3DetailedSolutions #final3-solution-7,#final3DetailedSolutions #final3-solution-8,#final3DetailedSolutions #final3-solution-12,#final3DetailedSolutions #final3-solution-13{break-inside:auto!important;page-break-inside:auto!important}
+  #final3DetailedSolutions #final3-solution-1 .final1-steps,#final3DetailedSolutions #final3-solution-3 .final1-steps,#final3DetailedSolutions #final3-solution-4 .final1-steps,#final3DetailedSolutions #final3-solution-6 .final1-steps,#final3DetailedSolutions #final3-solution-7 .final1-steps,#final3DetailedSolutions #final3-solution-8 .final1-steps,#final3DetailedSolutions #final3-solution-13 .final1-steps,#final3DetailedSolutions #final3-solution-2 .final1-step:nth-child(3),#final3DetailedSolutions #final3-solution-12 .final1-step:nth-child(2){break-before:page;page-break-before:always}
+  #final3DetailedSolutions #final3-solution-1 .final1-steps::before,#final3DetailedSolutions #final3-solution-3 .final1-steps::before,#final3DetailedSolutions #final3-solution-4 .final1-steps::before,#final3DetailedSolutions #final3-solution-6 .final1-steps::before,#final3DetailedSolutions #final3-solution-7 .final1-steps::before,#final3DetailedSolutions #final3-solution-8 .final1-steps::before,#final3DetailedSolutions #final3-solution-13 .final1-steps::before,#final3DetailedSolutions #final3-solution-2 .final1-step:nth-child(3)::before,#final3DetailedSolutions #final3-solution-12 .final1-step:nth-child(2)::before{display:block;margin:0 0 3mm;padding:0 0 2mm;border-bottom:1px solid #aebbd3;color:#182230;font-size:12pt;font-weight:800;line-height:1.35;break-after:avoid;page-break-after:avoid}
+  #final3DetailedSolutions #final3-solution-1 .final1-steps::before{content:'1번 풀이 계속'}
+  #final3DetailedSolutions #final3-solution-2 .final1-step:nth-child(3)::before{content:'2번 풀이 계속'}
+  #final3DetailedSolutions #final3-solution-3 .final1-steps::before{content:'3번 풀이 계속'}
+  #final3DetailedSolutions #final3-solution-4 .final1-steps::before{content:'4번 풀이 계속'}
+  #final3DetailedSolutions #final3-solution-6 .final1-steps::before{content:'6번 풀이 계속'}
+  #final3DetailedSolutions #final3-solution-7 .final1-steps::before{content:'7번 풀이 계속'}
+  #final3DetailedSolutions #final3-solution-8 .final1-steps::before{content:'8번 풀이 계속'}
+  #final3DetailedSolutions #final3-solution-12 .final1-step:nth-child(2)::before{content:'12번 풀이 계속'}
+  #final3DetailedSolutions #final3-solution-13 .final1-steps::before{content:'13번 풀이 계속'}
+}
 </style>
 <link rel="stylesheet" href="final-report-package.css">
+<link rel="stylesheet" href="final-report-print.css">
 </head>
 <body>
 <div id="app"></div>
@@ -481,13 +523,15 @@ td.weak-cell{white-space:nowrap}
   var requestedRound=p.get('round');
   var isFinal1=!isLast&&!isOriginal&&(requestedRound==null||requestedRound===''||(/^\d+$/.test(requestedRound)&&Number(requestedRound)===1));
   var isFinal2=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===2;
+  var isFinal3=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===3;
   var mockFile=isLast?'mock-data-last.js':(isOriginal?'mock-data-original.js':'mock-data-final.js');
   var files=['hs-auth.js','data.js',mockFile];
   if(!isOriginal) files.push('mock-data-original.js');
   files.push('bank/bank-registry.js');
   if(!isLast&&!isOriginal) files.push('mock-rx-data.js','final-diagnostic-comment.js','final-population.js','final-report-state.js');
   if(isFinal1) files.push('final1-detailed-data.js','final-detailed-solutions.js');
-  if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js');
+  if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js','final-report-print.js');
+  if(isFinal3) files.push('final3-solution-diagrams.js','final3-detailed-data.js','final-detailed-solutions.js');
   if(isLast) files.push(
     'mock-data-last3.js',
     'mock-data-last4.js',
@@ -511,6 +555,7 @@ td.weak-cell{white-space:nowrap}
   var params = new URLSearchParams(location.search);
   var isLast = params.get('set')==='last';
   var isOriginal = params.get('set')==='original';
+  var isFinal2 = !isLast&&!isOriginal&&Number(params.get('round')||1)===2;
   var M = isLast ? window.GFIELD_MOCK_LAST : (isOriginal ? window.GFIELD_MOCK_ORIGINAL : window.GFIELD_MOCK_FINAL);
   var finalBaseStats = {};
   if(!isLast&&!isOriginal){
@@ -947,6 +992,18 @@ td.weak-cell{white-space:nowrap}
         }
       })+'</section>';
     }
+    if(ctx.roundNum===3&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL3_RESOLVE_SOLUTION==='function'){
+      return '<section class="detail-section report-detailed-section" id="detailedAnswersSection" aria-label="검수된 상세 답안">'+window.GFIELD_FINAL1_DETAILED_RENDERER.render({
+        round:3,
+        data:window.GFIELD_FINAL3_DETAILED,
+        roundItems:ctx.items,
+        resolve:function(item){return window.GFIELD_FINAL3_RESOLVE_SOLUTION(item,{allowLocked:preview});},
+        renderDiagram:function(solution){
+          var diagrams=window.GFIELD_FINAL3_SOLUTION_DIAGRAMS;
+          return solution&&solution.diagram&&diagrams&&typeof diagrams.render==='function'?diagrams.render(solution.no):'';
+        }
+      })+'</section>';
+    }
     var solutionItems=ctx.items.filter(function(it){return it.detailedSolution===true&&it.comment;});
     var solutions=solutionItems.map(function(it){
       var paragraphs=String(it.comment).split(/\n\s*\n/).map(function(p){return '<p>'+esc(p)+'</p>';}).join('');
@@ -973,15 +1030,71 @@ td.weak-cell{white-space:nowrap}
     });
     return best;
   }
+  /* 분류 검수와 교재 연결 검수는 서로 다른 승인이다. Final2는 아래의
+     문항별 목록에서 출처·원래 유형·연결 처방이 모두 일치한 행만 사용한다. */
+  var FINAL2_REVIEWED_CURRICULUM_LINKS=Object.freeze([
+    {sourceKey:'final|2|9',area:'경우의 수',displayType:'입체도형의 최단거리',canonicalTypeId:'type-1obyr97',studentLabel:'먼저 익힐 내용',connectionKind:'prerequisite',books:{소마:[{b:'프리미어 초급 5',u:'3. 오일러 경로와 해밀턴 경로 · 82쪽'}]},points:['꼭짓점과 모서리를 구분하고, 이동 횟수와 같은 곳을 다시 지나는지 확인하기'],independentReviewStatus:'verified',releaseStatus:'eligible'},
+    {sourceKey:'final|2|16',area:'도형',displayType:'도형 채우기',canonicalTypeId:'type-03arvhe',studentLabel:'먼저 익힐 내용',connectionKind:'prerequisite',books:{소마:[{b:'프리미어 초급 5',u:'2. 단위넓이의 유래 · 63쪽'},{b:'프리미어 초급 8',u:'3. 도형의 개수 · 65쪽(교재) / 67쪽(PDF)'}]},points:['조각을 겹치거나 빈틈을 남기지 않고 채우기','돌리거나 뒤집어서 같은 모양은 한 가지로 세기'],independentReviewStatus:'verified',releaseStatus:'eligible'},
+    {sourceKey:'final|2|19',area:'식의 계산',displayType:'리그와 토너먼트',canonicalTypeId:'type-1ichp8w',studentLabel:'먼저 익힐 내용',connectionKind:'prerequisite',books:{소마:[{b:'프리미어 초급 8',u:'1. 리그와 토너먼트 · 리그전과 승패 · 교재 11쪽 / PDF 13쪽'},{b:'프리미어 초급 8',u:'1. 리그와 토너먼트 · 토너먼트와 대진표 · 교재 16쪽 / PDF 18쪽'}]},points:['리그전 경기 수를 n×(n-1)÷2로 구하기','토너먼트 경기 수를 전체 팀 수에서 남는 팀 수를 빼서 구한 뒤 두 방식을 함께 비교하기'],independentReviewStatus:'verified',releaseStatus:'eligible'},
+    {sourceKey:'final|2|25',area:'수·규칙찾기',displayType:'성냥개비 도형의 개수',canonicalTypeId:'type-0q6gg27',studentLabel:'먼저 익힐 내용',connectionKind:'prerequisite',books:{소마:[{b:'프리미어 초급 8',u:'3. 도형의 개수 · 분류하여 도형 세기 · 교재 59쪽 / PDF 61쪽'}]},points:['위쪽 띠와 아래쪽 층을 나누고, 각 부분에서 늘어나는 규칙을 따로 찾기'],independentReviewStatus:'verified',releaseStatus:'eligible'},
+    {sourceKey:'final|2|28',area:'경우의 수',displayType:'헤밀턴 경로',canonicalTypeId:'type-0ewdfoi',studentLabel:'먼저 익힐 내용',connectionKind:'prerequisite',books:{소마:[{b:'프리미어 초급 5',u:'3. 오일러 경로와 해밀턴 경로 · 한붓그리기 · 72쪽'},{b:'프리미어 초급 5',u:'3. 오일러 경로와 해밀턴 경로 · PREMIER LEVEL.02 · 90쪽'}]},points:['모든 길을 한 번씩 지나는 조건부터 확인하기','홀수 개의 길이 만나는 마을을 찾아 추가로 지나야 하는 가장 짧은 길 구하기'],independentReviewStatus:'verified',releaseStatus:'eligible'}
+  ]);
+  function reviewedFinal2CurriculumApproval(ctx,item,approvalRows){
+    if(!ctx||Number(ctx.roundNum)!==2||TAX_SET_KEY!=='final'||!item) return null;
+    var tx=taxonomyOf(ctx.roundNum,item);
+    if(!tx||tx.reviewStatus!=='confirmed'||tx.reviewRequired) return null;
+    var sourceKey=['final',2,Number(item.no)].join('|');
+    var rows=Array.isArray(approvalRows)?approvalRows:FINAL2_REVIEWED_CURRICULUM_LINKS;
+    var matches=rows.filter(function(row){
+      return row&&row.sourceKey===sourceKey&&
+        row.area===String(item.area||'')&&
+        row.displayType===String(item.type||'')&&
+        row.canonicalTypeId===String(tx.canonicalTypeId||'')&&
+        (row.connectionKind==='same-type'||row.connectionKind==='prerequisite')&&
+        row.independentReviewStatus==='verified'&&row.releaseStatus==='eligible';
+    });
+    if(matches.length!==1) return null;
+    var approved=matches[0],books=approved.books,points=approved.points;
+    var categories=['시중교재','소마','필즈더클래식','지필드'];
+    if(!approved.studentLabel||!books||typeof books!=='object'||Array.isArray(books)||!Array.isArray(points)||!points.length) return null;
+    var bookCategories=Object.keys(books);
+    if(!bookCategories.length||bookCategories.some(function(category){return categories.indexOf(category)<0;})) return null;
+    if(bookCategories.some(function(category){
+      if(!Array.isArray(books[category])||!books[category].length) return true;
+      var seen={};
+      return books[category].some(function(book){
+        if(!book||!String(book.b||'').trim()||!String(book.u||'').trim()) return true;
+        var key=String(book.b).trim()+'\n'+String(book.u).trim();
+        if(seen[key]) return true;
+        seen[key]=true;
+        return false;
+      });
+    })) return null;
+    if(points.some(function(point){return !String(point||'').trim();})) return null;
+    return approved;
+  }
+  function curriculumPrescriptionForItem(ctx,item,approvalRows){
+    if(TAX_SET_KEY!=='final'||!ctx||Number(ctx.roundNum)!==2) return prescriptionOf(item&&item.type);
+    var approved=reviewedFinal2CurriculumApproval(ctx,item,approvalRows);
+    return approved?{
+      label:approved.studentLabel,
+      connectionKind:approved.connectionKind,
+      books:approved.books,
+      pts:approved.points
+    }:null;
+  }
   function curriculumBookRows(rx){
     var categories=['시중교재','소마','필즈더클래식','지필드'];
     if(!(rx&&rx.books)) return [];
-    return categories.map(function(category){
-      var book=Array.isArray(rx.books[category])?rx.books[category][0]:null;
-      return book&&book.b&&book.u?{category:category,title:String(book.b),unit:String(book.u)}:null;
-    }).filter(Boolean);
+    return categories.reduce(function(rows,category){
+      var books=Array.isArray(rx.books[category])?rx.books[category]:[];
+      books.forEach(function(book){
+        if(book&&book.b&&book.u) rows.push({category:category,title:String(book.b),unit:String(book.u)});
+      });
+      return rows;
+    },[]);
   }
-  function curriculumBooksForItem(item){ return curriculumBookRows(prescriptionOf(item&&item.type)); }
+  function curriculumBooksForItem(ctx,item){ return curriculumBookRows(curriculumPrescriptionForItem(ctx,item)); }
   function curriculumBooksHTML(rx){
     var lines=curriculumBookRows(rx).map(function(book){
       return '<li><b>'+esc(book.category)+'</b><span>'+esc(book.title)+' · '+esc(book.unit)+'</span></li>';
@@ -991,18 +1104,21 @@ td.weak-cell{white-space:nowrap}
   function curriculumConnectionHTML(ctx){
     if(isLast||isOriginal) return '';
     var wrong=ctx.wrongList||[];
+    var lead=ctx.roundNum===2
+      ? '문항별로 검수된 교재 연결만 표시합니다. 검수 전 연결은 확인 중으로 둡니다.'
+      : '틀린 문제와 연결된 교재입니다. 같은 유형을 찾아 차근차근 연습해 보세요.';
     if(!wrong.length){
-      return '<section class="report-curriculum-section" id="curriculumConnection" aria-labelledby="curriculum-title"><h2 id="curriculum-title">오답 기준 교재 연결표</h2><div class="lead">실제 오답 유형의 키워드와 기존 교재 처방 자료를 연결합니다.</div><div class="report-empty">이번 회차는 오답이 없어 자동 권장 교재가 없습니다.</div></section>';
+      return '<section class="report-curriculum-section" id="curriculumConnection" aria-labelledby="curriculum-title"><h2 id="curriculum-title">오답 기준 교재 연결표</h2><div class="lead">'+lead+'</div><div class="report-empty">이번 회차는 오답이 없어 자동 권장 교재가 없습니다.</div></section>';
     }
     var rows=wrong.map(function(item){
-      var tx=taxonomyOf(ctx.roundNum,item),candidate=!!tx.reviewRequired,rx=prescriptionOf(item.type);
+      var tx=taxonomyOf(ctx.roundNum,item),candidate=!!tx.reviewRequired,rx=curriculumPrescriptionForItem(ctx,item);
       var displayType=candidate?'분류 확인 중':(tx.detailType||tx.displayType||item.type);
-      var status=rx?'함께 공부할 교재':'교재 연결 확인 중';
+      var status=rx?(rx.connectionKind==='prerequisite'?'먼저 공부할 교재':'같은 유형을 연습할 교재'):'교재 연결 확인 중';
       if(candidate) status+=' · 유형 분류 확인 중';
       var points=rx&&Array.isArray(rx.pts)&&rx.pts.length?'<ul class="curriculum-points">'+rx.pts.map(function(point){return '<li>'+esc(point)+'</li>';}).join('')+'</ul>':'<span class="curriculum-pending">학습 포인트 확인 중</span>';
       return '<tr data-curriculum-no="'+item.no+'"><td class="curriculum-no">'+item.no+'번</td><td><b>'+esc(displayType)+'</b><small>'+esc((tx.area||item.area||'')+(tx.subarea&&!candidate?' › '+tx.subarea:''))+'</small><em>'+esc(status)+'</em></td><td>'+curriculumBooksHTML(rx)+'</td><td>'+points+'</td></tr>';
     }).join('');
-    return '<section class="report-curriculum-section" id="curriculumConnection" aria-labelledby="curriculum-title"><h2 id="curriculum-title">오답 기준 교재 연결표</h2><div class="lead">틀린 문제와 연결된 교재입니다. 같은 유형을 찾아 차근차근 연습해 보세요.</div><div class="report-table-scroll"><table class="curriculum-table"><thead><tr><th scope="col">오답</th><th scope="col">진단 유형</th><th scope="col">권장 학습 위치</th><th scope="col">학습 포인트</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>';
+    return '<section class="report-curriculum-section" id="curriculumConnection" aria-labelledby="curriculum-title"><h2 id="curriculum-title">오답 기준 교재 연결표</h2><div class="lead">'+lead+'</div><div class="report-table-scroll"><table class="curriculum-table"><thead><tr><th scope="col">오답</th><th scope="col">진단 유형</th><th scope="col">권장 학습 위치</th><th scope="col">학습 포인트</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>';
   }
   function reportScreenHeaderHTML(ctx){
     var comparison=ctx.populationVerified&&Number.isFinite(ctx.pct);
@@ -1090,7 +1206,7 @@ td.weak-cell{white-space:nowrap}
         var diagnostic=window.GFIELD_DIAGNOSTIC_COMMENT.render(ctx,{escape:esc,taxonomy:taxonomyOf,points:function(no){return BP(no).pts;},verifyPopulation:fixedRatesVerified,percentile:percentileFor,history:ctx.personalHistory||[],books:function(no){
           var item=ctx.items.filter(function(row){return Number(row.no)===Number(no);})[0];
           if(!item||taxonomyOf(ctx.roundNum,item).reviewRequired) return [];
-          return curriculumBooksForItem(item).map(function(book){return {title:book.title,unit:book.unit};});
+          return curriculumBooksForItem(ctx,item).map(function(book){return {title:book.title,unit:book.unit};});
         }});
         if(typeof diagnostic==='string'&&diagnostic.trim()) return roundTeacherCommentHTML(ctx)+diagnostic+weakRepeatCommentHTML(ctx,weakMap);
       }catch(e){}
@@ -1107,12 +1223,12 @@ td.weak-cell{white-space:nowrap}
       var singleText=singles.length?(' 한 문항만 출제된 '+singles.map(function(x){return '<b>'+esc(x.k)+'</b>';}).join(', ')+'은 약점으로 단정하지 않고 추가 확인이 필요합니다.') : '';
       var candidateText=candidates.length?(' 자동 분류 후보 '+candidates.map(function(x){return '<b>'+esc(x.k)+'</b>';}).join(', ')+'은 검수 전이라 약점 판정에 사용하지 않았습니다.') : '';
       var evidenceNote=ctx.R&&Number.isFinite(Number(ctx.R.reportedAverage))
-        ? '제공된 전체 평균은 <b>'+Number(ctx.R.reportedAverage)+'점</b>입니다. 문항별 정답률·전체 점수 분포·석차 자료는 없으므로 임의 추정하지 않았습니다.'
-        : '전체 평균·문항 정답률·석차 자료는 검증 전이라 진단에 사용하지 않았습니다.';
+        ? '전체 평균은 <b>'+Number(ctx.R.reportedAverage)+'점</b>입니다. '+(ctx.ratesVerified?'문항별 정답률도 이번 진단에 반영했습니다. ':'')+'전체 점수 분포를 확인할 수 없어 석차 백분율은 표시하지 않습니다.'
+        : (ctx.ratesVerified?'문항별 정답률은 이번 진단에 반영했습니다. 전체 점수 분포를 확인할 수 없어 석차 백분율은 표시하지 않습니다.':'현재 확인할 수 있는 개인 답안을 중심으로 학습 방향을 안내합니다.');
       return roundNote+'<p><b>'+esc(ctx.name)+'</b> 학생은 이번 시험에서 <b>'+ctx.score+'점</b>, 30문항 중 <b>'+ctx.ncorr+'문항</b>을 맞혔습니다. '+evidenceNote+'</p>'+
         '<p>개인 답안 기준으로 <b>'+weak.k+'</b> 수행률이 '+weak.perf.toFixed(0)+'%로 가장 낮고, 배점대에서는 <b>'+weakP.k+'점 문항</b> 수행률이 '+weakP.perf.toFixed(0)+'%로 가장 낮습니다.</p>'+
         '<p>확정 소영역 기준 우선순위는 '+subText+'입니다.'+singleText+candidateText+'</p>'+
-        '<p>문항별 복습 체크 항목은 조건·지문 '+nc+'문항, 풀이 절차 '+npr+'문항, 개념 확인 '+ncp+'문항입니다. 실제 오답 원인은 풀이를 다시 보며 확인하고, 정답만 외우지 말고 같은 풀이 구조의 유사 문제로 다시 확인하세요.</p>'+
+        '<p>문항별 복습 체크 항목은 조건·지문 '+nc+'문항, 풀이 절차 '+npr+'문항, 개념 확인 '+ncp+'문항입니다. 틀린 문제는 풀이를 다시 보며 막힌 곳을 찾고, 정답만 외우지 말고 같은 풀이 구조의 유사 문제로 다시 확인하세요.</p>'+
         weakRepeatCommentHTML(ctx,weakMap);
     }
     var crowdLine = (weak.crowd<=weak.perf+8) ? "다른 학생들도 어려워한 영역" : "본인이 특히 약한 영역";
@@ -1136,7 +1252,7 @@ td.weak-cell{white-space:nowrap}
   }
   function causeSumHTML(ctx){
     var nw=ctx.wrongList.length, nc=ctx.g["조건"].length, np=ctx.g["절차"].length, nk=ctx.g["개념"].length;
-    return '오답 <b>'+nw+'문항</b>의 복습 체크 항목은 조건·지문 '+nc+'문항, 풀이 절차 '+np+'문항, 개념 확인 '+nk+'문항입니다. 이는 문항별 주의점 분류이며 학생의 실제 오답 원인 판정은 아닙니다.';
+    return '오답 <b>'+nw+'문항</b>을 다시 풀 때 조건·지문 '+nc+'문항, 풀이 절차 '+np+'문항, 개념 '+nk+'문항을 먼저 살펴보세요.';
   }
   function repeatLabel(rounds){
     var prev=rounds.slice(0,-1), cnt=rounds.length;
@@ -1412,6 +1528,9 @@ td.weak-cell{white-space:nowrap}
     markWeak:markWeak, unmarkWeak:unmarkWeak, isWeakMarked:isWeakMarked, weakListRows:weakListRows,
     originalWeakStatus:originalWeakStatus, repeatedOriginalSubareas:repeatedOriginalSubareas,
     detailedAnswersSectionHTML:detailedAnswersSectionHTML,
+    reviewedFinal2CurriculumApproval:reviewedFinal2CurriculumApproval,
+    curriculumPrescriptionForItem:curriculumPrescriptionForItem,
+    curriculumConnectionHTML:curriculumConnectionHTML,
     originalFirstAttempts:originalFirstAttempts };
 
   /* ===================== Supabase ===================== */
@@ -2226,10 +2345,16 @@ td.weak-cell{white-space:nowrap}
       var reportHeader=app.querySelector('.report-screen-header');
       if(reportHeader) reportHeader.appendChild(printBtn);
     }
+    if(isFinal2&&window.GFIELD_FINAL_REPORT_PRINT&&typeof window.GFIELD_FINAL_REPORT_PRINT.attach==='function'){
+      window.GFIELD_FINAL_REPORT_PRINT.attach({
+        button:printBtn,
+        source:app.querySelector('.final-report-package')
+      });
+    }
     wireWeakToggles(ctx);
     wireWrongPractice(ctx);
     if(isStandardFinal&&window.GFIELD_FINAL_REPORT_STATE)window.GFIELD_FINAL_REPORT_STATE.wire(app);
-    if((roundNum===1||roundNum===2)&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.wire==='function') window.GFIELD_FINAL1_DETAILED_RENDERER.wire();
+    if((roundNum===1||roundNum===2||roundNum===3)&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.wire==='function') window.GFIELD_FINAL1_DETAILED_RENDERER.wire();
   }
 
   /* ===================== boot ===================== */

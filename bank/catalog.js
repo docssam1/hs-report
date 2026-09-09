@@ -21,7 +21,7 @@
   function queryMatches(item,query){
     var cleanQuery=normalized(query);
     if(!cleanQuery)return true;
-    var fields=[item.area,item.subarea,item.displayType].concat(item.searchEvidence||[]);
+    var fields=[item.area,item.subarea,item.displayType,item.detailType,item.detailTypeKey].concat(item.searchEvidence||[]);
     var haystack=normalized(fields.join(' '));
     if(haystack.replace(/ /g,'').indexOf(cleanQuery.replace(/ /g,''))>=0)return true;
     var tokens=unique(cleanQuery.split(/\s+/).filter(function(token){return token.length>=2&&!SEARCH_STOP[token]}));
@@ -59,15 +59,20 @@
     originalCatalog.forEach(function(entry){originalById[entry.id]=entry});
     var map={};
     items.forEach(function(item){
-      var group=map[item.objectiveTypeId];
+      var sourceReviewed=item.reviewStatus==='confirmed'&&item.typeFamilyId==='reviewed-source-override';
+      var groupKey=sourceReviewed?item.canonicalTypeId:item.objectiveTypeId;
+      var group=map[groupKey];
       if(!group){
-        group=map[item.objectiveTypeId]={
-          id:item.objectiveTypeId,area:item.area,subarea:item.subarea,displayType:item.displayType,
+        group=map[groupKey]={
+          id:groupKey,area:item.area,subarea:item.subarea,displayType:item.displayType,
+          detailTypes:[],detailTypeKeys:[],sourceReviewed:sourceReviewed,
           sourceCounts:{},pointCounts:{},difficultyCounts:{},canonicalTypeIds:[],
           rates:[],points:[],unmeasuredRateCount:0,confirmedCount:0,candidateCount:0,itemCount:0,reviewBases:[],
           directGenerator:null,directGeneratorRef:null,fixedRefs:[]
         };
       }
+      if(group.detailTypes.indexOf(item.detailType)<0)group.detailTypes.push(item.detailType);
+      if(item.detailTypeKey&&group.detailTypeKeys.indexOf(item.detailTypeKey)<0)group.detailTypeKeys.push(item.detailTypeKey);
       if(group.canonicalTypeIds.indexOf(item.canonicalTypeId)<0)group.canonicalTypeIds.push(item.canonicalTypeId);
       group.sourceCounts[item.sourceRef.set]=(group.sourceCounts[item.sourceRef.set]||0)+1;
       group.pointCounts[item.pointBand]=(group.pointCounts[item.pointBand]||0)+1;
@@ -97,6 +102,7 @@
       group.practiceVerified=!!(group.generator&&group.generator.status==='verified-practice'&&group.generator.practiceReleaseReady===true);
       group.sourceLinkedReview=!!(group.generator&&group.generator.status==='source-linked-review');
       group.sourcePending=!!(original&&original.sourceFaithfulReleaseReady!==true);
+      group.studentDisplayName=group.sourceReviewed&&group.detailTypes.length===1?group.detailTypes[0]:group.displayType;
       if(group.rates.length){
         group.benchmarkRate=group.rates.reduce(function(sum,value){return sum+value},0)/group.rates.length;
         group.bankDifficulty=R.bankDifficulty(group.benchmarkRate,null);
@@ -104,7 +110,7 @@
         group.benchmarkRate=null;
         group.bankDifficulty=R.bankDifficulty(null,Math.max.apply(null,group.points));
       }
-      group.searchText=[group.area,group.subarea,group.displayType].join(' ').toLocaleLowerCase('ko-KR');
+      group.searchText=[group.area,group.subarea,group.displayType,group.studentDisplayName].concat(group.detailTypeKeys).join(' ').toLocaleLowerCase('ko-KR');
       return group;
     });
   }
@@ -146,8 +152,10 @@
         '&points='+encodeURIComponent(sourceRef.points)+'&difficulty='+encodeURIComponent(sourceDifficulty.label);
       generator='<a class="badge practice" href="index.html?'+params+'">이 유형 유사문제 검토하기</a>';
     }
+    var originalType=group.sourceReviewed&&group.studentDisplayName!==group.displayType
+      ?'<div class="raw-single">기존 유형명 · '+esc(group.displayType)+'</div>':'';
     return '<article class="type-card" data-type-id="'+esc(group.id)+'">'+
-      '<h4>'+esc(group.displayType)+'</h4><div class="sources" aria-label="출처 문항 수">'+sourceBadges(group)+'</div>'+
+      '<h4>'+esc(group.studentDisplayName)+'</h4>'+originalType+'<div class="sources" aria-label="출처 문항 수">'+sourceBadges(group)+'</div>'+
       '<div class="badges" aria-label="난이도 근거">'+evidenceBadges(group)+'</div>'+(generator?'<div class="development">'+generator+'</div>':'')+'</article>';
   }
 
@@ -219,7 +227,7 @@
   function renderResults(unified,originalCatalog){
     var items=selectedItems(unified);
     var groups=developmentFilter(aggregate(items,originalCatalog));
-    groups.sort(function(a,b){return AREA_ORDER.indexOf(a.area)-AREA_ORDER.indexOf(b.area)||a.subarea.localeCompare(b.subarea,'ko')||a.displayType.localeCompare(b.displayType,'ko')});
+    groups.sort(function(a,b){return AREA_ORDER.indexOf(a.area)-AREA_ORDER.indexOf(b.area)||a.subarea.localeCompare(b.subarea,'ko')||a.studentDisplayName.localeCompare(b.studentDisplayName,'ko')});
     var areas={};
     groups.forEach(function(group){
       if(!areas[group.area])areas[group.area]={};

@@ -32,33 +32,68 @@ function loadModels(){
 
 function registryWithMemoryFixture(overrides,additionalSubareas=[]){
   const source=fs.readFileSync(REGISTRY_PATH,'utf8');
-  const overrideMarker='var REVIEWED_TAXONOMY_OVERRIDES = Object.freeze([]);';
-  const overrideReplacement='var REVIEWED_TAXONOMY_OVERRIDES = Object.freeze('+JSON.stringify(overrides)+');';
-  const subareaMarker='var REVIEWED_ADDITIONAL_SUBAREAS = Object.freeze([]);';
-  const subareaReplacement='var REVIEWED_ADDITIONAL_SUBAREAS = Object.freeze('+JSON.stringify(additionalSubareas)+');';
-  assert.ok(source.includes(overrideMarker),'empty reviewed-taxonomy list marker exists');
-  assert.ok(source.includes(subareaMarker),'empty reviewed-subarea list marker exists');
+  const overridePattern=/\/\* reviewed-taxonomy-overrides:start \*\/[\s\S]*?\/\* reviewed-taxonomy-overrides:end \*\//;
+  const subareaPattern=/\/\* reviewed-additional-subareas:start \*\/[\s\S]*?\/\* reviewed-additional-subareas:end \*\//;
+  assert.equal((source.match(overridePattern)||[]).length,1,'one reviewed-taxonomy projection block exists');
+  assert.equal((source.match(subareaPattern)||[]).length,1,'one reviewed-subarea projection block exists');
+  const overrideReplacement='/* reviewed-taxonomy-overrides:start */\n  var REVIEWED_TAXONOMY_OVERRIDES = Object.freeze('+JSON.stringify(overrides)+');\n  /* reviewed-taxonomy-overrides:end */';
+  const subareaReplacement='/* reviewed-additional-subareas:start */\n  var REVIEWED_ADDITIONAL_SUBAREAS = Object.freeze('+JSON.stringify(additionalSubareas)+');\n  /* reviewed-additional-subareas:end */';
   const box={module:{exports:{}},exports:{}};
   box.globalThis=box;
   vm.createContext(box);
-  vm.runInContext(source.replace(overrideMarker,overrideReplacement).replace(subareaMarker,subareaReplacement),box,{filename:'bank-registry.fixture.js',timeout:3000});
+  vm.runInContext(source.replace(overridePattern,overrideReplacement).replace(subareaPattern,subareaReplacement),box,{filename:'bank-registry.fixture.js',timeout:3000});
   return box.module.exports;
 }
 
 const models=loadModels();
-const baseline=registry.buildUnifiedCatalog(models);
-const final2=baseline.items.filter(item=>item.sourceRef.set==='final'&&item.sourceRef.round===2);
+const emptyRegistry=registryWithMemoryFixture([],[]);
+const baseline=plain(emptyRegistry.buildUnifiedCatalog(models));
+const published=plain(registry.buildUnifiedCatalog(models));
+const final2Before=baseline.items.filter(item=>item.sourceRef.set==='final'&&item.sourceRef.round===2);
+const final2=published.items.filter(item=>item.sourceRef.set==='final'&&item.sourceRef.round===2);
 
-assert.deepEqual(registry.reviewedTaxonomyOverrides,[],'no real taxonomy approval is published yet');
-assert.deepEqual(registry.reviewedAdditionalSubareas,[],'no reviewed additional subarea is published yet');
 assert.equal(hash(baseline),EMPTY_CATALOG_SHA256,'empty reviewed list leaves the complete current catalogue byte-equivalent');
 assert.equal(baseline.summary.sourceQuestions,840);
 assert.equal(baseline.summary.confirmedItems,120);
 assert.equal(baseline.summary.candidateItems,720);
 assert.equal(final2.length,30);
 assert.equal(hash(baseline.items.filter(item=>!(item.sourceRef.set==='final'&&item.sourceRef.round===2))),NON_FINAL2_ITEMS_SHA256,'the other 810 source items have an exact preservation baseline');
-assert.ok(final2.every(item=>item.reviewStatus==='candidate'&&item.reviewRequired===true),'all Final2 taxonomy remains candidate while approval list is empty');
-assert.ok(final2.every(item=>item.detailType===item.displayType),'empty list preserves every Final2 display/detail type');
+assert.ok(final2Before.every(item=>item.reviewStatus==='candidate'&&item.reviewRequired===true),'empty fixture keeps every Final2 taxonomy candidate');
+assert.ok(final2Before.every(item=>item.detailType===item.displayType),'empty fixture preserves every Final2 display/detail type');
+
+assert.equal(registry.reviewedTaxonomyOverrides.length,30,'thirty independently reviewed Final2 source overrides are published');
+assert.deepEqual(registry.reviewedTaxonomyOverrides.map(row=>row.sourceKey),Array.from({length:30},(_,index)=>`final|2|${index+1}`),'only exact Final2 Q1-Q30 source keys are approved');
+assert.equal(registry.reviewedAdditionalSubareas.length,6,'six independently reviewed area/subarea pairs are published');
+assert.deepEqual(registry.reviewedAdditionalSubareas.map(row=>[row.area,row.subarea]),[
+  ['식의 계산','간격·자르기'],['식의 계산','포함과 배제'],['식의 계산','경기 수 계산'],
+  ['수·규칙찾기','운반과 소비'],['수·규칙찾기','나이 계산'],['경우의 수','모든 도로 지나기']
+]);
+assert.equal(published.summary.sourceQuestions,840);
+assert.equal(published.summary.confirmedItems,150);
+assert.equal(published.summary.candidateItems,690);
+assert.ok(final2.every(item=>item.reviewStatus==='confirmed'&&item.reviewRequired===false),'all and only reviewed Final2 taxonomy is confirmed');
+assert.equal(hash(published.items.filter(item=>!(item.sourceRef.set==='final'&&item.sourceRef.round===2))),NON_FINAL2_ITEMS_SHA256,'the published projection leaves every other 810 source item byte-equivalent');
+const allowedFinal2Changes=['subarea','subareaId','detailType','taxonomyPath','typeFamilyId','typeFamilyLabel','canonicalTypeId','reviewStatus','reviewRequired','reviewBasis','reviewReasons'];
+final2.forEach((item,index)=>{
+  const before=final2Before[index];
+  assert.equal(item.sourceKey,before.sourceKey);
+  const restored=plain(item);
+  delete restored.detailTypeKey;
+  allowedFinal2Changes.forEach(key=>{restored[key]=plain(before[key]);});
+  assert.deepEqual(restored,before,`${item.sourceKey} changes only approved taxonomy projection fields`);
+  assert.equal(item.canonicalTypeId,registry.stableId(registry.signature(item.area,item.subarea,item.detailTypeKey)),`${item.sourceKey} stable id uses the reviewed key, not the learner label`);
+});
+assert.deepEqual({
+  q4:[final2[3].subarea,final2[3].detailType],
+  q15:[final2[14].detailTypeKey,final2[14].detailType],
+  q23:[final2[22].subarea,final2[22].detailType],
+  q28:[final2[27].subarea,final2[27].detailType]
+},{
+  q4:['관찰과 분류','중복 선택 가능한 두 화폐의 서로 다른 합 분류하기'],
+  q15:['tuple-sequence-cumulative-prior-link-sum-response','여러 수 묶음의 누적·앞 묶음 연결 규칙으로 묶음의 합 구하기'],
+  q23:['운반과 소비','되돌아오는 도우미의 소비량까지 포함해 사막 횡단 최소 인원 구하기'],
+  q28:['모든 도로 지나기','모든 도로를 지나 출발점으로 돌아오는 가장 짧은 길 찾기']
+});
 
 assert.deepEqual(registry.reviewedTaxonomyOverrideContract.requiredStatuses,{
   workStatus:'complete',evidenceStatus:'verified',releaseStatus:'eligible'
@@ -236,10 +271,11 @@ rejected('already confirmed source taxonomy is not overwritten',[{
   canonicalTypeId:registry.stableId(registry.signature(confirmed.area,confirmed.subarea,'two-digit-condition-count'))
 }]);
 
+const publishedCatalogHash=hash(published);
 registry.reviewedTaxonomyOverrides.push(approved);
 registry.reviewedAdditionalSubareas.push(reviewedNewSubarea);
-assert.equal(hash(registry.buildUnifiedCatalog(models)),EMPTY_CATALOG_SHA256,'the exported reviewed list is a clone, not a runtime mutation surface');
+assert.equal(hash(registry.buildUnifiedCatalog(models)),publishedCatalogHash,'the exported reviewed list is a clone, not a runtime mutation surface');
 assert.equal(hash(baseline),EMPTY_CATALOG_SHA256,'fixture checks never mutate the baseline catalogue');
 assert.doesNotMatch(fs.readFileSync(REGISTRY_PATH,'utf8'),/\.private-work|sourceMemoryQuery|sha256AtAuthoring/i,'public registry exposes no private locator or source fingerprint');
 
-console.log('PASS Final2 taxonomy integration shell: empty lists preserve 840 items and the other 810; stable key/label overrides and reviewed new subareas work; mismatch, unapproved, duplicate, unknown and cross-round cases fail closed');
+console.log('PASS Final2 taxonomy integration: reviewed Final2 30 confirmed with stable key/learner label separation and six source-bound subareas; empty baseline and other 810 preserved; mismatch, unapproved, duplicate, unknown and cross-round cases fail closed');

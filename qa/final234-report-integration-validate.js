@@ -8,6 +8,7 @@ const baselines=Object.fromEntries([1,2,3,4].map(n=>['final'+n,{schemaVersion:1,
 const ox='O'.repeat(20)+'X'.repeat(10),score=core.scoreOf(ox);
 const PRIOR_FINAL2_NOS=[1,3,4,6,7,8,10,11,12,15,18,19,20,21,22,23,24,25,26,27,28,29,30];
 const FINAL2_DIAGRAM_SVG_COUNTS={2:1,5:1,9:9,12:1,13:2,16:4,28:1};
+const FINAL3_DIAGRAM_SVG_COUNTS={1:1,3:4,4:2,6:5,7:3,8:2,13:1};
 const records=[1,2,3,4].map(n=>({student,round:'final'+n,ox,score,wrong:10,source:'admin'}));
 records.push({student,round:'last1',ox,score,wrong:10,source:'admin'});
 records.push({student,round:'final2@2',ox:'O'.repeat(30),score:100,wrong:0,source:'practice-admin'});
@@ -57,6 +58,64 @@ const server=http.createServer((req,res)=>{
    assert.equal(await page.locator('#detailWrap .bar').count(),30,'all item answer rates visible');
    for(const width of [1280,390]){await page.setViewportSize({width,height:900});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'no horizontal overflow');}
    if(n===2){
+    assert.equal(await page.locator('#curriculumConnection tbody tr').count(),10,'Final2 실제 오답 10문항의 교재 연결 상태 표시');
+    assert.equal(await page.locator('#curriculumConnection .curriculum-books li').count(),3,'검수된 25번 한 권과 28번 두 권의 연결을 모두 표시');
+    assert.equal(await page.locator('#curriculumConnection .curriculum-points li').count(),3,'검수된 25번과 28번의 학습 포인트를 모두 표시');
+    assert.equal(await page.locator('#curriculumConnection td:nth-child(3) .curriculum-pending').count(),8,'나머지 Final2 오답 교재는 연결 확인 중으로 표시');
+    assert.equal(await page.locator('#curriculumConnection td:nth-child(4) .curriculum-pending').count(),8,'나머지 Final2 오답 학습 포인트는 확인 중으로 표시');
+    assert.equal(await page.locator('#curriculumConnection tr[data-curriculum-no="25"] .curriculum-books li').count(),1,'25번 승인 연결 한 건');
+    assert.equal(await page.locator('#curriculumConnection tr[data-curriculum-no="28"] .curriculum-books li').count(),2,'28번 승인 연결 두 건');
+    const publicCurriculum=await page.evaluate(()=>[9,16,19,25,28].map(no=>{
+     const item=GF_TEST.M.rounds['2'].items.find(row=>Number(row.no)===no);
+     const rx=GF_TEST.curriculumPrescriptionForItem({roundNum:2},item);
+     return {no,label:rx&&rx.label,kind:rx&&rx.connectionKind,books:rx&&Object.values(rx.books).flat().map(book=>book.b+' · '+book.u),points:rx&&rx.pts};
+    }));
+    assert.deepEqual(publicCurriculum.map(row=>[row.no,row.label,row.kind,row.books.length,row.points.length]),[
+     [9,'먼저 익힐 내용','prerequisite',1,1],
+     [16,'먼저 익힐 내용','prerequisite',2,2],
+     [19,'먼저 익힐 내용','prerequisite',2,2],
+     [25,'먼저 익힐 내용','prerequisite',1,1],
+     [28,'먼저 익힐 내용','prerequisite',2,2]
+    ],'독립 검수된 Final2 다섯 문항의 선행 교재 연결과 복수 학습 위치를 보존');
+    const curriculumGate=await page.evaluate(()=>{
+     const item=GF_TEST.M.rounds['2'].items.find(row=>Number(row.no)===1);
+     const tx=BANK_TYPE_REGISTRY.buildUnifiedCatalog({final:GF_TEST.M}).items.find(row=>row.sourceKey==='final|2|1');
+     const approved={
+      sourceKey:'final|2|1',area:item.area,displayType:item.type,
+      canonicalTypeId:tx.canonicalTypeId,studentLabel:'두 점수 가정법 복습',
+      connectionKind:'same-type',books:{지필드:[{b:'검수 교재',u:'검수 단원'}]},
+      points:['두 점수 차이를 한 문제당 점수 차이로 나누기'],
+      independentReviewStatus:'verified',releaseStatus:'eligible'
+     };
+     const label=rows=>{
+      const rx=GF_TEST.curriculumPrescriptionForItem({roundNum:2},item,rows);
+      return rx&&rx.label||null;
+     };
+     const final1Item=GF_TEST.M.rounds['1'].items.find(row=>Number(row.no)===3);
+     const final1Rx=GF_TEST.curriculumPrescriptionForItem({roundNum:1},final1Item);
+     const isolated=GF_TEST.curriculumPrescriptionForItem({roundNum:2},item,[approved]);
+     return {
+      publicLabel:label(undefined),approvedLabel:label([approved]),
+      wrongSource:label([{...approved,sourceKey:'final|2|2'}]),
+      wrongRawType:label([{...approved,displayType:'다른 유형'}]),
+      wrongCanonical:label([{...approved,canonicalTypeId:'type-other'}]),
+      wrongKind:label([{...approved,connectionKind:'keyword-match'}]),
+      emptyPoints:label([{...approved,points:[]}]),
+      duplicateBook:label([{...approved,books:{지필드:[approved.books.지필드[0],approved.books.지필드[0]]}}]),
+      locked:label([{...approved,releaseStatus:'locked'}]),
+      duplicate:label([approved,approved]),
+      approvedBook:isolated&&isolated.books.지필드[0].b,
+      approvedPoint:isolated&&isolated.pts[0],
+      final1Label:final1Rx&&final1Rx.label||null
+     };
+    });
+    assert.deepEqual(curriculumGate,{
+     publicLabel:null,approvedLabel:'두 점수 가정법 복습',wrongSource:null,
+     wrongRawType:null,wrongCanonical:null,wrongKind:null,emptyPoints:null,
+     duplicateBook:null,locked:null,duplicate:null,
+     approvedBook:'검수 교재',approvedPoint:'두 점수 차이를 한 문제당 점수 차이로 나누기',
+     final1Label:'달력·요일(시계)'
+    },'Final2 문항별 승인 payload만 허용하고 Final1 키워드 처방은 보존');
     const leadBoundary=await page.evaluate(()=>{
      const makeItems=count=>Array.from({length:30},(_,index)=>({
       no:index+1,
@@ -134,6 +193,39 @@ const server=http.createServer((req,res)=>{
     await page.evaluate(()=>window.dispatchEvent(new Event('afterprint')));
     await page.emulateMedia({media:'screen'});
     assert.equal(await page.evaluate(()=>document.body.classList.contains('print-final1-solutions')),false,'print mode cleaned up');
+   }
+   if(n===3){
+    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').count(),15,'reviewed Final3 front half is public without a preview flag');
+    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').count(),15,'unreviewed Q16-Q30 remain pending on the public report');
+    await page.goto(base+'/final.html?round=3&go=report&preview=1&name='+encodeURIComponent(student));
+    await page.locator('.final-report-package').waitFor();
+    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').count(),15,'local preview uses the same reviewed front half');
+    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').count(),15,'unreviewed Q16-Q30 remain pending on screen');
+    assert.match(await page.locator('#final3DetailedSolutions .final1-solutions-head').innerText(),/15문항 \/ 전체 30문항/);
+    assert.equal(await page.locator('#final3DetailedSolutions .final1-data-table').count(),11,'all reviewed Final3 teaching tables render');
+    for(const [no,svgCount] of Object.entries(FINAL3_DIAGRAM_SVG_COUNTS)){
+     const figure=page.locator('#final3-solution-'+no+' .gfield-final3-solution-diagram');
+     assert.equal(await figure.count(),1,'Q'+no+' has one source-bound diagram wrapper');
+     assert.equal(await figure.locator('svg').count(),svgCount,'Q'+no+' has its exact SVG set');
+    }
+    const shownAnswers=await page.locator('#final3DetailedSolutions .is-ready .final1-answer').allTextContents();
+    assert.match(shownAnswers[0],/바나나 144개, 사과 233개/);
+    assert.match(shownAnswers[2],/검은 타일 188개/);
+    assert.match(shownAnswers[6],/동그라미 1개/);
+    assert.match(shownAnswers[13],/관호 35살, 주연 21살/);
+    await page.setViewportSize({width:390,height:900});
+    const mobile=await page.locator('#final3DetailedSolutions').evaluate(node=>({
+     fits:node.scrollWidth<=node.clientWidth+1,
+     cards:[...node.querySelectorAll('.is-ready')].every(card=>card.scrollWidth<=card.clientWidth+1),
+     diagrams:[...node.querySelectorAll('.gfield-final3-solution-diagram')].every(figure=>figure.scrollWidth<=figure.clientWidth+1),
+     tables:[...node.querySelectorAll('.final1-data-table')].every(table=>table.scrollWidth<=table.parentElement.clientWidth+1)
+    }));
+    assert.deepEqual(mobile,{fits:true,cards:true,diagrams:true,tables:true},'Final3 reviewed cards fit at 390px');
+    await page.emulateMedia({media:'print'});
+    assert.equal(await page.locator('#final3DetailedSolutions .is-pending').evaluateAll(nodes=>nodes.every(node=>getComputedStyle(node).display==='none')),true,'Q16-Q30 are excluded from print');
+    assert.equal(await page.locator('#final3DetailedSolutions .is-ready').evaluateAll(nodes=>nodes.every(node=>getComputedStyle(node).display!=='none')),true,'Q1-Q15 remain printable');
+    await page.emulateMedia({media:'screen'});
+    await page.setViewportSize({width:1280,height:900});
    }
    results.push({round:n,cumulativeRounds:checked.rounds.length,answerRates:30});
   }

@@ -47,7 +47,7 @@ assert.deepEqual(
     confirmedItems: unified.summary.confirmedItems,
     candidateItems: unified.summary.candidateItems,
   },
-  { sourceQuestions: 840, rawDisplayTypes: 742, objectiveTypes: 748, canonicalTypes: 183, confirmedItems: 120, candidateItems: 720 },
+  { sourceQuestions: 840, rawDisplayTypes: 742, objectiveTypes: 748, canonicalTypes: 213, confirmedItems: 150, candidateItems: 690 },
   '전체 분류 현황 수치',
 );
 assert.equal(unified.summary.duplicateSourceKeys.length, 0, '출처 문항 키 중복 없음');
@@ -63,6 +63,12 @@ assert.deepEqual(
   Array.from({ length: 30 }, (_, index) => index + 1),
   '독립 검산 가능한 파이널 1회 30문항 연결',
 );
+const finalTwoItems = unified.items.filter((item) => item.sourceRef.set === 'final' && item.sourceRef.round === 2);
+assert.equal(finalTwoItems.length, 30, '파이널 2회 30문항');
+assert.ok(finalTwoItems.every((item) => item.reviewStatus === 'confirmed' && item.reviewRequired === false), '파이널 2회 검수된 30개 분류만 확정');
+assert.equal(finalTwoItems.find((item) => item.sourceRef.no === 15).detailType, '여러 수 묶음의 누적·앞 묶음 연결 규칙으로 묶음의 합 구하기', '15번은 묶음 전체 합 응답까지 표시');
+assert.equal(finalTwoItems.find((item) => item.sourceRef.no === 28).subarea, '모든 도로 지나기', '28번을 두 점 최단거리와 분리');
+assert.equal(unified.items.find((item) => item.sourceKey === 'final|3|10').detailType, '우기기', '같은 기존 유형명의 타회차에 Final2 학생 표시명을 전파하지 않음');
 const targetItems = unified.items.filter((item) => ['applied', 'final', 'last', 'original'].includes(item.sourceRef.set));
 assert.equal(targetItems.length, 600, '문제은행 기본 범위는 활용~시그니처 실전 600문항');
 assert.equal(targetItems.filter((item) => item.responseRateStatus === 'measured').length, 240, '파이널·최종 실제 정답률 240문항');
@@ -107,6 +113,9 @@ assert.match(catalogHtml, /data-area="수·규칙찾기"/, '영역별 전체 유
 assert.match(catalogHtml, /시험지 난이도 기준/, '선택 회차 점수대 영역');
 assert.match(catalogHtml, /최상·상·중간·하·최하/, '문제은행 5단계 난이도 안내');
 assert.match(catalogJs, /item\.objectiveTypeId/, '이원목적표의 세부유형 식별자로 묶음');
+assert.match(catalogJs, /sourceReviewed\?item\.canonicalTypeId:item\.objectiveTypeId/, '검수된 source-bound 유형은 안정 식별자로 분리하고 미승인 유형은 기존 묶음을 유지');
+assert.match(catalogJs, /group\.studentDisplayName/, '검수된 학생 표시명을 카드 제목과 검색에 사용');
+assert.match(catalogJs, /기존 유형명/, '기존 이원목적 유형명은 별도로 보존해 표시');
 assert.match(catalogJs, /class="subarea"/, '대영역 아래 소영역을 나누고 세부유형 카드를 표시');
 assert.match(catalogJs, /세부유형/, '세 단계 유형 구조를 화면에 표시');
 assert.match(catalogJs, /R\.bankDifficulty\(group\.benchmarkRate,null\)/, '실제 정답률 우선 난이도');

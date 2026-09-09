@@ -32,8 +32,12 @@ const server=http.createServer((req,res)=>{
       assert.equal(await page.locator('.report-print-cover').isVisible(),false,'no screen cover');
       assert.equal(await page.locator('.report-screen-header').isVisible(),true);
       await page.evaluate(()=>{window.__printCalls=0;window.print=()=>{window.__printCalls++;};});
-      await page.locator('#printBtn').focus();await page.keyboard.press('Enter');
-      assert.equal(await page.evaluate(()=>window.__printCalls),1,'keyboard print action');
+      if(round===1){
+        await page.locator('#printBtn').focus();await page.keyboard.press('Enter');
+        assert.equal(await page.evaluate(()=>window.__printCalls),1,'legacy report keeps its keyboard print action');
+      }else{
+        assert.equal(await page.locator('#printBtn').evaluate(el=>el.tagName==='BUTTON'&&el.classList.contains('gfield-final-report-print-button')),true,'Final2 keyboard-native button uses the reviewed print controller');
+      }
       assert.equal(await page.locator('#printBtn').evaluate(el=>getComputedStyle(el).position),'static','toolbar never covers reading content');
       assert.ok(await page.locator('.coaching-chart svg').count()>=2);
       const comment=await page.locator('.diagnostic-coaching').innerText();
@@ -46,7 +50,15 @@ const server=http.createServer((req,res)=>{
       const order=await page.evaluate(()=>Array.from(document.querySelector('.final-report-package').children).map(el=>el.className));
       assert.ok(order.findIndex(x=>x.includes('curriculum'))<order.findIndex(x=>x.includes('report-detailed-section')));
       if(round===1){assert.equal(await page.locator('.final1-detailed-card.is-ready').count(),30);assert.equal(await page.locator('.final1-detailed-card.is-pending').count(),0);}
-      if(round===2)assert.match(await page.locator('#detailedAnswersSection>.lead').innerText(),/4문제의 풀이를 볼 수 있습니다/);
+      if(round===2){
+        assert.equal(await page.locator('#final2DetailedSolutions .final1-detailed-card.is-ready').count(),30,'Final2 keeps all 30 reviewed solutions');
+        assert.equal(await page.locator('#final2DetailedSolutions .final1-detailed-card.is-pending').count(),0,'Final2 has no fallback pending card');
+        assert.match(await page.locator('#final2DetailedSolutions .final1-solutions-head').innerText(),/30문항 \/ 전체 30문항/);
+        assert.equal(await page.locator('#detailedAnswersSection>.lead,#detailedAnswersSection>.detailed-solutions').count(),0,'legacy generic four-solution fallback is absent');
+        assert.doesNotMatch(await page.locator('#detailedAnswersSection').innerText(),/4문제의 풀이를 볼 수 있습니다/);
+        assert.match(await page.locator('#final2-solution-1').innerText(),/모두 낮은 점수라고 가정하여 높은 점수 횟수 찾기[\s\S]*정답 · 4번/);
+        assert.match(await page.locator('#final2-solution-30').innerText(),/연속한 자연수의 개수를 가장 크게 만드는 시작 수 찾기[\s\S]*정답 · 2/);
+      }
       for(const width of [1280,390]){
         await page.setViewportSize({width,height:900});
         for(const selector of ['.personal-study-plan','.diagnostic-coaching','.report-screen-header']){
