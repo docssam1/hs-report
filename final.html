@@ -526,6 +526,7 @@ td.weak-cell{white-space:nowrap}
   var isFinal1=!isLast&&!isOriginal&&(requestedRound==null||requestedRound===''||(/^\d+$/.test(requestedRound)&&Number(requestedRound)===1));
   var isFinal2=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===2;
   var isFinal3=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===3;
+  var isFinal4=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===4;
   var mockFile=isLast?'mock-data-last.js':(isOriginal?'mock-data-original.js':'mock-data-final.js');
   var files=['hs-auth.js','data.js',mockFile];
   if(!isOriginal) files.push('mock-data-original.js');
@@ -534,6 +535,7 @@ td.weak-cell{white-space:nowrap}
   if(isFinal1) files.push('final1-detailed-data.js','final-detailed-solutions.js');
   if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js','final-report-print.js');
   if(isFinal3) files.push('final3-solution-diagrams.js','final3-backhalf-solution-diagrams.js','final3-detailed-data.js','final-detailed-solutions.js');
+  if(isFinal4) files.push('final4-detailed-data.js','final-detailed-solutions.js');
   if(isLast) files.push(
     'mock-data-last3.js',
     'mock-data-last4.js',
@@ -1005,6 +1007,14 @@ td.weak-cell{white-space:nowrap}
           var diagrams=registries.find(function(candidate){return candidate&&solution&&typeof candidate.modelFor==='function'&&candidate.modelFor(solution.no);});
           return solution&&solution.diagram&&diagrams&&typeof diagrams.render==='function'?diagrams.render(solution.no):'';
         }
+      })+'</section>';
+    }
+    if(ctx.roundNum===4&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL4_RESOLVE_SOLUTION==='function'){
+      return '<section class="detail-section report-detailed-section" id="detailedAnswersSection" aria-label="검수된 상세 답안">'+window.GFIELD_FINAL1_DETAILED_RENDERER.render({
+        round:4,
+        data:window.GFIELD_FINAL4_DETAILED,
+        roundItems:ctx.items,
+        resolve:window.GFIELD_FINAL4_RESOLVE_SOLUTION
       })+'</section>';
     }
     var solutionItems=ctx.items.filter(function(it){return it.detailedSolution===true&&it.comment;});

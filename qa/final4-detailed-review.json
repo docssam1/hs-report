@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "round": 4,
+  "reviewId": "final4-detailed-review-first10-safe9-20260909",
+  "sourcePages": [
+    "materials/final_4/001.jpg",
+    "materials/final_4/002.jpg"
+  ],
+  "reviewMethod": [
+    "source-text reread",
+    "independent arithmetic recomputation",
+    "canonical answer binding",
+    "learner-language review",
+    "desktop and 390px integration check"
+  ],
+  "items": [
+    {"no": 1, "status": "verified", "releaseStatus": "eligible", "answer": "큰 추 50g, 작은 추 10g"},
+    {"no": 2, "status": "verified", "releaseStatus": "eligible", "answer": "1개 남는다"},
+    {"no": 3, "status": "verified-after-correction", "releaseStatus": "eligible", "answer": "66번", "correction": "12시간의 직각 횟수는 22번"},
+    {"no": 4, "status": "verified-after-correction", "releaseStatus": "eligible", "answer": "여러 가지", "correction": "원문에 없는 중간 음수 금지 조건 제거"},
+    {"no": 5, "status": "verified", "releaseStatus": "eligible", "answer": "18일"},
+    {"no": 6, "status": "verified", "releaseStatus": "eligible", "answer": "3가지"},
+    {"no": 7, "status": "verified", "releaseStatus": "eligible", "answer": "7대"},
+    {"no": 8, "status": "verified", "releaseStatus": "eligible", "answer": "1720g"},
+    {"no": 9, "status": "source-condition-missing", "releaseStatus": "locked", "answer": null, "reason": "260알을 정하려면 처음 두 약병의 양이 같다는 조건이 필요하지만 현재 원본에서 확인되지 않음"},
+    {"no": 10, "status": "verified-after-exact-pattern-check", "releaseStatus": "eligible", "answer": "11개"}
+  ],
+  "summary": {"verified": 9, "locked": 1, "pendingAfter10": 20}
+}

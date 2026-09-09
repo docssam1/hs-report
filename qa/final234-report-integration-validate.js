@@ -228,6 +228,16 @@ const server=http.createServer((req,res)=>{
     await page.emulateMedia({media:'screen'});
     await page.setViewportSize({width:1280,height:900});
    }
+   if(n===4){
+    assert.equal(await page.locator('#final4DetailedSolutions .is-ready').count(),9,'nine source-verified Final4 solutions are public');
+    assert.equal(await page.locator('#final4DetailedSolutions .is-pending').count(),21,'unresolved Final4 items remain visibly pending');
+    assert.match(await page.locator('#final4DetailedSolutions .final1-solutions-head').innerText(),/9문항 \/ 전체 30문항/);
+    assert.equal(await page.locator('#final4DetailedSolutions .final1-data-table').count(),9,'each released Final4 item keeps its teaching table');
+    assert.equal(await page.locator('#final4-solution-9').evaluate(node=>node.classList.contains('is-pending')),true,'Q9 missing source condition stays pending');
+    await page.setViewportSize({width:390,height:900});
+    assert.ok(await page.locator('#final4DetailedSolutions').evaluate(node=>node.scrollWidth<=node.clientWidth+1&&[...node.querySelectorAll('.is-ready')].every(card=>card.scrollWidth<=card.clientWidth+1)),'Final4 released cards fit at 390px');
+    await page.setViewportSize({width:1280,height:900});
+   }
    results.push({round:n,cumulativeRounds:checked.rounds.length,answerRates:30});
   }
   await page.goto(base+'/last1-result.html?round=1&name='+encodeURIComponent(student));

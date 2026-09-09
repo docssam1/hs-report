@@ -26,5 +26,17 @@ for(const n of [2,3,4]){
  }
  after.rounds[n].stats=before.rounds[n].stats;
 }
-assert.deepEqual(after,before,'only Final2-4 reference aggregates changed: questions, answers, original cuts, Final1 and Final5 preserved');
-console.log('PASS source-bound private/fixed references, public count exclusion, questions/answers/cuts and Final1/Final5 preserved');
+const final4Corrections={
+  3:['comment','caution'],4:['comment','caution'],9:['answer','comment','caution'],10:['comment','caution'],
+  11:['answer','comment','caution'],17:['answer','comment','caution'],21:['answer','comment','caution'],
+  24:['answer','comment','caution'],26:['answer','comment'],27:['answer','comment','caution']
+};
+const expectedFinal4Answers={9:'원문 조건 확인 필요',11:'원문 조건 확인 필요',17:'450m',21:'원문 조건 확인 필요',24:'14일',26:'241×83=20003',27:'원문 조건 확인 필요'};
+for(const [noText,fields] of Object.entries(final4Corrections)){
+ const no=Number(noText),beforeItem=before.rounds['4'].items.find(item=>item.no===no),afterItem=after.rounds['4'].items.find(item=>item.no===no);
+ assert.ok(beforeItem&&afterItem,'Final4 reviewed correction item '+no);
+ if(Object.prototype.hasOwnProperty.call(expectedFinal4Answers,no))assert.equal(afterItem.answer,expectedFinal4Answers[no],'Final4 corrected answer '+no);
+ for(const field of fields){assert.equal(typeof afterItem[field],'string');assert.ok(afterItem[field].trim());beforeItem[field]=afterItem[field];}
+}
+assert.deepEqual(after,before,'only Final2-4 reference aggregates and the exact reviewed Final4 correction fields changed');
+console.log('PASS source-bound references, fixed rates/cuts, exact Final4 reviewed correction allowlist, all other questions/answers preserved');
