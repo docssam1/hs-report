@@ -46,6 +46,35 @@
     ]
   };
 
+  /* Source-specific taxonomy decisions live in this registry so every
+   * buildUnifiedCatalog consumer sees the same reviewed result.  Keep this
+   * list empty until the complete public projection has independent review. */
+  var REVIEWED_TAXONOMY_OVERRIDES = Object.freeze([]);
+  var REVIEWED_ADDITIONAL_SUBAREAS = Object.freeze([]);
+
+  var REVIEWED_TAXONOMY_OVERRIDE_CONTRACT = {
+    sourceIdentityFields: ['sourceKey', 'area', 'displayType'],
+    classificationFields: ['subarea', 'detailTypeKey', 'studentDisplayName', 'canonicalTypeId', 'detailTypeScope', 'itemSpecificNumericIdentity'],
+    requiredStatuses: {
+      workStatus: 'complete',
+      evidenceStatus: 'verified',
+      releaseStatus: 'eligible'
+    },
+    detailTypeRule: 'stable semantic detailTypeKey is separate from studentDisplayName; concept-defining numbers may appear in the label but item-specific values cannot define identity',
+    fallbackRule: 'mismatch, duplicate, unapproved, unknown-subarea, or unstable-id records leave the existing candidate unchanged',
+    propagationRule: 'approval is exact-sourceKey only and never transfers across rounds'
+  };
+
+  var REVIEWED_ADDITIONAL_SUBAREA_CONTRACT = {
+    identityFields: ['area', 'subarea'],
+    requiredStatuses: {
+      workStatus: 'complete',
+      evidenceStatus: 'verified',
+      releaseStatus: 'eligible'
+    },
+    sourceRule: 'reviewed additions are valid override targets but never source-authored confirmation aliases'
+  };
+
   /* Exam points are evidence from the source paper.  They are not the same
    * thing as the legacy generator's arbitrary Lv.1-Lv.5 variation switch. */
   var DIFFICULTY_BANDS = {
@@ -269,6 +298,71 @@
 
   function clone(value) {
     return JSON.parse(JSON.stringify(value));
+  }
+
+  function reviewedDetailType(row) {
+    var key = clean(row && row.detailTypeKey);
+    var label = clean(row && row.studentDisplayName);
+    if (!/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(key)) return null;
+    if (!label || clean(row.detailTypeScope) !== 'reusable' || row.itemSpecificNumericIdentity !== false) return null;
+    return { key: key, label: label };
+  }
+
+  function reviewedTaxonomyDecision(item, row) {
+    if (!item || !row || item.reviewStatus !== 'candidate' || item.reviewRequired !== true) return null;
+    if (clean(row.workStatus) !== 'complete' || clean(row.evidenceStatus) !== 'verified' || clean(row.releaseStatus) !== 'eligible') return null;
+    if (clean(row.sourceKey) !== item.sourceKey || clean(row.area) !== item.area || clean(row.displayType) !== item.displayType) return null;
+    var itemSourceKey = [clean(item.sourceRef && item.sourceRef.set), Number(item.sourceRef && item.sourceRef.round), Number(item.sourceRef && item.sourceRef.no)].join('|');
+    if (itemSourceKey !== item.sourceKey) return null;
+    var subarea = clean(row.subarea);
+    var detailType = reviewedDetailType(row);
+    if (!registeredSubarea(item.area, subarea) || !detailType) return null;
+    var canonicalTypeId = stableId(signature(item.area, subarea, detailType.key));
+    if (clean(row.canonicalTypeId) !== canonicalTypeId) return null;
+    return {
+      subarea: subarea,
+      detailTypeKey: detailType.key,
+      studentDisplayName: detailType.label,
+      canonicalTypeId: canonicalTypeId
+    };
+  }
+
+  function applyReviewedTaxonomyOverrides(items, overrides) {
+    if (!Array.isArray(items)) return [];
+    if (!Array.isArray(overrides) || !overrides.length) return items;
+    var sourceCounts = {};
+    var overrideCounts = {};
+    var bySource = {};
+    items.forEach(function (item) {
+      var key = clean(item && item.sourceKey);
+      sourceCounts[key] = (sourceCounts[key] || 0) + 1;
+    });
+    overrides.forEach(function (row) {
+      var key = clean(row && row.sourceKey);
+      if (!key) return;
+      overrideCounts[key] = (overrideCounts[key] || 0) + 1;
+      if (!Object.prototype.hasOwnProperty.call(bySource, key)) bySource[key] = row;
+    });
+    return items.map(function (item) {
+      var sourceKey = clean(item && item.sourceKey);
+      if (sourceCounts[sourceKey] !== 1 || overrideCounts[sourceKey] !== 1) return item;
+      var decision = reviewedTaxonomyDecision(item, bySource[sourceKey]);
+      if (!decision) return item;
+      return Object.assign({}, item, {
+        subarea: decision.subarea,
+        subareaId: 'subarea-' + stableId(item.area + '|' + decision.subarea).slice(5),
+        detailTypeKey: decision.detailTypeKey,
+        detailType: decision.studentDisplayName,
+        taxonomyPath: { major: item.area, minor: decision.subarea, detail: decision.studentDisplayName },
+        typeFamilyId: 'reviewed-source-override',
+        typeFamilyLabel: decision.studentDisplayName,
+        canonicalTypeId: decision.canonicalTypeId,
+        reviewStatus: 'confirmed',
+        reviewRequired: false,
+        reviewBasis: 'independently reviewed source-specific taxonomy override',
+        reviewReasons: []
+      });
+    });
   }
 
   function generatorLink(legacyId, file, coverage, sourceFaithfulBlockers) {
@@ -537,8 +631,46 @@
       });
   }
 
-  function registeredSubarea(area, subarea) {
+  function sourceConfirmedSubarea(area, subarea) {
     return !!(TAXONOMY[area] && TAXONOMY[area].indexOf(clean(subarea)) >= 0);
+  }
+
+  function reviewedAdditionalSubareas() {
+    var rows = Array.isArray(REVIEWED_ADDITIONAL_SUBAREAS) ? REVIEWED_ADDITIONAL_SUBAREAS : [];
+    var counts = {};
+    rows.forEach(function (row) {
+      var key = clean(row && row.area) + '|' + clean(row && row.subarea);
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    return rows.filter(function (row) {
+      var area = clean(row && row.area);
+      var subarea = clean(row && row.subarea);
+      var key = area + '|' + subarea;
+      if (!area || !subarea || counts[key] !== 1 || !TAXONOMY[area]) return false;
+      if (sourceConfirmedSubarea(area, subarea)) return false;
+      return clean(row.workStatus) === 'complete' &&
+        clean(row.evidenceStatus) === 'verified' &&
+        clean(row.releaseStatus) === 'eligible';
+    }).map(function (row) {
+      return { area: clean(row.area), subarea: clean(row.subarea) };
+    });
+  }
+
+  function registeredSubarea(area, subarea) {
+    area = clean(area);
+    subarea = clean(subarea);
+    if (sourceConfirmedSubarea(area, subarea)) return true;
+    return reviewedAdditionalSubareas().some(function (row) {
+      return row.area === area && row.subarea === subarea;
+    });
+  }
+
+  function effectiveTaxonomy() {
+    var taxonomy = clone(TAXONOMY);
+    reviewedAdditionalSubareas().forEach(function (row) {
+      if (taxonomy[row.area].indexOf(row.subarea) < 0) taxonomy[row.area].push(row.subarea);
+    });
+    return taxonomy;
   }
 
   function candidateRule(area, displayType) {
@@ -655,7 +787,7 @@
       Object.keys(entry.model.rounds || {}).forEach(function (roundKey) {
         (entry.model.rounds[roundKey].items || []).forEach(function (item) {
           var area = clean(item.area), subarea = clean(item.subarea), displayType = clean(item.type);
-          if (!registeredSubarea(area, subarea)) return;
+          if (!sourceConfirmedSubarea(area, subarea)) return;
           var key = area + '|' + displayType;
           var value = {
             area: area,
@@ -693,7 +825,7 @@
           var displayType = clean(item.type);
           var sourceSubarea = clean(item.subarea);
           var aId = AREA_IDS[area] || ('area-' + stableId(area).slice(5));
-          var isConfirmed = registeredSubarea(area, sourceSubarea);
+          var isConfirmed = sourceConfirmedSubarea(area, sourceSubarea);
           var exactAlias = !isConfirmed ? aliases[area + '|' + displayType] : null;
           var rule = !isConfirmed && !exactAlias ? candidateRule(area, displayType) : null;
           var subarea, subareaId, canonicalTypeId, familyId, familyLabel, basis;
@@ -773,6 +905,8 @@
       });
     });
 
+    items = applyReviewedTaxonomyOverrides(items, REVIEWED_TAXONOMY_OVERRIDES);
+
     var typeMap = {};
     items.forEach(function (item) {
       var type = typeMap[item.canonicalTypeId];
@@ -819,6 +953,7 @@
     var areaCounts = {};
     var pointCounts = {};
     var refs = 0;
+    var taxonomy = effectiveTaxonomy();
     catalog.forEach(function (type) {
       type.sourceRefs.forEach(function (ref) {
         refs++;
@@ -832,7 +967,7 @@
       setKey: clean(model && model.setKey || 'original'),
       sourceQuestions: refs,
       canonicalTypes: catalog.length,
-      canonicalSubareas: Object.keys(TAXONOMY).reduce(function (sum, area) { return sum + TAXONOMY[area].length; }, 0),
+      canonicalSubareas: Object.keys(taxonomy).reduce(function (sum, area) { return sum + taxonomy[area].length; }, 0),
       linkedLegacyGenerators: catalog.filter(function (type) { return !!type.generator; }).length,
       verifiedPracticeGenerators: catalog.filter(function (type) { return !!(type.generator && type.generator.practiceReleaseReady); }).length,
       sourceLinkedReviewTypes: catalog.filter(function (type) { return !!(type.generator && type.generator.status === 'source-linked-review'); }).length,
@@ -856,7 +991,7 @@
       if (!type.signature || signatures[type.signature]) errors.push(at + ': duplicate or missing signature');
       signatures[type.signature] = true;
       if (!Object.prototype.hasOwnProperty.call(TAXONOMY, type.area)) errors.push(at + ': unknown area');
-      else if (TAXONOMY[type.area].indexOf(type.subarea) < 0) errors.push(at + ': unknown subarea');
+      else if (!registeredSubarea(type.area, type.subarea)) errors.push(at + ': unknown subarea');
       if (!type.name) errors.push(at + ': missing type name');
       if (!Array.isArray(type.sourceRefs) || !type.sourceRefs.length) errors.push(at + ': missing source reference');
       (type.sourceRefs || []).forEach(function (ref) {
@@ -980,7 +1115,7 @@
   return {
     schemaVersion: SCHEMA_VERSION,
     registryVersion: REGISTRY_VERSION,
-    taxonomy: clone(TAXONOMY),
+    taxonomy: effectiveTaxonomy(),
     areaIds: clone(AREA_IDS),
     difficultyBands: clone(DIFFICULTY_BANDS),
     responseRateBands: clone(RESPONSE_RATE_BANDS),
@@ -990,12 +1125,17 @@
     assetPolicy: clone(ASSET_POLICY),
     releasePolicy: clone(RELEASE_POLICY),
     diagnosisPolicy: clone(DIAGNOSIS_POLICY),
+    reviewedTaxonomyOverrideContract: clone(REVIEWED_TAXONOMY_OVERRIDE_CONTRACT),
+    reviewedTaxonomyOverrides: clone(REVIEWED_TAXONOMY_OVERRIDES),
+    reviewedAdditionalSubareaContract: clone(REVIEWED_ADDITIONAL_SUBAREA_CONTRACT),
+    reviewedAdditionalSubareas: clone(REVIEWED_ADDITIONAL_SUBAREAS),
     legacyAudits: clone(LEGACY_AUDITS),
     paperManifestContract: clone(PAPER_MANIFEST_CONTRACT),
     signature: signature,
     stableId: stableId,
     buildCatalog: buildCatalog,
     buildUnifiedCatalog: buildUnifiedCatalog,
+    applyReviewedTaxonomyOverrides: applyReviewedTaxonomyOverrides,
     bankDifficulty: bankDifficulty,
     summarize: summarize,
     validateCatalog: validateCatalog,
