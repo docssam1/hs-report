@@ -31,7 +31,7 @@ const final4Corrections={
   11:['answer','comment','caution'],17:['answer','comment','caution'],21:['answer','comment','caution'],
   24:['answer','comment','caution'],26:['answer','comment'],27:['answer','comment','caution']
 };
-const expectedFinal4Answers={9:'원문 조건 확인 필요',11:'원문 조건 확인 필요',17:'450m',21:'원문 조건 확인 필요',24:'14일',26:'241×83=20003',27:'원문 조건 확인 필요'};
+const expectedFinal4Answers={9:'260알',11:'57',17:'450m',21:'12장',24:'14일',26:'241×83=20003',27:'4250'};
 for(const [noText,fields] of Object.entries(final4Corrections)){
  const no=Number(noText),beforeItem=before.rounds['4'].items.find(item=>item.no===no),afterItem=after.rounds['4'].items.find(item=>item.no===no);
  assert.ok(beforeItem&&afterItem,'Final4 reviewed correction item '+no);

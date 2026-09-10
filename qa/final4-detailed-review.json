@@ -1,29 +1,63 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "round": 4,
-  "reviewId": "final4-detailed-review-first10-safe9-20260909",
+  "reviewId": "final4-detailed-review-all30-20260911",
   "sourcePages": [
-    "materials/final_4/001.jpg",
-    "materials/final_4/002.jpg"
+    "materials/final_4/001.jpg", "materials/final_4/002.jpg", "materials/final_4/003.jpg",
+    "materials/final_4/004.jpg", "materials/final_4/005.jpg", "materials/final_4/006.jpg"
   ],
   "reviewMethod": [
-    "source-text reread",
+    "resource-room source text reread at original resolution",
+    "provided handwritten and text answer record reconciliation",
     "independent arithmetic recomputation",
     "canonical answer binding",
     "learner-language review",
-    "desktop and 390px integration check"
+    "desktop, 390px and print integration check"
+  ],
+  "sourceReadingCorrections": [
+    {"no": 9, "correction": "use the previously provided equal-initial-bottle condition"},
+    {"no": 11, "correction": "restore the previously provided answer record and calculation-value difference 111"},
+    {"no": 12, "correction": "the supplied answer record identifies the obscured cut count as 12"},
+    {"no": 16, "correction": "the supplied answer record identifies the obscured race distance as 100m"},
+    {"no": 21, "correction": "read Korean 10이 as 10 plus the subject particle, not 100"},
+    {"no": 27, "correction": "read Korean 8450이며 as 8450 plus the connective particle, not 84500"}
+  ],
+  "answerCorrections": [
+    {"no": 17, "before": "600m (또는 450m)", "after": "450m", "reason": "15-second travel includes only the remaining half-train length beyond the tunnel"},
+    {"no": 24, "before": "2시간", "after": "14일", "reason": "the question asks days and the total work calculation gives 24 days versus the planned 10"},
+    {"no": 26, "before": "(빈칸 채우기)", "after": "241×83=20003", "reason": "independent exhaustive comparison gives the unique minimum absolute difference 3"}
   ],
   "items": [
-    {"no": 1, "status": "verified", "releaseStatus": "eligible", "answer": "큰 추 50g, 작은 추 10g"},
-    {"no": 2, "status": "verified", "releaseStatus": "eligible", "answer": "1개 남는다"},
-    {"no": 3, "status": "verified-after-correction", "releaseStatus": "eligible", "answer": "66번", "correction": "12시간의 직각 횟수는 22번"},
-    {"no": 4, "status": "verified-after-correction", "releaseStatus": "eligible", "answer": "여러 가지", "correction": "원문에 없는 중간 음수 금지 조건 제거"},
-    {"no": 5, "status": "verified", "releaseStatus": "eligible", "answer": "18일"},
-    {"no": 6, "status": "verified", "releaseStatus": "eligible", "answer": "3가지"},
-    {"no": 7, "status": "verified", "releaseStatus": "eligible", "answer": "7대"},
-    {"no": 8, "status": "verified", "releaseStatus": "eligible", "answer": "1720g"},
-    {"no": 9, "status": "source-condition-missing", "releaseStatus": "locked", "answer": null, "reason": "260알을 정하려면 처음 두 약병의 양이 같다는 조건이 필요하지만 현재 원본에서 확인되지 않음"},
-    {"no": 10, "status": "verified-after-exact-pattern-check", "releaseStatus": "eligible", "answer": "11개"}
+    {"no": 1, "status": "verified", "answer": "큰 추 50g, 작은 추 10g"},
+    {"no": 2, "status": "verified", "answer": "1개 남는다"},
+    {"no": 3, "status": "verified-after-explanation-correction", "answer": "66번"},
+    {"no": 4, "status": "verified-after-condition-correction", "answer": "여러 가지"},
+    {"no": 5, "status": "verified", "answer": "18일"},
+    {"no": 6, "status": "verified", "answer": "3가지"},
+    {"no": 7, "status": "verified", "answer": "7대"},
+    {"no": 8, "status": "verified", "answer": "1720g"},
+    {"no": 9, "status": "verified-with-provided-answer-text", "answer": "260알"},
+    {"no": 10, "status": "verified-after-exact-pattern-check", "answer": "11개"},
+    {"no": 11, "status": "verified-with-provided-answer-text", "answer": "57"},
+    {"no": 12, "status": "verified-with-provided-answer-text", "answer": "50도막"},
+    {"no": 13, "status": "verified", "answer": "16개"},
+    {"no": 14, "status": "verified", "answer": "11살"},
+    {"no": 15, "status": "verified", "answer": "40명"},
+    {"no": 16, "status": "verified-with-provided-answer-text", "answer": "6시간 33분 45초"},
+    {"no": 17, "status": "verified-after-answer-correction", "answer": "450m"},
+    {"no": 18, "status": "verified", "answer": "152.5도"},
+    {"no": 19, "status": "verified", "answer": "85번"},
+    {"no": 20, "status": "verified", "answer": "32640"},
+    {"no": 21, "status": "verified-after-source-reading-correction", "answer": "12장"},
+    {"no": 22, "status": "verified", "answer": "2081"},
+    {"no": 23, "status": "verified", "answer": "72가지"},
+    {"no": 24, "status": "verified-after-answer-correction", "answer": "14일"},
+    {"no": 25, "status": "verified", "answer": "10개"},
+    {"no": 26, "status": "verified-after-answer-completion", "answer": "241×83=20003"},
+    {"no": 27, "status": "verified-after-source-reading-correction", "answer": "4250"},
+    {"no": 28, "status": "verified", "answer": "156"},
+    {"no": 29, "status": "verified", "answer": "378"},
+    {"no": 30, "status": "verified", "answer": "378"}
   ],
-  "summary": {"verified": 9, "locked": 1, "pendingAfter10": 20}
+  "summary": {"verified": 30, "locked": 0, "pending": 0}
 }

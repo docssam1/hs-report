@@ -1,7 +1,7 @@
 'use strict';
 // Synthetic records only. All off-site traffic is intercepted; no learner writes.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
-const {chromium}=require('playwright');
+const {chromium}=require(process.env.GFIELD_QA_PLAYWRIGHT||'playwright');
 const core=require('../supabase/functions/hs-final-population/population-core.js');
 const root=path.resolve(__dirname,'..'),student='회차연결검수학생';
 const baselines=Object.fromEntries([1,2,3,4].map(n=>['final'+n,{schemaVersion:1,exam:'final'+n,scope:'provided-original-records',approved:true,version:'final'+n+'-'+String(n).repeat(64),rows:[{id:'a',ox:'O'.repeat(30),score:100},{id:'b',ox:'X'.repeat(30),score:0}]}]));
@@ -23,7 +23,7 @@ const server=http.createServer((req,res)=>{
 (async()=>{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
  const base=process.env.GFIELD_QA_BASE_URL||'http://127.0.0.1:'+server.address().port,origin=new URL(base).origin;
- const browser=await chromium.launch(),context=await browser.newContext({viewport:{width:1280,height:900}});
+ const browser=await chromium.launch(process.env.GFIELD_QA_BROWSER_EXECUTABLE?{executablePath:process.env.GFIELD_QA_BROWSER_EXECUTABLE}:{}),context=await browser.newContext({viewport:{width:1280,height:900}});
  let failedExam=null;
  await context.addInitScript(n=>{localStorage.setItem('gfield_student',n);localStorage.setItem('gfield_hs_student_session_v1',JSON.stringify({access_token:'synthetic-only',refresh_token:'synthetic-only',expires_at:Math.floor(Date.now()/1000)+3600,login_name:n}));},student);
  await context.route(/^https?:\/\//,route=>{
@@ -229,13 +229,18 @@ const server=http.createServer((req,res)=>{
     await page.setViewportSize({width:1280,height:900});
    }
    if(n===4){
-    assert.equal(await page.locator('#final4DetailedSolutions .is-ready').count(),9,'nine source-verified Final4 solutions are public');
-    assert.equal(await page.locator('#final4DetailedSolutions .is-pending').count(),21,'unresolved Final4 items remain visibly pending');
-    assert.match(await page.locator('#final4DetailedSolutions .final1-solutions-head').innerText(),/9문항 \/ 전체 30문항/);
-    assert.equal(await page.locator('#final4DetailedSolutions .final1-data-table').count(),9,'each released Final4 item keeps its teaching table');
-    assert.equal(await page.locator('#final4-solution-9').evaluate(node=>node.classList.contains('is-pending')),true,'Q9 missing source condition stays pending');
+    assert.equal(await page.locator('#final4DetailedSolutions .is-ready').count(),30,'all source-linked Final4 solutions are public');
+    assert.equal(await page.locator('#final4DetailedSolutions .is-pending').count(),0,'no Final4 item remains pending');
+    assert.match(await page.locator('#final4DetailedSolutions .final1-solutions-head').innerText(),/30문항 \/ 전체 30문항/);
+    assert.ok(await page.locator('#final4DetailedSolutions .final1-data-table').count()>=9,'complex Final4 items keep teaching tables where useful');
+    assert.equal(await page.locator('#final4-solution-9').evaluate(node=>node.classList.contains('is-ready')),true,'Q9 supplied answer condition is connected');
+    assert.match(await page.locator('#final4-solution-21').innerText(),/10이.*100/,'Q21 Korean particle reread is explained');
+    assert.match(await page.locator('#final4-solution-27').innerText(),/8450이며/,'Q27 Korean particle reread is explained');
     await page.setViewportSize({width:390,height:900});
     assert.ok(await page.locator('#final4DetailedSolutions').evaluate(node=>node.scrollWidth<=node.clientWidth+1&&[...node.querySelectorAll('.is-ready')].every(card=>card.scrollWidth<=card.clientWidth+1)),'Final4 released cards fit at 390px');
+    await page.emulateMedia({media:'print'});
+    assert.equal(await page.locator('#final4DetailedSolutions .is-ready').evaluateAll(nodes=>nodes.every(node=>getComputedStyle(node).display!=='none')),true,'all Final4 solutions remain printable');
+    await page.emulateMedia({media:'screen'});
     await page.setViewportSize({width:1280,height:900});
    }
    results.push({round:n,cumulativeRounds:checked.rounds.length,answerRates:30});
