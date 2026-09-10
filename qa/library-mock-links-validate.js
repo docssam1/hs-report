@@ -211,8 +211,8 @@ function assertLastLibraryBooks(data, online) {
     );
     assertRoute(
       linkFor(book, (online?ONLINE_STUDENT:ONSITE_STUDENT)+' 학생 진단 분석지'),
-      '/last1-result.html',
-      { round },
+      '/final.html',
+      { set:'last', round, go:'report' },
       `최종 ${round}회 성적 확인`,
     );
 

@@ -80,7 +80,7 @@
     return url;
   }
   function lastTarget(action,round){
-    if(action==='report') return target('last1-result.html',{round:round});
+    if(action==='report') return target('final.html',{set:'last',round:round,go:'report'});
     if(action==='answer-page') return round===1?target('last1-answer.html',{}):target('last-answer.html',{round:round});
     return target('final.html',{set:'last',round:round,go:action||''});
   }

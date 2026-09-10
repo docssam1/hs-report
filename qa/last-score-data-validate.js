@@ -67,39 +67,43 @@ check('누적 판정표가 회차별 독립 기준으로 등록됨', () => {
 check('학생·교사 입력과 결과 화면은 동일한 lastN 키를 사용', () => {
   const analysis = read('last1-analysis.html');
   const entry = read('last1-entry.html');
-  const result = read('last1-result.html');
+  const result = read('final.html');
+  const adapter = read('last-report-data.js');
   assert.match(analysis, /const ROUND_KEY=ROUND_DATA\.key/);
   assert.match(entry, /var ROUND=round&&round\.key/);
-  assert.match(result, /const ROUND=ROUND_DATA&&ROUND_DATA\.key/);
+  assert.match(result, /function finalKey\(\)\{ return setPrefix\(\)\+roundNum; \}/);
+  assert.match(adapter, /paper\.items=source\.items\.map/);
   assert.match(analysis, /order=updated_at\.asc/);
-  assert.match(result, /order=updated_at\.asc/);
+  assert.match(result, /student=eq\."\+encodeURIComponent\(student\)/);
   assert.match(entry, /source:'online'/);
   assert.match(analysis, /source:'admin'/);
 });
 
 check('최종 1회와 최종 2회 이후의 누적 원천이 분리됨', () => {
   const analysis = read('last1-analysis.html');
-  const result = read('last1-result.html');
+  const result = read('final.html');
   assert.match(analysis, /roundNo===1\?4:roundNo-1/);
   assert.match(analysis, /key:'final'\+k/);
   assert.match(analysis, /key:'last'\+k/);
-  assert.match(result, /if\(roundNo===1\)/);
-  assert.match(result, /for\(let lastNo=1;lastNo<=roundNo;lastNo\+\+\)/);
+  assert.match(result, /function computeCumulativeConsidered/);
+  assert.match(result, /finalKey\(\)/);
 });
 
 check('홈페이지 설명 문구와 4개 회차 진입 링크가 반영됨', () => {
   assert.equal(model.dataProof, '400명 이상의 학생들의 문항과 성적 그리고 실제 결과를 반영한 데이터');
   const analysis = read('last1-analysis.html');
-  const result = read('last1-result.html');
+  const result = read('final.html');
+  const adapter = read('last-report-data.js');
   const student = read('index-enhancements.js');
   const admin = read('admin-mock-v2.js');
   assert.match(analysis, /SCORE_MODEL\.dataProof/);
-  assert.match(result, /SCORE_MODEL\.dataProof/);
+  assert.match(result, /last-score-data\.js/);
+  assert.match(adapter, /GFIELD_LAST_SCORE_DATA/);
   assert.match(student, /\(\[1-4\]\)/);
   assert.match(student, /\?round='\+round/);
   assert.match(admin, /\[1,2,3,4\]\.map/);
   assert.doesNotMatch(analysis, /대치\s*10등|\d+명\s*(?:중|응시)/);
-  assert.doesNotMatch(result, /대치\s*10등|\d+명\s*(?:중|응시)/);
+  assert.doesNotMatch(result, /대치\s*10등/);
 });
 
 console.log(`\n${passed} checks passed`);

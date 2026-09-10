@@ -79,9 +79,9 @@
     return '<figure class="final1-number-line"><figcaption id="'+id+'">실제 거리의 비로 그린 수직선</figcaption><div class="final1-number-line-scroll"><svg viewBox="0 0 720 142" role="img" aria-labelledby="'+id+'"><title>'+esc(accessible)+'</title><line class="axis" x1="'+left+'" y1="'+y+'" x2="'+right+'" y2="'+y+'"></line>'+distanceLabels+marks+'</svg></div><table class="final1-distance-table"><thead><tr><th scope="col">시작</th><th scope="col">끝</th><th scope="col">거리</th></tr></thead><tbody>'+distanceRows+'</tbody></table></figure>';
   }
 
-  function readyItemHTML(solution,round,diagramHTML){
+  function readyItemHTML(solution,round,diagramHTML,prefix){
     var no=integer(solution.no);
-    var prefix='final'+round;
+    prefix=prefix||('final'+round);
     var shownAnswer=text(solution.displayAnswer)||solution.answer;
     var steps=solution.steps.map(function(step,index){
       var title=text(step&&step.title)||'계산하기';
@@ -91,20 +91,22 @@
     return '<article class="final1-detailed-card is-ready" id="'+prefix+'-solution-'+no+'" data-detailed-solution-no="'+no+'"'+(round===1?' data-final1-solution-no="'+no+'"':'')+'>'+watermark()+'<div class="final1-card-content"><header class="final1-solution-heading"><span class="final1-no">'+no+'번</span><div><h4>'+esc(solution.title)+'</h4><span class="final1-status">상세 풀이</span></div></header><div class="final1-answer"><strong>정답</strong> · '+esc(shownAnswer)+'</div><div class="final1-solution-block"><h5>읽을 조건</h5><p>'+esc(solution.read)+'</p></div><div class="final1-solution-block"><h5>풀이 전략</h5><p>'+esc(solution.method)+'</p></div>'+numberLineHTML(solution.numberLine,no)+(diagramHTML||'')+'<div class="final1-steps">'+steps+'</div><div class="final1-solution-block final1-check"><h5>검산</h5><p>'+esc(solution.check)+'</p></div><div class="final1-solution-block final1-caution"><h5>주의할 점</h5><p>'+esc(solution.caution)+'</p></div></div></article>';
   }
 
-  function pendingItemHTML(no,title,round){
-    var prefix='final'+round;
+  function pendingItemHTML(no,title,round,prefix){
+    prefix=prefix||('final'+round);
     return '<article class="final1-detailed-card is-pending" id="'+prefix+'-solution-'+no+'" data-detailed-solution-no="'+no+'"'+(round===1?' data-final1-solution-no="'+no+'"':'')+'>'+watermark()+'<div class="final1-card-content"><header class="final1-solution-heading"><span class="final1-no">'+no+'번</span><div><h4>'+esc(title||'상세 풀이')+'</h4><span class="final1-status">상세 풀이 준비 중</span></div></header><p class="final1-pending-copy">내용 확인이 끝난 뒤 표시됩니다.</p></div></article>';
   }
 
-  function validSolution(solution,roundItem,round){
-    return !!solution&&solution.reviewStatus==='verified'&&typeof solution.answer==='string'&&solution.answer===String(roundItem.answer)&&(solution.displayAnswer==null||!!text(solution.displayAnswer))&&text(solution.title)&&text(solution.read)&&text(solution.method)&&Array.isArray(solution.steps)&&solution.steps.length>0&&solution.steps.every(function(step){return text(step&&step.title)&&text(step&&step.body)&&(step.table==null||validTable(step.table));})&&(solution.numberLine==null||validNumberLine(solution.numberLine))&&(round!==1||Number(roundItem.no)!==7||validNumberLine(solution.numberLine))&&text(solution.check)&&text(solution.caution);
+  function validSolution(solution,roundItem,round,requireQ7NumberLine){
+    return !!solution&&solution.reviewStatus==='verified'&&typeof solution.answer==='string'&&solution.answer===String(roundItem.answer)&&(solution.displayAnswer==null||!!text(solution.displayAnswer))&&text(solution.title)&&text(solution.read)&&text(solution.method)&&Array.isArray(solution.steps)&&solution.steps.length>0&&solution.steps.every(function(step){return text(step&&step.title)&&text(step&&step.body)&&(step.table==null||validTable(step.table));})&&(solution.numberLine==null||validNumberLine(solution.numberLine))&&(!requireQ7NumberLine||round!==1||Number(roundItem.no)!==7||validNumberLine(solution.numberLine))&&text(solution.check)&&text(solution.caution);
   }
 
   function render(options){
     options=options||{};
     var round=integer(options.round)||1;
     if(round<1||round>5) round=1;
-    var prefix='final'+round;
+    var prefix=text(options.prefix)||('final'+round);
+    var seriesLabel=text(options.seriesLabel)||'파이널';
+    var requireQ7NumberLine=options.requireQ7NumberLine!==false;
     var roundItems=Array.isArray(options.roundItems)?options.roundItems.slice():[];
     var dataItems=options.data&&Array.isArray(options.data.items)?options.data.items:[];
     var byNo={};
@@ -122,17 +124,17 @@
     var cards=roundItems.map(function(roundItem){
       var no=integer(roundItem.no);
       var solution=resolver(roundItem);
-      if(!validSolution(solution,roundItem,round)) return pendingItemHTML(no,solution&&text(solution.title),round);
+      if(!validSolution(solution,roundItem,round,requireQ7NumberLine)) return pendingItemHTML(no,solution&&text(solution.title),round,prefix);
       var diagramHTML=diagram(solution,roundItem)||'';
-      if(round===3&&solution.diagram&&!diagramHTML) return pendingItemHTML(no,text(solution.title),round);
-      return readyItemHTML(solution,round,diagramHTML);
+      if(round===3&&solution.diagram&&!diagramHTML) return pendingItemHTML(no,text(solution.title),round,prefix);
+      return readyItemHTML(solution,round,diagramHTML,prefix);
     }).join('');
     var readyCount=roundItems.filter(function(item){
       var solution=resolver(item);
-      return validSolution(solution,item,round)&&!(round===3&&solution.diagram&&!diagram(solution,item));
+      return validSolution(solution,item,round,requireQ7NumberLine)&&!(round===3&&solution.diagram&&!diagram(solution,item));
     }).length;
     var printRule=round===3?'<style>@media print{#final3DetailedSolutions .is-pending{display:none!important}}</style>':'';
-    return printRule+'<div class="final1-detailed-solutions" id="'+prefix+'DetailedSolutions" data-detailed-round="'+round+'"><div class="final1-print-watermark" aria-hidden="true">지필드 영재교육</div><header class="final1-solutions-head"><div class="final1-solutions-title-row"><div><h3>파이널 '+round+'회 상세 풀이</h3><p>'+readyCount+'문항 / 전체 '+roundItems.length+'문항의 풀이입니다. 문제의 조건을 짚고, 풀이 과정을 따라가며 답을 확인해 보세요.</p></div><button type="button" class="final1-print-only no-print" id="printFinal'+round+'Solutions">상세 풀이만 인쇄</button></div><nav class="final1-jump no-print" aria-label="상세 풀이 번호 이동"><strong>번호 이동</strong>'+jump+'</nav></header>'+cards+'</div>';
+    return printRule+'<div class="final1-detailed-solutions" id="'+prefix+'DetailedSolutions" data-detailed-round="'+round+'"><div class="final1-print-watermark" aria-hidden="true">지필드 영재교육</div><header class="final1-solutions-head"><div class="final1-solutions-title-row"><div><h3>'+esc(seriesLabel)+' '+round+'회 상세 풀이</h3><p>'+readyCount+'문항 / 전체 '+roundItems.length+'문항의 풀이입니다. 문제의 조건을 짚고, 풀이 과정을 따라가며 답을 확인해 보세요.</p></div><button type="button" class="final1-print-only no-print" id="printFinal'+round+'Solutions">상세 풀이만 인쇄</button></div><nav class="final1-jump no-print" aria-label="상세 풀이 번호 이동"><strong>번호 이동</strong>'+jump+'</nav></header>'+cards+'</div>';
   }
 
   function wire(){

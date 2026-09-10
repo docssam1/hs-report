@@ -18,7 +18,7 @@ for(let n=1;n<=9;n++){
 }
 for(let n=1;n<=4;n++){
  const u=U(R.normalizeUrl('final.html?set=last&round='+n+'&go=report&name=sample'));
- assert.equal(u.pathname,'/last1-result.html');assert.equal(u.searchParams.get('round'),String(n));
+ assert.equal(u.pathname,'/final.html');assert.equal(u.searchParams.get('set'),'last');assert.equal(u.searchParams.get('go'),'report');assert.equal(u.searchParams.get('round'),String(n));
  assert.equal(u.searchParams.get('name'),'sample');
 }
 assert.equal(U(R.normalizeUrl('answer.html?round=1',{title:'파이널 모의고사 1회 답안·교재 연결표'})).searchParams.get('set'),'final','explicit material title repairs missing series');

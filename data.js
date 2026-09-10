@@ -2101,7 +2101,7 @@ window.GFIELD_DATA = {
         },
         {
           "label": "성적 확인·진단",
-          "url": "https://hs.gfieldacademy.net/last1-result.html?round=1"
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1&go=report"
         }
       ]
     },
@@ -2125,7 +2125,7 @@ window.GFIELD_DATA = {
         },
         {
           "label": "성적 확인·진단",
-          "url": "https://hs.gfieldacademy.net/last1-result.html?round=2"
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=2&go=report"
         }
       ]
     },
@@ -2149,7 +2149,7 @@ window.GFIELD_DATA = {
         },
         {
           "label": "성적 확인·진단",
-          "url": "https://hs.gfieldacademy.net/last1-result.html?round=3"
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=3&go=report"
         }
       ]
     },
@@ -2173,7 +2173,7 @@ window.GFIELD_DATA = {
         },
         {
           "label": "성적 확인·진단",
-          "url": "https://hs.gfieldacademy.net/last1-result.html?round=4"
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=4&go=report"
         }
       ]
     },

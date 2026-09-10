@@ -86,7 +86,9 @@ const server=http.createServer((req,res)=>{
   const lastNode=page.locator('#timeline .node').filter({has:page.locator('h3',{hasText:/최종.*모의고사\s*1\s*회/})}).first();
   popupWait=page.waitForEvent('popup');await lastNode.getByRole('button',{name:/성적/}).first().click();
   popup=await popupWait;await popup.waitForLoadState('domcontentloaded');
-  assert.equal(new URL(popup.url()).pathname,'/last1-result.html','Last uses its own score store');
+  assert.equal(new URL(popup.url()).pathname,'/final.html','Last uses the common diagnostic report');
+  assert.equal(new URL(popup.url()).searchParams.get('set'),'last');
+  assert.equal(new URL(popup.url()).searchParams.get('go'),'report');
   assert.equal(new URL(popup.url()).searchParams.get('round'),'1');
   assert.equal(new URL(popup.url()).searchParams.get('name'),student);await popup.close();
   await page.setViewportSize({width:390,height:844});

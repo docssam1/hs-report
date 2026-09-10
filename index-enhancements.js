@@ -187,7 +187,7 @@
   function reportUrl(series,round){
     var helper=window.GFIELD_FINAL_LAST_ROUTES;
     if(helper&&helper.reportUrl) return helper.reportUrl(series,round,studentName());
-    var base=series==='last'?'last1-result.html?round='+round:'final.html?round='+round+'&go=report';
+    var base=series==='last'?'final.html?set=last&round='+round+'&go=report':'final.html?round='+round+'&go=report';
     return withName(base);
   }
   function reportLabel(){
@@ -556,7 +556,7 @@
   function reportUrl(series,round){
     var nm=studentName(),helper=window.GFIELD_FINAL_LAST_ROUTES;
     if(helper&&helper.reportUrl) return helper.reportUrl(series,round,nm);
-    var url=series==='last'?'last1-result.html?round='+round:'final.html?round='+round+'&go=report';
+    var url=series==='last'?'final.html?set=last&round='+round+'&go=report':'final.html?round='+round+'&go=report';
     return url+(nm?('&name='+encodeURIComponent(nm)):'');
   }
   function openResult(round){

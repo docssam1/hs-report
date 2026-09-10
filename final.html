@@ -531,14 +531,22 @@ td.weak-cell{white-space:nowrap}
   var files=['hs-auth.js','data.js',mockFile];
   if(!isOriginal) files.push('mock-data-original.js');
   files.push('bank/bank-registry.js');
-  if(!isLast&&!isOriginal) files.push('mock-rx-data.js','final-diagnostic-comment.js','final-population.js','final-report-state.js');
+  if(!isOriginal) files.push('mock-rx-data.js');
+  if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js','final-report-state.js');
   if(isFinal1) files.push('final1-detailed-data.js','final-detailed-solutions.js');
   if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js','final-report-print.js');
   if(isFinal3) files.push('final3-solution-diagrams.js','final3-backhalf-solution-diagrams.js','final3-detailed-data.js','final-detailed-solutions.js');
   if(isFinal4) files.push('final4-detailed-data.js','final-detailed-solutions.js');
   if(isLast) files.push(
+    'mock-data-final.js',
+    'final-population.js',
     'mock-data-last3.js',
     'mock-data-last4.js',
+    'last-score-data.js',
+    'last-answer-data.js',
+    'last1-detailed-data.js',
+    'last-report-data.js',
+    'final-detailed-solutions.js',
     'last-exam-svg.js',
     'last-exam-svg3.js',
     'last-exam-svg4.js'
@@ -561,13 +569,15 @@ td.weak-cell{white-space:nowrap}
   var isOriginal = params.get('set')==='original';
   var isFinal2 = !isLast&&!isOriginal&&Number(params.get('round')||1)===2;
   var M = isLast ? window.GFIELD_MOCK_LAST : (isOriginal ? window.GFIELD_MOCK_ORIGINAL : window.GFIELD_MOCK_FINAL);
+  var finalModel = window.GFIELD_MOCK_FINAL;
   var finalBaseStats = {};
-  if(!isLast&&!isOriginal){
+  if(!isOriginal&&finalModel&&finalModel.rounds){
     for(var baseRound=1;baseRound<=4;baseRound++){
-      var baseStats=M.rounds[String(baseRound)]&&M.rounds[String(baseRound)].stats;
+      var baseStats=finalModel.rounds[String(baseRound)]&&finalModel.rounds[String(baseRound)].stats;
       if(baseStats) finalBaseStats[String(baseRound)]=baseStats;
     }
   }
+  var lastFinalPopulationByRound = {};
   var TAX_SET_KEY = isOriginal?'original':(isLast?'last':'final');
   var TAXONOMY_INDEX = (function(){
     try{
@@ -585,6 +595,11 @@ td.weak-cell{white-space:nowrap}
   function taxonomyOf(rNum,item){
     item=item||{};
     var x=TAXONOMY_INDEX[[TAX_SET_KEY,Number(rNum),Number(item.no)].join('|')];
+    if(x&&item.taxonomyReviewStatus==='verified-source-bound'&&item.subarea){
+      return Object.assign({},x,{subarea:item.subarea,subareaId:'source-bound|'+(item.area||'')+'|'+item.subarea,
+        detailType:item.type||x.detailType,canonicalTypeId:'source-bound|'+TAX_SET_KEY+'|'+Number(rNum)+'|'+Number(item.no),
+        reviewStatus:'confirmed',reviewRequired:false,reviewBasis:'reviewed source-bound report taxonomy'});
+    }
     if(x) return x;
     var raw=item.type||'';
     return {area:item.area||'',subarea:item.subarea||'검토 대기',subareaId:item.subarea?('source|'+(item.area||'')+'|'+item.subarea):'review-other',
@@ -673,6 +688,10 @@ td.weak-cell{white-space:nowrap}
   function percentileFor(score, S){
     var secure=typeof window==='object'&&window.GFIELD_FINAL_POPULATION;
     if(secure&&secure.isVerified(S)) return secure.percentile(score,S);
+    if(Array.isArray(S.percentileTable)){
+      for(var i=0;i<S.percentileTable.length;i++) if(score>=Number(S.percentileTable[i][0])) return Number(S.percentileTable[i][1]);
+      return S.percentileTable.length?Number(S.percentileTable[S.percentileTable.length-1][1]):null;
+    }
     return Array.isArray(S.dist)&&S.n>0?percentileOf(score,S.dist,S.n):null;
   }
   function cutInfo(score, cuts){
@@ -711,6 +730,13 @@ td.weak-cell{white-space:nowrap}
      단순 숫자 배열이나 다른 회차에서 비례 복제한 값은 개인 진단에 섞지 않는다. */
   function populationStatsVerified(S){
     if(window.GFIELD_FINAL_POPULATION&&window.GFIELD_FINAL_POPULATION.isVerified(S)) return true;
+    var rank=S&&S.rankEvidence;
+    if(rank&&rank.status==='verified-source-rank'&&rank.sourceId&&rank.sourceRef&&rank.verifiedAt){
+      if(Array.isArray(S.percentileTable)&&S.percentileTable.length&&S.percentileTable.every(function(row,index,rows){
+        return Array.isArray(row)&&Number.isFinite(Number(row[0]))&&Number.isFinite(Number(row[1]))&&Number(row[1])>0&&Number(row[1])<=100&&(!index||(Number(row[0])<Number(rows[index-1][0])&&Number(row[1])>=Number(rows[index-1][1])));
+      })) return true;
+      if(Array.isArray(S.dist)&&Number(S.n)===S.dist.length&&S.n>0&&S.dist.every(function(v){return Number.isFinite(Number(v))&&Number(v)>=0&&Number(v)<=100;})) return true;
+    }
     var e=S&&(S.populationEvidence||S.evidence);
     if(!(e&&e.status==='verified'&&e.sourceId&&e.sourceRef&&e.observedAt&&e.verifiedBy&&e.verifiedAt)) return false;
     var cohort=e.cohort||{}, distribution=e.scoreDistribution||{}, itemRates=e.itemRates||{};
@@ -980,7 +1006,18 @@ td.weak-cell{white-space:nowrap}
     return '<div class="report-table-scroll"><table><thead><tr><th>번호</th><th>내 답</th><th>유형 / 영역</th><th>배점</th><th>정답</th>'+popHead+'<th>영상</th><th class="weak-cell no-print">약점 표시</th></tr></thead>'+detailRowsHTML(ctx)+'</table></div>';
   }
   function detailedAnswersSectionHTML(ctx){
-    if(isLast||isOriginal) return '';
+    if(isOriginal) return '';
+    if(isLast&&ctx.roundNum===1&&window.GFIELD_FINAL1_DETAILED_RENDERER&&window.GFIELD_LAST1_DETAILED){
+      return '<section class="detail-section report-detailed-section" id="detailedAnswersSection" aria-label="검수된 상세 답안">'+window.GFIELD_FINAL1_DETAILED_RENDERER.render({
+        round:1,
+        prefix:'last1',
+        seriesLabel:'최종',
+        requireQ7NumberLine:false,
+        data:window.GFIELD_LAST1_DETAILED,
+        roundItems:ctx.items
+      })+'</section>';
+    }
+    if(isLast) return '';
     if(ctx.roundNum===1&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.render==='function'){
       return '<section class="detail-section report-detailed-section" id="detailedAnswersSection" aria-label="검수된 상세 답안">'+window.GFIELD_FINAL1_DETAILED_RENDERER.render({data:window.GFIELD_FINAL1_DETAILED,roundItems:ctx.items})+'</section>';
     }
@@ -1087,6 +1124,10 @@ td.weak-cell{white-space:nowrap}
     return approved;
   }
   function curriculumPrescriptionForItem(ctx,item,approvalRows){
+    if(item&&item.prescriptionOverride) return item.prescriptionOverride;
+    if(item&&Object.prototype.hasOwnProperty.call(item,'prescriptionType')){
+      return item.prescriptionType?prescriptionOf(item.prescriptionType):null;
+    }
     if(TAX_SET_KEY!=='final'||!ctx||Number(ctx.roundNum)!==2) return prescriptionOf(item&&item.type);
     var approved=reviewedFinal2CurriculumApproval(ctx,item,approvalRows);
     return approved?{
@@ -1115,7 +1156,7 @@ td.weak-cell{white-space:nowrap}
     return lines.length?'<ul class="curriculum-books">'+lines.join('')+'</ul>':'<span class="curriculum-pending">연결 확인 중</span>';
   }
   function curriculumConnectionHTML(ctx){
-    if(isLast||isOriginal) return '';
+    if(isOriginal) return '';
     var wrong=ctx.wrongList||[];
     var lead=ctx.roundNum===2
       ? '문항별로 검수된 교재 연결만 표시합니다. 검수 전 연결은 확인 중으로 둡니다.'
@@ -1136,11 +1177,11 @@ td.weak-cell{white-space:nowrap}
   function reportScreenHeaderHTML(ctx){
     var comparison=ctx.populationVerified&&Number.isFinite(ctx.pct);
     var finalMetric=comparison?'<div><dt>석차 백분율</dt><dd>'+ctx.pct+'<small>%</small></dd></div>':'<div><dt>오답</dt><dd>'+ctx.wrong+'<small>문항</small></dd></div>';
-    return '<header class="report-screen-header"><div><span>초등선발 대비 파이널 '+ctx.roundNum+'회 진단</span><h1>'+esc(ctx.name)+' 학생</h1>'+(ctx.ratesVerified?'<span>평균 '+ctx.S.mean+'점 · 오답 '+ctx.wrong+'문항</span>':'')+(ctx.cutVerified?'<p class="report-expected-grade">예상 등급 · <b>'+esc(ctx.grade)+'</b></p>':'')+'</div><dl><div><dt>점수</dt><dd>'+ctx.score+'<small>/100</small></dd></div><div><dt>정답</dt><dd>'+ctx.ncorr+'<small>/30</small></dd></div>'+finalMetric+'</dl></header>';
+    return '<header class="report-screen-header"><div><span>초등선발 대비 '+esc(seriesLabel())+' '+ctx.roundNum+'회 진단</span><h1>'+esc(ctx.name)+' 학생</h1>'+(ctx.ratesVerified?'<span>평균 '+ctx.S.mean+'점 · 오답 '+ctx.wrong+'문항</span>':'')+(ctx.cutVerified?'<p class="report-expected-grade">예상 등급 · <b>'+esc(ctx.grade)+'</b></p>':'')+'</div><dl><div><dt>점수</dt><dd>'+ctx.score+'<small>/100</small></dd></div><div><dt>정답</dt><dd>'+ctx.ncorr+'<small>/30</small></dd></div>'+finalMetric+'</dl></header>';
   }
   function reportPrintCoverHTML(ctx){
     var stats=(ctx.ratesVerified?'<small>평균 '+ctx.S.mean+'점'+(Number.isFinite(ctx.pct)?' · 석차 백분율 '+ctx.pct+'%':'')+'</small>':'')+(ctx.cutVerified?'<small>예상 등급 · '+esc(ctx.grade)+'</small>':'');
-    return '<section class="report-print-cover" aria-label="파이널 진단 학습 패키지 표지"><div class="report-cover-mark" aria-hidden="true">G·FIELD</div><div class="report-cover-brand">지필드 영재교육</div><div class="report-cover-main"><p>초등선발 대비</p><h1>파이널 모의고사<br>진단 학습 패키지</h1><strong>파이널 '+ctx.roundNum+'회</strong></div><div class="report-cover-student"><span>STUDENT</span><b>'+esc(ctx.name)+'</b><i>'+ctx.score+'점</i>'+stats+'</div><div class="report-cover-index"><span>01 진단분석</span><span>02 오답 교재 연결</span><span>03 현재 확인된 상세답안</span></div><footer>G·FIELD GIFTED EDUCATION · 개인 학습 자료</footer></section>';
+    return '<section class="report-print-cover" aria-label="'+esc(seriesLabel())+' 진단 학습 패키지 표지"><div class="report-cover-mark" aria-hidden="true">G·FIELD</div><div class="report-cover-brand">지필드 영재교육</div><div class="report-cover-main"><p>초등선발 대비</p><h1>'+esc(seriesLabel())+' 모의고사<br>진단 학습 패키지</h1><strong>'+esc(seriesLabel())+' '+ctx.roundNum+'회</strong></div><div class="report-cover-student"><span>STUDENT</span><b>'+esc(ctx.name)+'</b><i>'+ctx.score+'점</i>'+stats+'</div><div class="report-cover-index"><span>01 진단분석</span><span>02 오답 교재 연결</span><span>03 상세 풀이</span></div><footer>G·FIELD GIFTED EDUCATION · 개인 학습 자료</footer></section>';
   }
 
   function wrongPracticeModel(ctx){
@@ -1246,7 +1287,7 @@ td.weak-cell{white-space:nowrap}
     }
     var crowdLine = (weak.crowd<=weak.perf+8) ? "다른 학생들도 어려워한 영역" : "본인이 특히 약한 영역";
     var missTxt = ctx.miss.length? ctx.miss.map(function(n){return n+'번';}).join(', ') : '없음';
-    return roundNote+'<p><b>'+esc(ctx.name)+'</b> 학생은 이번 초등선발 대비 실전 파이널 모의고사 '+ctx.roundNum+'회에서 <b>'+ctx.score+'점</b>(응시자 평균 '+ctx.S.mean+'점)을 얻어 30문항 중 <b>'+ctx.ncorr+'문항</b>을 맞혔습니다. 석차는 <b>'+ctx.pct+'%</b>, <b>'+esc(ctx.grade)+'</b> 정도가 예상됩니다.</p>'+
+    return roundNote+'<p><b>'+esc(ctx.name)+'</b> 학생은 이번 초등선발 대비 '+esc(seriesLabel())+' 모의고사 '+ctx.roundNum+'회에서 <b>'+ctx.score+'점</b>(응시자 평균 '+ctx.S.mean+'점)을 얻어 30문항 중 <b>'+ctx.ncorr+'문항</b>을 맞혔습니다. 석차는 <b>'+ctx.pct+'%</b>, <b>'+esc(ctx.grade)+'</b> 정도가 예상됩니다.</p>'+
       '<p>오답 '+nw+'문항의 복습 체크 항목은 <b>조건·지문 '+nc+'문항</b>, 풀이 절차 '+npr+'문항, 개념 확인 '+ncp+'문항입니다. 이는 문항에 등록한 주의점이며 실제 오답 원인은 풀이 확인 뒤 결정합니다.</p>'+
       '<p>수치로 보면 <b>'+weakP.k+'점 문항의 수행률이 '+weakP.perf.toFixed(0)+'%</b>로 가장 낮습니다. 배점이 낮은 문항과 높은 문항은 풀었는데 그 사이 구간에서 무너졌습니다. 영역으로는 <b>'+esc(weak.k)+'</b>이 '+weak.perf.toFixed(0)+'%이고 전체 평균이 '+weak.crowd.toFixed(0)+'%이니 '+crowdLine+'입니다.</p>'+
       '<p>개인 수행률과 문항 정답률이 모두 70% 이상인 강점 영역 우선 복습 후보는 <b>'+ctx.miss.length+'개</b>('+missTxt+'), 배점 합 <b>'+ctx.gain+'점</b>입니다. 70%는 초기 운영 기준이며, 이 문항만 바로잡고 다른 답안이 같다면 <b>'+ctx.newScore+'점 · 석차 백분율 '+ctx.newPct+'%</b>입니다.</p>'+
@@ -1467,6 +1508,32 @@ td.weak-cell{white-space:nowrap}
      attemptNo===1일 때만 사용합니다. */
   function computeCumulativeConsidered(roundNum, priorRows, attemptNo, fk, curOxArr, includeCurrent){
     var considered = []; // {n, pct, oxArr}
+    if(isLast){
+      if(roundNum===1){
+        for(var finalNo=1;finalNo<=4;finalNo++){
+          var finalKey='final'+finalNo,finalRow=priorRows[finalKey],finalStats=lastFinalPopulationByRound[String(finalNo)];
+          if(!finalRow||!validOx(finalRow.ox)||!populationStatsVerified(finalStats)) continue;
+          var finalOx=finalRow.ox.split(''),finalScore=computeScore(finalOx).score;
+          var finalPct=percentileFor(finalScore,finalStats);
+          if(finalPct!==null) considered.push({n:finalNo,label:'파이널 '+finalNo+'회',pct:finalPct,oxArr:finalOx,sourceModel:finalModel,sourceRound:finalNo});
+        }
+      }
+      for(var lastNo=1;lastNo<=roundNum;lastNo++){
+        if(!M.rounds[String(lastNo)]) continue;
+        var lastOx,lastKey='last'+lastNo;
+        if(lastNo===roundNum){
+          if(attemptNo===1&&includeCurrent!==false) lastOx=curOxArr;
+          else if(priorRows[fk]&&validOx(priorRows[fk].ox)) lastOx=priorRows[fk].ox.split('');
+          else continue;
+        }else if(priorRows[lastKey]&&validOx(priorRows[lastKey].ox)) lastOx=priorRows[lastKey].ox.split('');
+        else continue;
+        var lastStats=M.rounds[String(lastNo)].stats;
+        if(!populationStatsVerified(lastStats)) continue;
+        var lastPct=percentileFor(computeScore(lastOx).score,lastStats);
+        if(lastPct!==null) considered.push({n:lastNo,label:'최종 '+lastNo+'회',pct:lastPct,oxArr:lastOx,sourceModel:M,sourceRound:lastNo});
+      }
+      return considered;
+    }
     (M.cumulative.rounds||[]).forEach(function(rk){
       var mm = /^final(\d+)$/.exec(rk);
       if(!mm) return; // "last1-4" 등은 이 페이지의 데이터 범위 밖 (별도 데이터 파일 필요)
@@ -1492,13 +1559,14 @@ td.weak-cell{white-space:nowrap}
   }
   function computePersonalAttempts(roundNum, priorRows, attemptNo, fk, curOxArr, includeCurrent){
     var out=[];
+    var prefix=setPrefix();
     for(var n=1;n<=roundNum;n++){
       if(!M.rounds[String(n)]) continue;
       var oxa=null;
       if(n===roundNum){
         if(attemptNo===1&&includeCurrent!==false) oxa=curOxArr;
         else if(priorRows[fk]&&validOx(priorRows[fk].ox)) oxa=priorRows[fk].ox.split('');
-      }else if(priorRows['final'+n]&&validOx(priorRows['final'+n].ox)) oxa=priorRows['final'+n].ox.split('');
+      }else if(priorRows[prefix+n]&&validOx(priorRows[prefix+n].ox)) oxa=priorRows[prefix+n].ox.split('');
       if(oxa&&validOx(oxa)) out.push({n:n,oxArr:oxa,score:computeScore(oxa).score});
     }
     return out;
@@ -1593,9 +1661,23 @@ td.weak-cell{white-space:nowrap}
   }
 
   async function refreshFinalPopulation(priorRows){
-    if(isLast||isOriginal) return;
+    if(isOriginal) return;
     var api=window.GFIELD_FINAL_POPULATION;
     state.populationUnavailable=false;
+    if(isLast){
+      lastFinalPopulationByRound={};
+      if(roundNum!==1||!api) return;
+      for(var lastBaseRound=1;lastBaseRound<=4;lastBaseRound++){
+        var lastExam='final'+lastBaseRound,lastBase=finalBaseStats[String(lastBaseRound)];
+        var lastRow=priorRows&&priorRows[lastExam];
+        if(!lastBase||!lastRow||lastRow.source==='reset'||!validOx(lastRow.ox)) continue;
+        try{
+          var lastScore=computeScore(lastRow.ox.split('')).score;
+          lastFinalPopulationByRound[String(lastBaseRound)]=await api.load([lastScore],lastBase.cuts,teacherEntry?'admin':'student',lastExam);
+        }catch(e){}
+      }
+      return;
+    }
     // Reset every protected round before reading this student's score lookups.
     // A round with no saved result remains on its frozen aggregate-only baseline.
     Object.keys(finalBaseStats).forEach(function(key){
@@ -1686,7 +1768,7 @@ td.weak-cell{white-space:nowrap}
     } else {
       body = '<table><tr><th>유형</th><th>영역</th><th>표시한 회차</th><th class="no-print"></th></tr>'+
         rows.map(function(r){
-          var mm=/^(final|original)(\d+)$/.exec(r.round||''); var roundLabel = mm? ((mm[1]==='original'?'시그니처 실전':'파이널')+' '+mm[2]+'회') : esc(r.round||'-');
+          var mm=/^(final|last|original)(\d+)$/.exec(r.round||''); var roundLabel = mm? ((mm[1]==='original'?'시그니처 실전':(mm[1]==='last'?'최종':'파이널'))+' '+mm[2]+'회') : esc(r.round||'-');
           return '<tr><td>'+esc(r.type)+'</td><td>'+esc(r.area||'-')+'</td><td class="c">'+roundLabel+'</td>'+
             '<td class="c no-print"><button type="button" class="weakbtn on" data-unmark="1" data-type="'+esc(r.type)+'">해제</button></td></tr>';
         }).join('')+'</table>';
@@ -1747,10 +1829,7 @@ td.weak-cell{white-space:nowrap}
   function enterFlow(){
     var R = getRound();
     if(!R || (R.ready===false && !preview)){ renderStart(); return; }
-    if(goParam==='report'){
-      if(M.mode==='paper-only'){ openAnswerPage(); return; }
-      gradeAndShowReport({viewOnly:true}); return;
-    }
+    if(goParam==='report'){ gradeAndShowReport({viewOnly:true}); return; }
     if(goParam==='paper'){ renderPaper(); return; }
     if(goParam==='answer'){
       if(M.mode==='paper-only'){ openAnswerPage(); return; }
@@ -2175,7 +2254,7 @@ td.weak-cell{white-space:nowrap}
     if(viewOnly){
       var official=priorRows[fk];
       if(!official||!validOx(official.ox)){
-        app.innerHTML='<div class="doc"><section><h2>'+esc(state.name)+' 학생 파이널 '+roundNum+'회 성적표</h2><div class="lead">파이널 '+roundNum+'회 성적표가 아직 등록되지 않았습니다.</div></section></div>';
+        app.innerHTML='<div class="doc"><section><h2>'+esc(state.name)+' 학생 '+esc(seriesLabel())+' '+roundNum+'회 성적표</h2><div class="lead">'+esc(seriesLabel())+' '+roundNum+'회 성적표가 아직 등록되지 않았습니다.</div></section></div>';
         return;
       }
       state.oxArr=String(official.ox).split('');
@@ -2239,7 +2318,7 @@ td.weak-cell{white-space:nowrap}
 
     var cumHTML;
     if(!ctx.populationVerified){
-      var personalTrend=personalAttempts.length?'<table><tr><th>최초 응시</th><th>개인 점수</th></tr>'+personalAttempts.map(function(c){return '<tr><td>파이널 '+c.n+'회</td><td class="c"><b>'+c.score+'점</b></td></tr>';}).join('')+'</table>':'<div class="lead">아직 누적할 최초 응시 기록이 없습니다.</div>';
+      var personalTrend=personalAttempts.length?'<table><tr><th>최초 응시</th><th>개인 점수</th></tr>'+personalAttempts.map(function(c){return '<tr><td>'+esc(seriesLabel())+' '+c.n+'회</td><td class="c"><b>'+c.score+'점</b></td></tr>';}).join('')+'</table>':'<div class="lead">아직 누적할 최초 응시 기록이 없습니다.</div>';
       var safeRepMap={};
       personalAttempts.forEach(function(c){
         var seen={},R2=M.rounds[String(c.n)];
@@ -2253,29 +2332,30 @@ td.weak-cell{white-space:nowrap}
         });
       });
       var safeRepeated=Object.keys(safeRepMap).map(function(k){return safeRepMap[k];}).filter(function(x){return x.rounds.length>=2;});
-      var safeRepHTML=safeRepeated.length?safeRepeated.map(function(x){return '<div class="repwk"><b>'+esc(x.label)+'</b> — 파이널 '+x.rounds.join('·')+'회 반복 오답'+(x.reviewRequired?' <small>(소영역 분류 검토 중)</small>':'')+'</div>';}).join(''):'<div class="repwk">같은 세부유형이 두 회차 이상 반복된 오답은 아직 없습니다.</div>';
+      var safeRepHTML=safeRepeated.length?safeRepeated.map(function(x){return '<div class="repwk"><b>'+esc(x.label)+'</b> — '+esc(seriesLabel())+' '+x.rounds.join('·')+'회 반복 오답'+(x.reviewRequired?' <small>(소영역 분류 검토 중)</small>':'')+'</div>';}).join(''):'<div class="repwk">같은 세부유형이 두 회차 이상 반복된 오답은 아직 없습니다.</div>';
       cumHTML=personalTrend+
         '<h2 style="margin-top:22px;font-size:16px">회차를 건너 반복되는 세부유형</h2>'+safeRepHTML;
-    } else if(roundNum<=1){
+    } else if(roundNum<=1&&!isLast){
       cumHTML = '<p style="font-size:14px;color:var(--ink2)">이번이 첫 회차라 아직 누적 데이터가 없습니다. 지금은 무슨 반 가능 여부보다 <b>현재 위치를 파악하는 것</b>에 의미가 있습니다. 2회차부터 회차별 추이와 누적 석차, 그리고 <b>회차를 건너 반복해서 틀리는 유형</b>이 표시됩니다.</p>';
     } else {
       /* 누적 성적은 1차(기본) 응시만 사용합니다. 연습 재응시(@2/@3)는 절대 포함하지 않습니다. */
       if(!considered.length){
-        cumHTML = '<p style="font-size:14px;color:var(--ink2)">아직 누적 계산에 쓸 이전 파이널 회차 기록이 없습니다.</p>';
+        cumHTML = '<p style="font-size:14px;color:var(--ink2)">아직 누적 계산에 쓸 이전 '+esc(seriesLabel())+' 회차 기록이 없습니다.</p>';
       } else {
         var avgPct = round1(considered.reduce(function(s,c){return s+c.pct;},0)/considered.length);
         var band = cumulativeGrade(avgPct, M.cumulative.bands) || ['-', 0];
-        var trend = considered.map(function(c){ return '<tr><td>파이널 '+c.n+'회</td><td class="c">'+c.pct+'%</td></tr>'; }).join('');
+        var trend = considered.map(function(c){ return '<tr><td>'+esc(c.label||seriesLabel()+' '+c.n+'회')+'</td><td class="c">'+c.pct+'%</td></tr>'; }).join('');
         var repMap = {};
         considered.forEach(function(c){
-          var R2 = M.rounds[String(c.n)];
+          var sourceModel=c.sourceModel||M,R2 = sourceModel&&sourceModel.rounds&&sourceModel.rounds[String(c.sourceRound||c.n)];
+          if(!R2||!Array.isArray(R2.items)) return;
           R2.items.forEach(function(it){
-            if(c.oxArr[it.no-1]==='X'){ (repMap[it.type]=repMap[it.type]||[]).push(c.n); }
+            if(c.oxArr[it.no-1]==='X'){ (repMap[it.type]=repMap[it.type]||[]).push(c.label||c.n); }
           });
         });
-        var repEntries = Object.keys(repMap).map(function(t){ return {type:t, rounds:repMap[t].slice().sort(function(a,b){return a-b;})}; }).filter(function(e){ return e.rounds.length>1; });
+        var repEntries = Object.keys(repMap).map(function(t){ return {type:t, rounds:repMap[t].slice()}; }).filter(function(e){ return e.rounds.length>1; });
         var repHTML = repEntries.length
-          ? repEntries.map(function(e){ return '<div class="repwk"><b>'+esc(e.type)+'</b> — '+repeatLabel(e.rounds)+'</div>'; }).join('')
+          ? repEntries.map(function(e){ return '<div class="repwk"><b>'+esc(e.type)+'</b> — '+(isLast?esc(e.rounds.join(' · ')):repeatLabel(e.rounds))+'</div>'; }).join('')
           : '<div class="repwk">회차를 건너 반복해서 틀린 유형은 아직 없습니다.</div>';
         var cumLabel = esc(M.cumulative.label || M.cumulative.method || '석차 백분율 평균');
         cumHTML = '<table><tr><th>회차</th><th>석차 백분율</th></tr>'+trend+'</table>'+
@@ -2296,7 +2376,7 @@ td.weak-cell{white-space:nowrap}
     var kpiHTML=ctx.populationVerified
       ? '<div><i>점수 / 평균</i><b>'+ctx.score+'<small> / '+ctx.S.mean+'</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>석차</i><b>'+ctx.pct+'%</b></div><div><i>예상 결과</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div>'
       : '<div><i>개인 점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>오답</i><b>'+ctx.wrong+'<small>문항</small></b></div>'+(ctx.R&&Number.isFinite(Number(ctx.R.reportedAverage))?'<div><i>제공 평균</i><b>'+Number(ctx.R.reportedAverage)+'<small>점</small></b></div>':'<div><i>진단 기준</i><b style="font-size:15px">개인 수행</b></div>');
-    var isStandardFinal=!isLast&&!isOriginal;
+    var isStandardFinal=!isOriginal;
     var personalColor=isStandardFinal?'파란색':'주황색';
     var areaLead=ctx.ratesVerified?personalColor+'은 '+esc(ctx.name)+' 학생의 결과, 회색 점선은 평균입니다.':'영역별로 맞힌 문제와 더 연습할 문제를 살펴보세요.';
     var areaLegend='<div class="legend"><span><s style="background:rgba(249,115,22,.5);border:1px solid #ea580c"></s>'+esc(ctx.name)+'</span>'+(ctx.ratesVerified?'<span><s style="background:rgba(148,163,184,.4);border:1px dashed #94a3b8"></s>평균</span>':'')+'</div>';
@@ -2310,7 +2390,7 @@ td.weak-cell{white-space:nowrap}
     var cumulativeLead='그동안의 점수 변화와 반복해서 틀린 유형을 살펴보세요.';
     var reportHead=isStandardFinal
       ? reportPrintCoverHTML(ctx)+'<div class="report-fixed-watermark" aria-hidden="true">지필드 영재교육 · '+esc(ctx.name)+' 학생</div>'+reportScreenHeaderHTML(ctx)
-      : '<div class="cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>파이널 모의고사 진단분석지</h1><div class="sub">초등선발 대비 실전 파이널 모의고사 '+roundNum+'회 · 생각하는 황소 대비</div><div class="who"><b>'+esc(ctx.name)+'</b><span>학생</span></div><div class="kpi">'+kpiHTML+'</div></div>';
+      : '<div class="cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>'+esc(seriesLabel())+' 모의고사 진단분석지</h1><div class="sub">초등선발 대비 '+esc(seriesLabel())+' 모의고사 '+roundNum+'회 · 생각하는 황소 대비</div><div class="who"><b>'+esc(ctx.name)+'</b><span>학생</span></div><div class="kpi">'+kpiHTML+'</div></div>';
     var coachingHTML=isStandardFinal?'<div class="report-coaching"><h2>다음 학습을 위한 조언</h2><div class="cmt" id="cmtBody">'+buildComment(ctx,state.weak)+'</div></div>':'';
     var legacyCommentHTML=isStandardFinal?'':'<section style="border-bottom:none"><h2>원장 코멘트</h2><div class="cmt" id="cmtBody">'+buildComment(ctx,state.weak)+'</div><div class="sign">지필드 영재교육 원장 <b>DOCSSAM</b></div></section>';
 
@@ -2367,7 +2447,7 @@ td.weak-cell{white-space:nowrap}
     wireWeakToggles(ctx);
     wireWrongPractice(ctx);
     if(isStandardFinal&&window.GFIELD_FINAL_REPORT_STATE)window.GFIELD_FINAL_REPORT_STATE.wire(app);
-    if((roundNum===1||roundNum===2||roundNum===3)&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.wire==='function') window.GFIELD_FINAL1_DETAILED_RENDERER.wire();
+    if((roundNum===1||roundNum===2||roundNum===3||roundNum===4)&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.wire==='function') window.GFIELD_FINAL1_DETAILED_RENDERER.wire();
   }
 
   /* ===================== boot ===================== */
@@ -2389,7 +2469,7 @@ td.weak-cell{white-space:nowrap}
     var student = urlName;
     if(!student) student=storedStudent;
     if(goParam==='report'&&!preview&&!teacherEntry&&(!student||!storedStudent||student!==storedStudent)){
-      app.innerHTML='<div class="doc"><section><h2>내 성적표 전용 화면입니다</h2><div class="lead">로드맵에 로그인한 학생 이름과 성적표 이름이 같을 때만 열립니다. 학생 화면으로 돌아가 본인 이름으로 로그인한 뒤 「내 파이널 성적표」를 눌러 주세요.</div></section></div>';
+      app.innerHTML='<div class="doc"><section><h2>내 성적표 전용 화면입니다</h2><div class="lead">로드맵에 로그인한 학생 이름과 성적표 이름이 같을 때만 열립니다. 학생 화면으로 돌아가 본인 이름으로 로그인한 뒤 「내 '+esc(seriesLabel())+' 성적표」를 눌러 주세요.</div></section></div>';
       return;
     }
     if(student&&allowedForRound(student)){ state.name=student; enterFlow(); }
