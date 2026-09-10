@@ -10,11 +10,12 @@
 
   function point(no){return no<=12?2.7:(no<=22?3.4:4.2);}
   function answerRows(round){
-    if(round===1){
-      var detailed=root.GFIELD_LAST1_DETAILED&&root.GFIELD_LAST1_DETAILED.items;
-      return Array.isArray(detailed)?detailed.map(function(item){
+    if(round===1||round===2){
+      var source=round===1?root.GFIELD_LAST1_DETAILED:root.GFIELD_LAST2_DETAILED;
+      var detailed=source&&source.items;
+      if(Array.isArray(detailed)&&detailed.length===30) return detailed.map(function(item){
         return {status:item.reviewStatus,answer:item.answer,explanation:item.method,caution:item.caution};
-      }):[];
+      });
     }
     return answerModel&&answerModel.rounds&&answerModel.rounds[String(round)]||[];
   }
@@ -61,6 +62,29 @@
       '지필드':[{b:'ThinkingCore',u:'CH1 NUMBERS · 재치 있게 계산하기'}]
     },pts:['3·33·333을 먼저 따로 더하기','나머지 항은 같은 수가 몇 번 나오는지 세어 곱하기','마지막 네 자리만 필요하면 10000으로 나눈 나머지 확인하기']}
   };
+  var LAST2_SUBAREAS=[
+    '일과 작업량','자리 수와 조건 세기','달력·요일','등차 관계와 나이','쌓기나무·세 방향 투영',
+    '도형의 개수','수열과 규칙','간격·속력','마디수열·규칙찾기','수와 숫자 세기',
+    '수 배열의 합','자리 수 범위가 없는 두 수의 곱의 최대·최소','거울 시계','수량 관계','도형 암호',
+    '몫과 나머지','수 배열의 규칙','규칙 따라 건너뛰기','대각선 수 배열','비례 배분',
+    '거꾸로 풀기','소수 자릿수 세기','일·속력·시간','조건에 맞는 수','재치 있게 계산하기',
+    '정답 추리','달력·요일','일과 작업량','쌓기나무 성냥개비','거리·속력·시간'
+  ];
+  var LAST2_PRESCRIPTION_HINTS=[
+    '일에 관한 문제','조건에 맞는 수','요일','등차수열','쌓기나무',
+    '사각형의 개수','수열','간격','반복마디','특정 숫자 세기',
+    '가우스 덧셈','', '고장난 시계','합과 차','암호',
+    '몫과 나머지','수 배열표','우기기','가우스 덧셈','비례식',
+    '거꾸로 해결하기','', '일에 관한 문제','조건에 맞는 수','재치 있게 계산하기',
+    '논리추리','요일','일에 관한 문제','쌓기나무','거리 속력 시간'
+  ];
+  var LAST2_PRESCRIPTION_OVERRIDES={
+    12:{label:'자리 수 범위가 없는 두 수의 곱의 최대·최소',connectionKind:'same-type',books:{},pts:[
+      '문제에 두 자리 수끼리 곱한다는 조건이 있는지 먼저 확인하기',
+      '최댓값은 두 자리×두 자리와 세 자리×한 자리를 모두 비교하기',
+      '최솟값도 자리 수를 고정하지 말고 모든 나눔을 비교하기'
+    ]}
+  };
 
   model.blueprint=Array.from({length:30},function(_,index){
     return {no:index+1,pts:point(index+1)};
@@ -78,22 +102,24 @@
     var answers=answerRows(round);
     if(answers.length!==30) return;
     paper.items=source.items.map(function(meta,index){
-      var row=answers[index]||{},detail=round===1&&root.GFIELD_LAST1_DETAILED&&root.GFIELD_LAST1_DETAILED.items[index];
+      var detailedSource=round===1?root.GFIELD_LAST1_DETAILED:(round===2?root.GFIELD_LAST2_DETAILED:null);
+      var row=answers[index]||{},detail=detailedSource&&detailedSource.items[index];
+      var reviewedRound=round===1||round===2;
       return {
         no:index+1,
         type:meta.type,
         area:meta.area,
-        subarea:round===1?LAST1_SUBAREAS[index]:'',
-        taxonomyReviewStatus:round===1?'verified-source-bound':'candidate',
-        prescriptionType:round===1?LAST1_PRESCRIPTION_HINTS[index]:undefined,
-        prescriptionOverride:round===1?LAST1_PRESCRIPTION_OVERRIDES[index+1]:undefined,
+        subarea:round===1?LAST1_SUBAREAS[index]:(round===2?LAST2_SUBAREAS[index]:''),
+        taxonomyReviewStatus:reviewedRound?'verified-source-bound':'candidate',
+        prescriptionType:round===1?LAST1_PRESCRIPTION_HINTS[index]:(round===2?LAST2_PRESCRIPTION_HINTS[index]:undefined),
+        prescriptionOverride:round===1?LAST1_PRESCRIPTION_OVERRIDES[index+1]:(round===2?LAST2_PRESCRIPTION_OVERRIDES[index+1]:undefined),
         pts:point(index+1),
         answer:String(row.answer==null?'':row.answer),
         comment:String(row.explanation||''),
         t:Number(source.videoTimes[index])||0,
         tag:tagFor(meta.type),
         caution:String(row.caution||(detail&&detail.caution)||'문제의 조건과 답의 단위를 끝까지 확인하세요.'),
-        detailedSolution:round===1&&row.status==='verified'
+        detailedSolution:reviewedRound&&row.status==='verified'
       };
     });
     paper.video=source.video||paper.video;

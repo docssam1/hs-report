@@ -75,6 +75,7 @@ const server=http.createServer((req,res)=>{
    assert.doesNotMatch(summary,/\d[\d,]*\s*명|응시\s*인원/,'report summaries do not disclose participant counts (problem conditions may contain people)');
    if(title==='파이널 실전 모의고사 1회')assert.equal(await rp.locator('.final1-detailed-card.is-ready').count(),30,'approved Final1 detailed solutions kept');
    if(title==='최종 실전 모의고사 1회')assert.equal(await rp.locator('.final1-detailed-card.is-ready').count(),30,'reviewed Last1 detailed solutions are complete');
+   if(title==='최종 실전 모의고사 2회')assert.equal(await rp.locator('.final1-detailed-card.is-ready').count(),30,'reviewed Last2 detailed solutions are complete');
    if(title==='파이널 실전 모의고사 2회'){
     const count=await rp.evaluate(()=>GF_TEST.computeCumulativeConsidered(2,{final1:{ox:'O'.repeat(20)+'X'.repeat(10)},'final1@2':{ox:'O'.repeat(30)}},1,'final2',('O'.repeat(20)+'X'.repeat(10)).split(''),true).length);
     assert.equal(count,2,'verified Final1 and current Final2 enter cumulative once; retry stays excluded');
@@ -87,12 +88,12 @@ const server=http.createServer((req,res)=>{
    snapshots.push({title,url:new URL(url).pathname});
    await lp.setViewportSize({width:390,height:844});assert.ok(await lp.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'mobile report fits');
    if(process.env.GFIELD_QA_ARTIFACT_DIR){fs.mkdirSync(process.env.GFIELD_QA_ARTIFACT_DIR,{recursive:true});await lp.screenshot({path:path.join(process.env.GFIELD_QA_ARTIFACT_DIR,'same-'+(title.startsWith('파이널')?'final':'last')+title.match(/(\d+)회/)[1]+'-report.png')});}
-   if(title==='최종 실전 모의고사 1회'){
+   if(title==='최종 실전 모의고사 1회'||title==='최종 실전 모의고사 2회'){
     await lp.emulateMedia({media:'print'});
-    assert.equal(await lp.locator('.report-print-cover').isVisible(),true,'Last1 print package has a cover');
+    assert.equal(await lp.locator('.report-print-cover').isVisible(),true,title+' print package has a cover');
     assert.equal(await lp.locator('.report-screen-header').isVisible(),false,'screen header is not duplicated in print');
-    assert.equal(await lp.locator('.final1-detailed-card.is-ready').count(),30,'all reviewed Last1 solutions remain in print');
-    if(process.env.GFIELD_QA_ARTIFACT_DIR)await lp.pdf({path:path.join(process.env.GFIELD_QA_ARTIFACT_DIR,'last1-diagnostic-package.pdf'),format:'A4',printBackground:true});
+    assert.equal(await lp.locator('.final1-detailed-card.is-ready').count(),30,'all reviewed '+(title.endsWith('1회')?'Last1':'Last2')+' solutions remain in print');
+    if(process.env.GFIELD_QA_ARTIFACT_DIR)await lp.pdf({path:path.join(process.env.GFIELD_QA_ARTIFACT_DIR,title.endsWith('1회')?'last1-diagnostic-package.pdf':'last2-diagnostic-package.pdf'),format:'A4',printBackground:true});
     await lp.emulateMedia({media:'screen'});
    }
    await rp.close();await lp.close();await page.evaluate(()=>closeBook());
@@ -108,6 +109,6 @@ const server=http.createServer((req,res)=>{
   }
   assert.equal(JSON.stringify(rows),originalRows,'first records and retries unchanged');assert.deepEqual(writes,[],'no result, percentile, comment or other writes');
   assert.ok(actions.every(a=>a==='read-report'));
-  console.log(JSON.stringify({pass:true,catalogReportLinks:covered,reportParity:snapshots,verifiedFinalReferences:4,final1Detailed:30,final2Detailed,missingNotZero:true,productionWrites:0}));
+  console.log(JSON.stringify({pass:true,catalogReportLinks:covered,reportParity:snapshots,verifiedFinalReferences:4,final1Detailed:30,final2Detailed,last2Detailed:30,missingNotZero:true,productionWrites:0}));
  }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});

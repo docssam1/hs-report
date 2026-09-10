@@ -545,6 +545,7 @@ td.weak-cell{white-space:nowrap}
     'last-score-data.js',
     'last-answer-data.js',
     'last1-detailed-data.js',
+    'last2-detailed-data.js',
     'last-report-data.js',
     'final-detailed-solutions.js',
     'last-exam-svg.js',
@@ -1007,13 +1008,15 @@ td.weak-cell{white-space:nowrap}
   }
   function detailedAnswersSectionHTML(ctx){
     if(isOriginal) return '';
-    if(isLast&&ctx.roundNum===1&&window.GFIELD_FINAL1_DETAILED_RENDERER&&window.GFIELD_LAST1_DETAILED){
+    if(isLast&&(ctx.roundNum===1||ctx.roundNum===2)&&window.GFIELD_FINAL1_DETAILED_RENDERER){
+      var lastDetailed=ctx.roundNum===1?window.GFIELD_LAST1_DETAILED:window.GFIELD_LAST2_DETAILED;
+      if(!lastDetailed) return '';
       return '<section class="detail-section report-detailed-section" id="detailedAnswersSection" aria-label="검수된 상세 답안">'+window.GFIELD_FINAL1_DETAILED_RENDERER.render({
-        round:1,
-        prefix:'last1',
+        round:ctx.roundNum,
+        prefix:'last'+ctx.roundNum,
         seriesLabel:'최종',
         requireQ7NumberLine:false,
-        data:window.GFIELD_LAST1_DETAILED,
+        data:lastDetailed,
         roundItems:ctx.items
       })+'</section>';
     }
