@@ -2,10 +2,10 @@
   "version": "1.1.0",
   "sourceSet": "final",
   "sourceRound": 1,
-  "reviewedOn": "2026-09-06",
-  "frozenItemSetHash": "e5a4bb8cf6e3ab647c4e684d512a58b0a1ed964805b548c2d4c83f86403bceef",
+  "reviewedOn": "2026-09-11",
+  "frozenItemSetHash": "aa642f407284d7d78158acc9b00b67249749939d1ada84bba843bf5ce8f716b6",
   "frozenItemSetHashBasis": "SHA-256 of sorted id:itemContentHash rows joined by LF",
-  "questionIdentitySetHash": "e8a78d3e29732e86ae4519d94ac18875110cdbb14553afd2690b0b7f8f3cf006",
+  "questionIdentitySetHash": "e9949f1bb9c26338e1c9154936ed8ac43415612b00c1a7caf3657b18a32b90f1",
   "solutionEnricherVersion": "1.0.0",
   "statusMeaning": "verified는 이 콘텐츠 해시에 묶인 지문·조건·정답·풀이·문제 그림·풀이 그림의 검산 완료를 뜻합니다. Git 반영·배포 완료를 뜻하지 않습니다.",
   "responseRateNote": "파이널 1회 원문 문항에 연결된 난이도 분석용 추정 정답률입니다. 이 고정 변형 문항의 실측 정답률이 아닙니다.",
@@ -28,12 +28,12 @@
     {
       "id": "raster-review",
       "result": "PASS all fixed raster assets",
-      "method": "PNG 서명·크기와 실제 표시를 확인하고 q05 라벨, q13 우측 여백, q18 접기·절단, q20 절단 단계, q30 예시 3개를 재검토"
+      "method": "PNG 서명·크기와 실제 표시를 확인하고 q18 보기는 접기 한 세트만 한 번 제시하며 두 번째 반복은 지문으로 읽도록 재검토"
     },
     {
       "id": "question-identity-lock",
       "result": "PASS 90/90",
-      "method": "풀이 필드만 제외한 지문·조건·정답·문제 그림·수치 전제의 SHA-256 집합이 e8a78d3e29732e86ae4519d94ac18875110cdbb14553afd2690b0b7f8f3cf006와 일치"
+      "method": "풀이 필드만 제외한 지문·조건·정답·문제 그림·수치 전제의 SHA-256 집합이 e9949f1bb9c26338e1c9154936ed8ac43415612b00c1a7caf3657b18a32b90f1와 일치"
     },
     {
       "id": "self-study-solutions-q01-q15",
@@ -903,10 +903,10 @@
       "id": "final1-q18-v1",
       "sourceNo": 18,
       "variantNo": 1,
-      "questionIdentityHash": "a4ec493823110357aef51286bc8da5b17cad54754562eaded7c038f65d50c3b1",
-      "itemContentHash": "c513787dd9bf136b5d4507e44ed183055ac84e21f8216575545d190ed000f5d1",
+      "questionIdentityHash": "8157f32819ebe608114591451aa75cb73ef007f18ddf598c04c83f141d145371",
+      "itemContentHash": "500a84c90d5bce671a2113409e3602e502cd82f58395c29e924b7de08cc1ca99",
       "reviewStatus": "verified",
-      "reviewNotes": "mid-cross 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 25조각을 확인했습니다. 독학용 순서 풀이에서 두 번 접기 한 세트를 두 번 반복한 펼침 절단망의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
+      "reviewNotes": "mid-cross 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 25조각을 확인했습니다. 독학용 순서 풀이에서 두 번 접기 한 세트를 두 번 반복한 펼침 절단망의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다. 2026-09-11 사용자 검수에 따라 보기의 접기 그림은 한 세트만 한 번 제시하고, 두 번째 반복은 지문으로 읽도록 바로잡았습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
@@ -921,10 +921,10 @@
       "id": "final1-q18-v2",
       "sourceNo": 18,
       "variantNo": 2,
-      "questionIdentityHash": "cb520e81f087a0159aca057021d6a9a7391e0a3e90c8fc638afaaa824f3110ac",
-      "itemContentHash": "7e3db21442568993d26c434b7fce7119f675b7765ac42cddcc6d68b512fdd318",
+      "questionIdentityHash": "cf0ba8063264be15ac7343cfa602f896734c03c5eaac5eca840f2cf648455015",
+      "itemContentHash": "ffbbefc12731e499fd3964f87deb89d4c2e3ecb059b5cae9c66cbd11b86087e1",
       "reviewStatus": "verified",
-      "reviewNotes": "single-diagonal 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 12조각을 확인했습니다. 독학용 순서 풀이에서 두 번 접기 한 세트를 두 번 반복한 펼침 절단망의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
+      "reviewNotes": "single-diagonal 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 12조각을 확인했습니다. 독학용 순서 풀이에서 두 번 접기 한 세트를 두 번 반복한 펼침 절단망의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다. 2026-09-11 사용자 검수에 따라 보기의 접기 그림은 한 세트만 한 번 제시하고, 두 번째 반복은 지문으로 읽도록 바로잡았습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
@@ -939,10 +939,10 @@
       "id": "final1-q18-v3",
       "sourceNo": 18,
       "variantNo": 3,
-      "questionIdentityHash": "54bb8df15363a3afd41f7773f1404f596340f7deeb9f0a8df46864034198a7c5",
-      "itemContentHash": "768e10d89a63d0fc1b04c7316f989e16a4f37c1a5ebf1cdf53081dd4d1fd3258",
+      "questionIdentityHash": "67598d5ee7a91e4e08d95d91d0fb68f431c4d602c1372de8608bace85317a193",
+      "itemContentHash": "c0b5e708326d3fa4c710426a5e7baaeca4f9658146f3b58a7a88429bdbf5ffc1",
       "reviewStatus": "verified",
-      "reviewNotes": "diagonals 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 40조각을 확인했습니다. 독학용 순서 풀이에서 두 번 접기 한 세트를 두 번 반복한 펼침 절단망의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
+      "reviewNotes": "diagonals 절단망을 네 번의 반 접기 역순으로 펼치고 E−V+1로 다시 세어 40조각을 확인했습니다. 독학용 순서 풀이에서 두 번 접기 한 세트를 두 번 반복한 펼침 절단망의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다. 2026-09-11 사용자 검수에 따라 보기의 접기 그림은 한 세트만 한 번 제시하고, 두 번째 반복은 지문으로 읽도록 바로잡았습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",

@@ -57,6 +57,10 @@ function startServer() {
             !(sample.asset.width > 0) || !(sample.asset.height > 0) || !sample.asset.description) {
           fail(`${id}: real Canvas PNG inspection sample missing`);
         }
+        if (id === 'final1-q18' &&
+            !/보기에는 가로·세로 반 접기 한 세트만 한 번 그리고/.test(sample.asset.description)) {
+          fail('q18 repeats the sample fold drawings instead of showing one example set');
+        }
       });
       const fastAsset = () => ({ kind: 'raster', mimeType: 'image/png', src: 'data:image/png;base64,AA==', width: 2, height: 2, displayWidth: 1, displayHeight: 1, description: 'bulk math audit placeholder' });
       ['drawIsoStackWithHeightMap', 'drawTriangleChain', 'drawDistanceTable', 'drawRingPattern', 'drawNumberPyramid', 'drawMagicStar', 'drawSumGrid', 'drawCubeColumn', 'drawShapeValueGrid', 'drawMarkedRectGrid', 'drawDigitCards', 'drawCircleRule', 'drawFoldTwiceCut', 'drawCubeFaceDiagonalCuts']
@@ -264,6 +268,7 @@ function startServer() {
       if (!/자료실의 「도형의 개수」/.test(byId['final1-q22'].solution)) fail('q22 missing library follow-up');
       if (!/연장선이 만나는 점은 피자 밖/.test(byId['final1-q17'].text)) fail('q17 missing outside-intersection clarification');
       if (!/같은 방법을 한 번 더 반복/.test(byId['final1-q18'].text) || !/색종이 접기 개념이 아니라/.test(byId['final1-q18'].readingFocus)) fail('q18 missing repeated-example-reading focus');
+      if (!/보기에는 한 세트의 두 접기만 한 번 그림/.test(byId['final1-q18'].verification.visibleEvidence.method)) fail('q18 repeats the sample fold drawings instead of showing one example set');
       if (!/여섯 번의 칼질/.test(byId['final1-q20'].text) || !/전체 여섯 번.*현재/.test(byId['final1-q20'].readingFocus)) fail('q20 missing full-plan versus current-stage distinction');
       if (byId['final1-q26'].acceptedAnswers.length > 1 && (!/한 가지만 쓰세요/.test(byId['final1-q26'].text) || byId['final1-q26'].answerPolicy !== 'any-one')) fail('q26 multiple-answer acceptance contract missing');
       if (!/이름·요일·운동/.test(byId['final1-q23'].text) || byId['final1-q23'].answer.split(',').length !== 3) fail('q23 name-day-sport bundle missing');

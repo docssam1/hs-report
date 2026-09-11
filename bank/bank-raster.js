@@ -571,13 +571,18 @@
         arrow(x+w*(rightward?.2:.8),y+h*.55,x+w*(rightward?.8:.2),y+h*.55);
       }
     }
-    label(ctx,'보기: 가로로 반 접고 → 세로로 반 접기',202,20,{size:19,color:ink});
+    var firstLabel=spec.firstFold==='위→아래'?'위쪽을 아래로':'아래쪽을 위로';
+    var secondLabel=spec.secondFold==='오른쪽→왼쪽'?'오른쪽을 왼쪽으로':'왼쪽을 오른쪽으로';
+    label(ctx,'보기 · '+firstLabel+' 접기 → '+secondLabel+' 접기',202,20,{size:17,color:ink});
     folding(20,51,92,92,true);arrow(121,97,151,97);folding(164,97,92,46,false);
-    label(ctx,'① 보기의 방법 한 번',140,187,{size:18,color:ink});
-    arrow(274,97,303,97);
-    folding(319,74,68,68,true);arrow(398,108,425,108);folding(440,108,68,34,false);
-    label(ctx,'② 같은 방법을 한 번 더',415,187,{size:18,color:ink});
-    arrow(523,108,552,108);
+    label(ctx,'보기의 접기 방법 한 번',140,187,{size:18,color:ink});
+    ctx.save();
+    ctx.setLineDash([4,4]);
+    line(ctx,292,43,292,194,'#ced4da',1.2);
+    ctx.restore();
+    label(ctx,'위 보기의 방법을',423,69,{size:18,color:ink});
+    label(ctx,'한 번 더 반복한 뒤',423,98,{size:18,color:ink});
+    arrow(500,112,548,112);
     var x=586,y=54,side=96;
     ctx.strokeStyle=ink;ctx.lineWidth=2;ctx.strokeRect(x,y,side,side);
     var pattern=spec.cutPattern||'diagonals';
@@ -588,9 +593,9 @@
       line(ctx,x,y,x+side,y+side,'#111111',4);
       if(pattern!=='single-diagonal')line(ctx,x+side,y,x,y+side,'#111111',4);
     }
-    label(ctx,'③ 굵은 선대로 자르기',637,187,{size:18,color:ink});
+    label(ctx,'굵은 선대로 자르기',634,187,{size:18,color:ink});
     label(ctx,'접힌 종이 확대',634,34,{size:15,color:fold});
-    return finish(s, '가로 반 접기와 세로 반 접기를 한 묶음으로 두 번 반복하는 총 네 번의 접기와 마지막 절단선');
+    return finish(s, '보기에는 가로·세로 반 접기 한 세트만 한 번 그리고, 같은 방법을 글로 한 번 더 반복한 뒤 자르는 마지막 절단선');
   }
 
   function drawCubeFaceDiagonalCuts(variant) {

@@ -14,7 +14,8 @@ assert.match(sourceQuestions.find(q=>q.no===27).caution,/기차 길이−자동�
 // Reuse the existing independent reference calculations, never the generator.
 const reference=fs.readFileSync(path.join(root,'qa/bank-final1-generators-validate.js'),'utf8');
 const from=reference.indexOf('function externalAnswer(id, q) {');
-const to=reference.indexOf('\n\n      ids.forEach',from);
+const idsLoop=/\r?\n\r?\n\s{6}ids\.forEach/.exec(reference.slice(from));
+const to=idsLoop?from+idsLoop.index:-1;
 assert.ok(from>0&&to>from);
 const external=vm.runInNewContext('(function(){const digitSum=n=>String(n).split(\'\').reduce((s,d)=>s+Number(d),0);'+reference.slice(from,to)+';return externalAnswer;})()');
 function foldRegions(pattern){

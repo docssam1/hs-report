@@ -2,7 +2,7 @@
   "version": 1,
   "name": "hs-report-source-memory",
   "root": ".",
-  "updated": "2026-08-28",
+  "updated": "2026-09-11",
   "decisions": [
     {
       "id": "original-form-geometry-endpoint-topology-20260828",
@@ -18,6 +18,22 @@
         "qa/original-form-island-mask-validate.py",
         "qa/original-form-layout-validate.js",
         ".private-work/original-similar-2rounds/render-original-form-two-rounds.js"
+      ]
+    },
+    {
+      "id": "final1-q18-single-example-fold-sequence-20260911",
+      "status": "verified",
+      "scope": "Final 1 question 18 and its source-linked similar questions",
+      "rules": [
+        "The question figure shows the two-step fold sequence in the example exactly once.",
+        "The instruction to repeat the same fold sequence once more remains in the question text and is not redrawn in the example.",
+        "The final cut line is shown, but the unfolded result and answer-revealing construction are not shown in the question figure."
+      ],
+      "verification": [
+        "bank/bank-raster.js",
+        "bank/gens/g-final1.js",
+        "qa/bank-final1-generators-validate.js",
+        "qa/update-final1-q18-example-visual.js"
       ]
     }
   ]

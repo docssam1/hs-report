@@ -13,7 +13,7 @@ const OUTPUT_PATH = path.join(ROOT, 'bank', 'data', 'final1-fixed90.json');
 const AUDIT_PATH = path.join(ROOT, 'qa', 'final1-fixed90-content-audit.json');
 const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
 const FREEZE_SEED = 'F190';
-const LOCKED_QUESTION_IDENTITY_SET_HASH = 'e8a78d3e29732e86ae4519d94ac18875110cdbb14553afd2690b0b7f8f3cf006';
+const LOCKED_QUESTION_IDENTITY_SET_HASH = 'e9949f1bb9c26338e1c9154936ed8ac43415612b00c1a7caf3657b18a32b90f1';
 const SOURCE_RESPONSE_RATE_BASIS = '파이널 1회 원문 문항에 연결된 난이도 분석용 추정 정답률입니다. 이 고정 변형 문항의 실측 정답률이 아닙니다.';
 const IDS = Array.from({ length: 30 }, (_, index) => index + 1)
   .map((no) => `final1-q${String(no).padStart(2, '0')}`);

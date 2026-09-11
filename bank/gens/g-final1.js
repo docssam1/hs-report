@@ -286,7 +286,7 @@
       {
         asset: RASTER.drawFoldTwiceCut({ firstFold: plan.firstFold, secondFold: plan.secondFold, repeatCount: 2, totalHalfFolds: 4, cutPattern: plan.cutPattern, presentationVariant: plan.presentationVariant }),
         variantKey: 'fold-' + plan.cutPattern + '|' + plan.firstFold + '|' + plan.secondFold,
-        visibleMethod: '한 세트의 두 접기를 두 번 반복하는 총 네 번의 반 접기와 ' + plan.cutLabel + '를 순서대로 표시',
+        visibleMethod: '보기에는 한 세트의 두 접기만 한 번 그림으로 제시하고, 같은 세트를 한 번 더 반복한 뒤 ' + plan.cutLabel + '를 적용하도록 표시',
         solutionSteps: ['보기의 화살표 두 개가 한 세트임을 확인합니다.', '같은 세트를 한 번 더 반복해 반 접기를 모두 네 번 합니다.', '접은 순서의 반대로 절단 무늬를 펼쳐 그린 뒤 생긴 조각을 셉니다.']
       });
   });
