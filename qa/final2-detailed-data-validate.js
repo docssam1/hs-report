@@ -11,7 +11,7 @@ const EXPECTED=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,2
 const RELEASED23=[1,3,4,6,7,8,10,11,12,15,18,19,20,21,22,23,24,25,26,27,28,29,30];
 const REQUIRED_DIAGRAMS=new Map([
   [2,'final2-q2-alternating-square-chain-v1'],
-  [5,'final2-q5-point-contact-coloring-v1'],
+  [5,'final2-q5-cloud-coloring-v3'],
   [9,'final2-q9-five-edge-cuboid-paths-v1'],
   [12,'top-projection'],
   [13,'final2-q13-road-network-v1'],
@@ -23,7 +23,7 @@ const REQUIRED_DIAGRAMS=new Map([
 const REVIEW_ID='final2-detailed-review-20260909';
 const LEARNER_STAGE='초등 선발 대비 파이널 모의고사 수강생';
 const RELEASED23_EDUCATION_SHA256='f4dcca9f407a57c555b4723fa8101e322f29a219e5a9416a818b3e96a3183f53';
-const Q5_PUBLIC_PROJECTION_SHA256='1a1e8f8714c0de02a35b0e04015e9139c4bc2564505c17eb7ca9644d87c37acd';
+const Q5_PUBLIC_PROJECTION_SHA256='cd0aaa90bbfe00c3fab192e97fbf4c55fc1fbabc90842ccb62fab6ffe147eb36';
 const VISUAL_AMENDMENT={
   reviewId:'final2-original-visual-amendment-20260912',
   nos:[23,27,28],
@@ -176,9 +176,10 @@ assert.deepEqual(
   'the exact 20 explanations needing compact tabular evidence contain tables'
 );
 assert.equal(detailByNo.get(2).diagram,'final2-q2-alternating-square-chain-v1');
-assert.equal(detailByNo.get(5).diagram,'final2-q5-point-contact-coloring-v1');
-assert.match(detailByNo.get(5).read,/‘만나는’에는 한 점에서 닿는 경우도 포함/);
-assert.match(detailByNo.get(5).caution,/새 국경선을 그리는 것이 아닙니다/);
+assert.equal(detailByNo.get(5).diagram,'final2-q5-cloud-coloring-v3');
+assert.match(detailByNo.get(5).read,/구름 모양/);
+assert.match(detailByNo.get(5).read,/굽은 경계선/);
+assert.match(detailByNo.get(5).caution,/직선이나 점/);
 const q5Projection=Object.fromEntries(['no','title','answer','sourceLocator','read','method','steps','check','caution','diagram'].map(key=>[key,plain(detailByNo.get(5)[key])]));
 assert.equal(crypto.createHash('sha256').update(JSON.stringify(q5Projection)).digest('hex'),Q5_PUBLIC_PROJECTION_SHA256,'Q5 exact independently approved public projection');
 assert.equal(detailByNo.get(9).diagram,'final2-q9-five-edge-cuboid-paths-v1');
@@ -289,4 +290,4 @@ assert.match(review.supersessionBoundary,/actual 36-page detail and 50-page pack
 assert.match(review.supersessionBoundary,/remaining seven/);
 assert.doesNotMatch(JSON.stringify(review),/\\.private|clipboard|[a-f\\d]{64}/i,'public review contains no private locator or fingerprint');
 
-console.log('PASS Final2 reviewed data: exact 30 eligible, released-23 education hash preserved, reviewed Q23/Q27/Q28 visual amendment, nine fail-closed diagrams, approved Q5 point contract, and approval-demotion negative control');
+console.log('PASS Final2 reviewed data: exact 30 eligible, released-23 education hash preserved, reviewed Q23/Q27/Q28 visual amendment, nine fail-closed diagrams, source-matched Q5 cloud-boundary contract, and approval-demotion negative control');

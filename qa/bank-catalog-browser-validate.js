@@ -104,7 +104,7 @@ const ARTIFACT_DIR = process.env.GFIELD_QA_ARTIFACT_DIR || '';
     assert.match(await page.locator('#result-status').textContent(), /30문항$/, '파이널 3회 30문항');
     assert.equal(await page.getByRole('heading', { name: '우기기', exact: true }).count(), 1, '같은 기존 유형명의 미승인 타회차는 기존 제목 유지');
     assert.equal(await page.getByRole('heading', { name: '두 가지 점수의 총점에서 높은 점수 횟수 구하기', exact: true }).count(), 0, 'Final2 학생 표시명이 타회차에 전파되지 않음');
-    assert.equal(await page.getByRole('heading', { name: '점 접촉을 포함한 지도 최소 색칠', exact: true }).count(), 0, 'Final2 지도 조건명이 타회차 4색정리에 전파되지 않음');
+    assert.equal(await page.getByRole('heading', { name: '서로 만나는 나라의 최소 색칠', exact: true }).count(), 0, 'Final2 지도 조건명이 타회차 4색정리에 전파되지 않음');
 
     await page.selectOption('#source-filter', 'original');
     await page.selectOption('#round-filter', 'original|1');

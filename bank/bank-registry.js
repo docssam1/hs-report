@@ -82,7 +82,7 @@
     eligibleTaxonomyOverride('final|2|2', '도형', '크고 작은 도형의 개수(수열의 활용)', '도형의 개수', 'alternating-square-chain-rectangle-count', '번갈아 꺾인 정사각형 연결의 사각형 개수 세기', 'type-1asjoqy'),
     eligibleTaxonomyOverride('final|2|3', '식의 계산', '리그전', '합차와 배수', 'round-robin-total-wins-record', '단일 리그 전체 승수와 승수 차로 전적 구하기', 'type-01vpgcx'),
     eligibleTaxonomyOverride('final|2|4', '수·규칙찾기', '서로 다른 금액의 합', '관찰과 분류', 'distinct-sums-two-denominations-with-repetition', '중복 선택 가능한 두 화폐의 서로 다른 합 분류하기', 'type-0uodwvl'),
-    eligibleTaxonomyOverride('final|2|5', '경우의 수', '4색정리', '색칠하기', 'map-coloring-point-contact-minimum', '점 접촉을 포함한 지도 최소 색칠', 'type-11ztzpw'),
+    eligibleTaxonomyOverride('final|2|5', '경우의 수', '4색정리', '색칠하기', 'map-coloring-overlap-minimum', '서로 만나는 나라의 최소 색칠', 'type-11ztzpw'),
     eligibleTaxonomyOverride('final|2|6', '수·규칙찾기', '점점 작아지는 수의 개수', '조건에 맞는 수', 'strictly-decreasing-digits-in-range', '범위 안에서 자리 숫자가 차례로 작아지는 수 세기', 'type-0yi8hf8'),
     eligibleTaxonomyOverride('final|2|7', '식의 계산', '나머지가 나올때까지 나누기', '나눗셈의 몫과 나머지', 'repeated-division-consecutive-product', '연속곱을 거듭 나눌 때 처음 나머지가 생기는 차례', 'type-0pqn1vr'),
     eligibleTaxonomyOverride('final|2|8', '수·규칙찾기', '가짜 동전 구별하기', '수의 관계', 'coded-sampling-one-weighing-counterfeit-group', '표본 개수와 무게 차로 한 번에 가짜 다발 찾기', 'type-1r4snvn'),

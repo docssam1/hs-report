@@ -33,23 +33,15 @@
     return hour + '시 ' + minute + '분' + (second ? ' ' + second + '초' : '');
   }
 
-  function q4SplitExtremes(digits) {
-    var byKind = {
-      '1자리×3자리': [],
-      '2자리×2자리': []
-    };
+  function q4SplitExtremes(digits, split) {
+    var rows = [];
     permutations(digits).forEach(function (order) {
-      [1, 2, 3].forEach(function (split) {
-        var left = Number(order.slice(0, split).join(''));
-        var right = Number(order.slice(split).join(''));
-        var kind = Math.min(split, 4 - split) === 1 ? '1자리×3자리' : '2자리×2자리';
-        byKind[kind].push({ left: left, right: right, product: left * right });
-      });
+      var left = Number(order.slice(0, split).join(''));
+      var right = Number(order.slice(split).join(''));
+      rows.push({ left: left, right: right, product: left * right });
     });
-    Object.keys(byKind).forEach(function (kind) {
-      byKind[kind].sort(function (a, b) { return a.product - b.product; });
-    });
-    return byKind;
+    rows.sort(function (a, b) { return a.product - b.product; });
+    return rows;
   }
 
   function countColorings(counts, fixedFirst, fixedSecond) {
@@ -362,16 +354,14 @@
           '이 시각을 하나씩 세면 ' + answer + '번이므로 푼 문제도 ' + answer + '개입니다.'
         ];
       case 4: {
-        var splits = q4SplitExtremes(meta.digits);
-        var oneThree = splits['1자리×3자리'];
-        var twoTwo = splits['2자리×2자리'];
-        var oneMin = oneThree[0], oneMax = oneThree[oneThree.length - 1];
-        var twoMin = twoTwo[0], twoMax = twoTwo[twoTwo.length - 1];
+        var rows = q4SplitExtremes(meta.digits, meta.factorDigitCounts[0]);
+        var minimum = rows[0], maximum = rows[rows.length - 1];
+        var format = meta.factorDigitCounts[0] + '자리 수×' + meta.factorDigitCounts[1] + '자리 수';
         return [
-          '두 수의 자리 수는 1자리×3자리 또는 2자리×2자리입니다. 3자리×1자리는 곱셈 순서만 바뀌므로 같은 경우입니다.',
-          '1자리×3자리에서 가장 작은 곱은 ' + oneMin.left + '×' + oneMin.right + '=' + oneMin.product + ', 가장 큰 곱은 ' + oneMax.left + '×' + oneMax.right + '=' + oneMax.product + '입니다.',
-          '2자리×2자리에서 가장 작은 곱은 ' + twoMin.left + '×' + twoMin.right + '=' + twoMin.product + ', 가장 큰 곱은 ' + twoMax.left + '×' + twoMax.right + '=' + twoMax.product + '입니다.',
-          '두 종류를 함께 비교하면 전체 최소는 ' + meta.minimumProduct + ', 전체 최대는 ' + meta.maximumProduct + '이므로 ' + meta.maximumProduct + '−' + meta.minimumProduct + '=' + answer + '입니다.'
+          '문제에서 정한 ' + format + '에 맞게 숫자 카드를 두 묶음으로 나눕니다.',
+          '가장 작은 곱은 ' + minimum.left + '×' + minimum.right + '=' + minimum.product + '입니다.',
+          '가장 큰 곱은 ' + maximum.left + '×' + maximum.right + '=' + maximum.product + '입니다.',
+          meta.maximumProduct + '−' + meta.minimumProduct + '=' + answer + '이므로 답은 ' + answer + '입니다.'
         ];
       }
       case 5: {

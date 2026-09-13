@@ -17,6 +17,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:Pretendard,'Noto Sans KR','Malgun Gothic','맑은 고딕',sans-serif;background:var(--bg);color:var(--ink);padding:18px}
+  body.bank-access-pending>:not(.bank-access-gate){visibility:hidden}
   h1,h2,h3{font-family:Pretendard,'Noto Sans KR','Malgun Gothic','맑은 고딕',sans-serif;font-weight:800}
 
   /* ---------- 화면 UI (인쇄 시 숨김) ---------- */
@@ -54,8 +55,6 @@
   body.wrong-practice-mode .panel{display:none}
   body.fixed-bank-mode .row:has([data-role="tune"]),body.fixed-bank-mode .row:has([data-role="ratio"]),body.fixed-bank-mode [data-role="n"],body.fixed-bank-mode #seedInput,body.fixed-bank-mode #btnNew{display:none}
   body.fixed-bank-mode .qcard .qtext{font-size:12px;line-height:1.45}
-  body.fixed-bank-mode .qcard .qconditions{font-size:11.5px;line-height:1.4;margin-left:20px}
-  body.fixed-bank-mode .qcard .qconditions li{margin:1px 0}
   body.fixed-bank-mode .qcard .qmeta{font-size:9px}
   body.wrong-practice-mode .review-note{border-color:#86b7fe;background:#eff6ff;color:#1e3a5f;font-weight:700}
 
@@ -114,8 +113,6 @@
   .qpage .qcard:nth-last-child(-n+2){border-bottom:none}
   .qcard .qno{display:inline-block;font-weight:900;font-size:15px;color:#fff;background:var(--accent);border-radius:8px;padding:3px 10px;margin-right:8px}
   .qcard .qtext{font-size:13.5px;line-height:1.52;display:inline}
-  .qcard .qconditions{margin:5px 0 0 31px;padding:0;list-style:none;font-size:12.5px;line-height:1.45}
-  .qcard .qconditions li{margin:2px 0}
   .qcard .qmeta{font-size:9.5px;color:var(--dim);margin-top:4px}
   .qcard .qfigure{margin:6px 0;text-align:center}
   .qcard .qfigure img{display:block;max-width:100%;max-height:34mm;width:auto;height:auto;margin:0 auto;object-fit:contain}
@@ -159,7 +156,7 @@
   }
 </style>
 </head>
-<body>
+<body class="bank-access-pending">
 
 <div class="topbar">
   <a class="back" href="../index.html">← 자료실로</a>
@@ -220,6 +217,7 @@
     <button class="chip" data-role="n" data-val="4">4문제</button>
     <button class="chip" data-role="n" data-val="8">8문제</button>
     <button class="chip" data-role="n" data-val="20">20문제</button>
+    <button class="chip" data-role="n" data-val="40">40문제</button>
     <span class="spacer"></span>
     <label class="toggle"><input type="checkbox" id="optCover" checked> 표지 포함</label>
     <label class="toggle"><input type="checkbox" id="optAnswer" checked> 정답지 포함</label>
@@ -240,23 +238,28 @@
 
 <div class="stage-wrap" id="stage"></div>
 
+<script src="../hs-auth.js?v=20260913-bank-access"></script>
+<script>document.write('<script src="../data.js?v='+Date.now()+'"><\/script>');</script>
+<script src="bank-access.js?v=20260913a"></script>
 <script>
 (function(){var v=Date.now();
- ['bank-core.js','bank-fixed.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js'].forEach(function(f){
+ ['important-types.js','bank-core.js','bank-fixed.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js'].forEach(function(f){
    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
 </script>
 <script>
+window.GFIELD_BANK_ACCESS.ready.then(function(){
 (function(){
   var q=new URLSearchParams(location.search);
   var sourceParts=String(q.get('source')||'').split('|');
-  var bankCode=/^final[12]$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^[12]$/.test(sourceParts[1])?'final'+sourceParts[1]:'');
+  var bankCode=/^(?:final[12]|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^[12]$/.test(sourceParts[1])?'final'+sourceParts[1]:'');
   var fixed=!!bankCode;
   if(!fixed)return;
   document.body.classList.add('fixed-bank-mode');
   var s=document.createElement('script');s.src='final1-worksheet.js?v=20260913-gfield-standard';s.onload=function(){
     var hasGens=q.has('gens'), raw=hasGens?(q.get('gens')||'').split(','):(q.get('practice')==='wrong'?[]:null);
     if(!hasGens&&q.get('gen')&&q.get('gen')!=='mix')raw=[q.get('gen')];
-    window.FINAL1_WORKSHEET.mount({bankCode:bankCode,genIds:raw,pointBand:q.get('points')||'all',wrongPracticeMode:q.get('practice')==='wrong',query:{printMode:q.get('printMode')||q.get('mode')||'both'}});
+    var typeIds=bankCode==='important'?(q.get('types')||'').split(',').filter(Boolean):null;
+    window.FINAL1_WORKSHEET.mount({bankCode:bankCode,genIds:raw,typeIds:typeIds,n:Number(q.get('n'))||20,pointBand:q.get('points')||'all',wrongPracticeMode:q.get('practice')==='wrong',query:{printMode:q.get('printMode')||q.get('mode')||'both'}});
   };s.onerror=function(){document.getElementById('stage').textContent='학습지를 불러오지 못했습니다. 페이지를 다시 열어 주세요.';};document.head.appendChild(s);
 })();
 (function(){
@@ -264,7 +267,7 @@
   var CORE = window.BANK_CORE;
   var fixedQuery = new URLSearchParams(location.search);
   var fixedSource=String(fixedQuery.get('source')||'').split('|');
-  var fixedEarly = /^final[12]$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && fixedSource[0]==='final' && /^[12]$/.test(fixedSource[1]));
+  var fixedEarly = /^(?:final[12]|important)$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && fixedSource[0]==='final' && /^[12]$/.test(fixedSource[1]));
   if(fixedEarly)return;
 
   var GEN_NAMES = {
@@ -318,7 +321,7 @@
     difficultyMode: TUNE_NAMES[q.tune] ? q.tune : 'standard',
     difficultyMix: DIFFICULTY_MIX_NAMES[q.ratio] ? q.ratio : 'single',
     area: AREA_NAMES[q.area] ? q.area : 'all',
-    n: wrongPracticeMode ? queryIds.length*3 : ([4,8,20].indexOf(parseInt(q.n,10))>=0 ? parseInt(q.n,10) : 8),
+    n: wrongPracticeMode ? queryIds.length*3 : ([4,8,20,40].indexOf(parseInt(q.n,10))>=0 ? parseInt(q.n,10) : 8),
     seed: q.seed || '',
     cover: !wrongPracticeMode && !fixedBankMode,
     answer: true
@@ -474,7 +477,7 @@
     group.forEach(function(qq){
       var asset = qq.asset;
       var figure='';
-      var conditionList='';
+      var promptText=[qq.text].concat(fixedBankMode&&Array.isArray(qq.conditionLines)?qq.conditionLines:[]).filter(Boolean).join(' ');
       if (asset && (asset.kind !== 'raster' || !/^data:image\/png;base64,/.test(asset.src || ''))) {
         throw new Error('공개 문항 그림은 Canvas PNG 래스터만 사용할 수 있습니다.');
       }
@@ -482,15 +485,9 @@
         figure='<div class="qfigure"><img src="' + escAttr(asset.src) + '" alt="' + escAttr(asset.description || qq.genName || '문항 그림') +
           '" width="' + Number(asset.displayWidth || asset.width) + '" height="' + Number(asset.displayHeight || asset.height) + '"></div>';
       }
-      if(Array.isArray(qq.conditionLines)&&qq.conditionLines.length){
-        conditionList='<ol class="qconditions">'+qq.conditionLines.map(function(line,index){
-          return '<li>'+String.fromCodePoint(0x2460+index)+' '+esc(line)+'</li>';
-        }).join('')+'</ol>';
-      }
       body += '<div class="qcard'+(asset?'':' text-only')+'" data-index="'+escAttr(qq.index||'')+'" data-gen="'+escAttr(qq.genId||'')+'" data-source-no="'+escAttr(qq.sourceNo||'')+'" data-points="'+escAttr(qq.pointBand||'')+'" data-level="'+escAttr(qq.level||'')+'" data-tune="'+escAttr(qq.difficultyMode||'standard')+'" data-score="'+escAttr(qq.difficultyScore||0)+'">' +
-        '<span class="qno">' + qq.index + '</span><span class="qtext">' + esc(qq.text) + '</span>' +
+        '<span class="qno">' + qq.index + '</span><span class="qtext">' + esc(promptText) + '</span>' +
         (qq.id?'<div class="qmeta fixed-item" data-item-id="'+escAttr(qq.id)+'">파이널 1회 '+qq.sourceNo+'번 → 유사문제 '+qq.variantNo+'</div>':'') +
-        conditionList +
         '<div class="qmeta">[' + esc(qq.area||'') + ' › ' + esc(qq.subarea||'') + (fixedBankMode?'':' › '+esc(qq.detailType||qq.genName||'')) + ' · ' + esc(qq.pointBand) + '점]</div>' +
         figure +
         '<div class="answerline">답 <span class="blank"></span></div>' +
@@ -603,6 +600,9 @@
 
   render();
 })();
+}).catch(function(){
+  document.getElementById('stage').textContent='문제은행 열람 권한을 확인하지 못했습니다.';
+});
 </script>
 </body>
 </html>

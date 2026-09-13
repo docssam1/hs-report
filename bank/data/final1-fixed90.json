@@ -7,16 +7,16 @@
     "fixedItemCount": 90,
     "variantsPerSourceQuestion": 3,
     "seed": "F190",
-    "questionIdentitySetHash": "e9949f1bb9c26338e1c9154936ed8ac43415612b00c1a7caf3657b18a32b90f1",
-    "itemContentSetHash": "aa642f407284d7d78158acc9b00b67249749939d1ada84bba843bf5ce8f716b6",
+    "questionIdentitySetHash": "39a73a1603b2a04abff36b147fe625f2b3d900b23b01f12ccad88e4e374b887f",
+    "itemContentSetHash": "9814faa9dc5472c96d64468c53076a19db84272b5a47ad3fb2b85b8459c7647d",
     "solutionEnricherVersion": "1.0.0",
     "note": "이 파일에 저장된 실제 문항만 제공합니다. 열람할 때 새 문항을 생성하지 않습니다."
   },
   "sourceFingerprints": {
     "bank/bank-core.js": "23f27d9f91341524997b657c9d3783dfebd5b030bf272bb8f7a7c1a74f6b8ae5",
-    "bank/bank-raster.js": "ce800445d7d3f04af39ede22f55c76ab58d71b744020437559b5b1d0003f81f2",
-    "bank/gens/g-final1.js": "21fef6ca113e8516f63f1ccdf5f4074ea44909b05260402b886f4a3ce52bd702",
-    "bank/gens/g-final1-solutions.js": "960ffc314591298645d17e8b9c942c8cd0c0ef49717ccdec69243bec0a4d70f2",
+    "bank/bank-raster.js": "f2b9732d0ea47e4434998da69cef6b6f2653c7c0777d590e5905dcd52d37dd8b",
+    "bank/gens/g-final1.js": "89f24d0ec06785ff37c366293bdb5746e2257dc8acc0c7bf7b864dcfebe58981",
+    "bank/gens/g-final1-solutions.js": "e00c039a22cccfc4aa0c945129a89009f5ed9d4b8f13b6ede937d5e681df40fc",
     "mock-data-final.js": "dde47ad0bb175a843e16ef7a59444acbfa50cb9fac8cdb9b2900f28575e02303"
   },
   "reviewSummary": {
@@ -1354,30 +1354,30 @@
       "questionIdentityHash": "2cf0fef1525f4ffb76002a1144efb12a7cdc2210d6b400e3e51e369491ef0bc6"
     },
     {
-      "text": "숫자 카드 2, 3, 5, 9를 한 번씩 모두 사용하여 두 자연수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.",
-      "answer": 4158,
-      "solution": "두 자리 수×두 자리 수라는 조건이 없으므로 한 자리 수×세 자리 수도 반드시 비교합니다. 카드를 1장과 3장, 2장과 2장, 3장과 1장으로 나누어 보면 가장 큰 곱은 53×92=4876, 가장 작은 곱은 2×359=718이므로 차는 4158입니다.",
-      "solutionSkill": "카드를 두 수로 나누는 세 경우를 비교해 최대·최소 찾기",
+      "text": "숫자 카드 2, 3, 4, 6, 8, 9를 한 번씩 모두 사용하여 세 자리 수와 세 자리 수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.",
+      "answer": 721434,
+      "solution": "세 자리 수와 세 자리 수라는 조건에 맞게 카드를 3장과 3장으로 나눕니다. 가장 큰 곱은 863×942=812946, 가장 작은 곱은 248×369=91512이므로 차는 721434입니다.",
+      "solutionSkill": "제시된 자리 수로 카드를 나누어 큰 곱과 작은 곱의 배치를 비교",
       "solutionSteps": [
-        "두 수의 자리 수는 1자리×3자리 또는 2자리×2자리입니다. 3자리×1자리는 곱셈 순서만 바뀌므로 같은 경우입니다.",
-        "1자리×3자리에서 가장 작은 곱은 2×359=718, 가장 큰 곱은 9×532=4788입니다.",
-        "2자리×2자리에서 가장 작은 곱은 25×39=975, 가장 큰 곱은 92×53=4876입니다.",
-        "두 종류를 함께 비교하면 전체 최소는 718, 전체 최대는 4876이므로 4876−718=4158입니다."
+        "문제에서 정한 3자리 수×3자리 수에 맞게 숫자 카드를 두 묶음으로 나눕니다.",
+        "가장 작은 곱은 248×369=91512입니다.",
+        "가장 큰 곱은 942×863=812946입니다.",
+        "812946−91512=721434이므로 답은 721434입니다."
       ],
       "readingFocus": "",
       "acceptedAnswers": [
-        4158
+        721434
       ],
       "answerPolicy": "single",
       "pointBand": "2.7",
       "verification": {
         "primary": {
-          "method": "카드를 두 수로 나누는 세 경우를 비교해 최대·최소 찾기",
-          "answer": 4158
+          "method": "제시된 자리 수로 카드를 나누어 큰 곱과 작은 곱의 배치를 비교",
+          "answer": 721434
         },
         "independent": {
-          "method": "모든 카드 순열과 세 분할 위치를 전수 열거",
-          "answer": 4158
+          "method": "모든 카드 순열을 제시된 자리에서 나누어 전수 열거",
+          "answer": 721434
         },
         "unique": true,
         "validAnswerCount": 1,
@@ -1394,39 +1394,47 @@
         "reasoningLoad": "원본과 같은 핵심 조건 관계를 유지하고 수치 범위만 단계별 조정",
         "responseMode": "문항에서 요구한 하나의 수 또는 순서가 고정된 답"
       },
+      "variantKey": "factor-format-3x3",
       "meta": {
         "digits": [
           2,
           3,
-          5,
+          4,
+          6,
+          8,
           9
         ],
-        "minimumProduct": 718,
-        "maximumProduct": 4876,
+        "factorDigitCounts": [
+          3,
+          3
+        ],
+        "factorFormat": "3×3",
+        "minimumProduct": 91512,
+        "maximumProduct": 812946,
         "minimumPair": [
-          2,
-          359
+          248,
+          369
         ],
         "maximumPair": [
-          53,
-          92
+          863,
+          942
         ]
       },
-      "difficultyScore": 10061.604341224127,
+      "difficultyScore": 10103.447974324312,
       "level": 1,
       "difficultyMode": "standard",
       "genId": "final1-q04",
-      "genName": "파이널 1회 4번 · 범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값",
+      "genName": "파이널 1회 4번 · 숫자카드로 만든 두 수의 곱의 최댓값·최솟값",
       "area": "수·규칙찾기",
       "subarea": "숫자카드로 수 만들기",
-      "detailType": "범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값",
+      "detailType": "숫자카드로 만든 두 수의 곱의 최댓값·최솟값",
       "sourceSet": "final",
       "sourceRound": 1,
       "sourceNo": 4,
       "diagnosis": {
         "typeId": "source-final-1-04",
         "errorTags": [
-          "한 자리 수와 세 자리 수의 곱 누락",
+          "두 수의 자리 수 조건 누락",
           "숫자 카드 중복 사용",
           "최대·최소만 쓰고 차 누락"
         ]
@@ -1434,10 +1442,10 @@
       "index": 10,
       "id": "final1-q04-v1",
       "variantNo": 1,
-      "itemContentHash": "d3e4c5cc34539ec39d4c20352232fe2ad082a489936f286d265748ca1743a93f",
+      "itemContentHash": "92806171a6f5b14be4b3e2babcff1adf8b257407d4ffd36c130e85378b76f839",
       "reviewStatus": "verified",
-      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 718, 최대 4876, 차 4158를 확인했습니다. 독학용 순서 풀이에서 1자리×3자리와 2자리×2자리의 최소·최대의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
-      "sourceStructure": "서로 다른 숫자 카드 네 장을 한 번씩 모두 써서 두 자연수를 만들고, 가능한 곱의 최댓값과 최솟값의 차를 묻는다.",
+      "reviewNotes": "선생님 지정 자리 수 유형으로 다시 구성하고 모든 카드 순열을 독립 열거해 최댓값·최솟값·차를 확인했습니다.",
+      "sourceStructure": "서로 다른 숫자 카드를 한 번씩 모두 써서 제시된 자리 수의 두 자연수를 만들고, 가능한 곱의 최댓값과 최솟값의 차를 묻는다.",
       "sourceReference": {
         "title": "파이널 1회",
         "questionNo": 4,
@@ -1452,23 +1460,23 @@
           "detail": "범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값"
         }
       },
-      "sourceResponseRate": 0.175,
+      "sourceResponseRate": 0.161,
       "sourceResponseRateBasis": "파이널 1회 원문 문항에 연결된 난이도 분석용 추정 정답률입니다. 이 고정 변형 문항의 실측 정답률이 아닙니다.",
       "auditMetadata": {
         "freezeSeed": "F190",
         "generatorVersion": "1.2.0",
         "generatorId": "final1-q04",
         "solutionEnricherVersion": "1.0.0",
-        "promptKey": "숫자 카드 2, 3, 5, 9를 한 번씩 모두 사용하여 두 자연수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.||",
-        "itemContentHash": "d3e4c5cc34539ec39d4c20352232fe2ad082a489936f286d265748ca1743a93f",
+        "promptKey": "숫자 카드 2, 3, 4, 6, 8, 9를 한 번씩 모두 사용하여 세 자리 수와 세 자리 수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.||factor-format-3x3",
+        "itemContentHash": "92806171a6f5b14be4b3e2babcff1adf8b257407d4ffd36c130e85378b76f839",
         "independentEvidence": {
           "primary": {
-            "method": "카드를 두 수로 나누는 세 경우를 비교해 최대·최소 찾기",
-            "answer": 4158
+            "method": "제시된 자리 수로 카드를 나누어 큰 곱과 작은 곱의 배치를 비교",
+            "answer": 721434
           },
           "independent": {
-            "method": "모든 카드 순열과 세 분할 위치를 전수 열거",
-            "answer": 4158
+            "method": "모든 카드 순열을 제시된 자리에서 나누어 전수 열거",
+            "answer": 721434
           },
           "unique": true,
           "validAnswerCount": 1,
@@ -1478,35 +1486,35 @@
             "method": "문제 해결에 필요한 모든 수와 조건을 본문에 직접 제시"
           }
         },
-        "questionIdentityHash": "5d98357893682c18dfcb42870f7ba4efb275205d6aca48df9c1d395bc7bd16ff"
+        "questionIdentityHash": "3b52fa6a5fa733414da74d3bed99c8a93f46db50a3be7504ae96fa9ab302cdea"
       },
-      "questionIdentityHash": "5d98357893682c18dfcb42870f7ba4efb275205d6aca48df9c1d395bc7bd16ff"
+      "questionIdentityHash": "3b52fa6a5fa733414da74d3bed99c8a93f46db50a3be7504ae96fa9ab302cdea"
     },
     {
-      "text": "숫자 카드 1, 2, 6, 9를 한 번씩 모두 사용하여 두 자연수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.",
-      "answer": 5373,
-      "solution": "두 자리 수×두 자리 수라는 조건이 없으므로 한 자리 수×세 자리 수도 반드시 비교합니다. 카드를 1장과 3장, 2장과 2장, 3장과 1장으로 나누어 보면 가장 큰 곱은 62×91=5642, 가장 작은 곱은 1×269=269이므로 차는 5373입니다.",
-      "solutionSkill": "카드를 두 수로 나누는 세 경우를 비교해 최대·최소 찾기",
+      "text": "숫자 카드 1, 6, 7, 9를 한 번씩 모두 사용하여 두 자리 수와 두 자리 수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.",
+      "answer": 5743,
+      "solution": "두 자리 수와 두 자리 수라는 조건에 맞게 카드를 2장과 2장으로 나눕니다. 가장 큰 곱은 76×91=6916, 가장 작은 곱은 17×69=1173이므로 차는 5743입니다.",
+      "solutionSkill": "제시된 자리 수로 카드를 나누어 큰 곱과 작은 곱의 배치를 비교",
       "solutionSteps": [
-        "두 수의 자리 수는 1자리×3자리 또는 2자리×2자리입니다. 3자리×1자리는 곱셈 순서만 바뀌므로 같은 경우입니다.",
-        "1자리×3자리에서 가장 작은 곱은 1×269=269, 가장 큰 곱은 9×621=5589입니다.",
-        "2자리×2자리에서 가장 작은 곱은 16×29=464, 가장 큰 곱은 91×62=5642입니다.",
-        "두 종류를 함께 비교하면 전체 최소는 269, 전체 최대는 5642이므로 5642−269=5373입니다."
+        "문제에서 정한 2자리 수×2자리 수에 맞게 숫자 카드를 두 묶음으로 나눕니다.",
+        "가장 작은 곱은 17×69=1173입니다.",
+        "가장 큰 곱은 91×76=6916입니다.",
+        "6916−1173=5743이므로 답은 5743입니다."
       ],
       "readingFocus": "",
       "acceptedAnswers": [
-        5373
+        5743
       ],
       "answerPolicy": "single",
       "pointBand": "2.7",
       "verification": {
         "primary": {
-          "method": "카드를 두 수로 나누는 세 경우를 비교해 최대·최소 찾기",
-          "answer": 5373
+          "method": "제시된 자리 수로 카드를 나누어 큰 곱과 작은 곱의 배치를 비교",
+          "answer": 5743
         },
         "independent": {
-          "method": "모든 카드 순열과 세 분할 위치를 전수 열거",
-          "answer": 5373
+          "method": "모든 카드 순열을 제시된 자리에서 나누어 전수 열거",
+          "answer": 5743
         },
         "unique": true,
         "validAnswerCount": 1,
@@ -1523,39 +1531,45 @@
         "reasoningLoad": "원본과 같은 핵심 조건 관계를 유지하고 수치 범위만 단계별 조정",
         "responseMode": "문항에서 요구한 하나의 수 또는 순서가 고정된 답"
       },
+      "variantKey": "factor-format-2x2",
       "meta": {
         "digits": [
           1,
-          2,
           6,
+          7,
           9
         ],
-        "minimumProduct": 269,
-        "maximumProduct": 5642,
+        "factorDigitCounts": [
+          2,
+          2
+        ],
+        "factorFormat": "2×2",
+        "minimumProduct": 1173,
+        "maximumProduct": 6916,
         "minimumPair": [
-          1,
-          269
+          17,
+          69
         ],
         "maximumPair": [
-          62,
+          76,
           91
         ]
       },
-      "difficultyScore": 20058.83096522557,
+      "difficultyScore": 20069.34191196772,
       "level": 2,
       "difficultyMode": "standard",
       "genId": "final1-q04",
-      "genName": "파이널 1회 4번 · 범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값",
+      "genName": "파이널 1회 4번 · 숫자카드로 만든 두 수의 곱의 최댓값·최솟값",
       "area": "수·규칙찾기",
       "subarea": "숫자카드로 수 만들기",
-      "detailType": "범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값",
+      "detailType": "숫자카드로 만든 두 수의 곱의 최댓값·최솟값",
       "sourceSet": "final",
       "sourceRound": 1,
       "sourceNo": 4,
       "diagnosis": {
         "typeId": "source-final-1-04",
         "errorTags": [
-          "한 자리 수와 세 자리 수의 곱 누락",
+          "두 수의 자리 수 조건 누락",
           "숫자 카드 중복 사용",
           "최대·최소만 쓰고 차 누락"
         ]
@@ -1563,10 +1577,10 @@
       "index": 11,
       "id": "final1-q04-v2",
       "variantNo": 2,
-      "itemContentHash": "046c83e5003189163b77fca45c4896bd75c27e095dae416338b6cea634336a84",
+      "itemContentHash": "d3c1ac9706d552057e5342decfa70d3befe04dbc3603c7f38dc9f6cdd5c3386d",
       "reviewStatus": "verified",
-      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 269, 최대 5642, 차 5373를 확인했습니다. 독학용 순서 풀이에서 1자리×3자리와 2자리×2자리의 최소·최대의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
-      "sourceStructure": "서로 다른 숫자 카드 네 장을 한 번씩 모두 써서 두 자연수를 만들고, 가능한 곱의 최댓값과 최솟값의 차를 묻는다.",
+      "reviewNotes": "선생님 지정 자리 수 유형으로 다시 구성하고 모든 카드 순열을 독립 열거해 최댓값·최솟값·차를 확인했습니다.",
+      "sourceStructure": "서로 다른 숫자 카드를 한 번씩 모두 써서 제시된 자리 수의 두 자연수를 만들고, 가능한 곱의 최댓값과 최솟값의 차를 묻는다.",
       "sourceReference": {
         "title": "파이널 1회",
         "questionNo": 4,
@@ -1581,23 +1595,23 @@
           "detail": "범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값"
         }
       },
-      "sourceResponseRate": 0.175,
+      "sourceResponseRate": 0.161,
       "sourceResponseRateBasis": "파이널 1회 원문 문항에 연결된 난이도 분석용 추정 정답률입니다. 이 고정 변형 문항의 실측 정답률이 아닙니다.",
       "auditMetadata": {
         "freezeSeed": "F190",
         "generatorVersion": "1.2.0",
         "generatorId": "final1-q04",
         "solutionEnricherVersion": "1.0.0",
-        "promptKey": "숫자 카드 1, 2, 6, 9를 한 번씩 모두 사용하여 두 자연수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.||",
-        "itemContentHash": "046c83e5003189163b77fca45c4896bd75c27e095dae416338b6cea634336a84",
+        "promptKey": "숫자 카드 1, 6, 7, 9를 한 번씩 모두 사용하여 두 자리 수와 두 자리 수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.||factor-format-2x2",
+        "itemContentHash": "d3c1ac9706d552057e5342decfa70d3befe04dbc3603c7f38dc9f6cdd5c3386d",
         "independentEvidence": {
           "primary": {
-            "method": "카드를 두 수로 나누는 세 경우를 비교해 최대·최소 찾기",
-            "answer": 5373
+            "method": "제시된 자리 수로 카드를 나누어 큰 곱과 작은 곱의 배치를 비교",
+            "answer": 5743
           },
           "independent": {
-            "method": "모든 카드 순열과 세 분할 위치를 전수 열거",
-            "answer": 5373
+            "method": "모든 카드 순열을 제시된 자리에서 나누어 전수 열거",
+            "answer": 5743
           },
           "unique": true,
           "validAnswerCount": 1,
@@ -1607,35 +1621,35 @@
             "method": "문제 해결에 필요한 모든 수와 조건을 본문에 직접 제시"
           }
         },
-        "questionIdentityHash": "a4c7e476d1baaeac56b87f50f76b315b90374912134384cd094a9e39cbea07a6"
+        "questionIdentityHash": "a6c7b27daa71724dee66bef292c4d44ca3f15d38e14342efcee5399dce6726ff"
       },
-      "questionIdentityHash": "a4c7e476d1baaeac56b87f50f76b315b90374912134384cd094a9e39cbea07a6"
+      "questionIdentityHash": "a6c7b27daa71724dee66bef292c4d44ca3f15d38e14342efcee5399dce6726ff"
     },
     {
-      "text": "숫자 카드 1, 4, 6, 9를 한 번씩 모두 사용하여 두 자연수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.",
-      "answer": 5355,
-      "solution": "두 자리 수×두 자리 수라는 조건이 없으므로 한 자리 수×세 자리 수도 반드시 비교합니다. 카드를 1장과 3장, 2장과 2장, 3장과 1장으로 나누어 보면 가장 큰 곱은 64×91=5824, 가장 작은 곱은 1×469=469이므로 차는 5355입니다.",
-      "solutionSkill": "카드를 두 수로 나누는 세 경우를 비교해 최대·최소 찾기",
+      "text": "숫자 카드 1, 3, 4, 5, 7를 한 번씩 모두 사용하여 세 자리 수와 두 자리 수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.",
+      "answer": 34495,
+      "solution": "세 자리 수와 두 자리 수라는 조건에 맞게 카드를 3장과 2장으로 나눕니다. 가장 큰 곱은 541×73=39493, 가장 작은 곱은 357×14=4998이므로 차는 34495입니다.",
+      "solutionSkill": "제시된 자리 수로 카드를 나누어 큰 곱과 작은 곱의 배치를 비교",
       "solutionSteps": [
-        "두 수의 자리 수는 1자리×3자리 또는 2자리×2자리입니다. 3자리×1자리는 곱셈 순서만 바뀌므로 같은 경우입니다.",
-        "1자리×3자리에서 가장 작은 곱은 1×469=469, 가장 큰 곱은 9×641=5769입니다.",
-        "2자리×2자리에서 가장 작은 곱은 16×49=784, 가장 큰 곱은 91×64=5824입니다.",
-        "두 종류를 함께 비교하면 전체 최소는 469, 전체 최대는 5824이므로 5824−469=5355입니다."
+        "문제에서 정한 3자리 수×2자리 수에 맞게 숫자 카드를 두 묶음으로 나눕니다.",
+        "가장 작은 곱은 357×14=4998입니다.",
+        "가장 큰 곱은 541×73=39493입니다.",
+        "39493−4998=34495이므로 답은 34495입니다."
       ],
       "readingFocus": "",
       "acceptedAnswers": [
-        5355
+        34495
       ],
       "answerPolicy": "single",
       "pointBand": "2.7",
       "verification": {
         "primary": {
-          "method": "카드를 두 수로 나누는 세 경우를 비교해 최대·최소 찾기",
-          "answer": 5355
+          "method": "제시된 자리 수로 카드를 나누어 큰 곱과 작은 곱의 배치를 비교",
+          "answer": 34495
         },
         "independent": {
-          "method": "모든 카드 순열과 세 분할 위치를 전수 열거",
-          "answer": 5355
+          "method": "모든 카드 순열을 제시된 자리에서 나누어 전수 열거",
+          "answer": 34495
         },
         "unique": true,
         "validAnswerCount": 1,
@@ -1652,39 +1666,46 @@
         "reasoningLoad": "원본과 같은 핵심 조건 관계를 유지하고 수치 범위만 단계별 조정",
         "responseMode": "문항에서 요구한 하나의 수 또는 순서가 고정된 답"
       },
+      "variantKey": "factor-format-3x2",
       "meta": {
         "digits": [
           1,
+          3,
           4,
-          6,
-          9
+          5,
+          7
         ],
-        "minimumProduct": 469,
-        "maximumProduct": 5824,
+        "factorDigitCounts": [
+          3,
+          2
+        ],
+        "factorFormat": "3×2",
+        "minimumProduct": 4998,
+        "maximumProduct": 39493,
         "minimumPair": [
-          1,
-          469
+          357,
+          14
         ],
         "maximumPair": [
-          64,
-          91
+          541,
+          73
         ]
       },
-      "difficultyScore": 10061.258217108476,
+      "difficultyScore": 10080.730931560513,
       "level": 1,
       "difficultyMode": "standard",
       "genId": "final1-q04",
-      "genName": "파이널 1회 4번 · 범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값",
+      "genName": "파이널 1회 4번 · 숫자카드로 만든 두 수의 곱의 최댓값·최솟값",
       "area": "수·규칙찾기",
       "subarea": "숫자카드로 수 만들기",
-      "detailType": "범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값",
+      "detailType": "숫자카드로 만든 두 수의 곱의 최댓값·최솟값",
       "sourceSet": "final",
       "sourceRound": 1,
       "sourceNo": 4,
       "diagnosis": {
         "typeId": "source-final-1-04",
         "errorTags": [
-          "한 자리 수와 세 자리 수의 곱 누락",
+          "두 수의 자리 수 조건 누락",
           "숫자 카드 중복 사용",
           "최대·최소만 쓰고 차 누락"
         ]
@@ -1692,10 +1713,10 @@
       "index": 12,
       "id": "final1-q04-v3",
       "variantNo": 3,
-      "itemContentHash": "26f13c5bcab4510835aa9b7e86dc4b0d1426cc09f3c2920abb925a2d9d2e2be4",
+      "itemContentHash": "e0e2425b00e6c6caeafe6aedbb1bf909a85e8e762cd5885a9279132566da643b",
       "reviewStatus": "verified",
-      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 469, 최대 5824, 차 5355를 확인했습니다. 독학용 순서 풀이에서 1자리×3자리와 2자리×2자리의 최소·최대의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
-      "sourceStructure": "서로 다른 숫자 카드 네 장을 한 번씩 모두 써서 두 자연수를 만들고, 가능한 곱의 최댓값과 최솟값의 차를 묻는다.",
+      "reviewNotes": "선생님 지정 자리 수 유형으로 다시 구성하고 모든 카드 순열을 독립 열거해 최댓값·최솟값·차를 확인했습니다.",
+      "sourceStructure": "서로 다른 숫자 카드를 한 번씩 모두 써서 제시된 자리 수의 두 자연수를 만들고, 가능한 곱의 최댓값과 최솟값의 차를 묻는다.",
       "sourceReference": {
         "title": "파이널 1회",
         "questionNo": 4,
@@ -1710,23 +1731,23 @@
           "detail": "범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값"
         }
       },
-      "sourceResponseRate": 0.175,
+      "sourceResponseRate": 0.161,
       "sourceResponseRateBasis": "파이널 1회 원문 문항에 연결된 난이도 분석용 추정 정답률입니다. 이 고정 변형 문항의 실측 정답률이 아닙니다.",
       "auditMetadata": {
         "freezeSeed": "F190",
         "generatorVersion": "1.2.0",
         "generatorId": "final1-q04",
         "solutionEnricherVersion": "1.0.0",
-        "promptKey": "숫자 카드 1, 4, 6, 9를 한 번씩 모두 사용하여 두 자연수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.||",
-        "itemContentHash": "26f13c5bcab4510835aa9b7e86dc4b0d1426cc09f3c2920abb925a2d9d2e2be4",
+        "promptKey": "숫자 카드 1, 3, 4, 5, 7를 한 번씩 모두 사용하여 세 자리 수와 두 자리 수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.||factor-format-3x2",
+        "itemContentHash": "e0e2425b00e6c6caeafe6aedbb1bf909a85e8e762cd5885a9279132566da643b",
         "independentEvidence": {
           "primary": {
-            "method": "카드를 두 수로 나누는 세 경우를 비교해 최대·최소 찾기",
-            "answer": 5355
+            "method": "제시된 자리 수로 카드를 나누어 큰 곱과 작은 곱의 배치를 비교",
+            "answer": 34495
           },
           "independent": {
-            "method": "모든 카드 순열과 세 분할 위치를 전수 열거",
-            "answer": 5355
+            "method": "모든 카드 순열을 제시된 자리에서 나누어 전수 열거",
+            "answer": 34495
           },
           "unique": true,
           "validAnswerCount": 1,
@@ -1736,9 +1757,9 @@
             "method": "문제 해결에 필요한 모든 수와 조건을 본문에 직접 제시"
           }
         },
-        "questionIdentityHash": "c34a4c6204a9075d2ca3477c84da4e61e82ab67df038ce64e6c9b1c289807d27"
+        "questionIdentityHash": "c16461bd778eecb5544885c9de6f3686784373adab06173fde15682a904725d6"
       },
-      "questionIdentityHash": "c34a4c6204a9075d2ca3477c84da4e61e82ab67df038ce64e6c9b1c289807d27"
+      "questionIdentityHash": "c16461bd778eecb5544885c9de6f3686784373adab06173fde15682a904725d6"
     },
     {
       "text": "그림과 같이 밑변이 6센티미터, 같은 두 옆변이 각각 8센티미터인 이등변삼각형을 13개 변끼리 이어 붙였습니다. 완성된 도형의 둘레를 구하세요.",

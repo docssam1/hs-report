@@ -218,6 +218,11 @@
         <div class="matrix-scroll"><table id="acc-matrix"></table></div>
       </div>
       <div class="card">
+        <h3>문제은행 학생 권한</h3>
+        <div class="hint">문제은행 직접 주소와 성적표의 유사문 링크에 함께 적용됩니다. 전체공개를 끄면 체크한 학생만 문제·답안·풀이를 열 수 있습니다.</div>
+        <div class="matrix-scroll"><table id="bank-acc-matrix"></table></div>
+      </div>
+      <div class="card">
         <h3>교재(책) 등록 — 서재</h3>
         <div class="hint">PDF를 <b>파일 선택 또는 드래그</b>하면 저장소 <b>books/</b> 폴더에 자동으로 올라가고 링크가 자동 입력됩니다. (GitHub 토큰 1회 필요) · 재생목록·답안 파일은 [링크 버튼]으로 넣으세요. 업로드 후 하단 [GitHub에 저장]도 눌러 목록을 반영하세요.</div>
         <div id="book-items"></div>
@@ -838,7 +843,7 @@
 
   /* ===== ⑤ 자료실 ===== */
   function accArr(f){ if(!Array.isArray(S.archiveAccess[f])) S.archiveAccess[f]=["*"]; return S.archiveAccess[f]; }
-  function renderArchiveAdmin(){ renderFolders(); renderAccMatrix(); renderBooks(); }
+  function renderArchiveAdmin(){ renderFolders(); renderAccMatrix(); renderBankAccessMatrix(); renderBooks(); }
   function renderFolders(){
     let h='';
     S.archiveFolders.forEach((f,i)=>{ h+=`<div class="tb-row"><input type="text" value="${esc(f)}" onchange="renameFolder(${i},this.value)"><button class="btn del" onclick="delFolder(${i})">삭제</button></div>`; });
@@ -867,6 +872,20 @@
     renderSpAccMatrix();
   }
   function accAll(fi){ const f=S.archiveFolders[fi]; S.archiveAccess[f]=S.students.slice(); renderAccMatrix(); dirty(); }
+  const QUESTION_BANK_ACCESS_KEY='question-bank';
+  function bankAccessArr(){ if(!Array.isArray(S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY])) S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=[]; return S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]; }
+  function renderBankAccessMatrix(){
+    const el=document.getElementById('bank-acc-matrix'); if(!el)return;
+    const acc=bankAccessArr(),open=acc.includes('*');
+    let html='<thead><tr><th>자료</th><th>전체공개</th><th>모두<br>체크</th>';
+    S.students.forEach(s=>{html+=stuTh(s)});
+    html+='</tr></thead><tbody><tr><th>황소 약점 유형 문제은행</th><td class="cell '+(open?'on':'off')+'" onclick="bankAccessToggleOpen()"></td><td style="text-align:center"><button class="mini" onclick="bankAccessAll()" title="전원 개별 체크로 전환">☑</button></td>';
+    S.students.forEach((st,si)=>{const on=!open&&acc.includes(st);html+='<td class="cell '+(on?'on':'off')+'" style="'+(open?'opacity:.4':'')+'" onclick="bankAccessToggleStudent('+si+')"></td>'});
+    html+='</tr></tbody>';el.innerHTML=html;
+  }
+  function bankAccessToggleOpen(){const acc=bankAccessArr();S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=acc.includes('*')?[]:['*'];renderBankAccessMatrix();dirty()}
+  function bankAccessAll(){S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=S.students.slice();renderBankAccessMatrix();dirty()}
+  function bankAccessToggleStudent(studentIndex){const student=S.students[studentIndex];if(!student)return;let acc=bankAccessArr();if(acc.includes('*'))acc=S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=[];const i=acc.indexOf(student);if(i>=0)acc.splice(i,1);else acc.push(student);renderBankAccessMatrix();dirty()}
   /* ── VIP 라운지 메뉴별 열람 권한 ── */
   const VIP_MENUS=[['report','진단 결과·코멘트'],['ses','프리미엄 설명회'],['cou','신규 강좌 공지'],['clinic','결석·클리닉 신청'],['col','DOCSSAM 칼럼'],['mag','교육 매거진']];
   function vipArr(k){ if(!Array.isArray(S.vipAccess[k])) S.vipAccess[k]=["*"]; return S.vipAccess[k]; }

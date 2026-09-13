@@ -175,6 +175,21 @@
   .arc-intro{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;font-size:13.5px;color:var(--ink2);line-height:1.6;margin-bottom:14px;}
   .arc-intro b{color:var(--orange-d);}
   .folder{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:14px;overflow:hidden;box-shadow:0 4px 14px rgba(186,110,40,.08);}
+  .bank-launch{margin-bottom:16px;padding:18px;border:1px solid #cbd8ec;border-top:4px solid #2456c4;border-radius:12px;background:#fff;box-shadow:0 6px 18px rgba(23,52,95,.08)}
+  .bank-launch-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:13px}
+  .bank-launch-kicker{font-size:11px;font-weight:900;letter-spacing:.08em;color:#2456c4}
+  .bank-launch h3{margin-top:3px;color:#17345f;font-size:18px;line-height:1.4}
+  .bank-launch p{margin-top:4px;color:#566274;font-size:12.5px;line-height:1.55}
+  .bank-type-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .bank-type-btn{display:block;min-height:56px;padding:10px 12px;border:1px solid #cbd8ec;border-radius:7px;background:#f7f9fd;color:#17345f;text-align:left;cursor:pointer}
+  .bank-type-btn b{display:block;font-size:13px;line-height:1.35}.bank-type-btn small{display:block;margin-top:3px;color:#68758a;font-size:10.5px;line-height:1.35}
+  .bank-type-btn[aria-pressed="true"]{border-color:#2456c4;background:#eaf0ff;box-shadow:inset 0 0 0 1px #2456c4}
+  .bank-compose{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:13px;padding-top:13px;border-top:1px solid #e1e7f0}
+  .bank-compose-label{font-size:11px;font-weight:900;color:#566274}.bank-count-btn{min-height:34px;padding:6px 10px;border:1px solid #cbd8ec;border-radius:999px;background:#fff;color:#17345f;font-weight:800;cursor:pointer}
+  .bank-count-btn[aria-pressed="true"]{border-color:#2456c4;background:#2456c4;color:#fff}.bank-start{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 14px;border-radius:7px;background:#2456c4;color:#fff;font-size:12px;font-weight:900;text-decoration:none}
+  .bank-start[aria-disabled="true"]{pointer-events:none;background:#a8b3c5}.bank-selection-note{width:100%;color:#68758a;font-size:11px}
+  .bank-type-btn:focus-visible,.bank-count-btn:focus-visible,.bank-start:focus-visible{outline:3px solid #adc6ff;outline-offset:2px}
+  @media(max-width:520px){.bank-type-grid{grid-template-columns:1fr}.bank-start{width:100%;margin-left:0}}
   .folder-h{display:flex;align-items:center;gap:9px;padding:15px 18px;font-size:16px;color:#fff;background:linear-gradient(135deg,#fb923c,var(--orange-d));}
   .folder-h .folder-ic{font-size:18px;}
   .folder-h .folder-c{margin-left:auto;background:rgba(255,255,255,.28);color:#fff;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;}
@@ -499,6 +514,7 @@
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
 <script src="final-last-routes.js?v=20260909b"></script>
 <script src="archive-info.js?v=20260825b"></script>
+<script src="bank/important-types.js?v=20260913a"></script>
 <script>
   const D = window.GFIELD_DATA;
   let currentStudent = null;
@@ -846,6 +862,32 @@
   document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
 
   function canSeeFolder(folder){ const acc=(D.archiveAccess||{})[folder]; if(!Array.isArray(acc)) return false; /* 권한 정보 없으면 비공개 */ return acc.includes('*')||acc.includes(currentStudent); }
+  function canSeeProduct(key){ const acc=(D.archiveProductAccess||{})[key]; return Array.isArray(acc)&&(acc.includes('*')||acc.includes(currentStudent)); }
+  function studentBankHtml(){
+    const config=window.GFIELD_IMPORTANT_TYPES;
+    if(!config||!Array.isArray(config.types))return '';
+    const buttons=config.types.map(type=>{
+      const sources=type.sources.map(source=>`파이널 ${source.round}회 ${source.no}번`).join(' + ');
+      return `<button type="button" class="bank-type-btn" data-important-type="${escAttr(type.id)}" aria-pressed="false"><b>${escHtml(type.title)}</b><small>${escHtml(sources+(type.note?' · '+type.note:''))}</small></button>`;
+    }).join('');
+    const counts=config.questionCounts.map(count=>`<button type="button" class="bank-count-btn" data-count="${count}" aria-pressed="${count===20?'true':'false'}">${count}문항</button>`).join('');
+    return `<section class="bank-launch" aria-labelledby="student-bank-title"><div class="bank-launch-head"><div><div class="bank-launch-kicker">선생님이 고른 중요 유형</div><h3 id="student-bank-title">황소 약점 유형 문제은행</h3><p>공부할 유형을 고른 뒤 한 번에 최대 ${config.maxQuestions}문항까지 인쇄할 수 있습니다.</p></div></div><div class="bank-type-grid">${buttons}</div><div class="bank-compose"><span class="bank-compose-label">문항 수</span>${counts}<a class="bank-start" aria-disabled="true">선택 유형 문제지 만들기</a><div class="bank-selection-note">유형을 한 개 이상 선택해 주세요.</div></div></section>`;
+  }
+  function wireStudentBank(wrap){
+    const box=wrap.querySelector('.bank-launch'),config=window.GFIELD_IMPORTANT_TYPES;if(!box||!config)return;
+    const selected=new Set();let count=20,link=box.querySelector('.bank-start'),note=box.querySelector('.bank-selection-note');
+    function update(){
+      const pool=config.types.filter(type=>selected.has(type.id)).reduce((sum,type)=>sum+type.sources.length*3,0);
+      const actual=Math.min(count,pool,config.maxQuestions);
+      link.setAttribute('aria-disabled',selected.size?'false':'true');
+      link.removeAttribute('href');
+      if(selected.size)link.href=`bank/index.html?bank=important&types=${encodeURIComponent([...selected].join(','))}&n=${count}&points=all&printMode=both`;
+      note.textContent=selected.size?`${selected.size}개 유형 · 등록 문제 ${pool}문항 중 ${actual}문항을 엽니다.`:'유형을 한 개 이상 선택해 주세요.';
+    }
+    box.querySelectorAll('.bank-type-btn').forEach(button=>button.onclick=()=>{const id=button.dataset.importantType;if(selected.has(id))selected.delete(id);else selected.add(id);button.setAttribute('aria-pressed',selected.has(id)?'true':'false');update();});
+    box.querySelectorAll('.bank-count-btn').forEach(button=>button.onclick=()=>{count=Number(button.dataset.count);box.querySelectorAll('.bank-count-btn').forEach(other=>other.setAttribute('aria-pressed',other===button?'true':'false'));update();});
+    update();
+  }
   /* 별도 판매 교재는 책장 권한과 분리한다. accessKey가 없는 기존 교재는 종전 폴더 권한을 그대로 사용한다. */
   function canSeeBook(book){
     if(!book) return false;
@@ -905,8 +947,10 @@
   function renderArchive(){
     const wrap=document.getElementById('archive-list'); wrap.innerHTML='';
     if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 자료실이 제공되지 않습니다. 재원생 로그인 후 이용하세요.</div>'; return; }
+    const bankVisible=canSeeProduct('question-bank');
     const folders=(D.archiveFolders||[]).filter(canSeeArchiveFolder);
-    if(!folders.length){ wrap.innerHTML='<div class="empty-note">열람 가능한 자료실이 없습니다.</div>'; return; }
+    if(!folders.length&&!bankVisible){ wrap.innerHTML='<div class="empty-note">열람 가능한 자료실이 없습니다.</div>'; return; }
+    if(bankVisible){wrap.insertAdjacentHTML('beforeend',studentBankHtml());wireStudentBank(wrap);}
     let total=0;
     folders.forEach(folder=>{
       const books=(D.books||[]).filter(b=>b&&b.folder===folder&&canSeeBook(b)&&(b.pdf||b.video||(b.links&&b.links.length)));
@@ -932,7 +976,7 @@
       } else inner+='<div class="empty-note" style="text-align:left;padding:8px 0">등록된 교재가 없습니다.</div>';
       sec.innerHTML=inner; wrap.appendChild(sec);
     });
-    if(!total){ const n=document.createElement('div'); n.className='empty-note'; n.textContent='아직 책장에 교재가 없습니다.'; wrap.appendChild(n); }
+    if(!total&&!bankVisible){ const n=document.createElement('div'); n.className='empty-note'; n.textContent='아직 책장에 교재가 없습니다.'; wrap.appendChild(n); }
     const arcFooter=(window.GFIELD_ARCHIVE_INFO||{})._footer;
     if(arcFooter){ const f=document.createElement('div'); f.className='arc-info-foot'; f.textContent=arcFooter; wrap.appendChild(f); }
     wrap.querySelectorAll('.book[data-bi]').forEach(btn=>btn.onclick=()=>{

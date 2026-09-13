@@ -44,7 +44,9 @@ const server=http.createServer((req,res)=>{
     assert.match(text,new RegExp(expected.percentiles[String(Math.round(current*10))]+'%'));
     assert.equal(await page.locator('.cut-reference .cut-number').filter({hasText:'확인 중'}).count(),0);
     assert.equal(await page.locator('.cut-reference .cut-number').filter({hasText:'%'}).count(),5,'all fixed cutoff percentiles remain visible');
-    assert.match(text,/현재 위치는 .*%에서 .*%로 달라집니다/);
+    const coachingText=await page.locator('.diagnostic-coaching').textContent();
+    assert.match(coachingText,/현재 위치는 .*%에서 .*%로 달라집니다/);
+    assert.match(coachingText,/복습 목표 기준은 .*% · .*가능/,'target percentile includes a study-level label');
     assert.match(await page.locator('.report-screen-header').innerText(),/평균.*석차 백분율/s);
     assert.match(await page.locator('.report-cover-student').innerText(),/석차 백분율/);
     const labelsInside=await page.locator('.radar').evaluate(svg=>{const v=svg.viewBox.baseVal;return [...svg.querySelectorAll('.lb text')].every(t=>{const b=t.getBBox();return b.x>=v.x&&b.x+b.width<=v.x+v.width&&b.y>=v.y&&b.y+b.height<=v.y+v.height;});});
@@ -59,7 +61,7 @@ const server=http.createServer((req,res)=>{
     assert.equal(await page.locator('#detailWrap .bar').count(),30,'offline keeps all fixed item rates');
     assert.equal(await page.locator('.cut-reference .cut-number').filter({hasText:'%'}).count(),5,'offline keeps all fixed cutoff percentiles');
     assert.doesNotMatch(await page.locator('.report-screen-header').innerText(),/석차 백분율/);
-    assert.doesNotMatch(await page.locator('.diagnostic-coaching').innerText(),/현재 위치는 .*%에서 .*%로/);
+    assert.doesNotMatch(await page.locator('.diagnostic-coaching').textContent(),/현재 위치는 .*%에서 .*%로/);
     assert.doesNotMatch(text,/null%|NaN|자동 합산/);
     fail=false;await openAndGrade([]);text=await page.locator('#app').innerText();assert.doesNotMatch(text,/null%|NaN/);
     await openAndGrade(Array.from({length:30},(_,i)=>i+1));text=await page.locator('#app').innerText();

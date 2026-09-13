@@ -6,8 +6,7 @@
   'use strict';
 
   var CORE = global.BANK_CORE;
-  var RASTER = global.BANK_RASTER;
-  if (!CORE || !RASTER) throw new Error('inclusion generator requires BANK_CORE and BANK_RASTER');
+  if (!CORE) throw new Error('inclusion generator requires BANK_CORE');
 
   var CONTEXTS = [
     { first: '축구를 좋아하는 학생', second: '수영을 좋아하는 학생' },
@@ -96,23 +95,6 @@
       throw new Error('inclusion independent verification mismatch');
     }
 
-    var rows = [
-      { label: '전체 학생', value: scenario.total + '명' },
-      { label: '첫 번째 모임', value: context.first + ' ' + scenario.firstCount + '명', valueSize: 15 },
-      { label: '두 번째 모임', value: context.second + ' ' + scenario.secondCount + '명', valueSize: 15 }
-    ];
-    if (scenario.mode === 'exact') rows.push({ label: '둘 다 아님', value: scenario.neitherCount + '명', accent: true });
-    var asset = RASTER.drawConditionCard(
-      scenario.mode === 'minimum' ? '두 모임에 모두 속한 최소 인원' : '두 모임에 모두 속한 정확한 인원',
-      rows,
-      {
-        width: 720,
-        labelRatio: 0.27,
-        footer: scenario.mode === 'minimum' ? '같은 학생을 두 번 세지 않도록 생각해요.' : '어느 모임에도 속하지 않은 학생도 합계에 포함해요.',
-        description: '전체 인원과 두 모임의 인원, 추가 조건을 행별로 보여 주는 표'
-      }
-    );
-
     var text;
     var solution;
     if (scenario.mode === 'minimum') {
@@ -127,7 +109,6 @@
 
     return {
       text: text,
-      asset: asset,
       answer: scenario.answer,
       solution: solution,
       pointBand: CORE.pointBandForLevel(level),
@@ -142,7 +123,7 @@
         },
         unique: true,
         validAnswerCount: 1,
-        visibleEvidence: { passed: true, method: 'the total, both group counts, and any neither condition are shown in separate rows' }
+        visibleEvidence: { passed: true, method: '전체 인원, 두 모임의 인원, 둘 다 아닌 인원이 필요한 경우 문제 문장에 한 번씩 제시됨' }
       },
       meta: {
         mode: scenario.mode,
@@ -158,7 +139,7 @@
   global.BANK_GENS = global.BANK_GENS || [];
   global.BANK_GENS.push({
     id: 'inclusion',
-    version: '1.0.0',
+    version: '1.1.0',
     name: '포함과 배제 최소·정확 수',
     area: '경우의 수',
     gradeBand: '초2~초3',

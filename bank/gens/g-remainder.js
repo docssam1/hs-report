@@ -6,8 +6,7 @@
   'use strict';
 
   var CORE = global.BANK_CORE;
-  var RASTER = global.BANK_RASTER;
-  if (!CORE || !RASTER) throw new Error('remainder generator requires BANK_CORE and BANK_RASTER');
+  if (!CORE) throw new Error('remainder generator requires BANK_CORE');
 
   var LEVEL_PROFILES = {
     1: { conditionCount: 1, modulusSets: [[3], [4], [5], [6]], answerMin: 8, answerMax: 35, widthMin: 2, widthMax: 5 },
@@ -82,24 +81,12 @@
       throw new Error('remainder unique-answer verification mismatch');
     }
 
-    var rows = [{ label: '찾는 범위', value: minimum + '부터 ' + maximum + '까지', accent: true }];
-    conditions.forEach(function (condition) {
-      rows.push({
-        label: condition.divisor + '로 나누기',
-        value: '나머지 ' + condition.remainder
-      });
-    });
-    var asset = RASTER.drawConditionCard('나머지 조건에 맞는 수', rows, {
-      footer: '범위 안의 수만 하나씩 확인해요.',
-      description: '수의 범위와 각 나머지 조건을 행별로 보여 주는 표'
-    });
     var conditionText = conditions.map(function (condition) {
       return condition.divisor + '로 나누었을 때 나머지가 ' + condition.remainder + '인';
     }).join(', ');
 
     return {
       text: minimum + '부터 ' + maximum + '까지의 수 중에서 ' + conditionText + ' 수를 찾으세요.',
-      asset: asset,
       answer: answer,
       solution: '첫 번째 나머지 조건에 맞는 수를 ' + minimum + '부터 차례로 찾고, 나머지 조건도 모두 확인하면 답은 ' + answer + '입니다.',
       pointBand: CORE.pointBandForLevel(level),
@@ -108,7 +95,7 @@
         independent: { method: 'test every integer in the printed range against every remainder condition', answer: independentCandidates[0] },
         unique: true,
         validAnswerCount: independentCandidates.length,
-        visibleEvidence: { passed: true, method: 'the inclusive range and every divisor-remainder condition are printed in separate rows' }
+        visibleEvidence: { passed: true, method: '찾는 범위와 모든 나머지 조건이 문제 문장에 한 번씩 제시됨' }
       },
       meta: {
         minimum: minimum,
@@ -124,7 +111,7 @@
   global.BANK_GENS = global.BANK_GENS || [];
   global.BANK_GENS.push({
     id: 'remainder',
-    version: '1.0.0',
+    version: '1.1.0',
     name: '나머지 조건 수 찾기',
     area: '식의 계산',
     gradeBand: '초2~초3',

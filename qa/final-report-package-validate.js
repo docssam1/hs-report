@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
 const {chromium}=require('playwright');
-const root=path.resolve(__dirname,'..'),output=process.env.GFIELD_PACKAGE_REVIEW_DIR;
+const root=path.resolve(__dirname,'..'),output=process.env.GFIELD_PACKAGE_REVIEW_DIR,reviewRound=Number(process.env.GFIELD_PACKAGE_REVIEW_ROUND||0);
 const server=http.createServer((req,res)=>{
   const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
   if(!file.startsWith(root+path.sep)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);return res.end();}
@@ -23,7 +23,7 @@ const server=http.createServer((req,res)=>{
     });
     const page=await context.newPage(),errors=[];page.on('pageerror',err=>errors.push(err.message));
     const base=`http://127.0.0.1:${server.address().port}`;
-    for(const round of [1,2]){
+    for(const round of [1,2,3,4]){
       await page.goto(base+`/final.html?round=${round}&name=docssam&go=answer&preview=1`);
       assert.equal(await page.locator('.personal-study-plan').count(),0,'no plan before result');
       for(let no=1;no<=30;no++)if(![1,4,7,13,18,22,26].includes(no))await page.locator('.abtn').nth(no-1).click();
@@ -31,13 +31,7 @@ const server=http.createServer((req,res)=>{
       assert.equal(await page.locator('.personal-plan-stage').count(),3);
       assert.equal(await page.locator('.report-print-cover').isVisible(),false,'no screen cover');
       assert.equal(await page.locator('.report-screen-header').isVisible(),true);
-      await page.evaluate(()=>{window.__printCalls=0;window.print=()=>{window.__printCalls++;};});
-      if(round===1){
-        await page.locator('#printBtn').focus();await page.keyboard.press('Enter');
-        assert.equal(await page.evaluate(()=>window.__printCalls),1,'legacy report keeps its keyboard print action');
-      }else{
-        assert.equal(await page.locator('#printBtn').evaluate(el=>el.tagName==='BUTTON'&&el.classList.contains('gfield-final-report-print-button')),true,'Final2 keyboard-native button uses the reviewed print controller');
-      }
+      assert.equal(await page.locator('#printBtn').evaluate(el=>el.tagName==='BUTTON'&&el.classList.contains('gfield-final-report-print-button')),true,'every Final round uses the reviewed print controller');
       assert.equal(await page.locator('#printBtn').evaluate(el=>getComputedStyle(el).position),'static','toolbar never covers reading content');
       assert.ok(await page.locator('.coaching-chart svg').count()>=2);
       const comment=await page.locator('.diagnostic-coaching,.personal-study-plan').evaluateAll(nodes=>nodes.map(n=>n.textContent).join(' '));
@@ -49,7 +43,22 @@ const server=http.createServer((req,res)=>{
       assert.equal(await analysis.locator('.report-tier-section').evaluate(el=>el.nextElementSibling.classList.contains('report-item-section')),true,'item diagnosis follows the point-tier section');
       const order=await page.evaluate(()=>Array.from(document.querySelector('.final-report-package').children).map(el=>el.className));
       assert.ok(order.findIndex(x=>x.includes('curriculum'))<order.findIndex(x=>x.includes('report-detailed-section')));
-      if(round===1){assert.equal(await page.locator('.final1-detailed-card.is-ready').count(),30);assert.equal(await page.locator('.final1-detailed-card.is-pending').count(),0);}
+      assert.equal(await page.locator('.final1-detailed-card.is-ready').count(),30,`Final${round} keeps all 30 reviewed solutions`);
+      assert.equal(await page.locator('.final1-detailed-card.is-pending').count(),0,`Final${round} has no pending solution cards`);
+      const preparedMetrics=await page.evaluate(async()=>{
+        const job=window.GFIELD_FINAL_REPORT_PRINT.createPreparation({
+          source:document.querySelector('.final-report-package'),
+          requiredFontFamilies:[],
+          timeoutMs:30000
+        });
+        const prepared=await job.promise;
+        const metrics=prepared.metrics;
+        prepared.cleanup();
+        return metrics;
+      });
+      assert.equal(preparedMetrics.round,round,`Final${round} print preparation keeps the correct round`);
+      assert.equal(preparedMetrics.detailItems.length,30,`Final${round} print preparation keeps all detailed answers`);
+      assert.equal(preparedMetrics.detailStartPage%2,1,`Final${round} detailed answers start on a new sheet front`);
       if(round===2){
         assert.equal(await page.locator('#final2DetailedSolutions .final1-detailed-card.is-ready').count(),30,'Final2 keeps all 30 reviewed solutions');
         assert.equal(await page.locator('#final2DetailedSolutions .final1-detailed-card.is-pending').count(),0,'Final2 has no fallback pending card');
@@ -64,12 +73,12 @@ const server=http.createServer((req,res)=>{
         for(const selector of ['.personal-study-plan','.diagnostic-coaching','.report-screen-header']){
           assert.ok(await page.locator(selector).evaluate(el=>el.scrollWidth<=el.clientWidth+1),`${selector} at ${width}`);
         }
-        if(output){fs.mkdirSync(output,{recursive:true});await page.locator('.personal-study-plan').screenshot({path:path.join(output,`plan-r${round}-${width}.png`)});}
+        if(output&&(!reviewRound||reviewRound===round)){fs.mkdirSync(output,{recursive:true});await page.locator('.personal-study-plan').screenshot({path:path.join(output,`plan-r${round}-${width}.png`)});}
       }
       await page.emulateMedia({media:'print'});
       assert.equal(await page.locator('.report-print-cover').isVisible(),true);
       assert.equal(await page.locator('.report-screen-header').isVisible(),false);
-      if(output){await page.setViewportSize({width:1280,height:900});await page.pdf({path:path.join(output,`package-r${round}.pdf`),format:'A4',printBackground:true,margin:{top:'12mm',bottom:'12mm',left:'12mm',right:'12mm'}});}
+      if(output&&(!reviewRound||reviewRound===round)){await page.setViewportSize({width:1280,height:900});await page.pdf({path:path.join(output,`package-r${round}.pdf`),format:'A4',printBackground:true,margin:{top:'12mm',bottom:'12mm',left:'12mm',right:'12mm'}});}
       await page.emulateMedia({media:'screen'});
     }
     assert.deepEqual(errors,[]);assert.deepEqual(writes,[]);

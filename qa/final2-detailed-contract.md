@@ -3,7 +3,7 @@
 ## Scope
 
 - This independently reviewed set covers all questions `1` through `30` in Final round 2.
-- Q5 uses the independently resolved source contract that “meeting” includes countries touching at the same point. Its answer remains the canonical `4가지`; the derived diagram must emphasize the existing point without inventing an A–B border segment.
+- Q5 follows the original picture as one cloud-shaped outer boundary with five curved dividers joined to that boundary. The center country meets all five countries in the outer cycle, so its answer remains the canonical `4가지`; the derived diagram must not use straight rays, isolated point markers, or separate overlapping loops.
 - The package does not change canonical answers, scores, grades, population statistics, or learner records.
 - The 23 previously released explanations keep their educational text exactly. The 2026-09-12 visual amendment adds diagram bindings to Q23/Q27 and a closed-route panel to Q28. The historical 23-item projection remains checked separately from this explicit amendment. The seven previously added explanations are Q2, Q5, Q9, Q13, Q14, Q16, and Q17.
 

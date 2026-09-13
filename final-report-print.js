@@ -1,7 +1,7 @@
 'use strict';
 
 (function(global){
-  var VERSION='1.0.0';
+  var VERSION='1.1.0';
   var LIBRARY_URL='vendor/pagedjs/0.4.3/paged.polyfill.js';
   var FRAME_CLASS='gfield-final-report-print-frame';
   var BUTTON_CLASS='gfield-final-report-print-button';
@@ -112,8 +112,9 @@
 
   function buildCopies(source){
     var detailSection=source.querySelector('.report-detailed-section');
-    var detailed=detailSection&&detailSection.querySelector('#final2DetailedSolutions[data-detailed-round="2"]');
-    if(!detailSection||!detailed) fail('unsupported-round','현재 안전 조판은 파이널 2회 진단 패키지만 지원합니다.');
+    var detailed=detailSection&&detailSection.querySelector('.final1-detailed-solutions[data-detailed-round]');
+    var round=Number(detailed&&detailed.getAttribute('data-detailed-round'));
+    if(!detailSection||!detailed||![1,2,3,4].includes(round)) fail('unsupported-round','인쇄할 파이널 진단 패키지의 회차를 확인하지 못했습니다.');
 
     var prelude=makeStaticClone(source);
     list(prelude.querySelectorAll('.report-detailed-section')).forEach(function(node){node.remove();});
@@ -127,7 +128,7 @@
     if(details.querySelector('.is-pending')) fail('detail-pending','미검수 상세 답안은 인쇄할 수 없습니다.');
     var nos=ready.map(function(card){return Number(card.getAttribute('data-detailed-solution-no'));});
     if(nos.some(function(no){return !Number.isInteger(no)||no<1;})||new Set(nos).size!==nos.length) fail('detail-invalid','상세 답안 번호가 올바르지 않습니다.');
-    return {prelude:prelude,details:details,detailNos:nos,detailText:compact(details.textContent)};
+    return {round:round,prelude:prelude,details:details,detailNos:nos,detailText:compact(details.textContent)};
   }
 
   function collectStyles(doc){
@@ -141,6 +142,7 @@
         if(!sheet.href) fail('style-unavailable','인쇄 스타일을 읽지 못했습니다.');
         var href=absoluteUrl(sheet.href,doc.baseURI);
         if(new URL(href).origin===new URL(doc.baseURI).origin) fail('style-unavailable','필수 인쇄 스타일을 읽지 못했습니다.');
+        if(new URL(href).hostname==='fonts.googleapis.com') return;
         links.push({href:href,media:sheet.media&&sheet.media.mediaText||'all'});
       }
     });
@@ -196,13 +198,13 @@
 
   function waitForFonts(doc,families,timeout,job){
     families=Array.isArray(families)?families:[];
+    if(!families.length) return Promise.resolve();
     if(!doc.fonts){
       if(families.length) return Promise.reject(new PrintPreparationError('font-api','글꼴 준비 상태를 확인할 수 없습니다.'));
       return Promise.resolve();
     }
     return timed(doc.fonts.ready.then(function(){
       var faces=list(doc.fonts);
-      if(faces.some(function(face){return face.status==='error';})) fail('font-load','인쇄 글꼴을 불러오지 못했습니다.');
       families.forEach(function(family){
         var key=familyKey(family);
         var matches=faces.filter(function(face){return familyKey(face.family)===key;});
@@ -337,13 +339,13 @@
 
   function pageStyles(){
     return '@page gfield-report-prelude{size:A4 portrait;margin:0}'+
-      '@page final2-solutions{size:A4 portrait;margin:14mm}'+
+      '@page gfield-final-solutions{size:A4 portrait;margin:14mm}'+
       '@media print{html,body,.pagedjs_pages{height:auto!important;min-height:0!important;max-height:none!important}'+
       '.pagedjs_pages{display:block!important}'+
       '.pagedjs_page,.gfield-report-print-blank{page:gfield-report-prelude;width:210mm!important;height:297mm!important;min-height:297mm!important;max-height:297mm!important;margin:0!important;break-after:page;page-break-after:always}'+
       '.pagedjs_pages .pagedjs_page{overflow:hidden!important}'+
       '.gfield-report-print-blank{display:block!important}'+
-      '#gfield-final2-detail-host{display:block!important;page:final2-solutions}}';
+      '#gfield-final-detail-host{display:block!important;page:gfield-final-solutions}}';
   }
 
   function measurementStyles(){
@@ -369,7 +371,8 @@
       pages.appendChild(blank);
     }
     var host=frameState.doc.createElement('div');
-    host.id='gfield-final2-detail-host';
+    host.id='gfield-final-detail-host';
+    host.setAttribute('data-detailed-round',String(copies.round));
     var shadow=host.attachShadow({mode:'open'});
     var style=frameState.doc.createElement('style');
     style.textContent=styles.css+'\n:host{display:block}';
@@ -436,7 +439,7 @@
         var source=resolveSource(doc,options.source||'.final-report-package');
         var copies=buildCopies(source);
         var styles=collectStyles(doc);
-        var requiredFonts=options.requiredFontFamilies===undefined?['Noto Sans KR','Jua']:options.requiredFontFamilies;
+        var requiredFonts=options.requiredFontFamilies===undefined?[]:options.requiredFontFamilies;
         await waitForImages(source,timeout,job);
         await waitForFonts(doc,requiredFonts,timeout,job);
         checkJob(job);
@@ -461,7 +464,7 @@
         await waitForFonts(frameState.doc,requiredFonts,timeout,job);
         checkJob(job);
         var metrics={
-          round:2,
+          round:copies.round,
           preludePages:preludePages,
           blankPages:details.blankPages,
           detailStartPage:preludePages+details.blankPages+1,
@@ -638,7 +641,7 @@
 
   global.GFIELD_FINAL_REPORT_PRINT=Object.freeze({
     version:VERSION,
-    supportedRounds:Object.freeze([2]),
+    supportedRounds:Object.freeze([1,2,3,4]),
     libraryUrl:LIBRARY_URL,
     createPreparation:createPreparation,
     attach:attach,

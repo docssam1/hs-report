@@ -2,6 +2,18 @@
   'use strict';
   var round=function(x){return Math.round(x*10)/10;};
   var escape=function(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+  function studyLevel(score,cuts){
+    var rows=(Array.isArray(cuts)?cuts:[]).filter(function(row){return Array.isArray(row)&&Number.isFinite(Number(row[1]));}).slice().sort(function(a,b){return Number(b[1])-Number(a[1]);});
+    var matched=rows.find(function(row){return Number(score)>=Number(row[1]);});
+    var name=matched?String(matched[0]):'';
+    if(name.indexOf('경시 가능')>=0)return '경시 가능';
+    if(name.indexOf('경시컷')>=0)return '심화 가능';
+    if(name.indexOf('심화컷')>=0)return '실력 가능';
+    if(name.indexOf('실력컷')>=0)return '일품 가능';
+    if(name.indexOf('심화 가능')>=0)return '심화 가능';
+    if(name.indexOf('일품')>=0)return '일품 가능';
+    return '기초부터 다시 확인';
+  }
   function analyze(ctx,options){
     options=options||{};
     var ox=ctx.oxArr||[], items=ctx.items||[];
@@ -122,7 +134,10 @@
     if(a.priority.length&&verified){
       var pct=function(score){return typeof options.percentile==='function'?options.percentile(score,ctx.S):round(Math.min(ctx.S.n,ctx.S.dist.filter(function(v){return v>score;}).length+1)/ctx.S.n*100);};
       var fromPct=pct(a.score),toPct=pct(a.target);
-      if(Number.isFinite(fromPct)&&Number.isFinite(toPct)) scenario+='<p>이 점수를 기준으로 보면 현재 위치는 '+fromPct+'%에서 '+toPct+'%로 달라집니다. 다음 시험 결과를 미리 말해 주는 수치는 아닙니다.</p>';
+      if(Number.isFinite(fromPct)&&Number.isFinite(toPct)){
+        var targetLevel=studyLevel(a.target,ctx.S&&ctx.S.cuts);
+        scenario+='<p>이 점수를 기준으로 보면 현재 위치는 '+fromPct+'%에서 '+toPct+'%로 달라집니다. 복습 목표 기준은 <b>'+toPct+'% · '+e(targetLevel)+'</b>입니다. 다음 시험 결과를 미리 말해 주는 수치는 아닙니다.</p>';
+      }
       else scenario+='<p class="coaching-caution">점수 변화만 먼저 살펴보세요.</p>';
     }else if(a.priority.length){scenario+='<p class="coaching-caution">점수 변화만 먼저 살펴보세요.</p>';}
     return '<div class="diagnostic-coaching"><p><b>'+e(ctx.name)+'</b> 학생, 이번 파이널 '+e(ctx.roundNum)+'회에서 <b>'+a.score+'점</b>을 받았습니다. 맞힌 문제는 풀이 방법을 익히고, 틀린 문제는 다시 풀며 다음 공부를 준비해 봅시다.</p><div class="coaching-grid"><div class="coaching-block"><h3>이번 시험에서 잘한 점</h3>'+strength+'</div><div class="coaching-block"><h3>다시 살펴볼 영역</h3>'+weakness+'</div></div><h3>점수별 문제 보기</h3><p>'+e(tierText)+'</p><p>점수가 같은 문제라도 쓰는 방법은 다를 수 있습니다. 틀린 문제는 풀이 과정을 다시 적어 보세요.</p>'+scenario+planHTML(a,ctx,options,e)+(review?'<h3>문제별로 이렇게 복습하세요</h3><ol>'+review+'</ol>':'')+'<h3>교재와 연결하는 복습 순서</h3><p>교재 연결표에서 해당 유형의 학습 위치를 찾으세요. 조건을 읽고 표시하기 → 필요한 식·표·그림 만들기 → 막힌 단계만 상세답안과 비교하기 → 연결된 유사문제 풀기 → 다음 날 해설 없이 다시 설명하기 순서로 공부해 보세요. 교재 쪽수는 선생님과 함께 확인합니다.</p><p class="coaching-caution">틀린 이유는 한 가지가 아닐 수 있습니다. 풀이를 보며 어떤 부분이 어려웠는지 학생과 선생님이 함께 찾아보세요.</p></div>';

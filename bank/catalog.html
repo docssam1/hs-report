@@ -13,6 +13,7 @@
     --purple:#6941c6;--purple-soft:#f4f0ff;--blue-soft:#eef5ff;
   }
   *{box-sizing:border-box}
+  body.bank-access-pending>:not(.bank-access-gate){visibility:hidden}
   html{background:var(--bg)}
   body{margin:0;color:var(--ink);background:var(--bg);font-family:Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.55}
   button,input,select{font:inherit}
@@ -114,7 +115,7 @@
   @media print{.screen-only{display:none!important}.shell{width:100%;padding:0}.area-section{break-inside:avoid;box-shadow:none}}
 </style>
 </head>
-<body>
+<body class="bank-access-pending">
 <main class="shell">
   <nav class="topnav screen-only" aria-label="문제은행 이동">
     <a class="back" href="index.html">← 문제은행 연습지</a>
@@ -171,6 +172,9 @@
   <section id="results" class="results" aria-label="대영역과 소영역별 유형 목록" aria-busy="true"></section>
 </main>
 
+<script src="../hs-auth.js?v=20260913-bank-access"></script>
+<script>document.write('<script src="../data.js?v='+Date.now()+'"><\/script>');</script>
+<script src="bank-access.js?v=20260913a"></script>
 <script src="../mock-data.js"></script>
 <script src="../mock-data-hw.js"></script>
 <script src="../mock-data-final.js"></script>
@@ -351,6 +355,13 @@
   }catch(error){fail(error)}
 })();
 </script>
-<script src="catalog.js?v=20260912-final2-fixed90"></script>
+<script>
+window.GFIELD_BANK_ACCESS.ready.then(function(){
+  var script=document.createElement('script');
+  script.src='catalog.js?v=20260913-bank-access';
+  script.onerror=function(){document.getElementById('result-status').textContent='문제은행을 불러오지 못했습니다.';};
+  document.body.appendChild(script);
+});
+</script>
 </body>
 </html>

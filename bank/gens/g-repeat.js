@@ -6,8 +6,7 @@
   'use strict';
 
   var CORE = global.BANK_CORE;
-  var RASTER = global.BANK_RASTER;
-  if (!CORE || !RASTER) throw new Error('repeat generator requires BANK_CORE and BANK_RASTER');
+  if (!CORE) throw new Error('repeat generator requires BANK_CORE');
 
   var CHARACTERS = ['가', '나', '다', '라', '마', '바', '사', '아'];
   var LEVEL_PROFILES = {
@@ -48,18 +47,8 @@
     if (primaryAnswer !== independentAnswer) throw new Error('repeat independent verification mismatch');
 
     var patternText = pattern.join(' → ');
-    var asset = RASTER.drawConditionCard('반복되는 글자 규칙', [
-      { label: '반복 마디', value: patternText, accent: true },
-      { label: '이어 쓴 모습', value: preview(pattern) + ' …', valueSize: 16 },
-      { label: '찾을 자리', value: target + '번째 글자', accent: true }
-    ], {
-      footer: '반복 마디의 첫 글자를 1번째로 세어요.',
-      description: '반복 글자 마디와 찾을 자리를 보여 주는 조건표'
-    });
-
     return {
       text: patternText + ' 순서로 글자를 반복하여 이어 씁니다. ' + target + '번째에 오는 글자는 무엇입니까?',
-      asset: asset,
       answer: primaryAnswer,
       solution: '반복 마디는 ' + patternLength + '글자입니다. ' + target + '을(를) ' + patternLength + '으로 나누어 마디 안의 자리를 찾으면 ' + primaryAnswer + '입니다.',
       pointBand: CORE.pointBandForLevel(level),
@@ -68,7 +57,7 @@
         independent: { method: 'write and inspect every character through the requested position', answer: independentAnswer },
         unique: true,
         validAnswerCount: 1,
-        visibleEvidence: { passed: true, method: 'the complete repeating block and requested position are printed in separate rows' }
+        visibleEvidence: { passed: true, method: '반복 마디와 찾을 자리가 문제 문장에 한 번씩 제시됨' }
       },
       meta: {
         pattern: pattern,
@@ -82,7 +71,7 @@
   global.BANK_GENS = global.BANK_GENS || [];
   global.BANK_GENS.push({
     id: 'repeat',
-    version: '1.0.0',
+    version: '1.1.0',
     name: '반복문자·주기',
     area: '수·규칙찾기',
     gradeBand: '초2~초3',
