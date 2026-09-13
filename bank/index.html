@@ -6,18 +6,18 @@
 <title>지필드 생각하는 초등 황소 약점 유형 문제은행 | 지필드 영재교육</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="final1-worksheet.css?v=20260906">
+<link rel="stylesheet" href="final1-worksheet.css?v=20260913-gfield-standard">
 <style>
   :root{
-    --bg:#fff7ed; --card:#ffffff; --soft:#fff3e6;
-    --orange:#f97316; --orange-d:#ea580c; --accent:#c2410c;
-    --ink:#3b2a1d; --ink2:#6f5a49; --dim:#a89684;
-    --line:#f3e3d2; --line2:#efddc9;
+    --bg:#f5f7fb; --card:#ffffff; --soft:#eef5ff;
+    --orange:#3b6acb; --orange-d:#2456c4; --accent:#17345f;
+    --ink:#182230; --ink2:#465568; --dim:#7a8494;
+    --line:#d8dee8; --line2:#c5d1e4;
     --navy:#1F3864;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Noto Sans KR','Malgun Gothic','맑은 고딕',sans-serif;background:var(--bg);color:var(--ink);padding:18px}
-  h1,h2,h3{font-family:'Jua','Noto Sans KR',sans-serif;font-weight:400}
+  body{font-family:Pretendard,'Noto Sans KR','Malgun Gothic','맑은 고딕',sans-serif;background:var(--bg);color:var(--ink);padding:18px}
+  h1,h2,h3{font-family:Pretendard,'Noto Sans KR','Malgun Gothic','맑은 고딕',sans-serif;font-weight:800}
 
   /* ---------- 화면 UI (인쇄 시 숨김) ---------- */
   .topbar{max-width:900px;margin:0 auto 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -25,9 +25,9 @@
   .topbar h1{font-size:20px;color:var(--accent)}
   .topbar .tag{font-size:11px;color:var(--dim);letter-spacing:.06em}
   .catalog-link{margin-left:auto;display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:6px 10px;border:1px solid #cbd8ec;border-radius:9px;background:#f4f8ff;color:var(--navy);font-size:11.5px;font-weight:900;text-decoration:none}
-  .catalog-link .status{padding:2px 6px;border-radius:999px;background:#fff3cd;color:#8a5b00;font-size:9.5px}
+  .catalog-link .status{padding:2px 6px;border-radius:999px;background:#eaf0ff;color:#2456c4;font-size:9.5px}
 
-  .panel{max-width:900px;margin:0 auto 20px;background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:16px 18px;box-shadow:0 6px 18px rgba(194,65,12,.07)}
+  .panel{max-width:900px;margin:0 auto 20px;background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:16px 18px;box-shadow:0 6px 18px rgba(23,52,95,.08)}
   .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
   .row:last-child{margin-bottom:0}
   .row .label{font-size:12.5px;font-weight:700;color:var(--ink2);min-width:74px}
@@ -45,12 +45,12 @@
   .examno{font-size:11.5px;color:var(--dim)}
   .spacer{flex:1}
   .btn{font-size:13.5px;font-weight:800;padding:9px 18px;border-radius:10px;border:none;cursor:pointer}
-  .btn.primary{background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;box-shadow:0 6px 14px rgba(234,88,12,.28)}
+  .btn.primary{background:var(--orange-d);color:#fff;box-shadow:0 6px 14px rgba(36,86,196,.24)}
   .btn.ghost{background:#fff;border:1.5px solid var(--navy);color:var(--navy)}
 
   .stage-wrap{max-width:840px;margin:0 auto}
   .hint{font-size:11.5px;color:var(--dim);text-align:center;margin-bottom:14px}
-  .review-note{max-width:900px;margin:0 auto 14px;padding:11px 14px;border:1px solid #f0b429;border-radius:10px;background:#fff8db;color:#704900;font-size:12.5px;line-height:1.55}
+  .review-note{max-width:900px;margin:0 auto 14px;padding:11px 14px;border:1px solid #b8c9ef;border-radius:10px;background:#f3f7ff;color:#17345f;font-size:12.5px;line-height:1.55}
   body.wrong-practice-mode .panel{display:none}
   body.fixed-bank-mode .row:has([data-role="tune"]),body.fixed-bank-mode .row:has([data-role="ratio"]),body.fixed-bank-mode [data-role="n"],body.fixed-bank-mode #seedInput,body.fixed-bank-mode #btnNew{display:none}
   body.fixed-bank-mode .qcard .qtext{font-size:12px;line-height:1.45}
@@ -75,8 +75,8 @@
   .cover-hero{display:grid;grid-template-columns:minmax(0,1fr) 58mm;gap:10mm;align-items:stretch;margin-top:15mm}
   .cover-title{display:flex;flex-direction:column;justify-content:center;min-width:0;padding:3mm 0}
   .cover-title .kicker{font-size:12px;font-weight:900;letter-spacing:.12em;color:var(--orange-d)}
-  .cover-title .title-main{font-family:'Jua','Noto Sans KR',sans-serif;font-size:76px;line-height:.95;color:var(--navy);letter-spacing:-.045em;margin:11px 0 7px}
-  .cover-title .title-rest{font-family:'Jua','Noto Sans KR',sans-serif;font-size:31px;line-height:1.18;color:var(--ink);letter-spacing:-.035em;word-break:keep-all}
+  .cover-title .title-main{font-family:Pretendard,'Noto Sans KR','Malgun Gothic','맑은 고딕',sans-serif;font-size:76px;font-weight:900;line-height:.95;color:var(--navy);letter-spacing:-.045em;margin:11px 0 7px}
+  .cover-title .title-rest{font-family:Pretendard,'Noto Sans KR','Malgun Gothic','맑은 고딕',sans-serif;font-size:31px;font-weight:800;line-height:1.18;color:var(--ink);letter-spacing:-.035em;word-break:keep-all}
   .cover-title .tagline{max-width:94%;margin-top:17px;padding-top:10px;border-top:2px solid var(--orange-d);font-size:12px;font-weight:700;line-height:1.65;color:var(--ink2)}
   .cover-bull-panel{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:96mm;padding:10mm 7mm 8mm;background:var(--orange-d);color:#fff;border-radius:4px;overflow:hidden}
   .cover-bull-panel:after{content:'BULL';position:absolute;right:-8px;bottom:-17px;font-size:67px;font-weight:900;letter-spacing:-.08em;color:rgba(255,255,255,.13)}
@@ -136,7 +136,7 @@
   table.anstable td.ans{font-weight:800;color:var(--accent);text-align:center}
   table.anstable td.area{font-size:9.5px;color:var(--dim)}
   .solution-skill{color:var(--accent);font-size:10px}
-  .reading-focus{color:#7c3f13;font-size:9.5px;font-weight:700}
+  .reading-focus{color:#28558a;font-size:9.5px;font-weight:700}
   .answer-page{break-before:page;page-break-before:always}
 
   @media print{
@@ -248,20 +248,23 @@
 <script>
 (function(){
   var q=new URLSearchParams(location.search);
-  var fixed=q.get('bank')==='final1' || (q.get('practice')==='wrong' && String(q.get('source')||'final|1').split('|').slice(0,2).join('|')==='final|1');
+  var sourceParts=String(q.get('source')||'').split('|');
+  var bankCode=/^final[12]$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^[12]$/.test(sourceParts[1])?'final'+sourceParts[1]:'');
+  var fixed=!!bankCode;
   if(!fixed)return;
   document.body.classList.add('fixed-bank-mode');
-  var s=document.createElement('script');s.src='final1-worksheet.js?v=20260906';s.onload=function(){
+  var s=document.createElement('script');s.src='final1-worksheet.js?v=20260913-gfield-standard';s.onload=function(){
     var hasGens=q.has('gens'), raw=hasGens?(q.get('gens')||'').split(','):(q.get('practice')==='wrong'?[]:null);
     if(!hasGens&&q.get('gen')&&q.get('gen')!=='mix')raw=[q.get('gen')];
-    window.FINAL1_WORKSHEET.mount({genIds:raw,pointBand:q.get('points')||'all',wrongPracticeMode:q.get('practice')==='wrong',query:{printMode:q.get('printMode')||q.get('mode')||'both'}});
+    window.FINAL1_WORKSHEET.mount({bankCode:bankCode,genIds:raw,pointBand:q.get('points')||'all',wrongPracticeMode:q.get('practice')==='wrong',query:{printMode:q.get('printMode')||q.get('mode')||'both'}});
   };s.onerror=function(){document.getElementById('stage').textContent='학습지를 불러오지 못했습니다. 페이지를 다시 열어 주세요.';};document.head.appendChild(s);
 })();
 (function(){
   'use strict';
   var CORE = window.BANK_CORE;
   var fixedQuery = new URLSearchParams(location.search);
-  var fixedEarly = fixedQuery.get('bank')==='final1' || (fixedQuery.get('practice')==='wrong' && String(fixedQuery.get('source')||'final|1').split('|').slice(0,2).join('|')==='final|1');
+  var fixedSource=String(fixedQuery.get('source')||'').split('|');
+  var fixedEarly = /^final[12]$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && fixedSource[0]==='final' && /^[12]$/.test(fixedSource[1]));
   if(fixedEarly)return;
 
   var GEN_NAMES = {

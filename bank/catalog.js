@@ -68,7 +68,7 @@
           detailTypes:[],detailTypeKeys:[],sourceReviewed:sourceReviewed,
           sourceCounts:{},pointCounts:{},difficultyCounts:{},canonicalTypeIds:[],
           rates:[],points:[],unmeasuredRateCount:0,confirmedCount:0,candidateCount:0,itemCount:0,reviewBases:[],
-          directGenerator:null,directGeneratorRef:null,fixedRefs:[]
+          directGenerator:null,directGeneratorRef:null,fixedRefs:{}
         };
       }
       if(group.detailTypes.indexOf(item.detailType)<0)group.detailTypes.push(item.detailType);
@@ -80,8 +80,10 @@
       if(Number.isFinite(item.points))group.points.push(item.points);
       if(item.bankDifficulty)group.difficultyCounts[item.bankDifficulty.label]=(group.difficultyCounts[item.bankDifficulty.label]||0)+1;
       group.itemCount++;
-      if(item.sourceRef.set==='final'&&Number(item.sourceRef.round)===1){
-        group.fixedRefs.push('final1-q'+String(item.sourceRef.no).padStart(2,'0'));
+      if(item.sourceRef.set==='final'&&[1,2].indexOf(Number(item.sourceRef.round))>=0){
+        var fixedBank='final'+Number(item.sourceRef.round);
+        if(!group.fixedRefs[fixedBank])group.fixedRefs[fixedBank]=[];
+        group.fixedRefs[fixedBank].push(fixedBank+'-q'+String(item.sourceRef.no).padStart(2,'0'));
       }
       if(item.reviewStatus==='confirmed')group.confirmedCount++;else group.candidateCount++;
       if(group.reviewBases.indexOf(item.reviewBasis)<0)group.reviewBases.push(item.reviewBasis);
@@ -138,8 +140,11 @@
 
   function typeCardHtml(group){
     var generator='';
-    if(group.fixedRefs.length){
-      generator='<a class="badge practice" href="index.html?bank=final1&gens='+encodeURIComponent(unique(group.fixedRefs).join(','))+'">문항별 유사문제 3개 공부하기</a>';
+    var fixedBanks=Object.keys(group.fixedRefs);
+    if(fixedBanks.length){
+      generator=fixedBanks.map(function(bank){
+        return '<a class="badge practice" href="index.html?bank='+encodeURIComponent(bank)+'&gens='+encodeURIComponent(unique(group.fixedRefs[bank]).join(','))+'">문항별 유사문제 3개 공부하기</a>';
+      }).join(' ');
     }else if(group.practiceVerified){
       generator='<a class="badge practice" href="index.html?gen='+encodeURIComponent(group.generator.legacyId)+'">일반 연습문제 만들기</a>';
     }else if(group.sourceLinkedReview){
@@ -312,15 +317,19 @@
       });
     });
     window.__BANK_CATALOG_QA__={summary:unified.summary,groups:groups,unified:unified,difficultyPolicy:R.difficultyEvidencePolicy};
-    fetch('data/final1-fixed90-index.json?v=1',{cache:'no-cache'}).then(function(response){
-      if(!response.ok)throw new Error('등록 유사문제 검색 자료를 불러오지 못했습니다.');
-      return response.json();
-    }).then(function(index){
-      if(!Array.isArray(index.items)||index.items.length!==90)throw new Error('등록 유사문제 검색 자료를 확인해 주세요.');
-      unified.items.forEach(function(item){
-        if(item.sourceRef.set!=='final'||Number(item.sourceRef.round)!==1)return;
-        var fixed=index.items.filter(function(q){return q.sourceNo===Number(item.sourceRef.no)&&q.reviewStatus==='verified';});
-        item.searchEvidence=(item.searchEvidence||[]).concat(fixed.map(function(q){return [q.text].concat(q.conditionLines||[]).join(' ');}));
+    Promise.all([1,2].map(function(round){
+      return fetch('data/final'+round+'-fixed90-index.json?v=1',{cache:'no-cache'}).then(function(response){
+        if(!response.ok)throw new Error('파이널 '+round+'회 유사문제 검색 자료를 불러오지 못했습니다.');
+        return response.json();
+      }).then(function(index){return {round:round,index:index};});
+    })).then(function(rows){
+      rows.forEach(function(row){
+        if(!Array.isArray(row.index.items)||row.index.items.length!==90)throw new Error('파이널 '+row.round+'회 유사문제 검색 자료를 확인해 주세요.');
+        unified.items.forEach(function(item){
+          if(item.sourceRef.set!=='final'||Number(item.sourceRef.round)!==row.round)return;
+          var fixed=row.index.items.filter(function(q){return q.sourceNo===Number(item.sourceRef.no)&&q.reviewStatus==='verified';});
+          item.searchEvidence=(item.searchEvidence||[]).concat(fixed.map(function(q){return [q.text].concat(q.promptDataLines||[],q.conditionLines||[]).join(' ');}));
+        });
       });
       window.__BANK_CATALOG_QA__.fixedIndexLoaded=true;
       groups=renderResults(unified,originalCatalog);

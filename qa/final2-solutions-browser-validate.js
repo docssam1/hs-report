@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const http=require('node:http');
-const {chromium}=require('playwright');
+const {chromium}=require(process.env.GFIELD_QA_PLAYWRIGHT||'playwright');
 const ROOT=path.resolve(__dirname,'..');
 const output=process.env.GFIELD_FINAL2_REVIEW_DIR;
 const expected={7:'199번째',15:'422',25:'79개',26:'14살'};
@@ -34,23 +34,25 @@ const server=http.createServer((req,res)=>{
     const base=`http://127.0.0.1:${server.address().port}`;
     await page.goto(base+'/final.html?round=2&name=docssam&go=answer&preview=1',{waitUntil:'domcontentloaded'});
     await page.locator('#btnGrade').waitFor();
-    assert.equal(await page.locator('.detailed-solution').count(),0,'no worked answer before grading');
+    assert.equal(await page.locator('#final2DetailedSolutions .final1-detailed-card').count(),0,'no worked answer before grading');
     for(let no=1;no<=30;no++)if(!Object.hasOwn(expected,no))await page.locator('.abtn').nth(no-1).click();
     await page.locator('#btnGrade').click();
-    await page.locator('.detailed-solution').first().waitFor();
-    assert.equal(await page.locator('.detailed-solution').count(),4);
-    assert.match(await page.locator('[data-solution-no="7"] p').first().innerText(),/✓ 필기 해설 정정: 200번째 → 199번째/);
-    assert.match(await page.locator('[data-solution-no="7"] p').first().innerText(),/16의 배수는 32개가 아니라 31개/);
+    await page.locator('#final2DetailedSolutions .final1-detailed-card.is-ready').first().waitFor();
+    assert.equal(await page.locator('#final2DetailedSolutions .final1-detailed-card.is-ready').count(),30,'all reviewed Final2 solutions render');
+    assert.equal(await page.locator('#final2DetailedSolutions .final1-detailed-card.is-pending').count(),0,'no reviewed solution falls back to pending');
+    assert.match(await page.locator('#final2-solution-7').innerText(),/397=2×198\+1/);
+    assert.match(await page.locator('#final2-solution-7').innerText(),/200번째로 세면 안 됩니다/);
     for(const [no,answer] of Object.entries(expected)){
-      const card=page.locator(`[data-solution-no="${no}"]`);
-      assert.match(await card.locator('h3').innerText(),new RegExp(answer));
+      const card=page.locator(`#final2-solution-${no}`);
+      assert.match(await card.locator('.final1-answer').innerText(),new RegExp(answer));
       assert.ok((await card.innerText()).length>240,'substantive worked steps');
-      assert.equal(await card.locator('.solution-watermark span').count(),3);
+      assert.equal(await card.locator('.final1-watermark span').count(),3);
     }
+    for(const no of [23,27,28])assert.equal(await page.locator(`#final2-solution-${no} .gfield-final2-solution-diagram`).count(),1,`Q${no} includes its teaching diagram`);
     for(const width of [1280,390]){
       await page.setViewportSize({width,height:900});
       for(const no of Object.keys(expected)){
-        const card=page.locator(`[data-solution-no="${no}"]`);
+        const card=page.locator(`#final2-solution-${no}`);
         const bounds=await card.evaluate(el=>({w:el.clientWidth,sw:el.scrollWidth,right:el.getBoundingClientRect().right}));
         assert.ok(bounds.sw<=bounds.w+1&&bounds.right<=width+1,`${no} readable at ${width}px`);
         if(output){fs.mkdirSync(output,{recursive:true});await card.screenshot({path:path.join(output,`q${no}-${width}.png`)});}
@@ -69,6 +71,6 @@ const server=http.createServer((req,res)=>{
     }
     assert.deepEqual(writes,[],'preview/read-back must never write student results');
     assert.deepEqual(errors,[]);
-    console.log('PASS Final2 detailed solutions, answer table, desktop/mobile, pre-attempt boundary, zero student writes');
+    console.log('PASS Final2 30 detailed solutions, Q23/Q27/Q28 teaching diagrams, answer table, desktop/mobile, pre-attempt boundary, zero student writes');
   }finally{await browser.close();server.close();}
 })().catch(error=>{console.error(error);server.close();process.exitCode=1;});

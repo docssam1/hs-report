@@ -40,12 +40,12 @@ const server=http.createServer((req,res)=>{
       }
       assert.equal(await page.locator('#printBtn').evaluate(el=>getComputedStyle(el).position),'static','toolbar never covers reading content');
       assert.ok(await page.locator('.coaching-chart svg').count()>=2);
-      const comment=await page.locator('.diagnostic-coaching').innerText();
+      const comment=await page.locator('.diagnostic-coaching,.personal-study-plan').evaluateAll(nodes=>nodes.map(n=>n.textContent).join(' '));
       assert.match(comment,/반복 약점|되찾을 점수/);assert.doesNotMatch(comment,/\d+명 중|응시 인원|석차 백분율\([0-9]/);
       assert.match(comment,/이전 시험 기록이 없어/);
       const analysis=page.locator('.report-analysis-section');
-      assert.equal(await page.locator('.report-analysis-section>h2').first().innerText(),'영역별 학습 결과');
-      assert.equal(await analysis.locator('.report-tier-section>h2').innerText(),'배점대별 학습 결과');
+      assert.equal(await analysis.locator('#report-strengths>h2').innerText(),'강점과 보완점');
+      assert.equal(await analysis.locator('.report-tier-section>h2').innerText(),'배점대별 결과');
       assert.equal(await analysis.locator('.report-tier-section').evaluate(el=>el.nextElementSibling.classList.contains('report-item-section')),true,'item diagnosis follows the point-tier section');
       const order=await page.evaluate(()=>Array.from(document.querySelector('.final-report-package').children).map(el=>el.className));
       assert.ok(order.findIndex(x=>x.includes('curriculum'))<order.findIndex(x=>x.includes('report-detailed-section')));

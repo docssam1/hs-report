@@ -292,6 +292,13 @@ assert.equal(earliestTurnForExplorerCapacity,2);
 assert.equal(latestTurnForTotalSupply,1);
 assert.ok(earliestTurnForExplorerCapacity>latestTurnForTotalSupply,'one helper cannot satisfy both remaining trip and return requirements');
 assert.equal(answers.get(23),'2명');
+const q23Diagram=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.calculate(23);
+assert.equal(q23Diagram.valid,true);
+assert.deepEqual(JSON.parse(JSON.stringify(q23Diagram.stages.map(stage=>stage.supplies))),[
+  {T:4,H1:4,H2:4},{T:4,H1:1,H2:4},{T:4,H1:0,H2:2},{T:0,H1:0,H2:0}
+]);
+assert.deepEqual(JSON.parse(JSON.stringify(q23Diagram.returnTrips.map(trip=>[trip.turnDay,trip.returnSupply,trip.arrivalDay]))),[[1,1,2],[2,2,4]]);
+assert.deepEqual(JSON.parse(JSON.stringify(q23Diagram.oneHelper)),{earliestTurn:2,latestTurn:1,initialSupply:8,crossingConsumption:6,possible:false});
 
 // Q24: enumerate every nondecreasing multiset of teen ages whose product is fixed.
 const q24Target=10584000;
@@ -341,6 +348,11 @@ for(const [first,second] of q27Schedule){
 }
 assert.deepEqual(q27State,Array(6).fill(q27Full));
 assert.equal(answers.get(27),'8번');
+const q27Diagram=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.calculate(27);
+assert.equal(q27Diagram.valid,true);
+assert.deepEqual(JSON.parse(JSON.stringify(q27Diagram.steps.map(step=>step.call))),q27Schedule.map(pair=>pair.map(index=>'ABCDEF'[index])));
+assert.deepEqual(JSON.parse(JSON.stringify(q27Diagram.steps.map(step=>step.completed.length))),[0,0,0,0,2,3,4,6]);
+assert.deepEqual(JSON.parse(JSON.stringify(q27Diagram.finalKnowledge)),Object.fromEntries('ABCDEF'.split('').map(person=>[person,'ABCDEF'])));
 
 // Q28: recompute the road total, odd vertices, minimum pairing, and displayed closed walk.
 const q28Model=sandbox.window.GFIELD_FINAL2_SOLUTION_DIAGRAMS.model.q28;

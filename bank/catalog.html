@@ -7,8 +7,8 @@
 <title>지필드 생각하는 초등 황소 약점 유형 문제은행 | GFIELD</title>
 <style>
   :root{
-    --bg:#f7f3ea;--paper:#fffefa;--ink:#202938;--muted:#667085;--line:#ded8cb;
-    --navy:#17345f;--navy2:#0f2547;--orange:#f97316;--orange-soft:#fff2e6;
+    --bg:#f5f7fb;--paper:#fff;--ink:#182230;--muted:#667085;--line:#d8dee8;
+    --navy:#17345f;--navy2:#0f2547;--orange:#2456c4;--orange-soft:#eef5ff;
     --green:#16794d;--green-soft:#eaf7ef;--amber:#9a6700;--amber-soft:#fff7d6;
     --purple:#6941c6;--purple-soft:#f4f0ff;--blue-soft:#eef5ff;
   }
@@ -23,8 +23,8 @@
   .back{display:inline-flex;align-items:center;min-height:38px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;text-decoration:none;color:var(--navy);font-size:13px;font-weight:800}
   .topnav .crumb{font-size:12px;color:var(--muted)}
   .hero{position:relative;overflow:hidden;padding:28px;border-radius:24px;background:linear-gradient(135deg,var(--navy2),var(--navy));color:#fff;box-shadow:0 16px 42px rgba(15,37,71,.18)}
-  .hero:after{content:"";position:absolute;right:-80px;top:-130px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(249,115,22,.42),rgba(249,115,22,0) 68%);pointer-events:none}
-  .eyebrow{font-size:12px;font-weight:900;letter-spacing:.13em;color:#fdba74}
+  .hero:after{content:"";position:absolute;right:-80px;top:-130px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(78,127,219,.36),rgba(78,127,219,0) 68%);pointer-events:none}
+  .eyebrow{font-size:12px;font-weight:900;letter-spacing:.13em;color:#b8c9ef}
   h1{position:relative;z-index:1;margin:7px 0 8px;font-size:clamp(26px,4vw,42px);line-height:1.18;letter-spacing:-.045em;word-break:keep-all}
   .hero p{position:relative;z-index:1;max-width:780px;margin:0;color:#d9e4f3;font-size:14px}
   .notice{display:grid;grid-template-columns:auto 1fr;gap:12px;margin:16px 0;padding:15px 17px;border:1px solid #f3d68d;border-radius:15px;background:var(--amber-soft);color:#694900}
@@ -38,7 +38,7 @@
   .stat small{display:block;margin-top:3px;color:var(--muted);font-size:10.5px;line-height:1.35}
   .stat.practice{border-color:#b7dfc8;background:var(--green-soft)}
   .stat.practice strong{color:var(--green)}
-  .filters{position:sticky;top:8px;z-index:10;margin:18px 0;padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(255,254,250,.96);box-shadow:0 10px 28px rgba(15,37,71,.1);backdrop-filter:blur(10px)}
+  .filters{position:sticky;top:8px;z-index:10;margin:18px 0;padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.96);box-shadow:0 10px 28px rgba(15,37,71,.1);backdrop-filter:blur(10px)}
   .finder-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
   .finder-tab{min-height:48px;border:1px solid #b9c6d8;border-radius:12px;background:#fff;color:var(--navy);font-weight:900;cursor:pointer}
   .finder-tab.active{border-color:var(--navy);background:var(--navy);color:#fff}
@@ -47,7 +47,7 @@
   .type-search{display:grid;grid-template-columns:minmax(260px,1fr) auto;gap:10px;align-items:end}
   .area-picks{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
   .area-pick{min-height:36px;padding:7px 11px;border:1px solid #cfc8ba;border-radius:999px;background:#fff;color:#475467;font-size:11px;font-weight:900;cursor:pointer}
-  .area-pick.active{border-color:var(--orange);background:var(--orange-soft);color:#a64000}
+  .area-pick.active{border-color:var(--orange);background:var(--orange-soft);color:#17345f}
   .difficulty-rule{margin-top:10px;color:var(--muted);font-size:10.5px}
   .field{display:grid;gap:5px}
   .field label{font-size:11px;font-weight:900;color:#475467}
@@ -77,8 +77,8 @@
   .sub-review{padding:2px 7px;border-radius:999px;background:var(--amber-soft);color:var(--amber);font-size:10px;font-weight:900}
   .type-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .area-grid{padding:16px 18px}
-  .type-card{min-width:0;padding:14px;border:1px solid #e4dfd5;border-radius:14px;background:#fff}
-  .type-card.candidate{border-color:#efd48c;background:#fffdf5}
+  .type-card{min-width:0;padding:14px;border:1px solid #d8dee8;border-radius:14px;background:#fff}
+  .type-card.candidate{border-color:#c5d1e4;background:#f7f9fc}
   .type-card h4{margin:0;font-size:14px;color:#26364e;line-height:1.42;word-break:keep-all}
   .badges,.sources,.development{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:9px}
   .badge{display:inline-flex;align-items:center;min-height:24px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:900;line-height:1.25}
@@ -120,6 +120,7 @@
     <a class="back" href="index.html">← 문제은행 연습지</a>
     <a class="back" href="../index.html">자료실</a>
     <a class="back" href="index.html?bank=final1">파이널 1회 유사문제 90개</a>
+    <a class="back" href="index.html?bank=final2">파이널 2회 유사문제 90개</a>
     <span class="crumb">문제은행 유형 선택</span>
   </nav>
 
@@ -178,7 +179,7 @@
 <script src="../mock-data-last4.js"></script>
 <script src="../last-score-data.js"></script>
 <script src="../mock-data-original.js"></script>
-<script src="bank-registry.js"></script>
+<script src="bank-registry.js?v=20260912-final2"></script>
 <script type="text/plain" id="legacy-catalog-script">
 (function(){
   'use strict';
@@ -350,6 +351,6 @@
   }catch(error){fail(error)}
 })();
 </script>
-<script src="catalog.js?v=20260909-final2-taxonomy"></script>
+<script src="catalog.js?v=20260912-final2-fixed90"></script>
 </body>
 </html>

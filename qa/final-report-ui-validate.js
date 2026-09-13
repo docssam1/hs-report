@@ -40,9 +40,9 @@ const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL
   assert.equal(await page.evaluate(()=>typeof GFIELD_AUTH.functionCall),'function','auth module actually loaded; not injected');
   assert.equal(await page.locator('#detailWrap td.rt .bar').count(),30,'offline still shows all fixed rates');
   assert.match(await page.locator('.report-expected-grade').innerText(),/경시/);
-  assert.match(await page.locator('.cut-reference').innerText(),/92\.9%/);
+  assert.match(await page.locator('.cut-reference').textContent(),/92\.9%/,'cut percentiles remain in the expandable reference');
   assert.match(await page.locator('#detailWrap').innerText(),/★ 꼭 다시 맞히기/);
-  assert.equal(await page.evaluate(()=>document.querySelector('.report-tier-section').nextElementSibling.className),'report-item-section');
+  assert.ok(await page.evaluate(()=>document.querySelector('.report-tier-section').nextElementSibling.classList.contains('report-item-section')));
   const text=await page.locator('.final-report-package').innerText();assert.deepEqual(text.match(/.{0,30}(?:원본 통계|로그인과 연결|점수만으로 원인|원문|출처·표본|응시 인원|null%|NaN).{0,60}/g),null);
   const rateText=await page.locator('#detailWrap td.rt').allTextContents();
   await page.setViewportSize({width:390,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
@@ -83,7 +83,7 @@ const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL
   assert.equal(resultWrites.length,1);assert.equal(resultWrites[0].round,'final1@2','practice grade never overwrites first grade');
   repeatResults=true;offline=false;
   const attemptsStart=requests.length;
-  await page.goto(address.replace('go=answer&preview=1','go=report&entry=teacher'));await page.locator('.attempt-progress').waitFor();
+  await page.goto(address.replace('go=answer&preview=1','go=report&entry=teacher'));await page.locator('.attempt-progress').waitFor({state:'attached'});await page.locator('.attempt-progress').evaluate(el=>{for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
   const scores=attemptOxs.map(ox=>core.scoreOf(ox));
   const attemptLookups=requests.slice(attemptsStart).filter(r=>!r.action);
   assert.equal(attemptLookups.length,2);
@@ -95,7 +95,7 @@ const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL
   await page.setViewportSize({width:390,height:844});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'three-attempt report fits mobile');
   await page.setViewportSize({width:1280,height:900});
   offline=true;
-  await page.goto(address.replace('go=answer&preview=1','go=report&entry=teacher'));await page.locator('.attempt-progress').waitFor();
+  await page.goto(address.replace('go=answer&preview=1','go=report&entry=teacher'));await page.locator('.attempt-progress').waitFor({state:'attached'});await page.locator('.attempt-progress').evaluate(el=>{for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
   assert.equal(await page.locator('.attempt-progress [aria-label="백분율 자료 없음"]').count(),2,'first-score-only fallback does not invent practice percentiles');
   assert.doesNotMatch(await page.locator('.attempt-progress').innerText(),/null%|NaN|undefined/);
   assert.equal(await page.locator('#detailWrap td.rt .bar').count(),30,'attempt lookup failure never removes fixed item rates');

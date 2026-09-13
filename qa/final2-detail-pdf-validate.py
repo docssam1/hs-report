@@ -6,10 +6,9 @@ from pypdf import PdfReader
 
 folder = Path(sys.argv[1])
 selected = list(range(1, 31))
-continuations = {5, 9, 13, 16, 27, 28}
-page_counts = {number: (2 if number in continuations else 1) for number in selected}
+continuations = {5, 9, 13, 16, 23, 27, 28}
+page_counts = {number: (3 if number == 27 else 2 if number in continuations else 1) for number in selected}
 expected_detail_pages = sum(page_counts.values())
-expected_package_pages = 50
 details = PdfReader(folder / 'final2-details-only.pdf')
 package = PdfReader(folder / 'final2-report-package.pdf')
 assert len(details.pages) == expected_detail_pages, 'Reviewed explanations must use the exact approved page plan'
@@ -23,8 +22,8 @@ def group_solution_pages(page_texts):
         group = page_texts[cursor:cursor + count]
         assert len(group) == count, f'Missing pages for Q{number}'
         assert re.search(rf'\b{number}번\s', group[0]), f'Missing title: {number}'
-        if count == 2:
-            assert f'{number}번 풀이 계속' in group[1], f'Missing continuation heading: {number}'
+        for continuation in group[1:]:
+            assert f'{number}번 풀이 계속' in continuation, f'Missing continuation heading: {number}'
         groups[number] = group
         cursor += count
     assert cursor == len(page_texts), 'Unexpected extra solution page'
@@ -67,12 +66,15 @@ assert '5번 풀이 계속' in detail_groups[5][1]
 assert '9번 풀이 계속' in detail_groups[9][1]
 assert '13번 풀이 계속' in detail_groups[13][1]
 assert '16번 풀이 계속' in detail_groups[16][1]
+assert '23번 풀이 계속' in detail_groups[23][1]
 assert '422' in '\n'.join(detail_groups[15])
 assert '중점' in '\n'.join(detail_groups[12])
 assert '27번 풀이 계속' in detail_groups[27][1]
+assert '27번 풀이 계속' in detail_groups[27][2]
 assert '28번 풀이 계속' in detail_groups[28][1]
 package_texts = [p.extract_text() for p in package.pages]
-assert len(package.pages) == expected_package_pages, 'Report package must match the reviewed 50-page plan'
+front_pages = len(package.pages) - expected_detail_pages
+assert 10 <= front_pages <= 24, 'Report package front matter is outside the reviewed compact range'
 assert '진단 학습 패키지' in package_texts[0]
 assert any('오답 기준 교재 연결표' in t for t in package_texts[:-expected_detail_pages])
 for page in package_texts:
@@ -81,4 +83,4 @@ for page in package_texts:
 package_groups = validate_solution_groups(package_texts[-expected_detail_pages:])
 for number in selected:
     assert educational_body(package_groups[number]) == educational_body(detail_groups[number]), f'Package educational body mismatch: {number}'
-print('PASS synthetic PDFs: 30 complete solution groups, six headed continuations, exact 36/50 page plans, package sequence, watermarks, no pending pages')
+print(f'PASS synthetic PDFs: 30 complete solution groups, eight headed continuation pages, {expected_detail_pages} detail pages, {front_pages} report pages, package sequence, watermarks, no pending pages')

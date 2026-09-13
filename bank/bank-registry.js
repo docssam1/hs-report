@@ -505,11 +505,11 @@
       link.sourceAudit.visualRequired = true;
     }
     link.qaEvidence = {
-      suite: 'qa/bank-final1-generators-validate.js',
-      generatedQuestions: 5000,
-      levels: [1, 2, 3, 4, 5],
-      seedsPerLevel: 1000,
-      date: '2026-09-05'
+      suite: /^final2-q/.test(generatorId) ? 'qa/final2-fixed90-math-validate.js' : 'qa/bank-final1-generators-validate.js',
+      generatedQuestions: /^final2-q/.test(generatorId) ? 3 : 5000,
+      levels: /^final2-q/.test(generatorId) ? ['fixed-reviewed-variants'] : [1, 2, 3, 4, 5],
+      seedsPerLevel: /^final2-q/.test(generatorId) ? 0 : 1000,
+      date: /^final2-q/.test(generatorId) ? '2026-09-12' : '2026-09-05'
     };
     return link;
   }
@@ -599,6 +599,50 @@
       'bank/gens/g-final1.js',
       'same Final 1 source condition structure: ' + row[1],
       'final:1:' + no,
+      row[2] === true
+    );
+  });
+
+  /* 파이널 2회도 원본 회차·문항 번호에 고정된 검수 문항 3개씩만 연결한다. */
+  [
+    [1, '두 가지 점수의 총점에서 높은 점수 횟수 구하기', false],
+    [2, '번갈아 꺾인 정사각형 연결의 사각형 개수 세기', true],
+    [3, '단일 리그 전체 승수와 승수 차로 전적 구하기', false],
+    [4, '두 화폐를 여러 개 골라 만들 수 있는 서로 다른 금액의 수', false],
+    [5, '점에서만 만나는 나라까지 구분하는 최소 색칠', true],
+    [6, '범위 안에서 자리 숫자가 차례로 작아지는 수 세기', false],
+    [7, '연속곱을 4로 거듭 나눌 때 처음 나머지가 생기는 차례', false],
+    [8, '한 번의 무게 재기로 가짜 동전 다발 찾기', false],
+    [9, '직육면체 모서리에서 정해진 이동 수의 경로 세기', true],
+    [10, '빠른 시계와 느린 시계의 표시 차로 맞춘 시각 구하기', false],
+    [11, '모든 사람이 한 번씩 악수하는 데 걸리는 시간', false],
+    [12, '입체 표면에 그린 선을 위에서 본 모양', true],
+    [13, '필수점과 금지점이 있는 격자 최단경로', true],
+    [14, '같은 간격의 표지에서 일정한 차례마다 뺀 뒤 남은 수', false],
+    [15, '앞 묶음과 이어지는 세 수 묶음의 합', false],
+    [16, 'L자 조각으로 정사각형을 덮는 서로 다른 방법', true],
+    [17, '여러 양팔저울 결과에서 공통으로 가벼운 구슬 찾기', true],
+    [18, '전체를 여러 부류로 나눈 뒤 한 부류의 최댓값·최솟값', false],
+    [19, '리그와 토너먼트 경기 수의 최댓값·최솟값', false],
+    [20, '두 범위에서 곱의 일의 자리 조건을 만족하는 순서쌍', false],
+    [21, '도착 시각 차로 거리와 필요한 속력 구하기', false],
+    [22, '여러 종류 동전을 모두 사용해 목표 금액 만들기', false],
+    [23, '돌아오는 도우미의 식량까지 포함한 사막 건너기', false],
+    [24, '나이 범위와 나이의 곱으로 인원수와 나이 합 구하기', false],
+    [25, '단계별 성냥개비 도형의 작은 정삼각형 수', true],
+    [26, '서로 다른 시점의 배수 조건으로 현재 나이 구하기', false],
+    [27, '서로 가진 소식을 모두 주고받는 최소 통화 횟수', false],
+    [28, '모든 도로를 지나 출발점으로 돌아오는 가장 짧은 거리', true],
+    [29, '배수 차례로 문을 바꿀 때 마지막에 열린 문의 수', false],
+    [30, '자연수를 가장 긴 연속 자연수의 합으로 나타내기', false]
+  ].forEach(function (row) {
+    var no = row[0];
+    var sourceKey = ['final', 2, no].join('|');
+    SOURCE_ITEM_GENERATOR_LINKS[sourceKey] = sourceItemReviewGeneratorLink(
+      'final2-q' + String(no).padStart(2, '0'),
+      'bank/bank-fixed.js',
+      'same Final 2 source condition structure: ' + row[1],
+      'final:2:' + no,
       row[2] === true
     );
   });

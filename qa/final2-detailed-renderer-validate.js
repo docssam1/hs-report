@@ -62,12 +62,14 @@ for(const [no,className] of [
   [12,'gfield-final2-solution-diagram--q12'],
   [13,'gfield-final2-solution-diagram--q13'],
   [16,'gfield-final2-solution-diagram--q16'],
+  [23,'gfield-final2-solution-diagram--q23'],
+  [27,'gfield-final2-solution-diagram--q27'],
   [28,'gfield-final2-solution-diagram--q28']
 ]){
   const count=(html.match(new RegExp('class="gfield-final2-solution-diagram '+className+'"','g'))||[]).length;
   assert.equal(count,1,'Q'+no+' required SVG renders exactly once');
 }
-assert.equal((html.match(/class="gfield-final2-solution-diagram /g)||[]).length,7,'seven required reviewed SVGs render');
+assert.equal((html.match(/class="gfield-final2-solution-diagram /g)||[]).length,9,'nine required reviewed SVG figures render');
 
 for(const no of [2,5,9,13,14,16,17]){
   assert.match(html,new RegExp('data-detailed-solution-no="'+no+'"'),'new Q'+no+' ready card');
@@ -97,4 +99,4 @@ assert.match(final1,/id="printFinal1Solutions"/);
 assert.match(final1,/id="final1-solution-1"/);
 assert.match(final1,/data-final1-solution-no="1"/);
 
-console.log('PASS Final2 renderer: public 30/30, 20 tables, seven exact diagram figures, approval demotion fails closed, and no private evidence fields');
+console.log('PASS Final2 renderer: public 30/30, 20 tables, nine exact diagram figures, approval demotion fails closed, and no private evidence fields');

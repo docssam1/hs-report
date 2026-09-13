@@ -126,7 +126,7 @@ function startStaticServer() {
     const ox = Array(30).fill('O'); ox[3] = 'X'; ox[17] = 'X';
     mockRows = [{ student: 'docssam', round: 'final1', ox: ox.join(''), score: 93.9, wrong: 2, source: 'admin', updated_at: '2026-09-05T00:00:00.000Z' }];
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await page.getByText(/docssam 학생의 공식 1차 성적표 · 읽기 전용/).waitFor();
+    await page.getByText(/docssam 학생의 공식 1차 성적표/).waitFor();
     assert.equal(await page.locator('.wp-item').count(), 2, '공식 오답 두 문항의 유사문제만 연결');
     assert.match(await page.locator('#wpSummary').textContent(), /유사문제 6문제/);
     assert.deepEqual(writeMethods, [], '개인 성적표 열람은 성적을 다시 저장하지 않음');

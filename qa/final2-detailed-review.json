@@ -65,6 +65,21 @@
     "published": false,
     "answerVisibility": "post-attempt-only"
   },
+  "visualAmendment": {
+    "reviewId": "final2-original-visual-amendment-20260912",
+    "nos": [
+      23,
+      27,
+      28
+    ],
+    "scope": "diagram-only",
+    "status": "verified",
+    "preservedFields": [
+      "question",
+      "answer",
+      "educational-explanation"
+    ]
+  },
   "gateLayer": "independent-second-pass-complete",
   "independentReview": {
     "status": "verified",
@@ -447,6 +462,21 @@
       "answerContract": "2명",
       "evidenceKind": "capacity-schedule-and-lower-bound",
       "teachingFocus": "두 도우미의 귀환 몫을 남기는 실제 일정과 한 명으로 부족한 까닭을 함께 확인하기",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final2-q23-desert-helper-schedule-v1",
+        "status": "verified",
+        "stageDays": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "returnSupplies": [
+          1,
+          2
+        ]
+      },
       "gates": "pass"
     },
     {
@@ -481,6 +511,23 @@
       "answerContract": "8번",
       "evidenceKind": "construction-and-lower-bound-proof",
       "teachingFocus": "8번 통화표로 가능성을 보이고 첫 완성 시점과 두 무리 논리로 7번을 배제하기",
+      "representation": {
+        "kind": "derived-svg",
+        "diagramId": "final2-q27-six-sisters-call-flow-v1",
+        "status": "verified",
+        "callOrder": [
+          "AB",
+          "AC",
+          "AD",
+          "EF",
+          "AE",
+          "AB",
+          "AC",
+          "DF"
+        ],
+        "firstFullCall": 5,
+        "allFullCall": 8
+      },
       "gates": "pass"
     },
     {
@@ -491,6 +538,8 @@
       "teachingFocus": "모든 도로의 합과 홀수점 짝짓기의 최소 추가 길이를 합치고 실제 닫힌 순회로 확인하기",
       "representation": {
         "kind": "derived-svg",
+        "diagramId": "q28-weighted-road-graph-v1",
+        "status": "verified",
         "graphTopology": "verified",
         "edgeCount": 18,
         "baseLength": 201,
@@ -499,7 +548,14 @@
           "CH",
           "EI"
         ],
-        "routeLength": 216
+        "routeLength": 216,
+        "routeStepCount": 21,
+        "renderedPanels": 2,
+        "repeatedEdgeDistinctions": [
+          "dash",
+          "weight",
+          "legend"
+        ]
       },
       "gates": "pass"
     },

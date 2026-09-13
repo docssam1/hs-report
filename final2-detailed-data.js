@@ -1074,7 +1074,8 @@
         }
       ],
       "check": "계획에서 어느 순간에도 한 사람이 4일분보다 많이 지지 않습니다. H1은 1일분으로 1일을, H2는 2일분으로 2일을 돌아오고, T는 2일 지점의 4일분으로 남은 4일을 가므로 세 사람 모두 식량이 정확히 맞습니다.",
-      "caution": "앞으로 가는 탐험가의 몫만 계산하면 안 됩니다. 도우미가 되돌아가는 동안 먹을 식량을 먼저 남기고, 남는 것만 건네야 합니다."
+      "caution": "앞으로 가는 탐험가의 몫만 계산하면 안 됩니다. 도우미가 되돌아가는 동안 먹을 식량을 먼저 남기고, 남는 것만 건네야 합니다.",
+      "diagram": "final2-q23-desert-helper-schedule-v1"
     },
     {
       "no": 24,
@@ -1292,7 +1293,8 @@
         }
       ],
       "check": "표를 순서대로 합치면 5번째 뒤에 A와 E, 6번째 뒤에 B, 7번째 뒤에 C, 8번째 뒤에 D와 F가 ABCDEF를 압니다.",
-      "caution": "통화 한 번에 새 소식 하나만 전한다고 세면 안 됩니다. 두 사람은 지금까지 모은 소식을 모두 교환합니다. 또 8번짜리 예를 찾은 것만으로는 최솟값이 되지 않으므로, 7번이 불가능한 까닭까지 확인해야 합니다."
+      "caution": "통화 한 번에 새 소식 하나만 전한다고 세면 안 됩니다. 두 사람은 지금까지 모은 소식을 모두 교환합니다. 또 8번짜리 예를 찾은 것만으로는 최솟값이 되지 않으므로, 7번이 불가능한 까닭까지 확인해야 합니다.",
+      "diagram": "final2-q27-six-sisters-call-flow-v1"
     },
     {
       "no": 28,
@@ -1490,6 +1492,8 @@
     if(item.no===12) return item.answer==='(그림 답안)'&&item.diagram==='top-projection';
     if(item.no===13) return item.answer==='16가지'&&item.diagram==='final2-q13-road-network-v1';
     if(item.no===16) return item.answer==='4가지'&&item.diagram==='final2-q16-l-tromino-orbits-v1';
+    if(item.no===23) return item.answer==='2명'&&item.diagram==='final2-q23-desert-helper-schedule-v1';
+    if(item.no===27) return item.answer==='8번'&&item.diagram==='final2-q27-six-sisters-call-flow-v1';
     if(item.no===28) return item.answer==='216'&&item.diagram==='q28-weighted-road-graph-v1';
     return item.diagram==null;
   }

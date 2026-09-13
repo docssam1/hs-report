@@ -19,8 +19,8 @@ const plain=value=>JSON.parse(JSON.stringify(value));
 assert.ok(registry&&typeof registry.calculate==='function'&&typeof registry.render==='function');
 assert.ok(Object.isFrozen(registry)&&Object.isFrozen(registry.model),'diagram registry is immutable');
 
-// Q12 and Q28 were already reviewed and released. Their models, calculated data,
-// and rendered markup must remain byte-for-byte equivalent while new diagrams land.
+// Q12 remains byte-for-byte equivalent. Q28's reviewed model and calculation stay
+// frozen while the visual amendment adds line styling and a model-derived route view.
 const preserved={
   12:{
     model:'9a61f2238d0e0f42d3f42bfd483e2e777287dd433a1ba2c8c5ea183f86850880',
@@ -29,19 +29,85 @@ const preserved={
   },
   28:{
     model:'b9ed3df2764f1fda64587ea1d106a0046505f5c6435c21a884ede297630eaa86',
-    calculated:'4e9da6e3fa46879983651b6f3a3d598fb423541536fdce6abe61c0ccc6717480',
-    rendered:'a7a5555951003612b67f791d7d3a574c8c0fadb240376f439e97e8ff3f24a1aa'
+    calculated:'4e9da6e3fa46879983651b6f3a3d598fb423541536fdce6abe61c0ccc6717480'
   }
 };
-for(const no of [12,28]){
+for(const no of [12]){
   assert.equal(sha256(JSON.stringify(registry.model[`q${no}`])),preserved[no].model,`Q${no} model is unchanged`);
   assert.equal(sha256(JSON.stringify(registry.calculate(no))),preserved[no].calculated,`Q${no} calculation is unchanged`);
   assert.equal(sha256(registry.render(no)),preserved[no].rendered,`Q${no} renderer is unchanged`);
+}
+assert.equal(sha256(JSON.stringify(registry.model.q28)),preserved[28].model,'Q28 reviewed graph model is unchanged');
+assert.equal(sha256(JSON.stringify(registry.calculate(28))),preserved[28].calculated,'Q28 reviewed graph calculation is unchanged');
+
+const visualAmendment={
+  reviewId:'final2-original-visual-amendment-20260912',
+  nos:[23,27,28],
+  rendered:{
+    23:'8251b51b4767ae2617ffb213fdaa1f59225bf8a7bba0cc7425c0416508304593',
+    27:'894826da4795b58dbaa2179c42c81c532389d02c593eed029d4b6a59ee7febfb',
+    28:'bc54c1a27c75e22a724249dbb57f93a4e64c9eb1bfe55997b3cd49cf5f24fb31'
+  }
+};
+for(const no of visualAmendment.nos){
+  assert.equal(sha256(registry.render(no)),visualAmendment.rendered[no],visualAmendment.reviewId+' Q'+no+' exact rendered projection');
 }
 
 const q12Html=registry.render(12);
 assert.match(q12Html,/gfield-final2-solution-diagram--q12/,'existing Q12 projection remains registered');
 assert.match(q12Html,/gfield-final2-q12-answer/,'existing Q12 answer path remains present');
+
+const q23Model=registry.model.q23;
+assert.equal(q23Model.id,'final2-q23-desert-helper-schedule-v1');
+assert.equal(q23Model.crossingDays,6);
+assert.equal(q23Model.capacity,4);
+assert.deepEqual(plain(q23Model.people.map(person=>person.id)),['T','H1','H2']);
+const q23=registry.calculate(23);
+assert.equal(q23.valid,true);
+assert.deepEqual(plain(q23.stages.map(stage=>stage.day)),[0,1,2,6]);
+assert.deepEqual(plain(q23.stages.map(stage=>stage.supplies)),[
+  {T:4,H1:4,H2:4},{T:4,H1:1,H2:4},{T:4,H1:0,H2:2},{T:0,H1:0,H2:0}
+]);
+assert.deepEqual(plain(q23.returnTrips),[
+  {helper:'H1',turnDay:1,returnSupply:1,arrivalDay:2},
+  {helper:'H2',turnDay:2,returnSupply:2,arrivalDay:4}
+]);
+assert.deepEqual(plain(q23.oneHelper),{earliestTurn:2,latestTurn:1,initialSupply:8,crossingConsumption:6,possible:false});
+const q23Html=registry.render(23);
+assert.match(q23Html,/gfield-final2-solution-diagram--q23/);
+assert.equal(count(q23Html,/data-person-route=/g),3);
+assert.equal(count(q23Html,/data-return-route=/g),2);
+assert.equal(count(q23Html,/data-supply-stage=/g),4);
+assert.match(q23Html,/T=탐험가 · H1=도우미 1 · H2=도우미 2/);
+assert.match(q23Html,/data-one-helper-proof="two-days-needed-one-day-possible"/);
+assert.doesNotMatch(q23Html,/6\+2x|x≥|x≤/,'Q23 one-helper proof is written in child-readable words');
+
+const q27Model=registry.model.q27;
+assert.equal(q27Model.id,'final2-q27-six-sisters-call-flow-v1');
+assert.deepEqual(plain(q27Model.calls),[
+  ['A','B'],['A','C'],['A','D'],['E','F'],['A','E'],['A','B'],['A','C'],['D','F']
+]);
+const q27=registry.calculate(27);
+assert.equal(q27.valid,true);
+assert.equal(q27.firstFullCall,5);
+assert.equal(q27.allFullCall,8);
+assert.deepEqual(plain(q27.steps.map(step=>step.completed.length)),[0,0,0,0,2,3,4,6]);
+assert.deepEqual(plain(q27.steps.map(step=>q27Model.people.map(person=>step.knowledge[person]))),[
+  ['AB','AB','C','D','E','F'],
+  ['ABC','AB','ABC','D','E','F'],
+  ['ABCD','AB','ABC','ABCD','E','F'],
+  ['ABCD','AB','ABC','ABCD','EF','EF'],
+  ['ABCDEF','AB','ABC','ABCD','ABCDEF','EF'],
+  ['ABCDEF','ABCDEF','ABC','ABCD','ABCDEF','EF'],
+  ['ABCDEF','ABCDEF','ABCDEF','ABCD','ABCDEF','EF'],
+  ['ABCDEF','ABCDEF','ABCDEF','ABCDEF','ABCDEF','ABCDEF']
+]);
+const q27Html=registry.render(27);
+assert.match(q27Html,/gfield-final2-solution-diagram--q27/);
+assert.equal(count(q27Html,/data-call-step=/g),8);
+assert.match(q27Html,/A~F: 여섯 자매 · AB: A와 B의 소식/);
+assert.match(q27Html,/함께 안 소식 ABCDEF/);
+assert.match(q27Html,/data-minimum-proof="seven-calls-impossible"/);
 
 const q28Model=registry.model.q28;
 assert.equal(q28Model.id,'q28-weighted-road-graph-v1');
@@ -58,11 +124,21 @@ assert.deepEqual(Array.from(q28.oddVertices),['A','C','E','G','H','I']);
 
 const q28Html=registry.render(28);
 assert.match(q28Html,/gfield-final2-solution-diagram--q28/);
-assert.match(q28Html,/role="img"/);
-assert.match(q28Html,/한 번 더 지나는 길/);
+assert.equal(count(q28Html,/<svg\b/g),2,'Q28 has one exact road map and one actual return-route diagram');
+assert.equal(count(q28Html,/role="img"/g),2);
+assert.match(q28Html,/두 번 지남 · AG, CH, EI/);
 assert.equal(count(q28Html,/data-edge-id=/g),18,'all reviewed roads render exactly once');
 assert.equal(count(q28Html,/class="gfield-final2-q28-edge is-repeated"/g),3,'the three minimum repeated roads are marked');
+assert.equal(count(q28Html,/class="gfield-final2-q28-edge is-repeated"[^>]*stroke-width="6"[^>]*stroke-dasharray="10 6"/g),3,'repeated roads differ by both weight and dash');
 assert.equal(count(q28Html,/data-node-id=/g),9,'all villages render exactly once');
+assert.equal(count(q28Html,/data-route-row=/g),3,'the 21-step route is split into three readable rows');
+assert.equal(count(q28Html,/data-route-step=/g),21,'every traversal step is visible');
+assert.equal(count(q28Html,/class="gfield-final2-q28-route-leg is-repeated"/g),6,'AG, CH, and EI each appear twice in the actual route');
+for(const edge of q28Model.edges){
+  assert.equal(count(q28Html,new RegExp('data-route-edge-id="'+edge.id+'"','g')),q28Model.duplicateEdgeIds.includes(edge.id)?2:1,edge.id+' route multiplicity is visible');
+}
+assert.match(q28Html,/실제로 출발점으로 돌아오는 순서/);
+assert.match(q28Html,/A에서 출발 · 모든 18개 도로 포함 · A로 도착/);
 
 const q2Model=registry.model.q2;
 assert.equal(q2Model.id,'final2-q2-alternating-square-chain-v1');
@@ -191,15 +267,15 @@ assert.equal(count(q16Html,/data-piece="B"/g),12);
 assert.equal(count(q16Html,/data-piece="single"/g),12);
 assert.equal(count(q16Html,/role="img"/g),4);
 
-for(const no of [2,5,9,12,13,16,28]){
+for(const no of [2,5,9,12,13,16,23,27,28]){
   assert.notEqual(registry.calculate(no),null,`Q${no} has a calculation contract`);
   assert.ok(registry.render(no).length>0,`Q${no} has a fail-closed renderer implementation`);
   assert.doesNotMatch(registry.render(no),/<image\b|\bhref=|https?:\/\//i,`Q${no} uses only local model-derived SVG shapes`);
 }
 
-for(const unknown of [0,1,3,8,10,11,14,15,17,27,29,31,'unknown',null,undefined]){
+for(const unknown of [0,1,3,8,10,11,14,15,17,29,31,'unknown',null,undefined]){
   assert.equal(registry.calculate(unknown),null,`unknown model ${String(unknown)} does not calculate`);
   assert.equal(registry.render(unknown),'',`unknown model ${String(unknown)} fails closed`);
 }
 
-console.log('PASS Final2 diagram registry: Q2=39, Q5=4, Q9=8, Q13=4x4=16, Q16=4; Q12/Q28 hashes preserved; unknown models fail closed');
+console.log('PASS Final2 diagram registry: Q23=2 helpers, Q27=8 calls, Q28=201+15=216 with 21-step return route; prior reviewed cores preserved; unknown models fail closed');

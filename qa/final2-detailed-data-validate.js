@@ -16,12 +16,20 @@ const REQUIRED_DIAGRAMS=new Map([
   [12,'top-projection'],
   [13,'final2-q13-road-network-v1'],
   [16,'final2-q16-l-tromino-orbits-v1'],
+  [23,'final2-q23-desert-helper-schedule-v1'],
+  [27,'final2-q27-six-sisters-call-flow-v1'],
   [28,'q28-weighted-road-graph-v1']
 ]);
 const REVIEW_ID='final2-detailed-review-20260909';
 const LEARNER_STAGE='초등 선발 대비 파이널 모의고사 수강생';
 const RELEASED23_EDUCATION_SHA256='f4dcca9f407a57c555b4723fa8101e322f29a219e5a9416a818b3e96a3183f53';
 const Q5_PUBLIC_PROJECTION_SHA256='1a1e8f8714c0de02a35b0e04015e9139c4bc2564505c17eb7ca9644d87c37acd';
+const VISUAL_AMENDMENT={
+  reviewId:'final2-original-visual-amendment-20260912',
+  nos:[23,27,28],
+  fieldsByNo:{23:['diagram'],27:['diagram'],28:['diagram-renderer']}
+};
+const VISUAL_AMENDMENT_SHA256='b9af8b386538eeb44f08ead552ed843150f01c66164207dc7a4de6c13683007f';
 
 const read=name=>fs.readFileSync(path.join(ROOT,name),'utf8');
 const plain=value=>value===undefined?undefined:JSON.parse(JSON.stringify(value));
@@ -150,8 +158,17 @@ const educationKeys=['no','title','answer','sourceLocator','read','method','step
 const releasedProjection=publicData.items
   .filter(item=>RELEASED23.includes(item.no))
   .map(item=>Object.fromEntries(educationKeys.map(key=>[key,item[key]===undefined?null:plain(item[key])])));
-const releasedHash=crypto.createHash('sha256').update(JSON.stringify(releasedProjection)).digest('hex');
+const historicalProjection=releasedProjection.map(item=>VISUAL_AMENDMENT.fieldsByNo[item.no]?.includes('diagram')?{...item,diagram:null}:item);
+const releasedHash=crypto.createHash('sha256').update(JSON.stringify(historicalProjection)).digest('hex');
 assert.equal(releasedHash,RELEASED23_EDUCATION_SHA256,'the previously released 23 educational explanations are exact');
+const visualAmendmentProjection=publicData.items
+  .filter(item=>VISUAL_AMENDMENT.nos.includes(item.no))
+  .map(item=>Object.fromEntries(educationKeys.map(key=>[key,item[key]===undefined?null:plain(item[key])])));
+assert.equal(
+  crypto.createHash('sha256').update(JSON.stringify(visualAmendmentProjection)).digest('hex'),
+  VISUAL_AMENDMENT_SHA256,
+  VISUAL_AMENDMENT.reviewId+' exact Q23/Q27 bindings and preserved Q28 explanation'
+);
 
 assert.deepEqual(
   plain(publicData.items.filter(item=>item.steps.some(step=>step.table)).map(item=>item.no)),
@@ -167,6 +184,8 @@ assert.equal(crypto.createHash('sha256').update(JSON.stringify(q5Projection)).di
 assert.equal(detailByNo.get(9).diagram,'final2-q9-five-edge-cuboid-paths-v1');
 assert.equal(detailByNo.get(13).diagram,'final2-q13-road-network-v1');
 assert.equal(detailByNo.get(16).diagram,'final2-q16-l-tromino-orbits-v1');
+assert.equal(detailByNo.get(23).diagram,'final2-q23-desert-helper-schedule-v1');
+assert.equal(detailByNo.get(27).diagram,'final2-q27-six-sisters-call-flow-v1');
 assert.match(detailByNo.get(14).steps[0].body,/299×8=2392m/);
 assert.match(detailByNo.get(16).method,/가운데 칸을 피한다/);
 assert.equal(detailByNo.get(16).steps.length,5);
@@ -219,6 +238,13 @@ assert.equal(review.status.independentSecondPass,'verified');
 assert.equal(review.status.release,'eligible');
 assert.equal(review.status.published,false);
 assert.equal(review.status.answerVisibility,'post-attempt-only');
+assert.deepEqual(review.visualAmendment,{
+  reviewId:VISUAL_AMENDMENT.reviewId,
+  nos:VISUAL_AMENDMENT.nos,
+  scope:'diagram-only',
+  status:'verified',
+  preservedFields:['question','answer','educational-explanation']
+});
 assert.equal(review.gateLayer,'independent-second-pass-complete');
 assert.equal(review.learnerFitGate.gateId,'learner-fit');
 assert.equal(review.learnerFitGate.learnerStage,LEARNER_STAGE);
@@ -250,12 +276,17 @@ for(const [no,id] of REQUIRED_DIAGRAMS){
   assert.equal(review.items.find(item=>item.no===no).representation.status,'verified');
 }
 assert.equal(review.items.find(item=>item.no===12).representation.exactMidpointClaim,false);
+assert.equal(review.items.find(item=>item.no===28).representation.diagramId,'q28-weighted-road-graph-v1');
+assert.equal(review.items.find(item=>item.no===28).representation.status,'verified');
 assert.equal(review.items.find(item=>item.no===28).representation.edgeCount,18);
 assert.deepEqual(review.items.find(item=>item.no===28).representation.duplicateEdges,['AG','CH','EI']);
 assert.equal(review.items.find(item=>item.no===28).representation.routeLength,216);
+assert.equal(review.items.find(item=>item.no===28).representation.routeStepCount,21);
+assert.equal(review.items.find(item=>item.no===28).representation.renderedPanels,2);
+assert.deepEqual(review.items.find(item=>item.no===28).representation.repeatedEdgeDistinctions,['dash','weight','legend']);
 assert.match(review.supersessionBoundary,/eligible 30-question set/);
 assert.match(review.supersessionBoundary,/actual 36-page detail and 50-page package PDF review passed/);
 assert.match(review.supersessionBoundary,/remaining seven/);
 assert.doesNotMatch(JSON.stringify(review),/\\.private|clipboard|[a-f\\d]{64}/i,'public review contains no private locator or fingerprint');
 
-console.log('PASS Final2 reviewed data: exact 30 eligible, released-23 education hash preserved, canonical binding, seven fail-closed diagrams, approved Q5 point contract, and approval-demotion negative control');
+console.log('PASS Final2 reviewed data: exact 30 eligible, released-23 education hash preserved, reviewed Q23/Q27/Q28 visual amendment, nine fail-closed diagrams, approved Q5 point contract, and approval-demotion negative control');

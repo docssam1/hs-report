@@ -177,8 +177,9 @@ const server=http.createServer((req,res)=>{
     assert.equal(prepared.blanks,prepared.metrics.blankPages);
     assert.equal(prepared.shadowReady,30);
     assert.equal(prepared.shadowPending,0);
-    assert.equal(prepared.shadowDiagrams,7);
-    assert.equal(prepared.metrics.tableCount,6,'all six visible report tables are measured in the A4 frame');
+    assert.equal(prepared.shadowDiagrams,9);
+    const expectedPreludeTables=await page.evaluate(()=>{const copy=document.querySelector('.final-report-package').cloneNode(true);copy.querySelectorAll('.no-print,.report-detailed-section').forEach(node=>node.remove());return copy.querySelectorAll('table').length;});
+    assert.equal(prepared.metrics.tableCount,expectedPreludeTables,'every printable table, including collapsed comparisons, is measured in the A4 frame');
     assert.ok(prepared.lockedTables>=prepared.metrics.tableCount,'measured column proportions survive pagination');
     assert.equal(prepared.repeatedHeads,true,'split tables retain headers and colgroups');
     assert.ok(prepared.docssamLayout.title&&prepared.docssamLayout.firstCommentLine&&prepared.docssamLayout.area,'docssam comment title and first line remain in a rendered page area');
