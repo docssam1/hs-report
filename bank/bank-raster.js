@@ -198,6 +198,26 @@
     return finish(s, 'Equilateral triangle subdivided into an exact triangular grid');
   }
 
+  function drawSegmentNetwork(cols, rows, segments, opts) {
+    opts = opts || {};
+    var cellSize = opts.cellSize || 72;
+    var padding = opts.padding || 28;
+    var s = surface(cols * cellSize + padding * 2, rows * cellSize + padding * 2);
+    var ctx = s.ctx;
+    segments.forEach(function (segment) {
+      line(
+        ctx,
+        padding + segment[0] * cellSize,
+        padding + segment[1] * cellSize,
+        padding + segment[2] * cellSize,
+        padding + segment[3] * cellSize,
+        '#263238',
+        opts.lineWidth || 2.4
+      );
+    });
+    return finish(s, opts.description || '가로선과 세로선, 대각선이 함께 그려진 도형 개수 세기 선망');
+  }
+
   function drawRoadNetwork(cols, rows, opts) {
     opts = opts || {};
     var cs = opts.cellSize || 58;
@@ -621,6 +641,7 @@
     drawConditionCard: drawConditionCard,
     drawRectGrid: drawRectGrid,
     drawTriGrid: drawTriGrid,
+    drawSegmentNetwork: drawSegmentNetwork,
     drawRoadNetwork: drawRoadNetwork,
     drawIsoStackWithHeightMap: drawIsoStackWithHeightMap,
     drawPaintedCube: drawPaintedCube,

@@ -42,8 +42,49 @@
     return { count: variant === 'up' ? up : variant === 'down' ? down : up + down, up: up, down: down };
   }
 
+  function areaSummary(byArea) {
+    return Object.keys(byArea).map(Number).sort(function (a, b) { return a - b; }).map(function (area) {
+      return '넓이 ' + area + '인 것 ' + byArea[String(area)] + '개';
+    }).join(', ');
+  }
+
+  function diagonalQuestion(level, rng) {
+    var CORE = global.BANK_CORE, RASTER = global.BANK_RASTER, NETWORK = global.BANK_SHAPE_NETWORK;
+    if (!NETWORK) throw new Error('triangle diagonal variant requires BANK_SHAPE_NETWORK');
+    var choices = level === 3 ? ['cross-2x2'] :
+      level === 4 ? ['cross-2x2', 'offset-2x2'] : ['offset-2x2', 'double-cross-3x2'];
+    var pattern = NETWORK.getPattern(choices[Math.floor(rng() * choices.length)]);
+    var primary = NETWORK.countTriangles(pattern.segments);
+    var independent = NETWORK.countTrianglesByCycles(pattern.segments);
+    if (primary.count !== independent.count || JSON.stringify(primary.byArea) !== JSON.stringify(independent.byArea)) {
+      throw new Error('triangle diagonal independent verification mismatch');
+    }
+    return {
+      text: '다음 그림에서 선분을 변으로 하는 크고 작은 삼각형은 모두 몇 개입니까?',
+      asset: RASTER.drawSegmentNetwork(pattern.cols, pattern.rows, pattern.segments, {
+        cellSize: 78, padding: 28,
+        description: '가로선·세로선과 대각선으로 이루어진 삼각형 개수 세기 그림'
+      }),
+      answer: primary.count,
+      solution: '작은 정사각형 한 칸의 넓이를 1로 보고, 같은 삼각형을 두 번 세지 않도록 넓이별로 세면 ' + areaSummary(primary.byArea) + '입니다. 모두 더하면 ' + primary.count + '개입니다.',
+      pointBand: CORE.pointBandForLevel(level),
+      verification: {
+        primary: { method: 'vertex-combination enumeration', answer: primary.count },
+        independent: { method: 'closed three-side cycle walk', answer: independent.count },
+        unique: true,
+        validAnswerCount: 1,
+        visibleEvidence: { passed: true, method: '모든 가로선·세로선과 대각선이 그림에 한 번씩 표시됨' }
+      },
+      meta: {
+        networkType: 'diagonal', patternId: pattern.id, cols: pattern.cols, rows: pattern.rows,
+        segments: pattern.segments, diagonals: pattern.diagonals, byArea: primary.byArea
+      }
+    };
+  }
+
   function gen(level, rng) {
     var CORE = global.BANK_CORE, RASTER = global.BANK_RASTER;
+    if (level >= 3 && (level === 5 || rng() < (level === 4 ? 0.7 : 0.4))) return diagonalQuestion(level, rng);
     var n;
     if (level <= 1) n = 2;
     else if (level === 2) n = 3;
@@ -90,7 +131,7 @@
         validAnswerCount: 1,
         visibleEvidence: { passed: true, method: 'all three directions of the triangular grid are fully drawn' }
       },
-      meta: { n: n, variant: variant, up: res.up, down: res.down }
+      meta: { networkType: 'triangular-grid', n: n, variant: variant, up: res.up, down: res.down }
     };
   }
 

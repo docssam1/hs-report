@@ -91,14 +91,6 @@
     throw new Error('weekday scenario could not be generated');
   }
 
-  function involvedMonthText(startMonth, targetMonth) {
-    var from = Math.min(startMonth, targetMonth);
-    var to = Math.max(startMonth, targetMonth);
-    var parts = [];
-    for (var month = from; month <= to; month++) parts.push(month + '월 ' + MONTH_LENGTHS[month - 1] + '일');
-    return parts.join(' · ');
-  }
-
   function answerText(result) {
     return result.month + '월 ' + result.day + '일 ' + WEEKDAYS[result.weekdayIndex];
   }
@@ -112,11 +104,10 @@
     if (!sameResult(scenario.target, independent)) throw new Error('weekday independent verification mismatch');
 
     var directionText = scenario.direction > 0 ? '뒤' : '전';
-    var monthText = involvedMonthText(scenario.month, scenario.target.month);
     var answer = answerText(scenario.target);
     return {
       text: scenario.month + '월 ' + scenario.day + '일은 ' + WEEKDAYS[scenario.weekdayIndex] + '입니다. ' +
-        scenario.delta + '일 ' + directionText + '는 몇 월 며칠이고 무슨 요일입니까? 계산에 필요한 달의 날수는 ' + monthText + '입니다.',
+        scenario.delta + '일 ' + directionText + '는 몇 월 며칠이고 무슨 요일입니까?',
       answer: answer,
       solution: '날짜를 ' + scenario.delta + '일 ' + directionText + '로 옮기고, 7일마다 같은 요일이 돌아오는 규칙을 이용하면 ' + answer + '입니다.',
       pointBand: CORE.pointBandForLevel(level),
@@ -125,7 +116,7 @@
         independent: { method: 'move the calendar one day at a time', answer: answerText(independent) },
         unique: true,
         validAnswerCount: 1,
-        visibleEvidence: { passed: true, method: '시작 날짜·요일, 이동 방향·기간, 필요한 달의 날수가 문제 문장에 한 번씩 제시됨' }
+        visibleEvidence: { passed: true, method: '문제 문장에 시작 날짜·요일과 이동 방향·기간이 한 번씩 제시됨' }
       },
       meta: {
         startMonth: scenario.month,
