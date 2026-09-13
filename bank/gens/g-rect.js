@@ -75,8 +75,49 @@
     return [0, 0];
   }
 
+  function areaSummary(byArea) {
+    return Object.keys(byArea).map(Number).sort(function (a, b) { return a - b; }).map(function (area) {
+      return '넓이 ' + area + '인 것 ' + byArea[String(area)] + '개';
+    }).join(', ');
+  }
+
+  function diagonalQuestion(level, rng) {
+    var CORE = global.BANK_CORE, RASTER = global.BANK_RASTER, NETWORK = global.BANK_SHAPE_NETWORK;
+    if (!NETWORK) throw new Error('quadrilateral diagonal variant requires BANK_SHAPE_NETWORK');
+    var choices = level === 3 ? ['cross-2x2'] :
+      level === 4 ? ['cross-2x2', 'offset-2x2'] : ['offset-2x2', 'double-cross-3x2'];
+    var pattern = NETWORK.getPattern(choices[Math.floor(rng() * choices.length)]);
+    var primary = NETWORK.countQuadrilaterals(pattern.segments);
+    var independent = NETWORK.countQuadrilateralsByCycles(pattern.segments);
+    if (primary.count !== independent.count || JSON.stringify(primary.byArea) !== JSON.stringify(independent.byArea)) {
+      throw new Error('quadrilateral diagonal independent verification mismatch');
+    }
+    return {
+      text: '다음 그림에서 선분을 변으로 하는 크고 작은 사각형은 모두 몇 개입니까?',
+      asset: RASTER.drawSegmentNetwork(pattern.cols, pattern.rows, pattern.segments, {
+        cellSize: 78, padding: 28,
+        description: '가로선·세로선과 대각선으로 이루어진 사각형 개수 세기 그림'
+      }),
+      answer: primary.count,
+      solution: '작은 정사각형 한 칸의 넓이를 1로 보고, 같은 사각형을 두 번 세지 않도록 넓이별로 세면 ' + areaSummary(primary.byArea) + '입니다. 모두 더하면 ' + primary.count + '개입니다.',
+      pointBand: CORE.pointBandForLevel(level),
+      verification: {
+        primary: { method: 'ordered vertex enumeration', answer: primary.count },
+        independent: { method: 'closed four-side cycle walk', answer: independent.count },
+        unique: true,
+        validAnswerCount: 1,
+        visibleEvidence: { passed: true, method: '모든 가로선·세로선과 대각선이 그림에 한 번씩 표시됨' }
+      },
+      meta: {
+        networkType: 'diagonal', patternId: pattern.id, cols: pattern.cols, rows: pattern.rows,
+        segments: pattern.segments, diagonals: pattern.diagonals, byArea: primary.byArea
+      }
+    };
+  }
+
   function gen(level, rng) {
     var CORE = global.BANK_CORE, RASTER = global.BANK_RASTER;
+    if (level >= 3 && (level === 5 || rng() < (level === 4 ? 0.7 : 0.4))) return diagonalQuestion(level, rng);
     var R = CORE.randint;
     var cols, rows, squareOnly = false, include = [], exclude = [];
     var attempts = 0, best = null;
@@ -157,14 +198,14 @@
         validAnswerCount: 1,
         visibleEvidence: { passed: true, method: 'complete grid and every condition marker are visible' }
       },
-      meta: { cols: cols, rows: rows, squareOnly: squareOnly, include: include, exclude: exclude }
+      meta: { networkType: 'orthogonal-grid', cols: cols, rows: rows, squareOnly: squareOnly, include: include, exclude: exclude }
     };
   }
 
   global.BANK_GENS = global.BANK_GENS || [];
   global.BANK_GENS.push({
     id: 'rect',
-    name: '크고 작은 직사각형 개수',
+    name: '크고 작은 사각형 개수',
     area: '도형',
     gen: gen,
     pointBands: { 1: '2.7', 2: '2.7', 3: '3.4', 4: '3.4', 5: '4.2' },

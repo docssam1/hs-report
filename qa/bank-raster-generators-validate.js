@@ -14,6 +14,8 @@ const PROMPT_ONLY_SCREENSHOT = process.env.GFIELD_QA_PROMPT_ONLY_SCREENSHOT || '
 const POINT_BANDS = { 1: '2.7', 2: '2.7', 3: '3.4', 4: '3.4', 5: '4.2' };
 const NEW_GENERATOR_IDS = ['repeat', 'weekday', 'inclusion', 'remainder'];
 const REQUIRED_FIGURE_IDS = ['rect', 'tri', 'path', 'cube'];
+require(path.join(ROOT, 'bank', 'shape-network.js'));
+const SHAPE_NETWORK = global.BANK_SHAPE_NETWORK;
 
 for (const filename of ['g-repeat.js', 'g-weekday.js', 'g-inclusion.js', 'g-remainder.js']) {
   const source = fs.readFileSync(path.join(ROOT, 'bank', 'gens', filename), 'utf8');
@@ -172,8 +174,10 @@ function remainderByFullRange(meta) {
 }
 
 function independentAnswer(question) {
-  if (question.genId === 'rect') return countRect(question.meta);
-  if (question.genId === 'tri') return countTriangles(question.meta);
+  if (question.genId === 'rect') return question.meta.networkType === 'diagonal' ?
+    SHAPE_NETWORK.countQuadrilateralsByCycles(question.meta.segments).count : countRect(question.meta);
+  if (question.genId === 'tri') return question.meta.networkType === 'diagonal' ?
+    SHAPE_NETWORK.countTrianglesByCycles(question.meta.segments).count : countTriangles(question.meta);
   if (question.genId === 'path') return countPaths(question.meta);
   if (question.genId === 'repeat') return repeatByEnumeration(question.meta);
   if (question.genId === 'weekday') return weekdayByDayWalk(question.meta);
@@ -201,9 +205,8 @@ function assertNecessaryPromptData(question) {
     assert.ok(text.includes(`${meta.startMonth}월 ${meta.startDay}일`), 'weekday prompt keeps the start date');
     assert.ok(text.includes(weekdays[meta.startWeekdayIndex]), 'weekday prompt keeps the start weekday');
     assert.ok(text.includes(`${meta.delta}일`), 'weekday prompt keeps the movement count');
-    for (let month = Math.min(meta.startMonth, meta.targetMonth); month <= Math.max(meta.startMonth, meta.targetMonth); month++) {
-      assert.ok(text.includes(`${month}월 ${meta.monthLengths[month - 1]}일`), 'weekday prompt keeps every needed month length');
-    }
+    assert.equal(meta.monthLengths[8], 30, 'September has 30 days in the calculation data');
+    assert.doesNotMatch(text, /계산에 필요한 달의 날수/, 'weekday prompt does not give month lengths as a hint');
   } else if (question.genId === 'inclusion') {
     for (const value of [meta.total, meta.firstCount, meta.secondCount]) assert.ok(text.includes(`${value}명`), 'inclusion prompt keeps every group count');
     if (meta.mode === 'exact') assert.ok(text.includes(`${meta.neitherCount}명`), 'exact inclusion prompt keeps the neither-group count');
@@ -418,6 +421,10 @@ function assertNecessaryPromptData(question) {
       assert.equal(question.verification.validAnswerCount, 1, `${question.genId} one valid answer`);
       assert.equal(question.verification.visibleEvidence.passed, true, `${question.genId} visible evidence`);
       assert.equal(independentAnswer(question), question.answer, `${question.genId} external independent answer`);
+      if ((question.genId === 'tri' || question.genId === 'rect') && question.meta.networkType === 'diagonal') {
+        assert.ok(question.meta.diagonals.length > 0, `${question.genId} diagonal variant contains diagonal segments`);
+        assert.match(question.asset.description, /대각선/, `${question.genId} diagonal variant describes the visible diagonals`);
+      }
       if (NEW_GENERATOR_IDS.includes(question.genId)) {
         assert.equal(question.genVersion, '1.1.0', `${question.genId} generator version`);
         assert.equal(question.gradeBand, '초2~초3', `${question.genId} elementary grade band`);
@@ -431,6 +438,8 @@ function assertNecessaryPromptData(question) {
         assertNecessaryPromptData(question);
       }
     }
+    assert.ok(samples.output.some((question) => question.genId === 'tri' && question.meta.networkType === 'diagonal'), 'triangle family includes diagonal variants');
+    assert.ok(samples.output.some((question) => question.genId === 'rect' && question.meta.networkType === 'diagonal'), 'quadrilateral family includes diagonal variants');
     for (const [id, bands] of Object.entries(samples.generatorBands)) {
       if (!id.startsWith('final1-')) assert.deepEqual(bands, POINT_BANDS);
     }
@@ -455,7 +464,7 @@ function assertNecessaryPromptData(question) {
         document.head.innerHTML = '<meta charset="utf-8"><style>body{margin:0;padding:24px;background:#f3f4f6;font-family:"Malgun Gothic",sans-serif}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{background:#fff;border:1px solid #cbd5e1;border-radius:14px;padding:16px}.card h2{font-size:18px;margin:0 0 10px}.card p{font-size:13px;line-height:1.55}.card img{display:block;width:100%;height:auto;margin-top:10px}</style>';
         document.body.innerHTML = '<div class="grid" id="preview"></div>';
         const root = document.querySelector('#preview');
-        ['repeat', 'weekday', 'inclusion', 'remainder'].forEach((id) => {
+        ['weekday', 'tri', 'rect'].forEach((id) => {
           const generator = window.BANK_GENS.find((row) => row.id === id);
           const rng = window.BANK_CORE.mulberry32(window.BANK_CORE.hashString(`${id}:5:preview`));
           const question = generator.gen(5, rng);
@@ -466,6 +475,12 @@ function assertNecessaryPromptData(question) {
           const prompt = document.createElement('p');
           prompt.textContent = question.text;
           card.append(heading, prompt);
+          if (question.asset) {
+            const figure = document.createElement('img');
+            figure.src = question.asset.src;
+            figure.alt = question.asset.description;
+            card.appendChild(figure);
+          }
           root.appendChild(card);
         });
       });
