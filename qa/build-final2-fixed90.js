@@ -39,6 +39,17 @@ function mapSvg(spec){
   return {width:220,height:220,svg:svg(220,220,`<g transform="translate(10 10)">${body}</g>`)};
 }
 
+function cloudMapSvg(spec){
+  const dividers=spec.dividerPaths||[];
+  const boundaries=[
+    `<path data-map-outline="" d="${esc(spec.outlinePath)}" fill="white" stroke="#566274" stroke-width="3"/>`,
+    `<path data-center-country="${esc(spec.centerCountry)}" d="${esc(spec.centerPath)}" fill="white" stroke="#566274" stroke-width="2.6"/>`,
+    ...dividers.map((path,index)=>`<path data-curved-divider="${index+1}" d="${esc(path)}" fill="none" stroke="#566274" stroke-width="2.6"/>`)
+  ].join('');
+  const labels=(spec.labels||[]).map(label=>textAt(label.point[0],label.point[1],label.id,16,'font-weight="700"')).join('');
+  return {width:220,height:220,svg:svg(220,220,boundaries+labels)};
+}
+
 function cubeProject([x,y,z]){return [55+x*105+y*45,145+y*32-z*90];}
 function cuboidSvg(spec){
   const vertices=spec.vertices;
@@ -189,6 +200,7 @@ function renderModel(spec,solution=false){
   switch(spec.kind){
     case 'alternating-square-chain-grid':return chainSvg(spec);
     case 'planar-point-contact-map':return mapSvg(spec);
+    case 'cloud-region-map':return cloudMapSvg(spec);
     case 'cuboid-edge-graph':return cuboidSvg(spec);
     case 'solid-surface-path-projection':return projectionSvg(spec,solution);
     case 'grid-road-network':return gridSvg(spec);

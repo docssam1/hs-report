@@ -6,8 +6,7 @@
   'use strict';
 
   var CORE = global.BANK_CORE;
-  var RASTER = global.BANK_RASTER;
-  if (!CORE || !RASTER) throw new Error('weekday generator requires BANK_CORE and BANK_RASTER');
+  if (!CORE) throw new Error('weekday generator requires BANK_CORE');
 
   var MONTH_LENGTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   var WEEKDAYS = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
@@ -115,22 +114,9 @@
     var directionText = scenario.direction > 0 ? '뒤' : '전';
     var monthText = involvedMonthText(scenario.month, scenario.target.month);
     var answer = answerText(scenario.target);
-    var asset = RASTER.drawConditionCard('날짜와 요일 옮기기', [
-      { label: '시작 날짜', value: scenario.month + '월 ' + scenario.day + '일' },
-      { label: '시작 요일', value: WEEKDAYS[scenario.weekdayIndex], accent: true },
-      { label: '옮길 기간', value: scenario.delta + '일 ' + directionText, accent: true },
-      { label: '달의 날수', value: monthText, valueSize: monthText.length > 24 ? 13 : 16 }
-    ], {
-      width: 700,
-      labelRatio: 0.29,
-      footer: '날짜를 하루 옮길 때 요일도 하루씩 옮겨요.',
-      description: '시작 날짜와 요일, 옮길 기간, 달의 날수를 보여 주는 조건표'
-    });
-
     return {
       text: scenario.month + '월 ' + scenario.day + '일은 ' + WEEKDAYS[scenario.weekdayIndex] + '입니다. ' +
         scenario.delta + '일 ' + directionText + '는 몇 월 며칠이고 무슨 요일입니까? 계산에 필요한 달의 날수는 ' + monthText + '입니다.',
-      asset: asset,
       answer: answer,
       solution: '날짜를 ' + scenario.delta + '일 ' + directionText + '로 옮기고, 7일마다 같은 요일이 돌아오는 규칙을 이용하면 ' + answer + '입니다.',
       pointBand: CORE.pointBandForLevel(level),
@@ -139,7 +125,7 @@
         independent: { method: 'move the calendar one day at a time', answer: answerText(independent) },
         unique: true,
         validAnswerCount: 1,
-        visibleEvidence: { passed: true, method: 'start date, start weekday, direction, distance, and every involved month length are printed' }
+        visibleEvidence: { passed: true, method: '시작 날짜·요일, 이동 방향·기간, 필요한 달의 날수가 문제 문장에 한 번씩 제시됨' }
       },
       meta: {
         startMonth: scenario.month,
@@ -159,7 +145,7 @@
   global.BANK_GENS = global.BANK_GENS || [];
   global.BANK_GENS.push({
     id: 'weekday',
-    version: '1.0.0',
+    version: '1.1.0',
     name: '날짜 이동·요일',
     area: '식의 계산',
     gradeBand: '초2~초3',

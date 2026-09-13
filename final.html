@@ -539,9 +539,10 @@ td.weak-cell{white-space:nowrap}
   if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js','final-report-state.js');
   if(!isLast&&!isOriginal) files.push('final-parent-report.js');
   if(isFinal1) files.push('final1-detailed-data.js','final-detailed-solutions.js');
-  if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js','final-report-print.js');
+  if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js');
   if(isFinal3) files.push('final3-solution-diagrams.js','final3-backhalf-solution-diagrams.js','final3-detailed-data.js','final-detailed-solutions.js');
   if(isFinal4) files.push('final4-detailed-data.js','final-detailed-solutions.js');
+  if(isFinal1||isFinal2||isFinal3||isFinal4) files.push('final-report-print.js');
   if(isLast) files.push(
     'mock-data-final.js',
     'final-population.js',
@@ -2476,7 +2477,7 @@ td.weak-cell{white-space:nowrap}
       var reportHeader=app.querySelector('.report-screen-header');
       if(reportHeader) reportHeader.appendChild(printBtn);
     }
-    if(isFinal2&&window.GFIELD_FINAL_REPORT_PRINT&&typeof window.GFIELD_FINAL_REPORT_PRINT.attach==='function'){
+    if(isStandardFinal&&window.GFIELD_FINAL_REPORT_PRINT&&typeof window.GFIELD_FINAL_REPORT_PRINT.attach==='function'){
       window.GFIELD_FINAL_REPORT_PRINT.attach({
         button:printBtn,
         source:app.querySelector('.final-report-package')

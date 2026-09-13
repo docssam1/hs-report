@@ -174,31 +174,37 @@
 
   register({
     no: 4,
-    name: '범위가 주어지지 않은 두 수의 곱의 최댓값·최솟값',
+    name: '숫자카드로 만든 두 수의 곱의 최댓값·최솟값',
     area: '수·규칙찾기',
-    sourceStructure: '서로 다른 숫자 카드 네 장을 한 번씩 모두 써서 두 자연수를 만들고, 가능한 곱의 최댓값과 최솟값의 차를 묻는다.',
-    errorTags: ['한 자리 수와 세 자리 수의 곱 누락', '숫자 카드 중복 사용', '최대·최소만 쓰고 차 누락'],
-    primaryMethod: '카드를 두 수로 나누는 세 경우를 비교해 최대·최소 찾기',
-    independentMethod: '모든 카드 순열과 세 분할 위치를 전수 열거'
+    sourceStructure: '서로 다른 숫자 카드를 한 번씩 모두 써서 제시된 자리 수의 두 자연수를 만들고, 가능한 곱의 최댓값과 최솟값의 차를 묻는다.',
+    errorTags: ['두 수의 자리 수 조건 누락', '숫자 카드 중복 사용', '최대·최소만 쓰고 차 누락'],
+    primaryMethod: '제시된 자리 수로 카드를 나누어 큰 곱과 작은 곱의 배치를 비교',
+    independentMethod: '모든 카드 순열을 제시된 자리에서 나누어 전수 열거'
   }, function (level, rng, spec) {
+    var formats = [
+      { leftDigits: 2, rightDigits: 2, label: '두 자리 수와 두 자리 수' },
+      { leftDigits: 3, rightDigits: 2, label: '세 자리 수와 두 자리 수' },
+      { leftDigits: 3, rightDigits: 3, label: '세 자리 수와 세 자리 수' }
+    ];
+    var format = formats[(level + Math.floor(rng() * 2)) % formats.length];
+    var cardCount = format.leftDigits + format.rightDigits;
     var digits;
-    do { digits = CORE.shuffle(rng, [1, 2, 3, 4, 5, 6, 7, 8, 9]).slice(0, 4).sort(); }
-    while (digits.join('') === '2345');
+    do { digits = CORE.shuffle(rng, [1, 2, 3, 4, 5, 6, 7, 8, 9]).slice(0, cardCount).sort(); }
+    while (cardCount === 4 && digits.join('') === '2345');
     function numberFrom(values) { return Number(values.join('')); }
     var cases = [];
     permutations(digits).forEach(function (p) {
-      for (var split = 1; split <= 3; split++) {
-        var left = numberFrom(p.slice(0, split));
-        var right = numberFrom(p.slice(split));
-        cases.push({ left: left, right: right, product: left * right });
-      }
+      var left = numberFrom(p.slice(0, format.leftDigits));
+      var right = numberFrom(p.slice(format.leftDigits));
+      cases.push({ left: left, right: right, product: left * right });
     });
     var minCase = cases.reduce(function (best, item) { return item.product < best.product ? item : best; });
     var maxCase = cases.reduce(function (best, item) { return item.product > best.product ? item : best; });
     var independentProducts = [];
-    for (var mask = 1; mask < 15; mask++) {
+    for (var mask = 1; mask < (1 << cardCount) - 1; mask++) {
       var leftDigits = [], rightDigits = [];
       digits.forEach(function (digit, index) { (mask & (1 << index) ? leftDigits : rightDigits).push(digit); });
+      if (leftDigits.length !== format.leftDigits || rightDigits.length !== format.rightDigits) continue;
       permutations(leftDigits).forEach(function (leftOrder) {
         permutations(rightDigits).forEach(function (rightOrder) {
           independentProducts.push(numberFrom(leftOrder) * numberFrom(rightOrder));
@@ -208,10 +214,10 @@
     var min = minCase.product, max = maxCase.product;
     var independentAnswer = Math.max.apply(null, independentProducts) - Math.min.apply(null, independentProducts);
     return finalize(spec, max - min, independentAnswer,
-      '숫자 카드 ' + digits.join(', ') + '를 한 번씩 모두 사용하여 두 자연수를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.',
-      '두 자리 수×두 자리 수라는 조건이 없으므로 한 자리 수×세 자리 수도 반드시 비교합니다. 카드를 1장과 3장, 2장과 2장, 3장과 1장으로 나누어 보면 가장 큰 곱은 ' + maxCase.left + '×' + maxCase.right + '=' + max + ', 가장 작은 곱은 ' + minCase.left + '×' + minCase.right + '=' + min + '이므로 차는 ' + (max - min) + '입니다.',
-      { digits: digits, minimumProduct: min, maximumProduct: max, minimumPair: [minCase.left, minCase.right], maximumPair: [maxCase.left, maxCase.right] },
-      { solutionSteps: ['카드를 두 수로 나누는 자리 수를 정합니다.', '각 경우에서 곱이 가장 큰 배치와 가장 작은 배치를 비교합니다.', '가장 큰 곱에서 가장 작은 곱을 뺍니다.'] });
+      '숫자 카드 ' + digits.join(', ') + '를 한 번씩 모두 사용하여 ' + format.label + '를 만들고 곱합니다. 만들 수 있는 곱 중 가장 큰 값과 가장 작은 값의 차를 구하세요.',
+      format.label + '라는 조건에 맞게 카드를 ' + format.leftDigits + '장과 ' + format.rightDigits + '장으로 나눕니다. 가장 큰 곱은 ' + maxCase.left + '×' + maxCase.right + '=' + max + ', 가장 작은 곱은 ' + minCase.left + '×' + minCase.right + '=' + min + '이므로 차는 ' + (max - min) + '입니다.',
+      { digits: digits, factorDigitCounts: [format.leftDigits, format.rightDigits], factorFormat: format.leftDigits + '×' + format.rightDigits, minimumProduct: min, maximumProduct: max, minimumPair: [minCase.left, minCase.right], maximumPair: [maxCase.left, maxCase.right] },
+      { variantKey: 'factor-format-' + format.leftDigits + 'x' + format.rightDigits, solutionSteps: ['문제에서 정한 두 수의 자리 수를 확인합니다.', '각 자리 수 조건 안에서 곱이 가장 큰 배치와 가장 작은 배치를 비교합니다.', '가장 큰 곱에서 가장 작은 곱을 뺍니다.'] });
   });
 
   register({
@@ -370,10 +376,10 @@
     }
     var secondPair = total - firstPair;
     return finalize(spec, answer, matches.length === 1 ? matches[0].join(', ') : NaN,
-      '가온, 나래, 다온, 라온이 가진 구슬은 모두 ' + total + '개입니다. 네 사람이 가진 구슬의 수를 순서대로 구하세요.',
+      '가온, 나래, 다온, 라온이 가진 구슬은 모두 ' + total + '개입니다. 가온과 나래의 구슬을 합치면 ' + firstPair + '개이고, 다온의 구슬 수와 라온의 구슬 수의 2배를 합하면 ' + weighted + '개입니다. 가온은 다온보다 ' + difference + '개 더 가지고 있습니다. 네 사람이 가진 구슬의 수를 순서대로 구하세요.',
       '다온과 라온의 합은 전체에서 가온과 나래의 합을 뺀 ' + total + '−' + firstPair + '=' + secondPair + '개입니다. 두 식 「다온+라온=' + secondPair + '」, 「다온+라온×2=' + weighted + '」의 차를 구하면 라온은 ' + weighted + '−' + secondPair + '=' + d + '개, 다온은 ' + secondPair + '−' + d + '=' + c + '개입니다. 가온은 ' + c + '+' + difference + '=' + a + '개이고, 나래는 ' + firstPair + '−' + a + '=' + b + '개입니다.',
       { total: total, firstPair: firstPair, weighted: weighted, difference: difference, matches: matches },
-      { conditionLines: ['가온과 나래의 구슬을 합치면 ' + firstPair + '개입니다.', '다온의 구슬 수와 라온의 구슬 수의 2배를 합하면 ' + weighted + '개입니다.', '가온은 다온보다 ' + difference + '개 더 가지고 있습니다.'], solutionSteps: ['전체에서 가온과 나래의 합을 빼 다온과 라온의 합을 구합니다.', '두 식의 차로 라온을 구하고 다온을 구합니다.', '차 조건으로 가온을 구한 뒤 두 사람의 합으로 나래를 구합니다.'] });
+      { solutionSteps: ['전체에서 가온과 나래의 합을 빼 다온과 라온의 합을 구합니다.', '두 식의 차로 라온을 구하고 다온을 구합니다.', '차 조건으로 가온을 구한 뒤 두 사람의 합으로 나래를 구합니다.'] });
   });
 
   register({
@@ -401,10 +407,10 @@
       if (candidate + candidate + (candidate - squirrelGap) + candidateDog + candidateDog / 2 === total) matches.push(candidate);
     }
     return finalize(spec, rabbit, matches.length === 1 ? matches[0] : NaN,
-      '방학 수학 캠프에 참가한 학생 ' + total + '명이 가장 좋아하는 동물을 한 가지씩 골랐습니다. 토끼를 고른 학생은 몇 명입니까?',
+      '방학 수학 캠프에 참가한 학생 ' + total + '명이 강아지, 고양이, 토끼, 양, 다람쥐 중 가장 좋아하는 동물을 한 가지씩 골랐습니다. 강아지를 고른 학생이 가장 많고, 토끼와 양을 고른 학생 수는 같습니다. 토끼를 고른 학생은 다람쥐를 고른 학생보다 ' + squirrelGap + '명 많습니다. 강아지를 고른 학생은 고양이를 고른 학생의 2배이고, 양을 고른 학생보다 ' + dogGap + '명 많습니다. 토끼를 고른 학생은 몇 명입니까?',
       '토끼를 고른 학생 수를 기준 수로 둡니다. 전체 인원을 두 배하면 기준 수 9묶음에서 다람쥐의 부족분 ' + squirrelGap + '명의 2배를 빼고, 강아지의 증가분 ' + dogGap + '명의 3배를 더한 것과 같습니다. 따라서 기준 수는 (' + total + '×2+' + squirrelGap + '×2−' + dogGap + '×3)÷9=' + rabbit + '입니다. 확인하면 양 ' + sheep + '명, 다람쥐 ' + squirrel + '명, 강아지 ' + dog + '명, 고양이 ' + cat + '명이고 합은 ' + total + '명입니다.',
       { total: total, rabbit: rabbit, sheep: sheep, squirrel: squirrel, squirrelGap: squirrelGap, cat: cat, dog: dog, dogGap: dogGap, matchingRabbitCounts: matches, doubledTotalEquation: '2×전체=9×기준수−2×다람쥐 차+3×강아지 차' },
-      { conditionLines: ['동물은 강아지, 고양이, 토끼, 양, 다람쥐의 5가지이고 강아지를 고른 학생이 가장 많습니다.', '토끼와 양을 고른 학생 수는 같습니다.', '토끼를 고른 학생은 다람쥐를 고른 학생보다 ' + squirrelGap + '명 많습니다.', '강아지를 고른 학생은 고양이를 고른 학생의 2배이고, 양을 고른 학생보다 ' + dogGap + '명 많습니다.'], solutionSteps: ['토끼와 양을 같은 기준 수로 둡니다.', '고양이의 절반 관계를 없애려고 전체를 두 배하여 기준 수 묶음 9개로 나타냅니다.', '부족분과 증가분을 보정한 뒤 9로 나누고 다섯 집단의 합으로 확인합니다.'] });
+      { solutionSteps: ['토끼와 양을 같은 기준 수로 둡니다.', '고양이의 절반 관계를 없애려고 전체를 두 배하여 기준 수 묶음 9개로 나타냅니다.', '부족분과 증가분을 보정한 뒤 9로 나누고 다섯 집단의 합으로 확인합니다.'] });
   });
 
   register({
@@ -1212,10 +1218,10 @@
       });
     });
     return finalize(spec, answer, matches.length === 1 ? matches[0] : NaN,
-      '아이: ' + people.join(', ') + '. 운동: ' + sports.join(', ') + '. 월요일부터 금요일까지 한 명씩, 각 운동을 한 번씩 했습니다. 단서를 읽고 ' + target + '의 이름·요일·운동을 한 묶음으로 쓰세요.',
+      '아이: ' + people.join(', ') + '. 운동: ' + sports.join(', ') + '. 월요일부터 금요일까지 한 명씩, 각 운동을 한 번씩 했습니다. 수요일에는 ' + wednesdayPerson + '이 운동했고, ' + tuesdayPerson + '은 ' + wednesdayPerson + '의 바로 전날, ' + mondayPerson + '은 ' + tuesdayPerson + '보다 앞선 날 운동했습니다. ' + fridayPerson + '은 ' + target + '의 바로 다음 날 운동했습니다. 수요일 운동은 ' + wednesdaySport + ', 금요일 운동은 ' + fridaySport + '이고, ' + mondaySport + '은 화요일과 목요일 운동이 아닙니다. ' + tuesdaySport + '은 ' + mondaySport + '의 바로 다음 날 운동입니다. ' + target + '의 이름·요일·운동을 한 묶음으로 쓰세요.',
       '사람 표에서 수요일에 운동한 사람은 ' + wednesdayPerson + '입니다. 그 바로 전날은 ' + tuesdayPerson + '이고, 그보다 앞선 날의 사람은 ' + mondayPerson + '입니다. 따라서 세 사람의 날은 월·화·수요일로 정해집니다. 남은 이틀에서 ' + fridayPerson + '의 바로 전날은 ' + target + '입니다. 따라서 ' + target + '의 날은 목요일입니다. 운동 표에 먼저 놓을 것은 수요일: ' + wednesdaySport + ', 금요일: ' + fridaySport + '입니다. ' + mondaySport + ' 종목은 화요일과 목요일이 아니며 그 다음 날 종목은 ' + tuesdaySport + '입니다. 따라서 두 종목은 월요일과 화요일입니다. 남은 목요일 운동은 ' + targetSport + '입니다. 답은 ' + answer + '입니다.',
       { people: people, sports: sports, target: target, targetSport: targetSport, matches: matches, constraints: constraints, uniqueScheduleCount: matches.length },
-      { conditionLines: ['수요일: ' + wednesdayPerson, tuesdayPerson + ' → 다음 날 ' + wednesdayPerson, mondayPerson + ': ' + tuesdayPerson + '보다 앞선 날', fridayPerson + ': ' + target + ' 바로 다음 날', '수요일 운동: ' + wednesdaySport + ' / 금요일 운동: ' + fridaySport, mondaySport + ': 화·목요일 아님', tuesdaySport + ': ' + mondaySport + ' 바로 다음 날'], variantKey: people.join('-') + '|' + sports.join('-'), solutionSteps: ['아이 이름·요일·운동의 세 열을 가진 표를 그립니다.', '확정된 수요일과 바로 전날·다음 날 조건으로 사람을 배치합니다.', '운동의 확정·부정·바로 다음 날 조건을 연결하고 남은 목요일 묶음을 씁니다.'] });
+      { variantKey: people.join('-') + '|' + sports.join('-'), solutionSteps: ['아이 이름·요일·운동의 세 열을 가진 표를 그립니다.', '확정된 수요일과 바로 전날·다음 날 조건으로 사람을 배치합니다.', '운동의 확정·부정·바로 다음 날 조건을 연결하고 남은 목요일 묶음을 씁니다.'] });
   });
 
   global.BANK_FINAL1_REVIEW = {

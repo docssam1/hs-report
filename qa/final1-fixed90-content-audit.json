@@ -1,11 +1,11 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "sourceSet": "final",
   "sourceRound": 1,
-  "reviewedOn": "2026-09-11",
-  "frozenItemSetHash": "aa642f407284d7d78158acc9b00b67249749939d1ada84bba843bf5ce8f716b6",
+  "reviewedOn": "2026-09-13",
+  "frozenItemSetHash": "9814faa9dc5472c96d64468c53076a19db84272b5a47ad3fb2b85b8459c7647d",
   "frozenItemSetHashBasis": "SHA-256 of sorted id:itemContentHash rows joined by LF",
-  "questionIdentitySetHash": "e9949f1bb9c26338e1c9154936ed8ac43415612b00c1a7caf3657b18a32b90f1",
+  "questionIdentitySetHash": "39a73a1603b2a04abff36b147fe625f2b3d900b23b01f12ccad88e4e374b887f",
   "solutionEnricherVersion": "1.0.0",
   "statusMeaning": "verified는 이 콘텐츠 해시에 묶인 지문·조건·정답·풀이·문제 그림·풀이 그림의 검산 완료를 뜻합니다. Git 반영·배포 완료를 뜻하지 않습니다.",
   "responseRateNote": "파이널 1회 원문 문항에 연결된 난이도 분석용 추정 정답률입니다. 이 고정 변형 문항의 실측 정답률이 아닙니다.",
@@ -33,7 +33,7 @@
     {
       "id": "question-identity-lock",
       "result": "PASS 90/90",
-      "method": "풀이 필드만 제외한 지문·조건·정답·문제 그림·수치 전제의 SHA-256 집합이 e9949f1bb9c26338e1c9154936ed8ac43415612b00c1a7caf3657b18a32b90f1와 일치"
+      "method": "풀이 필드만 제외한 지문·조건·정답·문제 그림·수치 전제의 SHA-256 집합이 39a73a1603b2a04abff36b147fe625f2b3d900b23b01f12ccad88e4e374b887f와 일치"
     },
     {
       "id": "self-study-solutions-q01-q15",
@@ -49,6 +49,11 @@
       "id": "self-study-solution-assets",
       "result": "PASS 6/6",
       "method": "q07 실제 누적거리 수직선 3개와 q18 4×4 펼침 절단망 3개의 PNG 로드·좌표·라벨·조각 수를 실제 화면으로 확인"
+    },
+    {
+      "id": "q04-factor-format-upgrade",
+      "result": "PASS 3/3",
+      "method": "파이널 1회 4번을 두 자리×두 자리, 세 자리×두 자리, 세 자리×세 자리로 한 문항씩 구성하고 각 문항의 모든 카드 순열로 최솟값·최댓값·차를 독립 계산"
     }
   ],
   "reviewSummary": {
@@ -207,48 +212,51 @@
       "id": "final1-q04-v1",
       "sourceNo": 4,
       "variantNo": 1,
-      "questionIdentityHash": "5d98357893682c18dfcb42870f7ba4efb275205d6aca48df9c1d395bc7bd16ff",
-      "itemContentHash": "d3e4c5cc34539ec39d4c20352232fe2ad082a489936f286d265748ca1743a93f",
+      "questionIdentityHash": "3b52fa6a5fa733414da74d3bed99c8a93f46db50a3be7504ae96fa9ab302cdea",
+      "itemContentHash": "92806171a6f5b14be4b3e2babcff1adf8b257407d4ffd36c130e85378b76f839",
       "reviewStatus": "verified",
-      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 718, 최대 4876, 차 4158를 확인했습니다. 독학용 순서 풀이에서 1자리×3자리와 2자리×2자리의 최소·최대의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
+      "reviewNotes": "3×3 자리 수 유형입니다. 모든 숫자 카드 순열을 별도로 열거하여 최솟값 91512, 최댓값 812946, 차 721434을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
         "question-identity-lock",
-        "self-study-solutions-q01-q15"
+        "self-study-solutions-q01-q15",
+        "q04-factor-format-upgrade"
       ]
     },
     {
       "id": "final1-q04-v2",
       "sourceNo": 4,
       "variantNo": 2,
-      "questionIdentityHash": "a4c7e476d1baaeac56b87f50f76b315b90374912134384cd094a9e39cbea07a6",
-      "itemContentHash": "046c83e5003189163b77fca45c4896bd75c27e095dae416338b6cea634336a84",
+      "questionIdentityHash": "a6c7b27daa71724dee66bef292c4d44ca3f15d38e14342efcee5399dce6726ff",
+      "itemContentHash": "d3c1ac9706d552057e5342decfa70d3befe04dbc3603c7f38dc9f6cdd5c3386d",
       "reviewStatus": "verified",
-      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 269, 최대 5642, 차 5373를 확인했습니다. 독학용 순서 풀이에서 1자리×3자리와 2자리×2자리의 최소·최대의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
+      "reviewNotes": "2×2 자리 수 유형입니다. 모든 숫자 카드 순열을 별도로 열거하여 최솟값 1173, 최댓값 6916, 차 5743을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
         "question-identity-lock",
-        "self-study-solutions-q01-q15"
+        "self-study-solutions-q01-q15",
+        "q04-factor-format-upgrade"
       ]
     },
     {
       "id": "final1-q04-v3",
       "sourceNo": 4,
       "variantNo": 3,
-      "questionIdentityHash": "c34a4c6204a9075d2ca3477c84da4e61e82ab67df038ce64e6c9b1c289807d27",
-      "itemContentHash": "26f13c5bcab4510835aa9b7e86dc4b0d1426cc09f3c2920abb925a2d9d2e2be4",
+      "questionIdentityHash": "c16461bd778eecb5544885c9de6f3686784373adab06173fde15682a904725d6",
+      "itemContentHash": "e0e2425b00e6c6caeafe6aedbb1bf909a85e8e762cd5885a9279132566da643b",
       "reviewStatus": "verified",
-      "reviewNotes": "네 카드의 모든 순열과 세 분할 위치를 비교해 최소 469, 최대 5824, 차 5355를 확인했습니다. 독학용 순서 풀이에서 1자리×3자리와 2자리×2자리의 최소·최대의 실제 수치를 다시 계산해 답과 일치함을 확인했습니다.",
+      "reviewNotes": "3×2 자리 수 유형입니다. 모든 숫자 카드 순열을 별도로 열거하여 최솟값 4998, 최댓값 39493, 차 34495을 확인했습니다.",
       "evidenceIds": [
         "fixed90-independent-math",
         "generator-sweep",
         "source-content-review",
         "question-identity-lock",
-        "self-study-solutions-q01-q15"
+        "self-study-solutions-q01-q15",
+        "q04-factor-format-upgrade"
       ]
     },
     {

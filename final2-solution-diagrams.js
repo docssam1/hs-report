@@ -43,37 +43,38 @@
     },
     q5:{
       no:5,
-      id:'final2-q5-point-contact-coloring-v1',
+      id:'final2-q5-cloud-coloring-v3',
       sourceLocator:'materials/final_2/001.jpg#q5',
-      answerKind:'point-contact-map-coloring',
-      countries:['가','나','라','바','마','다'],
-      positiveLengthBoundaryPairs:[
-        ['가','나'],['가','라'],['가','마'],['가','다'],['나','라'],
-        ['나','바'],['라','바'],['라','마'],['바','마'],['마','다']
+      answerKind:'cloud-region-map-coloring',
+      countries:['가','나','다','라','마','바'],
+      meetingPairs:[
+        ['라','나'],['라','가'],['라','다'],['라','마'],['라','바'],
+        ['나','가'],['가','다'],['다','마'],['마','바'],['바','나']
       ],
-      pointOnlyPairs:[['가','바']],
-      centralJunction:{
-        point:[100,75],
-        localFrame:{left:18,top:18,right:182,bottom:132},
-        countriesClockwise:['가','마','바','라'],
-        sectors:[
-          {country:'라',quadrant:'upper-left',labelPoint:[62,43],colorId:2},
-          {country:'가',quadrant:'upper-right',labelPoint:[138,43],colorId:1},
-          {country:'마',quadrant:'lower-right',labelPoint:[138,107],colorId:3},
-          {country:'바',quadrant:'lower-left',labelPoint:[62,107],colorId:4}
-        ],
-        localBoundaryRays:[
-          [[100,75],[100,18]],[[100,75],[182,75]],
-          [[100,75],[100,132]],[[100,75],[18,75]]
-        ],
-        pointOnlyPairToEmphasize:['가','바'],
-        doNotDrawBoundarySegmentBetween:['가','바']
-      },
+      centerCountry:'라',
+      outerCycle:['나','가','다','마','바'],
+      outlinePath:'M24 61 C37 39 58 31 78 38 C95 22 122 24 139 39 C160 32 183 44 188 63 C205 74 204 95 193 108 C202 128 188 148 168 150 C157 169 134 168 117 159 C96 176 72 168 63 153 C40 158 22 143 27 123 C10 110 14 89 26 78 C20 71 20 66 24 61 Z',
+      centerPath:'M75 82 C87 78 91 70 104 76 C117 80 127 76 137 88 C130 97 142 105 132 114 C120 111 117 126 104 121 C94 130 86 119 77 120 C80 108 68 101 75 82 Z',
+      dividerPaths:[
+        'M75 82 C74 67 76 51 78 38',
+        'M137 88 C139 72 138 54 139 39',
+        'M132 114 C151 116 174 111 193 108',
+        'M104 121 C109 134 113 148 117 159',
+        'M77 120 C61 119 43 121 27 123'
+      ],
+      countryLabels:[
+        {country:'나',colorId:1,point:[45,89]},
+        {country:'가',colorId:2,point:[108,51]},
+        {country:'다',colorId:1,point:[166,72]},
+        {country:'마',colorId:2,point:[160,133]},
+        {country:'바',colorId:3,point:[73,143]},
+        {country:'라',colorId:4,point:[104,101]}
+      ],
       coloringClasses:[
-        {colorId:1,countries:['가']},
-        {colorId:2,countries:['라','다']},
-        {colorId:3,countries:['나','마']},
-        {colorId:4,countries:['바']}
+        {colorId:1,countries:['나','다']},
+        {colorId:2,countries:['가','마']},
+        {colorId:3,countries:['바']},
+        {colorId:4,countries:['라']}
       ],
       palette:{
         1:{fill:'#EAF0FF',stroke:'#2456C4'},
@@ -82,11 +83,8 @@
         4:{fill:'#F3EAFE',stroke:'#6E3CBC'}
       },
       labels:{
-        caption:'중앙의 한 점에서 만나는 네 나라와 네 가지 색 배정',
-        aria:'원래 지도의 중앙점을 확대한 그림. 위 왼쪽 라는 둘째 색, 위 오른쪽 가는 첫째 색, 아래 오른쪽 마는 셋째 색, 아래 왼쪽 바는 넷째 색이며 네 나라가 가운데 한 점에서 함께 만난다.',
-        local:'원래 중앙점 확대',
-        contract:'한 점에서 닿는 경우도 만남에 포함',
-        point:'중앙의 한 점',
+        caption:'불규칙한 지도에서 서로 만나는 나라와 네 가지 색 배정',
+        aria:'유럽 지도처럼 불규칙한 바깥 경계 안에 가운데 라와 둘레의 다섯 나라가 길이와 방향이 다른 굽은 국경선으로 나뉜 지도. 나와 다는 첫째 색, 가와 마는 둘째 색, 바는 셋째 색, 라는 넷째 색이다.',
         assignment:'네 색으로 칠하는 한 가지 방법'
       }
     },
@@ -393,7 +391,7 @@
 
   function calculateCountryColoring(){
     var model=MODEL.q5;
-    var allPairs=model.positiveLengthBoundaryPairs.concat(model.pointOnlyPairs);
+    var allPairs=model.meetingPairs;
     var pairMap={},valid=true;
     allPairs.forEach(function(pair){
       var key=pairKey(pair[0],pair[1]);
@@ -409,23 +407,20 @@
     });
     if(Object.keys(assignment).length!==model.countries.length) valid=false;
     allPairs.forEach(function(pair){if(assignment[pair[0]]===assignment[pair[1]]) valid=false;});
-    var central=['가','라','마','바'],centralPairs=0;
-    for(var first=0;first<central.length;first++) for(var second=first+1;second<central.length;second++){
-      if(pairMap[pairKey(central[first],central[second])]) centralPairs++;
-    }
-    var pointKey=pairKey(model.centralJunction.pointOnlyPairToEmphasize[0],model.centralJunction.pointOnlyPairToEmphasize[1]);
-    var boundaryKeys={};
-    model.positiveLengthBoundaryPairs.forEach(function(pair){boundaryKeys[pairKey(pair[0],pair[1])]=true;});
+    var centerPairCount=model.outerCycle.filter(function(country){return pairMap[pairKey(model.centerCountry,country)];}).length;
+    var outerPairCount=model.outerCycle.filter(function(country,index){return pairMap[pairKey(country,model.outerCycle[(index+1)%model.outerCycle.length])];}).length;
     var chromaticNumber=minimumColorCount(model.countries,allPairs);
-    valid=valid&&allPairs.length===11&&centralPairs===6&&chromaticNumber===4&&!boundaryKeys[pointKey];
-    valid=valid&&model.centralJunction.countriesClockwise.join('|')==='가|마|바|라';
+    valid=valid&&allPairs.length===10&&centerPairCount===5&&outerPairCount===5&&chromaticNumber===4;
+    valid=valid&&/C/.test(model.outlinePath)&&/Z$/.test(model.outlinePath)&&/C/.test(model.centerPath)&&/Z$/.test(model.centerPath);
+    valid=valid&&model.dividerPaths.length===5&&model.dividerPaths.every(function(path){return /C/.test(path)&&!/[LHZ]/.test(path);});
+    valid=valid&&model.countryLabels.length===model.countries.length;
     return {
       valid:valid,
       chromaticNumber:chromaticNumber,
       contactPairCount:allPairs.length,
-      centralPairCount:centralPairs,
-      assignment:assignment,
-      pointOnlyPair:model.pointOnlyPairs[0].slice()
+      centerPairCount:centerPairCount,
+      outerPairCount:outerPairCount,
+      assignment:assignment
     };
   }
 
@@ -818,37 +813,25 @@
     '</figure>';
   }
 
-  function junctionSectorPoints(quadrant,junction){
-    var frame=junction.localFrame,point=junction.point,left=frame.left,right=frame.right,top=frame.top,bottom=frame.bottom,x=point[0],y=point[1];
-    if(quadrant==='upper-left') return [[left,top],[x,top],[x,y],[left,y]];
-    if(quadrant==='upper-right') return [[x,top],[right,top],[right,y],[x,y]];
-    if(quadrant==='lower-right') return [[x,y],[right,y],[right,bottom],[x,bottom]];
-    return [[left,y],[x,y],[x,bottom],[left,bottom]];
-  }
-
   function renderCountryColoring(){
     var model=MODEL.q5,calculated=calculateCountryColoring();
     if(!calculated.valid) return '';
-    var junction=model.centralJunction;
-    var sectors=junction.sectors.map(function(sector){
-      var palette=model.palette[sector.colorId];
-      var points=junctionSectorPoints(sector.quadrant,junction).map(function(point){return point.join(',');}).join(' ');
-      return '<g class="gfield-final2-q5-sector" data-country="'+esc(sector.country)+'" data-color-id="'+sector.colorId+'">'+
-        '<polygon points="'+points+'" fill="'+palette.fill+'"></polygon>'+
-        '<text x="'+sector.labelPoint[0]+'" y="'+(sector.labelPoint[1]+5)+'" text-anchor="middle" fill="'+palette.stroke+'" stroke="#FFFFFF" stroke-width="3" paint-order="stroke" font-size="15" font-weight="900" font-family="sans-serif">'+sector.country+' · '+sector.colorId+'</text>'+
+    var countryLabels=model.countryLabels.map(function(label){
+      var palette=model.palette[label.colorId];
+      return '<g class="gfield-final2-q5-country" data-country="'+esc(label.country)+'" data-color-id="'+label.colorId+'">'+
+        '<text x="'+label.point[0]+'" y="'+(label.point[1]+5)+'" text-anchor="middle" fill="'+palette.stroke+'" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" font-size="13" font-weight="900" font-family="sans-serif">'+label.country+'·'+label.colorId+'</text>'+
       '</g>';
     }).join('');
-    var rays=junction.localBoundaryRays.map(function(ray,index){
-      return lineElement('gfield-final2-q5-boundary-ray','data-boundary-ray="'+index+'" x1="'+ray[0][0]+'" y1="'+ray[0][1]+'" x2="'+ray[1][0]+'" y2="'+ray[1][1]+'" stroke="#566274" stroke-width="2.2" stroke-linecap="round"');
+    var curvedDividers=model.dividerPaths.map(function(path,index){
+      return '<path class="gfield-final2-q5-divider" data-curved-divider="'+(index+1)+'" d="'+path+'" fill="none" stroke="#566274" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"></path>';
     }).join('');
-    var frame=junction.localFrame,point=junction.point;
-    var diagram='<svg viewBox="0 0 260 190" role="img" aria-label="'+esc(model.labels.aria)+'" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:auto;background:#FFFFFF">'+
-      '<text x="130" y="17" text-anchor="middle" fill="#182230" font-size="13" font-weight="900" font-family="sans-serif">원래 중앙점 확대</text>'+
-      '<g transform="translate(30 20)">'+sectors+
-        '<rect x="'+frame.left+'" y="'+frame.top+'" width="'+(frame.right-frame.left)+'" height="'+(frame.bottom-frame.top)+'" rx="4" fill="none" stroke="#566274" stroke-width="2.2" vector-effect="non-scaling-stroke"></rect>'+rays+
-        '<circle class="gfield-final2-q5-central-point" data-point-only-pair="가-바" cx="'+point[0]+'" cy="'+point[1]+'" r="7" fill="#B3261E" stroke="#FFFFFF" stroke-width="2.5" vector-effect="non-scaling-stroke"></circle>'+
+    var diagram='<svg viewBox="0 0 220 205" role="img" aria-label="'+esc(model.labels.aria)+'" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:auto;background:#FFFFFF">'+
+      '<text x="110" y="14" text-anchor="middle" fill="#182230" font-size="12.5" font-weight="900" font-family="sans-serif">구름 모양 지도와 다섯 개의 굽은 경계선</text>'+
+      '<g transform="translate(0 9)">'+
+        '<path class="gfield-final2-q5-outline" d="'+model.outlinePath+'" fill="#FFFFFF" stroke="#566274" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>'+
+        '<path class="gfield-final2-q5-center" d="'+model.centerPath+'" fill="#FFFFFF" stroke="#566274" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"></path>'+
+        curvedDividers+countryLabels+
       '</g>'+
-      '<circle cx="58" cy="171" r="5" fill="#B3261E"></circle><text x="69" y="176" fill="#566274" font-size="12.5" font-weight="700" font-family="sans-serif">빨간 점 = 원래 중앙의 한 점</text>'+
     '</svg>';
     var cards=model.coloringClasses.map(function(group,index){
       var palette=model.palette[group.colorId],label=['첫째','둘째','셋째','넷째'][index];
@@ -856,10 +839,10 @@
     }).join('');
     return '<figure class="gfield-final2-solution-diagram gfield-final2-solution-diagram--q5" style="box-sizing:border-box;width:100%;max-width:26rem;margin:.6rem auto;background:#FFFFFF;color:#182230;break-inside:avoid;page-break-inside:avoid">'+
       diagram+
-      '<div style="margin:.15rem 0 .45rem;text-align:center;color:#182230;font:800 .78rem/1.45 sans-serif">가·라·마·바는 같은 중앙점에서 만나므로 네 나라의 색이 모두 달라야 합니다.</div>'+
+      '<div style="margin:.15rem 0 .45rem;text-align:center;color:#182230;font:800 .78rem/1.45 sans-serif">둘레의 다섯 나라는 세 색이 필요하고, 모두와 만나는 가운데 라에는 넷째 색을 씁니다.</div>'+
       '<div class="gfield-final2-q5-color-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem">'+cards+'</div>'+
-      '<div style="margin:.4rem 0 0;text-align:center;color:#566274;font:700 .72rem/1.45 sans-serif">라·다는 서로 만나지 않고, 나·마도 서로 만나지 않아 같은 색을 쓸 수 있습니다.</div>'+
-      '<div style="margin:.25rem 0 0;text-align:center;color:#B3261E;font:700 .7rem/1.4 sans-serif">가와 바 사이에 새 국경선을 그린 것이 아니라, 원래 중앙점의 만남을 표시했습니다.</div>'+
+      '<div style="margin:.4rem 0 0;text-align:center;color:#566274;font:700 .72rem/1.45 sans-serif">나·다와 가·마는 각각 서로 만나지 않으므로 같은 색을 쓸 수 있습니다.</div>'+
+      '<div style="margin:.25rem 0 0;text-align:center;color:#B3261E;font:700 .7rem/1.4 sans-serif">점이 아니라, 두 나라가 함께 쓰는 굽은 경계선을 따라 만남을 확인합니다.</div>'+
       '<figcaption style="margin:.2rem 0 0;text-align:center;color:#566274;font:600 .78rem/1.4 sans-serif">'+esc(model.labels.caption)+'</figcaption>'+
     '</figure>';
   }

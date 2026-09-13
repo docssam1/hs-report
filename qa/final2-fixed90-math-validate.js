@@ -10,7 +10,7 @@ const DATA_PATH = path.join(ROOT, 'bank', 'data', 'final2-fixed90.json');
 const data = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
 const builderSource = fs.readFileSync(path.join(ROOT, 'qa', 'build-final2-fixed90.js'), 'utf8');
 const VISUAL_SOURCES = new Set([2, 5, 9, 12, 13, 16, 17, 25, 28]);
-const ANSWER_SET_SHA256 = '938c0bc0cf2cfdd3e3c413cbbe5215d41939727a45129c1a34fd892d41cc0919';
+const ANSWER_SET_SHA256 = 'dfbc7fe769b9b62e52d716467acbc919156a6172455e26d251fb2a50c741388b';
 
 function hash(value) {
   return crypto.createHash('sha256').update(value).digest('hex');
@@ -55,34 +55,25 @@ function minimumColorCount(countries, edges) {
 function validateMapColoring(item) {
   const asset = item.assetSpec;
   const countries = item.meta.countries;
-  const regionById = Object.fromEntries(asset.regions.map((region) => [region.id, region]));
-  const boundary = new Map();
-  const pointOnly = new Map();
-  for (let i = 0; i < countries.length; i += 1) {
-    for (let j = i + 1; j < countries.length; j += 1) {
-      const a = countries[i];
-      const b = countries[j];
-      const shared = regionById[a].polygon.filter((vertex) => regionById[b].polygon.includes(vertex));
-      if (shared.length >= 2) boundary.set(pairKey(a, b), [a, b]);
-      else if (shared.length === 1) pointOnly.set(pairKey(a, b), [a, b]);
-    }
-  }
-  assert.deepEqual(
-    [...boundary.keys()].sort(),
-    asset.positiveBoundaryPairs.map((pair) => pairKey(...pair)).sort(),
-    item.id + ': shared-boundary contacts'
-  );
-  assert.deepEqual(
-    [...pointOnly.keys()].sort(),
-    asset.pointOnlyPairs.map((pair) => pairKey(...pair)).sort(),
-    item.id + ': point-only contacts'
-  );
-  const edges = [...boundary.values(), ...pointOnly.values()];
+  assert.equal(asset.kind, 'cloud-region-map', item.id + ': source-matched cloud map');
+  assert.equal(asset.contactRule, 'shared-curved-boundary', item.id + ': shared boundary, not point contact');
+  assert.deepEqual(asset.labels.map((label) => label.id).sort(), countries.slice().sort(), item.id + ': all six countries labelled');
+  assert.ok(/C/.test(asset.outlinePath) && /Z$/.test(asset.outlinePath) && !/[LH]/.test(asset.outlinePath), item.id + ': cloud outline is curved');
+  assert.ok(/C/.test(asset.centerPath) && /Z$/.test(asset.centerPath) && !/[LH]/.test(asset.centerPath), item.id + ': center boundary is curved');
+  assert.equal(asset.dividerPaths.length, 5, item.id + ': five curved dividers');
+  assert.ok(asset.dividerPaths.every((path) => /C/.test(path) && !/[LHZ]/.test(path)), item.id + ': no straight partition rays or point markers');
+  assert.equal(asset.renderRules.straightBoundarySegments, false, item.id + ': no straight partition rays');
+  assert.ok(!item.text.includes('한 점에서만 닿는 경우'), item.id + ': no unsupported point wording');
+  const edgeMap = new Map(asset.meetingPairs.map((pair) => [pairKey(...pair), pair]));
+  assert.equal(edgeMap.size, asset.meetingPairs.length, item.id + ': unique meeting pairs');
+  assert.equal(edgeMap.size, item.meta.meetingPairCount, item.id + ': meeting-pair count');
+  const edges = [...edgeMap.values()];
   const answer = minimumColorCount(countries, edges);
   assert.equal(answer, item.meta.chromaticNumber, item.id + ': chromatic number');
   assert.equal(item.answer, answer + '가지', item.id + ': answer');
   const witness = item.verification.primary.witnessColoring;
   edges.forEach(([a, b]) => assert.notEqual(witness[a], witness[b], item.id + ': coloring witness'));
+  assert.equal(answer, 4, item.id + ': source-level four-color answer');
 }
 
 function edgeKey(a, b) {

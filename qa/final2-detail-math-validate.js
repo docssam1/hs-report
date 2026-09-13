@@ -60,12 +60,11 @@ assert.deepEqual(
   'Q4 printed different-type sums match all unordered distinct pairs'
 );
 
-// Q5: point contact counts as meeting; independently find the graph's chromatic number.
+// Q5: use the shared curved boundaries shown by the original cloud-shaped map.
 const q5Countries=['가','나','라','바','마','다'];
 const q5Edges=[
-  ['가','나'],['가','라'],['가','마'],['가','다'],['나','라'],
-  ['나','바'],['라','바'],['라','마'],['바','마'],['마','다'],
-  ['가','바']
+  ['라','나'],['라','가'],['라','다'],['라','마'],['라','바'],
+  ['나','가'],['가','다'],['다','마'],['마','바'],['바','나']
 ];
 const q5Adjacency=new Map(q5Countries.map(country=>[country,new Set()]));
 for(const [first,second] of q5Edges){
@@ -89,20 +88,21 @@ function q5ColoringWith(colorCount){
   }
   return assign(0);
 }
-assert.equal(q5ColoringWith(3),null,'central point makes the four-country clique require four colors');
+assert.equal(q5ColoringWith(3),null,'the five-country outer cycle plus its center requires four colors');
 const q5FourColoring=q5ColoringWith(4);
 assert.ok(q5FourColoring);
-const q5PrintedColoring=new Map([['가',0],['라',1],['다',1],['나',2],['마',2],['바',3]]);
+const q5PrintedColoring=new Map([['나',0],['다',0],['가',1],['마',1],['바',2],['라',3]]);
 for(const [first,second] of q5Edges){
   assert.notEqual(q5PrintedColoring.get(first),q5PrintedColoring.get(second),'Q5 printed coloring separates '+first+' and '+second);
 }
 assert.deepEqual(
   JSON.parse(JSON.stringify(byNo.get(5).steps[2].table.rows.map(row=>row[1]))),
-  ['가','라, 다','나, 마','바'],
+  ['나, 다','가, 마','바','라'],
   'Q5 table prints the independently checked four color classes'
 );
-assert.match(byNo.get(5).read,/한 점에서 닿는 경우도 포함/);
-assert.match(byNo.get(5).caution,/새 국경선을 그리는 것이 아닙니다/);
+assert.match(byNo.get(5).read,/구름 모양/);
+assert.match(byNo.get(5).read,/굽은 경계선/);
+assert.match(byNo.get(5).caution,/직선이나 점/);
 assert.equal(answers.get(5),'4가지');
 
 // Q6: enumerate every integer in the stated range, excluding one-digit values.

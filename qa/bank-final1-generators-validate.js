@@ -77,9 +77,10 @@ function startServer() {
         }
         if (id === 'final1-q04') {
           const values = [];
+          const split = m.factorDigitCounts[0];
           function visit(prefix, rest) {
             if (!rest.length) {
-              for (let split = 1; split <= 3; split++) values.push(Number(prefix.slice(0, split).join('')) * Number(prefix.slice(split).join('')));
+              values.push(Number(prefix.slice(0, split).join('')) * Number(prefix.slice(split).join('')));
               return;
             }
             rest.forEach((digit, index) => visit(prefix.concat(digit), rest.slice(0, index).concat(rest.slice(index + 1))));
@@ -207,6 +208,7 @@ function startServer() {
             let question;
             try { question = generator.gen(level, rng); }
             catch (error) { fail(`${id} L${level} S${seed}: ${error.message}`); continue; }
+            if (Array.isArray(question.conditionLines) && question.conditionLines.length) fail(`${id} L${level} S${seed}: helper condition summaries must be written into the prompt or represented as indispensable source data`);
             prompts.add(question.text + '|' + (question.conditionLines || []).join('|') + '|' + (question.variantKey || ''));
             answers.add(String(question.answer));
             if (visualIdSet.has(id)) {
@@ -262,7 +264,7 @@ function startServer() {
       if (window.BANK_FINAL1_REVIEW.readyQuestionNos.length !== 30 || window.BANK_FINAL1_REVIEW.blockedQuestionNos.length) fail('Final 1 release gate inventory mismatch');
       if (window.BANK_FINAL1_REVIEW.sourceAnswerConnectedQuestionNos.length !== 30 || window.BANK_FINAL1_REVIEW.generatorPendingQuestionNos.length) fail('Final 1 source-answer/generator states are not separated');
       const byId = Object.fromEntries(ids.map((id) => [id, window.BANK_GENS.find((row) => row.id === id).gen(3, core.mulberry32(core.hashString(`${id}:method`)))]));
-      if (!/두 자리 수×두 자리 수라는 조건이 없/.test(byId['final1-q04'].solution)) fail('q04 missing no-two-digit-condition caution');
+      if (!/자리 수|자리수/.test(byId['final1-q04'].solution)) fail('q04 missing factor-digit condition explanation');
       if (!/수직선에 꼭 그/.test(byId['final1-q07'].solution)) fail('q07 missing number-line instruction');
       if (!/가로줄의 합 전체와 세로줄의 합 전체는 같/.test(byId['final1-q13'].solution)) fail('q13 missing row-column sum invariant');
       if (!/자료실의 「도형의 개수」/.test(byId['final1-q22'].solution)) fail('q22 missing library follow-up');

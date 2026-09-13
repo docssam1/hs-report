@@ -51,7 +51,13 @@ const server=http.createServer((req,res)=>{
     await page.goto(base+'?bank=final1&gen=mix&n=8&seed=BAD&review=1#student=검수용가상학생',{waitUntil:'networkidle'});await ready();
     const expected=data.items.slice().sort((a,b)=>a.variantNo-b.variantNo||a.sourceNo-b.sourceNo);
     assert.deepEqual(await paperIds(),expected.map(q=>q.id));
-    assert.deepEqual(await page.locator('.qtext').allTextContents(),expected.map(q=>q.text));
+    const expectedPromptText=expected.map(q=>[q.text,...(q.conditionLines||[])].filter(Boolean).join(' '));
+    assert.deepEqual(await page.locator('.qtext').allTextContents(),expectedPromptText,'필수 단서는 번호형 요약 없이 문제 문장에 이어 표시');
+    assert.equal(await page.locator('.qconditions').count(),0,'문제 아래 조건 요약 목록 없음');
+    for(const item of expected.filter(q=>q.conditionLines&&q.conditionLines.length)){
+      const shown=await page.locator(`.qmeta.fixed-item[data-item-id="${item.id}"]`).locator('xpath=..').locator('.qtext').textContent();
+      item.conditionLines.forEach(line=>assert.ok(shown.includes(line),`${item.id}: 필수 단서 보존`));
+    }
     assert.deepEqual(await page.locator('.question-page').evaluateAll(ns=>ns.map(n=>n.querySelectorAll('.qcard').length)),Array(15).fill(6));
     assert.equal(await page.locator('.cover-page').count(),1);
     assert.equal(await page.locator('.cover-page input[type=checkbox]').count(),30);

@@ -155,7 +155,7 @@
       "q14": "flags 1, 5, 9, through 297 are the 75 removed flags, so 225 remain",
       "q16": "a center-avoiding L can be fixed at one corner; the six possible second placements form reflection classes {1,2}, {3}, {4,5}, and {6}, giving four",
       "q17": "only light-ball pair 1 and 7 satisfies all three balance outcomes",
-      "q5": "the point-inclusive meeting contract makes A, R, M, and B a four-country clique at the original central point, and the explicit four-color assignment attains the lower bound"
+      "q5": "the original cloud-shaped map has center R sharing curved boundaries with all five outer countries; the odd outer cycle needs three colors and R needs a fourth, with no point-contact rule"
     },
     "contentCorrections": [
       "Q7 keeps the corrected answer 199 rather than 200 because the product contains 397 factors of 2",
@@ -273,13 +273,13 @@
       "no": 5,
       "sourceLocator": "materials/final_2/001.jpg#q5",
       "answerContract": "4가지",
-      "evidenceKind": "point-contact-inclusive-graph-coloring",
-      "teachingFocus": "중앙 한 점에서 만나는 네 나라로 네 색의 필요성을 보이고 여섯 나라의 실제 네 색 배정으로 충분성을 확인",
+      "evidenceKind": "cloud-region-map-coloring",
+      "teachingFocus": "둘레의 다섯 나라가 이루는 홀수 고리에 세 색이 필요하고, 그 모두와 굽은 경계를 함께 쓰는 가운데 라에는 넷째 색이 필요함을 확인",
       "representation": {
         "kind": "derived-svg",
-        "diagramId": "final2-q5-point-contact-coloring-v1",
-        "contactContract": "point-contact-inclusive",
-        "addedBoundarySegmentBetweenAAndB": false,
+        "diagramId": "final2-q5-cloud-coloring-v3",
+        "contactContract": "shared-curved-boundaries-only",
+        "straightBoundarySegments": false,
         "status": "verified"
       },
       "gates": "pass"
@@ -581,7 +581,7 @@
     "duplicate or incomplete thirty-question set is rejected",
     "Q2, Q5, Q9, Q12, Q13, Q16, and Q28 each fail closed without its exact registered diagram",
     "demoting either approval status makes every detailed solution fail closed",
-    "the point-inclusive Q5 contract never invents a border segment between A and B"
+    "Q5 keeps one cloud-shaped outline and five curved dividers joined to the boundary; it never invents straight partitions or a point-contact rule"
   ],
   "supersessionBoundary": "This eligible 30-question set preserves the previously released 23 educational explanations and adds the independently reviewed remaining seven. All seven registered diagrams, the final independent integration review, and the actual 36-page detail and 50-page package PDF review passed. published=false makes no deployment claim; population statistics, scores, and learner records remain outside this record."
 }

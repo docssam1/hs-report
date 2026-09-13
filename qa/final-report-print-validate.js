@@ -27,7 +27,7 @@ assert.match(moduleSource,/docssam-saved-comment\{orphans:2;widows:2\}/);
 assert.match(moduleSource,/\.able-box\{break-inside:avoid!important;page-break-inside:avoid!important\}/);
 const finalHtml=fs.readFileSync(path.join(root,'final.html'),'utf8');
 assert.match(finalHtml,/<link rel="stylesheet" href="final-report-print\.css">/,'print layout is loaded by the report page');
-assert.match(finalHtml,/if\(isFinal2\) files\.push\([^\n]*'final-report-print\.js'\)/,'print controller is loaded only for Final2');
+assert.match(finalHtml,/if\(isFinal1\|\|isFinal2\|\|isFinal3\|\|isFinal4\) files\.push\('final-report-print\.js'\)/,'print controller is loaded for every standard Final round');
 
 const student='인쇄모듈합성검수학생';
 const ox='O'.repeat(30);
@@ -108,7 +108,7 @@ const server=http.createServer((req,res)=>{
       supported:window.GFIELD_FINAL_REPORT_PRINT&&window.GFIELD_FINAL_REPORT_PRINT.supportedRounds.slice(),
       wired:document.querySelector('#printBtn').classList.contains('gfield-final-report-print-button'),
       css:!!document.querySelector('link[href="final-report-print.css"]')
-    })),{api:true,supported:[2],wired:true,css:true},'Final2 report loads and wires the reviewed print module');
+    })),{api:true,supported:[1,2,3,4],wired:true,css:true},'Final report loads and wires the reviewed print module');
 
     const before=await page.evaluate(()=>({
       package:document.querySelector('.final-report-package').outerHTML,
@@ -127,7 +127,7 @@ const server=http.createServer((req,res)=>{
       const value=await job.promise.catch(error=>{throw new Error((error&&error.code||error&&error.name||'print-error')+': '+(error&&error.message||''));});
       window.__gfieldPreparedPrint=value;
       const doc=value.frame.contentDocument;
-      const host=doc.querySelector('#gfield-final2-detail-host');
+      const host=doc.querySelector('#gfield-final-detail-host');
       const pages=[...doc.querySelectorAll('.pagedjs_pages > .pagedjs_page')];
       const splitTables=[...doc.querySelectorAll('.pagedjs_pages table[data-split-from]')];
       const noteTitle=doc.querySelector('.pagedjs_pages #docssam-note-title');
@@ -342,7 +342,7 @@ const server=http.createServer((req,res)=>{
       let first='';try{await controller.prepareAndPrint();}catch(error){first=error.code;}
       const failureState={disabled:button.disabled,state:button.dataset.printState,text:button.textContent};
       const prepared=await controller.retry();
-      const second={detailStart:prepared.metrics.detailStartPage,ready:prepared.frame.contentDocument.querySelector('#gfield-final2-detail-host').shadowRoot.querySelectorAll('.is-ready').length};
+      const second={detailStart:prepared.metrics.detailStartPage,ready:prepared.frame.contentDocument.querySelector('#gfield-final-detail-host').shadowRoot.querySelectorAll('.is-ready').length};
       prepared.cleanup();
       controller.dispose();
       const restored=button.textContent===original;

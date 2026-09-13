@@ -74,8 +74,9 @@ assert.equal((html.match(/class="gfield-final2-solution-diagram /g)||[]).length,
 for(const no of [2,5,9,13,14,16,17]){
   assert.match(html,new RegExp('data-detailed-solution-no="'+no+'"'),'new Q'+no+' ready card');
 }
-assert.match(html,/이 문제의 ‘만나는’에는 한 점에서 닿는 경우도 포함합니다/);
-assert.match(html,/가와 바 사이에 새 국경선을 그리는 것이 아닙니다/);
+assert.match(html,/유럽 지도처럼 불규칙한 바깥 경계/);
+assert.match(html,/둘레의 다섯 나라.*세 색이 필요/);
+assert.match(html,/점이 아니라, 두 나라가 함께 쓰는 굽은 경계선/);
 assert.match(html,/정답<\/strong> · 39개/);
 assert.match(html,/정답<\/strong> · 8가지/);
 assert.match(html,/정답<\/strong> · 16가지/);

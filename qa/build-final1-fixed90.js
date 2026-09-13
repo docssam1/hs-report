@@ -13,7 +13,8 @@ const OUTPUT_PATH = path.join(ROOT, 'bank', 'data', 'final1-fixed90.json');
 const AUDIT_PATH = path.join(ROOT, 'qa', 'final1-fixed90-content-audit.json');
 const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
 const FREEZE_SEED = 'F190';
-const LOCKED_QUESTION_IDENTITY_SET_HASH = 'e9949f1bb9c26338e1c9154936ed8ac43415612b00c1a7caf3657b18a32b90f1';
+const LOCKED_QUESTION_IDENTITY_SET_HASH = '39a73a1603b2a04abff36b147fe625f2b3d900b23b01f12ccad88e4e374b887f';
+const INTENTIONAL_REVISED_SOURCE_NOS = new Set([4]);
 const SOURCE_RESPONSE_RATE_BASIS = '파이널 1회 원문 문항에 연결된 난이도 분석용 추정 정답률입니다. 이 고정 변형 문항의 실측 정답률이 아닙니다.';
 const IDS = Array.from({ length: 30 }, (_, index) => index + 1)
   .map((no) => `final1-q${String(no).padStart(2, '0')}`);
@@ -251,11 +252,15 @@ function itemContentSetHash(items) {
       const generator = generated.generatorMeta[question.genId];
       const source = sourceByNo.get(sourceNo);
       const review = reviewById.get(id);
+      const previous = previousById.get(id);
 
       assert.ok(source, `${id}: 원문 메타데이터가 없습니다.`);
       assert.ok(generator, `${id}: 생성기 메타데이터가 없습니다.`);
       assert.ok(!seenIds.has(id), `${id}: 고정 문항 ID가 중복됩니다.`);
       seenIds.add(id);
+
+      // This builder is currently authorized to revise only Q4. Preserve every other reviewed fixed item byte-for-byte.
+      if (previous && !INTENTIONAL_REVISED_SOURCE_NOS.has(sourceNo)) return previous;
 
       const sourceReference = sourceReferenceFor(sourceRound, source, sourceNo, question, generator);
       const sourceResponseRate = sourceRound.stats && sourceRound.stats.rate
@@ -290,9 +295,25 @@ function itemContentSetHash(items) {
         }
       };
       const identityHash = questionIdentityHash(item);
-      const previous = previousById.get(id);
       if (previous) {
-        assert.equal(identityHash, questionIdentityHash(previous), `${id}: 풀이 외의 잠긴 문제 본체가 바뀌었습니다.`);
+        if (INTENTIONAL_REVISED_SOURCE_NOS.has(sourceNo)) {
+          assert.deepEqual(canonicalize(item.meta), canonicalize(question.meta), `${id}: 생성 메타데이터 조립 오류`);
+          if (sourceNo === 4) {
+            assert.ok(['2×2', '3×2', '3×3'].includes(item.meta.factorFormat), `${id}: 숫자카드 곱의 자리 수 유형 오류`);
+          } else {
+            assert.equal(String(item.answer), String(previous.answer), `${id}: 조건 문장 통합 중 정답이 바뀌었습니다.`);
+            assert.deepEqual(canonicalize(item.meta), canonicalize(previous.meta), `${id}: 조건 문장 통합 중 수학 조건이 바뀌었습니다.`);
+            assert.deepEqual(item.conditionLines || [], [], `${id}: 번호형 조건 목록이 남았습니다.`);
+          }
+          if (previous.reviewStatus === 'verified') {
+            item.reviewStatus = 'verified';
+            item.reviewNotes = sourceNo === 4
+              ? '선생님 지정 자리 수 유형으로 다시 구성하고 모든 카드 순열을 독립 열거해 최댓값·최솟값·차를 확인했습니다.'
+              : '기존 필수 조건을 번호형 목록에서 문제 문장으로 옮겼습니다. 조건값·메타데이터·정답이 같음을 확인했습니다.';
+          }
+        } else {
+          assert.equal(identityHash, questionIdentityHash(previous), `${id}: 풀이 외의 잠긴 문제 본체가 바뀌었습니다.`);
+        }
       }
       item.questionIdentityHash = identityHash;
       item.auditMetadata.questionIdentityHash = identityHash;
@@ -392,6 +413,9 @@ function itemContentSetHash(items) {
 
     const q30 = items.filter((item) => item.sourceNo === 30);
     q30.forEach((item) => assert.equal(item.meta.examples.length, 3, `${item.id}: 완성 예시가 세 개가 아닙니다.`));
+
+    const q4 = items.filter((item) => item.sourceNo === 4);
+    assert.deepEqual(new Set(q4.map((item) => item.meta.factorFormat)), new Set(['2×2', '3×2', '3×3']), 'q04: 두 자리×두 자리, 세 자리×두 자리, 세 자리×세 자리 유형이 한 문항씩 있어야 합니다.');
 
     const contentSetHash = itemContentSetHash(items);
 

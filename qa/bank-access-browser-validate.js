@@ -9,6 +9,7 @@ const {chromium}=require('playwright');
 const root=path.resolve(__dirname,'..');
 const student='문제은행권한검수학생';
 const source=fs.readFileSync(path.join(root,'data.js'),'utf8');
+const importantTypes=['digit-product','assumption','broken-clock','number-pyramid','rectangle-count','units-digit-power','digit-card-sum','number-code','top-view','shortest-path','grouped-sequence','league-tournament','coin-combinations','shape-pattern','consecutive-sum'];
 
 const server=http.createServer((req,res)=>{
   const pathname=new URL(req.url,'http://localhost').pathname;
@@ -78,7 +79,36 @@ const server=http.createServer((req,res)=>{
     assert.match(await catalog.page.locator('#result-status').textContent(),/유형.*문항/);
     await catalog.context.close();
 
-    console.log('PASS bank access: approval session, self-account lookup, product permission, direct-link denial, identity binding, catalog gate');
+    const important=await open({path:'/bank/index.html?bank=important&types='+importantTypes.join(',')+'&n=40&points=all&printMode=both',session:true,granted:true});
+    await important.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===40);
+    assert.equal(await important.page.locator('.qcard').count(),40,'teacher-selected mixed bank is capped at 40 questions');
+    assert.equal(await important.page.locator('.f1-check').count(),16,'cover identifies all 16 source questions represented by 15 buttons');
+    assert.equal(await important.page.locator('.qcard[data-gen="final1-q04"]').count(),3,'all three digit-product formats remain inside the 40-question paper');
+    assert.deepEqual(new Set(await important.page.locator('.qcard[data-gen="final1-q04"] .qtext').allTextContents().then(rows=>rows.map(text=>text.match(/(두 자리 수와 두 자리 수|세 자리 수와 두 자리 수|세 자리 수와 세 자리 수)/)[1]))),new Set(['두 자리 수와 두 자리 수','세 자리 수와 두 자리 수','세 자리 수와 세 자리 수']));
+    await important.context.close();
+
+    const assumption=await open({path:'/bank/index.html?bank=important&types=assumption&n=40&points=all',session:true,granted:true});
+    await assumption.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===6);
+    assert.equal(await assumption.page.locator('.qcard[data-source-round="1"][data-source-no="8"]').count(),3,'Final1 Q8 belongs to the merged assumption type');
+    assert.equal(await assumption.page.locator('.qcard[data-source-round="2"][data-source-no="1"]').count(),3,'Final2 Q1 belongs to the merged assumption type');
+    await assumption.context.close();
+
+    const homeContext=await browser.newContext({viewport:{width:390,height:844}});
+    await homeContext.route('https://**/*',route=>route.abort());
+    const home=await homeContext.newPage();
+    await home.goto(base+'/index.html',{waitUntil:'networkidle'});
+    await home.evaluate(()=>{currentStudent='허유민';isDemo=false;renderArchive();});
+    assert.equal(await home.locator('.bank-launch').count(),1,'authorized student sees the teacher-selected bank entry');
+    assert.equal(await home.locator('.bank-type-btn').count(),15,'student sees exactly 15 teacher-selected type buttons');
+    assert.equal(await home.locator('.bank-type-btn[data-important-type="league-tournament"]').count(),1,'Final2 Q19 league/tournament button is included');
+    await home.locator('.bank-type-btn[data-important-type="assumption"]').evaluate(button=>button.click());
+    assert.match(await home.locator('.bank-selection-note').textContent(),/등록 문제 6문항 중 6문항/,'merged assumption button contains both rounds and six fixed questions');
+    assert.match(await home.locator('.bank-start').getAttribute('href'),/bank=important.*types=assumption.*n=20/,'selected button opens only its registered important type');
+    await home.evaluate(()=>{currentStudent='권한없는학생';renderArchive();});
+    assert.equal(await home.locator('.bank-launch').count(),0,'student without question-bank permission sees no important-type buttons');
+    await homeContext.close();
+
+    console.log('PASS bank access: approval session, self-account lookup, product permission, direct-link denial, identity binding, catalog gate, 15 teacher buttons, 40-question bank');
   }finally{
     await browser.close();server.close();
   }

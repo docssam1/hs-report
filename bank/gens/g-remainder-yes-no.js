@@ -77,10 +77,10 @@
     var answer = scenario.target;
     var independentAnswer = scenario.matches[0];
     if (answer !== independentAnswer) throw new Error('remainder yes/no independent verification mismatch');
+    var printedConditions = scenario.conditions.map(conditionText);
 
     return {
-      text: scenario.rangeMin + '부터 ' + scenario.rangeMax + '까지의 수 중 다음 세 조건을 모두 만족하는 수를 구하세요.',
-      conditionLines: scenario.conditions.map(conditionText),
+      text: scenario.rangeMin + '부터 ' + scenario.rangeMax + '까지의 수 중 다음 세 질문의 답과 맞는 수를 구하세요. ' + printedConditions.join(' '),
       answer: answer,
       solution: scenario.rangeMin + '부터 ' + scenario.rangeMax + '까지 차례로 확인하면 세 질문의 답이 모두 맞는 수는 ' +
         answer + ' 하나뿐입니다.',
@@ -104,7 +104,7 @@
   global.BANK_GENS = global.BANK_GENS || [];
   global.BANK_GENS.push({
     id: 'remainder-yes-no',
-    version: '1.0.0',
+    version: '1.1.0',
     name: '예·아니요 나머지 조건으로 수 찾기',
     area: TYPE.area,
     gradeBand: '초2~초3',

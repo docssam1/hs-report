@@ -10,8 +10,15 @@ const ROOT = path.resolve(__dirname, '..');
 const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
 const SCREENSHOT = process.env.GFIELD_QA_SCREENSHOT || '';
 const NEW_PREVIEW_SCREENSHOT = process.env.GFIELD_QA_NEW_PREVIEW_SCREENSHOT || '';
+const PROMPT_ONLY_SCREENSHOT = process.env.GFIELD_QA_PROMPT_ONLY_SCREENSHOT || '';
 const POINT_BANDS = { 1: '2.7', 2: '2.7', 3: '3.4', 4: '3.4', 5: '4.2' };
 const NEW_GENERATOR_IDS = ['repeat', 'weekday', 'inclusion', 'remainder'];
+const REQUIRED_FIGURE_IDS = ['rect', 'tri', 'path', 'cube'];
+
+for (const filename of ['g-repeat.js', 'g-weekday.js', 'g-inclusion.js', 'g-remainder.js']) {
+  const source = fs.readFileSync(path.join(ROOT, 'bank', 'gens', filename), 'utf8');
+  assert.doesNotMatch(source, /drawConditionCard/, `${filename} must not recreate the prompt as a condition-card image`);
+}
 
 function mimeType(filename) {
   const ext = path.extname(filename).toLowerCase();
@@ -183,6 +190,31 @@ function independentAnswer(question) {
   return mm.max - mm.min;
 }
 
+function assertNecessaryPromptData(question) {
+  const text = question.text;
+  const meta = question.meta;
+  if (question.genId === 'repeat') {
+    for (const character of meta.pattern) assert.ok(text.includes(character), 'repeat prompt keeps every character in the repeating block');
+    assert.match(text, new RegExp(`${meta.target}번째`), 'repeat prompt keeps the requested position');
+  } else if (question.genId === 'weekday') {
+    const weekdays = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+    assert.ok(text.includes(`${meta.startMonth}월 ${meta.startDay}일`), 'weekday prompt keeps the start date');
+    assert.ok(text.includes(weekdays[meta.startWeekdayIndex]), 'weekday prompt keeps the start weekday');
+    assert.ok(text.includes(`${meta.delta}일`), 'weekday prompt keeps the movement count');
+    for (let month = Math.min(meta.startMonth, meta.targetMonth); month <= Math.max(meta.startMonth, meta.targetMonth); month++) {
+      assert.ok(text.includes(`${month}월 ${meta.monthLengths[month - 1]}일`), 'weekday prompt keeps every needed month length');
+    }
+  } else if (question.genId === 'inclusion') {
+    for (const value of [meta.total, meta.firstCount, meta.secondCount]) assert.ok(text.includes(`${value}명`), 'inclusion prompt keeps every group count');
+    if (meta.mode === 'exact') assert.ok(text.includes(`${meta.neitherCount}명`), 'exact inclusion prompt keeps the neither-group count');
+  } else if (question.genId === 'remainder') {
+    assert.ok(text.includes(`${meta.minimum}부터 ${meta.maximum}까지`), 'remainder prompt keeps the inclusive range');
+    for (const condition of meta.conditions) {
+      assert.ok(text.includes(`${condition.divisor}로 나누었을 때 나머지가 ${condition.remainder}`), 'remainder prompt keeps every divisor and remainder');
+    }
+  }
+}
+
 (async () => {
   const { server, port } = await startStaticServer();
   const browser = await chromium.launch({
@@ -197,7 +229,7 @@ function independentAnswer(question) {
   try {
     await page.route('https://**/*', (route) => route.abort());
     await page.goto(`http://127.0.0.1:${port}/bank/index.html?gen=mix&level=all&n=20&seed=PNG1`, { waitUntil: 'networkidle' });
-    await page.waitForSelector('.qfigure img');
+    await page.waitForSelector('.qcard');
 
     const domAudit = await page.evaluate(async () => {
       const images = [...document.querySelectorAll('.qcard .qfigure img')];
@@ -212,12 +244,20 @@ function independentAnswer(question) {
         svg: document.querySelectorAll('.qcard svg').length,
         badSource: images.filter((img) => !img.src.startsWith('data:image/png;base64,')).length,
         badNaturalSize: images.filter((img) => img.naturalWidth < 300 || img.naturalHeight < 180).length,
+        conditionLists: document.querySelectorAll('.qconditions').length,
+        cards: [...document.querySelectorAll('.qcard')].map((card) => ({
+          genId: card.dataset.gen,
+          hasFigure: !!card.querySelector('.qfigure'),
+        })),
         scriptSources: [...document.scripts].map((script) => script.src),
       };
     });
     assert.equal(domAudit.questions, 20, '20 generated question cards');
-    assert.equal(domAudit.figures, 20, 'one raster figure per question');
-    assert.equal(domAudit.images, 20, 'all generated figures render as img');
+    assert.ok(domAudit.figures > 0, 'diagram-dependent questions keep their figures');
+    assert.equal(domAudit.figures, domAudit.cards.filter((card) => REQUIRED_FIGURE_IDS.includes(card.genId)).length, 'only diagram-dependent families render figures');
+    assert.equal(domAudit.images, domAudit.figures, 'every retained figure renders as img');
+    assert.equal(domAudit.cards.filter((card) => NEW_GENERATOR_IDS.includes(card.genId) && card.hasFigure).length, 0, 'text-complete questions do not repeat their conditions as figures');
+    assert.equal(domAudit.conditionLists, 0, 'numbered condition summaries are not printed below questions');
     assert.equal(domAudit.svg, 0, 'no generated inline SVG in DOM');
     assert.equal(domAudit.badSource, 0, 'all img sources are PNG data URLs');
     assert.equal(domAudit.badNaturalSize, 0, 'PNG figures have print-usable raster dimensions');
@@ -233,7 +273,21 @@ function independentAnswer(question) {
       assert.equal(await page.locator('.cover .genname').textContent(), label, `${id} targeted paper cover`);
       assert.equal(new URL(page.url()).searchParams.get('gen'), id, `${id} query state`);
       assert.equal(await page.locator('.qcard').count(), 20, `${id} targeted paper question count`);
+      assert.equal(await page.locator('.qfigure').count(), 0, `${id} does not repeat its prompt in a helper image`);
+      assert.equal(await page.locator('.qconditions').count(), 0, `${id} has no numbered restatement below the prompt`);
     }
+    if (PROMPT_ONLY_SCREENSHOT) {
+      await page.goto(`http://127.0.0.1:${port}/bank/index.html?gens=inclusion,remainder&points=all&n=4&seed=CLEAN`, { waitUntil: 'networkidle' });
+      await page.locator('.page').nth(1).screenshot({ path: PROMPT_ONLY_SCREENSHOT });
+    }
+    await page.goto(`http://127.0.0.1:${port}/bank/index.html?gen=remainder-yes-no&points=all&n=8&seed=CLUE&review=1`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('.qcard').count(), 8, 'remainder yes/no review questions render');
+    assert.equal(await page.locator('.qconditions').count(), 0, 'essential yes/no clues are not printed as a numbered helper list');
+    assert.equal(await page.locator('.qfigure').count(), 0, 'yes/no clues do not gain a repeated helper image');
+    assert.equal(await page.locator('.qtext').evaluateAll((nodes) => nodes.every((node) => /예|아니요/.test(node.textContent))), true, 'all essential yes/no clues remain in the natural prompt');
+    await page.goto(`http://127.0.0.1:${port}/bank/index.html?gen=mix&points=all&n=40&seed=MAX40`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('.chip[data-role="n"][data-val="40"].on').count(), 1, '40-question option is selected from the URL');
+    assert.equal(await page.locator('.qcard').count(), 40, 'one generated worksheet supports up to 40 questions');
     await page.goto(`http://127.0.0.1:${port}/bank/index.html?gen=rect&points=2.7&n=20&seed=MULT`, { waitUntil: 'networkidle' });
     await page.locator('.chip[data-role="type"][data-val="tri"]').click();
     assert.equal(await page.locator('.chip[data-role="type"][aria-pressed="true"]').count(), 2, 'two generator types selected together');
@@ -299,6 +353,7 @@ function independentAnswer(question) {
               solution: question.solution,
               meta: question.meta,
               verification: question.verification,
+              conditionLines: question.conditionLines || [],
               asset: {
                 kind: question.asset && question.asset.kind,
                 mimeType: question.asset && question.asset.mimeType,
@@ -312,7 +367,7 @@ function independentAnswer(question) {
               reproducible: question.text === replay.text &&
                 question.answer === replay.answer &&
                 JSON.stringify(question.meta) === JSON.stringify(replay.meta) &&
-                question.asset.src === replay.asset.src,
+                ((!question.asset && !replay.asset) || (question.asset && replay.asset && question.asset.src === replay.asset.src)),
               hasSvgField: Object.prototype.hasOwnProperty.call(question, 'svg'),
               containsSvgMarkup: JSON.stringify(question).toLowerCase().includes('<svg'),
             });
@@ -344,12 +399,16 @@ function independentAnswer(question) {
     assert.deepEqual(samples.generatorIds.filter((id) => !id.startsWith('final1-')).sort(), ['cube', 'inclusion', 'overlap-range-sum', 'path', 'rect', 'remainder', 'remainder-yes-no', 'repeat', 'tri', 'weekday']);
     assert.equal(samples.generatorIds.filter((id) => id.startsWith('final1-')).length, 30, '파이널 1회 검토 생성기는 별도 대량 검산에서 다룸');
     for (const question of samples.output) {
-      assert.equal(question.asset.kind, 'raster', `${question.genId} raster kind`);
-      assert.equal(question.asset.mimeType, 'image/png', `${question.genId} PNG MIME`);
-      assert.equal(question.asset.prefix, 'data:image/png;base64,', `${question.genId} PNG data URL`);
-      assert.ok(question.asset.length > 1000, `${question.genId} non-empty PNG`);
-      assert.ok(question.asset.width >= 300 && question.asset.height >= 180, `${question.genId} raster dimensions`);
-      assert.equal(question.asset.renderer, 'canvas-2d', `${question.genId} Canvas renderer`);
+      if (NEW_GENERATOR_IDS.includes(question.genId)) {
+        assert.equal(question.asset.kind, undefined, `${question.genId} has no redundant condition-card asset`);
+      } else {
+        assert.equal(question.asset.kind, 'raster', `${question.genId} raster kind`);
+        assert.equal(question.asset.mimeType, 'image/png', `${question.genId} PNG MIME`);
+        assert.equal(question.asset.prefix, 'data:image/png;base64,', `${question.genId} PNG data URL`);
+        assert.ok(question.asset.length > 1000, `${question.genId} non-empty PNG`);
+        assert.ok(question.asset.width >= 300 && question.asset.height >= 180, `${question.genId} raster dimensions`);
+        assert.equal(question.asset.renderer, 'canvas-2d', `${question.genId} Canvas renderer`);
+      }
       assert.equal(question.hasSvgField, false, `${question.genId} no svg field`);
       assert.equal(question.containsSvgMarkup, false, `${question.genId} no SVG markup`);
       assert.equal(question.pointBand, POINT_BANDS[question.level], `${question.genId} Lv${question.level} point band`);
@@ -360,14 +419,16 @@ function independentAnswer(question) {
       assert.equal(question.verification.visibleEvidence.passed, true, `${question.genId} visible evidence`);
       assert.equal(independentAnswer(question), question.answer, `${question.genId} external independent answer`);
       if (NEW_GENERATOR_IDS.includes(question.genId)) {
-        assert.equal(question.genVersion, '1.0.0', `${question.genId} generator version`);
+        assert.equal(question.genVersion, '1.1.0', `${question.genId} generator version`);
         assert.equal(question.gradeBand, '초2~초3', `${question.genId} elementary grade band`);
         assert.deepEqual(question.contentConstraints, { latinVariables: false, powers: false }, `${question.genId} content constraints`);
         assert.equal(question.reproducible, true, `${question.genId} fixed-seed reproduction`);
         assert.notEqual(question.verification.primary.method, question.verification.independent.method, `${question.genId} distinct proof methods`);
         assert.doesNotMatch(`${question.text} ${question.solution}`, /[A-Za-z]/, `${question.genId} no Latin variable in student text`);
         assert.doesNotMatch(`${question.text} ${question.solution}`, /제곱|[\^\u00b2\u00b3]/, `${question.genId} no powers in student text`);
-        assert.doesNotMatch(question.asset.description || '', /[A-Za-z]/, `${question.genId} Korean figure description`);
+        assert.deepEqual(question.conditionLines, [], `${question.genId} has no helper-condition list`);
+        assert.match(question.verification.visibleEvidence.method, /문제 문장/, `${question.genId} keeps necessary data in the prompt`);
+        assertNecessaryPromptData(question);
       }
     }
     for (const [id, bands] of Object.entries(samples.generatorBands)) {
@@ -404,10 +465,7 @@ function independentAnswer(question) {
           heading.textContent = generator.name + ' · 5단계';
           const prompt = document.createElement('p');
           prompt.textContent = question.text;
-          const image = document.createElement('img');
-          image.src = question.asset.src;
-          image.alt = question.asset.description;
-          card.append(heading, prompt, image);
+          card.append(heading, prompt);
           root.appendChild(card);
         });
       });
