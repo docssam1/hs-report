@@ -17,6 +17,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:Pretendard,'Noto Sans KR','Malgun Gothic','맑은 고딕',sans-serif;background:var(--bg);color:var(--ink);padding:18px}
+  body.bank-access-pending>:not(.bank-access-gate){visibility:hidden}
   h1,h2,h3{font-family:Pretendard,'Noto Sans KR','Malgun Gothic','맑은 고딕',sans-serif;font-weight:800}
 
   /* ---------- 화면 UI (인쇄 시 숨김) ---------- */
@@ -159,7 +160,7 @@
   }
 </style>
 </head>
-<body>
+<body class="bank-access-pending">
 
 <div class="topbar">
   <a class="back" href="../index.html">← 자료실로</a>
@@ -240,12 +241,16 @@
 
 <div class="stage-wrap" id="stage"></div>
 
+<script src="../hs-auth.js?v=20260913-bank-access"></script>
+<script>document.write('<script src="../data.js?v='+Date.now()+'"><\/script>');</script>
+<script src="bank-access.js?v=20260913a"></script>
 <script>
 (function(){var v=Date.now();
  ['bank-core.js','bank-fixed.js','bank-raster.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js'].forEach(function(f){
    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
 </script>
 <script>
+window.GFIELD_BANK_ACCESS.ready.then(function(){
 (function(){
   var q=new URLSearchParams(location.search);
   var sourceParts=String(q.get('source')||'').split('|');
@@ -603,6 +608,9 @@
 
   render();
 })();
+}).catch(function(){
+  document.getElementById('stage').textContent='문제은행 열람 권한을 확인하지 못했습니다.';
+});
 </script>
 </body>
 </html>
