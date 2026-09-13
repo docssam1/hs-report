@@ -7,7 +7,7 @@ const root=path.resolve(__dirname,'..'),student='회차연결검수학생';
 const baselines=Object.fromEntries([1,2,3,4].map(n=>['final'+n,{schemaVersion:1,exam:'final'+n,scope:'provided-original-records',approved:true,version:'final'+n+'-'+String(n).repeat(64),rows:[{id:'a',ox:'O'.repeat(30),score:100},{id:'b',ox:'X'.repeat(30),score:0}]}]));
 const ox='O'.repeat(20)+'X'.repeat(10),score=core.scoreOf(ox);
 const PRIOR_FINAL2_NOS=[1,3,4,6,7,8,10,11,12,15,18,19,20,21,22,23,24,25,26,27,28,29,30];
-const FINAL2_DIAGRAM_SVG_COUNTS={2:1,5:1,9:9,12:1,13:2,16:4,28:1};
+const FINAL2_DIAGRAM_SVG_COUNTS={2:1,5:1,9:9,12:1,13:2,16:4,23:1,27:1,28:2};
 const FINAL3_DIAGRAM_SVG_COUNTS={1:1,3:4,4:2,6:5,7:3,8:2,13:1};
 const records=[1,2,3,4].map(n=>({student,round:'final'+n,ox,score,wrong:10,source:'admin'}));
 records.push({student,round:'last1',ox,score,wrong:10,source:'admin'});
@@ -168,7 +168,7 @@ const server=http.createServer((req,res)=>{
      await page.setViewportSize({width,height:900});
      await page.locator('#final2DetailedSolutions .final1-solutions-head').scrollIntoViewIfNeeded();
      await page.screenshot({path:path.join(dir,'final2-detail-'+width+'.png')});
-     for(const no of detailCoverage.newNos){
+     for(const no of [...new Set(detailCoverage.newNos.concat([23,27,28]))]){
       const card=page.locator(`#final2-solution-${no}`);
       await card.screenshot({path:path.join(dir,`final2-card-${no}-${width}.png`)});
       assert.ok(await card.evaluate(node=>node.scrollWidth<=node.clientWidth+1),`Q${no} card fits at ${width}px`);
@@ -246,9 +246,14 @@ const server=http.createServer((req,res)=>{
    results.push({round:n,cumulativeRounds:checked.rounds.length,answerRates:30});
   }
   await page.goto(base+'/last1-result.html?round=1&name='+encodeURIComponent(student));
-  await page.locator('#res:not(.hide) .cum-card').waitFor();
-  assert.match(await page.locator('.cum-head').innerText(),/최초 성적 5회/,'Last1 includes all four Final first records plus Last1');
-  for(const n of [1,2,3,4])assert.match(await page.locator('.cum-trend').innerText(),new RegExp('파이널 '+n+'회'));
+  await page.locator('.final-report-package').waitFor();
+  const lastCumulative=await page.evaluate(({records,ox})=>{
+   const map=Object.fromEntries(records.map(row=>[row.round,row]));
+   return GF_TEST.computeCumulativeConsidered(1,map,2,'last1',ox.split(''),false).map(row=>row.label);
+  },{records,ox});
+  assert.deepEqual(lastCumulative,['파이널 1회','파이널 2회','파이널 3회','파이널 4회','최종 1회'],'Last1 includes all four Final first records plus Last1');
+  const cumulativeText=await page.locator('section').filter({has:page.getByRole('heading',{name:'누적 성적',exact:true})}).innerText();
+  for(const label of lastCumulative)assert.match(cumulativeText,new RegExp(label));
   failedExam='final3';
   await page.goto(base+'/final.html?round=3&go=report&name='+encodeURIComponent(student));await page.locator('.final-report-package').waitFor();
   assert.equal(await page.evaluate(()=>GF_TEST.buildContext('검수',3,('O'.repeat(20)+'X'.repeat(10)).split('')).populationVerified),false,'failed reference never becomes trusted');

@@ -54,8 +54,10 @@ const ARTIFACT_DIR = process.env.GFIELD_QA_ARTIFACT_DIR || '';
 
     await page.selectOption('#round-filter', 'final|2');
     assert.match(await page.locator('#result-status').textContent(), /30문항$/, '파이널 2회 30문항');
+    assert.equal(await page.getByRole('link', { name: '문항별 유사문제 3개 공부하기' }).count(), 30, '파이널 2회 30개 원문별 고정 문항 연결');
     const final2Assumption = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '두 가지 점수의 총점에서 높은 점수 횟수 구하기', exact: true }) });
     assert.equal(await final2Assumption.count(), 1, '파이널 2회 검수된 학생 표시명을 카드 제목으로 사용');
+    assert.match(await final2Assumption.getByRole('link', { name: '문항별 유사문제 3개 공부하기' }).getAttribute('href'), /bank=final2&gens=final2-q01/, '파이널 2회 1번의 고정 유사문제 3개로 연결');
     assert.match(await final2Assumption.textContent(), /기존 유형명 · 우기기/, '기존 이원목적 유형명은 별도로 보존');
     assert.equal(await page.getByRole('heading', { name: '여러 수 묶음의 누적·앞 묶음 연결 규칙으로 묶음의 합 구하기', exact: true }).count(), 1, '15번은 묶음 전체 합 응답을 표시');
     assert.equal(await page.getByRole('heading', { name: '모든 도로를 지나 출발점으로 돌아오는 가장 짧은 길 찾기', exact: true }).count(), 1, '28번은 모든 도로와 출발점 복귀 조건을 표시');

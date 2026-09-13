@@ -1,0 +1,543 @@
+/* 학부모가 읽는 파이널 1~4회 성적표에만 적용한다. */
+body.final-parent-report-page {
+  background: #f5f6f8;
+}
+
+.report-layout.final-parent-report {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 900px);
+  justify-content: center;
+  align-items: start;
+  gap: 24px;
+  max-width: 1124px;
+  margin: 0 auto;
+}
+
+.final-parent-report > .doc {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.parent-report-index {
+  position: sticky;
+  top: 24px;
+  z-index: 6;
+  display: grid;
+  align-self: start;
+  padding: 8px 0;
+  border: 1px solid #d8dee8;
+  background: #fff;
+}
+
+.parent-report-index a {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-left: 3px solid transparent;
+  color: #566274;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.parent-report-index a span {
+  color: #8290a7;
+  font-size: 10px;
+  letter-spacing: .04em;
+}
+
+.parent-report-index a:hover,
+.parent-report-index a[aria-current="location"] {
+  border-left-color: #2456c4;
+  background: #eaf0ff;
+  color: #174298;
+}
+
+.parent-report-index a:focus-visible,
+.final-parent-report summary:focus-visible,
+.parent-priority-list a:focus-visible {
+  outline: 3px solid #2456c4;
+  outline-offset: 2px;
+}
+
+.final-report-package .parent-summary-section,
+.final-report-package .parent-core-section,
+.final-parent-report #report-items {
+  padding: 28px 32px;
+  border-bottom: 1px solid #d8dee8;
+}
+
+.parent-report-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.parent-report-comparison.is-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.parent-summary-column {
+  padding: 18px;
+  border: 1px solid #d8dee8;
+  background: #fff;
+}
+
+.parent-summary-column.current {
+  border-top: 4px solid #2456c4;
+}
+
+.parent-summary-column.cumulative {
+  border-top: 4px solid #8290a7;
+  background: #f8f9fb;
+}
+
+.parent-summary-column > p {
+  margin: 0 0 12px;
+  color: #182230;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.parent-summary-column dl,
+.parent-summary-column div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+  padding: 8px 0;
+  border-top: 1px solid #e6eaf0;
+}
+
+.parent-summary-column dt {
+  color: #566274;
+  font-size: 12px;
+}
+
+.parent-summary-column dd {
+  margin: 0;
+  color: #182230;
+  font-size: 17px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.parent-report-scope {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 12px;
+  color: #566274;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.parent-report-note {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-left: 3px solid #8290a7;
+  background: #f5f6f8;
+  color: #566274;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.parent-area-comparison table,
+.parent-tier-comparison table {
+  table-layout: fixed;
+}
+
+.parent-area-comparison th:first-child,
+.parent-tier-comparison th:first-child {
+  width: 23%;
+}
+
+.parent-area-comparison th[scope="row"],
+.parent-tier-comparison th[scope="row"] {
+  background: #f5f6f8;
+  color: #182230;
+  text-align: left;
+}
+
+.parent-compare-bar {
+  display: grid;
+  grid-template-columns: minmax(50px, 1fr) 46px;
+  align-items: center;
+  gap: 8px;
+}
+
+.parent-compare-bar::before {
+  content: '';
+  grid-column: 1;
+  grid-row: 1;
+  height: 7px;
+  border-radius: 999px;
+  background: #e6eaf0;
+}
+
+.parent-compare-bar i {
+  z-index: 1;
+  grid-column: 1;
+  grid-row: 1;
+  height: 7px;
+  border-radius: 999px;
+  background: #2456c4;
+}
+
+.parent-compare-bar.cumulative i {
+  background: #8290a7;
+}
+
+.parent-compare-bar b {
+  color: #182230;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.parent-delta {
+  color: #182230;
+  font-size: 12px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.parent-no-data {
+  color: #566274;
+  font-size: 12px;
+}
+
+.parent-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.parent-focus-grid article {
+  padding: 16px;
+  border: 1px solid #d8dee8;
+  border-top: 3px solid #2456c4;
+  background: #fff;
+}
+
+.parent-focus-grid article:last-child {
+  border-top-color: #8290a7;
+}
+
+.parent-focus-grid h3,
+.parent-priority h3 {
+  margin: 0 0 10px;
+  color: #182230;
+  font-size: 16px;
+}
+
+.parent-focus-grid h4 {
+  margin: 12px 0 6px;
+  color: #566274;
+  font-size: 11px;
+  letter-spacing: .02em;
+}
+
+.parent-focus-grid.is-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.parent-focus-grid ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.parent-focus-grid li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 0;
+  border-top: 1px solid #e6eaf0;
+  font-size: 13px;
+}
+
+.parent-focus-grid li:first-child {
+  border-top: 0;
+}
+
+.parent-focus-grid li span,
+.parent-focus-grid p {
+  color: #566274;
+  font-size: 12px;
+}
+
+.final-parent-report details.parent-report-details {
+  margin-top: 18px;
+  border: 1px solid #d8dee8;
+  background: #fff;
+}
+
+.final-parent-report details.parent-report-details > summary {
+  min-height: 44px;
+  padding: 12px 14px;
+  color: #2456c4;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.final-parent-report details.parent-report-details > .parent-details-body,
+.final-parent-report details.parent-report-details > .diagnostic-coaching {
+  padding: 4px 16px 16px;
+}
+
+.parent-priority {
+  margin-bottom: 18px;
+  padding: 18px;
+  border: 1px solid #aebbd3;
+  border-top: 4px solid #2456c4;
+  background: #f8faff;
+}
+
+.parent-priority > p {
+  margin: 0 0 12px;
+  color: #566274;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.parent-priority-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.parent-priority-list a {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  min-height: 72px;
+  padding: 11px;
+  border: 1px solid #d8dee8;
+  background: #fff;
+  color: #182230;
+  text-decoration: none;
+}
+
+.parent-priority-list a > span {
+  color: #2456c4;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.parent-priority-list a > b,
+.parent-priority-list a > small {
+  grid-column: 2;
+}
+
+.parent-priority-list a > b {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.parent-priority-list a > small {
+  margin-top: 4px;
+  color: #566274;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.parent-priority-empty {
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid #d8dee8;
+  background: #f5f6f8;
+  color: #566274;
+  font-size: 13px;
+}
+
+.report-study-plan-host:empty {
+  display: none;
+}
+
+.final-parent-report .report-study-plan-host .personal-study-plan {
+  margin-top: 0;
+}
+
+@media (max-width: 1099px) {
+  .final-parent-report #report-summary,
+  .final-parent-report #report-strengths,
+  .final-parent-report #report-tiers,
+  .final-parent-report #report-items,
+  .final-parent-report #report-review,
+  .final-parent-report #curriculumConnection,
+  .final-parent-report #detailedAnswersSection {
+    scroll-margin-top: 72px;
+  }
+
+  .report-layout.final-parent-report {
+    display: block;
+    max-width: 900px;
+  }
+
+  .parent-report-index {
+    top: 0;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(126px, 1fr);
+    overflow-x: auto;
+    padding: 0;
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .parent-report-index a {
+    grid-template-columns: 22px 1fr;
+    border-bottom: 3px solid transparent;
+    border-left: 0;
+    white-space: nowrap;
+  }
+
+  .parent-report-index a:hover,
+  .parent-report-index a[aria-current="location"] {
+    border-bottom-color: #2456c4;
+    border-left-color: transparent;
+  }
+}
+
+@media (max-width: 600px) {
+  .final-report-package .parent-summary-section,
+  .final-report-package .parent-core-section {
+    padding: 24px 16px;
+  }
+
+  .parent-report-comparison {
+    gap: 8px;
+  }
+
+  .parent-summary-column {
+    padding: 12px;
+  }
+
+  .parent-summary-column div {
+    display: block;
+  }
+
+  .parent-summary-column dd {
+    margin-top: 2px;
+    font-size: 15px;
+    text-align: left;
+  }
+
+  .parent-area-comparison table,
+  .parent-tier-comparison table {
+    min-width: 0;
+  }
+
+  .parent-area-comparison tr,
+  .parent-tier-comparison tr {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .parent-area-comparison th:first-child,
+  .parent-tier-comparison th:first-child {
+    grid-column: 1 / -1;
+    width: auto;
+  }
+
+  .parent-area-comparison thead th:first-child,
+  .parent-tier-comparison thead th:first-child {
+    display: none;
+  }
+
+  .parent-area-comparison thead tr,
+  .parent-tier-comparison thead tr {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .parent-area-comparison thead th:not(:first-child),
+  .parent-tier-comparison thead th:not(:first-child) {
+    font-size: 10px;
+  }
+
+  .parent-area-comparison td,
+  .parent-tier-comparison td {
+    min-width: 0;
+    padding: 9px 6px;
+  }
+
+  .parent-compare-bar {
+    display: block;
+  }
+
+  .parent-compare-bar::before,
+  .parent-compare-bar i {
+    display: block;
+    margin-bottom: -7px;
+  }
+
+  .parent-compare-bar b {
+    display: block;
+    margin-top: 10px;
+    text-align: left;
+  }
+
+  .parent-focus-grid,
+  .parent-priority-list {
+    grid-template-columns: 1fr;
+  }
+
+  .parent-focus-grid li {
+    display: block;
+  }
+
+  .parent-focus-grid li span {
+    display: block;
+    margin-top: 2px;
+  }
+}
+
+@media print {
+  .report-layout.final-parent-report {
+    display: block;
+    max-width: none;
+    margin: 0;
+  }
+
+  .parent-report-index {
+    display: none !important;
+  }
+
+  .final-parent-report details.parent-report-details > summary {
+    display: none !important;
+  }
+
+  .final-parent-report details.parent-report-details > *:not(summary) {
+    display: block !important;
+  }
+
+  .final-parent-report details.parent-report-details {
+    border: 0;
+  }
+
+  .parent-summary-section,
+  .parent-core-section,
+  .parent-focus-grid article,
+  .parent-priority,
+  .parent-priority-list li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .parent-priority-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

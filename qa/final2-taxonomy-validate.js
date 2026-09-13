@@ -9,8 +9,8 @@ const vm=require('node:vm');
 
 const ROOT=path.resolve(__dirname,'..');
 const REGISTRY_PATH=path.join(ROOT,'bank','bank-registry.js');
-const EMPTY_CATALOG_SHA256='c9f76cb6110106653ac05b4801333a6bfbfa73c6d7d59fa6e5a5d057f954b522';
-const NON_FINAL2_ITEMS_SHA256='39176d995a32b54a0f540ea9ffc945c4ed1493a9c68d45a501d1284f653f6a5e';
+const EMPTY_CATALOG_SHA256='4f3c7f763b1c83ee980f2d630c42d14af4e62c4dfd539c147370b710482c4cc8';
+const NON_FINAL2_ITEMS_SHA256='53670e025126c7d0e8b7d3e3af828ebe92d92a6adc94ba5afb62a2ac15df78dd';
 const registry=require(REGISTRY_PATH);
 const plain=value=>JSON.parse(JSON.stringify(value));
 const hash=value=>crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');

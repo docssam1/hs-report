@@ -103,6 +103,7 @@
   function makeStaticClone(source){
     var clone=source.cloneNode(true);
     copyFormState(source,clone);
+    list(clone.querySelectorAll('details')).forEach(function(details){details.open=true;details.setAttribute('open','');});
     list(clone.querySelectorAll('script,iframe,object,embed')).forEach(function(node){node.remove();});
     list(clone.querySelectorAll('.no-print')).forEach(function(node){node.remove();});
     list(clone.querySelectorAll('[autofocus]')).forEach(function(node){node.removeAttribute('autofocus');});

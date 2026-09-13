@@ -206,6 +206,42 @@
         aria:'높이를 없애 위에서 본 굵은 선의 연결 모양'
       }
     },
+    q23:{
+      no:23,
+      id:'final2-q23-desert-helper-schedule-v1',
+      sourceLocator:'materials/final_2/004.jpg#q23',
+      answerKind:'desert-helper-schedule',
+      crossingDays:6,
+      capacity:4,
+      people:[
+        {id:'T',label:'탐험가'},
+        {id:'H1',label:'도우미 1'},
+        {id:'H2',label:'도우미 2'}
+      ],
+      turns:[
+        {day:1,helper:'H1',gifts:{T:1,H2:1},returnSupply:1},
+        {day:2,helper:'H2',gifts:{T:1},returnSupply:2}
+      ],
+      labels:{
+        caption:'두 도우미의 귀환 몫을 남기며 6일을 건너는 식량 흐름',
+        aria:'0일부터 6일까지의 사막 수직선. 탐험가와 도우미 둘이 각각 4일분으로 출발한다. 1일 지점에서 도우미 1은 귀환용 1일분을 남기고 탐험가와 도우미 2에게 1일분씩 건넨다. 2일 지점에서 도우미 2는 귀환용 2일분을 남기고 탐험가에게 1일분을 건넨다. 탐험가는 4일분으로 6일 지점까지 간다.'
+      }
+    },
+    q27:{
+      no:27,
+      id:'final2-q27-six-sisters-call-flow-v1',
+      sourceLocator:'materials/final_2/005.jpg#q27',
+      answerKind:'gossip-call-sequence',
+      people:['A','B','C','D','E','F'],
+      calls:[
+        ['A','B'],['A','C'],['A','D'],['E','F'],
+        ['A','E'],['A','B'],['A','C'],['D','F']
+      ],
+      labels:{
+        caption:'소식을 모은 뒤 다시 퍼뜨리는 8번의 통화',
+        aria:'A부터 F까지 여섯 자매의 8번 통화 흐름. A-B, A-C, A-D, E-F, A-E, A-B, A-C, D-F 순서이며 다섯 번째 뒤 두 명, 여섯 번째 뒤 세 명, 일곱 번째 뒤 네 명, 여덟 번째 뒤 여섯 명이 모든 소식을 안다.'
+      }
+    },
     q28:{
       no:28,
       id:'q28-weighted-road-graph-v1',
@@ -616,6 +652,94 @@
     return {spatial:spatial,projected:projected,screen:screen,pathD:pathD};
   }
 
+  function copySupplies(supplies){
+    var copied={};
+    Object.keys(supplies).forEach(function(id){copied[id]=supplies[id];});
+    return copied;
+  }
+
+  function calculateDesertSchedule(){
+    var model=MODEL.q23,supplies={},active=[],valid=true,previousDay=0,stages=[],returnTrips=[];
+    model.people.forEach(function(person){supplies[person.id]=model.capacity;active.push(person.id);});
+    stages.push({day:0,kind:'departure',supplies:copySupplies(supplies),active:active.slice()});
+    model.turns.forEach(function(turn){
+      var elapsed=turn.day-previousDay;
+      active.forEach(function(id){supplies[id]-=elapsed;if(supplies[id]<0) valid=false;});
+      var before=copySupplies(supplies),giftTotal=0;
+      Object.keys(turn.gifts).forEach(function(receiver){
+        var amount=turn.gifts[receiver];
+        if(active.indexOf(receiver)<0||amount<=0) valid=false;
+        supplies[turn.helper]-=amount;
+        supplies[receiver]+=amount;
+        giftTotal+=amount;
+      });
+      if(supplies[turn.helper]!==turn.returnSupply||before[turn.helper]!==turn.returnSupply+giftTotal) valid=false;
+      if(Object.keys(supplies).some(function(id){return supplies[id]<0||supplies[id]>model.capacity;})) valid=false;
+      stages.push({
+        day:turn.day,
+        kind:'turn',
+        helper:turn.helper,
+        before:before,
+        gifts:copySupplies(turn.gifts),
+        returnSupply:turn.returnSupply,
+        supplies:copySupplies(supplies),
+        active:active.slice()
+      });
+      returnTrips.push({helper:turn.helper,turnDay:turn.day,returnSupply:turn.returnSupply,arrivalDay:turn.day*2});
+      active=active.filter(function(id){return id!==turn.helper;});
+      supplies[turn.helper]=0;
+      previousDay=turn.day;
+    });
+    var finalElapsed=model.crossingDays-previousDay;
+    active.forEach(function(id){supplies[id]-=finalElapsed;if(supplies[id]<0) valid=false;});
+    stages.push({day:model.crossingDays,kind:'finish',supplies:copySupplies(supplies),active:active.slice()});
+    returnTrips.forEach(function(trip){if(trip.returnSupply!==trip.turnDay) valid=false;});
+    var oneHelper={
+      earliestTurn:model.crossingDays-model.capacity,
+      latestTurn:(model.capacity*2-model.crossingDays)/2,
+      initialSupply:model.capacity*2,
+      crossingConsumption:model.crossingDays
+    };
+    oneHelper.possible=oneHelper.earliestTurn<=oneHelper.latestTurn;
+    valid=valid&&active.length===1&&active[0]==='T'&&supplies.T===0&&!oneHelper.possible;
+    return {valid:valid,stages:stages,returnTrips:returnTrips,oneHelper:oneHelper};
+  }
+
+  function knowledgeText(knowledge,people){
+    return people.filter(function(person){return knowledge[person];}).join('');
+  }
+
+  function calculateCallFlow(){
+    var model=MODEL.q27,knowledge={},full=model.people.join(''),steps=[],firstFullCall=null,allFullCall=null;
+    model.people.forEach(function(person){knowledge[person]={};knowledge[person][person]=true;});
+    var initial={};
+    model.people.forEach(function(person){initial[person]=knowledgeText(knowledge[person],model.people);});
+    model.calls.forEach(function(call,index){
+      var union={};
+      model.people.forEach(function(person){
+        if(knowledge[call[0]][person]||knowledge[call[1]][person]) union[person]=true;
+      });
+      knowledge[call[0]]=copySupplies(union);
+      knowledge[call[1]]=copySupplies(union);
+      var state={},completed=[];
+      model.people.forEach(function(person){
+        state[person]=knowledgeText(knowledge[person],model.people);
+        if(state[person]===full) completed.push(person);
+      });
+      if(firstFullCall==null&&completed.length) firstFullCall=index+1;
+      if(allFullCall==null&&completed.length===model.people.length) allFullCall=index+1;
+      steps.push({no:index+1,call:call.slice(),shared:knowledgeText(union,model.people),knowledge:state,completed:completed});
+    });
+    return {
+      valid:firstFullCall===5&&allFullCall===8&&steps.length===8,
+      initial:initial,
+      steps:steps,
+      firstFullCall:firstFullCall,
+      allFullCall:allFullCall,
+      finalKnowledge:steps[steps.length-1].knowledge
+    };
+  }
+
   function graphPair(a,b){
     return [a,b].sort().join('-');
   }
@@ -656,6 +780,8 @@
     if(Number(no)===12) return calculateProjection();
     if(Number(no)===13) return calculateRoadPaths();
     if(Number(no)===16) return calculateTilings();
+    if(Number(no)===23) return calculateDesertSchedule();
+    if(Number(no)===27) return calculateCallFlow();
     if(Number(no)===28) return calculateGraph();
     return null;
   }
@@ -894,6 +1020,64 @@
     '</figure>';
   }
 
+  function renderDesertSchedule(){
+    var model=MODEL.q23,calculated=calculateDesertSchedule();
+    if(!calculated.valid) return '';
+    function dayX(day){return 46+day*58;}
+    function leftArrow(x,y,color){return '<polygon points="'+x+','+y+' '+(x+10)+','+(y-5)+' '+(x+10)+','+(y+5)+'" fill="'+color+'"></polygon>';}
+    function rightArrow(x,y,color){return '<polygon points="'+x+','+y+' '+(x-10)+','+(y-5)+' '+(x-10)+','+(y+5)+'" fill="'+color+'"></polygon>';}
+    var ticks=[];
+    for(var day=0;day<=model.crossingDays;day++) ticks.push(
+      '<g data-day="'+day+'"><line x1="'+dayX(day)+'" y1="146" x2="'+dayX(day)+'" y2="158" stroke="#566274" stroke-width="1.5"></line><text x="'+dayX(day)+'" y="176" text-anchor="middle" fill="#566274" font-size="13" font-weight="700" font-family="sans-serif">'+day+'일</text></g>'
+    );
+    return '<figure class="gfield-final2-solution-diagram gfield-final2-solution-diagram--q23" style="box-sizing:border-box;width:100%;max-width:31rem;margin:.6rem auto;background:#FFFFFF;color:#182230;break-inside:avoid;page-break-inside:avoid">'+
+      '<svg viewBox="0 0 440 572" role="img" aria-label="'+esc(model.labels.aria)+'" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:auto;background:#FFFFFF">'+
+        '<text x="220" y="19" text-anchor="middle" fill="#182230" font-size="15" font-weight="900" font-family="sans-serif">사막 횡단 수직선</text>'+
+        '<text x="220" y="37" text-anchor="middle" fill="#566274" font-size="11.5" font-weight="700" font-family="sans-serif">T=탐험가 · H1=도우미 1 · H2=도우미 2</text>'+
+        '<text x="18" y="50" fill="#2456C4" font-size="13" font-weight="900" font-family="sans-serif">T</text>'+
+        '<line data-person-route="T" x1="'+dayX(0)+'" y1="46" x2="'+dayX(6)+'" y2="46" stroke="#2456C4" stroke-width="5" stroke-linecap="round" vector-effect="non-scaling-stroke"></line>'+rightArrow(dayX(6),46,'#2456C4')+
+        '<text x="13" y="83" fill="#16734B" font-size="13" font-weight="900" font-family="sans-serif">H1</text>'+
+        '<line data-person-route="H1" x1="'+dayX(0)+'" y1="78" x2="'+dayX(1)+'" y2="78" stroke="#16734B" stroke-width="4" stroke-linecap="round" vector-effect="non-scaling-stroke"></line>'+rightArrow(dayX(1),78,'#16734B')+
+        '<line data-return-route="H1" x1="'+dayX(1)+'" y1="91" x2="'+dayX(0)+'" y2="91" stroke="#16734B" stroke-width="3" stroke-dasharray="7 5" stroke-linecap="round" vector-effect="non-scaling-stroke"></line>'+leftArrow(dayX(0),91,'#16734B')+
+        '<text x="13" y="116" fill="#6E3CBC" font-size="13" font-weight="900" font-family="sans-serif">H2</text>'+
+        '<line data-person-route="H2" x1="'+dayX(0)+'" y1="111" x2="'+dayX(2)+'" y2="111" stroke="#6E3CBC" stroke-width="4" stroke-linecap="round" vector-effect="non-scaling-stroke"></line>'+rightArrow(dayX(2),111,'#6E3CBC')+
+        '<line data-return-route="H2" x1="'+dayX(2)+'" y1="124" x2="'+dayX(0)+'" y2="124" stroke="#6E3CBC" stroke-width="3" stroke-dasharray="7 5" stroke-linecap="round" vector-effect="non-scaling-stroke"></line>'+leftArrow(dayX(0),124,'#6E3CBC')+
+        '<line x1="'+dayX(0)+'" y1="152" x2="'+dayX(6)+'" y2="152" stroke="#566274" stroke-width="2" vector-effect="non-scaling-stroke"></line>'+rightArrow(dayX(6)+1,152,'#566274')+ticks.join('')+
+        '<g data-supply-stage="0" data-supplies="T4|H1-4|H2-4"><rect x="16" y="191" width="408" height="48" rx="7" fill="#F5F6F8" stroke="#D8DEE8"></rect><text x="28" y="212" fill="#182230" font-size="14" font-weight="900" font-family="sans-serif">출발 · 각자 한도 4일분</text><text x="28" y="230" fill="#566274" font-size="13" font-weight="700" font-family="sans-serif">T 4 · H1 4 · H2 4</text></g>'+
+        '<g data-supply-stage="1" data-supplies="T4|H1-1|H2-4"><rect x="16" y="247" width="408" height="70" rx="7" fill="#FFFFFF" stroke="#D8DEE8"></rect><text x="28" y="268" fill="#182230" font-size="14" font-weight="900" font-family="sans-serif">1일 지점 · 셋이 먹고 3일분씩</text><text x="28" y="288" fill="#16734B" font-size="13" font-weight="800" font-family="sans-serif">H1: 귀환 1 · T와 H2에게 1씩 건넴</text><text x="28" y="307" fill="#182230" font-size="13" font-weight="800" font-family="sans-serif">앞으로 가는 두 사람: T 4 · H2 4</text></g>'+
+        '<g data-supply-stage="2" data-supplies="T4|H1-0|H2-2"><rect x="16" y="325" width="408" height="70" rx="7" fill="#FFFFFF" stroke="#D8DEE8"></rect><text x="28" y="346" fill="#182230" font-size="14" font-weight="900" font-family="sans-serif">2일 지점 · 둘이 먹고 3일분씩</text><text x="28" y="366" fill="#6E3CBC" font-size="13" font-weight="800" font-family="sans-serif">H2: 귀환 2 · T에게 1일분 건넴</text><text x="28" y="385" fill="#182230" font-size="13" font-weight="800" font-family="sans-serif">탐험가: T 4 → 남은 4일 횡단</text></g>'+
+        '<g data-supply-stage="6" data-supplies="T0|H1-0|H2-0"><rect x="16" y="403" width="408" height="44" rx="7" fill="#EAF0FF" stroke="#2456C4"></rect><text x="220" y="430" text-anchor="middle" fill="#182230" font-size="14" font-weight="900" font-family="sans-serif">6일 지점 · T가 식량을 정확히 쓰고 횡단 완료</text></g>'+
+        '<g data-one-helper-proof="two-days-needed-one-day-possible"><rect x="16" y="457" width="408" height="104" rx="7" fill="#FFF7F7" stroke="#E6B8BE"></rect><text x="28" y="478" fill="#B42332" font-size="14" font-weight="900" font-family="sans-serif">도우미가 1명뿐이라면</text><text x="28" y="497" fill="#182230" font-size="12" font-weight="800" font-family="sans-serif">탐험가가 남은 길을 4일분으로 가려면</text><text x="28" y="514" fill="#182230" font-size="12" font-weight="800" font-family="sans-serif">도우미가 2일 지점까지 함께 가야 합니다.</text><text x="28" y="531" fill="#182230" font-size="12" font-weight="800" font-family="sans-serif">전체 8일분 중 탐험가가 6일분을 쓰면 도우미는 왕복 2일분뿐,</text><text x="28" y="545" fill="#182230" font-size="12" font-weight="800" font-family="sans-serif">1일 지점까지만 가능하므로 서로 맞지 않습니다.</text></g>'+
+      '</svg>'+
+      '<figcaption style="margin:.2rem 0 0;text-align:center;color:#566274;font:600 .78rem/1.35 sans-serif">'+esc(model.labels.caption)+'</figcaption>'+
+    '</figure>';
+  }
+
+  function renderCallFlow(){
+    var model=MODEL.q27,calculated=calculateCallFlow();
+    if(!calculated.valid) return '';
+    var rows=calculated.steps.map(function(step,index){
+      var y=69+index*53,completed=step.completed.length;
+      return '<g class="gfield-final2-q27-call" data-call-step="'+step.no+'" data-call="'+esc(step.call.join('-'))+'" data-state="'+esc(model.people.map(function(person){return step.knowledge[person];}).join('|'))+'">'+
+        '<circle cx="28" cy="'+(y+21)+'" r="15" fill="'+(completed===model.people.length?'#16734B':'#2456C4')+'"></circle><text x="28" y="'+(y+26)+'" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="900" font-family="sans-serif">'+step.no+'</text>'+
+        '<rect x="51" y="'+y+'" width="373" height="43" rx="7" fill="'+(completed?'#F3F7FF':'#FFFFFF')+'" stroke="'+(completed?'#B8C9EF':'#D8DEE8')+'"></rect>'+
+        '<text x="64" y="'+(y+18)+'" fill="#182230" font-size="14" font-weight="900" font-family="sans-serif">'+esc(step.call[0]+' ↔ '+step.call[1])+'</text>'+
+        '<text x="137" y="'+(y+18)+'" fill="#566274" font-size="13" font-weight="800" font-family="sans-serif">'+esc('함께 안 소식 '+step.shared)+'</text>'+
+        '<rect x="337" y="'+(y+8)+'" width="75" height="27" rx="13.5" fill="'+(completed===model.people.length?'#E7F5EE':completed?'#EAF0FF':'#F5F6F8')+'"></rect><text x="374.5" y="'+(y+26)+'" text-anchor="middle" fill="'+(completed===model.people.length?'#16734B':'#566274')+'" font-size="11.5" font-weight="900" font-family="sans-serif">완성 '+completed+'명</text>'+
+      '</g>';
+    }).join('');
+    return '<figure class="gfield-final2-solution-diagram gfield-final2-solution-diagram--q27" style="box-sizing:border-box;width:100%;max-width:31rem;margin:.6rem auto;background:#FFFFFF;color:#182230;break-inside:avoid;page-break-inside:avoid">'+
+      '<svg viewBox="0 0 440 590" role="img" aria-label="'+esc(model.labels.aria)+'" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:auto;background:#FFFFFF">'+
+        '<text x="220" y="22" text-anchor="middle" fill="#182230" font-size="16" font-weight="900" font-family="sans-serif">8번의 통화와 소식의 누적</text>'+
+        '<text x="220" y="43" text-anchor="middle" fill="#566274" font-size="12.5" font-weight="700" font-family="sans-serif">A~F: 여섯 자매 · AB: A와 B의 소식</text>'+
+        '<text x="220" y="59" text-anchor="middle" fill="#566274" font-size="11.5" font-weight="700" font-family="sans-serif">완성 = 여섯 사람의 소식을 모두 앎</text>'+
+        '<line x1="28" y1="70" x2="28" y2="490" stroke="#B8C9EF" stroke-width="3" vector-effect="non-scaling-stroke"></line>'+rows+
+        '<g data-minimum-proof="seven-calls-impossible"><rect x="16" y="493" width="408" height="81" rx="7" fill="#FFF7F7" stroke="#E6B8BE"></rect><text x="28" y="514" fill="#B42332" font-size="14" font-weight="900" font-family="sans-serif">7번으로 끝난다고 가정하면</text><text x="28" y="535" fill="#182230" font-size="12.5" font-weight="800" font-family="sans-serif">처음 전 소식을 아는 때는 빨라도 5번째 통화입니다.</text><text x="28" y="554" fill="#182230" font-size="12.5" font-weight="800" font-family="sans-serif">남은 2통화로 부족한 4명을 채워야 하지만, 3명씩 두 무리에서는</text><text x="28" y="570" fill="#182230" font-size="12.5" font-weight="800" font-family="sans-serif">한 명이 자기 무리 소식부터 놓치므로 7번 완성은 불가능합니다.</text></g>'+
+      '</svg>'+
+      '<figcaption style="margin:.2rem 0 0;text-align:center;color:#566274;font:600 .78rem/1.35 sans-serif">'+esc(model.labels.caption)+'</figcaption>'+
+    '</figure>';
+  }
+
   function renderGraph(){
     var calculated=calculateGraph();
     var model=MODEL.q28;
@@ -905,7 +1089,7 @@
     var edges=model.edges.map(function(edge){
       var from=point(edge.from),to=point(edge.to);
       var repeated=model.duplicateEdgeIds.indexOf(edge.id)>=0;
-      var line='<line class="gfield-final2-q28-edge'+(repeated?' is-repeated':'')+'" data-edge-id="'+esc(edge.id)+'" x1="'+number(from.x)+'" y1="'+number(from.y)+'" x2="'+number(to.x)+'" y2="'+number(to.y)+'" stroke="'+(repeated?'#2456C4':'#566274')+'" stroke-width="'+(repeated?'5':'2.5')+'" stroke-linecap="round" vector-effect="non-scaling-stroke"></line>';
+      var line='<line class="gfield-final2-q28-edge'+(repeated?' is-repeated':'')+'" data-edge-id="'+esc(edge.id)+'" data-repeat-count="'+(repeated?2:1)+'" x1="'+number(from.x)+'" y1="'+number(from.y)+'" x2="'+number(to.x)+'" y2="'+number(to.y)+'" stroke="'+(repeated?'#2456C4':'#566274')+'" stroke-width="'+(repeated?'6':'2.5')+'"'+(repeated?' stroke-dasharray="10 6"':'')+' stroke-linecap="round" vector-effect="non-scaling-stroke"></line>';
       var mx=(from.x+to.x)/2,my=(from.y+to.y)/2;
       var label='<text x="'+number(mx)+'" y="'+number(my-5)+'" text-anchor="middle" fill="#182230" stroke="#FFFFFF" stroke-width="5" paint-order="stroke" font-size="13" font-weight="700" font-family="sans-serif">'+edge.weight+'</text>';
       return line+label;
@@ -914,11 +1098,32 @@
       var p=point(node.id),odd=model.oddVertices.indexOf(node.id)>=0;
       return '<g class="gfield-final2-q28-node'+(odd?' is-odd':'')+'" data-node-id="'+esc(node.id)+'"><circle cx="'+number(p.x)+'" cy="'+number(p.y)+'" r="13" fill="'+(odd?'#EAF0FF':'#FFFFFF')+'" stroke="'+(odd?'#2456C4':'#566274')+'" stroke-width="2" vector-effect="non-scaling-stroke"></circle><text x="'+number(p.x)+'" y="'+number(p.y+5)+'" text-anchor="middle" fill="#182230" font-size="14" font-weight="800" font-family="sans-serif">'+esc(node.id)+'</text></g>';
     }).join('');
-    return '<figure class="gfield-final2-solution-diagram gfield-final2-solution-diagram--q28" style="box-sizing:border-box;width:100%;max-width:32rem;margin:.6rem auto;background:#FFFFFF;color:#182230;break-inside:avoid;page-break-inside:avoid">'+
-      '<svg viewBox="0 0 400 340" role="img" aria-label="'+esc(model.labels.aria)+'" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:auto;background:#FFFFFF">'+
+    var edgeByPair={},useCounts={};
+    model.edges.forEach(function(edge){edgeByPair[graphPair(edge.from,edge.to)]=edge;useCounts[edge.id]=0;});
+    var routeRows=[];
+    for(var row=0;row<3;row++){
+      var rowNodes=model.route.slice(row*7,row*7+8),y=43+row*76,segments=[];
+      for(var leg=0;leg<7;leg++){
+        var fromId=rowNodes[leg],toId=rowNodes[leg+1],edge=edgeByPair[graphPair(fromId,toId)],step=row*7+leg+1;
+        useCounts[edge.id]+=1;
+        var x1=35+leg*53,x2=35+(leg+1)*53,repeated=model.duplicateEdgeIds.indexOf(edge.id)>=0,color=repeated?'#2456C4':'#566274';
+        segments.push('<g class="gfield-final2-q28-route-leg'+(repeated?' is-repeated':'')+'" data-route-step="'+step+'" data-route-edge-id="'+esc(edge.id)+'" data-route-use="'+useCounts[edge.id]+'"><line x1="'+(x1+11)+'" y1="'+y+'" x2="'+(x2-12)+'" y2="'+y+'" stroke="'+color+'" stroke-width="'+(repeated?'5':'2.5')+'"'+(repeated?' stroke-dasharray="8 5"':'')+' stroke-linecap="round" vector-effect="non-scaling-stroke"></line><polygon points="'+(x2-10)+','+y+' '+(x2-18)+','+(y-5)+' '+(x2-18)+','+(y+5)+'" fill="'+color+'"></polygon><text x="'+((x1+x2)/2)+'" y="'+(y-10)+'" text-anchor="middle" fill="'+color+'" font-size="11" font-weight="900" font-family="sans-serif">'+esc(edge.id)+'</text><text x="'+((x1+x2)/2)+'" y="'+(y+21)+'" text-anchor="middle" fill="#7A8494" font-size="9.5" font-weight="700" font-family="sans-serif">'+step+'</text></g>');
+      }
+      var routeNodes=rowNodes.map(function(id,index){
+        var x=35+index*53,isFirst=row===0&&index===0,isLast=row===2&&index===7;
+        return '<g class="gfield-final2-q28-route-node'+(isFirst?' is-start':'')+(isLast?' is-finish':'')+'" data-route-node="'+esc(id)+'"><circle cx="'+x+'" cy="'+y+'" r="11" fill="'+(isFirst||isLast?'#E7F5EE':'#FFFFFF')+'" stroke="'+(isFirst||isLast?'#16734B':'#566274')+'" stroke-width="2" vector-effect="non-scaling-stroke"></circle><text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" fill="#182230" font-size="11.5" font-weight="900" font-family="sans-serif">'+esc(id)+'</text></g>';
+      }).join('');
+      routeRows.push('<g data-route-row="'+(row+1)+'"><text x="7" y="'+(y+4)+'" fill="#566274" font-size="10" font-weight="800" font-family="sans-serif">'+(row*7+1)+'–'+(row*7+7)+'</text>'+segments.join('')+routeNodes+(row===0?'<text x="35" y="'+(y+35)+'" text-anchor="middle" fill="#16734B" font-size="10.5" font-weight="900" font-family="sans-serif">출발</text>':'')+(row===2?'<text x="406" y="'+(y+35)+'" text-anchor="middle" fill="#16734B" font-size="10.5" font-weight="900" font-family="sans-serif">도착</text>':'')+'</g>');
+    }
+    return '<figure class="gfield-final2-solution-diagram gfield-final2-solution-diagram--q28" style="box-sizing:border-box;width:100%;max-width:26rem;margin:.6rem auto;background:#FFFFFF;color:#182230;break-inside:avoid;page-break-inside:avoid">'+
+      '<div style="margin:0 0 .15rem;text-align:center;color:#182230;font:900 .84rem/1.4 sans-serif">① 모든 도로와 최소 중복 세 도로</div>'+
+      '<svg viewBox="0 0 400 360" role="img" aria-label="'+esc(model.labels.aria)+'" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:auto;background:#FFFFFF">'+
         edges+nodes+
-        '<g transform="translate(84 328)"><line x1="0" y1="-5" x2="34" y2="-5" stroke="#2456C4" stroke-width="5" stroke-linecap="round"></line><text x="43" y="0" fill="#566274" font-size="13" font-weight="700" font-family="sans-serif">'+esc(model.labels.duplicate)+'</text></g>'+
+        '<g transform="translate(30 337)"><line x1="0" y1="-5" x2="30" y2="-5" stroke="#566274" stroke-width="2.5" stroke-linecap="round"></line><text x="38" y="0" fill="#566274" font-size="12" font-weight="700" font-family="sans-serif">한 번 지남</text><line x1="132" y1="-5" x2="168" y2="-5" stroke="#2456C4" stroke-width="6" stroke-dasharray="10 6" stroke-linecap="round"></line><text x="177" y="0" fill="#2456C4" font-size="12" font-weight="800" font-family="sans-serif">두 번 지남 · AG, CH, EI</text></g>'+
       '</svg>'+
+      '<div style="margin:.35rem 0 .05rem;text-align:center;color:#182230;font:900 .84rem/1.4 sans-serif">② 실제로 출발점으로 돌아오는 순서</div>'+
+      '<svg viewBox="0 0 440 248" role="img" aria-label="A에서 출발해 A-B-C-D-E-F-A-G-B-H-C-H-G-F-I-E-I-H-D-I-G-A 순서로 모든 도로를 지나고 A로 돌아오는 21번의 이동" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:auto;background:#FFFFFF">'+routeRows.join('')+'</svg>'+
+      '<div style="margin:.1rem 0 0;text-align:center;color:#182230;font:900 .82rem/1.4 sans-serif">A에서 출발 · 모든 18개 도로 포함 · A로 도착</div>'+
       '<figcaption style="margin:.2rem 0 0;text-align:center;color:#566274;font:600 .78rem/1.35 sans-serif">'+esc(model.labels.caption)+'</figcaption>'+
     '</figure>';
   }
@@ -930,6 +1135,8 @@
     if(Number(no)===12) return renderProjection();
     if(Number(no)===13) return renderRoadPaths();
     if(Number(no)===16) return renderTilings();
+    if(Number(no)===23) return renderDesertSchedule();
+    if(Number(no)===27) return renderCallFlow();
     if(Number(no)===28) return renderGraph();
     return '';
   }
