@@ -30,11 +30,11 @@ const server=http.createServer((req,res)=>{
    return route.fulfill({json:empty?[]:rows});
   }
   if(u.pathname.endsWith('/hs-final-population')){
-   const b=req.postDataJSON();if(b.action){actions.push(b.action);if(b.action!=='read-report')writes.push(b);return route.fulfill({json:{canEdit:false,comment:'조건을 표시하고 풀이를 확인해 보세요.',snapshot:core.createResponse(baselines[b.exam],[score]),resultOx:ox}});}
+   const b=req.postDataJSON();if(b.action){actions.push(b.action);if(b.action==='read-portal-statistics')return route.fulfill({json:{snapshot:core.createResponse(baselines[b.exam],[score])}});if(b.action!=='read-report')writes.push(b);if(populationOffline)return route.fulfill({status:401,json:{error:'LOGIN_REQUIRED'}});return route.fulfill({json:{canEdit:false,comment:'조건을 표시하고 풀이를 확인해 보세요.',snapshot:core.createResponse(baselines[b.exam],[score]),resultOx:ox}});}
    if(populationOffline)return route.fulfill({status:503,json:{error:'STATISTICS_UNAVAILABLE'}});
    return route.fulfill({json:core.createResponse(baselines[b.exam],b.scores)});
   }
-  if(!['GET','HEAD','OPTIONS'].includes(req.method())&&!u.pathname.endsWith('/access_log'))writes.push({path:u.pathname,method:req.method()});
+  if(!['GET','HEAD','OPTIONS'].includes(req.method())&&!u.pathname.endsWith('/access_log')&&!u.pathname.endsWith('/auth/v1/token'))writes.push({path:u.pathname,method:req.method()});
   return route.fulfill({json:[]});
  });
  const page=await context.newPage();
@@ -123,7 +123,8 @@ const server=http.createServer((req,res)=>{
    assert.equal(b.links.filter(l=>/go=answer|last1-entry/.test(l.url)).length,1,'online input stays separate from report');
   }
   assert.equal(JSON.stringify(rows),originalRows,'first records and retries unchanged');assert.deepEqual(writes,[],'no result, percentile, comment or other writes');
-  assert.ok(actions.every(a=>a==='read-report'));
+  assert.ok(actions.every(a=>a==='read-report'||a==='read-portal-statistics'));
+  assert.ok(actions.includes('read-portal-statistics'),'name-only archive access uses the restricted saved-result statistics path');
   console.log(JSON.stringify({pass:true,catalogReportLinks:covered,reportParity:snapshots,verifiedFinalReferences:4,final1Detailed:30,final2Detailed,last2Detailed:30,missingNotZero:true,productionWrites:0}));
  }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});

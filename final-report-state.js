@@ -19,6 +19,15 @@
     try{
       var data=await root.GFIELD_AUTH.functionCall('hs-final-population',{action:'read-report',exam:'final'+round,student:student},slot);
       return data&&data.resultOx===ox&&data.snapshot?data.snapshot:null;
+    }catch(e){}
+    try{
+      var auth=root.GFIELD_AUTH,response=await fetch(auth.SUPABASE_URL+'/functions/v1/hs-final-population',{
+        method:'POST',headers:{apikey:auth.PUBLISHABLE_KEY,'Content-Type':'application/json'},
+        body:JSON.stringify({action:'read-portal-statistics',exam:'final'+round,student:student,resultOx:ox})
+      });
+      if(!response.ok)return null;
+      var publicData=await response.json();
+      return publicData&&publicData.snapshot?publicData.snapshot:null;
     }catch(e){return null;}
   }
   function render(){
