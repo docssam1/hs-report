@@ -26,11 +26,12 @@ const server=http.createServer((req,res)=>{
 
   async function open(options){
     const context=await browser.newContext({viewport:{width:390,height:844}});
-    await context.addInitScript(({student,session})=>{
+    await context.addInitScript(({student,session,handoff,handoffStudent})=>{
       window.__GFIELD_BANK_ACCESS_FORCE__=true;
       if(session)localStorage.setItem('gfield_hs_student_session_v1',JSON.stringify({access_token:'bank-access-token',refresh_token:'bank-access-refresh',expires_at:Math.floor(Date.now()/1000)+3600,login_name:student}));
       localStorage.setItem('gfield_student',student);
-    },{student,session:options.session});
+      if(handoff)sessionStorage.setItem('gfield_question_bank_handoff_v1',JSON.stringify({product:'question-bank',student:handoffStudent||student,issuedAt:Date.now()}));
+    },{student,session:options.session,handoff:options.handoff,handoffStudent:options.handoffStudent});
     await context.route(base+'/data.js*',route=>route.fulfill({contentType:'application/javascript',body:source+'\n;window.GFIELD_DATA.archiveProductAccess["question-bank"]='+(options.granted?'["'+student+'"]':'[]')+';'}));
     await context.route('https://fgahqumaldheqettmvqg.supabase.co/**',route=>{
       const url=new URL(route.request().url());
@@ -51,6 +52,23 @@ const server=http.createServer((req,res)=>{
     assert.equal(await missing.page.locator('#bankAccessForm').isVisible(),true,'approval-number form is shown');
     assert.equal(await missing.page.locator('.qcard').count(),0,'questions do not render before authorization');
     await missing.context.close();
+
+    const portal=await open({path:'/bank/index.html?bank=final2',session:false,handoff:true,granted:true});
+    await portal.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
+    assert.equal(await portal.page.locator('#bankAccessGate').isHidden(),true,'student entering from the named portal opens without another approval number');
+    assert.equal(await portal.page.evaluate(()=>document.body.dataset.bankStudent),student,'portal handoff keeps the selected student identity');
+    await portal.context.close();
+
+    const tamperedPortal=await open({path:'/bank/index.html?bank=final2',session:false,handoff:true,handoffStudent:'다른학생',granted:true});
+    assert.equal(await tamperedPortal.page.locator('#bankAccessGate').isVisible(),true,'a handoff for a different student is not accepted');
+    assert.equal(await tamperedPortal.page.locator('.qcard').count(),0,'mismatched portal identity renders no questions');
+    await tamperedPortal.context.close();
+
+    const deniedPortal=await open({path:'/bank/index.html?bank=final2',session:false,handoff:true,granted:false});
+    await deniedPortal.page.locator('#bankAccessStatus.error').waitFor();
+    assert.match(await deniedPortal.page.locator('#bankAccessStatus').textContent(),/열람 권한이 없습니다/);
+    assert.equal(await deniedPortal.page.locator('.qcard').count(),0,'portal identity without product permission stays blocked');
+    await deniedPortal.context.close();
 
     const login=await open({path:'/bank/index.html?bank=final2',session:false,granted:true});
     await login.page.locator('#bankAccessName').fill(student);
@@ -159,11 +177,13 @@ const server=http.createServer((req,res)=>{
     await assumption.context.close();
 
     const homeContext=await browser.newContext({viewport:{width:390,height:844}});
+    await homeContext.addInitScript(()=>{window.__GFIELD_BANK_ACCESS_FORCE__=true;});
     await homeContext.route('https://**/*',route=>route.abort());
     const home=await homeContext.newPage();
     await home.goto(base+'/index.html',{waitUntil:'networkidle'});
-    await home.evaluate(()=>{currentStudent='허유민';isDemo=false;renderArchive();});
+    await home.evaluate(()=>{currentStudent='허유민';isDemo=false;localStorage.setItem('gfield_student',currentStudent);renderArchive();});
     assert.equal(await home.locator('.bank-launch').count(),1,'authorized student sees the teacher-selected bank entry');
+    assert.deepEqual(await home.evaluate(()=>{const value=JSON.parse(sessionStorage.getItem('gfield_question_bank_handoff_v1'));return {product:value.product,student:value.student,recent:Date.now()-value.issuedAt<5000};}),{product:'question-bank',student:'허유민',recent:true},'authorized archive creates a same-tab bank handoff');
     assert.equal(await home.locator('.bank-type-btn').count(),15,'student sees exactly 15 teacher-selected type buttons');
     assert.equal(await home.locator('.bank-type-btn[data-important-type="league-tournament"]').count(),1,'Final2 Q19 league/tournament button is included');
     await home.locator('.bank-type-btn[data-important-type="assumption"]').evaluate(button=>button.click());
@@ -171,9 +191,16 @@ const server=http.createServer((req,res)=>{
     assert.match(await home.locator('.bank-start').getAttribute('href'),/bank=important.*types=assumption.*n=20/,'selected button opens only its registered important type');
     await home.evaluate(()=>{currentStudent='권한없는학생';renderArchive();});
     assert.equal(await home.locator('.bank-launch').count(),0,'student without question-bank permission sees no important-type buttons');
+    await home.evaluate(()=>{currentStudent='허유민';isDemo=false;localStorage.setItem('gfield_student',currentStudent);renderArchive();});
+    await home.locator('.bank-type-btn[data-important-type="assumption"]').evaluate(button=>button.click());
+    const bankHref=await home.locator('.bank-start').getAttribute('href');
+    await home.goto(new URL(bankHref,base+'/').href,{waitUntil:'networkidle'});
+    await home.waitForFunction(()=>document.querySelectorAll('.qcard').length===20);
+    assert.equal(await home.locator('#bankAccessGate').isHidden(),true,'actual archive link opens the selected bank without another approval form');
+    assert.equal(await home.evaluate(()=>document.body.dataset.bankStudent),'허유민','actual archive navigation preserves the selected student');
     await homeContext.close();
 
-    console.log('PASS bank access: approval session, self-account lookup, product permission, direct-link denial, identity binding, catalog gate, 15 teacher buttons, 40-question bank');
+    console.log('PASS bank access: named portal handoff without repeated approval, approval fallback, self-account lookup, product permission, direct-link denial, identity binding, catalog gate, 15 teacher buttons, 40-question bank');
   }finally{
     await browser.close();server.close();
   }
