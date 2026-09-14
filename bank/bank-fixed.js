@@ -83,9 +83,28 @@
       });
       var selected=[];
       for(var variant=0;variant<3;variant++)groups.forEach(function(group){selected.push(group[variant]);});
-      selected=selected.slice(0,Math.min(requestedCount,setting.maxQuestions));
+      var targetCount=Math.min(requestedCount,setting.maxQuestions);
+      var dynamic=global.BANK_IMPORTANT_GENERATORS;
+      function questionSignature(item){return String(item.text)+'|'+String(item.answer)+'|'+JSON.stringify(item.meta&&item.meta.parameters||item.meta||{});}
+      var seenQuestions=new Set(selected.map(questionSignature));
+      if(selected.length<targetCount){
+        if(!dynamic)throw new Error('중요 유형 추가 문제 생성기를 불러오지 못했습니다.');
+        var serialByType={};
+        groups.forEach(function(group){serialByType[group[0].importantTypeId]=4;});
+        var cursor=0,guard=0;
+        while(selected.length<targetCount&&guard<targetCount*200){
+          var sourceGroup=groups[cursor%groups.length],typeId=sourceGroup[0].importantTypeId;
+          if(!dynamic.has(typeId))throw new Error(sourceGroup[0].importantTypeTitle+' 유형의 추가 문제를 확인할 수 없습니다.');
+          var candidate=dynamic.generate(typeId,serialByType[typeId]++,sourceGroup[0]);
+          var signature=questionSignature(candidate);
+          if(!seenQuestions.has(signature)){seenQuestions.add(signature);selected.push(candidate);}
+          cursor++;guard++;
+        }
+        if(selected.length<targetCount)throw new Error('요청한 문항 수만큼 서로 다른 문제를 만들지 못했습니다.');
+      }
+      selected=selected.slice(0,targetCount);
       selected=selected.map(function(item,index){var copy=JSON.parse(JSON.stringify(item));copy.index=index+1;return copy;});
-      return {bankVersion:data.version,bankCode:'important',bankLabel:'중요 유형',fixed:true,seedStr:'IMPORTANT',seedNum:0,typeIds:requested.slice(),genIds:groups.map(function(group){return group[0].genId;}),pointBand:opts.pointBand||'all',difficultyMode:'standard',difficultyMix:'single',perGenerator:3,n:selected.length,availableCount:groups.length*3,questions:selected};
+      return {bankVersion:data.version,bankCode:'important',bankLabel:'중요 유형',fixed:true,seedStr:'IMPORTANT-V2',seedNum:0,typeIds:requested.slice(),genIds:groups.map(function(group){return group[0].genId;}),pointBand:opts.pointBand||'all',difficultyMode:'standard',difficultyMix:'single',perGenerator:0,n:selected.length,availableCount:setting.maxQuestions,questions:selected};
     }
     var ids = opts.genIds;
     var idPattern = new RegExp('^' + config.prefix + '(0[1-9]|[12][0-9]|30)$');

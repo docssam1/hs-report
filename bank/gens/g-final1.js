@@ -303,20 +303,19 @@
     area: '식의 계산',
     sourceStructure: '매주 일정하게 빨라지는 아날로그시계를 맞춘 뒤 다시 같은 시각을 가리키는 날을 구한다.',
     errorTags: ['24시간을 기준으로 계산', '주간 오차를 일간 오차로 바꾸지 않음', '시계판 반복 누락'],
-    primaryMethod: '12시간에 해당하는 720분을 하루 오차로 나눔',
+    primaryMethod: '누적 오차가 처음으로 720분의 배수가 되는 날 찾기',
     independentMethod: '날짜별 누적 오차를 12시간 나머지로 반복 확인'
   }, function (level, rng, spec) {
-    var gains = [10, 12, 15, 18, 20, 24, 30, 36, 40, 45, 48, 60];
-    var dailyGain = CORE.pick(rng, gains.slice(Math.min(level - 1, 5)));
-    if (dailyGain === 15) dailyGain = 18;
+    var dailyGain = CORE.randint(rng, 4 + level * 2, 24 + level * 14) * 2;
     var weeklyGain = dailyGain * 7;
     var weeklyGainLabel = Math.floor(weeklyGain / 60) + '시간' + (weeklyGain % 60 ? ' ' + (weeklyGain % 60) + '분' : '');
-    var answer = 720 / dailyGain;
+    function gcd(a, b) { while (b) { var rest = a % b; a = b; b = rest; } return a; }
+    var answer = 720 / gcd(720, dailyGain);
     var simulated = 1;
     while ((simulated * dailyGain) % 720 !== 0) simulated++;
     return finalize(spec, answer, simulated,
       '도윤이의 시계는 일주일에 ' + weeklyGainLabel + '씩 빨라집니다. 어느 날 시계를 정확히 맞추었습니다. 이 아날로그시계가 다시 정확한 시각을 가리키는 것은 며칠 후입니까?',
-      '하루에 ' + dailyGain + '분씩 빨라집니다. 아날로그시계는 12시간, 즉 720분 빠르면 같은 모양이므로 720÷' + dailyGain + '=' + answer + '일입니다.',
+      '하루에 ' + dailyGain + '분씩 빨라집니다. 누적해서 빨라진 시간이 720분의 배수가 되는 첫날을 찾으면 ' + answer + '일 후입니다.',
       { dailyGainMinutes: dailyGain, weeklyGainMinutes: weeklyGain });
   });
 
@@ -832,8 +831,7 @@
     primaryMethod: '삼각수로 목표 행의 처음과 끝을 구해 등차수열 합 계산',
     independentMethod: '1부터 차례로 행을 채워 목표 행만 직접 합산'
   }, function (level, rng, spec) {
-    var row = CORE.randint(rng, 8 + level * 2, 13 + level * 5);
-    if (row === 21) row++;
+    var row = CORE.randint(rng, 7 + level * 4, 24 + level * 15);
     var first = row * (row - 1) / 2 + 1;
     var last = row * (row + 1) / 2;
     var answer = (first + last) * row / 2;
