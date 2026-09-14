@@ -13,6 +13,9 @@ const call=(body,account=student,who=user)=>reports.handle(service,account,who,b
  await assert.rejects(call({action:'apply-percentiles',exam:'final1'}),e=>e.status===403);
  await assert.rejects(call({action:'save-comment',exam:'final1',student:'qa-one',comment:'bad',expectedUpdatedAt:null}),e=>e.status===403);
  await assert.rejects(call({action:'record-report',exam:'final1',student:'qa-one',score:0}),e=>e.status===400);
+ const portal=await reports.handlePortal(service,{action:'read-portal-statistics',exam:'final1',student:'qa-one',resultOx:'O'.repeat(30)},core,baseline);
+ assert.equal(portal.snapshot.percentiles['1000'],50);assert.deepEqual(Object.keys(portal),['snapshot']);assert.doesNotMatch(JSON.stringify(portal),/"(?:student|resultOx|n|count|denominator|dist|rows|owner_id)"/);
+ await assert.rejects(reports.handlePortal(service,{action:'read-portal-statistics',exam:'final1',student:'qa-one',resultOx:'X'.repeat(30)},core,baseline),e=>e.status===404);
  const blank=await call({action:'read-report',exam:'final1',student:'qa-one'});assert.equal(blank.snapshot.percentiles['1000'],50);assert.equal(blank.resultOx,'O'.repeat(30));assert.equal(writes.length,0,'reading an older result derives its approved snapshot without writing');
  const online=await call({action:'record-report',exam:'final1',student:'qa-one'});assert.equal(online.snapshot.percentiles['1000'],50);assert.equal(online.snapshot.rate[1],.5);assert.equal(online.canEdit,false);
  const note=await call({action:'save-comment',exam:'final1',student:'qa-one',comment:'<img src=x> 조건을 잘 표시했어요.',expectedUpdatedAt:null},teacher,{id:'teacher'});assert.ok(note.updatedAt);

@@ -15,6 +15,17 @@
     if(source&&source.exam) return source.exam===exam?source:null;
     return source&&source[exam]||null;
   }
+  async function handlePortal(service,body,core,baselines){
+    const keys=['action','exam','student','resultOx'];
+    if(!body||body.action!=='read-portal-statistics'||Object.keys(body).some(k=>!keys.includes(k))||!/^final[1-4]$/.test(body.exam||''))fail('INVALID_REQUEST',400);
+    if(typeof body.student!=='string'||!body.student.trim()||body.student.length>120||typeof body.resultOx!=='string'||!/^[OX]{30}$/.test(body.resultOx))fail('INVALID_REQUEST',400);
+    const baseline=baselineFor(baselines,body.exam);
+    if(!baseline)fail('REFERENCE_NOT_READY',409);
+    const {data:result,error}=await service.from('mock_results').select('student,round,ox,score,wrong,source').eq('student',body.student).eq('round',body.exam).maybeSingle();
+    if(error)fail('READ_FAILED',503);
+    if(!validResult(result,core)||result.ox!==body.resultOx)fail('RESULT_NOT_FOUND',404);
+    return {snapshot:frozenSnapshot(core,baseline,core.scoreOf(result.ox))};
+  }
   async function handle(service,account,user,body,core,baselines){
     const action=body.action;
     if(!allowed.has(action))fail('INVALID_REQUEST',400);
@@ -83,6 +94,6 @@
     }
     return response;
   }
-  const api={handle,validResult,frozenSnapshot};root.GFIELD_REPORT_SERVICE=api;
+  const api={handle,handlePortal,validResult,frozenSnapshot};root.GFIELD_REPORT_SERVICE=api;
   if(typeof module==='object'&&module.exports)module.exports=api;
 })(globalThis);
