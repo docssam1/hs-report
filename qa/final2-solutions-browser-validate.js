@@ -49,6 +49,14 @@ const server=http.createServer((req,res)=>{
       assert.equal(await card.locator('.final1-watermark span').count(),3);
     }
     for(const no of [23,27,28])assert.equal(await page.locator(`#final2-solution-${no} .gfield-final2-solution-diagram`).count(),1,`Q${no} includes its teaching diagram`);
+    const roadmapCurriculum=await page.evaluate(()=>{const display=value=>String(value||'').replace(/−/g,'-').replace(/\s+/g,' ').trim();return GF_TEST.M.rounds['2'].items.map(item=>{
+      const rx=GF_TEST.curriculumPrescriptionForItem({roundNum:2},item),categories=['시중교재','소마','필즈더클래식','지필드'];
+      return {
+        no:item.no,label:display(rx&&rx.label||'—'),
+        books:categories.map(category=>(rx&&rx.books&&rx.books[category]||[]).map(book=>display(book.b+' '+book.u))),
+        points:(rx&&rx.pts||[]).map(display)
+      };
+    });});
     for(const width of [1280,390]){
       await page.setViewportSize({width,height:900});
       for(const no of Object.keys(expected)){
@@ -65,6 +73,19 @@ const server=http.createServer((req,res)=>{
     assert.equal(await page.locator('.answer-correction').count(),1);
     assert.equal(await page.locator('#body tr').nth(6).locator('.answer-correction').innerText(),'✓ 필기 해설 정정: 200번째 → 199번째');
     for(const [no,answer] of Object.entries(expected))assert.equal(await page.locator('#body tr').nth(Number(no)-1).locator('.ans').innerText(),answer);
+    const answerCurriculum=await page.evaluate(()=>[...document.querySelectorAll('#body tr')].map((row,index)=>({
+      no:index+1,label:row.cells[4].innerText.trim(),
+      books:[5,6,7,8].map(cellIndex=>[...row.cells[cellIndex].querySelectorAll('b')].map(book=>book.innerText.trim()+' '+book.nextElementSibling.innerText.trim())),
+      points:[...row.cells[9].querySelectorAll('li')].map(point=>point.innerText.trim())
+    })));
+    assert.deepEqual(answerCurriculum,roadmapCurriculum,'자료실 30문항과 로드맵 30문항의 유형·교재·학습 포인트가 같은 원자료를 사용');
+    const reviewedLinks=await page.evaluate(()=>[9,16,19,25,28].map(no=>{
+      const cells=document.querySelectorAll('#body tr')[no-1].cells;
+      return {no,label:cells[4].innerText.trim(),books:[...cells].slice(5,9).flatMap(cell=>[...cell.querySelectorAll('b')].map(book=>book.innerText.trim())),points:[...cells[9].querySelectorAll('li')].map(point=>point.innerText.trim())};
+    }));
+    assert.deepEqual(reviewedLinks.map(row=>[row.no,row.label,row.books.length,row.points.length]),[
+      [9,'먼저 익힐 내용',1,1],[16,'먼저 익힐 내용',2,2],[19,'먼저 익힐 내용',2,2],[25,'먼저 익힐 내용',1,1],[28,'먼저 익힐 내용',2,2]
+    ],'자료실 답안표도 로드맵과 같은 문항별 검수 연결을 사용');
     if(output){
       await page.locator('#body tr').nth(6).screenshot({path:path.join(output,'answer-q7.png')});
       await page.pdf({path:path.join(output,'final2-answer-table.pdf'),format:'A4',printBackground:true});
