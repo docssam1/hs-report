@@ -15,6 +15,12 @@
     }catch(e){target.error=true;}
     return target;
   }
+  async function loadSnapshot(student,round,ox,slot){
+    try{
+      var data=await root.GFIELD_AUTH.functionCall('hs-final-population',{action:'read-report',exam:'final'+round,student:student},slot);
+      return data&&data.resultOx===ox&&data.snapshot?data.snapshot:null;
+    }catch(e){return null;}
+  }
   function render(){
     if(!current||current.preview)return '';
     var edit=current.canEdit;
@@ -37,5 +43,5 @@
       finally{button.disabled=false;}
     };
   }
-  root.GFIELD_FINAL_REPORT_STATE={load:load,render:render,wire:wire};
+  root.GFIELD_FINAL_REPORT_STATE={load:load,loadSnapshot:loadSnapshot,render:render,wire:wire};
 })(window);

@@ -43,8 +43,8 @@ function findRx(t){let best=null,bl=0;if(!t)return null;for(const r of RX)for(co
 function bk(list){if(!list||!list.length)return'<span class="none">—</span>';return list.map(b=>`<b>${esc(b.b)}</b> <span class="u">${esc(b.u)}</span>`).join('<br>')}
 function showContent(){
   document.getElementById('gate').classList.add('hidden');document.getElementById('content').classList.remove('hidden');
-  const viewer=(SET==='final'?'final.html?round='+RD:'mock.html?set='+SET+'&round='+RD)+'&name='+encodeURIComponent(NAME)+(P.get('preview')==='1'?'&preview=1':'');
-  document.getElementById('nav').innerHTML='<a href="'+viewer+'" class="viewer">📝 '+(SET==='final'?'파이널 진단 뷰어':'시험지 뷰어')+' · 오답 입력·분석</a><span class="sp"></span><button onclick="window.print()">🖨 인쇄 / PDF 저장</button>';
+  const viewer=(SET==='final'?'final.html?round='+RD+'&go=report':'mock.html?set='+SET+'&round='+RD)+'&name='+encodeURIComponent(NAME)+(P.get('preview')==='1'?'&preview=1':'');
+  document.getElementById('nav').innerHTML='<a href="'+viewer+'" class="viewer">📝 '+(SET==='final'?'내 진단 분석지':'시험지 뷰어 · 오답 입력·분석')+'</a><span class="sp"></span><button onclick="window.print()">🖨 인쇄 / PDF 저장</button>';
   const roundName=SET==='final'&&RD>=5?'최종 실전':SETNAME;
   document.title=`${roundName} 모의고사 · 답안 및 교재 연결표 | 지필드 영재교육`;document.getElementById('ttl').textContent=`${roundName} 모의고사 ${RD}회 · 답안 및 교재 연결표`;document.getElementById('ft1').textContent=`지필드 영재교육 · ${roundName} 모의고사 ${RD}회 답안 및 교재 연결표`;
   const items=(((M.rounds||{})[RD]||(M.rounds||{})[String(RD)]||{}).items)||[];

@@ -13,7 +13,7 @@ const call=(body,account=student,who=user)=>reports.handle(service,account,who,b
  await assert.rejects(call({action:'apply-percentiles',exam:'final1'}),e=>e.status===403);
  await assert.rejects(call({action:'save-comment',exam:'final1',student:'qa-one',comment:'bad',expectedUpdatedAt:null}),e=>e.status===403);
  await assert.rejects(call({action:'record-report',exam:'final1',student:'qa-one',score:0}),e=>e.status===400);
- const blank=await call({action:'read-report',exam:'final1',student:'qa-one'});assert.equal(blank.snapshot,null);assert.equal(writes.length,0);
+ const blank=await call({action:'read-report',exam:'final1',student:'qa-one'});assert.equal(blank.snapshot.percentiles['1000'],50);assert.equal(blank.resultOx,'O'.repeat(30));assert.equal(writes.length,0,'reading an older result derives its approved snapshot without writing');
  const online=await call({action:'record-report',exam:'final1',student:'qa-one'});assert.equal(online.snapshot.percentiles['1000'],50);assert.equal(online.snapshot.rate[1],.5);assert.equal(online.canEdit,false);
  const note=await call({action:'save-comment',exam:'final1',student:'qa-one',comment:'<img src=x> 조건을 잘 표시했어요.',expectedUpdatedAt:null},teacher,{id:'teacher'});assert.ok(note.updatedAt);
  await assert.rejects(call({action:'save-comment',exam:'final1',student:'qa-one',comment:'lost edit',expectedUpdatedAt:null},teacher,{id:'teacher'}),e=>e.status===409);
@@ -23,9 +23,9 @@ const call=(body,account=student,who=user)=>reports.handle(service,account,who,b
  const rates=JSON.stringify(tables.hs_final_report_references);
  await call({action:'apply-percentiles',exam:'final1'},teacher,{id:'teacher'});assert.equal(JSON.stringify(tables.hs_final_report_references),rates,'reapply cannot overwrite frozen rates');assert.equal(tables.hs_final_report_comments[0].comment,note.comment);
  tables.mock_results[0].ox='X'.repeat(30);tables.mock_results[0].score=0;tables.mock_results[0].wrong=30;
- assert.equal((await call({action:'read-report',exam:'final1',student:'qa-one'})).snapshot,null,'stale OX snapshot not shown');
+ const refreshed=await call({action:'read-report',exam:'final1',student:'qa-one'});assert.equal(refreshed.resultOx,'X'.repeat(30));assert.equal(refreshed.snapshot.percentiles['0'],100,'stale saved OX is replaced by the current result derivation');
  tables.mock_results[0].owner_id='somebody-else';await assert.rejects(call({action:'read-report',exam:'final1',student:'qa-one'}),e=>e.status===403);
  tables.mock_results=JSON.parse(original);assert.equal(JSON.stringify(baseline),source);assert.ok(writes.every(t=>t.startsWith('hs_final_report_')),'no writes to original grades/accounts');
  assert.doesNotMatch(JSON.stringify(online),/"(?:n|count|denominator|dist|rows|owner_id)"/);
- console.log('PASS report ownership, student/admin permissions, persisted percentile/rates, immutable reference, comments/CAS, stale snapshot, no source writes/counts');
+ console.log('PASS report ownership, student/admin permissions, live and persisted percentile/rates, immutable reference, comments/CAS, stale snapshot, no source writes/counts');
 })().catch(e=>{console.error(e);process.exitCode=1;});

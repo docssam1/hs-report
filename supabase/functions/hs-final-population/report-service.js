@@ -74,6 +74,13 @@
     if(error)fail('READ_FAILED',503);
     // Ignore a snapshot when a result was reset/replaced while applying.
     if(saved&&saved.result_ox===result.ox&&Number(saved.result_score)===core.scoreOf(result.ox)&&saved.snapshot?.version===baseline.version){response.snapshot=saved.snapshot;response.resultOx=result.ox;}
+    // Older first attempts may predate the bulk-apply action. They still use
+    // the same approved round reference, so return the derived snapshot for
+    // this exact saved result without changing the learner record.
+    else if(action==='read-report'&&baseline&&validResult(result,core)){
+      response.snapshot=frozenSnapshot(core,baseline,core.scoreOf(result.ox));
+      response.resultOx=result.ox;
+    }
     return response;
   }
   const api={handle,validResult,frozenSnapshot};root.GFIELD_REPORT_SERVICE=api;

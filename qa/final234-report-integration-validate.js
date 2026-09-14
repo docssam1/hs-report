@@ -59,10 +59,11 @@ const server=http.createServer((req,res)=>{
    for(const width of [1280,390]){await page.setViewportSize({width,height:900});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'no horizontal overflow');}
    if(n===2){
     assert.equal(await page.locator('#curriculumConnection tbody tr').count(),10,'Final2 실제 오답 10문항의 교재 연결 상태 표시');
-    assert.equal(await page.locator('#curriculumConnection .curriculum-books li').count(),3,'검수된 25번 한 권과 28번 두 권의 연결을 모두 표시');
-    assert.equal(await page.locator('#curriculumConnection .curriculum-points li').count(),3,'검수된 25번과 28번의 학습 포인트를 모두 표시');
-    assert.equal(await page.locator('#curriculumConnection td:nth-child(3) .curriculum-pending').count(),8,'나머지 Final2 오답 교재는 연결 확인 중으로 표시');
-    assert.equal(await page.locator('#curriculumConnection td:nth-child(4) .curriculum-pending').count(),8,'나머지 Final2 오답 학습 포인트는 확인 중으로 표시');
+    assert.ok(await page.locator('#curriculumConnection .curriculum-books li').count()>3,'답안·교재 연결표의 공용 처방을 Final2 오답에도 표시');
+    assert.ok(await page.locator('#curriculumConnection .curriculum-points li').count()>3,'공용 처방의 학습 포인트를 Final2 오답에도 표시');
+    const sharedPending=await page.evaluate(()=>GF_TEST.M.rounds['2'].items.slice(20).filter(item=>!GF_TEST.curriculumPrescriptionForItem({roundNum:2},item)).length);
+    assert.equal(await page.locator('#curriculumConnection td:nth-child(3) .curriculum-pending').count(),sharedPending,'진단지의 미연결 수가 공용 답안·교재 연결표와 같음');
+    assert.equal(await page.locator('#curriculumConnection td:nth-child(4) .curriculum-pending').count(),sharedPending,'진단지의 미등록 학습 포인트 수가 공용 답안·교재 연결표와 같음');
     assert.equal(await page.locator('#curriculumConnection tr[data-curriculum-no="25"] .curriculum-books li').count(),1,'25번 승인 연결 한 건');
     assert.equal(await page.locator('#curriculumConnection tr[data-curriculum-no="28"] .curriculum-books li').count(),2,'28번 승인 연결 두 건');
     const publicCurriculum=await page.evaluate(()=>[9,16,19,25,28].map(no=>{
@@ -110,12 +111,12 @@ const server=http.createServer((req,res)=>{
      };
     });
     assert.deepEqual(curriculumGate,{
-     publicLabel:null,approvedLabel:'두 점수 가정법 복습',wrongSource:null,
+     publicLabel:'우기기/가정하여 풀기',approvedLabel:'두 점수 가정법 복습',wrongSource:null,
      wrongRawType:null,wrongCanonical:null,wrongKind:null,emptyPoints:null,
      duplicateBook:null,locked:null,duplicate:null,
      approvedBook:'검수 교재',approvedPoint:'두 점수 차이를 한 문제당 점수 차이로 나누기',
      final1Label:'달력·요일(시계)'
-    },'Final2 문항별 승인 payload만 허용하고 Final1 키워드 처방은 보존');
+    },'Final2 공용 답안표 처방을 기본으로 쓰고 명시적 문항 승인 payload 검증은 보존');
     const leadBoundary=await page.evaluate(()=>{
      const makeItems=count=>Array.from({length:30},(_,index)=>({
       no:index+1,

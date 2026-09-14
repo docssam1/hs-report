@@ -20,7 +20,7 @@ const server=http.createServer((req,res)=>{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
  const base=process.env.GFIELD_QA_BASE_URL||'http://127.0.0.1:'+server.address().port,origin=new URL(base).origin;
  const browser=await chromium.launch(),context=await browser.newContext({viewport:{width:1280,height:900}}),writes=[],actions=[];
- let empty=false;
+ let empty=false,populationOffline=false;
  await context.addInitScript(n=>{localStorage.setItem('gfield_student',n);localStorage.setItem('gfield_hs_student_session_v1',JSON.stringify({access_token:'synthetic-only',refresh_token:'synthetic-only',expires_at:Math.floor(Date.now()/1000)+3600,login_name:n}));},student);
  await context.route(/^https?:\/\//,route=>{
   const req=route.request(),u=new URL(req.url());
@@ -30,7 +30,8 @@ const server=http.createServer((req,res)=>{
    return route.fulfill({json:empty?[]:rows});
   }
   if(u.pathname.endsWith('/hs-final-population')){
-   const b=req.postDataJSON();if(b.action){actions.push(b.action);if(b.action!=='read-report')writes.push(b);return route.fulfill({json:{canEdit:false,comment:'조건을 표시하고 풀이를 확인해 보세요.',snapshot:null,resultOx:ox}});}
+   const b=req.postDataJSON();if(b.action){actions.push(b.action);if(b.action!=='read-report')writes.push(b);return route.fulfill({json:{canEdit:false,comment:'조건을 표시하고 풀이를 확인해 보세요.',snapshot:core.createResponse(baselines[b.exam],[score]),resultOx:ox}});}
+   if(populationOffline)return route.fulfill({status:503,json:{error:'STATISTICS_UNAVAILABLE'}});
    return route.fulfill({json:core.createResponse(baselines[b.exam],b.scores)});
   }
   if(!['GET','HEAD','OPTIONS'].includes(req.method())&&!u.pathname.endsWith('/access_log'))writes.push({path:u.pathname,method:req.method()});
@@ -98,6 +99,20 @@ const server=http.createServer((req,res)=>{
    }
    await rp.close();await lp.close();await page.evaluate(()=>closeBook());
   }
+  populationOffline=true;
+  const fallback=await openRoadmap(/파이널.*모의고사\s*2\s*회/);
+  await fallback.locator('.final-report-package').waitFor({timeout:15000});
+  assert.match(await fallback.locator('.report-screen-header').innerText(),/석차 백분율/,'saved first-result snapshots restore the current percentile when the live lookup is unavailable');
+  const fallbackCumulative=await fallback.locator('#report-summary').innerText();
+  assert.match(fallbackCumulative,/석차 반영.*1.*2회/s,'saved round 1 and 2 snapshots restore the cumulative percentile');
+  await fallback.close();populationOffline=false;
+  const answer=await context.newPage();
+  await answer.goto(base+'/answer.html?set=final&round=2&name='+encodeURIComponent(student));
+  await answer.locator('#content:not(.hidden)').waitFor();
+  const answerReport=new URL(await answer.locator('#nav a.viewer').getAttribute('href'),base);
+  assert.equal(answerReport.pathname,'/final.html');assert.equal(answerReport.searchParams.get('round'),'2');
+  assert.equal(answerReport.searchParams.get('go'),'report');assert.equal(answerReport.searchParams.get('name'),student,'the answer/crosswalk returns to the same saved personal report');
+  await answer.close();
   empty=true;const missing=await openRoadmap(/파이널.*모의고사\s*1\s*회/);await missing.getByText('파이널 1회 성적표가 아직 등록되지 않았습니다.',{exact:true}).waitFor();await missing.close();
   await page.evaluate(()=>logout());await page.locator('#name-input').fill('교체검수학생');await page.locator('#login .enter').click();await page.locator('#dashboard:not(.hidden)').waitFor();
   await page.evaluate(()=>{renderArchive();renderArchive();});
