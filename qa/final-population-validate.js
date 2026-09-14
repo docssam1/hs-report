@@ -44,8 +44,12 @@ for(const mutate of [b=>b.approved=false,b=>b.rows[0].score=0,b=>b.rows[1].id='a
   // No participant data is bundled in the public data file.
   const pub={window:{}};vm.createContext(pub);vm.runInContext(fs.readFileSync(path.join(root,'mock-data-final.js'),'utf8'),pub);
   const publicStats=pub.window.GFIELD_MOCK_FINAL.rounds['1'].stats;
-  assert.deepEqual(Object.keys(publicStats).sort(),['cuts','mean','protectedReference','rate','rateEvidence']);
-  const file=path.join(root,'supabase/functions/hs-final-population/baseline.private.json');
+  assert.deepEqual(Object.keys(publicStats).sort(),['cuts','mean','percentileTable','protectedReference','rankEvidence','rate','rateEvidence']);
+  assert.equal(publicStats.percentileTable.length,1001);
+  assert.equal(JSON.stringify(publicStats.percentileTable.map(row=>row[0])),JSON.stringify(Array.from({length:1001},(_,index)=>(1000-index)/10)));
+  assert.doesNotMatch(JSON.stringify(publicStats),/"(?:n|size|count|denominator|dist|rows|student|sourceRow|id|ox)"/);
+  const privateRoot=process.env.GFIELD_PRIVATE_POPULATION_ROOT||path.join(root,'supabase/functions/hs-final-population');
+  const file=path.join(privateRoot,'baseline.private.json');
   if(process.env.GFIELD_PRIVATE_POPULATION_AUDIT==='1'){
     const privateBaseline=JSON.parse(fs.readFileSync(file,'utf8'));
     const original=JSON.parse(fs.readFileSync(path.join(root,'.private-work/final1-population/source-candidate.json'),'utf8'));
@@ -54,6 +58,10 @@ for(const mutate of [b=>b.approved=false,b=>b.rows[0].score=0,b=>b.rows[1].id='a
     assert.equal(actual.mean,31.6);
     assert.equal(publicStats.rateEvidence.version,privateBaseline.version);
     for(let no=1;no<=30;no++)assert.equal(publicStats.rate[no],Math.round(actual.rate[no]*1000)/1000,'public question-bank aggregate matches approved source');
+    for(let offset=0;offset<=1000;offset+=16){
+      const scores=Array.from({length:Math.min(16,1001-offset)},(_,i)=>(offset+i)/10),lookups=core.createResponse(privateBaseline,scores).percentiles;
+      for(const score of scores){const row=publicStats.percentileTable.find(item=>item[0]===score);assert.equal(row[1],lookups[String(Math.round(score*10))]);}
+    }
     assert.deepEqual(privateBaseline.rows,original.rows.filter(r=>r.score!=null&&r.score!=='').map(r=>({id:'source-row-'+r.sourceRow,ox:r.flags.map(v=>v===1||v==='1'?'O':'X').join(''),score:Math.round(Number(r.score)*10)/10})));
     const scoreValues=privateBaseline.rows.map(r=>r.score);
     for(let lo=0;lo<=1000;lo+=16){
