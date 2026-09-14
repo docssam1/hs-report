@@ -88,9 +88,74 @@ const server=http.createServer((req,res)=>{
     await important.context.close();
 
     const assumption=await open({path:'/bank/index.html?bank=important&types=assumption&n=40&points=all',session:true,granted:true});
-    await assumption.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===6);
-    assert.equal(await assumption.page.locator('.qcard[data-source-round="1"][data-source-no="8"]').count(),3,'Final1 Q8 belongs to the merged assumption type');
-    assert.equal(await assumption.page.locator('.qcard[data-source-round="2"][data-source-no="1"]').count(),3,'Final2 Q1 belongs to the merged assumption type');
+    await assumption.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===40);
+    assert.equal(await assumption.page.locator('.qmeta[data-item-id^="final1-q08-v"]').count(),3,'three reviewed Final1 Q8 anchors remain in the merged assumption type');
+    assert.equal(await assumption.page.locator('.qmeta[data-item-id^="final2-q01-v"]').count(),3,'three reviewed Final2 Q1 anchors remain in the merged assumption type');
+    assert.equal(await assumption.page.locator('.qcard').count(),40,'one selected type can fill the requested 40-question paper');
+    const typeCoverage=await assumption.page.evaluate(async(typeIds)=>{
+      const rows=[];
+      for(const typeId of typeIds){
+        for(const requestedCount of [4,8,20,40]){
+          let paper;try{paper=await window.BANK_FIXED.buildPaper({bankCode:'important',typeIds:[typeId],n:requestedCount,pointBand:'all'});}catch(error){rows.push({typeId,requestedCount,error:String(error&&error.message||error)});continue;}
+          const signatures=paper.questions.map(item=>`${item.text}|${item.answer}|${JSON.stringify(item.meta&&item.meta.parameters||item.meta||{})}`);
+          rows.push({typeId,requestedCount,count:paper.questions.length,ids:new Set(paper.questions.map(item=>item.id)).size,distinct:new Set(signatures).size,anchors:paper.questions.filter(item=>item.reviewStatus==='verified').length,runtime:paper.questions.filter(item=>item.reviewStatus==='runtime-verified').length,missing:paper.questions.filter(item=>!item.text||item.answer==null||!item.solution||!item.verification).length});
+        }
+      }
+      return rows;
+    },importantTypes);
+    for(const row of typeCoverage){
+      assert.equal(row.error,undefined,`${row.typeId} ${row.requestedCount}-question generation error: ${row.error||''}`);
+      assert.equal(row.count,row.requestedCount,`${row.typeId} fills ${row.requestedCount} questions`);
+      assert.equal(row.ids,row.requestedCount,`${row.typeId} has unique item ids at ${row.requestedCount}`);
+      assert.equal(row.distinct,row.requestedCount,`${row.typeId} has ${row.requestedCount} distinct questions`);
+      const expectedAnchors=Math.min(row.requestedCount,row.typeId==='assumption'?6:3);
+      assert.equal(row.anchors,expectedAnchors,`${row.typeId} retains reviewed anchors at ${row.requestedCount}`);
+      assert.equal(row.runtime,row.requestedCount-expectedAnchors,`${row.typeId} fills the remainder with runtime-verified questions at ${row.requestedCount}`);
+      assert.equal(row.missing,0,`${row.typeId} questions are complete`);
+    }
+    const final2Runtime=await assumption.page.evaluate(async(typeIds)=>{
+      const rows=[];
+      for(const typeId of typeIds){
+        const paper=await window.BANK_FIXED.buildPaper({bankCode:'important',typeIds:[typeId],n:40,pointBand:'all'});
+        paper.questions.filter(item=>item.reviewStatus==='runtime-verified').forEach(item=>rows.push({typeId,id:item.id,answer:item.answer,acceptedAnswers:item.acceptedAnswers,meta:item.meta,hasAsset:!!item.asset,hasSolutionAsset:!!item.solutionAsset}));
+      }
+      return rows;
+    },['top-view','shortest-path','grouped-sequence','league-tournament','coin-combinations','shape-pattern','consecutive-sum']);
+    const edgeKey=(a,b)=>[a.join(','),b.join(',')].sort().join('|');
+    const countPaths=(from,to,blocked,forbidden)=>{
+      const ways={};for(let y=from[1];y<=to[1];y++)for(let x=from[0];x<=to[0];x++){
+        const key=`${x},${y}`;if(forbidden&&x===forbidden[0]&&y===forbidden[1]){ways[key]=0;continue;}if(x===from[0]&&y===from[1]){ways[key]=1;continue;}
+        let total=0;if(x>from[0]&&!blocked.has(edgeKey([x-1,y],[x,y])))total+=ways[`${x-1},${y}`]||0;if(y>from[1]&&!blocked.has(edgeKey([x,y-1],[x,y])))total+=ways[`${x},${y-1}`]||0;ways[key]=total;
+      }return ways[`${to[0]},${to[1]}`]||0;
+    };
+    for(const item of final2Runtime){
+      const answerMatch=String(item.answer).match(/\d+/),number=answerMatch?Number(answerMatch[0]):null;
+      if(item.typeId==='top-view'){
+        const model=item.meta.parameters,projection=[];for(const point of model.path){const p=[point[0],point[1]],last=projection.at(-1);if(!last||last[0]!==p[0]||last[1]!==p[1])projection.push(p);}
+        assert.equal(projection.map(point=>point.join(',')).join('>'),item.meta.projectionSignature,`${item.id} top projection`);assert.equal(item.hasAsset,true,`${item.id} prompt image`);assert.equal(item.hasSolutionAsset,true,`${item.id} solution image`);
+      }else if(item.typeId==='shortest-path'){
+        const m=item.meta,blocked=new Set(m.blockedEdges),first=countPaths(m.points.A,m.points.B,blocked,null),second=countPaths(m.points.B,m.points.D,blocked,m.points.C);assert.equal(number,first*second,`${item.id} path count`);assert.equal(item.hasAsset,true,`${item.id} road image`);
+      }else if(item.typeId==='grouped-sequence'){
+        const m=item.meta,target=m.targetTuple;assert.equal(target[1],target[0]+target[2],`${item.id} tuple relation`);assert.equal(number,target.reduce((sum,value)=>sum+value,0),`${item.id} tuple sum`);
+      }else if(item.typeId==='league-tournament'){
+        const m=item.meta,N=m.participants,L=m.format1LeagueFinalists,g=m.format2GroupSize,counts=[N-L+L*(L-1)/2,L*g*(g-1)/2+L-1,N*(N-1)/2];assert.deepEqual(m.formatCounts,counts,`${item.id} game formats`);assert.equal(number,Math.max(...counts)-Math.min(...counts),`${item.id} game difference`);
+      }else if(item.typeId==='coin-combinations'){
+        const p=item.meta.parameters,[one,middle,large]=p.denominations;let count=0;for(let z=1;z*large<p.target;z++)for(let y=1;y*middle+z*large<p.target;y++)if(p.target-middle*y-large*z>=one)count++;assert.equal(number,count,`${item.id} coin combinations`);
+      }else if(item.typeId==='shape-pattern'){
+        const p=item.meta.parameters;assert.equal(number,(2*p.targetStage+1)+(p.targetStage+1)**2,`${item.id} shape pattern`);assert.equal(item.hasAsset,true,`${item.id} sequence image`);
+      }else if(item.typeId==='consecutive-sum'){
+        const p=item.meta.parameters;let best=null;for(let length=2;length<80;length++){const numerator=p.target-length*(length-1)/2;if(numerator<length)break;if(numerator%length===0){const start=numerator/length;if(!best||length>best.length)best={length,start};}}assert.equal(number,best.start,`${item.id} longest consecutive sum`);assert.equal(p.longestLength,best.length,`${item.id} longest length`);
+      }
+    }
+    const previewDir=process.env.GFIELD_IMPORTANT_PREVIEW_DIR;
+    if(previewDir){
+      fs.mkdirSync(previewDir,{recursive:true});
+      for(const typeId of ['top-view','shortest-path','shape-pattern']){
+        await assumption.page.goto(`${base}/bank/index.html?bank=important&types=${typeId}&n=8&points=all&printMode=both`,{waitUntil:'networkidle'});
+        await assumption.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===8);
+        await assumption.page.locator('.question-page').first().screenshot({path:path.join(previewDir,`${typeId}-first-page.png`)});
+      }
+    }
     await assumption.context.close();
 
     const homeContext=await browser.newContext({viewport:{width:390,height:844}});
@@ -102,7 +167,7 @@ const server=http.createServer((req,res)=>{
     assert.equal(await home.locator('.bank-type-btn').count(),15,'student sees exactly 15 teacher-selected type buttons');
     assert.equal(await home.locator('.bank-type-btn[data-important-type="league-tournament"]').count(),1,'Final2 Q19 league/tournament button is included');
     await home.locator('.bank-type-btn[data-important-type="assumption"]').evaluate(button=>button.click());
-    assert.match(await home.locator('.bank-selection-note').textContent(),/등록 문제 6문항 중 6문항/,'merged assumption button contains both rounds and six fixed questions');
+    assert.match(await home.locator('.bank-selection-note').textContent(),/검수 기준 6문항을 바탕으로 20문항/,'merged assumption button clearly describes anchor-based generation');
     assert.match(await home.locator('.bank-start').getAttribute('href'),/bank=important.*types=assumption.*n=20/,'selected button opens only its registered important type');
     await home.evaluate(()=>{currentStudent='권한없는학생';renderArchive();});
     assert.equal(await home.locator('.bank-launch').count(),0,'student without question-bank permission sees no important-type buttons');

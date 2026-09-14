@@ -26,7 +26,9 @@ sources.forEach(source=>{
 assert.equal(sources.length*3,48,'selected fixed pool has 48 questions before the 40-question cap');
 const q4=rounds[1].items.filter(item=>item.sourceNo===4);
 assert.deepEqual(new Set(q4.map(item=>item.meta.factorFormat)),new Set(['2×2','3×2','3×3']),'Q4 covers all three teacher-selected factor formats');
-const home=fs.readFileSync(path.join(root,'index.html'),'utf8'),fixed=fs.readFileSync(path.join(root,'bank/bank-fixed.js'),'utf8');
+const home=fs.readFileSync(path.join(root,'index.html'),'utf8'),fixed=fs.readFileSync(path.join(root,'bank/bank-fixed.js'),'utf8'),runtime=fs.readFileSync(path.join(root,'bank/important-generators.js'),'utf8');
 assert.match(home,/GFIELD_IMPORTANT_TYPES/);assert.match(home,/data-important-type/);assert.match(home,/bank=index\.html\?bank=important|bank\/index\.html\?bank=important/);
 assert.match(fixed,/config\.code==='important'/);assert.match(fixed,/Math\.min\(requestedCount,setting\.maxQuestions\)/);
-console.log('PASS important bank: 15 teacher buttons, 16 exact originals, 48 verified fixed items, 40-question cap, merged assumption type, Q4 2x2/3x2/3x3');
+for(const typeId of Object.keys(expected))assert.match(runtime,new RegExp("['\"]"+typeId+"['\"]"),typeId+' has a runtime generator route');
+assert.match(fixed,/BANK_IMPORTANT_GENERATORS/,'important bank supplements the three anchors with verified runtime variants');
+console.log('PASS important bank: 15 teacher buttons, 16 exact originals, 48 verified anchors, every type can fill 40 questions, merged assumption type, Q4 2x2/3x2/3x3');

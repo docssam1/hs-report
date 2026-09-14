@@ -877,12 +877,12 @@
     const box=wrap.querySelector('.bank-launch'),config=window.GFIELD_IMPORTANT_TYPES;if(!box||!config)return;
     const selected=new Set();let count=20,link=box.querySelector('.bank-start'),note=box.querySelector('.bank-selection-note');
     function update(){
-      const pool=config.types.filter(type=>selected.has(type.id)).reduce((sum,type)=>sum+type.sources.length*3,0);
-      const actual=Math.min(count,pool,config.maxQuestions);
+      const sourceCount=config.types.filter(type=>selected.has(type.id)).reduce((sum,type)=>sum+type.sources.length,0);
+      const actual=Math.min(count,config.maxQuestions);
       link.setAttribute('aria-disabled',selected.size?'false':'true');
       link.removeAttribute('href');
       if(selected.size)link.href=`bank/index.html?bank=important&types=${encodeURIComponent([...selected].join(','))}&n=${count}&points=all&printMode=both`;
-      note.textContent=selected.size?`${selected.size}개 유형 · 등록 문제 ${pool}문항 중 ${actual}문항을 엽니다.`:'유형을 한 개 이상 선택해 주세요.';
+      note.textContent=selected.size?`${selected.size}개 유형 · 검수 기준 ${sourceCount*3}문항을 바탕으로 ${actual}문항을 만듭니다.`:'유형을 한 개 이상 선택해 주세요.';
     }
     box.querySelectorAll('.bank-type-btn').forEach(button=>button.onclick=()=>{const id=button.dataset.importantType;if(selected.has(id))selected.delete(id);else selected.add(id);button.setAttribute('aria-pressed',selected.has(id)?'true':'false');update();});
     box.querySelectorAll('.bank-count-btn').forEach(button=>button.onclick=()=>{count=Number(button.dataset.count);box.querySelectorAll('.bank-count-btn').forEach(other=>other.setAttribute('aria-pressed',other===button?'true':'false'));update();});
