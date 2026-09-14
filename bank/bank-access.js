@@ -3,6 +3,8 @@
 
   var PRODUCT_KEY='question-bank';
   var FALLBACK_FOLDER='약점 유형';
+  var PORTAL_HANDOFF_KEY='gfield_question_bank_handoff_v1';
+  var PORTAL_HANDOFF_MAX_AGE=12*60*60*1000;
   var localHost=/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   var forceGate=root.__GFIELD_BANK_ACCESS_FORCE__===true;
   var resolveReady;
@@ -30,6 +32,17 @@
     var name='';
     try{name=(localStorage.getItem('gfield_student')||'').trim()}catch(error){}
     return {role:'tester',student:name,active:true};
+  }
+  function portalIdentity(){
+    try{
+      var raw=sessionStorage.getItem(PORTAL_HANDOFF_KEY);
+      if(!raw)return null;
+      var handoff=JSON.parse(raw),student=String(handoff&&handoff.student||'').trim();
+      var savedStudent=String(localStorage.getItem('gfield_student')||'').trim();
+      var issuedAt=Number(handoff&&handoff.issuedAt||0),age=Date.now()-issuedAt;
+      if(handoff.product!==PRODUCT_KEY||!student||student!==savedStudent||age<0||age>PORTAL_HANDOFF_MAX_AGE)return null;
+      return {role:'student',student:student,active:true,source:'portal-handoff'};
+    }catch(error){return null}
   }
   function injectStyle(){
     if(document.getElementById('bankAccessStyle'))return;
@@ -113,10 +126,15 @@
     try{
       var account=await restore();
       if(account){reveal(account);return}
-      setStatus('학생 이름과 승인번호를 입력해 주세요.',false);
+      var portal=portalIdentity();
+      if(portal){
+        if(!allowed(portal))throw Object.assign(new Error('ACCESS_DENIED'),{code:'ACCESS_DENIED'});
+        reveal(portal);return;
+      }
+      setStatus('자료실에서 학생 이름으로 들어오면 바로 이용할 수 있습니다.',false);
     }catch(error){setStatus(message(error),true)}
   }
 
-  root.GFIELD_BANK_ACCESS={ready:ready,allowed:allowed,permissionList:permissionList,start:start};
+  root.GFIELD_BANK_ACCESS={ready:ready,allowed:allowed,permissionList:permissionList,portalIdentity:portalIdentity,start:start};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })(window);
