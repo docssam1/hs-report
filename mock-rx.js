@@ -8,7 +8,7 @@
   const preview=params.get('preview')==='1';
 
   /* 기존 처방 데이터 먼저 로드 */
-  document.write('<script src="mock-rx-data.js?v=20260724"><\/script>');
+  document.write('<script src="mock-rx-data.js?v=20260914-parity"><\/script>');
 
   /* 활용 모의고사는 기존 상세 진단 틀에 활용 데이터만 주입 */
   if(set==='hw'){

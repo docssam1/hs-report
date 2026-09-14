@@ -423,6 +423,46 @@ const PRESCRIPTION = [
   },
 ];
 
+/* 자료실 답안표와 개인 진단 분석지가 함께 사용하는 문항별 검수 연결.
+ * 화면마다 별도 목록을 두지 않는다. 문항별 연결이 없을 때만 위의
+ * 공용 유형 처방(PRESCRIPTION)을 사용한다. */
+const FINAL2_REVIEWED_CURRICULUM_LINKS=Object.freeze([
+  {sourceKey:'final|2|9',area:'경우의 수',displayType:'입체도형의 최단거리',canonicalTypeId:'type-1obyr97',studentLabel:'먼저 익힐 내용',connectionKind:'prerequisite',books:{소마:[{b:'프리미어 초급 5',u:'3. 오일러 경로와 해밀턴 경로 · 82쪽'}]},points:['꼭짓점과 모서리를 구분하고, 이동 횟수와 같은 곳을 다시 지나는지 확인하기'],independentReviewStatus:'verified',releaseStatus:'eligible'},
+  {sourceKey:'final|2|16',area:'도형',displayType:'도형 채우기',canonicalTypeId:'type-03arvhe',studentLabel:'먼저 익힐 내용',connectionKind:'prerequisite',books:{소마:[{b:'프리미어 초급 5',u:'2. 단위넓이의 유래 · 63쪽'},{b:'프리미어 초급 8',u:'3. 도형의 개수 · 65쪽(교재) / 67쪽(PDF)'}]},points:['조각을 겹치거나 빈틈을 남기지 않고 채우기','돌리거나 뒤집어서 같은 모양은 한 가지로 세기'],independentReviewStatus:'verified',releaseStatus:'eligible'},
+  {sourceKey:'final|2|19',area:'식의 계산',displayType:'리그와 토너먼트',canonicalTypeId:'type-1ichp8w',studentLabel:'먼저 익힐 내용',connectionKind:'prerequisite',books:{소마:[{b:'프리미어 초급 8',u:'1. 리그와 토너먼트 · 리그전과 승패 · 교재 11쪽 / PDF 13쪽'},{b:'프리미어 초급 8',u:'1. 리그와 토너먼트 · 토너먼트와 대진표 · 교재 16쪽 / PDF 18쪽'}]},points:['리그전 경기 수를 n×(n-1)÷2로 구하기','토너먼트 경기 수를 전체 팀 수에서 남는 팀 수를 빼서 구한 뒤 두 방식을 함께 비교하기'],independentReviewStatus:'verified',releaseStatus:'eligible'},
+  {sourceKey:'final|2|25',area:'수·규칙찾기',displayType:'성냥개비 도형의 개수',canonicalTypeId:'type-0q6gg27',studentLabel:'먼저 익힐 내용',connectionKind:'prerequisite',books:{소마:[{b:'프리미어 초급 8',u:'3. 도형의 개수 · 분류하여 도형 세기 · 교재 59쪽 / PDF 61쪽'}]},points:['위쪽 띠와 아래쪽 층을 나누고, 각 부분에서 늘어나는 규칙을 따로 찾기'],independentReviewStatus:'verified',releaseStatus:'eligible'},
+  {sourceKey:'final|2|28',area:'경우의 수',displayType:'헤밀턴 경로',canonicalTypeId:'type-0ewdfoi',studentLabel:'먼저 익힐 내용',connectionKind:'prerequisite',books:{소마:[{b:'프리미어 초급 5',u:'3. 오일러 경로와 해밀턴 경로 · 한붓그리기 · 72쪽'},{b:'프리미어 초급 5',u:'3. 오일러 경로와 해밀턴 경로 · PREMIER LEVEL.02 · 90쪽'}]},points:['모든 길을 한 번씩 지나는 조건부터 확인하기','홀수 개의 길이 만나는 마을을 찾아 추가로 지나야 하는 가장 짧은 길 구하기'],independentReviewStatus:'verified',releaseStatus:'eligible'}
+]);
+
+function gfieldPrescriptionOf(type){
+  let best=null,bestLength=0,source=String(type||'');
+  PRESCRIPTION.forEach(row=>(row.kw||[]).forEach(keyword=>{
+    keyword=String(keyword||'');
+    if(keyword&&source.includes(keyword)&&keyword.length>bestLength){best=row;bestLength=keyword.length;}
+  }));
+  return best;
+}
+
+function gfieldCurriculumPrescription(set,round,item){
+  if(item&&item.prescriptionOverride)return item.prescriptionOverride;
+  if(item&&Object.prototype.hasOwnProperty.call(item,'prescriptionType')){
+    return item.prescriptionType?gfieldPrescriptionOf(item.prescriptionType):null;
+  }
+  const series=String(set||'').toLowerCase(),roundNumber=Number(round),sourceKey=[series,roundNumber,Number(item&&item.no)].join('|');
+  const matches=FINAL2_REVIEWED_CURRICULUM_LINKS.filter(row=>row.sourceKey===sourceKey&&row.area===String(item&&item.area||'')&&row.displayType===String(item&&item.type||'')&&row.independentReviewStatus==='verified'&&row.releaseStatus==='eligible');
+  if(matches.length===1){
+    const approved=matches[0];
+    return {label:approved.studentLabel,connectionKind:approved.connectionKind,books:approved.books,pts:approved.points};
+  }
+  return gfieldPrescriptionOf(item&&item.type);
+}
+
+if(typeof window!=='undefined')window.GFIELD_CURRICULUM=Object.freeze({
+  reviewedLinks:FINAL2_REVIEWED_CURRICULUM_LINKS,
+  findByType:gfieldPrescriptionOf,
+  resolve:gfieldCurriculumPrescription
+});
+
 /* ─────────────────────────────────────────────
  * 분석 리포트 헬퍼 (mock.html에서 사용)
  * ───────────────────────────────────────────── */
