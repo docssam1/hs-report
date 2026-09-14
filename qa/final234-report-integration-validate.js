@@ -257,10 +257,10 @@ const server=http.createServer((req,res)=>{
   for(const label of lastCumulative)assert.match(cumulativeText,new RegExp(label));
   failedExam='final3';
   await page.goto(base+'/final.html?round=3&go=report&name='+encodeURIComponent(student));await page.locator('.final-report-package').waitFor();
-  assert.equal(await page.evaluate(()=>GF_TEST.buildContext('검수',3,('O'.repeat(20)+'X'.repeat(10)).split('')).populationVerified),false,'failed reference never becomes trusted');
+  assert.equal(await page.evaluate(()=>GF_TEST.buildContext('검수',3,('O'.repeat(20)+'X'.repeat(10)).split('')).populationVerified),true,'approved public aggregate remains trusted when the authenticated lookup is unavailable');
   assert.equal(await page.locator('#detailWrap .bar').count(),30,'fixed answer rates survive offline reference');
-  assert.doesNotMatch(await page.locator('.report-screen-header').innerText(),/석차 백분율/);
+  assert.match(await page.locator('.report-screen-header').innerText(),/석차 백분율/,'saved student score uses the approved public score-percentile lookup');
   assert.equal(JSON.stringify(records),source);assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);
-  console.log(JSON.stringify({pass:true,results,offlineFailsClosed:true,productionWrites:0}));
+  console.log(JSON.stringify({pass:true,results,offlinePublicAggregate:true,productionWrites:0}));
  }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});
