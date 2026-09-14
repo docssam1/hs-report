@@ -51,7 +51,7 @@ const server=http.createServer((req,res)=>{
     return {rounds:out.map(r=>r.n),ox:out.map(r=>r.oxArr.join('')),ctx:GF_TEST.buildContext('검수',n,ox.split('')).populationVerified};
    },{n,ox,records});
    assert.equal(checked.ctx,true,'current round uses a trusted reference');
-   assert.deepEqual(checked.rounds,[1,2,3,4],'all saved first rounds included once');
+   assert.deepEqual(checked.rounds,Array.from({length:n},(_,i)=>i+1),'only first results from round 1 through the report round are included once');
    assert.ok(checked.ox.every(s=>s===ox),'perfect-score retry never replaces first result');
    const text=await page.locator('.report-screen-header,.cut-reference').allTextContents();
    assert.doesNotMatch(text.join(' '),/null%|NaN|undefined|응시\s*인원|\d[\d,]*\s*명/);
