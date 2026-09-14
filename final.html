@@ -1553,6 +1553,7 @@ td.weak-cell{white-space:nowrap}
       var mm = /^final(\d+)$/.exec(rk);
       if(!mm) return; // "last1-4" 등은 이 페이지의 데이터 범위 밖 (별도 데이터 파일 필요)
       var n = parseInt(mm[1],10);
+      if(n>roundNum) return; // 현재 보고서 이후 회차는 이미 저장되어 있어도 누적에서 제외
       if(!M.rounds[String(n)]) return;
       var oxa;
       if(n===roundNum){

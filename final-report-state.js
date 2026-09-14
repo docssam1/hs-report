@@ -21,9 +21,9 @@
       return data&&data.resultOx===ox&&data.snapshot?data.snapshot:null;
     }catch(e){}
     try{
-      var auth=root.GFIELD_AUTH,response=await fetch(auth.SUPABASE_URL+'/functions/v1/hs-final-population',{
+      var auth=root.GFIELD_AUTH,response=await fetch(auth.SUPABASE_URL+'/functions/v1/hs-final-portal-statistics',{
         method:'POST',headers:{apikey:auth.PUBLISHABLE_KEY,'Content-Type':'application/json'},
-        body:JSON.stringify({action:'read-portal-statistics',exam:'final'+round,student:student,resultOx:ox})
+        body:JSON.stringify({exam:'final'+round,student:student,resultOx:ox})
       });
       if(!response.ok)return null;
       var publicData=await response.json();

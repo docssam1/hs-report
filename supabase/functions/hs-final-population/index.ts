@@ -26,19 +26,6 @@ Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return reply({ ok: true });
   if (req.method !== "POST") return reply({ error: "METHOD_NOT_ALLOWED" }, 405);
   try {
-    const bodyText = await req.text();
-    if (bodyText.length > 14000) return reply({ error: "INVALID_REQUEST" }, 400);
-    let body;
-    try { body = JSON.parse(bodyText); } catch { return reply({ error: "INVALID_REQUEST" }, 400); }
-    if(body && body.action === 'read-portal-statistics'){
-      try {
-        const reports=(globalThis as unknown as { GFIELD_REPORT_SERVICE: {handlePortal: (...args: unknown[]) => Promise<unknown>} }).GFIELD_REPORT_SERVICE;
-        return reply(await reports.handlePortal(service,body,core,baselines));
-      } catch(error) {
-        const e=error as {status?:number;message?:string};
-        return reply({error:e.status?e.message:'REPORT_UNAVAILABLE'},e.status||503);
-      }
-    }
     const authorization = req.headers.get("authorization") || "";
     if (!authorization.startsWith("Bearer ")) return reply({ error: "LOGIN_REQUIRED" }, 401);
     const { data, error } = await service.auth.getUser(authorization.slice(7));
@@ -46,6 +33,10 @@ Deno.serve(async (req: Request) => {
     const { data: account, error: accountError } = await service.from("hs_accounts").select("role,active,student").eq("user_id", data.user.id).maybeSingle();
     if (accountError) return reply({ error: "STATISTICS_UNAVAILABLE" }, 503);
     if (!account?.active || !["student", "admin", "teacher"].includes(account.role)) return reply({ error: "ACCESS_DENIED" }, 403);
+    const bodyText = await req.text();
+    if (bodyText.length > 14000) return reply({ error: "INVALID_REQUEST" }, 400);
+    let body;
+    try { body = JSON.parse(bodyText); } catch { return reply({ error: "INVALID_REQUEST" }, 400); }
     if(body && typeof body.action === 'string'){
       try {
         const reports=(globalThis as unknown as { GFIELD_REPORT_SERVICE: {handle: (...args: unknown[]) => Promise<unknown>} }).GFIELD_REPORT_SERVICE;
