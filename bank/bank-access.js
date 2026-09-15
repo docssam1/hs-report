@@ -5,6 +5,7 @@
   var FALLBACK_FOLDER='약점 유형';
   var PORTAL_HANDOFF_KEY='gfield_question_bank_handoff_v1';
   var PORTAL_HANDOFF_MAX_AGE=12*60*60*1000;
+  var ACCESS_TIMEOUT_MS=Number(root.__GFIELD_BANK_ACCESS_TIMEOUT_MS__)||8000;
   var localHost=/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   var forceGate=root.__GFIELD_BANK_ACCESS_FORCE__===true;
   var resolveReady;
@@ -66,6 +67,17 @@
     var target=document.getElementById('bankAccessStatus');
     if(target){target.textContent=message||'';target.classList.toggle('error',!!isError)}
   }
+  function withinAccessTime(promise){
+    var timer;
+    return Promise.race([
+      Promise.resolve(promise),
+      new Promise(function(_,reject){
+        timer=setTimeout(function(){
+          var error=new Error('ACCESS_TIMEOUT');error.code='ACCESS_TIMEOUT';reject(error);
+        },ACCESS_TIMEOUT_MS);
+      })
+    ]).finally(function(){clearTimeout(timer)});
+  }
   function reveal(account){
     var node=shell();
     node.hidden=true;
@@ -106,6 +118,7 @@
   }
   function message(error){
     if(error&&error.code==='ACCESS_DENIED')return '이 학생에게는 문제은행 열람 권한이 없습니다. 원장님께 문의해 주세요.';
+    if(error&&error.code==='ACCESS_TIMEOUT')return '연결이 늦어지고 있습니다. 인터넷 연결을 확인한 뒤 다시 눌러 주세요.';
     return '이름과 승인번호를 확인해 주세요.';
   }
   function bindForm(){
@@ -116,7 +129,7 @@
       event.preventDefault();
       var button=form.querySelector('button'),name=document.getElementById('bankAccessName').value.trim(),code=document.getElementById('bankAccessCode').value;
       button.disabled=true;setStatus('권한을 확인하고 있습니다.',false);
-      try{reveal(await signIn(name,code))}
+      try{reveal(await withinAccessTime(signIn(name,code)))}
       catch(error){setStatus(message(error),true);button.disabled=false}
     });
   }
@@ -124,13 +137,13 @@
     injectStyle();shell();bindForm();
     if(localHost&&!forceGate){reveal(localIdentity());return}
     try{
-      var account=await restore();
-      if(account){reveal(account);return}
       var portal=portalIdentity();
       if(portal){
         if(!allowed(portal))throw Object.assign(new Error('ACCESS_DENIED'),{code:'ACCESS_DENIED'});
         reveal(portal);return;
       }
+      var account=await withinAccessTime(restore());
+      if(account){reveal(account);return}
       setStatus('자료실에서 학생 이름으로 들어오면 바로 이용할 수 있습니다.',false);
     }catch(error){setStatus(message(error),true)}
   }
