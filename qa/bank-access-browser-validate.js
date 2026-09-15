@@ -26,15 +26,19 @@ const server=http.createServer((req,res)=>{
 
   async function open(options){
     const context=await browser.newContext({viewport:{width:390,height:844}});
-    await context.addInitScript(({student,session,handoff,handoffStudent})=>{
+    await context.addInitScript(({student,session,handoff,handoffStudent,timeoutMs})=>{
       window.__GFIELD_BANK_ACCESS_FORCE__=true;
+      if(timeoutMs)window.__GFIELD_BANK_ACCESS_TIMEOUT_MS__=timeoutMs;
       if(session)localStorage.setItem('gfield_hs_student_session_v1',JSON.stringify({access_token:'bank-access-token',refresh_token:'bank-access-refresh',expires_at:Math.floor(Date.now()/1000)+3600,login_name:student}));
       localStorage.setItem('gfield_student',student);
       if(handoff)sessionStorage.setItem('gfield_question_bank_handoff_v1',JSON.stringify({product:'question-bank',student:handoffStudent||student,issuedAt:Date.now()}));
-    },{student,session:options.session,handoff:options.handoff,handoffStudent:options.handoffStudent});
+    },{student,session:options.session,handoff:options.handoff,handoffStudent:options.handoffStudent,timeoutMs:options.timeoutMs});
     await context.route(base+'/data.js*',route=>route.fulfill({contentType:'application/javascript',body:source+'\n;window.GFIELD_DATA.archiveProductAccess["question-bank"]='+(options.granted?'["'+student+'"]':'[]')+';'}));
+    let authCalls=0;
     await context.route('https://fgahqumaldheqettmvqg.supabase.co/**',route=>{
       const url=new URL(route.request().url());
+      if(url.pathname.startsWith('/auth/v1/'))authCalls++;
+      if(options.slowAuth&&url.pathname.startsWith('/auth/v1/'))return new Promise(resolve=>setTimeout(()=>resolve(route.fulfill({json:{id:'bank-access-user',access_token:'bank-access-token',refresh_token:'bank-access-refresh',expires_in:3600,user:{id:'bank-access-user'}}})),200));
       if(url.pathname==='/auth/v1/token')return route.fulfill({json:{access_token:'bank-access-token',refresh_token:'bank-access-refresh',expires_in:3600,user:{id:'bank-access-user'}}});
       if(url.pathname==='/auth/v1/user')return route.fulfill({json:{id:'bank-access-user'}});
       if(url.pathname==='/rest/v1/hs_accounts')return route.fulfill({json:[{role:'student',active:true,student}]});
@@ -43,7 +47,7 @@ const server=http.createServer((req,res)=>{
     await context.route('https://fonts.googleapis.com/**',route=>route.abort());
     const page=await context.newPage();
     await page.goto(base+options.path,{waitUntil:'networkidle'});
-    return {context,page};
+    return {context,page,authCalls:()=>authCalls};
   }
 
   try{
@@ -58,6 +62,27 @@ const server=http.createServer((req,res)=>{
     assert.equal(await portal.page.locator('#bankAccessGate').isHidden(),true,'student entering from the named portal opens without another approval number');
     assert.equal(await portal.page.evaluate(()=>document.body.dataset.bankStudent),student,'portal handoff keeps the selected student identity');
     await portal.context.close();
+
+    const slowPortal=await open({path:'/bank/index.html?bank=final2',session:true,handoff:true,granted:true,slowAuth:true,timeoutMs:30});
+    await slowPortal.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
+    assert.equal(await slowPortal.page.locator('#bankAccessGate').isHidden(),true,'valid portal handoff does not wait behind a stale remote session');
+    assert.equal(slowPortal.authCalls(),0,'portal handoff is checked before remote session recovery');
+    await slowPortal.context.close();
+
+    const stalledDirect=await open({path:'/bank/index.html?bank=final2',session:true,granted:true,slowAuth:true,timeoutMs:30});
+    assert.equal(await stalledDirect.page.locator('#bankAccessGate').isVisible(),true,'direct entry remains gated when remote session recovery stalls');
+    assert.match(await stalledDirect.page.locator('#bankAccessStatus').textContent(),/연결이 늦어지고 있습니다/);
+    assert.equal(await stalledDirect.page.locator('#bankAccessForm button').isEnabled(),true,'approval retry remains available after timeout');
+    await stalledDirect.context.close();
+
+    const stalledLogin=await open({path:'/bank/index.html?bank=final2',session:false,granted:true,slowAuth:true,timeoutMs:30});
+    await stalledLogin.page.locator('#bankAccessName').fill(student);
+    await stalledLogin.page.locator('#bankAccessCode').fill('1234');
+    await stalledLogin.page.locator('#bankAccessForm button').click();
+    await stalledLogin.page.locator('#bankAccessStatus.error').waitFor();
+    assert.match(await stalledLogin.page.locator('#bankAccessStatus').textContent(),/연결이 늦어지고 있습니다/);
+    assert.equal(await stalledLogin.page.locator('#bankAccessForm button').isEnabled(),true,'approval button is restored when approval verification stalls');
+    await stalledLogin.context.close();
 
     const tamperedPortal=await open({path:'/bank/index.html?bank=final2',session:false,handoff:true,handoffStudent:'다른학생',granted:true});
     assert.equal(await tamperedPortal.page.locator('#bankAccessGate').isVisible(),true,'a handoff for a different student is not accepted');
