@@ -19,7 +19,8 @@ const server=http.createServer((req,res)=>{
 (async()=>{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
  const base=process.env.GFIELD_QA_BASE_URL||'http://127.0.0.1:'+server.address().port,origin=new URL(base).origin;
- const browser=await chromium.launch(),context=await browser.newContext({viewport:{width:1280,height:900}}),writes=[],actions=[];
+ const executablePath=process.env.GFIELD_QA_BROWSER_EXECUTABLE||'';
+ const browser=await chromium.launch(executablePath?{executablePath}:{}),context=await browser.newContext({viewport:{width:1280,height:900}}),writes=[],actions=[];
  let empty=false,populationOffline=false;
  await context.addInitScript(n=>{localStorage.setItem('gfield_student',n);localStorage.setItem('gfield_hs_student_session_v1',JSON.stringify({access_token:'synthetic-only',refresh_token:'synthetic-only',expires_at:Math.floor(Date.now()/1000)+3600,login_name:n}));},student);
  await context.route(/^https?:\/\//,route=>{
@@ -113,7 +114,7 @@ const server=http.createServer((req,res)=>{
   assert.equal(answerReport.pathname,'/final.html');assert.equal(answerReport.searchParams.get('round'),'2');
   assert.equal(answerReport.searchParams.get('go'),'report');assert.equal(answerReport.searchParams.get('name'),student,'the answer/crosswalk returns to the same saved personal report');
   await answer.close();
-  empty=true;const missing=await openRoadmap(/파이널.*모의고사\s*1\s*회/);await missing.getByText('파이널 1회 성적표가 아직 등록되지 않았습니다.',{exact:true}).waitFor();await missing.close();
+  empty=true;const missing=await openRoadmap(/파이널.*모의고사\s*1\s*회/);await missing.getByText('공식 1차 성적표가 아직 등록되지 않았습니다.',{exact:true}).waitFor();await missing.close();
   await page.evaluate(()=>logout());await page.locator('#name-input').fill('교체검수학생');await page.locator('#login .enter').click();await page.locator('#dashboard:not(.hidden)').waitFor();
   await page.evaluate(()=>{renderArchive();renderArchive();});
   const switched=await page.evaluate(()=>D.books.filter(b=>/파이널|최종/.test(b.title||'')).map(b=>({title:b.title,links:b.links})));

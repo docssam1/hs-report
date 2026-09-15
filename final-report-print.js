@@ -103,7 +103,20 @@
   function makeStaticClone(source){
     var clone=source.cloneNode(true);
     copyFormState(source,clone);
-    list(clone.querySelectorAll('details')).forEach(function(details){details.open=true;details.setAttribute('open','');});
+    list(clone.querySelectorAll('details')).forEach(function(details){
+      var replacement=clone.ownerDocument.createElement('div');
+      list(details.attributes).forEach(function(attribute){if(attribute.name!=='open')replacement.setAttribute(attribute.name,attribute.value);});
+      replacement.classList.add('gfield-print-open-details');
+      while(details.firstChild)replacement.appendChild(details.firstChild);
+      list(replacement.querySelectorAll(':scope > summary')).forEach(function(summary){
+        var heading=clone.ownerDocument.createElement('div');
+        list(summary.attributes).forEach(function(attribute){heading.setAttribute(attribute.name,attribute.value);});
+        heading.classList.add('gfield-print-details-summary');
+        while(summary.firstChild)heading.appendChild(summary.firstChild);
+        summary.replaceWith(heading);
+      });
+      details.replaceWith(replacement);
+    });
     list(clone.querySelectorAll('script,iframe,object,embed')).forEach(function(node){node.remove();});
     list(clone.querySelectorAll('.no-print')).forEach(function(node){node.remove();});
     list(clone.querySelectorAll('[autofocus]')).forEach(function(node){node.removeAttribute('autofocus');});

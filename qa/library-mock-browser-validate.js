@@ -84,8 +84,8 @@ function expectedHref(locator, pattern, label) {
     assert.equal(await page.getByRole('button', { name: /인쇄/ }).count(), 1, '파이널 1회 서재 인쇄 버튼');
     assert.equal(await page.getByRole('link', { name: /시험지 보기·인쇄/ }).count(), 0, '파이널 중복 시험지 링크 제거');
     assert.equal(await page.locator('#bookviewer .bv-stage.split .bv-vid iframe').count(), 1, '파이널 시험지·영상 결합 뷰어');
-    await expectedHref(page.getByRole('link', { name: /오답 입력·진단/ }), /final\.html\?round=1&go=answer/, '파이널 진단');
-    await expectedHref(page.getByRole('link', { name: new RegExp(`${STUDENT} 학생 성적표`) }), /final\.html\?round=1&go=report/, '파이널 개인 성적표');
+    await expectedHref(page.getByRole('link', { name: /맞은 문제 체크·진단/ }), /final\.html\?round=1&go=answer/, '파이널 진단');
+    await expectedHref(page.getByRole('link', { name: new RegExp(`${STUDENT} 학생 진단 분석지`) }), /final\.html\?round=1&go=report/, '파이널 개인 성적표');
     await expectedHref(page.getByRole('link', { name: /답안·교재 연결표/ }), /answer\.html\?set=final&round=1/, '파이널 답안');
     const popupPromise = page.waitForEvent('popup');
     await page.getByRole('button', { name: /인쇄/ }).click();
@@ -110,9 +110,9 @@ function expectedHref(locator, pattern, label) {
     const lastVideo = page.locator('#bookviewer .bv-stage.split .bv-vid iframe');
     assert.equal(await lastVideo.count(), 1, '최종 시험지·영상 결합 뷰어');
     assert.match(await lastVideo.getAttribute('src'), /youtube\.com\/embed\/T9LbJLG2BRQ/, '최종 1회 전체 풀이 영상');
-    await expectedHref(page.getByRole('link', { name: /답안·해설/ }), /final\.html\?set=last&round=1&go=answer/, '최종 답안');
+    await expectedHref(page.getByRole('link', { name: /답안·해설/ }), /last1-answer\.html/, '최종 답안');
     await expectedHref(page.getByRole('link', { name: /성적 입력/ }), /last1-entry\.html\?round=1/, '최종 성적 입력');
-    await expectedHref(page.getByRole('link', { name: /성적 확인·진단/ }), /last1-result\.html\?round=1/, '최종 성적 진단');
+    await expectedHref(page.getByRole('link', { name: new RegExp(`${STUDENT} 학생 진단 분석지`) }), /final\.html\?set=last&round=1&go=report/, '최종 성적 진단');
 
     await page.click('#bookviewer .bv-back');
     await originalRound1Card.click();

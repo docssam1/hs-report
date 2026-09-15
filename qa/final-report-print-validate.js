@@ -67,7 +67,8 @@ const server=http.createServer((req,res)=>{
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   const base='http://127.0.0.1:'+server.address().port;
   const origin=new URL(base).origin;
-  const browser=await chromium.launch();
+  const executablePath=process.env.GFIELD_QA_BROWSER_EXECUTABLE||'';
+  const browser=await chromium.launch(executablePath?{executablePath}:{});
   const context=await browser.newContext({viewport:{width:390,height:900}});
   await context.addInitScript(name=>{
     localStorage.setItem('gfield_student',name);

@@ -627,6 +627,8 @@ td.weak-cell{white-space:nowrap}
   var preview = params.get('preview')==='1' && localPreviewHost;
   var urlName = (params.get('name')||'').trim();
   var goParam = (params.get('go')||'').trim();
+  var rawAttempt = (params.get('attempt')||'').trim();
+  var requestedAttempt = rawAttempt==='' ? 1 : (/^[123]$/.test(rawAttempt) ? Number(rawAttempt) : 0);
   /* 관리자 화면에서 연 링크만 입력 주체를 '선생님'으로 표시한다.
      이 값은 저장 출처를 구분하기 위한 메타데이터이며 인증 수단으로 사용하지 않는다. */
   var teacherEntry = params.get('entry')==='teacher';
@@ -1171,14 +1173,20 @@ td.weak-cell{white-space:nowrap}
     }).join('');
     return '<section class="report-curriculum-section" id="curriculumConnection" aria-labelledby="curriculum-title"><h2 id="curriculum-title">오답 기준 교재 연결표</h2><div class="lead">'+lead+'</div><div class="report-table-scroll"><table class="curriculum-table"><thead><tr><th scope="col">오답</th><th scope="col">진단 유형</th><th scope="col">권장 학습 위치</th><th scope="col">학습 포인트</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>';
   }
+  function reportAttemptLabel(ctx){
+    var attempt=Number(ctx&&ctx.attemptNo)||1;
+    return attempt>=2 ? attempt+'차 연습' : '공식 1차';
+  }
   function reportScreenHeaderHTML(ctx){
     var comparison=ctx.populationVerified&&Number.isFinite(ctx.pct);
-    var finalMetric=comparison?'<div><dt>석차 백분율</dt><dd>'+ctx.pct+'<small>%</small></dd></div>':'<div><dt>오답</dt><dd>'+ctx.wrong+'<small>문항</small></dd></div>';
-    return '<header class="report-screen-header"><div><span>초등선발 대비 '+esc(seriesLabel())+' '+ctx.roundNum+'회 진단</span><h1>'+esc(ctx.name)+' 학생</h1>'+(ctx.ratesVerified?'<span>평균 '+ctx.S.mean+'점 · 오답 '+ctx.wrong+'문항</span>':'')+(ctx.cutVerified?'<p class="report-expected-grade">예상 등급 · <b>'+esc(ctx.grade)+'</b></p>':'')+'</div><dl><div><dt>점수</dt><dd>'+ctx.score+'<small>/100</small></dd></div><div><dt>정답</dt><dd>'+ctx.ncorr+'<small>/30</small></dd></div>'+finalMetric+'</dl></header>';
+    var practice=Number(ctx.attemptNo)>=2;
+    var finalMetric=comparison?'<div><dt>'+(practice?'연습 점수 기준 백분율':'석차 백분율')+'</dt><dd>'+ctx.pct+'<small>%</small></dd></div>':'<div><dt>오답</dt><dd>'+ctx.wrong+'<small>문항</small></dd></div>';
+    return '<header class="report-screen-header"><div><span>초등선발 대비 '+esc(seriesLabel())+' '+ctx.roundNum+'회 진단 · '+reportAttemptLabel(ctx)+'</span><h1>'+esc(ctx.name)+' 학생</h1>'+(ctx.ratesVerified?'<span>평균 '+ctx.S.mean+'점 · 오답 '+ctx.wrong+'문항</span>':'')+(ctx.cutVerified?'<p class="report-expected-grade">'+(practice?'연습 점수 기준 예상 등급':'예상 등급')+' · <b>'+esc(ctx.grade)+'</b></p>':'')+'</div><dl><div><dt>점수</dt><dd>'+ctx.score+'<small>/100</small></dd></div><div><dt>정답</dt><dd>'+ctx.ncorr+'<small>/30</small></dd></div>'+finalMetric+'</dl></header>';
   }
   function reportPrintCoverHTML(ctx){
-    var stats=(ctx.ratesVerified?'<small>평균 '+ctx.S.mean+'점'+(Number.isFinite(ctx.pct)?' · 석차 백분율 '+ctx.pct+'%':'')+'</small>':'')+(ctx.cutVerified?'<small>예상 등급 · '+esc(ctx.grade)+'</small>':'');
-    return '<section class="report-print-cover" aria-label="'+esc(seriesLabel())+' 진단 학습 패키지 표지"><div class="report-cover-mark" aria-hidden="true">G·FIELD</div><div class="report-cover-brand">지필드 영재교육</div><div class="report-cover-main"><p>초등선발 대비</p><h1>'+esc(seriesLabel())+' 모의고사<br>진단 학습 패키지</h1><strong>'+esc(seriesLabel())+' '+ctx.roundNum+'회</strong></div><div class="report-cover-student"><span>STUDENT</span><b>'+esc(ctx.name)+'</b><i>'+ctx.score+'점</i>'+stats+'</div><div class="report-cover-index"><span>01 진단분석</span><span>02 오답 교재 연결</span><span>03 상세 풀이</span></div><footer>G·FIELD GIFTED EDUCATION · 개인 학습 자료</footer></section>';
+    var practice=Number(ctx.attemptNo)>=2;
+    var stats=(ctx.ratesVerified?'<small>평균 '+ctx.S.mean+'점'+(Number.isFinite(ctx.pct)?' · '+(practice?'연습 점수 기준 백분율 ':'석차 백분율 ')+ctx.pct+'%':'')+'</small>':'')+(ctx.cutVerified?'<small>'+(practice?'연습 점수 기준 예상 등급':'예상 등급')+' · '+esc(ctx.grade)+'</small>':'');
+    return '<section class="report-print-cover" aria-label="'+esc(seriesLabel())+' 진단 학습 패키지 표지"><div class="report-cover-mark" aria-hidden="true">G·FIELD</div><div class="report-cover-brand">지필드 영재교육</div><div class="report-cover-main"><p>초등선발 대비</p><h1>'+esc(seriesLabel())+' 모의고사<br>진단 학습 패키지</h1><strong>'+esc(seriesLabel())+' '+ctx.roundNum+'회 · '+reportAttemptLabel(ctx)+'</strong></div><div class="report-cover-student"><span>STUDENT</span><b>'+esc(ctx.name)+'</b><i>'+ctx.score+'점</i>'+stats+'</div><div class="report-cover-index"><span>01 진단분석</span><span>02 오답 교재 연결</span><span>03 상세 풀이</span></div><footer>G·FIELD GIFTED EDUCATION · 개인 학습 자료</footer></section>';
   }
 
   function wrongPracticeModel(ctx){
@@ -1421,7 +1429,12 @@ td.weak-cell{white-space:nowrap}
   /* ===GF-CORE-END=== */
 
   /* ---- 응시 차수별 변화 (per-round retake view; personal, does not affect 누적 성적) ---- */
-  function attemptTrendHTML(R, S, map, attemptNos){
+  function attemptReportUrl(attemptNo){
+    var query=['round='+roundNum,'go=report','attempt='+Number(attemptNo),'name='+encodeURIComponent(state.name)];
+    if(teacherEntry)query.push('entry=teacher');
+    return 'final.html?'+query.join('&');
+  }
+  function attemptTrendHTML(R, S, map, attemptNos, selectedAttempt){
     var LBL=['','1차','2차','3차'];
     var canCompare=populationStatsVerified(S);
     var rows = attemptNos.map(function(a,idx){
@@ -1434,9 +1447,10 @@ td.weak-cell{white-space:nowrap}
         var cls = diff>0?'dlt-up':(diff<0?'dlt-down':'dlt-flat');
         deltaHTML = '<span class="'+cls+'">'+(diff>0?'+':'')+diff+'점</span>';
       }
-      return '<tr><td>'+(LBL[a]||(a+'차'))+'</td><td class="c">'+sc.score+'점</td><td class="c">'+sc.correct+'문항</td>'+(canCompare?'<td class="c">'+(Number.isFinite(pct)?pct+'%':'<span aria-label="백분율 자료 없음">—</span>')+'</td>':'')+'<td class="c">'+deltaHTML+'</td></tr>';
+      var reportLink=Number(selectedAttempt)===a?'<b aria-current="page">현재 성적표</b>':'<a href="'+esc(attemptReportUrl(a))+'">성적표 보기</a>';
+      return '<tr><td>'+(LBL[a]||(a+'차'))+'</td><td class="c">'+sc.score+'점</td><td class="c">'+sc.correct+'문항</td>'+(canCompare?'<td class="c">'+(Number.isFinite(pct)?pct+'%':'<span aria-label="백분율 자료 없음">—</span>')+'</td>':'')+'<td class="c">'+deltaHTML+'</td><td class="c attempt-report-action no-print">'+reportLink+'</td></tr>';
     }).join('');
-    return '<table><tr><th>응시</th><th>점수</th><th>맞은 개수</th>'+(canCompare?'<th>석차 백분율</th>':'')+'<th>직전 대비</th></tr>'+rows+'</table>';
+    return '<table><tr><th>응시</th><th>점수</th><th>맞은 개수</th>'+(canCompare?'<th>석차 백분율</th>':'')+'<th>직전 대비</th><th class="no-print">성적표</th></tr>'+rows+'</table>';
   }
   function attemptClassify(R, map, attemptNos){
     var first=attemptNos[0], last=attemptNos[attemptNos.length-1];
@@ -1484,7 +1498,7 @@ td.weak-cell{white-space:nowrap}
     return '<div class="attempt-progress">'+
       '<h2 style="font-size:16px">응시 차수별 변화 <span style="font-size:11px;color:var(--dim);font-weight:400">(개인 연습 기록)</span></h2>'+
       '<div class="ap-note">이 회차를 '+attemptNos.length+'번 응시했습니다. 아래는 <b>연습 응시 기록</b>이며 <b>누적 성적에는 반영되지 않습니다.</b></div>'+
-      attemptTrendHTML(R,S,map,attemptNos)+
+      attemptTrendHTML(R,S,map,attemptNos,attemptNo)+
       attemptResolvedHTML(cls.resolved)+
       attemptUnresolvedHTML(cls.unresolved, R, attemptNos.length)+
       '</div>';
@@ -2260,15 +2274,17 @@ td.weak-cell{white-space:nowrap}
 
     var fk = finalKey();
     var fk2 = fk+'@2', fk3 = fk+'@3';
+    var attemptNo = viewOnly?requestedAttempt:deriveAttemptNo(priorRows, fk, fk2);
     if(viewOnly){
-      var official=priorRows[fk];
-      if(!official||!validOx(official.ox)){
-        app.innerHTML='<div class="doc"><section><h2>'+esc(state.name)+' 학생 '+esc(seriesLabel())+' '+roundNum+'회 성적표</h2><div class="lead">'+esc(seriesLabel())+' '+roundNum+'회 성적표가 아직 등록되지 않았습니다.</div></section></div>';
+      var selectedKey=attemptNo===1?fk:(attemptNo===2?fk2:fk3);
+      var selectedAttempt=attemptNo&&priorRows[selectedKey];
+      if(!selectedAttempt||!validOx(selectedAttempt.ox)){
+        var missingLabel=attemptNo>=2?attemptNo+'차 연습 성적표':'공식 1차 성적표';
+        app.innerHTML='<div class="doc"><section><h2>'+esc(state.name)+' 학생 '+esc(seriesLabel())+' '+roundNum+'회 성적표</h2><div class="lead">'+esc(missingLabel)+'가 아직 등록되지 않았습니다.</div></section></div>';
         return;
       }
-      state.oxArr=String(official.ox).split('');
+      state.oxArr=String(selectedAttempt.ox).split('');
     }
-    var attemptNo = viewOnly?1:deriveAttemptNo(priorRows, fk, fk2);
     var saveKey = attemptNo===1 ? fk : (attemptNo===2 ? fk2 : fk3);
     var saveSource = attemptNo===1 ? firstAttemptSource(state.name) : (teacherEntry?'practice-admin':'practice');
 
@@ -2379,7 +2395,7 @@ td.weak-cell{white-space:nowrap}
     var attemptHTML = attemptSectionHTML(roundNum, priorRows, attemptNo, fk, fk2, fk3, state.oxArr, includeCurrent);
 
     var previewBanner = preview ? '<div class="banner preview no-print">🔎 관리자 미리보기 — 저장되지 않습니다</div>' : '';
-    var personalReportBanner = viewOnly ? '<div class="banner preview no-print">📊 '+esc(ctx.name)+' 학생의 공식 1차 성적표</div>' : '';
+    var personalReportBanner = viewOnly ? '<div class="banner preview no-print">📊 '+esc(ctx.name)+' 학생의 '+reportAttemptLabel(ctx)+' 성적표</div>' : '';
     var teacherBanner = (!preview && teacherEntry) ? '<div class="banner preview no-print">🧑‍🏫 선생님 대리 입력 — 재원생의 답안을 대신 기록합니다. 회차별 최초 성적만 누적에 반영됩니다.</div>' : '';
     var practiceBanner = (!preview && attemptNo>=2) ? '<div class="banner practice no-print">연습 응시 — 기록은 남지만 누적 성적에는 반영되지 않습니다 ('+attemptNo+'회차 시도)</div>' : '';
     var saveErrBanner = saveErr ? '<div class="banner saveerr no-print">'+(saveConflict?'다른 입력이 먼저 저장되어 기존 최초 기록을 유지했습니다.':'저장 실패, 네트워크 확인')+'</div>' : '';

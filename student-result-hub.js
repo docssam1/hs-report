@@ -98,7 +98,7 @@
     for(var i=0;i<sorted.length;i++) if(score>=Number(sorted[i].average)) return String(sorted[i].grade)+'반';
     return basis.belowLabel||'노력요함';
   }
-  function reportLink(item,options){
+  function reportLink(item,options,model){
     var m=item.meta,name=options.student,helper=root.GFIELD_FINAL_LAST_ROUTES;
     if((m.kind==='final'||m.kind==='last')&&helper){
       var allowed=helper.accessAllowed(options.data||{},name,m.kind,m.round);
@@ -106,7 +106,11 @@
     }
     if(m.kind==='original') return {url:'final.html?set=original&round='+m.round+'&go=report&name='+encodeURIComponent(name),label:'상세 분석·유사문제'};
     if(m.kind==='hw') return {url:'mock.html?set=hw&round='+m.round+'&name='+encodeURIComponent(name),label:'상세 분석·유사문제'};
-    if(m.kind==='middle') return {url:'mock.html?round='+m.round+'&name='+encodeURIComponent(name),label:'상세 분석·유사문제'};
+    if(m.kind==='middle'){
+      var middleAccess=root.GFIELD_MIDDLE_ACCESS;
+      var allowed=!middleAccess||middleAccess.allowsRound(options.data||{},name,m.round,model);
+      return {url:allowed?'mock.html?round='+m.round+'&go=report&name='+encodeURIComponent(name):'',label:allowed?'상세 분석·복습문제':'자료실 승인 필요'};
+    }
     return {url:'',label:'자료 없음'};
   }
   function describe(item,options){
@@ -124,11 +128,17 @@
     }else if(m.kind==='original'){
       model=root.GFIELD_MOCK_ORIGINAL;title='시그니처 실전 '+m.round+'회';grade=originalGrade(item.score.score,model);
     }else if(m.kind==='hw'){
+      model=root.GFIELD_MOCK_HW;
       title='활용 모의고사 '+m.round+'회';
     }else{
+      model=root.GFIELD_MOCK;
       title='중급 모의고사 '+m.round+'회';
     }
-    return {title:title,score:item.score.score,percentile:Number.isFinite(percentile)?round1(percentile):null,grade:grade,link:reportLink(item,options)};
+    return {title:title,score:item.score.score,percentile:Number.isFinite(percentile)?round1(percentile):null,grade:grade,link:reportLink(item,options,model)};
+  }
+  function canShow(item,options){
+    if(!item||item.meta.kind!=='middle'||!root.GFIELD_MIDDLE_ACCESS) return true;
+    return root.GFIELD_MIDDLE_ACCESS.allowsRound(options.data||{},options.student,item.meta.round,root.GFIELD_MOCK);
   }
   function fetchRows(options,signal){
     var url=options.supabaseUrl+'/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq.'+encodeURIComponent(options.student);
@@ -173,7 +183,7 @@
       var items=officialRows(rows,options.student);return loadModels(items).then(function(){return items;});
     }).then(function(items){
       if(revision!==state.revision) return;
-      var described=items.map(function(item){return describe(item,options);});
+      var described=items.filter(function(item){return canShow(item,options);}).map(function(item){return describe(item,options);});
       panel=container.querySelector('.srh-panel');
       if(!described.length){container.querySelector('.srh-summary').textContent='등록된 응시 성적이 없습니다.';panel.innerHTML=stateHtml('아직 등록된 응시 성적이 없습니다.','empty');return;}
       container.querySelector('.srh-summary').textContent='응시 '+described.length+'회 · 시험별 진단과 복습을 한곳에서 봅니다.';
