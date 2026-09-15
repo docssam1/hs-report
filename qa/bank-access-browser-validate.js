@@ -26,13 +26,14 @@ const server=http.createServer((req,res)=>{
 
   async function open(options){
     const context=await browser.newContext({viewport:{width:390,height:844}});
-    await context.addInitScript(({student,session,handoff,handoffStudent,timeoutMs})=>{
+    await context.addInitScript(({student,session,handoff,handoffStudent,launch,launchStudent,launchAgeMs,timeoutMs})=>{
       window.__GFIELD_BANK_ACCESS_FORCE__=true;
       if(timeoutMs)window.__GFIELD_BANK_ACCESS_TIMEOUT_MS__=timeoutMs;
       if(session)localStorage.setItem('gfield_hs_student_session_v1',JSON.stringify({access_token:'bank-access-token',refresh_token:'bank-access-refresh',expires_at:Math.floor(Date.now()/1000)+3600,login_name:student}));
       localStorage.setItem('gfield_student',student);
       if(handoff)sessionStorage.setItem('gfield_question_bank_handoff_v1',JSON.stringify({product:'question-bank',student:handoffStudent||student,issuedAt:Date.now()}));
-    },{student,session:options.session,handoff:options.handoff,handoffStudent:options.handoffStudent,timeoutMs:options.timeoutMs});
+      if(launch)localStorage.setItem('gfield_question_bank_launch_v1',JSON.stringify({product:'question-bank',student:launchStudent||student,issuedAt:Date.now()-(launchAgeMs||0)}));
+    },{student,session:options.session,handoff:options.handoff,handoffStudent:options.handoffStudent,launch:options.launch,launchStudent:options.launchStudent,launchAgeMs:options.launchAgeMs,timeoutMs:options.timeoutMs});
     await context.route(base+'/data.js*',route=>route.fulfill({contentType:'application/javascript',body:source+'\n;window.GFIELD_DATA.archiveProductAccess["question-bank"]='+(options.granted?'["'+student+'"]':'[]')+';'}));
     let authCalls=0;
     await context.route('https://fgahqumaldheqettmvqg.supabase.co/**',route=>{
@@ -62,6 +63,19 @@ const server=http.createServer((req,res)=>{
     assert.equal(await portal.page.locator('#bankAccessGate').isHidden(),true,'student entering from the named portal opens without another approval number');
     assert.equal(await portal.page.evaluate(()=>document.body.dataset.bankStudent),student,'portal handoff keeps the selected student identity');
     await portal.context.close();
+
+    const crossTabPortal=await open({path:'/bank/index.html?bank=final2',session:false,launch:true,granted:true});
+    await crossTabPortal.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
+    assert.equal(await crossTabPortal.page.locator('#bankAccessGate').isHidden(),true,'one-time portal launch opens when tab-scoped storage is unavailable');
+    assert.equal(await crossTabPortal.page.evaluate(()=>document.body.dataset.bankStudent),student,'cross-tab portal launch keeps the selected student identity');
+    assert.equal(await crossTabPortal.page.evaluate(()=>localStorage.getItem('gfield_question_bank_launch_v1')),null,'one-time portal launch is removed immediately after reading');
+    assert.equal(crossTabPortal.authCalls(),0,'valid cross-tab portal launch does not wait for remote authentication');
+    await crossTabPortal.context.close();
+
+    const expiredLaunch=await open({path:'/bank/index.html?bank=final2',session:false,launch:true,launchAgeMs:11*60*1000,granted:true});
+    assert.equal(await expiredLaunch.page.locator('#bankAccessGate').isVisible(),true,'expired cross-tab launch cannot bypass the approval gate');
+    assert.equal(await expiredLaunch.page.evaluate(()=>localStorage.getItem('gfield_question_bank_launch_v1')),null,'expired cross-tab launch is also removed after reading');
+    await expiredLaunch.context.close();
 
     const slowPortal=await open({path:'/bank/index.html?bank=final2',session:true,handoff:true,granted:true,slowAuth:true,timeoutMs:30});
     await slowPortal.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
@@ -206,9 +220,10 @@ const server=http.createServer((req,res)=>{
     await homeContext.route('https://**/*',route=>route.abort());
     const home=await homeContext.newPage();
     await home.goto(base+'/index.html',{waitUntil:'networkidle'});
-    await home.evaluate(()=>{currentStudent='허유민';isDemo=false;localStorage.setItem('gfield_student',currentStudent);renderArchive();});
-    assert.equal(await home.locator('.bank-launch').count(),1,'authorized student sees the teacher-selected bank entry');
-    assert.deepEqual(await home.evaluate(()=>{const value=JSON.parse(sessionStorage.getItem('gfield_question_bank_handoff_v1'));return {product:value.product,student:value.student,recent:Date.now()-value.issuedAt<5000};}),{product:'question-bank',student:'허유민',recent:true},'authorized archive creates a same-tab bank handoff');
+    await home.evaluate(()=>{currentStudent='정윤성';isDemo=false;localStorage.setItem('gfield_student',currentStudent);renderArchive();});
+    assert.equal(await home.locator('.bank-launch').count(),1,'reported authorized student sees the teacher-selected bank entry');
+    assert.deepEqual(await home.evaluate(()=>{const value=JSON.parse(sessionStorage.getItem('gfield_question_bank_handoff_v1'));return {product:value.product,student:value.student,recent:Date.now()-value.issuedAt<5000};}),{product:'question-bank',student:'정윤성',recent:true},'reported student archive creates a same-tab bank handoff');
+    assert.deepEqual(await home.evaluate(()=>{const value=JSON.parse(localStorage.getItem('gfield_question_bank_launch_v1'));return {product:value.product,student:value.student,recent:Date.now()-value.issuedAt<5000};}),{product:'question-bank',student:'정윤성',recent:true},'reported student archive creates a short-lived cross-tab bank launch');
     assert.equal(await home.locator('.bank-type-btn').count(),15,'student sees exactly 15 teacher-selected type buttons');
     assert.equal(await home.locator('.bank-type-btn[data-important-type="league-tournament"]').count(),1,'Final2 Q19 league/tournament button is included');
     await home.locator('.bank-type-btn[data-important-type="assumption"]').evaluate(button=>button.click());
@@ -216,16 +231,16 @@ const server=http.createServer((req,res)=>{
     assert.match(await home.locator('.bank-start').getAttribute('href'),/bank=important.*types=assumption.*n=20/,'selected button opens only its registered important type');
     await home.evaluate(()=>{currentStudent='권한없는학생';renderArchive();});
     assert.equal(await home.locator('.bank-launch').count(),0,'student without question-bank permission sees no important-type buttons');
-    await home.evaluate(()=>{currentStudent='허유민';isDemo=false;localStorage.setItem('gfield_student',currentStudent);renderArchive();});
+    await home.evaluate(()=>{currentStudent='정윤성';isDemo=false;localStorage.setItem('gfield_student',currentStudent);renderArchive();});
     await home.locator('.bank-type-btn[data-important-type="assumption"]').evaluate(button=>button.click());
     const bankHref=await home.locator('.bank-start').getAttribute('href');
     await home.goto(new URL(bankHref,base+'/').href,{waitUntil:'networkidle'});
     await home.waitForFunction(()=>document.querySelectorAll('.qcard').length===20);
     assert.equal(await home.locator('#bankAccessGate').isHidden(),true,'actual archive link opens the selected bank without another approval form');
-    assert.equal(await home.evaluate(()=>document.body.dataset.bankStudent),'허유민','actual archive navigation preserves the selected student');
+    assert.equal(await home.evaluate(()=>document.body.dataset.bankStudent),'정윤성','actual archive navigation preserves the reported student');
     await homeContext.close();
 
-    console.log('PASS bank access: named portal handoff without repeated approval, approval fallback, self-account lookup, product permission, direct-link denial, identity binding, catalog gate, 15 teacher buttons, 40-question bank');
+    console.log('PASS bank access: same-tab and one-time cross-tab portal handoff without repeated approval, approval fallback, self-account lookup, product permission, direct-link denial, identity binding, catalog gate, 15 teacher buttons, 40-question bank');
   }finally{
     await browser.close();server.close();
   }
