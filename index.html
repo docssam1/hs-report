@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="student-result-hub.css?v=20260915a">
 <style>
   :root{
     --bg:#fff7ed; --card:#ffffff; --soft:#fff3e6;
@@ -438,6 +439,8 @@
     </div>
   </div>
 
+  <section id="student-result-hub" class="student-result-hub hidden" aria-label="내 모의고사 성적"></section>
+
   <section id="view-home">
     <div id="briefing"></div>
     <div id="home-card"></div>
@@ -515,6 +518,7 @@
 <script src="final-last-routes.js?v=20260909b"></script>
 <script src="archive-info.js?v=20260825b"></script>
 <script src="bank/important-types.js?v=20260913a"></script>
+<script src="student-result-hub.js?v=20260915a"></script>
 <script>
   const D = window.GFIELD_DATA;
   let currentStudent = null;
@@ -575,6 +579,9 @@
     document.getElementById('dashboard').classList.remove('hidden');
     document.getElementById('who').textContent=given;
     renderStatus(); renderBriefing(); renderHome(); renderTimeline(); renderArchive(); renderVip();
+    if(window.GFIELD_STUDENT_RESULT_HUB){
+      window.GFIELD_STUDENT_RESULT_HUB.render({student:currentStudent,container:document.getElementById('student-result-hub'),data:D,supabaseUrl:AL_URL,supabaseKey:AL_KEY});
+    }
     if(briefTimer) clearInterval(briefTimer);
     if(!isDemo) briefTimer=setInterval(renderBriefing, 600000);
     applyMemberTabs(); nav(isOnline()?'archive':'home'); window.scrollTo(0,0);
@@ -583,6 +590,7 @@
   function logout(){
     const keep=currentStudent&&!isDemo?currentStudent:'';
     currentStudent=null; isDemo=false; reportUnlocked=false;
+    if(window.GFIELD_STUDENT_RESULT_HUB) window.GFIELD_STUDENT_RESULT_HUB.clear();
     /* 로그인 정보는 유지 — 다음 방문 시 이름 입력 없이 바로 입장 */
     try{ sessionStorage.removeItem(QUESTION_BANK_HANDOFF_KEY); }catch(e){}
     if(briefTimer){ clearInterval(briefTimer); briefTimer=null; }
