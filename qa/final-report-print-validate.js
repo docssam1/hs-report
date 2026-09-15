@@ -12,7 +12,7 @@ const core=require('../supabase/functions/hs-final-population/population-core.js
 const root=path.resolve(__dirname,'..');
 const vendor=path.join(root,'vendor/pagedjs/0.4.3/paged.polyfill.js');
 const license=path.join(root,'vendor/pagedjs/0.4.3/LICENSE.md');
-const sha=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex').toUpperCase();
+const sha=file=>crypto.createHash('sha256').update(fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n')).digest('hex').toUpperCase();
 assert.equal(sha(vendor),'F59F361802416C770D549A647958649AF2CF6601999924BC00E4F507DAD5269F','pinned pagedjs@0.4.3 distribution');
 assert.equal(sha(license),'F49BDDE202CA66880E2D7CB7FD8103F43A917A60B61681484A66CF370E7647E0','pinned MIT license');
 assert.match(fs.readFileSync(license,'utf8'),/The MIT License[\s\S]*Copyright[\s\S]*Permission is hereby granted/);
@@ -280,6 +280,25 @@ const server=http.createServer((req,res)=>{
       return {missingFont,missingLibrary,missingImage,badTable,frames:document.querySelectorAll('.gfield-final-report-print-frame').length};
     },base);
     assert.deepEqual(failureCodes,{missingFont:'font-missing',missingLibrary:'library-load',missingImage:'image-load',badTable:'table-columns',frames:0});
+
+    const ignoredScreenImage=await page.evaluate(async base=>{
+      const source=document.querySelector('.final-report-package').cloneNode(true);
+      source.style.position='fixed';source.style.left='-10000px';
+      const screenOnly=document.createElement('div');screenOnly.className='no-print';
+      const badImage=document.createElement('img');badImage.src=base+'/screen-only-does-not-exist.png';screenOnly.appendChild(badImage);
+      source.prepend(screenOnly);document.body.appendChild(source);
+      try{
+        const job=GFIELD_FINAL_REPORT_PRINT.createPreparation({source,requiredFontFamilies:[],timeoutMs:5000});
+        const prepared=await job.promise;
+        const result={detailStartPage:prepared.metrics.detailStartPage,frames:document.querySelectorAll('.gfield-final-report-print-frame').length};
+        prepared.cleanup();
+        result.framesAfter=document.querySelectorAll('.gfield-final-report-print-frame').length;
+        return result;
+      }finally{source.remove();}
+    },base);
+    assert.equal(ignoredScreenImage.detailStartPage%2,1,'a broken screen-only similar-item image cannot block the printable package');
+    assert.equal(ignoredScreenImage.frames,1);
+    assert.equal(ignoredScreenImage.framesAfter,0);
 
     const controllerResult=await page.evaluate(async base=>{
       const button=document.createElement('button');

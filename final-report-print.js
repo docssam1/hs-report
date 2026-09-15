@@ -1,7 +1,7 @@
 'use strict';
 
 (function(global){
-  var VERSION='1.1.0';
+  var VERSION='1.1.1';
   var LIBRARY_URL='vendor/pagedjs/0.4.3/paged.polyfill.js';
   var FRAME_CLASS='gfield-final-report-print-frame';
   var BUTTON_CLASS='gfield-final-report-print-button';
@@ -440,7 +440,6 @@
         var copies=buildCopies(source);
         var styles=collectStyles(doc);
         var requiredFonts=options.requiredFontFamilies===undefined?[]:options.requiredFontFamilies;
-        await waitForImages(source,timeout,job);
         await waitForFonts(doc,requiredFonts,timeout,job);
         checkJob(job);
         var frameState=prepareFrame(doc,styles,copies,job);
