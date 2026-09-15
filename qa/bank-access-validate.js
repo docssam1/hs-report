@@ -13,8 +13,7 @@ vm.runInContext(read('data.js'),dataContext);
 const data=dataContext.window.GFIELD_DATA;
 const access=data.archiveProductAccess&&data.archiveProductAccess['question-bank'];
 assert.ok(Array.isArray(access)&&access.length>0,'question-bank product permission list exists');
-assert.ok(access.every(name=>(data.students||[]).includes(name)||name==='DEMO'),'only known students are carried into initial access');
-assert.ok(access.includes('정윤성'),'reported student has explicit question-bank product permission');
+assert.deepEqual(Array.from(access),['*'],'question bank is open to every student who completed the named portal entry');
 
 const gate=read('bank/bank-access.js');
 assert.match(gate,/PRODUCT_KEY='question-bank'/);
@@ -29,6 +28,7 @@ assert.match(gate,/student!==savedStudent/,'portal handoff must match the select
 assert.doesNotMatch(gate,/URLSearchParams\([^)]*student|location\.(?:search|hash).*student/,'URL student display data is never authority');
 
 const home=read('index.html');
+assert.match(home,/!\(\(D\.students\|\|\[\]\)\.includes\(name\)\)/,'the named portal still rejects unregistered student names');
 assert.match(home,/sessionStorage\.setItem\(QUESTION_BANK_HANDOFF_KEY/,'authorized archive entry creates the bank handoff');
 assert.match(home,/localStorage\.setItem\(QUESTION_BANK_LAUNCH_KEY/,'authorized archive entry creates the short-lived cross-tab launch');
 assert.match(home,/link\.addEventListener\('click',issueQuestionBankHandoff\)/,'the bank launch is refreshed at the actual click');

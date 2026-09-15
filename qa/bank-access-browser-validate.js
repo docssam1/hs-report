@@ -229,8 +229,8 @@ const server=http.createServer((req,res)=>{
     await home.locator('.bank-type-btn[data-important-type="assumption"]').evaluate(button=>button.click());
     assert.match(await home.locator('.bank-selection-note').textContent(),/검수 기준 6문항을 바탕으로 20문항/,'merged assumption button clearly describes anchor-based generation');
     assert.match(await home.locator('.bank-start').getAttribute('href'),/bank=important.*types=assumption.*n=20/,'selected button opens only its registered important type');
-    await home.evaluate(()=>{currentStudent='권한없는학생';renderArchive();});
-    assert.equal(await home.locator('.bank-launch').count(),0,'student without question-bank permission sees no important-type buttons');
+    await home.evaluate(()=>{currentStudent='체험';isDemo=true;renderArchive();});
+    assert.equal(await home.locator('.bank-launch').count(),0,'demo entry does not see the student question bank');
     await home.evaluate(()=>{currentStudent='정윤성';isDemo=false;localStorage.setItem('gfield_student',currentStudent);renderArchive();});
     await home.locator('.bank-type-btn[data-important-type="assumption"]').evaluate(button=>button.click());
     const bankHref=await home.locator('.bank-start').getAttribute('href');
