@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 9. 15. 오후 5:42:19
+ * 생성: 2026. 9. 15. 오후 5:46:12
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -783,6 +783,10 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789103859137_yhkk__________________2_.pdf",
           "folder": "tb_mtwi9277",
           "pages": 6
+        },
+        {
+          "title": "초등과정 대비 파이널 모의고사 2회 손필기",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789461958924_iecs__________________2____.pdf"
         }
       ]
     },
