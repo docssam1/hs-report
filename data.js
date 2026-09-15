@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 9. 15. 오후 4:44:14
+ * 생성: 2026. 9. 15. 오후 5:42:19
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -2532,6 +2532,17 @@ window.GFIELD_DATA = {
       "links": [],
       "imgdir": "bk_mt1ekh32",
       "pages": 8
+    },
+    {
+      "folder": "약점 유형",
+      "title": "1031 초급 D CH3 리그와 토너먼트",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1789461664829_k20d_1031____D_CH3_________.pdf",
+      "video": "https://youtu.be/3KqJhE_BJnA",
+      "cover": "",
+      "date": "2026-09-15",
+      "links": [],
+      "imgdir": "bk_mu2f9xl5",
+      "pages": 10
     }
   ],
   "pins": {},
