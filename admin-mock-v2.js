@@ -34,6 +34,35 @@
     return validRow(x)?x.ox.split(''):null;
   }
 
+  function finalOfficialEntries(){
+    if(!Array.isArray(MK_ROWS))return null;
+    const finalData=dataFor('final'),questions=Number(finalData.questions)||30;
+    const points={};
+    (finalData.blueprint||[]).forEach(item=>{points[Number(item.no)]=Number(item.pts)||0;});
+    return MK_ROWS.map(x=>({x,p:parseRoundKey(x&&x.round)})).filter(o=>{
+      const ox=String(o.x&&o.x.ox||'');
+      return o.p&&o.p.set==='final'&&o.p.slot===1&&/^[1-4]$/.test(o.p.round)&&o.x.source!=='reset'&&ox.length===questions&&/^[OX]+$/.test(ox);
+    }).map(o=>{
+      let score=0,wrong=0;
+      String(o.x.ox).split('').forEach((mark,index)=>{if(mark==='O')score+=points[index+1]||0;else wrong++;});
+      score=Math.round(score*10)/10;
+      if(Math.abs(Number(o.x.score)-score)>0.0001||Number(o.x.wrong)!==wrong)return null;
+      return {
+        student:String(o.x.student||'').trim(),
+        round:Number(o.p.round),
+        roundTitle:roundTitle('final',o.p.round),
+        score:score,
+        wrong:wrong,
+        updatedAt:o.x.updated_at||''
+      };
+    }).filter(row=>row&&row.student).sort((a,b)=>a.student.localeCompare(b.student,'ko')||a.round-b.round);
+  }
+
+  window.GFIELD_ADMIN_MOCK_V2=Object.freeze({
+    finalOfficialEntries:finalOfficialEntries,
+    reportUrl:function(entry){return teacherEntryUrl('final',entry.round,entry.student).replace('go=answer','go=report');}
+  });
+
   if(typeof mkM==='function') mkM=function(){return dataFor(window.mkSet)};
   if(typeof mkRoundKeys==='function') mkRoundKeys=function(){return Object.keys((dataFor(window.mkSet).rounds)||{}).sort((a,b)=>+a-+b)};
   if(typeof mkLatest==='function') mkLatest=latestOxV2;
@@ -140,6 +169,7 @@
     }
     const hint=document.querySelector('#tab-mock .card > .hint');
     if(hint)hint.textContent='중급·활용·파이널·시그니처 실전 모의고사 결과를 분리해 확인합니다. 파이널과 시그니처 실전은 온라인 회원이 직접 입력하거나 선생님이 재원생 답안을 대신 기록할 수 있으며, 회차별 최초 기록만 누적에 반영됩니다.';
+    if(window.GFIELD_ADMIN_FINAL_BATCH&&typeof window.GFIELD_ADMIN_FINAL_BATCH.refresh==='function')window.GFIELD_ADMIN_FINAL_BATCH.refresh();
   };
 
   window.setMockSetV2=function(set){window.mkSet=set==='original'?'original':(set==='final'?'final':(set==='hw'?'hw':'mid'));renderMock()};
