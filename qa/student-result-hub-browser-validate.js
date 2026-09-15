@@ -12,7 +12,8 @@ const dataAddon=`\n;(function(){
   var d=window.GFIELD_DATA;
   d.students=d.students||[];if(d.students.indexOf(${JSON.stringify(student)})<0)d.students.push(${JSON.stringify(student)});
   d.archiveAccess=d.archiveAccess||{};
-  ['파이널 모의고사','최종 모의고사'].forEach(function(key){d.archiveAccess[key]=d.archiveAccess[key]||[];if(d.archiveAccess[key].indexOf(${JSON.stringify(student)})<0)d.archiveAccess[key].push(${JSON.stringify(student)});});
+  ['중급 모의고사','파이널 모의고사','최종 모의고사'].forEach(function(key){d.archiveAccess[key]=d.archiveAccess[key]||[];if(d.archiveAccess[key].indexOf(${JSON.stringify(student)})<0)d.archiveAccess[key].push(${JSON.stringify(student)});});
+  d.studentTypes=d.studentTypes||{};d.studentTypes[${JSON.stringify(student)}]='online';
 })();`;
 
 function ox(correct){return 'O'.repeat(correct)+'X'.repeat(30-correct);}
@@ -24,6 +25,7 @@ function scoreOf(value){
 function row(round,correct,updated){const value=ox(correct),score=scoreOf(value);return {student,round,ox:value,score:score.score,wrong:score.wrong,source:'admin',updated_at:updated};}
 const records=[
   row('1',11,'2026-07-01T00:00:00Z'),
+  row('8',30,'2026-07-02T00:00:00Z'),
   row('hw1',13,'2026-07-08T00:00:00Z'),
   row('final1',15,'2026-09-01T00:00:00Z'),
   row('final2',18,'2026-09-08T00:00:00Z'),
@@ -46,7 +48,8 @@ const server=http.createServer((req,res)=>{
 
 (async()=>{
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
-  const browser=await chromium.launch();
+  const executablePath=process.env.GFIELD_QA_BROWSER_EXECUTABLE||'';
+  const browser=await chromium.launch(executablePath?{executablePath}:{});
   const mockResultMethods=[],errors=[];
   try{
     const context=await browser.newContext({viewport:{width:1280,height:900}});
@@ -78,6 +81,10 @@ const server=http.createServer((req,res)=>{
     assert.match(await final1.innerText(),new RegExp(expectedFinal1.toFixed(1)+'%'));
     assert.match(await final1.locator('a').getAttribute('href'),/^final\.html\?round=1&go=report&name=/);
     assert.equal(await final1.locator('a').innerText(),'상세 분석·유사문제');
+    const middle1=hub.locator('tbody tr',{hasText:'중급 모의고사 1회'});
+    assert.match(await middle1.locator('a').getAttribute('href'),/^mock\.html\?round=1&go=report&name=/);
+    assert.equal(await middle1.locator('a').innerText(),'상세 분석·복습문제');
+    assert.equal(await hub.locator('tbody tr',{hasText:'중급 모의고사 8회'}).count(),0,'구매하지 않은 중급 회차는 기존 기록이 있어도 숨긴다');
     const last2=hub.locator('tbody tr',{hasText:'최종 모의고사 2회'});
     assert.match(await last2.innerText(),/\d+\.\d%/);
     assert.match(await last2.locator('a').getAttribute('href'),/^final\.html\?set=last&round=2&go=report&name=/);

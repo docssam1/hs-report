@@ -18,6 +18,7 @@
   function roundTitle(set,r){const M=dataFor(set);return((M.rounds||{})[r]||{}).title||r+'회'}
   function rawKey(set,r,slot){return(set==='original'?'original':(set==='final'?'final':(set==='hw'?'hw':'')))+r+(Number(slot)===1?'':'@'+slot)}
   function teacherEntryUrl(set,r,student){return 'final.html?'+(set==='original'?'set=original&':'')+'round='+r+'&go=answer&entry=teacher&name='+encodeURIComponent(student)}
+  function teacherReportUrl(set,r,student,slot){return 'final.html?'+(set==='original'?'set=original&':'')+'round='+r+'&go=report&attempt='+(Number(slot)||1)+'&entry=teacher&name='+encodeURIComponent(student)}
   function previewUrl(set,r,student){return 'mock.html?set='+set+'&round='+r+'&name='+encodeURIComponent(student)+'&preview=1'}
   function sourceLabel(source){
     return ({online:'온라인 회원',admin:'선생님',teacher:'선생님',parent:'학생·학부모',practice:'연습',
@@ -139,7 +140,7 @@
         panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b>${protectedFinalRound?`<small data-final-percentile="${r}" style="display:block;color:#2456c4">백분율 미반영</small>`:''}</td><td>${wrong}</td><td>${esc(sourceLabel(x.source))}</td><td>${esc(at)}</td><td>
           <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">
             ${openAction}
-            ${window.mkSet==='final'&&p.slot===1?`<a class="btn sm" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student).replace('go=answer','go=report')}">성적표·코멘트</a>`:''}
+            ${window.mkSet==='final'?`<a class="btn sm" target="_blank" href="${teacherReportUrl(window.mkSet,r,student,p.slot)}">${p.slot===1?'공식 1차':'연습 '+p.slot+'차'} 성적표</a>`:''}
             <button class="btn del sm" onclick="deleteMockAttemptV2('${esc(student)}','${window.mkSet}','${r}',${p.slot})">${p.slot}차 초기화</button>
             ${i===0?`<button class="btn sm" style="background:#fff3e0;color:#b45309" onclick="deleteMockRoundV2('${esc(student)}','${window.mkSet}','${r}')">회차 전체</button>`:''}
           </div></td></tr>`;
