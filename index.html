@@ -524,6 +524,7 @@
   let currentStudent = null;
   let isDemo = false;
   const QUESTION_BANK_HANDOFF_KEY='gfield_question_bank_handoff_v1';
+  const QUESTION_BANK_LAUNCH_KEY='gfield_question_bank_launch_v1';
   let carTimer = null;
   let briefTimer = null;
   let reportUnlocked = false;
@@ -593,6 +594,7 @@
     if(window.GFIELD_STUDENT_RESULT_HUB) window.GFIELD_STUDENT_RESULT_HUB.clear();
     /* 로그인 정보는 유지 — 다음 방문 시 이름 입력 없이 바로 입장 */
     try{ sessionStorage.removeItem(QUESTION_BANK_HANDOFF_KEY); }catch(e){}
+    try{ localStorage.removeItem(QUESTION_BANK_LAUNCH_KEY); }catch(e){}
     if(briefTimer){ clearInterval(briefTimer); briefTimer=null; }
     document.getElementById('dashboard').classList.add('hidden');
     document.getElementById('login').classList.remove('hidden');
@@ -883,9 +885,16 @@
     const counts=config.questionCounts.map(count=>`<button type="button" class="bank-count-btn" data-count="${count}" aria-pressed="${count===20?'true':'false'}">${count}문항</button>`).join('');
     return `<section class="bank-launch" aria-labelledby="student-bank-title"><div class="bank-launch-head"><div><div class="bank-launch-kicker">선생님이 고른 중요 유형</div><h3 id="student-bank-title">황소 약점 유형 문제은행</h3><p>공부할 유형을 고른 뒤 한 번에 최대 ${config.maxQuestions}문항까지 인쇄할 수 있습니다.</p></div></div><div class="bank-type-grid">${buttons}</div><div class="bank-compose"><span class="bank-compose-label">문항 수</span>${counts}<a class="bank-start" aria-disabled="true">선택 유형 문제지 만들기</a><div class="bank-selection-note">유형을 한 개 이상 선택해 주세요.</div></div></section>`;
   }
+  function issueQuestionBankHandoff(){
+    if(!currentStudent||isDemo)return;
+    const payload=JSON.stringify({product:'question-bank',student:currentStudent,issuedAt:Date.now()});
+    try{ sessionStorage.setItem(QUESTION_BANK_HANDOFF_KEY,payload); }catch(e){}
+    /* 새 탭·앱 내 브라우저에서도 이어지도록 하며, 문제은행에서 읽은 뒤 즉시 없앤다. */
+    try{ localStorage.setItem(QUESTION_BANK_LAUNCH_KEY,payload); }catch(e){}
+  }
   function wireStudentBank(wrap){
     const box=wrap.querySelector('.bank-launch'),config=window.GFIELD_IMPORTANT_TYPES;if(!box||!config)return;
-    try{ sessionStorage.setItem(QUESTION_BANK_HANDOFF_KEY,JSON.stringify({product:'question-bank',student:currentStudent,issuedAt:Date.now()})); }catch(e){}
+    issueQuestionBankHandoff();
     const selected=new Set();let count=20,link=box.querySelector('.bank-start'),note=box.querySelector('.bank-selection-note');
     function update(){
       const sourceCount=config.types.filter(type=>selected.has(type.id)).reduce((sum,type)=>sum+type.sources.length,0);
@@ -897,6 +906,7 @@
     }
     box.querySelectorAll('.bank-type-btn').forEach(button=>button.onclick=()=>{const id=button.dataset.importantType;if(selected.has(id))selected.delete(id);else selected.add(id);button.setAttribute('aria-pressed',selected.has(id)?'true':'false');update();});
     box.querySelectorAll('.bank-count-btn').forEach(button=>button.onclick=()=>{count=Number(button.dataset.count);box.querySelectorAll('.bank-count-btn').forEach(other=>other.setAttribute('aria-pressed',other===button?'true':'false'));update();});
+    link.addEventListener('click',issueQuestionBankHandoff);
     update();
   }
   /* 별도 판매 교재는 책장 권한과 분리한다. accessKey가 없는 기존 교재는 종전 폴더 권한을 그대로 사용한다. */

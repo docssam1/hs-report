@@ -4,7 +4,9 @@
   var PRODUCT_KEY='question-bank';
   var FALLBACK_FOLDER='약점 유형';
   var PORTAL_HANDOFF_KEY='gfield_question_bank_handoff_v1';
+  var PORTAL_LAUNCH_KEY='gfield_question_bank_launch_v1';
   var PORTAL_HANDOFF_MAX_AGE=12*60*60*1000;
+  var PORTAL_LAUNCH_MAX_AGE=10*60*1000;
   var ACCESS_TIMEOUT_MS=Number(root.__GFIELD_BANK_ACCESS_TIMEOUT_MS__)||8000;
   var localHost=/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   var forceGate=root.__GFIELD_BANK_ACCESS_FORCE__===true;
@@ -34,16 +36,25 @@
     try{name=(localStorage.getItem('gfield_student')||'').trim()}catch(error){}
     return {role:'tester',student:name,active:true};
   }
-  function portalIdentity(){
+  function handoffIdentity(raw,maxAge,source){
+    if(!raw)return null;
     try{
-      var raw=sessionStorage.getItem(PORTAL_HANDOFF_KEY);
-      if(!raw)return null;
       var handoff=JSON.parse(raw),student=String(handoff&&handoff.student||'').trim();
       var savedStudent=String(localStorage.getItem('gfield_student')||'').trim();
       var issuedAt=Number(handoff&&handoff.issuedAt||0),age=Date.now()-issuedAt;
-      if(handoff.product!==PRODUCT_KEY||!student||student!==savedStudent||age<0||age>PORTAL_HANDOFF_MAX_AGE)return null;
-      return {role:'student',student:student,active:true,source:'portal-handoff'};
+      if(handoff.product!==PRODUCT_KEY||!student||student!==savedStudent||age<0||age>maxAge)return null;
+      return {role:'student',student:student,active:true,source:source};
     }catch(error){return null}
+  }
+  function portalIdentity(){
+    var sessionRaw='',launchRaw='';
+    try{sessionRaw=sessionStorage.getItem(PORTAL_HANDOFF_KEY)||''}catch(error){}
+    try{
+      launchRaw=localStorage.getItem(PORTAL_LAUNCH_KEY)||'';
+      if(launchRaw)localStorage.removeItem(PORTAL_LAUNCH_KEY);
+    }catch(error){}
+    return handoffIdentity(sessionRaw,PORTAL_HANDOFF_MAX_AGE,'portal-handoff')||
+      handoffIdentity(launchRaw,PORTAL_LAUNCH_MAX_AGE,'portal-launch');
   }
   function injectStyle(){
     if(document.getElementById('bankAccessStyle'))return;
