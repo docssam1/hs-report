@@ -58,11 +58,13 @@ const server=http.createServer((req,res)=>{
       const shown=await page.locator(`.qmeta.fixed-item[data-item-id="${item.id}"]`).locator('xpath=..').locator('.qtext').textContent();
       item.conditionLines.forEach(line=>assert.ok(shown.includes(line),`${item.id}: 필수 단서 보존`));
     }
-    assert.deepEqual(await page.locator('.question-page').evaluateAll(ns=>ns.map(n=>n.querySelectorAll('.qcard').length)),Array(15).fill(6));
+    const editorialPageCount=await page.locator('.question-page').count();
+    assert.ok(editorialPageCount>15,'editorial layout gives long and visual questions more room than compact layout');
+    assert.ok(await page.locator('.qcard[data-wide="true"]').count()>0,'long visual questions use a full row');
     assert.equal(await page.locator('.cover-page').count(),1);
     assert.equal(await page.locator('.cover-page input[type=checkbox]').count(),30);
     assert.match(await page.locator('.cover-page').innerText(),/검수용가상학생/);
-    assert.equal(await page.locator('.duplex-blank').count(),0,'cover + 15 question pages is even');
+    assert.equal(await page.locator('.duplex-blank').count(),(1+editorialPageCount)%2,'answer start follows the actual editorial page count');
     assert.equal(await page.locator('.solution-card').count(),90);
     assert.deepEqual(await page.locator('.solution-card').evaluateAll(ns=>ns.map(n=>n.dataset.answerId)),expected.map(q=>q.id));
     assert.doesNotMatch(await page.locator('#final1Worksheet').innerText(),/undefined|NaN|\[object Object\]/);
@@ -77,12 +79,13 @@ const server=http.createServer((req,res)=>{
         const r=rects[i],a=c.querySelector('.answerline').getBoundingClientRect();
         const problems=[];
         if(c.scrollWidth>c.clientWidth+2||c.scrollHeight>c.clientHeight+2||a.bottom>r.bottom+2)problems.push([pi,i,'overflow']);
-        if(i%2&&Math.abs(r.top-rects[i-1].top)>1)problems.push([pi,i,'unaligned']);
+        for(let j=0;j<i;j++)if(r.left<rects[j].right-2&&r.right>rects[j].left+2&&r.top<rects[j].bottom-2&&r.bottom>rects[j].top+2)problems.push([pi,i,'overlap',j]);
+        if(i>0&&c.dataset.wide!=='true'&&cards[i-1].dataset.wide!=='true'&&r.left>rects[i-1].left+2&&Math.abs(r.top-rects[i-1].top)>1)problems.push([pi,i,'unaligned']);
         if(Math.abs(r.height-rects[0].height)>2)problems.push([pi,i,'unequal']);
         if(getComputedStyle(c).transform!=='none')problems.push([pi,i,'transform']);
         return problems;
       });
-    }));assert.deepEqual(geometry,[],'all six solving cells have equal height and top alignment');
+    }));assert.deepEqual(geometry,[],'all editorial solving cells have equal height and top alignment');
     const clipped=await page.locator('.page').evaluateAll(ns=>ns.flatMap((p,i)=>{
       const r=p.getBoundingClientRect(),s=getComputedStyle(p),bottom=r.bottom-parseFloat(s.paddingBottom);
       return [...p.children].filter(c=>!c.classList.contains('wm-layer')&&!c.classList.contains('f1-watermark-clip')&&c.getBoundingClientRect().bottom>bottom+2).map(c=>[i,c.className,'outside page']);
@@ -92,7 +95,7 @@ const server=http.createServer((req,res)=>{
       await page.locator(`#final1Worksheet [data-role=points][data-val="${band}"]`).click();await ready();
       assert.equal(await page.locator('.qcard').count(),count);
       assert.equal(await page.locator(`.qcard:not([data-points="${band}"])`).count(),0);
-      const before=1+Math.ceil(count/6);
+      const before=1+await page.locator('.question-page').count();
       assert.equal(await page.locator('.duplex-blank').count(),before%2);
       if(band==='2.7')await save('points2-both');
     }
@@ -105,12 +108,13 @@ const server=http.createServer((req,res)=>{
     await page.locator('#final1Worksheet [data-val="2.7"]').click();await ready();assert.equal(await page.locator('.qcard').count(),3);
     await page.locator('#final1Worksheet [data-val="all"]').click();await ready();assert.deepEqual(await paperIds(),subset.map(q=>q.id));
     assert.equal(await page.locator('.cover-page input[type=checkbox]').first().isChecked(),true,'self check survives band changes');
+    const subsetQuestionPages=await page.locator('.question-page').count();
     for(const mode of ['questions','answers','both','quick']){
       await page.locator('#printMode').selectOption(mode);await ready();
-      assert.equal(await page.locator('.question-page').count(),['questions','both'].includes(mode)?1:0);
+      assert.equal(await page.locator('.question-page').count(),['questions','both'].includes(mode)?subsetQuestionPages:0);
       assert.equal(await page.locator('.cover-page').count(),['questions','both'].includes(mode)?1:0);
       assert.equal(await page.locator('.solution-card').count(),['answers','both'].includes(mode)?6:0);
-      assert.equal(await page.locator('.duplex-blank').count(),0,'2 preceding pages / answer-only modes have no blank');
+      assert.equal(await page.locator('.duplex-blank').count(),mode==='both'&&(1+subsetQuestionPages)%2===1?1:0,'editorial question pages keep answers on a new front side');
       await save('subset6-'+mode);
     }
     await page.locator('#printMode').selectOption('both');await ready();
@@ -120,7 +124,7 @@ const server=http.createServer((req,res)=>{
     if(output)await page.screenshot({path:path.join(output,'mobile390.png')});
     await page.setViewportSize({width:1280,height:1100});
     await page.goto(base+'?bank=final1&gens=final1-q17,final1-q18,final1-q19',{waitUntil:'networkidle'});await ready();
-    assert.equal(await page.locator('.duplex-blank').count(),1,'cover + 2 questions = 3 before answers');await save('subset9-both');
+    assert.equal(await page.locator('.duplex-blank').count(),(1+await page.locator('.question-page').count())%2,'answer start follows the actual editorial page count');await save('subset9-both');
     await page.locator('#final1Worksheet [data-val="2.7"]').click();await page.waitForTimeout(100);
     assert.equal(await page.locator('.qcard').count(),0);assert.equal(await page.locator('#btnPrint').isDisabled(),true);
     for(const query of ['bank=final1&gens=final1-q01,missing','practice=wrong&per=3&source=final%7C1','bank=final1&gens=final1-q01,final1-q01']){
@@ -146,6 +150,6 @@ const server=http.createServer((req,res)=>{
     assert.match(await anonymous.locator('.cover-page .wm-layer').textContent(),/학습 자료 · 지필드 영재교육/,'no student name still has mandatory branding');
     await anonymous.close();
     assert.deepEqual(errors,[]);
-    console.log((draft?'DRAFT LAYOUT ONLY; ':'')+'PASS fixed worksheet: 90 exact items, mixed types, 6 equal cells/page, cover30, identity display, all 4 modes, duplex parity, self-check, mobile, fail-closed scope, no random assembly');
+    console.log((draft?'DRAFT LAYOUT ONLY; ':'')+'PASS fixed worksheet: 90 exact items, mixed types, editorial 4-up default, cover30, identity display, all 4 modes, duplex parity, self-check, mobile, fail-closed scope, no random assembly');
   }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});

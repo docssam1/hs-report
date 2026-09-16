@@ -99,7 +99,7 @@ function startStaticServer() {
     assert.equal(await practice.locator('.qcard').count(), 6, '오답 유형마다 정확히 3문제');
     assert.equal(await practice.locator('.qcard[data-source-no="13"]').count(), 3, '13번 유사문제 3개');
     assert.equal(await practice.locator('.qcard[data-source-no="18"]').count(), 3, '18번 유사문제 3개');
-    assert.equal(await practice.locator('.question-page').count(), 1, '6문제를 한 페이지에 배치');
+    assert.ok(await practice.locator('.question-page').count() > 1, '읽기 편한 구성은 긴 문항과 그림에 필요한 공간을 확보');
     assert.equal(await practice.locator('.solution-card').count(), 6, '문제 뒤 별도 문항별 풀이');
     assert.equal(await practice.locator('.cover-page').count(), 1, '학생 이름과 셀프 체크 표지');
     assert.equal(await practice.locator('.question-page .anstable').count(), 0, '문제 페이지에 정답표 없음');
@@ -108,7 +108,9 @@ function startStaticServer() {
     const pageOrder = await practice.locator('.page').evaluateAll((nodes) => nodes.map((node) => node.classList.contains('question-page') ? 'question' : node.classList.contains('answer-page') ? 'answer' : 'other'));
     assert.equal(pageOrder[0], 'other', '표지 먼저');
     assert.equal(pageOrder[1], 'question');
-    assert.ok(pageOrder.slice(2).every(kind=>kind==='answer'), '모든 문제 뒤에 답안 배치');
+    const firstAnswer=pageOrder.indexOf('answer');
+    assert.ok(firstAnswer>1&&pageOrder.slice(1,firstAnswer).every(kind=>kind==='question'||kind==='other'),'모든 문제와 필요한 양면 빈 면 뒤에 답안 배치');
+    assert.ok(pageOrder.slice(firstAnswer).every(kind=>kind==='answer'),'답안 시작 뒤에는 문제 페이지가 섞이지 않음');
     await practice.locator('#final1Worksheet [data-role="points"][data-val="all"]').click();
     await practice.waitForFunction(()=>document.querySelectorAll('.qcard').length===15);
     assert.deepEqual(await practice.locator('.qcard').evaluateAll(ns=>[...new Set(ns.map(n=>Number(n.dataset.sourceNo)))].sort((a,b)=>a-b)),[4,13,18,23,26], '배점 전환은 전체 오답으로 복귀하며 정답 문항을 추가하지 않음');
@@ -120,7 +122,7 @@ function startStaticServer() {
     await page.evaluate(() => localStorage.setItem('gfield_student', 'docssam'));
     mockRows = [];
     await page.goto(`http://127.0.0.1:${port}/final.html?round=1&name=docssam&go=report`, { waitUntil: 'domcontentloaded' });
-    await page.getByText('파이널 1회 성적표가 아직 등록되지 않았습니다.', { exact: true }).waitFor();
+    await page.getByText('공식 1차 성적표가 아직 등록되지 않았습니다.', { exact: true }).waitFor();
     assert.equal(await page.locator('.kpi').count(), 0, '미등록 성적에는 빈 분석표를 표시하지 않음');
 
     const ox = Array(30).fill('O'); ox[3] = 'X'; ox[17] = 'X';
