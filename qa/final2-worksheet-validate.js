@@ -69,16 +69,24 @@ async function assertWatermarks(page) {
     assert.match(await page.locator('.cover-page').textContent(), /검수용가상학생/);
     assert.equal(await page.locator('.cover-page input[type=checkbox]').count(), 30);
     assert.equal(await page.locator('.qcard').count(), 90);
-    assert.equal(await page.locator('.question-page').count(), 15);
+    const editorialPageCount = await page.locator('.question-page').count();
+    assert.ok(editorialPageCount > 15, 'editorial layout gives long and visual questions more room than compact layout');
     assert.equal(await page.locator('.solution-card').count(), 90);
     assert.ok(await page.locator('.answer-page').count() <= 30, 'student-readable detailed answers remain compact without fixed writing-space slots');
-    assert.equal(await page.locator('.duplex-blank').count(), 0, 'cover and 15 question pages already make an even number');
+    assert.equal(await page.locator('.duplex-blank').count(), (1 + editorialPageCount) % 2, 'answer start follows the actual editorial page count');
     assert.deepEqual(
       await page.locator('.qmeta.fixed-item').evaluateAll((nodes) => nodes.map((node) => node.dataset.itemId)),
       expected.map((item) => item.id),
       'fixed items keep the approved variant-first order'
     );
+    assert.ok(await page.locator('.qcard[data-wide="true"]').count() > 0, 'long visual questions use a full row');
+    await page.locator('#pageLayout').selectOption('compact');
+    await ready();
+    assert.equal(await page.locator('.question-page').count(), 15, 'compact option keeps six questions per page');
     assert.deepEqual(await page.locator('.question-page').evaluateAll((pages) => pages.map((sheet) => sheet.querySelectorAll('.qcard').length)), Array(15).fill(6));
+    await page.locator('#pageLayout').selectOption('editorial');
+    await ready();
+    assert.equal(await page.locator('.question-page').count(), editorialPageCount, 'editorial layout returns without changing the paper');
     assert.equal(await page.locator('.question-page .ans').count(), 0, 'answers are not shown on question pages');
     assert.equal(await page.locator('.question-page img').count(), 27, 'one prompt figure for each visual item');
     assert.equal(await page.locator('.solution-card img').count(), 6, 'three top-view answers and three road explanations have solution figures');
@@ -111,7 +119,7 @@ async function assertWatermarks(page) {
         coverBackground: cover.backgroundColor
       };
     });
-    assert.match(typeRules.fontFamily, /Pretendard.*Noto Sans KR.*Malgun Gothic/, 'one approved Korean font chain is shared by the fixed worksheet');
+    assert.match(typeRules.fontFamily, /Noto Sans KR.*Malgun Gothic/, 'one actually loaded Korean font chain is shared by the fixed worksheet');
     assert.ok(typeRules.promptSize >= 16 && typeRules.promptLineHeight >= 1.6, 'problem text meets the elementary reading profile');
     assert.ok(typeRules.metaSize >= 10, 'source and score metadata remain legible');
     assert.ok(typeRules.solutionSize >= 14 && typeRules.solutionLineHeight >= 1.6, 'student-facing solutions use the student reading size');
@@ -130,12 +138,16 @@ async function assertWatermarks(page) {
         const answerLine = card.querySelector('.answerline').getBoundingClientRect();
         const problems = [];
         if (card.scrollWidth > card.clientWidth + 2 || answerLine.bottom > rect.bottom + 2) problems.push([pageIndex, index, card.querySelector('.qmeta').dataset.itemId, 'overflow', card.scrollHeight - card.clientHeight, Math.round(answerLine.bottom - rect.bottom)]);
-        if (index % 2 && Math.abs(rect.top - rects[index - 1].top) > 1) problems.push([pageIndex, index, 'row alignment']);
+        for (let otherIndex = 0; otherIndex < index; otherIndex += 1) {
+          const other = rects[otherIndex];
+          if (rect.left < other.right - 2 && rect.right > other.left + 2 && rect.top < other.bottom - 2 && rect.bottom > other.top + 2) problems.push([pageIndex, index, card.querySelector('.qmeta').dataset.itemId, 'overlap', otherIndex]);
+        }
+        if (index > 0 && card.dataset.wide !== 'true' && cards[index - 1].dataset.wide !== 'true' && rect.left > rects[index - 1].left + 2 && Math.abs(rect.top - rects[index - 1].top) > 1) problems.push([pageIndex, index, 'row alignment']);
         if (Math.abs(rect.height - rects[0].height) > 2) problems.push([pageIndex, index, 'unequal cell']);
         return problems;
       });
     }));
-    assert.deepEqual(geometry, [], 'six equal solving cells fit each page');
+    assert.deepEqual(geometry, [], 'editorial solving cells fit each page');
     const answerGeometry = await page.locator('.answer-page:not(.quick-page)').evaluateAll((pages) => pages.flatMap((sheet, pageIndex) => {
       const cards = [...sheet.querySelectorAll('.solution-card')];
       if (!cards.length) return [[pageIndex, 'empty answer page']];
@@ -165,12 +177,13 @@ async function assertWatermarks(page) {
     await ready();
     assert.equal(await page.locator('.qcard').count(), 9, 'three variants for each selected wrong answer');
     assert.deepEqual(await page.locator('.qcard').evaluateAll((cards) => [...new Set(cards.map((card) => Number(card.dataset.sourceNo)))].sort((a, b) => a - b)), [5, 13, 28]);
-    assert.equal(await page.locator('.question-page').count(), 2);
-    assert.equal(await page.locator('.duplex-blank').count(), 1, 'answers begin on a new front side after an odd page count');
+    const subsetQuestionPages = await page.locator('.question-page').count();
+    assert.ok(subsetQuestionPages >= 3, 'selected visual questions keep their editorial space');
+    assert.equal(await page.locator('.duplex-blank').count(), (1 + subsetQuestionPages) % 2, 'answer start follows selected editorial page count');
     for (const mode of ['questions', 'answers', 'both', 'quick']) {
       await page.locator('#printMode').selectOption(mode);
       await ready();
-      assert.equal(await page.locator('.question-page').count(), ['questions', 'both'].includes(mode) ? 2 : 0, mode + ': question pages');
+      assert.equal(await page.locator('.question-page').count(), ['questions', 'both'].includes(mode) ? subsetQuestionPages : 0, mode + ': question pages');
       assert.equal(await page.locator('.solution-card').count(), ['answers', 'both'].includes(mode) ? 9 : 0, mode + ': solution count');
       assert.equal(await page.locator('.quick-page').count(), mode === 'quick' ? 1 : 0, mode + ': quick answer page');
     }
@@ -207,7 +220,7 @@ async function assertWatermarks(page) {
     assert.equal(await page.locator('#btnPrint').isDisabled(), true, 'invalid scope cannot print');
     assert.ok(failedRequests.every((url) => /^https:\/\//.test(url)), 'only deliberately blocked external requests may fail');
     assert.deepEqual(errors, [], 'browser errors');
-    console.log('PASS Final2 worksheet: fixed 90, no numbered helper summaries, only indispensable Q15/Q19 data blocks, 6 per page, 4 print modes, duplex answer start, 27 prompt figures once each, detailed answers, watermark, 390px, fail-closed round scope' + (PDF_PATH ? '; PDF=' + PDF_PATH : ''));
+    console.log('PASS Final2 worksheet: fixed 90, no numbered helper summaries, only indispensable Q15/Q19 data blocks, editorial 4-up default, compact 6-up option, 4 print modes, duplex answer start, 27 prompt figures once each, detailed answers, watermark, 390px, fail-closed round scope' + (PDF_PATH ? '; PDF=' + PDF_PATH : ''));
   } finally {
     await browser.close();
     server.close();
