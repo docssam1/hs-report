@@ -22,7 +22,9 @@ const REQUIRED_DIAGRAMS=new Map([
 ]);
 const REVIEW_ID='final2-detailed-review-20260909';
 const LEARNER_STAGE='초등 선발 대비 파이널 모의고사 수강생';
-const RELEASED23_EDUCATION_SHA256='f4dcca9f407a57c555b4723fa8101e322f29a219e5a9416a818b3e96a3183f53';
+// Q18의 낡은 표현 `부류`를 초등 학부모·학생에게 자연스러운 `경우`로
+// 바꾼 승인본까지 포함한다. 정답·계산·도형 계약은 바뀌지 않았다.
+const RELEASED23_EDUCATION_SHA256='4a358f33928bb5d10935bacfe55beceda33f0bfbcbab77641788743f6e603363';
 const Q5_PUBLIC_PROJECTION_SHA256='cd0aaa90bbfe00c3fab192e97fbf4c55fc1fbabc90842ccb62fab6ffe147eb36';
 const VISUAL_AMENDMENT={
   reviewId:'final2-original-visual-amendment-20260912',
