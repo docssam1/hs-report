@@ -20,13 +20,17 @@ function line(a,b,extra=''){return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}"
 function textAt(x,y,value,size=15,extra=''){return `<text x="${x}" y="${y}" fill="#182230" stroke="none" font-family="Noto Sans KR,Arial,sans-serif" font-size="${size}" text-anchor="middle" dominant-baseline="middle" ${extra}>${esc(value)}</text>`;}
 
 function chainSvg(spec){
-  const cells=spec.cellCoordinates.map(row=>({x:row[1],y:row[2]}));
+  const visibleCount=Math.min(Number(spec.renderRules&&spec.renderRules.visibleCellCount)||5,spec.cellCoordinates.length);
+  const cells=spec.cellCoordinates.slice(0,visibleCount).map(row=>({x:row[1],y:row[2]}));
   const project=([x,y])=>[(x+y)*24,(y-x)*24];
   const polys=cells.map(cell=>[[cell.x,cell.y],[cell.x+1,cell.y],[cell.x+1,cell.y+1],[cell.x,cell.y+1]].map(project));
   const points=polys.flat(),minX=Math.min(...points.map(p=>p[0])),minY=Math.min(...points.map(p=>p[1]));
   const shifted=polys.map(poly=>poly.map(([x,y])=>[x-minX+24,y-minY+24]));
-  const width=Math.ceil(Math.max(...shifted.flat().map(p=>p[0]))+24),height=Math.ceil(Math.max(...shifted.flat().map(p=>p[1]))+24);
-  return {width,height,svg:svg(width,height,shifted.map(poly=>`<polygon points="${poly.map(p=>p.join(',')).join(' ')}" fill="white"/>`).join(''))};
+  const continued=visibleCount<spec.cellCoordinates.length;
+  const last=shifted[shifted.length-1],lastCenter=[last.reduce((sum,p)=>sum+p[0],0)/4,last.reduce((sum,p)=>sum+p[1],0)/4];
+  const dots=continued?[1,2,3].map(i=>`<circle cx="${lastCenter[0]+34+i*12}" cy="${lastCenter[1]-34-i*12}" r="2.8" fill="#182230" stroke="none"/>`).join(''):'';
+  const width=Math.ceil(Math.max(...shifted.flat().map(p=>p[0]))+(continued?92:24)),height=Math.ceil(Math.max(...shifted.flat().map(p=>p[1]))+24);
+  return {width,height,svg:svg(width,height,shifted.map(poly=>`<polygon points="${poly.map(p=>p.join(',')).join(' ')}" fill="white"/>`).join('')+dots)};
 }
 
 function mapSvg(spec){
@@ -121,20 +125,20 @@ function balanceSvg(spec){
 }
 
 function triangleStage(n,offsetX,offsetY,scale){
-  const h=scale*Math.sqrt(3)/2,width=(n+1)*scale,parts=[];
+  const h=scale*Math.sqrt(3)/2,m=n+1,width=m*scale,parts=[];
   const topLeft=[offsetX,offsetY+h],topPeak=[offsetX+scale/2,offsetY],topRightPeak=[offsetX+width-scale/2,offsetY],topRight=[offsetX+width,offsetY+h];
   parts.push(`<polygon points="${[topLeft,topPeak,topRightPeak,topRight].map(p=>p.join(',')).join(' ')}" fill="white"/>`,line(topLeft,topRight));
   for(let i=1;i<=n;i++)parts.push(line([offsetX+i*scale,offsetY+h],[offsetX+(i-.5)*scale,offsetY]));
   for(let i=1;i<=n;i++)parts.push(line([offsetX+i*scale,offsetY+h],[offsetX+(i+.5)*scale,offsetY]));
-  const bottom=[offsetX+width/2,offsetY+h+(n+1)*h];
-  parts.push(`<polygon points="${topLeft.join(',')} ${topRight.join(',')} ${bottom.join(',')}" fill="white"/>`);
-  for(let row=1;row<=n;row++){
-    const y=offsetY+h+row*h,left=offsetX+row*scale/2,right=offsetX+width-row*scale/2;
-    parts.push(line([left,y],[right,y]));
-  }
-  for(let i=1;i<=n;i++){
-    parts.push(line([offsetX+i*scale,offsetY+h],bottom));
-    parts.push(line([offsetX+width-i*scale,offsetY+h],bottom));
+  const baseY=offsetY+h;
+  const point=(row,column)=>[offsetX+(row/2+column)*scale,baseY+row*h];
+  for(let row=0;row<m;row++){
+    const count=m-row;
+    for(let column=0;column<count;column++)parts.push(line(point(row,column),point(row,column+1)));
+    for(let column=0;column<=count;column++){
+      if(column<count)parts.push(line(point(row,column),point(row+1,column)));
+      if(column>0)parts.push(line(point(row,column),point(row+1,column-1)));
+    }
   }
   return parts.join('');
 }
@@ -224,6 +228,19 @@ function sentence(value){
   const text=String(value||'').trim();
   return text&&!/[.!?]$/.test(text)?text+'.':text;
 }
+function naturalCategoryLanguage(value){
+  if(typeof value==='string')return value
+    .replace(/시험 부류/g,'시험 결과')
+    .replace(/미지 부류/g,'남은 경우')
+    .replace(/네 부류/g,'네 가지 경우')
+    .replace(/세 부류/g,'세 경우')
+    .replace(/두 부류/g,'두 경우')
+    .replace(/한 부류/g,'한 경우')
+    .replace(/부류/g,'경우');
+  if(Array.isArray(value))return value.map(naturalCategoryLanguage);
+  if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([key,child])=>[key,naturalCategoryLanguage(child)]));
+  return value;
+}
 function promptContent(original,no){
   const lines=Array.isArray(original.conditionLines)?original.conditionLines.filter(Boolean):[];
   // Genuine givens belong in the question, not in a numbered hint list.
@@ -251,8 +268,14 @@ async function main(){
     const steps=(original.solutionSteps||[]).map(normalizeStep);
     if(steps.length<2)throw new Error(`${original.id}: 단계별 풀이가 부족합니다.`);
     const {conditionLines:unusedConditionLines,...originalWithoutConditionLines}=original;
-    const item={...originalWithoutConditionLines,...promptContent(original,no),sourceSet:'final',sourceRound:2,genId:`final2-q${String(no).padStart(2,'0')}`,reviewStatus:'verified',area:tx.area,subarea:tx.subarea,detailType:tx.studentDisplayName,solutionSteps:steps,solution:steps.join(' ')};
-    if(original.assetSpec)item.asset=await raster(original.assetSpec,`${no}번 유사문제 ${variant} 그림`);
+    let item={...originalWithoutConditionLines,...promptContent(original,no),sourceSet:'final',sourceRound:2,genId:`final2-q${String(no).padStart(2,'0')}`,reviewStatus:'verified',area:tx.area,subarea:tx.subarea,detailType:tx.studentDisplayName,solutionSteps:steps,solution:steps.join(' ')};
+    if(no===18)item.text=item.text
+      .replace(/의 네 부류로만 나뉘며 서로 겹치지 않습니다\./,' 가운데 한 가지에만 해당합니다.')
+      .replace(/의 네 부류로 빠짐없이 나뉘고 서로 겹치지 않습니다\./,' 가운데 한 가지에만 해당합니다.')
+      .replace(/의 네 부류로만 나뉘며 겹치는 부류는 없습니다\./,' 가운데 한 가지에만 해당합니다.');
+    if(no===18)item=naturalCategoryLanguage(item);
+    if(no===25)item.assetSpec={...item.assetSpec,topologyVersion:'final2-q25-triangular-lattice-v2'};
+    if(item.assetSpec)item.asset=await raster(item.assetSpec,`${no}번 유사문제 ${variant} 그림`);
     if(no===12){item.answer='그림 답안';item.solutionAsset=await raster(original.assetSpec,`${no}번 유사문제 ${variant} 위에서 본 답 그림`,true);}
     if(no===28){
       const diagram=roadSolution(original);
@@ -269,7 +292,7 @@ async function main(){
   const identity=items.map(item=>({id:item.id,sourceNo:item.sourceNo,variantNo:item.variantNo,text:item.text,promptDataLines:item.promptDataLines||[]}));
   const content=items.map(({asset,solutionAsset,...item})=>item);
   const data={
-    version:'2.0.0',sourceSet:'final',sourceRound:2,
+    version:'2.3.0',sourceSet:'final',sourceRound:2,
     freezePolicy:{runtimeGeneration:false,fixedItemCount:90,variantsPerSourceQuestion:3,seed:'F290',questionIdentitySetHash:hash(JSON.stringify(identity)),itemContentSetHash:hash(JSON.stringify(content)),note:'독립 검수까지 통과한 고정 문항만 제공합니다. 열람할 때 문항을 새로 만들지 않습니다.'},
     sourceFingerprints:{'materials/final_2/001.jpg':fileHash('materials/final_2/001.jpg'),'materials/final_2/002.jpg':fileHash('materials/final_2/002.jpg'),'materials/final_2/003.jpg':fileHash('materials/final_2/003.jpg'),'materials/final_2/004.jpg':fileHash('materials/final_2/004.jpg'),'materials/final_2/005.jpg':fileHash('materials/final_2/005.jpg'),'materials/final_2/006.jpg':fileHash('materials/final_2/006.jpg'),'final2-detailed-data.js':fileHash('final2-detailed-data.js'),'qa/final2-detailed-review.json':fileHash('qa/final2-detailed-review.json')},
     reviewSummary:{verified:90,pending:0},items

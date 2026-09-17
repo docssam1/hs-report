@@ -80,6 +80,9 @@ async function assertWatermarks(page) {
       'fixed items keep the approved variant-first order'
     );
     assert.ok(await page.locator('.qcard[data-wide="true"]').count() > 0, 'long visual questions use a full row');
+    assert.ok(await page.locator('.question-page').evaluateAll((pages) => pages.every((sheet) => sheet.querySelectorAll('.qcard').length >= 2)), 'editorial pagination never leaves a page with only one problem');
+    const lastEditorialCount = await page.locator('.question-page').last().locator('.qcard').count();
+    assert.equal(await page.locator('.question-page.f1-last-two').count(), lastEditorialCount === 2 ? 1 : 0, 'the final two problems use the full remaining page when only two remain');
     await page.locator('#pageLayout').selectOption('compact');
     await ready();
     assert.equal(await page.locator('.question-page').count(), 15, 'compact option keeps six questions per page');
@@ -97,6 +100,27 @@ async function assertWatermarks(page) {
     assert.equal(await page.locator('.qconditions').count(), 0, 'numbered restatement and hint lists are never printed below a problem');
     assert.equal(await page.locator('.f1-qgiven').count(), 6, 'only Q15 and Q19 keep indispensable source data for three variants each');
     assert.deepEqual(await page.locator('.f1-qgiven').evaluateAll((blocks) => [...new Set(blocks.map((block) => Number(block.closest('.qcard').dataset.sourceNo)))].sort((a, b) => a - b)), [15, 19], 'separate data blocks belong only to Q15 and Q19');
+    assert.equal(await page.locator('.qcard[data-source-no="18"]').count(), 3, 'all Q18 variants are present');
+    assert.doesNotMatch(await page.locator('.qcard[data-source-no="18"]').allTextContents().then((values) => values.join(' ')), /부류/, 'Q18 uses natural elementary wording');
+    assert.match(await page.locator('.qcard[data-source-no="18"]').first().textContent(), /가운데 한 가지에만 해당합니다/, 'Q18 states the non-overlap rule without old classification jargon');
+    const fractions = page.locator('.qcard[data-source-no="26"] .f1-frac');
+    assert.equal(await fractions.count(), 6, 'all six age ratios are typeset as stacked fractions');
+    assert.ok(await fractions.evaluateAll((nodes) => nodes.every((node) => {
+      const style = getComputedStyle(node);
+      const first = node.firstElementChild.getBoundingClientRect();
+      const second = node.lastElementChild.getBoundingClientRect();
+      const box = node.getBoundingClientRect();
+      return style.display === 'inline-grid' && getComputedStyle(node.firstElementChild).borderBottomStyle === 'solid' && first.bottom <= second.top + 2 && box.height > 18;
+    })), 'fraction bar, numerator and denominator are visibly separated');
+    assert.ok(await page.locator('.qcard[data-source-no="26"] .f1-qtext').evaluateAll((nodes) => nodes.every((node) => !node.innerHTML.includes('1/'))), 'plain slash fractions are absent from printed prompts');
+    assert.ok(await page.locator('.qcard[data-source-no="25"] .qfigure img').evaluateAll((images) => images.every((image) => image.naturalWidth === 510 && image.naturalHeight === 200)), 'Q25 uses the corrected three-stage triangular lattice figure');
+    const answerBlanks = page.locator('.f1-answerline .f1-answer-blank');
+    assert.equal(await answerBlanks.count(), 90, 'every problem uses the dedicated unfilled answer line');
+    assert.ok(await answerBlanks.evaluateAll((nodes) => nodes.every((node) => {
+      const style = getComputedStyle(node);
+      return style.backgroundColor === 'rgba(0, 0, 0, 0)' && style.backgroundImage === 'none' && style.boxShadow === 'none' && parseFloat(style.height) <= 1.5;
+    })), 'answer lines stay transparent and cannot become filled color boxes');
+    assert.equal(await page.locator('.f1-answerline i').count(), 0, 'answer lines do not use generic italic elements that can inherit rich-text highlighting');
     assert.equal(await page.locator('.qcard[data-source-no="16"] .qfigure').evaluateAll((figures) => figures.filter((figure) => /×\s*(2|10)/.test(figure.textContent || '')).length), 0, 'Q16 drawings do not repeat quantities already stated in the prompt');
     assert.ok(await page.locator('.qcard[data-source-no="28"] .qfigure img').first().evaluate((image) => image.getBoundingClientRect().height > 140), 'Q28 graph is large enough to read');
     assert.ok(await page.locator('.qcard[data-source-no="28"] .qtext').first().evaluate((text) => parseFloat(getComputedStyle(text).fontSize) >= 15.5), 'Q28 prompt stays enlarged while its graph remains readable');
@@ -106,26 +130,53 @@ async function assertWatermarks(page) {
       const prompt = style('.qtext');
       const meta = style('.qmeta');
       const solution = style('.f1-solution p');
+      const type = style('.f1-qtype');
+      const workspace = style('.f1-workspace');
       const primary = style('#btnPrint');
       const cover = style('.cover-page');
       return {
         fontFamily: body.fontFamily,
         promptSize: parseFloat(prompt.fontSize),
         promptLineHeight: parseFloat(prompt.lineHeight) / parseFloat(prompt.fontSize),
+        promptWeight: Number(prompt.fontWeight),
         metaSize: parseFloat(meta.fontSize),
         solutionSize: parseFloat(solution.fontSize),
         solutionLineHeight: parseFloat(solution.lineHeight) / parseFloat(solution.fontSize),
+        typeColor: type.color,
+        typeWeight: Number(type.fontWeight),
+        workspaceMinHeight: parseFloat(workspace.minHeight),
+        workspaceLines: workspace.backgroundImage,
         primaryBackground: primary.backgroundColor,
         coverBackground: cover.backgroundColor
       };
     });
     assert.match(typeRules.fontFamily, /Noto Sans KR.*Malgun Gothic/, 'one actually loaded Korean font chain is shared by the fixed worksheet');
-    assert.ok(typeRules.promptSize >= 16 && typeRules.promptLineHeight >= 1.6, 'problem text meets the elementary reading profile');
+    assert.ok(typeRules.promptSize >= 15 && typeRules.promptSize <= 15.5 && typeRules.promptLineHeight >= 1.55, 'problem text leaves room to solve without becoming too small');
+    assert.ok(typeRules.promptWeight >= 400 && typeRules.promptWeight <= 500, 'problem text uses ordinary workbook weight instead of display bold');
     assert.ok(typeRules.metaSize >= 10, 'source and score metadata remain legible');
     assert.ok(typeRules.solutionSize >= 14 && typeRules.solutionLineHeight >= 1.6, 'student-facing solutions use the student reading size');
+    assert.equal(typeRules.typeColor, 'rgb(36, 86, 196)', 'question type uses GFIELD blue');
+    assert.ok(typeRules.typeWeight >= 800, 'question type is visibly bold');
+    assert.ok(typeRules.workspaceMinHeight >= 55 && /repeating-linear-gradient/.test(typeRules.workspaceLines), 'editorial problems reserve ruled solving space');
     assert.equal(typeRules.primaryBackground, 'rgb(36, 86, 196)', 'the single primary action uses GFIELD blue');
     assert.equal(typeRules.coverBackground, 'rgb(255, 255, 255)', 'the cover stays white, not yellow or beige');
     assert.deepEqual(await page.locator('#f1Pages img').evaluateAll((images) => images.filter((image) => !image.complete || !image.naturalWidth || !image.naturalHeight).map((image) => image.alt)), [], 'all figures decode');
+    const unexplainedRed = await page.locator('.question-page .qfigure img').evaluateAll(async (images) => Promise.all(images.map(async (image) => {
+      await image.decode();
+      const canvas = document.createElement('canvas');
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+      const context = canvas.getContext('2d', {willReadFrequently: true});
+      context.drawImage(image, 0, 0);
+      const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+      let redPixels = 0;
+      for (let offset = 0; offset < pixels.length; offset += 4) {
+        const red = pixels[offset], green = pixels[offset + 1], blue = pixels[offset + 2];
+        if (red > 140 && red > green + 25 && red > blue + 20) redPixels += 1;
+      }
+      return redPixels ? {alt: image.alt, redPixels} : null;
+    })).then((values) => values.filter(Boolean)));
+    assert.deepEqual(unexplainedRed, [], 'prompt figures contain no unexplained red or pink marks');
     assert.match(await page.locator('.solution-card[data-answer-id="final2-q13-v3"]').textContent(), /15가지/);
     assert.match(await page.locator('.solution-card[data-answer-id="final2-q13-v3"]').textContent(), /3가지.*5가지.*3×5=15가지/s);
     assert.doesNotMatch(await page.locator('#final1Worksheet').innerText(), /undefined|NaN|\[object Object\]/);

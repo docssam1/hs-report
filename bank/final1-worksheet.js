@@ -1,18 +1,35 @@
 (function(global){
   'use strict';
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function mathText(v){
+    return esc(v).replace(/(^|[^0-9])(\d{1,3})\/(\d{1,3})(?![0-9])/g,function(_,prefix,numerator,denominator){
+      return prefix+'<span class="f1-frac" role="math" aria-label="'+denominator+'분의 '+numerator+'"><span>'+numerator+'</span><span>'+denominator+'</span></span>';
+    });
+  }
   function chunks(a,n){var out=[];for(var i=0;i<a.length;i+=n)out.push(a.slice(i,i+n));return out;}
   function editorialWide(x){
     var dataLength=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0;
     var total=(x.text||'').length+dataLength;
-    return total>180||!!x.asset&&(total>110||[18,20,28].includes(Number(x.sourceNo)));
+    if(Number(x.sourceRound)===1)return total>180||!!x.asset&&(total>110||[18,20,28].includes(Number(x.sourceNo)));
+    return total>210||!!x.asset&&(total>180||Number(x.sourceNo)===28);
   }
   function questionGroups(items,layout){
     if(layout==='compact')return chunks(items,6);
     var groups=[],group=[],slots=0;
     items.forEach(x=>{
       var weight=editorialWide(x)?2:1;
-      if(weight===2&&slots%2===1){groups.push(group);group=[];slots=0;}
+      if(weight===2&&slots%2===1){
+        if(group.length===1&&groups.length){
+          var previous=groups[groups.length-1];
+          var moved=previous[previous.length-1];
+          if(moved&&!editorialWide(moved)){
+            previous.pop();
+            group.unshift(moved);
+            slots+=1;
+          }
+        }
+        if(slots%2===1){groups.push(group);group=[];slots=0;}
+      }
       if(group.length&&slots+weight>4){groups.push(group);group=[];slots=0;}
       group.push(x);slots+=weight;
       if(slots===4){groups.push(group);group=[];slots=0;}
@@ -71,19 +88,21 @@
         var legacyGiven=bankCode==='final1'&&[12,14,23].includes(Number(x.sourceNo))&&Array.isArray(x.conditionLines)?x.conditionLines:[];
         var promptText=[x.text].concat(legacyGiven).filter(Boolean).join(' ');
         var given=Array.isArray(x.promptDataLines)&&x.promptDataLines.length?x.promptDataLines:[];
-        var givenBlock=given.length?'<div class="f1-qgiven"><b>'+esc(x.promptDataLabel||'주어진 조건')+'</b><div class="f1-qgiven-lines">'+given.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div></div>':'';
+        var givenBlock=given.length?'<div class="f1-qgiven"><b>'+esc(x.promptDataLabel||'주어진 조건')+'</b><div class="f1-qgiven-lines">'+given.map(t=>'<span>'+mathText(t)+'</span>').join('')+'</div></div>':'';
         var sourceLabel=important?'파이널 '+x.sourceRound+'회 '+x.sourceNo+'번':'원문 '+x.sourceNo+'번';
-        html+='<article class="f1-qcard qcard" data-index="'+x.index+'" data-source-no="'+x.sourceNo+'" data-source-round="'+x.sourceRound+'" data-points="'+esc(x.pointBand)+'" data-gen="'+esc(x.genId)+'" data-wide="'+String(layout==='editorial'&&editorialWide(x))+'"><div class="f1-qcard-head"><span class="f1-qno">'+x.index+'.</span><span class="f1-qtype">['+esc(x.importantTypeTitle||x.detailType)+']</span></div><div class="f1-qtext qtext">'+esc(promptText)+'</div>'+givenBlock+'<div class="f1-qmeta qmeta fixed-item" data-item-id="'+esc(x.id)+'">'+sourceLabel+' / 유사문제 '+x.variantNo+' / '+esc(x.pointBand)+'점</div>'+(x.asset?'<div class="f1-qfigure qfigure">'+raster(x.asset,'')+'</div>':'')+'<div class="f1-answerline answerline"><span>답</span><i></i></div></article>';
-      });return sheet('question-page',html+'</div>');
+        html+='<article class="f1-qcard qcard" data-index="'+x.index+'" data-source-no="'+x.sourceNo+'" data-source-round="'+x.sourceRound+'" data-points="'+esc(x.pointBand)+'" data-gen="'+esc(x.genId)+'" data-wide="'+String(layout==='editorial'&&editorialWide(x))+'"><div class="f1-qcard-head"><span class="f1-qno">'+x.index+'.</span><span class="f1-qtype">['+esc(x.importantTypeTitle||x.detailType)+']</span></div><div class="f1-qtext qtext">'+mathText(promptText)+'</div>'+givenBlock+'<div class="f1-qmeta qmeta fixed-item" data-item-id="'+esc(x.id)+'">'+sourceLabel+' / 유사문제 '+x.variantNo+' / '+esc(x.pointBand)+'점</div>'+(x.asset?'<div class="f1-qfigure qfigure">'+raster(x.asset,'')+'</div>':'')+'<div class="f1-workspace" aria-hidden="true"></div><div class="f1-answerline answerline"><span>답</span><span class="f1-answer-blank" aria-hidden="true"></span></div></article>';
+      });
+      var lastTwo=layout==='editorial'&&n===total&&group.length===2&&group.every(x=>!editorialWide(x));
+      return sheet('question-page'+(lastTwo?' f1-last-two':''),html+'</div>');
     }
     function answerCard(x){
       var steps=Array.isArray(x.solutionSteps)?x.solutionSteps:[];
       var split=x.solutionAsset&&Number.isInteger(x.solutionAssetAfterStep)&&x.solutionAssetAfterStep>0&&x.solutionAssetAfterStep<steps.length?x.solutionAssetAfterStep:steps.length;
-      var body='<ol>'+steps.slice(0,split).map(t=>'<li>'+esc(t)+'</li>').join('')+'</ol>'+raster(x.solutionAsset,'f1-solution-asset');
-      if(split<steps.length)body+='<ol start="'+(split+1)+'">'+steps.slice(split).map(t=>'<li>'+esc(t)+'</li>').join('')+'</ol>';
-      return '<article class="f1-solution solution-card" data-answer-id="'+esc(x.id)+'" data-source-no="'+x.sourceNo+'" data-index="'+x.index+'"><div class="f1-solution-head"><h3>'+x.index+'. <span class="f1-solution-type">['+esc(x.detailType)+']</span></h3><strong class="ans">답 '+esc(x.answer)+'</strong></div><div class="label">원문 '+x.sourceNo+'번</div>'+(x.readingFocus?'<p class="f1-core"><b>핵심</b> '+esc(x.readingFocus)+'</p>':'')+(x.solutionSkill?'<p class="f1-method"><b>풀이</b> '+esc(x.solutionSkill)+'</p>':'')+body+(steps.join(' ')===x.solution?'':'<p class="f1-answer-summary">'+esc(x.solution)+'</p>')+'</article>';
+      var body='<ol>'+steps.slice(0,split).map(t=>'<li>'+mathText(t)+'</li>').join('')+'</ol>'+raster(x.solutionAsset,'f1-solution-asset');
+      if(split<steps.length)body+='<ol start="'+(split+1)+'">'+steps.slice(split).map(t=>'<li>'+mathText(t)+'</li>').join('')+'</ol>';
+      return '<article class="f1-solution solution-card" data-answer-id="'+esc(x.id)+'" data-source-no="'+x.sourceNo+'" data-index="'+x.index+'"><div class="f1-solution-head"><h3>'+x.index+'. <span class="f1-solution-type">['+esc(x.detailType)+']</span></h3><strong class="ans">답 '+mathText(x.answer)+'</strong></div><div class="label">원문 '+x.sourceNo+'번</div>'+(x.readingFocus?'<p class="f1-core"><b>핵심</b> '+mathText(x.readingFocus)+'</p>':'')+(x.solutionSkill?'<p class="f1-method"><b>풀이</b> '+mathText(x.solutionSkill)+'</p>':'')+body+(steps.join(' ')===x.solution?'':'<p class="f1-answer-summary">'+mathText(x.solution)+'</p>')+'</article>';
     }
-    function quickAnswerGrid(items){return '<section class="f1-answer-key" aria-label="빠른 정답"><h3>빠른 정답</h3><div class="f1-answer-key-grid">'+items.map(x=>'<div data-answer-id="'+esc(x.id)+'"><b>'+x.index+'</b><span>'+esc(x.answer)+'</span></div>').join('')+'</div></section>';}
+    function quickAnswerGrid(items){return '<section class="f1-answer-key" aria-label="빠른 정답"><h3>빠른 정답</h3><div class="f1-answer-key-grid">'+items.map(x=>'<div data-answer-id="'+esc(x.id)+'"><b>'+x.index+'</b><span>'+mathText(x.answer)+'</span></div>').join('')+'</div></section>';}
     function answerPages(items){return '<div class="f1-answer-staging">'+quickAnswerGrid(items)+items.map(answerCard).join('')+'</div>';}
     function compactAnswerPages(){
       var staging=pageRoot.querySelector('.f1-answer-staging');if(!staging)return;
@@ -100,7 +119,7 @@
       staging.remove();
       built.forEach((answerPage,index)=>{answerPage.querySelector('h2 small').textContent=(index+1)+' / '+built.length;answerPage.classList.remove('f1-pagination-probe');});
     }
-    function quickPages(items){return chunks(items,30).map((group,i,groups)=>sheet('f1-answer-page answer-page quick-page','<h2>빠른 정답 <small>'+(i+1)+' / '+groups.length+'</small></h2><div class="f1-quick">'+group.map(x=>'<div data-answer-id="'+esc(x.id)+'"><b>'+x.index+'</b><span>'+esc(x.answer)+'</span></div>').join('')+'</div>')).join('');}
+    function quickPages(items){return chunks(items,30).map((group,i,groups)=>sheet('f1-answer-page answer-page quick-page','<h2>빠른 정답 <small>'+(i+1)+' / '+groups.length+'</small></h2><div class="f1-quick">'+group.map(x=>'<div data-answer-id="'+esc(x.id)+'"><b>'+x.index+'</b><span>'+mathText(x.answer)+'</span></div>').join('')+'</div>')).join('');}
     async function render(){
       var current=++revision;print.disabled=true;pageRoot.innerHTML='';root.querySelector('#f1Status').textContent='문항을 불러오는 중입니다.';
       root.dataset.layout=layout;root.querySelector('#pageLayout').value=layout;root.querySelector('#printMode').value=mode;root.querySelectorAll('[data-role=points]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.val===band)));

@@ -10,7 +10,7 @@ const DATA_PATH = path.join(ROOT, 'bank', 'data', 'final2-fixed90.json');
 const data = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
 const builderSource = fs.readFileSync(path.join(ROOT, 'qa', 'build-final2-fixed90.js'), 'utf8');
 const VISUAL_SOURCES = new Set([2, 5, 9, 12, 13, 16, 17, 25, 28]);
-const ANSWER_SET_SHA256 = 'dfbc7fe769b9b62e52d716467acbc919156a6172455e26d251fb2a50c741388b';
+const ANSWER_SET_SHA256 = 'bc826f123946f668662ba237e1eeba9e20ded1a60b688196ba9aa4e131c4853b';
 
 function hash(value) {
   return crypto.createHash('sha256').update(value).digest('hex');
@@ -118,6 +118,77 @@ function validateGridPath(item) {
   assert.equal(item.answer, first.count * second.count + '가지', item.id + ': answer');
 }
 
+function validateCounterfeitBalance(item) {
+  const model = item.meta;
+  assert.match(item.text, /양팔저울/, item.id + ': balance scale is explicit');
+  assert.doesNotMatch(item.text, /전자저울/, item.id + ': electronic scale removed');
+  assert.equal(item.answer, '2번', item.id + ': minimum answer');
+  assert.equal(model.minimumWeighings, 2, item.id + ': two-weighing model');
+  assert.equal(model.maxOutcomesPerWeighing, 3, item.id + ': three balance outcomes');
+  assert.ok(model.maxOutcomesPerWeighing < model.bundleCount, item.id + ': one weighing cannot distinguish all bundles');
+  assert.ok(model.maxOutcomesPerWeighing ** model.minimumWeighings >= model.bundleCount, item.id + ': two weighings can distinguish all bundles');
+  assert.deepEqual(model.firstWeighing.left, [1, 2, 3], item.id + ': first left group');
+  assert.deepEqual(model.firstWeighing.right, [4, 5, 6], item.id + ': first right group');
+  assert.equal(new Set([...model.firstWeighing.left, ...model.firstWeighing.right]).size, 6, item.id + ': first groups do not overlap');
+}
+
+function validateAlternatingSquarePreview(item) {
+  const cells = item.assetSpec.cellCoordinates;
+  const visibleCount = item.assetSpec.renderRules.visibleCellCount;
+  assert.match(item.text, /그림과 같은 규칙으로/, item.id + ': prompt treats the figure as a pattern sample');
+  assert.equal(visibleCount, 5, item.id + ': only five starting squares are shown');
+  assert.equal(item.assetSpec.renderRules.showContinuation, true, item.id + ': continuation is shown');
+  assert.ok(cells.length > visibleCount, item.id + ': target chain is not fully drawn');
+  assert.equal(item.answer, String(cells.length * 2 - 1) + '개', item.id + ': rectangle count');
+}
+
+function validatePartitionExtrema(item) {
+  const model = item.meta;
+  const variableMin = model.variableLowerExclusive + 1;
+  const variableMax = model.variableUpperExclusive - 1;
+  const fixedTotal = model.fixedGroups.reduce((sum, value) => sum + value, 0);
+  const targetMin = model.total - fixedTotal - variableMax;
+  const targetMax = model.total - fixedTotal - variableMin;
+  assert.doesNotMatch(item.text + ' ' + item.detailType, /부류/, item.id + ': elementary wording does not use 부류');
+  assert.match(item.text, /가운데 한 가지에만 해당합니다/, item.id + ': four cases are disjoint in natural language');
+  assert.equal(model.targetMin, targetMin, item.id + ': recomputed minimum');
+  assert.equal(model.targetMax, targetMax, item.id + ': recomputed maximum');
+  assert.equal(item.answer, `${targetMin}명, ${targetMax}명`, item.id + ': extrema answer');
+}
+
+function validateTriangularLattice(item) {
+  const model = item.meta.parameters;
+  const stage = model.targetStage;
+  const top = 2 * stage + 1;
+  const rows = stage + 1;
+  const lower = rows * rows;
+  assert.equal(item.assetSpec.topologyVersion, 'final2-q25-triangular-lattice-v2', item.id + ': corrected equilateral lattice');
+  assert.equal(model.topBandCount, top, item.id + ': top band count');
+  assert.equal(model.lowerRows, rows, item.id + ': lower triangular rows');
+  assert.equal(model.lowerCount, lower, item.id + ': lower rows contain 1+3+... unit triangles');
+  assert.equal(model.triangleCount, top + lower, item.id + ': total count');
+  assert.equal(item.answer, String(top + lower) + '개', item.id + ': triangle answer');
+  assert.match(item.solutionSteps.join(' '), /1\+3\+5|홀수의 합/, item.id + ': lower triangular lattice is explained by odd rows');
+}
+
+function validateAgeRatios(item) {
+  const model = item.meta.parameters;
+  const candidates = [];
+  for (let adult = model.adultMinExclusive + 1; adult < model.adultMaxExclusive; adult += 1) {
+    if ((adult + model.firstOffset) % model.firstRatio !== 0) continue;
+    if ((adult + model.secondOffset) % model.secondRatio !== 0) continue;
+    const first = (adult + model.firstOffset) / model.firstRatio - model.firstOffset;
+    const second = (adult + model.secondOffset) / model.secondRatio - model.secondOffset;
+    if (first > 0 && second > 0) candidates.push({adult, first, second});
+  }
+  assert.equal(candidates.length, 1, item.id + ': unique age solution');
+  assert.deepEqual(candidates[0], {adult: model.adultCurrent, first: model.firstChildCurrent, second: model.secondChildCurrent}, item.id + ': recomputed ages');
+  assert.equal(model.sum, candidates[0].first + candidates[0].second, item.id + ': recomputed age sum');
+  assert.equal(item.answer, String(model.sum) + '살', item.id + ': age answer');
+  assert.match(item.text, new RegExp(`1/${model.firstRatio}`), item.id + ': first ratio remains structured source data');
+  assert.match(item.text, new RegExp(`1/${model.secondRatio}`), item.id + ': second ratio remains structured source data');
+}
+
 assert.equal(data.sourceSet, 'final');
 assert.equal(data.sourceRound, 2);
 assert.equal(data.freezePolicy.runtimeGeneration, false);
@@ -193,7 +264,12 @@ for (const item of data.items) {
     if(item.sourceNo!==28)assert.equal(item.solutionAsset, undefined, item.id + ': unexpected solution figure');
   }
   if (item.sourceNo === 5) validateMapColoring(item);
+  if (item.sourceNo === 2) validateAlternatingSquarePreview(item);
+  if (item.sourceNo === 8) validateCounterfeitBalance(item);
   if (item.sourceNo === 13) validateGridPath(item);
+  if (item.sourceNo === 18) validatePartitionExtrema(item);
+  if (item.sourceNo === 25) validateTriangularLattice(item);
+  if (item.sourceNo === 26) validateAgeRatios(item);
 }
 
 const identity = data.items.map((item) => ({
