@@ -1,8 +1,8 @@
 {
-  "version": 1,
+  "version": 2,
   "name": "hs-report-source-memory",
   "root": ".",
-  "updated": "2026-09-11",
+  "updated": "2026-09-18",
   "decisions": [
     {
       "id": "original-form-geometry-endpoint-topology-20260828",
@@ -34,6 +34,22 @@
         "bank/gens/g-final1.js",
         "qa/bank-final1-generators-validate.js",
         "qa/update-final1-q18-example-visual.js"
+      ]
+    },
+    {
+      "id": "source-geometry-no-explanatory-redraw-20260918",
+      "status": "verified",
+      "scope": "all source-based geometry questions in problem screens and printable worksheets",
+      "rules": [
+        "Open the exact source question number and use its original problem figure without redrawing, simplifying, rotating, mirroring, recoloring, or adding or deleting mathematical content.",
+        "Do not repeat the prompt as explanatory notes and do not draw intermediate calculations, completed repetitions, solution paths, construction lines, counts, or answer clues into the problem figure.",
+        "If changed numbers or conditions no longer agree with the original figure, keep the variant locked instead of inventing a replacement figure.",
+        "Detailed explanation and solution-only diagrams belong after answer reveal, not in the problem figure."
+      ],
+      "verification": [
+        "AGENTS.md",
+        "QUESTION-BANK-QUALITY-STANDARD.md",
+        "C:/Users/user/OneDrive/그림/Desktop/GFIELD_QUESTION_BANK_PRODUCTION_STANDARD_20260913.md"
       ]
     }
   ]
