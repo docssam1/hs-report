@@ -131,6 +131,8 @@ async function assertWatermarks(page) {
       const meta = style('.qmeta');
       const solution = style('.f1-solution p');
       const type = style('.f1-qtype');
+      const number = style('.f1-qno');
+      const pageHeading = style('.f1-qhead');
       const workspace = style('.f1-workspace');
       const primary = style('#btnPrint');
       const cover = style('.cover-page');
@@ -144,6 +146,11 @@ async function assertWatermarks(page) {
         solutionLineHeight: parseFloat(solution.lineHeight) / parseFloat(solution.fontSize),
         typeColor: type.color,
         typeWeight: Number(type.fontWeight),
+        numberColor: number.color,
+        numberWeight: Number(number.fontWeight),
+        numberBackground: number.backgroundColor,
+        pageHeadingColor: pageHeading.color,
+        pageHeadingWeight: Number(pageHeading.fontWeight),
         workspaceMinHeight: parseFloat(workspace.minHeight),
         workspaceLines: workspace.backgroundImage,
         primaryBackground: primary.backgroundColor,
@@ -155,8 +162,13 @@ async function assertWatermarks(page) {
     assert.ok(typeRules.promptWeight >= 400 && typeRules.promptWeight <= 500, 'problem text uses ordinary workbook weight instead of display bold');
     assert.ok(typeRules.metaSize >= 10, 'source and score metadata remain legible');
     assert.ok(typeRules.solutionSize >= 14 && typeRules.solutionLineHeight >= 1.6, 'student-facing solutions use the student reading size');
-    assert.equal(typeRules.typeColor, 'rgb(36, 86, 196)', 'question type uses GFIELD blue');
-    assert.ok(typeRules.typeWeight >= 800, 'question type is visibly bold');
+    assert.equal(typeRules.typeColor, 'rgb(86, 98, 116)', 'question type is quiet secondary text rather than decorative blue');
+    assert.ok(typeRules.typeWeight >= 400 && typeRules.typeWeight <= 500, 'question type uses ordinary workbook weight');
+    assert.equal(typeRules.numberColor, 'rgb(24, 34, 48)', 'question number uses the same ink family as a printed workbook');
+    assert.ok(typeRules.numberWeight >= 600 && typeRules.numberWeight <= 700, 'question number is emphasized without display-heavy weight');
+    assert.equal(typeRules.numberBackground, 'rgba(0, 0, 0, 0)', 'question number is not placed in a decorative color block');
+    assert.equal(typeRules.pageHeadingColor, 'rgb(24, 34, 48)', 'question page heading avoids decorative blue');
+    assert.ok(typeRules.pageHeadingWeight >= 600 && typeRules.pageHeadingWeight <= 700, 'question page heading uses restrained emphasis');
     assert.ok(typeRules.workspaceMinHeight >= 55 && /repeating-linear-gradient/.test(typeRules.workspaceLines), 'editorial problems reserve ruled solving space');
     assert.equal(typeRules.primaryBackground, 'rgb(36, 86, 196)', 'the single primary action uses GFIELD blue');
     assert.equal(typeRules.coverBackground, 'rgb(255, 255, 255)', 'the cover stays white, not yellow or beige');
