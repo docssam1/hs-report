@@ -130,6 +130,9 @@ async function assertWatermarks(page) {
       const prompt = style('.qtext');
       const meta = style('.qmeta');
       const solution = style('.f1-solution p');
+      const answerHeading = style('.f1-answer-page h2');
+      const solutionType = style('.f1-solution-type');
+      const answerValue = style('.f1-solution .ans');
       const type = style('.f1-qtype');
       const number = style('.f1-qno');
       const pageHeading = style('.f1-qhead');
@@ -144,6 +147,13 @@ async function assertWatermarks(page) {
         metaSize: parseFloat(meta.fontSize),
         solutionSize: parseFloat(solution.fontSize),
         solutionLineHeight: parseFloat(solution.lineHeight) / parseFloat(solution.fontSize),
+        solutionWeight: Number(solution.fontWeight),
+        answerHeadingColor: answerHeading.color,
+        answerHeadingWeight: Number(answerHeading.fontWeight),
+        solutionTypeColor: solutionType.color,
+        solutionTypeWeight: Number(solutionType.fontWeight),
+        answerValueColor: answerValue.color,
+        answerValueWeight: Number(answerValue.fontWeight),
         typeColor: type.color,
         typeWeight: Number(type.fontWeight),
         numberColor: number.color,
@@ -162,6 +172,13 @@ async function assertWatermarks(page) {
     assert.ok(typeRules.promptWeight >= 400 && typeRules.promptWeight <= 500, 'problem text uses ordinary workbook weight instead of display bold');
     assert.ok(typeRules.metaSize >= 10, 'source and score metadata remain legible');
     assert.ok(typeRules.solutionSize >= 14 && typeRules.solutionLineHeight >= 1.6, 'student-facing solutions use the student reading size');
+    assert.ok(typeRules.solutionWeight >= 400 && typeRules.solutionWeight <= 500, 'student-facing solutions use ordinary workbook weight');
+    assert.equal(typeRules.answerHeadingColor, 'rgb(24, 34, 48)', 'answer heading uses print ink rather than decorative blue');
+    assert.ok(typeRules.answerHeadingWeight >= 600 && typeRules.answerHeadingWeight <= 700, 'answer heading uses restrained emphasis');
+    assert.equal(typeRules.solutionTypeColor, 'rgb(86, 98, 116)', 'solution type is quiet secondary text');
+    assert.ok(typeRules.solutionTypeWeight >= 400 && typeRules.solutionTypeWeight <= 500, 'solution type avoids display-heavy weight');
+    assert.equal(typeRules.answerValueColor, 'rgb(24, 34, 48)', 'answer value uses print ink');
+    assert.ok(typeRules.answerValueWeight >= 600 && typeRules.answerValueWeight <= 700, 'answer value alone keeps a readable emphasis');
     assert.equal(typeRules.typeColor, 'rgb(86, 98, 116)', 'question type is quiet secondary text rather than decorative blue');
     assert.ok(typeRules.typeWeight >= 400 && typeRules.typeWeight <= 500, 'question type uses ordinary workbook weight');
     assert.equal(typeRules.numberColor, 'rgb(24, 34, 48)', 'question number uses the same ink family as a printed workbook');
