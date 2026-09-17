@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.3.0",
   "sourceSet": "final",
   "sourceRound": 2,
   "freezePolicy": {
@@ -7,8 +7,8 @@
     "fixedItemCount": 90,
     "variantsPerSourceQuestion": 3,
     "seed": "F290",
-    "questionIdentitySetHash": "8d338e8d8ebb04e46bd37c2e93508cee73174cc6415bd818df5d91d790b13dc7",
-    "itemContentSetHash": "35c1440e214ac352c6c1fffeb3f34aa7e6f65b7ff5505228acdf111a8d8710fc",
+    "questionIdentitySetHash": "c4a3118182dedd037d9186e330f4f3b7dcb22b973db2cc7167b17baef6d0ebdf",
+    "itemContentSetHash": "00b5e49d9363e9a792fa33e2305d0b78b22f83c14b1477a7ff08df8256913bb5",
     "note": "독립 검수까지 통과한 고정 문항만 제공합니다. 열람할 때 문항을 새로 만들지 않습니다."
   },
   "sourceFingerprints": {
@@ -18,8 +18,8 @@
     "materials/final_2/004.jpg": "d86757802728695134b5153eb9f158e1bcbf47e2c0e5c4c765c171b7127aca7e",
     "materials/final_2/005.jpg": "7eaf790213d1fdea30819b4e37e66ee3e1f4bb0669485ef8314584788b78589a",
     "materials/final_2/006.jpg": "9f2dc7a470893fd62c1d87211ffc9463746dc242bd5f09ebaf6e90920eafe16a",
-    "final2-detailed-data.js": "136b86c8fcb5b478dc1b62c4f8f14676c217ca7753b5286d47832169a8a3fc9e",
-    "qa/final2-detailed-review.json": "68672136932b92ddcd1ed86866be786c3a1bbff875ff20e8b82c12f2d82bd6d4"
+    "final2-detailed-data.js": "e586b301a7814155ff08e2f440c612b6c597c1e36aae6bc228196db4f300414f",
+    "qa/final2-detailed-review.json": "5bf26cce701fe0d57feb745a1038398cdc6f7965e729bfe6a837ffb4475e7a25"
   },
   "reviewSummary": {
     "verified": 90,
@@ -216,7 +216,7 @@
       "id": "final2-q02-v1",
       "sourceNo": 2,
       "variantNo": 1,
-      "text": "그림처럼 크기가 같은 정사각형 12개를 한 칸씩 번갈아 꺾어 이어 붙였습니다. 그림 안의 크고 작은 사각형은 모두 몇 개입니까?",
+      "text": "그림과 같은 규칙으로 크기가 같은 정사각형을 한 칸씩 번갈아 꺾어 모두 12개 이어 붙였습니다. 만들어진 크고 작은 사각형은 모두 몇 개입니까?",
       "answer": "23개",
       "acceptedAnswers": [
         "23개"
@@ -337,7 +337,9 @@
           "showCellIds": false,
           "showCountingGuides": false,
           "answerMarks": false,
-          "closedOutlines": true
+          "closedOutlines": true,
+          "visibleCellCount": 5,
+          "showContinuation": true
         }
       },
       "sourceSet": "final",
@@ -347,19 +349,19 @@
       "solution": "기본 작은 정사각형은 12개입니다. 맞닿은 두 칸이 만드는 큰 직사각형은 첫째 기울기 6개, 둘째 기울기 5개로 모두 11개입니다. 세 칸부터는 꺾인 모양이라 네 변의 사각형이 되지 않습니다. 따라서 12+11=23개입니다.",
       "asset": {
         "kind": "raster",
-        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAB4CAYAAADfRGj6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAFaElEQVR42u3dzW4cRRhG4boMdlFYgbLJChLJSBApMiwiA4KN75z8sCaJk1sYMgYjC4bR/HRXfW/3cyQrFtkczVs6IuP2VNsAAErSvAQAINAAAIEGAIEGAAg0AAg0AECgAQACDQACDQAQaAAQaACAQAMABBoABBoAINAAINAAAIEGAIEGAAg0AECgAUCgAQACDQACvVbe33zYXF5d335tv+fPnz9/gS4y7rff/7L57PPHt1/b75NG5s+ff66/QB847vbP+98njMyfP/9cf4Hew82Hj5vvfvj1dtCL5z9u3r67+c9/++Pte/78+fMX6NHj/t/fVRyZP3/+uf4CfeK4CSPz588/11+gzxy38sj8+fPP9RfoicatODJ//vxz/QV64nErjcyfP/9cf4GeadwKI/Pnzz/XX6BnHnfkyPz588/1F+hO444YmT9//rn+At153J4j8+fPP9dfoAeN22Nk/vz55/oL9OBx5xyZP3/+uf4CXWTcOUbmz59/rr9AFxt3ypH58+ef6y/QRcedYmT+/Pnn+gt08XHPGZk/f/65/gIdMu4pI/Pnzz/XX6DD4nzMyPz588/1F+jQOB8yMn/+/HP9BTo8zvtG5s+ff66/QC8kzrucnz57sfnm+U/8+fMP9O8R6ZZ8+/bDR09ir4W/+Ptg8ufPP8//7rbwy6trgd73AiUO/NurN5sHX3zFnz9/gV5WoO+/ONt/Hj348uuoO8Zevn7zjzN//vyz/Hu/rdrS33N+9fr3mJH/7cqfP/8c/xE/82pL+IFgwsi7Did//vwz/Ec9kNCW8rRG5ZH3HU7+/PnX9h/5tFhb0ns+FUc+5HDy58+/pv/oR3nb0t6QrzTyMYeTP3/+tfwr/J5FW+Ib8hVGPuVw8ufPv4Z/lV+Ca0v9aenIkc85nPz58x/rX+k3lNuSf1o6YuQpDid//vzH+Ff7+Ii29EdZeo485eHkz59/X/+Kn+3T1vAoS4+R5zic/Pnz7+Nf9YPX2lqeM5xz5DkPJ3/+/Of1r/ypmG1NzxnOMXKPw8mfP/95/Kt/ZHFb20PgU47c83Dy589/Wv+Ez5Nva3wIfIqRRxxO/vz5T+OfctlHW+tv6Jwz8sjDyZ8///P8k25iamu+puqUkSscTv78+Z/mn3ZNXlv7HYLHjFzpcPLnz/84/8Q7TJsLXg8bueLh5M+f/2H+iXHuFuiEF2ffyJUPJ3/+/Pf7p8a5S6CTXpxdIyccTv78+e/2T47z7IFOfHH2XWrJnz//HP/t5dJ3F0yn3RzeJdDbK8ldC8+fP3/+Aj0ZW9eLT//3kDowf/78//J/+OhJbJy7v8VR+Ur1Xc5Pn7349M+8n/nz5x/on/ie8/AfElYeede4/Pnzz/VPZ8hjdhVH3jcuf/78c/0FOjzSh4zLnz//XH+BDo30MePy588/11+gwyJ9yrj8+fPP9RfokEifMy5//vxz/QW6+MhTjMufP/9cf4EuOvKU4/Lnzz/XX6CLjTzHuPz588/1F+giI885Ln/+/HP9BXrwyD3G5c+ff66/QA8auee4/Pnzz/UX6M4jjxiXP3/+uf4C3WnkkePy588/11+gZx65wrj8+fPP9RfomUauNC5//vxz/QV64pErjsufP/9cf4GeaOTK4/Lnzz/XX6DPHDlhXP78+ef6C/SJIyeNy58//1x/gd4cdmPv9pbhu9uG73+fcHsvf/78c/0F+siRU6+F58+f/2NxXmKg70a+vLq+/Uoclz9//rn+Ag0AAg0AEGgAgEADgEADAAQaAAQaACDQAACBBgCBBgAINAAINABAoAEAAg0AAg0AEGgAEGgAgEADgEADAAQaACDQACDQAACBBoCF8yfpFgtGOQupIgAAAABJRU5ErkJggg==",
-        "width": 360,
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAggAAADwCAIAAADqwAtpAAAN2UlEQVR4nOzdXaikdR0H8P/quXW9qS56u4hQcjfTjIIueoEoIorIiyLpwkCii0oohCBWK69CI+om2YsNwmKLtdCg6M1eyBCyqNxMEYt21fLlRntBME+P+9fT/GfO/HfOmZln/i+fz9U588zefNnf73ueZ2ae2dre3g4A3Th67OYj19+w66HPfeZTV115RejeOQGgG3f/6d7jt9w27+hwaHhC6J5iADpy1+/+cHL+6h8ODU8I3dsKAN247/4HlnxCD5wxAJBwxgB05IJXvmLJJ/TAGQPQkcsuvfjQRRfOOzocGp4QuqcYgI4cvujC97/v3fOODocOz6+NfriUBPQlflLh+C23Tb496dCZwvAhhuiAD7gBHbr7zDtT43uQhtcVhitIzhV2KAYAEl5jACChGABIKAYAEooBgIRiACChGABIKAYAEooBgIRiACChGABIKAYAEu6uCtTEze9GoBiAahw9drPbZY9AMQB1GFrhyPU3TD04lMSRMz2hG1bIawxABYYrSMO5wryjw6G7J04jWJJiACowvK5wcv7qP3nmhYfAiriUBFQgvtq8zBNYnDMGABLOGIAKXPDKVyz5BBbnjAGowGWXXnxo/ucVhkPDEwIrohiAChw+83mFeUeHQz7mtkIuJQF1iJ9U8AG3ERzY3t4OAJVwS4wRKAYAEl5jACChGABIKAYAEooBgIRiACChGABIKAYAEooBgIRiACChGABIKAYAEuded911gRrccedvXv/md33rltueePKfb3zD6wIp+RTu7j/d+/0f3v7t73zvpz//1ekHH97a2nrRC18QKJLbbtdh2HqXf/Cq4YdTpx86fuLW4YdPfvwjgefJp3BHj93sdtkVccZQgZ2tFz3xxJOnHnzI38U75FO4oRWOXH/Do48+Pvng8Ovtv7jj/IPn+ea1AimG0k1tvcju2yGfwg1XkG78yk1TrbDjkccef+0lr3ZNqTSKoWi7br3I7gvyqcHwusI3v/XdeUeHwjj0qgsuufhQoCTelVSu2a134htHv/SFz+78Gq+n3/jlm0KX5FOF+FVryzyB8XnxuVC7br1n//h9w7M/X33NtfHBbl9rlQ+sj0tJJZq79c44fNGFL3vpi3/wo5/FXzu8ZiKfipx+8OEf3/7LzBPef/l7XEoqjWIoTn7rRT3vPvnUZWtr67e//+O8F58PXXThhz/0AS8+l0YxlGWRrRf1ufvkU51h6T/11FO3/+KOXY9+7CNXvvPtbw0URjEUZPGtF/W2++RTqcsuvfj8g+c98tjjk+cNw7nC0Ao+4FYmxVCKvW69qJ/dJ5+qDd3w2ktefehVF7z8ZS+59DWHh9cVhitIzhWKdWB7ezuwafvbejuOn7h15304g2EVDoPX0vtw5ANjcsaweUtuvdD638XygZEphg1bfutFre4++cD4FMMmrWrrRe3tPvnARiiGjVnt1ota2n3ygU1RDJuxjq0XtbH75AMbpBg2YH1bL6p998kHNksxjG3dWy+qd/fJBzZOMYxqnK0X1bj75AMlUAzjGXPrRXXtPvlAIRTDSMbfelEtu08+UA7FMIZNbb2o/N0nHyiKYli7zW69qOTdJx8ojWJYrxK2XlTm7pMPFEgxrFE5Wy8qbffJB8qkGNaltK0XlbP75APFUgxrUebWi0rYffKBkimG1St560Wb3X3ygcIphhUrf+tFm9p98oHyKYZVqmXrRePvPvlAFRTDytS19aIxd598oBaKYTVq3HrROLtPPlARxbAC9W69aN27Tz5QF8WwrNq3XrS+3ScfqI5iWEobWy9ax+6TD9RIMexfS1svWu3ukw9USjHsU3tbL1rV7pMP1Esx7EerWy9afvfJB6qmGPas7a0XLbP75AO1Uwx708PWi/a3++SjG2iAYtiDfrZetNfdJx/dQBsUw6J623rR4rtPPkE30ArFsJA+t160yO6Tj26gJYrh7HreelF+98lHN9AYxXAWtl40b/cNP8sn6AbaohhytMKk2d13/wN/Ofb145PPkY9uoAEHtre3A7s5+rWbj3z+hslHet56O46fuPXqa67d9ZB8wkw+W1vnvu2tbzr21S8GqIczht0N5wof/cSnJx+x9aKpv4t3yCeayueZZ7b/+rdTw59fwqEi5wRmzF5BGkb913feFTjjiSefnHpEPpOm8nn66f8OpxE3fvmmAJVwxjBtthWC68UTZq+wBflMkA8NUAyJXVshMtthztaL5BPkQysUw//t+h6krXPP/ePJP8dfO5/tXV+Nl8+Oee9W8D4lqqMYnjPvnanveNtbHv77P+y+eVtPPtG8fLyHlRophmflP69g9+XfuSuffD66geoohoU+xdbz7lvk8xzy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",
+        "width": 260,
         "height": 120,
-        "displayWidth": 360,
+        "displayWidth": 260,
         "displayHeight": 120,
-        "description": "2번 유사문제 1 그림"
+        "description": "처음 다섯 정사각형과 이어짐표만 보인 12개 정사각형 연결 규칙"
       }
     },
     {
       "id": "final2-q02-v2",
       "sourceNo": 2,
       "variantNo": 2,
-      "text": "그림처럼 크기가 같은 정사각형 15개를 한 칸씩 번갈아 꺾어 이어 붙였습니다. 그림 안의 크고 작은 사각형은 모두 몇 개입니까?",
+      "text": "그림과 같은 규칙으로 크기가 같은 정사각형을 한 칸씩 번갈아 꺾어 모두 15개 이어 붙였습니다. 만들어진 크고 작은 사각형은 모두 몇 개입니까?",
       "answer": "29개",
       "acceptedAnswers": [
         "29개"
@@ -495,7 +497,9 @@
           "showCellIds": false,
           "showCountingGuides": false,
           "answerMarks": false,
-          "closedOutlines": true
+          "closedOutlines": true,
+          "visibleCellCount": 5,
+          "showContinuation": true
         }
       },
       "sourceSet": "final",
@@ -505,19 +509,19 @@
       "solution": "기본 작은 정사각형은 15개입니다. 맞닿은 두 칸이 만드는 큰 직사각형은 두 기울기에서 각각 7개씩, 모두 14개입니다. 세 칸부터는 꺾인 모양이라 네 변의 사각형이 되지 않습니다. 따라서 15+14=29개입니다.",
       "asset": {
         "kind": "raster",
-        "src": "data:image/png;base64,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",
-        "width": 432,
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAggAAADwCAIAAADqwAtpAAAN2UlEQVR4nOzdXaikdR0H8P/quXW9qS56u4hQcjfTjIIueoEoIorIiyLpwkCii0oohCBWK69CI+om2YsNwmKLtdCg6M1eyBCyqNxMEYt21fLlRntBME+P+9fT/GfO/HfOmZln/i+fz9U588zefNnf73ueZ2ae2dre3g4A3Th67OYj19+w66HPfeZTV115RejeOQGgG3f/6d7jt9w27+hwaHhC6J5iADpy1+/+cHL+6h8ODU8I3dsKAN247/4HlnxCD5wxAJBwxgB05IJXvmLJJ/TAGQPQkcsuvfjQRRfOOzocGp4QuqcYgI4cvujC97/v3fOODocOz6+NfriUBPQlflLh+C23Tb496dCZwvAhhuiAD7gBHbr7zDtT43uQhtcVhitIzhV2KAYAEl5jACChGABIKAYAEooBgIRiACChGABIKAYAEooBgIRiACChGABIKAYAEu6uCtTEze9GoBiAahw9drPbZY9AMQB1GFrhyPU3TD04lMSRMz2hG1bIawxABYYrSMO5wryjw6G7J04jWJJiACowvK5wcv7qP3nmhYfAiriUBFQgvtq8zBNYnDMGABLOGIAKXPDKVyz5BBbnjAGowGWXXnxo/ucVhkPDEwIrohiAChw+83mFeUeHQz7mtkIuJQF1iJ9U8AG3ERzY3t4OAJVwS4wRKAYAEl5jACChGABIKAYAEooBgIRiACChGABIKAYAEooBgIRiACChGABIKAYAEuded911gRrccedvXv/md33rltueePKfb3zD6wIp+RTu7j/d+/0f3v7t73zvpz//1ekHH97a2nrRC18QKJLbbtdh2HqXf/Cq4YdTpx86fuLW4YdPfvwjgefJp3BHj93sdtkVccZQgZ2tFz3xxJOnHnzI38U75FO4oRWOXH/Do48+Pvng8Ovtv7jj/IPn+ea1AimG0k1tvcju2yGfwg1XkG78yk1TrbDjkccef+0lr3ZNqTSKoWi7br3I7gvyqcHwusI3v/XdeUeHwjj0qgsuufhQoCTelVSu2a134htHv/SFz+78Gq+n3/jlm0KX5FOF+FVryzyB8XnxuVC7br1n//h9w7M/X33NtfHBbl9rlQ+sj0tJJZq79c44fNGFL3vpi3/wo5/FXzu8ZiKfipx+8OEf3/7LzBPef/l7XEoqjWIoTn7rRT3vPvnUZWtr67e//+O8F58PXXThhz/0AS8+l0YxlGWRrRf1ufvkU51h6T/11FO3/+KOXY9+7CNXvvPtbw0URjEUZPGtF/W2++RTqcsuvfj8g+c98tjjk+cNw7nC0Ao+4FYmxVCKvW69qJ/dJ5+qDd3w2ktefehVF7z8ZS+59DWHh9cVhitIzhWKdWB7ezuwafvbejuOn7h15304g2EVDoPX0vtw5ANjcsaweUtuvdD638XygZEphg1bfutFre4++cD4FMMmrWrrRe3tPvnARiiGjVnt1ota2n3ygU1RDJuxjq0XtbH75AMbpBg2YH1bL6p998kHNksxjG3dWy+qd/fJBzZOMYxqnK0X1bj75AMlUAzjGXPrRXXtPvlAIRTDSMbfelEtu08+UA7FMIZNbb2o/N0nHyiKYli7zW69qOTdJx8ojWJYrxK2XlTm7pMPFEgxrFE5Wy8qbffJB8qkGNaltK0XlbP75APFUgxrUebWi0rYffKBkimG1St560Wb3X3ygcIphhUrf+tFm9p98oHyKYZVqmXrRePvPvlAFRTDytS19aIxd598oBaKYTVq3HrROLtPPlARxbAC9W69aN27Tz5QF8WwrNq3XrS+3ScfqI5iWEobWy9ax+6TD9RIMexfS1svWu3ukw9USjHsU3tbL1rV7pMP1Esx7EerWy9afvfJB6qmGPas7a0XLbP75AO1Uwx708PWi/a3++SjG2iAYtiDfrZetNfdJx/dQBsUw6J623rR4rtPPkE30ArFsJA+t160yO6Tj26gJYrh7HreelF+98lHN9AYxXAWtl40b/cNP8sn6AbaohhytMKk2d13/wN/Ofb145PPkY9uoAEHtre3A7s5+rWbj3z+hslHet56O46fuPXqa67d9ZB8wkw+W1vnvu2tbzr21S8GqIczht0N5wof/cSnJx+x9aKpv4t3yCeayueZZ7b/+rdTw59fwqEi5wRmzF5BGkb913feFTjjiSefnHpEPpOm8nn66f8OpxE3fvmmAJVwxjBtthWC68UTZq+wBflMkA8NUAyJXVshMtthztaL5BPkQysUw//t+h6krXPP/ePJP8dfO5/tXV+Nl8+Oee9W8D4lqqMYnjPvnanveNtbHv77P+y+eVtPPtG8fLyHlRophmflP69g9+XfuSuffD66geoohoU+xdbz7lvk8xzy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",
+        "width": 260,
         "height": 120,
-        "displayWidth": 432,
+        "displayWidth": 260,
         "displayHeight": 120,
-        "description": "2번 유사문제 2 그림"
+        "description": "처음 다섯 정사각형과 이어짐표만 보인 15개 정사각형 연결 규칙"
       }
     },
     {
       "id": "final2-q02-v3",
       "sourceNo": 2,
       "variantNo": 3,
-      "text": "그림처럼 크기가 같은 정사각형 24개를 한 칸씩 번갈아 꺾어 이어 붙였습니다. 그림 안의 크고 작은 사각형은 모두 몇 개입니까?",
+      "text": "그림과 같은 규칙으로 크기가 같은 정사각형을 한 칸씩 번갈아 꺾어 모두 24개 이어 붙였습니다. 만들어진 크고 작은 사각형은 모두 몇 개입니까?",
       "answer": "47개",
       "acceptedAnswers": [
         "47개"
@@ -698,7 +702,9 @@
           "showCellIds": false,
           "showCountingGuides": false,
           "answerMarks": false,
-          "closedOutlines": true
+          "closedOutlines": true,
+          "visibleCellCount": 5,
+          "showContinuation": true
         }
       },
       "sourceSet": "final",
@@ -708,12 +714,12 @@
       "solution": "기본 작은 정사각형은 24개입니다. 맞닿은 두 칸이 만드는 큰 직사각형은 첫째 기울기 12개, 둘째 기울기 11개로 모두 23개입니다. 세 칸부터는 꺾인 모양이라 네 변의 사각형이 되지 않습니다. 따라서 24+23=47개입니다.",
       "asset": {
         "kind": "raster",
-        "src": "data:image/png;base64,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",
-        "width": 648,
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAggAAADwCAIAAADqwAtpAAAN2UlEQVR4nOzdXaikdR0H8P/quXW9qS56u4hQcjfTjIIueoEoIorIiyLpwkCii0oohCBWK69CI+om2YsNwmKLtdCg6M1eyBCyqNxMEYt21fLlRntBME+P+9fT/GfO/HfOmZln/i+fz9U588zefNnf73ueZ2ae2dre3g4A3Th67OYj19+w66HPfeZTV115RejeOQGgG3f/6d7jt9w27+hwaHhC6J5iADpy1+/+cHL+6h8ODU8I3dsKAN247/4HlnxCD5wxAJBwxgB05IJXvmLJJ/TAGQPQkcsuvfjQRRfOOzocGp4QuqcYgI4cvujC97/v3fOODocOz6+NfriUBPQlflLh+C23Tb496dCZwvAhhuiAD7gBHbr7zDtT43uQhtcVhitIzhV2KAYAEl5jACChGABIKAYAEooBgIRiACChGABIKAYAEooBgIRiACChGABIKAYAEu6uCtTEze9GoBiAahw9drPbZY9AMQB1GFrhyPU3TD04lMSRMz2hG1bIawxABYYrSMO5wryjw6G7J04jWJJiACowvK5wcv7qP3nmhYfAiriUBFQgvtq8zBNYnDMGABLOGIAKXPDKVyz5BBbnjAGowGWXXnxo/ucVhkPDEwIrohiAChw+83mFeUeHQz7mtkIuJQF1iJ9U8AG3ERzY3t4OAJVwS4wRKAYAEl5jACChGABIKAYAEooBgIRiACChGABIKAYAEooBgIRiACChGABIKAYAEuded911gRrccedvXv/md33rltueePKfb3zD6wIp+RTu7j/d+/0f3v7t73zvpz//1ekHH97a2nrRC18QKJLbbtdh2HqXf/Cq4YdTpx86fuLW4YdPfvwjgefJp3BHj93sdtkVccZQgZ2tFz3xxJOnHnzI38U75FO4oRWOXH/Do48+Pvng8Ovtv7jj/IPn+ea1AimG0k1tvcju2yGfwg1XkG78yk1TrbDjkccef+0lr3ZNqTSKoWi7br3I7gvyqcHwusI3v/XdeUeHwjj0qgsuufhQoCTelVSu2a134htHv/SFz+78Gq+n3/jlm0KX5FOF+FVryzyB8XnxuVC7br1n//h9w7M/X33NtfHBbl9rlQ+sj0tJJZq79c44fNGFL3vpi3/wo5/FXzu8ZiKfipx+8OEf3/7LzBPef/l7XEoqjWIoTn7rRT3vPvnUZWtr67e//+O8F58PXXThhz/0AS8+l0YxlGWRrRf1ufvkU51h6T/11FO3/+KOXY9+7CNXvvPtbw0URjEUZPGtF/W2++RTqcsuvfj8g+c98tjjk+cNw7nC0Ao+4FYmxVCKvW69qJ/dJ5+qDd3w2ktefehVF7z8ZS+59DWHh9cVhitIzhWKdWB7ezuwafvbejuOn7h15304g2EVDoPX0vtw5ANjcsaweUtuvdD638XygZEphg1bfutFre4++cD4FMMmrWrrRe3tPvnARiiGjVnt1ota2n3ygU1RDJuxjq0XtbH75AMbpBg2YH1bL6p998kHNksxjG3dWy+qd/fJBzZOMYxqnK0X1bj75AMlUAzjGXPrRXXtPvlAIRTDSMbfelEtu08+UA7FMIZNbb2o/N0nHyiKYli7zW69qOTdJx8ojWJYrxK2XlTm7pMPFEgxrFE5Wy8qbffJB8qkGNaltK0XlbP75APFUgxrUebWi0rYffKBkimG1St560Wb3X3ygcIphhUrf+tFm9p98oHyKYZVqmXrRePvPvlAFRTDytS19aIxd598oBaKYTVq3HrROLtPPlARxbAC9W69aN27Tz5QF8WwrNq3XrS+3ScfqI5iWEobWy9ax+6TD9RIMexfS1svWu3ukw9USjHsU3tbL1rV7pMP1Esx7EerWy9afvfJB6qmGPas7a0XLbP75AO1Uwx708PWi/a3++SjG2iAYtiDfrZetNfdJx/dQBsUw6J623rR4rtPPkE30ArFsJA+t160yO6Tj26gJYrh7HreelF+98lHN9AYxXAWtl40b/cNP8sn6AbaohhytMKk2d13/wN/Ofb145PPkY9uoAEHtre3A7s5+rWbj3z+hslHet56O46fuPXqa67d9ZB8wkw+W1vnvu2tbzr21S8GqIczht0N5wof/cSnJx+x9aKpv4t3yCeayueZZ7b/+rdTw59fwqEi5wRmzF5BGkb913feFTjjiSefnHpEPpOm8nn66f8OpxE3fvmmAJVwxjBtthWC68UTZq+wBflMkA8NUAyJXVshMtthztaL5BPkQysUw//t+h6krXPP/ePJP8dfO5/tXV+Nl8+Oee9W8D4lqqMYnjPvnanveNtbHv77P+y+eVtPPtG8fLyHlRophmflP69g9+XfuSuffD66geoohoU+xdbz7lvk8xzy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",
+        "width": 260,
         "height": 120,
-        "displayWidth": 648,
+        "displayWidth": 260,
         "displayHeight": 120,
-        "description": "2번 유사문제 3 그림"
+        "description": "처음 다섯 정사각형과 이어짐표만 보인 24개 정사각형 연결 규칙"
       }
     },
     {
@@ -2167,223 +2173,226 @@
       "id": "final2-q08-v1",
       "sourceNo": 8,
       "variantNo": 1,
-      "text": "모양이 같은 은화가 15개씩 든 다발이 7개 있습니다. 한 다발에는 모두 가짜 은화가 들어 있고 나머지는 모두 진짜입니다. 진짜 은화는 1개에 12g, 가짜 은화는 1개에 11g입니다. 전자저울을 최소 몇 번 사용하면 가짜 다발을 찾을 수 있습니까? 전자저울에는 여러 다발에서 꺼낸 은화를 한꺼번에 올릴 수 있습니다. 전자저울은 올린 은화의 정확한 무게를 보여 줍니다.",
-      "answer": "1번",
+      "text": "모양이 같은 은화가 15개씩 든 다발이 7개 있습니다. 한 다발에는 가벼운 가짜 은화만 들어 있고 나머지는 모두 진짜 은화입니다. 각 다발에서 은화를 한 개씩 꺼내 양팔저울로 재어 볼 때, 최소 몇 번이면 가짜 다발을 확실히 찾을 수 있습니까?",
+      "answer": "2번",
       "acceptedAnswers": [
-        "1번"
+        "2번"
       ],
       "answerPolicy": "single",
       "pointBand": "2.7",
       "area": "수·규칙찾기",
       "subarea": "수의 관계",
-      "detailType": "표본 개수와 무게 차로 한 번에 가짜 다발 찾기",
-      "solutionSkill": "다발 번호만큼 꺼내 한 번에 달고 기준 무게와의 차이로 번호 찾기",
+      "detailType": "양팔저울의 세 결과로 후보 다발 줄이기",
+      "solutionSkill": "후보 다발을 세 무리로 나누어 양팔저울 결과마다 후보를 3개 이하로 줄이기",
       "solutionSteps": [
-        "1번 다발에서 1개, 2번에서 2개, …, 7번에서 7개를 꺼내면 모두 28개입니다.",
-        "모두 진짜라면 28×12=336g입니다. 가짜 한 개는 1g 가볍습니다.",
-        "실제 무게가 336g보다 몇 g 가벼운지가 곧 가짜 다발 번호가 되므로 한 번이면 찾을 수 있습니다.",
-        "측정을 전혀 하지 않으면 7개 다발 가운데 어느 것이 가짜인지 구별할 수 없습니다. 한 번으로 찾는 방법이 있으므로 최소 횟수는 1번입니다."
+        "첫 번째에는 1·2·3번 다발의 은화를 왼쪽에, 4·5·6번 다발의 은화를 오른쪽에 한 개씩 올립니다.",
+        "양쪽이 같으면 7번 다발이 후보이고, 한쪽이 올라가면 그쪽에 올린 세 다발이 후보입니다.",
+        "후보가 세 다발이면 두 다발의 은화를 하나씩 비교합니다. 같으면 올리지 않은 다발, 다르면 올라간 쪽 다발이 가짜입니다. 후보가 두 다발이면 두 은화를 바로 비교해 올라간 쪽을 찾습니다.",
+        "한 번의 결과는 왼쪽이 올라감·같음·오른쪽이 올라감의 3가지뿐이어서 7개 후보를 모두 구별할 수 없습니다. 두 번으로는 찾을 수 있으므로 최소 2번입니다."
       ],
-      "readingFocus": "양팔저울이 아니라 정확한 무게가 숫자로 나오는 전자저울입니다.",
+      "readingFocus": "가짜 은화가 가벼우므로 가짜 은화가 올라간 접시가 위로 올라갑니다.",
       "meta": {
         "bundleCount": 7,
         "coinsPerBundle": 15,
-        "realWeight": 12,
-        "fakeWeight": 11,
-        "sampleCounts": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
-        "baselineWeight": 336,
-        "minimumWeighings": 1
+        "fakeRelation": "lighter",
+        "firstWeighing": {
+          "left": [
+            1,
+            2,
+            3
+          ],
+          "right": [
+            4,
+            5,
+            6
+          ]
+        },
+        "maxOutcomesPerWeighing": 3,
+        "minimumWeighings": 2
       },
       "verification": {
         "primary": {
-          "method": "1~7개 표본의 기준 무게 부족분을 다발 번호에 대응",
-          "answer": "1번"
+          "method": "첫 저울에서 후보를 세 무리로 나눈 뒤 둘째 저울에서 남은 후보를 구별",
+          "answer": "2번"
         },
         "independent": {
-          "method": "가짜 다발 7경우의 측정 무게를 전부 계산해 서로 다름 확인",
-          "answer": "1번"
+          "method": "한 번의 3결과로는 7경우를 구별할 수 없고 3²=9이므로 두 번이면 최대 9경우를 구별함을 확인",
+          "answer": "2번"
         },
         "unique": true,
         "validAnswerCount": 1,
         "answerContract": "single-value",
         "visibleEvidence": {
           "passed": true,
-          "method": "다발 수·다발당 개수·두 무게·전자저울 조건이 모두 제시됨"
+          "method": "다발 수·가짜가 가벼운다는 조건·양팔저울로 찾을 것이 모두 제시됨"
         }
       },
       "learnerFit": {
         "gateId": "learner-fit",
         "status": "pass",
         "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
-        "language": "은화 다발과 전자저울 상황을 분명하게 설명",
-        "representations": "다발 번호와 표본 수의 일대일 대응",
-        "prerequisites": "1부터의 합, 곱셈, 무게 차",
-        "reasoning-load": "한 번의 측정값에 다발 번호를 부호화",
-        "response-mode": "전자저울의 최소 사용 횟수 한 개"
+        "language": "은화 다발과 양팔저울 상황을 분명하게 설명",
+        "representations": "후보 다발을 3·3·1로 나누는 경우 분류",
+        "prerequisites": "양팔저울의 평형과 기울기, 경우 나누기",
+        "reasoning-load": "저울 결과에 따라 후보를 세 무리로 줄이고 최소성 확인",
+        "response-mode": "양팔저울의 최소 사용 횟수 한 개"
       },
       "assetSpec": null,
       "sourceSet": "final",
       "sourceRound": 2,
       "genId": "final2-q08",
       "reviewStatus": "verified",
-      "solution": "1번 다발에서 1개, 2번에서 2개, …, 7번에서 7개를 꺼내면 모두 28개입니다. 모두 진짜라면 28×12=336g입니다. 가짜 한 개는 1g 가볍습니다. 실제 무게가 336g보다 몇 g 가벼운지가 곧 가짜 다발 번호가 되므로 한 번이면 찾을 수 있습니다. 측정을 전혀 하지 않으면 7개 다발 가운데 어느 것이 가짜인지 구별할 수 없습니다. 한 번으로 찾는 방법이 있으므로 최소 횟수는 1번입니다."
+      "solution": "첫 번째에는 1·2·3번 다발의 은화를 왼쪽에, 4·5·6번 다발의 은화를 오른쪽에 한 개씩 올립니다. 양쪽이 같으면 7번 다발이 후보이고, 한쪽이 올라가면 그쪽에 올린 세 다발이 후보입니다. 후보가 세 다발이면 두 다발의 은화를 하나씩 비교합니다. 같으면 올리지 않은 다발, 다르면 올라간 쪽 다발이 가짜입니다. 후보가 두 다발이면 두 은화를 바로 비교해 올라간 쪽을 찾습니다. 한 번의 결과는 왼쪽이 올라감·같음·오른쪽이 올라감의 3가지뿐이어서 7개 후보를 모두 구별할 수 없습니다. 두 번으로는 찾을 수 있으므로 최소 2번입니다."
     },
     {
       "id": "final2-q08-v2",
       "sourceNo": 8,
       "variantNo": 2,
-      "text": "모양이 같은 은화가 20개씩 든 다발이 8개 있습니다. 한 다발에는 모두 가짜 은화가 들어 있고 나머지는 모두 진짜입니다. 진짜 은화는 1개에 9g, 가짜 은화는 1개에 11g입니다. 전자저울을 최소 몇 번 사용하면 가짜 다발을 찾을 수 있습니까? 전자저울에는 여러 다발에서 꺼낸 은화를 한꺼번에 올릴 수 있습니다. 전자저울은 올린 은화의 정확한 무게를 보여 줍니다.",
-      "answer": "1번",
+      "text": "모양이 같은 은화가 20개씩 든 다발이 8개 있습니다. 한 다발에는 무거운 가짜 은화만 들어 있고 나머지는 모두 진짜 은화입니다. 각 다발에서 은화를 한 개씩 꺼내 양팔저울로 재어 볼 때, 최소 몇 번이면 가짜 다발을 확실히 찾을 수 있습니까?",
+      "answer": "2번",
       "acceptedAnswers": [
-        "1번"
+        "2번"
       ],
       "answerPolicy": "single",
       "pointBand": "2.7",
       "area": "수·규칙찾기",
       "subarea": "수의 관계",
-      "detailType": "표본 개수와 무게 차로 한 번에 가짜 다발 찾기",
-      "solutionSkill": "다발 번호만큼 꺼내 한 번에 달고 기준 무게와의 차이로 번호 찾기",
+      "detailType": "양팔저울의 세 결과로 후보 다발 줄이기",
+      "solutionSkill": "후보 다발을 세 무리로 나누어 양팔저울 결과마다 후보를 3개 이하로 줄이기",
       "solutionSteps": [
-        "1번 다발에서 1개, 2번에서 2개, …, 8번에서 8개를 꺼내면 모두 36개입니다.",
-        "모두 진짜라면 36×9=324g입니다. 이번에는 가짜 한 개가 2g 더 무겁습니다.",
-        "실제 무게가 324g보다 2g, 4g, …, 16g 무거운 경우가 각각 1~8번 다발과 대응하므로 한 번이면 찾습니다.",
-        "측정을 전혀 하지 않으면 8개 다발 가운데 어느 것이 가짜인지 구별할 수 없습니다. 한 번으로 찾는 방법이 있으므로 최소 횟수는 1번입니다."
+        "첫 번째에는 1·2·3번 다발의 은화를 왼쪽에, 4·5·6번 다발의 은화를 오른쪽에 한 개씩 올립니다.",
+        "양쪽이 같으면 7·8번 다발이 후보이고, 한쪽이 내려가면 그쪽에 올린 세 다발이 후보입니다.",
+        "후보가 세 다발이면 두 다발의 은화를 하나씩 비교합니다. 같으면 올리지 않은 다발, 다르면 내려간 쪽 다발이 가짜입니다. 후보가 두 다발이면 두 은화를 바로 비교해 내려간 쪽을 찾습니다.",
+        "한 번의 결과는 왼쪽이 올라감·같음·오른쪽이 올라감의 3가지뿐이어서 8개 후보를 모두 구별할 수 없습니다. 두 번으로는 찾을 수 있으므로 최소 2번입니다."
       ],
-      "readingFocus": "가짜가 더 가벼운지 더 무거운지 확인해 기준 무게보다 늘어난 양을 읽습니다.",
+      "readingFocus": "가짜 은화가 무거우므로 가짜 은화가 올라간 접시가 아래로 내려갑니다.",
       "meta": {
         "bundleCount": 8,
         "coinsPerBundle": 20,
-        "realWeight": 9,
-        "fakeWeight": 11,
-        "sampleCounts": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8
-        ],
-        "baselineWeight": 324,
-        "minimumWeighings": 1
+        "fakeRelation": "heavier",
+        "firstWeighing": {
+          "left": [
+            1,
+            2,
+            3
+          ],
+          "right": [
+            4,
+            5,
+            6
+          ]
+        },
+        "maxOutcomesPerWeighing": 3,
+        "minimumWeighings": 2
       },
       "verification": {
         "primary": {
-          "method": "1~8개 표본의 기준 무게 초과분을 다발 번호에 대응",
-          "answer": "1번"
+          "method": "첫 저울에서 후보를 세 무리로 나눈 뒤 둘째 저울에서 남은 후보를 구별",
+          "answer": "2번"
         },
         "independent": {
-          "method": "가짜 다발 8경우의 측정 무게를 전부 계산해 서로 다름 확인",
-          "answer": "1번"
+          "method": "한 번의 3결과로는 8경우를 구별할 수 없고 3²=9이므로 두 번이면 최대 9경우를 구별함을 확인",
+          "answer": "2번"
         },
         "unique": true,
         "validAnswerCount": 1,
         "answerContract": "single-value",
         "visibleEvidence": {
           "passed": true,
-          "method": "다발 수·다발당 개수·두 무게·전자저울 조건이 모두 제시됨"
+          "method": "다발 수·가짜가 무거운다는 조건·양팔저울로 찾을 것이 모두 제시됨"
         }
       },
       "learnerFit": {
         "gateId": "learner-fit",
         "status": "pass",
         "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
-        "language": "은화 다발과 전자저울 상황을 분명하게 설명",
-        "representations": "다발 번호와 표본 수의 일대일 대응",
-        "prerequisites": "1부터의 합, 곱셈, 무게 차",
-        "reasoning-load": "무거운 가짜의 한 번 측정값에 다발 번호를 부호화",
-        "response-mode": "전자저울의 최소 사용 횟수 한 개"
+        "language": "은화 다발과 양팔저울 상황을 분명하게 설명",
+        "representations": "후보 다발을 3·3·2로 나누는 경우 분류",
+        "prerequisites": "양팔저울의 평형과 기울기, 경우 나누기",
+        "reasoning-load": "저울 결과에 따라 후보를 세 무리로 줄이고 최소성 확인",
+        "response-mode": "양팔저울의 최소 사용 횟수 한 개"
       },
       "assetSpec": null,
       "sourceSet": "final",
       "sourceRound": 2,
       "genId": "final2-q08",
       "reviewStatus": "verified",
-      "solution": "1번 다발에서 1개, 2번에서 2개, …, 8번에서 8개를 꺼내면 모두 36개입니다. 모두 진짜라면 36×9=324g입니다. 이번에는 가짜 한 개가 2g 더 무겁습니다. 실제 무게가 324g보다 2g, 4g, …, 16g 무거운 경우가 각각 1~8번 다발과 대응하므로 한 번이면 찾습니다. 측정을 전혀 하지 않으면 8개 다발 가운데 어느 것이 가짜인지 구별할 수 없습니다. 한 번으로 찾는 방법이 있으므로 최소 횟수는 1번입니다."
+      "solution": "첫 번째에는 1·2·3번 다발의 은화를 왼쪽에, 4·5·6번 다발의 은화를 오른쪽에 한 개씩 올립니다. 양쪽이 같으면 7·8번 다발이 후보이고, 한쪽이 내려가면 그쪽에 올린 세 다발이 후보입니다. 후보가 세 다발이면 두 다발의 은화를 하나씩 비교합니다. 같으면 올리지 않은 다발, 다르면 내려간 쪽 다발이 가짜입니다. 후보가 두 다발이면 두 은화를 바로 비교해 내려간 쪽을 찾습니다. 한 번의 결과는 왼쪽이 올라감·같음·오른쪽이 올라감의 3가지뿐이어서 8개 후보를 모두 구별할 수 없습니다. 두 번으로는 찾을 수 있으므로 최소 2번입니다."
     },
     {
       "id": "final2-q08-v3",
       "sourceNo": 8,
       "variantNo": 3,
-      "text": "모양이 같은 은화가 12개씩 든 다발이 9개 있습니다. 한 다발에는 모두 가짜 은화가 들어 있고 나머지는 모두 진짜입니다. 진짜 은화는 1개에 15g, 가짜 은화는 1개에 13g입니다. 전자저울을 최소 몇 번 사용하면 가짜 다발을 찾을 수 있습니까? 전자저울에는 여러 다발에서 꺼낸 은화를 한꺼번에 올릴 수 있습니다. 전자저울은 올린 은화의 정확한 무게를 보여 줍니다.",
-      "answer": "1번",
+      "text": "모양이 같은 은화가 12개씩 든 다발이 9개 있습니다. 한 다발에는 가벼운 가짜 은화만 들어 있고 나머지는 모두 진짜 은화입니다. 각 다발에서 은화를 한 개씩 꺼내 양팔저울로 재어 볼 때, 최소 몇 번이면 가짜 다발을 확실히 찾을 수 있습니까?",
+      "answer": "2번",
       "acceptedAnswers": [
-        "1번"
+        "2번"
       ],
       "answerPolicy": "single",
       "pointBand": "2.7",
       "area": "수·규칙찾기",
       "subarea": "수의 관계",
-      "detailType": "표본 개수와 무게 차로 한 번에 가짜 다발 찾기",
-      "solutionSkill": "다발 번호만큼 꺼내 한 번에 달고 기준 무게와의 차이로 번호 찾기",
+      "detailType": "양팔저울의 세 결과로 후보 다발 줄이기",
+      "solutionSkill": "후보 다발을 세 무리로 나누어 양팔저울 결과마다 후보를 3개 이하로 줄이기",
       "solutionSteps": [
-        "1번 다발에서 1개, 2번에서 2개, …, 9번에서 9개를 꺼내면 모두 45개입니다.",
-        "모두 진짜라면 45×15=675g입니다. 가짜 한 개는 2g 가볍습니다.",
-        "실제 무게의 부족분 2g, 4g, …, 18g을 2로 나누면 가짜 다발 번호가 되므로 한 번이면 찾습니다.",
-        "측정을 전혀 하지 않으면 9개 다발 가운데 어느 것이 가짜인지 구별할 수 없습니다. 한 번으로 찾는 방법이 있으므로 최소 횟수는 1번입니다."
+        "첫 번째에는 1·2·3번 다발의 은화를 왼쪽에, 4·5·6번 다발의 은화를 오른쪽에 한 개씩 올립니다.",
+        "양쪽이 같으면 7·8·9번 다발이 후보이고, 한쪽이 올라가면 그쪽에 올린 세 다발이 후보입니다.",
+        "후보가 세 다발이면 두 다발의 은화를 하나씩 비교합니다. 같으면 올리지 않은 다발, 다르면 올라간 쪽 다발이 가짜입니다. 후보가 두 다발이면 두 은화를 바로 비교해 올라간 쪽을 찾습니다.",
+        "한 번의 결과는 왼쪽이 올라감·같음·오른쪽이 올라감의 3가지뿐이어서 9개 후보를 모두 구별할 수 없습니다. 두 번으로는 찾을 수 있으므로 최소 2번입니다."
       ],
-      "readingFocus": "다발마다 꺼내는 개수를 다르게 해야 한 번의 무게로 다발 번호를 알 수 있습니다.",
+      "readingFocus": "가짜 은화가 가벼우므로 가짜 은화가 올라간 접시가 위로 올라갑니다.",
       "meta": {
         "bundleCount": 9,
         "coinsPerBundle": 12,
-        "realWeight": 15,
-        "fakeWeight": 13,
-        "sampleCounts": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9
-        ],
-        "baselineWeight": 675,
-        "minimumWeighings": 1
+        "fakeRelation": "lighter",
+        "firstWeighing": {
+          "left": [
+            1,
+            2,
+            3
+          ],
+          "right": [
+            4,
+            5,
+            6
+          ]
+        },
+        "maxOutcomesPerWeighing": 3,
+        "minimumWeighings": 2
       },
       "verification": {
         "primary": {
-          "method": "1~9개 표본의 기준 무게 부족분을 다발 번호에 대응",
-          "answer": "1번"
+          "method": "첫 저울에서 후보를 세 무리로 나눈 뒤 둘째 저울에서 남은 후보를 구별",
+          "answer": "2번"
         },
         "independent": {
-          "method": "가짜 다발 9경우의 측정 무게를 전부 계산해 서로 다름 확인",
-          "answer": "1번"
+          "method": "한 번의 3결과로는 9경우를 구별할 수 없고 3²=9이므로 두 번이면 최대 9경우를 구별함을 확인",
+          "answer": "2번"
         },
         "unique": true,
         "validAnswerCount": 1,
         "answerContract": "single-value",
         "visibleEvidence": {
           "passed": true,
-          "method": "다발 수·다발당 개수·두 무게·전자저울 조건이 모두 제시됨"
+          "method": "다발 수·가짜가 가벼운다는 조건·양팔저울로 찾을 것이 모두 제시됨"
         }
       },
       "learnerFit": {
         "gateId": "learner-fit",
         "status": "pass",
         "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
-        "language": "은화 다발과 전자저울 상황을 분명하게 설명",
-        "representations": "다발 번호와 표본 수의 일대일 대응",
-        "prerequisites": "1부터의 합, 곱셈, 무게 차",
-        "reasoning-load": "한 번의 측정값에 다발 번호를 부호화",
-        "response-mode": "전자저울의 최소 사용 횟수 한 개"
+        "language": "은화 다발과 양팔저울 상황을 분명하게 설명",
+        "representations": "후보 다발을 3·3·3로 나누는 경우 분류",
+        "prerequisites": "양팔저울의 평형과 기울기, 경우 나누기",
+        "reasoning-load": "저울 결과에 따라 후보를 세 무리로 줄이고 최소성 확인",
+        "response-mode": "양팔저울의 최소 사용 횟수 한 개"
       },
       "assetSpec": null,
       "sourceSet": "final",
       "sourceRound": 2,
       "genId": "final2-q08",
       "reviewStatus": "verified",
-      "solution": "1번 다발에서 1개, 2번에서 2개, …, 9번에서 9개를 꺼내면 모두 45개입니다. 모두 진짜라면 45×15=675g입니다. 가짜 한 개는 2g 가볍습니다. 실제 무게의 부족분 2g, 4g, …, 18g을 2로 나누면 가짜 다발 번호가 되므로 한 번이면 찾습니다. 측정을 전혀 하지 않으면 9개 다발 가운데 어느 것이 가짜인지 구별할 수 없습니다. 한 번으로 찾는 방법이 있으므로 최소 횟수는 1번입니다."
+      "solution": "첫 번째에는 1·2·3번 다발의 은화를 왼쪽에, 4·5·6번 다발의 은화를 오른쪽에 한 개씩 올립니다. 양쪽이 같으면 7·8·9번 다발이 후보이고, 한쪽이 올라가면 그쪽에 올린 세 다발이 후보입니다. 후보가 세 다발이면 두 다발의 은화를 하나씩 비교합니다. 같으면 올리지 않은 다발, 다르면 올라간 쪽 다발이 가짜입니다. 후보가 두 다발이면 두 은화를 바로 비교해 올라간 쪽을 찾습니다. 한 번의 결과는 왼쪽이 올라감·같음·오른쪽이 올라감의 3가지뿐이어서 9개 후보를 모두 구별할 수 없습니다. 두 번으로는 찾을 수 있으므로 최소 2번입니다."
     },
     {
       "id": "final2-q09-v1",
@@ -5806,7 +5815,7 @@
       "id": "final2-q18-v1",
       "sourceNo": 18,
       "variantNo": 1,
-      "text": "어떤 학교의 5학년 900명은 ‘컴퓨터 자격시험 합격’, ‘한자시험에만 합격’, ‘어느 시험에도 응시하지 않음’, ‘두 시험에 모두 불합격’의 네 부류로만 나뉘며 서로 겹치지 않습니다. 컴퓨터 자격시험 합격자는 250명보다 많고 321명보다 적습니다. 어느 시험에도 응시하지 않은 학생이 180명이고 두 시험에 모두 불합격한 학생이 20명일 때, 한자시험에만 합격한 학생 수의 최솟값과 최댓값을 차례로 구하세요.",
+      "text": "어떤 학교의 5학년 900명은 ‘컴퓨터 자격시험 합격’, ‘한자시험에만 합격’, ‘어느 시험에도 응시하지 않음’, ‘두 시험에 모두 불합격’ 가운데 한 가지에만 해당합니다. 컴퓨터 자격시험 합격자는 250명보다 많고 321명보다 적습니다. 어느 시험에도 응시하지 않은 학생이 180명이고 두 시험에 모두 불합격한 학생이 20명일 때, 한자시험에만 합격한 학생 수의 최솟값과 최댓값을 차례로 구하세요.",
       "answer": "380명, 449명",
       "acceptedAnswers": [
         "380명, 449명"
@@ -5815,8 +5824,8 @@
       "pointBand": "3.4",
       "area": "식의 계산",
       "subarea": "포함과 배제",
-      "detailType": "전체를 여러 부류로 나누고 정해진 두 수 사이 조건에서 한 부류의 최댓값·최솟값 구하기",
-      "solutionSkill": "네 부류의 합에서 미지 부류를 식으로 나타내고 열린 범위의 양끝을 반대로 대응하기",
+      "detailType": "전체를 네 가지 경우로 나누어 남은 수의 최솟값·최댓값 구하기",
+      "solutionSkill": "네 가지 경우의 합에서 남은 경우를 식으로 나타내고 열린 범위의 양끝을 반대로 대응하기",
       "solutionSteps": [
         "컴퓨터 합격자 수는 자연수로 251명부터 320명까지입니다.",
         "한자시험에만 합격한 수를 H, 컴퓨터 합격자 수를 C라 하면 H=900−180−20−C=700−C입니다.",
@@ -5851,16 +5860,16 @@
         "answerContract": "ordered-pair",
         "visibleEvidence": {
           "passed": true,
-          "method": "서로 겹치지 않는 네 부류와 전체·고정값·열린 범위를 모두 명시"
+          "method": "서로 겹치지 않는 네 가지 경우와 전체·고정값·열린 범위를 모두 명시"
         }
       },
       "learnerFit": {
         "gateId": "learner-fit",
         "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
-        "language": "학생과 시험의 네 부류를 겹치지 않는다고 명확히 설명",
+        "language": "학생과 시험의 네 가지 경우를 겹치지 않는다고 명확히 설명",
         "representations": "전체를 네 부분으로 나눈 식과 열린 자연수 범위",
         "prerequisites": "덧셈과 뺄셈, 초과·미만, 최댓값·최솟값",
-        "reasoningLoad": "미지 부류 식을 세운 뒤 반대로 움직이는 범위 양끝 대응",
+        "reasoningLoad": "남은 경우 식을 세운 뒤 반대로 움직이는 범위 양끝 대응",
         "responseMode": "최솟값, 최댓값의 순서 있는 한 쌍",
         "status": "pass"
       },
@@ -5875,7 +5884,7 @@
       "id": "final2-q18-v2",
       "sourceNo": 18,
       "variantNo": 2,
-      "text": "학생 760명은 ‘코딩시험 합격’, ‘한자시험에만 합격’, ‘두 시험 모두 보지 않음’, ‘두 시험에 모두 불합격’의 네 부류로 빠짐없이 나뉘고 서로 겹치지 않습니다. 코딩시험 합격자는 200명보다 많고 281명보다 적습니다. 두 시험 모두 보지 않은 학생은 145명, 두 시험에 모두 불합격한 학생은 15명입니다. 한자시험에만 합격한 학생 수의 최솟값과 최댓값을 차례로 구하세요.",
+      "text": "학생 760명은 ‘코딩시험 합격’, ‘한자시험에만 합격’, ‘두 시험 모두 보지 않음’, ‘두 시험에 모두 불합격’ 가운데 한 가지에만 해당합니다. 코딩시험 합격자는 200명보다 많고 281명보다 적습니다. 두 시험 모두 보지 않은 학생은 145명, 두 시험에 모두 불합격한 학생은 15명입니다. 한자시험에만 합격한 학생 수의 최솟값과 최댓값을 차례로 구하세요.",
       "answer": "320명, 399명",
       "acceptedAnswers": [
         "320명, 399명"
@@ -5884,8 +5893,8 @@
       "pointBand": "3.4",
       "area": "식의 계산",
       "subarea": "포함과 배제",
-      "detailType": "전체를 여러 부류로 나누고 정해진 두 수 사이 조건에서 한 부류의 최댓값·최솟값 구하기",
-      "solutionSkill": "네 부류의 합에서 미지 부류를 식으로 나타내고 열린 범위의 양끝을 반대로 대응하기",
+      "detailType": "전체를 네 가지 경우로 나누어 남은 수의 최솟값·최댓값 구하기",
+      "solutionSkill": "네 가지 경우의 합에서 남은 경우를 식으로 나타내고 열린 범위의 양끝을 반대로 대응하기",
       "solutionSteps": [
         "코딩시험 합격자는 201명부터 280명까지 가능합니다.",
         "한자시험에만 합격한 수는 760−145−15−C=600−C입니다.",
@@ -5912,7 +5921,7 @@
           "answer": "320명, 399명"
         },
         "independent": {
-          "method": "가능한 C 80개에 대해 네 부류의 합이 760인지 전수 검사",
+          "method": "가능한 C 80개에 대해 네 가지 경우의 합이 760인지 전수 검사",
           "answer": "320명, 399명"
         },
         "unique": true,
@@ -5920,13 +5929,13 @@
         "answerContract": "ordered-pair",
         "visibleEvidence": {
           "passed": true,
-          "method": "네 부류가 완전 분할임을 쓰고 모든 수치와 답 순서를 지문에 표시"
+          "method": "네 가지 경우가 완전 분할임을 쓰고 모든 수치와 답 순서를 지문에 표시"
         }
       },
       "learnerFit": {
         "gateId": "learner-fit",
         "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
-        "language": "시험 결과를 네 부류의 쉬운 말로 구분",
+        "language": "시험 결과를 네 가지 경우의 쉬운 말로 구분",
         "representations": "부분의 합과 열린 구간",
         "prerequisites": "자연수 범위, 뺄셈식, 최댓값·최솟값",
         "reasoningLoad": "초과·미만을 정수 양끝으로 바꾸고 역관계 적용",
@@ -5944,7 +5953,7 @@
       "id": "final2-q18-v3",
       "sourceNo": 18,
       "variantNo": 3,
-      "text": "어린이 1150명은 ‘컴퓨터시험 합격’, ‘한국사시험에만 합격’, ‘어느 시험도 치르지 않음’, ‘두 시험에 모두 불합격’의 네 부류로만 나뉘며 겹치는 부류는 없습니다. 컴퓨터시험 합격자는 300명보다 많고 371명보다 적습니다. 어느 시험도 치르지 않은 어린이는 240명, 두 시험에 모두 불합격한 어린이는 30명일 때, 한국사시험에만 합격한 어린이 수의 최솟값과 최댓값을 차례로 구하세요.",
+      "text": "어린이 1150명은 ‘컴퓨터시험 합격’, ‘한국사시험에만 합격’, ‘어느 시험도 치르지 않음’, ‘두 시험에 모두 불합격’ 가운데 한 가지에만 해당합니다. 컴퓨터시험 합격자는 300명보다 많고 371명보다 적습니다. 어느 시험도 치르지 않은 어린이는 240명, 두 시험에 모두 불합격한 어린이는 30명일 때, 한국사시험에만 합격한 어린이 수의 최솟값과 최댓값을 차례로 구하세요.",
       "answer": "510명, 579명",
       "acceptedAnswers": [
         "510명, 579명"
@@ -5953,8 +5962,8 @@
       "pointBand": "3.4",
       "area": "식의 계산",
       "subarea": "포함과 배제",
-      "detailType": "전체를 여러 부류로 나누고 정해진 두 수 사이 조건에서 한 부류의 최댓값·최솟값 구하기",
-      "solutionSkill": "네 부류의 합에서 미지 부류를 식으로 나타내고 열린 범위의 양끝을 반대로 대응하기",
+      "detailType": "전체를 네 가지 경우로 나누어 남은 수의 최솟값·최댓값 구하기",
+      "solutionSkill": "네 가지 경우의 합에서 남은 경우를 식으로 나타내고 열린 범위의 양끝을 반대로 대응하기",
       "solutionSteps": [
         "컴퓨터시험 합격자 C는 301명부터 370명까지입니다.",
         "한국사시험에만 합격한 수 H는 1150−240−30−C=880−C입니다.",
@@ -5989,16 +5998,16 @@
         "answerContract": "ordered-pair",
         "visibleEvidence": {
           "passed": true,
-          "method": "완전 분할 조건과 열린 범위, 고정된 두 부류의 수를 모두 노출"
+          "method": "완전 분할 조건과 열린 범위, 고정된 두 경우의 수를 모두 노출"
         }
       },
       "learnerFit": {
         "gateId": "learner-fit",
         "learnerStage": "초등 선발 대비 파이널 모의고사 수강생",
-        "language": "어린이와 시험 부류를 짧고 분명하게 설명",
-        "representations": "전체-세 부류의 뺄셈과 범위 양끝",
+        "language": "어린이와 시험 결과를 짧고 분명하게 설명",
+        "representations": "전체-세 경우의 뺄셈과 범위 양끝",
         "prerequisites": "큰 수 뺄셈, 초과·미만, 최댓값·최솟값",
-        "reasoningLoad": "서로 반대로 변하는 두 부류의 경곗값 판단",
+        "reasoningLoad": "서로 반대로 변하는 두 경우의 경곗값 판단",
         "responseMode": "최솟값과 최댓값의 순서 있는 쌍",
         "status": "pass"
       },
@@ -7411,7 +7420,7 @@
       "pointBand": "4.2",
       "area": "수·규칙찾기",
       "subarea": "규칙수열·도형배열",
-      "detailType": "단계별 도형을 부분 수열로 나누어 작은 삼각형 세기",
+      "detailType": "위쪽 띠와 아래쪽 삼각형의 규칙으로 작은 정삼각형 세기",
       "solutionSkill": "보석을 위쪽 띠와 아래쪽 층으로 나누고 홀수 배열의 합 이용하기",
       "solutionSteps": [
         "위쪽 띠 규칙 찾기 — 위쪽은 1번째 3개, 2번째 5개, 3번째 7개로 2개씩 늘어 5번째에는 11개입니다.",
@@ -7462,7 +7471,7 @@
       "assetSpec": {
         "required": true,
         "kind": "triangular-lattice-composite-sequence",
-        "topologyVersion": "final2-q25-preserved-v1",
+        "topologyVersion": "final2-q25-triangular-lattice-v2",
         "answerHidden": true,
         "sourceRasterCopied": false,
         "visibleStages": [
@@ -7496,7 +7505,7 @@
       "solution": "위쪽 띠 규칙 찾기 — 위쪽은 1번째 3개, 2번째 5개, 3번째 7개로 2개씩 늘어 5번째에는 11개입니다. 아래쪽 층수 찾기 — 아래쪽은 1번째 2층에서 한 층씩 늘어나므로 5번째에는 6층입니다. 아래쪽 삼각형 세기 — 6층의 가장 작은 삼각형 수는 1+3+5+7+9+11=36개입니다. 두 부분 합하기 — 위쪽 11개와 아래쪽 36개를 더하면 47개입니다.",
       "asset": {
         "kind": "raster",
-        "src": "data:image/png;base64,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",
+        "src": "data:image/png;base64,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1xs9H3nkkdmzZ9PQKdzwAQAIN3wAAJR+AAClHwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwClHwBA6QcAUPoBAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcA+KL0d3d3r169+qeffhr2//b09FRXV1++fDkSiXz++eeE0D9IDJASdslK2b+k63pbW9u+fftCodCNN94oIteuXVuyZElNTc38+fNF5JVXXpk7d25paamu652dnb29vSLS1tZ25syZQCAwderUjo4OEZk9e/Znn332+OOP//XXX1euXCGEaa23t/eLL744cOBATk5OeXn5nXfeSWL4nK7rhw8f3rdvX3Z29rJly4qKikiJNC793d3dDz744NmzZ3Nzczds2KBKvxG//PJLXV3dlStXHn300V27ds2bN6+8vJyweUNfX9+WLVt0Xa+oqDh16tTatWvfe+899d4mMXxb93fv3t3S0rJ169aurq4tW7a88MILy5YtIyXStfRnZ2cfOnSovb19xYoVg76RPfXUUzk5OSISjUZXrFgxZsyY7u7urq4u9ReKi4uvXr16+vTpNWvWHDlypKKiYu7cuYTNGzIzM994442cnJysrKx58+Z99913e/fuVaWfxPCnQCBQUVGxceNG9Z/r16//5JNPVOknJdL1hs+wrrvuut27d8e+xHV3dxMSXxkzZkzs9eTJk2M3bUkM38rIyIh9Azh58uS0adNICe8/5r377ruXLl360EMPXX/99bE/7OzsVHfuenp6Tp48KSJXr15dsGDBnj17iJ9n9PT0HDx4sLCwkMTAv//+++mnn65bt66zszMcDpMSHiz9PT09JSUlM2bMmDFjxrDh6evr+/HHHzVNi0ajp0+f/uGHH0QkNzf3m2++eeKJJ4ifZ3z11VcXLlx4+OGHSQx0dXUdP348EAhcunTp0qVLpIR47IZPTk7O119/PfLfaWtr03X91ltvra+vLyws/PXXX8+dO0fYPObs2bPPPffc7t27x40bR2Jg4sSJL774oog0NDRs3LixoaGBlPDavX4R+f777+vq6qqrq2W4zr+ampqnn366v7//ySef3L9//7fffrtjx47+/n4i5xnRaHTDhg3btm275557SAwMdO+991ZVVV2+fFk93SUlPFX6r127FvtOF/s2cOTIEfX63XffzcjI0HW9ubk5Ly9v+vTpS5cuLS4uJnLecOHChbVr1xYXF69cuZLEQHd392uvvVZeXn7bbbfput7U1DR9+vRYLzgpkX6lv7W1dc2aNer1ggULZs2atX///tjzme7u7osXL8qQ3o8bbrhBPe4PBAJ5eXnqRXZ2NmHzzPt81apVZ8+era6uVku53Nzc5ubmSZMmkRj+lJ2d/cADDxQXF+fm5nZ1dU2cOPH9999XS35SIi1Lf0FBwalTpyTOHf8zZ84sX7580J+XlZVVVFTIcP2gO3bsMP6jMLj5fX7o0CGJ/yiIxPChoqKi48ePR6PRzMxM9eyHlEiGgK7rXAUAEJo7AQCUfgAApR8AQOkHAFD6AQCUfgAApR8AQOkHAFD6AQCUfgAApR8AQOkHAFD6AQCUfgCg9AMAKP0AAG/7D05pfDu2mOxQAAAAAElFTkSuQmCC",
         "width": 510,
         "height": 200,
         "displayWidth": 510,
@@ -7518,7 +7527,7 @@
       "pointBand": "4.2",
       "area": "수·규칙찾기",
       "subarea": "규칙수열·도형배열",
-      "detailType": "단계별 도형을 부분 수열로 나누어 작은 삼각형 세기",
+      "detailType": "위쪽 띠와 아래쪽 삼각형의 규칙으로 작은 정삼각형 세기",
       "solutionSkill": "위쪽 등차수열과 아래쪽 홀수 층 배열을 따로 계산해 합하기",
       "solutionSteps": [
         "위쪽 작은 삼각형 구하기 — 3,5,7,…로 늘어나므로 6번째 위쪽은 3+2×5=13개입니다.",
@@ -7569,7 +7578,7 @@
       "assetSpec": {
         "required": true,
         "kind": "triangular-lattice-composite-sequence",
-        "topologyVersion": "final2-q25-preserved-v1",
+        "topologyVersion": "final2-q25-triangular-lattice-v2",
         "answerHidden": true,
         "sourceRasterCopied": false,
         "visibleStages": [
@@ -7603,7 +7612,7 @@
       "solution": "위쪽 작은 삼각형 구하기 — 3,5,7,…로 늘어나므로 6번째 위쪽은 3+2×5=13개입니다. 아래쪽 층수 구하기 — 2층,3층,4층,…이므로 6번째 아래쪽은 7층입니다. 7층 전체 세기 — 1+3+5+7+9+11+13=49개입니다. 전체 개수 구하기 — 13+49=62이므로 62개입니다.",
       "asset": {
         "kind": "raster",
-        "src": "data:image/png;base64,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",
+        "src": "data:image/png;base64,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1xs9H3nkkdmzZ9PQKdzwAQAIN3wAAJR+AAClHwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwClHwBA6QcAUPoBAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcA+KL0d3d3r169+qeffhr2//b09FRXV1++fDkSiXz++eeE0D9IDJASdslK2b+k63pbW9u+fftCodCNN94oIteuXVuyZElNTc38+fNF5JVXXpk7d25paamu652dnb29vSLS1tZ25syZQCAwderUjo4OEZk9e/Znn332+OOP//XXX1euXCGEaa23t/eLL744cOBATk5OeXn5nXfeSWL4nK7rhw8f3rdvX3Z29rJly4qKikiJNC793d3dDz744NmzZ3Nzczds2KBKvxG//PJLXV3dlStXHn300V27ds2bN6+8vJyweUNfX9+WLVt0Xa+oqDh16tTatWvfe+899d4mMXxb93fv3t3S0rJ169aurq4tW7a88MILy5YtIyXStfRnZ2cfOnSovb19xYoVg76RPfXUUzk5OSISjUZXrFgxZsyY7u7urq4u9ReKi4uvXr16+vTpNWvWHDlypKKiYu7cuYTNGzIzM994442cnJysrKx58+Z99913e/fuVaWfxPCnQCBQUVGxceNG9Z/r16//5JNPVOknJdL1hs+wrrvuut27d8e+xHV3dxMSXxkzZkzs9eTJk2M3bUkM38rIyIh9Azh58uS0adNICe8/5r377ruXLl360EMPXX/99bE/7OzsVHfuenp6Tp48KSJXr15dsGDBnj17iJ9n9PT0HDx4sLCwkMTAv//+++mnn65bt66zszMcDpMSHiz9PT09JSUlM2bMmDFjxrDh6evr+/HHHzVNi0ajp0+f/uGHH0QkNzf3m2++eeKJJ4ifZ3z11VcXLlx4+OGHSQx0dXUdP348EAhcunTp0qVLpIR47IZPTk7O119/PfLfaWtr03X91ltvra+vLyws/PXXX8+dO0fYPObs2bPPPffc7t27x40bR2Jg4sSJL774oog0NDRs3LixoaGBlPDavX4R+f777+vq6qqrq2W4zr+ampqnn366v7//ySef3L9//7fffrtjx47+/n4i5xnRaHTDhg3btm275557SAwMdO+991ZVVV2+fFk93SUlPFX6r127FvtOF/s2cOTIEfX63XffzcjI0HW9ubk5Ly9v+vTpS5cuLS4uJnLecOHChbVr1xYXF69cuZLEQHd392uvvVZeXn7bbbfput7U1DR9+vRYLzgpkX6lv7W1dc2aNer1ggULZs2atX///tjzme7u7osXL8qQ3o8bbrhBPe4PBAJ5eXnqRXZ2NmHzzPt81apVZ8+era6uVku53Nzc5ubmSZMmkRj+lJ2d/cADDxQXF+fm5nZ1dU2cOPH9999XS35SIi1Lf0FBwalTpyTOHf8zZ84sX7580J+XlZVVVFTIcP2gO3bsMP6jMLj5fX7o0CGJ/yiIxPChoqKi48ePR6PRzMxM9eyHlEiGgK7rXAUAEJo7AQCUfgAApR8AQOkHAFD6AQCUfgAApR8AQOkHAFD6AQCUfgAApR8AQOkHAFD6AQCUfgCg9AMAKP0AAG/7D05pfDu2mOxQAAAAAElFTkSuQmCC",
         "width": 510,
         "height": 200,
         "displayWidth": 510,
@@ -7625,7 +7634,7 @@
       "pointBand": "4.2",
       "area": "수·규칙찾기",
       "subarea": "규칙수열·도형배열",
-      "detailType": "단계별 도형을 부분 수열로 나누어 작은 삼각형 세기",
+      "detailType": "위쪽 띠와 아래쪽 삼각형의 규칙으로 작은 정삼각형 세기",
       "solutionSkill": "단계 번호로 위쪽 띠와 아래쪽 제곱 배열의 값을 각각 구하기",
       "solutionSteps": [
         "위쪽 띠 세기 — 8번째 위쪽 띠에는 3+2×7=17개의 작은 삼각형이 있습니다.",
@@ -7676,7 +7685,7 @@
       "assetSpec": {
         "required": true,
         "kind": "triangular-lattice-composite-sequence",
-        "topologyVersion": "final2-q25-preserved-v1",
+        "topologyVersion": "final2-q25-triangular-lattice-v2",
         "answerHidden": true,
         "sourceRasterCopied": false,
         "visibleStages": [
@@ -7710,7 +7719,7 @@
       "solution": "위쪽 띠 세기 — 8번째 위쪽 띠에는 3+2×7=17개의 작은 삼각형이 있습니다. 아래쪽 높이 찾기 — 8번째 아래쪽은 9층입니다. 아래쪽 개수 계산하기 — 첫 9개 홀수의 합은 9²=81이므로 아래쪽은 81개입니다. 전체 합하기 — 17+81=98이므로 모두 98개입니다.",
       "asset": {
         "kind": "raster",
-        "src": "data:image/png;base64,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",
+        "src": "data:image/png;base64,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1xs9H3nkkdmzZ9PQKdzwAQAIN3wAAJR+AAClHwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwAo/QAASj8AgNIPAKD0AwClHwBA6QcAUPoBAJR+AAClHwBA6QcAUPoBAJR+AAClHwBA6QcA+KL0d3d3r169+qeffhr2//b09FRXV1++fDkSiXz++eeE0D9IDJASdslK2b+k63pbW9u+fftCodCNN94oIteuXVuyZElNTc38+fNF5JVXXpk7d25paamu652dnb29vSLS1tZ25syZQCAwderUjo4OEZk9e/Znn332+OOP//XXX1euXCGEaa23t/eLL744cOBATk5OeXn5nXfeSWL4nK7rhw8f3rdvX3Z29rJly4qKikiJNC793d3dDz744NmzZ3Nzczds2KBKvxG//PJLXV3dlStXHn300V27ds2bN6+8vJyweUNfX9+WLVt0Xa+oqDh16tTatWvfe+899d4mMXxb93fv3t3S0rJ169aurq4tW7a88MILy5YtIyXStfRnZ2cfOnSovb19xYoVg76RPfXUUzk5OSISjUZXrFgxZsyY7u7urq4u9ReKi4uvXr16+vTpNWvWHDlypKKiYu7cuYTNGzIzM994442cnJysrKx58+Z99913e/fuVaWfxPCnQCBQUVGxceNG9Z/r16//5JNPVOknJdL1hs+wrrvuut27d8e+xHV3dxMSXxkzZkzs9eTJk2M3bUkM38rIyIh9Azh58uS0adNICe8/5r377ruXLl360EMPXX/99bE/7OzsVHfuenp6Tp48KSJXr15dsGDBnj17iJ9n9PT0HDx4sLCwkMTAv//+++mnn65bt66zszMcDpMSHiz9PT09JSUlM2bMmDFjxrDh6evr+/HHHzVNi0ajp0+f/uGHH0QkNzf3m2++eeKJJ4ifZ3z11VcXLlx4+OGHSQx0dXUdP348EAhcunTp0qVLpIR47IZPTk7O119/PfLfaWtr03X91ltvra+vLyws/PXXX8+dO0fYPObs2bPPPffc7t27x40bR2Jg4sSJL774oog0NDRs3LixoaGBlPDavX4R+f777+vq6qqrq2W4zr+ampqnn366v7//ySef3L9//7fffrtjx47+/n4i5xnRaHTDhg3btm275557SAwMdO+991ZVVV2+fFk93SUlPFX6r127FvtOF/s2cOTIEfX63XffzcjI0HW9ubk5Ly9v+vTpS5cuLS4uJnLecOHChbVr1xYXF69cuZLEQHd392uvvVZeXn7bbbfput7U1DR9+vRYLzgpkX6lv7W1dc2aNer1ggULZs2atX///tjzme7u7osXL8qQ3o8bbrhBPe4PBAJ5eXnqRXZ2NmHzzPt81apVZ8+era6uVku53Nzc5ubmSZMmkRj+lJ2d/cADDxQXF+fm5nZ1dU2cOPH9999XS35SIi1Lf0FBwalTpyTOHf8zZ84sX7580J+XlZVVVFTIcP2gO3bsMP6jMLj5fX7o0CGJ/yiIxPChoqKi48ePR6PRzMxM9eyHlEiGgK7rXAUAEJo7AQCUfgAApR8AQOkHAFD6AQCUfgAApR8AQOkHAFD6AQCUfgAApR8AQOkHAFD6AQCUfgCg9AMAKP0AAG/7D05pfDu2mOxQAAAAAElFTkSuQmCC",
         "width": 510,
         "height": 200,
         "displayWidth": 510,
