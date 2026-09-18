@@ -51,6 +51,22 @@
         "QUESTION-BANK-QUALITY-STANDARD.md",
         "C:/Users/user/OneDrive/그림/Desktop/GFIELD_QUESTION_BANK_PRODUCTION_STANDARD_20260913.md"
       ]
+    },
+    {
+      "id": "final7-q06-continuous-wide-crossings-20260918",
+      "status": "verified",
+      "scope": "Final 7 question 6 source-linked fishing-line variants",
+      "rules": [
+        "The fishing line is one visually continuous line from the front label to the back label; crossings never create disconnected pieces.",
+        "Use three crossings distributed across the left, center, and right portions of the figure instead of clustering them in one narrow area.",
+        "Fish heads and tails stay visible, while route numbers, answer marks, and traced solution overlays are excluded from the problem figure."
+      ],
+      "verification": [
+        "materials/final_7/002.jpg#q6",
+        "bank/data/final7-fixed6.json",
+        "qa/final7-fixed6-validate.js",
+        "qa/final7-fixed6-browser-validate.js"
+      ]
     }
   ]
 }

@@ -4,10 +4,16 @@
   var loaded = {};
   function bankConfig(bankCode) {
     if(String(bankCode||'')==='important')return {code:'important',round:null,label:'중요 유형',prefix:''};
-    var match = /^final([12])$/.exec(String(bankCode || 'final1'));
+    var match = /^final([127])$/.exec(String(bankCode || 'final1'));
     if (!match) throw new Error('등록된 파이널 유사문제 회차를 확인해 주세요.');
     var round = Number(match[1]);
-    return {code:'final' + round, round:round, label:'파이널 ' + round + '회', prefix:'final' + round + '-q'};
+    return {
+      code:'final' + round,
+      round:round,
+      label:round===7?'최종 7회':'파이널 ' + round + '회',
+      prefix:'final' + round + '-q',
+      file:round===7?'final7-fixed6.json':'final' + round + '-fixed90.json'
+    };
   }
   function validate(data, bankCode) {
     var config = bankConfig(bankCode);
@@ -15,11 +21,14 @@
       if(!data||!Array.isArray(data.items)||!Array.isArray(data.types)||data.items.length!==48)throw new Error('중요 유형 등록 문항을 확인할 수 없습니다.');
       return data;
     }
-    if (!data || data.sourceSet !== 'final' || data.sourceRound !== config.round || !Array.isArray(data.items) || data.items.length !== 90) {
+    var availableNos=data&&data.freezePolicy&&Array.isArray(data.freezePolicy.availableSourceNos)?data.freezePolicy.availableSourceNos.slice():Array.from({length:30},function(_,i){return i+1;});
+    if (!data || data.sourceSet !== 'final' || data.sourceRound !== config.round || !Array.isArray(data.items) || data.items.length !== availableNos.length*3) {
       throw new Error(config.label + ' 등록 문항을 확인할 수 없습니다.');
     }
     var ids = new Set();
-    for (var no = 1; no <= 30; no++) {
+    for (var index = 0; index < availableNos.length; index++) {
+      var no=Number(availableNos[index]);
+      if(!Number.isInteger(no)||no<1||no>30)throw new Error(config.label+' 공개 문항 번호를 확인해 주세요.');
       var genId = config.prefix + String(no).padStart(2, '0');
       var group = data.items.filter(function (item) { return item.genId === genId; });
       if (group.length !== 3) throw new Error(no + '번 유사문제 3문항의 등록을 확인해 주세요.');
@@ -56,7 +65,7 @@
       return loaded.important;
     }
     if (!loaded[config.code]) {
-      loaded[config.code] = fetch('data/' + config.code + '-fixed90.json?v=1', {cache:'no-cache'}).then(function (response) {
+      loaded[config.code] = fetch('data/' + config.file + '?v=1', {cache:'no-cache'}).then(function (response) {
         if (!response.ok) throw new Error('등록 문항을 불러오지 못했습니다. 잠시 후 다시 열어 주세요.');
         return response.json();
       }).then(function (data) { return validate(data, config.code); }).catch(function (error) { loaded[config.code] = null; throw error; });
@@ -114,6 +123,7 @@
     var selected = [], groups = [];
     ids.forEach(function (id) {
       var group = data.items.filter(function (item) { return item.genId === id; }).sort(function (a, b) { return a.variantNo - b.variantNo; });
+      if(group.length!==3)throw new Error(id.replace(config.prefix,'')+'번 유사문제는 아직 검수 중입니다.');
       if (opts.pointBand && opts.pointBand !== 'all' && group[0].pointBand !== opts.pointBand) return;
       if (group.some(function (item) { return item.reviewStatus !== 'verified'; })) {
         throw new Error(group[0].sourceNo + '번 유사문제는 검수 중입니다. 검수가 끝난 뒤 제공됩니다.');

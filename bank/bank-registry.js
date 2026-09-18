@@ -504,12 +504,13 @@
       link.assetKind = 'raster';
       link.sourceAudit.visualRequired = true;
     }
+    var fixedRound=/^final([27])-q/.exec(generatorId);
     link.qaEvidence = {
-      suite: /^final2-q/.test(generatorId) ? 'qa/final2-fixed90-math-validate.js' : 'qa/bank-final1-generators-validate.js',
-      generatedQuestions: /^final2-q/.test(generatorId) ? 3 : 5000,
-      levels: /^final2-q/.test(generatorId) ? ['fixed-reviewed-variants'] : [1, 2, 3, 4, 5],
-      seedsPerLevel: /^final2-q/.test(generatorId) ? 0 : 1000,
-      date: /^final2-q/.test(generatorId) ? '2026-09-12' : '2026-09-05'
+      suite: fixedRound?(fixedRound[1]==='7'?'qa/final7-fixed6-validate.js':'qa/final2-fixed90-math-validate.js'):'qa/bank-final1-generators-validate.js',
+      generatedQuestions: fixedRound ? 3 : 5000,
+      levels: fixedRound ? ['fixed-reviewed-variants'] : [1, 2, 3, 4, 5],
+      seedsPerLevel: fixedRound ? 0 : 1000,
+      date: fixedRound?(fixedRound[1]==='7'?'2026-09-18':'2026-09-12'):'2026-09-05'
     };
     return link;
   }
@@ -599,6 +600,22 @@
       'bank/gens/g-final1.js',
       'same Final 1 source condition structure: ' + row[1],
       'final:1:' + no,
+      row[2] === true
+    );
+  });
+
+  /* 최종 7회는 사용자 눈검수가 끝난 문항만 부분 공개한다. */
+  [
+    [5, '서로 다른 육각형 배열에서 X부터 Y까지 가는 방법의 수', true],
+    [6, '세 구간에서 교차하는 한 줄의 낚싯줄을 편 뒤 물고기 방향 판단', true]
+  ].forEach(function (row) {
+    var no = row[0];
+    var sourceKey = ['final', 7, no].join('|');
+    SOURCE_ITEM_GENERATOR_LINKS[sourceKey] = sourceItemReviewGeneratorLink(
+      'final7-q' + String(no).padStart(2, '0'),
+      'bank/bank-fixed.js',
+      'same Final 7 source reasoning with a user-reviewed visual variant: ' + row[1],
+      'final:7:' + no,
       row[2] === true
     );
   });
