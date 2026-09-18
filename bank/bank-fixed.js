@@ -12,7 +12,8 @@
       round:round,
       label:round===7?'최종 7회':'파이널 ' + round + '회',
       prefix:'final' + round + '-q',
-      file:round===7?'final7-fixed6.json':'final' + round + '-fixed90.json'
+      adapterId:round===7?'gfield-final7-reviewed':null,
+      file:round===7?null:'final' + round + '-fixed90.json'
     };
   }
   function validate(data, bankCode) {
@@ -65,10 +66,17 @@
       return loaded.important;
     }
     if (!loaded[config.code]) {
-      loaded[config.code] = fetch('data/' + config.file + '?v=1', {cache:'no-cache'}).then(function (response) {
+      var source;
+      if(config.adapterId){
+        var adapters=global.QUESTION_BANK_ADAPTERS;
+        var adapter=adapters&&typeof adapters.get==='function'?adapters.get(config.adapterId):null;
+        if(!adapter||typeof adapter.load!=='function')return Promise.reject(new Error(config.label+' 소스 어댑터를 확인할 수 없습니다.'));
+        source=adapter.load();
+      }else source=fetch('data/' + config.file + '?v=1', {cache:'no-cache'}).then(function (response) {
         if (!response.ok) throw new Error('등록 문항을 불러오지 못했습니다. 잠시 후 다시 열어 주세요.');
         return response.json();
-      }).then(function (data) { return validate(data, config.code); }).catch(function (error) { loaded[config.code] = null; throw error; });
+      });
+      loaded[config.code] = source.then(function (data) { return validate(data, config.code); }).catch(function (error) { loaded[config.code] = null; throw error; });
     }
     return loaded[config.code];
   }

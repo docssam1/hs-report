@@ -506,7 +506,7 @@
     }
     var fixedRound=/^final([27])-q/.exec(generatorId);
     link.qaEvidence = {
-      suite: fixedRound?(fixedRound[1]==='7'?'qa/final7-fixed6-validate.js':'qa/final2-fixed90-math-validate.js'):'qa/bank-final1-generators-validate.js',
+      suite: fixedRound?(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':'qa/final2-fixed90-math-validate.js'):'qa/bank-final1-generators-validate.js',
       generatedQuestions: fixedRound ? 3 : 5000,
       levels: fixedRound ? ['fixed-reviewed-variants'] : [1, 2, 3, 4, 5],
       seedsPerLevel: fixedRound ? 0 : 1000,
@@ -607,7 +607,11 @@
   /* 최종 7회는 사용자 눈검수가 끝난 문항만 부분 공개한다. */
   [
     [5, '서로 다른 육각형 배열에서 X부터 Y까지 가는 방법의 수', true],
-    [6, '세 구간에서 교차하는 한 줄의 낚싯줄을 편 뒤 물고기 방향 판단', true]
+    [6, '세 구간에서 교차하는 한 줄의 낚싯줄을 편 뒤 물고기 방향 판단', true],
+    [7, '같은 세 숫자로 만든 뒤쪽 쪽수와 연속 페이지 수', false],
+    [8, '범위 안에서 같은 나머지를 갖는 수의 합', false],
+    [9, '동서·남북 이동을 상쇄해 출발점으로 돌아가는 거리', false],
+    [10, '합과 나눗셈 조건에서 가장 작은 선택 수 구하기', false]
   ].forEach(function (row) {
     var no = row[0];
     var sourceKey = ['final', 7, no].join('|');

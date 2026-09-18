@@ -7,7 +7,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const ROOT = path.resolve(__dirname, '..');
-const DATA_PATH = path.join(ROOT, 'bank', 'data', 'final7-fixed6.json');
+const DATA_PATH = path.join(ROOT, 'bank', 'data', 'final7-reviewed.json');
 const data = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
 const registry = require(path.join(ROOT, 'bank', 'bank-registry.js'));
 
@@ -69,16 +69,43 @@ function ropeCrossings(points) {
   return hits.sort((a, b) => a[0] - b[0]);
 }
 
+function permutations(number) {
+  const digits = String(number).split('');
+  const results = new Set();
+  function visit(prefix, remaining) {
+    if (!remaining.length) { results.add(Number(prefix)); return; }
+    remaining.forEach((digit, index) => visit(prefix + digit, remaining.filter((_, i) => i !== index)));
+  }
+  visit('', digits);
+  return [...results].sort((a, b) => a - b);
+}
+
+function minimumSelected(max, count, target) {
+  for (let smallest = 1; smallest <= max; smallest += 1) {
+    let sums = new Set(['0:0']);
+    for (let value = smallest + 1; value <= max; value += 1) {
+      const next = new Set(sums);
+      for (const state of sums) {
+        const [used, sum] = String(state).split(':').map(Number);
+        if (used < count - 1) next.add((used + 1) + ':' + (sum + value));
+      }
+      sums = next;
+    }
+    if (sums.has((count - 1) + ':' + (target - smallest))) return smallest;
+  }
+  return null;
+}
+
 assert.equal(data.sourceSet, 'final');
 assert.equal(data.sourceRound, 7);
 assert.equal(data.freezePolicy.runtimeGeneration, false);
 assert.equal(data.freezePolicy.partialRelease, true);
-assert.equal(data.freezePolicy.fixedItemCount, 6);
+assert.equal(data.freezePolicy.fixedItemCount, 18);
 assert.equal(data.freezePolicy.variantsPerSourceQuestion, 3);
-assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6]);
-assert.deepEqual(data.reviewSummary, {verified: 6, pending: 0, unavailableSourceQuestions: 28});
-assert.equal(data.items.length, 6);
-assert.equal(new Set(data.items.map((item) => item.id)).size, 6);
+assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10]);
+assert.deepEqual(data.reviewSummary, {verified: 18, pending: 0, unavailableSourceQuestions: 24});
+assert.equal(data.items.length, 18);
+assert.equal(new Set(data.items.map((item) => item.id)).size, 18);
 
 for (const [relativePath, expected] of Object.entries(data.sourceFingerprints)) {
   assert.equal(hash(fs.readFileSync(path.join(ROOT, relativePath))), expected, relativePath + ': source fingerprint');
@@ -89,8 +116,12 @@ vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'mock-data-final.js'), 'utf8'
 const sourceRound = sandbox.window.GFIELD_MOCK_FINAL.rounds['7'];
 assert.equal(sourceRound.items.find((item) => item.no === 5).answer, '9가지', 'source Q5 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 6).answer, '6마리', 'source Q6 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 7).answer, '136', 'source Q7 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 8).answer, '425', 'source Q8 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 9).answer, '40', 'source Q9 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 10).answer, '50', 'source Q10 remains traceable');
 
-for (const no of [5, 6]) {
+for (const no of [5, 6, 7, 8, 9, 10]) {
   const group = data.items.filter((item) => item.sourceNo === no).sort((a, b) => a.variantNo - b.variantNo);
   assert.equal(group.length, 3, no + ': exactly three reviewed variants');
   assert.deepEqual(group.map((item) => item.variantNo), [1, 2, 3]);
@@ -99,9 +130,9 @@ for (const no of [5, 6]) {
   assert.ok(link, no + ': registry link');
   assert.equal(link.generatorId, 'final7-q' + String(no).padStart(2, '0'));
   assert.equal(link.studentWrongPracticeReady, true);
-  assert.equal(link.qaEvidence.suite, 'qa/final7-fixed6-validate.js');
+  assert.equal(link.qaEvidence.suite, 'qa/final7-reviewed-validate.js');
 }
-assert.equal(registry.sourceItemGenerator('final|7|7'), null, 'unreviewed Final 7 items remain locked');
+assert.equal(registry.sourceItemGenerator('final|7|11'), null, 'unreviewed Final 7 items remain locked');
 
 for (const item of data.items) {
   assert.equal(item.reviewStatus, 'verified', item.id + ': review status');
@@ -114,13 +145,18 @@ for (const item of data.items) {
   assert.equal(item.conditionLines, undefined, item.id + ': no repeated condition list');
   assert.equal(item.promptDataLines, undefined, item.id + ': no helper or hint box');
   assert.doesNotMatch(item.text, /①|②|③|힌트|풀이 순서/, item.id + ': no answer-leading helper copy');
-  assert.equal(item.asset.kind, 'raster', item.id + ': approved raster prompt asset');
-  assert.match(item.asset.src, /^data:image\/png;base64,/, item.id + ': embedded PNG');
-  const bytes = Buffer.from(item.asset.src.split(',')[1], 'base64');
-  assert.equal(hash(bytes), item.assetSha256, item.id + ': asset hash');
-  assert.ok(item.asset.width >= 720 && item.asset.height >= 300, item.id + ': readable source dimensions');
-  assert.equal(bytes.readUInt32BE(16), item.asset.width, item.id + ': PNG width');
-  assert.equal(bytes.readUInt32BE(20), item.asset.height, item.id + ': PNG height');
+  if (item.sourceNo <= 6) {
+    assert.equal(item.asset.kind, 'raster', item.id + ': approved raster prompt asset');
+    assert.match(item.asset.src, /^data:image\/png;base64,/, item.id + ': embedded PNG');
+    const bytes = Buffer.from(item.asset.src.split(',')[1], 'base64');
+    assert.equal(hash(bytes), item.assetSha256, item.id + ': asset hash');
+    assert.ok(item.asset.width >= 720 && item.asset.height >= 300, item.id + ': readable source dimensions');
+    assert.equal(bytes.readUInt32BE(16), item.asset.width, item.id + ': PNG width');
+    assert.equal(bytes.readUInt32BE(20), item.asset.height, item.id + ': PNG height');
+  } else {
+    assert.equal(item.asset, undefined, item.id + ': text-only item has no decorative image');
+    assert.equal(item.assetSpec, null, item.id + ': text-only renderer contract');
+  }
 }
 
 for (const item of data.items.filter((item) => item.sourceNo === 5)) {
@@ -147,4 +183,34 @@ for (const item of data.items.filter((item) => item.sourceNo === 6)) {
   assert.equal(item.assetSpec.renderRules.spreadCrossings, true, item.id + ': wide crossing layout contract');
 }
 
-console.log('PASS Final 7 Q5/Q6: six reviewed variants, independent path/crossing/answer checks, visible single-answer evidence, and fail-closed partial release');
+for (const item of data.items.filter((item) => item.sourceNo === 7)) {
+  const validEnds = permutations(item.meta.start).filter((end) => end > item.meta.start && end - item.meta.start + 1 <= item.meta.limit);
+  assert.deepEqual(validEnds, [item.meta.validEnd], item.id + ': exactly one later permutation fits the page limit');
+  assert.equal(item.meta.validEnd - item.meta.start + 1, item.meta.inclusiveCount, item.id + ': inclusive page count');
+  assert.equal(item.answer, item.meta.inclusiveCount + '페이지', item.id + ': page answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 8)) {
+  const values = [];
+  for (let number = item.meta.from; number <= item.meta.to; number += 1) if (number % item.meta.divisor === item.meta.remainder) values.push(number);
+  assert.deepEqual(values, item.meta.matchingValues, item.id + ': exhaustive remainder-class values');
+  assert.equal(item.answer, String(values.reduce((sum, number) => sum + number, 0)), item.id + ': remainder-class sum');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 9)) {
+  const east = (item.meta.moves.east || 0) - (item.meta.moves.west || 0);
+  const north = (item.meta.moves.north || 0) - (item.meta.moves.south || 0);
+  const expected = {};
+  if (east > 0) expected.west = east; else expected.east = -east;
+  if (north > 0) expected.south = north; else expected.north = -north;
+  assert.deepEqual(item.meta.returnMoves, expected, item.id + ': inverse displacement');
+  assert.equal(item.answer, String(Object.values(expected).reduce((sum, value) => sum + value, 0)), item.id + ': return-distance sum');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 10)) {
+  const minimum = minimumSelected(item.meta.maximum, item.meta.selectedCount, item.meta.targetSum);
+  assert.equal(minimum, Number(item.answer), item.id + ': dynamic-programming minimum selected number');
+  assert.equal(item.meta.targetSum, item.meta.selectedCount * item.meta.quotient, item.id + ': quotient condition');
+}
+
+console.log('PASS Final 7 Q5-Q10: eighteen reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed partial release');
