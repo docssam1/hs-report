@@ -11,6 +11,7 @@
     var dataLength=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0;
     var total=(x.text||'').length+dataLength;
     if(Number(x.sourceRound)===1)return total>180||!!x.asset&&(total>110||[18,20,28].includes(Number(x.sourceNo)));
+    if(Number(x.sourceRound)===7&&[5,6].includes(Number(x.sourceNo)))return true;
     return total>210||!!x.asset&&(total>180||Number(x.sourceNo)===28);
   }
   function questionGroups(items,layout){
@@ -47,12 +48,12 @@
     var legacy=document.getElementById('btnPrint');if(legacy)legacy.id='legacyPrint';
     var root=document.createElement('main');root.id='final1Worksheet';root.className='gfield-ui';document.body.appendChild(root);
     var q=new URLSearchParams(location.search),wrong=!!opts.wrongPracticeMode,ids=opts.genIds;
-    var bankCode=/^(?:final[12]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
+    var bankCode=/^(?:final[127]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
     var important=bankCode==='important';
     root.dataset.bankCode=bankCode;
-    var round=important?null:Number(bankCode.slice(5)),roundLabel=important?'선생님이 고른 중요 유형':'파이널 '+round+'회',idPrefix=important?'':bankCode+'-q';
+    var round=important?null:Number(bankCode.slice(5)),roundLabel=important?'선생님이 고른 중요 유형':(round===7?'최종 7회':'파이널 '+round+'회'),idPrefix=important?'':bankCode+'-q';
     if(important)ids=Array.isArray(opts.typeIds)?opts.typeIds:[];
-    else if(!Array.isArray(ids))ids=wrong?[]:Array.from({length:30},(_,i)=>idPrefix+String(i+1).padStart(2,'0'));
+    else if(!Array.isArray(ids))ids=wrong?[]:(round===7?[idPrefix+'05',idPrefix+'06']:Array.from({length:30},(_,i)=>idPrefix+String(i+1).padStart(2,'0')));
     var labels={all:'전체문제','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
     var counts=[4,8,20,40],requestedCount=counts.includes(Number(opts.n))?Number(opts.n):20;
     var band=Object.hasOwn(labels,opts.pointBand)?opts.pointBand:'all',mode=q.get('printMode')||'both';

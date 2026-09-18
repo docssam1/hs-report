@@ -266,16 +266,16 @@ check('진단은 한 문제 오답과 반복 약점을 구분', () => {
   assert.match(policy.populationComparison, /forbidden/);
 });
 
-check('5계열 840문항을 빠짐없이 통합', () => {
+check('5계열 870문항을 빠짐없이 통합', () => {
   assert.equal(unified.summary.sets, 5);
-  assert.equal(unified.summary.sourceQuestions, 840);
+  assert.equal(unified.summary.sourceQuestions, 870);
   const setCounts = Object.fromEntries(
     Object.keys(unifiedModels).map((set) => [set, unified.items.filter((item) => item.sourceRef.set === set).length]),
   );
-  assert.deepEqual(setCounts, { middle: 240, applied: 270, final: 150, last: 120, original: 60 });
+  assert.deepEqual(setCounts, { middle: 240, applied: 270, final: 180, last: 120, original: 60 });
 });
 
-check('840문항 모두 이원목적표 유형·내부 식별자·출처·배점 밴드 보유', () => {
+check('870문항 모두 이원목적표 유형·내부 식별자·출처·배점 밴드 보유', () => {
   unified.items.forEach((item) => {
     assert.ok(item.areaId, item.sourceKey + ' areaId');
     assert.ok(item.subareaId, item.sourceKey + ' subareaId');
@@ -289,7 +289,7 @@ check('840문항 모두 이원목적표 유형·내부 식별자·출처·배점
     ['source-2.7', 'source-3.4', 'source-4.2']
       .map((band) => [band, unified.items.filter((item) => item.pointBand === band).length]),
   );
-  assert.deepEqual(bandCounts, { 'source-2.7': 336, 'source-3.4': 280, 'source-4.2': 224 });
+  assert.deepEqual(bandCounts, { 'source-2.7': 348, 'source-3.4': 290, 'source-4.2': 232 });
 });
 
 check('실제 정답률 우선·정답률 없으면 배점인 5단계 난이도 계약', () => {
@@ -316,10 +316,10 @@ check('실제 정답률 우선·정답률 없으면 배점인 5단계 난이도 
   });
 
   const target = unified.items.filter((item) => ['applied', 'final', 'last', 'original'].includes(item.sourceRef.set));
-  assert.equal(target.length, 600);
+  assert.equal(target.length, 630);
   assert.equal(target.filter((item) => item.responseRateStatus === 'measured').length, 240);
   assert.equal(target.filter((item) => item.bankDifficulty.basis === 'response-rate').length, 240);
-  assert.equal(target.filter((item) => item.bankDifficulty.basis === 'source-points').length, 360);
+  assert.equal(target.filter((item) => item.bankDifficulty.basis === 'source-points').length, 390);
   assert.deepEqual(
     new Set(target.map((item) => item.bankDifficulty.label)),
     new Set(['최상', '상', '중간', '하', '최하']),
@@ -331,7 +331,7 @@ check('실제 정답률 우선·정답률 없으면 배점인 5단계 난이도 
   target.filter((item) => item.responseRateStatus === 'unmeasured').forEach((item) => {
     assert.equal(item.responseRateUse, 'source-points-fallback');
   });
-  assert.equal(unified.papers.filter((paper) => ['applied', 'final', 'last', 'original'].includes(paper.set)).length, 20);
+  assert.equal(unified.papers.filter((paper) => ['applied', 'final', 'last', 'original'].includes(paper.set)).length, 21);
 });
 
 check('item.area를 권위값으로 보존하고 출처 키 중복 없음', () => {
@@ -343,33 +343,34 @@ check('item.area를 권위값으로 보존하고 출처 키 중복 없음', () =
   });
   unified.items.forEach((item) => assert.equal(item.area, originals.get(item.sourceKey), item.sourceKey));
   assert.deepEqual(unified.summary.duplicateSourceKeys, []);
-  assert.equal(new Set(unified.items.map((item) => item.sourceKey)).size, 840);
+  assert.equal(new Set(unified.items.map((item) => item.sourceKey)).size, 870);
 });
 
 check('등록 소영역과 규칙 후보를 명시적으로 구분', () => {
-  assert.equal(unified.summary.confirmedItems, 150);
-  assert.equal(unified.summary.candidateItems, 690);
-  unified.items.filter((item) => item.sourceRef.set === 'original' || (item.sourceRef.set === 'final' && [1, 2, 5].includes(item.sourceRef.round))).forEach((item) => {
-    assert.equal(item.reviewStatus, 'confirmed');
-    assert.equal(item.reviewRequired, false);
-  });
-  unified.items.filter((item) => item.sourceRef.set !== 'original' && !(item.sourceRef.set === 'final' && [1, 2, 5].includes(item.sourceRef.round))).forEach((item) => {
-    assert.equal(item.reviewStatus, 'candidate');
-    assert.equal(item.reviewRequired, true);
-    assert.ok(item.reviewReasons.length);
+  assert.equal(unified.summary.confirmedItems, 153);
+  assert.equal(unified.summary.candidateItems, 717);
+  unified.items.forEach((item) => {
+    if (item.reviewStatus === 'confirmed') {
+      assert.equal(item.reviewRequired, false);
+      assert.deepEqual(item.reviewReasons, []);
+    } else {
+      assert.equal(item.reviewStatus, 'candidate');
+      assert.equal(item.reviewRequired, true);
+      assert.ok(item.reviewReasons.length);
+    }
   });
 });
 
 check('이원목적표의 대영역+소영역+세부유형을 화면 권위값으로 보존', () => {
-  assert.equal(unified.summary.rawDisplayTypes, 742);
-  assert.equal(unified.summary.objectiveTypes, 748);
-  assert.equal(new Set(unified.items.map((item) => item.objectiveTypeId)).size, 748);
+  assert.equal(unified.summary.rawDisplayTypes, 772);
+  assert.equal(unified.summary.objectiveTypes, 778);
+  assert.equal(new Set(unified.items.map((item) => item.objectiveTypeId)).size, 778);
   unified.items.forEach((item) => assert.ok(item.displayType));
   unified.items.forEach((item) => assert.deepEqual(item.taxonomyPath, { major: item.area, minor: item.subarea, detail: item.detailType }));
 });
 
 check('기존 후보 family는 생성기 연결용 내부 값으로만 유지', () => {
-  assert.equal(unified.summary.canonicalTypes, 213, `canonical types=${unified.summary.canonicalTypes}`);
+  assert.equal(unified.summary.canonicalTypes, 216, `canonical types=${unified.summary.canonicalTypes}`);
   assert.ok(unified.summary.canonicalTypes < unified.summary.rawDisplayTypes / 3);
   const clockTypes = unified.items.filter((item) => item.area === '도형' && /시침과 분침이 (직각|겹)/.test(item.displayType));
   assert.ok(clockTypes.length >= 4);

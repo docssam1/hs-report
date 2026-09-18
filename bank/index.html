@@ -251,7 +251,7 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
 (function(){
   var q=new URLSearchParams(location.search);
   var sourceParts=String(q.get('source')||'').split('|');
-  var bankCode=/^(?:final[12]|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^[12]$/.test(sourceParts[1])?'final'+sourceParts[1]:'');
+  var bankCode=/^(?:final[127]|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^(?:1|2|7)$/.test(sourceParts[1])?'final'+sourceParts[1]:'');
   var fixed=!!bankCode;
   if(!fixed)return;
   document.body.classList.add('fixed-bank-mode');
@@ -267,7 +267,7 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
   var CORE = window.BANK_CORE;
   var fixedQuery = new URLSearchParams(location.search);
   var fixedSource=String(fixedQuery.get('source')||'').split('|');
-  var fixedEarly = /^(?:final[12]|important)$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && fixedSource[0]==='final' && /^[12]$/.test(fixedSource[1]));
+  var fixedEarly = /^(?:final[127]|important)$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && fixedSource[0]==='final' && /^(?:1|2|7)$/.test(fixedSource[1]));
   if(fixedEarly)return;
 
   var GEN_NAMES = {
