@@ -39,7 +39,7 @@ function startServer() {
     await page.route('https://**/*', (route) => route.abort());
     await page.addInitScript(() => localStorage.setItem('gfield_student', '최종7검수학생'));
     const base = `http://127.0.0.1:${server.address().port}/bank/index.html`;
-    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q05%2Cfinal7-q06%2Cfinal7-q07%2Cfinal7-q08%2Cfinal7-q09%2Cfinal7-q10%2Cfinal7-q11%2Cfinal7-q12&per=3&points=all&source=final%7C7&sourceNos=5%2C6%2C7%2C8%2C9%2C10%2C11%2C12&printMode=both#student=%EC%B5%9C%EC%A2%857%EA%B2%80%EC%88%98%ED%95%99%EC%83%9D', {waitUntil: 'networkidle'});
+    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q05%2Cfinal7-q06%2Cfinal7-q07%2Cfinal7-q08%2Cfinal7-q09%2Cfinal7-q10%2Cfinal7-q11%2Cfinal7-q12%2Cfinal7-q13%2Cfinal7-q14&per=3&points=all&source=final%7C7&sourceNos=5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14&printMode=both#student=%EC%B5%9C%EC%A2%857%EA%B2%80%EC%88%98%ED%95%99%EC%83%9D', {waitUntil: 'networkidle'});
     await page.waitForFunction(() => {
       const button = document.querySelector('#final1Worksheet #btnPrint');
       return button && !button.disabled;
@@ -47,15 +47,16 @@ function startServer() {
 
     assert.match(await page.locator('.f1-title').textContent(), /최종 7회 약점 유형/);
     assert.match(await page.locator('.cover-page h1').textContent(), /최종 7회/);
-    assert.equal(await page.locator('.qcard').count(), 24, 'twenty-four reviewed variants render');
-    for (const no of [5,6,7,8,9,10,11,12]) assert.equal(await page.locator(`.qcard[data-source-no="${no}"]`).count(), 3, `Q${no} variants`);
-    assert.equal(await page.locator('.question-page').count(), 9, 'nine balanced question pages render');
+    assert.equal(await page.locator('.qcard').count(), 30, 'thirty reviewed variants render');
+    for (const no of [5,6,7,8,9,10,11,12,13,14]) assert.equal(await page.locator(`.qcard[data-source-no="${no}"]`).count(), 3, `Q${no} variants`);
+    assert.equal(await page.locator('.question-page').count(), 11, 'eleven balanced question pages render');
     assert.ok(await page.locator('.qcard[data-source-no="5"],.qcard[data-source-no="6"],.qcard[data-source-no="12"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'true')), 'reviewed Final 7 diagrams use wide rows');
-    assert.ok(await page.locator('.qcard[data-source-no="7"],.qcard[data-source-no="8"],.qcard[data-source-no="9"],.qcard[data-source-no="10"],.qcard[data-source-no="11"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'false')), 'text-only items use the regular page grid');
-    assert.deepEqual(await page.locator('.question-page').evaluateAll((pages) => pages.map((sheet) => sheet.querySelectorAll('.qcard').length)), [2,3,3,2,3,3,2,3,3], 'each variant cycle keeps balanced visual and text pages');
+    assert.ok(await page.locator('.qcard[data-source-no="7"],.qcard[data-source-no="8"],.qcard[data-source-no="9"],.qcard[data-source-no="10"],.qcard[data-source-no="11"],.qcard[data-source-no="13"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'false')), 'short text-only items use the regular page grid');
+    assert.ok(await page.locator('.qcard[data-source-no="14"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'false')), 'repeated-transfer items stay in the regular grid to preserve writing space without one-item pages');
+    assert.deepEqual(await page.locator('.question-page').evaluateAll((pages) => pages.map((sheet) => sheet.querySelectorAll('.qcard').length)), [2,3,3,3,3,3,3,2,3,3,2], 'question pages avoid one-item pages while preserving wide figures');
     assert.equal(await page.locator('.question-page img').count(), 9, 'one prompt figure for every visual question');
-    assert.equal(await page.locator('.solution-card').count(), 24, 'twenty-four detailed answers');
-    assert.equal(await page.locator('.solution-card ol li').count(), 72, 'three concise steps per answer');
+    assert.equal(await page.locator('.solution-card').count(), 30, 'thirty detailed answers');
+    assert.equal(await page.locator('.solution-card ol li').count(), 90, 'three concise steps per answer');
     assert.equal(await page.locator('.duplex-blank').count(), 0, 'answer bundle already starts on an odd-numbered page');
     assert.equal(await page.locator('.qconditions,.f1-qgiven').count(), 0, 'no repeated conditions or hint boxes');
     assert.equal(await page.locator('.question-page .ans').count(), 0, 'no answer leakage on question pages');
@@ -116,20 +117,20 @@ function startServer() {
     if (OUTPUT) await page.screenshot({path: path.join(OUTPUT, 'final7-reviewed-mobile.png'), fullPage: true});
 
     await page.setViewportSize({width: 1280, height: 1000});
-    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q13&per=3&points=all&source=final%7C7&sourceNos=13&printMode=both#student=%EA%B2%80%EC%88%98', {waitUntil: 'networkidle'});
+    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q15&per=3&points=all&source=final%7C7&sourceNos=15&printMode=both#student=%EA%B2%80%EC%88%98', {waitUntil: 'networkidle'});
     await page.locator('#f1Status').waitFor();
-    assert.match(await page.locator('#f1Status').textContent(), /13번 유사문제는 아직 검수 중입니다/);
+    assert.match(await page.locator('#f1Status').textContent(), /15번 유사문제는 아직 검수 중입니다/);
     assert.equal(await page.locator('#btnPrint').isDisabled(), true, 'unreviewed Final 7 item cannot print');
 
     await page.goto(`http://127.0.0.1:${server.address().port}/final.html?round=7&name=docssam&go=answer&preview=1`, {waitUntil: 'domcontentloaded'});
     await page.locator('.abtn').first().waitFor();
     for (let no = 1; no <= 30; no += 1) {
-      if (![5, 6, 7, 8, 9, 10, 11, 12, 13].includes(no)) await page.locator('.abtn').nth(no - 1).click();
+      if (![5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(no)) await page.locator('.abtn').nth(no - 1).click();
     }
     await page.locator('#btnGrade').click();
     await page.locator('#wrongPractice').waitFor();
-    assert.deepEqual(await page.locator('.wp-item').evaluateAll((rows) => rows.map((row) => Number(row.dataset.wpNo))), [5, 6, 7, 8, 9, 10, 11, 12], 'report exposes only reviewed Q5-Q12 practice');
-    assert.match(await page.locator('.wp-pending').textContent(), /13번/, 'unreviewed wrong answer stays visibly pending');
+    assert.deepEqual(await page.locator('.wp-item').evaluateAll((rows) => rows.map((row) => Number(row.dataset.wpNo))), [5, 6, 7, 8, 9, 10, 11, 12, 13, 14], 'report exposes only reviewed Q5-Q14 practice');
+    assert.match(await page.locator('.wp-pending').textContent(), /15번/, 'unreviewed wrong answer stays visibly pending');
     const popupPromise = page.waitForEvent('popup');
     await page.locator('#wpStart').click();
     const practice = await popupPromise;
@@ -138,12 +139,12 @@ function startServer() {
     const practiceUrl = new URL(practice.url());
     assert.equal(practiceUrl.searchParams.get('bank'), 'final7');
     assert.equal(practiceUrl.searchParams.get('source'), 'final|7');
-    assert.equal(practiceUrl.searchParams.get('gens'), 'final7-q05,final7-q06,final7-q07,final7-q08,final7-q09,final7-q10,final7-q11,final7-q12');
-    assert.equal(await practice.locator('.qcard').count(), 24, 'real Final 7 report opens exactly the twenty-four reviewed variants');
+    assert.equal(practiceUrl.searchParams.get('gens'), 'final7-q05,final7-q06,final7-q07,final7-q08,final7-q09,final7-q10,final7-q11,final7-q12,final7-q13,final7-q14');
+    assert.equal(await practice.locator('.qcard').count(), 30, 'real Final 7 report opens exactly the thirty reviewed variants');
     await practice.close();
     assert.deepEqual(errors, [], 'browser errors after report-to-bank navigation');
 
-    console.log('PASS Final 7 Q5-Q12 browser: reviewed figures and text items, twenty-four detailed answers, desktop/390px/PDF readiness, adapter loading, and unreviewed fail-closed behavior');
+    console.log('PASS Final 7 Q5-Q14 browser: reviewed figures and text items, thirty detailed answers, desktop/390px/PDF readiness, adapter loading, and unreviewed fail-closed behavior');
   } finally {
     await browser.close();
     server.close();
