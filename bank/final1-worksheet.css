@@ -50,7 +50,7 @@ body.fixed-bank-mode .topbar,body.fixed-bank-mode .panel,body.fixed-bank-mode .h
 #final1Worksheet[data-layout="editorial"] .f1-answerline{font-size:12px;padding-top:5px;margin-top:5px}
 #final1Worksheet[data-layout="editorial"] .question-page.f1-last-two .f1-qpage{grid-template-rows:auto minmax(0,1fr)}
 .f1-answer-staging{position:absolute;left:-10000px;top:0;visibility:hidden;width:186mm}
-.f1-pagination-probe{box-sizing:border-box!important;width:210mm!important;height:297mm!important;min-height:297mm!important;max-height:297mm!important;padding:12mm!important;position:absolute!important;left:-10000px!important;top:0!important;visibility:hidden!important;overflow:hidden!important}
+.f1-pagination-probe{box-sizing:border-box!important;width:210mm!important;height:294mm!important;min-height:294mm!important;max-height:294mm!important;padding:12mm!important;position:absolute!important;left:-10000px!important;top:0!important;visibility:hidden!important;overflow:hidden!important}
 .f1-answer-flow{display:block}
 
 .f1-watermark-clip{position:absolute;inset:0;overflow:hidden;pointer-events:none}

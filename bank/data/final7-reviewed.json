@@ -1,24 +1,29 @@
 {
-  "version": "7.1.0",
+  "version": "7.2.0",
   "sourceSet": "final",
   "sourceRound": 7,
   "freezePolicy": {
     "runtimeGeneration": false,
-    "fixedItemCount": 6,
+    "fixedItemCount": 18,
     "variantsPerSourceQuestion": 3,
     "availableSourceNos": [
       5,
-      6
+      6,
+      7,
+      8,
+      9,
+      10
     ],
     "partialRelease": true
   },
   "sourceFingerprints": {
-    "materials/final_7/002.jpg": "c83aefb6deac15a550f4f5aec42ec484dd00eff2b36441fe27b4b4ad0b40bfae"
+    "materials/final_7/002.jpg": "c83aefb6deac15a550f4f5aec42ec484dd00eff2b36441fe27b4b4ad0b40bfae",
+    "materials/final_7/003.jpg": "d82717b7623807eee4f34efc14d2ec106c2dc41435a9840fcb6fd39f60538cd9"
   },
   "reviewSummary": {
-    "verified": 6,
+    "verified": 18,
     "pending": 0,
-    "unavailableSourceQuestions": 28
+    "unavailableSourceQuestions": 24
   },
   "items": [
     {
@@ -1343,6 +1348,989 @@
       "assetSha256": "a7c7abf50ef315f957feeef1b14a2b340641b8f2b9d0aaa02c7718275a373ce6",
       "solution": "낚싯줄의 앞에서 시작하여 교차점에서 다른 선으로 건너가지 않고 같은 줄을 뒤까지 따라갑니다. 지나가는 순서대로 번호를 붙이면 앞쪽을 바라보는 물고기는 1·2·4·6·7·9·11번째입니다. 따라서 앞쪽을 바라보는 물고기는 모두 7마리입니다.",
       "itemContentHash": "cb27e262688e61eb92f002ac5817436520a1cffd778ade088ee1a9805524affa"
+    },
+    {
+      "id": "final7-q07-v1",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 7,
+      "variantNo": 1,
+      "genId": "final7-q07",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/002.jpg#q7",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/002.jpg",
+        "transformedDimensions": [
+          "page numbers",
+          "maximum page count",
+          "book activity"
+        ],
+        "preservedInvariants": [
+          "same three digits used once",
+          "later page",
+          "inclusive consecutive-page count"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "민서는 책에서 연속된 페이지 여러 장을 뜯어냈습니다. 뜯어낸 부분의 첫 페이지는 247쪽이고, 마지막 페이지는 247에 쓰인 세 숫자를 한 번씩 사용해 만든 뒤쪽의 다른 쪽수입니다. 뜯어낸 페이지가 120페이지를 넘지 않을 때, 뜯어낸 페이지는 모두 몇 페이지일까요?",
+      "answer": "28페이지",
+      "acceptedAnswers": [
+        "28페이지",
+        "28"
+      ],
+      "area": "식의 계산",
+      "subarea": "연속수",
+      "detailType": "같은 세 숫자와 제한으로 마지막 쪽수 찾기",
+      "readingFocus": "마지막 쪽수는 첫 쪽수의 세 숫자를 한 번씩만 사용하며, 첫 쪽수보다 뒤에 있어야 합니다.",
+      "solutionSkill": "가능한 쪽수의 순서를 비교하고 처음과 끝을 모두 포함해 페이지 수 구하기",
+      "solutionSteps": [
+        "247의 세 숫자를 한 번씩 사용해 만들 수 있는 뒤쪽 쪽수를 작은 수부터 확인합니다.",
+        "제한 안에 드는 마지막 쪽수는 274쪽 하나뿐입니다.",
+        "274-247+1=28이므로 모두 28페이지입니다."
+      ],
+      "meta": {
+        "start": 247,
+        "limit": 120,
+        "validEnd": 274,
+        "inclusiveCount": 28
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "세 숫자의 순열을 작은 수부터 비교",
+          "answer": "28페이지"
+        },
+        "independent": {
+          "method": "모든 순열을 열거하고 제한·순서 조건으로 필터링",
+          "answer": "28페이지"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "첫 쪽수·숫자 사용 규칙·최대 페이지 수가 본문에 모두 보임"
+        }
+      },
+      "solution": "247의 세 숫자를 한 번씩 사용해 만들 수 있는 뒤쪽 쪽수를 작은 수부터 확인합니다. 제한 안에 드는 마지막 쪽수는 274쪽 하나뿐입니다. 274-247+1=28이므로 모두 28페이지입니다.",
+      "itemContentHash": "142320443b785ef855b4362e6fa341bcb19ec89088b5f12be79af3542a5a16d4"
+    },
+    {
+      "id": "final7-q07-v2",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 7,
+      "variantNo": 2,
+      "genId": "final7-q07",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/002.jpg#q7",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/002.jpg",
+        "transformedDimensions": [
+          "page numbers",
+          "maximum page count",
+          "book activity"
+        ],
+        "preservedInvariants": [
+          "same three digits used once",
+          "later page",
+          "inclusive consecutive-page count"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "도현이는 문제집의 연속된 페이지를 복사했습니다. 처음 복사한 페이지는 384쪽이고, 마지막으로 복사한 페이지는 384에 쓰인 세 숫자를 한 번씩 사용해 만든 뒤쪽의 다른 쪽수입니다. 복사한 페이지가 80페이지를 넘지 않을 때, 복사한 페이지는 모두 몇 페이지일까요?",
+      "answer": "55페이지",
+      "acceptedAnswers": [
+        "55페이지",
+        "55"
+      ],
+      "area": "식의 계산",
+      "subarea": "연속수",
+      "detailType": "같은 세 숫자와 제한으로 마지막 쪽수 찾기",
+      "readingFocus": "마지막 쪽수는 첫 쪽수의 세 숫자를 한 번씩만 사용하며, 첫 쪽수보다 뒤에 있어야 합니다.",
+      "solutionSkill": "가능한 쪽수의 순서를 비교하고 처음과 끝을 모두 포함해 페이지 수 구하기",
+      "solutionSteps": [
+        "384의 세 숫자를 한 번씩 사용해 만들 수 있는 뒤쪽 쪽수를 작은 수부터 확인합니다.",
+        "제한 안에 드는 마지막 쪽수는 438쪽 하나뿐입니다.",
+        "438-384+1=55이므로 모두 55페이지입니다."
+      ],
+      "meta": {
+        "start": 384,
+        "limit": 80,
+        "validEnd": 438,
+        "inclusiveCount": 55
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "세 숫자의 순열을 작은 수부터 비교",
+          "answer": "55페이지"
+        },
+        "independent": {
+          "method": "모든 순열을 열거하고 제한·순서 조건으로 필터링",
+          "answer": "55페이지"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "첫 쪽수·숫자 사용 규칙·최대 페이지 수가 본문에 모두 보임"
+        }
+      },
+      "solution": "384의 세 숫자를 한 번씩 사용해 만들 수 있는 뒤쪽 쪽수를 작은 수부터 확인합니다. 제한 안에 드는 마지막 쪽수는 438쪽 하나뿐입니다. 438-384+1=55이므로 모두 55페이지입니다.",
+      "itemContentHash": "f0d4a47caaad176e986238a175831f1c250fb43982ee1914d0ad314c52bd61b3"
+    },
+    {
+      "id": "final7-q07-v3",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 7,
+      "variantNo": 3,
+      "genId": "final7-q07",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/002.jpg#q7",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/002.jpg",
+        "transformedDimensions": [
+          "page numbers",
+          "maximum page count",
+          "book activity"
+        ],
+        "preservedInvariants": [
+          "same three digits used once",
+          "later page",
+          "inclusive consecutive-page count"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "유나는 사전의 연속된 페이지를 읽었습니다. 처음 읽은 페이지는 529쪽이고, 마지막으로 읽은 페이지는 529에 쓰인 세 숫자를 한 번씩 사용해 만든 뒤쪽의 다른 쪽수입니다. 읽은 페이지가 100페이지를 넘지 않을 때, 읽은 페이지는 모두 몇 페이지일까요?",
+      "answer": "64페이지",
+      "acceptedAnswers": [
+        "64페이지",
+        "64"
+      ],
+      "area": "식의 계산",
+      "subarea": "연속수",
+      "detailType": "같은 세 숫자와 제한으로 마지막 쪽수 찾기",
+      "readingFocus": "마지막 쪽수는 첫 쪽수의 세 숫자를 한 번씩만 사용하며, 첫 쪽수보다 뒤에 있어야 합니다.",
+      "solutionSkill": "가능한 쪽수의 순서를 비교하고 처음과 끝을 모두 포함해 페이지 수 구하기",
+      "solutionSteps": [
+        "529의 세 숫자를 한 번씩 사용해 만들 수 있는 뒤쪽 쪽수를 작은 수부터 확인합니다.",
+        "제한 안에 드는 마지막 쪽수는 592쪽 하나뿐입니다.",
+        "592-529+1=64이므로 모두 64페이지입니다."
+      ],
+      "meta": {
+        "start": 529,
+        "limit": 100,
+        "validEnd": 592,
+        "inclusiveCount": 64
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "세 숫자의 순열을 작은 수부터 비교",
+          "answer": "64페이지"
+        },
+        "independent": {
+          "method": "모든 순열을 열거하고 제한·순서 조건으로 필터링",
+          "answer": "64페이지"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "첫 쪽수·숫자 사용 규칙·최대 페이지 수가 본문에 모두 보임"
+        }
+      },
+      "solution": "529의 세 숫자를 한 번씩 사용해 만들 수 있는 뒤쪽 쪽수를 작은 수부터 확인합니다. 제한 안에 드는 마지막 쪽수는 592쪽 하나뿐입니다. 592-529+1=64이므로 모두 64페이지입니다.",
+      "itemContentHash": "b59c601656a15a09c9e71b2e94f2bbb907458502a5731f882703607704002085"
+    },
+    {
+      "id": "final7-q08-v1",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 8,
+      "variantNo": 1,
+      "genId": "final7-q08",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/002.jpg#q8",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/002.jpg",
+        "transformedDimensions": [
+          "number range",
+          "divisor",
+          "remainder",
+          "setting"
+        ],
+        "preservedInvariants": [
+          "inclusive range",
+          "one fixed remainder class",
+          "sum of every matching number"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "20부터 100까지의 수 중에서 8로 나눌 때 나머지가 5인 수를 모두 더하면 얼마입니까?",
+      "answer": "570",
+      "acceptedAnswers": [
+        "570"
+      ],
+      "area": "식의 계산",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "범위 안에서 같은 나머지를 갖는 수의 합",
+      "readingFocus": "범위의 양 끝을 포함하고 조건에 맞는 수를 빠짐없이 찾습니다.",
+      "solutionSkill": "가장 작은 수부터 제수만큼 늘어나는 수열을 만들고 합 구하기",
+      "solutionSteps": [
+        "조건에 맞는 수는 21, 29, 37, 45, 53, 61, 69, 77, 85, 93입니다.",
+        "모두 10개이고 처음과 끝의 합은 21+93=114입니다.",
+        "(21+93)×10÷2=570입니다."
+      ],
+      "meta": {
+        "from": 20,
+        "to": 100,
+        "divisor": 8,
+        "remainder": 5,
+        "matchingValues": [
+          21,
+          29,
+          37,
+          45,
+          53,
+          61,
+          69,
+          77,
+          85,
+          93
+        ]
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "같은 나머지를 갖는 등차수열의 첫째항·끝항·항 수로 합 계산",
+          "answer": "570"
+        },
+        "independent": {
+          "method": "범위의 모든 자연수를 직접 나누어 조건에 맞는 수를 합산",
+          "answer": "570"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "범위·제수·나머지가 본문에 모두 보임"
+        }
+      },
+      "solution": "조건에 맞는 수는 21, 29, 37, 45, 53, 61, 69, 77, 85, 93입니다. 모두 10개이고 처음과 끝의 합은 21+93=114입니다. (21+93)×10÷2=570입니다.",
+      "itemContentHash": "fc7528230ed004c36175eb7fde016cc8fd115a0ce375d390d8850a0416ab3a00"
+    },
+    {
+      "id": "final7-q08-v2",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 8,
+      "variantNo": 2,
+      "genId": "final7-q08",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/002.jpg#q8",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/002.jpg",
+        "transformedDimensions": [
+          "number range",
+          "divisor",
+          "remainder",
+          "setting"
+        ],
+        "preservedInvariants": [
+          "inclusive range",
+          "one fixed remainder class",
+          "sum of every matching number"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "15 이상 90 이하인 자연수 중에서 6으로 나눌 때 나머지가 2인 수의 합을 구하세요.",
+      "answer": "636",
+      "acceptedAnswers": [
+        "636"
+      ],
+      "area": "식의 계산",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "범위 안에서 같은 나머지를 갖는 수의 합",
+      "readingFocus": "범위의 양 끝을 포함하고 조건에 맞는 수를 빠짐없이 찾습니다.",
+      "solutionSkill": "가장 작은 수부터 제수만큼 늘어나는 수열을 만들고 합 구하기",
+      "solutionSteps": [
+        "조건에 맞는 수는 20, 26, 32, 38, 44, 50, 56, 62, 68, 74, 80, 86입니다.",
+        "모두 12개이고 처음과 끝의 합은 20+86=106입니다.",
+        "(20+86)×12÷2=636입니다."
+      ],
+      "meta": {
+        "from": 15,
+        "to": 90,
+        "divisor": 6,
+        "remainder": 2,
+        "matchingValues": [
+          20,
+          26,
+          32,
+          38,
+          44,
+          50,
+          56,
+          62,
+          68,
+          74,
+          80,
+          86
+        ]
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "같은 나머지를 갖는 등차수열의 첫째항·끝항·항 수로 합 계산",
+          "answer": "636"
+        },
+        "independent": {
+          "method": "범위의 모든 자연수를 직접 나누어 조건에 맞는 수를 합산",
+          "answer": "636"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "범위·제수·나머지가 본문에 모두 보임"
+        }
+      },
+      "solution": "조건에 맞는 수는 20, 26, 32, 38, 44, 50, 56, 62, 68, 74, 80, 86입니다. 모두 12개이고 처음과 끝의 합은 20+86=106입니다. (20+86)×12÷2=636입니다.",
+      "itemContentHash": "aecbcf75f88caa476bca099810facd4c754bf5e0a2bd27e8e85483dda1d3cc17"
+    },
+    {
+      "id": "final7-q08-v3",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 8,
+      "variantNo": 3,
+      "genId": "final7-q08",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/002.jpg#q8",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/002.jpg",
+        "transformedDimensions": [
+          "number range",
+          "divisor",
+          "remainder",
+          "setting"
+        ],
+        "preservedInvariants": [
+          "inclusive range",
+          "one fixed remainder class",
+          "sum of every matching number"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "30부터 120까지 번호가 하나씩 쓰인 카드가 있습니다. 카드의 번호를 9로 나눌 때 나머지가 7인 카드의 번호를 모두 더하면 얼마입니까?",
+      "answer": "745",
+      "acceptedAnswers": [
+        "745"
+      ],
+      "area": "식의 계산",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "범위 안에서 같은 나머지를 갖는 수의 합",
+      "readingFocus": "범위의 양 끝을 포함하고 조건에 맞는 수를 빠짐없이 찾습니다.",
+      "solutionSkill": "가장 작은 수부터 제수만큼 늘어나는 수열을 만들고 합 구하기",
+      "solutionSteps": [
+        "조건에 맞는 수는 34, 43, 52, 61, 70, 79, 88, 97, 106, 115입니다.",
+        "모두 10개이고 처음과 끝의 합은 34+115=149입니다.",
+        "(34+115)×10÷2=745입니다."
+      ],
+      "meta": {
+        "from": 30,
+        "to": 120,
+        "divisor": 9,
+        "remainder": 7,
+        "matchingValues": [
+          34,
+          43,
+          52,
+          61,
+          70,
+          79,
+          88,
+          97,
+          106,
+          115
+        ]
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "같은 나머지를 갖는 등차수열의 첫째항·끝항·항 수로 합 계산",
+          "answer": "745"
+        },
+        "independent": {
+          "method": "범위의 모든 자연수를 직접 나누어 조건에 맞는 수를 합산",
+          "answer": "745"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "범위·제수·나머지가 본문에 모두 보임"
+        }
+      },
+      "solution": "조건에 맞는 수는 34, 43, 52, 61, 70, 79, 88, 97, 106, 115입니다. 모두 10개이고 처음과 끝의 합은 34+115=149입니다. (34+115)×10÷2=745입니다.",
+      "itemContentHash": "be823dc738574fdabcdd4f362e078d2e4abe626f0245b019622e99ab817273cd"
+    },
+    {
+      "id": "final7-q09-v1",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 9,
+      "variantNo": 1,
+      "genId": "final7-q09",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q9",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "movement amounts",
+          "direction order",
+          "traveler setting"
+        ],
+        "preservedInvariants": [
+          "four orthogonal moves",
+          "return to start in two directions",
+          "sum of two return distances"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "배송 로봇은 출발점에서 동쪽으로 36m, 북쪽으로 18m, 서쪽으로 14m, 남쪽으로 7m 이동했습니다. 로봇은 처음 출발한 자리로 돌아가기 위해 서쪽으로 □m, 남쪽으로 △m 이동하려고 합니다. 이때 □+△의 값은 얼마입니까?",
+      "answer": "33",
+      "acceptedAnswers": [
+        "33"
+      ],
+      "area": "수·규칙찾기",
+      "subarea": "방향과 이동",
+      "detailType": "이동 경로를 거꾸로 추적해 출발점으로 돌아가기",
+      "readingFocus": "동서 방향과 남북 방향의 이동을 각각 계산합니다.",
+      "solutionSkill": "서로 반대인 방향의 이동량을 상쇄한 뒤 돌아갈 두 거리의 합 구하기",
+      "solutionSteps": [
+        "동쪽·서쪽 이동을 서로 빼고, 북쪽·남쪽 이동도 서로 뺍니다.",
+        "출발점으로 돌아갈 두 거리는 22m와 11m입니다.",
+        "22+11=33입니다."
+      ],
+      "meta": {
+        "moves": {
+          "east": 36,
+          "north": 18,
+          "west": 14,
+          "south": 7
+        },
+        "returnMoves": {
+          "west": 22,
+          "south": 11
+        }
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "동서·남북 순이동량을 각각 계산",
+          "answer": "33"
+        },
+        "independent": {
+          "method": "좌표평면에서 시작점을 (0,0)으로 두고 네 이동을 순서대로 대입",
+          "answer": "33"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "네 이동 방향·거리와 돌아갈 두 방향이 본문에 모두 보임"
+        }
+      },
+      "solution": "동쪽·서쪽 이동을 서로 빼고, 북쪽·남쪽 이동도 서로 뺍니다. 출발점으로 돌아갈 두 거리는 22m와 11m입니다. 22+11=33입니다.",
+      "itemContentHash": "44361a3ae249880a1f329f99f4de350f2c9754b4b6d03a685428cef9e416e531"
+    },
+    {
+      "id": "final7-q09-v2",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 9,
+      "variantNo": 2,
+      "genId": "final7-q09",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q9",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "movement amounts",
+          "direction order",
+          "traveler setting"
+        ],
+        "preservedInvariants": [
+          "four orthogonal moves",
+          "return to start in two directions",
+          "sum of two return distances"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "등산객이 출발점에서 북쪽으로 45m, 동쪽으로 28m, 남쪽으로 19m, 서쪽으로 11m 걸었습니다. 처음 출발한 자리로 돌아가기 위해 서쪽으로 □m, 남쪽으로 △m 걸어가려고 합니다. 이때 □+△의 값은 얼마입니까?",
+      "answer": "43",
+      "acceptedAnswers": [
+        "43"
+      ],
+      "area": "수·규칙찾기",
+      "subarea": "방향과 이동",
+      "detailType": "이동 경로를 거꾸로 추적해 출발점으로 돌아가기",
+      "readingFocus": "동서 방향과 남북 방향의 이동을 각각 계산합니다.",
+      "solutionSkill": "서로 반대인 방향의 이동량을 상쇄한 뒤 돌아갈 두 거리의 합 구하기",
+      "solutionSteps": [
+        "동쪽·서쪽 이동을 서로 빼고, 북쪽·남쪽 이동도 서로 뺍니다.",
+        "출발점으로 돌아갈 두 거리는 17m와 26m입니다.",
+        "17+26=43입니다."
+      ],
+      "meta": {
+        "moves": {
+          "north": 45,
+          "east": 28,
+          "south": 19,
+          "west": 11
+        },
+        "returnMoves": {
+          "west": 17,
+          "south": 26
+        }
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "동서·남북 순이동량을 각각 계산",
+          "answer": "43"
+        },
+        "independent": {
+          "method": "좌표평면에서 시작점을 (0,0)으로 두고 네 이동을 순서대로 대입",
+          "answer": "43"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "네 이동 방향·거리와 돌아갈 두 방향이 본문에 모두 보임"
+        }
+      },
+      "solution": "동쪽·서쪽 이동을 서로 빼고, 북쪽·남쪽 이동도 서로 뺍니다. 출발점으로 돌아갈 두 거리는 17m와 26m입니다. 17+26=43입니다.",
+      "itemContentHash": "349e682213ea598da52522efbbd169223f74339b45e6c4cab87e7278777787ea"
+    },
+    {
+      "id": "final7-q09-v3",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 9,
+      "variantNo": 3,
+      "genId": "final7-q09",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q9",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "movement amounts",
+          "direction order",
+          "traveler setting"
+        ],
+        "preservedInvariants": [
+          "four orthogonal moves",
+          "return to start in two directions",
+          "sum of two return distances"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "드론이 출발점에서 서쪽으로 52m, 남쪽으로 21m, 동쪽으로 34m, 북쪽으로 9m 이동했습니다. 처음 출발한 자리로 돌아가기 위해 동쪽으로 □m, 북쪽으로 △m 이동하려고 합니다. 이때 □+△의 값은 얼마입니까?",
+      "answer": "30",
+      "acceptedAnswers": [
+        "30"
+      ],
+      "area": "수·규칙찾기",
+      "subarea": "방향과 이동",
+      "detailType": "이동 경로를 거꾸로 추적해 출발점으로 돌아가기",
+      "readingFocus": "동서 방향과 남북 방향의 이동을 각각 계산합니다.",
+      "solutionSkill": "서로 반대인 방향의 이동량을 상쇄한 뒤 돌아갈 두 거리의 합 구하기",
+      "solutionSteps": [
+        "동쪽·서쪽 이동을 서로 빼고, 북쪽·남쪽 이동도 서로 뺍니다.",
+        "출발점으로 돌아갈 두 거리는 18m와 12m입니다.",
+        "18+12=30입니다."
+      ],
+      "meta": {
+        "moves": {
+          "west": 52,
+          "south": 21,
+          "east": 34,
+          "north": 9
+        },
+        "returnMoves": {
+          "east": 18,
+          "north": 12
+        }
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "동서·남북 순이동량을 각각 계산",
+          "answer": "30"
+        },
+        "independent": {
+          "method": "좌표평면에서 시작점을 (0,0)으로 두고 네 이동을 순서대로 대입",
+          "answer": "30"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "네 이동 방향·거리와 돌아갈 두 방향이 본문에 모두 보임"
+        }
+      },
+      "solution": "동쪽·서쪽 이동을 서로 빼고, 북쪽·남쪽 이동도 서로 뺍니다. 출발점으로 돌아갈 두 거리는 18m와 12m입니다. 18+12=30입니다.",
+      "itemContentHash": "592ff57c917ae51c2d1d611f61391cbd4860ecebd30ba35e48f26948f52623b8"
+    },
+    {
+      "id": "final7-q10-v1",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 10,
+      "variantNo": 1,
+      "genId": "final7-q10",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q10",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "number range",
+          "selected count",
+          "quotient",
+          "numbered object"
+        ],
+        "preservedInvariants": [
+          "each number appears once",
+          "sum divides exactly by selected count",
+          "minimum selected number"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "1부터 89까지의 수가 각각 하나씩 적힌 89장의 카드가 있습니다. 이 중 5장을 골라 적힌 수를 더한 뒤 5로 나누었더니 나누어떨어졌고, 몫은 76이었습니다. 고른 카드에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "30",
+      "acceptedAnswers": [
+        "30"
+      ],
+      "area": "식의 계산",
+      "subarea": "우기기/가정하여 풀기",
+      "detailType": "합과 나눗셈 조건으로 가장 작은 수 구하기",
+      "readingFocus": "곱이 아니라 고른 수의 합을 고른 개수로 나눈 몫입니다.",
+      "solutionSkill": "수의 합을 구한 뒤 나머지 수들을 가장 크게 가정해 최소값 구하기",
+      "solutionSteps": [
+        "고른 수의 합은 5×76=380입니다.",
+        "가장 작은 수를 최소로 하려면 나머지 4개를 89, 88, 87, 86로 가장 크게 잡습니다.",
+        "380-(89+88+87+86)=30입니다."
+      ],
+      "meta": {
+        "maximum": 89,
+        "selectedCount": 5,
+        "quotient": 76,
+        "targetSum": 380,
+        "maximizedOthers": [
+          89,
+          88,
+          87,
+          86
+        ]
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "최대 가능한 나머지 수들을 대입해 가장 작은 수의 하한 계산",
+          "answer": "30"
+        },
+        "independent": {
+          "method": "서로 다른 선택 수의 합 조건을 만족하는 경우를 열거해 최소 선택값 비교",
+          "answer": "30"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "수의 범위·선택 개수·나눗셈의 몫이 본문에 모두 보임"
+        }
+      },
+      "solution": "고른 수의 합은 5×76=380입니다. 가장 작은 수를 최소로 하려면 나머지 4개를 89, 88, 87, 86로 가장 크게 잡습니다. 380-(89+88+87+86)=30입니다.",
+      "itemContentHash": "7b90aca27fadf07b5d2c0974c649d21ce655bd8c455920e75e89f827cde24b2d"
+    },
+    {
+      "id": "final7-q10-v2",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 10,
+      "variantNo": 2,
+      "genId": "final7-q10",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q10",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "number range",
+          "selected count",
+          "quotient",
+          "numbered object"
+        ],
+        "preservedInvariants": [
+          "each number appears once",
+          "sum divides exactly by selected count",
+          "minimum selected number"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "1부터 70까지의 수가 각각 하나씩 적힌 70개의 공이 있습니다. 이 중 6개를 골라 적힌 수를 더한 뒤 6으로 나누었더니 나누어떨어졌고, 몫은 58이었습니다. 고른 공에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "8",
+      "acceptedAnswers": [
+        "8"
+      ],
+      "area": "식의 계산",
+      "subarea": "우기기/가정하여 풀기",
+      "detailType": "합과 나눗셈 조건으로 가장 작은 수 구하기",
+      "readingFocus": "곱이 아니라 고른 수의 합을 고른 개수로 나눈 몫입니다.",
+      "solutionSkill": "수의 합을 구한 뒤 나머지 수들을 가장 크게 가정해 최소값 구하기",
+      "solutionSteps": [
+        "고른 수의 합은 6×58=348입니다.",
+        "가장 작은 수를 최소로 하려면 나머지 5개를 70, 69, 68, 67, 66로 가장 크게 잡습니다.",
+        "348-(70+69+68+67+66)=8입니다."
+      ],
+      "meta": {
+        "maximum": 70,
+        "selectedCount": 6,
+        "quotient": 58,
+        "targetSum": 348,
+        "maximizedOthers": [
+          70,
+          69,
+          68,
+          67,
+          66
+        ]
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "최대 가능한 나머지 수들을 대입해 가장 작은 수의 하한 계산",
+          "answer": "8"
+        },
+        "independent": {
+          "method": "서로 다른 선택 수의 합 조건을 만족하는 경우를 열거해 최소 선택값 비교",
+          "answer": "8"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "수의 범위·선택 개수·나눗셈의 몫이 본문에 모두 보임"
+        }
+      },
+      "solution": "고른 수의 합은 6×58=348입니다. 가장 작은 수를 최소로 하려면 나머지 5개를 70, 69, 68, 67, 66로 가장 크게 잡습니다. 348-(70+69+68+67+66)=8입니다.",
+      "itemContentHash": "bd139044d0b5304a34a43c6f3e08b535806f14f97b037ae80eb9797a30b3a12d"
+    },
+    {
+      "id": "final7-q10-v3",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 10,
+      "variantNo": 3,
+      "genId": "final7-q10",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q10",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "number range",
+          "selected count",
+          "quotient",
+          "numbered object"
+        ],
+        "preservedInvariants": [
+          "each number appears once",
+          "sum divides exactly by selected count",
+          "minimum selected number"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "1부터 80까지의 수가 각각 하나씩 적힌 80장의 번호표가 있습니다. 이 중 4장을 골라 적힌 수를 더한 뒤 4로 나누었더니 나누어떨어졌고, 몫은 65이었습니다. 고른 번호표에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "23",
+      "acceptedAnswers": [
+        "23"
+      ],
+      "area": "식의 계산",
+      "subarea": "우기기/가정하여 풀기",
+      "detailType": "합과 나눗셈 조건으로 가장 작은 수 구하기",
+      "readingFocus": "곱이 아니라 고른 수의 합을 고른 개수로 나눈 몫입니다.",
+      "solutionSkill": "수의 합을 구한 뒤 나머지 수들을 가장 크게 가정해 최소값 구하기",
+      "solutionSteps": [
+        "고른 수의 합은 4×65=260입니다.",
+        "가장 작은 수를 최소로 하려면 나머지 3개를 80, 79, 78로 가장 크게 잡습니다.",
+        "260-(80+79+78)=23입니다."
+      ],
+      "meta": {
+        "maximum": 80,
+        "selectedCount": 4,
+        "quotient": 65,
+        "targetSum": 260,
+        "maximizedOthers": [
+          80,
+          79,
+          78
+        ]
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "최대 가능한 나머지 수들을 대입해 가장 작은 수의 하한 계산",
+          "answer": "23"
+        },
+        "independent": {
+          "method": "서로 다른 선택 수의 합 조건을 만족하는 경우를 열거해 최소 선택값 비교",
+          "answer": "23"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "수의 범위·선택 개수·나눗셈의 몫이 본문에 모두 보임"
+        }
+      },
+      "solution": "고른 수의 합은 4×65=260입니다. 가장 작은 수를 최소로 하려면 나머지 3개를 80, 79, 78로 가장 크게 잡습니다. 260-(80+79+78)=23입니다.",
+      "itemContentHash": "c85af05069afe560040e0059463aa7b2afc32df8589ab9140001c48312f0b756"
     }
   ]
 }

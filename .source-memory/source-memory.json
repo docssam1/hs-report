@@ -63,9 +63,24 @@
       ],
       "verification": [
         "materials/final_7/002.jpg#q6",
-        "bank/data/final7-fixed6.json",
-        "qa/final7-fixed6-validate.js",
-        "qa/final7-fixed6-browser-validate.js"
+        "bank/data/final7-reviewed.json",
+        "qa/final7-reviewed-validate.js",
+        "qa/final7-reviewed-browser-validate.js"
+      ]
+    },
+    {
+      "id": "question-bank-source-adapter-contract-20260918",
+      "status": "verified",
+      "scope": "cross-project question-bank source integration",
+      "rules": [
+        "Consumers query registered adapter capabilities instead of assuming or copying a source-data.js file.",
+        "Type reuse requires matching solving model, visual model, answer contract, and grade band; publisher labels remain source metadata.",
+        "Sources without verified original structure and official answers remain pending or blocked, and private originals, official answers, learner data, and personal absolute paths stay out of public source exports."
+      ],
+      "verification": [
+        "QUESTION-BANK-SOURCE-ADAPTER-CONTRACT.md",
+        "bank/core/adapter-registry.js",
+        "bank/adapters/final7-reviewed-adapter.js"
       ]
     }
   ]
