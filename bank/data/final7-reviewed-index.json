@@ -1,5 +1,5 @@
 {
-  "version": "7.2.0",
+  "version": "7.3.0",
   "sourceSet": "final",
   "sourceRound": 7,
   "availableSourceNos": [
@@ -8,7 +8,9 @@
     7,
     8,
     9,
-    10
+    10,
+    11,
+    12
   ],
   "items": [
     {
@@ -226,6 +228,78 @@
       "detailType": "합과 나눗셈 조건으로 가장 작은 수 구하기",
       "pointBand": "2.7",
       "text": "1부터 80까지의 수가 각각 하나씩 적힌 80장의 번호표가 있습니다. 이 중 4장을 골라 적힌 수를 더한 뒤 4로 나누었더니 나누어떨어졌고, 몫은 65이었습니다. 고른 번호표에 적힌 수 중 가장 작은 수는 얼마입니까?"
+    },
+    {
+      "id": "final7-q11-v1",
+      "sourceNo": 11,
+      "genId": "final7-q11",
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "식의 계산",
+      "subarea": "우기기/가정하여 풀기",
+      "detailType": "두 종류 좌석의 수를 마지막 불완전 착석에서 역산하기",
+      "pointBand": "2.7",
+      "text": "놀이공원 대기실에 3인용 의자와 7인용 긴 의자가 모두 36개 있습니다. 사람들을 차례로 모두 앉혔더니 154명이 앉았고, 마지막 7인용 긴 의자에는 5명만 앉았습니다. 7인용 긴 의자는 모두 몇 개입니까?"
+    },
+    {
+      "id": "final7-q11-v2",
+      "sourceNo": 11,
+      "genId": "final7-q11",
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "식의 계산",
+      "subarea": "우기기/가정하여 풀기",
+      "detailType": "두 종류 좌석의 수를 마지막 불완전 착석에서 역산하기",
+      "pointBand": "2.7",
+      "text": "체험관 휴게실에 2인용 의자와 6인용 긴 의자가 모두 38개 있습니다. 사람들을 차례로 모두 앉혔더니 142명이 앉았고, 마지막 6인용 긴 의자에는 4명만 앉았습니다. 6인용 긴 의자는 모두 몇 개입니까?"
+    },
+    {
+      "id": "final7-q11-v3",
+      "sourceNo": 11,
+      "genId": "final7-q11",
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "식의 계산",
+      "subarea": "우기기/가정하여 풀기",
+      "detailType": "두 종류 좌석의 수를 마지막 불완전 착석에서 역산하기",
+      "pointBand": "2.7",
+      "text": "식당에 4인용 식탁와 9인용 긴 식탁가 모두 29개 있습니다. 사람들을 차례로 모두 앉혔더니 168명이 앉았고, 마지막 9인용 긴 식탁에는 6명만 앉았습니다. 9인용 긴 식탁는 모두 몇 개입니까?"
+    },
+    {
+      "id": "final7-q12-v1",
+      "sourceNo": 12,
+      "genId": "final7-q12",
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "도형 분할과 넓이",
+      "detailType": "반복 분할에서 두 단계 사이 새로 색칠한 넓이",
+      "pointBand": "2.7",
+      "text": "정사각형을 그림과 같은 규칙으로 색칠했습니다. 다섯 번째 도형에서 네 번째 도형보다 더 색칠한 부분은 전체의 얼마인지 분수로 나타내세요."
+    },
+    {
+      "id": "final7-q12-v2",
+      "sourceNo": 12,
+      "genId": "final7-q12",
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "도형 분할과 넓이",
+      "detailType": "반복 분할에서 두 단계 사이 새로 색칠한 넓이",
+      "pointBand": "2.7",
+      "text": "정사각형을 그림과 같은 규칙으로 색칠했습니다. 네 번째 도형에서 두 번째 도형보다 더 색칠한 부분은 전체의 얼마인지 분수로 나타내세요."
+    },
+    {
+      "id": "final7-q12-v3",
+      "sourceNo": 12,
+      "genId": "final7-q12",
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "도형 분할과 넓이",
+      "detailType": "반복 분할에서 두 단계 사이 새로 색칠한 넓이",
+      "pointBand": "2.7",
+      "text": "정사각형을 그림과 같은 규칙으로 색칠했습니다. 여섯 번째 도형에서 다섯 번째 도형보다 더 색칠한 부분은 전체의 얼마인지 분수로 나타내세요."
     }
   ]
 }

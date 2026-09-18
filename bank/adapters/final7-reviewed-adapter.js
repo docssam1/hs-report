@@ -18,19 +18,21 @@
     {id:'digit-permutation-page-range',domain:'number',middle:'연속수',label:'같은 숫자로 만든 마지막 쪽수와 페이지 수',gradeBand:{from:'g3',to:'g5'},solvingModel:'digit-permutation-range-filter',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q07',rendererId:'text-block',searchAliases:['쪽수','숫자 순서','연속 페이지']},
     {id:'fixed-remainder-arithmetic-sum',domain:'number',middle:'나머지',label:'범위 안에서 같은 나머지를 갖는 수의 합',gradeBand:{from:'g3',to:'g5'},solvingModel:'arithmetic-progression-remainder-class',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q08',rendererId:'text-block',searchAliases:['나머지의 합','등차수열']},
     {id:'orthogonal-return-displacement',domain:'number',middle:'방향과 이동',label:'이동 경로를 거꾸로 추적해 출발점으로 돌아가기',gradeBand:{from:'g3',to:'g5'},solvingModel:'orthogonal-vector-cancellation',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q09',rendererId:'text-block',searchAliases:['방향 이동','출발점으로 돌아가기']},
-    {id:'maximize-others-minimum-selected',domain:'number',middle:'가정하여 풀기',label:'합 조건에서 가장 작은 선택 수 구하기',gradeBand:{from:'g3',to:'g5'},solvingModel:'maximize-complement-to-minimize-target',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q10',rendererId:'text-block',searchAliases:['가장 작은 수','최댓값 가정','카드의 합']}
+    {id:'maximize-others-minimum-selected',domain:'number',middle:'가정하여 풀기',label:'합 조건에서 가장 작은 선택 수 구하기',gradeBand:{from:'g3',to:'g5'},solvingModel:'maximize-complement-to-minimize-target',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q10',rendererId:'text-block',searchAliases:['가장 작은 수','최댓값 가정','카드의 합']},
+    {id:'two-capacity-partial-last-seat',domain:'number',middle:'가정하여 풀기',label:'마지막 불완전 착석에서 두 종류 좌석 수 구하기',gradeBand:{from:'g3',to:'g5'},solvingModel:'all-small-capacity-difference',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q11',rendererId:'text-block',searchAliases:['의자 수','우기기','좌석 정원']},
+    {id:'recursive-quarter-shaded-area-difference',domain:'geometry',middle:'도형 분할과 넓이',label:'반복 분할한 두 단계의 색칠 넓이 차',gradeBand:{from:'g3',to:'g5'},solvingModel:'geometric-area-increments',visualModel:'recursive-quarter-shading',answerContract:'single-fraction',generatorId:'final7-q12',rendererId:'reviewed-raster',searchAliases:['반복 색칠','넓이의 차','정사각형 분할']}
   ];
   var typeById = new Map(types.map(function (type) { return [type.id, type]; }));
-  var typeIdByNo = {5:types[0].id,6:types[1].id,7:types[2].id,8:types[3].id,9:types[4].id,10:types[5].id};
-  var visualByNo = {5:'hex-cells:path-count',6:'continuous-rope:oriented-fish',7:'text:digit-permutation-pages',8:'text:remainder-class-sum',9:'text:orthogonal-moves',10:'text:bounded-distinct-selection'};
-  var unitByNo = {5:'가지',6:'마리',7:'페이지',8:'',9:'',10:''};
+  var typeIdByNo = {5:types[0].id,6:types[1].id,7:types[2].id,8:types[3].id,9:types[4].id,10:types[5].id,11:types[6].id,12:types[7].id};
+  var visualByNo = {5:'hex-cells:path-count',6:'continuous-rope:oriented-fish',7:'text:digit-permutation-pages',8:'text:remainder-class-sum',9:'text:orthogonal-moves',10:'text:bounded-distinct-selection',11:'text:two-capacity-partial-last-seat',12:'recursive-quarter-shading:first-three-stages'};
+  var unitByNo = {5:'가지',6:'마리',7:'페이지',8:'',9:'',10:'',11:'개',12:'분수'};
 
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
   function useData(value) { data = value; return adapter; }
   function requireData() { if (!data) throw new Error('최종 7회 검수 문항 데이터를 먼저 불러와 주세요.'); return data; }
   function load() {
     if (data) return Promise.resolve(data);
-    if (!loadPromise) loadPromise = fetch('data/final7-reviewed.json?v=2', {cache:'no-cache'}).then(function (response) {
+    if (!loadPromise) loadPromise = fetch('data/final7-reviewed.json?v=3', {cache:'no-cache'}).then(function (response) {
       if (!response.ok) throw new Error('최종 7회 검수 문항을 불러오지 못했습니다.');
       return response.json();
     }).then(function (value) { data = value; return value; }).catch(function (error) { loadPromise = null; throw error; });

@@ -100,12 +100,12 @@ assert.equal(data.sourceSet, 'final');
 assert.equal(data.sourceRound, 7);
 assert.equal(data.freezePolicy.runtimeGeneration, false);
 assert.equal(data.freezePolicy.partialRelease, true);
-assert.equal(data.freezePolicy.fixedItemCount, 18);
+assert.equal(data.freezePolicy.fixedItemCount, 24);
 assert.equal(data.freezePolicy.variantsPerSourceQuestion, 3);
-assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10]);
-assert.deepEqual(data.reviewSummary, {verified: 18, pending: 0, unavailableSourceQuestions: 24});
-assert.equal(data.items.length, 18);
-assert.equal(new Set(data.items.map((item) => item.id)).size, 18);
+assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10, 11, 12]);
+assert.deepEqual(data.reviewSummary, {verified: 24, pending: 0, unavailableSourceQuestions: 22});
+assert.equal(data.items.length, 24);
+assert.equal(new Set(data.items.map((item) => item.id)).size, 24);
 
 for (const [relativePath, expected] of Object.entries(data.sourceFingerprints)) {
   assert.equal(hash(fs.readFileSync(path.join(ROOT, relativePath))), expected, relativePath + ': source fingerprint');
@@ -120,8 +120,10 @@ assert.equal(sourceRound.items.find((item) => item.no === 7).answer, '136', 'sou
 assert.equal(sourceRound.items.find((item) => item.no === 8).answer, '425', 'source Q8 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 9).answer, '40', 'source Q9 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 10).answer, '50', 'source Q10 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 11).answer, '15개', 'source Q11 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 12).answer, '$\\frac{1}{128}$', 'source Q12 remains traceable');
 
-for (const no of [5, 6, 7, 8, 9, 10]) {
+for (const no of [5, 6, 7, 8, 9, 10, 11, 12]) {
   const group = data.items.filter((item) => item.sourceNo === no).sort((a, b) => a.variantNo - b.variantNo);
   assert.equal(group.length, 3, no + ': exactly three reviewed variants');
   assert.deepEqual(group.map((item) => item.variantNo), [1, 2, 3]);
@@ -132,7 +134,7 @@ for (const no of [5, 6, 7, 8, 9, 10]) {
   assert.equal(link.studentWrongPracticeReady, true);
   assert.equal(link.qaEvidence.suite, 'qa/final7-reviewed-validate.js');
 }
-assert.equal(registry.sourceItemGenerator('final|7|11'), null, 'unreviewed Final 7 items remain locked');
+assert.equal(registry.sourceItemGenerator('final|7|13'), null, 'unreviewed Final 7 items remain locked');
 
 for (const item of data.items) {
   assert.equal(item.reviewStatus, 'verified', item.id + ': review status');
@@ -145,12 +147,13 @@ for (const item of data.items) {
   assert.equal(item.conditionLines, undefined, item.id + ': no repeated condition list');
   assert.equal(item.promptDataLines, undefined, item.id + ': no helper or hint box');
   assert.doesNotMatch(item.text, /①|②|③|힌트|풀이 순서/, item.id + ': no answer-leading helper copy');
-  if (item.sourceNo <= 6) {
+  if (item.sourceNo <= 6 || item.sourceNo === 12) {
     assert.equal(item.asset.kind, 'raster', item.id + ': approved raster prompt asset');
     assert.match(item.asset.src, /^data:image\/png;base64,/, item.id + ': embedded PNG');
     const bytes = Buffer.from(item.asset.src.split(',')[1], 'base64');
     assert.equal(hash(bytes), item.assetSha256, item.id + ': asset hash');
-    assert.ok(item.asset.width >= 720 && item.asset.height >= 300, item.id + ': readable source dimensions');
+    if (item.sourceNo === 12) assert.ok(item.asset.width >= 300 && item.asset.height >= 100, item.id + ': readable recursive-area dimensions');
+    else assert.ok(item.asset.width >= 720 && item.asset.height >= 300, item.id + ': readable source dimensions');
     assert.equal(bytes.readUInt32BE(16), item.asset.width, item.id + ': PNG width');
     assert.equal(bytes.readUInt32BE(20), item.asset.height, item.id + ': PNG height');
   } else {
@@ -213,4 +216,35 @@ for (const item of data.items.filter((item) => item.sourceNo === 10)) {
   assert.equal(item.meta.targetSum, item.meta.selectedCount * item.meta.quotient, item.id + ': quotient condition');
 }
 
-console.log('PASS Final 7 Q5-Q10: eighteen reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed partial release');
+for (const item of data.items.filter((item) => item.sourceNo === 11)) {
+  const m = item.meta;
+  const matches = [];
+  for (let largeCount = 1; largeCount <= m.totalFurniture; largeCount += 1) {
+    const smallCount = m.totalFurniture - largeCount;
+    const seated = smallCount * m.smallCapacity + (largeCount - 1) * m.largeCapacity + m.lastOccupancy;
+    if (seated === m.totalPeople) matches.push(largeCount);
+  }
+  assert.deepEqual(matches, [m.largeCount], item.id + ': exactly one larger-furniture count');
+  assert.equal(item.answer, m.largeCount + '개', item.id + ': larger-furniture answer');
+  assert.ok(m.lastOccupancy > 0 && m.lastOccupancy < m.largeCapacity, item.id + ': last larger unit is partially occupied');
+}
+
+function fractionDifference(fromStage, toStage) {
+  const denominator = 4 ** toStage;
+  let numerator = 0;
+  for (let stage = fromStage + 1; stage <= toStage; stage += 1) numerator += 2 * (4 ** (toStage - stage));
+  const divisor = (a, b) => b ? divisor(b, a % b) : a;
+  const common = divisor(numerator, denominator);
+  return [numerator / common, denominator / common];
+}
+for (const item of data.items.filter((item) => item.sourceNo === 12)) {
+  const expected = fractionDifference(item.meta.fromStage, item.meta.toStage);
+  assert.deepEqual(item.meta.answerFraction, expected, item.id + ': independent colored-area difference');
+  assert.equal(item.answer, expected[0] + '/' + expected[1], item.id + ': reduced fraction answer');
+  assert.equal(item.assetSpec.renderRules.showAnswerFraction, false, item.id + ': prompt figure has no answer fraction');
+  assert.equal(item.assetSpec.renderRules.showOnlyFirstThreeStages, true, item.id + ': prompt shows only the first three stages');
+  assert.equal(new Set(item.meta.shadedCorners).size, 2, item.id + ': exactly two newly shaded quarters');
+  assert.ok(!item.meta.shadedCorners.includes(item.meta.activeCorner), item.id + ': next active quarter remains unshaded and visible');
+}
+
+console.log('PASS Final 7 Q5-Q12: twenty-four reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed partial release');

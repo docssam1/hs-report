@@ -1,10 +1,10 @@
 {
-  "version": "7.2.0",
+  "version": "7.3.0",
   "sourceSet": "final",
   "sourceRound": 7,
   "freezePolicy": {
     "runtimeGeneration": false,
-    "fixedItemCount": 18,
+    "fixedItemCount": 24,
     "variantsPerSourceQuestion": 3,
     "availableSourceNos": [
       5,
@@ -12,7 +12,9 @@
       7,
       8,
       9,
-      10
+      10,
+      11,
+      12
     ],
     "partialRelease": true
   },
@@ -21,9 +23,9 @@
     "materials/final_7/003.jpg": "d82717b7623807eee4f34efc14d2ec106c2dc41435a9840fcb6fd39f60538cd9"
   },
   "reviewSummary": {
-    "verified": 18,
+    "verified": 24,
     "pending": 0,
-    "unavailableSourceQuestions": 24
+    "unavailableSourceQuestions": 22
   },
   "items": [
     {
@@ -2331,6 +2333,577 @@
       },
       "solution": "고른 수의 합은 4×65=260입니다. 가장 작은 수를 최소로 하려면 나머지 3개를 80, 79, 78로 가장 크게 잡습니다. 260-(80+79+78)=23입니다.",
       "itemContentHash": "c85af05069afe560040e0059463aa7b2afc32df8589ab9140001c48312f0b756"
+    },
+    {
+      "id": "final7-q11-v1",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 11,
+      "variantNo": 1,
+      "genId": "final7-q11",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q11",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "seat capacities",
+          "total furniture",
+          "last partial occupancy",
+          "setting"
+        ],
+        "preservedInvariants": [
+          "two furniture capacities",
+          "one final partially occupied larger unit",
+          "find larger-unit count"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "놀이공원 대기실에 3인용 의자와 7인용 긴 의자가 모두 36개 있습니다. 사람들을 차례로 모두 앉혔더니 154명이 앉았고, 마지막 7인용 긴 의자에는 5명만 앉았습니다. 7인용 긴 의자는 모두 몇 개입니까?",
+      "answer": "12개",
+      "acceptedAnswers": [
+        "12개",
+        "12"
+      ],
+      "area": "식의 계산",
+      "subarea": "우기기/가정하여 풀기",
+      "detailType": "두 종류 좌석의 수를 마지막 불완전 착석에서 역산하기",
+      "readingFocus": "마지막 큰 좌석 하나를 따로 빼고, 나머지 좌석은 모두 가득 찼다고 봅니다.",
+      "solutionSkill": "작은 좌석으로 모두 채웠다고 가정한 인원과 실제 인원의 차이를 좌석당 차이로 나누기",
+      "solutionSteps": [
+        "마지막 7인용 긴 의자를 빼면 35곳에 149명이 앉았습니다.",
+        "이를 모두 3인용 의자라고 보면 105명이고, 실제와의 차이는 44명입니다.",
+        "가득 찬 큰 좌석은 44÷4=11개이므로 마지막 좌석까지 모두 12개입니다."
+      ],
+      "meta": {
+        "smallCapacity": 3,
+        "largeCapacity": 7,
+        "totalFurniture": 36,
+        "lastOccupancy": 5,
+        "totalPeople": 154,
+        "fullLargeCount": 11,
+        "largeCount": 12
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "마지막 큰 좌석을 제외하고 작은 좌석으로 우겨 차이 계산",
+          "answer": "12개"
+        },
+        "independent": {
+          "method": "두 종류 좌석 수의 연립 조건을 모든 정수 조합으로 열거",
+          "answer": "12개"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "두 좌석의 정원·전체 수·총인원·마지막 좌석의 착석 수가 본문에 모두 보임"
+        }
+      },
+      "solution": "마지막 7인용 긴 의자를 빼면 35곳에 149명이 앉았습니다. 이를 모두 3인용 의자라고 보면 105명이고, 실제와의 차이는 44명입니다. 가득 찬 큰 좌석은 44÷4=11개이므로 마지막 좌석까지 모두 12개입니다.",
+      "itemContentHash": "a69f90d71196c17062cbebc041d0ba55762eca4806bdfffe046764ebc51e5ad7"
+    },
+    {
+      "id": "final7-q11-v2",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 11,
+      "variantNo": 2,
+      "genId": "final7-q11",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q11",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "seat capacities",
+          "total furniture",
+          "last partial occupancy",
+          "setting"
+        ],
+        "preservedInvariants": [
+          "two furniture capacities",
+          "one final partially occupied larger unit",
+          "find larger-unit count"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "체험관 휴게실에 2인용 의자와 6인용 긴 의자가 모두 38개 있습니다. 사람들을 차례로 모두 앉혔더니 142명이 앉았고, 마지막 6인용 긴 의자에는 4명만 앉았습니다. 6인용 긴 의자는 모두 몇 개입니까?",
+      "answer": "17개",
+      "acceptedAnswers": [
+        "17개",
+        "17"
+      ],
+      "area": "식의 계산",
+      "subarea": "우기기/가정하여 풀기",
+      "detailType": "두 종류 좌석의 수를 마지막 불완전 착석에서 역산하기",
+      "readingFocus": "마지막 큰 좌석 하나를 따로 빼고, 나머지 좌석은 모두 가득 찼다고 봅니다.",
+      "solutionSkill": "작은 좌석으로 모두 채웠다고 가정한 인원과 실제 인원의 차이를 좌석당 차이로 나누기",
+      "solutionSteps": [
+        "마지막 6인용 긴 의자를 빼면 37곳에 138명이 앉았습니다.",
+        "이를 모두 2인용 의자라고 보면 74명이고, 실제와의 차이는 64명입니다.",
+        "가득 찬 큰 좌석은 64÷4=16개이므로 마지막 좌석까지 모두 17개입니다."
+      ],
+      "meta": {
+        "smallCapacity": 2,
+        "largeCapacity": 6,
+        "totalFurniture": 38,
+        "lastOccupancy": 4,
+        "totalPeople": 142,
+        "fullLargeCount": 16,
+        "largeCount": 17
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "마지막 큰 좌석을 제외하고 작은 좌석으로 우겨 차이 계산",
+          "answer": "17개"
+        },
+        "independent": {
+          "method": "두 종류 좌석 수의 연립 조건을 모든 정수 조합으로 열거",
+          "answer": "17개"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "두 좌석의 정원·전체 수·총인원·마지막 좌석의 착석 수가 본문에 모두 보임"
+        }
+      },
+      "solution": "마지막 6인용 긴 의자를 빼면 37곳에 138명이 앉았습니다. 이를 모두 2인용 의자라고 보면 74명이고, 실제와의 차이는 64명입니다. 가득 찬 큰 좌석은 64÷4=16개이므로 마지막 좌석까지 모두 17개입니다.",
+      "itemContentHash": "b195ea1e24c6073e7bc79e6c53be14127ea52c31110b45520497009167a34e99"
+    },
+    {
+      "id": "final7-q11-v3",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 11,
+      "variantNo": 3,
+      "genId": "final7-q11",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q11",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "seat capacities",
+          "total furniture",
+          "last partial occupancy",
+          "setting"
+        ],
+        "preservedInvariants": [
+          "two furniture capacities",
+          "one final partially occupied larger unit",
+          "find larger-unit count"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "식당에 4인용 식탁와 9인용 긴 식탁가 모두 29개 있습니다. 사람들을 차례로 모두 앉혔더니 168명이 앉았고, 마지막 9인용 긴 식탁에는 6명만 앉았습니다. 9인용 긴 식탁는 모두 몇 개입니까?",
+      "answer": "11개",
+      "acceptedAnswers": [
+        "11개",
+        "11"
+      ],
+      "area": "식의 계산",
+      "subarea": "우기기/가정하여 풀기",
+      "detailType": "두 종류 좌석의 수를 마지막 불완전 착석에서 역산하기",
+      "readingFocus": "마지막 큰 좌석 하나를 따로 빼고, 나머지 좌석은 모두 가득 찼다고 봅니다.",
+      "solutionSkill": "작은 좌석으로 모두 채웠다고 가정한 인원과 실제 인원의 차이를 좌석당 차이로 나누기",
+      "solutionSteps": [
+        "마지막 9인용 긴 식탁를 빼면 28곳에 162명이 앉았습니다.",
+        "이를 모두 4인용 식탁라고 보면 112명이고, 실제와의 차이는 50명입니다.",
+        "가득 찬 큰 좌석은 50÷5=10개이므로 마지막 좌석까지 모두 11개입니다."
+      ],
+      "meta": {
+        "smallCapacity": 4,
+        "largeCapacity": 9,
+        "totalFurniture": 29,
+        "lastOccupancy": 6,
+        "totalPeople": 168,
+        "fullLargeCount": 10,
+        "largeCount": 11
+      },
+      "assetSpec": null,
+      "verification": {
+        "primary": {
+          "method": "마지막 큰 좌석을 제외하고 작은 좌석으로 우겨 차이 계산",
+          "answer": "11개"
+        },
+        "independent": {
+          "method": "두 종류 좌석 수의 연립 조건을 모든 정수 조합으로 열거",
+          "answer": "11개"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-value",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "두 좌석의 정원·전체 수·총인원·마지막 좌석의 착석 수가 본문에 모두 보임"
+        }
+      },
+      "solution": "마지막 9인용 긴 식탁를 빼면 28곳에 162명이 앉았습니다. 이를 모두 4인용 식탁라고 보면 112명이고, 실제와의 차이는 50명입니다. 가득 찬 큰 좌석은 50÷5=10개이므로 마지막 좌석까지 모두 11개입니다.",
+      "itemContentHash": "61a5726724ae5075940012b1b05396489d2974f471673b1341a5546961b62a1f"
+    },
+    {
+      "id": "final7-q12-v1",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 12,
+      "variantNo": 1,
+      "genId": "final7-q12",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q12",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "nested corner",
+          "shaded diagonal",
+          "compared stages"
+        ],
+        "preservedInvariants": [
+          "recursive quartering",
+          "two diagonally opposite quarters newly shaded",
+          "area difference between stages"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "정사각형을 그림과 같은 규칙으로 색칠했습니다. 다섯 번째 도형에서 네 번째 도형보다 더 색칠한 부분은 전체의 얼마인지 분수로 나타내세요.",
+      "answer": "1/512",
+      "acceptedAnswers": [
+        "1/512"
+      ],
+      "area": "도형",
+      "subarea": "도형 분할과 넓이",
+      "detailType": "반복 분할에서 두 단계 사이 새로 색칠한 넓이",
+      "readingFocus": "각 단계에서 이어서 나눈 정사각형의 대각선 두 칸만 새로 색칠됩니다.",
+      "solutionSkill": "단계별 작은 정사각형 한 칸의 넓이와 새로 색칠한 두 칸의 넓이를 더하기",
+      "solutionSteps": [
+        "한 단계가 늘 때 이어서 나누는 정사각형 한 칸의 넓이는 앞 단계의 1/4이 됩니다.",
+        "5번째부터 5번째까지 새로 색칠한 넓이는 2/1024입니다.",
+        "2/1024=1/512입니다."
+      ],
+      "meta": {
+        "fromStage": 4,
+        "toStage": 5,
+        "activeCorner": "se",
+        "shadedCorners": [
+          "ne",
+          "sw"
+        ],
+        "addedAreaTerms": [
+          "2/1024"
+        ],
+        "answerFraction": [
+          1,
+          512
+        ]
+      },
+      "assetSpec": {
+        "kind": "recursive-quarter-shading",
+        "shownStages": [
+          1,
+          2,
+          3
+        ],
+        "activeCorner": "se",
+        "shadedCorners": [
+          "ne",
+          "sw"
+        ],
+        "renderRules": {
+          "showAnswerFraction": false,
+          "showOnlyFirstThreeStages": true
+        }
+      },
+      "verification": {
+        "primary": {
+          "method": "각 단계에서 새로 색칠한 두 정사각형의 넓이를 분수로 합산",
+          "answer": "1/512"
+        },
+        "independent": {
+          "method": "4진 격자 셀의 면적을 단계별로 열거해 두 도형의 색칠 넓이 차 계산",
+          "answer": "1/512"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-fraction",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "첫 세 단계의 분할선·색칠 두 칸·계속 나뉘는 모서리가 모두 보임"
+        }
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "data:image/png;base64,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",
+        "mimeType": "image/png",
+        "description": "첫 번째부터 세 번째까지 한 모서리의 정사각형을 반복해 나누고 대각선 두 칸을 색칠한 규칙",
+        "width": 331,
+        "height": 119
+      },
+      "assetSha256": "0053499e05aed88bbb94179d57334c7ae276e50139d55e80217f5e34e076e5c4",
+      "solution": "한 단계가 늘 때 이어서 나누는 정사각형 한 칸의 넓이는 앞 단계의 1/4이 됩니다. 5번째부터 5번째까지 새로 색칠한 넓이는 2/1024입니다. 2/1024=1/512입니다.",
+      "itemContentHash": "a29dfcb3f2a623724f8fd670f89e5bf56dcd9f58ea6ba395dce41afc202f78ed"
+    },
+    {
+      "id": "final7-q12-v2",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 12,
+      "variantNo": 2,
+      "genId": "final7-q12",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q12",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "nested corner",
+          "shaded diagonal",
+          "compared stages"
+        ],
+        "preservedInvariants": [
+          "recursive quartering",
+          "two diagonally opposite quarters newly shaded",
+          "area difference between stages"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "정사각형을 그림과 같은 규칙으로 색칠했습니다. 네 번째 도형에서 두 번째 도형보다 더 색칠한 부분은 전체의 얼마인지 분수로 나타내세요.",
+      "answer": "5/128",
+      "acceptedAnswers": [
+        "5/128"
+      ],
+      "area": "도형",
+      "subarea": "도형 분할과 넓이",
+      "detailType": "반복 분할에서 두 단계 사이 새로 색칠한 넓이",
+      "readingFocus": "각 단계에서 이어서 나눈 정사각형의 대각선 두 칸만 새로 색칠됩니다.",
+      "solutionSkill": "단계별 작은 정사각형 한 칸의 넓이와 새로 색칠한 두 칸의 넓이를 더하기",
+      "solutionSteps": [
+        "한 단계가 늘 때 이어서 나누는 정사각형 한 칸의 넓이는 앞 단계의 1/4이 됩니다.",
+        "3번째부터 4번째까지 새로 색칠한 넓이는 2/64 + 2/256입니다.",
+        "2/64 + 2/256=5/128입니다."
+      ],
+      "meta": {
+        "fromStage": 2,
+        "toStage": 4,
+        "activeCorner": "nw",
+        "shadedCorners": [
+          "ne",
+          "sw"
+        ],
+        "addedAreaTerms": [
+          "2/64",
+          "2/256"
+        ],
+        "answerFraction": [
+          5,
+          128
+        ]
+      },
+      "assetSpec": {
+        "kind": "recursive-quarter-shading",
+        "shownStages": [
+          1,
+          2,
+          3
+        ],
+        "activeCorner": "nw",
+        "shadedCorners": [
+          "ne",
+          "sw"
+        ],
+        "renderRules": {
+          "showAnswerFraction": false,
+          "showOnlyFirstThreeStages": true
+        }
+      },
+      "verification": {
+        "primary": {
+          "method": "각 단계에서 새로 색칠한 두 정사각형의 넓이를 분수로 합산",
+          "answer": "5/128"
+        },
+        "independent": {
+          "method": "4진 격자 셀의 면적을 단계별로 열거해 두 도형의 색칠 넓이 차 계산",
+          "answer": "5/128"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-fraction",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "첫 세 단계의 분할선·색칠 두 칸·계속 나뉘는 모서리가 모두 보임"
+        }
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "data:image/png;base64,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",
+        "mimeType": "image/png",
+        "description": "첫 번째부터 세 번째까지 한 모서리의 정사각형을 반복해 나누고 대각선 두 칸을 색칠한 규칙",
+        "width": 331,
+        "height": 119
+      },
+      "assetSha256": "cc8d5e6dbf179ca54306a5d012118a2e9dc6220e1ea15480cc136c6b34bcf38d",
+      "solution": "한 단계가 늘 때 이어서 나누는 정사각형 한 칸의 넓이는 앞 단계의 1/4이 됩니다. 3번째부터 4번째까지 새로 색칠한 넓이는 2/64 + 2/256입니다. 2/64 + 2/256=5/128입니다.",
+      "itemContentHash": "67eaa3d6e593228d8427c418c5e5823a4827201c7023794fdfce10c151408e09"
+    },
+    {
+      "id": "final7-q12-v3",
+      "sourceSet": "final",
+      "sourceRound": 7,
+      "sourceNo": 12,
+      "variantNo": 3,
+      "genId": "final7-q12",
+      "pointBand": "2.7",
+      "answerPolicy": "single",
+      "sourceLocator": "materials/final_7/003.jpg#q12",
+      "reviewStatus": "verified",
+      "releaseStatus": "verified-student-wrong-practice",
+      "sourceComparison": {
+        "status": "user-reviewed-variant",
+        "sourcePath": "materials/final_7/003.jpg",
+        "transformedDimensions": [
+          "nested corner",
+          "shaded diagonal",
+          "compared stages"
+        ],
+        "preservedInvariants": [
+          "recursive quartering",
+          "two diagonally opposite quarters newly shaded",
+          "area difference between stages"
+        ]
+      },
+      "learnerFit": {
+        "gateId": "learner-fit",
+        "status": "pass",
+        "learnerStage": "초등 선발 대비 최종 모의고사 수강생",
+        "language": "원문과 같은 수준의 짧은 문장",
+        "responseMode": "한 개의 수로 답하기"
+      },
+      "text": "정사각형을 그림과 같은 규칙으로 색칠했습니다. 여섯 번째 도형에서 다섯 번째 도형보다 더 색칠한 부분은 전체의 얼마인지 분수로 나타내세요.",
+      "answer": "1/2048",
+      "acceptedAnswers": [
+        "1/2048"
+      ],
+      "area": "도형",
+      "subarea": "도형 분할과 넓이",
+      "detailType": "반복 분할에서 두 단계 사이 새로 색칠한 넓이",
+      "readingFocus": "각 단계에서 이어서 나눈 정사각형의 대각선 두 칸만 새로 색칠됩니다.",
+      "solutionSkill": "단계별 작은 정사각형 한 칸의 넓이와 새로 색칠한 두 칸의 넓이를 더하기",
+      "solutionSteps": [
+        "한 단계가 늘 때 이어서 나누는 정사각형 한 칸의 넓이는 앞 단계의 1/4이 됩니다.",
+        "6번째부터 6번째까지 새로 색칠한 넓이는 2/4096입니다.",
+        "2/4096=1/2048입니다."
+      ],
+      "meta": {
+        "fromStage": 5,
+        "toStage": 6,
+        "activeCorner": "ne",
+        "shadedCorners": [
+          "nw",
+          "se"
+        ],
+        "addedAreaTerms": [
+          "2/4096"
+        ],
+        "answerFraction": [
+          1,
+          2048
+        ]
+      },
+      "assetSpec": {
+        "kind": "recursive-quarter-shading",
+        "shownStages": [
+          1,
+          2,
+          3
+        ],
+        "activeCorner": "ne",
+        "shadedCorners": [
+          "nw",
+          "se"
+        ],
+        "renderRules": {
+          "showAnswerFraction": false,
+          "showOnlyFirstThreeStages": true
+        }
+      },
+      "verification": {
+        "primary": {
+          "method": "각 단계에서 새로 색칠한 두 정사각형의 넓이를 분수로 합산",
+          "answer": "1/2048"
+        },
+        "independent": {
+          "method": "4진 격자 셀의 면적을 단계별로 열거해 두 도형의 색칠 넓이 차 계산",
+          "answer": "1/2048"
+        },
+        "unique": true,
+        "validAnswerCount": 1,
+        "answerContract": "single-fraction",
+        "visibleEvidence": {
+          "passed": true,
+          "method": "첫 세 단계의 분할선·색칠 두 칸·계속 나뉘는 모서리가 모두 보임"
+        }
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "data:image/png;base64,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",
+        "mimeType": "image/png",
+        "description": "첫 번째부터 세 번째까지 한 모서리의 정사각형을 반복해 나누고 대각선 두 칸을 색칠한 규칙",
+        "width": 331,
+        "height": 119
+      },
+      "assetSha256": "e5968c5f56af45d5d3ffcc897aa72cbf0262f0bc1d2352afab8070b4a13b5539",
+      "solution": "한 단계가 늘 때 이어서 나누는 정사각형 한 칸의 넓이는 앞 단계의 1/4이 됩니다. 6번째부터 6번째까지 새로 색칠한 넓이는 2/4096입니다. 2/4096=1/2048입니다.",
+      "itemContentHash": "c6e562e83231ace8650a99b278ab47e69f97f88ad0c425c5e7684b6c81d5ff51"
     }
   ]
 }

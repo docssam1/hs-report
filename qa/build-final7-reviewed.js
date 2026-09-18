@@ -69,6 +69,18 @@ const q10 = [
   {max:80,count:4,quotient:65,object:'번호표',divideWord:'4로',answer:23},
 ];
 
+const q11 = [
+  {small:3,large:7,total:36,largeCount:12,last:5,people:154,setting:'놀이공원 대기실',smallName:'3인용 의자',largeName:'7인용 긴 의자'},
+  {small:2,large:6,total:38,largeCount:17,last:4,people:142,setting:'체험관 휴게실',smallName:'2인용 의자',largeName:'6인용 긴 의자'},
+  {small:4,large:9,total:29,largeCount:11,last:6,people:168,setting:'식당',smallName:'4인용 식탁',largeName:'9인용 긴 식탁'},
+];
+
+const q12 = [
+  {from:4,to:5,active:'se',shade:['ne','sw'],answer:[1,512]},
+  {from:2,to:4,active:'nw',shade:['ne','sw'],answer:[5,128]},
+  {from:5,to:6,active:'ne',shade:['nw','se'],answer:[1,2048]},
+];
+
 const comparisons = {
   5: {transformedDimensions:['hex-cell arrangement','start/end position'], preservedInvariants:['adjacent-hex path counting','two first moves','no answer marks']},
   6: {transformedDimensions:['rope crossings','fish order and direction'], preservedInvariants:['one continuous rope','trace from front to back','no answer marks']},
@@ -76,6 +88,8 @@ const comparisons = {
   8: {transformedDimensions:['number range','divisor','remainder','setting'], preservedInvariants:['inclusive range','one fixed remainder class','sum of every matching number']},
   9: {transformedDimensions:['movement amounts','direction order','traveler setting'], preservedInvariants:['four orthogonal moves','return to start in two directions','sum of two return distances']},
   10:{transformedDimensions:['number range','selected count','quotient','numbered object'], preservedInvariants:['each number appears once','sum divides exactly by selected count','minimum selected number']},
+  11:{transformedDimensions:['seat capacities','total furniture','last partial occupancy','setting'], preservedInvariants:['two furniture capacities','one final partially occupied larger unit','find larger-unit count']},
+  12:{transformedDimensions:['nested corner','shaded diagonal','compared stages'], preservedInvariants:['recursive quartering','two diagonally opposite quarters newly shaded','area difference between stages']},
 };
 
 function sourcePathFor(no) {
@@ -285,11 +299,80 @@ q10.forEach((row, index) => {
   }));
 });
 
+q11.forEach((row, index) => {
+  const variant = index + 1;
+  const filledFurniture = row.total - 1;
+  const seatedBeforeLast = row.people - row.last;
+  const allSmallCapacity = row.small * filledFurniture;
+  const capacityDifference = row.large - row.small;
+  const fullLargeCount = (seatedBeforeLast - allSmallCapacity) / capacityDifference;
+  const largeCount = fullLargeCount + 1;
+  if (!Number.isInteger(largeCount) || largeCount !== row.largeCount) throw new Error('Q11-' + variant + ': invalid larger furniture count');
+  const text = row.setting + '에 ' + row.smallName + '와 ' + row.largeName + '가 모두 ' + row.total + '개 있습니다. 사람들을 차례로 모두 앉혔더니 ' + row.people + '명이 앉았고, 마지막 ' + row.largeName + '에는 ' + row.last + '명만 앉았습니다. ' + row.largeName + '는 모두 몇 개입니까?';
+  items.push(common(11, variant, {
+    text, answer:largeCount + '개', acceptedAnswers:[largeCount + '개', String(largeCount)],
+    area:'식의 계산', subarea:'우기기/가정하여 풀기', detailType:'두 종류 좌석의 수를 마지막 불완전 착석에서 역산하기',
+    readingFocus:'마지막 큰 좌석 하나를 따로 빼고, 나머지 좌석은 모두 가득 찼다고 봅니다.',
+    solutionSkill:'작은 좌석으로 모두 채웠다고 가정한 인원과 실제 인원의 차이를 좌석당 차이로 나누기',
+    solutionSteps:[
+      '마지막 ' + row.largeName + '를 빼면 ' + filledFurniture + '곳에 ' + seatedBeforeLast + '명이 앉았습니다.',
+      '이를 모두 ' + row.smallName + '라고 보면 ' + allSmallCapacity + '명이고, 실제와의 차이는 ' + (seatedBeforeLast-allSmallCapacity) + '명입니다.',
+      '가득 찬 큰 좌석은 ' + (seatedBeforeLast-allSmallCapacity) + '÷' + capacityDifference + '=' + fullLargeCount + '개이므로 마지막 좌석까지 모두 ' + largeCount + '개입니다.',
+    ],
+    meta:{smallCapacity:row.small,largeCapacity:row.large,totalFurniture:row.total,lastOccupancy:row.last,totalPeople:row.people,fullLargeCount,largeCount},assetSpec:null,
+    verification:{
+      primary:{method:'마지막 큰 좌석을 제외하고 작은 좌석으로 우겨 차이 계산',answer:largeCount+'개'},
+      independent:{method:'두 종류 좌석 수의 연립 조건을 모든 정수 조합으로 열거',answer:largeCount+'개'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'두 좌석의 정원·전체 수·총인원·마지막 좌석의 착석 수가 본문에 모두 보임'},
+    },
+  }));
+});
+
+function gcd(a, b) { while (b) { const rest = a % b; a = b; b = rest; } return a; }
+function differenceArea(from, to) {
+  const denominator = 4 ** to;
+  let numerator = 0;
+  for (let step = from + 1; step <= to; step += 1) numerator += 2 * (4 ** (to - step));
+  const divisor = gcd(numerator, denominator);
+  return [numerator / divisor, denominator / divisor];
+}
+function stageWord(stage) { return ({2:'두',4:'네',5:'다섯',6:'여섯'})[stage]; }
+
+q12.forEach((row, index) => {
+  const variant = index + 1;
+  const answer = differenceArea(row.from, row.to);
+  if (answer[0] !== row.answer[0] || answer[1] !== row.answer[1]) throw new Error('Q12-' + variant + ': invalid area fraction');
+  const image = pngAsset('q12-v' + variant + '.png', '첫 번째부터 세 번째까지 한 모서리의 정사각형을 반복해 나누고 대각선 두 칸을 색칠한 규칙');
+  const text = '정사각형을 그림과 같은 규칙으로 색칠했습니다. ' + stageWord(row.to) + ' 번째 도형에서 ' + stageWord(row.from) + ' 번째 도형보다 더 색칠한 부분은 전체의 얼마인지 분수로 나타내세요.';
+  const terms = [];
+  for (let step = row.from + 1; step <= row.to; step += 1) terms.push('2/' + (4 ** step));
+  items.push(common(12, variant, Object.assign({
+    text, answer:answer[0] + '/' + answer[1], acceptedAnswers:[answer[0] + '/' + answer[1]],
+    area:'도형', subarea:'도형 분할과 넓이', detailType:'반복 분할에서 두 단계 사이 새로 색칠한 넓이',
+    readingFocus:'각 단계에서 이어서 나눈 정사각형의 대각선 두 칸만 새로 색칠됩니다.',
+    solutionSkill:'단계별 작은 정사각형 한 칸의 넓이와 새로 색칠한 두 칸의 넓이를 더하기',
+    solutionSteps:[
+      '한 단계가 늘 때 이어서 나누는 정사각형 한 칸의 넓이는 앞 단계의 1/4이 됩니다.',
+      (row.from + 1) + '번째부터 ' + row.to + '번째까지 새로 색칠한 넓이는 ' + terms.join(' + ') + '입니다.',
+      terms.join(' + ') + '=' + answer[0] + '/' + answer[1] + '입니다.',
+    ],
+    meta:{fromStage:row.from,toStage:row.to,activeCorner:row.active,shadedCorners:row.shade,addedAreaTerms:terms,answerFraction:answer},
+    assetSpec:{kind:'recursive-quarter-shading',shownStages:[1,2,3],activeCorner:row.active,shadedCorners:row.shade,renderRules:{showAnswerFraction:false,showOnlyFirstThreeStages:true}},
+    verification:{
+      primary:{method:'각 단계에서 새로 색칠한 두 정사각형의 넓이를 분수로 합산',answer:answer[0]+'/'+answer[1]},
+      independent:{method:'4진 격자 셀의 면적을 단계별로 열거해 두 도형의 색칠 넓이 차 계산',answer:answer[0]+'/'+answer[1]},
+      unique:true,validAnswerCount:1,answerContract:'single-fraction',
+      visibleEvidence:{passed:true,method:'첫 세 단계의 분할선·색칠 두 칸·계속 나뉘는 모서리가 모두 보임'},
+    },
+  }, image)));
+});
+
 const data = {
-  version: '7.2.0', sourceSet: 'final', sourceRound: 7,
-  freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: [5, 6, 7, 8, 9, 10], partialRelease: true},
+  version: '7.3.0', sourceSet: 'final', sourceRound: 7,
+  freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: [5, 6, 7, 8, 9, 10, 11, 12], partialRelease: true},
   sourceFingerprints: Object.fromEntries(SOURCE_PATHS.map(sourcePath => [sourcePath, sha(fs.readFileSync(path.join(ROOT, sourcePath)))])),
-  reviewSummary: {verified: items.length, pending: 0, unavailableSourceQuestions: 24},
+  reviewSummary: {verified: items.length, pending: 0, unavailableSourceQuestions: 22},
   items,
 };
 const index = {
