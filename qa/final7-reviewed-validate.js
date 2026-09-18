@@ -100,12 +100,12 @@ assert.equal(data.sourceSet, 'final');
 assert.equal(data.sourceRound, 7);
 assert.equal(data.freezePolicy.runtimeGeneration, false);
 assert.equal(data.freezePolicy.partialRelease, true);
-assert.equal(data.freezePolicy.fixedItemCount, 30);
+assert.equal(data.freezePolicy.fixedItemCount, 36);
 assert.equal(data.freezePolicy.variantsPerSourceQuestion, 3);
-assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
-assert.deepEqual(data.reviewSummary, {verified: 30, pending: 0, unavailableSourceQuestions: 20});
-assert.equal(data.items.length, 30);
-assert.equal(new Set(data.items.map((item) => item.id)).size, 30);
+assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
+assert.deepEqual(data.reviewSummary, {verified: 36, pending: 0, unavailableSourceQuestions: 18});
+assert.equal(data.items.length, 36);
+assert.equal(new Set(data.items.map((item) => item.id)).size, 36);
 
 for (const [relativePath, expected] of Object.entries(data.sourceFingerprints)) {
   assert.equal(hash(fs.readFileSync(path.join(ROOT, relativePath))), expected, relativePath + ': source fingerprint');
@@ -124,8 +124,10 @@ assert.equal(sourceRound.items.find((item) => item.no === 11).answer, '15개', '
 assert.equal(sourceRound.items.find((item) => item.no === 12).answer, '$\\frac{1}{128}$', 'source Q12 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 13).answer, '2가 12개', 'source Q13 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 14).answer, '101, 148, 145', 'source Q14 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 15).answer, '(3, 50)', 'source Q15 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 16).answer, '165', 'source Q16 remains traceable');
 
-for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]) {
+for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]) {
   const group = data.items.filter((item) => item.sourceNo === no).sort((a, b) => a.variantNo - b.variantNo);
   assert.equal(group.length, 3, no + ': exactly three reviewed variants');
   assert.deepEqual(group.map((item) => item.variantNo), [1, 2, 3]);
@@ -136,7 +138,7 @@ for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]) {
   assert.equal(link.studentWrongPracticeReady, true);
   assert.equal(link.qaEvidence.suite, 'qa/final7-reviewed-validate.js');
 }
-assert.equal(registry.sourceItemGenerator('final|7|15'), null, 'unreviewed Final 7 items remain locked');
+assert.equal(registry.sourceItemGenerator('final|7|17'), null, 'unreviewed Final 7 items remain locked');
 
 for (const item of data.items) {
   assert.equal(item.reviewStatus, 'verified', item.id + ': review status');
@@ -149,12 +151,13 @@ for (const item of data.items) {
   assert.equal(item.conditionLines, undefined, item.id + ': no repeated condition list');
   assert.equal(item.promptDataLines, undefined, item.id + ': no helper or hint box');
   assert.doesNotMatch(item.text, /①|②|③|힌트|풀이 순서/, item.id + ': no answer-leading helper copy');
-  if (item.sourceNo <= 6 || item.sourceNo === 12) {
+  if (item.sourceNo <= 6 || item.sourceNo === 12 || item.sourceNo === 15) {
     assert.equal(item.asset.kind, 'raster', item.id + ': approved raster prompt asset');
     assert.match(item.asset.src, /^data:image\/png;base64,/, item.id + ': embedded PNG');
     const bytes = Buffer.from(item.asset.src.split(',')[1], 'base64');
     assert.equal(hash(bytes), item.assetSha256, item.id + ': asset hash');
     if (item.sourceNo === 12) assert.ok(item.asset.width >= 300 && item.asset.height >= 100, item.id + ': readable recursive-area dimensions');
+    else if (item.sourceNo === 15) assert.ok(item.asset.width >= 800 && item.asset.height >= 180, item.id + ': readable arrow-grid dimensions');
     else assert.ok(item.asset.width >= 720 && item.asset.height >= 300, item.id + ': readable source dimensions');
     assert.equal(bytes.readUInt32BE(16), item.asset.width, item.id + ': PNG width');
     assert.equal(bytes.readUInt32BE(20), item.asset.height, item.id + ': PNG height');
@@ -287,4 +290,45 @@ for (const item of data.items.filter((item) => item.sourceNo === 14)) {
   assert.equal(item.answer, item.meta.initialCounts[0] + '개, ' + item.meta.finalCounts[1] + '개, ' + item.meta.finalCounts[2] + '개', item.id + ': ordered triple answer');
 }
 
-console.log('PASS Final 7 Q5-Q14: thirty reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed partial release');
+function arrowPosition(item, position) {
+  const period = item.meta.path.length;
+  const block = Math.floor((position - 1) / period);
+  const step = (position - 1) % period;
+  const [row, column] = item.meta.path[step];
+  return [row, block * item.meta.columnsPerBlock + column];
+}
+for (const item of data.items.filter((item) => item.sourceNo === 15)) {
+  const path = item.meta.path;
+  assert.equal(path.length, item.meta.rows * item.meta.columnsPerBlock, item.id + ': visits every square in one block');
+  assert.equal(new Set(path.map(key)).size, path.length, item.id + ': never returns to a square inside the block');
+  for (let index = 0; index < path.length - 1; index += 1) {
+    assert.equal(Math.abs(path[index][0] - path[index + 1][0]) + Math.abs(path[index][1] - path[index + 1][1]), 1, item.id + ': adjacent arrow step ' + (index + 1));
+  }
+  const nextBlockFirst = [path[0][0], path[0][1] + item.meta.columnsPerBlock];
+  assert.equal(Math.abs(path.at(-1)[0] - nextBlockFirst[0]) + Math.abs(path.at(-1)[1] - nextBlockFirst[1]), 1, item.id + ': final arrow continues to the next block instead of returning');
+  assert.deepEqual(arrowPosition(item, 1), item.meta.firstPosition, item.id + ': first position');
+  assert.deepEqual(arrowPosition(item, 6), item.meta.sixthPosition, item.id + ': sixth position');
+  assert.deepEqual(arrowPosition(item, item.meta.targetPosition), item.meta.answerPosition, item.id + ': independently repeated target position');
+  assert.equal(item.answer, '(' + item.meta.answerPosition[0] + ', ' + item.meta.answerPosition[1] + ')', item.id + ': ordered-pair answer');
+  assert.equal(item.assetSpec.renderRules.showAnswerPosition, false, item.id + ': prompt image has no answer mark');
+  assert.equal(item.assetSpec.renderRules.revisitWithinBlock, false, item.id + ': no return-to-original-cell contract');
+}
+
+function simulateCards(cardCount) {
+  const queue = Array.from({length:cardCount}, (_, index) => index + 1);
+  let lastFour = [];
+  while (queue.length > 2) {
+    queue.shift(); queue.shift();
+    if (queue.length > 2) queue.push(queue.shift());
+    if (queue.length === 4) lastFour = queue.slice();
+  }
+  return {lastFour,lastTwo:queue.slice()};
+}
+for (const item of data.items.filter((item) => item.sourceNo === 16)) {
+  const result = simulateCards(item.meta.cardCount);
+  assert.deepEqual(result.lastFour, item.meta.lastFour, item.id + ': independently simulated last four cards');
+  assert.deepEqual(result.lastTwo, item.meta.lastTwo, item.id + ': independently simulated last two cards');
+  assert.equal(item.answer, String(result.lastTwo[0] + result.lastTwo[1]), item.id + ': final two-card sum');
+}
+
+console.log('PASS Final 7 Q5-Q16: thirty-six reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed partial release');

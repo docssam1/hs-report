@@ -93,6 +93,18 @@ const q14 = [
   {labels:['빨강','파랑','초록'],intro:'빨강, 파랑, 초록 상자가 있습니다.',container:'상자',object:'카드',objectSubject:'카드가',gapAB:2,gapBC:5,repeat:25,finalA:4,moveAB:4,moveBC:2,moveCA:1,answer:[79,127,97]},
 ];
 
+const q15 = [
+  {rows:2,cols:6,target:102,path:[[1,1],[2,1],[2,2],[1,2],[1,3],[2,3],[2,4],[1,4],[1,5],[2,5],[2,6],[1,6]],answer:[2,51]},
+  {rows:4,cols:4,target:197,path:[[1,1],[2,1],[3,1],[4,1],[4,2],[3,2],[2,2],[1,2],[1,3],[2,3],[3,3],[4,3],[4,4],[3,4],[2,4],[1,4]],answer:[4,50]},
+  {rows:3,cols:6,target:250,path:[[1,1],[2,1],[3,1],[3,2],[2,2],[1,2],[1,3],[2,3],[3,3],[3,4],[2,4],[1,4],[1,5],[2,5],[3,5],[3,6],[2,6],[1,6]],answer:[3,84]},
+];
+
+const q16 = [
+  {count:60,answer:45},
+  {count:80,answer:105},
+  {count:120,answer:117},
+];
+
 const comparisons = {
   5: {transformedDimensions:['hex-cell arrangement','start/end position'], preservedInvariants:['adjacent-hex path counting','two first moves','no answer marks']},
   6: {transformedDimensions:['rope crossings','fish order and direction'], preservedInvariants:['one continuous rope','trace from front to back','no answer marks']},
@@ -104,6 +116,8 @@ const comparisons = {
   12:{transformedDimensions:['nested corner','shaded diagonal','compared stages'], preservedInvariants:['recursive quartering','two diagonally opposite quarters newly shaded','area difference between stages']},
   13:{transformedDimensions:['two digits','total term count','last complete block'], preservedInvariants:['alternating digit blocks','block lengths increase by one','compare the two digit counts']},
   14:{transformedDimensions:['container labels','objects','initial gaps','transfer amounts','repeat count'], preservedInvariants:['three containers','cyclic transfers','reverse from final first-container count','report one initial and two final counts']},
+  15:{transformedDimensions:['grid height and width','non-repeating arrow path','target position'], preservedInvariants:['one arrow move per square','periodic horizontal continuation','find row and column of a distant term']},
+  16:{transformedDimensions:['number of cards'], preservedInvariants:['discard top two cards','move the next card to the bottom','stop with exactly two cards','add the final card numbers']},
 };
 
 function sourcePathFor(no) {
@@ -466,11 +480,107 @@ q14.forEach((row, index) => {
   }));
 });
 
+function arrowDirection(from, to) {
+  const rowGap = Math.abs(from[0] - to[0]);
+  const columnGap = Math.abs(from[1] - to[1]);
+  if (rowGap + columnGap !== 1) throw new Error('Q15: arrow path must move to one adjacent square');
+}
+
+function validateArrowPath(row) {
+  if (row.path.length !== row.rows * row.cols) throw new Error('Q15: path must visit every square exactly once');
+  if (new Set(row.path.map((point) => point.join(','))).size !== row.path.length) throw new Error('Q15: path returns to a visited square');
+  row.path.forEach(([pathRow, column]) => {
+    if (pathRow < 1 || pathRow > row.rows || column < 1 || column > row.cols) throw new Error('Q15: path leaves the grid');
+  });
+  for (let step = 0; step < row.path.length - 1; step += 1) arrowDirection(row.path[step], row.path[step + 1]);
+  arrowDirection(row.path.at(-1), [row.path[0][0], row.path[0][1] + row.cols]);
+}
+
+function arrowPosition(row, position) {
+  const period = row.path.length;
+  const block = Math.floor((position - 1) / period);
+  const step = (position - 1) % period;
+  return [row.path[step][0], block * row.cols + row.path[step][1]];
+}
+
+q15.forEach((row, index) => {
+  const variant = index + 1;
+  validateArrowPath(row);
+  const first = arrowPosition(row, 1);
+  const sixth = arrowPosition(row, 6);
+  const answerPosition = arrowPosition(row, row.target);
+  if (answerPosition[0] !== row.answer[0] || answerPosition[1] !== row.answer[1]) throw new Error('Q15-' + variant + ': invalid arrow position');
+  const period = row.path.length;
+  const completeBlocks = Math.floor((row.target - 1) / period);
+  const step = (row.target - 1) % period + 1;
+  const image = pngAsset('q15-v' + variant + '.png', row.rows + '행 격자에서 같은 칸을 다시 지나지 않고 다음 묶음으로 이어지는 반복 화살표');
+  const text = '정사각형 칸에서 화살표 방향으로 한 칸씩 나아갑니다. 첫 번째 칸의 위치를 (' + first[0] + ', ' + first[1] + '), 여섯 번째 칸의 위치를 (' + sixth[0] + ', ' + sixth[1] + ')이라고 할 때, ' + row.target + '번째 칸의 위치를 구하세요.';
+  const answer = '(' + answerPosition[0] + ', ' + answerPosition[1] + ')';
+  items.push(common(15, variant, Object.assign({
+    text, answer, acceptedAnswers:[answer, answerPosition.join(','), answerPosition.join(', ')], pointBand:'3.4',
+    area:'수·규칙찾기', subarea:'규칙과 위치', detailType:'반복되는 화살표 이동에서 먼 칸의 위치 찾기',
+    readingFocus:'한 묶음 안에서는 같은 칸을 다시 지나지 않고, 마지막 화살표는 오른쪽의 다음 묶음으로 이어집니다.',
+    solutionSkill:'한 묶음의 칸 수로 나누어 묶음 수와 묶음 안의 차례를 찾기',
+    solutionSteps:[
+      '화살표 ' + period + '개가 한 묶음이고, 한 묶음이 끝날 때마다 오른쪽으로 ' + row.cols + '열 이동합니다.',
+      row.target + '번째는 완성된 ' + completeBlocks + '묶음 뒤의 ' + step + '번째 칸입니다.',
+      step + '번째 칸의 묶음 안 위치에 오른쪽 이동을 더하면 ' + answer + '입니다.',
+    ],
+    learnerFit:{gateId:'learner-fit',status:'pass',learnerStage:'초등 선발 대비 최종 모의고사 수강생',language:'원문과 같은 수준의 짧은 문장',responseMode:'행과 열을 순서쌍으로 답하기'},
+    meta:{rows:row.rows,columnsPerBlock:row.cols,path:row.path,targetPosition:row.target,firstPosition:first,sixthPosition:sixth,completeBlocks,stepInBlock:step,answerPosition},
+    assetSpec:{kind:'periodic-arrow-grid',rows:row.rows,columnsPerBlock:row.cols,path:row.path,shownBlocks:2,renderRules:{showAnswerPosition:false,repeatHorizontally:true,revisitWithinBlock:false}},
+    verification:{
+      primary:{method:'한 묶음의 칸 수로 나눠 묶음 안 차례와 오른쪽 이동 열 수 계산',answer},
+      independent:{method:'첫째 칸부터 목표 차례까지 화살표 경로를 직접 반복 생성',answer},
+      unique:true,validAnswerCount:1,answerContract:'ordered-pair',
+      visibleEvidence:{passed:true,method:'격자 행·열 번호, 첫째·여섯째 칸, 모든 화살표 방향이 보이며 같은 칸 재방문 없음'},
+    },
+  }, image)));
+});
+
+function simulateCards(count) {
+  const cards = Array.from({length:count}, (_, index) => index + 1);
+  let lastFour = [];
+  while (cards.length > 2) {
+    cards.shift();
+    cards.shift();
+    if (cards.length > 2) cards.push(cards.shift());
+    if (cards.length === 4) lastFour = cards.slice();
+  }
+  return {lastFour,lastTwo:cards.slice(),sum:cards[0] + cards[1]};
+}
+
+q16.forEach((row, index) => {
+  const variant = index + 1;
+  const result = simulateCards(row.count);
+  if (result.sum !== row.answer || result.lastFour.length !== 4 || result.lastTwo.length !== 2) throw new Error('Q16-' + variant + ': invalid final cards');
+  const text = '1부터 ' + row.count + '까지의 자연수가 적힌 카드 ' + row.count + '장을 위에서부터 차례대로 쌓았습니다. 위에서부터 2장을 버리고, 그다음 1장을 맨 밑으로 놓는 일을 카드가 2장 남을 때까지 반복합니다. 마지막에 남는 2장의 카드에 적힌 수의 합을 구하세요.';
+  items.push(common(16, variant, {
+    text, answer:String(row.answer), acceptedAnswers:[String(row.answer)], pointBand:'3.4',
+    area:'수·규칙찾기', subarea:'규칙과 과정', detailType:'카드 버리기와 옮기기를 반복한 뒤 남는 두 수의 합',
+    readingFocus:'매번 위의 두 장을 먼저 버린 다음, 바로 다음 한 장을 맨 밑으로 옮깁니다.',
+    solutionSkill:'카드의 위쪽 순서를 유지하며 버림·버림·옮김을 두 장이 남을 때까지 반복하기',
+    solutionSteps:[
+      '카드의 맨 위를 기준으로 버림·버림·맨 밑으로 옮김을 같은 순서로 반복합니다.',
+      '카드가 4장 남았을 때의 위에서부터 순서는 ' + result.lastFour.join(', ') + '입니다.',
+      '여기서 위의 두 장을 버리면 ' + result.lastTwo.join(', ') + '가 남으므로 합은 ' + result.lastTwo[0] + '+' + result.lastTwo[1] + '=' + result.sum + '입니다.',
+    ],
+    meta:{cardCount:row.count,discardCount:2,moveCount:1,stopCount:2,lastFour:result.lastFour,lastTwo:result.lastTwo},
+    assetSpec:null,
+    verification:{
+      primary:{method:'카드 순서를 표로 줄여 마지막 네 장과 두 장을 확인',answer:String(row.answer)},
+      independent:{method:'큐에 1부터 전체 카드 수까지 넣고 버림·버림·뒤로 보내기를 직접 모의 실행',answer:String(row.answer)},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'처음 카드 순서·버리는 장수·옮기는 장수·멈추는 장수가 본문에 모두 보임'},
+    },
+  }));
+});
+
 const data = {
-  version: '7.4.0', sourceSet: 'final', sourceRound: 7,
-  freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14], partialRelease: true},
+  version: '7.5.0', sourceSet: 'final', sourceRound: 7,
+  freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], partialRelease: true},
   sourceFingerprints: Object.fromEntries(SOURCE_PATHS.map(sourcePath => [sourcePath, sha(fs.readFileSync(path.join(ROOT, sourcePath)))])),
-  reviewSummary: {verified: items.length, pending: 0, unavailableSourceQuestions: 20},
+  reviewSummary: {verified: items.length, pending: 0, unavailableSourceQuestions: 18},
   items,
 };
 const index = {
