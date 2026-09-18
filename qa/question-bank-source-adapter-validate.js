@@ -13,8 +13,8 @@ adapter.useData(data);
 
 const types = adapter.listTypes();
 const sourceItems = adapter.listSourceItems();
-assert.equal(types.length, 6, 'six normalized reviewed types');
-assert.equal(sourceItems.length, 6, 'six normalized reviewed source items');
+assert.equal(types.length, 8, 'eight normalized reviewed types');
+assert.equal(sourceItems.length, 8, 'eight normalized reviewed source items');
 assert.equal(new Set(types.map((type) => type.id)).size, types.length, 'unique type ids');
 assert.equal(new Set(sourceItems.map((item) => item.sourceKey)).size, sourceItems.length, 'duplicate sourceKey count is zero');
 
@@ -38,7 +38,7 @@ assert.doesNotMatch(publicMetadata, /[A-Z]:[\\/]|Users[\\/]|AppData|OneDrive/, '
 assert.doesNotMatch(publicMetadata, /materials[\\/]final_7|\.pdf|\.jpg/i, 'no private original locator');
 
 const generated = sourceItems.reduce((sum, item) => sum + adapter.getGenerator(types.find((type) => type.id === item.typeIds[0]).generatorId).items.length, 0);
-assert.equal(generated, 18, 'all eighteen approved variants are reachable through adapter capabilities');
-assert.equal(data.reviewSummary.unavailableSourceQuestions, 24, 'unreviewed source questions remain outside the adapter release');
+assert.equal(generated, 24, 'all twenty-four approved variants are reachable through adapter capabilities');
+assert.equal(data.reviewSummary.unavailableSourceQuestions, 22, 'unreviewed source questions remain outside the adapter release');
 
-console.log('PASS source adapter contract: 6 types, 6 verified sources, 18 variants, 24 locked sources, 0 duplicate keys, 0 missing type/generator/renderer references, 0 private paths or official source answers');
+console.log('PASS source adapter contract: 8 types, 8 verified sources, 24 variants, 22 locked sources, 0 duplicate keys, 0 missing type/generator/renderer references, 0 private paths or official source answers');

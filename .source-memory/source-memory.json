@@ -69,6 +69,24 @@
       ]
     },
     {
+      "id": "final7-q12-recursive-quarter-visible-sequence-20260918",
+      "status": "verified",
+      "scope": "Final 7 question 12 source-linked repeated-area variants",
+      "rules": [
+        "The problem figure shows only the first three stages of the repeated coloring rule.",
+        "Each new stage divides one currently unshaded corner square into four equal squares and colors the two diagonal squares that are newly added at that stage.",
+        "The requested later stage, completed target figure, calculation, and answer fraction never appear in the problem figure."
+      ],
+      "verification": [
+        "materials/final_7/003.jpg#q12",
+        "bank/assets/final7/q12-v1.png",
+        "bank/assets/final7/q12-v2.png",
+        "bank/assets/final7/q12-v3.png",
+        "qa/final7-reviewed-validate.js",
+        "qa/final7-reviewed-browser-validate.js"
+      ]
+    },
+    {
       "id": "question-bank-source-adapter-contract-20260918",
       "status": "verified",
       "scope": "cross-project question-bank source integration",
