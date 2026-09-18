@@ -25,8 +25,8 @@
     round=Number(round);
     if(name.toLowerCase()==='docssam') return true;
     if(!name||!Array.isArray(data.students)||data.students.indexOf(name)<0) return false;
-    if(series==='final'&&round===5){
-      return includesName((data.archiveProductAccess||{})['mock-final-5'],name);
+    if(series==='final'&&(round===5||round===7)){
+      return includesName((data.archiveProductAccess||{})['mock-final-'+round],name);
     }
     if(series==='final'&&round>=1&&round<=4){
       return assigned(data,name,'final',round)||includesName((data.archiveAccess||{})['파이널 모의고사'],name);
@@ -91,8 +91,10 @@
   function canonicalSeriesRound(series,round){
     series=String(series||'').toLowerCase();
     round=roundNumber(round);
-    /* The additional-library Final 6~9 names are legacy aliases for Last 1~4. */
-    if(series==='final'&&round>=6&&round<=9){series='last';round-=5;}
+    /* Final 7 is a source-backed independent product, not a Last 2 alias. */
+    if(series==='final'&&round===7) return {series:'final',round:round};
+    /* Other unmigrated additional-library names retain their legacy aliases. */
+    if(series==='final'&&(round===6||round===8||round===9)){series='last';round-=5;}
     if(series==='final'&&round>=1&&round<=5) return {series:'final',round:round};
     if(series==='last'&&round>=1&&round<=4) return {series:'last',round:round};
     return null;
@@ -113,17 +115,17 @@
     var page=basename(source),series=explicitSeries(source,options.title),round=roundNumber(source.searchParams.get('round'));
     var mappedSeries=series,mappedRound=round,action='',dest=null;
 
-    /* Old Final 6~9 numbering was actually Last 1~4. */
-    if(series==='final'&&round>=6&&round<=9){mappedSeries='last';mappedRound=round-5;}
+    /* Final 7 now has its own source and must never be rewritten to Last 2. */
+    if(series==='final'&&(round===6||round===8||round===9)){mappedSeries='last';mappedRound=round-5;}
 
     if(page==='mock.html'&&mappedSeries){
-      if(mappedSeries==='final'&&mappedRound>=1&&mappedRound<=5) dest=finalTarget(source.searchParams.get('go'),mappedRound);
+      if(mappedSeries==='final'&&(mappedRound>=1&&mappedRound<=5||mappedRound===7)) dest=finalTarget(source.searchParams.get('go'),mappedRound);
       if(mappedSeries==='last'&&mappedRound>=1&&mappedRound<=4) dest=lastTarget(source.searchParams.get('go'),mappedRound);
     }else if(page==='answer.html'&&mappedSeries){
       if(mappedSeries==='last'&&mappedRound>=1&&mappedRound<=4) dest=lastTarget('answer-page',mappedRound);
-      if(mappedSeries==='final'&&mappedRound>=1&&mappedRound<=5&&!source.searchParams.get('set')) dest=finalTarget('answer-page',mappedRound);
+      if(mappedSeries==='final'&&(mappedRound>=1&&mappedRound<=5||mappedRound===7)&&!source.searchParams.get('set')) dest=finalTarget('answer-page',mappedRound);
     }else if(page==='final.html'){
-      if(!mappedSeries&&round>=6&&round<=9){mappedSeries='last';mappedRound=round-5;}
+      if(!mappedSeries&&(round===6||round===8||round===9)){mappedSeries='last';mappedRound=round-5;}
       action=String(source.searchParams.get('go')||'');
       if(mappedSeries==='last'&&mappedRound>=1&&mappedRound<=4){
         dest=action==='report'?lastTarget('report',mappedRound):lastTarget(action,mappedRound);

@@ -121,6 +121,7 @@
   function model(ctx,options){
     options=options||{};
     var roundNum=Number(ctx&&ctx.roundNum)||1;
+    var standalone=options.standalone===true;
     var rounds=options.rounds||{};
     var attempts=uniqueRounds((options.attempts||[]).filter(function(row){return validAttempt(row,roundNum,rounds);}).slice().sort(function(a,b){return Number(a.n)-Number(b.n);}));
     var considered=uniqueRounds((options.considered||[]).filter(function(row){var pct=number(row&&row.pct);return row&&Number(row.n)>=1&&Number(row.n)<=roundNum&&pct!=null&&pct>=0&&pct<=100;}).slice().sort(function(a,b){return Number(a.n)-Number(b.n);}));
@@ -151,8 +152,9 @@
     }).filter(Boolean);
     return {
       roundNum:roundNum,
+      standalone:standalone,
       isPractice:Number(ctx.attemptNo)>=2,
-      current:{label:(Number(ctx.attemptNo)>=2?'이번 연습 결과':'이번 회차')+' · 파이널 '+roundNum+'회',score:number(ctx.score),percentile:number(ctx.pct),grade:ctx.grade||null},
+      current:{label:(Number(ctx.attemptNo)>=2?'이번 연습 결과':'이번 회차')+' · '+(standalone?(ctx.R&&ctx.R.title||'최종 실전 '+roundNum+'회'):'파이널 '+roundNum+'회'),score:number(ctx.score),percentile:number(ctx.pct),grade:ctx.grade||null},
       cumulative:{label:'파이널 1~'+roundNum+'회',personalRounds:personalRounds,rankRounds:rankRounds,missingPersonalRounds:missingRounds(roundNum,personalRounds),missingRankRounds:missingRounds(roundNum,rankRounds),personalHistory:attempts.map(function(row){return {n:Number(row.n),score:number(row.score)};}),rankHistory:considered.map(function(row){return {n:Number(row.n),pct:number(row.pct)};}),scoreAverage:scoreAverage,percentileAverage:percentileAverage,band:band?band[0]:null},
       areas:areas,
       tiers:tiers,
@@ -174,6 +176,7 @@
   function metric(label,value,unit){return '<div><dt>'+escapeHTML(label)+'</dt><dd>'+(value==null?'확인 필요':escapeHTML(value)+(unit||''))+'</dd></div>';}
   function summaryHTML(vm){
     var current='<article class="parent-summary-column current"><p>'+escapeHTML(vm.current.label)+'</p>'+metric('점수',vm.current.score,'점')+metric('석차 백분율',vm.current.percentile,'%')+metric('예상 등급',vm.current.grade,'')+'</article>';
+    if(vm.standalone)return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison is-single">'+current+'</div></section>';
     if(vm.roundNum<2)return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison is-single">'+current+'</div><p class="parent-report-note">누적 비교는 파이널 2회부터 표시됩니다.</p></section>';
     var cumulative='<article class="parent-summary-column cumulative"><p>'+escapeHTML(vm.cumulative.label)+' 누적</p>'+metric('회차 평균 점수',vm.cumulative.scoreAverage,'점')+metric('회차별 석차 백분율 평균',vm.cumulative.percentileAverage,'%')+metric('누적 판정',vm.cumulative.band,'')+'</article>';
     var scope='<div class="parent-report-scope"><span>개인 성적 반영: '+roundsText(vm.cumulative.personalRounds)+'</span><span>석차 반영: '+roundsText(vm.cumulative.rankRounds)+'</span></div>';
@@ -198,18 +201,20 @@
     function list(rows,empty){return rows.length?'<ul>'+rows.map(function(row){return '<li><b>'+escapeHTML(row.label)+'</b><span>'+row.perf.toFixed(1)+'% · '+row.n+'문항</span></li>';}).join('')+'</ul>':'<p>'+empty+'</p>';}
     function column(title,strengths,improvements){return '<article><h3>'+title+'</h3><h4>강점</h4>'+list(strengths,'확인 필요')+'<h4>우선 보완</h4>'+list(improvements,'확인 필요')+'</article>';}
     var current=column('이번 회차',vm.currentStrengths,vm.currentImprovements);
-    var cumulative=vm.roundNum>=2?column('1~'+vm.roundNum+'회 누적',vm.cumulativeStrengths,vm.cumulativeImprovements):'';
-    return '<div class="parent-focus-grid'+(vm.roundNum<2?' is-single':'')+'">'+current+cumulative+'</div>';
+    var cumulative=!vm.standalone&&vm.roundNum>=2?column('1~'+vm.roundNum+'회 누적',vm.cumulativeStrengths,vm.cumulativeImprovements):'';
+    return '<div class="parent-focus-grid'+(vm.standalone||vm.roundNum<2?' is-single':'')+'">'+current+cumulative+'</div>';
   }
   function areaHTML(vm){
-    var lead=vm.roundNum>=2?'득점률 비교 · 차이=이번−누적':'이번 회차의 영역별 득점률입니다.';
-    var head=vm.roundNum>=2?'<tr><th>영역</th><th>이번</th><th>누적</th><th>차이</th></tr>':'<tr><th>영역</th><th>이번</th></tr>';
-    var rows=vm.roundNum>=2?comparisonRows(vm.areas):vm.areas.map(function(row){return '<tr><th scope="row">'+escapeHTML(row.label)+'</th><td>'+barHTML(row.current&&row.current.perf,'current')+'</td></tr>';}).join('');
+    var compare=!vm.standalone&&vm.roundNum>=2;
+    var lead=compare?'득점률 비교 · 차이=이번−누적':'이번 회차의 영역별 득점률입니다.';
+    var head=compare?'<tr><th>영역</th><th>이번</th><th>누적</th><th>차이</th></tr>':'<tr><th>영역</th><th>이번</th></tr>';
+    var rows=compare?comparisonRows(vm.areas):vm.areas.map(function(row){return '<tr><th scope="row">'+escapeHTML(row.label)+'</th><td>'+barHTML(row.current&&row.current.perf,'current')+'</td></tr>';}).join('');
     return '<div class="parent-area-comparison"><p class="lead">'+lead+'</p><div class="report-table-scroll"><table><thead>'+head+'</thead><tbody>'+rows+'</tbody></table></div>'+focusHTML(vm)+'</div>';
   }
   function tierHTML(vm){
-    var head=vm.roundNum>=2?'<tr><th>배점대</th><th>이번</th><th>누적</th><th>차이</th></tr>':'<tr><th>배점대</th><th>이번</th></tr>';
-    var rows=vm.roundNum>=2?comparisonRows(vm.tiers):vm.tiers.map(function(row){return '<tr><th scope="row">'+escapeHTML(row.label)+'</th><td>'+barHTML(row.current&&row.current.perf,'current')+'</td></tr>';}).join('');
+    var compare=!vm.standalone&&vm.roundNum>=2;
+    var head=compare?'<tr><th>배점대</th><th>이번</th><th>누적</th><th>차이</th></tr>':'<tr><th>배점대</th><th>이번</th></tr>';
+    var rows=compare?comparisonRows(vm.tiers):vm.tiers.map(function(row){return '<tr><th scope="row">'+escapeHTML(row.label)+'</th><td>'+barHTML(row.current&&row.current.perf,'current')+'</td></tr>';}).join('');
     return '<div class="parent-tier-comparison"><p class="lead">포함된 모든 문항의 득점 합을 배점 합으로 나눈 결과입니다.</p><div class="report-table-scroll"><table><thead>'+head+'</thead><tbody>'+rows+'</tbody></table></div></div>';
   }
   function priorityHTML(vm){
@@ -219,6 +224,7 @@
     return '<div class="parent-priority"><h3>먼저 다시 풀 '+vm.priorityItems.length+'문항</h3><p>잘하는 영역에서 놓친 문제 중 확인된 정답률이 높은 순서입니다.'+target+'</p><ol class="parent-priority-list">'+items+'</ol></div>';
   }
   function historyHTML(vm){
+    if(vm.standalone)return '';
     var personal=vm.cumulative.personalHistory.length?'<table><thead><tr><th>회차</th><th>최초 응시 점수</th></tr></thead><tbody>'+vm.cumulative.personalHistory.map(function(row){return '<tr><td>파이널 '+row.n+'회</td><td class="c">'+(row.score==null?'확인 필요':row.score+'점')+'</td></tr>';}).join('')+'</tbody></table>':'<p class="lead">반영할 최초 응시 기록이 없습니다.</p>';
     var rank=vm.cumulative.rankHistory.length?'<table><thead><tr><th>회차</th><th>석차 백분율</th></tr></thead><tbody>'+vm.cumulative.rankHistory.map(function(row){return '<tr><td>파이널 '+row.n+'회</td><td class="c">'+row.pct+'%</td></tr>';}).join('')+'</tbody></table>':'<p class="lead">반영할 석차 자료가 없습니다.</p>';
     var repeated=vm.repeatedWeaknesses.length?vm.repeatedWeaknesses.map(function(row){return '<div class="repwk"><b>'+escapeHTML(row.label)+'</b> — 파이널 '+row.rounds.join('·')+'회 반복 오답</div>';}).join(''):'<div class="repwk">승인된 같은 유형이 서로 다른 두 회차 이상 반복된 오답은 없습니다.</div>';

@@ -5,16 +5,18 @@ vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../final-last-routes.js'
 const R=window.GFIELD_FINAL_LAST_ROUTES;
 const U=x=>new URL(x,window.location.href);
 for(let n=1;n<=9;n++){
- assert.equal(R.reportUrl('final',n,'sample'),R.withStudent(R.route(n>5?'last':'final',n>5?n-5:n,'report'),'sample'),'shared report helper handles legacy aliases');
+ const independent=n===7;
+ assert.equal(R.reportUrl('final',n,'sample'),R.withStudent(R.route(n>5&&!independent?'last':'final',n>5&&!independent?n-5:n,'report'),'sample'),'shared report helper handles independent Final 7 and remaining legacy aliases');
 }
 for(const [series,n] of [['last',5],['final',10],['mid',1],['final',0],['final',1.5]]){
  assert.equal(R.reportUrl(series,n,'sample'),'','invalid report round is not guessed');
 }
 for(let n=1;n<=9;n++){
  const u=U(R.normalizeUrl('mock.html?set=final&round='+n+'&name=sample&go=timer&preview=1'));
- assert.equal(u.pathname,'/final.html');assert.equal(u.searchParams.get('round'),String(n>5?n-5:n));
+ const independent=n===7;
+ assert.equal(u.pathname,'/final.html');assert.equal(u.searchParams.get('round'),String(n>5&&!independent?n-5:n));
  assert.equal(u.searchParams.get('name'),'sample');assert.equal(u.searchParams.get('preview'),'1');
- assert.equal(u.searchParams.get('set'),n>5?'last':null);
+ assert.equal(u.searchParams.get('set'),n>5&&!independent?'last':null);
 }
 for(let n=1;n<=4;n++){
  const u=U(R.normalizeUrl('final.html?set=last&round='+n+'&go=report&name=sample'));
@@ -28,13 +30,14 @@ for(const external of ['https://example.org/answer.html?set=final&round=6','//ex
  assert.equal(R.normalizeUrl(external),external);assert.equal(R.withStudent(external,'private-name'),external);assert.equal(R.isKnownHtml(external),false);
 }
 for(const f of ['last1-entry.html?round=1','last1-result.html?round=2','last1-answer.html','last-answer.html?round=4'])assert.equal(R.isKnownHtml(f),true,'canonical Last HTML recognised');
-const data={students:['assigned','archive','other','online'],attendance:{assigned:['sep-w1'],other:[],online:[]},studentTypes:{online:'online'},archiveAccess:{'파이널 모의고사':['archive']},archiveProductAccess:{'mock-final-5':['archive']}};
+const data={students:['assigned','archive','other','online'],attendance:{assigned:['sep-w1'],other:[],online:[]},studentTypes:{online:'online'},archiveAccess:{'파이널 모의고사':['archive']},archiveProductAccess:{'mock-final-5':['archive'],'mock-final-7':['archive']}};
 const before=JSON.stringify(data);
 assert.equal(R.accessAllowed(data,'assigned','final',1),true);
 assert.equal(R.accessAllowed(data,'assigned','final',2),false,'assignment remains round scoped');
 assert.equal(R.accessAllowed(data,'assigned','final',5),false,'Final5 retains separate product approval');
 assert.equal(R.accessAllowed(data,'archive','final',4),true);
 assert.equal(R.accessAllowed(data,'archive','final',5),true);
+assert.equal(R.accessAllowed(data,'archive','final',7),true,'Final 7 uses its own product approval');
 assert.equal(R.accessAllowed(data,'other','final',1),false);
 assert.equal(R.accessAllowed(data,'online','final',1),false);
 assert.equal(R.accessAllowed(data,'not-registered','final',1),false);
