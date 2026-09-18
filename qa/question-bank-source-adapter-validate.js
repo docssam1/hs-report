@@ -13,8 +13,8 @@ adapter.useData(data);
 
 const types = adapter.listTypes();
 const sourceItems = adapter.listSourceItems();
-assert.equal(types.length, 10, 'ten normalized reviewed types');
-assert.equal(sourceItems.length, 10, 'ten normalized reviewed source items');
+assert.equal(types.length, 12, 'twelve normalized reviewed types');
+assert.equal(sourceItems.length, 12, 'twelve normalized reviewed source items');
 assert.equal(new Set(types.map((type) => type.id)).size, types.length, 'unique type ids');
 assert.equal(new Set(sourceItems.map((item) => item.sourceKey)).size, sourceItems.length, 'duplicate sourceKey count is zero');
 
@@ -38,9 +38,11 @@ assert.doesNotMatch(publicMetadata, /[A-Z]:[\\/]|Users[\\/]|AppData|OneDrive/, '
 assert.doesNotMatch(publicMetadata, /materials[\\/]final_7|\.pdf|\.jpg/i, 'no private original locator');
 
 const generated = sourceItems.reduce((sum, item) => sum + adapter.getGenerator(types.find((type) => type.id === item.typeIds[0]).generatorId).items.length, 0);
-assert.equal(generated, 30, 'all thirty approved variants are reachable through adapter capabilities');
-assert.equal(data.reviewSummary.unavailableSourceQuestions, 20, 'unreviewed source questions remain outside the adapter release');
+assert.equal(generated, 36, 'all thirty-six approved variants are reachable through adapter capabilities');
+assert.equal(data.reviewSummary.unavailableSourceQuestions, 18, 'unreviewed source questions remain outside the adapter release');
 assert.equal(sourceItems.find((item) => item.sourceLocator.questionNo === 13).answerContract, 'number-and-count', 'Q13 keeps its number-and-count answer contract');
 assert.equal(sourceItems.find((item) => item.sourceLocator.questionNo === 14).answerContract, 'ordered-triple', 'Q14 keeps its ordered-triple answer contract');
+assert.equal(sourceItems.find((item) => item.sourceLocator.questionNo === 15).answerContract, 'ordered-pair', 'Q15 keeps its ordered-pair answer contract');
+assert.equal(sourceItems.find((item) => item.sourceLocator.questionNo === 16).answerContract, 'single-number', 'Q16 keeps its single-number answer contract');
 
-console.log('PASS source adapter contract: 10 types, 10 verified sources, 30 variants, 20 locked sources, 0 duplicate keys, 0 missing type/generator/renderer references, 0 private paths or official source answers');
+console.log('PASS source adapter contract: 12 types, 12 verified sources, 36 variants, 18 locked sources, 0 duplicate keys, 0 missing type/generator/renderer references, 0 private paths or official source answers');

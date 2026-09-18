@@ -22,19 +22,21 @@
     {id:'two-capacity-partial-last-seat',domain:'number',middle:'가정하여 풀기',label:'마지막 불완전 착석에서 두 종류 좌석 수 구하기',gradeBand:{from:'g3',to:'g5'},solvingModel:'all-small-capacity-difference',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q11',rendererId:'text-block',searchAliases:['의자 수','우기기','좌석 정원']},
     {id:'recursive-quarter-shaded-area-difference',domain:'geometry',middle:'도형 분할과 넓이',label:'반복 분할한 두 단계의 색칠 넓이 차',gradeBand:{from:'g3',to:'g5'},solvingModel:'geometric-area-increments',visualModel:'recursive-quarter-shading',answerContract:'single-fraction',generatorId:'final7-q12',rendererId:'reviewed-raster',searchAliases:['반복 색칠','넓이의 차','정사각형 분할']},
     {id:'alternating-growing-run-count-difference',domain:'number',middle:'군수열/묶음수열',label:'한 개씩 길어지는 두 숫자 묶음의 개수 비교',gradeBand:{from:'g3',to:'g5'},solvingModel:'triangular-block-parity-count',visualModel:'text-sequence',answerContract:'number-and-count',generatorId:'final7-q13',rendererId:'text-block',searchAliases:['군수열','묶음수열','늘어나는 묶음']},
-    {id:'three-container-cyclic-transfer',domain:'number',middle:'거꾸로 생각하기',label:'세 곳 사이의 반복 이동을 거꾸로 계산하기',gradeBand:{from:'g3',to:'g5'},solvingModel:'cyclic-transfer-net-change-reversal',visualModel:'text-only',answerContract:'ordered-triple',generatorId:'final7-q14',rendererId:'text-block',searchAliases:['세 상자','반복 이동','거꾸로 계산']}
+    {id:'three-container-cyclic-transfer',domain:'number',middle:'거꾸로 생각하기',label:'세 곳 사이의 반복 이동을 거꾸로 계산하기',gradeBand:{from:'g3',to:'g5'},solvingModel:'cyclic-transfer-net-change-reversal',visualModel:'text-only',answerContract:'ordered-triple',generatorId:'final7-q14',rendererId:'text-block',searchAliases:['세 상자','반복 이동','거꾸로 계산']},
+    {id:'periodic-arrow-grid-position',domain:'number',middle:'규칙과 위치',label:'반복되는 화살표 이동에서 먼 칸의 위치 찾기',gradeBand:{from:'g3',to:'g5'},solvingModel:'periodic-path-quotient-remainder',visualModel:'nonrepeating-arrow-grid',answerContract:'ordered-pair',generatorId:'final7-q15',rendererId:'reviewed-raster',searchAliases:['화살표 이동','행과 열','주기적 위치']},
+    {id:'discard-two-move-one-card-queue',domain:'number',middle:'규칙과 과정',label:'카드 버리기와 옮기기를 반복한 뒤 남는 두 수의 합',gradeBand:{from:'g3',to:'g5'},solvingModel:'queue-discard-discard-rotate',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q16',rendererId:'text-block',searchAliases:['카드 버리기','맨 밑으로 옮기기','마지막 두 장']}
   ];
   var typeById = new Map(types.map(function (type) { return [type.id, type]; }));
-  var typeIdByNo = {5:types[0].id,6:types[1].id,7:types[2].id,8:types[3].id,9:types[4].id,10:types[5].id,11:types[6].id,12:types[7].id,13:types[8].id,14:types[9].id};
-  var visualByNo = {5:'hex-cells:path-count',6:'continuous-rope:oriented-fish',7:'text:digit-permutation-pages',8:'text:remainder-class-sum',9:'text:orthogonal-moves',10:'text:bounded-distinct-selection',11:'text:two-capacity-partial-last-seat',12:'recursive-quarter-shading:first-three-stages',13:'text:alternating-growing-runs',14:'text:cyclic-three-container-transfer'};
-  var unitByNo = {5:'가지',6:'마리',7:'페이지',8:'',9:'',10:'',11:'개',12:'분수',13:'숫자·개수',14:'개·개·개'};
+  var typeIdByNo = {5:types[0].id,6:types[1].id,7:types[2].id,8:types[3].id,9:types[4].id,10:types[5].id,11:types[6].id,12:types[7].id,13:types[8].id,14:types[9].id,15:types[10].id,16:types[11].id};
+  var visualByNo = {5:'hex-cells:path-count',6:'continuous-rope:oriented-fish',7:'text:digit-permutation-pages',8:'text:remainder-class-sum',9:'text:orthogonal-moves',10:'text:bounded-distinct-selection',11:'text:two-capacity-partial-last-seat',12:'recursive-quarter-shading:first-three-stages',13:'text:alternating-growing-runs',14:'text:cyclic-three-container-transfer',15:'grid:periodic-nonrepeating-arrow-path',16:'text:queue-discard-two-move-one'};
+  var unitByNo = {5:'가지',6:'마리',7:'페이지',8:'',9:'',10:'',11:'개',12:'분수',13:'숫자·개수',14:'개·개·개',15:'행·열',16:''};
 
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
   function useData(value) { data = value; return adapter; }
   function requireData() { if (!data) throw new Error('최종 7회 검수 문항 데이터를 먼저 불러와 주세요.'); return data; }
   function load() {
     if (data) return Promise.resolve(data);
-    if (!loadPromise) loadPromise = fetch('data/final7-reviewed.json?v=4', {cache:'no-cache'}).then(function (response) {
+    if (!loadPromise) loadPromise = fetch('data/final7-reviewed.json?v=5', {cache:'no-cache'}).then(function (response) {
       if (!response.ok) throw new Error('최종 7회 검수 문항을 불러오지 못했습니다.');
       return response.json();
     }).then(function (value) { data = value; return value; }).catch(function (error) { loadPromise = null; throw error; });
