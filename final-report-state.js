@@ -1,13 +1,20 @@
 (function(root){
   'use strict';
   var current=null;
+  var reportReadCache=new Map();
   var esc=function(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+  var cacheKey=function(student,round,slot){return [student,'final'+round,slot].join('\n');};
   async function load(student,round,ox,slot,record,preview){
     current={student:student,exam:'final'+round,slot:slot,canEdit:false,comment:'',commentUpdatedAt:null,snapshot:null,error:false,preview:preview};
     var target=current;
     if(preview)return target;
     try{
-      var data=await root.GFIELD_AUTH.functionCall('hs-final-population',{action:record?'record-report':'read-report',exam:target.exam,student:student},slot);
+      var key=cacheKey(student,round,slot);
+      var cached=!record&&reportReadCache.has(key)?reportReadCache.get(key):null;
+      reportReadCache.delete(key);
+      var data=cached
+        ?cached
+        :await root.GFIELD_AUTH.functionCall('hs-final-population',{action:record?'record-report':'read-report',exam:target.exam,student:student},slot);
       if(current!==target)return null;
       target.canEdit=data.canEdit===true;target.comment=typeof data.comment==='string'?data.comment:'';
       target.commentUpdatedAt=data.commentUpdatedAt||null;
@@ -18,6 +25,7 @@
   async function loadSnapshot(student,round,ox,slot){
     try{
       var data=await root.GFIELD_AUTH.functionCall('hs-final-population',{action:'read-report',exam:'final'+round,student:student},slot);
+      reportReadCache.set(cacheKey(student,round,slot),data);
       return data&&data.resultOx===ox&&data.snapshot?data.snapshot:null;
     }catch(e){return null;}
   }
