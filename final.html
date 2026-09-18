@@ -531,6 +531,7 @@ td.weak-cell{white-space:nowrap}
   var isFinal2=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===2;
   var isFinal3=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===3;
   var isFinal4=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===4;
+  var isFinal7=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===7;
   var mockFile=isLast?'mock-data-last.js':(isOriginal?'mock-data-original.js':'mock-data-final.js');
   var files=['hs-auth.js','data.js',mockFile];
   if(!isOriginal) files.push('mock-data-original.js');
@@ -542,7 +543,8 @@ td.weak-cell{white-space:nowrap}
   if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js');
   if(isFinal3) files.push('final3-solution-diagrams.js','final3-backhalf-solution-diagrams.js','final3-detailed-data.js','final-detailed-solutions.js');
   if(isFinal4) files.push('final4-detailed-data.js','final-detailed-solutions.js');
-  if(isFinal1||isFinal2||isFinal3||isFinal4) files.push('final-report-print.js');
+  if(isFinal7) files.push('last-score-data.js','final7-benchmark.js');
+  if(!isLast&&!isOriginal) files.push('final-report-print.js');
   if(isLast) files.push(
     'mock-data-final.js',
     'final-population.js',
@@ -620,7 +622,8 @@ td.weak-cell{white-space:nowrap}
 
   var rawRound = params.get('round');
   var maxRound = isOriginal ? 2 : (isLast ? 4 : 5);
-  var roundNum = rawRound==null||rawRound==='' ? 1 : (/^\d+$/.test(rawRound) && Number(rawRound)>=1 && Number(rawRound)<=maxRound ? Number(rawRound) : 0);
+  var parsedRound=/^\d+$/.test(rawRound||'')?Number(rawRound):0;
+  var roundNum = rawRound==null||rawRound==='' ? 1 : (parsedRound>=1&&((parsedRound<=maxRound)||(M&&M.rounds&&M.rounds[String(parsedRound)])) ? parsedRound : 0);
   /* 잠긴 시험의 미리보기는 개발자 로컬 서버에서만 허용한다.
      정적 배포 주소에서는 preview=1만으로 ready:false를 우회할 수 없다. */
   var localPreviewHost = location.protocol==='file:' || location.hostname==='localhost' || location.hostname==='127.0.0.1' || location.hostname==='::1';
@@ -637,6 +640,10 @@ td.weak-cell{white-space:nowrap}
     var row=(M.blueprint||[]).filter(function(b){return Number(b.no)===Number(no);})[0];
     if(!row) throw new Error('blueprint '+no+'번 누락');
     return row;
+  }
+  function examMinutes(){
+    var round=M&&M.rounds&&M.rounds[String(roundNum)];
+    return Number(round&&round.minutes||M.exam&&M.exam.minutes||90);
   }
   function validOx(ox){
     var s=Array.isArray(ox)?ox.join(''):String(ox==null?'':ox);
@@ -658,7 +665,7 @@ td.weak-cell{white-space:nowrap}
   function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function round1(x){ return Math.round(x*10)/10; }
   function mmss(s){ s=Math.max(0,s); var m=Math.floor(s/60), ss=Math.floor(s%60); return (m<10?'0'+m:''+m)+':'+(ss<10?'0'+ss:''+ss); }
-  function seriesLabel(){ return (M&&M.label) || (isLast?'최종':'파이널'); }
+  function seriesLabel(){ var r=M&&M.rounds&&M.rounds[String(roundNum)]; return (r&&r.seriesLabel)||(M&&M.label)||(isLast?'최종':'파이널'); }
   function roundLabel(n){ return seriesLabel()+' '+n+'회'; }
   function setPrefix(){ return isOriginal?'original':(isLast?'last':'final'); }
   function allowedForRound(name){
@@ -766,7 +773,7 @@ td.weak-cell{white-space:nowrap}
   }
   // Item rates are a frozen teaching reference, independent of login/percentiles.
   function fixedRatesVerified(S){
-    if(populationStatsVerified(S)) return true;
+    if(populationStatsVerified(S)&&S&&S.rate&&Array.from({length:30},function(_,i){return S.rate[i+1];}).every(function(v){return typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=1;})) return true;
     var e=S&&S.rateEvidence;
     return !!(e&&e.status==='verified-source-aggregate'&&e.scope==='provided-original-records'&&S.rate&&Array.from({length:30},function(_,i){return S.rate[i+1];}).every(function(v){return typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=1;}));
   }
@@ -1521,6 +1528,7 @@ td.weak-cell{white-space:nowrap}
      attemptNo===1일 때만 사용합니다. */
   function computeCumulativeConsidered(roundNum, priorRows, attemptNo, fk, curOxArr, includeCurrent){
     var considered = []; // {n, pct, oxArr}
+    if(M.rounds[String(roundNum)]&&M.rounds[String(roundNum)].standalone) return considered;
     if(isLast){
       if(roundNum===1){
         for(var finalNo=1;finalNo<=4;finalNo++){
@@ -1678,6 +1686,7 @@ td.weak-cell{white-space:nowrap}
     if(isOriginal) return;
     var api=window.GFIELD_FINAL_POPULATION;
     state.populationUnavailable=false;
+    if(M.rounds[String(roundNum)]&&M.rounds[String(roundNum)].standalone) return;
     if(isLast){
       lastFinalPopulationByRound={};
       if(roundNum!==1||!api) return;
@@ -1910,7 +1919,7 @@ td.weak-cell{white-space:nowrap}
       '<div class="doc start-doc">'+
       '<div class="cover small-cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>'+esc(R.title||roundLabel(roundNum))+'</h1><div class="sub">'+esc(state.name)+' 학생, 준비되면 시작하세요</div></div>'+
       '<section>'+
-      '<div class="examinfo"><div><b>'+M.exam.minutes+'분</b><span>시험 시간</span></div><div><b>'+M.exam.questions+'문항</b><span>문항 수</span></div><div><b>'+M.exam.total+'점</b><span>만점</span></div></div>'+
+      '<div class="examinfo"><div><b>'+examMinutes()+'분</b><span>시험 시간</span></div><div><b>'+M.exam.questions+'문항</b><span>문항 수</span></div><div><b>'+M.exam.total+'점</b><span>만점</span></div></div>'+
       (hasPaper
         ? '<div class="startbtns"><button class="btn-primary" id="btnPaper">📝 시험지 보기·인쇄</button><button class="btn-secondary" id="btnTimer">⏱ 실전 타이머</button><button class="btn-secondary" id="btnSkip">'+(paperOnly?'✅ 답안·해설':'✅ 맞은 문제 체크·진단')+'</button></div>'
         : '<div class="startbtns"><button class="btn-primary" id="btnTimer">⏱ 시간 재고 풀기</button><button class="btn-secondary" id="btnSkip">그냥 풀기</button></div>')+
@@ -1964,7 +1973,7 @@ td.weak-cell{white-space:nowrap}
     return '<section class="exam-paper-page" data-page="'+page.page+'">'+
       '<div class="paper-watermark">G-FIELD · '+esc(student||'최종 모의고사')+'</div>'+
       '<header class="paper-head"><div class="paper-brand-row"><span>G-FIELD GIFTED EDUCATION</span><span>생각하는 황소 초등선발 대비</span></div>'+
-      '<h1>'+esc(R.title||roundLabel(roundNum))+'</h1><div class="paper-meta"><span>이름 <span class="blank paper-name">'+esc(student)+'</span></span><span class="time-limit">'+M.exam.minutes+'분 · '+M.exam.total+'점</span></div></header>'+
+      '<h1>'+esc(R.title||roundLabel(roundNum))+'</h1><div class="paper-meta"><span>이름 <span class="blank paper-name">'+esc(student)+'</span></span><span class="time-limit">'+examMinutes()+'분 · '+M.exam.total+'점</span></div></header>'+
       '<div class="paper-running"><span>'+esc(roundLabel(roundNum))+'</span><span>'+page.page+' / '+R.paper.pages.length+'</span></div>'+body+
       '<footer class="paper-foot"><span>지필드 영재교육</span><span>'+page.page+'</span></footer></section>';
   }
@@ -1977,7 +1986,7 @@ td.weak-cell{white-space:nowrap}
     var addCopyright=Array.isArray(R.paper.copyrightMissingPages)&&R.paper.copyrightMissingPages.indexOf(pageNo)>=0;
     return '<section class="paper-image-page" data-page="'+pageNo+'" oncontextmenu="return false">'+
       '<img src="'+src+'" alt="'+esc(R.title||roundLabel(roundNum))+' '+pageNo+'쪽" draggable="false">'+
-      (pageNo===1?'<div class="paper-time-correction">제한시간 : '+Number(M.exam.minutes||90)+'분</div>':'')+
+      (pageNo===1?'<div class="paper-time-correction">제한시간 : '+examMinutes()+'분</div>':'')+
       (addCopyright?'<div class="paper-copyright">이 시험지의 전부 또는 일부의 무단전재와 무단복제를<br>금합니다. 저작권 등록번호 C-2025-032626</div>':'')+
       '<div class="paper-image-watermark"><span>'+stamp+'</span><span>'+stamp+'</span><span>'+stamp+'</span></div></section>';
   }
@@ -1995,7 +2004,7 @@ td.weak-cell{white-space:nowrap}
         '<div class="correction-item-head"><span class="correction-qno">'+Number(item.qno)+'번</span><h2>'+esc(item.heading||'정정된 문항')+'</h2></div>'+
         '<div class="correction-instruction">'+esc(item.instruction||'아래 문장으로 읽고 풉니다.')+'</div>'+
         '<div class="correction-text">'+esc(item.text||'').replace(/\n/g,'<br>')+'</div></article>';}).join('')+'</div>'+
-      '<footer class="correction-foot"><span>지필드 영재교육 · 문항 검수본</span><span>시험 시간은 '+Number(M.exam.minutes||90)+'분입니다.</span></footer></section>';
+      '<footer class="correction-foot"><span>지필드 영재교육 · 문항 검수본</span><span>시험 시간은 '+examMinutes()+'분입니다.</span></footer></section>';
   }
 
   function printPaperWhenReady(){
@@ -2036,11 +2045,11 @@ td.weak-cell{white-space:nowrap}
 
   function renderTimer(){
     showPrint(false);
-    var TOTAL = (M.exam.minutes||90)*60;
+    var TOTAL = examMinutes()*60;
     var CUES = (CUES_DATA.length? CUES_DATA : [{at:0,ph:'시작',msg:'시작하자.'},{at:TOTAL,ph:'종료',msg:'수고했어.'}]).slice().sort(function(a,b){return a.at-b.at;});
-    var examMinutes=Number(M.exam.minutes||90);
-    var middleStart=examMinutes===80?32:35;
-    var reviewStart=examMinutes===80?68:75;
+    var timerMinutes=examMinutes();
+    var middleStart=timerMinutes===80?32:35;
+    var reviewStart=timerMinutes===80?68:75;
     var fallbackPlan=[
       {from:0,t:"0~5분",  h:"시험지 훑어보기", d:"풀 수 있을 것 같은 문제 체크"},
       {from:5*60,t:"5~"+middleStart+"분", h:"1~12번 (2.7점)", d:"모르는 문제는 표시하고 넘어가기"},
@@ -2049,12 +2058,12 @@ td.weak-cell{white-space:nowrap}
     ];
     var PLAN=(Array.isArray(M.exam.plan)&&M.exam.plan.length?M.exam.plan.map(function(p){return {
       from:(Number(p.from)||0)*60,
-      t:p.label||((p.from||0)+'~'+(p.to||M.exam.minutes)+'분'),
+      t:p.label||((p.from||0)+'~'+(p.to||timerMinutes)+'분'),
       h:p.title||'', d:p.detail||''
     };}):fallbackPlan);
     app.innerHTML =
       '<div class="timer-wrap">'+
-      '<div class="hd"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>'+esc(M.title||'파이널 모의고사')+' · '+ (M.exam.minutes||90) +'분 실전 타이머</h1><p>시간 배분 훈련용입니다. 구간마다 음성으로 안내합니다.</p></div>'+
+      '<div class="hd"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>'+esc(M.title||'파이널 모의고사')+' · '+timerMinutes+'분 실전 타이머</h1><p>시간 배분 훈련용입니다. 구간마다 음성으로 안내합니다.</p></div>'+
       '<div class="clock">'+
         '<div class="phase" id="ph">시작 대기</div>'+
         '<div class="time" id="tm">'+mmss(TOTAL)+'</div>'+
@@ -2067,7 +2076,7 @@ td.weak-cell{white-space:nowrap}
         '<label><input type="checkbox" id="vc" checked> 음성 안내</label>'+
         '<label>목소리 <select id="vs"><option>불러오는 중…</option></select></label>'+
         '<span class="topt-sep" aria-hidden="true"></span>'+
-        '<label class="topt-speed">속도 <select id="sp"><option value="1">실제 ('+(M.exam.minutes||90)+'분)</option><option value="30">30배</option><option value="90">90배</option><option value="300">300배</option></select></label>'+
+        '<label class="topt-speed">속도 <select id="sp"><option value="1">실제 ('+timerMinutes+'분)</option><option value="30">30배</option><option value="90">90배</option><option value="300">300배</option></select></label>'+
       '</div>'+
       '<div class="now" id="now" style="display:none"><div class="t" id="nt"></div><div class="m" id="nm"></div></div>'+
       '<div class="plan"><span class="h2b">시간 배분</span><ol id="pl"></ol></div>'+
@@ -2333,11 +2342,12 @@ td.weak-cell{white-space:nowrap}
     /* completed-rounds count는 '누적 성적' 계산과 같은 방식(1차 응시만, 회차별 1건)으로
        구해 비교-기준 안내(온라인 학생의 연습 회차 부족 강조)에도 그대로 재사용합니다. */
     var includeCurrent=viewOnly?false:(preview||saved||saveConflict);
-    var personalAttempts = computePersonalAttempts(roundNum, priorRows, attemptNo, fk, state.oxArr, includeCurrent);
+    var isStandaloneRound=!!(ctx.R&&ctx.R.standalone);
+    var personalAttempts = isStandaloneRound?[]:computePersonalAttempts(roundNum, priorRows, attemptNo, fk, state.oxArr, includeCurrent);
     ctx.personalHistory=personalAttempts.filter(function(row){return row.n!==roundNum;}).map(function(row){
       return {round:Number(row.n),oxArr:row.oxArr.slice(),items:M.rounds[String(row.n)].items};
     });
-    var considered = computeCumulativeConsidered(roundNum, priorRows, attemptNo, fk, state.oxArr, includeCurrent);
+    var considered = isStandaloneRound?[]:computeCumulativeConsidered(roundNum, priorRows, attemptNo, fk, state.oxArr, includeCurrent);
     var cmpOnline = isOnlineStudent(ctx.name);
     var cmpNoteHTML = ctx.populationVerified?compareNoteHTML(ctx.R, M.compare, cmpOnline, considered.length):'';
     if(!isLast&&!isOriginal)cmpNoteHTML='';
@@ -2424,6 +2434,7 @@ td.weak-cell{white-space:nowrap}
       document.body.classList.add('final-parent-report-page');
       var parentAPI=window.GFIELD_FINAL_PARENT_REPORT;
       var parentVM=parentAPI.model(ctx,{
+        standalone:isStandaloneRound,
         attempts:personalAttempts,
         considered:considered,
         rounds:M.rounds,

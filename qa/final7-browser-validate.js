@@ -1,0 +1,73 @@
+'use strict';
+const fs=require('node:fs');
+const path=require('node:path');
+const assert=require('node:assert/strict');
+const {chromium}=require('playwright');
+
+(async()=>{
+  const root=path.join(__dirname,'..');
+  const out=path.join(root,'.private-work','final7-qa');
+  fs.mkdirSync(out,{recursive:true});
+  const browser=await chromium.launch({headless:true});
+  const page=await browser.newPage({viewport:{width:1440,height:1000}});
+  const errors=[];
+  page.on('pageerror',error=>errors.push(String(error)));
+
+  const base=process.env.GFIELD_QA_BASE||'http://127.0.0.1:8897';
+  await page.goto(base+'/final.html?round=7&name=docssam&preview=1',{waitUntil:'networkidle'});
+  await page.waitForSelector('.start-doc');
+  assert((await page.locator('.small-cover h1').textContent()).includes('최종 실전 모의고사 7회'));
+  assert((await page.locator('.examinfo').textContent()).includes('80분'));
+  await page.click('#btnPaper');
+  await page.waitForSelector('.paper-image-page img');
+  assert.equal(await page.locator('.paper-image-page img').count(),8,'paper viewer must show all 8 original pages');
+  await page.screenshot({path:path.join(out,'paper-desktop.png'),fullPage:false});
+
+  await page.goto(base+'/final.html?round=7&name=docssam&preview=1&go=answer',{waitUntil:'networkidle'});
+  await page.waitForSelector('#agrid .abtn');
+  assert.equal(await page.locator('#agrid .abtn').count(),30);
+  for(const n of [1,3,5,7,9])await page.click('#agrid .abtn[data-qno="'+n+'"]');
+  await page.click('#btnGrade');
+  await page.waitForSelector('#report-summary',{timeout:15000});
+  const body=await page.locator('body').innerText();
+  assert(!body.includes('최종 1~4회 성적과 누적하지 않습니다.'));
+  assert(!body.includes('최종 1~4회를 기준'));
+  assert(!body.includes('반영 기준'));
+  assert(!body.includes('파이널 1~7회 누적'));
+  assert(!body.includes('1~7회 누적'));
+  assert(!body.includes('석차 백분율\n확인 필요'),'rank percentile must be calculated from the verified process benchmark');
+  assert(!body.includes('예상 등급\n확인 필요'),'expected grade must be calculated from the verified process cuts');
+  await page.locator('#report-summary').screenshot({path:path.join(out,'summary-benchmark.png')});
+  const q29Detail=page.locator('#detailedAnswersSection [data-solution-no="29"]');
+  assert.equal(await q29Detail.count(),1,'Q29 reviewed detailed solution must render once');
+  const q29DetailText=await q29Detail.innerText();
+  assert(q29DetailText.includes('가운데가 1이면'));
+  assert(q29DetailText.includes('4×3×2×1=24가지'));
+  assert(q29DetailText.includes('4×2×24=192가지'));
+  await q29Detail.screenshot({path:path.join(out,'q29-detailed-solution.png')});
+  assert.equal(await page.evaluate(()=>!!window.GFIELD_FINAL_REPORT_PRINT),true,'diagnostic print helper must load for Final 7');
+  await page.screenshot({path:path.join(out,'report-desktop.png'),fullPage:false});
+  await page.setViewportSize({width:390,height:844});
+  await page.waitForTimeout(100);
+  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
+  assert(overflow<=1,'390px report must not overflow horizontally: '+overflow+'px');
+  await page.screenshot({path:path.join(out,'report-mobile.png'),fullPage:false});
+  await page.setViewportSize({width:1440,height:1000});
+
+  await page.goto(base+'/answer.html?set=final&round=7&name=docssam',{waitUntil:'networkidle'});
+  await page.waitForSelector('#body tr');
+  assert.equal(await page.locator('#body tr').count(),30,'answer table must show 30 source answers');
+  assert.equal((await page.locator('#body tr').nth(18).locator('.ans').innerText()).trim(),'382개');
+  assert.equal((await page.locator('#body tr').nth(9).locator('.ans').innerText()).trim(),'50');
+  const q29Row=page.locator('#body tr').nth(28);
+  assert.equal((await q29Row.locator('.ans').innerText()).trim(),'192가지');
+  const q29Text=await q29Row.innerText();
+  assert(q29Text.includes('✓ 필기 해설 정정:'));
+  assert(q29Text.includes('공식 답안과 영상의 64가지'));
+  assert.equal(await page.getByText('교재 목차 대조 전',{exact:true}).count(),30,'unreviewed textbook links must not be guessed');
+  await page.screenshot({path:path.join(out,'answer-desktop.png'),fullPage:false});
+
+  assert.deepEqual(errors,[],'browser page errors: '+errors.join(' | '));
+  await browser.close();
+  console.log('PASS Final 7 desktop paper, 30-answer table, and standalone report visual smoke test');
+})().catch(error=>{console.error(error);process.exit(1);});
