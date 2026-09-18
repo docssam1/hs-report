@@ -7,7 +7,7 @@ const path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const ASSET_DIR = path.join(ROOT, 'bank', 'assets', 'final7');
 const DATA_DIR = path.join(ROOT, 'bank', 'data');
-const SOURCE_PATHS = ['materials/final_7/002.jpg', 'materials/final_7/003.jpg'];
+const SOURCE_PATHS = ['materials/final_7/002.jpg', 'materials/final_7/003.jpg', 'materials/final_7/004.jpg'];
 
 const q5 = [
   {
@@ -81,6 +81,18 @@ const q12 = [
   {from:5,to:6,active:'ne',shade:['nw','se'],answer:[1,2048]},
 ];
 
+const q13 = [
+  {first:4,second:7,total:210,lastBlock:20,answerNumber:7,difference:10},
+  {first:3,second:8,total:276,lastBlock:23,answerNumber:3,difference:12},
+  {first:5,second:9,total:325,lastBlock:25,answerNumber:5,difference:13},
+];
+
+const q14 = [
+  {labels:['A','B','C'],intro:'A, B, C라고 적힌 바구니가 있습니다.',container:'바구니',object:'구슬',objectSubject:'구슬이',gapAB:4,gapBC:4,repeat:30,finalA:2,moveAB:4,moveBC:3,moveCA:1,answer:[92,118,144]},
+  {labels:['가','나','다'],intro:'가, 나, 다라고 적힌 통이 있습니다.',container:'통',object:'바둑돌',objectSubject:'바둑돌이',gapAB:5,gapBC:2,repeat:40,finalA:3,moveAB:5,moveBC:3,moveCA:2,answer:[123,198,156]},
+  {labels:['빨강','파랑','초록'],intro:'빨강, 파랑, 초록 상자가 있습니다.',container:'상자',object:'카드',objectSubject:'카드가',gapAB:2,gapBC:5,repeat:25,finalA:4,moveAB:4,moveBC:2,moveCA:1,answer:[79,127,97]},
+];
+
 const comparisons = {
   5: {transformedDimensions:['hex-cell arrangement','start/end position'], preservedInvariants:['adjacent-hex path counting','two first moves','no answer marks']},
   6: {transformedDimensions:['rope crossings','fish order and direction'], preservedInvariants:['one continuous rope','trace from front to back','no answer marks']},
@@ -90,10 +102,12 @@ const comparisons = {
   10:{transformedDimensions:['number range','selected count','quotient','numbered object'], preservedInvariants:['each number appears once','sum divides exactly by selected count','minimum selected number']},
   11:{transformedDimensions:['seat capacities','total furniture','last partial occupancy','setting'], preservedInvariants:['two furniture capacities','one final partially occupied larger unit','find larger-unit count']},
   12:{transformedDimensions:['nested corner','shaded diagonal','compared stages'], preservedInvariants:['recursive quartering','two diagonally opposite quarters newly shaded','area difference between stages']},
+  13:{transformedDimensions:['two digits','total term count','last complete block'], preservedInvariants:['alternating digit blocks','block lengths increase by one','compare the two digit counts']},
+  14:{transformedDimensions:['container labels','objects','initial gaps','transfer amounts','repeat count'], preservedInvariants:['three containers','cyclic transfers','reverse from final first-container count','report one initial and two final counts']},
 };
 
 function sourcePathFor(no) {
-  return no <= 8 ? SOURCE_PATHS[0] : SOURCE_PATHS[1];
+  return no <= 8 ? SOURCE_PATHS[0] : no <= 12 ? SOURCE_PATHS[1] : SOURCE_PATHS[2];
 }
 
 function sha(value) {
@@ -368,11 +382,95 @@ q12.forEach((row, index) => {
   }, image)));
 });
 
+function sequencePrefix(first, second, count) {
+  const values = [];
+  for (let block = 1; values.length < count; block += 1) {
+    const value = block % 2 ? first : second;
+    for (let index = 0; index < block && values.length < count; index += 1) values.push(value);
+  }
+  return values;
+}
+function blockCounts(lastBlock) {
+  let firstCount = 0;
+  let secondCount = 0;
+  for (let block = 1; block <= lastBlock; block += 1) {
+    if (block % 2) firstCount += block;
+    else secondCount += block;
+  }
+  return {firstCount, secondCount};
+}
+function numberSubject(number) { return number + ([3, 6, 7, 8].includes(number % 10) ? '이' : '가'); }
+
+q13.forEach((row, index) => {
+  const variant = index + 1;
+  const total = row.lastBlock * (row.lastBlock + 1) / 2;
+  const counts = blockCounts(row.lastBlock);
+  const answerNumber = counts.firstCount > counts.secondCount ? row.first : row.second;
+  const difference = Math.abs(counts.firstCount - counts.secondCount);
+  if (total !== row.total || answerNumber !== row.answerNumber || difference !== row.difference) throw new Error('Q13-' + variant + ': invalid alternating block count');
+  const prefix = sequencePrefix(row.first, row.second, 15);
+  const text = '다음과 같은 규칙으로 숫자 ' + row.first + ', ' + row.second + '를 모두 ' + row.total + '개 나열했습니다. 어느 숫자가 몇 개 더 많습니까? 나열된 수의 처음 부분은 ' + prefix.join(', ') + ', …입니다.';
+  const answer = numberSubject(answerNumber) + ' ' + difference + '개';
+  items.push(common(13, variant, {
+    text, answer, acceptedAnswers:[answer, answerNumber + ',' + difference, answerNumber + ' ' + difference], pointBand:'3.4',
+    area:'수·규칙찾기', subarea:'군수열/묶음수열', detailType:'한 개씩 길어지는 두 숫자 묶음의 개수 비교',
+    readingFocus:'첫째 묶음부터 길이가 1개씩 늘고, 두 숫자가 묶음마다 번갈아 나옵니다.',
+    solutionSkill:'전체 개수를 삼각수로 나타내 마지막 묶음을 찾고 홀수·짝수 번째 묶음의 길이 합 비교하기',
+    solutionSteps:[
+      '1+2+⋯+' + row.lastBlock + '=' + row.total + '이므로 ' + row.lastBlock + '번째 묶음까지 들어갑니다.',
+      '홀수 번째 묶음의 ' + row.first + '은 ' + counts.firstCount + '개이고, 짝수 번째 묶음의 ' + row.second + '는 ' + counts.secondCount + '개입니다.',
+      '따라서 ' + numberSubject(answerNumber) + ' ' + difference + '개 더 많습니다.',
+    ],
+    meta:{firstNumber:row.first,secondNumber:row.second,totalTerms:row.total,lastCompleteBlock:row.lastBlock,firstNumberCount:counts.firstCount,secondNumberCount:counts.secondCount,answerNumber,difference,shownPrefix:prefix},assetSpec:null,
+    verification:{
+      primary:{method:'삼각수로 마지막 완성 묶음을 찾고 홀수·짝수 번째 묶음의 길이를 각각 합산',answer},
+      independent:{method:'첫째 항부터 전체 항까지 묶음 규칙을 직접 생성해 두 숫자의 개수를 집계',answer},
+      unique:true,validAnswerCount:1,answerContract:'number-and-count',
+      visibleEvidence:{passed:true,method:'두 숫자·전체 항 수·처음 다섯 묶음의 배열이 본문에 모두 보임'},
+    },
+  }));
+});
+
+q14.forEach((row, index) => {
+  const variant = index + 1;
+  const [a, b, c] = row.labels;
+  const netA = -row.moveAB + row.moveCA;
+  const netB = row.moveAB - row.moveBC;
+  const netC = row.moveBC - row.moveCA;
+  const initialA = row.finalA - netA * row.repeat;
+  const initialB = initialA - row.gapAB;
+  const initialC = initialB - row.gapBC;
+  const finalB = initialB + netB * row.repeat;
+  const finalC = initialC + netC * row.repeat;
+  const answerValues = [initialA, finalB, finalC];
+  if (answerValues.some((value, answerIndex) => value !== row.answer[answerIndex])) throw new Error('Q14-' + variant + ': invalid cyclic-transfer answer');
+  const text = row.intro + ' 처음에 ' + a + ' ' + row.container + '에는 ' + b + ' ' + row.container + '보다 ' + row.objectSubject + ' ' + row.gapAB + '개 더 많고, ' + b + ' ' + row.container + '에는 ' + c + ' ' + row.container + '보다 ' + row.gapBC + '개 더 많습니다. ' + a + '에서 ' + b + '로 ' + row.moveAB + '개, ' + b + '에서 ' + c + '로 ' + row.moveBC + '개, ' + c + '에서 ' + a + '로 ' + row.moveCA + '개를 옮기는 일을 ' + row.repeat + '번 반복했더니 ' + a + ' ' + row.container + '에 ' + row.objectSubject + ' ' + row.finalA + '개 남았습니다. ' + a + ' ' + row.container + '에 처음 들어 있던 ' + row.object + '의 개수와 ' + b + ', ' + c + ' ' + row.container + '에 마지막에 남아 있는 ' + row.object + '의 개수를 각각 구하세요.';
+  const answer = initialA + '개, ' + finalB + '개, ' + finalC + '개';
+  items.push(common(14, variant, {
+    text, answer, acceptedAnswers:[answer, answerValues.join(','), answerValues.join(', ')], pointBand:'3.4',
+    area:'식의 계산', subarea:'거꾸로 생각하기', detailType:'세 곳 사이의 반복 이동을 거꾸로 계산하기',
+    readingFocus:'세 번의 이동을 한 묶음으로 보고 각 곳의 수가 한 번에 얼마나 변하는지 계산합니다.',
+    solutionSkill:'첫째 곳의 마지막 수에서 처음 수를 역산한 뒤 처음 관계와 반복 순변화로 나머지 두 곳의 마지막 수 구하기',
+    solutionSteps:[
+      '한 번 반복할 때 ' + a + '는 ' + (-netA) + '개 줄고, ' + b + '는 ' + netB + '개 늘며, ' + c + '는 ' + netC + '개 늘어납니다.',
+      a + '는 모두 ' + (-netA) + '×' + row.repeat + '=' + (-netA * row.repeat) + '개 줄었으므로 처음에는 ' + row.finalA + '+' + (-netA * row.repeat) + '=' + initialA + '개였습니다.',
+      '처음 ' + b + '는 ' + initialB + '개, ' + c + '는 ' + initialC + '개이므로 마지막에는 각각 ' + finalB + '개, ' + finalC + '개입니다.',
+    ],
+    meta:{labels:row.labels,initialGaps:[row.gapAB,row.gapBC],transfers:[row.moveAB,row.moveBC,row.moveCA],repeatCount:row.repeat,finalFirst:row.finalA,netChange:[netA,netB,netC],initialCounts:[initialA,initialB,initialC],finalCounts:[row.finalA,finalB,finalC]},assetSpec:null,
+    verification:{
+      primary:{method:'한 번의 순변화량으로 첫째 곳의 처음 수를 역산한 뒤 나머지 수 계산',answer},
+      independent:{method:'초기 세 수에서 주어진 이동 세 단계를 반복 횟수만큼 직접 모의 실행',answer},
+      unique:true,validAnswerCount:1,answerContract:'ordered-triple',
+      visibleEvidence:{passed:true,method:'처음 두 차이·세 이동량·반복 횟수·첫째 곳의 마지막 수가 본문에 모두 보임'},
+    },
+  }));
+});
+
 const data = {
-  version: '7.3.0', sourceSet: 'final', sourceRound: 7,
-  freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: [5, 6, 7, 8, 9, 10, 11, 12], partialRelease: true},
+  version: '7.4.0', sourceSet: 'final', sourceRound: 7,
+  freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14], partialRelease: true},
   sourceFingerprints: Object.fromEntries(SOURCE_PATHS.map(sourcePath => [sourcePath, sha(fs.readFileSync(path.join(ROOT, sourcePath)))])),
-  reviewSummary: {verified: items.length, pending: 0, unavailableSourceQuestions: 22},
+  reviewSummary: {verified: items.length, pending: 0, unavailableSourceQuestions: 20},
   items,
 };
 const index = {

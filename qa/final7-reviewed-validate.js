@@ -100,12 +100,12 @@ assert.equal(data.sourceSet, 'final');
 assert.equal(data.sourceRound, 7);
 assert.equal(data.freezePolicy.runtimeGeneration, false);
 assert.equal(data.freezePolicy.partialRelease, true);
-assert.equal(data.freezePolicy.fixedItemCount, 24);
+assert.equal(data.freezePolicy.fixedItemCount, 30);
 assert.equal(data.freezePolicy.variantsPerSourceQuestion, 3);
-assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10, 11, 12]);
-assert.deepEqual(data.reviewSummary, {verified: 24, pending: 0, unavailableSourceQuestions: 22});
-assert.equal(data.items.length, 24);
-assert.equal(new Set(data.items.map((item) => item.id)).size, 24);
+assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+assert.deepEqual(data.reviewSummary, {verified: 30, pending: 0, unavailableSourceQuestions: 20});
+assert.equal(data.items.length, 30);
+assert.equal(new Set(data.items.map((item) => item.id)).size, 30);
 
 for (const [relativePath, expected] of Object.entries(data.sourceFingerprints)) {
   assert.equal(hash(fs.readFileSync(path.join(ROOT, relativePath))), expected, relativePath + ': source fingerprint');
@@ -122,8 +122,10 @@ assert.equal(sourceRound.items.find((item) => item.no === 9).answer, '40', 'sour
 assert.equal(sourceRound.items.find((item) => item.no === 10).answer, '50', 'source Q10 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 11).answer, '15개', 'source Q11 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 12).answer, '$\\frac{1}{128}$', 'source Q12 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 13).answer, '2가 12개', 'source Q13 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 14).answer, '101, 148, 145', 'source Q14 remains traceable');
 
-for (const no of [5, 6, 7, 8, 9, 10, 11, 12]) {
+for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]) {
   const group = data.items.filter((item) => item.sourceNo === no).sort((a, b) => a.variantNo - b.variantNo);
   assert.equal(group.length, 3, no + ': exactly three reviewed variants');
   assert.deepEqual(group.map((item) => item.variantNo), [1, 2, 3]);
@@ -134,7 +136,7 @@ for (const no of [5, 6, 7, 8, 9, 10, 11, 12]) {
   assert.equal(link.studentWrongPracticeReady, true);
   assert.equal(link.qaEvidence.suite, 'qa/final7-reviewed-validate.js');
 }
-assert.equal(registry.sourceItemGenerator('final|7|13'), null, 'unreviewed Final 7 items remain locked');
+assert.equal(registry.sourceItemGenerator('final|7|15'), null, 'unreviewed Final 7 items remain locked');
 
 for (const item of data.items) {
   assert.equal(item.reviewStatus, 'verified', item.id + ': review status');
@@ -247,4 +249,42 @@ for (const item of data.items.filter((item) => item.sourceNo === 12)) {
   assert.ok(!item.meta.shadedCorners.includes(item.meta.activeCorner), item.id + ': next active quarter remains unshaded and visible');
 }
 
-console.log('PASS Final 7 Q5-Q12: twenty-four reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed partial release');
+function generatedBlockCounts(item) {
+  const counts = new Map([[item.meta.firstNumber, 0], [item.meta.secondNumber, 0]]);
+  let produced = 0;
+  for (let block = 1; produced < item.meta.totalTerms; block += 1) {
+    const value = block % 2 ? item.meta.firstNumber : item.meta.secondNumber;
+    for (let index = 0; index < block && produced < item.meta.totalTerms; index += 1) {
+      counts.set(value, counts.get(value) + 1);
+      produced += 1;
+    }
+  }
+  return counts;
+}
+for (const item of data.items.filter((item) => item.sourceNo === 13)) {
+  const counts = generatedBlockCounts(item);
+  assert.equal(item.meta.lastCompleteBlock * (item.meta.lastCompleteBlock + 1) / 2, item.meta.totalTerms, item.id + ': total ends at one complete block');
+  assert.equal(counts.get(item.meta.firstNumber), item.meta.firstNumberCount, item.id + ': first-number exhaustive count');
+  assert.equal(counts.get(item.meta.secondNumber), item.meta.secondNumberCount, item.id + ': second-number exhaustive count');
+  const winner = [...counts.entries()].sort((a, b) => b[1] - a[1])[0];
+  assert.equal(winner[0], item.meta.answerNumber, item.id + ': more frequent number');
+  assert.equal(Math.abs(item.meta.firstNumberCount - item.meta.secondNumberCount), item.meta.difference, item.id + ': count difference');
+  assert.match(item.answer, new RegExp('^' + item.meta.answerNumber + '[이가] ' + item.meta.difference + '개$'), item.id + ': number-and-count answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 14)) {
+  const counts = item.meta.initialCounts.slice();
+  const [moveAB, moveBC, moveCA] = item.meta.transfers;
+  for (let turn = 0; turn < item.meta.repeatCount; turn += 1) {
+    counts[0] -= moveAB; counts[1] += moveAB;
+    counts[1] -= moveBC; counts[2] += moveBC;
+    counts[2] -= moveCA; counts[0] += moveCA;
+    assert.ok(counts.every((value) => value >= 0), item.id + ': every simulated container count stays nonnegative');
+  }
+  assert.deepEqual(counts, item.meta.finalCounts, item.id + ': independent repeated-transfer simulation');
+  assert.equal(item.meta.initialCounts[0] - item.meta.initialCounts[1], item.meta.initialGaps[0], item.id + ': first initial gap');
+  assert.equal(item.meta.initialCounts[1] - item.meta.initialCounts[2], item.meta.initialGaps[1], item.id + ': second initial gap');
+  assert.equal(item.answer, item.meta.initialCounts[0] + '개, ' + item.meta.finalCounts[1] + '개, ' + item.meta.finalCounts[2] + '개', item.id + ': ordered triple answer');
+}
+
+console.log('PASS Final 7 Q5-Q14: thirty reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed partial release');

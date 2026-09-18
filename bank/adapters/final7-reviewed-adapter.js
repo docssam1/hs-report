@@ -20,19 +20,21 @@
     {id:'orthogonal-return-displacement',domain:'number',middle:'방향과 이동',label:'이동 경로를 거꾸로 추적해 출발점으로 돌아가기',gradeBand:{from:'g3',to:'g5'},solvingModel:'orthogonal-vector-cancellation',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q09',rendererId:'text-block',searchAliases:['방향 이동','출발점으로 돌아가기']},
     {id:'maximize-others-minimum-selected',domain:'number',middle:'가정하여 풀기',label:'합 조건에서 가장 작은 선택 수 구하기',gradeBand:{from:'g3',to:'g5'},solvingModel:'maximize-complement-to-minimize-target',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q10',rendererId:'text-block',searchAliases:['가장 작은 수','최댓값 가정','카드의 합']},
     {id:'two-capacity-partial-last-seat',domain:'number',middle:'가정하여 풀기',label:'마지막 불완전 착석에서 두 종류 좌석 수 구하기',gradeBand:{from:'g3',to:'g5'},solvingModel:'all-small-capacity-difference',visualModel:'text-only',answerContract:'single-number',generatorId:'final7-q11',rendererId:'text-block',searchAliases:['의자 수','우기기','좌석 정원']},
-    {id:'recursive-quarter-shaded-area-difference',domain:'geometry',middle:'도형 분할과 넓이',label:'반복 분할한 두 단계의 색칠 넓이 차',gradeBand:{from:'g3',to:'g5'},solvingModel:'geometric-area-increments',visualModel:'recursive-quarter-shading',answerContract:'single-fraction',generatorId:'final7-q12',rendererId:'reviewed-raster',searchAliases:['반복 색칠','넓이의 차','정사각형 분할']}
+    {id:'recursive-quarter-shaded-area-difference',domain:'geometry',middle:'도형 분할과 넓이',label:'반복 분할한 두 단계의 색칠 넓이 차',gradeBand:{from:'g3',to:'g5'},solvingModel:'geometric-area-increments',visualModel:'recursive-quarter-shading',answerContract:'single-fraction',generatorId:'final7-q12',rendererId:'reviewed-raster',searchAliases:['반복 색칠','넓이의 차','정사각형 분할']},
+    {id:'alternating-growing-run-count-difference',domain:'number',middle:'군수열/묶음수열',label:'한 개씩 길어지는 두 숫자 묶음의 개수 비교',gradeBand:{from:'g3',to:'g5'},solvingModel:'triangular-block-parity-count',visualModel:'text-sequence',answerContract:'number-and-count',generatorId:'final7-q13',rendererId:'text-block',searchAliases:['군수열','묶음수열','늘어나는 묶음']},
+    {id:'three-container-cyclic-transfer',domain:'number',middle:'거꾸로 생각하기',label:'세 곳 사이의 반복 이동을 거꾸로 계산하기',gradeBand:{from:'g3',to:'g5'},solvingModel:'cyclic-transfer-net-change-reversal',visualModel:'text-only',answerContract:'ordered-triple',generatorId:'final7-q14',rendererId:'text-block',searchAliases:['세 상자','반복 이동','거꾸로 계산']}
   ];
   var typeById = new Map(types.map(function (type) { return [type.id, type]; }));
-  var typeIdByNo = {5:types[0].id,6:types[1].id,7:types[2].id,8:types[3].id,9:types[4].id,10:types[5].id,11:types[6].id,12:types[7].id};
-  var visualByNo = {5:'hex-cells:path-count',6:'continuous-rope:oriented-fish',7:'text:digit-permutation-pages',8:'text:remainder-class-sum',9:'text:orthogonal-moves',10:'text:bounded-distinct-selection',11:'text:two-capacity-partial-last-seat',12:'recursive-quarter-shading:first-three-stages'};
-  var unitByNo = {5:'가지',6:'마리',7:'페이지',8:'',9:'',10:'',11:'개',12:'분수'};
+  var typeIdByNo = {5:types[0].id,6:types[1].id,7:types[2].id,8:types[3].id,9:types[4].id,10:types[5].id,11:types[6].id,12:types[7].id,13:types[8].id,14:types[9].id};
+  var visualByNo = {5:'hex-cells:path-count',6:'continuous-rope:oriented-fish',7:'text:digit-permutation-pages',8:'text:remainder-class-sum',9:'text:orthogonal-moves',10:'text:bounded-distinct-selection',11:'text:two-capacity-partial-last-seat',12:'recursive-quarter-shading:first-three-stages',13:'text:alternating-growing-runs',14:'text:cyclic-three-container-transfer'};
+  var unitByNo = {5:'가지',6:'마리',7:'페이지',8:'',9:'',10:'',11:'개',12:'분수',13:'숫자·개수',14:'개·개·개'};
 
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
   function useData(value) { data = value; return adapter; }
   function requireData() { if (!data) throw new Error('최종 7회 검수 문항 데이터를 먼저 불러와 주세요.'); return data; }
   function load() {
     if (data) return Promise.resolve(data);
-    if (!loadPromise) loadPromise = fetch('data/final7-reviewed.json?v=3', {cache:'no-cache'}).then(function (response) {
+    if (!loadPromise) loadPromise = fetch('data/final7-reviewed.json?v=4', {cache:'no-cache'}).then(function (response) {
       if (!response.ok) throw new Error('최종 7회 검수 문항을 불러오지 못했습니다.');
       return response.json();
     }).then(function (value) { data = value; return value; }).catch(function (error) { loadPromise = null; throw error; });
@@ -51,7 +53,7 @@
         sourceTypeLabel:first.detailType,
         typeIds:[typeIdByNo[no]],
         difficulty:'actual',
-        answerContract:'single-number',
+        answerContract:typeById.get(typeIdByNo[no]).answerContract,
         visualSignature:visualByNo[no],
         sourceFidelity:'structure-matched',
         verificationStatus:first.reviewStatus === 'verified' ? 'verified' : 'pending',
