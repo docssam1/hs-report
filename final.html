@@ -1277,6 +1277,12 @@ td.weak-cell{white-space:nowrap}
       '<div class="wp-filters" role="group" aria-label="오답 배점대 선택"><button type="button" class="wp-chip on" data-wp-filter="all">전체문제</button><button type="button" class="wp-chip" data-wp-filter="2.7">2점대</button><button type="button" class="wp-chip" data-wp-filter="3.4">3점대</button><button type="button" class="wp-chip" data-wp-filter="4.2">4점대</button></div>'+
       '<div class="wp-summary" id="wpSummary"></div><div class="wp-list" id="wpList">'+items+'</div>'+pending+'<button type="button" class="wp-start" id="wpStart">선택한 오답 유사문제 시작</button></div></section>';
   }
+  function issueWrongPracticeHandoff(ctx){
+    if(!ctx||Number(ctx.roundNum)!==7||!ctx.name)return;
+    var payload=JSON.stringify({product:'mock-final-7',student:String(ctx.name).trim(),issuedAt:Date.now()});
+    try{sessionStorage.setItem('gfield_question_bank_handoff_v1',payload);}catch(error){}
+    try{localStorage.setItem('gfield_question_bank_launch_v1',payload);}catch(error){}
+  }
   function wireWrongPractice(ctx){
     var root=document.getElementById('wrongPractice'); if(!root)return;
     var selected='all',chips=Array.prototype.slice.call(root.querySelectorAll('.wp-chip'));
@@ -1300,6 +1306,7 @@ td.weak-cell{white-space:nowrap}
       if(ctx.roundNum===1||ctx.roundNum===2||ctx.roundNum===7)queryParams.bank='final'+ctx.roundNum;
       var query=new URLSearchParams(queryParams);
       // Display-only name in the fragment: not a request parameter or authority.
+      issueWrongPracticeHandoff(ctx);
       window.open('bank/index.html?'+query.toString()+'#'+new URLSearchParams({student:ctx.name}).toString(),'_blank','noopener');
     };
     paint();
