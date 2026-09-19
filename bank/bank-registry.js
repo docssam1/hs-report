@@ -82,10 +82,10 @@
     eligibleTaxonomyOverride('final|2|2', '도형', '크고 작은 도형의 개수(수열의 활용)', '도형의 개수', 'alternating-square-chain-rectangle-count', '번갈아 꺾인 정사각형 연결의 사각형 개수 세기', 'type-1asjoqy'),
     eligibleTaxonomyOverride('final|2|3', '식의 계산', '리그전', '합차와 배수', 'round-robin-total-wins-record', '단일 리그 전체 승수와 승수 차로 전적 구하기', 'type-01vpgcx'),
     eligibleTaxonomyOverride('final|2|4', '수·규칙찾기', '서로 다른 금액의 합', '관찰과 분류', 'distinct-sums-two-denominations-with-repetition', '중복 선택 가능한 두 화폐의 서로 다른 합 분류하기', 'type-0uodwvl'),
-    eligibleTaxonomyOverride('final|2|5', '경우의 수', '4색정리', '색칠하기', 'map-coloring-overlap-minimum', '서로 만나는 나라의 최소 색칠', 'type-11ztzpw'),
+    eligibleTaxonomyOverride('final|2|5', '경우의 수', '4색정리', '색칠하기', 'map-coloring-overlap-minimum', '서로 만나는 나라의 최소 색칠', 'type-1ywkbtw'),
     eligibleTaxonomyOverride('final|2|6', '수·규칙찾기', '점점 작아지는 수의 개수', '조건에 맞는 수', 'strictly-decreasing-digits-in-range', '범위 안에서 자리 숫자가 차례로 작아지는 수 세기', 'type-0yi8hf8'),
     eligibleTaxonomyOverride('final|2|7', '식의 계산', '나머지가 나올때까지 나누기', '나눗셈의 몫과 나머지', 'repeated-division-consecutive-product', '연속곱을 거듭 나눌 때 처음 나머지가 생기는 차례', 'type-0pqn1vr'),
-    eligibleTaxonomyOverride('final|2|8', '수·규칙찾기', '가짜 동전 구별하기', '수의 관계', 'balance-scale-three-way-counterfeit-group', '양팔저울의 세 결과로 후보 다발 줄이기', 'type-1r4snvn'),
+    eligibleTaxonomyOverride('final|2|8', '수·규칙찾기', '가짜 동전 구별하기', '수의 관계', 'balance-scale-three-way-counterfeit-group', '양팔저울의 세 결과로 후보 다발 줄이기', 'type-17ymepq'),
     eligibleTaxonomyOverride('final|2|9', '경우의 수', '입체도형의 최단거리', '경로 세기', 'cuboid-exact-edge-simple-paths', '직육면체 모서리에서 이동 수가 정해진 재방문 없는 경로 세기', 'type-1obyr97'),
     eligibleTaxonomyOverride('final|2|10', '식의 계산', '고장난 시계의 시간 차', '달력·요일(시계)', 'two-clock-relative-drift-backsolve', '빠른 시계와 느린 시계의 표시 차로 맞춘 시각 역산하기', 'type-1a3um2w'),
     eligibleTaxonomyOverride('final|2|11', '수·규칙찾기', '악수하기', '수의 관계', 'all-pairs-handshake-parallel-rounds-time', '전원 악수의 짝 수와 동시 진행 수로 종료 시각 구하기', 'type-0xlwudq'),
@@ -617,7 +617,21 @@
     [13, '한 개씩 길어지는 두 숫자 묶음의 개수 비교', false],
     [14, '세 곳 사이의 반복 이동을 거꾸로 계산하기', false],
     [15, '같은 칸을 다시 지나지 않는 반복 화살표에서 먼 칸의 위치 찾기', true],
-    [16, '위의 두 카드를 버리고 다음 카드를 맨 밑으로 옮긴 뒤 남는 두 수의 합', false]
+    [16, '위의 두 카드를 버리고 다음 카드를 맨 밑으로 옮긴 뒤 남는 두 수의 합', false],
+    [17, '가운데 정사각형 배열과 두 바깥 배열의 단계별 개수 관계', true],
+    [18, '세 쌍의 합으로 세 수와 가장 큰 값을 찾기', false],
+    [19, '절반과 일정한 수를 반복해 준 뒤 처음 수를 거꾸로 계산하기', false],
+    [20, '남은 양의 절반씩 나누었을 때 계획한 몫과 실제 몫 비교하기', false],
+    [21, '일부 숫자만 보이는 곱에서 연속한 세 짝수 찾기', true],
+    [22, '두 집단의 여집합 수와 두 집단의 합으로 나머지 인원 구하기', false],
+    [23, '1을 더하기 전후 자리 숫자의 합이 모두 8의 배수인 최소 수 찾기', false],
+    [24, '넓이가 두 배인 두 작업을 여러 날 나누어 끝낼 때 전체 인원 구하기', false],
+    [25, '연속한 두 배 관계와 나머지보다 많은 수로 첫 사람의 수량 구하기', false],
+    [26, '평년·윤년의 요일 이동으로 같은 달력의 가장 가까운 해 찾기', false],
+    [27, '1에서 시작해 매주 일정한 배수가 될 때 목표 이상이 되는 첫 주 구하기', false],
+    [28, '삼각형 자연수 배열에서 선택한 칸을 제외한 변 이웃의 합으로 숨은 수 찾기', true],
+    [29, '가운데 칸을 공유하는 가로줄과 세로줄의 합이 같은 수 배열의 경우의 수', true],
+    [30, '짝수 번호만 남기고 다시 번호를 붙이는 과정을 반복해 마지막 학생 찾기', false]
   ].forEach(function (row) {
     var no = row[0];
     var sourceKey = ['final', 7, no].join('|');

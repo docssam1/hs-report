@@ -86,28 +86,14 @@
       '<figcaption>파랑은 현재 득점, 초록은 선택한 오답의 배점입니다. 두 막대의 눈금은 같습니다.</figcaption></figure>';
   }
   function planHTML(a,ctx,options,e){
-    function tasks(rows){
-      return rows.length?'<ul>'+rows.map(function(r){
-        var books=typeof options.books==='function'?options.books(r.no):[];
-        var first=Array.isArray(books)?books.find(function(b){return b&&typeof b.title==='string'&&b.title;}):null;
-        var book=first?e(first.title+(first.unit?' · '+first.unit:''))+'에서 다시 보기':('교재 연결표에서 '+r.no+'번과 연결된 학습 위치 찾기');
-        return '<li><b>'+r.no+'번 · '+e(r.confirmed?r.type:'유형 확인 중')+'</b> ('+r.points+'점)<br>'+book+(r.repeatRounds&&r.repeatRounds.length?'<br>이전에도 같은 유형을 틀린 회차: '+r.repeatRounds.map(function(n){return n+'회';}).join(', ')+' 및 이번 회차':'')+'</li>';
-      }).join('')+'</ul>':'';
-    }
     var allCorrect=a.wrong.length===0;
-    var stage1='<article class="personal-plan-stage"><h4>1단계 · '+(allCorrect?'강점 재현하기':'되찾을 점수부터')+'</h4><p class="plan-when">첫 학습 · 약 15~20분 권장</p>'+
-      (allCorrect?'<p>맞힌 문제 중 풀이가 길었던 두 문제를 골라 해설 없이 설명합니다. 만점이어도 낯선 조건에서 같은 방법을 쓸 수 있는지 한 번 더 풀어 보세요.</p>':tasks(a.priority)+'<p>조건에 밑줄을 긋고 스스로 다시 풉니다. 막힌 경우 상세답안에서 그 단계만 확인한 뒤 처음부터 다시 풀어 보세요.</p>')+
-      '<p><b>완료 기준:</b> 정답뿐 아니라 “왜 이 식·그림을 쓰는지”를 도움 없이 설명할 수 있습니다.</p><p class="plan-score">'+(allCorrect?'점수 상승 계산 없음':a.score+'점 → '+a.target+'점 · 이 단계 +'+a.gain+'점')+'</p></article>';
-    var noRepeat=a.historyRounds?'이전 시험까지 살펴보았지만, 따로 다시 풀 유형은 없습니다. 1단계에서 푼 문제는 다시 넣지 않습니다.':'이전 시험 기록이 없어 반복해서 어려웠던 유형은 아직 알 수 없습니다.';
-    var stage2='<article class="personal-plan-stage"><h4>2단계 · 반복 약점 보완</h4><p class="plan-when">1단계 완료 후 · 약 20~25분 권장</p>'+
-      (a.repeated.length?tasks(a.repeated)+'<p>연결 교재에서 개념과 예제 풀이를 확인하고, 이번 오답을 다시 풉니다. 연결된 유사문제가 준비된 경우 같은 유형 3문제로 방법을 바꾸어 적용해 보세요.</p>':'<p>'+noRepeat+' 새 약점을 만들어 배정하지 않고, 1단계 문항을 다음 날 다시 확인합니다.</p>')+
-      '<p><b>완료 기준:</b> 해설 없이 다시 풀고, 전에 막혔던 단계와 달라진 풀이를 설명합니다.</p><p class="plan-score">'+(a.repeated.length?a.stage2Target+'점 · 이 단계 +'+a.stage2Gain+'점 · 1~2단계 합계 +'+round(a.gain+a.stage2Gain)+'점':'추가 점수 합산 없음')+'</p></article>';
-    var stage3='<article class="personal-plan-stage"><h4>3단계 · 다음 수준 도전</h4><p class="plan-when">앞 단계 완료 후 · 약 20분 권장</p>'+
-      (a.challenge.length?tasks(a.challenge)+'<p>이미 맞힌 같은 유형과 연결된 추가 문제입니다. 조건을 정리해 먼저 스스로 풀고, 어렵다면 어떤 개념이 막혔는지 선생님과 함께 찾아보세요.</p>':'<p>다음으로 풀 도전 문제는 선생님과 함께 고릅니다. 앞 단계의 풀이를 다시 설명한 뒤, 조건이 조금 달라진 같은 유형의 문제를 골라 보세요.</p>')+
-      '<p><b>완료 기준:</b> 달라진 조건을 짚고, 기존 풀이에서 무엇을 바꿨는지 설명합니다.</p><p class="plan-score">'+(a.challenge.length?a.stage3Target+'점 · 이 단계 +'+a.stage3Gain+'점 · 전체 합계 +'+round(a.gain+a.stage2Gain+a.stage3Gain)+'점':'새로운 도전 문제의 점수는 이번 시험 점수에 더하지 않습니다.')+'</p></article>';
-    var stages=[{label:'현재',score:a.score},{label:'1단계',score:a.target},{label:'2단계까지',score:a.stage2Target},{label:'3단계까지',score:a.stage3Target}];
-    var graph='<figure class="coaching-chart"><svg viewBox="0 0 500 200" role="img" aria-label="'+e(stages.map(function(s){return s.label+' '+s.score+'점';}).join(', '))+'">'+stages.map(function(s,i){var y=16+i*43;return '<text x="0" y="'+y+'" font-size="13" fill="#182230">'+s.label+'</text><rect x="90" y="'+(y-12)+'" width="310" height="16" fill="#E9EDF3"/><rect x="90" y="'+(y-12)+'" width="'+(310*s.score/100)+'" height="16" fill="'+(i?'#16734B':'#2456C4')+'"/><text x="414" y="'+y+'" font-size="13" fill="#182230">'+s.score+'점</text>';}).join('')+'<text x="90" y="190" font-size="12" fill="#566274">0점</text><text x="400" y="190" font-size="12" text-anchor="end" fill="#566274">100점</text></svg><figcaption>각 단계의 문제를 모두 다시 풀었을 때의 점수입니다.</figcaption></figure>';
-    return '<section class="personal-study-plan" aria-label="학생별 단계별 학습 계획"><h3>'+e(ctx.name)+' 학생의 단계별 학습 계획</h3><p>정해진 날짜보다 완료 기준에 맞춰 다음 단계로 넘어갑니다. 권장 시간은 일정 제안이며 관찰된 풀이 시간이 아닙니다.</p>'+stage1+stage2+stage3+(allCorrect?'':graph)+'<p class="coaching-caution">선생님은 학습 뒤 풀이와 설명을 확인해 문항과 시간을 조정합니다. 이 계획은 성적·진도·완료 기록을 자동 변경하지 않습니다.</p></section>';
+    var stage1='<article class="personal-plan-stage"><h4>1차 · 오답 다시 풀기</h4><p class="plan-when">20분</p>'+
+      (allCorrect?'<p>풀이가 길었던 2문항을 해설 없이 다시 풉니다.</p>':'<p>이번 주 우선 '+a.priority.length+'문항을 해설 없이 다시 풀고, 막힌 단계만 확인합니다.</p>')+
+      '<p class="plan-check"><b>완료</b> 식이나 그림을 쓴 이유를 설명한다.</p></article>';
+    var stage2='<article class="personal-plan-stage"><h4>2차 · 연결 학습</h4><p class="plan-when">25분</p>'+
+      (allCorrect?'<p>풀이가 길었던 유형의 유사문제를 2문제씩 풉니다.</p><p class="plan-check"><b>완료</b> 2문제를 도움 없이 푼다.</p>':'<p>우선 문항의 교재 위치를 확인하고 유사문제를 유형별 3문제씩 풉니다.</p><p class="plan-check"><b>완료</b> 3문제를 도움 없이 푼다.</p>')+'</article>';
+    var stage3='<article class="personal-plan-stage"><h4>3차 · 다음 날 확인</h4><p class="plan-when">15분</p><p>우선 문항을 빈 종이에 다시 풀고 풀이를 말로 설명합니다.</p><p class="plan-check"><b>완료</b> 전부 맞히고 도움 없이 설명한다.</p></article>';
+    return '<section class="personal-study-plan" aria-label="이번 주 학습 계획"><div class="plan-title-row"><div><h3>'+e(ctx.name)+' 학생의 이번 주 학습 계획</h3><p>각 차수의 완료 기준을 통과하면 다음으로 넘어갑니다. 시간은 권장치이며 관찰된 풀이 시간이 아닙니다.</p></div>'+(allCorrect?'':'<strong>'+a.score+'점 → '+a.target+'점</strong>')+'</div><div class="personal-plan-grid">'+stage1+stage2+stage3+'</div></section>';
   }
   function render(ctx,options){
     options=options||{};var e=options.escape||escape,a=analyze(ctx,options);

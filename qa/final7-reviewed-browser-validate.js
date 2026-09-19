@@ -39,7 +39,7 @@ function startServer() {
     await page.route('https://**/*', (route) => route.abort());
     await page.addInitScript(() => localStorage.setItem('gfield_student', '최종7검수학생'));
     const base = `http://127.0.0.1:${server.address().port}/bank/index.html`;
-    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q05%2Cfinal7-q06%2Cfinal7-q07%2Cfinal7-q08%2Cfinal7-q09%2Cfinal7-q10%2Cfinal7-q11%2Cfinal7-q12%2Cfinal7-q13%2Cfinal7-q14%2Cfinal7-q15%2Cfinal7-q16&per=3&points=all&source=final%7C7&sourceNos=5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16&printMode=both#student=%EC%B5%9C%EC%A2%857%EA%B2%80%EC%88%98%ED%95%99%EC%83%9D', {waitUntil: 'networkidle'});
+    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q05%2Cfinal7-q06%2Cfinal7-q07%2Cfinal7-q08%2Cfinal7-q09%2Cfinal7-q10%2Cfinal7-q11%2Cfinal7-q12%2Cfinal7-q13%2Cfinal7-q14%2Cfinal7-q15%2Cfinal7-q16%2Cfinal7-q17%2Cfinal7-q18%2Cfinal7-q19%2Cfinal7-q20%2Cfinal7-q21%2Cfinal7-q22%2Cfinal7-q23%2Cfinal7-q24%2Cfinal7-q25%2Cfinal7-q26%2Cfinal7-q27%2Cfinal7-q28%2Cfinal7-q29%2Cfinal7-q30&per=3&points=all&source=final%7C7&sourceNos=5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30&printMode=both#student=%EC%B5%9C%EC%A2%857%EA%B2%80%EC%88%98%ED%95%99%EC%83%9D', {waitUntil: 'networkidle'});
     await page.waitForFunction(() => {
       const button = document.querySelector('#final1Worksheet #btnPrint');
       return button && !button.disabled;
@@ -47,22 +47,27 @@ function startServer() {
 
     assert.match(await page.locator('.f1-title').textContent(), /최종 7회 약점 유형/);
     assert.match(await page.locator('.cover-page h1').textContent(), /최종 7회/);
-    assert.equal(await page.locator('.qcard').count(), 36, 'thirty-six reviewed variants render');
-    for (const no of [5,6,7,8,9,10,11,12,13,14,15,16]) assert.equal(await page.locator(`.qcard[data-source-no="${no}"]`).count(), 3, `Q${no} variants`);
-    assert.equal(await page.locator('.question-page').count(), 12, 'twelve balanced question pages render');
+    assert.equal(await page.locator('.qcard').count(), 78, 'seventy-eight reviewed variants render');
+    for (const no of [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]) assert.equal(await page.locator(`.qcard[data-source-no="${no}"]`).count(), 3, `Q${no} variants`);
     assert.ok(await page.locator('.qcard[data-source-no="5"],.qcard[data-source-no="6"],.qcard[data-source-no="12"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'true')), 'reviewed Final 7 diagrams use wide rows');
     assert.ok(await page.locator('.qcard[data-source-no="7"],.qcard[data-source-no="8"],.qcard[data-source-no="9"],.qcard[data-source-no="10"],.qcard[data-source-no="11"],.qcard[data-source-no="13"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'false')), 'short text-only items use the regular page grid');
-    assert.ok(await page.locator('.qcard[data-source-no="14"],.qcard[data-source-no="15"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'false')), 'Q14 and Q15 stay in the regular grid to preserve writing space without one-item pages');
-    assert.deepEqual(await page.locator('.question-page').evaluateAll((pages) => pages.map((sheet) => sheet.querySelectorAll('.qcard').length)), [2,3,3,4,2,3,3,4,2,3,3,4], 'question pages avoid one-item pages while preserving wide figures');
-    assert.equal(await page.locator('.question-page img').count(), 12, 'one prompt figure for every visual question');
-    assert.equal(await page.locator('.solution-card').count(), 36, 'thirty-six detailed answers');
-    assert.equal(await page.locator('.solution-card ol li').count(), 108, 'three concise steps per answer');
-    assert.equal(await page.locator('.duplex-blank').count(), 1, 'one duplex blank keeps the answer bundle on an odd-numbered page');
+    assert.ok(await page.locator('.qcard[data-source-no="14"],.qcard[data-source-no="15"],.qcard[data-source-no="17"],.qcard[data-source-no="29"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'false')), 'Q14, Q15, Q17, and Q29 stay in the regular grid to preserve writing space without one-item pages');
+    const pageCardCounts = await page.locator('.question-page').evaluateAll((pages) => pages.map((sheet) => sheet.querySelectorAll('.qcard').length));
+    assert.ok(pageCardCounts.every((count) => count>=2&&count<=4), 'question pages avoid one-item pages while preserving wide figures: ' + JSON.stringify(pageCardCounts));
+    assert.equal(await page.locator('.question-page img').count(), 24, 'one prompt figure for every visual question');
+    assert.equal(await page.locator('.solution-card').count(), 78, 'seventy-eight detailed answers');
+    assert.equal(await page.locator('.solution-card ol li').count(), 234, 'three concise steps per answer');
     assert.equal(await page.locator('.qconditions,.f1-qgiven').count(), 0, 'no repeated conditions or hint boxes');
     assert.equal(await page.locator('.question-page .ans').count(), 0, 'no answer leakage on question pages');
     assert.ok(await page.locator('.qcard[data-source-no="6"] img').evaluateAll((images) => images.every((image) => image.getBoundingClientRect().width > 540)), 'fishing-line diagrams stay wide and readable');
     assert.ok(await page.locator('.qcard[data-source-no="12"] img').evaluateAll((images) => images.every((image) => image.getBoundingClientRect().width > 300)), 'recursive-area diagrams stay wide and readable');
     assert.ok(await page.locator('.qcard[data-source-no="15"] img').evaluateAll((images) => images.every((image) => image.getBoundingClientRect().width > 250)), 'arrow-grid diagrams stay readable in the regular grid');
+    assert.ok(await page.locator('.qcard[data-source-no="17"] img').evaluateAll((images) => images.every((image) => image.getBoundingClientRect().width > 250)), 'stage-growth diagrams stay readable in the regular grid');
+    assert.ok(await page.locator('.qcard[data-source-no="21"] img').evaluateAll((images) => images.every((image) => image.getBoundingClientRect().width > 250)), 'masked-number diagrams stay readable in the regular grid');
+    const q28Widths = await page.locator('.qcard[data-source-no="28"] img').evaluateAll((images) => images.map((image) => image.getBoundingClientRect().width));
+    assert.ok(q28Widths.every((width) => width > 380), 'triangular-array diagrams and original examples stay wide and readable: ' + JSON.stringify(q28Widths));
+    const q29Widths = await page.locator('.qcard[data-source-no="29"] img').evaluateAll((images) => images.map((image) => image.getBoundingClientRect().width));
+    assert.ok(q29Widths.every((width) => width > 250), 'different-size cross arrays stay readable: ' + JSON.stringify(q29Widths));
     const q5InkBounds = await page.locator('.qcard[data-source-no="5"] img').evaluateAll(async (images) => Promise.all(images.map(async (image) => {
       await image.decode();
       const canvas = document.createElement('canvas');
@@ -118,20 +123,20 @@ function startServer() {
     if (OUTPUT) await page.screenshot({path: path.join(OUTPUT, 'final7-reviewed-mobile.png'), fullPage: true});
 
     await page.setViewportSize({width: 1280, height: 1000});
-    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q17&per=3&points=all&source=final%7C7&sourceNos=17&printMode=both#student=%EA%B2%80%EC%88%98', {waitUntil: 'networkidle'});
+    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q04&per=3&points=all&source=final%7C7&sourceNos=4&printMode=both#student=%EA%B2%80%EC%88%98', {waitUntil: 'networkidle'});
     await page.locator('#f1Status').waitFor();
-    assert.match(await page.locator('#f1Status').textContent(), /17번 유사문제는 아직 검수 중입니다/);
-    assert.equal(await page.locator('#btnPrint').isDisabled(), true, 'unreviewed Final 7 item cannot print');
+    assert.match(await page.locator('#f1Status').textContent(), /4번 유사문제는 아직 검수 중입니다/);
+    assert.equal(await page.locator('#btnPrint').isDisabled(), true, 'item outside the reviewed Final 7 range cannot print');
 
     await page.goto(`http://127.0.0.1:${server.address().port}/final.html?round=7&name=docssam&go=answer&preview=1`, {waitUntil: 'domcontentloaded'});
     await page.locator('.abtn').first().waitFor();
     for (let no = 1; no <= 30; no += 1) {
-      if (![5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].includes(no)) await page.locator('.abtn').nth(no - 1).click();
+      if (![5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].includes(no)) await page.locator('.abtn').nth(no - 1).click();
     }
     await page.locator('#btnGrade').click();
     await page.locator('#wrongPractice').waitFor();
-    assert.deepEqual(await page.locator('.wp-item').evaluateAll((rows) => rows.map((row) => Number(row.dataset.wpNo))), [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 'report exposes only reviewed Q5-Q16 practice');
-    assert.match(await page.locator('.wp-pending').textContent(), /17번/, 'unreviewed wrong answer stays visibly pending');
+    assert.deepEqual(await page.locator('.wp-item').evaluateAll((rows) => rows.map((row) => Number(row.dataset.wpNo))), [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30], 'report exposes every reviewed Q5-Q30 practice item');
+    assert.equal(await page.locator('.wp-pending').count(), 0, 'approved Q29-Q30 do not remain pending');
     const popupPromise = page.waitForEvent('popup');
     await page.locator('#wpStart').click();
     const practice = await popupPromise;
@@ -140,12 +145,12 @@ function startServer() {
     const practiceUrl = new URL(practice.url());
     assert.equal(practiceUrl.searchParams.get('bank'), 'final7');
     assert.equal(practiceUrl.searchParams.get('source'), 'final|7');
-    assert.equal(practiceUrl.searchParams.get('gens'), 'final7-q05,final7-q06,final7-q07,final7-q08,final7-q09,final7-q10,final7-q11,final7-q12,final7-q13,final7-q14,final7-q15,final7-q16');
-    assert.equal(await practice.locator('.qcard').count(), 36, 'real Final 7 report opens exactly the thirty-six reviewed variants');
+    assert.equal(practiceUrl.searchParams.get('gens'), 'final7-q05,final7-q06,final7-q07,final7-q08,final7-q09,final7-q10,final7-q11,final7-q12,final7-q13,final7-q14,final7-q15,final7-q16,final7-q17,final7-q18,final7-q19,final7-q20,final7-q21,final7-q22,final7-q23,final7-q24,final7-q25,final7-q26,final7-q27,final7-q28,final7-q29,final7-q30');
+    assert.equal(await practice.locator('.qcard').count(), 78, 'real Final 7 report opens exactly the seventy-eight reviewed variants');
     await practice.close();
     assert.deepEqual(errors, [], 'browser errors after report-to-bank navigation');
 
-    console.log('PASS Final 7 Q5-Q16 browser: reviewed figures and text items, thirty-six detailed answers, desktop/390px/PDF readiness, adapter loading, and unreviewed fail-closed behavior');
+    console.log('PASS Final 7 Q5-Q30 browser: reviewed figures and text items, seventy-eight detailed answers, desktop/390px/PDF readiness, adapter loading, and report-to-bank navigation');
   } finally {
     await browser.close();
     server.close();

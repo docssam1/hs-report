@@ -587,7 +587,29 @@
     if(briefTimer) clearInterval(briefTimer);
     if(!isDemo) briefTimer=setInterval(renderBriefing, 600000);
     applyMemberTabs(); nav(isOnline()?'archive':'home'); window.scrollTo(0,0);
+    const next=qrNextTarget();
+    if(next){
+      const helper=window.GFIELD_FINAL_LAST_ROUTES;
+      if(/(?:^|\/)bank\/index\.html(?:[?#]|$)/i.test(next)) issueQuestionBankHandoff();
+      location.href=helper&&helper.withStudent?helper.withStudent(next,currentStudent):next+(next.includes('?')?'&':'?')+'name='+encodeURIComponent(currentStudent);
+      return;
+    }
     if(!isDemo) showCheer(given);
+  }
+
+  /* 인쇄물 QR 진입: 학생 개인정보는 QR에 넣지 않고 로그인 뒤 목적지로 이동한다. */
+  function qrNextTarget(){
+    let raw='';
+    try{ raw=new URLSearchParams(location.search).get('next')||''; }catch(e){ return ''; }
+    if(!raw) return '';
+    try{
+      const url=new URL(raw,location.href);
+      if(url.origin!==location.origin) return '';
+      const path=url.pathname.replace(/^\/+/, '').toLowerCase();
+      const page=path.split('/').pop();
+      if(page!=='final.html'&&path!=='bank/index.html'&&!path.endsWith('/bank/index.html')) return '';
+      return url.pathname.replace(/^\//,'')+url.search+url.hash;
+    }catch(e){ return ''; }
   }
   function logout(){
     const keep=currentStudent&&!isDemo?currentStudent:'';

@@ -33,21 +33,26 @@ const server=http.createServer((req,res)=>{
       assert.equal(await page.locator('.report-screen-header').isVisible(),true);
       assert.equal(await page.locator('#printBtn').evaluate(el=>el.tagName==='BUTTON'&&el.classList.contains('gfield-final-report-print-button')),true,'every Final round uses the reviewed print controller');
       assert.equal(await page.locator('#printBtn').evaluate(el=>getComputedStyle(el).position),'static','toolbar never covers reading content');
-      assert.ok(await page.locator('.coaching-chart svg').count()>=2);
+      assert.equal(await page.locator('.personal-plan-grid .personal-plan-stage').count(),3);
+      assert.match(await page.locator('#report-plan').innerText(),/이번 주 학습/);
+      assert.equal(await page.locator('.report-wrong-summary tbody tr').count(),7,'compact screen lists only wrong questions');
+      assert.equal(await page.locator('.report-resource-details').count(),2,'curriculum and detailed solutions stay available on demand');
+      assert.equal(await page.locator('.report-resource-details[open]').count(),0,'long learning resources start collapsed');
       const comment=await page.locator('.diagnostic-coaching,.personal-study-plan').evaluateAll(nodes=>nodes.map(n=>n.textContent).join(' '));
-      assert.match(comment,/반복 약점|되찾을 점수/);assert.doesNotMatch(comment,/\d+명 중|응시 인원|석차 백분율\([0-9]/);
-      assert.match(comment,/이전 시험 기록이 없어/);
+      assert.match(comment,/이번 주 학습 계획|오답 다시 풀기/);assert.doesNotMatch(comment,/\d+명 중|응시 인원|석차 백분율\([0-9]/);
+      assert.match(comment,/각 차수의 완료 기준을 통과하면/);
       const analysis=page.locator('.report-analysis-section');
       assert.equal(await analysis.locator('#report-strengths>h2').innerText(),'강점과 보완점');
       assert.equal(await analysis.locator('.report-tier-section>h2').innerText(),'배점대별 결과');
       assert.equal(await analysis.locator('.report-tier-section').evaluate(el=>el.nextElementSibling.classList.contains('report-item-section')),true,'item diagnosis follows the point-tier section');
-      const order=await page.evaluate(()=>Array.from(document.querySelector('.final-report-package').children).map(el=>el.className));
+      const order=await page.evaluate(()=>Array.from(document.querySelector('#report-materials').children).map(el=>el.className));
       assert.ok(order.findIndex(x=>x.includes('curriculum'))<order.findIndex(x=>x.includes('report-detailed-section')));
       assert.equal(await page.locator('.final1-detailed-card.is-ready').count(),30,`Final${round} keeps all 30 reviewed solutions`);
       assert.equal(await page.locator('.final1-detailed-card.is-pending').count(),0,`Final${round} has no pending solution cards`);
       const preparedMetrics=await page.evaluate(async()=>{
         const job=window.GFIELD_FINAL_REPORT_PRINT.createPreparation({
           source:document.querySelector('.final-report-package'),
+          mode:'summary',
           requiredFontFamilies:[],
           timeoutMs:30000
         });
@@ -57,16 +62,24 @@ const server=http.createServer((req,res)=>{
         return metrics;
       });
       assert.equal(preparedMetrics.round,round,`Final${round} print preparation keeps the correct round`);
-      assert.equal(preparedMetrics.detailItems.length,30,`Final${round} print preparation keeps all detailed answers`);
-      assert.equal(preparedMetrics.detailStartPage%2,1,`Final${round} detailed answers start on a new sheet front`);
+      assert.equal(preparedMetrics.mode,'summary',`Final${round} defaults to a concise diagnosis`);
+      assert.equal(preparedMetrics.detailItems.length,0,`Final${round} summary excludes 30 detailed answers`);
+      assert.equal(preparedMetrics.detailStartPage,null,`Final${round} summary has no appended answer section`);
+      assert.ok(preparedMetrics.preludePages<=8,`Final${round} summary stays compact: ${preparedMetrics.preludePages} pages`);
+      const fullMetrics=await page.evaluate(async()=>{
+        const job=window.GFIELD_FINAL_REPORT_PRINT.createPreparation({source:document.querySelector('.final-report-package'),mode:'full',requiredFontFamilies:[],timeoutMs:30000});
+        const prepared=await job.promise,metrics=prepared.metrics;prepared.cleanup();return metrics;
+      });
+      assert.equal(fullMetrics.detailItems.length,30,`Final${round} detailed answers remain separately available`);
+      assert.equal(fullMetrics.detailStartPage%2,1,`Final${round} detailed answers keep duplex parity`);
       if(round===2){
         assert.equal(await page.locator('#final2DetailedSolutions .final1-detailed-card.is-ready').count(),30,'Final2 keeps all 30 reviewed solutions');
         assert.equal(await page.locator('#final2DetailedSolutions .final1-detailed-card.is-pending').count(),0,'Final2 has no fallback pending card');
-        assert.match(await page.locator('#final2DetailedSolutions .final1-solutions-head').innerText(),/30문항 \/ 전체 30문항/);
+        assert.match(await page.locator('#final2DetailedSolutions .final1-solutions-head').textContent(),/30문항 \/ 전체 30문항/);
         assert.equal(await page.locator('#detailedAnswersSection>.lead,#detailedAnswersSection>.detailed-solutions').count(),0,'legacy generic four-solution fallback is absent');
         assert.doesNotMatch(await page.locator('#detailedAnswersSection').innerText(),/4문제의 풀이를 볼 수 있습니다/);
-        assert.match(await page.locator('#final2-solution-1').innerText(),/모두 낮은 점수라고 가정하여 높은 점수 횟수 찾기[\s\S]*정답 · 4번/);
-        assert.match(await page.locator('#final2-solution-30').innerText(),/연속한 자연수의 개수를 가장 크게 만드는 시작 수 찾기[\s\S]*정답 · 2/);
+        assert.match(await page.locator('#final2-solution-1').textContent(),/모두 낮은 점수라고 가정하여 높은 점수 횟수 찾기[\s\S]*정답 · 4번/);
+        assert.match(await page.locator('#final2-solution-30').textContent(),/연속한 자연수의 개수를 가장 크게 만드는 시작 수 찾기[\s\S]*정답 · 2/);
       }
       for(const width of [1280,390]){
         await page.setViewportSize({width,height:900});
@@ -76,7 +89,9 @@ const server=http.createServer((req,res)=>{
         if(output&&(!reviewRound||reviewRound===round)){fs.mkdirSync(output,{recursive:true});await page.locator('.personal-study-plan').screenshot({path:path.join(output,`plan-r${round}-${width}.png`)});}
       }
       await page.emulateMedia({media:'print'});
-      assert.equal(await page.locator('.report-print-cover').isVisible(),true);
+      assert.equal(await page.locator('.report-print-cover').isVisible(),false,'native print uses the concise diagnosis instead of the full cover package');
+      assert.equal(await page.locator('.report-compact-print-header').isVisible(),true,'native print shows the concise student header');
+      assert.equal(await page.locator('.report-detailed-section').isVisible(),false,'native print does not expand the 30-source-item solution appendix');
       assert.equal(await page.locator('.report-screen-header').isVisible(),false);
       if(output&&(!reviewRound||reviewRound===round)){await page.setViewportSize({width:1280,height:900});await page.pdf({path:path.join(output,`package-r${round}.pdf`),format:'A4',printBackground:true,margin:{top:'12mm',bottom:'12mm',left:'12mm',right:'12mm'}});}
       await page.emulateMedia({media:'screen'});

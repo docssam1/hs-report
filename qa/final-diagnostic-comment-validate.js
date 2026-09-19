@@ -34,7 +34,7 @@ assert.equal(new Set(picked).size,picked.length);
 assert.equal(a.stage3Target,a.score+picked.length*10);
 assert.ok(a.stage3Target<=100);
 h=mod.render(c,{...opts,history});
-assert.match(h,/1단계 · 되찾을 점수부터/);assert.match(h,/2단계 · 반복 약점 보완/);assert.match(h,/3단계 · 다음 수준 도전/);
+assert.match(h,/1차 · 오답 다시 풀기/);assert.match(h,/2차 · 연결 학습/);assert.match(h,/3차 · 다음 날 확인/);
 assert.match(h,/관찰된 풀이 시간이 아닙니다/);
 c=fixture([1,2,3,6]);c.populationVerified=true;c.rate={1:.99,2:.99,3:.99,6:.85};c.S.rate=c.rate;
 a=mod.analyze(c,{...opts,verifyPopulation:()=>true});

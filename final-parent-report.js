@@ -144,11 +144,14 @@
     var strengths=focusRows(cumulativeAreas.length?cumulativeAreas:currentAreas,true);
     var improvements=focusRows(cumulativeAreas.length?cumulativeAreas:currentAreas,false);
     var itemByNo={};(ctx.items||[]).forEach(function(item){itemByNo[Number(item.no)]=item;});
-    var priorityItems=(ctx.miss||[]).slice(0,3).map(function(no){
+    var recoveryNos=(ctx.miss||[]).slice();
+    var fallbackNos=(ctx.wrongList||[]).map(function(item){return Number(item.no);});
+    var priorityNos=(recoveryNos.length?recoveryNos:fallbackNos).slice(0,3);
+    var priorityItems=priorityNos.map(function(no){
       var item=itemByNo[Number(no)];if(!item)return null;
       var meta=taxonomyValue(options.taxonomy,roundNum,item);
       var rate=ctx.ratesVerified&&ctx.rate?number(ctx.rate[Number(no)]):null;
-      return {no:Number(no),label:meta.detailType||meta.displayType||item.type||'유형',area:meta.area||item.area||'',subarea:meta.subarea||item.subarea||'',points:pointValue(options.points,Number(no),roundNum),rate:rate==null?null:round1(rate*100)};
+      return {no:Number(no),label:meta.detailType||meta.displayType||item.type||'유형',area:meta.area||item.area||'',subarea:meta.subarea||item.subarea||'',points:pointValue(options.points,Number(no),roundNum),rate:rate==null?null:round1(rate*100),recovery:recoveryNos.indexOf(Number(no))>=0};
     }).filter(Boolean);
     return {
       roundNum:roundNum,
@@ -221,7 +224,9 @@
     if(!vm.priorityItems.length)return '<div class="parent-priority-empty">'+(vm.currentWrongCount===0?'이번 회차는 오답이 없습니다.':'이번 회차에는 ★ 우선 복습 추천 문항이 없습니다. 아래 학습 계획에 따라 오답을 차근차근 복습하세요.')+'</div>';
     var items=vm.priorityItems.map(function(item,index){return '<li><a href="#report-items"><span>'+String(index+1).padStart(2,'0')+'</span><b>'+item.no+'번 · '+escapeHTML(item.label)+'</b><small>'+escapeHTML(item.area)+(item.subarea?' › '+escapeHTML(item.subarea):'')+' · '+item.points+'점'+(item.rate==null?'':' · 정답률 '+item.rate.toFixed(0)+'%')+'</small></a></li>';}).join('');
     var target=vm.targetScore==null?'':' 이 문항들을 모두 맞히고 다른 답안이 같다면 '+vm.currentScore+'점에서 '+vm.targetScore+'점이 됩니다.';
-    return '<div class="parent-priority"><h3>먼저 다시 풀 '+vm.priorityItems.length+'문항</h3><p>잘하는 영역에서 놓친 문제 중 확인된 정답률이 높은 순서입니다.'+target+'</p><ol class="parent-priority-list">'+items+'</ol></div>';
+    var recovery=vm.priorityItems.some(function(item){return item.recovery;});
+    var reason=recovery?'현재 실력에서 먼저 회복할 가능성이 큰 문항입니다.':'오답 중 앞에서부터 3문항만 먼저 복습합니다.';
+    return '<div class="parent-priority"><h3>이번 주 우선 '+vm.priorityItems.length+'문항</h3><p>'+reason+target+'</p><ol class="parent-priority-list">'+items+'</ol></div>';
   }
   function historyHTML(vm){
     if(vm.standalone)return '';
@@ -231,7 +236,7 @@
     return '<h3>개인 성적 반영 기록</h3>'+personal+'<h3>석차 반영 기록</h3>'+rank+'<h3>서로 다른 회차에 반복된 약점 유형</h3>'+repeated+'<p class="parent-report-note">영역·배점대 누적은 포함 문항의 득점 합÷배점 합입니다. 차이는 이번−누적이며, 한 번의 차이만으로 성장이나 하락을 단정하지 않습니다.</p>';
   }
   function indexHTML(){
-    var items=[['report-summary','성적 요약'],['report-strengths','강점과 보완점'],['report-tiers','배점대별 결과'],['report-items','문항별 진단'],['report-review','오답 복습'],['curriculumConnection','교재 연결'],['detailedAnswersSection','상세 답안']];
+    var items=[['report-summary','성적 요약'],['report-plan','이번 주 학습'],['report-strengths','강점·보완'],['report-items','오답 요약'],['report-materials','학습 자료']];
     return '<nav class="parent-report-index no-print" aria-label="성적표 섹션">'+items.map(function(item,index){return '<a href="#'+item[0]+'"'+(!index?' aria-current="location"':'')+'><span>0'+(index+1)+'</span>'+item[1]+'</a>';}).join('')+'</nav>';
   }
   function openAncestors(node){

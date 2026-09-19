@@ -1,7 +1,7 @@
 'use strict';
 
 (function(global){
-  var VERSION='1.1.1';
+  var VERSION='1.2.0';
   var LIBRARY_URL='vendor/pagedjs/0.4.3/paged.polyfill.js';
   var FRAME_CLASS='gfield-final-report-print-frame';
   var BUTTON_CLASS='gfield-final-report-print-button';
@@ -123,15 +123,39 @@
     return clone;
   }
 
-  function buildCopies(source){
+  function buildCopies(source,mode){
+    mode=mode==='full'?'full':'summary';
     var detailSection=source.querySelector('.report-detailed-section');
     var detailed=detailSection&&detailSection.querySelector('.final1-detailed-solutions[data-detailed-round]');
-    var round=Number(detailed&&detailed.getAttribute('data-detailed-round'));
-    if(!detailSection||!detailed||![1,2,3,4].includes(round)) fail('unsupported-round','인쇄할 파이널 진단 패키지의 회차를 확인하지 못했습니다.');
+    var round=Number(source.getAttribute('data-report-round')||(detailed&&detailed.getAttribute('data-detailed-round')));
+    if(!Number.isInteger(round)||round<1) fail('unsupported-round','인쇄할 진단지의 회차를 확인하지 못했습니다.');
 
     var prelude=makeStaticClone(source);
     list(prelude.querySelectorAll('.report-detailed-section')).forEach(function(node){node.remove();});
     if(prelude.querySelector('.report-detailed-section')) fail('prelude-leak','상세 답안이 진단 앞부분에 남았습니다.');
+    if(mode==='summary'){
+      prelude.classList.add('gfield-summary-print');
+      list(prelude.querySelectorAll('.report-print-cover,.parent-summary-support,#report-tiers,.parent-report-details')).forEach(function(node){node.remove();});
+      list(prelude.querySelectorAll('.curriculum-table tbody tr:not(.report-print-priority)')).forEach(function(node){node.remove();});
+      var materials=prelude.querySelector('#report-materials');
+      if(materials)list(materials.children).forEach(function(node){
+        if(node.tagName==='H2'||(node.tagName==='P'&&node.classList.contains('lead')))node.remove();
+      });
+      var teacherComment=prelude.querySelector('.docssam-saved-comment');
+      if(teacherComment){
+        var teacherText=compact(teacherComment.textContent);
+        if(!teacherText){
+          var teacherSection=teacherComment.closest('.report-docssam-note');
+          if(teacherSection)teacherSection.remove();
+        }else if(teacherText.length>500){
+          var excerpt=teacherText.slice(0,500).replace(/\s+\S*$/,'').trim();
+          teacherComment.textContent=excerpt+'…\n전체 코멘트는 화면에서 확인하세요.';
+          teacherComment.setAttribute('data-print-truncated','true');
+        }
+      }
+      return {mode:mode,round:round,prelude:prelude,details:null,detailNos:[],detailText:''};
+    }
+    if(!detailSection||!detailed||![1,2,3,4].includes(round)) fail('unsupported-round','전체 상세 풀이를 인쇄할 수 있는 회차가 아닙니다.');
 
     var details=makeStaticClone(detailSection);
     list(details.querySelectorAll('.is-pending')).forEach(function(node){node.remove();});
@@ -141,7 +165,7 @@
     if(details.querySelector('.is-pending')) fail('detail-pending','미검수 상세 답안은 인쇄할 수 없습니다.');
     var nos=ready.map(function(card){return Number(card.getAttribute('data-detailed-solution-no'));});
     if(nos.some(function(no){return !Number.isInteger(no)||no<1;})||new Set(nos).size!==nos.length) fail('detail-invalid','상세 답안 번호가 올바르지 않습니다.');
-    return {round:round,prelude:prelude,details:details,detailNos:nos,detailText:compact(details.textContent)};
+    return {mode:mode,round:round,prelude:prelude,details:details,detailNos:nos,detailText:compact(details.textContent)};
   }
 
   function collectStyles(doc){
@@ -367,8 +391,11 @@
       '#gfield-report-print-prelude>section:not(.report-print-cover){padding:6mm 0!important}'+
       '#gfield-report-print-prelude .report-print-cover{min-height:260mm!important;padding:12mm 8mm!important}'+
       '#gfield-report-print-prelude>.report-docssam-note{break-before:page!important;page-break-before:always!important;break-inside:avoid!important;page-break-inside:avoid!important}'+
+      '#gfield-report-print-prelude.gfield-summary-print>.report-docssam-note{break-before:auto!important;page-break-before:auto!important}'+
       '#gfield-report-print-prelude>.report-docssam-note>h2{break-after:avoid!important;page-break-after:avoid!important}'+
       '#gfield-report-print-prelude>.report-docssam-note>.docssam-saved-comment{orphans:2;widows:2}'+
+      '#gfield-report-print-prelude.gfield-summary-print .personal-study-plan{break-inside:avoid!important;page-break-inside:avoid!important}'+
+      '#gfield-report-print-prelude.gfield-summary-print .report-materials-section,#gfield-report-print-prelude.gfield-summary-print .report-curriculum-section{break-before:auto!important;page-break-before:auto!important}'+
       '#gfield-report-print-prelude .diagnostic-coaching>h3:last-of-type{break-before:page!important;page-break-before:always!important;break-after:avoid!important;page-break-after:avoid!important}'+
       '#gfield-report-print-prelude .able-box{break-inside:avoid!important;page-break-inside:avoid!important}'+
       '@page{size:A4 portrait;margin:10mm}';
@@ -450,7 +477,7 @@
     job.promise=(async function(){
       try{
         var source=resolveSource(doc,options.source||'.final-report-package');
-        var copies=buildCopies(source);
+        var copies=buildCopies(source,options.mode);
         var styles=collectStyles(doc);
         var requiredFonts=options.requiredFontFamilies===undefined?[]:options.requiredFontFamilies;
         await waitForFonts(doc,requiredFonts,timeout,job);
@@ -470,21 +497,25 @@
         checkJob(job);
         var flow=await timed(frameState.win.PagedPolyfill.preview(),timeout,'pagination-timeout','인쇄 쪽 나누기 시간이 초과되었습니다.',job);
         var preludePages=verifyPrelude(frameState,visible,flow);
-        var details=appendDetails(frameState,styles,copies,preludePages);
-        await nextFrame(frameState.win);
-        await waitForImages(details.shadow,timeout,job);
+        if(!copies.details)addStyle(frameState.doc,pageStyles(),'gfield-print-page-styles');
+        var details=copies.details?appendDetails(frameState,styles,copies,preludePages):{blankPages:0,shadow:null};
+        if(details.shadow){
+          await nextFrame(frameState.win);
+          await waitForImages(details.shadow,timeout,job);
+        }
         await waitForFonts(frameState.doc,requiredFonts,timeout,job);
         checkJob(job);
         var metrics={
           round:copies.round,
           preludePages:preludePages,
           blankPages:details.blankPages,
-          detailStartPage:preludePages+details.blankPages+1,
+          mode:copies.mode,
+          detailStartPage:copies.details?preludePages+details.blankPages+1:null,
           detailItems:copies.detailNos.slice(),
           tableCount:tableCount,
           visiblePreludeTextNodes:visible.length
         };
-        if(metrics.detailStartPage%2!==1) fail('duplex-parity','상세 답안이 새 종이 앞면에서 시작하지 않습니다.');
+        if(copies.details&&metrics.detailStartPage%2!==1) fail('duplex-parity','상세 답안이 새 종이 앞면에서 시작하지 않습니다.');
         var prepared={
           frame:frameState.frame,
           metrics:metrics,
@@ -654,6 +685,7 @@
   global.GFIELD_FINAL_REPORT_PRINT=Object.freeze({
     version:VERSION,
     supportedRounds:Object.freeze([1,2,3,4]),
+    defaultMode:'summary',
     libraryUrl:LIBRARY_URL,
     createPreparation:createPreparation,
     attach:attach,

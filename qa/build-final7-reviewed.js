@@ -7,7 +7,7 @@ const path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const ASSET_DIR = path.join(ROOT, 'bank', 'assets', 'final7');
 const DATA_DIR = path.join(ROOT, 'bank', 'data');
-const SOURCE_PATHS = ['materials/final_7/002.jpg', 'materials/final_7/003.jpg', 'materials/final_7/004.jpg'];
+const SOURCE_PATHS = ['materials/final_7/002.jpg', 'materials/final_7/003.jpg', 'materials/final_7/004.jpg', 'materials/final_7/005.jpg', 'materials/final_7/006.jpg', 'materials/final_7/007.jpg', 'materials/final_7/008.jpg'];
 
 const q5 = [
   {
@@ -105,6 +105,90 @@ const q16 = [
   {count:120,answer:117},
 ];
 
+const q17 = [
+  {mode:'source',light:144,answer:132},
+  {mode:'reverse',dark:182,answer:196},
+  {mode:'total',light:289,answer:561},
+];
+
+const q18 = [
+  {intro:'나이가 서로 다른 민준, 서윤, 도윤 세 사람이 있습니다.',labels:['민준','서윤','도윤'],unit:'살',pairSums:[19,27,24],ask:'셋 중 나이가 가장 많은 사람은 누구이고, 몇 살입니까?',answer:'도윤 16살',values:[8,11,16]},
+  {intro:'빨강, 파랑, 초록 세 바구니에 서로 다른 수의 공이 들어 있습니다.',labels:['빨강','파랑','초록'],unit:'개',pairSums:[24,27,21],ask:'공이 가장 많이 들어 있는 바구니는 어느 것이고, 몇 개입니까?',answer:'파랑 바구니 15개',values:[9,15,12],answerLabel:'파랑 바구니'},
+  {intro:'가, 나, 다 세 학급이 서로 다른 수의 책을 모았습니다.',labels:['가 학급','나 학급','다 학급'],unit:'권',pairSums:[24,27,31],ask:'책을 가장 많이 모은 학급은 어디이고, 몇 권입니까?',answer:'다 학급 17권',values:[14,10,17]},
+];
+
+const q19 = [
+  {lead:'서연이가 봉사 행사에 가져온 리본을 다섯 개의 체험 부스에 차례로 나누어 주었습니다.',object:'리본',receivers:'부스',count:5,extra:2,left:3,unit:'개',answer:220},
+  {lead:'용준이가 주운 밤을 집으로 가져오는 길에 여섯 명의 친구를 차례로 만났습니다.',object:'밤',receivers:'친구',count:6,extra:1,left:2,unit:'개',answer:254},
+  {lead:'유민이가 모은 카드를 네 명의 동생에게 차례로 나누어 주었습니다.',object:'카드',receivers:'동생',count:4,extra:3,left:1,unit:'장',answer:106},
+];
+
+const q20 = [
+  {giver:'현우',people:5,peopleName:'친구',object:'찰흙',total:960,target:5,unit:'g',answer:162},
+  {giver:'하린',people:5,peopleName:'친구',object:'색모래',total:1600,target:5,unit:'g',answer:270},
+  {giver:'선우',people:6,peopleName:'친구',object:'밀가루',total:1920,target:6,unit:'g',answer:290},
+];
+
+const q21 = [
+  {first:'1',last:'2',answer:54,product:175392},
+  {first:'4',last:'0',answer:76,product:474240},
+  {first:'8',last:'8',answer:92,product:830208},
+];
+
+const q22 = [
+  {intro:'어느 초등학교 운동장에 각 학년 학생들이 모여 있습니다.',a:'5학년',b:'6학년',notB:168,notA:132,sumAB:140,answer:80},
+  {intro:'한 학교의 학생들이 여러 동아리 중 하나에 참여하고 있습니다.',a:'미술 동아리',b:'과학 동아리',notB:155,notA:125,sumAB:130,answer:75},
+  {intro:'체육 대회에 참가한 학생들이 종목별로 모여 있습니다.',a:'축구 종목',b:'수영 종목',notB:174,notA:146,sumAB:160,answer:80},
+];
+
+const q23 = [
+  {lower:200,answer:259},
+  {lower:400,answer:439},
+  {lower:700,answer:709},
+];
+
+const q24 = [
+  {people:'농부',work:'잔디밭의 풀을 깎으려고 합니다',large:'큰 잔디밭',small:'작은 잔디밭',last:2,answer:8},
+  {people:'화가',work:'두 벽에 그림을 그리려고 합니다',large:'큰 벽',small:'작은 벽',last:3,answer:12},
+  {people:'작업자',work:'두 운동장의 흰 선을 새로 칠하려고 합니다',large:'큰 운동장',small:'작은 운동장',last:4,answer:16},
+];
+
+const q25 = [
+  {names:['서연','용준','유민','현우'],activity:'밤을 주웠습니다',object:'밤',extra:12,total:68,answer:4},
+  {names:['민혁','관호','주연','유빈'],activity:'우표를 모았습니다',object:'우표',extra:10,total:80,answer:5},
+  {names:['유준','채연','하영','지유'],activity:'조개를 주웠습니다',object:'조개',extra:17,total:101,answer:6},
+];
+
+const q26 = [
+  {name:'관호',reference:2026,cutoff:2024,leapAnchor:2024,direction:'past',answer:2015},
+  {name:'주연',reference:2027,cutoff:2025,leapAnchor:2024,direction:'past',answer:2021},
+  {name:'유빈',reference:2029,cutoff:2031,leapAnchor:2032,direction:'future',answer:2035},
+];
+
+const q27 = [
+  {subject:'세균의 수',factor:10,target:500000,answer:6},
+  {subject:'소식을 들은 사람 수',factor:20,target:2000000,answer:5},
+  {subject:'컴퓨터 바이러스에 감염된 파일 수',factor:100,target:50000000,answer:4},
+];
+
+const q28 = [
+  {targetSum:146,answer:24},
+  {targetSum:200,answer:33},
+  {targetSum:260,answer:43},
+];
+
+const q29 = [
+  {horizontal:3,vertical:3,numbers:[1,3,5,7,9],answer:24},
+  {horizontal:5,vertical:3,numbers:[1,3,5,7,9,11,15],answer:144},
+  {horizontal:7,vertical:3,numbers:[1,3,5,7,9,11,13,15,21],answer:1440},
+];
+
+const q30 = [
+  {students:150,answer:128},
+  {students:350,answer:256},
+  {students:90,answer:64},
+];
+
 const comparisons = {
   5: {transformedDimensions:['hex-cell arrangement','start/end position'], preservedInvariants:['adjacent-hex path counting','two first moves','no answer marks']},
   6: {transformedDimensions:['rope crossings','fish order and direction'], preservedInvariants:['one continuous rope','trace from front to back','no answer marks']},
@@ -118,10 +202,24 @@ const comparisons = {
   14:{transformedDimensions:['container labels','objects','initial gaps','transfer amounts','repeat count'], preservedInvariants:['three containers','cyclic transfers','reverse from final first-container count','report one initial and two final counts']},
   15:{transformedDimensions:['grid height and width','non-repeating arrow path','target position'], preservedInvariants:['one arrow move per square','periodic horizontal continuation','find row and column of a distant term']},
   16:{transformedDimensions:['number of cards'], preservedInvariants:['discard top two cards','move the next card to the bottom','stop with exactly two cards','add the final card numbers']},
+  17:{transformedDimensions:['object material','figure arrangement','given color and requested quantity'], preservedInvariants:['center n by n array','two outer groups total n times n minus 1','first three stages visible without answer marks']},
+  18:{transformedDimensions:['people or object setting','labels','three pair sums'], preservedInvariants:['three distinct values','all three pair sums','find the largest label and value']},
+  19:{transformedDimensions:['character','shared object','recipient count','extra amount','final remainder'], preservedInvariants:['give half of the current amount plus a fixed extra','repeat the same action','reverse from the final remainder']},
+  20:{transformedDimensions:['character','shared material','total amount','recipient count'], preservedInvariants:['original plan is equal sharing','actual sharing repeatedly halves the remainder','compare the target recipient with the equal share']},
+  21:{transformedDimensions:['visible first digit','visible last digit','consecutive even factors'], preservedInvariants:['six-digit product pattern','three consecutive even numbers','find the smallest factor','exactly one valid factor triple']},
+  22:{transformedDimensions:['school grouping context','two named groups','complement counts','two-group total'], preservedInvariants:['all students belong to one category','two complement counts','sum of the two target groups','find everyone outside both groups']},
+  23:{transformedDimensions:['lower bound of the three-digit range'], preservedInvariants:['digit sum divisible by eight before adding one','digit sum divisible by eight after adding one','find the least valid number','exhaustive range verification']},
+  24:{transformedDimensions:['worker role','work setting','third-day worker count'], preservedInvariants:['larger job is twice the smaller job','all workers on larger job on day one','equal groups on day two','one group finishes each remaining job']},
+  25:{transformedDimensions:['characters','collected object','fixed excess','total count'], preservedInvariants:['second count is twice first','third count is twice second','fourth exceeds the other three combined','find the first count']},
+  26:{transformedDimensions:['character','reference year','search cutoff','past or future direction'], preservedInvariants:['same leap status','same weekday for every date','nearest valid year on the requested side','leap-year anchor is stated']},
+  27:{transformedDimensions:['growing subject','weekly multiplier','target threshold'], preservedInvariants:['start from one','same multiplier every week','find the first week reaching or exceeding the target','power growth']},
+  28:{transformedDimensions:['target neighbor sum','hidden cell position'], preservedInvariants:['consecutive natural numbers in centered triangular rows','exclude the selected cell','sum only edge-sharing cells','exactly one valid hidden number','original example image retained']},
+  29:{transformedDimensions:['number of cells','numbers placed','horizontal arm length'], preservedInvariants:['one shared center cell','use every number exactly once','equal horizontal and vertical sums','different positions count separately']},
+  30:{transformedDimensions:['initial student count'], preservedInvariants:['keep even-numbered students','renumber from one after every round','repeat until one student remains','report the original number']},
 };
 
 function sourcePathFor(no) {
-  return no <= 8 ? SOURCE_PATHS[0] : no <= 12 ? SOURCE_PATHS[1] : SOURCE_PATHS[2];
+  return no <= 8 ? SOURCE_PATHS[0] : no <= 12 ? SOURCE_PATHS[1] : no <= 16 ? SOURCE_PATHS[2] : no <= 20 ? SOURCE_PATHS[3] : no <= 24 ? SOURCE_PATHS[4] : no <= 28 ? SOURCE_PATHS[5] : SOURCE_PATHS[6];
 }
 
 function sha(value) {
@@ -576,11 +674,598 @@ q16.forEach((row, index) => {
   }));
 });
 
+q17.forEach((row, index) => {
+  const variant = index + 1;
+  let stage;
+  let light;
+  let dark;
+  let answer;
+  let text;
+  let detailType;
+  let solutionSteps;
+  if (row.mode === 'reverse') {
+    stage = (1 + Math.sqrt(1 + 4 * row.dark)) / 2;
+    dark = row.dark;
+    light = stage * stage;
+    answer = light;
+    if (!Number.isInteger(stage) || stage * (stage - 1) !== dark || answer !== row.answer) throw new Error('Q17-' + variant + ': invalid reverse count');
+    text = '흰색 정사각형 타일과 검은색 정사각형 타일을 각 단계별로 다음 그림과 같은 규칙으로 놓았습니다. 어떤 단계에서 검은색 타일이 ' + dark + '개였다면, 흰색 타일은 몇 개인지 구하세요.';
+    detailType = '바깥 계단 배열 수에서 가운데 정사각형 배열 수 찾기';
+    solutionSteps = [
+      '검은색 타일 수는 단계 수와 그보다 1 작은 수의 곱입니다.',
+      stage + '×' + (stage - 1) + '=' + dark + '이므로 ' + stage + '단계입니다.',
+      '흰색 타일은 ' + stage + '×' + stage + '=' + light + '개입니다.',
+    ];
+  } else {
+    stage = Math.sqrt(row.light);
+    light = row.light;
+    dark = stage * (stage - 1);
+    answer = row.mode === 'total' ? light + dark : dark;
+    if (!Number.isInteger(stage) || answer !== row.answer) throw new Error('Q17-' + variant + ': invalid stage count');
+    if (row.mode === 'total') {
+      text = '흰색 전구와 검은색 전구를 각 단계별로 다음 그림과 같은 규칙으로 놓았습니다. 어떤 단계에서 흰색 전구가 ' + light + '개였다면, 전구는 모두 몇 개인지 구하세요.';
+      detailType = '두 종류의 단계별 배열 전체 개수 구하기';
+      solutionSteps = [
+        stage + '×' + stage + '=' + light + '이므로 ' + stage + '단계입니다.',
+        '검은색 전구는 ' + stage + '×' + (stage - 1) + '=' + dark + '개입니다.',
+        '전구는 모두 ' + light + '+' + dark + '=' + answer + '개입니다.',
+      ];
+    } else {
+      const oneSide = dark / 2;
+      text = '흰색 바둑돌과 검은색 바둑돌을 각 단계별로 다음 그림과 같은 규칙으로 배열했습니다. 어떤 단계에서 흰색 바둑돌이 ' + light + '개였다면, 검은색 바둑돌은 몇 개인지 구하세요.';
+      detailType = '정사각형 배열과 양쪽 계단 배열의 개수 관계';
+      solutionSteps = [
+        stage + '×' + stage + '=' + light + '이므로 ' + stage + '단계입니다.',
+        '검은색 바둑돌은 한쪽에 1+2+⋯+' + (stage - 1) + '=' + oneSide + '개씩 있습니다.',
+        '양쪽을 합하면 ' + oneSide + '×2=' + dark + '개입니다.',
+      ];
+    }
+  }
+  const image = pngAsset('q17-v' + variant + '.png', '가운데 정사각형 배열과 두 바깥 배열이 같은 단계 규칙으로 늘어나는 그림');
+  items.push(common(17, variant, Object.assign({
+    text, answer:answer + '개', acceptedAnswers:[answer + '개', String(answer)], pointBand:'3.4',
+    area:'수·규칙찾기', subarea:'도형 배열의 규칙', detailType,
+    readingFocus:'가운데 배열의 한 변에 놓인 수가 단계 수이고, 바깥 두 묶음은 단계마다 한 줄씩 늘어납니다.',
+    solutionSkill:'가운데 정사각형 배열로 단계를 찾고 두 바깥 계단 배열의 개수 관계 적용하기',
+    solutionSteps,
+    meta:{mode:row.mode,stage,lightCount:light,darkCount:dark,totalCount:light + dark},
+    assetSpec:{kind:'square-core-double-stair-growth',variantModel:row.mode,shownStages:[1,2,3],renderRules:{showAnswerCounts:false,preserveStageCounts:true}},
+    verification:{
+      primary:{method:'그림의 단계별 가운데 정사각형과 바깥 두 계단 배열을 식으로 나타냄',answer:answer + '개'},
+      independent:{method:'단계 수 n에 대해 가운데 n²개, 바깥 전체 n(n-1)개를 별도로 계산',answer:answer + '개'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'1~3단계의 가운데 배열과 바깥 두 묶음이 모두 보이며 수나 정답 표시는 없음'},
+    },
+  }, image)));
+});
+
+q18.forEach((row, index) => {
+  const variant = index + 1;
+  const [a, b, c] = row.labels;
+  const [ab, bc, ac] = row.pairSums;
+  const total = (ab + bc + ac) / 2;
+  const values = [total - bc, total - ac, total - ab];
+  if (!Number.isInteger(total) || values.some((value, valueIndex) => value !== row.values[valueIndex])) throw new Error('Q18-' + variant + ': invalid pair-sum values');
+  const maximum = Math.max(...values);
+  const maximumIndex = values.indexOf(maximum);
+  const maximumLabel = row.answerLabel || row.labels[maximumIndex];
+  if (row.answer !== maximumLabel + ' ' + maximum + row.unit) throw new Error('Q18-' + variant + ': invalid largest value answer');
+  const text = row.intro + ' ' + a + '와 ' + b + '의 합은 ' + ab + row.unit + ', ' + b + '와 ' + c + '의 합은 ' + bc + row.unit + ', ' + a + '와 ' + c + '의 합은 ' + ac + row.unit + '입니다. ' + row.ask;
+  items.push(common(18, variant, {
+    text, answer:row.answer, acceptedAnswers:[row.answer, maximumLabel + ',' + maximum, maximumLabel + ' ' + maximum], pointBand:'3.4',
+    area:'식의 계산', subarea:'합과 차', detailType:'세 쌍의 합으로 세 수와 가장 큰 값 찾기',
+    readingFocus:'세 쌍의 합을 모두 더하면 각 수가 두 번씩 들어갑니다.',
+    solutionSkill:'세 쌍의 합의 절반으로 전체를 구하고 반대쪽 두 수의 합을 빼서 각 수 찾기',
+    solutionSteps:[
+      '세 합을 모두 더하면 각 수가 두 번씩 들어가므로 전체는 (' + ab + '+' + bc + '+' + ac + ')÷2=' + total + row.unit + '입니다.',
+      a + ', ' + b + ', ' + c + '의 값은 차례로 ' + values[0] + row.unit + ', ' + values[1] + row.unit + ', ' + values[2] + row.unit + '입니다.',
+      '가장 큰 값은 ' + maximumLabel + '의 ' + maximum + row.unit + '입니다.',
+    ],
+    learnerFit:{gateId:'learner-fit',status:'pass',learnerStage:'초등 선발 대비 최종 모의고사 수강생',language:'원문과 같은 수준의 짧은 문장',responseMode:'대상과 수를 함께 답하기'},
+    meta:{labels:row.labels,unit:row.unit,pairSums:row.pairSums,total,values,maximumIndex,maximumLabel,maximum}, assetSpec:null,
+    verification:{
+      primary:{method:'세 쌍의 합을 더해 전체를 구한 뒤 각 반대쪽 합을 빼기',answer:row.answer},
+      independent:{method:'계산된 세 값으로 주어진 세 쌍의 합을 다시 대입 확인',answer:row.answer},
+      unique:true,validAnswerCount:1,answerContract:'entity-and-number',
+      visibleEvidence:{passed:true,method:'세 대상·세 쌍의 합·가장 큰 대상과 값을 묻는 조건이 본문에 모두 보임'},
+    },
+  }));
+});
+
+function subjectName(name) {
+  const code = name.charCodeAt(name.length - 1) - 0xAC00;
+  return name + (code >= 0 && code <= 11171 && code % 28 ? '이가' : '가');
+}
+
+q19.forEach((row, index) => {
+  const variant = index + 1;
+  let before = row.left;
+  const reverseValues = [before];
+  for (let turn = 0; turn < row.count; turn += 1) {
+    before = 2 * (before + row.extra);
+    reverseValues.push(before);
+  }
+  let forward = before;
+  const forwardValues = [forward];
+  for (let turn = 0; turn < row.count; turn += 1) {
+    forward = forward / 2 - row.extra;
+    forwardValues.push(forward);
+  }
+  if (before !== row.answer || forward !== row.left || !reverseValues.every(Number.isInteger)) throw new Error('Q19-' + variant + ': invalid reverse-sharing answer');
+  const text = row.lead + ' 첫 번째 ' + row.receivers + '부터 매번 그때 가지고 있던 ' + row.object + '의 절반과 ' + row.extra + row.unit + '를 더 주었습니다. 마지막 ' + row.receivers + '에게 나누어 준 뒤 ' + row.object + '이 ' + row.left + row.unit + ' 남았다면, 처음에 가지고 있던 ' + row.object + '은 몇 ' + row.unit + '입니까?';
+  const reverseChain = reverseValues.slice(0, -1).map((value, chainIndex) => value + '→' + reverseValues[chainIndex + 1]).join(', ');
+  items.push(common(19, variant, {
+    text, answer:row.answer + row.unit, acceptedAnswers:[row.answer + row.unit, String(row.answer)], pointBand:'3.4',
+    area:'식의 계산', subarea:'거꾸로 계산', detailType:'절반과 일정한 수를 반복해 준 뒤 처음 수 역산하기',
+    readingFocus:'마지막에 남은 수에서 시작해 매번 더 준 수를 더하고 두 배합니다.',
+    solutionSkill:'한 번 전의 수=(남은 수+추가로 준 수)×2를 같은 횟수만큼 반복하기',
+    solutionSteps:[
+      '마지막에 남은 ' + row.left + row.unit + '부터 거꾸로 계산합니다.',
+      '한 번 전의 수는 (남은 수+' + row.extra + ')×2이므로 ' + reverseChain + '입니다.',
+      '따라서 처음에 가지고 있던 ' + row.object + '은 ' + row.answer + row.unit + '입니다.',
+    ],
+    meta:{recipientCount:row.count,extraEachTime:row.extra,finalRemainder:row.left,unit:row.unit,reverseValues,forwardValues,initialAmount:row.answer}, assetSpec:null,
+    verification:{
+      primary:{method:'마지막 수에서 더 준 수를 더하고 두 배하는 역산 반복',answer:row.answer + row.unit},
+      independent:{method:'계산한 처음 수에서 절반과 추가 수를 실제 횟수만큼 순방향으로 나눔',answer:row.answer + row.unit},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'받는 곳의 수·매번 주는 규칙·마지막 남은 수가 본문에 모두 보임'},
+    },
+  }));
+});
+
+q20.forEach((row, index) => {
+  const variant = index + 1;
+  if (row.total % row.people || row.total % (2 ** row.target)) throw new Error('Q20-' + variant + ': invalid division conditions');
+  const equalShare = row.total / row.people;
+  const actualShares = Array.from({length:row.people}, (_, shareIndex) => row.total / (2 ** (shareIndex + 1)));
+  const targetShare = actualShares[row.target - 1];
+  const difference = equalShare - targetShare;
+  if (difference !== row.answer) throw new Error('Q20-' + variant + ': invalid sequential-half answer');
+  const ordinals = ['첫째','둘째','셋째','넷째','다섯째','여섯째'];
+  const text = subjectName(row.giver) + ' ' + row.people + '명의 ' + row.peopleName + '에게 ' + row.object + ' ' + row.total + row.unit + '을 똑같이 나누어 주려고 했습니다. 마음이 바뀌어 첫째에게 전체의 절반을 주고, 둘째부터는 바로 앞 사람에게 주고 남은 양의 절반씩을 차례로 주었습니다. ' + ordinals[row.target - 1] + '는 처음에 똑같이 나누어 받기로 한 양보다 몇 ' + row.unit + ' 적게 받았습니까?';
+  const shareList = actualShares.map((share, shareIndex) => ordinals[shareIndex] + ' ' + share + row.unit).join(', ');
+  items.push(common(20, variant, {
+    text, answer:row.answer + row.unit, acceptedAnswers:[row.answer + row.unit, String(row.answer)], pointBand:'3.4',
+    area:'식의 계산', subarea:'분수의 연산', detailType:'남은 양의 절반씩 나누었을 때 계획한 몫과 실제 몫의 차',
+    readingFocus:'처음 계획한 똑같은 몫과 실제로 차례에 따라 받은 몫을 따로 구합니다.',
+    solutionSkill:'전체를 사람 수로 나눈 계획 몫과 전체를 2의 차례 제곱으로 나눈 실제 몫 비교하기',
+    solutionSteps:[
+      '똑같이 나누면 한 명이 ' + row.total + '÷' + row.people + '=' + equalShare + row.unit + '을 받습니다.',
+      '실제로 받은 양은 차례로 ' + shareList + '입니다.',
+      ordinals[row.target - 1] + '는 ' + equalShare + '-' + targetShare + '=' + difference + row.unit + ' 적게 받았습니다.',
+    ],
+    meta:{giver:row.giver,recipientCount:row.people,totalAmount:row.total,targetRecipient:row.target,equalShare,actualShares,targetShare,difference,unit:row.unit}, assetSpec:null,
+    verification:{
+      primary:{method:'계획한 균등 몫과 차례별 절반 몫을 각각 계산해 차 구하기',answer:row.answer + row.unit},
+      independent:{method:'각 차례 뒤 남은 양과 받은 양이 같음을 순서대로 모의 실행',answer:row.answer + row.unit},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'전체 양·사람 수·반복 분배 규칙·비교할 차례가 본문에 모두 보임'},
+    },
+  }));
+});
+
+q21.forEach((row, index) => {
+  const variant = index + 1;
+  const matches = [];
+  for (let number = 2; number <= 998; number += 2) {
+    const product = number * (number + 2) * (number + 4);
+    const digits = String(product);
+    if (digits.length === 6 && digits[0] === row.first && digits.at(-1) === row.last) matches.push({number,product});
+  }
+  if (matches.length !== 1 || matches[0].number !== row.answer || matches[0].product !== row.product) throw new Error('Q21-' + variant + ': invalid unique consecutive-even answer');
+  const image = pngAsset('q21-v' + variant + '.png', row.first + '로 시작하고 ' + row.last + '로 끝나는 여섯 자리 수의 숫자칸');
+  items.push(common(21, variant, Object.assign({
+    text:'아래 수는 연속한 세 짝수의 곱입니다. 세 짝수 중 가장 작은 수를 구하세요.',
+    answer:String(row.answer), acceptedAnswers:[String(row.answer)], pointBand:'3.4',
+    area:'식의 계산', subarea:'연속수와 곱', detailType:'일부 숫자만 보이는 곱에서 연속한 세 짝수 찾기',
+    readingFocus:'숫자칸은 여섯 자리 수이며 첫째 자리와 일의 자리만 주어져 있습니다.',
+    solutionSkill:'여섯 자리 범위의 연속한 세 짝수를 곱해 주어진 첫째·끝자리 조건을 함께 확인하기',
+    solutionSteps:[
+      '여섯 자리 수가 되는 연속한 세 짝수를 작은 수부터 차례로 확인합니다.',
+      row.answer + '×' + (row.answer + 2) + '×' + (row.answer + 4) + '=' + row.product + '이고 ' + row.first + '로 시작하여 ' + row.last + '로 끝납니다.',
+      '두 자리 조건을 모두 만족하는 경우는 하나이므로 가장 작은 수는 ' + row.answer + '입니다.',
+    ],
+    meta:{digits:6,firstDigit:row.first,lastDigit:row.last,smallestEven:row.answer,factors:[row.answer,row.answer+2,row.answer+4],product:row.product,validMatches:matches},
+    assetSpec:{kind:'masked-six-digit-number',knownPositions:{first:row.first,last:row.last},blankCount:4,renderRules:{showHiddenDigits:false,showProductAnswer:false}},
+    verification:{
+      primary:{method:'연속한 세 짝수의 곱을 구해 첫째 자리와 일의 자리 확인',answer:String(row.answer)},
+      independent:{method:'여섯 자리 곱을 만드는 모든 연속 짝수 세 수를 전수 열거해 숫자 무늬 필터링',answer:String(row.answer)},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'첫째 자리·네 빈칸·일의 자리가 한 줄에 보이며 숨은 숫자와 정답은 표시하지 않음'},
+    },
+  }, image)));
+});
+
+function hasBatchim(word) {
+  const code = word.charCodeAt(word.length - 1) - 0xAC00;
+  return code >= 0 && code <= 11171 && code % 28 !== 0;
+}
+
+q22.forEach((row, index) => {
+  const variant = index + 1;
+  const total = (row.notB + row.notA + row.sumAB) / 2;
+  const aCount = total - row.notA;
+  const bCount = total - row.notB;
+  const neither = total - row.sumAB;
+  if (!Number.isInteger(total) || aCount + bCount !== row.sumAB || neither !== row.answer || Math.min(aCount,bCount,neither) < 0) throw new Error('Q22-' + variant + ': invalid complement-count answer');
+  const pair = row.a + (hasBatchim(row.a) ? '과 ' : '와 ') + row.b;
+  const pairObject = pair + (hasBatchim(row.b) ? '을' : '를');
+  const text = row.intro + ' 이 중 ' + row.notB + '명은 ' + row.b + ' 학생이 아니고, ' + row.notA + '명은 ' + row.a + ' 학생이 아닙니다. 모인 ' + pair + ' 학생은 모두 ' + row.sumAB + '명입니다. ' + pairObject + ' 제외한 나머지 학생은 모두 몇 명입니까?';
+  items.push(common(22, variant, {
+    text, answer:neither + '명', acceptedAnswers:[neither + '명', String(neither)], pointBand:'3.4',
+    area:'경우의 수', subarea:'포함과 배제', detailType:'두 집단의 여집합 수와 두 집단의 합으로 나머지 인원 구하기',
+    readingFocus:'각 집단이 아닌 학생 수를 전체에서 빼면 두 집단의 학생 수가 됩니다.',
+    solutionSkill:'전체를 □로 놓고 두 집단 수를 각각 나타낸 뒤 두 집단의 합 조건으로 전체와 나머지 구하기',
+    solutionSteps:[
+      '전체 학생 수를 □명이라 하면 ' + row.a + '은 □-' + row.notA + '명, ' + row.b + '은 □-' + row.notB + '명입니다.',
+      '두 집단의 합이 ' + row.sumAB + '명이므로 전체는 (' + row.notA + '+' + row.notB + '+' + row.sumAB + ')÷2=' + total + '명입니다.',
+      '두 집단을 제외한 학생은 ' + total + '-' + row.sumAB + '=' + neither + '명입니다.',
+    ],
+    meta:{groups:[row.a,row.b],notCounts:[row.notA,row.notB],groupSum:row.sumAB,total,aCount,bCount,neither}, assetSpec:null,
+    verification:{
+      primary:{method:'전체를 미지수로 두고 두 집단의 합 식 세우기',answer:neither + '명'},
+      independent:{method:'계산된 전체·두 집단·나머지를 원래 두 여집합 수에 다시 대입',answer:neither + '명'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'두 여집합 수·두 집단의 합·구할 나머지 집단이 본문에 모두 보임'},
+    },
+  }));
+});
+
+function digitSum(number) {
+  return String(number).split('').reduce((sum, digit) => sum + Number(digit), 0);
+}
+
+q23.forEach((row, index) => {
+  const variant = index + 1;
+  const matches = [];
+  for (let number = row.lower + 1; number <= 999; number += 1) {
+    if (digitSum(number) % 8 === 0 && digitSum(number + 1) % 8 === 0) matches.push(number);
+  }
+  if (!matches.length || matches[0] !== row.answer) throw new Error('Q23-' + variant + ': invalid least digit-sum answer');
+  const beforeSum = digitSum(row.answer);
+  const afterSum = digitSum(row.answer + 1);
+  const text = row.lower + '보다 큰 세 자리 자연수 중에서 각 자리 숫자의 합이 8로 나누어떨어지는 수가 있습니다. 이 수에 1을 더한 수의 각 자리 숫자의 합도 8로 나누어떨어질 때, 조건을 만족하는 가장 작은 수를 구하세요.';
+  items.push(common(23, variant, {
+    text, answer:String(row.answer), acceptedAnswers:[String(row.answer)], pointBand:'4.2',
+    area:'수·규칙찾기', subarea:'조건에 맞는 수', detailType:'1을 더하기 전후 자리 숫자의 합이 모두 8의 배수인 최소 수 찾기',
+    readingFocus:'원래 수와 1을 더한 수의 자리 숫자 합을 각각 확인합니다.',
+    solutionSkill:'일의 자리 받아올림이 생기는 수를 범위 안에서 차례로 확인하기',
+    solutionSteps:[
+      '1을 더하기 전과 후의 자리 숫자 합이 모두 8의 배수가 되려면 일의 자리에서 받아올림이 일어나야 합니다.',
+      row.answer + '의 자리 숫자 합은 ' + beforeSum + '이고, ' + (row.answer + 1) + '의 자리 숫자 합도 ' + afterSum + '이므로 두 합은 모두 8의 배수입니다.',
+      row.lower + '보다 큰 수를 차례로 확인했을 때 먼저 조건을 만족하는 수가 없으므로 가장 작은 수는 ' + row.answer + '입니다.',
+    ],
+    meta:{lowerExclusive:row.lower,upperInclusive:999,divisor:8,answer:row.answer,beforeSum,afterSum,validMatches:matches}, assetSpec:null,
+    verification:{
+      primary:{method:'받아올림 후보의 전후 자리 숫자 합 확인',answer:String(row.answer)},
+      independent:{method:'주어진 하한 다음 수부터 999까지 전수 열거해 두 합의 나머지가 모두 0인 첫 수 확인',answer:String(row.answer)},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'하한·세 자리 범위·나누는 수·1을 더한 뒤의 조건·최소값 요구가 본문에 모두 보임'},
+    },
+  }));
+});
+
+q24.forEach((row, index) => {
+  const variant = index + 1;
+  const totalWorkers = row.answer;
+  const largeWork = totalWorkers * 3 / 2;
+  const smallWork = totalWorkers * 3 / 4;
+  const largeRemainderAfterDay1 = largeWork - totalWorkers;
+  const largeRemainderAfterDay2 = largeRemainderAfterDay1 - totalWorkers / 2;
+  const smallRemainderAfterDay2 = smallWork - totalWorkers / 2;
+  if (totalWorkers !== 4 * row.last || largeWork !== 2 * smallWork || largeRemainderAfterDay2 !== 0 || smallRemainderAfterDay2 !== row.last) throw new Error('Q24-' + variant + ': invalid shared-work answer');
+  const text = row.people + '들이 ' + row.work + '. ' + row.large + '의 넓이는 ' + row.small + '의 넓이의 2배입니다. 첫째 날에는 모든 ' + row.people + '가 ' + row.large + '에서 하루 종일 일했습니다. 둘째 날에는 같은 수의 두 모둠으로 나누어 한 모둠은 ' + row.large + '의 남은 일을 끝내고, 다른 모둠은 ' + row.small + '에서 일했습니다. 셋째 날에는 ' + row.people + ' ' + row.last + '명이 ' + row.small + '의 남은 일을 끝냈습니다. ' + row.people + '는 모두 몇 명입니까?';
+  items.push(common(24, variant, {
+    text, answer:totalWorkers + '명', acceptedAnswers:[totalWorkers + '명', String(totalWorkers)], pointBand:'4.2',
+    area:'식의 계산', subarea:'일·속력·시간', detailType:'넓이가 두 배인 두 작업을 여러 날 나누어 끝낼 때 전체 인원 구하기',
+    readingFocus:'날마다 어느 작업에 몇 명이 참여했는지와 두 작업량의 비를 구분합니다.',
+    solutionSkill:'전체 인원을 한 단위로 두고 큰 작업과 작은 작업의 양을 같은 단위로 나타내기',
+    solutionSteps:[
+      '전체 인원을 □명이라 하면 둘째 날 각 모둠은 □÷2명입니다.',
+      row.large + '은 첫째 날 □명과 둘째 날 □÷2명이 끝냈으므로 작업량은 □의 1과 1/2배이고, ' + row.small + '의 작업량은 그 절반인 □의 3/4배입니다.',
+      '둘째 날 □÷2명이 ' + row.small + '에서 일한 뒤 남은 □÷4명분을 ' + row.last + '명이 끝냈으므로 □÷4=' + row.last + ', □=' + totalWorkers + '입니다.',
+    ],
+    meta:{workerRole:row.people,largeWorkName:row.large,smallWorkName:row.small,largeToSmallRatio:2,thirdDayWorkers:row.last,totalWorkers,largeWork,smallWork,largeRemainderAfterDay1,largeRemainderAfterDay2,smallRemainderAfterDay2}, assetSpec:null,
+    verification:{
+      primary:{method:'전체 인원을 미지수로 두고 큰 작업과 작은 작업의 양을 비교',answer:totalWorkers + '명'},
+      independent:{method:'각 날의 작업 인원을 1인 1일 작업량으로 두고 두 작업의 완료·잔여량을 순서대로 모의 계산',answer:totalWorkers + '명'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'두 작업의 넓이비·날짜별 인원 배치·마지막 인원이 본문에 모두 보임'},
+    },
+  }));
+});
+
+function subjectNameForFinal7(name) {
+  return name + (hasBatchim(name) ? '이가' : '가');
+}
+
+function topicNameForFinal7(name) {
+  return name + (hasBatchim(name) ? '이는' : '는');
+}
+
+q25.forEach((row, index) => {
+  const variant = index + 1;
+  const [first, second, third, fourth] = row.names;
+  const values = [row.answer, row.answer * 2, row.answer * 4, row.answer * 7 + row.extra];
+  if (values.reduce((sum, value) => sum + value, 0) !== row.total || values[3] !== values[0] + values[1] + values[2] + row.extra) throw new Error('Q25-' + variant + ': invalid multiplicative remainder answer');
+  const text = first + ', ' + second + ', ' + third + ', ' + fourth + (hasBatchim(fourth) ? '은' : '는') + ' 함께 ' + row.activity + '. ' + topicNameForFinal7(second) + ' ' + subjectNameForFinal7(first) + ' 모은 ' + row.object + '의 2배를 모았고, ' + topicNameForFinal7(third) + ' ' + subjectNameForFinal7(second) + ' 모은 ' + row.object + '의 2배를 모았습니다. ' + topicNameForFinal7(fourth) + ' 나머지 세 명이 모은 ' + row.object + '를 합친 것보다 ' + row.extra + '개 더 많이 모았습니다. 네 명이 모은 ' + row.object + '가 모두 ' + row.total + '개일 때, ' + subjectNameForFinal7(first) + ' 모은 ' + row.object + '는 몇 개입니까?';
+  items.push(common(25, variant, {
+    text, answer:row.answer + '개', acceptedAnswers:[row.answer + '개', String(row.answer)], pointBand:'4.2',
+    area:'식의 계산', subarea:'배수와 나머지', detailType:'연속한 두 배 관계와 나머지보다 많은 수로 첫 사람의 수량 구하기',
+    readingFocus:'둘째와 셋째의 수를 첫째의 수로 나타내고, 넷째의 비교 대상이 나머지 세 명의 합임을 확인합니다.',
+    solutionSkill:'첫 사람의 수를 한 단위로 두어 네 사람의 수량을 한 식으로 나타내기',
+    solutionSteps:[
+      subjectNameForFinal7(first) + ' 모은 수를 □개라 하면 ' + second + (hasBatchim(second) ? '은' : '는') + ' 2×□개, ' + third + (hasBatchim(third) ? '은' : '는') + ' 4×□개입니다.',
+      fourth + (hasBatchim(fourth) ? '은' : '는') + ' (□+2×□+4×□)+' + row.extra + '=7×□+' + row.extra + '개입니다.',
+      '네 사람의 합은 14×□+' + row.extra + '=' + row.total + '이므로 □=' + row.answer + '입니다.',
+    ],
+    meta:{names:row.names,object:row.object,firstCount:row.answer,counts:values,secondMultiplier:2,thirdToSecondMultiplier:2,fourthExtra:row.extra,total:row.total}, assetSpec:null,
+    verification:{
+      primary:{method:'첫 사람의 수를 미지수로 두고 네 사람의 합 식 계산',answer:row.answer + '개'},
+      independent:{method:'구한 네 수를 두 배 관계·나머지 세 명의 합과의 차·전체 합에 각각 재대입',answer:row.answer + '개'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'두 번의 2배 관계·넷째의 초과량·전체 합·구할 사람이 본문에 모두 보임'},
+    },
+  }));
+});
+
+function isLeapYear(year) {
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+}
+
+function januaryFirstWeekday(year) {
+  return new Date(Date.UTC(year, 0, 1)).getUTCDay();
+}
+
+function sameCalendar(yearA, yearB) {
+  return isLeapYear(yearA) === isLeapYear(yearB) && januaryFirstWeekday(yearA) === januaryFirstWeekday(yearB);
+}
+
+q26.forEach((row, index) => {
+  const variant = index + 1;
+  const matches = [];
+  if (row.direction === 'past') {
+    for (let year = 1900; year < row.cutoff; year += 1) if (sameCalendar(year, row.reference)) matches.push(year);
+  } else {
+    for (let year = row.cutoff + 1; year <= 2100; year += 1) if (sameCalendar(year, row.reference)) matches.push(year);
+  }
+  const answer = row.direction === 'past' ? matches.at(-1) : matches[0];
+  if (answer !== row.answer) throw new Error('Q26-' + variant + ': invalid nearest matching calendar');
+  const earlier = Math.min(answer, row.reference);
+  const later = Math.max(answer, row.reference);
+  let leapCount = 0;
+  for (let year = earlier; year < later; year += 1) if (isLeapYear(year)) leapCount += 1;
+  const weekdayShift = later - earlier + leapCount;
+  if (weekdayShift % 7 !== 0 || isLeapYear(answer) !== isLeapYear(row.reference)) throw new Error('Q26-' + variant + ': calendar equivalence verification failed');
+  const rangePhrase = row.direction === 'past' ? row.cutoff + '년과 가장 가까운 과거의 해' : row.cutoff + '년 이후의 해 중에서 ' + row.cutoff + '년과 가장 가까운 해';
+  const searchPhrase = row.direction === 'past' ? row.cutoff + '년보다 작은 해를 가까운 순서로' : row.cutoff + '년보다 큰 해를 가까운 순서로';
+  const text = subjectNameForFinal7(row.name) + ' ' + row.reference + '년도 달력을 보다가 다른 해에도 날짜와 요일이 같은 달력이 있는지 찾아보았습니다. ' + row.reference + '년과 연도만 다르고 달력이 같은 해 중에서 ' + rangePhrase + '는 몇 년입니까? (단, ' + row.leapAnchor + '년은 윤년입니다.)';
+  items.push(common(26, variant, {
+    text, answer:answer + '년', acceptedAnswers:[answer + '년', String(answer)], pointBand:'4.2',
+    area:'수·규칙찾기', subarea:'달력과 요일', detailType:'평년·윤년의 요일 이동으로 같은 달력의 가장 가까운 해 찾기',
+    readingFocus:'찾는 해의 방향과 기준 연도, 평년·윤년 여부를 함께 확인합니다.',
+    solutionSkill:'평년은 1일, 윤년은 2일씩 바뀌는 1월 1일의 요일을 누적하고 윤년 여부도 비교하기',
+    solutionSteps:[
+      '같은 달력이 되려면 두 해가 모두 평년이거나 모두 윤년이고, 1월 1일의 요일도 같아야 합니다.',
+      earlier + '년부터 ' + later + '년까지 요일은 모두 ' + weekdayShift + '일, 즉 ' + (weekdayShift / 7) + '주 이동하므로 날짜와 요일이 다시 같아집니다.',
+      searchPhrase + ' 확인하면 먼저 조건을 만족하는 해는 ' + answer + '년입니다.',
+    ],
+    meta:{name:row.name,referenceYear:row.reference,cutoffYear:row.cutoff,leapAnchor:row.leapAnchor,direction:row.direction,answerYear:answer,matchingYears:matches,earlierYear:earlier,laterYear:later,leapCount,weekdayShift}, assetSpec:null,
+    verification:{
+      primary:{method:'평년과 윤년의 요일 이동량을 누적해 같은 달력 확인',answer:answer + '년'},
+      independent:{method:'요청 범위의 모든 연도를 전수 검사해 윤년 여부와 1월 1일 요일이 같은 첫 해 확인',answer:answer + '년'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'기준 달력·탐색 기준 연도·과거 또는 이후 방향·윤년 기준이 본문에 모두 보임'},
+    },
+  }));
+});
+
+q27.forEach((row, index) => {
+  const variant = index + 1;
+  let week = 0;
+  let count = 1;
+  let previous = 1;
+  while (count < row.target) {
+    previous = count;
+    count *= row.factor;
+    week += 1;
+  }
+  if (week !== row.answer || previous >= row.target || count < row.target) throw new Error('Q27-' + variant + ': invalid first threshold week');
+  const text = '처음에 1이었던 ' + row.subject + '가 1주일마다 ' + row.factor + '배가 됩니다. ' + row.subject + '가 적어도 ' + row.target.toLocaleString('ko-KR') + '이 되는 것은 몇 주일 후입니까?';
+  items.push(common(27, variant, {
+    text, answer:row.answer + '주일', acceptedAnswers:[row.answer + '주일', String(row.answer)], pointBand:'4.2',
+    area:'수·규칙찾기', subarea:'규칙과 큰 수', detailType:'1에서 시작해 매주 일정한 배수가 될 때 목표 이상이 되는 첫 주 구하기',
+    readingFocus:'매주 더하는 것이 아니라 앞 주의 수에 같은 배수를 곱한다는 점과 목표 이상이 되는 첫 주를 확인합니다.',
+    solutionSkill:'주별 수를 거듭제곱으로 나타내고 목표보다 작은 마지막 주와 목표 이상인 첫 주 비교하기',
+    solutionSteps:[
+      row.subject + '는 매주 ' + row.factor + '배이므로 ' + row.factor + '의 거듭제곱으로 늘어납니다.',
+      (row.answer - 1) + '주 후에는 ' + previous.toLocaleString('ko-KR') + '이고 목표인 ' + row.target.toLocaleString('ko-KR') + '보다 작습니다.',
+      row.answer + '주 후에는 ' + count.toLocaleString('ko-KR') + '이므로 처음으로 목표 이상이 되는 때는 ' + row.answer + '주일 후입니다.',
+    ],
+    meta:{subject:row.subject,start:1,weeklyMultiplier:row.factor,targetThreshold:row.target,firstWeek:row.answer,previousCount:previous,firstReachedCount:count}, assetSpec:null,
+    verification:{
+      primary:{method:'주별 수를 차례로 곱해 목표 이상이 되는 첫 주 확인',answer:row.answer + '주일'},
+      independent:{method:'직전 거듭제곱은 목표 미만이고 다음 거듭제곱은 목표 이상인지 경계값 검사',answer:row.answer + '주일'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'시작 수·주별 배수·목표 인원·처음 도달 시점 요구가 본문에 모두 보임'},
+    },
+  }));
+});
+
+function triangularNumber(n) {
+  return n * (n + 1) / 2;
+}
+
+function triangularValue(row, column) {
+  return triangularNumber(row - 1) + column;
+}
+
+function triangularLocate(number) {
+  let row = 1;
+  while (triangularNumber(row) < number) row += 1;
+  return [row, number - triangularNumber(row - 1)];
+}
+
+function triangularNeighbors(row, column) {
+  return [[row,column-1],[row,column+1],[row-1,column-1],[row-1,column],[row+1,column],[row+1,column+1]]
+    .filter(([candidateRow,candidateColumn]) => candidateRow >= 1 && candidateColumn >= 1 && candidateColumn <= candidateRow)
+    .map(([candidateRow,candidateColumn]) => triangularValue(candidateRow,candidateColumn));
+}
+
+function triangularNeighborSum(number) {
+  const [row,column] = triangularLocate(number);
+  return triangularNeighbors(row,column).reduce((sum,value) => sum + value, 0);
+}
+
+q28.forEach((row, index) => {
+  const variant = index + 1;
+  const matches = [];
+  for (let number = 1; number <= 500; number += 1) if (triangularNeighborSum(number) === row.targetSum) matches.push(number);
+  if (matches.length !== 1 || matches[0] !== row.answer) throw new Error('Q28-' + variant + ': invalid unique triangular-neighbor answer');
+  const [answerRow,answerColumn] = triangularLocate(row.answer);
+  const adjacent = triangularNeighbors(answerRow,answerColumn);
+  const image = pngAsset('q28-v' + variant + '.png', '삼각형 자연수 배열, 원본 계산 약속 보기, 원 안에 들어갈 수의 이웃 합 ' + row.targetSum);
+  const text = '그림과 같이 자연수를 위에서부터 차례로 배열했습니다. 원 안에 들어 있는 수는 그 수가 적힌 칸을 제외하고, 그 수가 적힌 칸에 변으로 맞닿은 칸들의 수를 모두 더한 값으로 계산하기로 했습니다. 보기를 보고 다음 원 안에 들어갈 수를 구하세요.';
+  items.push(common(28, variant, Object.assign({
+    text, answer:String(row.answer), acceptedAnswers:[String(row.answer)], pointBand:'4.2',
+    area:'수·규칙찾기', subarea:'수 배열의 규칙', detailType:'삼각형 자연수 배열에서 선택한 칸을 제외한 변 이웃의 합으로 숨은 수 찾기',
+    readingFocus:'원 안의 수가 적힌 칸 자체는 합에서 제외하고, 변으로 맞닿은 칸만 더합니다.',
+    solutionSkill:'삼각수로 목표 수의 행과 열을 찾고 같은 행·윗행·아랫행의 변 이웃 여섯 수 합 확인하기',
+    solutionSteps:[
+      row.answer + '은 ' + answerRow + '번째 줄 ' + answerColumn + '번째 칸에 있습니다.',
+      '이 칸을 제외하고 변으로 맞닿은 칸의 수는 ' + adjacent.join(', ') + '입니다.',
+      adjacent.join('+') + '=' + row.targetSum + '이고 이 합을 만드는 칸은 하나뿐이므로 원 안의 수는 ' + row.answer + '입니다.',
+    ],
+    meta:{targetNeighborSum:row.targetSum,answerNumber:row.answer,answerRow,answerColumn,adjacentValues:adjacent,validMatches:matches,searchMax:500,excludeSelectedCell:true,adjacency:'shared-edge-only'},
+    assetSpec:{kind:'triangular-number-array-with-source-example',visibleRows:5,sequenceStart:1,exampleSource:'cropped-original-q28-example',targetNeighborSum:row.targetSum,renderRules:{showAnswerCell:false,showAnswerNumber:false,showOriginalExamples:true}},
+    verification:{
+      primary:{method:'답 후보 칸의 변 이웃을 좌표로 찾아 합 계산',answer:String(row.answer)},
+      independent:{method:'1부터 500까지 모든 칸의 변 이웃 합을 전수 열거해 목표 합과 일치하는 칸 수 확인',answer:String(row.answer)},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'자연수 배열·자기 칸 제외·변 이웃만 합산·원본 보기·목표 합이 모두 보이며 답 칸은 표시하지 않음'},
+    },
+  }, image)));
+});
+
+function factorial(number) {
+  let value = 1;
+  for (let current = 2; current <= number; current += 1) value *= current;
+  return value;
+}
+
+function combinations(values, count) {
+  const result = [];
+  function visit(start, selected) {
+    if (selected.length === count) {
+      result.push(selected);
+      return;
+    }
+    for (let index = start; index <= values.length - (count - selected.length); index += 1) {
+      visit(index + 1, selected.concat(values[index]));
+    }
+  }
+  visit(0, []);
+  return result;
+}
+
+function exhaustiveCrossCount(numbers, horizontal, vertical) {
+  const centerIndex = Math.floor(horizontal / 2);
+  let count = 0;
+  function visit(prefix, remaining) {
+    if (!remaining.length) {
+      const horizontalSum = prefix.slice(0, horizontal).reduce((sum, value) => sum + value, 0);
+      const verticalSum = prefix[centerIndex] + prefix.slice(horizontal).reduce((sum, value) => sum + value, 0);
+      if (horizontalSum === verticalSum) count += 1;
+      return;
+    }
+    remaining.forEach((value, index) => visit(prefix.concat(value), remaining.slice(0, index).concat(remaining.slice(index + 1))));
+  }
+  visit([], numbers);
+  if (horizontal + vertical - 1 !== numbers.length) throw new Error('cross cell count and number count differ');
+  return count;
+}
+
+q29.forEach((row, index) => {
+  const variant = index + 1;
+  const total = row.numbers.reduce((sum, value) => sum + value, 0);
+  const centerCases = [];
+  row.numbers.forEach((center) => {
+    const remaining = row.numbers.filter((value) => value !== center);
+    const verticalArmSum = (total - center) / 2;
+    combinations(remaining, row.vertical - 1).forEach((arms) => {
+      if (arms.reduce((sum, value) => sum + value, 0) === verticalArmSum) centerCases.push({center, verticalArms:arms});
+    });
+  });
+  const arrangementsPerCase = factorial(row.vertical - 1) * factorial(row.horizontal - 1);
+  const combinationCount = centerCases.length * arrangementsPerCase;
+  const exhaustiveCount = exhaustiveCrossCount(row.numbers, row.horizontal, row.vertical);
+  if (combinationCount !== row.answer || exhaustiveCount !== row.answer) throw new Error('Q29-' + variant + ': invalid equal-line arrangement count');
+  const caseText = centerCases.map((entry) => '가운데 ' + entry.center + ', 세로의 나머지 수 ' + entry.verticalArms.join('·')).join('; ');
+  const image = pngAsset('q29-v' + variant + '.png', '가로 ' + row.horizontal + '칸과 세로 ' + row.vertical + '칸이 가운데에서 만나는 빈 수 배열');
+  const text = '그림의 가로줄과 세로줄에 있는 수의 합이 같도록 빈칸에 ' + row.numbers.join(', ') + '을 한 번씩 모두 써넣으려고 합니다. 수를 써넣는 방법은 모두 몇 가지입니까? (단, 위치가 다른 칸에 다른 수가 들어가는 것은 모두 다릅니다.)';
+  items.push(common(29, variant, Object.assign({
+    text, answer:row.answer + '가지', acceptedAnswers:[row.answer + '가지', String(row.answer)], pointBand:'4.2',
+    area:'경우의 수', subarea:'수 배열의 경우의 수', detailType:'가로줄과 세로줄의 합이 같은 수 배열의 경우의 수',
+    readingFocus:'가로줄과 세로줄이 공유하는 가운데 칸을 먼저 정하고, 나머지 칸의 순서를 각각 셉니다.',
+    solutionSkill:'가운데 수와 세로의 나머지 수를 먼저 고른 뒤 세로와 가로의 자리 바꿈 수를 곱하기',
+    solutionSteps:[
+      '모든 수의 합은 ' + total + '이고, 가능한 선택은 ' + caseText + '로 모두 ' + centerCases.length + '가지입니다.',
+      '한 선택마다 세로의 나머지 ' + (row.vertical - 1) + '칸은 ' + factorial(row.vertical - 1) + '가지, 가로의 나머지 ' + (row.horizontal - 1) + '칸은 ' + factorial(row.horizontal - 1) + '가지로 바꿔 놓을 수 있습니다.',
+      centerCases.length + '×' + factorial(row.vertical - 1) + '×' + factorial(row.horizontal - 1) + '=' + row.answer + '이므로 모두 ' + row.answer + '가지입니다.',
+    ],
+    meta:{horizontalCells:row.horizontal,verticalCells:row.vertical,totalCells:row.numbers.length,numbers:row.numbers,total,centerCases,arrangementsPerCase,combinationCount,exhaustiveCount},
+    assetSpec:{kind:'cross-number-cells',horizontalCells:row.horizontal,verticalCells:row.vertical,totalCells:row.numbers.length,renderRules:{showNumbers:false,showAnswerArrangement:false,preserveSharedCenter:true}},
+    verification:{
+      primary:{method:'가운데 수와 세로 나머지 수의 조합을 찾은 뒤 각 줄의 순열 수를 곱함',answer:row.answer + '가지'},
+      independent:{method:row.numbers.length + '!개 전체 배열을 전수 확인해 두 줄의 합이 같은 배치 수 계산',answer:row.answer + '가지'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'서로 다른 칸 수의 십자 배열·사용할 수·모든 위치 구별 조건이 보이며 숫자나 정답 배열은 표시하지 않음'},
+    },
+  }, image)));
+});
+
+q30.forEach((row, index) => {
+  const variant = index + 1;
+  let remaining = Array.from({length:row.students}, (_, studentIndex) => studentIndex + 1);
+  const roundCounts = [remaining.length];
+  while (remaining.length > 1) {
+    remaining = remaining.filter((_, position) => (position + 1) % 2 === 0);
+    roundCounts.push(remaining.length);
+  }
+  let largestPowerOfTwo = 1;
+  const powers = [1];
+  while (largestPowerOfTwo * 2 <= row.students) {
+    largestPowerOfTwo *= 2;
+    powers.push(largestPowerOfTwo);
+  }
+  if (remaining[0] !== row.answer || largestPowerOfTwo !== row.answer) throw new Error('Q30-' + variant + ': invalid last original student number');
+  const text = row.students + '명의 학생을 한 줄로 세워 차례대로 1번부터 ' + row.students + '번까지 번호를 붙인 뒤 짝수 번호인 학생만 남깁니다. 남은 학생들에게 다시 1번부터 차례대로 번호를 붙이고 짝수 번호인 학생만 남기는 일을 한 명이 남을 때까지 반복합니다. 마지막에 남은 학생이 처음 줄에서 받은 번호는 몇 번입니까?';
+  items.push(common(30, variant, {
+    text, answer:String(row.answer), acceptedAnswers:[String(row.answer), row.answer + '번'], pointBand:'4.2',
+    area:'수·규칙찾기', subarea:'규칙에 따른 제거', detailType:'짝수 번호만 남기고 다시 번호를 붙이는 과정을 반복해 마지막 학생 찾기',
+    readingFocus:'매번 새로 붙인 번호가 짝수인 학생만 남으므로 처음 번호에서는 2의 배수, 4의 배수, 8의 배수 순서로 남습니다.',
+    solutionSkill:'처음 학생 수 이하인 가장 큰 2의 거듭제곱 찾기',
+    solutionSteps:[
+      '첫 번째에는 처음 번호가 2의 배수인 학생, 다음에는 4의 배수인 학생, 그다음에는 8의 배수인 학생이 남습니다.',
+      row.students + ' 이하인 2의 거듭제곱은 ' + powers.join(', ') + '이고, 그중 가장 큰 수는 ' + largestPowerOfTwo + '입니다.',
+      '따라서 마지막에 남은 학생이 처음 줄에서 받은 번호는 ' + row.answer + '번입니다.',
+    ],
+    meta:{initialStudents:row.students,roundCounts,powersOfTwo:powers,lastOriginalNumber:remaining[0],largestPowerOfTwo}, assetSpec:null,
+    verification:{
+      primary:{method:'매 라운드의 짝수 위치만 남기며 실제 학생 번호를 끝까지 모의 실행',answer:String(row.answer)},
+      independent:{method:'처음 학생 수 이하인 가장 큰 2의 거듭제곱 계산',answer:String(row.answer)},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'처음 학생 수·짝수 번호만 남기는 규칙·매번 재번호·한 명이 될 때까지 반복 조건이 본문에 모두 보임'},
+    },
+  }));
+});
+
 const data = {
-  version: '7.5.0', sourceSet: 'final', sourceRound: 7,
-  freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], partialRelease: true},
+  version: '7.12.0', sourceSet: 'final', sourceRound: 7,
+  freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30], partialRelease: true},
   sourceFingerprints: Object.fromEntries(SOURCE_PATHS.map(sourcePath => [sourcePath, sha(fs.readFileSync(path.join(ROOT, sourcePath)))])),
-  reviewSummary: {verified: items.length, pending: 0, unavailableSourceQuestions: 18},
+  reviewSummary: {verified: items.length, pending: 0, unavailableSourceQuestions: 0},
   items,
 };
 const index = {

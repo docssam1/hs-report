@@ -12,7 +12,7 @@
     var total=(x.text||'').length+dataLength;
     if(Number(x.sourceRound)===1)return total>180||!!x.asset&&(total>110||[18,20,28].includes(Number(x.sourceNo)));
     if(Number(x.sourceRound)===7&&[5,6,12].includes(Number(x.sourceNo)))return true;
-    if(Number(x.sourceRound)===7&&[14,15].includes(Number(x.sourceNo)))return false;
+    if(Number(x.sourceRound)===7&&[14,15,17,29].includes(Number(x.sourceNo)))return false;
     return total>210||!!x.asset&&(total>180||Number(x.sourceNo)===28);
   }
   function questionGroups(items,layout){
@@ -37,6 +37,11 @@
       if(slots===4){groups.push(group);group=[];slots=0;}
     });
     if(group.length)groups.push(group);
+    if(groups.length>1&&groups[groups.length-1].length===1){
+      var last=groups[groups.length-1],previous=groups[groups.length-2],moveIndex=-1;
+      for(var j=previous.length-1;j>=0;j-=1){if(!editorialWide(previous[j])){moveIndex=j;break;}}
+      if(moveIndex>=0)last.unshift(previous.splice(moveIndex,1)[0]);
+    }
     return groups;
   }
   function raster(a,cls){
@@ -54,7 +59,7 @@
     root.dataset.bankCode=bankCode;
     var round=important?null:Number(bankCode.slice(5)),roundLabel=important?'선생님이 고른 중요 유형':(round===7?'최종 7회':'파이널 '+round+'회'),idPrefix=important?'':bankCode+'-q';
     if(important)ids=Array.isArray(opts.typeIds)?opts.typeIds:[];
-    else if(!Array.isArray(ids))ids=wrong?[]:(round===7?[5,6,7,8,9,10,11,12,13,14,15,16].map(no=>idPrefix+String(no).padStart(2,'0')):Array.from({length:30},(_,i)=>idPrefix+String(i+1).padStart(2,'0')));
+    else if(!Array.isArray(ids))ids=wrong?[]:(round===7?[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28].map(no=>idPrefix+String(no).padStart(2,'0')):Array.from({length:30},(_,i)=>idPrefix+String(i+1).padStart(2,'0')));
     var labels={all:'전체문제','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
     var counts=[4,8,20,40],requestedCount=counts.includes(Number(opts.n))?Number(opts.n):20;
     var band=Object.hasOwn(labels,opts.pointBand)?opts.pointBand:'all',mode=q.get('printMode')||'both';
@@ -85,7 +90,8 @@
       return sheet('f1-cover cover-page','<div class="f1-mast"><div class="f1-brand">지필드 영재교육</div><div class="f1-issue">'+labels[band]+' / '+paper.questions.length+'문항</div></div><div class="f1-cover-heading"><div class="f1-owner">'+(student?esc(student)+' 학생의':'이름 ____________________')+'</div><h1>'+roundLabel+(important?'':' <span>약점 유형</span>')+'</h1></div><div class="f1-check-title">'+(wrong?'오답':'선택')+' 유형 자기 점검</div><p class="lead">풀이를 보지 않고 다시 풀 수 있으면 체크하세요.</p><div class="f1-checks">'+list+'</div><div class="f1-rule">'+(important?'검수 문제 3개를 기준으로 같은 유형의 새 문제를 이어서 공부합니다.':'원문 한 문제마다 유사문제 3개씩 공부합니다.')+' 체크는 성적에 반영되지 않습니다.</div>');
     }
     function questionPage(group,n,total){
-      var html='<div class="f1-qpage qpage"><div class="f1-qhead qhead"><span>'+roundLabel+' 약점 유형</span><small>문제 '+n+' / '+total+'</small></div>';
+      var wideLead=layout==='editorial'&&group.length===3&&editorialWide(group[0]);
+      var html='<div class="f1-qpage qpage" data-wide-lead="'+String(wideLead)+'"><div class="f1-qhead qhead"><span>'+roundLabel+' 약점 유형</span><small>문제 '+n+' / '+total+'</small></div>';
       group.forEach(x=>{
         var legacyGiven=bankCode==='final1'&&[12,14,23].includes(Number(x.sourceNo))&&Array.isArray(x.conditionLines)?x.conditionLines:[];
         var promptText=[x.text].concat(legacyGiven).filter(Boolean).join(' ');
@@ -105,7 +111,7 @@
       return '<article class="f1-solution solution-card" data-answer-id="'+esc(x.id)+'" data-source-no="'+x.sourceNo+'" data-index="'+x.index+'"><div class="f1-solution-head"><h3>'+x.index+'. <span class="f1-solution-type">['+esc(x.detailType)+']</span></h3><strong class="ans">답 '+mathText(x.answer)+'</strong></div><div class="label">원문 '+x.sourceNo+'번</div>'+(x.readingFocus?'<p class="f1-core"><b>핵심</b> '+mathText(x.readingFocus)+'</p>':'')+(x.solutionSkill?'<p class="f1-method"><b>풀이</b> '+mathText(x.solutionSkill)+'</p>':'')+body+(steps.join(' ')===x.solution?'':'<p class="f1-answer-summary">'+mathText(x.solution)+'</p>')+'</article>';
     }
     function quickAnswerGrid(items){return '<section class="f1-answer-key" aria-label="빠른 정답"><h3>빠른 정답</h3><div class="f1-answer-key-grid">'+items.map(x=>'<div data-answer-id="'+esc(x.id)+'"><b>'+x.index+'</b><span>'+mathText(x.answer)+'</span></div>').join('')+'</div></section>';}
-    function answerPages(items){return '<div class="f1-answer-staging">'+quickAnswerGrid(items)+items.map(answerCard).join('')+'</div>';}
+    function answerPages(items){return '<div class="f1-answer-staging">'+items.map(answerCard).join('')+'</div>';}
     function compactAnswerPages(){
       var staging=pageRoot.querySelector('.f1-answer-staging');if(!staging)return;
       var cards=Array.from(staging.children),built=[],page=null,flow=null;

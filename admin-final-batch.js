@@ -2,7 +2,7 @@
 (function(global){
   'use strict';
 
-  var VERSION='1.0.0';
+  var VERSION='1.1.0';
   var selectedStudents=new Set();
   var selectedRounds=new Set([1,2,3,4]);
   var running=false;
@@ -31,13 +31,13 @@
     panel.innerHTML='<div class="final-batch-head"><div><h4 id="final-batch-title">파이널 진단·유사문제 한 번에 저장</h4><p>응시 학생과 회차를 고르면 학생별 PDF를 회차 폴더에 나누어 저장합니다. 성적 기록은 읽기만 합니다.</p></div><span class="final-batch-count" id="final-batch-count">선택 0건</span></div>'+
       '<div class="final-batch-body"><fieldset class="final-batch-fieldset"><legend>1. 회차 선택</legend><div class="final-batch-rounds" id="final-batch-rounds">'+
       [1,2,3,4].map(function(round){return '<label class="final-batch-check"><input type="checkbox" value="'+round+'" checked>파이널 '+round+'회</label>';}).join('')+
-      '<label class="final-batch-check"><input type="checkbox" id="final-batch-similar" checked>오답 유사문제·풀이 포함</label></div></fieldset>'+
+      '<label class="final-batch-check"><input type="checkbox" id="final-batch-similar" checked>오답 유사문제·풀이 포함</label><label class="final-batch-check"><input type="checkbox" id="final-batch-details">원문 30문항 상세 풀이도 포함</label></div></fieldset>'+
       '<fieldset class="final-batch-fieldset"><legend>2. 응시 학생 선택</legend><div class="final-batch-tools"><button type="button" id="final-batch-select-all">응시 학생 전체 선택</button><button type="button" id="final-batch-clear">선택 비우기</button><span id="final-batch-student-count"></span></div><div class="final-batch-students" id="final-batch-students"></div></fieldset></div>'+
-      '<div class="final-batch-actions"><button type="button" class="btn final-batch-primary" id="final-batch-folder" data-final-batch-action>선택 폴더에 PDF 저장</button><button type="button" class="btn final-batch-secondary" id="final-batch-zip" data-final-batch-action>ZIP 한 개로 받기</button><button type="button" class="btn final-batch-cancel" id="final-batch-cancel" hidden>중단</button><p class="final-batch-note">폴더 저장은 Chrome·Edge에서 지원합니다. 다른 브라우저에서는 ZIP 저장을 이용하세요. 공식 1차 성적이 있는 학생·회차만 저장됩니다.</p></div><div class="final-batch-status" id="final-batch-status" role="status" aria-live="polite"></div>';
+      '<div class="final-batch-actions"><button type="button" class="btn final-batch-primary" id="final-batch-folder" data-final-batch-action>진단+유사문제 한 번에 저장</button><button type="button" class="btn final-batch-secondary" id="final-batch-zip" data-final-batch-action>ZIP 한 개로 받기</button><button type="button" class="btn final-batch-cancel" id="final-batch-cancel" hidden>중단</button><p class="final-batch-note">기본 파일에는 진단 요약·이번 주 학습 계획·오답 유사문제·풀이가 함께 들어갑니다. 원문 30문항 상세 풀이는 필요할 때만 추가하세요.</p></div><div class="final-batch-status" id="final-batch-status" role="status" aria-live="polite"></div>';
     body.parentNode.insertBefore(panel,body);
 
     document.getElementById('final-batch-rounds').addEventListener('change',function(event){
-      if(event.target.id==='final-batch-similar')return;
+      if(event.target.id==='final-batch-similar'||event.target.id==='final-batch-details')return;
       var round=Number(event.target.value);if(event.target.checked)selectedRounds.add(round);else selectedRounds.delete(round);refresh();
     });
     document.getElementById('final-batch-students').addEventListener('change',function(event){
@@ -101,11 +101,27 @@
       return new Promise(function(resolve,reject){image.addEventListener('load',resolve,{once:true});image.addEventListener('error',function(){reject(new Error('PDF 그림을 불러오지 못했습니다.'));},{once:true});});
     }));
   }
+  function ensureLocalRenderer(doc){
+    var win=doc&&doc.defaultView;
+    if(win&&typeof win.html2canvas==='function')return Promise.resolve(win.html2canvas);
+    return new Promise(function(resolve,reject){
+      var script=doc.createElement('script');
+      script.src=new URL('vendor/html2canvas/1.4.1/html2canvas.min.js',global.location.href).href;
+      script.onload=function(){if(win&&typeof win.html2canvas==='function')resolve(win.html2canvas);else reject(new Error('PDF 렌더러를 준비하지 못했습니다.'));};
+      script.onerror=function(){reject(new Error('PDF 렌더러를 불러오지 못했습니다.'));};
+      (doc.head||doc.documentElement).appendChild(script);
+    });
+  }
   function wrongBankUrl(doc,task){
     var rows=Array.from(doc.querySelectorAll('#wrongPractice .wp-item'));if(!rows.length)return '';
-    var params=new URLSearchParams({practice:'wrong',gens:rows.map(function(row){return row.dataset.wpGen;}).join(','),per:'3',points:'all',source:'final|'+task.round,sourceNos:rows.map(function(row){return row.dataset.wpNo;}).join(','),seed:task.student+'-final'+task.round+'-batch'});
+    var params=new URLSearchParams({practice:'wrong',gens:rows.map(function(row){return row.dataset.wpGen;}).join(','),per:'3',points:'all',printMode:'both',source:'final|'+task.round,sourceNos:rows.map(function(row){return row.dataset.wpNo;}).join(','),seed:task.student+'-final'+task.round+'-batch'});
     if(task.round===1||task.round===2)params.set('bank','final'+task.round);
     return 'bank/index.html?'+params.toString()+'#'+new URLSearchParams({student:task.student}).toString();
+  }
+  function reviewedBankPages(doc,requireReviewed,forBatch){
+    var reviewed=Array.from(doc.querySelectorAll('#final1Worksheet #f1Pages .page'));
+    var pages=reviewed.length||requireReviewed?reviewed:Array.from(doc.querySelectorAll('#stage .page'));
+    return forBatch?pages.filter(function(page){return !page.classList.contains('cover-page')&&!page.classList.contains('duplex-blank');}):pages;
   }
 
   async function paginateDetails(prepared){
@@ -128,7 +144,66 @@
 
   async function addPage(pdf,element,isFirst){
     await waitImages(element);
-    var canvas=await global.html2canvas(element,{backgroundColor:'#ffffff',scale:1.45,useCORS:true,allowTaint:false,logging:false,imageTimeout:20000,removeContainer:true});
+    var worksheet=element.ownerDocument.getElementById('final1Worksheet');
+    var isEditorial=element.classList.contains('question-page')&&worksheet&&worksheet.dataset.layout==='editorial';
+    var isAnswer=element.classList.contains('answer-page');
+    var forcedStyles=[];
+    function forceStyle(node,styles){
+      if(!node)return;
+      forcedStyles.push([node,node.getAttribute('style')]);
+      Object.keys(styles).forEach(function(name){node.style[name]=styles[name];});
+    }
+    forceStyle(element.querySelector('.wm-layer.wm-active'),{opacity:'.04'});
+    if(isEditorial)element.classList.add('f1-batch-capture-editorial');
+    if(isAnswer)element.classList.add('f1-batch-capture-answer');
+    if(isEditorial){
+      var qpage=element.querySelector('.f1-qpage'),cards=Array.from(element.querySelectorAll('.f1-qcard'));
+      forceStyle(qpage,{gridTemplateRows:'auto repeat(2,minmax(0,1fr))',rowGap:'6mm'});
+      cards.forEach(function(card,index){
+        forceStyle(card,{display:'flex',flexDirection:'column',border:'1px solid #d8dee8',padding:'4mm',overflow:'hidden'});
+        if(card.dataset.wide==='true')forceStyle(card,{gridColumn:'1 / -1'});
+        if(qpage&&qpage.dataset.wideLead==='true'){
+          if(index===0)forceStyle(card,{gridColumn:'1 / -1',gridRow:'2'});
+          if(index===1)forceStyle(card,{gridColumn:'1',gridRow:'3'});
+          if(index===2)forceStyle(card,{gridColumn:'2',gridRow:'3'});
+        }
+        var workspace=card.querySelector('.f1-workspace');
+        forceStyle(workspace,{display:'block',flex:'1 1 16mm',minHeight:card.dataset.wide==='true'?'12mm':'16mm',marginTop:'7px'});
+      });
+    }
+    if(isAnswer){
+      forceStyle(element.querySelector('.f1-answer-flow'),{boxSizing:'border-box',width:'100%',maxWidth:'100%',overflow:'hidden'});
+      Array.from(element.querySelectorAll('.f1-solution')).forEach(function(solution){forceStyle(solution,{boxSizing:'border-box',width:'100%',maxWidth:'100%',minWidth:'0',overflow:'hidden'});});
+      Array.from(element.querySelectorAll('.f1-solution-asset')).forEach(function(asset){
+        forceStyle(asset,{display:'block',width:asset.closest('[data-answer-id^="final2-q28-"]')?'68mm':'auto',maxWidth:'100%',height:'auto',maxHeight:asset.closest('[data-answer-id^="final2-q28-"]')?'50mm':'24mm',objectFit:'contain',marginLeft:'auto',marginRight:'auto'});
+      });
+    }
+    await new Promise(function(resolve){element.ownerDocument.defaultView.requestAnimationFrame(function(){element.ownerDocument.defaultView.requestAnimationFrame(resolve);});});
+    var renderer=await ensureLocalRenderer(element.ownerDocument);
+    var canvas;
+    var token='gfield-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+    element.setAttribute('data-gfield-batch-token',token);
+    var renderInFrame=element.ownerDocument.defaultView.Function('token','options','return window.html2canvas(document.querySelector(\'[data-gfield-batch-token="\'+token+\'"]\'),options);');
+    try{canvas=await renderInFrame(token,{backgroundColor:'#ffffff',scale:1.45,useCORS:true,allowTaint:false,logging:false,imageTimeout:20000,removeContainer:true});}
+    finally{
+      element.removeAttribute('data-gfield-batch-token');
+      forcedStyles.reverse().forEach(function(saved){if(saved[1]===null)saved[0].removeAttribute('style');else saved[0].setAttribute('style',saved[1]);});
+      if(isEditorial)element.classList.remove('f1-batch-capture-editorial');
+      if(isAnswer)element.classList.remove('f1-batch-capture-answer');
+    }
+    if(global.__GFIELD_BATCH_QA_CAPTURE__&&element.classList.contains('question-page')&&!global.__GFIELD_BATCH_QA_CAPTURE__.question){
+      global.__GFIELD_BATCH_QA_CAPTURE__.question=canvas.toDataURL('image/png');
+      var captureRoot=element.ownerDocument.getElementById('final1Worksheet');
+      var captureCard=element.querySelector('.f1-qcard');
+      global.__GFIELD_BATCH_QA_CAPTURE__.meta={
+        layout:captureRoot&&captureRoot.dataset.layout||'',
+        innerWidth:element.ownerDocument.defaultView.innerWidth,
+        pageWidth:element.getBoundingClientRect().width,
+        pageHeight:element.getBoundingClientRect().height,
+        cardColumn:captureCard&&element.ownerDocument.defaultView.getComputedStyle(captureCard).gridColumn||'',
+        cardDisplay:captureCard&&element.ownerDocument.defaultView.getComputedStyle(captureCard).display||''
+      };
+    }
     if(!isFirst)pdf.addPage('a4','portrait');
     pdf.addImage(canvas.toDataURL('image/jpeg',0.88),'JPEG',0,0,210,297,undefined,'FAST');
     canvas.width=1;canvas.height=1;
@@ -142,28 +217,30 @@
       status((index+1)+'/'+total+' · '+task.student+' · 파이널 '+task.round+'회 진단지를 준비하고 있습니다.');
       reportFrame=await loadFrame(api().reportUrl(task),'진단지');
       var reportDoc=reportFrame.contentDocument;
+      var includeDetails=document.getElementById('final-batch-details').checked;
       await waitFor(function(){
         var ready=reportDoc.querySelectorAll('.final1-detailed-card.is-ready').length;
-        return reportDoc.querySelector('.final-report-package')&&ready>=30&&!reportDoc.querySelector('.final1-detailed-card.is-pending')&&reportFrame.contentWindow.GFIELD_FINAL_REPORT_PRINT;
-      },45000,'진단지와 상세 답안을 준비하지 못했습니다.');
+        return reportDoc.querySelector('.final-report-package')&&(!includeDetails||(ready>=30&&!reportDoc.querySelector('.final1-detailed-card.is-pending')))&&reportFrame.contentWindow.GFIELD_FINAL_REPORT_PRINT;
+      },45000,includeDetails?'진단지와 상세 답안을 준비하지 못했습니다.':'진단 요약을 준비하지 못했습니다.');
       var bankUrl=document.getElementById('final-batch-similar').checked?wrongBankUrl(reportDoc,task):'';
-      var job=reportFrame.contentWindow.GFIELD_FINAL_REPORT_PRINT.createPreparation({document:reportDoc,source:reportDoc.querySelector('.final-report-package'),requiredFontFamilies:[],timeoutMs:45000});
+      var job=reportFrame.contentWindow.GFIELD_FINAL_REPORT_PRINT.createPreparation({document:reportDoc,source:reportDoc.querySelector('.final-report-package'),mode:includeDetails?'full':'summary',requiredFontFamilies:[],timeoutMs:45000});
       prepared=await job.promise;
       var printDoc=prepared.frame.contentDocument;
       var prelude=Array.from(printDoc.querySelectorAll('.pagedjs_pages > .pagedjs_page'));
       if(!prelude.length)throw new Error('진단지 쪽을 만들지 못했습니다.');
-      detailPages=await paginateDetails(prepared);
+      if(includeDetails)detailPages=await paginateDetails(prepared);
       var PDF=global.jspdf.jsPDF,pdf=new PDF({orientation:'portrait',unit:'mm',format:'a4',compress:true,putOnlyUsedFonts:true});
       pdf.setProperties({title:task.student+' 파이널 '+task.round+'회 진단과 복습',subject:'지필드 파이널 진단 결과와 유사문제',creator:'GFIELD 관리자'});
       var pageNo=0;
       for(var p=0;p<prelude.length;p++){status((index+1)+'/'+total+' · '+task.student+' · 진단 '+(p+1)+'/'+prelude.length+'쪽');await addPage(pdf,prelude[p],pageNo++===0);}
-      if(prepared.metrics.blankPages){addBlank(pdf,pageNo++===0);}
-      for(var d=0;d<detailPages.pages.length;d++){status((index+1)+'/'+total+' · '+task.student+' · 상세 답안 '+(d+1)+'/'+detailPages.pages.length+'쪽');await addPage(pdf,detailPages.pages[d],pageNo++===0);}
+      if(includeDetails&&prepared.metrics.blankPages){addBlank(pdf,pageNo++===0);}
+      if(includeDetails)for(var d=0;d<detailPages.pages.length;d++){status((index+1)+'/'+total+' · '+task.student+' · 상세 답안 '+(d+1)+'/'+detailPages.pages.length+'쪽');await addPage(pdf,detailPages.pages[d],pageNo++===0);}
       if(bankUrl){
         status((index+1)+'/'+total+' · '+task.student+' · 유사문제를 준비하고 있습니다.');
         bankFrame=await loadFrame(bankUrl,'유사문제');
         var bankDoc=bankFrame.contentDocument;
-        var bankPages=await waitFor(function(){var pages=Array.from(bankDoc.querySelectorAll('#final1Worksheet #f1Pages .page, #stage .page'));return pages.length&&!(bankDoc.getElementById('btnPrint')||{}).disabled?pages:null;},45000,'유사문제와 풀이를 준비하지 못했습니다.');
+        var requireReviewed=/(?:\?|&)bank=final(?:1|2)(?:&|$)/.test(bankUrl);
+        var bankPages=await waitFor(function(){var pages=reviewedBankPages(bankDoc,requireReviewed,true);return pages.length&&!(bankDoc.getElementById('btnPrint')||{}).disabled?pages:null;},45000,'유사문제와 풀이를 준비하지 못했습니다.');
         await waitImages(bankDoc.getElementById('f1Pages')||bankDoc.getElementById('stage'));
         for(var b=0;b<bankPages.length;b++){status((index+1)+'/'+total+' · '+task.student+' · 유사문제 '+(b+1)+'/'+bankPages.length+'쪽');await addPage(pdf,bankPages[b],pageNo++===0);}
       }
@@ -220,6 +297,6 @@
     }finally{cleanupFrame(activeFrame);setBusy(false);}
   }
 
-  global.GFIELD_ADMIN_FINAL_BATCH=Object.freeze({version:VERSION,refresh:refresh,_test:Object.freeze({safeName:safeName,wrongBankUrl:wrongBankUrl,taskList:taskList,buildPackage:buildPackage,writeFile:writeFile})});
+  global.GFIELD_ADMIN_FINAL_BATCH=Object.freeze({version:VERSION,refresh:refresh,_test:Object.freeze({safeName:safeName,wrongBankUrl:wrongBankUrl,reviewedBankPages:reviewedBankPages,loadFrame:loadFrame,cleanupFrame:cleanupFrame,taskList:taskList,buildPackage:buildPackage,writeFile:writeFile})});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',refresh);else refresh();
 })(window);

@@ -34,7 +34,8 @@ async function assertWatermarks(page) {
     const missing = await page.locator('#f1Pages .page:not(.duplex-blank)').evaluateAll((pages) => pages.flatMap((sheet, index) => {
       const layer = sheet.querySelector('.wm-layer.wm-active');
       if (!layer || layer.querySelectorAll('.wm-tile').length !== 32 || !layer.textContent.includes('지필드 영재교육')) return [index];
-      return Number(getComputedStyle(layer).opacity) < 0.1 ? [index] : [];
+      const opacity = Number(getComputedStyle(layer).opacity);
+      return opacity < 0.035 || opacity > 0.05 ? [index] : [];
     }));
     assert.deepEqual(missing, [], media + ': every content page has a watermark');
   }
@@ -94,7 +95,7 @@ async function assertWatermarks(page) {
     assert.equal(await page.locator('.question-page img').count(), 27, 'one prompt figure for each visual item');
     assert.equal(await page.locator('.solution-card img').count(), 6, 'three top-view answers and three road explanations have solution figures');
     assert.equal(await page.locator('.solution-card[data-source-no="28"] img').count(),3);
-    assert.ok(await page.locator('.solution-card[data-source-no="28"] img').evaluateAll(images=>images.every(image=>image.getBoundingClientRect().width>=350)),'road solution maps are legible');
+    assert.ok(await page.locator('.solution-card[data-source-no="28"] img').evaluateAll(images=>images.every(image=>{const width=image.getBoundingClientRect().width;return width>=240&&width<=275})),'road solution maps use a compact but legible answer-book size');
     assert.ok(await page.locator('.solution-card[data-source-no="28"]').evaluateAll(cards=>cards.every(card=>card.querySelector('ol').children.length===3&&card.querySelector('ol[start="4"]'))),'road image sits between explanation and minimum proof');
     assert.equal(await page.locator('.qcard').evaluateAll((cards) => cards.filter((card) => card.querySelectorAll('img').length > 1).length), 0, 'a prompt never repeats its figure');
     assert.equal(await page.locator('.qconditions').count(), 0, 'numbered restatement and hint lists are never printed below a problem');
@@ -171,7 +172,7 @@ async function assertWatermarks(page) {
     assert.ok(typeRules.promptSize >= 15 && typeRules.promptSize <= 15.5 && typeRules.promptLineHeight >= 1.55, 'problem text leaves room to solve without becoming too small');
     assert.ok(typeRules.promptWeight >= 400 && typeRules.promptWeight <= 500, 'problem text uses ordinary workbook weight instead of display bold');
     assert.ok(typeRules.metaSize >= 10, 'source and score metadata remain legible');
-    assert.ok(typeRules.solutionSize >= 14 && typeRules.solutionLineHeight >= 1.6, 'student-facing solutions use the student reading size');
+    assert.ok(typeRules.solutionSize >= 12 && typeRules.solutionSize <= 12.5 && typeRules.solutionLineHeight >= 1.45, 'student-facing solutions use the compact answer-book reading size');
     assert.ok(typeRules.solutionWeight >= 400 && typeRules.solutionWeight <= 500, 'student-facing solutions use ordinary workbook weight');
     assert.equal(typeRules.answerHeadingColor, 'rgb(24, 34, 48)', 'answer heading uses print ink rather than decorative blue');
     assert.ok(typeRules.answerHeadingWeight >= 600 && typeRules.answerHeadingWeight <= 700, 'answer heading uses restrained emphasis');
