@@ -514,6 +514,7 @@ td.weak-cell{white-space:nowrap}
 <link rel="stylesheet" href="final-report-package.css">
 <link rel="stylesheet" href="final-report-print.css">
 <link rel="stylesheet" href="final-parent-report.css">
+<link rel="stylesheet" href="final7-original-tutor.css?v=20260920a">
 </head>
 <body>
 <div id="app"></div>
@@ -543,7 +544,7 @@ td.weak-cell{white-space:nowrap}
   if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js');
   if(isFinal3) files.push('final3-solution-diagrams.js','final3-backhalf-solution-diagrams.js','final3-detailed-data.js','final-detailed-solutions.js');
   if(isFinal4) files.push('final4-detailed-data.js','final-detailed-solutions.js');
-  if(isFinal7) files.push('last-score-data.js','final7-benchmark.js');
+  if(isFinal7) files.push('last-score-data.js','final7-benchmark.js','final7-original-tutor.js');
   if(!isLast&&!isOriginal) files.push('final-report-print.js');
   if(isLast) files.push(
     'mock-data-final.js',
@@ -2559,6 +2560,9 @@ td.weak-cell{white-space:nowrap}
         wrongPracticeHTML(ctx)+'<section><h2>누적 성적</h2><div class="lead">'+cumulativeLead+'</div>'+cumHTML+attemptHTML+'</section>'+weakSectionHTML(ctx)+legacyCommentHTML+curriculumConnectionHTML(ctx)+detailedAnswersSectionHTML(ctx)+'</div>';
     }
     wireReportQr(app);
+    if(roundNum===7&&window.GFIELD_FINAL7_ORIGINAL_TUTOR&&typeof window.GFIELD_FINAL7_ORIGINAL_TUTOR.attach==='function'){
+      window.GFIELD_FINAL7_ORIGINAL_TUTOR.attach(app,{round:roundNum,items:ctx.items});
+    }
     showPrint(true);
     printBtn.textContent=isStandardFinal?'진단 요약 인쇄 / PDF 저장':'🖨 인쇄';
     printBtn.setAttribute('aria-label',isStandardFinal?'성적 요약과 이번 주 학습 계획을 간단히 인쇄하거나 PDF로 저장':'인쇄');

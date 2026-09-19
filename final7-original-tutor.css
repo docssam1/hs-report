@@ -1,0 +1,35 @@
+.f7ot-card{position:relative;margin:18px 0;padding:18px;border:1px solid #cfd8e7;border-left:5px solid #2456c4;border-radius:14px;background:#fff}
+.f7ot-card h3{margin:0 0 7px;color:#182230;font-size:18px;line-height:1.4}
+.f7ot-card p{margin:0 0 14px;color:#526070;font-size:14px;line-height:1.65}
+.f7ot-card .f7ot-source{max-width:620px;margin:0 0 14px}
+.f7ot-launch,.f7ot-action{min-height:42px;padding:9px 14px;border:1px solid #2456c4;border-radius:9px;background:#fff;color:#17345f;font:800 13px/1.35 Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;cursor:pointer}
+.f7ot-launch:hover,.f7ot-launch:focus-visible,.f7ot-action:hover,.f7ot-action:focus-visible{outline:3px solid rgba(36,86,196,.16);outline-offset:1px}
+.f7ot-launch{background:#2456c4;color:#fff}
+.f7ot-row-launch{min-height:30px;padding:5px 8px;font-size:11px}
+.f7ot-dialog{width:min(820px,calc(100vw - 28px));max-height:min(900px,calc(100vh - 28px));padding:0;border:0;border-radius:18px;background:#fff;color:#182230;box-shadow:0 24px 90px rgba(23,52,95,.34);overflow:hidden}
+.f7ot-dialog::backdrop{background:rgba(15,32,56,.58);backdrop-filter:blur(2px)}
+.f7ot-shell{display:grid;grid-template-rows:auto minmax(0,1fr) auto;max-height:min(900px,calc(100vh - 28px));font-family:Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif}
+.f7ot-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:18px 20px 14px;border-bottom:1px solid #dbe2ec;background:#f7f9fd}
+.f7ot-head small{display:block;margin-bottom:4px;color:#2456c4;font-size:10px;font-weight:900;letter-spacing:.08em}
+.f7ot-head h2{margin:0;color:#17345f;font-size:20px;line-height:1.35}
+.f7ot-close{flex:0 0 auto;width:36px;height:36px;border:1px solid #c5d1e4;border-radius:50%;background:#fff;color:#465568;font-size:24px;line-height:1;cursor:pointer}
+.f7ot-body{min-height:340px;padding:20px;overflow:auto}
+.f7ot-progress{display:flex;gap:5px;margin:0 0 14px}.f7ot-progress i{display:block;flex:1;height:5px;border-radius:99px;background:#e5eaf2}.f7ot-progress i.on{background:#2456c4}
+.f7ot-stage h3{margin:0 0 10px;color:#17345f;font-size:19px;line-height:1.4}
+.f7ot-teacher{margin:0 0 14px;padding:13px 15px;border-left:4px solid #2456c4;background:#f2f6ff;color:#182230;font-size:16px;font-weight:700;line-height:1.7;word-break:keep-all}
+.f7ot-note{margin:10px 0 0;color:#5d6978;font-size:13px;line-height:1.6}
+.f7ot-actions{display:flex;flex-wrap:wrap;gap:8px;padding:14px 20px 18px;border-top:1px solid #e5e9f0;background:#fff}
+.f7ot-action.primary{background:#2456c4;color:#fff}
+.f7ot-source{position:relative;width:100%;overflow:hidden;border:1px solid #d9e0ea;border-radius:12px;background:#fff;touch-action:none;user-select:none}
+.f7ot-source svg{display:block;width:100%;height:auto}
+.f7ot-source--problem{aspect-ratio:540/380}.f7ot-source--figure{aspect-ratio:520/230}
+.f7ot-source image{pointer-events:none}
+.f7ot-trace-path{fill:none;stroke:#2878e8;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;opacity:.78;filter:drop-shadow(0 1px 1px rgba(255,255,255,.8))}
+.f7ot-guide{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.9;clip-path:inset(0 100% 0 0)}
+.f7ot-guide.is-playing{animation:f7ot-reveal 4.8s ease-in-out forwards}
+.f7ot-rule{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.f7ot-rule span{padding:10px;border-radius:9px;background:#f4f6f9;color:#344054;font-size:13px;font-weight:750;text-align:center}.f7ot-rule b{color:#2456c4}
+.f7ot-answer{padding:16px;border:1px solid #bed0ef;border-radius:12px;background:#f5f8ff;text-align:center}.f7ot-answer strong{display:block;margin-top:4px;color:#2456c4;font-size:25px}
+@keyframes f7ot-reveal{to{clip-path:inset(0 0 0 0)}}
+@media(max-width:600px){.f7ot-dialog{width:calc(100vw - 14px);max-height:calc(100vh - 14px);border-radius:14px}.f7ot-shell{max-height:calc(100vh - 14px)}.f7ot-head{padding:15px 14px 11px}.f7ot-head h2{font-size:18px}.f7ot-body{padding:14px}.f7ot-actions{padding:11px 14px 14px}.f7ot-action{width:100%}.f7ot-teacher{font-size:15px}.f7ot-rule{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.f7ot-guide.is-playing{animation-duration:.01ms}}
+@media print{.f7ot-card,.f7ot-dialog,.f7ot-launch{display:none!important}}

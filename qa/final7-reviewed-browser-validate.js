@@ -57,18 +57,7 @@ function startServer() {
     assert.equal(await page.locator('.question-page img').count(), 24, 'one prompt figure for every visual question');
     assert.equal(await page.locator('.solution-card').count(), 78, 'seventy-eight detailed answers');
     assert.equal(await page.locator('.solution-card ol li').count(), 234, 'three concise steps per answer');
-    assert.equal(await page.locator('.f1-coach-launch').count(), 78, 'every reviewed answer has a step coach');
-    await page.locator('.f1-coach-launch').first().click();
-    assert.equal(await page.locator('#gfieldStepCoach').isVisible(), true, 'step coach opens from the answer');
-    assert.match(await page.locator('.gsc-message').innerText(), /정답은 이미 확인했어요/,'coach starts after the answer is visible');
-    assert.equal(await page.locator('.gsc-faq .gsc-action').count(), 5, 'coach offers five focused FAQ choices');
-    await page.getByRole('button',{name:'처음부터 아주 자세히 설명해 주세요'}).click();
-    assert.match(await page.locator('.gsc-stage-card h3').innerText(), /무엇을 구하나요/,'coach starts with reading the target');
-    await page.getByRole('button',{name:'아직 모르겠어요'}).click();
-    assert.match(await page.locator('.gsc-deeper h3').innerText(), /더 잘게 나누어/,'coach deepens only the current step');
-    assert.equal(await page.locator('.gsc-deeper li').count(),3,'deep explanation connects previous, current, and next actions');
-    if(OUTPUT)await page.locator('#gfieldStepCoach').screenshot({path:path.join(OUTPUT,'final7-step-coach-deep.png')});
-    await page.locator('.gsc-close').click();
+    assert.equal(await page.locator('.f1-coach-launch,.gfield-step-coach,.f7ot-launch').count(), 0, 'similar-problem answers do not receive an original-question tutor');
     assert.equal(await page.locator('.qconditions,.f1-qgiven').count(), 0, 'no repeated conditions or hint boxes');
     assert.equal(await page.locator('.question-page .ans').count(), 0, 'no answer leakage on question pages');
     assert.ok(await page.locator('.qcard[data-source-no="6"] img').evaluateAll((images) => images.every((image) => image.getBoundingClientRect().width > 540)), 'fishing-line diagrams stay wide and readable');
@@ -110,7 +99,6 @@ function startServer() {
       });
     })), [], 'every problem card stays inside its A4 page');
     await page.emulateMedia({media:'print'});
-    assert.ok(await page.locator('.f1-coach-launch').evaluateAll((buttons)=>buttons.every((button)=>getComputedStyle(button).display==='none')),'coach controls never print');
     const answerHeaderMetrics = await page.locator('.f1-answer-page').evaluateAll((pages) => pages.map((sheet, index) => {
       const heading = sheet.querySelector('h2');
       const first = sheet.querySelector('.solution-card');
@@ -148,6 +136,27 @@ function startServer() {
     }
     await page.locator('#btnGrade').click();
     await page.locator('#wrongPractice').waitFor();
+    await page.locator('#detailedAnswersSection summary').click();
+    const originalTutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="6"]');
+    assert.equal(await originalTutor.count(),1,'the source-specific tutor belongs to original Q6 only');
+    assert.equal(await originalTutor.locator('.f7ot-source--problem image').getAttribute('href'),'materials/final_7/002.jpg','the tutor reuses the exact original page image');
+    await originalTutor.locator('.f7ot-launch').click();
+    await page.getByRole('button',{name:'6번 풀이 시작'}).click();
+    assert.match(await page.locator('.f7ot-teacher').innerText(),/앞 물고기의 꼬리와 다음 물고기의 머리/,'the lesson starts with the teacher transcript criterion');
+    await page.getByRole('button',{name:'모르겠어요 · 선을 이어서 보여 주세요'}).click();
+    await page.locator('.f7ot-guide.is-playing').waitFor();
+    assert.equal(await page.locator('.f7ot-guide.is-playing').count(),1,'not understood reveals the source-specific fishing-line guide');
+    if(OUTPUT){await page.waitForTimeout(5200);await page.locator('#final7OriginalTutor').screenshot({path:path.join(OUTPUT,'final7-q06-original-tutor-guide.png')});}
+    await page.setViewportSize({width:390,height:844});
+    assert.ok(await page.locator('#final7OriginalTutor').evaluate((node)=>node.scrollWidth<=node.clientWidth+1),'Q6 tutor does not overflow at 390px');
+    if(OUTPUT)await page.locator('#final7OriginalTutor').screenshot({path:path.join(OUTPUT,'final7-q06-original-tutor-mobile.png')});
+    await page.setViewportSize({width:1280,height:1000});
+    await page.getByRole('button',{name:'이해되었어요 · 물고기를 셀게요'}).click();
+    assert.match(await page.locator('.f7ot-answer').innerText(),/6마리/,'the original lesson ends with the verified Q6 answer');
+    await page.locator('.f7ot-close').click();
+    await page.emulateMedia({media:'print'});
+    assert.equal(await originalTutor.evaluate((node)=>getComputedStyle(node).display),'none','original tutor is excluded from print and PDF');
+    await page.emulateMedia({media:null});
     assert.deepEqual(await page.locator('.wp-item').evaluateAll((rows) => rows.map((row) => Number(row.dataset.wpNo))), [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30], 'report exposes every reviewed Q5-Q30 practice item');
     assert.equal(await page.locator('.wp-pending').count(), 0, 'approved Q29-Q30 do not remain pending');
     const popupPromise = page.waitForEvent('popup');
@@ -163,7 +172,7 @@ function startServer() {
     await practice.close();
     assert.deepEqual(errors, [], 'browser errors after report-to-bank navigation');
 
-    console.log('PASS Final 7 Q5-Q30 browser: reviewed figures and text items, seventy-eight detailed answers, desktop/390px/PDF readiness, adapter loading, and report-to-bank navigation');
+    console.log('PASS Final 7 Q5-Q30 browser: reviewed figures and text items, no tutor on variants, source-script Q6 original tutor, seventy-eight detailed answers, desktop/390px/PDF readiness, adapter loading, and report-to-bank navigation');
   } finally {
     await browser.close();
     server.close();
