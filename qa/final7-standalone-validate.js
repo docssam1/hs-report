@@ -65,9 +65,27 @@ assert.deepEqual(JSON.parse(JSON.stringify(R.canonicalSeriesRound('final',7))),{
 assert.equal(R.normalizeUrl('mock.html?set=final&round=7'),'final.html?round=7');
 assert.equal(R.normalizeUrl('answer.html?set=final&round=7'),'answer.html?set=final&round=7');
 
+const accessData={
+  students:['파이널3출석학생','최종7승인학생','미승인학생'],
+  attendance:{'파이널3출석학생':['sep-21'],'최종7승인학생':[],'미승인학생':[]},
+  archiveAccess:{'파이널 모의고사':[]},
+  archiveProductAccess:{'mock-final-7':['최종7승인학생']}
+};
+assert.equal(R.accessAllowed(accessData,'파이널3출석학생','final',3),true,'Final 3 keeps attendance-based access');
+assert.equal(R.accessAllowed(accessData,'파이널3출석학생','final',7),false,'Final 3 attendance cannot open Final 7');
+assert.equal(R.accessAllowed(accessData,'최종7승인학생','final',7),true,'Final 7 uses its own round approval');
+assert.equal(R.accessAllowed(accessData,'최종7승인학생','final',3),false,'Final 7 approval cannot open Final 3');
+assert.equal(R.accessAllowed(accessData,'미승인학생','final',7),false,'unapproved students cannot open Final 7');
+
 const html=fs.readFileSync(path.join(root,'final.html'),'utf8');
 assert(html.includes('isStandaloneRound?[]:computePersonalAttempts'),'standalone round must exclude prior personal attempts');
 assert(html.includes('isStandaloneRound?[]:computeCumulativeConsidered'),'standalone round must exclude prior percentile records');
 assert(html.includes('M.rounds[String(roundNum)].standalone) return;'),'standalone round must skip Final population lookups');
+assert.match(html,/archiveProductAccess\|\|\{\}\)\['mock-final-'\+roundNum\]/,'Final report must enforce round product approval');
+const answerHtml=fs.readFileSync(path.join(root,'answer.html'),'utf8');
+assert.match(answerHtml,/GFIELD_FINAL_LAST_ROUTES\.accessAllowed\(D,name,'final',RD\)/,'Final answer sheet must share the round approval guard');
+const adminHtml=fs.readFileSync(path.join(root,'admin.html'),'utf8');
+assert.match(adminHtml,/id="final7-acc-matrix"/,'admin must expose a clear Final 7 round approval table');
+assert.match(adminHtml,/const FINAL7_ACCESS_KEY='mock-final-7'/,'admin Final 7 control must use the same product key');
 
-console.log('PASS Final 7 source identity, 30 official answers, independent route, 80-minute paper, and no-cumulative guards');
+console.log('PASS Final 7 source identity, answers, independent route, round-only approval, and no-cumulative guards');
