@@ -38,7 +38,7 @@ const server=http.createServer((request,response)=>{
     assert.equal(await approved.page.locator('#bankAccessGate').isHidden(),true,'Final7 approval opens its reviewed practice without the global bank permission');
     assert.equal(await approved.page.locator('.qcard[data-source-no="5"]').count(),3,'Q5 keeps exactly three reviewed variants');
     assert.equal(await approved.page.locator('.qcard[data-source-no="6"]').count(),3,'Q6 keeps exactly three reviewed variants');
-    assert.equal(await approved.page.locator('.f1-coach-launch').count(),6,'each approved Final7 variant includes the detailed coach');
+    assert.equal(await approved.page.locator('.f1-coach-launch,.gfield-step-coach,.f7ot-launch').count(),0,'similar-problem variants never include the original-question tutor');
     await approved.page.goto(base+'/bank/index.html?bank=final7',{waitUntil:'networkidle'});
     await approved.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===78);
     assert.equal(await approved.page.locator('.qcard[data-source-no="29"]').count(),3,'direct Final7 entry includes all three Q29 variants');
@@ -49,6 +49,6 @@ const server=http.createServer((request,response)=>{
     assert.equal(await wrongProduct.page.locator('#bankAccessGate').isVisible(),true,'Final7 approval cannot open another round or the general bank');
     assert.equal(await wrongProduct.page.locator('.qcard').count(),0,'no other-round questions render through the scoped approval');
     await wrongProduct.context.close();
-    console.log('PASS Final7 scoped practice access: 3 reviewed variants per source, detailed coach, no global bank or other-round grant');
+    console.log('PASS Final7 scoped practice access: 3 reviewed variants per source, no tutor on variants, no global bank or other-round grant');
   }finally{await browser.close();server.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
