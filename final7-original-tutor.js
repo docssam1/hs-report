@@ -2,6 +2,7 @@
   'use strict';
 
   var SOURCE_IMAGE='materials/final_7/002.jpg';
+  var SOURCE_IMAGE_Q11='materials/final_7/003.jpg';
   var stage=0;
   var tracing=false;
 
@@ -21,6 +22,19 @@
     if(interactive)wireTrace(wrap);
     if(guide)paintExactLine(wrap.querySelector('.f7ot-guide'));
     return wrap;
+  }
+  function q11SourceFigure(){
+    var wrap=document.createElement('div');wrap.className='f7ot-source f7ot-source--q11';
+    wrap.innerHTML='<svg viewBox="600 120 550 330" role="img" aria-label="최종 7회 11번 원본 문제"><image href="'+SOURCE_IMAGE_Q11+'" x="0" y="0" width="1191" height="1684" preserveAspectRatio="xMidYMid slice"></image></svg>';
+    return wrap;
+  }
+  function q11Visual(kind){
+    var visual=document.createElement('div');visual.className='f7ot-math-scene f7ot-math-scene--'+kind;
+    if(kind==='chairs')visual.innerHTML='<div><small>전체 의자</small><strong>41개</strong></div><span>→</span><div><small>마지막 5인용</small><strong>3명</strong></div><span>→</span><div class="active"><small>가득 찬 의자</small><strong>40개 · 122명</strong></div>';
+    if(kind==='difference')visual.innerHTML='<div><small>2인용</small><strong class="f7ot-seats">● ●</strong></div><span class="f7ot-math-sign">5 − 2</span><div><small>5인용</small><strong class="f7ot-seats">● ● ● ● ●</strong></div><b class="f7ot-scene-answer">차이 3자리</b>';
+    if(kind==='assume')visual.innerHTML='<div><small>40개를 모두 2인용으로 우기기</small><strong>40 × 2 = 80명</strong></div><span>→</span><div class="active"><small>실제 가득 앉은 사람</small><strong>122명</strong></div><b class="f7ot-scene-answer">122 − 80 = 42명</b>';
+    if(kind==='finish')visual.innerHTML='<div><small>3명씩 늘려 42명 채우기</small><strong>42 ÷ 3 = 14개</strong></div><span>+</span><div><small>마지막 불완전 5인용</small><strong>1개</strong></div><b class="f7ot-scene-answer">14 + 1 = 15개</b>';
+    return visual;
   }
   function paintExactLine(canvas){
     var source=new Image();
@@ -154,24 +168,80 @@
       {label:'처음부터 다시 보기',action:showOriginal}
     ]);
   }
-  function open(){showOriginal();var node=dialog();if(typeof node.showModal==='function')node.showModal();else node.setAttribute('open','');}
-  function launch(label,row){
-    var node=document.createElement('button');node.type='button';node.className='f7ot-launch no-print'+(row?' f7ot-row-launch':'');node.textContent=label;node.addEventListener('click',open);return node;
+  function showQ11Original(){
+    stage=0;dialog().querySelector('#f7otTitle').textContent='최종 7회 11번 · 우기기';render(function(){
+      var section=stageShell('먼저 원문을 다시 볼까요?','선생님 대본의 순서대로 마지막 의자를 먼저 정리하고, 우기기의 첫 번째 차이부터 계산할게요.',q11SourceFigure());
+      return section;
+    },[{label:'11번 풀이 시작',action:function(){showQ11Chairs(false);},primary:true}]);
   }
-  function originalCard(){
+  function showQ11Chairs(deeper){
+    stage=1;render(function(){
+      var speech=deeper?'전체 의자는 41개지만 마지막 5인용 의자는 3명만 앉았어요. 그래서 가득 찬 의자는 41-1=40개이고, 그 40개에 앉은 사람은 125-3=122명입니다.':'마지막 5인용 의자에는 3명이 앉았죠. 그러면 가득 찬 의자는 40개이고, 거기에 앉은 사람은 122명이라고 할 수 있겠죠? 이해됐나요?';
+      return stageShell(deeper?'마지막 의자 하나를 따로 떼어 볼게요':'우기기 전에 마지막 의자를 정리해요',speech,q11Visual('chairs'));
+    },[
+      {label:'이해했어요 · 첫 번째 차이 보기',action:function(){showQ11Difference(false);},primary:true},
+      {label:deeper?'다시 설명해 주세요':'모르겠어요 · 더 잘게 보여 주세요',action:function(){showQ11Chairs(true);}},
+      {label:'원문 다시 보기',action:showQ11Original}
+    ]);
+  }
+  function showQ11Difference(deeper){
+    stage=2;render(function(){
+      var speech=deeper?'2인용을 5인용으로 한 개 바꾸면 앉을 수 있는 사람은 2명에서 5명으로 늘어요. 늘어난 자리는 5-2=3자리입니다.':'선생님이 뭐라고 했죠? 우기기를 시작하기 전에 첫 번째 차이를 계산하라고 했죠. 5인용과 2인용의 차이는 3자리예요. 기억나나요?';
+      return stageShell(deeper?'2자리와 5자리를 직접 비교해요':'첫 번째는 차이를 계산해요',speech,q11Visual('difference'));
+    },[
+      {label:'기억나요 · 모두 2인용으로 우겨 볼게요',action:function(){showQ11Assume(false);},primary:true},
+      {label:deeper?'차이를 다시 볼게요':'모르겠어요 · 자리 차이를 보여 주세요',action:function(){showQ11Difference(true);}},
+      {label:'앞 단계로',action:function(){showQ11Chairs(false);}}
+    ]);
+  }
+  function showQ11Assume(deeper){
+    stage=3;render(function(){
+      var speech=deeper?'가득 찬 의자 40개가 모두 2인용이라면 40×2=80명입니다. 실제 가득 앉은 사람 122명까지는 122-80=42명이 더 필요합니다.':'이제 40개를 모두 2인용이라고 우겨 봅시다. 그러면 80명입니다. 실제 122명과는 42명 차이가 나죠. 이해되었나요?';
+      return stageShell(deeper?'80명에서 122명까지의 차이를 봐요':'모두 2인용이라고 우겨요',speech,q11Visual('assume'));
+    },[
+      {label:'이해했어요 · 5인용 수 구하기',action:showQ11Finish,primary:true},
+      {label:deeper?'계산을 다시 볼게요':'모르겠어요 · 42명이 왜 나오는지 보여 주세요',action:function(){showQ11Assume(true);}},
+      {label:'첫 번째 차이 다시 보기',action:function(){showQ11Difference(false);}}
+    ]);
+  }
+  function showQ11Finish(){
+    stage=4;render(function(){
+      var section=stageShell('3명씩 바꾸고 마지막 의자를 더해요','의자 하나를 2인용에서 5인용으로 바꿀 때 3명씩 늘어요. 42÷3=14이므로 가득 찬 5인용은 14개예요. 마지막 5인용 의자 한 개를 더하면 15개입니다.',q11Visual('finish'));
+      var answer=document.createElement('div');answer.className='f7ot-answer';answer.innerHTML='5인용 의자의 수<strong>15개</strong>';section.appendChild(answer);return section;
+    },[
+      {label:'이해했어요 · 마치기',action:function(){dialog().close();},primary:true},
+      {label:'42명이 왜 나오는지 다시 보기',action:function(){showQ11Assume(false);}},
+      {label:'처음부터 다시 보기',action:showQ11Original}
+    ]);
+  }
+  function openQ6(){dialog().querySelector('#f7otTitle').textContent='최종 7회 6번 · 낚싯줄 따라가기';showOriginal();var node=dialog();if(typeof node.showModal==='function')node.showModal();else node.setAttribute('open','');}
+  function openQ11(){showQ11Original();var node=dialog();if(typeof node.showModal==='function')node.showModal();else node.setAttribute('open','');}
+  function launch(label,row,handler){
+    var node=document.createElement('button');node.type='button';node.className='f7ot-launch no-print'+(row?' f7ot-row-launch':'');node.textContent=label;node.addEventListener('click',handler);return node;
+  }
+  function originalCardQ6(){
     var card=document.createElement('article');card.className='detailed-solution f7ot-card';card.dataset.solutionNo='6';
     var heading=document.createElement('h3');heading.textContent='6번 원문 풀이 도우미';
     var copy=document.createElement('p');copy.textContent='원문 그림과 선생님 대본으로 낚싯줄을 직접 따라가며 배웁니다.';
-    card.append(heading,copy,sourceFigure(true,false,false),launch('선생님 대본으로 한 단계씩 보기',false));return card;
+    card.append(heading,copy,sourceFigure(true,false,false),launch('선생님 대본으로 한 단계씩 보기',false,openQ6));return card;
+  }
+  function originalCardQ11(){
+    var card=document.createElement('article');card.className='detailed-solution f7ot-card';card.dataset.solutionNo='11';
+    var heading=document.createElement('h3');heading.textContent='11번 원문 풀이 도우미';
+    var copy=document.createElement('p');copy.textContent='선생님 대본의 우기기 순서대로 첫 번째 차이부터 계산합니다.';
+    card.append(heading,copy,q11SourceFigure(),launch('선생님 대본으로 한 단계씩 보기',false,openQ11));return card;
   }
   function attach(container,options){
-    if(!container||!options||Number(options.round)!==7||container.querySelector('.f7ot-card'))return;
+    if(!container||!options||Number(options.round)!==7)return;
     var details=container.querySelector('#detailedAnswersSection .report-resource-details');if(!details)return;
     var solutions=details.querySelector('.detailed-solutions');
     if(!solutions){solutions=document.createElement('div');solutions.className='detailed-solutions';details.appendChild(solutions);}
-    solutions.insertBefore(originalCard(),solutions.firstChild);
-    var row=container.querySelector('#detailWrap tbody:nth-of-type(6) tr:first-child .weak-cell');
-    if(row)row.replaceChildren(launch('6번 풀이',true));
+    if(!solutions.querySelector('.f7ot-card[data-solution-no="11"]'))solutions.insertBefore(originalCardQ11(),solutions.firstChild);
+    if(!solutions.querySelector('.f7ot-card[data-solution-no="6"]'))solutions.insertBefore(originalCardQ6(),solutions.firstChild);
+    var row6=container.querySelector('#detailWrap tbody:nth-of-type(6) tr:first-child .weak-cell');
+    if(row6)row6.replaceChildren(launch('6번 풀이',true,openQ6));
+    var row11=container.querySelector('#detailWrap tbody:nth-of-type(11) tr:first-child .weak-cell');
+    if(row11)row11.replaceChildren(launch('11번 풀이',true,openQ11));
   }
-  root.GFIELD_FINAL7_ORIGINAL_TUTOR={attach:attach,open:open,sourcePriority:['final7-video-script','basic','think-core']};
+  root.GFIELD_FINAL7_ORIGINAL_TUTOR={attach:attach,openQ6:openQ6,openQ11:openQ11,sourcePriority:['final7-video-script','basic','think-core']};
 })(window);
