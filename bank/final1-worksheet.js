@@ -144,6 +144,7 @@
         pageRoot.innerHTML=pages.join('');cleanUrl();
         await Promise.all([document.fonts.ready].concat(Array.from(pageRoot.querySelectorAll('img')).map(img=>img.decode())));
         compactAnswerPages();
+        if(global.GFIELD_QUESTION_COACH&&typeof global.GFIELD_QUESTION_COACH.attach==='function')global.GFIELD_QUESTION_COACH.attach(root,paper.questions);
         var watermarkName=student||global.BANK_CORE.getStudentName()||'학습 자료';
         pageRoot.querySelectorAll('.wm-layer').forEach(layer=>global.BANK_CORE.buildWatermarkTiles(layer,watermarkName));
         if(current!==revision)return;root.querySelector('#f1Status').textContent=paper.questions.length+'문항 / '+labels[band]+' / '+(layout==='editorial'?'읽기 편한 4문항':'간결한 6문항')+' / '+(important?'선택 유형':'원문별 3문항');print.disabled=false;

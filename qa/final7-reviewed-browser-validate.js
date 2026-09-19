@@ -57,6 +57,18 @@ function startServer() {
     assert.equal(await page.locator('.question-page img').count(), 24, 'one prompt figure for every visual question');
     assert.equal(await page.locator('.solution-card').count(), 78, 'seventy-eight detailed answers');
     assert.equal(await page.locator('.solution-card ol li').count(), 234, 'three concise steps per answer');
+    assert.equal(await page.locator('.f1-coach-launch').count(), 78, 'every reviewed answer has a step coach');
+    await page.locator('.f1-coach-launch').first().click();
+    assert.equal(await page.locator('#gfieldStepCoach').isVisible(), true, 'step coach opens from the answer');
+    assert.match(await page.locator('.gsc-message').innerText(), /정답은 이미 확인했어요/,'coach starts after the answer is visible');
+    assert.equal(await page.locator('.gsc-faq .gsc-action').count(), 5, 'coach offers five focused FAQ choices');
+    await page.getByRole('button',{name:'처음부터 아주 자세히 설명해 주세요'}).click();
+    assert.match(await page.locator('.gsc-stage-card h3').innerText(), /무엇을 구하나요/,'coach starts with reading the target');
+    await page.getByRole('button',{name:'아직 모르겠어요'}).click();
+    assert.match(await page.locator('.gsc-deeper h3').innerText(), /더 잘게 나누어/,'coach deepens only the current step');
+    assert.equal(await page.locator('.gsc-deeper li').count(),3,'deep explanation connects previous, current, and next actions');
+    if(OUTPUT)await page.locator('#gfieldStepCoach').screenshot({path:path.join(OUTPUT,'final7-step-coach-deep.png')});
+    await page.locator('.gsc-close').click();
     assert.equal(await page.locator('.qconditions,.f1-qgiven').count(), 0, 'no repeated conditions or hint boxes');
     assert.equal(await page.locator('.question-page .ans').count(), 0, 'no answer leakage on question pages');
     assert.ok(await page.locator('.qcard[data-source-no="6"] img').evaluateAll((images) => images.every((image) => image.getBoundingClientRect().width > 540)), 'fishing-line diagrams stay wide and readable');
@@ -98,6 +110,7 @@ function startServer() {
       });
     })), [], 'every problem card stays inside its A4 page');
     await page.emulateMedia({media:'print'});
+    assert.ok(await page.locator('.f1-coach-launch').evaluateAll((buttons)=>buttons.every((button)=>getComputedStyle(button).display==='none')),'coach controls never print');
     const answerHeaderMetrics = await page.locator('.f1-answer-page').evaluateAll((pages) => pages.map((sheet, index) => {
       const heading = sheet.querySelector('h2');
       const first = sheet.querySelector('.solution-card');

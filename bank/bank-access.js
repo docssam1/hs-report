@@ -24,12 +24,24 @@
     var folders=data.archiveAccess||{};
     return Array.isArray(folders[FALLBACK_FOLDER])?folders[FALLBACK_FOLDER]:[];
   }
+  function scopedProductKey(){
+    var query=new URLSearchParams(location.search),bank=String(query.get('bank')||'');
+    var source=String(query.get('source')||'').split('|');
+    if(bank==='final7')return 'mock-final-7';
+    if(query.get('practice')==='wrong'&&source[0]==='final'&&source[1]==='7')return 'mock-final-7';
+    return '';
+  }
+  function scopedPermissionList(){
+    var key=scopedProductKey();if(!key)return [];
+    var data=root.GFIELD_DATA||{},products=data.archiveProductAccess||{};
+    return Array.isArray(products[key])?products[key]:[];
+  }
+  function listed(list,student){return list.indexOf('*')>=0||list.indexOf(student)>=0;}
   function allowed(account){
     if(!account||account.active!==true)return false;
     if(account.role==='admin'||account.role==='teacher')return true;
     if(account.role!=='student'||!account.student)return false;
-    var list=permissionList();
-    return list.indexOf('*')>=0||list.indexOf(account.student)>=0;
+    return listed(permissionList(),account.student)||listed(scopedPermissionList(),account.student);
   }
   function localIdentity(){
     var name='';
@@ -42,7 +54,9 @@
       var handoff=JSON.parse(raw),student=String(handoff&&handoff.student||'').trim();
       var savedStudent=String(localStorage.getItem('gfield_student')||'').trim();
       var issuedAt=Number(handoff&&handoff.issuedAt||0),age=Date.now()-issuedAt;
-      if(handoff.product!==PRODUCT_KEY||!student||student!==savedStudent||age<0||age>maxAge)return null;
+      var scoped=scopedProductKey();
+      if((handoff.product!==PRODUCT_KEY||!student||student!==savedStudent||age<0||age>maxAge)&&
+         (handoff.product!==scoped||!scoped||!student||student!==savedStudent||age<0||age>maxAge))return null;
       return {role:'student',student:student,active:true,source:source};
     }catch(error){return null}
   }
@@ -159,6 +173,6 @@
     }catch(error){setStatus(message(error),true)}
   }
 
-  root.GFIELD_BANK_ACCESS={ready:ready,allowed:allowed,permissionList:permissionList,portalIdentity:portalIdentity,start:start};
+  root.GFIELD_BANK_ACCESS={ready:ready,allowed:allowed,permissionList:permissionList,scopedProductKey:scopedProductKey,portalIdentity:portalIdentity,start:start};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })(window);
