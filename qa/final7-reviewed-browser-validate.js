@@ -140,11 +140,14 @@ function startServer() {
     const originalTutors=page.locator('#detailedAnswersSection .f7ot-card');
     const q6Tutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="6"]');
     const q11Tutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="11"]');
-    assert.equal(await originalTutors.count(),2,'only reviewed original Q6 and Q11 receive source-specific tutors');
+    const q12Tutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="12"]');
+    assert.equal(await originalTutors.count(),3,'only reviewed original Q6, Q11 and Q12 receive source-specific tutors');
     assert.equal(await q6Tutor.count(),1,'original Q6 receives one tutor');
     assert.equal(await q11Tutor.count(),1,'original Q11 receives one tutor');
+    assert.equal(await q12Tutor.count(),1,'original Q12 receives one tutor');
     assert.equal(await q6Tutor.locator('.f7ot-source--problem image').getAttribute('href'),'materials/final_7/002.jpg','Q6 tutor reuses the exact original page image');
     assert.equal(await q11Tutor.locator('.f7ot-source--q11 image').getAttribute('href'),'materials/final_7/003.jpg','Q11 tutor reuses the exact original page image');
+    assert.equal(await q12Tutor.locator('.f7ot-source--q12 image').getAttribute('href'),'materials/final_7/003.jpg','Q12 tutor reuses the exact original page image');
     await q6Tutor.locator('.f7ot-launch').click();
     await page.getByRole('button',{name:'6번 풀이 시작'}).click();
     assert.match(await page.locator('.f7ot-teacher').innerText(),/앞 물고기의 꼬리와 다음 물고기의 머리/,'the lesson starts with the teacher transcript criterion');
@@ -178,8 +181,28 @@ function startServer() {
     await page.getByRole('button',{name:'이해했어요 · 5인용 수 구하기'}).click();
     assert.match(await page.locator('.f7ot-answer').innerText(),/15개/,'Q11 adds the last incomplete five-seat chair to fourteen full ones');
     await page.locator('.f7ot-close').click();
+    await q12Tutor.locator('.f7ot-launch').click();
+    if(OUTPUT)await page.locator('#final7OriginalTutor').screenshot({path:path.join(OUTPUT,'final7-q12-original-tutor-source.png')});
+    await page.getByRole('button',{name:'12번 풀이 시작'}).click();
+    assert.match(await page.locator('.f7ot-teacher').innerText(),/4칸 중 2칸/,'Q12 starts by turning the source diagram into fractions');
+    assert.match(await page.locator('.f7ot-q12-equation').innerText(),/2\/16 = 1\/8/,'Q12 verifies the second newly shaded area');
+    await page.getByRole('button',{name:'이해했어요 · 넓이 규칙 보기'}).click();
+    assert.match(await page.locator('.f7ot-teacher').innerText(),/앞 단계의 1\/4/,'Q12 follows the teacher-script shrinking rule');
+    assert.match(await page.locator('.f7ot-q12-sequence').innerText(),/1\/2[\s\S]*1\/8[\s\S]*1\/32/,'Q12 exposes the verified fraction sequence without the final answer');
+    assert.doesNotMatch(await page.locator('#final7OriginalTutor').innerText(),/1\/128/,'Q12 does not reveal the answer before the final beat');
+    await page.getByRole('button',{name:'이해했어요 · 세 번째 확인하기'}).click();
+    assert.match(await page.locator('.f7ot-q12-equation').innerText(),/2\/64 = 1\/32/,'Q12 independently verifies the third increment');
+    if(OUTPUT)await page.locator('#final7OriginalTutor').screenshot({path:path.join(OUTPUT,'final7-q12-original-tutor.png')});
+    await page.setViewportSize({width:390,height:844});
+    assert.ok(await page.locator('#final7OriginalTutor').evaluate((node)=>node.scrollWidth<=node.clientWidth+1),'Q12 tutor does not overflow at 390px');
+    if(OUTPUT)await page.locator('#final7OriginalTutor').screenshot({path:path.join(OUTPUT,'final7-q12-original-tutor-mobile.png')});
+    await page.setViewportSize({width:1280,height:1000});
+    await page.getByRole('button',{name:'알겠어요 · 네 번째 구하기'}).click();
+    assert.match(await page.locator('.f7ot-q12-equation').innerText(),/2\/256 = 1\/128/,'Q12 calculates only the fourth newly shaded area');
+    assert.match(await page.locator('.f7ot-answer').innerText(),/1\/128/,'Q12 ends at the verified single answer');
+    await page.locator('.f7ot-close').click();
     await page.emulateMedia({media:'print'});
-    assert.deepEqual(await originalTutors.evaluateAll((nodes)=>nodes.map((node)=>getComputedStyle(node).display)),['none','none'],'original tutors are excluded from print and PDF');
+    assert.deepEqual(await originalTutors.evaluateAll((nodes)=>nodes.map((node)=>getComputedStyle(node).display)),['none','none','none'],'original tutors are excluded from print and PDF');
     await page.emulateMedia({media:null});
     assert.deepEqual(await page.locator('.wp-item').evaluateAll((rows) => rows.map((row) => Number(row.dataset.wpNo))), [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30], 'report exposes every reviewed Q5-Q30 practice item');
     assert.equal(await page.locator('.wp-pending').count(), 0, 'approved Q29-Q30 do not remain pending');
@@ -196,7 +219,7 @@ function startServer() {
     await practice.close();
     assert.deepEqual(errors, [], 'browser errors after report-to-bank navigation');
 
-    console.log('PASS Final 7 Q5-Q30 browser: reviewed figures and text items, no tutor on variants, source-script Q6 and Q11 original tutors, seventy-eight detailed answers, desktop/390px/PDF readiness, adapter loading, and report-to-bank navigation');
+    console.log('PASS Final 7 Q5-Q30 browser: reviewed figures and text items, no tutor on variants, source-script Q6, Q11 and Q12 original tutors, seventy-eight detailed answers, desktop/390px/PDF readiness, adapter loading, and report-to-bank navigation');
   } finally {
     await browser.close();
     server.close();
