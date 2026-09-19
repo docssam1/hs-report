@@ -59,7 +59,7 @@
     root.dataset.bankCode=bankCode;
     var round=important?null:Number(bankCode.slice(5)),roundLabel=important?'선생님이 고른 중요 유형':(round===7?'최종 7회':'파이널 '+round+'회'),idPrefix=important?'':bankCode+'-q';
     if(important)ids=Array.isArray(opts.typeIds)?opts.typeIds:[];
-    else if(!Array.isArray(ids))ids=wrong?[]:(round===7?[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28].map(no=>idPrefix+String(no).padStart(2,'0')):Array.from({length:30},(_,i)=>idPrefix+String(i+1).padStart(2,'0')));
+    else if(!Array.isArray(ids))ids=wrong?[]:(round===7?Array.from({length:26},(_,i)=>idPrefix+String(i+5).padStart(2,'0')):Array.from({length:30},(_,i)=>idPrefix+String(i+1).padStart(2,'0')));
     var labels={all:'전체문제','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
     var counts=[4,8,20,40],requestedCount=counts.includes(Number(opts.n))?Number(opts.n):20;
     var band=Object.hasOwn(labels,opts.pointBand)?opts.pointBand:'all',mode=q.get('printMode')||'both';

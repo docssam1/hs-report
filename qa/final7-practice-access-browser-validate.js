@@ -39,6 +39,10 @@ const server=http.createServer((request,response)=>{
     assert.equal(await approved.page.locator('.qcard[data-source-no="5"]').count(),3,'Q5 keeps exactly three reviewed variants');
     assert.equal(await approved.page.locator('.qcard[data-source-no="6"]').count(),3,'Q6 keeps exactly three reviewed variants');
     assert.equal(await approved.page.locator('.f1-coach-launch').count(),6,'each approved Final7 variant includes the detailed coach');
+    await approved.page.goto(base+'/bank/index.html?bank=final7',{waitUntil:'networkidle'});
+    await approved.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===78);
+    assert.equal(await approved.page.locator('.qcard[data-source-no="29"]').count(),3,'direct Final7 entry includes all three Q29 variants');
+    assert.equal(await approved.page.locator('.qcard[data-source-no="30"]').count(),3,'direct Final7 entry includes all three Q30 variants');
     await approved.context.close();
 
     const wrongProduct=await open('/bank/index.html?bank=final2','mock-final-7');
