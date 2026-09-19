@@ -28,6 +28,32 @@
     wrap.innerHTML='<svg viewBox="600 120 550 330" role="img" aria-label="최종 7회 11번 원본 문제"><image href="'+SOURCE_IMAGE_Q11+'" x="0" y="0" width="1191" height="1684" preserveAspectRatio="xMidYMid slice"></image></svg>';
     return wrap;
   }
+  function q12SourceFigure(){
+    var wrap=document.createElement('div');wrap.className='f7ot-source f7ot-source--q12';
+    wrap.innerHTML='<svg viewBox="600 745 550 350" role="img" aria-label="최종 7회 12번 원본 문제"><image href="'+SOURCE_IMAGE_Q11+'" x="0" y="0" width="1191" height="1684" preserveAspectRatio="xMidYMid slice"></image></svg>';
+    return wrap;
+  }
+  function q12Diagram(level,highlightLevel,label){
+    var x=14,y=14,size=232,parts=['<figure class="f7ot-q12-diagram"><svg viewBox="0 0 260 260" role="img" aria-label="'+label+' 도형">'];
+    parts.push('<rect x="14" y="14" width="232" height="232" class="f7ot-q12-outline"></rect>');
+    for(var index=0;index<level;index+=1){
+      var half=size/2,fill=index===highlightLevel?'f7ot-q12-new':'f7ot-q12-old';
+      parts.push('<rect x="'+(x+half)+'" y="'+y+'" width="'+half+'" height="'+half+'" class="'+fill+'"></rect>');
+      parts.push('<rect x="'+x+'" y="'+(y+half)+'" width="'+half+'" height="'+half+'" class="'+fill+'"></rect>');
+      parts.push('<path d="M '+(x+half)+' '+y+' V '+(y+size)+' M '+x+' '+(y+half)+' H '+(x+size)+'" class="f7ot-q12-line"></path>');
+      x+=half;y+=half;size=half;
+    }
+    parts.push('</svg><figcaption>'+label+'</figcaption></figure>');
+    return parts.join('');
+  }
+  function q12Visual(kind){
+    var visual=document.createElement('div');visual.className='f7ot-q12-visual f7ot-q12-visual--'+kind;
+    if(kind==='pattern')visual.innerHTML=q12Diagram(1,0,'첫 번째')+q12Diagram(2,1,'두 번째')+'<div class="f7ot-q12-equation"><b>첫 번째</b> 2/4 = 1/2<br><b>두 번째에 새로</b> 2/16 = 1/8</div>';
+    if(kind==='sequence')visual.innerHTML='<div class="f7ot-q12-sequence"><span>1/2</span><i>÷4</i><span>1/8</span><i>÷4</i><span>1/32</span><i>÷4</i><span>?</span></div>';
+    if(kind==='third')visual.innerHTML=q12Diagram(3,2,'세 번째에 새로 색칠한 두 칸')+'<div class="f7ot-q12-equation"><b>작은 한 칸</b> 1/64<br><b>두 칸</b> 2/64 = 1/32</div>';
+    if(kind==='finish')visual.innerHTML=q12Diagram(4,3,'네 번째에 새로 색칠한 두 칸')+'<div class="f7ot-q12-equation"><b>작은 한 칸</b> 1/256<br><b>두 칸</b> 2/256 = 1/128</div>';
+    return visual;
+  }
   function q11Visual(kind){
     var visual=document.createElement('div');visual.className='f7ot-math-scene f7ot-math-scene--'+kind;
     if(kind==='chairs')visual.innerHTML='<div><small>전체 의자</small><strong>41개</strong></div><span>→</span><div><small>마지막 5인용</small><strong>3명</strong></div><span>→</span><div class="active"><small>가득 찬 의자</small><strong>40개 · 122명</strong></div>';
@@ -214,8 +240,54 @@
       {label:'처음부터 다시 보기',action:showQ11Original}
     ]);
   }
+  function showQ12Original(){
+    stage=0;dialog().querySelector('#f7otTitle').textContent='최종 7회 12번 · 반복 색칠 넓이';render(function(){
+      return stageShell('먼저 원문 그림을 다시 볼까요?','네 번째 전체 넓이가 아니라, 세 번째보다 더 색칠한 부분만 찾는 문제예요. 원문 그림에서 반복되는 한 곳을 찾아볼게요.',q12SourceFigure());
+    },[{label:'12번 풀이 시작',action:function(){showQ12Pattern(false);},primary:true}]);
+  }
+  function showQ12Pattern(deeper){
+    stage=1;render(function(){
+      var speech=deeper?'첫 번째는 전체를 4칸으로 나누어 대각선의 2칸을 색칠합니다. 두 번째는 오른쪽 아래의 남은 흰 정사각형 하나만 다시 4칸으로 나누고, 그 안의 대각선 2칸을 새로 색칠합니다.':'그림을 수로 나타내 볼까요? 첫 번째는 4칸 중 2칸, 두 번째는 전체를 16칸으로 보았을 때 작은 2칸을 새로 색칠했어요. 여기까지 이해됐나요?';
+      return stageShell(deeper?'어느 정사각형을 다시 나누는지 볼게요':'한 단계에서 새로 색칠한 두 칸을 찾아요',speech,q12Visual('pattern'));
+    },[
+      {label:'이해했어요 · 넓이 규칙 보기',action:function(){showQ12Sequence(false);},primary:true},
+      {label:deeper?'그림을 다시 볼게요':'모르겠어요 · 나누는 칸을 다시 보여 주세요',action:function(){showQ12Pattern(true);}},
+      {label:'원문 다시 보기',action:showQ12Original}
+    ]);
+  }
+  function showQ12Sequence(deeper){
+    stage=2;render(function(){
+      var speech=deeper?'새로 색칠한 넓이는 첫 번째 1/2, 두 번째 1/8, 세 번째 1/32입니다. 1/2÷4=1/8, 1/8÷4=1/32처럼 바로 앞 단계의 1/4이 됩니다.':'선생님이 뭐라고 했죠? 한 단계가 늘 때마다 새로 색칠한 넓이는 앞 단계의 1/4이 됩니다. 1/2, 1/8, 1/32로 줄어드는 것이 보이나요?';
+      return stageShell(deeper?'분모가 4배씩 커지는 것을 확인해요':'새로 색칠한 넓이는 1/4씩 줄어요',speech,q12Visual('sequence'));
+    },[
+      {label:'이해했어요 · 세 번째 확인하기',action:function(){showQ12Third(false);},primary:true},
+      {label:deeper?'규칙을 다시 볼게요':'모르겠어요 · 분수로 더 자세히 보여 주세요',action:function(){showQ12Sequence(true);}},
+      {label:'그림 규칙 다시 보기',action:function(){showQ12Pattern(false);}}
+    ]);
+  }
+  function showQ12Third(deeper){
+    stage=3;render(function(){
+      var speech=deeper?'세 번째에 새로 생긴 작은 한 칸은 전체의 1/64입니다. 같은 크기 두 칸을 색칠하므로 2/64이고, 약분하면 1/32입니다.':'세 번째에서 새로 색칠한 부분은 전체를 64칸으로 보았을 때 두 칸이에요. 그래서 2/64=1/32입니다. 그럼 네 번째에는 어떻게 될까요?';
+      return stageShell(deeper?'작은 한 칸의 넓이부터 볼게요':'세 번째의 새 색칠 넓이를 확인해요',speech,q12Visual('third'));
+    },[
+      {label:'알겠어요 · 네 번째 구하기',action:showQ12Finish,primary:true},
+      {label:deeper?'세 번째를 다시 볼게요':'모르겠어요 · 1/32가 되는 과정을 보여 주세요',action:function(){showQ12Third(true);}},
+      {label:'넓이 규칙 다시 보기',action:function(){showQ12Sequence(false);}}
+    ]);
+  }
+  function showQ12Finish(){
+    stage=4;render(function(){
+      var section=stageShell('네 번째에서 새로 색칠한 두 칸만 계산해요','네 번째의 작은 한 칸은 전체의 1/256입니다. 두 칸을 새로 색칠했으므로 2/256=1/128입니다. 이것이 네 번째 도형에서 세 번째 도형보다 더 색칠한 부분이에요.',q12Visual('finish'));
+      var answer=document.createElement('div');answer.className='f7ot-answer';answer.innerHTML='세 번째보다 더 색칠한 부분<strong>1/128</strong>';section.appendChild(answer);return section;
+    },[
+      {label:'이해했어요 · 마치기',action:function(){dialog().close();},primary:true},
+      {label:'1/32부터 다시 보기',action:function(){showQ12Third(false);}},
+      {label:'처음부터 다시 보기',action:showQ12Original}
+    ]);
+  }
   function openQ6(){dialog().querySelector('#f7otTitle').textContent='최종 7회 6번 · 낚싯줄 따라가기';showOriginal();var node=dialog();if(typeof node.showModal==='function')node.showModal();else node.setAttribute('open','');}
   function openQ11(){showQ11Original();var node=dialog();if(typeof node.showModal==='function')node.showModal();else node.setAttribute('open','');}
+  function openQ12(){showQ12Original();var node=dialog();if(typeof node.showModal==='function')node.showModal();else node.setAttribute('open','');}
   function launch(label,row,handler){
     var node=document.createElement('button');node.type='button';node.className='f7ot-launch no-print'+(row?' f7ot-row-launch':'');node.textContent=label;node.addEventListener('click',handler);return node;
   }
@@ -231,17 +303,26 @@
     var copy=document.createElement('p');copy.textContent='선생님 대본의 우기기 순서대로 첫 번째 차이부터 계산합니다.';
     card.append(heading,copy,q11SourceFigure(),launch('선생님 대본으로 한 단계씩 보기',false,openQ11));return card;
   }
+  function originalCardQ12(){
+    var card=document.createElement('article');card.className='detailed-solution f7ot-card';card.dataset.solutionNo='12';
+    var heading=document.createElement('h3');heading.textContent='12번 원문 풀이 도우미';
+    var copy=document.createElement('p');copy.textContent='원문 그림에서 한 단계마다 새로 색칠되는 두 칸의 넓이를 따라갑니다.';
+    card.append(heading,copy,q12SourceFigure(),launch('선생님 대본으로 한 단계씩 보기',false,openQ12));return card;
+  }
   function attach(container,options){
     if(!container||!options||Number(options.round)!==7)return;
     var details=container.querySelector('#detailedAnswersSection .report-resource-details');if(!details)return;
     var solutions=details.querySelector('.detailed-solutions');
     if(!solutions){solutions=document.createElement('div');solutions.className='detailed-solutions';details.appendChild(solutions);}
+    if(!solutions.querySelector('.f7ot-card[data-solution-no="12"]'))solutions.insertBefore(originalCardQ12(),solutions.firstChild);
     if(!solutions.querySelector('.f7ot-card[data-solution-no="11"]'))solutions.insertBefore(originalCardQ11(),solutions.firstChild);
     if(!solutions.querySelector('.f7ot-card[data-solution-no="6"]'))solutions.insertBefore(originalCardQ6(),solutions.firstChild);
     var row6=container.querySelector('#detailWrap tbody:nth-of-type(6) tr:first-child .weak-cell');
     if(row6)row6.replaceChildren(launch('6번 풀이',true,openQ6));
     var row11=container.querySelector('#detailWrap tbody:nth-of-type(11) tr:first-child .weak-cell');
     if(row11)row11.replaceChildren(launch('11번 풀이',true,openQ11));
+    var row12=container.querySelector('#detailWrap tbody:nth-of-type(12) tr:first-child .weak-cell');
+    if(row12)row12.replaceChildren(launch('12번 풀이',true,openQ12));
   }
-  root.GFIELD_FINAL7_ORIGINAL_TUTOR={attach:attach,openQ6:openQ6,openQ11:openQ11,sourcePriority:['final7-video-script','basic','think-core']};
+  root.GFIELD_FINAL7_ORIGINAL_TUTOR={attach:attach,openQ6:openQ6,openQ11:openQ11,openQ12:openQ12,sourcePriority:['final7-video-script','basic','think-core']};
 })(window);

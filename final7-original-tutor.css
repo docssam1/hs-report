@@ -24,6 +24,7 @@
 .f7ot-source svg{display:block;width:100%;height:auto}
 .f7ot-source--problem{aspect-ratio:540/380}.f7ot-source--figure{aspect-ratio:520/230}
 .f7ot-source--q11{aspect-ratio:550/330}
+.f7ot-source--q12{aspect-ratio:550/350}
 .f7ot-source image{pointer-events:none}
 .f7ot-trace-path{fill:none;stroke:#2878e8;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;opacity:.78;filter:drop-shadow(0 1px 1px rgba(255,255,255,.8))}
 .f7ot-guide{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.9;clip-path:inset(0 100% 0 0)}
@@ -39,8 +40,14 @@
 .f7ot-math-scene .f7ot-math-sign{padding:6px 8px;border-radius:8px;background:#eaf1ff;font-size:16px}
 .f7ot-scene-answer{grid-column:1/-1;padding:10px;border-radius:9px;background:#eaf1ff;color:#17345f;font-size:17px;text-align:center}
 .f7ot-math-scene--chairs{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.2fr)}
+.f7ot-q12-visual{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:14px;padding:14px;border:1px solid #d7dfeb;border-radius:12px;background:#fbfcfe}
+.f7ot-q12-diagram{margin:0;text-align:center}.f7ot-q12-diagram svg{display:block;width:min(100%,220px);height:auto;margin:auto}.f7ot-q12-diagram figcaption{margin-top:5px;color:#526070;font-size:12px;font-weight:800}
+.f7ot-q12-outline,.f7ot-q12-line{fill:none;stroke:#26384f;stroke-width:2}.f7ot-q12-old{fill:#c9d9ad}.f7ot-q12-new{fill:#ffb66b;stroke:#e06a00;stroke-width:2}
+.f7ot-q12-equation{padding:12px;border-radius:10px;background:#fff;color:#344054;font-size:16px;line-height:1.8;text-align:center}.f7ot-q12-equation b{color:#17345f}
+.f7ot-q12-visual--pattern .f7ot-q12-equation{grid-column:1/-1}
+.f7ot-q12-visual--sequence{display:block}.f7ot-q12-sequence{display:flex;align-items:center;justify-content:center;gap:10px;min-height:120px}.f7ot-q12-sequence span{min-width:74px;padding:15px 10px;border:1px solid #9db6e5;border-radius:10px;background:#fff;color:#17345f;font-size:22px;font-weight:900;text-align:center}.f7ot-q12-sequence i{color:#2456c4;font-size:15px;font-style:normal;font-weight:900}
 .f7ot-answer{padding:16px;border:1px solid #bed0ef;border-radius:12px;background:#f5f8ff;text-align:center}.f7ot-answer strong{display:block;margin-top:4px;color:#2456c4;font-size:25px}
 @keyframes f7ot-reveal{to{clip-path:inset(0 0 0 0)}}
-@media(max-width:600px){.f7ot-dialog{width:calc(100vw - 14px);max-height:calc(100vh - 14px);border-radius:14px}.f7ot-shell{max-height:calc(100vh - 14px)}.f7ot-head{padding:15px 14px 11px}.f7ot-head h2{font-size:18px}.f7ot-body{padding:14px}.f7ot-actions{padding:11px 14px 14px}.f7ot-action{width:100%}.f7ot-teacher{font-size:15px}.f7ot-rule{grid-template-columns:1fr}.f7ot-math-scene,.f7ot-math-scene--chairs{grid-template-columns:1fr}.f7ot-math-scene>span{transform:rotate(90deg)}.f7ot-math-scene .f7ot-math-sign{transform:none}.f7ot-scene-answer{grid-column:1}}
+@media(max-width:600px){.f7ot-dialog{width:calc(100vw - 14px);max-height:calc(100vh - 14px);border-radius:14px}.f7ot-shell{max-height:calc(100vh - 14px)}.f7ot-head{padding:15px 14px 11px}.f7ot-head h2{font-size:18px}.f7ot-body{padding:14px}.f7ot-actions{padding:11px 14px 14px}.f7ot-action{width:100%}.f7ot-teacher{font-size:15px}.f7ot-rule{grid-template-columns:1fr}.f7ot-math-scene,.f7ot-math-scene--chairs,.f7ot-q12-visual{grid-template-columns:1fr}.f7ot-math-scene>span{transform:rotate(90deg)}.f7ot-math-scene .f7ot-math-sign{transform:none}.f7ot-scene-answer,.f7ot-q12-visual--pattern .f7ot-q12-equation{grid-column:1}.f7ot-q12-sequence{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);gap:4px}.f7ot-q12-sequence span{min-width:0;padding:12px 3px;font-size:16px}.f7ot-q12-sequence i{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.f7ot-guide.is-playing{animation-duration:.01ms}}
 @media print{.f7ot-card,.f7ot-dialog,.f7ot-launch{display:none!important}}
