@@ -100,12 +100,12 @@ assert.equal(data.sourceSet, 'final');
 assert.equal(data.sourceRound, 7);
 assert.equal(data.freezePolicy.runtimeGeneration, false);
 assert.equal(data.freezePolicy.partialRelease, true);
-assert.equal(data.freezePolicy.fixedItemCount, 36);
+assert.equal(data.freezePolicy.fixedItemCount, 78);
 assert.equal(data.freezePolicy.variantsPerSourceQuestion, 3);
-assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
-assert.deepEqual(data.reviewSummary, {verified: 36, pending: 0, unavailableSourceQuestions: 18});
-assert.equal(data.items.length, 36);
-assert.equal(new Set(data.items.map((item) => item.id)).size, 36);
+assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]);
+assert.deepEqual(data.reviewSummary, {verified: 78, pending: 0, unavailableSourceQuestions: 0});
+assert.equal(data.items.length, 78);
+assert.equal(new Set(data.items.map((item) => item.id)).size, 78);
 
 for (const [relativePath, expected] of Object.entries(data.sourceFingerprints)) {
   assert.equal(hash(fs.readFileSync(path.join(ROOT, relativePath))), expected, relativePath + ': source fingerprint');
@@ -126,8 +126,22 @@ assert.equal(sourceRound.items.find((item) => item.no === 13).answer, '2가 12�
 assert.equal(sourceRound.items.find((item) => item.no === 14).answer, '101, 148, 145', 'source Q14 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 15).answer, '(3, 50)', 'source Q15 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 16).answer, '165', 'source Q16 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 17).answer, '210', 'source Q17 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 18).answer, '병 16살', 'source Q18 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 19).answer, '382개', 'source Q19 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 20).answer, '216g', 'source Q20 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 21).answer, '62', 'source Q21 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 22).answer, '75명', 'source Q22 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 23).answer, '169', 'source Q23 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 24).answer, '4명', 'source Q24 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 25).answer, '3마리', 'source Q25 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 26).answer, '2014년', 'source Q26 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 27).answer, '5주일', 'source Q27 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 28).answer, '30', 'source Q28 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 29).answer, '192가지', 'corrected source Q29 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 30).answer, '128', 'source Q30 remains traceable');
 
-for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]) {
+for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]) {
   const group = data.items.filter((item) => item.sourceNo === no).sort((a, b) => a.variantNo - b.variantNo);
   assert.equal(group.length, 3, no + ': exactly three reviewed variants');
   assert.deepEqual(group.map((item) => item.variantNo), [1, 2, 3]);
@@ -138,7 +152,7 @@ for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]) {
   assert.equal(link.studentWrongPracticeReady, true);
   assert.equal(link.qaEvidence.suite, 'qa/final7-reviewed-validate.js');
 }
-assert.equal(registry.sourceItemGenerator('final|7|17'), null, 'unreviewed Final 7 items remain locked');
+assert.equal(registry.sourceItemGenerator('final|7|4'), null, 'items outside the reviewed Final 7 source range remain locked');
 
 for (const item of data.items) {
   assert.equal(item.reviewStatus, 'verified', item.id + ': review status');
@@ -151,13 +165,17 @@ for (const item of data.items) {
   assert.equal(item.conditionLines, undefined, item.id + ': no repeated condition list');
   assert.equal(item.promptDataLines, undefined, item.id + ': no helper or hint box');
   assert.doesNotMatch(item.text, /①|②|③|힌트|풀이 순서/, item.id + ': no answer-leading helper copy');
-  if (item.sourceNo <= 6 || item.sourceNo === 12 || item.sourceNo === 15) {
+  if (item.sourceNo <= 6 || item.sourceNo === 12 || item.sourceNo === 15 || item.sourceNo === 17 || item.sourceNo === 21 || item.sourceNo === 28 || item.sourceNo === 29) {
     assert.equal(item.asset.kind, 'raster', item.id + ': approved raster prompt asset');
     assert.match(item.asset.src, /^data:image\/png;base64,/, item.id + ': embedded PNG');
     const bytes = Buffer.from(item.asset.src.split(',')[1], 'base64');
     assert.equal(hash(bytes), item.assetSha256, item.id + ': asset hash');
     if (item.sourceNo === 12) assert.ok(item.asset.width >= 300 && item.asset.height >= 100, item.id + ': readable recursive-area dimensions');
     else if (item.sourceNo === 15) assert.ok(item.asset.width >= 800 && item.asset.height >= 180, item.id + ': readable arrow-grid dimensions');
+    else if (item.sourceNo === 17) assert.ok(item.asset.width >= 650 && item.asset.height >= 200, item.id + ': readable stage-growth dimensions');
+    else if (item.sourceNo === 21) assert.ok(item.asset.width >= 650 && item.asset.height >= 60, item.id + ': readable masked-number dimensions');
+    else if (item.sourceNo === 28) assert.ok(item.asset.width >= 650 && item.asset.height >= 380, item.id + ': readable horizontal triangular-array dimensions');
+    else if (item.sourceNo === 29) assert.ok(item.asset.width >= 650 && item.asset.height >= 250, item.id + ': readable cross-array dimensions');
     else assert.ok(item.asset.width >= 720 && item.asset.height >= 300, item.id + ': readable source dimensions');
     assert.equal(bytes.readUInt32BE(16), item.asset.width, item.id + ': PNG width');
     assert.equal(bytes.readUInt32BE(20), item.asset.height, item.id + ': PNG height');
@@ -331,4 +349,192 @@ for (const item of data.items.filter((item) => item.sourceNo === 16)) {
   assert.equal(item.answer, String(result.lastTwo[0] + result.lastTwo[1]), item.id + ': final two-card sum');
 }
 
-console.log('PASS Final 7 Q5-Q16: thirty-six reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed partial release');
+for (const item of data.items.filter((item) => item.sourceNo === 17)) {
+  const stage = item.meta.stage;
+  assert.ok(Number.isInteger(stage) && stage > 0, item.id + ': integral stage');
+  assert.equal(item.meta.lightCount, stage * stage, item.id + ': center square count');
+  assert.equal(item.meta.darkCount, stage * (stage - 1), item.id + ': two outer stair groups count');
+  assert.equal(item.meta.totalCount, item.meta.lightCount + item.meta.darkCount, item.id + ': total count');
+  const expected = item.meta.mode === 'reverse' ? item.meta.lightCount : item.meta.mode === 'total' ? item.meta.totalCount : item.meta.darkCount;
+  assert.equal(item.answer, expected + '개', item.id + ': requested quantity answer');
+  assert.equal(item.assetSpec.renderRules.showAnswerCounts, false, item.id + ': prompt figure does not leak counts');
+  assert.equal(item.assetSpec.renderRules.preserveStageCounts, true, item.id + ': transformed figure preserves stage counts');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 18)) {
+  const [ab, bc, ac] = item.meta.pairSums;
+  const total = (ab + bc + ac) / 2;
+  const values = [total - bc, total - ac, total - ab];
+  assert.equal(Number.isInteger(total), true, item.id + ': integral total');
+  assert.deepEqual(values, item.meta.values, item.id + ': independently recovered three values');
+  assert.equal(values[0] + values[1], ab, item.id + ': first pair sum');
+  assert.equal(values[1] + values[2], bc, item.id + ': second pair sum');
+  assert.equal(values[0] + values[2], ac, item.id + ': third pair sum');
+  assert.equal(item.meta.maximum, Math.max(...values), item.id + ': largest value');
+  assert.equal(item.verification.answerContract, 'entity-and-number', item.id + ': target label and value answer contract');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 19)) {
+  let current = item.meta.initialAmount;
+  const forwardValues = [current];
+  for (let turn = 0; turn < item.meta.recipientCount; turn += 1) {
+    current = current / 2 - item.meta.extraEachTime;
+    forwardValues.push(current);
+  }
+  assert.deepEqual(forwardValues, item.meta.forwardValues, item.id + ': independent forward sharing sequence');
+  assert.equal(current, item.meta.finalRemainder, item.id + ': final remainder');
+  assert.ok(forwardValues.every(Number.isInteger), item.id + ': every forward amount is integral');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 20)) {
+  assert.equal(item.meta.equalShare, item.meta.totalAmount / item.meta.recipientCount, item.id + ': equal-share plan');
+  let remainder = item.meta.totalAmount;
+  const actualShares = [];
+  for (let turn = 0; turn < item.meta.recipientCount; turn += 1) {
+    const share = remainder / 2;
+    actualShares.push(share);
+    remainder -= share;
+  }
+  assert.deepEqual(actualShares, item.meta.actualShares, item.id + ': independently simulated successive halves');
+  assert.equal(item.meta.difference, item.meta.equalShare - item.meta.targetShare, item.id + ': planned versus actual difference');
+  assert.equal(item.answer, item.meta.difference + item.meta.unit, item.id + ': difference answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 21)) {
+  const matches = [];
+  for (let number = 2; number <= 998; number += 2) {
+    const product = number * (number + 2) * (number + 4);
+    const digits = String(product);
+    if (digits.length === item.meta.digits && digits[0] === item.meta.firstDigit && digits.at(-1) === item.meta.lastDigit) matches.push({number,product});
+  }
+  assert.deepEqual(matches, item.meta.validMatches, item.id + ': exhaustive consecutive-even matches');
+  assert.equal(matches.length, 1, item.id + ': exactly one valid factor triple');
+  assert.equal(item.answer, String(matches[0].number), item.id + ': smallest factor answer');
+  assert.equal(item.assetSpec.renderRules.showHiddenDigits, false, item.id + ': hidden digits are not leaked');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 22)) {
+  const [notA,notB] = item.meta.notCounts;
+  assert.equal(item.meta.aCount, item.meta.total - notA, item.id + ': first group from complement');
+  assert.equal(item.meta.bCount, item.meta.total - notB, item.id + ': second group from complement');
+  assert.equal(item.meta.aCount + item.meta.bCount, item.meta.groupSum, item.id + ': two-group sum');
+  assert.equal(item.meta.neither, item.meta.total - item.meta.groupSum, item.id + ': neither group count');
+  assert.equal(item.answer, item.meta.neither + '명', item.id + ': outside both groups answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 23)) {
+  const matches = [];
+  const digitSum = (number) => String(number).split('').reduce((sum, digit) => sum + Number(digit), 0);
+  for (let number = item.meta.lowerExclusive + 1; number <= item.meta.upperInclusive; number += 1) {
+    if (digitSum(number) % item.meta.divisor === 0 && digitSum(number + 1) % item.meta.divisor === 0) matches.push(number);
+  }
+  assert.deepEqual(matches, item.meta.validMatches, item.id + ': exhaustive before-and-after digit-sum matches');
+  assert.equal(matches[0], item.meta.answer, item.id + ': least valid number');
+  assert.equal(item.answer, String(matches[0]), item.id + ': digit-sum answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 24)) {
+  const n = item.meta.totalWorkers;
+  assert.equal(item.meta.largeWork, 2 * item.meta.smallWork, item.id + ': larger job is twice smaller job');
+  assert.equal(item.meta.largeRemainderAfterDay1, item.meta.largeWork - n, item.id + ': day-one larger-job remainder');
+  assert.equal(item.meta.largeRemainderAfterDay2, item.meta.largeRemainderAfterDay1 - n / 2, item.id + ': day-two larger job completed');
+  assert.equal(item.meta.smallRemainderAfterDay2, item.meta.smallWork - n / 2, item.id + ': day-two smaller-job remainder');
+  assert.equal(item.meta.smallRemainderAfterDay2, item.meta.thirdDayWorkers, item.id + ': third-day workers finish smaller job');
+  assert.equal(item.answer, n + '명', item.id + ': total workforce answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 25)) {
+  const [first,second,third,fourth] = item.meta.counts;
+  assert.equal(second, first * item.meta.secondMultiplier, item.id + ': second is twice first');
+  assert.equal(third, second * item.meta.thirdToSecondMultiplier, item.id + ': third is twice second');
+  assert.equal(fourth, first + second + third + item.meta.fourthExtra, item.id + ': fourth exceeds the other three combined');
+  assert.equal(first + second + third + fourth, item.meta.total, item.id + ': total count');
+  assert.equal(item.answer, first + '개', item.id + ': first count answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 26)) {
+  const leap = (year) => year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const weekday = (year) => new Date(Date.UTC(year,0,1)).getUTCDay();
+  const same = (year) => leap(year) === leap(item.meta.referenceYear) && weekday(year) === weekday(item.meta.referenceYear);
+  const matches = [];
+  if (item.meta.direction === 'past') for (let year=1900;year<item.meta.cutoffYear;year+=1) { if (same(year)) matches.push(year); }
+  else for (let year=item.meta.cutoffYear+1;year<=2100;year+=1) { if (same(year)) matches.push(year); }
+  const answer = item.meta.direction === 'past' ? matches.at(-1) : matches[0];
+  assert.deepEqual(matches, item.meta.matchingYears, item.id + ': exhaustive matching calendar years');
+  assert.equal(answer, item.meta.answerYear, item.id + ': nearest calendar on requested side');
+  assert.equal(item.answer, answer + '년', item.id + ': calendar year answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 27)) {
+  let week = 0;
+  let count = item.meta.start;
+  let previous = count;
+  while (count < item.meta.targetThreshold) {
+    previous = count;
+    count *= item.meta.weeklyMultiplier;
+    week += 1;
+  }
+  assert.equal(week, item.meta.firstWeek, item.id + ': first threshold week');
+  assert.equal(previous, item.meta.previousCount, item.id + ': previous week remains below threshold');
+  assert.equal(count, item.meta.firstReachedCount, item.id + ': first reached count');
+  assert.ok(previous < item.meta.targetThreshold && count >= item.meta.targetThreshold, item.id + ': threshold boundary');
+  assert.equal(item.answer, week + '주일', item.id + ': week answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 28)) {
+  const triangular = (n) => n * (n + 1) / 2;
+  const valueAt = (row,column) => triangular(row - 1) + column;
+  const locate = (number) => { let row=1; while (triangular(row)<number) row+=1; return [row,number-triangular(row-1)]; };
+  const neighbors = (row,column) => [[row,column-1],[row,column+1],[row-1,column-1],[row-1,column],[row+1,column],[row+1,column+1]].filter(([r,c]) => r>=1&&c>=1&&c<=r).map(([r,c]) => valueAt(r,c));
+  const sum = (number) => { const [row,column]=locate(number); return neighbors(row,column).reduce((total,value)=>total+value,0); };
+  const matches=[];
+  for (let number=1;number<=item.meta.searchMax;number+=1) if (sum(number)===item.meta.targetNeighborSum) matches.push(number);
+  assert.deepEqual(matches, item.meta.validMatches, item.id + ': exhaustive triangular-array matches');
+  assert.equal(matches.length, 1, item.id + ': exactly one hidden number');
+  assert.deepEqual(neighbors(item.meta.answerRow,item.meta.answerColumn), item.meta.adjacentValues, item.id + ': visible edge neighbors');
+  assert.equal(item.meta.excludeSelectedCell, true, item.id + ': selected cell excluded from sum');
+  assert.equal(item.assetSpec.renderRules.showAnswerCell, false, item.id + ': answer cell is not marked');
+  assert.equal(item.assetSpec.renderRules.showOriginalExamples, true, item.id + ': approved original example is visible');
+  assert.equal(item.answer, String(matches[0]), item.id + ': triangular-array answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 29)) {
+  const {horizontalCells,verticalCells,numbers} = item.meta;
+  assert.equal(horizontalCells + verticalCells - 1, item.meta.totalCells, item.id + ': cross cell count');
+  assert.equal(numbers.length, item.meta.totalCells, item.id + ': one number per cell');
+  assert.equal(new Set(numbers).size, numbers.length, item.id + ': distinct numbers');
+  const centerIndex = Math.floor(horizontalCells / 2);
+  let count = 0;
+  function visit(prefix, remaining) {
+    if (!remaining.length) {
+      const horizontalSum = prefix.slice(0,horizontalCells).reduce((sum,value)=>sum+value,0);
+      const verticalSum = prefix[centerIndex] + prefix.slice(horizontalCells).reduce((sum,value)=>sum+value,0);
+      if (horizontalSum === verticalSum) count += 1;
+      return;
+    }
+    remaining.forEach((value,index)=>visit(prefix.concat(value),remaining.slice(0,index).concat(remaining.slice(index+1))));
+  }
+  visit([],numbers);
+  assert.equal(count, item.meta.exhaustiveCount, item.id + ': independent exhaustive equal-line count');
+  assert.equal(count, item.meta.combinationCount, item.id + ': exhaustive and combinatorial counts agree');
+  assert.equal(item.answer, count + '가지', item.id + ': arrangement answer');
+  assert.equal(item.assetSpec.renderRules.showNumbers, false, item.id + ': prompt cells remain empty');
+  assert.equal(item.assetSpec.renderRules.showAnswerArrangement, false, item.id + ': prompt does not leak one arrangement');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 30)) {
+  let remaining = Array.from({length:item.meta.initialStudents},(_,index)=>index+1);
+  const counts=[remaining.length];
+  while(remaining.length>1){
+    remaining=remaining.filter((_,index)=>(index+1)%2===0);
+    counts.push(remaining.length);
+  }
+  let power=1;
+  while(power*2<=item.meta.initialStudents)power*=2;
+  assert.deepEqual(counts,item.meta.roundCounts,item.id + ': independent repeated renumbering counts');
+  assert.equal(remaining[0],item.meta.lastOriginalNumber,item.id + ': simulated last original number');
+  assert.equal(power,item.meta.largestPowerOfTwo,item.id + ': largest power-of-two check');
+  assert.equal(item.answer,String(remaining[0]),item.id + ': last student answer');
+}
+
+console.log('PASS Final 7 Q5-Q30: seventy-eight reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed reviewed range');

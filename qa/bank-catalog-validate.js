@@ -47,7 +47,7 @@ assert.deepEqual(
     confirmedItems: unified.summary.confirmedItems,
     candidateItems: unified.summary.candidateItems,
   },
-  { sourceQuestions: 840, rawDisplayTypes: 742, objectiveTypes: 748, canonicalTypes: 213, confirmedItems: 150, candidateItems: 690 },
+  { sourceQuestions: 870, rawDisplayTypes: 772, objectiveTypes: 778, canonicalTypes: 218, confirmedItems: 155, candidateItems: 715 },
   '전체 분류 현황 수치',
 );
 assert.equal(unified.summary.duplicateSourceKeys.length, 0, '출처 문항 키 중복 없음');
@@ -70,9 +70,9 @@ assert.equal(finalTwoItems.find((item) => item.sourceRef.no === 15).detailType, 
 assert.equal(finalTwoItems.find((item) => item.sourceRef.no === 28).subarea, '모든 도로 지나기', '28번을 두 점 최단거리와 분리');
 assert.equal(unified.items.find((item) => item.sourceKey === 'final|3|10').detailType, '우기기', '같은 기존 유형명의 타회차에 Final2 학생 표시명을 전파하지 않음');
 const targetItems = unified.items.filter((item) => ['applied', 'final', 'last', 'original'].includes(item.sourceRef.set));
-assert.equal(targetItems.length, 600, '문제은행 기본 범위는 활용~시그니처 실전 600문항');
+assert.equal(targetItems.length, 630, '문제은행 기본 범위는 활용~시그니처 실전 630문항');
 assert.equal(targetItems.filter((item) => item.responseRateStatus === 'measured').length, 240, '파이널·최종 실제 정답률 240문항');
-assert.equal(targetItems.filter((item) => item.bankDifficulty.basis === 'source-points').length, 360, '정답률 없는 문항은 배점 기준 360문항');
+assert.equal(targetItems.filter((item) => item.bankDifficulty.basis === 'source-points').length, 390, '정답률 없는 문항은 배점 기준 390문항');
 assert.ok(
   targetItems.some((item) => item.sourceKey === 'last|1|1' && item.searchEvidence.some((text) => /동화책/.test(text))),
   '최종 시험지 지문을 유형 검색 근거로 연결',
@@ -141,4 +141,4 @@ assert.match(indexHtml, /genIds: state\.genIds/, '선택 유형 목록을 시험
 assert.match(indexHtml, /difficultyMode: state\.difficultyMode/, '난이도 조정을 시험지 생성기로 전달');
 assert.match(indexHtml, /difficultyMix: state\.difficultyMix/, '난이도 혼합 비율을 시험지 생성기로 전달');
 
-console.log('PASS bank catalog contract: 840 questions, 742 objective-table area/type pairs, five difficulty levels, rate-first/points-fallback');
+console.log('PASS bank catalog contract: 870 questions, 778 objective-table area/type pairs, five difficulty levels, rate-first/points-fallback');

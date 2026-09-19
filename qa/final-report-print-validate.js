@@ -27,7 +27,7 @@ assert.match(moduleSource,/docssam-saved-comment\{orphans:2;widows:2\}/);
 assert.match(moduleSource,/\.able-box\{break-inside:avoid!important;page-break-inside:avoid!important\}/);
 const finalHtml=fs.readFileSync(path.join(root,'final.html'),'utf8');
 assert.match(finalHtml,/<link rel="stylesheet" href="final-report-print\.css">/,'print layout is loaded by the report page');
-assert.match(finalHtml,/if\(isFinal1\|\|isFinal2\|\|isFinal3\|\|isFinal4\) files\.push\('final-report-print\.js'\)/,'print controller is loaded for every standard Final round');
+assert.match(finalHtml,/if\(!isLast&&!isOriginal\) files\.push\('final-report-print\.js'\)/,'print controller is loaded for every standard Final round');
 
 const student='인쇄모듈합성검수학생';
 const ox='O'.repeat(30);
@@ -101,7 +101,7 @@ const server=http.createServer((req,res)=>{
   page.on('pageerror',error=>errors.push(error.message));
   try{
     await page.goto(base+'/final.html?round=2&go=report&name='+encodeURIComponent(student));
-    await page.locator('.final-report-package #final2DetailedSolutions').waitFor();
+    await page.locator('.final-report-package #final2DetailedSolutions').waitFor({state:'attached'});
     assert.equal(await page.locator('#final2DetailedSolutions .is-ready').count(),30);
     assert.equal(await page.locator('#final2DetailedSolutions .is-pending').count(),0);
     assert.deepEqual(await page.evaluate(()=>({
@@ -118,9 +118,43 @@ const server=http.createServer((req,res)=>{
       bodyClass:document.body.className
     }));
 
+    const summary=await page.evaluate(async()=>{
+      const job=GFIELD_FINAL_REPORT_PRINT.createPreparation({
+        source:document.querySelector('.final-report-package'),
+        mode:'summary',
+        requiredFontFamilies:[],
+        timeoutMs:30000
+      });
+      const value=await job.promise;
+      const doc=value.frame.contentDocument;
+      const comment=doc.querySelector('.pagedjs_pages .docssam-saved-comment');
+      const result={
+        metrics:value.metrics,
+        pages:doc.querySelectorAll('.pagedjs_pages > .pagedjs_page').length,
+        compactHeaders:doc.querySelectorAll('.pagedjs_pages .report-compact-print-header').length,
+        detailHosts:doc.querySelectorAll('#gfield-final-detail-host,.final1-detailed-card').length,
+        removedSections:doc.querySelectorAll('.pagedjs_pages .report-print-cover,.pagedjs_pages .parent-summary-support,.pagedjs_pages #report-tiers,.pagedjs_pages .parent-report-details').length,
+        truncatedComment:!!(comment&&comment.getAttribute('data-print-truncated')==='true'),
+        commentLength:comment?comment.textContent.trim().length:0
+      };
+      value.cleanup();
+      return result;
+    });
+    assert.equal(summary.metrics.mode,'summary');
+    assert.equal(summary.metrics.detailStartPage,null);
+    assert.deepEqual(summary.metrics.detailItems,[]);
+    assert.equal(summary.pages,summary.metrics.preludePages);
+    assert.ok(summary.pages<=7,'concise diagnosis stays within seven A4 pages even with an unusually long teacher comment');
+    assert.equal(summary.compactHeaders,1);
+    assert.equal(summary.detailHosts,0);
+    assert.equal(summary.removedSections,0);
+    assert.equal(summary.truncatedComment,true);
+    assert.ok(summary.commentLength<=540,'summary print keeps only a concise teacher-comment excerpt');
+
     const prepared=await page.evaluate(async()=>{
       const job=GFIELD_FINAL_REPORT_PRINT.createPreparation({
         source:document.querySelector('.final-report-package'),
+        mode:'full',
         requiredFontFamilies:[],
         timeoutMs:30000,
         printCleanupTimeoutMs:10
@@ -264,19 +298,19 @@ const server=http.createServer((req,res)=>{
     const failureCodes=await page.evaluate(async base=>{
       const source=document.querySelector('.final-report-package');
       async function code(job){try{const value=await job.promise;value.cleanup();return 'unexpected-success';}catch(error){return error.code;}}
-      const missingFont=await code(GFIELD_FINAL_REPORT_PRINT.createPreparation({source,requiredFontFamilies:['검수용 없는 글꼴'],timeoutMs:5000}));
-      const missingLibrary=await code(GFIELD_FINAL_REPORT_PRINT.createPreparation({source,requiredFontFamilies:[],libraryUrl:base+'/does-not-exist.js',timeoutMs:5000}));
+      const missingFont=await code(GFIELD_FINAL_REPORT_PRINT.createPreparation({source,mode:'full',requiredFontFamilies:['검수용 없는 글꼴'],timeoutMs:5000}));
+      const missingLibrary=await code(GFIELD_FINAL_REPORT_PRINT.createPreparation({source,mode:'full',requiredFontFamilies:[],libraryUrl:base+'/does-not-exist.js',timeoutMs:5000}));
 
       const imageClone=source.cloneNode(true);
       imageClone.style.position='fixed';imageClone.style.left='-10000px';
       const badImage=document.createElement('img');badImage.src=base+'/does-not-exist.png';imageClone.prepend(badImage);document.body.append(imageClone);
-      const missingImage=await code(GFIELD_FINAL_REPORT_PRINT.createPreparation({source:imageClone,requiredFontFamilies:[],timeoutMs:5000}));
+      const missingImage=await code(GFIELD_FINAL_REPORT_PRINT.createPreparation({source:imageClone,mode:'full',requiredFontFamilies:[],timeoutMs:5000}));
       imageClone.remove();
 
       const tableClone=source.cloneNode(true);
       tableClone.style.position='fixed';tableClone.style.left='-10000px';document.body.append(tableClone);
       tableClone.querySelector('table th').colSpan=2;
-      const badTable=await code(GFIELD_FINAL_REPORT_PRINT.createPreparation({source:tableClone,requiredFontFamilies:[],timeoutMs:5000}));
+      const badTable=await code(GFIELD_FINAL_REPORT_PRINT.createPreparation({source:tableClone,mode:'full',requiredFontFamilies:[],timeoutMs:5000}));
       tableClone.remove();
       return {missingFont,missingLibrary,missingImage,badTable,frames:document.querySelectorAll('.gfield-final-report-print-frame').length};
     },base);
@@ -289,7 +323,7 @@ const server=http.createServer((req,res)=>{
       const badImage=document.createElement('img');badImage.src=base+'/screen-only-does-not-exist.png';screenOnly.appendChild(badImage);
       source.prepend(screenOnly);document.body.appendChild(source);
       try{
-        const job=GFIELD_FINAL_REPORT_PRINT.createPreparation({source,requiredFontFamilies:[],timeoutMs:5000});
+        const job=GFIELD_FINAL_REPORT_PRINT.createPreparation({source,mode:'full',requiredFontFamilies:[],timeoutMs:5000});
         const prepared=await job.promise;
         const result={detailStartPage:prepared.metrics.detailStartPage,frames:document.querySelectorAll('.gfield-final-report-print-frame').length};
         prepared.cleanup();
@@ -312,6 +346,7 @@ const server=http.createServer((req,res)=>{
       const controller=GFIELD_FINAL_REPORT_PRINT.attach({
         button,
         source:document.querySelector('.final-report-package'),
+        mode:'full',
         libraryUrl:base+'/slow-paged.js',
         requiredFontFamilies:[],
         timeoutMs:5000,
@@ -354,6 +389,7 @@ const server=http.createServer((req,res)=>{
       const controller=GFIELD_FINAL_REPORT_PRINT.attach({
         button,
         source:document.querySelector('.final-report-package'),
+        mode:'full',
         libraryUrl:base+'/paged-on-retry.js',
         requiredFontFamilies:[],
         timeoutMs:10000,
@@ -380,9 +416,13 @@ const server=http.createServer((req,res)=>{
     const detailPrint=await page.evaluate(async()=>{
       window.__legacyDetailPrints=0;
       window.print=()=>{window.__legacyDetailPrints++;};
+      const details=document.querySelector('#detailedAnswersSection details');
+      const wasOpen=details.open;
+      details.open=true;
       document.querySelector('#printFinal2Solutions').click();
       const active=document.body.classList.contains('print-final1-solutions');
       window.dispatchEvent(new Event('afterprint'));
+      details.open=wasOpen;
       return {calls:window.__legacyDetailPrints,active,clean:!document.body.classList.contains('print-final1-solutions')};
     });
     assert.deepEqual(detailPrint,{calls:1,active:true,clean:true},'existing detail-only print remains intact');
