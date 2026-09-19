@@ -3,6 +3,7 @@
 
   var SOURCE_IMAGE='materials/final_7/002.jpg';
   var SOURCE_IMAGE_Q11='materials/final_7/003.jpg';
+  var SOURCE_IMAGE_Q13='materials/final_7/004.jpg';
   var stage=0;
   var tracing=false;
 
@@ -52,6 +53,18 @@
     if(kind==='sequence')visual.innerHTML='<div class="f7ot-q12-sequence"><span>1/2</span><i>÷4</i><span>1/8</span><i>÷4</i><span>1/32</span><i>÷4</i><span>?</span></div>';
     if(kind==='third')visual.innerHTML=q12Diagram(3,2,'세 번째에 새로 색칠한 두 칸')+'<div class="f7ot-q12-equation"><b>작은 한 칸</b> 1/64<br><b>두 칸</b> 2/64 = 1/32</div>';
     if(kind==='finish')visual.innerHTML=q12Diagram(4,3,'네 번째에 새로 색칠한 두 칸')+'<div class="f7ot-q12-equation"><b>작은 한 칸</b> 1/256<br><b>두 칸</b> 2/256 = 1/128</div>';
+    return visual;
+  }
+  function q13SourceFigure(){
+    var wrap=document.createElement('div');wrap.className='f7ot-source f7ot-source--q13';
+    wrap.innerHTML='<svg viewBox="45 125 530 265" role="img" aria-label="최종 7회 13번 원본 문제"><image href="'+SOURCE_IMAGE_Q13+'" x="0" y="0" width="1191" height="1684" preserveAspectRatio="xMidYMid slice"></image></svg>';
+    return wrap;
+  }
+  function q13Visual(kind){
+    var visual=document.createElement('div');visual.className='f7ot-q13-visual f7ot-q13-visual--'+kind;
+    if(kind==='groups')visual.innerHTML='<div class="f7ot-q13-groups"><span><b>1</b><small>1개</small></span><span><b>2 2</b><small>2개</small></span><span><b>1 1 1</b><small>3개</small></span><span><b>2 2 2 2</b><small>4개</small></span><span><b>1 1 1 1 1</b><small>5개</small></span></div>';
+    if(kind==='boundary')visual.innerHTML='<div class="f7ot-q13-boundary"><b>1부터 20까지</b><strong>210개</strong><span>+</span><b>21+22+23+24</b><strong>90개</strong><em>210+90=300</em></div>';
+    if(kind==='pairs')visual.innerHTML='<div class="f7ot-q13-pairs"><span>(1, 2)</span><span>(3, 4)</span><span>(5, 6)</span><i>…</i><span>(23, 24)</span></div><div class="f7ot-q13-pair-rule"><b>두 묶음마다</b><strong>2가 1개 더 많음</strong><b>모두 12쌍</b></div>';
     return visual;
   }
   function q11Visual(kind){
@@ -285,9 +298,55 @@
       {label:'처음부터 다시 보기',action:showQ12Original}
     ]);
   }
+  function showQ13Original(){
+    stage=0;dialog().querySelector('#f7otTitle').textContent='최종 7회 13번 · 늘어나는 묶음';render(function(){
+      return stageShell('먼저 원문 수열을 다시 볼까요?','숫자를 하나씩 세기 전에, 같은 숫자가 몇 개씩 묶여 있는지 찾아볼게요.',q13SourceFigure());
+    },[{label:'13번 풀이 시작',action:function(){showQ13Groups(false);},primary:true}]);
+  }
+  function showQ13Groups(deeper){
+    stage=1;render(function(){
+      var speech=deeper?'첫 묶음에는 1이 1개, 둘째 묶음에는 2가 2개, 셋째 묶음에는 1이 3개, 넷째 묶음에는 2가 4개 있습니다. 묶음의 길이가 1개씩 늘고 숫자는 1과 2가 번갈아 나옵니다.':'선생님이 묶음을 먼저 보라고 했죠. 1개, 2개, 3개, 4개, 5개로 묶음의 길이가 하나씩 늘어나는 것이 보이나요?';
+      return stageShell(deeper?'같은 숫자끼리 선을 그어 묶어 볼게요':'몇 번째 묶음인지 먼저 찾아요',speech,q13Visual('groups'));
+    },[
+      {label:'이해했어요 · 300개 경계 찾기',action:function(){showQ13Boundary(false);},primary:true},
+      {label:deeper?'묶음을 다시 볼게요':'모르겠어요 · 묶음을 더 자세히 보여 주세요',action:function(){showQ13Groups(true);}},
+      {label:'원문 다시 보기',action:showQ13Original}
+    ]);
+  }
+  function showQ13Boundary(deeper){
+    stage=2;render(function(){
+      var speech=deeper?'1부터 20까지 더하면 210입니다. 여기에 21+22+23+24=90을 더하면 정확히 300입니다. 따라서 300번째 수는 24번째 묶음의 마지막 수예요.':'300에 가까운 묶음의 끝을 찾아볼까요? 1부터 20까지는 210개이고, 21번째부터 24번째까지 90개를 더하면 정확히 300개입니다. 이해됐나요?';
+      return stageShell(deeper?'300번째가 어느 묶음에서 끝나는지 계산해요':'1번째부터 24번째 묶음까지가 300개예요',speech,q13Visual('boundary'));
+    },[
+      {label:'이해했어요 · 1과 2 비교하기',action:function(){showQ13Pairs(false);},primary:true},
+      {label:deeper?'경계를 다시 볼게요':'모르겠어요 · 210과 90을 보여 주세요',action:function(){showQ13Boundary(true);}},
+      {label:'묶음 규칙 다시 보기',action:function(){showQ13Groups(false);}}
+    ]);
+  }
+  function showQ13Pairs(deeper){
+    stage=3;render(function(){
+      var speech=deeper?'홀수 번째 묶음에는 1이 홀수 개, 바로 다음 짝수 번째 묶음에는 2가 그보다 한 개 더 있습니다. (1,2)부터 (23,24)까지 이런 묶음 쌍이 12개입니다.':'묶음을 두 개씩 짝지어 볼까요? 1개와 2개, 3개와 4개처럼 매 쌍마다 2가 딱 한 개 더 많아요. 이런 쌍이 몇 개일까요?';
+      return stageShell(deeper?'묶음 두 개마다 차이가 1개예요':'홀수 묶음과 다음 짝수 묶음을 짝지어요',speech,q13Visual('pairs'));
+    },[
+      {label:'12쌍이에요 · 답 확인하기',action:showQ13Finish,primary:true},
+      {label:deeper?'묶음 쌍을 다시 볼게요':'모르겠어요 · 왜 한 개 차이인지 보여 주세요',action:function(){showQ13Pairs(true);}},
+      {label:'300개 경계 다시 보기',action:function(){showQ13Boundary(false);}}
+    ]);
+  }
+  function showQ13Finish(){
+    stage=4;render(function(){
+      var section=stageShell('12쌍에서 한 개씩 차이가 나요','각 묶음 쌍마다 2가 1개씩 더 많고, 묶음 쌍은 12개입니다. 따라서 숫자 2가 숫자 1보다 12개 더 많습니다.',q13Visual('pairs'));
+      var answer=document.createElement('div');answer.className='f7ot-answer';answer.innerHTML='더 많은 숫자와 개수 차이<strong>2가 12개 더 많음</strong>';section.appendChild(answer);return section;
+    },[
+      {label:'이해했어요 · 마치기',action:function(){dialog().close();},primary:true},
+      {label:'묶음 짝 다시 보기',action:function(){showQ13Pairs(false);}},
+      {label:'처음부터 다시 보기',action:showQ13Original}
+    ]);
+  }
   function openQ6(){dialog().querySelector('#f7otTitle').textContent='최종 7회 6번 · 낚싯줄 따라가기';showOriginal();var node=dialog();if(typeof node.showModal==='function')node.showModal();else node.setAttribute('open','');}
   function openQ11(){showQ11Original();var node=dialog();if(typeof node.showModal==='function')node.showModal();else node.setAttribute('open','');}
   function openQ12(){showQ12Original();var node=dialog();if(typeof node.showModal==='function')node.showModal();else node.setAttribute('open','');}
+  function openQ13(){showQ13Original();var node=dialog();if(typeof node.showModal==='function')node.showModal();else node.setAttribute('open','');}
   function launch(label,row,handler){
     var node=document.createElement('button');node.type='button';node.className='f7ot-launch no-print'+(row?' f7ot-row-launch':'');node.textContent=label;node.addEventListener('click',handler);return node;
   }
@@ -309,11 +368,18 @@
     var copy=document.createElement('p');copy.textContent='원문 그림에서 한 단계마다 새로 색칠되는 두 칸의 넓이를 따라갑니다.';
     card.append(heading,copy,q12SourceFigure(),launch('선생님 대본으로 한 단계씩 보기',false,openQ12));return card;
   }
+  function originalCardQ13(){
+    var card=document.createElement('article');card.className='detailed-solution f7ot-card';card.dataset.solutionNo='13';
+    var heading=document.createElement('h3');heading.textContent='13번 원문 풀이 도우미';
+    var copy=document.createElement('p');copy.textContent='선생님 대본대로 묶음의 끝을 찾고 1과 2의 개수를 묶음 쌍으로 비교합니다.';
+    card.append(heading,copy,q13SourceFigure(),launch('선생님 대본으로 한 단계씩 보기',false,openQ13));return card;
+  }
   function attach(container,options){
     if(!container||!options||Number(options.round)!==7)return;
     var details=container.querySelector('#detailedAnswersSection .report-resource-details');if(!details)return;
     var solutions=details.querySelector('.detailed-solutions');
     if(!solutions){solutions=document.createElement('div');solutions.className='detailed-solutions';details.appendChild(solutions);}
+    if(!solutions.querySelector('.f7ot-card[data-solution-no="13"]'))solutions.insertBefore(originalCardQ13(),solutions.firstChild);
     if(!solutions.querySelector('.f7ot-card[data-solution-no="12"]'))solutions.insertBefore(originalCardQ12(),solutions.firstChild);
     if(!solutions.querySelector('.f7ot-card[data-solution-no="11"]'))solutions.insertBefore(originalCardQ11(),solutions.firstChild);
     if(!solutions.querySelector('.f7ot-card[data-solution-no="6"]'))solutions.insertBefore(originalCardQ6(),solutions.firstChild);
@@ -323,6 +389,8 @@
     if(row11)row11.replaceChildren(launch('11번 풀이',true,openQ11));
     var row12=container.querySelector('#detailWrap tbody:nth-of-type(12) tr:first-child .weak-cell');
     if(row12)row12.replaceChildren(launch('12번 풀이',true,openQ12));
+    var row13=container.querySelector('#detailWrap tbody:nth-of-type(13) tr:first-child .weak-cell');
+    if(row13)row13.replaceChildren(launch('13번 풀이',true,openQ13));
   }
-  root.GFIELD_FINAL7_ORIGINAL_TUTOR={attach:attach,openQ6:openQ6,openQ11:openQ11,openQ12:openQ12,sourcePriority:['final7-video-script','basic','think-core']};
+  root.GFIELD_FINAL7_ORIGINAL_TUTOR={attach:attach,openQ6:openQ6,openQ11:openQ11,openQ12:openQ12,openQ13:openQ13,sourcePriority:['final7-video-script','basic','think-core']};
 })(window);
