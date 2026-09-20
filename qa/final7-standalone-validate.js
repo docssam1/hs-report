@@ -18,8 +18,8 @@ assert.equal(round.cumulative,false,'Final 7 must opt out of cumulative reportin
 assert.equal(round.minutes,80,'source paper states 80 minutes');
 assert.equal(round.items.length,30,'source paper has 30 questions');
 assert.equal(round.paper.imagePages,8,'source paper has 8 pages');
-assert.equal(round.ready,false,'release remains locked until independent solution review');
-assert.deepEqual(Array.from(round.lockedQuestions),Array.from({length:30},(_,i)=>i+1));
+assert.equal(round.ready,true,'reviewed Final 7 is released to students with the dedicated round approval');
+assert.deepEqual(Array.from(round.lockedQuestions),[],'no Final 7 source question remains in the review lock');
 assert.equal(round.stats.rankEvidence.status,'verified-source-rank','Final 7 must use a verified process benchmark for rank percentile');
 assert.equal(round.stats.percentileTable.length>100,true,'process percentile table must cover score changes without coarse guessing');
 assert.equal(round.stats.cuts.length,6,'process grade cuts must contain the five shared levels and the floor');
