@@ -119,6 +119,11 @@ vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'final7-original-tutor.js'), 
 const q28Tutor = tutorSandbox.window.GFIELD_FINAL7_ORIGINAL_TUTOR.scriptedTutors[28];
 const q21Tutor = tutorSandbox.window.GFIELD_FINAL7_ORIGINAL_TUTOR.scriptedTutors[21];
 const q22Tutor = tutorSandbox.window.GFIELD_FINAL7_ORIGINAL_TUTOR.scriptedTutors[22];
+const q5Tutor = tutorSandbox.window.GFIELD_FINAL7_ORIGINAL_TUTOR.scriptedTutors[5];
+assert.equal(q5Tutor.answer, '11가지', 'Q5 tutor uses the independently enumerated correction');
+assert.match(q5Tutor.steps[0].speech, /한 번 지난 칸은 다시 지나지 않고/, 'Q5 states the user-confirmed no-revisit rule');
+assert.match(q5Tutor.steps[1].speech, /4가지/, 'Q5 counts the center-first branch');
+assert.match(q5Tutor.steps[2].speech, /3가지.*4가지.*7가지/, 'Q5 counts all right-lower-first branches');
 assert.match(q21Tutor.steps[1].speech, /56×58×60=194880/, 'Q21 proves that candidates below 58 cannot reach 200000');
 assert.match(q21Tutor.steps[2].speech, /58×60×62=215760.*60×62×64=238080.*62×64×66=261888/, 'Q21 checks every candidate from 58 through the first match');
 assert.match(q22Tutor.steps[0].speech, /모든 학생을 한 묶음 R/, 'Q22 keeps every non-4th/non-6th grade in one remainder group');
@@ -128,7 +133,8 @@ assert.match(q28Tutor.steps[1].deep, /2○, 2○\+1, 2○\+1/, 'Q28 generalizes 
 assert.doesNotMatch(q28Tutor.steps[1].speech, /○−4/, 'Q28 does not reuse the sample number 9 offsets for the unknown target');
 assert.doesNotMatch(q28Tutor.steps.map((step) => step.speech + ' ' + (step.deep || '')).join(' '), /r번째 줄|○−r/, 'Q28 avoids an age-inappropriate row variable');
 assert.match(q28Tutor.steps[3].speech, /22, 23, 29, 31, 38, 39/, 'Q28 verifies the actual six neighbors of 30');
-assert.equal(sourceRound.items.find((item) => item.no === 5).answer, '9가지', 'source Q5 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 5).officialAnswer, '9가지', 'source Q5 official answer remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 5).answer, '11가지', 'source Q5 learner answer uses the independently verified correction');
 assert.equal(sourceRound.items.find((item) => item.no === 6).answer, '6마리', 'source Q6 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 7).answer, '136', 'source Q7 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 8).answer, '425', 'source Q8 remains traceable');

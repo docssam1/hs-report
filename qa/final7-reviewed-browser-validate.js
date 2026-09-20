@@ -143,8 +143,8 @@ function startServer() {
     const q11Tutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="11"]');
     const q12Tutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="12"]');
     const q13Tutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="13"]');
-    assert.equal(await originalTutors.count(),29,'reviewed original Q1-Q4 and Q6-Q30 receive source-specific tutors');
-    assert.equal(await page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="5"]').count(),0,'ambiguous original Q5 does not teach the unverified official count');
+    assert.equal(await originalTutors.count(),30,'reviewed original Q1-Q30 receive source-specific tutors');
+    assert.equal(await page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="5"]').count(),1,'corrected original Q5 receives its verified tutor');
     assert.equal(await q6Tutor.count(),1,'original Q6 receives one tutor');
     assert.equal(await q11Tutor.count(),1,'original Q11 receives one tutor');
     assert.equal(await q12Tutor.count(),1,'original Q12 receives one tutor');
@@ -154,7 +154,7 @@ function startServer() {
     assert.equal(await q11Tutor.locator('.f7ot-source--q11 image').getAttribute('href'),'materials/final_7/003.jpg','Q11 tutor reuses the exact original page image');
     assert.equal(await q12Tutor.locator('.f7ot-source--q12 image').getAttribute('href'),'materials/final_7/003.jpg','Q12 tutor reuses the exact original page image');
     assert.equal(await q13Tutor.locator('.f7ot-source--q13 image').getAttribute('href'),'materials/final_7/004.jpg','Q13 tutor reuses the exact original page image');
-    const scriptedSources={1:'001.jpg',2:'001.jpg',3:'001.jpg',4:'001.jpg',7:'002.jpg',8:'002.jpg',9:'003.jpg',10:'003.jpg',14:'004.jpg',15:'004.jpg',16:'004.jpg',17:'005.jpg',18:'005.jpg',19:'005.jpg',20:'005.jpg',21:'006.jpg',22:'006.jpg',23:'006.jpg',24:'006.jpg',25:'007.jpg',26:'007.jpg',27:'007.jpg',28:'007.jpg',29:'008.jpg',30:'008.jpg'};
+    const scriptedSources={1:'001.jpg',2:'001.jpg',3:'001.jpg',4:'001.jpg',5:'002.jpg',7:'002.jpg',8:'002.jpg',9:'003.jpg',10:'003.jpg',14:'004.jpg',15:'004.jpg',16:'004.jpg',17:'005.jpg',18:'005.jpg',19:'005.jpg',20:'005.jpg',21:'006.jpg',22:'006.jpg',23:'006.jpg',24:'006.jpg',25:'007.jpg',26:'007.jpg',27:'007.jpg',28:'007.jpg',29:'008.jpg',30:'008.jpg'};
     for(const [no,file] of Object.entries(scriptedSources))assert.equal(await page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="'+no+'"] .f7ot-source--scripted image').getAttribute('href'),'materials/final_7/'+file,'Q'+no+' reuses the exact original page image');
     await q6Tutor.locator('.f7ot-launch').click();
     await page.getByRole('button',{name:'6번 풀이 시작'}).click();
@@ -226,7 +226,7 @@ function startServer() {
     await page.getByRole('button',{name:'12쌍이에요 · 답 확인하기'}).click();
     assert.match(await page.locator('.f7ot-answer').innerText(),/2가 12개 더 많음/,'Q13 ends at the verified number and difference');
     await page.locator('.f7ot-close').click();
-    const scriptedAnswers={1:'37개',2:'95분',3:'67개',4:'102개',7:'136페이지',8:'425',9:'40',10:'50',14:'101, 148, 145',15:'(3, 50)',16:'165',17:'210개',18:'병 16살',19:'382개',20:'216g',21:'62',22:'75명',23:'169',24:'4명',25:'3마리',26:'2014년',27:'5주일',28:'30',29:'192가지',30:'128'};
+    const scriptedAnswers={1:'37개',2:'95분',3:'67개',4:'102개',5:'11가지',7:'136페이지',8:'425',9:'40',10:'50',14:'101, 148, 145',15:'(3, 50)',16:'165',17:'210개',18:'병 16살',19:'382개',20:'216g',21:'62',22:'75명',23:'169',24:'4명',25:'3마리',26:'2014년',27:'5주일',28:'30',29:'192가지',30:'128'};
     for(const [no,answer] of Object.entries(scriptedAnswers)){
       await page.evaluate((value)=>window.GFIELD_FINAL7_ORIGINAL_TUTOR.openScripted(Number(value)),no);
       assert.match(await page.locator('.f7ot-head').innerText(),new RegExp('최종 7회 '+no+'번'));
@@ -252,7 +252,7 @@ function startServer() {
     await page.setViewportSize({width:1280,height:1000});
     await page.locator('.f7ot-close').click();
     await page.emulateMedia({media:'print'});
-    assert.deepEqual(await originalTutors.evaluateAll((nodes)=>nodes.map((node)=>getComputedStyle(node).display)),Array(29).fill('none'),'original tutors are excluded from print and PDF');
+    assert.deepEqual(await originalTutors.evaluateAll((nodes)=>nodes.map((node)=>getComputedStyle(node).display)),Array(30).fill('none'),'original tutors are excluded from print and PDF');
     await page.emulateMedia({media:null});
     const wrongNos=allNos.filter((no)=>no!==5);
     assert.deepEqual(await page.locator('.wp-item').evaluateAll((rows) => rows.map((row) => Number(row.dataset.wpNo))), wrongNos, 'report exposes every reviewed wrong item');
