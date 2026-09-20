@@ -39,7 +39,9 @@ function startServer() {
     await page.route('https://**/*', (route) => route.abort());
     await page.addInitScript(() => localStorage.setItem('gfield_student', '최종7검수학생'));
     const base = `http://127.0.0.1:${server.address().port}/bank/index.html`;
-    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q05%2Cfinal7-q06%2Cfinal7-q07%2Cfinal7-q08%2Cfinal7-q09%2Cfinal7-q10%2Cfinal7-q11%2Cfinal7-q12%2Cfinal7-q13%2Cfinal7-q14%2Cfinal7-q15%2Cfinal7-q16%2Cfinal7-q17%2Cfinal7-q18%2Cfinal7-q19%2Cfinal7-q20%2Cfinal7-q21%2Cfinal7-q22%2Cfinal7-q23%2Cfinal7-q24%2Cfinal7-q25%2Cfinal7-q26%2Cfinal7-q27%2Cfinal7-q28%2Cfinal7-q29%2Cfinal7-q30&per=3&points=all&source=final%7C7&sourceNos=5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30&printMode=both#student=%EC%B5%9C%EC%A2%857%EA%B2%80%EC%88%98%ED%95%99%EC%83%9D', {waitUntil: 'networkidle'});
+    const allNos=Array.from({length:30},(_,index)=>index+1);
+    const allGens=allNos.map((no)=>'final7-q'+String(no).padStart(2,'0')).join(',');
+    await page.goto(base + '?bank=final7&practice=wrong&gens='+encodeURIComponent(allGens)+'&per=3&points=all&source=final%7C7&sourceNos='+encodeURIComponent(allNos.join(','))+'&printMode=both#student=%EC%B5%9C%EC%A2%857%EA%B2%80%EC%88%98%ED%95%99%EC%83%9D', {waitUntil: 'networkidle'});
     await page.waitForFunction(() => {
       const button = document.querySelector('#final1Worksheet #btnPrint');
       return button && !button.disabled;
@@ -47,16 +49,16 @@ function startServer() {
 
     assert.match(await page.locator('.f1-title').textContent(), /최종 7회 약점 유형/);
     assert.match(await page.locator('.cover-page h1').textContent(), /최종 7회/);
-    assert.equal(await page.locator('.qcard').count(), 78, 'seventy-eight reviewed variants render');
-    for (const no of [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]) assert.equal(await page.locator(`.qcard[data-source-no="${no}"]`).count(), 3, `Q${no} variants`);
+    assert.equal(await page.locator('.qcard').count(), 90, 'ninety reviewed variants render');
+    for (const no of allNos) assert.equal(await page.locator(`.qcard[data-source-no="${no}"]`).count(), 3, `Q${no} variants`);
     assert.ok(await page.locator('.qcard[data-source-no="5"],.qcard[data-source-no="6"],.qcard[data-source-no="12"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'true')), 'reviewed Final 7 diagrams use wide rows');
     assert.ok(await page.locator('.qcard[data-source-no="7"],.qcard[data-source-no="8"],.qcard[data-source-no="9"],.qcard[data-source-no="10"],.qcard[data-source-no="11"],.qcard[data-source-no="13"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'false')), 'short text-only items use the regular page grid');
     assert.ok(await page.locator('.qcard[data-source-no="14"],.qcard[data-source-no="15"],.qcard[data-source-no="17"],.qcard[data-source-no="29"]').evaluateAll((cards) => cards.every((card) => card.dataset.wide === 'false')), 'Q14, Q15, Q17, and Q29 stay in the regular grid to preserve writing space without one-item pages');
     const pageCardCounts = await page.locator('.question-page').evaluateAll((pages) => pages.map((sheet) => sheet.querySelectorAll('.qcard').length));
     assert.ok(pageCardCounts.every((count) => count>=2&&count<=4), 'question pages avoid one-item pages while preserving wide figures: ' + JSON.stringify(pageCardCounts));
-    assert.equal(await page.locator('.question-page img').count(), 24, 'one prompt figure for every visual question');
-    assert.equal(await page.locator('.solution-card').count(), 78, 'seventy-eight detailed answers');
-    assert.equal(await page.locator('.solution-card ol li').count(), 234, 'three concise steps per answer');
+    assert.equal(await page.locator('.question-page img').count(), 36, 'one prompt figure for every visual question');
+    assert.equal(await page.locator('.solution-card').count(), 90, 'ninety detailed answers');
+    assert.equal(await page.locator('.solution-card ol li').count(), 270, 'three concise steps per answer');
     assert.equal(await page.locator('.f1-coach-launch,.gfield-step-coach,.f7ot-launch').count(), 0, 'similar-problem answers do not receive an original-question tutor');
     assert.equal(await page.locator('.qconditions,.f1-qgiven').count(), 0, 'no repeated conditions or hint boxes');
     assert.equal(await page.locator('.question-page .ans').count(), 0, 'no answer leakage on question pages');
@@ -124,25 +126,25 @@ function startServer() {
     if (OUTPUT) await page.screenshot({path: path.join(OUTPUT, 'final7-reviewed-mobile.png'), fullPage: true});
 
     await page.setViewportSize({width: 1280, height: 1000});
-    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q04&per=3&points=all&source=final%7C7&sourceNos=4&printMode=both#student=%EA%B2%80%EC%88%98', {waitUntil: 'networkidle'});
+    await page.goto(base + '?bank=final7&practice=wrong&gens=final7-q31&per=3&points=all&source=final%7C7&sourceNos=31&printMode=both#student=%EA%B2%80%EC%88%98', {waitUntil: 'networkidle'});
     await page.locator('#f1Status').waitFor();
-    assert.match(await page.locator('#f1Status').textContent(), /4번 유사문제는 아직 검수 중입니다/);
+    assert.match(await page.locator('#f1Status').textContent(), /학습할 최종 7회 문항을 선택해 주세요/);
     assert.equal(await page.locator('#btnPrint').isDisabled(), true, 'item outside the reviewed Final 7 range cannot print');
 
     await page.goto(`http://127.0.0.1:${server.address().port}/final.html?round=7&name=docssam&go=answer&preview=1`, {waitUntil: 'domcontentloaded'});
     await page.locator('.abtn').first().waitFor();
-    for (let no = 1; no <= 30; no += 1) {
-      if (![5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].includes(no)) await page.locator('.abtn').nth(no - 1).click();
-    }
+    await page.locator('.abtn').nth(4).click();
     await page.locator('#btnGrade').click();
     await page.locator('#wrongPractice').waitFor();
+    assert.doesNotMatch(await page.locator('.diagnostic-coaching').innerText(),/유형 확인 중/,'reviewed Final 7 types remain visible in the diagnostic coaching section');
     await page.locator('#detailedAnswersSection summary').click();
     const originalTutors=page.locator('#detailedAnswersSection .f7ot-card');
     const q6Tutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="6"]');
     const q11Tutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="11"]');
     const q12Tutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="12"]');
     const q13Tutor=page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="13"]');
-    assert.equal(await originalTutors.count(),21,'reviewed original Q6 and Q11-Q30 receive source-specific tutors');
+    assert.equal(await originalTutors.count(),29,'reviewed original Q1-Q4 and Q6-Q30 receive source-specific tutors');
+    assert.equal(await page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="5"]').count(),0,'ambiguous original Q5 does not teach the unverified official count');
     assert.equal(await q6Tutor.count(),1,'original Q6 receives one tutor');
     assert.equal(await q11Tutor.count(),1,'original Q11 receives one tutor');
     assert.equal(await q12Tutor.count(),1,'original Q12 receives one tutor');
@@ -152,7 +154,7 @@ function startServer() {
     assert.equal(await q11Tutor.locator('.f7ot-source--q11 image').getAttribute('href'),'materials/final_7/003.jpg','Q11 tutor reuses the exact original page image');
     assert.equal(await q12Tutor.locator('.f7ot-source--q12 image').getAttribute('href'),'materials/final_7/003.jpg','Q12 tutor reuses the exact original page image');
     assert.equal(await q13Tutor.locator('.f7ot-source--q13 image').getAttribute('href'),'materials/final_7/004.jpg','Q13 tutor reuses the exact original page image');
-    const scriptedSources={14:'004.jpg',15:'004.jpg',16:'004.jpg',17:'005.jpg',18:'005.jpg',19:'005.jpg',20:'005.jpg',21:'006.jpg',22:'006.jpg',23:'006.jpg',24:'006.jpg',25:'007.jpg',26:'007.jpg',27:'007.jpg',28:'007.jpg',29:'008.jpg',30:'008.jpg'};
+    const scriptedSources={1:'001.jpg',2:'001.jpg',3:'001.jpg',4:'001.jpg',7:'002.jpg',8:'002.jpg',9:'003.jpg',10:'003.jpg',14:'004.jpg',15:'004.jpg',16:'004.jpg',17:'005.jpg',18:'005.jpg',19:'005.jpg',20:'005.jpg',21:'006.jpg',22:'006.jpg',23:'006.jpg',24:'006.jpg',25:'007.jpg',26:'007.jpg',27:'007.jpg',28:'007.jpg',29:'008.jpg',30:'008.jpg'};
     for(const [no,file] of Object.entries(scriptedSources))assert.equal(await page.locator('#detailedAnswersSection .f7ot-card[data-solution-no="'+no+'"] .f7ot-source--scripted image').getAttribute('href'),'materials/final_7/'+file,'Q'+no+' reuses the exact original page image');
     await q6Tutor.locator('.f7ot-launch').click();
     await page.getByRole('button',{name:'6번 풀이 시작'}).click();
@@ -224,7 +226,7 @@ function startServer() {
     await page.getByRole('button',{name:'12쌍이에요 · 답 확인하기'}).click();
     assert.match(await page.locator('.f7ot-answer').innerText(),/2가 12개 더 많음/,'Q13 ends at the verified number and difference');
     await page.locator('.f7ot-close').click();
-    const scriptedAnswers={14:'101, 148, 145',15:'(3, 50)',16:'165',17:'210개',18:'병 16살',19:'382개',20:'216g',21:'62',22:'75명',23:'169',24:'4명',25:'3마리',26:'2014년',27:'5주일',28:'30',29:'192가지',30:'128'};
+    const scriptedAnswers={1:'37개',2:'95분',3:'67개',4:'102개',7:'136페이지',8:'425',9:'40',10:'50',14:'101, 148, 145',15:'(3, 50)',16:'165',17:'210개',18:'병 16살',19:'382개',20:'216g',21:'62',22:'75명',23:'169',24:'4명',25:'3마리',26:'2014년',27:'5주일',28:'30',29:'192가지',30:'128'};
     for(const [no,answer] of Object.entries(scriptedAnswers)){
       await page.evaluate((value)=>window.GFIELD_FINAL7_ORIGINAL_TUTOR.openScripted(Number(value)),no);
       assert.match(await page.locator('.f7ot-head').innerText(),new RegExp('최종 7회 '+no+'번'));
@@ -250,9 +252,10 @@ function startServer() {
     await page.setViewportSize({width:1280,height:1000});
     await page.locator('.f7ot-close').click();
     await page.emulateMedia({media:'print'});
-    assert.deepEqual(await originalTutors.evaluateAll((nodes)=>nodes.map((node)=>getComputedStyle(node).display)),Array(21).fill('none'),'original tutors are excluded from print and PDF');
+    assert.deepEqual(await originalTutors.evaluateAll((nodes)=>nodes.map((node)=>getComputedStyle(node).display)),Array(29).fill('none'),'original tutors are excluded from print and PDF');
     await page.emulateMedia({media:null});
-    assert.deepEqual(await page.locator('.wp-item').evaluateAll((rows) => rows.map((row) => Number(row.dataset.wpNo))), [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30], 'report exposes every reviewed Q5-Q30 practice item');
+    const wrongNos=allNos.filter((no)=>no!==5);
+    assert.deepEqual(await page.locator('.wp-item').evaluateAll((rows) => rows.map((row) => Number(row.dataset.wpNo))), wrongNos, 'report exposes every reviewed wrong item');
     assert.equal(await page.locator('.wp-pending').count(), 0, 'approved Q29-Q30 do not remain pending');
     const popupPromise = page.waitForEvent('popup');
     await page.locator('#wpStart').click();
@@ -262,12 +265,12 @@ function startServer() {
     const practiceUrl = new URL(practice.url());
     assert.equal(practiceUrl.searchParams.get('bank'), 'final7');
     assert.equal(practiceUrl.searchParams.get('source'), 'final|7');
-    assert.equal(practiceUrl.searchParams.get('gens'), 'final7-q05,final7-q06,final7-q07,final7-q08,final7-q09,final7-q10,final7-q11,final7-q12,final7-q13,final7-q14,final7-q15,final7-q16,final7-q17,final7-q18,final7-q19,final7-q20,final7-q21,final7-q22,final7-q23,final7-q24,final7-q25,final7-q26,final7-q27,final7-q28,final7-q29,final7-q30');
-    assert.equal(await practice.locator('.qcard').count(), 78, 'real Final 7 report opens exactly the seventy-eight reviewed variants');
+    assert.equal(practiceUrl.searchParams.get('gens'), wrongNos.map((no)=>'final7-q'+String(no).padStart(2,'0')).join(','));
+    assert.equal(await practice.locator('.qcard').count(), 87, 'real Final 7 report opens three variants for every selected wrong item');
     await practice.close();
     assert.deepEqual(errors, [], 'browser errors after report-to-bank navigation');
 
-    console.log('PASS Final 7 Q5-Q30 browser: reviewed figures and text items, no tutor on variants, source-script Q6 and Q11-Q30 original tutors, seventy-eight detailed answers, desktop/390px/PDF readiness, adapter loading, and report-to-bank navigation');
+    console.log('PASS Final 7 Q1-Q30 browser: reviewed figures and text items, no tutor on variants, verified original tutors, ninety detailed answers, desktop/390px/PDF readiness, adapter loading, and report-to-bank navigation');
   } finally {
     await browser.close();
     server.close();

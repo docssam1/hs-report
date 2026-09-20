@@ -2174,17 +2174,18 @@ window.GFIELD_MOCK_FINAL = {
 
 /* 최종 실전 모의고사 7회는 추가 자료실의 독립 시험이다.
  * 파이널 1~5회 또는 최종 1~4회와 누적하지 않는다.
- * 30문항 답과 Q5~Q30의 유사문제·상세 풀이 검수를 마쳤으며 회차 승인 학생에게 공개한다. */
+ * 30문항 답, Q1~Q30 유사문제와 검증된 원문 상세 풀이를 회차 승인 학생에게 공개한다.
+ * 단, 원문 5번은 조건과 공식 답이 일치하지 않아 원문 튜터만 잠근다. */
 (function addStandaloneFinalSeven(model){
   if(!model||!model.rounds)return;
   var rows=[
     [1,'흩어진 물건의 개수 구하기','식의 계산','곱셈과 뺄셈','37'],
     [2,'거울에 비친 시계로 지난 시간 구하기','도형','시계와 대칭','95분'],
-    [3,'커지는 정사각형 배열의 바둑돌 수','수·규칙찾기','도형 배열의 규칙','67개'],
+    [3,'계단형 성냥개비 배열의 크고 작은 정사각형 수','도형','도형 세기','67개'],
     [4,'규칙에 따라 놓인 기호의 개수','수·규칙찾기','도형 배열의 규칙','102개'],
     [5,'벌집 모양 길을 따라가는 방법의 수','경우의 수','길 찾기','9가지'],
     [6,'묶인 줄에서 앞을 보는 물고기 수','도형','방향과 위치','6마리'],
-    [7,'찢어진 연속 두 쪽의 쪽수','식의 계산','연속수','136'],
+    [7,'숫자 순서를 바꾼 마지막 쪽과 연속 페이지 수','식의 계산','연속수','136'],
     [8,'나머지 조건을 만족하는 수의 합','식의 계산','나눗셈의 몫과 나머지','425'],
     [9,'이동 경로를 거꾸로 추적하기','수·규칙찾기','방향과 이동','40'],
     [10,'다섯 수의 합과 나눗셈 조건으로 가장 작은 수 구하기','식의 계산','우기기/가정하여 풀기','50'],
@@ -2219,7 +2220,7 @@ window.GFIELD_MOCK_FINAL = {
     script:'영상 해설 문항별 시작 시각 연결 완료',
     answerUrl:'answer.html?set=final&round=7',
     paper:{imageDir:'final_7',imagePages:8},
-    items:rows.map(function(row){return {no:row[0],type:row[1],detailType:row[1],area:row[2],subarea:row[3],answer:row[4],comment:'',taxonomyReviewStatus:'source-bound-candidate',curriculumReviewStatus:'pending'};}),
+    items:rows.map(function(row){return {no:row[0],type:row[1],detailType:row[1],area:row[2],subarea:row[3],answer:row[4],comment:'',taxonomyReviewStatus:'verified-source-bound',curriculumReviewStatus:'pending'};}),
     stats:{},
     ready:true,
     lockedQuestions:[],

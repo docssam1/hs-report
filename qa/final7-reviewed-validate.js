@@ -99,13 +99,13 @@ function minimumSelected(max, count, target) {
 assert.equal(data.sourceSet, 'final');
 assert.equal(data.sourceRound, 7);
 assert.equal(data.freezePolicy.runtimeGeneration, false);
-assert.equal(data.freezePolicy.partialRelease, true);
-assert.equal(data.freezePolicy.fixedItemCount, 78);
+assert.equal(data.freezePolicy.partialRelease, false);
+assert.equal(data.freezePolicy.fixedItemCount, 90);
 assert.equal(data.freezePolicy.variantsPerSourceQuestion, 3);
-assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]);
-assert.deepEqual(data.reviewSummary, {verified: 78, pending: 0, unavailableSourceQuestions: 0});
-assert.equal(data.items.length, 78);
-assert.equal(new Set(data.items.map((item) => item.id)).size, 78);
+assert.deepEqual(data.freezePolicy.availableSourceNos, Array.from({length:30}, (_, index) => index + 1));
+assert.deepEqual(data.reviewSummary, {verified: 90, pending: 0, unavailableSourceQuestions: 0});
+assert.equal(data.items.length, 90);
+assert.equal(new Set(data.items.map((item) => item.id)).size, 90);
 
 for (const [relativePath, expected] of Object.entries(data.sourceFingerprints)) {
   assert.equal(hash(fs.readFileSync(path.join(ROOT, relativePath))), expected, relativePath + ': source fingerprint');
@@ -157,7 +157,7 @@ assert.equal(sourceRound.items.find((item) => item.no === 28).answer, '30', 'sou
 assert.equal(sourceRound.items.find((item) => item.no === 29).answer, '192가지', 'corrected source Q29 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 30).answer, '128', 'source Q30 remains traceable');
 
-for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]) {
+for (const no of Array.from({length:30}, (_, index) => index + 1)) {
   const group = data.items.filter((item) => item.sourceNo === no).sort((a, b) => a.variantNo - b.variantNo);
   assert.equal(group.length, 3, no + ': exactly three reviewed variants');
   assert.deepEqual(group.map((item) => item.variantNo), [1, 2, 3]);
@@ -168,7 +168,7 @@ for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
   assert.equal(link.studentWrongPracticeReady, true);
   assert.equal(link.qaEvidence.suite, 'qa/final7-reviewed-validate.js');
 }
-assert.equal(registry.sourceItemGenerator('final|7|4'), null, 'items outside the reviewed Final 7 source range remain locked');
+assert.equal(registry.sourceItemGenerator('final|7|31'), null, 'items outside the Final 7 source range remain locked');
 
 for (const item of data.items) {
   assert.equal(item.reviewStatus, 'verified', item.id + ': review status');
@@ -199,6 +199,44 @@ for (const item of data.items) {
     assert.equal(item.asset, undefined, item.id + ': text-only item has no decorative image');
     assert.equal(item.assetSpec, null, item.id + ': text-only renderer contract');
   }
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 1)) {
+  const m = item.meta;
+  assert.equal(m.totalCount - m.pictureCount - m.separateCount, m.hiddenCount, item.id + ': hidden remainder');
+  assert.equal(item.answer, m.hiddenCount + '개', item.id + ': hidden remainder answer');
+  assert.equal(item.assetSpec.objectCount, m.pictureCount, item.id + ': picture object count contract');
+  assert.equal(item.assetSpec.renderRules.allowOverlap, false, item.id + ': every object remains countable');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 2)) {
+  const read = (value) => { const match=String(value).match(/(\d+)시(?:\s*(\d+)분)?/); return (Number(match[1])%12)*60+Number(match[2]||0); };
+  const actual = (720 - read(item.meta.mirrorTime)) % 720;
+  const wake = read(item.meta.wakeTime);
+  assert.equal(read(item.meta.actualTime), actual, item.id + ': reflected analog-clock time');
+  assert.equal(item.meta.elapsedMinutes, (wake - actual + 720) % 720, item.id + ': elapsed minutes');
+  assert.equal(item.answer, item.meta.elapsedMinutes + '분', item.id + ': elapsed-time answer');
+  assert.equal(item.assetSpec.renderRules.showActualTime, false, item.id + ': prompt image hides actual time');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 3)) {
+  const n=item.meta.stage;
+  const occupied=new Set();
+  for(let level=0;level<n;level+=1){const width=2*(n-level)-1;for(let x=level;x<level+width;x+=1)occupied.add(x+','+(n-level-1));}
+  const counts=[];
+  for(let size=1;size<=n;size+=1){let count=0;for(let y=0;y<=n-size;y+=1)for(let x=0;x<=2*n-1-size;x+=1){let full=true;for(let dy=0;dy<size&&full;dy+=1)for(let dx=0;dx<size;dx+=1)if(!occupied.has((x+dx)+','+(y+dy))){full=false;break;}if(full)count+=1;}if(count)counts.push(count);}
+  assert.deepEqual(counts, item.meta.countsBySide, item.id + ': exhaustive square counts by side');
+  assert.equal(counts.reduce((sum,value)=>sum+value,0), item.meta.totalSquareCount, item.id + ': all square sizes total');
+  assert.equal(item.answer, item.meta.totalSquareCount + '개', item.id + ': square-count answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 4)) {
+  const m=item.meta;
+  assert.equal(m.totalPositions, m.rows*m.columns, item.id + ': rectangular total');
+  assert.equal(m.visibleStars, m.totalPositions-m.missingPositions, item.id + ': occupied positions');
+  assert.equal(item.answer, m.visibleStars + '개', item.id + ': visible-star answer');
+  assert.equal(item.assetSpec.renderRules.showMissingCount, false, item.id + ': no missing-count hint in picture');
+  assert.equal(item.assetSpec.renderRules.showGroupingMarks, false, item.id + ': no grouping hint in picture');
 }
 
 for (const item of data.items.filter((item) => item.sourceNo === 5)) {
@@ -553,4 +591,4 @@ for (const item of data.items.filter((item) => item.sourceNo === 30)) {
   assert.equal(item.answer,String(remaining[0]),item.id + ': last student answer');
 }
 
-console.log('PASS Final 7 Q5-Q30: seventy-eight reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed reviewed range');
+console.log('PASS Final 7 Q1-Q30: ninety reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed reviewed range');

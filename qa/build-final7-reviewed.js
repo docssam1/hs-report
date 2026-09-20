@@ -7,7 +7,31 @@ const path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const ASSET_DIR = path.join(ROOT, 'bank', 'assets', 'final7');
 const DATA_DIR = path.join(ROOT, 'bank', 'data');
-const SOURCE_PATHS = ['materials/final_7/002.jpg', 'materials/final_7/003.jpg', 'materials/final_7/004.jpg', 'materials/final_7/005.jpg', 'materials/final_7/006.jpg', 'materials/final_7/007.jpg', 'materials/final_7/008.jpg'];
+const SOURCE_PATHS = ['materials/final_7/001.jpg', 'materials/final_7/002.jpg', 'materials/final_7/003.jpg', 'materials/final_7/004.jpg', 'materials/final_7/005.jpg', 'materials/final_7/006.jpg', 'materials/final_7/007.jpg', 'materials/final_7/008.jpg'];
+
+const q1 = [
+  {name:'민혁', object:'색연필', total:60, floor:14, desk:3, place:'필통', answer:43},
+  {name:'관호', object:'성냥개비', total:72, floor:16, desk:5, place:'상자', answer:51},
+  {name:'주연', object:'나무 막대', total:80, floor:19, desk:4, place:'서랍', answer:57},
+];
+
+const q2 = [
+  {name:'유빈', mirror:'5시 20분', actual:'6시 40분', wake:'8시 10분', elapsed:90},
+  {name:'유준', mirror:'4시 45분', actual:'7시 15분', wake:'9시', elapsed:105},
+  {name:'서연', mirror:'6시 10분', actual:'5시 50분', wake:'8시 20분', elapsed:150},
+];
+
+const q3 = [
+  {stage:5, counts:[25,12,4], answer:41},
+  {stage:7, counts:[49,30,16,6,1], answer:102},
+  {stage:8, counts:[64,42,25,12,4], answer:147},
+];
+
+const q4 = [
+  {rows:9, cols:11, missing:15, answer:84},
+  {rows:11, cols:12, missing:21, answer:111},
+  {rows:10, cols:13, missing:24, answer:106},
+];
 
 const q5 = [
   {
@@ -190,6 +214,10 @@ const q30 = [
 ];
 
 const comparisons = {
+  1: {transformedDimensions:['object','total count','visible arrangement','separate count'], preservedInvariants:['whole minus visible groups','one hidden remainder','no count labels in the picture']},
+  2: {transformedDimensions:['mirror-clock time','wake time'], preservedInvariants:['read mirror image first','find actual time','calculate elapsed minutes']},
+  3: {transformedDimensions:['target stage'], preservedInvariants:['odd-width stair-step square arrangement','count every axis-aligned square size','no answer marks']},
+  4: {transformedDimensions:['rectangle dimensions','missing-star regions'], preservedInvariants:['complete rectangular array minus missing positions','all visible stars are countable','no missing-count labels']},
   5: {transformedDimensions:['hex-cell arrangement','start/end position'], preservedInvariants:['adjacent-hex path counting','two first moves','no answer marks']},
   6: {transformedDimensions:['rope crossings','fish order and direction'], preservedInvariants:['one continuous rope','trace from front to back','no answer marks']},
   7: {transformedDimensions:['page numbers','maximum page count','book activity'], preservedInvariants:['same three digits used once','later page','inclusive consecutive-page count']},
@@ -219,7 +247,7 @@ const comparisons = {
 };
 
 function sourcePathFor(no) {
-  return no <= 8 ? SOURCE_PATHS[0] : no <= 12 ? SOURCE_PATHS[1] : no <= 16 ? SOURCE_PATHS[2] : no <= 20 ? SOURCE_PATHS[3] : no <= 24 ? SOURCE_PATHS[4] : no <= 28 ? SOURCE_PATHS[5] : SOURCE_PATHS[6];
+  return no <= 4 ? SOURCE_PATHS[0] : no <= 8 ? SOURCE_PATHS[1] : no <= 12 ? SOURCE_PATHS[2] : no <= 16 ? SOURCE_PATHS[3] : no <= 20 ? SOURCE_PATHS[4] : no <= 24 ? SOURCE_PATHS[5] : no <= 28 ? SOURCE_PATHS[6] : SOURCE_PATHS[7];
 }
 
 function sha(value) {
@@ -272,11 +300,111 @@ function common(no, variant, fields) {
 }
 
 const items = [];
+q1.forEach((row, index) => {
+  const variant = index + 1;
+  const image = pngAsset('q01-v' + variant + '.png', '바닥에 흩어져 있으나 서로 겹치지 않아 한 개씩 셀 수 있는 막대 모양 물건');
+  items.push(common(1, variant, Object.assign({
+    text: row.name + '이가 ' + row.object + ' ' + row.total + '개를 정리하고 있습니다. 그림은 바닥에 떨어진 ' + row.object + '이고, 책상 위에는 ' + row.desk + '개가 있습니다. 나머지는 모두 ' + row.place + ' 안에 있다면, ' + row.place + ' 안에는 몇 개가 있습니까?',
+    answer: row.answer + '개', acceptedAnswers:[row.answer + '개', String(row.answer)],
+    area:'식의 계산', subarea:'뺄셈', detailType:'전체에서 그림 속 수와 따로 있는 수를 빼기',
+    readingFocus:'그림 속 물건을 한 개씩 세고, 책상 위의 수까지 전체에서 뺍니다.',
+    solutionSkill:'전체 수에서 두 곳에 보이는 수를 차례로 빼어 보이지 않는 나머지 구하기',
+    solutionSteps:[
+      '그림 속 ' + row.object + '은 ' + row.floor + '개입니다.',
+      '이미 보이는 수는 ' + row.floor + '+' + row.desk + '=' + (row.floor + row.desk) + '개입니다.',
+      row.total + '-' + (row.floor + row.desk) + '=' + row.answer + '이므로 ' + row.place + ' 안에는 ' + row.answer + '개가 있습니다.',
+    ],
+    meta:{object:row.object,totalCount:row.total,pictureCount:row.floor,separateCount:row.desk,hiddenCount:row.answer},
+    assetSpec:{kind:'scattered-countable-objects',objectCount:row.floor,renderRules:{showCount:false,allowOverlap:false}},
+    verification:{
+      primary:{method:'전체에서 그림 속 수와 책상 위 수를 차례로 뺌',answer:row.answer+'개'},
+      independent:{method:'PNG 생성 입력의 물건 수를 다시 세고 total-picture-separate 계산',answer:row.answer+'개'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'그림 속 물건이 서로 겹치지 않고 모두 화면 안에 보임'},
+    },
+  }, image)));
+});
+
+q2.forEach((row, index) => {
+  const variant = index + 1;
+  const image = pngAsset('q02-v' + variant + '.png', '거울에 비친 아날로그 시계의 시침과 분침');
+  items.push(common(2, variant, Object.assign({
+    text: row.name + '이가 자다가 잠깐 깨어 거울에 비친 시계를 보니 그림과 같았습니다. 다시 잠들었다가 오전 ' + row.wake + '에 일어났다면, 다시 잠든 뒤 몇 분 만에 일어난 것입니까?',
+    answer: row.elapsed + '분', acceptedAnswers:[row.elapsed + '분', String(row.elapsed)],
+    area:'측정', subarea:'시각과 시간', detailType:'거울에 비친 시각을 실제 시각으로 고쳐 지난 시간 구하기',
+    readingFocus:'그림은 실제 시계가 아니라 거울에 비친 모습입니다.',
+    solutionSkill:'거울 속 시각을 좌우로 되돌려 실제 시각을 찾은 뒤 기상 시각까지의 시간 계산하기',
+    solutionSteps:[
+      '거울에 비친 시계는 ' + row.mirror + '를 나타냅니다.',
+      '좌우를 되돌린 실제 시각은 오전 ' + row.actual + '입니다.',
+      row.actual + '부터 ' + row.wake + '까지는 ' + row.elapsed + '분입니다.',
+    ],
+    meta:{mirrorTime:row.mirror,actualTime:row.actual,wakeTime:row.wake,elapsedMinutes:row.elapsed},
+    assetSpec:{kind:'mirror-analog-clock',mirrorTime:row.mirror,renderRules:{showActualTime:false,showElapsedMinutes:false}},
+    verification:{
+      primary:{method:'11시 60분에서 거울 시각을 빼 실제 시각을 찾고 경과 시간 계산',answer:row.elapsed+'분'},
+      independent:{method:'시침·분침 각도를 좌우 반사해 실제 분 수를 다시 계산',answer:row.elapsed+'분'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'시침과 분침이 서로 구분되고 시침이 분침 위치에 맞게 눈금 사이에 놓임'},
+    },
+  }, image)));
+});
+
+q3.forEach((row, index) => {
+  const variant = index + 1;
+  const image = pngAsset('q03-v' + variant + '.png', '단위 정사각형이 아래층부터 홀수 개씩 놓인 계단형 성냥개비 배열');
+  items.push(common(3, variant, Object.assign({
+    text: '성냥개비로 그림과 같이 정사각형을 층층이 만들었습니다. 그림은 ' + row.stage + '번째 모양입니다. 이 모양에서 찾을 수 있는 크고 작은 정사각형은 모두 몇 개입니까?',
+    answer: row.answer + '개', acceptedAnswers:[row.answer + '개', String(row.answer)],
+    area:'도형', subarea:'도형 세기', detailType:'계단형 성냥개비 배열에서 크고 작은 정사각형의 개수',
+    readingFocus:'가장 작은 정사각형뿐 아니라 여러 칸을 합친 큰 정사각형도 셉니다.',
+    solutionSkill:'정사각형의 한 변 길이에 따라 나누어 세고 모두 더하기',
+    solutionSteps:[
+      '한 변이 한 칸인 정사각형은 ' + row.counts[0] + '개입니다.',
+      '더 큰 정사각형을 한 변 길이별로 세면 ' + row.counts.slice(1).join(', ') + '개입니다.',
+      row.counts.join('+') + '=' + row.answer + '이므로 모두 ' + row.answer + '개입니다.',
+    ],
+    meta:{stage:row.stage,countsBySide:row.counts,totalSquareCount:row.answer},
+    assetSpec:{kind:'odd-row-square-staircase',stage:row.stage,renderRules:{showCount:false,axisAlignedOnly:true}},
+    verification:{
+      primary:{method:'한 변 길이별 정사각형 수를 나누어 합산',answer:row.answer+'개'},
+      independent:{method:'단위 칸 점유 격자에서 가능한 모든 정사각형의 네 변을 전수 확인',answer:row.answer+'개'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'모든 수평·수직 선분이 끊김 없이 보이고 회전 정사각형은 생기지 않음'},
+    },
+  }, image)));
+});
+
+q4.forEach((row, index) => {
+  const variant = index + 1;
+  const image = pngAsset('q04-v' + variant + '.png', '일부 자리가 비어 있는 직사각형 별 배열');
+  items.push(common(4, variant, Object.assign({
+    text: '별을 직사각형 모양으로 빈틈없이 놓으려 했습니다. 그림처럼 아직 놓지 못한 자리가 있을 때, 이미 놓인 별은 모두 몇 개입니까?',
+    answer: row.answer + '개', acceptedAnswers:[row.answer + '개', String(row.answer)],
+    area:'식의 계산', subarea:'곱셈과 뺄셈', detailType:'직사각형 전체 자리에서 빈 자리를 빼어 도형의 개수 구하기',
+    readingFocus:'완성된 직사각형의 전체 자리와 그림의 빈 자리를 따로 셉니다.',
+    solutionSkill:'가로와 세로를 곱한 전체 수에서 비어 있는 자리 수 빼기',
+    solutionSteps:[
+      '모든 자리에 별을 놓으면 ' + row.cols + '×' + row.rows + '=' + (row.cols*row.rows) + '개입니다.',
+      '그림에서 비어 있는 자리는 모두 ' + row.missing + '개입니다.',
+      (row.cols*row.rows) + '-' + row.missing + '=' + row.answer + '이므로 이미 놓인 별은 ' + row.answer + '개입니다.',
+    ],
+    meta:{rows:row.rows,columns:row.cols,totalPositions:row.rows*row.cols,missingPositions:row.missing,visibleStars:row.answer},
+    assetSpec:{kind:'incomplete-symbol-rectangle',rows:row.rows,columns:row.cols,missingPositions:row.missing,renderRules:{showMissingCount:false,showGroupingMarks:false}},
+    verification:{
+      primary:{method:'전체 자리에서 빈 자리 수를 뺌',answer:row.answer+'개'},
+      independent:{method:'PNG 생성 점유 격자의 별 위치를 직접 집계',answer:row.answer+'개'},
+      unique:true,validAnswerCount:1,answerContract:'single-value',
+      visibleEvidence:{passed:true,method:'별이 모두 분리되어 보이고 빈 영역에 개수·괄호·풀이 표시는 없음'},
+    },
+  }, image)));
+});
+
 q5.forEach((row, index) => {
   const variant = index + 1;
   const image = pngAsset('q05-v' + variant + '.png', '서로 맞닿은 육각형 칸과 X·Y가 표시된 길 찾기 게임판');
   items.push(common(5, variant, Object.assign({
-    text: row.text,
+    text: row.text + ' (변을 함께 쓰는 이웃한 칸으로만 움직이며, 한 번 지난 칸은 다시 지나지 않습니다.)',
     answer: row.answer + '가지',
     acceptedAnswers: [row.answer + '가지', String(row.answer)],
     area: '경우의 수', subarea: '길 찾기', detailType: '육각형 칸을 따라가는 방법의 수',
@@ -1262,8 +1390,8 @@ q30.forEach((row, index) => {
 });
 
 const data = {
-  version: '7.12.0', sourceSet: 'final', sourceRound: 7,
-  freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30], partialRelease: true},
+  version: '7.13.0', sourceSet: 'final', sourceRound: 7,
+  freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: Array.from({length:30}, (_, index) => index + 1), partialRelease: false},
   sourceFingerprints: Object.fromEntries(SOURCE_PATHS.map(sourcePath => [sourcePath, sha(fs.readFileSync(path.join(ROOT, sourcePath)))])),
   reviewSummary: {verified: items.length, pending: 0, unavailableSourceQuestions: 0},
   items,

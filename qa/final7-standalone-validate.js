@@ -17,6 +17,8 @@ assert.equal(round.standalone,true,'Final 7 must be standalone');
 assert.equal(round.cumulative,false,'Final 7 must opt out of cumulative reporting');
 assert.equal(round.minutes,80,'source paper states 80 minutes');
 assert.equal(round.items.length,30,'source paper has 30 questions');
+assert.equal(round.items.filter(item=>item.taxonomyReviewStatus==='verified-source-bound').length,30,'all Final 7 report types must use the reviewed source-bound taxonomy');
+assert.equal(round.items.every(item=>item.area&&item.subarea&&item.detailType),true,'all Final 7 report types must have an explicit area, subarea, and detail type');
 assert.equal(round.paper.imagePages,8,'source paper has 8 pages');
 assert.equal(round.ready,true,'reviewed Final 7 is released to students with the dedicated round approval');
 assert.deepEqual(Array.from(round.lockedQuestions),[],'no Final 7 source question remains in the review lock');
