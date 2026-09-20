@@ -13,6 +13,7 @@ const dataAddon=`\n;(function(){
   d.students=d.students||[];if(d.students.indexOf(${JSON.stringify(student)})<0)d.students.push(${JSON.stringify(student)});
   d.archiveAccess=d.archiveAccess||{};
   ['중급 모의고사','파이널 모의고사','최종 모의고사'].forEach(function(key){d.archiveAccess[key]=d.archiveAccess[key]||[];if(d.archiveAccess[key].indexOf(${JSON.stringify(student)})<0)d.archiveAccess[key].push(${JSON.stringify(student)});});
+  d.archiveProductAccess=d.archiveProductAccess||{};d.archiveProductAccess['mock-final-7']=[${JSON.stringify(student)}];
   d.studentTypes=d.studentTypes||{};d.studentTypes[${JSON.stringify(student)}]='online';
 })();`;
 
@@ -29,6 +30,7 @@ const records=[
   row('hw1',13,'2026-07-08T00:00:00Z'),
   row('final1',15,'2026-09-01T00:00:00Z'),
   row('final2',18,'2026-09-08T00:00:00Z'),
+  row('final7',7,'2026-09-20T00:00:00Z'),
   row('last2',20,'2026-10-08T00:00:00Z'),
   row('original1',17,'2026-11-01T00:00:00Z'),
   Object.assign(row('final1@2',30,'2026-09-02T00:00:00Z'),{source:'practice-student'}),
@@ -68,9 +70,9 @@ const server=http.createServer((req,res)=>{
     await page.goto(`http://127.0.0.1:${server.address().port}/index.html`);
     if(await page.locator('#skipBtn').count())await page.locator('#skipBtn').click();
     await page.locator('#name-input').fill(student);await page.locator('.enter').click();
-    const hub=page.locator('#student-result-hub');await hub.locator('.srh-summary').filter({hasText:'응시 6회'}).waitFor();
+    const hub=page.locator('#student-result-hub');await hub.locator('.srh-summary').filter({hasText:'응시 7회'}).waitFor();
     assert.equal(await hub.locator('.srh-banner').getAttribute('aria-expanded'),'false','result table starts collapsed');
-    assert.equal(await hub.locator('tbody tr').count(),6,'only six valid first attempts are shown');
+    assert.equal(await hub.locator('tbody tr').count(),7,'all seven valid first attempts, including Final 7, are shown');
     assert.deepEqual(mockResultMethods,['GET'],'the result hub never writes grades');
     await hub.locator('.srh-banner').click();
     assert.equal(await hub.locator('.srh-banner').getAttribute('aria-expanded'),'true');
@@ -88,6 +90,10 @@ const server=http.createServer((req,res)=>{
     const last2=hub.locator('tbody tr',{hasText:'최종 모의고사 2회'});
     assert.match(await last2.innerText(),/\d+\.\d%/);
     assert.match(await last2.locator('a').getAttribute('href'),/^final\.html\?set=last&round=2&go=report&name=/);
+    const final7=hub.locator('tbody tr',{hasText:'최종 실전 모의고사 7회'});
+    assert.equal(await final7.count(),1,'Final 7 appears in this-week result hub');
+    assert.match(await final7.innerText(),/\d+\.\d%/,'Final 7 uses the verified process percentile');
+    assert.match(await final7.locator('a').getAttribute('href'),/^final\.html\?round=7&go=report&name=/,'Final 7 opens its own report, not Last 2');
     for(const title of ['중급 모의고사 1회','활용 모의고사 1회','시그니처 실전 1회']){
       assert.match(await hub.locator('tbody tr',{hasText:title}).innerText(),/자료 없음/,'unsupported rank data is not invented');
     }
@@ -98,11 +104,11 @@ const server=http.createServer((req,res)=>{
     }
     await page.setViewportSize({width:390,height:844});
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'result hub fits 390px without horizontal overflow');
-    assert.equal(await hub.locator('.srh-detail').count(),6);
+    assert.equal(await hub.locator('.srh-detail').count(),7);
     if(process.env.GFIELD_RESULT_HUB_QA_DIR){
       await hub.screenshot({path:path.join(process.env.GFIELD_RESULT_HUB_QA_DIR,'student-result-hub-390.png')});
     }
     assert.deepEqual(errors,[],'student result hub has no browser errors');
-    console.log('student result hub browser validation passed: 6 official first attempts, score/percentile/grade, routes, 390px, zero result writes');
+    console.log('student result hub browser validation passed: 7 official first attempts including Final 7, score/percentile/grade, routes, 390px, zero result writes');
   }finally{await browser.close();server.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

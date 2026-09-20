@@ -6,6 +6,7 @@
     middle:{file:'mock-data.js',global:'GFIELD_MOCK'},
     hw:{file:'mock-data-hw.js',global:'GFIELD_MOCK_HW'},
     final:{file:'mock-data-final.js',global:'GFIELD_MOCK_FINAL'},
+    final7:{file:'final7-benchmark.js',global:''},
     original:{file:'mock-data-original.js',global:'GFIELD_MOCK_ORIGINAL'},
     last:{file:'last-score-data.js',global:'GFIELD_LAST_SCORE_DATA'}
   };
@@ -30,7 +31,7 @@
     var match;
     if(/^\d+$/.test(key)&&Number(key)>=1&&Number(key)<=8) return {kind:'middle',round:Number(key),order:100+Number(key)};
     if((match=/^hw([1-9])$/.exec(key))) return {kind:'hw',round:Number(match[1]),order:200+Number(match[1])};
-    if((match=/^final([1-5])$/.exec(key))) return {kind:'final',round:Number(match[1]),order:300+Number(match[1])};
+    if((match=/^final([1-5]|7)$/.exec(key))) return {kind:'final',round:Number(match[1]),order:300+Number(match[1])};
     if((match=/^last([1-4])$/.exec(key))) return {kind:'last',round:Number(match[1]),order:400+Number(match[1])};
     if((match=/^original([1-2])$/.exec(key))) return {kind:'original',round:Number(match[1]),order:500+Number(match[1])};
     return null;
@@ -52,12 +53,12 @@
   function loadScript(kind){
     var spec=MODEL_FILES[kind];
     if(!spec) return Promise.resolve();
-    if(root[spec.global]) return Promise.resolve(root[spec.global]);
+    if(spec.global&&root[spec.global]) return Promise.resolve(root[spec.global]);
     if(scriptPromises[kind]) return scriptPromises[kind];
     scriptPromises[kind]=new Promise(function(resolve,reject){
       var node=document.createElement('script');
       node.src=spec.file+'?v=20260915a';node.async=true;
-      node.onload=function(){root[spec.global]?resolve(root[spec.global]):reject(new Error('성적 기준을 확인하지 못했습니다.'));};
+      node.onload=function(){(!spec.global||root[spec.global])?resolve(spec.global?root[spec.global]:true):reject(new Error('성적 기준을 확인하지 못했습니다.'));};
       node.onerror=function(){reject(new Error('성적 기준을 불러오지 못했습니다.'));};
       document.head.appendChild(node);
     });
@@ -65,7 +66,11 @@
   }
   function loadModels(items){
     var kinds={};items.forEach(function(item){kinds[item.meta.kind]=true;});
-    return Promise.all(Object.keys(kinds).map(loadScript));
+    var needsFinal7=items.some(function(item){return item.meta.kind==='final'&&item.meta.round===7;});
+    if(needsFinal7) kinds.last=true;
+    return Promise.all(Object.keys(kinds).map(loadScript)).then(function(){
+      return needsFinal7?loadScript('final7'):null;
+    });
   }
   function percentileFromTable(score,table){
     if(!Array.isArray(table)||!table.length) return null;
@@ -117,7 +122,7 @@
     var m=item.meta,model,round,stats,percentile=null,grade=null,title='';
     if(m.kind==='final'){
       model=root.GFIELD_MOCK_FINAL;round=model&&model.rounds&&model.rounds[String(m.round)];stats=round&&round.stats;
-      title='파이널 모의고사 '+m.round+'회';
+      title=m.round===7?'최종 실전 모의고사 7회':'파이널 모의고사 '+m.round+'회';
       if(verifiedFinalStats(stats)) percentile=percentileFromTable(item.score.score,stats.percentileTable);
       grade=gradeFromCuts(item.score.score,stats&&stats.cuts);
     }else if(m.kind==='last'){
