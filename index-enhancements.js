@@ -133,6 +133,9 @@
     3:'https://youtu.be/M4EHgd42ReU',
     4:'https://youtu.be/ZiOpTckV_wM'
   };
+  var additionalFinalVideos={
+    7:'https://youtu.be/NpGefamVXp8'
+  };
   var originalFormBooks=[
     {
       folder:'추가 모의고사',
@@ -222,8 +225,10 @@
     book.links=[{label:reportLabel(),url:reportUrl(series,round)}].concat(links);
   }
   function syncAdditionalFinalAlias(book,legacyRound){
-    var series=legacyRound===5?'final':'last';
-    var round=legacyRound===5?5:legacyRound-5;
+    var independentFinal=legacyRound===5||legacyRound===7;
+    var series=independentFinal?'final':'last';
+    var round=independentFinal?legacyRound:legacyRound-5;
+    if(additionalFinalVideos[legacyRound]) book.video=additionalFinalVideos[legacyRound];
     var links=(book.links||[]).filter(function(link){
       return !isReportLink(book,link)&&!isScoreInputLink(book,link);
     });
