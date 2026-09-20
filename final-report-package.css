@@ -42,12 +42,50 @@
   box-shadow: none;
   max-width: 100%;
 }
+.report-screen-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 288px;
+  flex: 0 0 288px;
+}
+.report-screen-action {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 12px;
+  border: 1px solid var(--report-blue);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--report-blue);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.report-screen-action:hover {
+  background: var(--report-blue-soft);
+}
+.report-screen-action:focus-visible {
+  outline: 3px solid var(--report-blue);
+  outline-offset: 3px;
+}
+.report-screen-actions .print-btn {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 0;
+}
 .report-screen-header .print-btn:focus-visible {
   outline: 3px solid #2456c4;
   outline-offset: 4px;
 }
 @media (max-width:700px) {
-  .report-screen-header .print-btn {width:100%;margin-top:16px;}
+  .report-screen-actions {width:100%;margin-top:16px;}
+  .report-screen-header .print-btn {width:100%;margin:0;}
 }
 
 .report-screen-header h1 {
