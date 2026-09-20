@@ -74,11 +74,18 @@ const server = http.createServer((request, response) => {
     const report = page.getByRole('link', { name: new RegExp(student + ' 학생 진단 분석지') });
     assert.equal(await report.count(), 1, 'Final 7 viewer exposes the student report');
     const reportUrl = await report.getAttribute('href');
-    assert.match(reportUrl, /^final\.html\?round=7&go=report&name=/, 'Final 7 report keeps its independent round');
+    assert.match(reportUrl, /^final\.html\?round=7&go=report&name=.*&v=20260920b$/, 'Final 7 report keeps its independent round and bypasses stale route caches');
     assert.doesNotMatch(reportUrl, /set=last|round=2/, 'Final 7 is not rewritten to Last 2');
 
     await page.setViewportSize({ width: 390, height: 844 });
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Final 7 viewer has no 390px page overflow');
+    await page.goto(new URL(reportUrl, page.url()).href, { waitUntil: 'domcontentloaded' });
+    await page.locator('h2').waitFor();
+    assert.equal(new URL(page.url()).searchParams.get('round'), '7', 'click destination remains Final 7');
+    assert.doesNotMatch(await page.locator('body').innerText(), /최종\s*2회\s*성적표/, 'Final 7 report never renders the Last 2 empty report');
+    ['index.html','final.html','answer.html','mock.html','last1-result.html'].forEach(file => {
+      assert.match(fs.readFileSync(path.join(root, file), 'utf8'), /final-last-routes\.js\?v=20260920b/, file + ' loads the current route rules');
+    });
     console.log('PASS Final 7 appears in the additional mock library with its 8-page paper, solution video, own report route, and 390px fit');
   } finally {
     await browser.close();
