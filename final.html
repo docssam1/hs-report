@@ -633,9 +633,21 @@ td.weak-cell{white-space:nowrap}
   var goParam = (params.get('go')||'').trim();
   var rawAttempt = (params.get('attempt')||'').trim();
   var requestedAttempt = rawAttempt==='' ? 1 : (/^[123]$/.test(rawAttempt) ? Number(rawAttempt) : 0);
-  /* 관리자 화면에서 연 링크만 입력 주체를 '선생님'으로 표시한다.
-     이 값은 저장 출처를 구분하기 위한 메타데이터이며 인증 수단으로 사용하지 않는다. */
-  var teacherEntry = params.get('entry')==='teacher';
+  /* entry=teacher 쿼리만으로는 관리자 권한이 되지 않는다.
+     저장된 관리자 세션을 서버에서 확인한 뒤에만 대리 입력과 권한 우회를 활성화한다. */
+  var teacherEntryRequested = params.get('entry')==='teacher';
+  var teacherEntry = false;
+
+  async function authorizeTeacherEntry(){
+    if(!teacherEntryRequested) return true;
+    if(!window.GFIELD_AUTH||typeof window.GFIELD_AUTH.getUser!=='function') return false;
+    try{
+      var user=await window.GFIELD_AUTH.getUser('admin');
+      var role=user&&user.app_metadata&&user.app_metadata.role;
+      teacherEntry=role==='admin'||role==='teacher';
+    }catch(e){ teacherEntry=false; }
+    return teacherEntry;
+  }
 
   function BP(no){
     var row=(M.blueprint||[]).filter(function(b){return Number(b.no)===Number(no);})[0];
@@ -672,6 +684,7 @@ td.weak-cell{white-space:nowrap}
   function allowedForRound(name){
     name=String(name||'').trim();
     if(preview||name.toLowerCase()==='docssam') return true;
+    if(teacherEntry) return !!name;
     if(!(D.students||[]).includes(name)) return false;
     if(!isLast&&!isOriginal&&roundNum>=5){
       var access=((D.archiveProductAccess||{})['mock-final-'+roundNum])||[];
@@ -2585,7 +2598,7 @@ td.weak-cell{white-space:nowrap}
   }
 
   /* ===================== boot ===================== */
-  function boot(){
+  async function boot(){
     if(!roundNum){
       document.title='회차 확인 · 지필드 영재교육';
       app.innerHTML='<div class="doc"><section><h2>회차를 확인해 주세요</h2><div class="lead">'+esc(seriesLabel())+' 모의고사 1~'+maxRound+'회 중 올바른 회차를 선택해 주세요.</div></section></div>';
@@ -2598,6 +2611,10 @@ td.weak-cell{white-space:nowrap}
       return;
     }
     document.title=roundLabel(roundNum)+' · 지필드 영재교육';
+    if(teacherEntryRequested&&!(await authorizeTeacherEntry())){
+      app.innerHTML='<div class="doc"><section><h2>관리자 로그인을 다시 확인해 주세요</h2><div class="lead">이 화면은 관리자 콘솔에서 학생 답안을 대신 입력할 때만 열립니다. 관리자 콘솔에 다시 로그인한 뒤 학생 이름을 선택해 주세요.</div><p><a class="btn-primary" href="admin.html" style="display:inline-block;text-decoration:none">관리자 콘솔로 이동</a></p></section></div>';
+      return;
+    }
     var storedStudent='';
     try{ storedStudent=(localStorage.getItem('gfield_student')||'').trim(); }catch(e){ storedStudent=''; }
     var student = urlName;
@@ -2609,7 +2626,10 @@ td.weak-cell{white-space:nowrap}
     if(student&&allowedForRound(student)){ state.name=student; enterFlow(); }
     else { renderGate(); }
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  function startBoot(){boot().catch(function(){
+    app.innerHTML='<div class="doc"><section><h2>화면을 열지 못했습니다</h2><div class="lead">로그인 상태를 확인한 뒤 다시 시도해 주세요.</div></section></div>';
+  });}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', startBoot); else startBoot();
 })();
 </script>
 </body>

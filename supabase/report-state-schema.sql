@@ -10,7 +10,7 @@ create table public.hs_final_report_snapshots (
 );
 create table public.hs_final_report_comments (
   student text not null,
-  round text not null check (round ~ '^final[1-5]$'),
+  round text not null check (round ~ '^final([1-5]|7)$'),
   comment text not null check (char_length(comment) <= 3000),
   updated_at timestamptz not null default now(),
   updated_by uuid not null,

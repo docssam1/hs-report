@@ -29,16 +29,52 @@ function svg(width, height, body) {
 }
 
 function q1Svg(row) {
-  const placements = [];
-  for (let i = 0; i < row.count; i += 1) {
-    const col = i % 7;
-    const line = Math.floor(i / 7);
-    const x = 72 + col * 84 + ((line * 23 + col * 11 + row.seed * 7) % 19);
-    const y = 68 + line * 76 + ((col * 17 + row.seed * 9) % 24);
-    const angle = [-22, -11, 7, 18, -6, 13, -16][(i + row.seed) % 7];
-    placements.push(`<g transform="translate(${x} ${y}) rotate(${angle})"><line x1="-24" y1="0" x2="24" y2="0" stroke="#20242b" stroke-width="4" stroke-linecap="round"/><line x1="-20" y1="0" x2="20" y2="0" stroke="#5b6470" stroke-width="1.5" stroke-linecap="round"/></g>`);
+  // A deterministic spill, not a tidy counting grid. Several leads cross at
+  // their interiors just like the source picture, while every full lead stays
+  // traceable from one tip to the other.
+  const leadLength = 112;
+  const leadStrokeWidth = 3.4;
+  const source = [
+    // The first lead cuts across at least four other leads in every variant.
+    [380, 92, -1], [365, 78, -26], [405, 68, 24], [425, 85, -18],
+    [465, 74, 15], [488, 95, -30], [520, 90, 8],
+    [360, 112, 34], [398, 115, -35], [438, 118, 20], [478, 125, -22], [525, 127, 12],
+    [350, 150, -14], [400, 150, 9], [450, 156, -18], [500, 160, 5],
+    [378, 190, -6], [452, 198, 0], [535, 180, -28],
+  ];
+  const offset = (row.seed - 2) * 3;
+  const placements = source.slice(0, row.count).map(([x, y, angle], index) => {
+    const length = leadLength;
+    return {x:x + (index % 3 === 0 ? offset : 0), y:y + (index % 4 === 0 ? -offset : 0), angle, length};
+  });
+  const endpoints = ({x,y,angle,length}) => {
+    const rad=angle*Math.PI/180, dx=Math.cos(rad)*length/2, dy=Math.sin(rad)*length/2;
+    return [[x-dx,y-dy],[x+dx,y+dy]];
+  };
+  const cross = (a,b,c) => (b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
+  let intersections=0;
+  const crossingCounts = Array(placements.length).fill(0);
+  for(let i=0;i<placements.length;i+=1)for(let j=i+1;j<placements.length;j+=1){
+    const [a,b]=endpoints(placements[i]),[c,d]=endpoints(placements[j]);
+    if(cross(a,b,c)*cross(a,b,d)<0&&cross(c,d,a)*cross(c,d,b)<0){
+      intersections+=1;
+      crossingCounts[i]+=1;
+      crossingCounts[j]+=1;
+    }
   }
-  return svg(700, 260, `<path d="M28 224 Q350 244 672 224" fill="none" stroke="#d5d8dc" stroke-width="2"/>${placements.join('')}`);
+  if(intersections<8)throw new Error(`Q1 variant ${row.seed}: clustered spill needs at least eight visible crossings`);
+  if(crossingCounts[0]<4)throw new Error(`Q1 variant ${row.seed}: one lead must visibly cross at least four other leads`);
+  placements.forEach((lead,index)=>{
+    endpoints(lead).flat().forEach((value,coordinate)=>{
+      const limit=coordinate%2===0?700:260;
+      if(value<18||value>limit-18)throw new Error(`Q1 variant ${row.seed}: lead ${index+1} leaves the picture`);
+    });
+  });
+  if (new Set(placements.map((lead) => lead.length)).size !== 1) {
+    throw new Error(`Q1 variant ${row.seed}: every lead must have the same length`);
+  }
+  const leads = placements.map(({x,y,angle,length}) => `<g transform="translate(${x} ${y}) rotate(${angle})"><line x1="${-length/2}" y1="2.5" x2="${length/2}" y2="2.5" stroke="#c7cbd0" stroke-width="2.6" stroke-linecap="round"/><line x1="${-length/2}" y1="0" x2="${length/2}" y2="0" stroke="#353a41" stroke-width="${leadStrokeWidth}" stroke-linecap="round"/><line x1="${-length/2+2}" y1="-.6" x2="${length/2-2}" y2="-.6" stroke="#7d838b" stroke-width=".8" stroke-linecap="round"/></g>`).join('');
+  return svg(700, 260, leads);
 }
 
 function q2Svg(row) {

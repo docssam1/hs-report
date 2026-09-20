@@ -498,7 +498,11 @@ check('온라인 회원 직접 입력과 재원생 교사 기록 경로 분리',
   assert.match(analysisSource, /연결할.*최초 응시 기록이 없습니다/);
   assert.doesNotMatch(analysisSource, /Prefer:'resolution=merge-duplicates'\},\s*body:JSON\.stringify\(\{student:nm,round:'last1'/);
 
-  assert.match(finalSource, /var teacherEntry = params\.get\('entry'\)==='teacher'/);
+  assert.match(finalSource, /var teacherEntryRequested = params\.get\('entry'\)==='teacher'/);
+  assert.match(finalSource, /var teacherEntry = false/);
+  assert.match(finalSource, /window\.GFIELD_AUTH\.getUser\('admin'\)/);
+  assert.match(finalSource, /teacherEntry=role==='admin'\|\|role==='teacher'/);
+  assert.match(finalSource, /if\(teacherEntry\) return !!name/);
   assert.match(finalSource, /return isOnlineStudent\(name\) \? 'online' : 'parent'/);
   assert.match(finalSource, /teacherEntry\?'practice-admin':'practice'/);
   const finalSaveBlock=finalSource.slice(finalSource.indexOf('async function supaUpsert'),finalSource.indexOf('async function supaLoadRows'));

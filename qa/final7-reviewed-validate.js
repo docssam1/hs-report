@@ -209,10 +209,19 @@ for (const item of data.items) {
 
 for (const item of data.items.filter((item) => item.sourceNo === 1)) {
   const m = item.meta;
+  assert.equal(m.object, '샤프심', item.id + ': source material remains mechanical-pencil leads');
   assert.equal(m.totalCount - m.pictureCount - m.separateCount, m.hiddenCount, item.id + ': hidden remainder');
   assert.equal(item.answer, m.hiddenCount + '개', item.id + ': hidden remainder answer');
   assert.equal(item.assetSpec.objectCount, m.pictureCount, item.id + ': picture object count contract');
-  assert.equal(item.assetSpec.renderRules.allowOverlap, false, item.id + ': every object remains countable');
+  assert.equal(item.assetSpec.kind, 'spilled-pencil-leads', item.id + ': spilled-lead renderer contract');
+  assert.equal(item.assetSpec.renderRules.allowOverlap, true, item.id + ': source-like crossings are retained');
+  assert.equal(item.assetSpec.renderRules.clusteredToOneSide, true, item.id + ': leads form one piled cluster instead of an even grid');
+  assert.equal(item.assetSpec.renderRules.equalLength, true, item.id + ': every lead has the same length');
+  assert.equal(item.assetSpec.renderRules.equalThickness, true, item.id + ': every lead has the same thickness');
+  assert.ok(item.assetSpec.renderRules.minimumInteriorCrossings >= 8, item.id + ': crossings are visible rather than implied');
+  assert.ok(item.assetSpec.renderRules.oneLeadMinimumCrossings >= 4, item.id + ': one lead clearly crosses at least four other leads');
+  assert.match(item.asset.description, /쏟아져.*교차한 샤프심/, item.id + ': accessible description matches the picture without leaking the count');
+  assert.doesNotMatch(item.text, /색연필|성냥개비|나무 막대/, item.id + ': substitute stick objects are removed');
 }
 
 for (const item of data.items.filter((item) => item.sourceNo === 2)) {
