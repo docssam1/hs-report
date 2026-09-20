@@ -123,8 +123,10 @@ assert.match(q21Tutor.steps[1].speech, /56×58×60=194880/, 'Q21 proves that can
 assert.match(q21Tutor.steps[2].speech, /58×60×62=215760.*60×62×64=238080.*62×64×66=261888/, 'Q21 checks every candidate from 58 through the first match');
 assert.match(q22Tutor.steps[0].speech, /모든 학생을 한 묶음 R/, 'Q22 keeps every non-4th/non-6th grade in one remainder group');
 assert.doesNotMatch(q22Tutor.steps.map((step) => step.speech + ' ' + (step.deep || '')).join(' '), /4·5·6학년만|5학년만/, 'Q22 does not invent a three-grade-only source condition');
-assert.match(q28Tutor.steps[1].speech, /○−r/, 'Q28 uses the target row, not the example row, for neighbor offsets');
+assert.match(q28Tutor.steps[1].speech, /8\+10=18.*5\+14=19.*6\+13=19/, 'Q28 starts from the visible sample and pairs opposite neighbors');
+assert.match(q28Tutor.steps[1].deep, /2○, 2○\+1, 2○\+1/, 'Q28 generalizes the three opposite-pair sums without a row variable');
 assert.doesNotMatch(q28Tutor.steps[1].speech, /○−4/, 'Q28 does not reuse the sample number 9 offsets for the unknown target');
+assert.doesNotMatch(q28Tutor.steps.map((step) => step.speech + ' ' + (step.deep || '')).join(' '), /r번째 줄|○−r/, 'Q28 avoids an age-inappropriate row variable');
 assert.match(q28Tutor.steps[3].speech, /22, 23, 29, 31, 38, 39/, 'Q28 verifies the actual six neighbors of 30');
 assert.equal(sourceRound.items.find((item) => item.no === 5).answer, '9가지', 'source Q5 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 6).answer, '6마리', 'source Q6 remains traceable');
