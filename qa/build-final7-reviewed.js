@@ -10,9 +10,9 @@ const DATA_DIR = path.join(ROOT, 'bank', 'data');
 const SOURCE_PATHS = ['materials/final_7/001.jpg', 'materials/final_7/002.jpg', 'materials/final_7/003.jpg', 'materials/final_7/004.jpg', 'materials/final_7/005.jpg', 'materials/final_7/006.jpg', 'materials/final_7/007.jpg', 'materials/final_7/008.jpg'];
 
 const q1 = [
-  {name:'민혁', object:'색연필', total:60, floor:14, desk:3, place:'필통', answer:43},
-  {name:'관호', object:'성냥개비', total:72, floor:16, desk:5, place:'상자', answer:51},
-  {name:'주연', object:'나무 막대', total:80, floor:19, desk:4, place:'서랍', answer:57},
+  {name:'민혁', object:'샤프심', total:60, floor:14, desk:3, place:'샤프심 통', answer:43},
+  {name:'관호', object:'샤프심', total:72, floor:16, desk:5, place:'샤프심 통', answer:51},
+  {name:'주연', object:'샤프심', total:80, floor:19, desk:4, place:'샤프심 통', answer:57},
 ];
 
 const q2 = [
@@ -302,9 +302,11 @@ function common(no, variant, fields) {
 const items = [];
 q1.forEach((row, index) => {
   const variant = index + 1;
-  const image = pngAsset('q01-v' + variant + '.png', '바닥에 흩어져 있으나 서로 겹치지 않아 한 개씩 셀 수 있는 막대 모양 물건');
+  const image = pngAsset('q01-v' + variant + '.png', '바닥에 쏟아져 일부가 서로 교차한 샤프심');
+  const code=row.name.charCodeAt(row.name.length-1)-0xAC00;
+  const subject=row.name+(code>=0&&code<=11171&&code%28?'이가':'가');
   items.push(common(1, variant, Object.assign({
-    text: row.name + '이가 ' + row.object + ' ' + row.total + '개를 정리하고 있습니다. 그림은 바닥에 떨어진 ' + row.object + '이고, 책상 위에는 ' + row.desk + '개가 있습니다. 나머지는 모두 ' + row.place + ' 안에 있다면, ' + row.place + ' 안에는 몇 개가 있습니까?',
+    text: subject + ' ' + row.object + ' ' + row.total + '개를 정리하고 있습니다. 그림은 바닥에 쏟아진 ' + row.object + '을 나타냅니다. 책상 위에는 ' + row.desk + '개가 있습니다. 나머지는 모두 ' + row.place + ' 안에 있다면, ' + row.place + ' 안에는 몇 개가 있습니까?',
     answer: row.answer + '개', acceptedAnswers:[row.answer + '개', String(row.answer)],
     area:'식의 계산', subarea:'뺄셈', detailType:'전체에서 그림 속 수와 따로 있는 수를 빼기',
     readingFocus:'그림 속 물건을 한 개씩 세고, 책상 위의 수까지 전체에서 뺍니다.',
@@ -315,12 +317,12 @@ q1.forEach((row, index) => {
       row.total + '-' + (row.floor + row.desk) + '=' + row.answer + '이므로 ' + row.place + ' 안에는 ' + row.answer + '개가 있습니다.',
     ],
     meta:{object:row.object,totalCount:row.total,pictureCount:row.floor,separateCount:row.desk,hiddenCount:row.answer},
-    assetSpec:{kind:'scattered-countable-objects',objectCount:row.floor,renderRules:{showCount:false,allowOverlap:false}},
+    assetSpec:{kind:'spilled-pencil-leads',objectCount:row.floor,renderRules:{showCount:false,allowOverlap:true,clusteredToOneSide:true,equalLength:true,equalThickness:true,minimumInteriorCrossings:8,oneLeadMinimumCrossings:4}},
     verification:{
       primary:{method:'전체에서 그림 속 수와 책상 위 수를 차례로 뺌',answer:row.answer+'개'},
       independent:{method:'PNG 생성 입력의 물건 수를 다시 세고 total-picture-separate 계산',answer:row.answer+'개'},
       unique:true,validAnswerCount:1,answerContract:'single-value',
-      visibleEvidence:{passed:true,method:'그림 속 물건이 서로 겹치지 않고 모두 화면 안에 보임'},
+      visibleEvidence:{passed:true,method:'샤프심이 모두 화면 안에 있고 일부는 교차하지만 각 샤프심의 양 끝을 따라 셀 수 있음'},
     },
   }, image)));
 });
@@ -1390,7 +1392,7 @@ q30.forEach((row, index) => {
 });
 
 const data = {
-  version: '7.13.0', sourceSet: 'final', sourceRound: 7,
+  version: '7.14.0', sourceSet: 'final', sourceRound: 7,
   freezePolicy: {runtimeGeneration: false, fixedItemCount: items.length, variantsPerSourceQuestion: 3, availableSourceNos: Array.from({length:30}, (_, index) => index + 1), partialRelease: false},
   sourceFingerprints: Object.fromEntries(SOURCE_PATHS.map(sourcePath => [sourcePath, sha(fs.readFileSync(path.join(ROOT, sourcePath)))])),
   reviewSummary: {verified: items.length, pending: 0, unavailableSourceQuestions: 0},

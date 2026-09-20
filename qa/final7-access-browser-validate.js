@@ -83,9 +83,31 @@ async function installRoundFixture(page) {
     assert.deepEqual(await admin.evaluate(() => Array.from(S.archiveProductAccess['mock-final-7'])), ['회차승인검수A']);
     const final7BookIndex = await admin.evaluate(() => S.books.findIndex(book => book && book.accessKey === 'mock-final-7'));
     assert.ok(final7BookIndex >= 0, 'Final 7 library card uses the same approval key');
+
+    const teacherEntry = await adminContext.newPage();
+    await installRoundFixture(teacherEntry);
+    await teacherEntry.route('https://fgahqumaldheqettmvqg.supabase.co/**', route => {
+      if (route.request().url().includes('/auth/v1/user')) {
+        return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ id: 'qa-admin', app_metadata: { role: 'admin', admin_id: 'DOCSSAM' } }) });
+      }
+      return route.abort();
+    });
+    await teacherEntry.goto(`${BASE_URL}/final.html?round=7&go=answer&entry=teacher&name=${encodeURIComponent(FINAL3_ONLY)}`, { waitUntil: 'domcontentloaded' });
+    await teacherEntry.waitForSelector('#agrid');
+    assert.equal(await teacherEntry.locator('#gname').count(), 0, 'verified admin bypasses the student Final 7 purchase gate');
+    assert.match(await teacherEntry.locator('.banner.preview').innerText(), /선생님 대리 입력/);
+
+    const forgedContext = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const forged = await forgedContext.newPage();
+    await installRoundFixture(forged);
+    await forged.goto(`${BASE_URL}/final.html?round=7&go=answer&entry=teacher&name=${encodeURIComponent(FINAL3_ONLY)}`, { waitUntil: 'domcontentloaded' });
+    await forged.waitForSelector('h2');
+    assert.match(await forged.locator('body').innerText(), /관리자 로그인을 다시 확인해 주세요/,'entry=teacher query alone cannot bypass access');
+    assert.equal(await forged.locator('#agrid').count(),0,'unverified teacher entry cannot reach answer recording');
+    await forgedContext.close();
     await adminContext.close();
 
-    console.log('PASS Final 7 round approval blocks Final 3 attendance and stays editable in admin');
+    console.log('PASS Final 7 student approval stays narrow while a verified admin can enter answers without per-student purchase access');
   } finally {
     await browser.close();
   }

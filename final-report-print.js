@@ -1,7 +1,7 @@
 'use strict';
 
 (function(global){
-  var VERSION='1.2.0';
+  var VERSION='1.2.1';
   var LIBRARY_URL='vendor/pagedjs/0.4.3/paged.polyfill.js';
   var FRAME_CLASS='gfield-final-report-print-frame';
   var BUTTON_CLASS='gfield-final-report-print-button';
@@ -137,6 +137,15 @@
       prelude.classList.add('gfield-summary-print');
       list(prelude.querySelectorAll('.report-print-cover,.parent-summary-support,#report-tiers,.parent-report-details')).forEach(function(node){node.remove();});
       list(prelude.querySelectorAll('.curriculum-table tbody tr:not(.report-print-priority)')).forEach(function(node){node.remove();});
+      list(prelude.querySelectorAll('.report-wrong-summary tbody tr:not(.report-print-priority)')).forEach(function(node){node.remove();});
+      // The screen keeps every linked book and learning point. The concise
+      // print package keeps only the first priority location and first action
+      // so a single table row can never exceed an A4 page and disappear while
+      // Paged.js is laying out a low-score report.
+      list(prelude.querySelectorAll('.curriculum-books,.curriculum-points')).forEach(function(listNode){
+        list(listNode.querySelectorAll(':scope > li')).slice(1).forEach(function(item){item.remove();});
+        if(listNode.querySelectorAll(':scope > li').length)listNode.setAttribute('data-print-priority-only','true');
+      });
       var materials=prelude.querySelector('#report-materials');
       if(materials)list(materials.children).forEach(function(node){
         if(node.tagName==='H2'||(node.tagName==='P'&&node.classList.contains('lead')))node.remove();

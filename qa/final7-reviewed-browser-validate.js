@@ -57,6 +57,8 @@ function startServer() {
     const pageCardCounts = await page.locator('.question-page').evaluateAll((pages) => pages.map((sheet) => sheet.querySelectorAll('.qcard').length));
     assert.ok(pageCardCounts.every((count) => count>=2&&count<=4), 'question pages avoid one-item pages while preserving wide figures: ' + JSON.stringify(pageCardCounts));
     assert.equal(await page.locator('.question-page img').count(), 36, 'one prompt figure for every visual question');
+    assert.ok(await page.locator('.qcard[data-source-no="1"] img').evaluateAll((images) => images.every((image) => /쏟아져.*교차한 샤프심/.test(image.alt))), 'Q1 keeps the spilled overlapping pencil-lead picture identity');
+    assert.doesNotMatch(await page.locator('.qcard[data-source-no="1"]').allTextContents().then((values) => values.join(' ')), /색연필|성냥개비|나무 막대/, 'Q1 does not replace pencil leads with generic sticks');
     assert.equal(await page.locator('.solution-card').count(), 90, 'ninety detailed answers');
     assert.equal(await page.locator('.solution-card ol li').count(), 270, 'three concise steps per answer');
     assert.equal(await page.locator('.f1-coach-launch,.gfield-step-coach,.f7ot-launch').count(), 0, 'similar-problem answers do not receive an original-question tutor');
