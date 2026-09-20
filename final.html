@@ -1256,6 +1256,44 @@ td.weak-cell{white-space:nowrap}
     var finalMetric=comparison?'<div><dt>'+(practice?'연습 점수 기준 백분율':'석차 백분율')+'</dt><dd>'+ctx.pct+'<small>%</small></dd></div>':'<div><dt>오답</dt><dd>'+ctx.wrong+'<small>문항</small></dd></div>';
     return '<header class="report-screen-header"><div><span>초등선발 대비 '+esc(seriesLabel())+' '+ctx.roundNum+'회 진단 · '+reportAttemptLabel(ctx)+'</span><h1>'+esc(ctx.name)+' 학생</h1>'+(ctx.ratesVerified?'<span>평균 '+ctx.S.mean+'점 · 오답 '+ctx.wrong+'문항</span>':'')+(ctx.cutVerified?'<p class="report-expected-grade">'+(practice?'연습 점수 기준 예상 등급':'예상 등급')+' · <b>'+esc(ctx.grade)+'</b></p>':'')+'</div><dl><div><dt>점수</dt><dd>'+ctx.score+'<small>/100</small></dd></div><div><dt>정답</dt><dd>'+ctx.ncorr+'<small>/30</small></dd></div>'+finalMetric+'</dl></header>';
   }
+  function reportHeaderActions(root,ctx){
+    var header=root&&root.querySelector('.report-screen-header');
+    if(!header)return null;
+    var actions=document.createElement('div');
+    actions.className='report-screen-actions no-print';
+    var details=Array.prototype.slice.call(root.querySelectorAll('.final-report-package details.parent-report-details, .final-report-package details.report-resource-details'));
+    if(details.length){
+      var toggle=document.createElement('button');
+      toggle.type='button';
+      toggle.className='report-screen-action report-detail-toggle';
+      function syncToggle(){
+        var allOpen=details.every(function(detail){return detail.open;});
+        toggle.setAttribute('aria-expanded',allOpen?'true':'false');
+        toggle.textContent=allOpen?'상세 모두 접기':'상세 전체보기';
+      }
+      toggle.addEventListener('click',function(){
+        var shouldOpen=toggle.getAttribute('aria-expanded')!=='true';
+        details.forEach(function(detail){detail.open=shouldOpen;});
+        syncToggle();
+      });
+      details.forEach(function(detail){detail.addEventListener('toggle',syncToggle);});
+      syncToggle();
+      actions.appendChild(toggle);
+    }
+    var video=ctx&&ctx.R&&String(ctx.R.video||'');
+    if(/^https?:\/\//i.test(video)){
+      var lecture=document.createElement('a');
+      lecture.className='report-screen-action report-lecture-link';
+      lecture.href=video;
+      lecture.target='_blank';
+      lecture.rel='noopener';
+      lecture.textContent='▶ 강의 보기';
+      lecture.setAttribute('aria-label',seriesLabel()+' '+ctx.roundNum+'회 풀이 강의 보기');
+      actions.appendChild(lecture);
+    }
+    header.appendChild(actions);
+    return actions;
+  }
   function reportPrintCoverHTML(ctx){
     var practice=Number(ctx.attemptNo)>=2;
     var stats=(ctx.ratesVerified?'<small>평균 '+ctx.S.mean+'점'+(Number.isFinite(ctx.pct)?' · '+(practice?'연습 점수 기준 백분율 ':'석차 백분율 ')+ctx.pct+'%':'')+'</small>':'')+(ctx.cutVerified?'<small>'+(practice?'연습 점수 기준 예상 등급':'예상 등급')+' · '+esc(ctx.grade)+'</small>':'');
@@ -2581,8 +2619,8 @@ td.weak-cell{white-space:nowrap}
     printBtn.setAttribute('aria-label',isStandardFinal?'성적 요약과 이번 주 학습 계획을 간단히 인쇄하거나 PDF로 저장':'인쇄');
     printBtn.onclick = function(){ window.print(); };
     if(isStandardFinal){
-      var reportHeader=app.querySelector('.report-screen-header');
-      if(reportHeader) reportHeader.appendChild(printBtn);
+      var reportActions=reportHeaderActions(app,ctx);
+      if(reportActions) reportActions.appendChild(printBtn);
     }
     if(isStandardFinal&&window.GFIELD_FINAL_REPORT_PRINT&&typeof window.GFIELD_FINAL_REPORT_PRINT.attach==='function'){
       window.GFIELD_FINAL_REPORT_PRINT.attach({
