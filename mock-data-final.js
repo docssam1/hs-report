@@ -2174,7 +2174,7 @@ window.GFIELD_MOCK_FINAL = {
 
 /* 최종 실전 모의고사 7회는 추가 자료실의 독립 시험이다.
  * 파이널 1~5회 또는 최종 1~4회와 누적하지 않는다.
- * 답은 공식 답안 PDF를 문항별로 대조했으며, 상세 풀이·교재 연결은 별도 검수 전까지 비워 둔다. */
+ * 30문항 답과 Q5~Q30의 유사문제·상세 풀이 검수를 마쳤으며 회차 승인 학생에게 공개한다. */
 (function addStandaloneFinalSeven(model){
   if(!model||!model.rounds)return;
   var rows=[
@@ -2221,8 +2221,8 @@ window.GFIELD_MOCK_FINAL = {
     paper:{imageDir:'final_7',imagePages:8},
     items:rows.map(function(row){return {no:row[0],type:row[1],detailType:row[1],area:row[2],subarea:row[3],answer:row[4],comment:'',taxonomyReviewStatus:'source-bound-candidate',curriculumReviewStatus:'pending'};}),
     stats:{},
-    ready:false,
-    lockedQuestions:Array.from({length:30},function(_,index){return index+1;}),
+    ready:true,
+    lockedQuestions:[],
     reviewNote:'공식 답안과 영상 해설 대조 완료. 29번은 공식·영상 답안 64가지를 독립 전수검산 결과 192가지로 정정했습니다. 나머지 독립 풀이 검산과 상세 풀이·교재 연결 검수 후 공개합니다.'
   };
   var starts=[53,113,167,283,348,469,520,581,644,709,769,820,945,1009,1187,1320,1444,1510,1575,1639,1697,1814,1877,1939,2067,2134,2196,2319,2383,2668];

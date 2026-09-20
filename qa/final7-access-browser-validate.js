@@ -28,8 +28,10 @@ async function installRoundFixture(page) {
     const approved = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     await installRoundFixture(approved);
     await approved.goto(`${BASE_URL}/final.html?round=7&name=${encodeURIComponent(APPROVED)}`, { waitUntil: 'domcontentloaded' });
-    await approved.waitForSelector('.start-doc,.paper-lock');
+    await approved.waitForSelector('.start-doc');
     assert.equal(await approved.locator('#gname').count(), 0, 'approved student passes the Final 7 name gate');
+    assert.equal(await approved.locator('.paper-lock').count(), 0, 'approved student is not stopped by the old review lock');
+    assert.match(await approved.locator('.start-doc').innerText(), /최종 실전 모의고사 7회/);
 
     const denied = await browser.newPage({ viewport: { width: 390, height: 844 } });
     await installRoundFixture(denied);
