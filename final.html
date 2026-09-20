@@ -542,7 +542,7 @@ td.weak-cell{white-space:nowrap}
   if(!isLast&&!isOriginal) files.push('final-parent-report.js');
   if(isFinal1) files.push('final1-detailed-data.js','final-detailed-solutions.js');
   if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js');
-  if(isFinal3) files.push('final3-solution-diagrams.js','final3-backhalf-solution-diagrams.js','final3-detailed-data.js','final-detailed-solutions.js');
+  if(isFinal3) files.push('final3-solution-diagrams.js','final3-backhalf-solution-diagrams.js','final3-detailed-data.js','final-detailed-solutions.js','final3-question-coach.js');
   if(isFinal4) files.push('final4-detailed-data.js','final-detailed-solutions.js');
   if(isFinal7) files.push('last-score-data.js','final7-benchmark.js','final7-original-tutor.js');
   if(!isLast&&!isOriginal) files.push('final-report-print.js');
@@ -2595,6 +2595,7 @@ td.weak-cell{white-space:nowrap}
     wireWrongPractice(ctx);
     if(isStandardFinal&&window.GFIELD_FINAL_REPORT_STATE)window.GFIELD_FINAL_REPORT_STATE.wire(app);
     if((roundNum===1||roundNum===2||roundNum===3||roundNum===4)&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.wire==='function') window.GFIELD_FINAL1_DETAILED_RENDERER.wire();
+    if(roundNum===3&&window.GFIELD_FINAL3_QUESTION_COACH&&typeof window.GFIELD_FINAL3_QUESTION_COACH.wire==='function') window.GFIELD_FINAL3_QUESTION_COACH.wire(app);
   }
 
   /* ===================== boot ===================== */
