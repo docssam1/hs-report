@@ -2133,7 +2133,7 @@ td.weak-cell{white-space:nowrap}
       {from:0,t:"0~5분",  h:"시험지 훑어보기", d:"풀 수 있을 것 같은 문제 체크"},
       {from:5*60,t:"5~"+middleStart+"분", h:"1~12번 (2.7점)", d:"모르는 문제는 표시하고 넘어가기"},
       {from:middleStart*60,t:middleStart+"~"+reviewStart+"분",h:"13~30번 (3.4·4.2점)", d:"한 문제에 너무 오래 머물지 않기"},
-      {from:reviewStart*60,t:reviewStart+"~"+examMinutes+"분",h:"마무리", d:"빈 답과 옮겨 적은 답 확인"}
+      {from:reviewStart*60,t:reviewStart+"~"+timerMinutes+"분",h:"마무리", d:"빈 답과 옮겨 적은 답 확인"}
     ];
     var PLAN=(Array.isArray(M.exam.plan)&&M.exam.plan.length?M.exam.plan.map(function(p){return {
       from:(Number(p.from)||0)*60,
