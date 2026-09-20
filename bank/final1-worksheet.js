@@ -54,7 +54,7 @@
     var legacy=document.getElementById('btnPrint');if(legacy)legacy.id='legacyPrint';
     var root=document.createElement('main');root.id='final1Worksheet';root.className='gfield-ui';document.body.appendChild(root);
     var q=new URLSearchParams(location.search),wrong=!!opts.wrongPracticeMode,ids=opts.genIds;
-    var bankCode=/^(?:final[127]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
+    var bankCode=/^(?:final[1237]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
     var important=bankCode==='important';
     root.dataset.bankCode=bankCode;
     var round=important?null:Number(bankCode.slice(5)),roundLabel=important?'선생님이 고른 중요 유형':(round===7?'최종 7회':'파이널 '+round+'회'),idPrefix=important?'':bankCode+'-q';

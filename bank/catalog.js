@@ -80,7 +80,7 @@
       if(Number.isFinite(item.points))group.points.push(item.points);
       if(item.bankDifficulty)group.difficultyCounts[item.bankDifficulty.label]=(group.difficultyCounts[item.bankDifficulty.label]||0)+1;
       group.itemCount++;
-      if(item.sourceRef.set==='final'&&[1,2].indexOf(Number(item.sourceRef.round))>=0){
+      if(item.sourceRef.set==='final'&&[1,2,3].indexOf(Number(item.sourceRef.round))>=0){
         var fixedBank='final'+Number(item.sourceRef.round);
         if(!group.fixedRefs[fixedBank])group.fixedRefs[fixedBank]=[];
         group.fixedRefs[fixedBank].push(fixedBank+'-q'+String(item.sourceRef.no).padStart(2,'0'));
@@ -317,7 +317,7 @@
       });
     });
     window.__BANK_CATALOG_QA__={summary:unified.summary,groups:groups,unified:unified,difficultyPolicy:R.difficultyEvidencePolicy};
-    Promise.all([1,2].map(function(round){
+    Promise.all([1,2,3].map(function(round){
       return fetch('data/final'+round+'-fixed90-index.json?v=1',{cache:'no-cache'}).then(function(response){
         if(!response.ok)throw new Error('파이널 '+round+'회 유사문제 검색 자료를 불러오지 못했습니다.');
         return response.json();

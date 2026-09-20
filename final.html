@@ -1355,7 +1355,7 @@ td.weak-cell{white-space:nowrap}
       var ids=scope.map(function(row){return row.getAttribute('data-wp-gen');});
       var nos=scope.map(function(row){return row.getAttribute('data-wp-no');});
       var queryParams={practice:'wrong',gens:ids.join(','),per:'3',points:selected,source:TAX_SET_KEY+'|'+ctx.roundNum,sourceNos:nos.join(','),seed:''};
-      if(ctx.roundNum===1||ctx.roundNum===2||ctx.roundNum===7)queryParams.bank='final'+ctx.roundNum;
+      if(ctx.roundNum===1||ctx.roundNum===2||ctx.roundNum===3||ctx.roundNum===7)queryParams.bank='final'+ctx.roundNum;
       var query=new URLSearchParams(queryParams);
       // Display-only name in the fragment: not a request parameter or authority.
       issueWrongPracticeHandoff(ctx);

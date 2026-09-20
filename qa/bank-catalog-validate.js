@@ -47,7 +47,7 @@ assert.deepEqual(
     confirmedItems: unified.summary.confirmedItems,
     candidateItems: unified.summary.candidateItems,
   },
-  { sourceQuestions: 870, rawDisplayTypes: 772, objectiveTypes: 778, canonicalTypes: 218, confirmedItems: 155, candidateItems: 715 },
+  { sourceQuestions: 870, rawDisplayTypes: 772, objectiveTypes: 778, canonicalTypes: 248, confirmedItems: 185, candidateItems: 685 },
   '전체 분류 현황 수치',
 );
 assert.equal(unified.summary.duplicateSourceKeys.length, 0, '출처 문항 키 중복 없음');
@@ -68,7 +68,7 @@ assert.equal(finalTwoItems.length, 30, '파이널 2회 30문항');
 assert.ok(finalTwoItems.every((item) => item.reviewStatus === 'confirmed' && item.reviewRequired === false), '파이널 2회 검수된 30개 분류만 확정');
 assert.equal(finalTwoItems.find((item) => item.sourceRef.no === 15).detailType, '여러 수 묶음의 누적·앞 묶음 연결 규칙으로 묶음의 합 구하기', '15번은 묶음 전체 합 응답까지 표시');
 assert.equal(finalTwoItems.find((item) => item.sourceRef.no === 28).subarea, '모든 도로 지나기', '28번을 두 점 최단거리와 분리');
-assert.equal(unified.items.find((item) => item.sourceKey === 'final|3|10').detailType, '우기기', '같은 기존 유형명의 타회차에 Final2 학생 표시명을 전파하지 않음');
+assert.equal(unified.items.find((item) => item.sourceKey === 'final|3|10').detailType, '두 사람이 주고받은 횟수와 남은 양 구하기', '파이널 3회 승인 세부유형명을 정확히 사용');
 const targetItems = unified.items.filter((item) => ['applied', 'final', 'last', 'original'].includes(item.sourceRef.set));
 assert.equal(targetItems.length, 630, '문제은행 기본 범위는 활용~시그니처 실전 630문항');
 assert.equal(targetItems.filter((item) => item.responseRateStatus === 'measured').length, 240, '파이널·최종 실제 정답률 240문항');

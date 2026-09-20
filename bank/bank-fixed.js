@@ -4,7 +4,7 @@
   var loaded = {};
   function bankConfig(bankCode) {
     if(String(bankCode||'')==='important')return {code:'important',round:null,label:'중요 유형',prefix:''};
-    var match = /^final([127])$/.exec(String(bankCode || 'final1'));
+    var match = /^final([1237])$/.exec(String(bankCode || 'final1'));
     if (!match) throw new Error('등록된 파이널 유사문제 회차를 확인해 주세요.');
     var round = Number(match[1]);
     return {
