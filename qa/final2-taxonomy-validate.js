@@ -9,8 +9,8 @@ const vm=require('node:vm');
 
 const ROOT=path.resolve(__dirname,'..');
 const REGISTRY_PATH=path.join(ROOT,'bank','bank-registry.js');
-const EMPTY_CATALOG_SHA256='4f3c7f763b1c83ee980f2d630c42d14af4e62c4dfd539c147370b710482c4cc8';
-const NON_FINAL2_ITEMS_SHA256='53670e025126c7d0e8b7d3e3af828ebe92d92a6adc94ba5afb62a2ac15df78dd';
+const EMPTY_CATALOG_SHA256='f866d06365122aa60a932bea52ec3f6039abaa2ffacca6a39a07f63855f5a9c4';
+const NON_FINAL2_ITEMS_SHA256='427e21bc1f826baa2516b9511b7c6639be87bbd109615ff2247c3c609098461a';
 const registry=require(REGISTRY_PATH);
 const plain=value=>JSON.parse(JSON.stringify(value));
 const hash=value=>crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -48,31 +48,33 @@ function registryWithMemoryFixture(overrides,additionalSubareas=[]){
 const models=loadModels();
 const emptyRegistry=registryWithMemoryFixture([],[]);
 const baseline=plain(emptyRegistry.buildUnifiedCatalog(models));
-const published=plain(registry.buildUnifiedCatalog(models));
+const final2Overrides=registry.reviewedTaxonomyOverrides.filter(row=>/^final\|2\|/.test(row.sourceKey));
+const publishedRegistry=registryWithMemoryFixture(final2Overrides,registry.reviewedAdditionalSubareas);
+const published=plain(publishedRegistry.buildUnifiedCatalog(models));
 const final2Before=baseline.items.filter(item=>item.sourceRef.set==='final'&&item.sourceRef.round===2);
 const final2=published.items.filter(item=>item.sourceRef.set==='final'&&item.sourceRef.round===2);
 
 assert.equal(hash(baseline),EMPTY_CATALOG_SHA256,'empty reviewed list leaves the complete current catalogue byte-equivalent');
-assert.equal(baseline.summary.sourceQuestions,840);
-assert.equal(baseline.summary.confirmedItems,120);
-assert.equal(baseline.summary.candidateItems,720);
+assert.equal(baseline.summary.sourceQuestions,870);
+assert.equal(baseline.summary.confirmedItems,125);
+assert.equal(baseline.summary.candidateItems,745);
 assert.equal(final2.length,30);
-assert.equal(hash(baseline.items.filter(item=>!(item.sourceRef.set==='final'&&item.sourceRef.round===2))),NON_FINAL2_ITEMS_SHA256,'the other 810 source items have an exact preservation baseline');
+assert.equal(hash(baseline.items.filter(item=>!(item.sourceRef.set==='final'&&item.sourceRef.round===2))),NON_FINAL2_ITEMS_SHA256,'the other 840 source items have an exact preservation baseline');
 assert.ok(final2Before.every(item=>item.reviewStatus==='candidate'&&item.reviewRequired===true),'empty fixture keeps every Final2 taxonomy candidate');
 assert.ok(final2Before.every(item=>item.detailType===item.displayType),'empty fixture preserves every Final2 display/detail type');
 
-assert.equal(registry.reviewedTaxonomyOverrides.length,30,'thirty independently reviewed Final2 source overrides are published');
-assert.deepEqual(registry.reviewedTaxonomyOverrides.map(row=>row.sourceKey),Array.from({length:30},(_,index)=>`final|2|${index+1}`),'only exact Final2 Q1-Q30 source keys are approved');
+assert.equal(final2Overrides.length,30,'thirty independently reviewed Final2 source overrides are published');
+assert.deepEqual(final2Overrides.map(row=>row.sourceKey),Array.from({length:30},(_,index)=>`final|2|${index+1}`),'only exact Final2 Q1-Q30 source keys are selected for this projection');
 assert.equal(registry.reviewedAdditionalSubareas.length,6,'six independently reviewed area/subarea pairs are published');
 assert.deepEqual(registry.reviewedAdditionalSubareas.map(row=>[row.area,row.subarea]),[
   ['식의 계산','간격·자르기'],['식의 계산','포함과 배제'],['식의 계산','경기 수 계산'],
   ['수·규칙찾기','운반과 소비'],['수·규칙찾기','나이 계산'],['경우의 수','모든 도로 지나기']
 ]);
-assert.equal(published.summary.sourceQuestions,840);
-assert.equal(published.summary.confirmedItems,150);
-assert.equal(published.summary.candidateItems,690);
+assert.equal(published.summary.sourceQuestions,870);
+assert.equal(published.summary.confirmedItems,155);
+assert.equal(published.summary.candidateItems,715);
 assert.ok(final2.every(item=>item.reviewStatus==='confirmed'&&item.reviewRequired===false),'all and only reviewed Final2 taxonomy is confirmed');
-assert.equal(hash(published.items.filter(item=>!(item.sourceRef.set==='final'&&item.sourceRef.round===2))),NON_FINAL2_ITEMS_SHA256,'the published projection leaves every other 810 source item byte-equivalent');
+assert.equal(hash(published.items.filter(item=>!(item.sourceRef.set==='final'&&item.sourceRef.round===2))),NON_FINAL2_ITEMS_SHA256,'the published projection leaves every other 840 source item byte-equivalent');
 const allowedFinal2Changes=['subarea','subareaId','detailType','taxonomyPath','typeFamilyId','typeFamilyLabel','canonicalTypeId','reviewStatus','reviewRequired','reviewBasis','reviewReasons'];
 final2.forEach((item,index)=>{
   const before=final2Before[index];
@@ -153,7 +155,7 @@ assert.equal(withApproval.summary.sourceQuestions,baseline.summary.sourceQuestio
 assert.equal(withApproval.summary.measuredResponseRateItems,baseline.summary.measuredResponseRateItems);
 assert.equal(withApproval.summary.confirmedItems,baseline.summary.confirmedItems+1);
 assert.equal(withApproval.summary.candidateItems,baseline.summary.candidateItems-1);
-assert.equal(hash(withApproval.items.filter(item=>!(item.sourceRef.set==='final'&&item.sourceRef.round===2))),NON_FINAL2_ITEMS_SHA256,'an approved Final2 fixture leaves all other 810 source items byte-equivalent');
+assert.equal(hash(withApproval.items.filter(item=>!(item.sourceRef.set==='final'&&item.sourceRef.round===2))),NON_FINAL2_ITEMS_SHA256,'an approved Final2 fixture leaves all other 840 source items byte-equivalent');
 
 const reviewedNewSubarea={
   area:before.area,
@@ -173,12 +175,12 @@ const newSubareaAfter=withNewSubarea.items.find(item=>item.sourceKey===before.so
 assert.equal(newSubareaAfter.reviewStatus,'confirmed','a source-specific override can use a separately reviewed new subarea');
 assert.equal(newSubareaAfter.subarea,reviewedNewSubarea.subarea);
 assert.ok(newSubareaRegistry.taxonomy[before.area].includes(reviewedNewSubarea.subarea),'the reviewed subarea is visible in the effective public taxonomy');
-assert.equal(hash(withNewSubarea.items.filter(item=>!(item.sourceRef.set==='final'&&item.sourceRef.round===2))),NON_FINAL2_ITEMS_SHA256,'registering a reviewed Final2 subarea leaves all other 810 source items byte-equivalent');
+assert.equal(hash(withNewSubarea.items.filter(item=>!(item.sourceRef.set==='final'&&item.sourceRef.round===2))),NON_FINAL2_ITEMS_SHA256,'registering a reviewed Final2 subarea leaves all other 840 source items byte-equivalent');
 
 const collisionModels=plain(models);
 const collisionRaw=collisionModels.final.rounds['3'].items.find(item=>Number(item.no)===1);
 collisionRaw.subarea=reviewedNewSubarea.subarea;
-const collisionBaseline=plain(registry.buildUnifiedCatalog(collisionModels)).items.find(item=>item.sourceKey==='final|3|1');
+const collisionBaseline=plain(publishedRegistry.buildUnifiedCatalog(collisionModels)).items.find(item=>item.sourceKey==='final|3|1');
 const collisionAfter=plain(newSubareaRegistry.buildUnifiedCatalog(collisionModels)).items.find(item=>item.sourceKey==='final|3|1');
 assert.deepEqual(collisionAfter,collisionBaseline,'a reviewed added subarea never auto-confirms an unapproved source-authored match in another round');
 assert.equal(collisionAfter.reviewStatus,'candidate');
@@ -271,11 +273,11 @@ rejected('already confirmed source taxonomy is not overwritten',[{
   canonicalTypeId:registry.stableId(registry.signature(confirmed.area,confirmed.subarea,'two-digit-condition-count'))
 }]);
 
-const publishedCatalogHash=hash(published);
+const liveCatalogHash=hash(registry.buildUnifiedCatalog(models));
 registry.reviewedTaxonomyOverrides.push(approved);
 registry.reviewedAdditionalSubareas.push(reviewedNewSubarea);
-assert.equal(hash(registry.buildUnifiedCatalog(models)),publishedCatalogHash,'the exported reviewed list is a clone, not a runtime mutation surface');
+assert.equal(hash(registry.buildUnifiedCatalog(models)),liveCatalogHash,'the exported reviewed list is a clone, not a runtime mutation surface');
 assert.equal(hash(baseline),EMPTY_CATALOG_SHA256,'fixture checks never mutate the baseline catalogue');
 assert.doesNotMatch(fs.readFileSync(REGISTRY_PATH,'utf8'),/\.private-work|sourceMemoryQuery|sha256AtAuthoring/i,'public registry exposes no private locator or source fingerprint');
 
-console.log('PASS Final2 taxonomy integration: reviewed Final2 30 confirmed with stable key/learner label separation and six source-bound subareas; empty baseline and other 810 preserved; mismatch, unapproved, duplicate, unknown and cross-round cases fail closed');
+console.log('PASS Final2 taxonomy integration: reviewed Final2 30 confirmed with stable key/learner label separation and six source-bound subareas; empty baseline and other 840 preserved; mismatch, unapproved, duplicate, unknown and cross-round cases fail closed');

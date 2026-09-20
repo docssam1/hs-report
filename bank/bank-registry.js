@@ -107,7 +107,37 @@
     eligibleTaxonomyOverride('final|2|27', '경우의 수', '소식 주고 받기', '관계와 분류', 'gossip-union-minimum-calls', '통화마다 합쳐지는 소식 상태로 전원 공유 최소 횟수 구하기', 'type-1728912'),
     eligibleTaxonomyOverride('final|2|28', '경우의 수', '헤밀턴 경로', '모든 도로 지나기', 'weighted-all-edges-closed-route-minimum', '모든 도로를 지나 출발점으로 돌아오는 가장 짧은 길 찾기', 'type-0ewdfoi'),
     eligibleTaxonomyOverride('final|2|29', '수·규칙찾기', '약수의 활용', '조건에 맞는 수', 'divisor-parity-toggle-open-count', '배수 차례로 상태를 바꿀 때 약수 홀짝으로 열린 것 세기', 'type-1j8flar'),
-    eligibleTaxonomyOverride('final|2|30', '수·규칙찾기', '연속하는 자연수', '조건에 맞는 수', 'longest-positive-consecutive-sum-representation', '자연수를 가장 긴 연속 자연수의 합으로 나타내기', 'type-1tarp8q')
+    eligibleTaxonomyOverride('final|2|30', '수·규칙찾기', '연속하는 자연수', '조건에 맞는 수', 'longest-positive-consecutive-sum-representation', '자연수를 가장 긴 연속 자연수의 합으로 나타내기', 'type-1tarp8q'),
+    eligibleTaxonomyOverride('final|3|1', '수·규칙찾기', '피보나치 수열의 활용', '마디수열·규칙찾기', 'fibonacci-fruit-pair-sequence', '두 항을 더해 이어지는 과일 수열', 'type-0vtlybx'),
+    eligibleTaxonomyOverride('final|3|2', '경우의 수', '논리추리', '논리추리', 'four-people-job-logic', '네 사람의 직업을 조건으로 연결하기', 'type-091koth'),
+    eligibleTaxonomyOverride('final|3|3', '수·규칙찾기', '붙이는 타일의 개수', '규칙수열·도형배열', 'square-border-added-tiles', '정사각형 테두리에 새로 붙이는 타일 수', 'type-1tj9p0d'),
+    eligibleTaxonomyOverride('final|3|4', '수·규칙찾기', '손가락 규칙 (반복마디)', '마디수열·규칙찾기', 'two-hand-finger-bounce-sequence', '양손 손가락을 왕복하는 반복 순서', 'type-0cmnvs0'),
+    eligibleTaxonomyOverride('final|3|5', '수·규칙찾기', '달력', '주기와 나머지', 'date-gap-weekday', '두 날짜 사이의 날수로 요일 찾기', 'type-0xolt7l'),
+    eligibleTaxonomyOverride('final|3|6', '도형', '종이접기', '접기·자르기', 'fold-cut-full-circle-count', '접은 종이를 오려 펼친 완전한 원의 수', 'type-0km0849'),
+    eligibleTaxonomyOverride('final|3|7', '경우의 수', '최단거리(왕복)', '관계와 분류', 'shape-weight-balance', '도형의 무게 관계로 저울 수평 맞추기', 'type-064n6wd'),
+    eligibleTaxonomyOverride('final|3|8', '식의 계산', '도형이 나타내는 수 (양팔저울)', '식의 완성', 'mountain-round-trip-shortest-path', '계단식 산을 오르내리는 최단 경로 수', 'type-03tepp5'),
+    eligibleTaxonomyOverride('final|3|9', '경우의 수', '기준맞춰 해결하기', '논리추리', 'four-operations-target-number', '한 기준 수에서 네 연산으로 만든 수 찾기', 'type-1lqzqu9'),
+    eligibleTaxonomyOverride('final|3|10', '식의 계산', '우기기', '우기기/가정하여 풀기', 'exchange-count-and-remainder', '두 사람이 주고받은 횟수와 남은 양 구하기', 'type-0bai5a3'),
+    eligibleTaxonomyOverride('final|3|11', '식의 계산', '재치있게 계산하기', '재치 있게 계산하기', 'repeated-one-product-digit-sum', '1이 반복된 수의 곱에서 자리수의 합 구하기', 'type-01knpzz'),
+    eligibleTaxonomyOverride('final|3|12', '수·규칙찾기', '양팔저욱(최소의 개수)', '수의 관계', 'minimum-weights-target-measure', '양팔저울로 목표 무게를 재는 최소 추 개수', 'type-00fktdo'),
+    eligibleTaxonomyOverride('final|3|13', '경우의 수', '최단거리의 활용', '경로 세기', 'two-row-honeycomb-forward-path', '두 줄 벌집에서 앞으로 가는 경로 수', 'type-1s09kb5'),
+    eligibleTaxonomyOverride('final|3|14', '식의 계산', '나이계산', '나이 계산', 'mutual-age-time-relation', '서로의 현재 나이가 되는 두 시점의 나이 관계', 'type-161umi7'),
+    eligibleTaxonomyOverride('final|3|15', '식의 계산', '도형이 나나태는 수', '식의 완성', 'six-symbol-equation-system', '서로 다른 여섯 수가 들어간 기호식', 'type-1jv7x7q'),
+    eligibleTaxonomyOverride('final|3|16', '식의 계산', '곱의 최대 최소', '식의 완성', 'seven-digit-cards-maximum-product', '일곱 숫자 카드로 곱이 가장 큰 두 수 만들기', 'type-1mh1sru'),
+    eligibleTaxonomyOverride('final|3|17', '수·규칙찾기', '수 퍼즐', '수의 관계', 'matching-edge-rectangle-placement', '변의 수가 같은 직사각형 조각 배치', 'type-1ce6mp0'),
+    eligibleTaxonomyOverride('final|3|18', '식의 계산', '그림 그려 해결하기(강물의 깊이)', '비와 비율', 'submerged-stick-depth-ratio', '같은 깊이에 꽂힌 막대의 물 위 비율로 깊이 구하기', 'type-1ds1p41'),
+    eligibleTaxonomyOverride('final|3|19', '도형', '포함하지 않는 도형의 개수', '도형의 개수', 'exclude-shaded-square-count', '색칠한 부분을 포함하지 않는 정사각형 세기', 'type-0rltzz9'),
+    eligibleTaxonomyOverride('final|3|20', '수·규칙찾기', '수 분류하기', '관찰과 분류', 'pair-partition-six-cards', '여섯 카드를 두 장씩 세 묶음으로 나누기', 'type-02gx8st'),
+    eligibleTaxonomyOverride('final|3|21', '수·규칙찾기', '수배열표', '수 배열의 규칙', 'square-ring-number-position', '정사각형 둘레를 늘리는 수 배열의 위치', 'type-0adreqq'),
+    eligibleTaxonomyOverride('final|3|22', '수·규칙찾기', '조건에 맞는 수의 순서', '조건에 맞는 수', 'repeated-digit-number-order', '같은 숫자가 반복되는 수의 순서 찾기', 'type-09okh48'),
+    eligibleTaxonomyOverride('final|3|23', '식의 계산', '나누어 나머지가 생기는 수', '나눗셈의 몫과 나머지', 'repeated-division-first-remainder', '연속곱을 거듭 나눌 때 처음 나머지가 생기는 차례', 'type-0zl0hkv'),
+    eligibleTaxonomyOverride('final|3|24', '식의 계산', '복면산(곱셈)', '식의 완성', 'distinct-digit-long-multiplication', '서로 다른 숫자가 들어간 세로 곱셈', 'type-0xlhh3u'),
+    eligibleTaxonomyOverride('final|3|25', '수·규칙찾기', '성냥개비의 수의 활용', '규칙수열·도형배열', 'mirror-readable-matchstick-number', '거울에서도 자연수가 되는 성냥개비 숫자', 'type-1wznd76'),
+    eligibleTaxonomyOverride('final|3|26', '도형', '도형의 대칭', '공간지각', 'folded-hexagon-coloring', '접었을 때 겹치는 정육각형 색칠 방법', 'type-1thbwgj'),
+    eligibleTaxonomyOverride('final|3|27', '식의 계산', '나눗셈의 활용(문장제)', '합차와 배수', 'total-money-people-share', '전체 금액으로 사람 수와 한 사람 몫 찾기', 'type-09a86sg'),
+    eligibleTaxonomyOverride('final|3|28', '식의 계산', '조건에 맞는 수', '식의 완성', 'product-sum-natural-pair', '곱과 합 조건을 함께 만족하는 두 자연수 찾기', 'type-0432tsw'),
+    eligibleTaxonomyOverride('final|3|29', '수·규칙찾기', '등비 수열의 활용', '마디수열·규칙찾기', 'doubling-message-time', '동시에 두 배씩 전하는 데 걸리는 시간 구하기', 'type-0k1rbdj'),
+    eligibleTaxonomyOverride('final|3|30', '경우의 수', '4색정리', '색칠하기', 'adjacent-region-minimum-colors', '이웃한 지역을 다르게 칠하는 최소 색 수', 'type-1gyde5s')
   ]);
   /* reviewed-taxonomy-overrides:end */
 
@@ -504,13 +534,13 @@
       link.assetKind = 'raster';
       link.sourceAudit.visualRequired = true;
     }
-    var fixedRound=/^final([27])-q/.exec(generatorId);
+    var fixedRound=/^final([237])-q/.exec(generatorId);
     link.qaEvidence = {
-      suite: fixedRound?(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':'qa/final2-fixed90-math-validate.js'):'qa/bank-final1-generators-validate.js',
+      suite: fixedRound ? (fixedRound[1]==='3'?'qa/final3-fixed90-validate.js':(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':'qa/final2-fixed90-math-validate.js')) : 'qa/bank-final1-generators-validate.js',
       generatedQuestions: fixedRound ? 3 : 5000,
       levels: fixedRound ? ['fixed-reviewed-variants'] : [1, 2, 3, 4, 5],
       seedsPerLevel: fixedRound ? 0 : 1000,
-      date: fixedRound?(fixedRound[1]==='7'?'2026-09-18':'2026-09-12'):'2026-09-05'
+      date: fixedRound ? (fixedRound[1]==='3'?'2026-09-20':(fixedRound[1]==='7'?'2026-09-18':'2026-09-12')) : '2026-09-05'
     };
     return link;
   }
@@ -644,6 +674,50 @@
       'bank/bank-fixed.js',
       'same Final 7 source reasoning with a user-reviewed visual variant: ' + row[1],
       'final:7:' + no,
+      row[2] === true
+    );
+  });
+
+  /* 파이널 3회는 사용자 눈검수까지 통과한 고정 문항 3개씩을 연결한다. */
+  [
+    [1, '두 항을 더해 이어지는 과일 수열', true],
+    [2, '네 사람의 직업을 조건으로 연결하기', false],
+    [3, '정사각형 테두리에 새로 붙이는 타일 수', true],
+    [4, '양손 손가락을 왕복하는 반복 순서', true],
+    [5, '두 날짜 사이의 날수로 요일 찾기', false],
+    [6, '접은 종이를 오려 펼친 완전한 원의 수', true],
+    [7, '도형의 무게 관계로 저울 수평 맞추기', true],
+    [8, '계단식 산을 오르내리는 최단 경로 수', true],
+    [9, '한 기준 수에서 네 연산으로 만든 수 찾기', false],
+    [10, '두 사람이 주고받은 횟수와 남은 양 구하기', false],
+    [11, '1이 반복된 수의 곱에서 자리수의 합 구하기', false],
+    [12, '양팔저울로 목표 무게를 재는 최소 추 개수', false],
+    [13, '두 줄 벌집에서 앞으로 가는 경로 수', true],
+    [14, '서로의 현재 나이가 되는 두 시점의 나이 관계', false],
+    [15, '서로 다른 여섯 수가 들어간 기호식', true],
+    [16, '일곱 숫자 카드로 곱이 가장 큰 두 수 만들기', true],
+    [17, '변의 수가 같은 직사각형 조각 배치', true],
+    [18, '같은 깊이에 꽂힌 막대의 물 위 비율로 깊이 구하기', false],
+    [19, '색칠한 부분을 포함하지 않는 정사각형 세기', true],
+    [20, '여섯 카드를 두 장씩 세 묶음으로 나누기', false],
+    [21, '정사각형 둘레를 늘리는 수 배열의 위치', true],
+    [22, '같은 숫자가 반복되는 수의 순서 찾기', false],
+    [23, '연속곱을 거듭 나눌 때 처음 나머지가 생기는 차례', false],
+    [24, '서로 다른 숫자가 들어간 세로 곱셈', true],
+    [25, '거울에서도 자연수가 되는 성냥개비 숫자', true],
+    [26, '접었을 때 겹치는 정육각형 색칠 방법', true],
+    [27, '전체 금액으로 사람 수와 한 사람 몫 찾기', false],
+    [28, '곱과 합 조건을 함께 만족하는 두 자연수 찾기', false],
+    [29, '동시에 두 배씩 전하는 데 걸리는 시간 구하기', false],
+    [30, '이웃한 지역을 다르게 칠하는 최소 색 수', true]
+  ].forEach(function (row) {
+    var no = row[0];
+    var sourceKey = ['final', 3, no].join('|');
+    SOURCE_ITEM_GENERATOR_LINKS[sourceKey] = sourceItemReviewGeneratorLink(
+      'final3-q' + String(no).padStart(2, '0'),
+      'bank/bank-fixed.js',
+      'same Final 3 source condition structure: ' + row[1],
+      'final:3:' + no,
       row[2] === true
     );
   });

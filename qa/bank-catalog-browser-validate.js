@@ -63,6 +63,16 @@ const ARTIFACT_DIR = process.env.GFIELD_QA_ARTIFACT_DIR || '';
     assert.equal(await page.getByRole('heading', { name: '모든 도로를 지나 출발점으로 돌아오는 가장 짧은 길 찾기', exact: true }).count(), 1, '28번은 모든 도로와 출발점 복귀 조건을 표시');
     assert.equal(await page.locator('.type-card').count(), 30, '파이널 2회 승인 문항을 안정 유형별 카드 30개로 분리');
 
+    await page.selectOption('#round-filter', 'final|3');
+    assert.match(await page.locator('#result-status').textContent(), /30문항$/, '파이널 3회 30문항');
+    assert.equal(await page.getByRole('link', { name: '문항별 유사문제 3개 공부하기' }).count(), 30, '파이널 3회 30개 원문별 승인 문항 연결');
+    const final3Fold = page.locator('.type-card').filter({ has: page.getByRole('heading', { name: '접은 종이를 오려 펼친 완전한 원의 수', exact: true }) });
+    assert.equal(await final3Fold.count(), 1, '파이널 3회 6번의 승인 표시명 사용');
+    assert.match(await final3Fold.getByRole('link', { name: '문항별 유사문제 3개 공부하기' }).getAttribute('href'), /bank=final3&gens=final3-q06/, '파이널 3회 6번 고정 유사문제 3개 연결');
+    assert.equal(await page.locator('.type-card').count(), 30, '파이널 3회 승인 문항을 안정 유형별 카드 30개로 분리');
+
+    await page.selectOption('#round-filter', 'final|2');
+
     async function inspectFinal2Cards(width, height, screenshotName) {
       await page.setViewportSize({ width, height });
       const observed = await page.evaluate(() => ({
@@ -102,7 +112,7 @@ const ARTIFACT_DIR = process.env.GFIELD_QA_ARTIFACT_DIR || '';
 
     await page.selectOption('#round-filter', 'final|3');
     assert.match(await page.locator('#result-status').textContent(), /30문항$/, '파이널 3회 30문항');
-    assert.equal(await page.getByRole('heading', { name: '우기기', exact: true }).count(), 1, '같은 기존 유형명의 미승인 타회차는 기존 제목 유지');
+    assert.equal(await page.getByRole('heading', { name: '두 사람이 주고받은 횟수와 남은 양 구하기', exact: true }).count(), 1, '파이널 3회 10번 승인 세부유형명 사용');
     assert.equal(await page.getByRole('heading', { name: '두 가지 점수의 총점에서 높은 점수 횟수 구하기', exact: true }).count(), 0, 'Final2 학생 표시명이 타회차에 전파되지 않음');
     assert.equal(await page.getByRole('heading', { name: '서로 만나는 나라의 최소 색칠', exact: true }).count(), 0, 'Final2 지도 조건명이 타회차 4색정리에 전파되지 않음');
 
@@ -128,7 +138,7 @@ const ARTIFACT_DIR = process.env.GFIELD_QA_ARTIFACT_DIR || '';
     assert.equal(await page.locator('#type-panel').isVisible(), true, '유형 검색 화면 표시');
     assert.equal(await page.locator('#paper-panel').isHidden(), true, '시험지 선택 화면 숨김');
     assert.equal(await page.locator('#paper-context').isHidden(), true, '유형 검색에서는 시험지 점수대 숨김');
-    assert.match(await page.locator('#result-status').textContent(), /600문항$/, '유형 찾기 기본 범위 600문항');
+    assert.match(await page.locator('#result-status').textContent(), /630문항$/, '유형 찾기 기본 범위 630문항');
 
     await page.fill('#search', '숫자 3이 적혀 있는 쪽');
     assert.ok(await page.getByText('특정 숫자가 들어 있는 수의 개수', { exact: true }).count() > 0, '실제 지문 일부로 관련 유형 검색');
@@ -139,7 +149,7 @@ const ARTIFACT_DIR = process.env.GFIELD_QA_ARTIFACT_DIR || '';
     await page.locator('.area-pick[data-area="도형"]').click();
     assert.equal(await page.locator('.area-section').count(), 1, '영역별 전체 유형은 한 영역만 표시');
     assert.equal(await page.locator('.area-head h2').textContent(), '도형', '도형 영역 전체 유형');
-    assert.match(await page.locator('#result-status').textContent(), /123문항$/, '도형 영역 123문항');
+    assert.match(await page.locator('#result-status').textContent(), /126문항$/, '도형 영역 126문항');
 
     await page.setViewportSize({ width: 390, height: 844 });
     const mobile = await page.evaluate(() => ({
