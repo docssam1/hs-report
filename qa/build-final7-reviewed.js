@@ -988,11 +988,11 @@ q25.forEach((row, index) => {
   const variant = index + 1;
   const [first, second, third, fourth] = row.names;
   const values = [row.answer, row.answer * 2, row.answer * 4, row.answer * 7 + row.extra];
-  if (values.reduce((sum, value) => sum + value, 0) !== row.total || values[3] !== values[0] + values[1] + values[2] + row.extra) throw new Error('Q25-' + variant + ': invalid multiplicative remainder answer');
+  if (values.reduce((sum, value) => sum + value, 0) !== row.total || values[3] !== values[0] + values[1] + values[2] + row.extra) throw new Error('Q25-' + variant + ': invalid multiplicative sum-and-difference answer');
   const text = first + ', ' + second + ', ' + third + ', ' + fourth + (hasBatchim(fourth) ? '은' : '는') + ' 함께 ' + row.activity + '. ' + topicNameForFinal7(second) + ' ' + subjectNameForFinal7(first) + ' 모은 ' + row.object + '의 2배를 모았고, ' + topicNameForFinal7(third) + ' ' + subjectNameForFinal7(second) + ' 모은 ' + row.object + '의 2배를 모았습니다. ' + topicNameForFinal7(fourth) + ' 나머지 세 명이 모은 ' + row.object + '를 합친 것보다 ' + row.extra + '개 더 많이 모았습니다. 네 명이 모은 ' + row.object + '가 모두 ' + row.total + '개일 때, ' + subjectNameForFinal7(first) + ' 모은 ' + row.object + '는 몇 개입니까?';
   items.push(common(25, variant, {
     text, answer:row.answer + '개', acceptedAnswers:[row.answer + '개', String(row.answer)], pointBand:'4.2',
-    area:'식의 계산', subarea:'배수와 나머지', detailType:'연속한 두 배 관계와 나머지보다 많은 수로 첫 사람의 수량 구하기',
+    area:'식의 계산', subarea:'배수 관계와 합', detailType:'연속한 두 배 관계와 세 사람의 합보다 많은 수로 첫 사람의 수량 구하기',
     readingFocus:'둘째와 셋째의 수를 첫째의 수로 나타내고, 넷째의 비교 대상이 나머지 세 명의 합임을 확인합니다.',
     solutionSkill:'첫 사람의 수를 한 단위로 두어 네 사람의 수량을 한 식으로 나타내기',
     solutionSteps:[
