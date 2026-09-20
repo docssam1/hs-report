@@ -39,7 +39,7 @@ const {chromium}=require('playwright');
   assert(!body.includes('예상 등급\n확인 필요'),'expected grade must be calculated from the verified process cuts');
   await page.locator('#report-summary').screenshot({path:path.join(out,'summary-benchmark.png')});
   await page.locator('#detailedAnswersSection summary').click();
-  const q29Detail=page.locator('#detailedAnswersSection [data-solution-no="29"]');
+  const q29Detail=page.locator('#detailedAnswersSection .detailed-solution:not(.f7ot-card)[data-solution-no="29"]');
   assert.equal(await q29Detail.count(),1,'Q29 reviewed detailed solution must render once');
   const q29DetailText=await q29Detail.innerText();
   assert(q29DetailText.includes('가운데가 1이면'));
