@@ -1,8 +1,12 @@
 {
-  "version": "7.12.0",
+  "version": "7.13.0",
   "sourceSet": "final",
   "sourceRound": 7,
   "availableSourceNos": [
+    1,
+    2,
+    3,
+    4,
     5,
     6,
     7,
@@ -32,6 +36,150 @@
   ],
   "items": [
     {
+      "id": "final7-q01-v1",
+      "sourceNo": 1,
+      "genId": "final7-q01",
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "식의 계산",
+      "subarea": "뺄셈",
+      "detailType": "전체에서 그림 속 수와 따로 있는 수를 빼기",
+      "pointBand": "2.7",
+      "text": "민혁이가 색연필 60개를 정리하고 있습니다. 그림은 바닥에 떨어진 색연필이고, 책상 위에는 3개가 있습니다. 나머지는 모두 필통 안에 있다면, 필통 안에는 몇 개가 있습니까?"
+    },
+    {
+      "id": "final7-q01-v2",
+      "sourceNo": 1,
+      "genId": "final7-q01",
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "식의 계산",
+      "subarea": "뺄셈",
+      "detailType": "전체에서 그림 속 수와 따로 있는 수를 빼기",
+      "pointBand": "2.7",
+      "text": "관호이가 성냥개비 72개를 정리하고 있습니다. 그림은 바닥에 떨어진 성냥개비이고, 책상 위에는 5개가 있습니다. 나머지는 모두 상자 안에 있다면, 상자 안에는 몇 개가 있습니까?"
+    },
+    {
+      "id": "final7-q01-v3",
+      "sourceNo": 1,
+      "genId": "final7-q01",
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "식의 계산",
+      "subarea": "뺄셈",
+      "detailType": "전체에서 그림 속 수와 따로 있는 수를 빼기",
+      "pointBand": "2.7",
+      "text": "주연이가 나무 막대 80개를 정리하고 있습니다. 그림은 바닥에 떨어진 나무 막대이고, 책상 위에는 4개가 있습니다. 나머지는 모두 서랍 안에 있다면, 서랍 안에는 몇 개가 있습니까?"
+    },
+    {
+      "id": "final7-q02-v1",
+      "sourceNo": 2,
+      "genId": "final7-q02",
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "측정",
+      "subarea": "시각과 시간",
+      "detailType": "거울에 비친 시각을 실제 시각으로 고쳐 지난 시간 구하기",
+      "pointBand": "2.7",
+      "text": "유빈이가 자다가 잠깐 깨어 거울에 비친 시계를 보니 그림과 같았습니다. 다시 잠들었다가 오전 8시 10분에 일어났다면, 다시 잠든 뒤 몇 분 만에 일어난 것입니까?"
+    },
+    {
+      "id": "final7-q02-v2",
+      "sourceNo": 2,
+      "genId": "final7-q02",
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "측정",
+      "subarea": "시각과 시간",
+      "detailType": "거울에 비친 시각을 실제 시각으로 고쳐 지난 시간 구하기",
+      "pointBand": "2.7",
+      "text": "유준이가 자다가 잠깐 깨어 거울에 비친 시계를 보니 그림과 같았습니다. 다시 잠들었다가 오전 9시에 일어났다면, 다시 잠든 뒤 몇 분 만에 일어난 것입니까?"
+    },
+    {
+      "id": "final7-q02-v3",
+      "sourceNo": 2,
+      "genId": "final7-q02",
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "측정",
+      "subarea": "시각과 시간",
+      "detailType": "거울에 비친 시각을 실제 시각으로 고쳐 지난 시간 구하기",
+      "pointBand": "2.7",
+      "text": "서연이가 자다가 잠깐 깨어 거울에 비친 시계를 보니 그림과 같았습니다. 다시 잠들었다가 오전 8시 20분에 일어났다면, 다시 잠든 뒤 몇 분 만에 일어난 것입니까?"
+    },
+    {
+      "id": "final7-q03-v1",
+      "sourceNo": 3,
+      "genId": "final7-q03",
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "도형 세기",
+      "detailType": "계단형 성냥개비 배열에서 크고 작은 정사각형의 개수",
+      "pointBand": "2.7",
+      "text": "성냥개비로 그림과 같이 정사각형을 층층이 만들었습니다. 그림은 5번째 모양입니다. 이 모양에서 찾을 수 있는 크고 작은 정사각형은 모두 몇 개입니까?"
+    },
+    {
+      "id": "final7-q03-v2",
+      "sourceNo": 3,
+      "genId": "final7-q03",
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "도형 세기",
+      "detailType": "계단형 성냥개비 배열에서 크고 작은 정사각형의 개수",
+      "pointBand": "2.7",
+      "text": "성냥개비로 그림과 같이 정사각형을 층층이 만들었습니다. 그림은 7번째 모양입니다. 이 모양에서 찾을 수 있는 크고 작은 정사각형은 모두 몇 개입니까?"
+    },
+    {
+      "id": "final7-q03-v3",
+      "sourceNo": 3,
+      "genId": "final7-q03",
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "도형 세기",
+      "detailType": "계단형 성냥개비 배열에서 크고 작은 정사각형의 개수",
+      "pointBand": "2.7",
+      "text": "성냥개비로 그림과 같이 정사각형을 층층이 만들었습니다. 그림은 8번째 모양입니다. 이 모양에서 찾을 수 있는 크고 작은 정사각형은 모두 몇 개입니까?"
+    },
+    {
+      "id": "final7-q04-v1",
+      "sourceNo": 4,
+      "genId": "final7-q04",
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "식의 계산",
+      "subarea": "곱셈과 뺄셈",
+      "detailType": "직사각형 전체 자리에서 빈 자리를 빼어 도형의 개수 구하기",
+      "pointBand": "2.7",
+      "text": "별을 직사각형 모양으로 빈틈없이 놓으려 했습니다. 그림처럼 아직 놓지 못한 자리가 있을 때, 이미 놓인 별은 모두 몇 개입니까?"
+    },
+    {
+      "id": "final7-q04-v2",
+      "sourceNo": 4,
+      "genId": "final7-q04",
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "식의 계산",
+      "subarea": "곱셈과 뺄셈",
+      "detailType": "직사각형 전체 자리에서 빈 자리를 빼어 도형의 개수 구하기",
+      "pointBand": "2.7",
+      "text": "별을 직사각형 모양으로 빈틈없이 놓으려 했습니다. 그림처럼 아직 놓지 못한 자리가 있을 때, 이미 놓인 별은 모두 몇 개입니까?"
+    },
+    {
+      "id": "final7-q04-v3",
+      "sourceNo": 4,
+      "genId": "final7-q04",
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "식의 계산",
+      "subarea": "곱셈과 뺄셈",
+      "detailType": "직사각형 전체 자리에서 빈 자리를 빼어 도형의 개수 구하기",
+      "pointBand": "2.7",
+      "text": "별을 직사각형 모양으로 빈틈없이 놓으려 했습니다. 그림처럼 아직 놓지 못한 자리가 있을 때, 이미 놓인 별은 모두 몇 개입니까?"
+    },
+    {
       "id": "final7-q05-v1",
       "sourceNo": 5,
       "genId": "final7-q05",
@@ -41,7 +189,7 @@
       "subarea": "길 찾기",
       "detailType": "육각형 칸을 따라가는 방법의 수",
       "pointBand": "2.7",
-      "text": "도윤이가 그림과 같은 게임판에서 X에서 출발하여 Y까지 도착하면 끝나는 게임을 합니다. 도윤이는 몇 가지 방법으로 갈 수 있을까요?"
+      "text": "도윤이가 그림과 같은 게임판에서 X에서 출발하여 Y까지 도착하면 끝나는 게임을 합니다. 도윤이는 몇 가지 방법으로 갈 수 있을까요? (변을 함께 쓰는 이웃한 칸으로만 움직이며, 한 번 지난 칸은 다시 지나지 않습니다.)"
     },
     {
       "id": "final7-q05-v2",
@@ -53,7 +201,7 @@
       "subarea": "길 찾기",
       "detailType": "육각형 칸을 따라가는 방법의 수",
       "pointBand": "2.7",
-      "text": "로봇이 그림의 X칸에서 출발하여 Y칸에 도착하려고 합니다. 로봇이 갈 수 있는 방법은 모두 몇 가지일까요?"
+      "text": "로봇이 그림의 X칸에서 출발하여 Y칸에 도착하려고 합니다. 로봇이 갈 수 있는 방법은 모두 몇 가지일까요? (변을 함께 쓰는 이웃한 칸으로만 움직이며, 한 번 지난 칸은 다시 지나지 않습니다.)"
     },
     {
       "id": "final7-q05-v3",
@@ -65,7 +213,7 @@
       "subarea": "길 찾기",
       "detailType": "육각형 칸을 따라가는 방법의 수",
       "pointBand": "2.7",
-      "text": "장난감 말을 그림의 X에서 출발시켜 Y까지 옮기려고 합니다. 장난감 말이 갈 수 있는 방법은 모두 몇 가지일까요?"
+      "text": "장난감 말을 그림의 X에서 출발시켜 Y까지 옮기려고 합니다. 장난감 말이 갈 수 있는 방법은 모두 몇 가지일까요? (변을 함께 쓰는 이웃한 칸으로만 움직이며, 한 번 지난 칸은 다시 지나지 않습니다.)"
     },
     {
       "id": "final7-q06-v1",

@@ -17,6 +17,8 @@ assert.equal(round.standalone,true,'Final 7 must be standalone');
 assert.equal(round.cumulative,false,'Final 7 must opt out of cumulative reporting');
 assert.equal(round.minutes,80,'source paper states 80 minutes');
 assert.equal(round.items.length,30,'source paper has 30 questions');
+assert.equal(round.items.filter(item=>item.taxonomyReviewStatus==='verified-source-bound').length,30,'all Final 7 report types must use the reviewed source-bound taxonomy');
+assert.equal(round.items.every(item=>item.area&&item.subarea&&item.detailType),true,'all Final 7 report types must have an explicit area, subarea, and detail type');
 assert.equal(round.paper.imagePages,8,'source paper has 8 pages');
 assert.equal(round.ready,true,'reviewed Final 7 is released to students with the dedicated round approval');
 assert.deepEqual(Array.from(round.lockedQuestions),[],'no Final 7 source question remains in the review lock');
@@ -27,6 +29,13 @@ assert.equal(Object.prototype.hasOwnProperty.call(round.stats,'rate'),false,'oth
 
 const expected=['37','95분','67개','102개','9가지','6마리','136','425','40','50','15개','$\\frac{1}{128}$','2가 12개','101, 148, 145','(3, 50)','165','210','병 16살','382개','216g','62','75명','169','4명','3마리','2014년','5주일','30','64가지','128'];
 assert.deepEqual(Array.from(round.items,item=>item.officialAnswer||item.answer),expected,'all official answers must remain traceable to the answer PDF');
+const q5=round.items.find(item=>item.no===5);
+assert.equal(q5.officialAnswer,'9가지','Q5 preserves the source answer for audit');
+assert.equal(q5.answer,'11가지','Q5 learner answer uses the no-revisit correction');
+const q5Graph={X:['R','C'],R:['X','B','C'],B:['R','L','C'],L:['B','Y','C'],Y:['L','C'],C:['X','R','B','L','Y']};
+let q5Paths=0;
+(function walk(cell,visited){if(cell==='Y'){q5Paths+=1;return;}q5Graph[cell].forEach(next=>{if(visited.indexOf(next)<0)walk(next,visited.concat(next));});})('X',['X']);
+assert.equal(q5Paths,11,'Q5 has eleven simple cell paths when no cell may be revisited');
 const q10=round.items.find(item=>item.no===10);
 assert.equal(q10.answer,'50');
 assert.equal(88*5-(99+98+97+96),50,'Q10 video clarification independently verifies the answer');

@@ -33,14 +33,14 @@ const server=http.createServer((request,response)=>{
       await context.route('https://**/*',route=>route.abort());
       const page=await context.newPage();await page.goto(base+url,{waitUntil:'networkidle'});return {context,page};
     }
-    const approved=await open('/bank/index.html?bank=final7&practice=wrong&gens=final7-q05%2Cfinal7-q06&per=3&points=all&source=final%7C7','mock-final-7');
+    const approved=await open('/bank/index.html?bank=final7&practice=wrong&gens=final7-q01%2Cfinal7-q04&per=3&points=all&source=final%7C7','mock-final-7');
     await approved.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===6);
     assert.equal(await approved.page.locator('#bankAccessGate').isHidden(),true,'Final7 approval opens its reviewed practice without the global bank permission');
-    assert.equal(await approved.page.locator('.qcard[data-source-no="5"]').count(),3,'Q5 keeps exactly three reviewed variants');
-    assert.equal(await approved.page.locator('.qcard[data-source-no="6"]').count(),3,'Q6 keeps exactly three reviewed variants');
+    assert.equal(await approved.page.locator('.qcard[data-source-no="1"]').count(),3,'Q1 keeps exactly three reviewed variants');
+    assert.equal(await approved.page.locator('.qcard[data-source-no="4"]').count(),3,'Q4 keeps exactly three reviewed variants');
     assert.equal(await approved.page.locator('.f1-coach-launch,.gfield-step-coach,.f7ot-launch').count(),0,'similar-problem variants never include the original-question tutor');
     await approved.page.goto(base+'/bank/index.html?bank=final7',{waitUntil:'networkidle'});
-    await approved.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===78);
+    await approved.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
     assert.equal(await approved.page.locator('.qcard[data-source-no="29"]').count(),3,'direct Final7 entry includes all three Q29 variants');
     assert.equal(await approved.page.locator('.qcard[data-source-no="30"]').count(),3,'direct Final7 entry includes all three Q30 variants');
     await approved.context.close();

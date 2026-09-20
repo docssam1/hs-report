@@ -13,8 +13,8 @@ adapter.useData(data);
 
 const types = adapter.listTypes();
 const sourceItems = adapter.listSourceItems();
-assert.equal(types.length, 26, 'twenty-six normalized reviewed types');
-assert.equal(sourceItems.length, 26, 'twenty-six normalized reviewed source items');
+assert.equal(types.length, 30, 'thirty normalized reviewed types');
+assert.equal(sourceItems.length, 30, 'thirty normalized reviewed source items');
 assert.equal(new Set(types.map((type) => type.id)).size, types.length, 'unique type ids');
 assert.equal(new Set(sourceItems.map((item) => item.sourceKey)).size, sourceItems.length, 'duplicate sourceKey count is zero');
 
@@ -38,8 +38,8 @@ assert.doesNotMatch(publicMetadata, /[A-Z]:[\\/]|Users[\\/]|AppData|OneDrive/, '
 assert.doesNotMatch(publicMetadata, /materials[\\/]final_7|\.pdf|\.jpg/i, 'no private original locator');
 
 const generated = sourceItems.reduce((sum, item) => sum + adapter.getGenerator(types.find((type) => type.id === item.typeIds[0]).generatorId).items.length, 0);
-assert.equal(generated, 78, 'all seventy-eight approved variants are reachable through adapter capabilities');
-assert.equal(data.reviewSummary.unavailableSourceQuestions, 0, 'no source question remains locked inside the reviewed Q5-Q30 range');
+assert.equal(generated, 90, 'all ninety approved variants are reachable through adapter capabilities');
+assert.equal(data.reviewSummary.unavailableSourceQuestions, 0, 'no source question remains locked inside the reviewed Q1-Q30 range');
 assert.equal(sourceItems.find((item) => item.sourceLocator.questionNo === 13).answerContract, 'number-and-count', 'Q13 keeps its number-and-count answer contract');
 assert.equal(sourceItems.find((item) => item.sourceLocator.questionNo === 14).answerContract, 'ordered-triple', 'Q14 keeps its ordered-triple answer contract');
 assert.equal(sourceItems.find((item) => item.sourceLocator.questionNo === 15).answerContract, 'ordered-pair', 'Q15 keeps its ordered-pair answer contract');
@@ -59,4 +59,4 @@ assert.equal(sourceItems.find((item) => item.sourceLocator.questionNo === 28).an
 assert.equal(sourceItems.find((item) => item.sourceLocator.questionNo === 29).answerContract, 'single-number', 'Q29 keeps its single-number answer contract');
 assert.equal(sourceItems.find((item) => item.sourceLocator.questionNo === 30).answerContract, 'single-number', 'Q30 keeps its single-number answer contract');
 
-console.log('PASS source adapter contract: 26 types, 26 verified sources, 78 variants, 0 locked sources in reviewed range, 0 duplicate keys, 0 missing type/generator/renderer references, 0 private paths or official source answers');
+console.log('PASS source adapter contract: 30 types, 30 verified sources, 90 variants, 0 locked sources in reviewed range, 0 duplicate keys, 0 missing type/generator/renderer references, 0 private paths or official source answers');

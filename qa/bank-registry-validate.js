@@ -347,8 +347,8 @@ check('item.area를 권위값으로 보존하고 출처 키 중복 없음', () =
 });
 
 check('등록 소영역과 규칙 후보를 명시적으로 구분', () => {
-  assert.equal(unified.summary.confirmedItems, 153);
-  assert.equal(unified.summary.candidateItems, 717);
+  assert.equal(unified.summary.confirmedItems, 155);
+  assert.equal(unified.summary.candidateItems, 715);
   unified.items.forEach((item) => {
     if (item.reviewStatus === 'confirmed') {
       assert.equal(item.reviewRequired, false);
@@ -370,7 +370,7 @@ check('이원목적표의 대영역+소영역+세부유형을 화면 권위값�
 });
 
 check('기존 후보 family는 생성기 연결용 내부 값으로만 유지', () => {
-  assert.equal(unified.summary.canonicalTypes, 216, `canonical types=${unified.summary.canonicalTypes}`);
+  assert.equal(unified.summary.canonicalTypes, 218, `canonical types=${unified.summary.canonicalTypes}`);
   assert.ok(unified.summary.canonicalTypes < unified.summary.rawDisplayTypes / 3);
   const clockTypes = unified.items.filter((item) => item.area === '도형' && /시침과 분침이 (직각|겹)/.test(item.displayType));
   assert.ok(clockTypes.length >= 4);

@@ -702,8 +702,9 @@
   }
   function renderMock(){
     const body=document.getElementById('mock-body'); if(!body) return;
-    const subs = MK_ROWS? [...new Set(MK_ROWS.map(x=>x.student))]:[];
-    const studs=mkStudents();
+    const koDesc=(a,b)=>String(b).localeCompare(String(a),'ko',{sensitivity:'base',numeric:true});
+    const subs = MK_ROWS? [...new Set(MK_ROWS.map(x=>x.student))].sort(koDesc):[];
+    const studs=[...mkStudents()].sort(koDesc);
     if(!mkSel||!studs.includes(mkSel)) mkSel=studs[0]||'';
     let h=`<div style="margin:8px 0;font-size:13px"><b>제출 학생:</b> ${subs.length? subs.map(s=>esc(s)).join(', '):'아직 없음'}</div>`;
     h+=`<div style="display:flex;gap:8px;align-items:center;margin:8px 0"><b>학생</b> <select onchange="mkSel=this.value;renderMock()" style="padding:8px;border:1px solid #ddd;border-radius:8px">${studs.map(s=>`<option ${s===mkSel?'selected':''}>${esc(s)}</option>`).join('')}</select></div>`;

@@ -16,6 +16,12 @@ assert.doesNotMatch(admin, /area=b\.area\|\|\(it&&it\.area\)/, 'blueprint.area �
 assert.match(adminV2, /sc=mkScore\(x\.ox\),score=sc\?sc\.score:'-',wrong=sc\?sc\.wrong:'-'/, '저장된 점수 대신 검증된 O/X로 점수를 재계산해야 함');
 assert.match(adminV2, /학생 아이디로 다시 로그인할 필요가 없습니다/, '파이널 재원생은 관리자 학생 선택에서 바로 오답 입력');
 assert.match(adminV2, /학생 로드맵의 「내 파이널 성적표」/, '관리자 입력 뒤 학생 개인 성적표 흐름 안내');
+assert.match(admin, /const koDesc=\(a,b\)=>String\(b\)\.localeCompare\(String\(a\),'ko',\{sensitivity:'base',numeric:true\}\)/, '학생 이름은 한국어 내림차순 비교를 사용해야 함');
+assert.match(admin, /\[\.\.\.mkStudents\(\)\]\.sort\(koDesc\)/, '학생 드롭다운은 원본 배열을 바꾸지 않고 내림차순 정렬해야 함');
+assert.match(admin, /MK_ROWS\.map\(x=>x\.student\)\)\]\.sort\(koDesc\)/, '제출 학생 표시도 같은 내림차순을 사용해야 함');
+
+const sampleStudents=['김서연','허유민','노관호','정윤성'];
+assert.deepEqual(sampleStudents.sort((a,b)=>String(b).localeCompare(String(a),'ko',{sensitivity:'base',numeric:true})),['허유민','정윤성','노관호','김서연'],'한국어 이름 내림차순은 ㅎ에서 ㄱ 방향이어야 함');
 
 const context = { window: {} };
 context.window = context;

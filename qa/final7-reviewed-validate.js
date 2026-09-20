@@ -99,13 +99,13 @@ function minimumSelected(max, count, target) {
 assert.equal(data.sourceSet, 'final');
 assert.equal(data.sourceRound, 7);
 assert.equal(data.freezePolicy.runtimeGeneration, false);
-assert.equal(data.freezePolicy.partialRelease, true);
-assert.equal(data.freezePolicy.fixedItemCount, 78);
+assert.equal(data.freezePolicy.partialRelease, false);
+assert.equal(data.freezePolicy.fixedItemCount, 90);
 assert.equal(data.freezePolicy.variantsPerSourceQuestion, 3);
-assert.deepEqual(data.freezePolicy.availableSourceNos, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]);
-assert.deepEqual(data.reviewSummary, {verified: 78, pending: 0, unavailableSourceQuestions: 0});
-assert.equal(data.items.length, 78);
-assert.equal(new Set(data.items.map((item) => item.id)).size, 78);
+assert.deepEqual(data.freezePolicy.availableSourceNos, Array.from({length:30}, (_, index) => index + 1));
+assert.deepEqual(data.reviewSummary, {verified: 90, pending: 0, unavailableSourceQuestions: 0});
+assert.equal(data.items.length, 90);
+assert.equal(new Set(data.items.map((item) => item.id)).size, 90);
 
 for (const [relativePath, expected] of Object.entries(data.sourceFingerprints)) {
   assert.equal(hash(fs.readFileSync(path.join(ROOT, relativePath))), expected, relativePath + ': source fingerprint');
@@ -119,6 +119,11 @@ vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'final7-original-tutor.js'), 
 const q28Tutor = tutorSandbox.window.GFIELD_FINAL7_ORIGINAL_TUTOR.scriptedTutors[28];
 const q21Tutor = tutorSandbox.window.GFIELD_FINAL7_ORIGINAL_TUTOR.scriptedTutors[21];
 const q22Tutor = tutorSandbox.window.GFIELD_FINAL7_ORIGINAL_TUTOR.scriptedTutors[22];
+const q5Tutor = tutorSandbox.window.GFIELD_FINAL7_ORIGINAL_TUTOR.scriptedTutors[5];
+assert.equal(q5Tutor.answer, '11가지', 'Q5 tutor uses the independently enumerated correction');
+assert.match(q5Tutor.steps[0].speech, /한 번 지난 칸은 다시 지나지 않고/, 'Q5 states the user-confirmed no-revisit rule');
+assert.match(q5Tutor.steps[1].speech, /4가지/, 'Q5 counts the center-first branch');
+assert.match(q5Tutor.steps[2].speech, /3가지.*4가지.*7가지/, 'Q5 counts all right-lower-first branches');
 assert.match(q21Tutor.steps[1].speech, /56×58×60=194880/, 'Q21 proves that candidates below 58 cannot reach 200000');
 assert.match(q21Tutor.steps[2].speech, /58×60×62=215760.*60×62×64=238080.*62×64×66=261888/, 'Q21 checks every candidate from 58 through the first match');
 assert.match(q22Tutor.steps[0].speech, /모든 학생을 한 묶음 R/, 'Q22 keeps every non-4th/non-6th grade in one remainder group');
@@ -128,7 +133,8 @@ assert.match(q28Tutor.steps[1].deep, /2○, 2○\+1, 2○\+1/, 'Q28 generalizes 
 assert.doesNotMatch(q28Tutor.steps[1].speech, /○−4/, 'Q28 does not reuse the sample number 9 offsets for the unknown target');
 assert.doesNotMatch(q28Tutor.steps.map((step) => step.speech + ' ' + (step.deep || '')).join(' '), /r번째 줄|○−r/, 'Q28 avoids an age-inappropriate row variable');
 assert.match(q28Tutor.steps[3].speech, /22, 23, 29, 31, 38, 39/, 'Q28 verifies the actual six neighbors of 30');
-assert.equal(sourceRound.items.find((item) => item.no === 5).answer, '9가지', 'source Q5 remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 5).officialAnswer, '9가지', 'source Q5 official answer remains traceable');
+assert.equal(sourceRound.items.find((item) => item.no === 5).answer, '11가지', 'source Q5 learner answer uses the independently verified correction');
 assert.equal(sourceRound.items.find((item) => item.no === 6).answer, '6마리', 'source Q6 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 7).answer, '136', 'source Q7 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 8).answer, '425', 'source Q8 remains traceable');
@@ -157,7 +163,7 @@ assert.equal(sourceRound.items.find((item) => item.no === 28).answer, '30', 'sou
 assert.equal(sourceRound.items.find((item) => item.no === 29).answer, '192가지', 'corrected source Q29 remains traceable');
 assert.equal(sourceRound.items.find((item) => item.no === 30).answer, '128', 'source Q30 remains traceable');
 
-for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]) {
+for (const no of Array.from({length:30}, (_, index) => index + 1)) {
   const group = data.items.filter((item) => item.sourceNo === no).sort((a, b) => a.variantNo - b.variantNo);
   assert.equal(group.length, 3, no + ': exactly three reviewed variants');
   assert.deepEqual(group.map((item) => item.variantNo), [1, 2, 3]);
@@ -168,7 +174,7 @@ for (const no of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
   assert.equal(link.studentWrongPracticeReady, true);
   assert.equal(link.qaEvidence.suite, 'qa/final7-reviewed-validate.js');
 }
-assert.equal(registry.sourceItemGenerator('final|7|4'), null, 'items outside the reviewed Final 7 source range remain locked');
+assert.equal(registry.sourceItemGenerator('final|7|31'), null, 'items outside the Final 7 source range remain locked');
 
 for (const item of data.items) {
   assert.equal(item.reviewStatus, 'verified', item.id + ': review status');
@@ -199,6 +205,44 @@ for (const item of data.items) {
     assert.equal(item.asset, undefined, item.id + ': text-only item has no decorative image');
     assert.equal(item.assetSpec, null, item.id + ': text-only renderer contract');
   }
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 1)) {
+  const m = item.meta;
+  assert.equal(m.totalCount - m.pictureCount - m.separateCount, m.hiddenCount, item.id + ': hidden remainder');
+  assert.equal(item.answer, m.hiddenCount + '개', item.id + ': hidden remainder answer');
+  assert.equal(item.assetSpec.objectCount, m.pictureCount, item.id + ': picture object count contract');
+  assert.equal(item.assetSpec.renderRules.allowOverlap, false, item.id + ': every object remains countable');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 2)) {
+  const read = (value) => { const match=String(value).match(/(\d+)시(?:\s*(\d+)분)?/); return (Number(match[1])%12)*60+Number(match[2]||0); };
+  const actual = (720 - read(item.meta.mirrorTime)) % 720;
+  const wake = read(item.meta.wakeTime);
+  assert.equal(read(item.meta.actualTime), actual, item.id + ': reflected analog-clock time');
+  assert.equal(item.meta.elapsedMinutes, (wake - actual + 720) % 720, item.id + ': elapsed minutes');
+  assert.equal(item.answer, item.meta.elapsedMinutes + '분', item.id + ': elapsed-time answer');
+  assert.equal(item.assetSpec.renderRules.showActualTime, false, item.id + ': prompt image hides actual time');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 3)) {
+  const n=item.meta.stage;
+  const occupied=new Set();
+  for(let level=0;level<n;level+=1){const width=2*(n-level)-1;for(let x=level;x<level+width;x+=1)occupied.add(x+','+(n-level-1));}
+  const counts=[];
+  for(let size=1;size<=n;size+=1){let count=0;for(let y=0;y<=n-size;y+=1)for(let x=0;x<=2*n-1-size;x+=1){let full=true;for(let dy=0;dy<size&&full;dy+=1)for(let dx=0;dx<size;dx+=1)if(!occupied.has((x+dx)+','+(y+dy))){full=false;break;}if(full)count+=1;}if(count)counts.push(count);}
+  assert.deepEqual(counts, item.meta.countsBySide, item.id + ': exhaustive square counts by side');
+  assert.equal(counts.reduce((sum,value)=>sum+value,0), item.meta.totalSquareCount, item.id + ': all square sizes total');
+  assert.equal(item.answer, item.meta.totalSquareCount + '개', item.id + ': square-count answer');
+}
+
+for (const item of data.items.filter((item) => item.sourceNo === 4)) {
+  const m=item.meta;
+  assert.equal(m.totalPositions, m.rows*m.columns, item.id + ': rectangular total');
+  assert.equal(m.visibleStars, m.totalPositions-m.missingPositions, item.id + ': occupied positions');
+  assert.equal(item.answer, m.visibleStars + '개', item.id + ': visible-star answer');
+  assert.equal(item.assetSpec.renderRules.showMissingCount, false, item.id + ': no missing-count hint in picture');
+  assert.equal(item.assetSpec.renderRules.showGroupingMarks, false, item.id + ': no grouping hint in picture');
 }
 
 for (const item of data.items.filter((item) => item.sourceNo === 5)) {
@@ -553,4 +597,4 @@ for (const item of data.items.filter((item) => item.sourceNo === 30)) {
   assert.equal(item.answer,String(remaining[0]),item.id + ': last student answer');
 }
 
-console.log('PASS Final 7 Q5-Q30: seventy-eight reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed reviewed range');
+console.log('PASS Final 7 Q1-Q30: ninety reviewed variants, independent answer checks, visible single-answer evidence, and fail-closed reviewed range');

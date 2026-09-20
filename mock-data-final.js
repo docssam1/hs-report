@@ -2174,17 +2174,17 @@ window.GFIELD_MOCK_FINAL = {
 
 /* 최종 실전 모의고사 7회는 추가 자료실의 독립 시험이다.
  * 파이널 1~5회 또는 최종 1~4회와 누적하지 않는다.
- * 30문항 답과 Q5~Q30의 유사문제·상세 풀이 검수를 마쳤으며 회차 승인 학생에게 공개한다. */
+ * 30문항 답, Q1~Q30 유사문제와 검증된 원문 상세 풀이를 회차 승인 학생에게 공개한다. */
 (function addStandaloneFinalSeven(model){
   if(!model||!model.rounds)return;
   var rows=[
     [1,'흩어진 물건의 개수 구하기','식의 계산','곱셈과 뺄셈','37'],
     [2,'거울에 비친 시계로 지난 시간 구하기','도형','시계와 대칭','95분'],
-    [3,'커지는 정사각형 배열의 바둑돌 수','수·규칙찾기','도형 배열의 규칙','67개'],
+    [3,'계단형 성냥개비 배열의 크고 작은 정사각형 수','도형','도형 세기','67개'],
     [4,'규칙에 따라 놓인 기호의 개수','수·규칙찾기','도형 배열의 규칙','102개'],
-    [5,'벌집 모양 길을 따라가는 방법의 수','경우의 수','길 찾기','9가지'],
+    [5,'벌집 모양 길을 따라가는 방법의 수','경우의 수','길 찾기','11가지'],
     [6,'묶인 줄에서 앞을 보는 물고기 수','도형','방향과 위치','6마리'],
-    [7,'찢어진 연속 두 쪽의 쪽수','식의 계산','연속수','136'],
+    [7,'숫자 순서를 바꾼 마지막 쪽과 연속 페이지 수','식의 계산','연속수','136'],
     [8,'나머지 조건을 만족하는 수의 합','식의 계산','나눗셈의 몫과 나머지','425'],
     [9,'이동 경로를 거꾸로 추적하기','수·규칙찾기','방향과 이동','40'],
     [10,'다섯 수의 합과 나눗셈 조건으로 가장 작은 수 구하기','식의 계산','우기기/가정하여 풀기','50'],
@@ -2219,14 +2219,23 @@ window.GFIELD_MOCK_FINAL = {
     script:'영상 해설 문항별 시작 시각 연결 완료',
     answerUrl:'answer.html?set=final&round=7',
     paper:{imageDir:'final_7',imagePages:8},
-    items:rows.map(function(row){return {no:row[0],type:row[1],detailType:row[1],area:row[2],subarea:row[3],answer:row[4],comment:'',taxonomyReviewStatus:'source-bound-candidate',curriculumReviewStatus:'pending'};}),
+    items:rows.map(function(row){return {no:row[0],type:row[1],detailType:row[1],area:row[2],subarea:row[3],answer:row[4],comment:'',taxonomyReviewStatus:'verified-source-bound',curriculumReviewStatus:'pending'};}),
     stats:{},
     ready:true,
     lockedQuestions:[],
-    reviewNote:'공식 답안과 영상 해설 대조 완료. 29번은 공식·영상 답안 64가지를 독립 전수검산 결과 192가지로 정정했습니다. 나머지 독립 풀이 검산과 상세 풀이·교재 연결 검수 후 공개합니다.'
+    reviewNote:'공식 답안과 영상 해설을 대조했습니다. 5번은 같은 칸을 다시 지나지 않는 조건으로 전수검산해 9가지에서 11가지로, 29번은 모든 위치를 구분해 64가지에서 192가지로 정정했습니다.'
   };
   var starts=[53,113,167,283,348,469,520,581,644,709,769,820,945,1009,1187,1320,1444,1510,1575,1639,1697,1814,1877,1939,2067,2134,2196,2319,2383,2668];
   model.rounds['7'].items.forEach(function(item){item.t=starts[item.no-1];});
+  var q5=model.rounds['7'].items.filter(function(item){return item.no===5;})[0];
+  q5.officialAnswer='9가지';
+  q5.videoAnswer='9가지';
+  q5.answer='11가지';
+  q5.answerStatus='verified-correction';
+  q5.detailedSolution=true;
+  q5.reviewStatus='verified';
+  q5.comment='한 번 지난 칸은 다시 지나지 않고 변을 함께 쓰는 칸으로만 움직입니다. X에서 첫걸음이 가운데 칸인 경우는 4가지, 오른쪽 아래 칸인 경우는 7가지이므로 모두 4+7=11가지입니다.';
+  q5.caution='✓ 공식 해설 정정: 같은 칸을 다시 지나지 않는 모든 경로를 빠짐없이 세면 9가지가 아니라 11가지입니다.';
   var q10=model.rounds['7'].items.filter(function(item){return item.no===10;})[0];
   q10.comment='다섯 카드의 합을 5로 나눈 몫이 88이므로 합은 440입니다. 가장 작은 수를 최소로 하려면 나머지 네 수를 99, 98, 97, 96으로 가장 크게 잡습니다. 440-(99+98+97+96)=50입니다.';
   q10.caution='곱이 880인 문제가 아닙니다. 다섯 수의 합을 5로 나눈 몫이 88이라는 조건입니다.';
