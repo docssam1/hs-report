@@ -107,7 +107,9 @@
     var m=item.meta,name=options.student,helper=root.GFIELD_FINAL_LAST_ROUTES;
     if((m.kind==='final'||m.kind==='last')&&helper){
       var allowed=helper.accessAllowed(options.data||{},name,m.kind,m.round);
-      return {url:allowed?helper.reportUrl(m.kind,m.round,name):'',label:allowed?'상세 분석·유사문제':'자료실 승인 필요'};
+      var url=allowed?helper.reportUrl(m.kind,m.round,name):'';
+      if(url&&m.kind==='final'&&m.round===7) url+='&v=20260920b';
+      return {url:url,label:allowed?'상세 분석·유사문제':'자료실 승인 필요'};
     }
     if(m.kind==='original') return {url:'final.html?set=original&round='+m.round+'&go=report&name='+encodeURIComponent(name),label:'상세 분석·유사문제'};
     if(m.kind==='hw') return {url:'mock.html?set=hw&round='+m.round+'&name='+encodeURIComponent(name),label:'상세 분석·유사문제'};

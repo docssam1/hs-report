@@ -93,7 +93,7 @@ const server=http.createServer((req,res)=>{
     const final7=hub.locator('tbody tr',{hasText:'최종 실전 모의고사 7회'});
     assert.equal(await final7.count(),1,'Final 7 appears in this-week result hub');
     assert.match(await final7.innerText(),/\d+\.\d%/,'Final 7 uses the verified process percentile');
-    assert.match(await final7.locator('a').getAttribute('href'),/^final\.html\?round=7&go=report&name=/,'Final 7 opens its own report, not Last 2');
+    assert.match(await final7.locator('a').getAttribute('href'),/^final\.html\?round=7&go=report&name=.*&v=20260920b$/,'Final 7 opens its own cache-safe report, not Last 2');
     for(const title of ['중급 모의고사 1회','활용 모의고사 1회','시그니처 실전 1회']){
       assert.match(await hub.locator('tbody tr',{hasText:title}).innerText(),/자료 없음/,'unsupported rank data is not invented');
     }
