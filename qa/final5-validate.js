@@ -32,6 +32,10 @@ assert.ok(Math.abs(model.blueprint.reduce((sum, row) => sum + row.pts, 0) - 100)
 const byNo = Object.fromEntries(round.items.map(item => [item.no, item]));
 assert.equal(byNo[2].answer, '4250g');
 assert.match(byNo[2].comment, /9×450\+200=4250g/);
+assert.equal(byNo[3].answer, '64');
+assert.match(byNo[3].comment, /15\+13\+11\+11\+6\+6=62/);
+assert.equal(byNo[4].answer, '7일, 8일, 9일');
+assert.match(byNo[4].comment, /3\+4\+5\+6\+7\+8\+9\+10\+11/);
 assert.equal(byNo[6].answer, '5가지');
 assert.match(byNo[6].comment, /\(0,0,17\).*\(2,4,1\)/);
 assert.equal(byNo[20].answer, '50번');
