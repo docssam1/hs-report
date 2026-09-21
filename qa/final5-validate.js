@@ -30,12 +30,22 @@ assert.equal(round.paper.imagePages, 7);
 assert.ok(Math.abs(model.blueprint.reduce((sum, row) => sum + row.pts, 0) - 100) < 1e-9);
 
 const byNo = Object.fromEntries(round.items.map(item => [item.no, item]));
+assert.equal(byNo[2].answer, '4250g');
+assert.match(byNo[2].comment, /9×450\+200=4250g/);
 assert.equal(byNo[6].answer, '5가지');
 assert.match(byNo[6].comment, /\(0,0,17\).*\(2,4,1\)/);
 assert.equal(byNo[20].answer, '50번');
 assert.match(byNo[20].comment, /3, 3, 1, 3, 3, 1.*3, 2, 1, 2, 3, 4.*홀수.*50/);
 assert.match(byNo[20].caution, /영상 해설 오류.*헬리콥터의 시작칸 4.*첫 번째 이동 위치로 잘못/);
 assert.equal(byNo[30].answer, '99999785960');
+
+// 2번: 가 봉지의 양을 구한 뒤 문제에서 묻는 다 봉지의 양까지 계산한다.
+const bagA = (6100 - 250) / 13;
+const bagB = 3 * bagA + 50;
+const bagC = 3 * bagB + 50;
+assert.equal(bagA, 450);
+assert.equal(bagC, 4250);
+assert.equal(bagA + bagB + bagC, 6100);
 
 // 6번: 모든 비음수 해를 열거하고 홀수 발사 횟수만 남긴다.
 const scoreWays = [];
