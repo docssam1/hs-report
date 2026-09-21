@@ -534,13 +534,13 @@
       link.assetKind = 'raster';
       link.sourceAudit.visualRequired = true;
     }
-    var fixedRound=/^final([237])-q/.exec(generatorId);
+    var fixedRound=/^final([2347])-q/.exec(generatorId);
     link.qaEvidence = {
-      suite: fixedRound ? (fixedRound[1]==='3'?'qa/final3-fixed90-validate.js':(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':'qa/final2-fixed90-math-validate.js')) : 'qa/bank-final1-generators-validate.js',
+      suite: fixedRound ? (fixedRound[1]==='3'?'qa/final3-fixed90-validate.js':(fixedRound[1]==='4'?'qa/final4-fixed90-validate.js':(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':'qa/final2-fixed90-math-validate.js'))) : 'qa/bank-final1-generators-validate.js',
       generatedQuestions: fixedRound ? 3 : 5000,
       levels: fixedRound ? ['fixed-reviewed-variants'] : [1, 2, 3, 4, 5],
       seedsPerLevel: fixedRound ? 0 : 1000,
-      date: fixedRound ? (fixedRound[1]==='3'?'2026-09-20':(fixedRound[1]==='7'?'2026-09-18':'2026-09-12')) : '2026-09-05'
+      date: fixedRound ? (fixedRound[1]==='3'?'2026-09-20':(fixedRound[1]==='4'?'2026-09-21':(fixedRound[1]==='7'?'2026-09-18':'2026-09-12'))) : '2026-09-05'
     };
     return link;
   }
@@ -718,6 +718,50 @@
       'bank/bank-fixed.js',
       'same Final 3 source condition structure: ' + row[1],
       'final:3:' + no,
+      row[2] === true
+    );
+  });
+
+  /* 파이널 4회는 사용자 눈검수와 독립 계산을 통과한 고정 문항 3개씩을 연결한다. */
+  [
+    [1, '두 저울식의 차로 두 종류의 무게 찾기', false],
+    [2, '남는 수와 모자라는 수의 차로 사람 수 찾기', false],
+    [3, '긴 시간 동안 시침과 분침이 직각인 횟수', false],
+    [4, '수의 순서를 유지해 덧셈·뺄셈 부호 넣기', false],
+    [5, '날짜의 배수와 요일 조건을 함께 맞추기', false],
+    [6, '정해진 수 사이에 부호를 넣는 경우의 수', false],
+    [7, '한 대·한 번의 운반량으로 필요한 자동차 수 구하기', false],
+    [8, '저울 위의 같은 저울 무게 찾기', true],
+    [9, '같은 수로 시작한 두 약병의 남은 양 비교하기', false],
+    [10, '반복된 1과 9의 곱에서 짝수 숫자 세기', false],
+    [11, '잘못 본 자리 숫자가 계산값의 차에 미친 영향', false],
+    [12, '꺾인 한 줄 실을 여러 방향으로 잘라 도막 수 구하기', true],
+    [13, '두 물건의 전체 길이를 같은 양으로 맞추기', false],
+    [14, '세 사람의 시점별 나이와 배수 관계', false],
+    [15, '세 가지 집합의 겹치는 관계', false],
+    [16, '두 이동 시간의 차로 잠든 시간 구하기', false],
+    [17, '열차의 절반이 들어간 뒤 터널 통과 거리', false],
+    [18, '서로 다른 두 시각의 두 바늘 사이 각도', false],
+    [19, '전체 악수에서 같은 나라끼리의 악수 빼기', false],
+    [20, '반복 가능한 숫자로 만든 세 자리 홀수·짝수의 합', false],
+    [21, '합이 같은 세 장 묶음을 최대한 많이 만들기', false],
+    [22, '연도가 주어진 달력의 모든 자리 숫자 합', false],
+    [23, '모든 숫자 카드로 만든 곱의 홀짝 경우의 수', false],
+    [24, '인원이 줄어든 뒤 작업이 늦어진 날수', false],
+    [25, '자리 숫자의 합이 정해진 다섯 자리 4의 배수', false],
+    [26, '서로 다른 다섯 숫자로 목표에 가장 가까운 곱 만들기', true],
+    [27, '연속 자연수에서 짝수 번째 수의 합', false],
+    [28, '같은 차로 커지는 세 수의 곱을 제곱수로 만들기', false],
+    [29, '같은 숫자로 이루어진 수열의 자리 숫자 합', false],
+    [30, '같은 방향으로 쌓은 주사위의 맞닿은 면', true]
+  ].forEach(function (row) {
+    var no = row[0];
+    var sourceKey = ['final', 4, no].join('|');
+    SOURCE_ITEM_GENERATOR_LINKS[sourceKey] = sourceItemReviewGeneratorLink(
+      'final4-q' + String(no).padStart(2, '0'),
+      'bank/bank-fixed.js',
+      'same Final 4 source condition structure: ' + row[1],
+      'final:4:' + no,
       row[2] === true
     );
   });
