@@ -63,6 +63,7 @@
     var labels={all:'전체문제','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
     var counts=[4,8,20,40],requestedCount=counts.includes(Number(opts.n))?Number(opts.n):20;
     var band=Object.hasOwn(labels,opts.pointBand)?opts.pointBand:'all',mode=q.get('printMode')||'both';
+    var orderMode=q.get('view')==='grouped'?'grouped':'mixed';
     if(!['questions','answers','both','quick'].includes(mode))mode='both';
     var layout=q.get('layout')||'editorial';
     if(!['editorial','compact'].includes(layout))layout='editorial';
@@ -71,13 +72,15 @@
     // Display-only name, never authority for reading or writing student results.
     var back=wrong?'../final.html?round='+round+'&go=report'+(student?'&name='+encodeURIComponent(student):''):'../index.html';
     var countControls=important?'<div class="f1-bands f1-counts" role="group" aria-label="문항 수">'+counts.map(k=>'<button type="button" data-role="count" data-val="'+k+'">'+k+'문항</button>').join('')+'</div>':'';
-    root.innerHTML='<header class="f1-toolbar"><a class="f1-back" href="'+esc(back)+'">← '+(wrong?'성적표':'자료실')+'</a><div class="f1-title">'+roundLabel+(important?'':' 약점 유형')+'</div><div class="f1-bands" role="group" aria-label="오답 배점대">'+Object.keys(labels).map(k=>'<button type="button" data-role="points" data-val="'+k+'">'+labels[k]+'</button>').join('')+'</div>'+countControls+'<label class="f1-layout-label">문제 배치 <select id="pageLayout"><option value="editorial">읽기 편한 4문항</option><option value="compact">간결한 6문항</option></select></label><label class="f1-print-label">인쇄 구성 <select id="printMode"><option value="questions">문제만</option><option value="answers">답안·풀이만</option><option value="both">둘 다</option><option value="quick">빠른 정답만</option></select></label><button type="button" id="btnPrint" disabled>인쇄</button></header><div class="f1-status" id="f1Status" role="status" aria-live="polite"></div><div id="f1Pages"></div>';
+    var viewControls=important?'':'<div class="f1-bands f1-view-modes" role="group" aria-label="약점 유형 보기 방식"><button type="button" data-role="view" data-val="grouped">문제별로 보기</button><button type="button" data-role="view" data-val="mixed">섞어서 보기</button></div>';
+    root.innerHTML='<header class="f1-toolbar"><a class="f1-back" href="'+esc(back)+'">← '+(wrong?'성적표':'자료실')+'</a><div class="f1-title">'+roundLabel+(important?'':' 약점 유형')+'</div><div class="f1-bands" role="group" aria-label="오답 배점대">'+Object.keys(labels).map(k=>'<button type="button" data-role="points" data-val="'+k+'">'+labels[k]+'</button>').join('')+'</div>'+viewControls+countControls+'<label class="f1-layout-label">문제 배치 <select id="pageLayout"><option value="editorial">읽기 편한 4문항</option><option value="compact">간결한 6문항</option></select></label><label class="f1-print-label">인쇄 구성 <select id="printMode"><option value="questions">문제만</option><option value="answers">답안·풀이만</option><option value="both">둘 다</option><option value="quick">빠른 정답만</option></select></label><button type="button" id="btnPrint" disabled>인쇄</button></header><div class="f1-status" id="f1Status" role="status" aria-live="polite"></div><div id="f1Pages"></div>';
     var pageRoot=root.querySelector('#f1Pages'),print=root.querySelector('#btnPrint');
     function sheet(cls,html){return '<section class="f1-page page '+cls+'"><div class="f1-watermark-clip"><div class="wm-layer"></div></div>'+html+'</section>';}
     function cleanUrl(){
       var u=new URL(location.href);['seed','gen','review','n','tune','ratio','area','level','mode'].forEach(k=>u.searchParams.delete(k));
       u.searchParams.set('bank',bankCode);u.searchParams.set('points',band);u.searchParams.set('printMode',mode);
       u.searchParams.set('layout',layout);
+      if(!important)u.searchParams.set('view',orderMode);
       if(important){u.searchParams.set('types',ids.join(','));u.searchParams.set('n',requestedCount);u.searchParams.delete('gens');return history.replaceState(null,'',u.toString());}
       var idPattern=new RegExp('^'+idPrefix+'(0[1-9]|[12][0-9]|30)$');
       var all=ids.length===30&&new Set(ids).size===30&&ids.every(id=>idPattern.test(id));
@@ -131,9 +134,10 @@
     async function render(){
       var current=++revision;print.disabled=true;pageRoot.innerHTML='';root.querySelector('#f1Status').textContent='문항을 불러오는 중입니다.';
       root.dataset.layout=layout;root.querySelector('#pageLayout').value=layout;root.querySelector('#printMode').value=mode;root.querySelectorAll('[data-role=points]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.val===band)));
+      root.querySelectorAll('[data-role=view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.val===orderMode)));
       root.querySelectorAll('[data-role=count]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.val)===requestedCount)));
       try{
-        var paper=await global.BANK_FIXED.buildPaper({bankCode:bankCode,genIds:important?null:ids.slice(),typeIds:important?ids.slice():null,n:requestedCount,pointBand:band});if(current!==revision)return;
+        var paper=await global.BANK_FIXED.buildPaper({bankCode:bankCode,genIds:important?null:ids.slice(),typeIds:important?ids.slice():null,n:requestedCount,pointBand:band,orderMode:orderMode});if(current!==revision)return;
         if(!paper.questions.length){root.querySelector('#f1Status').textContent='선택한 배점대의 '+(wrong?'오답':'문항')+'이 없습니다.';return;}
         var pages=[],groups=questionGroups(paper.questions,layout);
         if(mode==='questions'||mode==='both'){
@@ -146,10 +150,11 @@
         compactAnswerPages();
         var watermarkName=student||global.BANK_CORE.getStudentName()||'학습 자료';
         pageRoot.querySelectorAll('.wm-layer').forEach(layer=>global.BANK_CORE.buildWatermarkTiles(layer,watermarkName));
-        if(current!==revision)return;root.querySelector('#f1Status').textContent=paper.questions.length+'문항 / '+labels[band]+' / '+(layout==='editorial'?'읽기 편한 4문항':'간결한 6문항')+' / '+(important?'선택 유형':'원문별 3문항');print.disabled=false;
+        if(current!==revision)return;root.querySelector('#f1Status').textContent=paper.questions.length+'문항 / '+labels[band]+' / '+(layout==='editorial'?'읽기 편한 4문항':'간결한 6문항')+' / '+(important?'선택 유형':(orderMode==='grouped'?'문제별로 보기':'섞어서 보기'));print.disabled=false;
       }catch(error){if(current!==revision)return;pageRoot.innerHTML='';root.querySelector('#f1Status').innerHTML='<div class="f1-error" role="alert">'+esc(error.message||'문항을 불러오지 못했습니다.')+'</div>';}
     }
     root.querySelectorAll('[data-role=points]').forEach(b=>b.addEventListener('click',()=>{band=b.dataset.val;render();}));
+    root.querySelectorAll('[data-role=view]').forEach(b=>b.addEventListener('click',()=>{orderMode=b.dataset.val;render();}));
     root.querySelectorAll('[data-role=count]').forEach(b=>b.addEventListener('click',()=>{requestedCount=Number(b.dataset.val);render();}));
     root.querySelector('#pageLayout').addEventListener('change',e=>{layout=e.target.value;render();});
     root.querySelector('#printMode').addEventListener('change',e=>{mode=e.target.value;render();});

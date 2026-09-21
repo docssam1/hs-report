@@ -25,7 +25,7 @@ function server(){
     const page=await browser.newPage({viewport:{width:1280,height:900}});
     const errors=[];page.on('pageerror',error=>errors.push(error.message));
     await page.addInitScript(()=>localStorage.setItem('gfield_student','파이널4검수학생'));
-    const url=`http://127.0.0.1:${host.address().port}/bank/index.html?bank=final4&printMode=both#student=파이널4검수학생`;
+    const url=`http://127.0.0.1:${host.address().port}/bank/index.html?bank=final4&printMode=both&view=grouped#student=파이널4검수학생`;
     await page.goto(url,{waitUntil:'networkidle'});
     await page.waitForFunction(()=>document.querySelector('#btnPrint')&&!document.querySelector('#btnPrint').disabled);
     assert.match(await page.locator('.f1-title').innerText(),/파이널 4회 약점 유형/);
@@ -33,6 +33,13 @@ function server(){
     assert.equal(await page.locator('.qcard').count(),90);
     assert.equal(await page.locator('.solution-card').count(),90);
     assert.equal(await page.locator('.question-page img').count(),12);
+    assert.deepEqual(await page.locator('.qcard').evaluateAll(cards=>cards.slice(0,6).map(card=>Number(card.dataset.sourceNo))),[1,1,1,2,2,2]);
+    assert.equal(await page.locator('[data-role="view"][data-val="grouped"]').getAttribute('aria-pressed'),'true');
+    await page.locator('[data-role="view"][data-val="mixed"]').click();
+    await page.waitForFunction(()=>document.querySelector('[data-role="view"][data-val="mixed"]')?.getAttribute('aria-pressed')==='true'&&document.querySelector('.qcard')?.dataset.sourceNo==='1');
+    assert.deepEqual(await page.locator('.qcard').evaluateAll(cards=>cards.slice(0,6).map(card=>Number(card.dataset.sourceNo))),[1,2,3,4,5,6]);
+    await page.locator('[data-role="view"][data-val="grouped"]').click();
+    await page.waitForFunction(()=>document.querySelector('[data-role="view"][data-val="grouped"]')?.getAttribute('aria-pressed')==='true'&&[...document.querySelectorAll('.qcard')].slice(0,3).every(card=>card.dataset.sourceNo==='1'));
     assert.equal(await page.locator('[class*="coach"], [id*="coach"]').count(),0,'유사문제에는 질문 도우미가 없습니다.');
     assert.deepEqual(await page.locator('.qcard').evaluateAll(cards=>cards.filter(card=>card.scrollWidth>card.clientWidth+2).map(card=>card.dataset.index)),[]);
     assert.deepEqual(await page.locator('#f1Pages img').evaluateAll(images=>images.filter(image=>!image.complete||!image.naturalWidth).map(image=>image.alt)),[]);
@@ -69,9 +76,19 @@ function server(){
     const practiceUrl=new URL(practice.url());
     assert.equal(practiceUrl.searchParams.get('bank'),'final4');
     assert.equal(practiceUrl.searchParams.get('source'),'final|4');
+    assert.equal(practiceUrl.searchParams.get('view'),'grouped');
     assert.equal(await practice.locator('.qcard').count(),12);
+    assert.deepEqual(await practice.locator('.qcard').evaluateAll(cards=>cards.slice(0,6).map(card=>Number(card.dataset.sourceNo))),[8,8,8,12,12,12]);
     assert.equal(await practice.locator('[class*="coach"], [id*="coach"]').count(),0);
     await practice.close();
+    const mixedPopupPromise=page.waitForEvent('popup');
+    await page.locator('[data-wp-view="mixed"]').click();
+    const mixedPractice=await mixedPopupPromise;
+    await mixedPractice.waitForLoadState('domcontentloaded');
+    await mixedPractice.locator('.qcard').first().waitFor();
+    assert.equal(new URL(mixedPractice.url()).searchParams.get('view'),'mixed');
+    assert.deepEqual(await mixedPractice.locator('.qcard').evaluateAll(cards=>cards.slice(0,4).map(card=>Number(card.dataset.sourceNo))),[8,12,26,30]);
+    await mixedPractice.close();
     assert.deepEqual(errors,[]);
   }finally{await browser.close();host.close();}
   console.log(JSON.stringify({pass:true,items:90,figures:12,pdf:path.join(OUTPUT,'final4-fixed90-both.pdf')}));

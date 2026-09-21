@@ -129,6 +129,7 @@
       throw new Error('학습할 ' + config.label + ' 문항을 선택해 주세요.');
     }
     var selected = [], groups = [];
+    var orderMode = opts.orderMode === 'mixed' ? 'mixed' : 'grouped';
     ids.forEach(function (id) {
       var group = data.items.filter(function (item) { return item.genId === id; }).sort(function (a, b) { return a.variantNo - b.variantNo; });
       if(group.length!==3)throw new Error(id.replace(config.prefix,'')+'번 유사문제는 아직 검수 중입니다.');
@@ -138,19 +139,30 @@
       }
       groups.push(group);
     });
-    // Interleave the reviewed variants across source types; do not regenerate.
-    for (var variant = 0; variant < 3; variant++) {
+    // Keep each source question's three variants together for focused study,
+    // or interleave them for a mixed review. Never regenerate reviewed items.
+    if (orderMode === 'grouped') {
       groups.forEach(function (group) {
-        var item = group[variant];
-        var copy = JSON.parse(JSON.stringify(item));
-        copy.index = selected.length + 1;
-        selected.push(copy);
+        group.forEach(function (item) {
+          var copy = JSON.parse(JSON.stringify(item));
+          copy.index = selected.length + 1;
+          selected.push(copy);
+        });
       });
+    } else {
+      for (var variant = 0; variant < 3; variant++) {
+        groups.forEach(function (group) {
+          var item = group[variant];
+          var copy = JSON.parse(JSON.stringify(item));
+          copy.index = selected.length + 1;
+          selected.push(copy);
+        });
+      }
     }
     return {
       bankVersion:data.version, bankCode:config.code, sourceSet:'final', sourceRound:config.round, bankLabel:config.label,
       fixed:true, seedStr:'F' + config.round + 'V1', seedNum:0,
-      genIds:ids.slice(), pointBand:opts.pointBand || 'all', difficultyMode:'standard', difficultyMix:'single',
+      genIds:ids.slice(), pointBand:opts.pointBand || 'all', difficultyMode:'standard', difficultyMix:'single', orderMode:orderMode,
       perGenerator:3, n:selected.length, questions:selected
     };
   }
