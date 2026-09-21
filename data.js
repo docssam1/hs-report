@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 9. 21. 오후 7:49:03
+ * 생성: 2026. 9. 21. 오후 7:51:37
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -811,6 +811,12 @@ window.GFIELD_DATA = {
           "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789720382594_1spe__________________3_.pdf",
           "folder": "tb_mu6pb5a1",
           "pages": 7
+        },
+        {
+          "title": "초등과정 대비 파이널 모의고사 3회 손필기",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789987853977_jagj__________________3____.pdf",
+          "folder": "tb_mub4k60q",
+          "pages": 8
         }
       ]
     },
@@ -829,6 +835,18 @@ window.GFIELD_DATA = {
         {
           "title": "파이널 모의고사 4회 · 답안·교재 연결표",
           "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=4"
+        },
+        {
+          "title": "파이널 모의고사 4회",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789987797818_y2fl__________________4_.pdf",
+          "folder": "tb_mub4isz3",
+          "pages": 6
+        },
+        {
+          "title": "초등과정 대비 파이널 모의고사 4회 손필기",
+          "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789987822895_m1pf__________________4____.pdf",
+          "folder": "tb_mub4jhh7",
+          "pages": 6
         }
       ]
     },
