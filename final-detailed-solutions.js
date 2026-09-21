@@ -7,6 +7,12 @@
     });
   }
 
+  function mathHTML(value){
+    return esc(value).replace(/(^|[^0-9])([0-9]+)\/([0-9]+)(?![0-9])/g,function(_,before,numerator,denominator){
+      return before+'<span class="final-math-frac" role="img" aria-label="'+denominator+'분의 '+numerator+'"><span>'+numerator+'</span><span>'+denominator+'</span></span>';
+    });
+  }
+
   function integer(value){
     var n=Number(value);
     return Number.isInteger(n)?n:null;
@@ -32,9 +38,9 @@
   function tableHTML(table,no,stepIndex){
     if(!validTable(table)) return '';
     var width=table.headers.length;
-    var headers=table.headers.map(function(cell){return '<th scope="col">'+esc(cell)+'</th>';}).join('');
+    var headers=table.headers.map(function(cell){return '<th scope="col">'+mathHTML(cell)+'</th>';}).join('');
     var rows=table.rows.filter(function(row){return Array.isArray(row)&&row.length===width;}).map(function(row){
-      return '<tr>'+row.map(function(cell){return '<td>'+esc(cell)+'</td>';}).join('')+'</tr>';
+      return '<tr>'+row.map(function(cell){return '<td>'+mathHTML(cell)+'</td>';}).join('')+'</tr>';
     }).join('');
     if(!rows) return '';
     var caption=text(table.caption)||no+'번 '+stepIndex+'단계 정리';
@@ -86,9 +92,9 @@
     var steps=solution.steps.map(function(step,index){
       var title=text(step&&step.title)||'계산하기';
       var body=text(step&&step.body);
-      return '<div class="final1-step"><h5><span class="final1-step-index">'+(index+1)+'</span>'+esc(title)+'</h5><p>'+esc(body)+'</p>'+tableHTML(step&&step.table,no,index+1)+'</div>';
+      return '<div class="final1-step"><h5><span class="final1-step-index">'+(index+1)+'</span>'+esc(title)+'</h5><p>'+mathHTML(body)+'</p>'+tableHTML(step&&step.table,no,index+1)+'</div>';
     }).join('');
-    return '<article class="final1-detailed-card is-ready" id="'+prefix+'-solution-'+no+'" data-detailed-solution-no="'+no+'"'+(round===1?' data-final1-solution-no="'+no+'"':'')+'>'+watermark()+'<div class="final1-card-content"><header class="final1-solution-heading"><span class="final1-no">'+no+'번</span><div><h4>'+esc(solution.title)+'</h4><span class="final1-status">상세 풀이</span></div></header><div class="final1-answer"><strong>정답</strong> · '+esc(shownAnswer)+'</div><div class="final1-solution-block"><h5>읽을 조건</h5><p>'+esc(solution.read)+'</p></div><div class="final1-solution-block"><h5>풀이 전략</h5><p>'+esc(solution.method)+'</p></div>'+numberLineHTML(solution.numberLine,no)+(diagramHTML||'')+'<div class="final1-steps">'+steps+'</div><div class="final1-solution-block final1-check"><h5>검산</h5><p>'+esc(solution.check)+'</p></div><div class="final1-solution-block final1-caution"><h5>주의할 점</h5><p>'+esc(solution.caution)+'</p></div></div></article>';
+    return '<article class="final1-detailed-card is-ready" id="'+prefix+'-solution-'+no+'" data-detailed-solution-no="'+no+'"'+(round===1?' data-final1-solution-no="'+no+'"':'')+'>'+watermark()+'<div class="final1-card-content"><header class="final1-solution-heading"><span class="final1-no">'+no+'번</span><div><h4>'+esc(solution.title)+'</h4><span class="final1-status">상세 풀이</span></div></header><div class="final1-answer"><strong>정답</strong> · '+mathHTML(shownAnswer)+'</div><div class="final1-solution-block"><h5>읽을 조건</h5><p>'+mathHTML(solution.read)+'</p></div><div class="final1-solution-block"><h5>풀이 전략</h5><p>'+mathHTML(solution.method)+'</p></div>'+numberLineHTML(solution.numberLine,no)+(diagramHTML||'')+'<div class="final1-steps">'+steps+'</div><div class="final1-solution-block final1-check"><h5>검산</h5><p>'+mathHTML(solution.check)+'</p></div><div class="final1-solution-block final1-caution"><h5>주의할 점</h5><p>'+mathHTML(solution.caution)+'</p></div></div></article>';
   }
 
   function pendingItemHTML(no,title,round,prefix){
