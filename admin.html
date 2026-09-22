@@ -219,8 +219,8 @@
         <div class="matrix-scroll"><table id="acc-matrix"></table></div>
       </div>
       <div class="card">
-        <h3>문제은행 학생 권한</h3>
-        <div class="hint">문제은행 직접 주소와 성적표의 유사문 링크에 함께 적용됩니다. 전체공개를 끄면 체크한 학생만 문제·답안·풀이를 열 수 있습니다.</div>
+        <h3>문제은행 학생 이용</h3>
+        <div class="hint">황소 약점 유형 문제은행은 <b>자료실에 등록된 학생 전체가 승인번호 없이</b> 이용합니다. 최종 7회처럼 회차별 승인이 필요한 자료는 아래의 별도 명단을 따릅니다.</div>
         <div class="matrix-scroll"><table id="bank-acc-matrix"></table></div>
       </div>
       <div class="card">
@@ -883,12 +883,7 @@
   function bankAccessArr(){ if(!Array.isArray(S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY])) S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=[]; return S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]; }
   function renderBankAccessMatrix(){
     const el=document.getElementById('bank-acc-matrix'); if(!el)return;
-    const acc=bankAccessArr(),open=acc.includes('*');
-    let html='<thead><tr><th>자료</th><th>전체공개</th><th>모두<br>체크</th>';
-    S.students.forEach(s=>{html+=stuTh(s)});
-    html+='</tr></thead><tbody><tr><th>황소 약점 유형 문제은행</th><td class="cell '+(open?'on':'off')+'" onclick="bankAccessToggleOpen()"></td><td style="text-align:center"><button class="mini" onclick="bankAccessAll()" title="전원 개별 체크로 전환">☑</button></td>';
-    S.students.forEach((st,si)=>{const on=!open&&acc.includes(st);html+='<td class="cell '+(on?'on':'off')+'" style="'+(open?'opacity:.4':'')+'" onclick="bankAccessToggleStudent('+si+')"></td>'});
-    html+='</tr></tbody>';el.innerHTML=html;
+    el.innerHTML='<tbody><tr><th>황소 약점 유형 문제은행</th><td style="padding:14px"><b>등록 학생 '+S.students.length+'명 자동 허용</b><br><span class="hint">별도 승인번호와 개별 체크가 필요하지 않습니다.</span></td></tr></tbody>';
   }
   function bankAccessToggleOpen(){const acc=bankAccessArr();S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=acc.includes('*')?[]:['*'];renderBankAccessMatrix();dirty()}
   function bankAccessAll(){S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=S.students.slice();renderBankAccessMatrix();dirty()}
