@@ -34,7 +34,7 @@ const server=http.createServer((req,res)=>{
       if(handoff)sessionStorage.setItem('gfield_question_bank_handoff_v1',JSON.stringify({product:'question-bank',student:handoffStudent||student,issuedAt:Date.now()}));
       if(launch)localStorage.setItem('gfield_question_bank_launch_v1',JSON.stringify({product:'question-bank',student:launchStudent||student,issuedAt:Date.now()-(launchAgeMs||0)}));
     },{student,session:options.session,handoff:options.handoff,handoffStudent:options.handoffStudent,launch:options.launch,launchStudent:options.launchStudent,launchAgeMs:options.launchAgeMs,timeoutMs:options.timeoutMs});
-    await context.route(base+'/data.js*',route=>route.fulfill({contentType:'application/javascript',body:source+'\n;window.GFIELD_DATA.archiveProductAccess["question-bank"]='+(options.granted?'["'+student+'"]':'[]')+';'}));
+    await context.route(base+'/data.js*',route=>route.fulfill({contentType:'application/javascript',body:source+'\n;'+(options.unregistered?'':'window.GFIELD_DATA.students.push("'+student+'");')+'window.GFIELD_DATA.archiveProductAccess["mock-final-7"]='+(options.granted?'["'+student+'"]':'[]')+';'}));
     let authCalls=0;
     await context.route('https://fgahqumaldheqettmvqg.supabase.co/**',route=>{
       const url=new URL(route.request().url());
@@ -53,9 +53,9 @@ const server=http.createServer((req,res)=>{
 
   try{
     const missing=await open({path:'/bank/index.html?bank=final2',session:false,granted:true});
-    assert.equal(await missing.page.locator('#bankAccessGate').isVisible(),true,'direct URL requires a verified session');
-    assert.equal(await missing.page.locator('#bankAccessForm').isVisible(),true,'approval-number form is shown');
-    assert.equal(await missing.page.locator('.qcard').count(),0,'questions do not render before authorization');
+    await missing.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
+    assert.equal(await missing.page.locator('#bankAccessForm').count(),0,'approval-number form is not rendered');
+    assert.equal(await missing.page.locator('#bankAccessGate').isHidden(),true,'saved registered student returns through the archive automatically');
     await missing.context.close();
 
     const portal=await open({path:'/bank/index.html?bank=final2',session:false,handoff:true,granted:true});
@@ -73,8 +73,8 @@ const server=http.createServer((req,res)=>{
     await crossTabPortal.context.close();
 
     const expiredLaunch=await open({path:'/bank/index.html?bank=final2',session:false,launch:true,launchAgeMs:11*60*1000,granted:true});
-    assert.equal(await expiredLaunch.page.locator('#bankAccessGate').isVisible(),true,'expired cross-tab launch cannot bypass the approval gate');
-    assert.equal(await expiredLaunch.page.evaluate(()=>localStorage.getItem('gfield_question_bank_launch_v1')),null,'expired cross-tab launch is also removed after reading');
+    await expiredLaunch.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
+    assert.equal(await expiredLaunch.page.locator('#bankAccessForm').count(),0,'expired handoff returns through archive instead of showing approval login');
     await expiredLaunch.context.close();
 
     const slowPortal=await open({path:'/bank/index.html?bank=final2',session:true,handoff:true,granted:true,slowAuth:true,timeoutMs:30});
@@ -84,44 +84,26 @@ const server=http.createServer((req,res)=>{
     await slowPortal.context.close();
 
     const stalledDirect=await open({path:'/bank/index.html?bank=final2',session:true,granted:true,slowAuth:true,timeoutMs:30});
-    assert.equal(await stalledDirect.page.locator('#bankAccessGate').isVisible(),true,'direct entry remains gated when remote session recovery stalls');
-    assert.match(await stalledDirect.page.locator('#bankAccessStatus').textContent(),/연결이 늦어지고 있습니다/);
-    assert.equal(await stalledDirect.page.locator('#bankAccessForm button').isEnabled(),true,'approval retry remains available after timeout');
+    await stalledDirect.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
+    assert.equal(await stalledDirect.page.locator('#bankAccessForm').count(),0,'remote recovery timeout does not restore the approval form');
     await stalledDirect.context.close();
 
-    const stalledLogin=await open({path:'/bank/index.html?bank=final2',session:false,granted:true,slowAuth:true,timeoutMs:30});
-    await stalledLogin.page.locator('#bankAccessName').fill(student);
-    await stalledLogin.page.locator('#bankAccessCode').fill('1234');
-    await stalledLogin.page.locator('#bankAccessForm button').click();
-    await stalledLogin.page.locator('#bankAccessStatus.error').waitFor();
-    assert.match(await stalledLogin.page.locator('#bankAccessStatus').textContent(),/연결이 늦어지고 있습니다/);
-    assert.equal(await stalledLogin.page.locator('#bankAccessForm button').isEnabled(),true,'approval button is restored when approval verification stalls');
-    await stalledLogin.context.close();
-
     const tamperedPortal=await open({path:'/bank/index.html?bank=final2',session:false,handoff:true,handoffStudent:'다른학생',granted:true});
-    assert.equal(await tamperedPortal.page.locator('#bankAccessGate').isVisible(),true,'a handoff for a different student is not accepted');
-    assert.equal(await tamperedPortal.page.locator('.qcard').count(),0,'mismatched portal identity renders no questions');
+    await tamperedPortal.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
+    assert.equal(await tamperedPortal.page.evaluate(()=>document.body.dataset.bankStudent),student,'mismatched handoff is discarded and the registered archive identity is restored');
     await tamperedPortal.context.close();
 
-    const deniedPortal=await open({path:'/bank/index.html?bank=final2',session:false,handoff:true,granted:false});
-    await deniedPortal.page.locator('#bankAccessStatus.error').waitFor();
-    assert.match(await deniedPortal.page.locator('#bankAccessStatus').textContent(),/열람 권한이 없습니다/);
-    assert.equal(await deniedPortal.page.locator('.qcard').count(),0,'portal identity without product permission stays blocked');
+    const deniedPortal=await open({path:'/bank/index.html?bank=final2&from=archive&name='+encodeURIComponent(student),session:false,unregistered:true});
+    await deniedPortal.page.waitForURL(/\/index\.html\?next=/);
+    assert.equal(await deniedPortal.page.locator('.qcard').count(),0,'an unregistered URL identity cannot open the bank');
+    assert.equal(await deniedPortal.page.locator('#bankAccessForm').count(),0,'an unregistered student is sent to name login, not approval login');
     await deniedPortal.context.close();
 
-    const login=await open({path:'/bank/index.html?bank=final2',session:false,granted:true});
-    await login.page.locator('#bankAccessName').fill(student);
-    await login.page.locator('#bankAccessCode').fill('1234');
-    await login.page.locator('#bankAccessForm button').click();
-    await login.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
-    assert.equal(await login.page.locator('#bankAccessGate').isHidden(),true,'approval-number login opens the bank after permission check');
-    await login.context.close();
-
-    const denied=await open({path:'/bank/index.html?bank=final2#student=다른학생',session:true,granted:false});
-    await denied.page.locator('#bankAccessStatus.error').waitFor();
-    assert.match(await denied.page.locator('#bankAccessStatus').textContent(),/열람 권한이 없습니다/);
-    assert.equal(await denied.page.locator('.qcard').count(),0,'valid login without product permission stays blocked');
-    await denied.context.close();
+    const deniedRound=await open({path:'/bank/index.html?bank=final7',session:false,handoff:true,granted:false});
+    await deniedRound.page.locator('#bankAccessStatus.error').waitFor();
+    assert.match(await deniedRound.page.locator('#bankAccessStatus').textContent(),/이 회차의 열람 권한이 없습니다/);
+    assert.equal(await deniedRound.page.locator('.qcard').count(),0,'registered general access cannot bypass Final7 round approval');
+    await deniedRound.context.close();
 
     const granted=await open({path:'/bank/index.html?bank=final2#student=다른학생',session:true,granted:true});
     await granted.page.waitForFunction(()=>document.querySelectorAll('.qcard').length===90);
@@ -240,7 +222,7 @@ const server=http.createServer((req,res)=>{
     assert.equal(await home.evaluate(()=>document.body.dataset.bankStudent),'정윤성','actual archive navigation preserves the reported student');
     await homeContext.close();
 
-    console.log('PASS bank access: same-tab and one-time cross-tab portal handoff without repeated approval, approval fallback, self-account lookup, product permission, direct-link denial, identity binding, catalog gate, 15 teacher buttons, 40-question bank');
+    console.log('PASS bank access: registered-student archive flow without approval number, same-tab/cross-tab/query fallback, scoped Final7 approval, identity binding, catalog gate, 15 teacher buttons, 40-question bank');
   }finally{
     await browser.close();server.close();
   }
