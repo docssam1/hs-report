@@ -590,8 +590,10 @@
     const next=qrNextTarget();
     if(next){
       const helper=window.GFIELD_FINAL_LAST_ROUTES;
-      if(/(?:^|\/)bank\/index\.html(?:[?#]|$)/i.test(next)) issueQuestionBankHandoff();
-      location.href=helper&&helper.withStudent?helper.withStudent(next,currentStudent):next+(next.includes('?')?'&':'?')+'name='+encodeURIComponent(currentStudent);
+      if(/(?:^|\/)bank\/(?:index|catalog)\.html(?:[?#]|$)/i.test(next)){
+        issueQuestionBankHandoff();
+        location.href=withQuestionBankIdentity(next);
+      }else location.href=helper&&helper.withStudent?helper.withStudent(next,currentStudent):next+(next.includes('?')?'&':'?')+'name='+encodeURIComponent(currentStudent);
       return;
     }
     if(!isDemo) showCheer(given);
@@ -607,7 +609,7 @@
       if(url.origin!==location.origin) return '';
       const path=url.pathname.replace(/^\/+/, '').toLowerCase();
       const page=path.split('/').pop();
-      if(page!=='final.html'&&path!=='bank/index.html'&&!path.endsWith('/bank/index.html')) return '';
+      if(page!=='final.html'&&!/(?:^|\/)bank\/(?:index|catalog)\.html$/.test(path)) return '';
       return url.pathname.replace(/^\//,'')+url.search+url.hash;
     }catch(e){ return ''; }
   }
@@ -897,7 +899,10 @@
   document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
 
   function canSeeFolder(folder){ const acc=(D.archiveAccess||{})[folder]; if(!Array.isArray(acc)) return false; /* 권한 정보 없으면 비공개 */ return acc.includes('*')||acc.includes(currentStudent); }
-  function canSeeProduct(key){ const acc=(D.archiveProductAccess||{})[key]; return Array.isArray(acc)&&(acc.includes('*')||acc.includes(currentStudent)); }
+  function canSeeProduct(key){
+    if(key==='question-bank') return !isDemo&&Array.isArray(D.students)&&D.students.includes(currentStudent);
+    const acc=(D.archiveProductAccess||{})[key]; return Array.isArray(acc)&&(acc.includes('*')||acc.includes(currentStudent));
+  }
   function studentBankHtml(){
     const config=window.GFIELD_IMPORTANT_TYPES;
     if(!config||!Array.isArray(config.types))return '';
@@ -915,6 +920,12 @@
     /* 새 탭·앱 내 브라우저에서도 이어지도록 하며, 문제은행에서 읽은 뒤 즉시 없앤다. */
     try{ localStorage.setItem(QUESTION_BANK_LAUNCH_KEY,payload); }catch(e){}
   }
+  function withQuestionBankIdentity(target){
+    const url=new URL(target,location.href);
+    url.searchParams.set('from','archive');
+    url.searchParams.set('name',currentStudent);
+    return url.href;
+  }
   function wireStudentBank(wrap){
     const box=wrap.querySelector('.bank-launch'),config=window.GFIELD_IMPORTANT_TYPES;if(!box||!config)return;
     issueQuestionBankHandoff();
@@ -924,7 +935,7 @@
       const actual=Math.min(count,config.maxQuestions);
       link.setAttribute('aria-disabled',selected.size?'false':'true');
       link.removeAttribute('href');
-      if(selected.size)link.href=`bank/index.html?bank=important&types=${encodeURIComponent([...selected].join(','))}&n=${count}&points=all&printMode=both`;
+      if(selected.size)link.href=withQuestionBankIdentity(`bank/index.html?bank=important&types=${encodeURIComponent([...selected].join(','))}&n=${count}&points=all&printMode=both`);
       note.textContent=selected.size?`${selected.size}개 유형 · 검수 기준 ${sourceCount*3}문항을 바탕으로 ${actual}문항을 만듭니다.`:'유형을 한 개 이상 선택해 주세요.';
     }
     box.querySelectorAll('.bank-type-btn').forEach(button=>button.onclick=()=>{const id=button.dataset.importantType;if(selected.has(id))selected.delete(id);else selected.add(id);button.setAttribute('aria-pressed',selected.has(id)?'true':'false');update();});

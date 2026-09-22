@@ -2,7 +2,6 @@
   'use strict';
 
   var PRODUCT_KEY='question-bank';
-  var FALLBACK_FOLDER='약점 유형';
   var PORTAL_HANDOFF_KEY='gfield_question_bank_handoff_v1';
   var PORTAL_LAUNCH_KEY='gfield_question_bank_launch_v1';
   var PORTAL_HANDOFF_MAX_AGE=12*60*60*1000;
@@ -18,11 +17,12 @@
       return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
     });
   }
-  function permissionList(){
-    var data=root.GFIELD_DATA||{},products=data.archiveProductAccess||{};
-    if(Array.isArray(products[PRODUCT_KEY]))return products[PRODUCT_KEY];
-    var folders=data.archiveAccess||{};
-    return Array.isArray(folders[FALLBACK_FOLDER])?folders[FALLBACK_FOLDER]:[];
+  function registeredStudents(){
+    var students=(root.GFIELD_DATA||{}).students;
+    return Array.isArray(students)?students:[];
+  }
+  function registeredStudent(student){
+    return !!student&&registeredStudents().indexOf(student)>=0;
   }
   function scopedProductKey(){
     var query=new URLSearchParams(location.search),bank=String(query.get('bank')||'');
@@ -41,7 +41,9 @@
     if(!account||account.active!==true)return false;
     if(account.role==='admin'||account.role==='teacher')return true;
     if(account.role!=='student'||!account.student)return false;
-    return listed(permissionList(),account.student)||listed(scopedPermissionList(),account.student);
+    /* 일반 문제은행은 자료실 등록 학생 전체, 회차 자료는 해당 회차 승인만 허용한다. */
+    if(scopedProductKey())return listed(scopedPermissionList(),account.student);
+    return registeredStudent(account.student);
   }
   function localIdentity(){
     var name='';
@@ -68,13 +70,35 @@
       if(launchRaw)localStorage.removeItem(PORTAL_LAUNCH_KEY);
     }catch(error){}
     return handoffIdentity(sessionRaw,PORTAL_HANDOFF_MAX_AGE,'portal-handoff')||
-      handoffIdentity(launchRaw,PORTAL_LAUNCH_MAX_AGE,'portal-launch');
+      handoffIdentity(launchRaw,PORTAL_LAUNCH_MAX_AGE,'portal-launch')||portalQueryIdentity()||savedPortalIdentity();
+  }
+  function savedPortalIdentity(){
+    var student='';
+    try{student=String(localStorage.getItem('gfield_student')||'').trim()}catch(error){}
+    if(!registeredStudent(student))return null;
+    return {role:'student',student:student,active:true,source:'saved-archive'};
+  }
+  function portalQueryIdentity(){
+    var query=new URLSearchParams(location.search);
+    var student=String(query.get('name')||'').trim();
+    if(query.get('from')!=='archive'||!registeredStudent(student))return null;
+    return {role:'student',student:student,active:true,source:'portal-query'};
+  }
+  function bankReturnTarget(){
+    var query=new URLSearchParams(location.search);
+    query.delete('from');query.delete('name');
+    var page=/\/catalog\.html$/i.test(location.pathname)?'bank/catalog.html':'bank/index.html';
+    var search=query.toString();
+    return page+(search?'?'+search:'')+location.hash;
+  }
+  function archiveLoginUrl(){
+    return '../index.html?next='+encodeURIComponent(bankReturnTarget());
   }
   function injectStyle(){
     if(document.getElementById('bankAccessStyle'))return;
     var style=document.createElement('style');
     style.id='bankAccessStyle';
-    style.textContent='body.bank-access-pending{overflow:hidden;background:#f5f7fb}body.bank-access-pending>:not(.bank-access-gate){visibility:hidden}.bank-access-gate[hidden]{display:none}.bank-access-gate{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;padding:20px;background:#17345f;color:#182230;visibility:visible}.bank-access-card{width:min(100%,390px);padding:30px;border:1px solid rgba(255,255,255,.24);border-radius:20px;background:#fff;box-shadow:0 24px 70px rgba(4,20,46,.34)}.bank-access-brand{color:#2456c4;font-size:12px;font-weight:900;letter-spacing:.18em}.bank-access-card h1{margin:8px 0 6px;color:#17345f;font:900 25px/1.3 Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif}.bank-access-lead{margin:0 0 20px;color:#566274;font-size:13px;line-height:1.6}.bank-access-card form{display:grid;gap:12px}.bank-access-card label{display:grid;gap:6px;color:#344054;font-size:12px;font-weight:800}.bank-access-card input{width:100%;min-height:46px;padding:10px 12px;border:1px solid #c5d1e4;border-radius:10px;background:#fff;color:#182230;font:500 16px Pretendard,"Noto Sans KR",sans-serif}.bank-access-card input:focus{border-color:#2456c4;outline:3px solid #e5edff}.bank-access-card button{min-height:46px;border:0;border-radius:10px;background:#2456c4;color:#fff;font-size:14px;font-weight:900;cursor:pointer}.bank-access-card button:disabled{opacity:.55;cursor:wait}.bank-access-status{min-height:20px;margin:14px 0 8px;color:#566274;font-size:12px;line-height:1.5}.bank-access-status.error{color:#b42318;font-weight:800}.bank-access-card>a{color:#2456c4;font-size:12px;font-weight:800;text-decoration:none}@media(max-width:430px){.bank-access-card{padding:24px 20px;border-radius:16px}}';
+    style.textContent='body.bank-access-pending{overflow:hidden;background:#f5f7fb}body.bank-access-pending>:not(.bank-access-gate){visibility:hidden}.bank-access-gate[hidden]{display:none}.bank-access-gate{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;padding:20px;background:#17345f;color:#182230;visibility:visible}.bank-access-card{width:min(100%,390px);padding:30px;border:1px solid rgba(255,255,255,.24);border-radius:20px;background:#fff;box-shadow:0 24px 70px rgba(4,20,46,.34)}.bank-access-brand{color:#2456c4;font-size:12px;font-weight:900;letter-spacing:.18em}.bank-access-card h1{margin:8px 0 6px;color:#17345f;font:900 25px/1.3 Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif}.bank-access-lead{margin:0;color:#566274;font-size:13px;line-height:1.6}.bank-access-status{min-height:20px;margin:14px 0;color:#566274;font-size:12px;line-height:1.5}.bank-access-status.error{color:#b42318;font-weight:800}.bank-access-card>a{display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:10px;background:#2456c4;color:#fff;font-size:14px;font-weight:900;text-decoration:none}@media(max-width:430px){.bank-access-card{padding:24px 20px;border-radius:16px}}';
     document.head.appendChild(style);
   }
   function shell(){
@@ -84,7 +108,7 @@
     node.id='bankAccessGate';
     node.className='bank-access-gate';
     node.setAttribute('aria-live','polite');
-    node.innerHTML='<div class="bank-access-card"><div class="bank-access-brand">G·FIELD</div><h1>문제은행 열람</h1><p class="bank-access-lead">승인된 학생만 문제와 풀이를 볼 수 있습니다.</p><form id="bankAccessForm"><label>학생 이름<input id="bankAccessName" autocomplete="username" required></label><label>승인번호<input id="bankAccessCode" type="password" inputmode="numeric" autocomplete="current-password" required></label><button type="submit">확인</button></form><p class="bank-access-status" id="bankAccessStatus">로그인 정보를 확인하고 있습니다.</p><a href="../index.html">자료실로 돌아가기</a></div>';
+    node.innerHTML='<div class="bank-access-card"><div class="bank-access-brand">G·FIELD</div><h1>자료실 로그인으로 연결 중</h1><p class="bank-access-lead">등록된 학생 이름으로 로그인하면 승인번호 없이 문제은행을 이용할 수 있습니다.</p><p class="bank-access-status" id="bankAccessStatus">학생 정보를 확인하고 있습니다.</p><a id="bankArchiveLogin" href="'+esc(archiveLoginUrl())+'">자료실에서 로그인하기</a></div>';
     document.body.appendChild(node);
     return node;
   }
@@ -134,32 +158,13 @@
     if(!allowed(account))throw Object.assign(new Error('ACCESS_DENIED'),{code:'ACCESS_DENIED'});
     return account;
   }
-  async function signIn(name,code){
-    await root.GFIELD_AUTH.signIn(name,code);
-    var slot=String(name||'').trim().toLowerCase()==='docssam'?'admin':'student';
-    var account=await verifiedAccount(slot);
-    if(!allowed(account))throw Object.assign(new Error('ACCESS_DENIED'),{code:'ACCESS_DENIED'});
-    return account;
-  }
   function message(error){
-    if(error&&error.code==='ACCESS_DENIED')return '이 학생에게는 문제은행 열람 권한이 없습니다. 원장님께 문의해 주세요.';
-    if(error&&error.code==='ACCESS_TIMEOUT')return '연결이 늦어지고 있습니다. 인터넷 연결을 확인한 뒤 다시 눌러 주세요.';
-    return '이름과 승인번호를 확인해 주세요.';
-  }
-  function bindForm(){
-    var form=document.getElementById('bankAccessForm');
-    if(!form||form.dataset.bound)return;
-    form.dataset.bound='1';
-    form.addEventListener('submit',async function(event){
-      event.preventDefault();
-      var button=form.querySelector('button'),name=document.getElementById('bankAccessName').value.trim(),code=document.getElementById('bankAccessCode').value;
-      button.disabled=true;setStatus('권한을 확인하고 있습니다.',false);
-      try{reveal(await withinAccessTime(signIn(name,code)))}
-      catch(error){setStatus(message(error),true);button.disabled=false}
-    });
+    if(error&&error.code==='ACCESS_DENIED')return scopedProductKey()?'이 회차의 열람 권한이 없습니다. 원장님께 문의해 주세요.':'등록 학생 정보를 확인할 수 없습니다.';
+    if(error&&error.code==='ACCESS_TIMEOUT')return '연결이 늦어져 자료실 로그인 화면으로 이동합니다.';
+    return '자료실에서 학생 이름으로 로그인해 주세요.';
   }
   async function start(){
-    injectStyle();shell();bindForm();
+    injectStyle();shell();
     if(localHost&&!forceGate){reveal(localIdentity());return}
     try{
       var portal=portalIdentity();
@@ -169,10 +174,14 @@
       }
       var account=await withinAccessTime(restore());
       if(account){reveal(account);return}
-      setStatus('자료실에서 학생 이름으로 들어오면 바로 이용할 수 있습니다.',false);
-    }catch(error){setStatus(message(error),true)}
+      setStatus('자료실 로그인 화면으로 이동합니다.',false);
+      location.replace(archiveLoginUrl());
+    }catch(error){
+      setStatus(message(error),!!(error&&error.code==='ACCESS_DENIED'));
+      if(!(error&&error.code==='ACCESS_DENIED'))location.replace(archiveLoginUrl());
+    }
   }
 
-  root.GFIELD_BANK_ACCESS={ready:ready,allowed:allowed,permissionList:permissionList,scopedProductKey:scopedProductKey,portalIdentity:portalIdentity,start:start};
+  root.GFIELD_BANK_ACCESS={ready:ready,allowed:allowed,registeredStudents:registeredStudents,scopedProductKey:scopedProductKey,portalIdentity:portalIdentity,archiveLoginUrl:archiveLoginUrl,start:start};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })(window);
