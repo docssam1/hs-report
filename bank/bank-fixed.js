@@ -16,6 +16,55 @@
       file:round===7?null:'final' + round + '-fixed90.json'
     };
   }
+
+  /* =======================================================================
+     누락된 문제 식 보충 (2026-09)
+
+     파이널 4회 유사문제 4·6·10번(각 3변형, 모두 9건)은 본문이 "다음 식",
+     "다음 빈칸", "다음 곱"으로 식을 가리키는데 정작 식을 담는 키
+     (promptDataLines / asset)가 데이터에 아예 없어서, 화면과 인쇄물에
+     문장만 나오고 식이 통째로 비어 있었다.
+
+     아래 식은 각 항목에 저장된 answer 와 solutionSteps 를 그대로 재현하는지
+     전수 계산으로 검증한 값이다.
+       q04  1~9 사이 ±  → 결과 9 / 15 / －1  → 경우의 수 11 / 9 / 11
+       q06  첫 수 고정 + → 결과 9 / 13 / 17  → 경우의 수 3 / 2 / 2
+       q10  반복수의 곱 → 0이 아닌 짝수 7 / 10 / 15개
+     표기는 원문 상세풀이(final4-detailed-data.js)와 같은 전각 기호를 쓴다.
+
+     ※ 본래 있어야 할 자리는 bank/data/final4-fixed90.json 이지만 그 파일은
+       동결(freezePolicy)된 382KB 단일 파일이라, 여기서 불러온 직후에 채운다.
+       나중에 JSON 에 식이 들어가면 아래 로직은 자동으로 아무 일도 하지 않는다
+       (이미 값이 있으면 건드리지 않음).
+     ======================================================================= */
+  var PROMPT_BACKFILL = {
+    final4: {
+      'final4-q04-v1': ['1 ○ 2 ○ 3 ○ 4 ○ 5 ○ 6 ○ 7 ○ 8 ○ 9 ＝ 9'],
+      'final4-q04-v2': ['1 ○ 2 ○ 3 ○ 4 ○ 5 ○ 6 ○ 7 ○ 8 ○ 9 ＝ 15'],
+      'final4-q04-v3': ['1 ○ 2 ○ 3 ○ 4 ○ 5 ○ 6 ○ 7 ○ 8 ○ 9 ＝ －1'],
+      'final4-q06-v1': ['7 ○ 6 ○ 5 ○ 4 ○ 3 ○ 2'],
+      'final4-q06-v2': ['8 ○ 7 ○ 6 ○ 5 ○ 4 ○ 3'],
+      'final4-q06-v3': ['9 ○ 8 ○ 7 ○ 6 ○ 5 ○ 4'],
+      'final4-q10-v1': ['11111111 × 99999999'],
+      'final4-q10-v2': ['2222222222 × 9999999999'],
+      'final4-q10-v3': ['333333333333333 × 999999999999999']
+    }
+  };
+  function backfillPrompts(data, bankCode) {
+    try {
+      var table = PROMPT_BACKFILL[String(bankCode || '')];
+      if (!table || !data || !Array.isArray(data.items)) return data;
+      data.items.forEach(function (item) {
+        if (!item || !table[item.id]) return;
+        var already = (Array.isArray(item.promptDataLines) && item.promptDataLines.length) || item.asset;
+        if (already) return;                       /* 원본 데이터가 고쳐지면 건드리지 않는다 */
+        item.promptDataLines = table[item.id].slice();
+        if (!item.promptDataLabel) item.promptDataLabel = '식';
+      });
+    } catch (error) { /* 보충에 실패해도 본래 흐름은 막지 않는다 */ }
+    return data;
+  }
+
   function validate(data, bankCode) {
     var config = bankConfig(bankCode);
     if(config.code==='important'){
@@ -76,7 +125,7 @@
         if (!response.ok) throw new Error('등록 문항을 불러오지 못했습니다. 잠시 후 다시 열어 주세요.');
         return response.json();
       });
-      loaded[config.code] = source.then(function (data) { return validate(data, config.code); }).catch(function (error) { loaded[config.code] = null; throw error; });
+      loaded[config.code] = source.then(function (data) { return validate(backfillPrompts(data, config.code), config.code); }).catch(function (error) { loaded[config.code] = null; throw error; });
     }
     return loaded[config.code];
   }
