@@ -1,0 +1,7 @@
+.original-batch-panel{--gf-action:#2456c4;margin-top:16px}
+.original-batch-panel .final-batch-head{background:#f8faff}
+.original-batch-panel .final-batch-check:has(input:checked),.original-batch-panel .final-batch-student:has(input:checked){background:#eaf0ff;border-color:#9db4e7}
+.original-batch-panel input{accent-color:var(--gf-action)}
+.original-batch-panel button:focus-visible,.original-batch-panel input:focus-visible{outline:3px solid #2456c4;outline-offset:2px}
+.original-batch-panel button:disabled,.original-batch-panel input:disabled{cursor:wait;opacity:.65}
+.original-batch-panel .final-batch-note{color:#53647f}

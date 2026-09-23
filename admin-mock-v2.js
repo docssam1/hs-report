@@ -35,14 +35,14 @@
     return validRow(x)?x.ox.split(''):null;
   }
 
-  function finalOfficialEntries(){
+  function officialEntries(set){
     if(!Array.isArray(MK_ROWS))return null;
-    const finalData=dataFor('final'),questions=Number(finalData.questions)||30;
+    const model=dataFor(set),questions=Number(model.questions)||30;
     const points={};
-    (finalData.blueprint||[]).forEach(item=>{points[Number(item.no)]=Number(item.pts)||0;});
+    (model.blueprint||[]).forEach(item=>{points[Number(item.no)]=Number(item.pts)||0;});
     return MK_ROWS.map(x=>({x,p:parseRoundKey(x&&x.round)})).filter(o=>{
       const ox=String(o.x&&o.x.ox||'');
-      return o.p&&o.p.set==='final'&&o.p.slot===1&&/^[1-4]$/.test(o.p.round)&&o.x.source!=='reset'&&ox.length===questions&&/^[OX]+$/.test(ox);
+      return o.p&&o.p.set===set&&o.p.slot===1&&new RegExp(set==='original'?'^[1-2]$':'^[1-4]$').test(o.p.round)&&o.x.source!=='reset'&&ox.length===questions&&/^[OX]+$/.test(ox);
     }).map(o=>{
       let score=0,wrong=0;
       String(o.x.ox).split('').forEach((mark,index)=>{if(mark==='O')score+=points[index+1]||0;else wrong++;});
@@ -50,8 +50,9 @@
       if(Math.abs(Number(o.x.score)-score)>0.0001||Number(o.x.wrong)!==wrong)return null;
       return {
         student:String(o.x.student||'').trim(),
+        set:set,
         round:Number(o.p.round),
-        roundTitle:roundTitle('final',o.p.round),
+        roundTitle:roundTitle(set,o.p.round),
         score:score,
         wrong:wrong,
         updatedAt:o.x.updated_at||''
@@ -60,8 +61,9 @@
   }
 
   window.GFIELD_ADMIN_MOCK_V2=Object.freeze({
-    finalOfficialEntries:finalOfficialEntries,
-    reportUrl:function(entry){return teacherEntryUrl('final',entry.round,entry.student).replace('go=answer','go=report');}
+    finalOfficialEntries:function(){return officialEntries('final');},
+    originalOfficialEntries:function(){return officialEntries('original');},
+    reportUrl:function(entry){return entry&&entry.set==='original'?teacherReportUrl('original',entry.round,entry.student,1):teacherEntryUrl('final',entry.round,entry.student).replace('go=answer','go=report');}
   });
 
   if(typeof mkM==='function') mkM=function(){return dataFor(window.mkSet)};
@@ -87,8 +89,11 @@
     /* 최종 모의고사 진단 분석지 — 어드민 전용 */
     const lastLinks=[1,2,3,4].map(r=>`<a class="btn sm" style="background:#fff;color:#1e3c72;text-decoration:none;font-weight:800" target="_blank"
       href="last1-analysis.html?round=${r}&mode=teacher${student?('&name='+encodeURIComponent(student)):''}">최종 ${r}회</a>`).join('');
-    const originalLinks=[1,2].map(r=>`<a class="btn sm" style="background:#fff;color:#7c3aed;text-decoration:none;font-weight:800" target="_blank"
-      href="final.html?set=original&round=${r}&go=answer&entry=teacher${student?('&name='+encodeURIComponent(student)):''}">시그니처 실전 ${r}회</a>`).join('');
+    const originalLinks=[1,2].map(r=>{
+      const official=rowsFor(student,'original',r).some(o=>o.p.slot===1);
+      return `<a class="btn sm" style="background:#fff;color:#7c3aed;text-decoration:none;font-weight:800" target="_blank"
+        href="${official?teacherReportUrl('original',r,student,1):teacherEntryUrl('original',r,student)}">시그니처 실전 ${r}회 ${official?'공식 진단지':'맞은 문제 체크'}</a>`;
+    }).join('');
     let last1=`<div style="border:1px solid #c7d7f0;border-radius:14px;padding:14px;margin:4px 0 12px;background:linear-gradient(135deg,#2a5298,#1e3c72);color:#fff">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <b style="font-size:14px">📊 최종 모의고사 진단 분석지</b>
@@ -140,7 +145,7 @@
         panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b>${protectedFinalRound?`<small data-final-percentile="${r}" style="display:block;color:#2456c4">백분율 미반영</small>`:''}</td><td>${wrong}</td><td>${esc(sourceLabel(x.source))}</td><td>${esc(at)}</td><td>
           <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">
             ${openAction}
-            ${window.mkSet==='final'?`<a class="btn sm" target="_blank" href="${teacherReportUrl(window.mkSet,r,student,p.slot)}">${p.slot===1?'공식 1차':'연습 '+p.slot+'차'} 성적표</a>`:''}
+            ${window.mkSet==='final'||window.mkSet==='original'?`<a class="btn sm" target="_blank" href="${teacherReportUrl(window.mkSet,r,student,p.slot)}">${p.slot===1?'공식 1차':'연습 '+p.slot+'차'} 성적표</a>`:''}
             <button class="btn del sm" onclick="deleteMockAttemptV2('${esc(student)}','${window.mkSet}','${r}',${p.slot})">${p.slot}차 초기화</button>
             ${i===0?`<button class="btn sm" style="background:#fff3e0;color:#b45309" onclick="deleteMockRoundV2('${esc(student)}','${window.mkSet}','${r}')">회차 전체</button>`:''}
           </div></td></tr>`;
@@ -171,6 +176,7 @@
     const hint=document.querySelector('#tab-mock .card > .hint');
     if(hint)hint.textContent='중급·활용·파이널·시그니처 실전 모의고사 결과를 분리해 확인합니다. 파이널과 시그니처 실전은 온라인 회원이 직접 입력하거나 선생님이 재원생 답안을 대신 기록할 수 있으며, 회차별 최초 기록만 누적에 반영됩니다.';
     if(window.GFIELD_ADMIN_FINAL_BATCH&&typeof window.GFIELD_ADMIN_FINAL_BATCH.refresh==='function')window.GFIELD_ADMIN_FINAL_BATCH.refresh();
+    if(window.GFIELD_ADMIN_ORIGINAL_BATCH&&typeof window.GFIELD_ADMIN_ORIGINAL_BATCH.refresh==='function')window.GFIELD_ADMIN_ORIGINAL_BATCH.refresh();
   };
 
   window.setMockSetV2=function(set){window.mkSet=set==='original'?'original':(set==='final'?'final':(set==='hw'?'hw':'mid'));renderMock()};

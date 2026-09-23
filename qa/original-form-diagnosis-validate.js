@@ -8,7 +8,9 @@ const vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const DATA_FILE = path.join(ROOT, 'mock-data-original.js');
 const PAGE_FILE = path.join(ROOT, 'final.html');
-const PRIVATE_DIR = path.join(ROOT, '.private-work', 'original-similar-2rounds');
+const PRIVATE_DIR = process.env.GFIELD_ORIGINAL_PRIVATE_DIR
+  ? path.resolve(process.env.GFIELD_ORIGINAL_PRIVATE_DIR)
+  : path.join(ROOT, '.private-work', 'original-similar-2rounds');
 const RIGOR_META_FILE = path.join(ROOT, 'drafts', 'original-similar-2rounds', 'rigor-meta.json');
 const allowedAreas = ['수·규칙찾기', '도형', '경우의 수', '식의 계산'];
 
@@ -117,7 +119,7 @@ check('새 60문항의 핵심 정답과 분류', () => {
   assert.equal(model.rounds['2'].paper.imageDir, 'original_form_2_v2');
 });
 
-check('시험지 60문항과 공개 진단 데이터가 문항별로 일치', () => {
+check('시험지 60문항과 공개 진단 데이터가 문항별로 일치하며 1회 7번 최신 정답 반영', () => {
   for (const roundNo of ['1', '2']) {
     const rendered = JSON.parse(fs.readFileSync(
       path.join(PRIVATE_DIR, `original-form-round${roundNo}-data.json`),
@@ -127,6 +129,13 @@ check('시험지 60문항과 공개 진단 데이터가 문항별로 일치', ()
     assert.equal(rendered.length, diagnostic.length);
     rendered.forEach((item, index) => {
       const publicItem = diagnostic[index];
+      // The private reproduction still records the pre-correction 55. The
+      // published student/answer PDFs and current mock data use 78 for R1Q7.
+      const correctedAnswer = roundNo === '1' && item.number === 7 ? '78' : item.answer;
+      if (roundNo === '1' && item.number === 7) {
+        assert.equal(publicItem.answer, '78', '1회 7번 공개 정답은 78을 유지');
+        assert.ok(['55', '78'].includes(item.answer), '1회 7번 비공개 재현본의 알려진 버전만 허용');
+      }
       assert.deepEqual(
         {
           no: publicItem.no,
@@ -142,7 +151,7 @@ check('시험지 60문항과 공개 진단 데이터가 문항별로 일치', ()
           area: item.area,
           subarea: item.subarea,
           type: item.type,
-          answer: item.answer,
+          answer: correctedAnswer,
           point: item.point,
           difficultyClass: item.difficultyClass,
         },
@@ -205,6 +214,12 @@ const core = loadCore(model);
 check('원본형 점수 계산과 등급 경계', () => {
   assert.equal(core.computeScore(Array(30).fill('O')).score, 100);
   const cuts = model.rounds['1'].stats.cuts;
+  assert.equal(core.publicCutVerified(model.rounds['1'].stats), true, '공개 컷 근거와 화면 표시 이름을 모두 확인');
+  assert.equal(core.publicCutVerified(model.rounds['2'].stats), true, '두 회차 모두 예상 등급 표시 가능');
+  const invalidCuts = JSON.parse(JSON.stringify(model.rounds['1'].stats));
+  invalidCuts.cuts[1][0] = '확인되지 않은 등급';
+  assert.equal(core.publicCutVerified(invalidCuts), false, '근거와 다른 등급명은 표시하지 않음');
+  assert.equal(core.buildContext('검증 학생', 1, Array(30).fill('O')).grade, '경시 가능');
   assert.equal(core.cutInfo(48.1, cuts).grade, '경시 가능');
   assert.equal(core.cutInfo(48.0, cuts).grade, '경시컷 · 심화안정권');
   assert.equal(core.cutInfo(39.0, cuts).grade, '경시컷 · 심화안정권');
@@ -237,6 +252,7 @@ check('두 회차 같은 소영역 반복 오답 감지', () => {
 check('개인 전용 레이더에는 존재하지 않는 전체 평균 계열 없음', () => {
   const areas = core.areaAgg(model.rounds['2'].items, Array(30).fill('O'), {});
   const svg = core.radarSVG(areas, true);
+  assert.match(svg, /viewBox="-30 0 380 320"/, '왼쪽 영역명과 백분율이 SVG 밖으로 잘리지 않아야 함');
   assert.doesNotMatch(svg, /class="av"|class="d-av"/);
   assert.match(svg, /class="me"/);
 });
@@ -247,6 +263,17 @@ check('저장 실패한 현재 답안은 최초 기록에 포함하지 않음', 
   const saved = core.originalFirstAttempts(2, {}, 1, 'original2', ox, true);
   assert.equal(saved.length, 1);
   assert.equal(saved[0].n, 2);
+});
+
+check('검수·공개 승인 전 원본형 오답 유사문제는 열리지 않음', () => {
+  const ctx = { roundNum: 1, wrongList: [model.rounds['1'].items[7]] };
+  const practice = core.wrongPracticeModel(ctx);
+  assert.equal(practice.ready.length, 0);
+  assert.equal(practice.pending.length, 1);
+  const html = core.wrongPracticeHTML(ctx);
+  assert.match(html, /id="originalPracticeStatus"/);
+  assert.match(html, /원문 구조와 정답을 대조하고 공개 승인/);
+  assert.doesNotMatch(html, /id="wpStart"/);
 });
 
 console.log(`원본형 성적·약점 진단 QA ${tests.length}개 통과`);
