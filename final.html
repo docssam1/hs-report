@@ -167,7 +167,8 @@ tr.cau td{border-bottom:1px solid var(--line);font-size:11.5px;color:var(--ink2)
 .cmt p+p{margin-top:11px} .cmt b{color:var(--ink)}
 .sign{text-align:right;font-size:12.5px;color:var(--dim);margin-top:16px}
 .sign b{font-family:'Jua';color:var(--navy);font-size:15px}
-@media print{body{background:#fff}.doc{box-shadow:none}section{break-inside:avoid}.cause li{break-inside:avoid}}
+@media print{body{background:#fff}.doc{box-shadow:none}section{break-inside:avoid}.cause li{break-inside:avoid}.original-repeat-block{break-inside:avoid;page-break-inside:avoid}}
+@media print{.original-report>.cover{padding:32px 34px 28px}.original-report>section{padding:22px 34px}.original-report .cmt{padding:14px 18px}}
 
 /* ===== 나만의 약점 유형 (weak-type bookmarking) ===== */
 .weakbtn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;border:1.5px solid #fdba74;background:#fff;color:var(--orange-d);cursor:pointer;font-family:inherit;line-height:1.4;white-space:nowrap}
@@ -804,7 +805,10 @@ td.weak-cell{white-space:nowrap}
     var cuts=S.cuts||[];
     return sources.length>=2&&sources.every(function(s){return s.year&&/^https:\/\//.test(s.url||'');})&&rows.length>0&&cuts.length===rows.length+1&&rows.every(function(r){
       return Number(r.average)===round1((Number(r.y2024)+Number(r.y2025))/2);
-    })&&rows.every(function(r,i){return cuts[i]&&cuts[i][0]===r.grade&&Number(cuts[i][1])===Number(r.average);});
+    })&&rows.every(function(r,i){
+      var expectedLabel=i===0?r.grade+' 가능':rows[i-1].grade+'컷 · '+r.grade+'안정권';
+      return cuts[i]&&cuts[i][0]===expectedLabel&&Number(cuts[i][1])===Number(r.average);
+    })&&cuts[rows.length]&&cuts[rows.length][0]===(M.cutBasis.belowLabel||'노력요함')&&Number(cuts[rows.length][1])===0;
   }
   /* 누적 성적: 최초 응시 회차별 석차 백분율 평균 -> 등급(band).
      학생 화면에는 참여 인원과 절대 등수를 표시하지 않습니다. */
@@ -968,7 +972,7 @@ td.weak-cell{white-space:nowrap}
       rings+='<polygon class="ring" points="'+p+'"/>';
     });
     var scale=[0.5,1].map(function(f){ return '<text class="sc" x="'+(cx+3)+'" y="'+(cy-R*f+4).toFixed(1)+'">'+Math.round(f*100)+'</text>'; }).join('');
-    return '<svg viewBox="'+(!isLast&&!isOriginal?'-50 0 420 320':'0 0 320 320')+'" class="radar">'+
+    return '<svg viewBox="'+(isOriginal?'-30 0 380 320':(!isLast?'-50 0 420 320':'0 0 320 320'))+'" class="radar">'+
       '<defs><radialGradient id="gMe" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#fb923c" stop-opacity=".72"/><stop offset="100%" stop-color="#ea580c" stop-opacity=".34"/></radialGradient>'+
       '<linearGradient id="gAv" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cbd5e1" stop-opacity=".45"/><stop offset="100%" stop-color="#94a3b8" stop-opacity=".2"/></linearGradient>'+
       '<filter id="sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#ea580c" flood-opacity=".34"/></filter>'+
@@ -1236,7 +1240,8 @@ td.weak-cell{white-space:nowrap}
     var model=wrongPracticeModel(ctx),rows=model.ready||[];
     if(!rows.length)return '';
     var query={practice:'wrong',gens:rows.map(function(row){return row.generator.generatorId;}).join(','),per:'3',points:'all',printMode:'both',source:TAX_SET_KEY+'|'+ctx.roundNum,sourceNos:rows.map(function(row){return row.item.no;}).join(','),seed:TAX_SET_KEY+'-'+ctx.roundNum+'-personal-review'};
-    if(!isLast&&!isOriginal&&[1,2,3,4,7].indexOf(ctx.roundNum)>=0)query.bank='final'+ctx.roundNum;
+    if(isOriginal&&[1,2].indexOf(ctx.roundNum)>=0)query.bank='original'+ctx.roundNum;
+    else if(!isLast&&[1,2,3,4,7].indexOf(ctx.roundNum)>=0)query.bank='final'+ctx.roundNum;
     var target='bank/index.html?'+new URLSearchParams(query).toString();
     return publicSiteUrl('index.html?'+new URLSearchParams({next:target}).toString());
   }
@@ -1328,10 +1333,13 @@ td.weak-cell{white-space:nowrap}
   function wrongPracticeHTML(ctx){
     if(!ctx.wrongList.length) return '<section class="no-print"><h2>틀린 문제 유사문제 학습</h2><div class="wrong-practice">이번 회차는 오답이 없어 별도의 유사문제가 필요하지 않습니다.</div></section>';
     var model=wrongPracticeModel(ctx);
+    if(isOriginal&&!model.ready.length){
+      return '<section class="no-print" id="originalPracticeStatus"><h2>오답 유사문제</h2><div class="wrong-practice">이 회차의 유사문제는 원문 구조와 정답을 대조하고 공개 승인을 받은 뒤 제공됩니다. 현재 열 수 있는 문항은 없습니다. 위 오답표의 정답지와 풀이를 먼저 확인해 주세요.</div></section>';
+    }
     var items=model.ready.map(function(row){
       return '<article class="wp-item" data-wp-points="'+esc(row.points)+'" data-wp-gen="'+esc(row.generator.generatorId)+'" data-wp-no="'+row.item.no+'"><b>'+row.item.no+'번 · '+esc(row.tx.detailType||row.tx.displayType||row.item.type)+'</b><span>'+esc(row.tx.area||row.item.area)+' › '+esc(row.tx.subarea||row.item.subarea||'분류 확인 중')+' · '+esc(row.points)+'점</span></article>';
     }).join('');
-    var pending=model.pending.length?'<div class="wp-pending">아직 유사문제 그림 검수가 끝나지 않은 문항: '+model.pending.map(function(row){return row.item.no+'번';}).join(', ')+'</div>':'';
+    var pending=model.pending.length?'<div class="wp-pending">유사문제 검수·공개 승인 전인 문항: '+model.pending.map(function(row){return row.item.no+'번';}).join(', ')+'</div>':'';
     return '<section class="no-print"><h2>틀린 문제와 비슷한 문제 풀기</h2><div class="lead">배점대를 고르면 틀린 문제마다 비슷한 문제를 3개씩 연습할 수 있습니다.</div><div class="wrong-practice" id="wrongPractice" data-set="'+esc(TAX_SET_KEY)+'" data-round="'+ctx.roundNum+'">'+
       '<div class="wp-filters" role="group" aria-label="오답 배점대 선택"><button type="button" class="wp-chip on" data-wp-filter="all">전체문제</button><button type="button" class="wp-chip" data-wp-filter="2.7">2점대</button><button type="button" class="wp-chip" data-wp-filter="3.4">3점대</button><button type="button" class="wp-chip" data-wp-filter="4.2">4점대</button></div>'+
       '<div class="wp-summary" id="wpSummary"></div><div class="wp-list" id="wpList">'+items+'</div>'+pending+'<div class="wp-starts"><button type="button" class="wp-start" id="wpStart" data-wp-view="grouped">문제별로 보기</button><button type="button" class="wp-start wp-mixed" data-wp-view="mixed">섞어서 보기</button></div></div></section>';
@@ -1362,7 +1370,8 @@ td.weak-cell{white-space:nowrap}
       var ids=scope.map(function(row){return row.getAttribute('data-wp-gen');});
       var nos=scope.map(function(row){return row.getAttribute('data-wp-no');});
       var queryParams={practice:'wrong',gens:ids.join(','),per:'3',points:selected,source:TAX_SET_KEY+'|'+ctx.roundNum,sourceNos:nos.join(','),seed:'',view:start.getAttribute('data-wp-view')||'grouped'};
-      if([1,2,3,4,7].indexOf(ctx.roundNum)>=0)queryParams.bank='final'+ctx.roundNum;
+      if(isOriginal&&[1,2].indexOf(ctx.roundNum)>=0)queryParams.bank='original'+ctx.roundNum;
+      else if(!isLast&&[1,2,3,4,7].indexOf(ctx.roundNum)>=0)queryParams.bank='final'+ctx.roundNum;
       var query=new URLSearchParams(queryParams);
       // Display-only name in the fragment: not a request parameter or authority.
       issueWrongPracticeHandoff(ctx);
@@ -1540,7 +1549,7 @@ td.weak-cell{white-space:nowrap}
     var saveErrBanner=saveErr?'<div class="banner saveerr no-print">'+(saveConflict?'다른 입력이 먼저 저장되어 기존 최초 기록을 유지했습니다.':'저장 실패, 네트워크 확인')+'</div>':'';
     var previewBanner=preview?'<div class="banner preview no-print">🔎 관리자 미리보기 — 저장되지 않습니다</div>':'';
     app.innerHTML=previewBanner+teacherBanner+practiceBanner+saveErrBanner+
-      '<div class="doc"><div class="cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>시그니처 실전 모의고사 성적·약점 진단</h1>'+
+      '<div class="doc original-report"><div class="cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>시그니처 실전 모의고사 성적·약점 진단</h1>'+
       '<div class="sub">'+esc(ctx.R.title)+' · 생각하는 황소 초등선발 대비</div><div class="who"><b>'+esc(ctx.name)+'</b><span>학생</span></div>'+
       '<div class="kpi"><div><i>점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>판정 기준</i><b style="font-size:15px">2개년 평균 컷</b></div><div><i>예상 결과</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div></div></div>'+
       '<section><h2>성적 판정 기준</h2>'+originalCutBasisHTML()+cutWarnHTML(ctx)+'</section>'+
@@ -1549,13 +1558,14 @@ td.weak-cell{white-space:nowrap}
       '<table><tr><th>대영역</th><th>출제</th><th>정답</th><th>배점</th><th>득점</th><th>내 득점률</th><th>잃은 점수</th></tr>'+originalAreaRowsHTML(ctx.A)+'</table></div></section>'+
       '<section><h2>소영역별 약점</h2><div class="lead">두 문항 이상 출제된 소영역은 배점 수행률로 판정합니다. 한 문항뿐인 소영역은 약점으로 단정하지 않고 <b>확인 필요</b>로 표시합니다.</div>'+
       '<table><tr><th>소영역</th><th>출제</th><th>정답</th><th>내 득점률</th><th>잃은 점수</th><th>오답 번호</th><th>판정</th></tr>'+originalSubareaRowsHTML(ctx.SA)+'</table>'+
-      '<h2 style="margin-top:26px;font-size:16px">두 회차 반복 약점</h2>'+repeatHTML+'</section>'+
+      '<div class="original-repeat-block"><h2 style="margin-top:26px;font-size:16px">두 회차 반복 약점</h2>'+repeatHTML+'</div></section>'+
       '<section><h2>문항별 세부유형·정답</h2><div class="lead">오답 문항만 표시합니다. 문제의 소재가 아니라 실제 풀이 핵심을 기준으로 분류했습니다.</div>'+
-      '<table><tr><th>번호</th><th>대영역</th><th>소영역</th><th>세부유형</th><th>배점</th><th>정답</th><th>해설</th></tr>'+originalWrongRowsHTML(ctx)+'</table></section>'+
+      '<table><tr><th>번호</th><th>대영역</th><th>소영역</th><th>세부유형</th><th>배점</th><th>정답</th><th>해설</th></tr>'+originalWrongRowsHTML(ctx)+'</table></section>'+wrongPracticeHTML(ctx)+
       '<section><h2>최초 성적 기록</h2><div class="lead">선생님 입력과 온라인 회원 입력은 같은 중앙 기록을 사용합니다. 연습 재응시는 최초 성적을 바꾸지 않습니다.</div>'+historyHTML+'</section>'+
       '<section style="border-bottom:none"><h2>전문 진단 코멘트</h2><div class="cmt">'+originalCommentHTML(ctx,weakAreas,weakSubs,repeated)+'</div>'+
       '<div class="sign">지필드 영재교육 원장 <b>DOCSSAM</b></div></section></div>';
     showPrint(true); printBtn.onclick=function(){window.print();};
+    wireWrongPractice(ctx);
   }
   /* ===GF-CORE-END=== */
 
@@ -1758,7 +1768,8 @@ td.weak-cell{white-space:nowrap}
     reviewedFinal2CurriculumApproval:reviewedFinal2CurriculumApproval,
     curriculumPrescriptionForItem:curriculumPrescriptionForItem,
     curriculumConnectionHTML:curriculumConnectionHTML,
-    originalFirstAttempts:originalFirstAttempts };
+    originalFirstAttempts:originalFirstAttempts,
+    wrongPracticeModel:wrongPracticeModel, wrongPracticeHTML:wrongPracticeHTML };
 
   /* ===================== Supabase ===================== */
   function scoreOfOx(oxArr){ return computeScore(oxArr); }

@@ -35,9 +35,13 @@ const server=http.createServer((req,res)=>{
   const errors=[];
   try{
     const context=await browser.newContext({viewport:{width:1280,height:900}});
+    await context.addInitScript(()=>localStorage.setItem('gfield_hs_admin_session_v1',JSON.stringify({
+      access_token:'qa-admin',refresh_token:'qa-refresh',expires_at:Math.floor(Date.now()/1000)+3600
+    })));
     await context.route(/^https?:\/\//,async route=>{
       const request=route.request(),url=new URL(request.url());
       if(url.hostname==='127.0.0.1')return route.continue();
+      if(url.hostname==='fgahqumaldheqettmvqg.supabase.co'&&url.pathname==='/auth/v1/user')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({id:'qa-admin',app_metadata:{role:'admin'}})});
       if(url.hostname==='fgahqumaldheqettmvqg.supabase.co'&&url.pathname==='/rest/v1/mock_results')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([record])});
       if(url.hostname==='fgahqumaldheqettmvqg.supabase.co'&&url.pathname.startsWith('/rest/v1/'))return route.fulfill({status:200,contentType:'application/json',body:'[]'});
       if(url.hostname==='fgahqumaldheqettmvqg.supabase.co'&&url.pathname.includes('/functions/v1/'))return route.fulfill({status:503,contentType:'application/json',body:'{}'});
