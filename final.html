@@ -526,7 +526,10 @@ td.weak-cell{white-space:nowrap}
 <script src="final-last-routes.js?v=20260920b"></script>
 <script>(function(){
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
-  var v=Date.now();
+  // Keep published static scripts cacheable. Admin-generated data.js changes
+  // between releases, so only that one file needs a fresh URL per visit.
+  var staticVersion='20260923-final-print-1';
+  var dataVersion=Date.now();
   var p=new URLSearchParams(location.search);
   var isLast=p.get('set')==='last';
   var isOriginal=p.get('set')==='original';
@@ -549,6 +552,7 @@ td.weak-cell{white-space:nowrap}
   if(isFinal4) files.push('final4-detailed-data.js','final-detailed-solutions.js','final4-question-coach.js');
   if(isFinal7) files.push('last-score-data.js','final7-benchmark.js','final7-original-tutor.js');
   if(!isLast&&!isOriginal) files.push('final-report-print.js');
+  if(isFinal1||isFinal2||isFinal3||isFinal4||isFinal7) files.push('final-summary-practice-print.js');
   if(isLast) files.push(
     'mock-data-final.js',
     'final-population.js',
@@ -566,7 +570,7 @@ td.weak-cell{white-space:nowrap}
   );
   files.push('exam-cues.js');
   files.forEach(function(f){
-    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');
+    document.write('<scr'+'ipt src="'+f+'?v='+(f==='data.js'?dataVersion:staticVersion)+'"><\/scr'+'ipt>');
   });
 })();</script>
 
@@ -1899,12 +1903,22 @@ td.weak-cell{white-space:nowrap}
   /* ===================== App state / screens ===================== */
   var app = document.getElementById('app');
   var printBtn = document.getElementById('printBtn');
+  var summaryPrintController = null;
   var state = { name:'', oxArr:null, timerHandle:null, weak:{} };
 
   function getRound(){ return M.rounds[String(roundNum)]; }
   function finalKey(){ return setPrefix()+roundNum; }
 
-  function showPrint(show){ printBtn.style.display = show? 'block':'none'; }
+  function showPrint(show){
+    // A report rerender replaces #app. Recover the button from the old report
+    // before wiring it to the new report, or the print action disappears.
+    if(!show&&summaryPrintController){summaryPrintController.dispose();summaryPrintController=null;}
+    if(!printBtn.isConnected){
+      if(summaryPrintController){summaryPrintController.dispose();summaryPrintController=null;}
+      document.body.appendChild(printBtn);
+    }
+    printBtn.style.display = show? 'block':'none';
+  }
 
   /* ---- 나만의 약점 유형: rendering + toggle wiring (uses state.weak) ---- */
   function weakBtnHTML(type, area, qno){
@@ -2533,6 +2547,7 @@ td.weak-cell{white-space:nowrap}
       ? '<div><i>점수 / 평균</i><b>'+ctx.score+'<small> / '+ctx.S.mean+'</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>석차</i><b>'+ctx.pct+'%</b></div><div><i>예상 결과</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div>'
       : '<div><i>개인 점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>오답</i><b>'+ctx.wrong+'<small>문항</small></b></div>'+(ctx.R&&Number.isFinite(Number(ctx.R.reportedAverage))?'<div><i>제공 평균</i><b>'+Number(ctx.R.reportedAverage)+'<small>점</small></b></div>':'<div><i>진단 기준</i><b style="font-size:15px">개인 수행</b></div>');
     var isStandardFinal=!isOriginal;
+    var hasPreparedSummaryPrint=!isLast&&!isOriginal;
     var personalColor=isStandardFinal?'파란색':'주황색';
     var areaLead=ctx.ratesVerified?personalColor+'은 '+esc(ctx.name)+' 학생의 결과, 회색 점선은 평균입니다.':'영역별로 맞힌 문제와 더 연습할 문제를 살펴보세요.';
     var areaLegend='<div class="legend"><span><s style="background:rgba(249,115,22,.5);border:1px solid #ea580c"></s>'+esc(ctx.name)+'</span>'+(ctx.ratesVerified?'<span><s style="background:rgba(148,163,184,.4);border:1px dashed #94a3b8"></s>평균</span>':'')+'</div>';
@@ -2618,15 +2633,38 @@ td.weak-cell{white-space:nowrap}
       window.GFIELD_FINAL7_ORIGINAL_TUTOR.attach(app,{round:roundNum,items:ctx.items});
     }
     showPrint(true);
-    printBtn.textContent=isStandardFinal?'진단 요약 인쇄 / PDF 저장':'🖨 인쇄';
-    printBtn.setAttribute('aria-label',isStandardFinal?'성적 요약과 이번 주 학습 계획을 간단히 인쇄하거나 PDF로 저장':'인쇄');
+    var similarPrinter=window.GFIELD_FINAL_SUMMARY_PRACTICE_PRINT;
+    var priorityNos=(parentVM&&parentVM.priorityItems||[]).map(function(item){return Number(item.no);});
+    var hasSimilarPrinter=hasPreparedSummaryPrint&&[1,2,3,4,7].indexOf(roundNum)>=0&&similarPrinter&&typeof similarPrinter.attach==='function';
+    var hasRecommendedSimilar=hasSimilarPrinter&&priorityNos.length>0;
+    printBtn.textContent=hasRecommendedSimilar?'진단 요약·추천 유사문제 인쇄 / PDF 저장':(hasPreparedSummaryPrint?'진단 요약만 인쇄 / PDF 저장':'🖨 성적표 인쇄');
+    printBtn.setAttribute('aria-label',hasRecommendedSimilar?'이번 주 우선 복습 문항의 검수된 유사문제와 풀이까지 진단 요약에 이어서 인쇄하거나 PDF로 저장':(hasPreparedSummaryPrint?'추천 유사문제 없이 진단 요약만 인쇄하거나 PDF로 저장':'현재 성적표 인쇄'));
     printBtn.onclick = function(){ window.print(); };
     if(isStandardFinal){
       var reportActions=reportHeaderActions(app,ctx);
       if(reportActions) reportActions.appendChild(printBtn);
+      if(reportActions&&hasPreparedSummaryPrint&&priorityNos.length&&[1,2,3,4,7].indexOf(roundNum)>=0&&!hasSimilarPrinter){
+        var printWarning=document.createElement('div');
+        printWarning.className='no-print';
+        printWarning.setAttribute('role','alert');
+        printWarning.style.cssText='grid-column:1/-1;color:#b42318;font-size:12px;line-height:1.5';
+        printWarning.textContent='추천 유사문제 인쇄 기능을 불러오지 못했습니다. 새로고침해 주세요. 지금은 진단 요약만 인쇄됩니다.';
+        reportActions.appendChild(printWarning);
+      }
     }
-    if(isStandardFinal&&window.GFIELD_FINAL_REPORT_PRINT&&typeof window.GFIELD_FINAL_REPORT_PRINT.attach==='function'){
-      window.GFIELD_FINAL_REPORT_PRINT.attach({
+    if(hasSimilarPrinter){
+      if(summaryPrintController){summaryPrintController.dispose();summaryPrintController=null;}
+      summaryPrintController=similarPrinter.attach({
+        button:printBtn,
+        source:app.querySelector('.final-report-package'),
+        priorityNos:priorityNos,
+        round:roundNum,
+        name:ctx.name,
+        beforeOpen:function(){issueWrongPracticeHandoff(ctx);}
+      });
+    }else if(hasPreparedSummaryPrint&&window.GFIELD_FINAL_REPORT_PRINT&&typeof window.GFIELD_FINAL_REPORT_PRINT.attach==='function'){
+      if(summaryPrintController){summaryPrintController.dispose();summaryPrintController=null;}
+      summaryPrintController=window.GFIELD_FINAL_REPORT_PRINT.attach({
         button:printBtn,
         source:app.querySelector('.final-report-package'),
         mode:'summary'
