@@ -15,243 +15,59 @@ window.GFIELD_DATA = {
     "lng": 127.0584
   },
   "nodes": [
-    {
-      "id": "may-w34",
-      "type": "week",
-      "track": "concept",
-      "date": "5월 3·4주차",
-      "title": "GIFTED MATH 3 V1-1",
-      "desc": "HS 개념 다지기",
-      "focus": "기초 개념 확립 주간"
-    },
-    {
-      "id": "jun-w12",
-      "type": "week",
-      "track": "concept",
-      "date": "6월 1·2주차",
-      "title": "GIFTED MATH 3 V1-2",
-      "desc": "HS 개념 다지기",
-      "focus": "심화 연산 및 개념 완성"
-    },
-    {
-      "id": "jun-w3",
-      "type": "week",
-      "track": "apply",
-      "date": "6월 3주차",
-      "title": "THINKING BASIC 1",
-      "desc": "HS 개념 응용",
-      "focus": "문제 푸는 방법 찾기 (1)"
-    },
-    {
-      "id": "jun-w4",
-      "type": "week",
-      "track": "apply",
-      "date": "6월 4주차",
-      "title": "THINKING BASIC 2",
-      "desc": "HS 개념 응용",
-      "focus": "문제 푸는 방법 찾기 (2)"
-    },
-    {
-      "id": "jul-w1",
-      "type": "week",
-      "track": "apply",
-      "date": "7월 1주차",
-      "title": "THINKING BASIC 3",
-      "desc": "HS 개념 응용",
-      "focus": "규칙 찾아 문제 해결하기 (1)"
-    },
-    {
-      "id": "jul-w2",
-      "type": "week",
-      "track": "exam",
-      "date": "7월 2주차",
-      "title": "THINKING CORE CH1 (1)",
-      "desc": "NUMBERS (1) + 중급 모의고사 1회",
-      "focus": "수업 시간 30분 연장 시작 · 실전 개념 병행"
-    },
-    {
-      "id": "jul-w3",
-      "type": "week",
-      "track": "exam",
-      "date": "7월 3주차",
-      "title": "THINKING CORE CH1 (2)",
-      "desc": "NUMBERS (2) + 중급 모의고사 2회",
-      "focus": "개념 적용 및 오답 제로 훈련"
-    },
-    {
-      "id": "div-mock",
-      "type": "divider",
-      "label": "Phase 2 · 중급 모의고사 집중 훈련 진입"
-    },
-    {
-      "id": "jul-w4",
-      "type": "week",
-      "track": "exam",
-      "date": "7월 4주차",
-      "title": "중급 모의고사 2회 리뷰 테스트",
-      "desc": "중급 2회 리뷰 테스트 + 중급 모의고사 3회",
-      "focus": "오답 원인 찾기 훈련 시작"
-    },
-    {
-      "id": "jul-w5",
-      "type": "week",
-      "track": "exam",
-      "date": "8월 1주차",
-      "title": "THINKING CORE CH1 (3)",
-      "desc": "Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 4회",
-      "focus": "수와 숫자의 개수 마무리"
-    },
-    {
-      "id": "special-summer",
-      "type": "special",
-      "track": "special",
-      "date": "7월 말~8월 중순",
-      "title": "[선택] 방학 특강 모의고사 집중반",
-      "desc": "월·수·금 09:30 ~ 12:00",
-      "focus": "특강 수강생 전용 · 정규 진도와 별개로 신청"
-    },
-    {
-      "id": "aug-w1",
-      "type": "week",
-      "track": "exam",
-      "date": "8월 2주차",
-      "title": "THINKING CORE CH2 (1)",
-      "desc": "THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트",
-      "focus": "나이·속력 문장제 집중"
-    },
-    {
-      "id": "aug-w2",
-      "type": "week",
-      "track": "exam",
-      "date": "8월 3주차",
-      "title": "THINKING CORE CH2 (2)",
-      "desc": "THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회",
-      "focus": "시계와 각 · 수배열표 훈련"
-    },
-    {
-      "id": "aug-w3",
-      "type": "week",
-      "track": "mock",
-      "date": "8월 4주차",
-      "title": "THINKING CORE CH3",
-      "desc": "THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회",
-      "focus": "수 · 경우의 수 통합 적용"
-    },
-    {
-      "id": "aug-w4",
-      "type": "week",
-      "track": "exam",
-      "date": "8월 5주차",
-      "title": "THINKING CORE CH4",
-      "desc": "",
-      "focus": ""
-    },
-    {
-      "id": "promo-final-prep",
-      "type": "promo",
-      "label": "파이널 진입 전 · 추가 모의고사 추천",
-      "title": "파이널 전에 실전 감각을 더 쌓고 싶다면",
-      "desc": "중급 8회와 시크릿 추가 모의고사로 파이널 난이도에 미리 적응할 수 있어요. 한 주라도 더 실전을 겪은 학생이 파이널에서 흔들리지 않습니다.",
-      "cta": "추가 모의고사 문의하기",
-      "url": "https://open.kakao.com/me/gfield"
-    },
-    {
-      "id": "div-final",
-      "type": "divider",
-      "label": "Phase 3 · 파이널 · 최종 실전 과정 진입"
-    },
-    {
-      "id": "sep-w1",
-      "type": "week",
-      "track": "final",
-      "date": "9월 1주차",
-      "title": "파이널 실전 모의고사 1회",
-      "desc": "파이널 과정 시작 · 신유형 지문 분석",
-      "focus": "파이널 난이도 적응 · 조건 해석 훈련"
-    },
-    {
-      "id": "sep-14",
-      "type": "week",
-      "track": "final",
-      "date": "9월 2주차",
-      "title": "파이널 실전 모의고사 2회",
-      "desc": "파이널 1회 오답 리뷰 + 파이널 2회 응시",
-      "focus": "OMR 마킹 · 시간 배분 훈련"
-    },
-    {
-      "id": "sep-21",
-      "type": "week",
-      "track": "final",
-      "date": "9월 3주차",
-      "title": "파이널 실전 모의고사 3회",
-      "desc": "파이널 2회 오답 리뷰 + 파이널 3회 응시",
-      "focus": "낯선 유형 적응 훈련"
-    },
-    {
-      "id": "sep-28",
-      "type": "week",
-      "track": "final",
-      "date": "9월 4주차",
-      "title": "파이널 실전 모의고사 4회",
-      "desc": "파이널 3회 오답 리뷰 + 파이널 4회 응시 · 누적 백분율 중간 점검",
-      "focus": "파이널 마무리 · 누적 백분율 점검"
-    },
-    {
-      "id": "oct-5",
-      "type": "week",
-      "track": "final",
-      "date": "10월 1주차",
-      "title": "최종 실전 모의고사 1회",
-      "desc": "파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공",
-      "focus": "90분 시간 배분 전략 · 약점 유형 확인"
-    },
-    {
-      "id": "oct-12",
-      "type": "week",
-      "track": "final",
-      "date": "10월 2주차",
-      "title": "최종 실전 모의고사 2회",
-      "desc": "최종 1회 오답 리뷰 + 최종 2회 응시",
-      "focus": "목표 레벨 기준선 점검"
-    },
-    {
-      "id": "oct-19",
-      "type": "week",
-      "track": "final",
-      "date": "10월 3주차",
-      "title": "최종 실전 모의고사 3회",
-      "desc": "최종 2회 오답 리뷰 + 최종 3회 응시",
-      "focus": "실전 리허설 · 누적 성적 최종 확인"
-    },
-    {
-      "id": "oct-26",
-      "type": "week",
-      "track": "final",
-      "date": "10월 4주차",
-      "title": "최종 실전 모의고사 4회 및 최종 정리",
-      "desc": "최종 4회 + 총정리 · 학부모 최종 상담",
-      "focus": "종강 · 시험 직전 컨디션 조절",
-      "link": "https://open.kakao.com/me/gfield"
-    },
-    {
-      "id": "extra-mocks",
-      "type": "extra",
-      "track": "special",
-      "date": "주 2회",
-      "title": "[선택] 추가 모의고사",
-      "desc": "서재에서 승인한 회차만 개별 제공",
-      "focus": "강의 · 시험지 · 오답 분석을 한 번에 연결"
-    },
-    {
-      "id": "goal-exam",
-      "type": "goal",
-      "date": "11월 1일(일)",
-      "title": "생각하는 황소 입학시험",
-      "desc": "누적 데이터 기반 최종 상담 및 시험 응시",
-      "focus": ""
-    }
+    { "id": "may-w34", "type": "week", "track": "concept", "date": "5월 3·4주차", "title": "GIFTED MATH 3 V1-1", "desc": "HS 개념 다지기", "focus": "기초 개념 확립 주간" },
+    { "id": "jun-w12", "type": "week", "track": "concept", "date": "6월 1·2주차", "title": "GIFTED MATH 3 V1-2", "desc": "HS 개념 다지기", "focus": "심화 연산 및 개념 완성" },
+    { "id": "jun-w3", "type": "week", "track": "apply", "date": "6월 3주차", "title": "THINKING BASIC 1", "desc": "HS 개념 응용", "focus": "문제 푸는 방법 찾기 (1)" },
+    { "id": "jun-w4", "type": "week", "track": "apply", "date": "6월 4주차", "title": "THINKING BASIC 2", "desc": "HS 개념 응용", "focus": "문제 푸는 방법 찾기 (2)" },
+    { "id": "jul-w1", "type": "week", "track": "apply", "date": "7월 1주차", "title": "THINKING BASIC 3", "desc": "HS 개념 응용", "focus": "규칙 찾아 문제 해결하기 (1)" },
+    { "id": "jul-w2", "type": "week", "track": "exam", "date": "7월 2주차", "title": "THINKING CORE CH1 (1)", "desc": "NUMBERS (1) + 중급 모의고사 1회", "focus": "수업 시간 30분 연장 시작 · 실전 개념 병행" },
+    { "id": "jul-w3", "type": "week", "track": "exam", "date": "7월 3주차", "title": "THINKING CORE CH1 (2)", "desc": "NUMBERS (2) + 중급 모의고사 2회", "focus": "개념 적용 및 오답 제로 훈련" },
+    { "id": "div-mock", "type": "divider", "label": "Phase 2 · 중급 모의고사 집중 훈련 진입" },
+    { "id": "jul-w4", "type": "week", "track": "exam", "date": "7월 4주차", "title": "중급 모의고사 2회 리뷰 테스트", "desc": "중급 2회 리뷰 테스트 + 중급 모의고사 3회", "focus": "오답 원인 찾기 훈련 시작" },
+    { "id": "jul-w5", "type": "week", "track": "exam", "date": "8월 1주차", "title": "THINKING CORE CH1 (3)", "desc": "Thinking Core NUMBERS 수와 숫자의 개수 + 중급 3회 리뷰 테스트 + 중급 모의고사 4회", "focus": "수와 숫자의 개수 마무리" },
+    { "id": "special-summer", "type": "special", "track": "special", "date": "7월 말~8월 중순", "title": "[선택] 방학 특강 모의고사 집중반", "desc": "월·수·금 09:30 ~ 12:00", "focus": "특강 수강생 전용 · 정규 진도와 별개로 신청" },
+    { "id": "aug-w1", "type": "week", "track": "exam", "date": "8월 2주차", "title": "THINKING CORE CH2 (1)", "desc": "THINKING CORE CH2 Algebra(1) 나이·속력 + 중급 4회 리뷰테스트", "focus": "나이·속력 문장제 집중" },
+    { "id": "aug-w2", "type": "week", "track": "exam", "date": "8월 3주차", "title": "THINKING CORE CH2 (2)", "desc": "THINKING CORE CH2 Algebra(1) 시계와 각·수배열표 + 중급 모의고사 5회", "focus": "시계와 각 · 수배열표 훈련" },
+    { "id": "aug-w3", "type": "week", "track": "mock", "date": "8월 4주차", "title": "THINKING CORE CH3", "desc": "THINKING CORE CH3 Numbers & Case + 중급 모의고사 6회", "focus": "수 · 경우의 수 통합 적용" },
+    { "id": "aug-w4", "type": "week", "track": "exam", "date": "8월 5주차", "title": "THINKING CORE CH4", "desc": "", "focus": "" },
+    { "id": "promo-final-prep", "type": "promo", "label": "파이널 진입 전 · 추가 모의고사 추천", "title": "파이널 전에 실전 감각을 더 쌓고 싶다면", "desc": "중급 8회와 시크릿 추가 모의고사로 파이널 난이도에 미리 적응할 수 있어요. 한 주라도 더 실전을 겪은 학생이 파이널에서 흔들리지 않습니다.", "cta": "추가 모의고사 문의하기", "url": "https://open.kakao.com/me/gfield" },
+    { "id": "div-final", "type": "divider", "label": "Phase 3 · 파이널 · 최종 실전 과정 진입" },
+    { "id": "sep-w1", "type": "week", "track": "final", "date": "9월 1주차", "title": "파이널 실전 모의고사 1회", "desc": "파이널 과정 시작 · 신유형 지문 분석", "focus": "파이널 난이도 적응 · 조건 해석 훈련" },
+    { "id": "sep-14", "type": "week", "track": "final", "date": "9월 2주차", "title": "파이널 실전 모의고사 2회", "desc": "파이널 1회 오답 리뷰 + 파이널 2회 응시", "focus": "OMR 마킹 · 시간 배분 훈련" },
+    { "id": "sep-21", "type": "week", "track": "final", "date": "9월 3주차", "title": "파이널 실전 모의고사 3회", "desc": "파이널 2회 오답 리뷰 + 파이널 3회 응시", "focus": "낯선 유형 적응 훈련" },
+    { "id": "sep-28", "type": "week", "track": "final", "date": "9월 4주차", "title": "파이널 실전 모의고사 4회", "desc": "파이널 3회 오답 리뷰 + 파이널 4회 응시 · 누적 백분율 중간 점검", "focus": "파이널 마무리 · 누적 백분율 점검" },
+    { "id": "oct-5", "type": "week", "track": "final", "date": "10월 1주차", "title": "최종 실전 모의고사 1회", "desc": "파이널 4회 리뷰 + 최종 1회 응시 · 약점 유형 분석지 제공", "focus": "90분 시간 배분 전략 · 약점 유형 확인" },
+    { "id": "oct-12", "type": "week", "track": "final", "date": "10월 2주차", "title": "최종 실전 모의고사 2회", "desc": "최종 1회 오답 리뷰 + 최종 2회 응시", "focus": "목표 레벨 기준선 점검" },
+    { "id": "oct-19", "type": "week", "track": "final", "date": "10월 3주차", "title": "최종 실전 모의고사 3회", "desc": "최종 2회 오답 리뷰 + 최종 3회 응시", "focus": "실전 리허설 · 누적 성적 최종 확인" },
+    { "id": "oct-26", "type": "week", "track": "final", "date": "10월 4주차", "title": "최종 실전 모의고사 4회 및 최종 정리", "desc": "최종 4회 + 총정리 · 학부모 최종 상담", "focus": "종강 · 시험 직전 컨디션 조절", "link": "https://open.kakao.com/me/gfield" },
+    { "id": "extra-mocks", "type": "extra", "track": "special", "date": "주 2회", "title": "[선택] 추가 모의고사", "desc": "서재에서 승인한 회차만 개별 제공", "focus": "강의 · 시험지 · 오답 분석을 한 번에 연결" },
+    { "id": "goal-exam", "type": "goal", "date": "11월 1일(일)", "title": "생각하는 황소 입학시험", "desc": "누적 데이터 기반 최종 상담 및 시험 응시", "focus": "" }
   ],
-  "content": {},
+  "content": {
+    "may-w34": { "notice": "", "homework": "", "textbooks": [ { "title": "GIFTED MATH 3 V1-1", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783672745748_2cxl_GIFTED_MATH_3_V1-1_NEW.pdf", "folder": "tb_mrhhi7af", "pages": 51 } ] },
+    "jun-w12": { "notice": "", "homework": "", "textbooks": [ { "title": "GIFTED MATH 3 V1-2 NEW", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753365276_q5ho_GIFTED_MATH_3_V1-2_NEW.pdf", "folder": "tb_mrhhl1l3", "pages": 44 }, { "title": "GIFTED MATH 3 V1-3", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753558814_go0g_GIFTED_MATH_3_V1-3.pdf", "folder": "tb_mrhhn9kd", "pages": 35 } ] },
+    "jun-w3": { "notice": "", "homework": "", "textbooks": [ { "title": "HS 대비 필수 개념정리-THINKING BASIC", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753689111_1mbr_HS___________-HS___4.pdf", "folder": "tb_mrho8522", "pages": 40 }, { "title": "HS 응용4 문제푸는 방법찿기(1) DT", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753904629_4uvw_HS___4___________1__DT.pdf" } ] },
+    "jun-w4": { "notice": "", "homework": "", "textbooks": [ { "title": "HS 대비 필수 개념정리-THINKING BASIC", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753701741_hnwb_HS___________-HS___4.pdf" }, { "title": "HS 응용4 문제푸는 방법찿기(2) DT", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753917751_38ha_HS___4___________2__DT.pdf" }, { "title": "HS 응용4 문제푸는 방법찿기(1) DT", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1783753904629_4uvw_HS___4___________1__DT.pdf" } ] },
+    "jul-w1": { "notice": "", "homework": "", "textbooks": [ { "title": "HS 응용4 문제푸는 방법찿기(2) DT", "url": "" } ] },
+    "jul-w2": { "notice": "", "homework": "", "textbooks": [ { "title": "Thinking Core — 생각하는 황소 대비 심화 개념 (2)", "url": "output/pdf/thinking-core-revised-96p.pdf", "folder": "tb_mrhqq399", "pages": 96 }, { "title": "중급 모의고사 1회 · 답안 및 교재 연결표", "url": "https://hs.gfieldacademy.net/answer.html?round=1" }, { "title": "초등과정 선발 대비 모의고사 1회 중급", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784011786664_t288_________________1____.pdf", "folder": "tb_mrkakb9h", "pages": 6 }, { "title": "초등과정 대비 실전 모의고사 1회 중급 리뷰", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784333982911_5uve_________________1_______.pdf", "folder": "tb_mrpmdvy0", "pages": 2 }, { "title": "초등과정 선발 대비 모의고사 1회 중급 손글씨 답안", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784858930016_k7z5_________________1_______.pdf" } ] },
+    "jul-w3": { "notice": "", "homework": "초등과정 대비 실전 모의고사 2회 중급 풀고 답 입력하기\n", "textbooks": [ { "title": "중급 모의고사 2회 · 답안 및 교재 연결표", "url": "https://hs.gfieldacademy.net/answer.html?round=2" }, { "title": "초등과정 대비 실전 모의고사 1회 중급 리뷰", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784333982911_5uve_________________1_______.pdf", "folder": "tb_mry9ga7q", "pages": 2 }, { "title": "초등과정 대비 실전 모의고사 2회 중급 손글씨 답안", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784856816406_94n0_________________2___________.pdf" }, { "title": "초등과정 대비 실전 모의고사 2회 중급", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784858858811_qdaf_________________2____.pdf", "folder": "tb_mryavtk6", "pages": 6 }, { "title": "모의고사 오답 입력방법", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784872289382_nf7a_____________.pdf" }, { "title": "초등과정 대비 실전 모의고사 2회 중급 리뷰", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784944439216_1kne_________________2_______.pdf", "folder": "tb_mrzpu8cf", "pages": 2 }, { "title": "초등과정 대비 실전 모의고사 2회 중급 리뷰 답안", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784969835013_b35n_________________2__________.pdf" } ] },
+    "jul-w4": { "notice": "", "homework": "* 복습하기\n* 초등과정 대비 실전 모의고사 3회 중급\n     https://youtu.be/U5Kk7reqz4Q", "textbooks": [ { "title": "초등과정 대비 실전 모의고사 3회 중급", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784900104181_jkfe_________________3____.pdf", "folder": "tb_mryzfxq5", "pages": 6 }, { "title": "중급 모의고사 3회 · 답안 및 교재 연결표", "url": "https://hs.gfieldacademy.net/answer.html?round=3" }, { "title": "초등과정 대비 실전 모의고사 2회 중급 리뷰 답안", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784969835013_b35n_________________2__________.pdf" }, { "title": "초등과정 대비 실전 모의고사 2회 중급 리뷰", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1784944439216_1kne_________________2_______.pdf", "folder": "tb_ms15m3rp", "pages": 2 }, { "title": "초등과정 대비 실전 모의고사 3회 중급 리뷰", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1785388773797_8kkw_________________3_______.pdf", "folder": "tb_ms72dsdp", "pages": 2 } ] },
+    "jul-w5": { "notice": "", "homework": "Thinking Core 1 NUMBERS(1) semi Test\n     검은색 책 1단원 뒤에 있습니다. \n     https://youtu.be/rJKaRm6utcE", "textbooks": [ { "title": "중급 모의고사 4회 · 답안 및 교재 연결표", "url": "https://hs.gfieldacademy.net/answer.html?round=4" }, { "title": "초등과정 대비 실전 모의고사 4회 중급", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1785345756192_az8p_________________4____.pdf", "folder": "tb_ms6crqfd", "pages": 6 }, { "title": "초등과정 대비 실전 모의고사 4회 중급 리뷰", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1785345783456_q145_________________4_______.pdf", "folder": "tb_msd6fnvg", "pages": 2 }, { "title": "초등과정 대비 실전 모의고사 3회 중급 리뷰", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1785345882699_gl31_________________3_______.pdf", "folder": "tb_ms6cuezk", "pages": 2 }, { "title": "초등과정 대비 실전 모의고사 3회 중급 리뷰 답안", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1785728327980_fcz9_________________3__________.pdf" } ] },
+    "special-summer": { "notice": "", "homework": "", "textbooks": [] },
+    "aug-w1": { "notice": "", "homework": "", "textbooks": [ { "title": "초등과정 대비 실전 모의고사 4회 중급 리뷰", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1785345783456_q145_________________4_______.pdf", "folder": "tb_mslm1w7u", "pages": 2 } ] },
+    "aug-w2": { "notice": "", "homework": "", "textbooks": [ { "title": "중급 모의고사 5회 · 답안 및 교재 연결표", "url": "https://hs.gfieldacademy.net/answer.html?round=5" }, { "title": "중급 모의고사 5회", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1786963497160_gi8r_________________5____.pdf", "folder": "tb_msx3xnxu", "pages": 6 }, { "title": "중급 모의고사 5회 답안 손필기", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1786963621821_7k2l_________________5_______.pdf" } ] },
+    "aug-w3": { "notice": "", "homework": "", "textbooks": [ { "title": "중급 모의고사 6회 · 답안 및 교재 연결표", "url": "https://hs.gfieldacademy.net/answer.html?round=6" }, { "title": "초등과정 대비 실전 모의고사 6회 중급", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1787971772103_ys7p_________________6____.pdf", "folder": "tb_mtds8mld", "pages": 6 } ] },
+    "sep-w1": { "notice": "", "homework": "", "textbooks": [ { "title": "파이널 모의고사 1회 · 오답 입력·분석", "url": "https://hs.gfieldacademy.net/final.html?round=1&go=answer" }, { "title": "파이널 모의고사 1회 · 실전 타이머", "url": "https://hs.gfieldacademy.net/final.html?round=1&go=timer" }, { "title": "파이널 모의고사 1회 · 답안·교재 연결표", "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=1" }, { "title": "파이널 모의고사 1회", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/%EC%B4%88%EB%93%B1%EA%B3%BC%EC%A0%95%20%EB%8C%80%EB%B9%84%20%ED%8C%8C%EC%9D%B4%EB%84%90%20%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC%201%ED%9A%8C.pdf", "folder": "tb_mtnog5pv", "pages": 8 } ] },
+    "sep-14": { "notice": "", "homework": "", "textbooks": [ { "title": "파이널 모의고사 2회 · 오답 입력·분석", "url": "https://hs.gfieldacademy.net/final.html?round=2&go=answer" }, { "title": "파이널 모의고사 2회 · 실전 타이머", "url": "https://hs.gfieldacademy.net/final.html?round=2&go=timer" }, { "title": "파이널 모의고사 2회 · 답안·교재 연결표", "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=2" }, { "title": "초등과정 대비 파이널 모의고사 2회", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789103859137_yhkk__________________2_.pdf", "folder": "tb_mtwi9277", "pages": 6 }, { "title": "초등과정 대비 파이널 모의고사 2회 손필기", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789461958924_iecs__________________2____.pdf" } ] },
+    "sep-21": { "notice": "", "homework": "", "textbooks": [ { "title": "파이널 모의고사 3회 · 오답 입력·분석", "url": "https://hs.gfieldacademy.net/final.html?round=3&go=answer" }, { "title": "파이널 모의고사 3회 · 실전 타이머", "url": "https://hs.gfieldacademy.net/final.html?round=3&go=timer" }, { "title": "파이널 모의고사 3회 · 답안·교재 연결표", "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=3" }, { "title": "파이널 모의고사 3회 모의고사", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789720382594_1spe__________________3_.pdf", "folder": "tb_mu6pb5a1", "pages": 7 }, { "title": "초등과정 대비 파이널 모의고사 3회 손필기", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789987853977_jagj__________________3____.pdf", "folder": "tb_mub4k60q", "pages": 8 } ] },
+    "sep-28": { "notice": "", "homework": "", "textbooks": [ { "title": "파이널 모의고사 4회 · 오답 입력·분석", "url": "https://hs.gfieldacademy.net/final.html?round=4&go=answer" }, { "title": "파이널 모의고사 4회 · 실전 타이머", "url": "https://hs.gfieldacademy.net/final.html?round=4&go=timer" }, { "title": "파이널 모의고사 4회 · 답안·교재 연결표", "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=4" }, { "title": "파이널 모의고사 4회", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789987797818_y2fl__________________4_.pdf", "folder": "tb_mub4isz3", "pages": 6 }, { "title": "초등과정 대비 파이널 모의고사 4회 손필기", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1789987822895_m1pf__________________4____.pdf", "folder": "tb_mub4jhh7", "pages": 6 } ] },
+    "aug-w4": { "notice": "", "homework": "", "textbooks": [ { "title": "초등과정 대비 실전 모의고사 5,6회 리뷰", "url": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/1788169503524_tw1n_________________5_6____.pdf", "folder": "tb_mth1yhsr", "pages": 4 } ] },
+    "oct-5": { "notice": "", "homework": "", "textbooks": [] },
+    "oct-12": { "notice": "", "homework": "", "textbooks": [] },
+    "oct-19": { "notice": "", "homework": "", "textbooks": [] },
+    "oct-26": { "notice": "", "homework": "", "textbooks": [] },
+    "extra-mocks": { "notice": "서재에서 승인된 추가 모의고사만 이곳에 표시됩니다.", "homework": "주 2회 실전 응시 후 영상 풀이와 오답 분석까지 마무리하세요.", "textbooks": [ { "title": "최종 실전 모의고사 5회 · 강의·시험지·진단", "accessKey": "mock-final-5" } ] }
+  },
   "students": [
     "허유민","김현우","김유준","이하린","정지안","안채연","박서진","민준기","김서연","김명서",
     "임유준","김시후","노관호","윤하영","DEMO","문선우","유호연","김서율","김지유","김소라",
