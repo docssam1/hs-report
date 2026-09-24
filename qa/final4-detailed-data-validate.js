@@ -29,6 +29,11 @@ assert.match(data.items.find(item=>item.no===3).caution,/12시간의 정확한 �
 assert.match(data.items.find(item=>item.no===4).caution,/조건이 없습니다/);
 assert.doesNotMatch(data.items.find(item=>item.no===4).caution,/3학년|범위를 벗어/);
 assert.match(data.items.find(item=>item.no===10).steps[1].body,/111111111110888888888889/);
+assert.equal(data.items.find(item=>item.no===11).answer,'45');
+assert.match(data.items.find(item=>item.no===11).check,/121－76＝45.*127－16＝111/);
+const finalPage=fs.readFileSync(path.join(root,'final.html'),'utf8');
+assert.match(finalPage,/final4AnswerVersion='20260924-final4-q11-answer-1'/);
+assert.match(finalPage,/f==='mock-data-final\.js'\|\|f==='final4-detailed-data\.js'/);
 assert.match(data.items.find(item=>item.no===21).caution,/‘10이’/);
 assert.match(data.items.find(item=>item.no===27).caution,/‘8450이며’/);
 assert.equal(data.items.find(item=>item.no===17).answer,'450m');

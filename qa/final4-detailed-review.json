@@ -16,13 +16,14 @@
   ],
   "sourceReadingCorrections": [
     {"no": 9, "correction": "use the previously provided equal-initial-bottle condition"},
-    {"no": 11, "correction": "restore the previously provided answer record and calculation-value difference 111"},
+    {"no": 11, "correction": "read 111 as the result of one misread subtraction, not the difference between two calculations"},
     {"no": 12, "correction": "the supplied answer record identifies the obscured cut count as 12"},
     {"no": 16, "correction": "the supplied answer record identifies the obscured race distance as 100m"},
     {"no": 21, "correction": "read Korean 10이 as 10 plus the subject particle, not 100"},
     {"no": 27, "correction": "read Korean 8450이며 as 8450 plus the connective particle, not 84500"}
   ],
   "answerCorrections": [
+    {"no": 11, "before": "57", "after": "45", "reason": "the minuend was read 6 larger and the subtrahend 60 smaller, so the mistaken difference is 66 larger than the true difference"},
     {"no": 17, "before": "600m (또는 450m)", "after": "450m", "reason": "15-second travel includes only the remaining half-train length beyond the tunnel"},
     {"no": 24, "before": "2시간", "after": "14일", "reason": "the question asks days and the total work calculation gives 24 days versus the planned 10"},
     {"no": 26, "before": "(빈칸 채우기)", "after": "241×83=20003", "reason": "independent exhaustive comparison gives the unique minimum absolute difference 3"}
@@ -38,7 +39,7 @@
     {"no": 8, "status": "verified", "answer": "1720g"},
     {"no": 9, "status": "verified-with-provided-answer-text", "answer": "260알"},
     {"no": 10, "status": "verified-after-exact-pattern-check", "answer": "11개"},
-    {"no": 11, "status": "verified-with-provided-answer-text", "answer": "57"},
+    {"no": 11, "status": "verified-after-source-and-user-work-correction", "answer": "45"},
     {"no": 12, "status": "verified-with-provided-answer-text", "answer": "50도막"},
     {"no": 13, "status": "verified", "answer": "16개"},
     {"no": 14, "status": "verified", "answer": "11살"},

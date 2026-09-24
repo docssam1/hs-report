@@ -530,6 +530,7 @@ td.weak-cell{white-space:nowrap}
   // Keep published static scripts cacheable. Admin-generated data.js changes
   // between releases, so only that one file needs a fresh URL per visit.
   var staticVersion='20260923-final-print-1';
+  var final4AnswerVersion='20260924-final4-q11-answer-1';
   var dataVersion=Date.now();
   var p=new URLSearchParams(location.search);
   var isLast=p.get('set')==='last';
@@ -571,7 +572,8 @@ td.weak-cell{white-space:nowrap}
   );
   files.push('exam-cues.js');
   files.forEach(function(f){
-    document.write('<scr'+'ipt src="'+f+'?v='+(f==='data.js'?dataVersion:staticVersion)+'"><\/scr'+'ipt>');
+    var version=f==='data.js'?dataVersion:((f==='mock-data-final.js'||f==='final4-detailed-data.js')?final4AnswerVersion:staticVersion);
+    document.write('<scr'+'ipt src="'+f+'?v='+version+'"><\/scr'+'ipt>');
   });
 })();</script>
 
