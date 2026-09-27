@@ -4,7 +4,8 @@
  * 보존되어 있다. 현재 앱에는 검수된 전체 누적분포가 연결되지 않았으므로
  * 초2 집단의 평균·표준편차 근사값으로 2024년 분포를 2025년 척도로
  * 옮긴 뒤 두 해의 누적분포를 1:1로 합쳐 예상 레벨을 계산한다.
- * 석차·정답률·실제 합격 여부는 추정하지 않는다.
+ * 예상 석차는 두 해의 분포를 합친 참고 집단에서만 계산한다.
+ * 실제 응시 석차·문항 정답률·합격 여부와 혼동하지 않는다.
  * ========================================================= */
 (function(){
   'use strict';
@@ -36,6 +37,15 @@
     var a=historical.y2024,b=historical.y2025;
     var original2024=a.mean+(a.sdApprox/b.sdApprox)*(score-b.mean);
     return (upperShare(a,original2024)+upperShare(b,score))/2;
+  }
+  function estimatedPosition(score){
+    var value=Number(score);
+    if(!Number.isFinite(value)||value<0||value>100)return null;
+    var cohortSize=Math.round((historical.y2024.n+historical.y2025.n)/2);
+    var share=pooledUpperShare(value);
+    return {topPercent:Math.round(share*1000)/10,
+      rank:Math.max(1,Math.round(share*cohortSize)),cohortSize:cohortSize,
+      status:'historical-distribution-estimate'};
   }
   function pooledScoreFor(upperShareTarget){
     var low=0,high=100;
@@ -131,6 +141,7 @@
   ];
 
   window.GFIELD_MOCK_ORIGINAL = {
+    estimatedPosition: estimatedPosition,
     title: '초등선발 대비 시그니처 실전 모의고사',
     label: '시그니처 실전',
     setKey: 'original',

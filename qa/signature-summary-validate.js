@@ -30,6 +30,11 @@ const core = sandbox.GF_TEST;
 assert.deepEqual(Array.from(model.cutBasis.rows, row => row.threshold2025), [46.8, 38, 30, 20.6]);
 assert.equal(model.cutBasis.normalization.status, 'approximate-merged-distribution');
 assert.deepEqual(Array.from(model.cutBasis.rows, row => row.targetTopPct), [2, 5.1, 12.1, 32.3]);
+assert.deepEqual(JSON.parse(JSON.stringify(model.estimatedPosition(46.8))), {
+  topPercent: 2, rank: 83, cohortSize: 4129, status: 'historical-distribution-estimate',
+});
+assert.ok(model.estimatedPosition(38).rank > model.estimatedPosition(46.8).rank);
+assert.equal(model.estimatedPosition(101), null);
 assert.equal(core.publicCutVerified(model.rounds['2'].stats), true);
 assert.equal(core.cutInfo(46.8, model.rounds['2'].stats.cuts).grade, '경시 가능');
 assert.equal(core.cutInfo(46.7, model.rounds['2'].stats.cuts).grade, '경시컷 · 심화안정권');
@@ -38,13 +43,16 @@ assert.equal(core.cutInfo(20.5, model.rounds['2'].stats.cuts).grade, '노력요�
 assert.equal(core.cutInfo(30, model.rounds['2'].stats.cuts).grade, '심화컷 · 실력안정권');
 const ctx = {
   name: '검증학생', roundNum: 2, attemptNo: 1, score: 60, ncorr: 20, wrong: 10,
-  grade: '실력', R: model.rounds['2'], wrongList: [],
+  grade: '실력', R: model.rounds['2'], wrongList: [], cutVerified: true,
 };
 const attempts = [{ n: 1, score: 40 }, { n: 2, score: 60 }];
 const combined = core.originalSummaryHTML(ctx, [], attempts, []);
 assert.match(combined, /1회 성적 · 최초 응시[\s\S]*40점/);
 assert.match(combined, /2회 성적 · 최초 응시[\s\S]*60점/);
 assert.match(combined, /누적 성적 · 1·2회 평균[\s\S]*50점/);
+assert.match(combined, /2회 성적 · 최초 응시[\s\S]*60점[\s\S]*상위 약 0\.3%/);
+assert.match(combined, /누적 성적 · 1·2회 평균[\s\S]*50점[\s\S]*명 기준 약 \d+등/);
+assert.match(combined, /회차별 난이도 차이는 미보정/);
 assert.equal(((combined.match(/<ol class="week-plan">([\s\S]*?)<\/ol>/) || [,''])[1].match(/<li>/g) || []).length, 7);
 assert.match(combined, /타이머는 현재 속도를 살피는 신호/);
 assert.match(html, /안내 시각은 참고 기준이며, 그 번호까지 풀어야 정답인 것은 아닙니다/);

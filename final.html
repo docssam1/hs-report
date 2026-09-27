@@ -176,7 +176,7 @@ tr.cau td{border-bottom:1px solid var(--line);font-size:11.5px;color:var(--ink2)
 .original-report .report-qr-text{display:block;min-width:0;flex:1}
 .original-report .report-qr-card b{display:block;font-size:13px}.original-report .report-qr-card small{display:block;color:#566274;font-size:11px;line-height:1.4}
 .original-summary{color:#182230}.original-summary .report-cover-qr{margin:16px 0 0}.original-summary .original-summary-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.original-summary .original-summary-actions button{min-height:44px;padding:9px 15px;border:1px solid #2456c4;border-radius:6px;background:#2456c4;color:#fff;font:700 14px 'Noto Sans KR',sans-serif;cursor:pointer}.original-summary .original-summary-actions button:focus-visible{outline:3px solid #2456c4;outline-offset:3px}.original-summary .week-plan{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:12px 0 0;padding:0}.original-summary .week-plan li{padding:8px 10px;border:1px solid #d8dee8;font-size:12px;line-height:1.5}.original-summary .week-plan b{color:#2456c4}
-.original-summary .cumulative-title{margin:18px 0 9px;font-size:16px;color:#1f3864}.original-summary .cumulative-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.original-summary .cumulative-grid div{padding:12px;border:1px solid #d8dee8;background:#f5f6f8}.original-summary .cumulative-grid span{display:block;font-size:12px;color:#566274}.original-summary .cumulative-grid b{display:block;margin-top:4px;font-size:20px;color:#182230}
+.original-summary .cumulative-title{margin:18px 0 9px;font-size:16px;color:#1f3864}.original-summary .cumulative-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.original-summary .cumulative-grid div{padding:12px;border:1px solid #d8dee8;background:#f5f6f8}.original-summary .cumulative-grid span{display:block;font-size:12px;color:#566274}.original-summary .cumulative-grid b{display:block;margin-top:4px;font-size:20px;color:#182230}.original-summary .cumulative-grid small{display:block;margin-top:4px;font-size:10px;line-height:1.4;color:#566274}
 .original-resources .resource-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.original-resources .resource-actions button,.original-resources .resource-actions a{display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;border:1px solid #2456c4;border-radius:6px;background:#fff;color:#2456c4;font:700 13px 'Noto Sans KR',sans-serif;text-decoration:none;cursor:pointer}.original-resources .resource-actions button:focus-visible,.original-resources .resource-actions a:focus-visible{outline:3px solid #2456c4;outline-offset:3px}.original-resources details{margin-top:12px}.original-resources summary{cursor:pointer;font-weight:700}.original-resources .video-frame{position:relative;width:100%;aspect-ratio:16/9;margin-top:12px;background:#101828}.original-resources iframe{display:block;width:100%;height:100%;border:0}
 .original-summary .exam-skill-tips{margin:12px 0 0;padding-left:20px;font-size:12px;line-height:1.7;color:#344054}
 .original-summary .docssam-summary{margin:18px 0;padding:12px 14px;border-left:3px solid #2456c4;background:#f5f8ff}.original-summary .docssam-summary h2{margin:0 0 8px;font-size:16px}.original-summary .docssam-summary p{margin:5px 0;font-size:12px;line-height:1.6}
@@ -1579,7 +1579,7 @@ td.weak-cell{white-space:nowrap}
   }
   function originalCutBasisHTML(){
     var B=M.cutBasis||{}, rows=B.rows||[];
-    return '<p class="lead">시그니처 기출 점수를 2024·2025년 초2 성적분포와 비교해 2025년 기준으로 환산한 예상 합격 레벨입니다. 향후 선발 결과는 달라질 수 있습니다.</p>'+
+    return '<p class="lead">시그니처 기출 점수를 2024·2025년 초2 성적분포와 비교해 2025년 기준으로 환산한 예상 합격 레벨입니다. 예상 상위 비율과 석차는 두 해의 참고 응시집단을 합친 추정치이며, 이번 모의고사의 실제 석차나 합격 결과는 아닙니다. 회차별 난이도 차이는 아직 보정하지 않았습니다.</p>'+
       '<table><tr><th>구간</th><th>2025 환산 참고점</th></tr>'+rows.map(function(r){
         return '<tr><td><b>'+esc(r.grade)+'</b></td><td class="c"><b>약 '+Number(r.threshold2025).toFixed(1)+'점</b></td></tr>';
       }).join('')+'</table>'+
@@ -1627,11 +1627,16 @@ td.weak-cell{white-space:nowrap}
     var practiceNote=ctx.wrongList.length?(ready?'검수 완료 유사문항 '+ready+'개 원문이 연결되어 있습니다. 승인되지 않은 오답 유형은 원문으로 복습하세요.':'오답 유사문항 연결은 검수·공개 승인 확인 중입니다. 승인 전 문제는 열리지 않습니다.'):'이번 회차는 오답이 없어 새 유사문항을 자동 배정하지 않습니다.';
     var firstAttempt=attempts.filter(function(a){return a.n===1;})[0],secondAttempt=attempts.filter(function(a){return a.n===2;})[0];
     var cumulative=firstAttempt&&secondAttempt?round1((firstAttempt.score+secondAttempt.score)/2):null;
+    function positionText(score){
+      var p=ctx.cutVerified&&typeof M.estimatedPosition==='function'?M.estimatedPosition(score):null;
+      return p?'상위 '+(p.topPercent<0.1?'0.1% 미만':'약 '+p.topPercent+'%')+' · '+p.cohortSize.toLocaleString('ko-KR')+'명 기준 약 '+p.rank.toLocaleString('ko-KR')+'등':'';
+    }
+    var currentPosition=positionText(ctx.score);
     var combined=ctx.roundNum===2?'<h3 class="cumulative-title">회차별 성적과 누적 성적</h3><div class="cumulative-grid">'+
-      '<div><span>1회 성적 · 최초 응시</span><b>'+(firstAttempt?firstAttempt.score+'점':'기록 없음')+'</b></div>'+
-      '<div><span>2회 성적 · 최초 응시</span><b>'+(secondAttempt?secondAttempt.score+'점':'기록 없음')+'</b></div>'+
-      '<div><span>누적 성적 · 1·2회 평균</span><b>'+(cumulative!==null?cumulative+'점':'산출 대기')+'</b></div></div>'+
-      '<p class="lead" style="margin-top:9px">누적 성적은 두 회차의 최초 응시 점수만으로 계산하며, 연습 재응시 점수는 넣지 않습니다.'+(cumulative!==null?(repeated.length?' 두 회차 반복 오답 소영역: '+esc(repeated.map(function(x){return x.k;}).join(', '))+'.':' 두 회차 반복 오답 소영역은 확인되지 않았습니다.'):' 두 회차를 모두 응시해야 누적 성적을 표시합니다.')+'</p>':'';
+      '<div><span>1회 성적 · 최초 응시</span><b>'+(firstAttempt?firstAttempt.score+'점':'기록 없음')+'</b>'+(firstAttempt?'<small>'+positionText(firstAttempt.score)+'</small>':'')+'</div>'+
+      '<div><span>2회 성적 · 최초 응시</span><b>'+(secondAttempt?secondAttempt.score+'점':'기록 없음')+'</b>'+(secondAttempt?'<small>'+positionText(secondAttempt.score)+'</small>':'')+'</div>'+
+      '<div><span>누적 성적 · 1·2회 평균</span><b>'+(cumulative!==null?cumulative+'점':'산출 대기')+'</b>'+(cumulative!==null?'<small>'+positionText(cumulative)+'</small>':'')+'</div></div>'+
+      '<p class="lead" style="margin-top:9px">누적 점수는 두 회차의 최초 성적 평균이며 재응시는 제외합니다. 예상 석차는 2개년 참고 분포 기준으로, 회차별 난이도 차이는 미보정입니다.'+(cumulative!==null?(repeated.length?' 반복 오답 소영역: '+esc(repeated.map(function(x){return x.k;}).join(', '))+'.':' 반복 오답 소영역은 확인되지 않았습니다.'):' 두 회차를 모두 응시해야 누적 성적을 표시합니다.')+'</p>':'';
     var days=ctx.wrongList.length&&ready===ctx.wrongList.length?[
       '1일 · 원답과 조건·답 형식 확인',
       '2일 · '+first+' 기본 유사문항',
@@ -1661,12 +1666,13 @@ td.weak-cell{white-space:nowrap}
     var answerBreakdown=validSignatureStates(ctx.answerStates,false)?signatureStateSummary(ctx.answerStates):null;
     var answerBreakdownHTML=answerBreakdown?'<p class="lead" style="margin-top:10px"><b>답안 상태</b> · 맞음 '+answerBreakdown.correct+'개 · 틀림 '+answerBreakdown.wrong+'개 · 미응답 '+answerBreakdown.blank+'개. 미응답은 채점상 미정답에 포함하지만, 복습할 때는 틀린 답과 구분합니다.</p>':'<p class="lead" style="margin-top:10px">기존 O/X 기록에는 틀린 답과 미응답의 구분이 저장되지 않았습니다. 아래 오답 수에는 미응답이 포함될 수 있으며, 시험지로 확인하기 전에는 추정하지 않습니다.</p>';
     return '<section class="original-summary" id="originalSummary"><h2>진단 요약</h2><p class="lead">'+esc(ctx.name)+' 학생 · 시그니처 실전 '+ctx.roundNum+'회 · '+attemptLabel+'입니다.</p>'+
-      '<table><tr><th>점수</th><th>맞은 문제</th><th>미정답</th><th>2025 환산 예상 레벨</th></tr><tr><td>'+ctx.score+'점</td><td>'+ctx.ncorr+'개</td><td>'+ctx.wrong+'개</td><td>'+esc(ctx.grade)+'</td></tr></table>'+answerBreakdownHTML+
+      '<table><tr><th>점수</th><th>맞은 문제</th><th>미정답</th><th>2025 환산 예상 레벨</th></tr><tr><td>'+ctx.score+'점</td><td>'+ctx.ncorr+'개</td><td>'+ctx.wrong+'개</td><td>'+esc(ctx.grade)+'</td></tr></table>'+
+      (currentPosition&&ctx.roundNum===1?'<p class="lead" style="margin-top:9px"><b>예상 위치</b> · '+currentPosition+'. 실제 이번 모의고사 석차가 아닌 참고 추정치입니다.</p>':'')+answerBreakdownHTML+
       (first?'<p style="margin-top:12px;font-size:13px"><b>이번 주 시작 후보</b> · '+esc(first)+(focus[1]?' / '+esc(second):'')+'</p>':'')+combined+
       '<div class="original-summary-actions no-print"><button type="button" data-original-summary-print>요약 진단지만 인쇄 / PDF 저장</button></div>'+reportQrHTML(ctx)+
       '<div data-docssam-summary>'+(window.GFIELD_FINAL_REPORT_STATE&&window.GFIELD_FINAL_REPORT_STATE.summary?window.GFIELD_FINAL_REPORT_STATE.summary():'')+'</div>'+
-      '<h2 style="margin-top:20px">일주일 복습 안내</h2><p class="lead">하루 15~25분은 참고 범위입니다. 집중 상태에 따라 조절하고, 전체 80분 재응시와 구분하세요. '+esc(practiceNote)+'</p><ol class="week-plan">'+days.map(function(day){var split=day.split(' · ');return '<li><b>'+esc(split[0])+'</b> · '+esc(split.slice(1).join(' · '))+'</li>';}).join('')+'</ol>'+
-      '<h2 style="margin-top:20px">시험장에서 써 볼 방법</h2><ul class="exam-skill-tips"><li>시작이 막히면 ‘구할 것’과 ‘주어진 것’을 한 줄씩 적고 첫 식이나 그림부터 만듭니다.</li><li>막힌 문제는 표시하고 다음 문제로 간 뒤, 끝에 다시 돌아옵니다.</li><li>풀이식과 최종 답을 구분해 적고, 문제에서 요구한 답의 형식·단위를 확인합니다.</li><li>타이머는 현재 속도를 살피는 신호로만 씁니다. 목표 시각에 못 맞췄다고 서두르거나 풀이를 포기하지 않습니다.</li></ul><p class="lead">위 방법은 공통 제안입니다. 아이에게 맞는 적용 순서와 시간 기준은 독샘의 관찰 코멘트로 정합니다.</p></section>';
+      '<h2 style="margin-top:20px">일주일 복습 안내</h2><p class="lead">하루 15~25분은 참고입니다. 집중 상태에 맞춰 조절하고 80분 재응시와 구분하세요. '+esc(practiceNote)+'</p><ol class="week-plan">'+days.map(function(day){var split=day.split(' · ');return '<li><b>'+esc(split[0])+'</b> · '+esc(split.slice(1).join(' · '))+'</li>';}).join('')+'</ol>'+
+      '<h2 style="margin-top:20px">시험장에서 써 볼 방법</h2><ul class="exam-skill-tips"><li>시작이 막히면 ‘구할 것’과 ‘주어진 것’을 한 줄씩 적고 첫 식이나 그림부터 만듭니다.</li><li>막힌 문제는 표시하고 다음 문제로 간 뒤, 끝에 다시 돌아옵니다.</li><li>풀이식과 최종 답을 구분해 적고, 문제에서 요구한 답의 형식·단위를 확인합니다.</li><li>타이머는 현재 속도를 살피는 신호로만 씁니다. 목표 시각에 못 맞췄다고 서두르거나 풀이를 포기하지 않습니다.</li></ul><p class="lead">적용 순서와 시간 기준은 독샘의 관찰 코멘트를 따릅니다.</p></section>';
   }
   function originalResourcesHTML(ctx){
     var video=String(ctx.R.video||''),match=video.match(/^https:\/\/www\.youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})$/);
