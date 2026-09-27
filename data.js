@@ -252,7 +252,7 @@ window.GFIELD_DATA = {
     }
   ],
   "content": {
-   "may-w34": {
+    "may-w34": {
       "notice": "[[hl:[[red:GIFTED MATH 3 V1-1]]]]\n \n[[hlb: CH1 기출다지기, 사고력 키우기 ]]\n   학습영상 https://youtu.be/ASN1UYcip0c    \n - 기출 다지기\n   황소 시험에 익숙해지기 위하여 몇 년간의 실제 기출문제를 가지고 학습하였습니다.\n   개구리 문제 섬을 색칠하여 푼 학생^^ 했는데 아무도 ㅜㅜ 없었습니다.\n\n   - 사고력 키우기\n   다양한 풀이와 지문이해를 위한 멘사 퍼즐형 문제입니다. 쉽지만 단순히 선행이 많이되었다고 식으로\n   풀기보다는 조건을 이해하고 그림으로 그릴수 있도록 하였습니다.\n\n   [[hlb:CH2 개념 덧셈과 밸셈식에서 숨겨진 수 알아보기]]\n    학습영상  https://youtu.be/a1uMuvgpl_4\n\n   - 덧셈과 밸셈식에서 숨겨진 수 알아보기\n     복면산과 도형이 나타낸 수 개념 유형입니다. \n\n[[hlb:CH3 도형의 개수]]\n   학습영상 https://youtu.be/bsQUySr0j4s\n",
       "homework": "",
       "textbooks": [
@@ -264,7 +264,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "jun-w12": {
+    "jun-w12": {
       "notice": "[[hlp:GIFTED MATH 3 V1-2(1)]]\n   * p4의 4번째 문제같은 조건에 알맞은 수는 특별한 스킬이 필요하지 않습니다.\n    대부분의 문제가 첫 글자,수를 쓰는 것 부터 시작하는데 오래 걸릴 것 같으면 방법을 \n   알고도 시도하지 않는 것이 문제입니다. \n\n- 기출 다지기 \n - 사고력 키우기 \n   학습영상 https://youtu.be/3KyijX8_neQ\n    \n  \n황소대비 개념3 v1-2(2)\n학습영상  https://youtu.be/oS_QW3smwbM\n- 마방진 및 다양한 방진 해결\n- 논리추리(이중 조건), 줄세우기\n- 조건에 맞는 수 , 수의 성질\n\nGIFTED MATH V1-2 (2) 실전유형\n 학습영상  https://youtu.be/c76FzeLSPRg\n\nGIFTED MATH V 1-3 개념 및 유제\n학습영상    https://youtu.be/j93kA9PXIA4",
       "homework": "",
       "textbooks": [
@@ -282,7 +282,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "jun-w3": {
+    "jun-w3": {
       "notice": "[[hlp: THINKING BASIC 1]]\n      CH1 문제푸는 방법 찾기(1) 개념\n  학습 영상) https://youtu.be/F3RHYlGtcp4\n\n    - 간격과 둘레\n    - 마방진\n    - 달력\n    - 합과 차의 배수\n\n------------------------------------------------\n실수 많이 한 유형\n- 도형의 간격에서 '꼭짓점에 반드시 나무를 심는다는' 말은 신경쓰지 말기\n     그냥 둘레 나누기 간격 = 나무\n\n- 4X4 , 5X5 마방진에서 한줄의 합\n     모든 수의 합 나누기 줄의 수 (가우스 덧셈 활용)\n\n- 합과 차의 배수\n    가장 작은 수를 O 로 놓기\n    -2와 5의 차이는 7\n    연필2=볼펜3 이하면 연필은 OOO  볼펜은 OO\n---------------------------------------------------------------\n[[hlp:  필수유형]]\n    학습영상) https://youtu.be/zNkGD57AcNs\n\n[[red:문제푸는 방법 찾기(1)  DT]]\n학습영상) https://youtu.be/CaFhlPFvDXw\n",
       "homework": "",
       "textbooks": [
@@ -298,7 +298,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "jun-w4": {
+    "jun-w4": {
       "notice": "[[hlp: THINKING BASIC 2]]\n   CH1 문제푸는 방법 찾기(2) 개념\n [[hlb:- 개념유형 1 [우기기]]]\n학습영상) https://youtu.be/GMZdS5LUN8c <자세한 설명 버전>\n\n  [[hlb:- 개념유형 3,4 [차를 이용한 계산,비,연비,바꾸어 넣어 해결하기]]]\n학습영상) https://youtu.be/qFvUchnAW48\n\n   [[hlb:- 개념유형 5 [거리,속력,시간]]]\n  학습영상) https://youtu.be/xbo9h8rBIW0\n\n   [[hlb:- 필수유형 ]]]\nhttps://youtu.be/hDPKx7cQtIw\n\n[[hlp:문제푸는 방법 찾기(2) DT]]\n   https://youtu.be/vNIxPPswm4c",
       "homework": "",
       "textbooks": [
@@ -316,7 +316,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "jul-w1": {
+    "jul-w1": {
       "notice": "[[hlp: THINKING BASIC 3]]\n      [[green:CH3  규칙찾아 해결하기]]\n  학습 영상)https://youtu.be/T7yjdayjKxA \n\n      [[green:  필수 유형]]\n    학습영상)  https://youtu.be/PYHnn1x2dlM?si=_m1jMfoef6B_Pj-P&t=844",
       "homework": "",
       "textbooks": [
@@ -326,7 +326,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "jul-w2": {
+    "jul-w2": {
       "notice": "[[hlp:문제푸는 방법 찾기(2) DT]]\n   학습영상) https://youtu.be/vNIxPPswm4c\n\n지금까지 공부한  THINKING BASIC 3는 왕수학 올림피아드3, 왕수학 응용 4의 황소 관련 중요 개념이었습니다.\n금주부터는 실전 훈련으로 Thinking Core — 생각하는 황소 대비 심화 개념을 진행합니다.\n이 교재는 모의고사 전 진행하는 핵심 심화 개념 교재로 개념 학습 후 관련 유형에 대한 SEMI 테스트로 시험에 적응 훈련을 진행합니다.\n\nTHINKING CORE CH1 - NUMBERS(1)\n학습영상) https://youtu.be/r6NRdZudWks\n• 배수 판정법\n• 소인수분해의 이용\n\n",
       "homework": "[[hlp:문제푸는 방법 찾기(2) DT]] 다시 풀기\n   https://youtu.be/vNIxPPswm4c\n\n[[hlp:황소 대비 모의고사 중급 1회]]\n학습영상) https://youtu.be/_DDz_JTccso\n앞으로 있을 실전 모의고사에 익숙해지는 훈련입니다. 조건을 조금 줄인 시험지이며, 너무 심화 문제까지 완벽히 이해할 필요는 없습니다(100점이 목표가 아닙니다).\n단, 반드시 시험을 본 후 영상을 보고 이해하고, 여러 번 봐도 이해되지 않는(실수가 아닌) 유형을 질문하도록 해주세요.\n수업 시간에 중요 유형 설명 후 유사 문제로 테스트를 진행합니다.\n\n선택)  THINKING CORE CH1 배운 부분 공부하기",
       "textbooks": [
@@ -358,7 +358,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "jul-w3": {
+    "jul-w3": {
       "notice": "과제로 해온 중급 모의고사를 중요 문제와 질문을 천천히 다시 한번 설명한 후 유사문제 테스트를 진행하고 있습니다. 질문 시에는 최대한 아이들에 맞춰 다양한 풀이로 이해 시키고\n있습니다. 가장 중요한 것은 칠판에 집중하며 같이 풀이를 하며 내가 알고있는지 모르는지 판단하는 연습인 것 같습니다. 개념이 부족하기 보다는 지금까지 그냥 알고 있다 생각하고 넘어간 문제들이 많았던 것 같습니다. 지금까지 배웠던 사고력 내용을 이와 같이 정리 한다면 파이널 시에는 조금 더 개녀이 정리 될고 시험을 볼수 있는 힘도 생길겁니다.\n\n[[hlb:1. 초등 선발대비 중급 모의고사 1회 중요문제 및 질문 풀이]]\n      학습영상)https://youtu.be/fSDUh7mphZE\n\n    [[hl:유형별 영상]]\n\n      #1 직사각형에서 특정 도형을 포함하거나 포함하지 않는 도형의 개수\n               https://youtu.be/fSDUh7mphZE?si=jpLgBBUlG-189Lsw&t=61\n      #5  배수 판정법을 이용한 성질을 이용한 수의 개수 (기출문제)\n                 https://youtu.be/fSDUh7mphZE?si=ZPRYsNhyQKMm-WLU&t=125\n    #6 고장난 시계\n           https://youtu.be/fSDUh7mphZE?si=r-l4p42a7Lxb14y1&t=230\n     #7 달력에 관한 문제\n          https://youtu.be/fSDUh7mphZE?si=SzyH2wQo6eK3thbj&t=394\n    #11 몫과 나머지의 성질(검산식으로 쓰기) [[red: [기출문제]]]\n           https://youtu.be/fSDUh7mphZE?si=wofSbysRFgjH4OgQ&t=661\n    #13 연산에서의 짝수와 홀수의 성질[[red: [기출문제]]]\n           https://youtu.be/fSDUh7mphZE?si=TITUYF4eYJo4i6nP&t=763\n    #15 묶음 수열(군수열) \n          https://youtu.be/fSDUh7mphZE?si=c2lmwvSavaSod4B7&t=885\n   #20 반복마디(주기)가 있는 수 배열표 [[red: [기출문제]]]\n        https://youtu.be/fSDUh7mphZE?si=RMA-r75hcz4lIBZo&t=1117\n #21 덧셈,뺄셈 넣어 올바른 식 만들기\n       https://youtu.be/fSDUh7mphZE?si=Sz9d6TPUSw5N9G4u&t=1207\n#23 거울에 비친 디지털 수 [[red: [기출문제]]]\n      https://youtu.be/fSDUh7mphZE?si=B6SOPLckAhcgQIUV&t=1426\n#29 재치있게 계산하기  [[red: [기출문제]]]\n    https://youtu.be/fSDUh7mphZE?si=YfNxVa02UsIQEI0X&t=1542\n  \n  \n[[hlb:2. 초등 선발대비 중급 모의고사 1회 리뷰 테스트]]\n\n     학습영상 ) https://youtu.be/C13i84JC520        \n\n\n[[hlb:THINKING CORE CH1 - NUMBERS(2)]]\n학습영상)  https://youtu.be/DXyQQgBKtSg?si=BAxl8OwLV08-qlNp&t=1161\n    • 소인수분해를 이용한 곱의 성질 \n             -> 소인수분해는 최후의 수단으로 사용하자는 겁니다. 이 유형의 수의 감을 높이는 유형입니다.\n   \n    * 재치있게 계산하기           \n                ",
       "homework": "초등과정 대비 실전 모의고사 2회 중급 풀고 답 입력하기\n",
       "textbooks": [
@@ -398,7 +398,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "jul-w4": {
+    "jul-w4": {
       "notice": "7월 4주차 학습내용\n[[hlg:추천 학습순서]]\n1. 초등 선발대비 중급 모의고사  중요문제 및 질문 풀이 영상 보기\n2. 리뷰 테스트 다시 풀어보기\n3. 리뷰 테스트 영상보며 채점하며 복습\n4. 틀린 유형 --약점 유형-- 으로 개념 학습\n5. 초등과정 대비 실전 모의고사  중급 다음과제 풀기\n6. 초등과정 대비 실전 모의고사 중급 영상보며 체점 및 학습 \n1. [[hl:초등 선발대비 중급 모의고사 2회 중요문제 및 질문 풀이]]\nhttps://youtu.be/CIxkEfGMVQw\n    #3 쌓기나무 구멍 뚷기\n              바탕 그림을 그리는 귀찮음을 이겨내고  좌표만  알면 쉽게 풉니다.\n              https://youtu.be/CIxkEfGMVQw?si=iV5vB4yGxrEW3zQJ&t=22\n     #4 소인수분해를 이용한 두 수 \n               https://youtu.be/CIxkEfGMVQw?si=XGkTDqn96t8mVZhD&t=194\n    #5 정사각형이 아닌 직사각형의 개수\n               https://youtu.be/CIxkEfGMVQw?si=9pWS3EhKa1c9h5lx&t=277\n    #6  같은 수의 곱의 일의 자리\n              https://youtu.be/CIxkEfGMVQw?si=09PgnGLweMTIp3QY&t=451\n    #7 선으로 나뉜 교점과 영역의 개수\n                https://youtu.be/CIxkEfGMVQw?si=HCcxFTmveW2t9vVC&t=586\n    #10 겉면을 제외한 쌓기나무의 개수\n               https://youtu.be/CIxkEfGMVQw?si=3UZRo6KAd698KLhX&t=676\n    # 13 만들수 있는 동전의 개수\n                https://youtu.be/CIxkEfGMVQw?si=yjAfcamqk7FMnbYn&t=721\n    #14 시침과 분침이 직각의 횟수\n             https://youtu.be/CIxkEfGMVQw?si=Yyg1YHtBjqtFgzHn&t=844\n    #16 곱의 최대 최소\n            https://youtu.be/CIxkEfGMVQw?si=cR_vshVUxxR1aqs1&t=929\n    #18 수와 숫자의 개수의 활용\n             https://youtu.be/CIxkEfGMVQw?si=He6vzg13iIZM4XYD&t=1037\n    #20 수 배열표에서의 규칙\n             https://youtu.be/CIxkEfGMVQw?si=GD3LjQYJnXJ62heY&t=1391\n    #30 일방통행에서의 최단거리\n             https://youtu.be/CIxkEfGMVQw?si=TKxeEBnXI2fnA3-W&t=1955\n\n2.  [[hl:초등과정 대비 실전 모의고사 2회 중급 리뷰 테스트]]\n     https://youtu.be/Ax0R3oKGz50\n",
       "homework": "* 복습하기\n* 초등과정 대비 실전 모의고사 3회 중급\n     https://youtu.be/U5Kk7reqz4Q",
       "textbooks": [
@@ -430,7 +430,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "jul-w5": {
+    "jul-w5": {
       "notice": "[[red:[[red:-]]-----------------------------------------------------------------------------------]]\n[[hlp:저와의 약속 어머님과 같이 90일만 집중하고 수학 공부하기 잘 지킬수 있을까요?]]\n그래도 이제 서서히 적응하고 있고 실수에 안 속으려 하는 모습이 보입니다. \n우기기 문제를 풀 떄 표로도 못 풀었는데 1,2,3,4 쓰며 푸는 모습이나 요일 문제를 이제는 해결한 모습, 틀렸을 떄 너무 아쉬워 하는 모습을\n보면 너무 기특하네요.\n\n이해가 안된다면 영상을 보고 따라쓰기를 정말 여러번 해 봐주세요.\n우선 황소가 목표라면 지금 기간에는 잠시 수학 선행 쉬어도 큰 문제없습니다. 단, 심화라면 꾸준히 해도 됩니다.\n전 점프 왕수학을 추천해요^^ 황소 대비하는 모든 어머님들 파이팅입니다. 11월 분명히 좋은 결과과 있을겁니다.\n[[red:-------------------------------------------------------------------------------------------------------]]\n[[hl:[아카이브] 상단을 보면 시험 타이머와 제 톡으로 바로 연결되로록 유형 요청 버튼을 만들었으니 언제는 사진만 찍어 부족한 유형 보내주세요.]]\n\n\n[[hl:초등 선발대비 중급 모의고사 3회 중요문제 및 질문 풀이]]\nhttps://youtu.be/bbb4N1DUWcs\n * 약점유형\n    ⭐ - 나머지가 가장 큰 경우의 검산식 \n       풀이에 한자리 수를 곱하여 세 자리가 되는 경우가 빠져 있어 수정하였습니다.\n       https://youtu.be/bbb4N1DUWcs?si=pLX9cegiyRq7R7Iz&t=346\n   ⭐  - 시침과 분침이 직각인 경우의 횟수\n      https://youtu.be/bbb4N1DUWcs?si=0AB5tvDCcl0VMWJn&t=586\n    ⭐ - 변형된 크고 작은 입체 도형의 개수\n       https://youtu.be/bbb4N1DUWcs?si=PkguwaQcozpyW85l&t=1246    - 표로 나타낸 길 수직선으로 구하기(성대경시 단골 문제)\n        https://youtu.be/bbb4N1DUWcs?si=Fi0IRGHjoGHFNiJj&t=772\n  ⭐  - 요일 \n       https://youtu.be/bbb4N1DUWcs?si=gtjdEWz-TPJidnxL&t=832\n   - 숫자 카드로 만들수 있는 세 자리수의 합 ( 1031 초급 문제인데 계속 틀림)\n        리뷰에서의 같은 숫자카드를 여러번 사용하는 경우와 한 번씩 사용하는 경우도 나누어 봐주세요.\n            https://youtu.be/bbb4N1DUWcs?si=H8VnlInGetmGdAYD&t=972\n   ⭐ - 나이계산\n      https://youtu.be/bbb4N1DUWcs?si=-p6Au20nJJDqAoZu&t=1400\n\n[[hlp:초등과정 대비 실전 모의고사 3회 중급 리뷰]]\nhttps://youtu.be/wG_S51SQOLE\n\n\n[[hl:Thinking Core NUMBERS(1) 수와 숫자의 개수]]\nhttps://youtu.be/DXyQQgBKtSg?si=CLzjzRMSRy0vqmWJ&t=1843\n\n⭐ Thinking Core 1 NUMBERS(1) 개념  \nhttps://youtu.be/r6NRdZudWks?si=ubhMpCmkPWF__9lQ\n              \n[[green:이번 주 노트 정리를 하며 풀어 보기를 권해 드립니다.]]\n              - 합이 일정한 경우의 수 \n              - 배수 판정법\n              - 재치 있게 계산하기\n               - 수와 숫자의 개수\n\n",
       "homework": "Thinking Core 1 NUMBERS(1) semi Test\n     검은색 책 1단원 뒤에 있습니다. \n     https://youtu.be/rJKaRm6utcE\n\n[[green:이번주는 강제적인 중급 모의고사 과제는 없습니다.  2주 동안은 thinking core 개념에 집중할 예정입니다.\n하지만 선택 과제로 4,5,6회를 드리고 리뷰 테스트를 마지막에 진행합니다/]]\n\n    [[hlg:초등과정 대비 실전 모의고사 4회 중급 영상   ]]\n    https://youtu.be/cBZ7iS4keIo\n  \n       [[hlg:초등과정 대비 실전 모의고사 4회 중급 리뷰 영상   ]]\n      https://youtu.be/4-N-oN_fSe8\n\n\n  자료실 아래 어플리케이션 메뉴 쪽을 보면 프리미어 하이퍼 포커스라는 버튼이 있습니다. 이건 프리미어 선발 시험의 주요 문제를 정리 해 놓은 것입니다.\n  황소 재원생은 개인 전화번호 만으로 무료로 누적 관리 하도록 만들어 놓았으니 사고력 기억을 살리는 의미로 공부해주세요/.",
       "textbooks": [
@@ -467,7 +467,7 @@ window.GFIELD_DATA = {
       "homework": "",
       "textbooks": []
     },
-   "aug-w1": {
+    "aug-w1": {
       "notice": "[[green:초등과정 대비 실전 모의고사 중급 4회 질문 및 중요문항]]\n   https://youtu.be/AumfJZ3jH8c\n\n#1 숫카카드로 만든 수의 합\n   https://youtu.be/AumfJZ3jH8c?si=Bltlq6DtwJR_ZWAU&t=40\n#2 도형이 포험된 크고 작은 사각형의 개수\n  https://youtu.be/AumfJZ3jH8c?si=-igugUPDNAEf6dwE&t=360\n#14 등비수열의 합\n https://youtu.be/AumfJZ3jH8c?si=BJDTtrEzto82e26S&t=1353\n#17 도형 채우기\nhttps://youtu.be/AumfJZ3jH8c?si=Vlp5aM2YbfbNkAZN&t=1641\n#24 네 변위의 점에서 선택하여 만든 삼각형의 개수\nhttps://youtu.be/AumfJZ3jH8c?si=Q07WUgOrd1z-PR1-&t=2087\n#25 블록으로 수 만기\nhttps://youtu.be/AumfJZ3jH8c?si=GCmvHDqUwcAOXUgD&t=2163\n#27 물 채우기 (구멍 뚫린 배수구)\nhttps://youtu.be/AumfJZ3jH8c?si=x7NJyHZGtV_hwETB&t=2476\n\n[[green:THINKING CORE CH2  Algebra(1) 나이,속력]]\nhttps://youtu.be/TxEkE7zNu8I\n\n[[green:속력 조금 더 친절 한 설명]]\nhttps://youtu.be/xbo9h8rBIW0?si=6GH2O24-Xx4so2k0&t=170\n\n* 방정식만으로 해결이 안되는 경우들이 많습니다.\n* 반드시 그림으로 이해한 후 풀이 해야 합니다.\n",
       "homework": "[[red:초등과정 대비 실전 모의고사 중급 4회 리뷰]]\n   https://youtu.be/4-N-oN_fSe8\n\n[[red:초등과정 대비 실전 모의고사  SEMI 모의고사 1회(검은색 1단원 뒤)]]\n 지난주 링크가 잘못 되어 있었습니다.\nhttps://youtu.be/rJKaRm6utcE\n",
       "textbooks": [
@@ -479,7 +479,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "aug-w2": {
+    "aug-w2": {
       "notice": "교재 안의 문제 외 문제를 바꿔서 계속 질문하며 수행률을 높이고 있습니다.\n함정에 빠지지 않도록 속을 수 있는 조건을 바꿔가며 진행했는데 역시....  하지만 이제 한번 더 생각하는 버릇이 생긴것 같습니다.\n연휴로 인해 결석 한 친구들은 꼭 영상을 보고 부족한 유형들은 클리닉 잡아주세요. \n\nTHINKING CORE CH2  Algebra(1) 시계와 각·수배열표\n     - [[red:시계와 각]] \n      복습 영상 ) https://youtu.be/RJVDpfkWQUI?si=0USB6HLXBb09iWz8&t=2618\n       시계 파트 중 각에 대한 부분은 4학년 편입 시에만 나오고 이제 출제가 되지 않습니다. \n    \n     하지만 \n      [[blue:겹치는 시각의 수]]\n      [[blue:고장난 시계]]는 2년에 한번 꼴로 꾸준히 출제 되고 있으니 꼭 복습해주세요.\n\n     - [[red:수 배열표]]\n       복습영상 ) https://youtu.be/jYu8jXkawrA?si=syi-QdVQpqLB3Guf&t=1176\n      분명히 어디에선가 들어봤지만 수열의 종류부터 바로 대답 못 하는 경우도 많았습니다.\n        - 여러 가지 수열의 종류 (자료실에 수열에 관한 문제들 업로드 해 놓겠습니다.\n        -  파스칼의 삼각형에서의 규칙\n        -  수 배열표에서의 행과 열 찾기\n\n[[red:초등과정 대비 실전 모의고사 중급 4회 질문 및 중요문항]]\n    수업 시간에 진행하지 않았지만 아래 내용도 체크 해주세요. 4회 중 많이 질문했던 유형입니다.\n    복습영상) https://youtu.be/AumfJZ3jH8c\n       \n    #1 숫자카드로 만든 수의 합\n           https://youtu.be/AumfJZ3jH8c?si=8GLvT3i-0n-9MwVm&t=32\n\n   #3 특정 도형이 포함된 도형의 개수  \n           https://youtu.be/AumfJZ3jH8c?si=8rjFMpPQ50i8Y2z5&t=360\n\n    #14 등비수열의 합\n           https://youtu.be/AumfJZ3jH8c?si=FobbpEhhVQvXlSdC&t=1357   \n\n   #22 곱한 값에 이어진 0의 개수\n            https://youtu.be/AumfJZ3jH8c?si=fLCewdkQsqzCQ_bI&t=1955\n\n    #27 일에 관한 문제\n          https://youtu.be/AumfJZ3jH8c?si=z8Dq6Xi4PMbNSP9M&t=2483 \n ",
       "homework": " ⭐ THINKING CORE CH2 semi 2회  모의고사\n         학습영상 1번 - 13번  https://youtu.be/W6GnRtzez24\n                    14,15,16번 https://youtu.be/AT5xxcA0DSU\n\n⭐ 선택과제  \n      1.    [[hlb:초등 선발 모의고사 중급 5회]]  \n      2.   [[hlb:초등 선발 모의고사 중급 4회 리뷰]] ",
       "textbooks": [
@@ -499,7 +499,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "aug-w3": {
+    "aug-w3": {
       "notice": "HS BASIC 3 numbers(2)\n\n1. 최단거리 \n   개념영상) https://youtu.be/9BRRNjSTxJc\n     팩토리얼(!) 개념도 설명하였지만 공식과 개념이 중요한 것은 아닙니다. \n\n   복습영상) https://youtu.be/mrbiiMvjZ38?si=Op-XfjJ-ezkn4ZxQ&t=63\n  이미 익숙한 단원인데도 연산 실수가 많습니다. \n  단순한 최단거리가 아니라 1,1,1,2,2,3을 배열하는 법, 주어진 칸에 색칠 하는 법 ( 조순열) 까지 연결하여\n  설명하였습니다. \n\n2. 약속\n    복습영상) https://youtu.be/Mz2SwhSUqcM\n     여러 형태의 변형 문제로 출제가 되는 단원입니다.\n\n3. 수배열표\n   지난 시간 배웠는데 아직도 실수가 많아 다시 한번 점검 하였습니다.\n",
       "homework": "초등과정 semi 모의고사 3회\n     https://youtu.be/doFnLZ2P0jc\n\n선택\n초등과정 대비 실전 모의고사 6회 중급\n   https://youtu.be/43D594kTXP4",
       "textbooks": [
@@ -515,8 +515,8 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "sep-w1": {
-      "notice": "절대 결과를 보고 꾸중하지는 마세요. 지금부터라도 집중하여 제대로 공부하면 됩니다. 오늘 진행한 문제 중 80% 이상은 어디서든 다 배웠던 내용입니다.\n문제 살펴보라고 하는 5분동안 뒷장을 넘기지 못하는 친구들도 있었고 글 떄문에 쉬운 문제도 풀지 않고 넘어가는 학생들도 있었습니다. \n[[red:그리고 반드시 아이의 시험지를 살펴봐 주세요. 그리고 단원 분류표를 보고 어느 개념과 연결되었는지 봐주세요.\n부모님의 노력이 아이의 합격의 80% 이상의 좌우합니다.]]\n\n하지만 공식 암기는 되어 있지만 개념 심화가 되어 있지 않았다면, 설명은 이해하지만 문제를 못 읽고 이해하지 못하는 경우가 많습니다. 이제부터라도 틀린 답만 체크하지 말고 제 영상을 5번 이상 필기하며 보면서 유형과 개념을 익혀 주세요.\n\n오늘 시험을 보는 것을 살펴보니 유형은 인지되어 있으나 풀이 과정 70% 이후에서 해결을 못하거나 실수를 하는 경우, 시험에 대한 연습이 안 되는 경우가 많았습니다. 그러다 보니 마무리가 안 되어 점수 하락이 되었을 것입니다.\n\n특히 \n1번 기준도 세우지 않고 넘어간 학생\n4번 두 수의 곱을 두자리 수만 생각한 학생\n7번 성대경시 대비를 했어도 수직선을 그리지 않은 학생\n8번 우기기를 배웠어도 우기기인 줄 모르는 학생\n10번 아무런 수 표시가 안되어 있는 학생\n12번  식에 이름이 안 써있는 학생\n18번 보기를 두번 접으라는 것을 놓친 학생\n\n[[red:모두 개념을 모르기보다 시험을 대하는 진지함의 문제입니다. 결국 연습을 많이 해야겠죠.  한번 믿어보고 이제 개념은 놓아 주시고 복습 할 시간이 없다면 이곳 저곳 다니지 말아주세요.\n가장 오랜 시간 이런 대비를 한 강사의 조언입니다. 이 대비는 영어가 아니라 學만 늘린다고 실력이 늘지 않습니다. 왜 틀렸는지 필기하며 스스로 꺠우쳐야 합니다.]]\n이번 주 모의고사부터는 성적 취합 후 이전 연도 합격자와 비교하여 누적 성적표를 제공해 드립니다. 월요일 쯤 이 창에 아이 진단지가 공개됩니다.\n\n당부드리고 싶은 말은, 황소 결과를 떠나 어린 나이에 배웠던 사고력 수학을 전체적으로 점검하고 기억에 오래 남기를 희망하신다면 답보다는 풀이 과정에 맞춰 학습하시기를 추천드리며, 부족한 유형은 언제든 제 톡으로 사진 찍어 보내주세요.\n\n다음 주 시험은 오늘 진행한 모의고사를 꼼꼼히 복습한다면 더 나은 성적이 될 수 있을 것입니다. 마지막 시험 때 얼마나 성장할지 벌써부터 기대가 되네요. 파이팅!\n\n[[hl:초등과정 대비 파이널 모의고사 1회 풀이 영상]]\nhttps://youtu.be/bA-ddeRW-mM",
+    "sep-w1": {
+      "notice": "절대 결과를 보고 꾸중하지는 마세요. 지금부터라도 집중하여 제대로 공부하면 됩니다. 오늘 진행한 문제 중 80% 이상은 어디서든 다 배웠던 내용입니다.\n문제 살펴보라고 하는 5분동안 뒷장을 넘기지 못하는 친구들도 있었고 글 떄문에 쉬운 문제도 풀지 않고 넘어가는 학생들도 있었습니다. \n[[red:그리고 반드시 아이의 시험지를 살펴봐 주세요. 그리고 단원 분류표를 보고 어느 개념과 연결되었는지 봐주세요.\n부모님의 노력이 아이의 합격의 80% 이상의 좌우합니다.]]\n\n하지만 공식 암기는 되어 있지만 개념 심화가 되어 있지 않았다면, 설명은 이해하지만 문제를 못 읽고 이해하지 못하는 경우가 많습니다. 이제부터라도 틀린 답만 체크하지 말고 제 영상을 5번 이상 필기하며 보면서 유형과 개념을 익혀 주세요.\n\n오늘 시험을 보는 것을 살펴보니 유형은 인지되어 있으나 풀이 과정 70% 이후에서 해결을 못하거나 실수를 하는 경우, 시험에 대한 연습이 안 되는 경우가 많았습니다. 그러다 보니 마무리가 안 되어 점수 하락이 되었을 것입니다.\n\n특히 \n1번 기준도 세우지 않고 넘어간 학생\n4번 두 수의 곱을 두자리 수만 생각한 학생\n7번 성대경시 대비를 했어도 수직선을 그리지 않은 학생\n8번 우기기를 배웠어도 우기기인 줄 모르는 학생\n10번 아무런 수 표시가 안되어 있는 학생\n12번  식에 이름이 안 써있는 학생\n18번 보기를 두번 접으라는 것을 놓친 학생\n\n[[red:모두 개념을 모르기보다 시험을 대하는 진지함의 문제입니다. 결국 연습을 많이 해야겠죠.  한번 믿어보고 이제 개념은 놓아 주시고 복습 할 시간이 없다면 이곳 저곳 다니지 말아주세요.\n가장 오랜 시간 이런 대비를 한 강사의 조언입니다. 이 대비는 영어가 아니라 學만 늘린다고 실력이 늘지 않습니다. 왜 틀렸는지 필기하며 스스로 꺠우쳐야 합니다.]]\n이번 주 모의고사부터는 성적 취합 후 이전 연도 합격자와 비교하여 누적 성적표를 제공해 드립니다. 월요일 쯥 이 창에 아이 진단지가 공개됩니다.\n\n당부드리고 싶은 말은, 황소 결과를 떠나 어린 나이에 배웠던 사고력 수학을 전체적으로 점검하고 기억에 오래 남기를 희망하신다면 답보다는 풀이 과정에 맞춰 학습하시기를 추천드리며, 부족한 유형은 언제든 제 톡으로 사진 찍어 보내주세요.\n\n다음 주 시험은 오늘 진행한 모의고사를 꼼꼼히 복습한다면 더 나은 성적이 될 수 있을 것입니다. 마지막 시험 때 얼마나 성장할지 벌써부터 기대가 되네요. 파이팅!\n\n[[hl:초등과정 대비 파이널 모의고사 1회 풀이 영상]]\nhttps://youtu.be/bA-ddeRW-mM",
       "homework": "",
       "textbooks": [
         {
@@ -539,7 +539,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "sep-14": {
+    "sep-14": {
       "notice": "이번 주는 대수 문제와 경우의 수 문항을 늘리고, 기본적인 도형 문제를 배제하고 도형을 활용한 가짓수 문제를 출제하다 보니 도형이 강점이었던 학생들의 점수 하락이 있었습니다.\n\n그런데 길찾기는 왜 자꾸 틀리는지 ㅠㅠ 자주 안 나오기는 하는데 안 나오길 기도해야겠어요.\n\n아마 2점대 문제부터 어렵지는 않지만 패턴에 익숙하지 않아 당황했을 겁니다.\n\n4.2점대에서는 25번, 26번, 30번은 충분히 풀 수 있는 유형이니 이 부분도 복습 더 해주세요.\n\n아직 어린 나이라 주위 환경과 마음가짐에 따라 편차가 심한 경우도 있으니 더욱 꼼꼼히 관리해 주세요.\n\n[[hl:초등선발 대비 파이널 모의고사 2회 풀이 영상]]\nhttps://youtu.be/_dEhSC9ZaKo",
       "homework": "",
       "textbooks": [
@@ -567,7 +567,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "sep-21": {
+    "sep-21": {
       "notice": "제의 풀이 과정은 대부분 이해하고 있습니다. 다만 글을 읽고 자신이 아는 유형인지 모르는 경우가 많습니다. 풀이를 할 때면 \"아~ 아는 문제였는데\" 하는 한숨과 한탄이 여기저기 들립니다.\n\n지금은 개념을 공부할 때는 아닌 것 같아요. 하지만 심화 개념이나 부족한 개념이 있다면 언제든 연락 주세요.\n\n마지막 1달 반, 더욱 꼼꼼히 지도하겠습니다.\n\n[[hl:초등선발 대비 파이널 모의고사 3회 풀이 영상]]\nhttps://youtu.be/W7J1DnR6W4Y",
       "homework": "",
       "textbooks": [
@@ -597,7 +597,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "sep-28": {
+    "sep-28": {
       "notice": "이번 4회는 2, 3점대의 난이도는 어려워 보이지 않지만, 읽는 시간이 오래 걸리거나 조건이나 공식을 생각하지 않고 무작정 노가다로 푼 경우가 많아 시간 관리가 안 되어 점수가 내려간 학생들이 많을 겁니다.\n\n풀이 접근은 쉽지만 글을 읽는 것이 쉽지 않아 저도 이번 회차는 풀이하는 데 시간이 오래 걸렸습니다. (그래도 60점 이상의 학생들도 있습니다 ㅜㅜ)\n\n[[hl:초등선발 대비 파이널 모의고사 4회 풀이 영상]]\nhttps://youtu.be/VqHjNHMYVs8",
       "homework": "",
       "textbooks": [
@@ -627,7 +627,7 @@ window.GFIELD_DATA = {
         }
       ]
     },
-   "aug-w4": {
+    "aug-w4": {
       "notice": "",
       "homework": "",
       "textbooks": [
@@ -2490,6 +2490,42 @@ window.GFIELD_DATA = {
     "magazine": [
       {
         "category": "교육정책",
+        "title": "AI 디지털교과서 활용 학교 5.2%로 급감…도입 1년 만에 '유명무실'",
+        "desc": "교육부가 국회 교육위원회에 제출한 자료에 따르면 AI 디지털교과서 활용 학교 비율이 지난해 1학기 34.2%에서 올해 1학기 5.2%로 급감했다. '교과서'에서 '교육자료'로 법적 지위가 바뀌며 재정 지원이 줄고, 감사원 분석 결과 학년·과목별로 평균 60%의 학생이 한 번도 접속하지 않은 것으로 나타났다.",
+        "source": "경향신문",
+        "sourceUrl": "https://www.khan.co.kr/article/202609211632001/",
+        "image": "",
+        "date": "2026-09-27"
+      },
+      {
+        "category": "입시",
+        "title": "2027학년도 수능 응시자 55만여 명…N수생 비중 31.5%로 최고치",
+        "desc": "한국교육과정평가원이 2027학년도 수능 응시원서 접수 결과 55만1,864명이 지원했다고 발표했다. 졸업생(N수생)이 전년보다 8.6% 늘어 비중이 28.9%에서 31.5%로 올랐고, 재학생은 4.4% 줄었다. 시험은 11월 19일 실시된다.",
+        "source": "뉴스핌",
+        "sourceUrl": "https://www.newspim.com/news/view/20260908000096",
+        "image": "",
+        "date": "2026-09-27"
+      },
+      {
+        "category": "학습법",
+        "title": "네이버, 학교·선택과목 검색 통합 개편…고교학점제 정보 한눈에",
+        "desc": "네이버가 나이스·학교알리미·교육부 등에 흩어진 공식 데이터를 통합해 학교 및 선택과목 검색 기능을 9월 17일부터 개편했다. 학사일정, 급식, 개설 과목은 물론 전공별 권장 선택과목까지 확인할 수 있으며, 10월부터는 대학·입시 정보로 확대될 예정이다.",
+        "source": "이데일리",
+        "sourceUrl": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=05159446645581104",
+        "image": "",
+        "date": "2026-09-27"
+      },
+      {
+        "category": "교육정책",
+        "title": "교육부, '어울림 더하기 선도학교' 276곳 운영…학폭 초기 개입 강화",
+        "desc": "교육부가 교원·학생·학부모가 갈등 초기부터 함께 개입하는 학교폭력 예방 모델 '어울림 더하기 선도학교' 276곳(초 104·중 114·고 56)을 9월부터 운영한다고 밝혔다. 학교폭력 피해응답률이 2020년 0.9%에서 2.9%로 3배 늘어난 데 따른 대응으로, 2027년에는 400개 학교로 확대할 계획이다.",
+        "source": "파이낸셜뉴스",
+        "sourceUrl": "https://www.fnnews.com/news/202609151100004383",
+        "image": "",
+        "date": "2026-09-27"
+      },
+      {
+        "category": "교육정책",
         "title": "중학교 정보 수업 2027년부터 2배 확대…교사 부족이 관건",
         "desc": "2022 개정 교육과정에 따라 2027년부터 중학교 정보 수업 시수가 34시간에서 68시간으로 늘고 초등학교에도 정보 34시간이 새로 생긴다. 그러나 국·공립 중학교의 정보교사 확보율은 지역별로 최저 31%(강원)에서 최고 93.2%(경기)까지 격차가 크고, 전국 951개 중학교에는 정보교사가 아예 없는 것으로 나타났다. AI 시대 대응을 위한 교육과정 확대가 교사 수급 문제로 삐걱거릴 수 있다는 우려가 나온다.",
         "source": "강원일보",
@@ -2811,42 +2847,6 @@ window.GFIELD_DATA = {
         "sourceUrl": "https://www.asiatoday.co.kr/kn/view.php?key=20260722010007959",
         "image": "",
         "date": "2026-07-27"
-      },
-      {
-        "category": "학원가",
-        "title": "늘봄 확대에도 방학 사교육비 부담 여전…돌봄 공백에 학원·캠프 의존",
-        "desc": "정부가 늘봄학교와 방학 돌봄을 확대하고 있지만 학교·지역마다 운영 대상과 시간이 달라 맞벌이 가정의 돌봄 공백이 이어지고 있다. 학부모들은 공백을 학원·캠프·특강으로 메우면서 방학 한 달에 100만 원 안팎의 추가 비용을 지출하는 사례가 적지 않다. 전문가들은 돌봄 확대만으로는 한계가 있으며 공교육에 대한 신뢰 회복이 근본 과제라고 지적한다.",
-        "source": "일요신문",
-        "sourceUrl": "https://www.ilyo.co.kr/?ac=article_view&entry_id=512020",
-        "image": "https://ilyo.co.kr/contents/article/images/2026/0724/1784875253060203.jpg",
-        "date": "2026-07-27"
-      },
-      {
-        "category": "입시",
-        "title": "2027 영재학교 경쟁률 6.21대 1로 상승…3단계 다면평가 8월 초 실시",
-        "desc": "한국과학영재학교를 제외한 7개 영재학교의 2027학년도 경쟁률이 정원 내 기준 6.21대 1로, 전년(5.72대 1)보다 상승했다. 동일한 모집 규모에 지원자가 328명 늘었으며 세종·대구·인천 과학예술영재학교가 상위권을 기록했다. 3단계 영재성 다면평가는 7개교가 8월 8일, 한국과학영재학교가 8월 15일에 치러질 예정이다.",
-        "source": "베리타스알파",
-        "sourceUrl": "https://www.veritas-a.com/news/articleView.html?idxno=612603",
-        "image": "",
-        "date": "2026-07-27"
-      },
-      {
-        "category": "교육정책",
-        "title": "늘봄학교, '온동네 초등돌봄'으로 개편…초3 이상 연 50만원 방과후 이용권",
-        "desc": "교육부가 올해부터 늘봄학교를 '온동네 초등돌봄·교육' 정책으로 발전시켰다. 초등 1·2학년은 기존처럼 학교 중심 무상 돌봄 프로그램을 지원하고, 초3 이상 희망자에게는 연 50만원의 방과후 프로그램 이용권(바우처)을 지급해 프로그램 선택권을 넓힌다.",
-        "source": "서울신문",
-        "sourceUrl": "https://www.seoul.co.kr/news/society/education-news/2026/02/04/20260204008005",
-        "image": "",
-        "date": "2026-07-23"
-      },
-      {
-        "category": "사고력",
-        "title": "대학부설 과학영재교육원 공동 온라인 선교육과정 수강생 모집",
-        "desc": "과학기술정보통신부와 한국과학창의재단이 2026년 대학부설 과학영재교육원 공동 온라인 선(先)교육과정 수강생을 모집한다. 대학부설 영재교육원 진학에 관심 있는 학생이라면 온라인 과정으로 미리 교육을 경험해 볼 수 있는 기회다.",
-        "source": "뉴스서울",
-        "sourceUrl": "https://newsseoul.co.kr/news/view/1065591010273279",
-        "image": "",
-        "date": "2026-07-23"
       }
     ],
     "coach": [
