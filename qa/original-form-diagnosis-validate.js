@@ -83,10 +83,15 @@ check('모든 문항에 대영역·소영역·세부유형·정답 존재', () =
   }));
 });
 
-check('공개 점수컷 2개년 산술평균과 경계값', () => {
-  assert.deepEqual(model.cutBasis.rows.map((row) => row.average), [48.1, 39.0, 30.6, 21.0]);
+check('2025 기준 초2 환산 예상 레벨과 경계값', () => {
+  assert.equal(model.cutBasis.normalization.status, 'approximate-merged-distribution');
+  assert.deepEqual(model.cutBasis.rows.map((row) => row.threshold2025), [46.8, 38, 30, 20.6]);
+  const {y2024, y2025} = model.cutBasis.distribution;
+  assert.equal(y2024.knots.at(-1)[1], y2024.n);
+  assert.equal(y2025.knots.at(-1)[1], y2025.n);
   model.cutBasis.rows.forEach((row) => {
-    assert.equal(row.average, Math.round(((row.y2024 + row.y2025) / 2) * 10) / 10);
+    assert.equal(row.threshold2025, row.pooledPoint2025);
+    assert.ok(row.targetTopPct > 0 && row.targetTopPct < 100);
   });
   Object.values(model.rounds).forEach((round) => {
     assert.equal(round.stats.cutOnly, true);
@@ -220,14 +225,14 @@ check('원본형 점수 계산과 등급 경계', () => {
   invalidCuts.cuts[1][0] = '확인되지 않은 등급';
   assert.equal(core.publicCutVerified(invalidCuts), false, '근거와 다른 등급명은 표시하지 않음');
   assert.equal(core.buildContext('검증 학생', 1, Array(30).fill('O')).grade, '경시 가능');
-  assert.equal(core.cutInfo(48.1, cuts).grade, '경시 가능');
-  assert.equal(core.cutInfo(48.0, cuts).grade, '경시컷 · 심화안정권');
-  assert.equal(core.cutInfo(39.0, cuts).grade, '경시컷 · 심화안정권');
-  assert.equal(core.cutInfo(38.9, cuts).grade, '심화컷 · 실력안정권');
-  assert.equal(core.cutInfo(30.6, cuts).grade, '심화컷 · 실력안정권');
-  assert.equal(core.cutInfo(30.5, cuts).grade, '실력컷 · 일품안정권');
-  assert.equal(core.cutInfo(21.0, cuts).grade, '실력컷 · 일품안정권');
-  assert.equal(core.cutInfo(20.9, cuts).grade, '노력요함');
+  assert.equal(core.cutInfo(46.8, cuts).grade, '경시 가능');
+  assert.equal(core.cutInfo(46.7, cuts).grade, '경시컷 · 심화안정권');
+  assert.equal(core.cutInfo(38, cuts).grade, '경시컷 · 심화안정권');
+  assert.equal(core.cutInfo(37.9, cuts).grade, '심화컷 · 실력안정권');
+  assert.equal(core.cutInfo(30, cuts).grade, '심화컷 · 실력안정권');
+  assert.equal(core.cutInfo(29.9, cuts).grade, '실력컷 · 일품안정권');
+  assert.equal(core.cutInfo(20.6, cuts).grade, '실력컷 · 일품안정권');
+  assert.equal(core.cutInfo(20.5, cuts).grade, '노력요함');
 });
 
 check('소영역 수행률과 1문항 확인 필요 판정', () => {

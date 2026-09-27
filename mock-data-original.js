@@ -1,8 +1,10 @@
 /* =========================================================
  * 지필드 영재교육 · 초등선발 대비 시그니처 실전 모의고사 진단 데이터
- * 공개 점수컷은 2024·2025년 12월 초등과정 입학시험 성적분포의
- * 등급별 최저점을 직접 대조한 뒤 산술평균한 값만 사용한다.
- * 응시 인원·등수·석차 백분율·문항 정답률은 추정하지 않는다.
+ * 사용자 제공 2024·2025년 12월 초등과정 입학시험 성적분포 이미지는
+ * 보존되어 있다. 현재 앱에는 검수된 전체 누적분포가 연결되지 않았으므로
+ * 초2 집단의 평균·표준편차 근사값으로 2024년 분포를 2025년 척도로
+ * 옮긴 뒤 두 해의 누적분포를 1:1로 합쳐 예상 레벨을 계산한다.
+ * 석차·정답률·실제 합격 여부는 추정하지 않는다.
  * ========================================================= */
 (function(){
   'use strict';
@@ -12,13 +14,55 @@
     return {no:no, area:area, subarea:subarea, type:type, answer:answer, pts:point, difficultyClass:difficultyClass};
   }
 
-  var cuts = [
-    ['경시 가능', 48.1],
-    ['경시컷 · 심화안정권', 39.0],
-    ['심화컷 · 실력안정권', 30.6],
-    ['실력컷 · 일품안정권', 21.0],
-    ['노력요함', 0]
+  // 이미 확인한 초2 누적 석차의 주요 지점. 전체 행을 전사한 분포가 아니므로
+  // 지점 사이는 선형 보간하고 표준편차·경계 점수는 근사값으로 취급한다.
+  var historical = {
+    y2024:{n:4142,mean:18.35,sdApprox:11.5,knots:[[85.5,1],[75.9,3],[70.9,7],[65.4,14],[60,23],[55.1,52],[50.1,86],[45,132],[40,224],[35.3,340],[31.1,508],[30.1,546],[25,923],[21,1321],[20.4,1368],[19.9,1499],[15,2156],[10.3,3192],[5.4,3797],[4.2,3987],[3.4,3989],[2.7,4002],[0,4142]]},
+    y2025:{n:4116,mean:17.84,sdApprox:10.7,knots:[[71.4,1],[60,5],[55.3,17],[50.9,38],[46.1,80],[40,161],[38,194],[35.9,255],[30.1,495],[25,921],[21,1350],[20.4,1400],[19.9,1536],[15,2191],[10.3,3151],[5.4,3682],[4.2,3941],[3.4,3943],[2.7,3961],[0,4116]]}
+  };
+  function upperShare(year,score){
+    var knots=year.knots;
+    if(score<=0) return 1;
+    if(score>knots[0][0]) return 0;
+    for(var i=0;i<knots.length-1;i++){
+      var high=knots[i],low=knots[i+1];
+      if(score<=high[0]&&score>=low[0]){
+        return (high[1]+(high[0]-score)/(high[0]-low[0])*(low[1]-high[1]))/year.n;
+      }
+    }
+    return 1;
+  }
+  function pooledUpperShare(score){
+    var a=historical.y2024,b=historical.y2025;
+    var original2024=a.mean+(a.sdApprox/b.sdApprox)*(score-b.mean);
+    return (upperShare(a,original2024)+upperShare(b,score))/2;
+  }
+  function pooledScoreFor(upperShareTarget){
+    var low=0,high=100;
+    for(var i=0;i<50;i++){
+      var mid=(low+high)/2;
+      if(pooledUpperShare(mid)>upperShareTarget) low=mid;
+      else high=mid;
+    }
+    return (low+high)/2;
+  }
+  var sourceBoundaries=[
+    {grade:'경시',y2024:50.1,y2025:46.1},
+    {grade:'심화',y2024:40,y2025:38},
+    {grade:'실력',y2024:31.1,y2025:30.1},
+    {grade:'일품',y2024:21,y2025:21}
   ];
+  var cutRows=sourceBoundaries.map(function(row){
+    var target=(upperShare(historical.y2024,row.y2024)+upperShare(historical.y2025,row.y2025))/2;
+    var pooled=pooledScoreFor(target);
+    return {grade:row.grade,y2024:row.y2024,y2025:row.y2025,
+      targetTopPct:Math.round(target*1000)/10,pooledPoint2025:Math.round(pooled*10)/10,
+      threshold2025:Math.round(pooled*10)/10};
+  });
+  var cuts=cutRows.map(function(row,i){
+    return [i===0?row.grade+' 가능':cutRows[i-1].grade+'컷 · '+row.grade+'안정권',row.threshold2025];
+  });
+  cuts.push(['노력요함',0]);
 
   var round1 = [
     q(1, '식의 계산', '합차와 배수', '두 상황의 높이', '155cm', 2.7, 'D2'),
@@ -97,18 +141,15 @@
       return {no:i+1, pts:pts(i+1)};
     }),
     cutBasis: {
-      title: '2024·2025년 12월 초등과정 입학시험 등급별 최저점 평균',
-      note: '공개 성적분포의 결과 구간이 바뀌는 최저점을 연도별로 확인한 뒤 산술평균했습니다.',
+      title: '2025년 기준 초2 예상 레벨',
+      note: '2024년 초2 누적분포를 2025년 척도로 옮기고 두 해의 분포를 같은 비중으로 합쳐 레벨별 상위 비율에 대응하는 점수를 역산했습니다. 누적표 일부 지점의 보간·표준편차 근사값을 사용하므로 경계는 소수 첫째 자리까지 표시합니다.',
+      normalization: {mean2024:historical.y2024.mean, mean2025:historical.y2025.mean, sd2024Approx:historical.y2024.sdApprox, sd2025Approx:historical.y2025.sdApprox, yearWeight:0.5, status:'approximate-merged-distribution'},
+      distribution: historical,
       sources: [
         {year:2024, label:'2024년 성적분포', url:'https://blog.naver.com/thinkbull_okjeong/223650988987?photoView=0'},
         {year:2025, label:'2025년 성적분포', url:'https://blog.naver.com/thinkbull_okjeong/224066996182?photoView=0'}
       ],
-      rows: [
-        {grade:'경시', y2024:50.1, y2025:46.1, average:48.1},
-        {grade:'심화', y2024:40.0, y2025:38.0, average:39.0},
-        {grade:'실력', y2024:31.1, y2025:30.1, average:30.6},
-        {grade:'일품', y2024:21.0, y2025:21.0, average:21.0}
-      ],
+      rows: cutRows,
       belowLabel: '노력요함'
     },
     rounds: {
@@ -121,6 +162,7 @@
           pageRanges:[[1,6],[7,12],[13,18],[19,24],[25,28],[29,30]]
         },
         answerUrl: 'output/pdf/hwangso-original-form-mock-01-rebuilt-answer.pdf',
+        video: 'https://www.youtube.com/watch?v=FUq-XBAcP_8',
         items: round1,
         stats: {cutOnly:true, cuts:cuts}
       },
@@ -133,6 +175,7 @@
           pageRanges:[[1,6],[7,12],[13,18],[19,24],[25,28],[29,30]]
         },
         answerUrl: 'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf',
+        video: 'https://www.youtube.com/watch?v=R5NN1K29__4',
         items: round2,
         stats: {cutOnly:true, cuts:cuts}
       }
@@ -149,10 +192,10 @@
       ],
       cues:[
         {at:0, ph:'훑어보기', msg:'자, 시작하자. 5분 동안 시험지를 훑어보며 풀 수 있을 것 같은 문제를 표시해 보자.'},
-        {at:300, ph:'1~12번', msg:'이제 12번까지 먼저 풀자. 모르는 문제는 표시하고 다음 문제로 넘어가자.'},
-        {at:1020, ph:'1~12번', msg:'17분 지났어. 지금쯤 6번을 넘어가면 좋아.'},
-        {at:1920, ph:'13~30번', msg:'32분 지났어. 13번부터 30번까지 풀자. 앞에서 남긴 문제는 마지막에 다시 보자.'},
-        {at:3000, ph:'13~30번', msg:'50분이야. 한 문제에 너무 오래 머물지 말고 풀 수 있는 문제부터 풀자.'},
+        {at:300, ph:'1~12번 참고', msg:'앞쪽 문제부터 살펴보자. 막힌 문제는 표시하고 다음에 다시 돌아와도 괜찮아.'},
+        {at:1020, ph:'속도 확인', msg:'17분 지났어. 몇 번에 있는지보다 한 문제에 오래 멈춰 있지 않은지 확인해 보자.'},
+        {at:1920, ph:'다음 구간 참고', msg:'32분 지났어. 앞에서 막힌 문제는 표시해 두고 뒤쪽의 풀 수 있는 문제도 살펴보자.'},
+        {at:3000, ph:'흐름 확인', msg:'50분이야. 시간이 걸리는 문제는 표시하고, 지금 풀 수 있는 문제부터 차분히 이어 가자.'},
         {at:4080, ph:'마무리', msg:'68분이 지났어. 이제 12분 남았어. 표시한 문제와 빈 답을 확인하자.'},
         {at:4500, ph:'마무리', msg:'5분 남았어. 답을 빠뜨리거나 잘못 옮긴 곳이 없는지 확인하자.'},
         {at:4800, ph:'종료', msg:'80분이 다 됐어. 펜을 내려놓자. 수고했어.'}

@@ -1,0 +1,45 @@
+'use strict';
+
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const vm=require('node:vm');
+const script=fs.readFileSync(path.join(__dirname,'..','final-report-state.js'),'utf8');
+const calls=[];
+let stored='';
+const sandbox={window:{GFIELD_AUTH:{async functionCall(_name,body){calls.push(body);if(body.action==='read-report')return {canEdit:true,comment:stored,commentUpdatedAt:null};stored=body.comment;return {comment:stored,updatedAt:'2026-09-27T00:00:00Z'};}}}};
+vm.createContext(sandbox);
+vm.runInContext(script,sandbox);
+const state=sandbox.window.GFIELD_FINAL_REPORT_STATE;
+
+(async()=>{
+  await state.load('검증학생',2,'O'.repeat(30),'admin',false,false,'original');
+  const blank=state.render();
+  assert.match(blank,/수업에서 확인한 모습/);
+  assert.match(blank,/풀이 습관/);
+  assert.match(blank,/장점/);
+  assert.match(blank,/보완할 점/);
+  assert.match(blank,/주의 사항/);
+  assert.match(blank,/추천 지도/);
+  assert.match(blank,/시험 운영·타이머 활용/);
+  assert.doesNotMatch(blank,/data-docssam-field="lesson"[^>]*>[^<]+<\/textarea>/,'unverified observations must not be prefilled');
+  const values={lesson:'교사가 확인한 <수업 기록>',examStrategy:'타이머는 참고 신호'};
+  const saved={innerHTML:'',hidden:true};
+  const status={textContent:''};
+  const button={disabled:false};
+  const container={querySelector(selector){if(selector==='#docssam-comment-save')return button;if(selector==='#docssam-comment')return null;if(selector==='#docssam-comment-status')return status;if(selector==='.docssam-saved-comment')return saved;const match=selector.match(/data-docssam-field="([^"]+)/);return match?{value:values[match[1]]||''}:null;}};
+  state.wire(container);
+  await button.onclick();
+  assert.equal(calls[1].exam,'original2');
+  assert.equal(JSON.parse(calls[1].comment).fields.lesson,values.lesson);
+  assert.match(saved.innerHTML,/&lt;수업 기록&gt;/,'saved text must be HTML escaped');
+  assert.doesNotMatch(saved.innerHTML,/<수업 기록>/);
+  assert.equal(status.textContent,'저장했습니다.');
+  assert.match(state.summary(),/시험 운영·타이머 활용/,'teacher evidence appears on the summary sheet too');
+  assert.doesNotMatch(state.summary(),/<수업 기록>/);
+  await state.load('검증학생',1,'O'.repeat(30),'admin',false,false,'original');
+  assert.equal(calls[2].exam,'original1','comment reads are round-specific');
+  await state.load('검증학생',2,'O'.repeat(30),'admin',false,false);
+  assert.equal(calls[3].exam,'final2','Final report behavior stays separate');
+  console.log('PASS Signature Docssam structured evidence-only comments, escaped save, round isolation, timer field');
+})().catch(error=>{console.error(error);process.exitCode=1;});

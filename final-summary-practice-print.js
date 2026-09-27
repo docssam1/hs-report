@@ -65,7 +65,7 @@
       return match?Number(match[1]):NaN;
     });
     if(printedPriority.length!==nos.length||printedPriority.some(function(no,index){return no!==Number(nos[index]);}))fail('priority-mismatch','화면의 우선 복습 추천과 인쇄할 문항이 다릅니다.');
-    return {doc:doc,button:button,source:source,round:round,nos:nos.map(Number),name:String(options.name||'').trim(),timeout:Number(options.timeoutMs)||DEFAULT_TIMEOUT};
+    return {doc:doc,button:button,source:source,round:round,nos:nos.map(Number),name:String(options.name||'').trim(),teacherPrint:options.teacherPrint===true,timeout:Number(options.timeoutMs)||DEFAULT_TIMEOUT};
   }
 
   function bankUrl(input){
@@ -81,6 +81,7 @@
       printMode:'both',
       layout:'editorial'
     });
+    if(input.teacherPrint)params.set('reportPrint','teacher');
     return 'bank/index.html?'+params.toString();
   }
   function makeBankFrame(input,job){

@@ -185,12 +185,17 @@ const adminSession = {
     const teacherPage = await context.newPage();
     const teacherFailures = [];
     teacherPage.on('pageerror', error => teacherFailures.push(`pageerror: ${error.message}`));
-    teacherPage.on('console', message => { if (message.type() === 'error') teacherFailures.push(`console: ${message.text()}`); });
+    teacherPage.on('console', message => { if (message.type() === 'error') teacherFailures.push(`console: ${message.text()} @ ${message.location().url}`); });
     await teacherPage.route('https://fonts.googleapis.com/**', route => route.fulfill({ status: 200, contentType: 'text/css', body: '' }));
     await teacherPage.route('https://fonts.gstatic.com/**', route => route.fulfill({ status: 200, contentType: 'font/woff2', body: '' }));
     let teacherSavedRows = [];
     await teacherPage.route('https://fgahqumaldheqettmvqg.supabase.co/**', async route => {
       const request = route.request();
+      let body = {};
+      try { body = request.postDataJSON() || {}; } catch {}
+      if (request.url().includes('/functions/v1/hs-final-population') && body.action === 'read-report') {
+        return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ canEdit: true, comment: '', commentUpdatedAt: null, snapshot: null, resultOx: null }) });
+      }
       if (request.url().includes('/rest/v1/mock_results')) {
         return route.fulfill({ status: request.method() === 'POST' ? 201 : 200, contentType: 'application/json', body: request.method() === 'POST' ? '' : JSON.stringify(teacherSavedRows) });
       }
@@ -203,11 +208,15 @@ const adminSession = {
       return route.abort();
     });
     await teacherPage.goto(`${BASE_URL}/${await teacherEntry.getAttribute('href')}`, { waitUntil: 'domcontentloaded' });
-    await teacherPage.waitForSelector('.agrid').catch(async error => { throw new Error(`${error.message}\nTeacher screen: ${(await teacherPage.locator('body').innerText()).slice(0, 1000)}`); });
-    assert.equal(await teacherPage.locator('.agrid .abtn').count(), 30, 'teacher entry opens all 30 original-form answer buttons');
-    for(let no=1;no<=30;no++)await teacherPage.locator('.abtn').nth(no-1).click();
+    await teacherPage.waitForSelector('#signatureStateGrid select').catch(async error => { throw new Error(`${error.message}\nTeacher screen: ${(await teacherPage.locator('body').innerText()).slice(0, 1000)}`); });
+    assert.equal(await teacherPage.locator('#signatureStateGrid select').count(), 30, 'teacher entry opens all 30 original-form answer states');
+    for(let no=1;no<=30;no++)await teacherPage.locator('#signatureStateGrid select').nth(no-1).selectOption('O');
     await teacherPage.click('#btnGrade');
     await teacherPage.getByRole('heading', { name: '시그니처 실전 모의고사 성적·약점 진단' }).waitFor();
+    await teacherPage.locator('#originalSummary').waitFor();
+    assert.equal(await teacherPage.locator('#originalSummary .week-plan li').count(),7,'Signature report reuses approved-practice flow for a seven-day review guide');
+    assert.equal(await teacherPage.locator('#originalSummary [data-original-summary-print]').count(),1,'Signature summary has its own print action');
+    assert.equal(await teacherPage.locator('#originalSummary .report-qr-card').count(),1,'unapproved Signature practice never gains a fake QR');
     assert.equal(await teacherPage.locator('.who b').textContent(), '허유민', 'selected admin student carries into the original-form report');
     teacherSavedRows = [
       { student: '허유민', round: 'original1', ox: `X${'O'.repeat(29)}`, score: 97.3, wrong: 1, source: 'admin' },

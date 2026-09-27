@@ -22,6 +22,7 @@ assert.match(gate,/return registeredStudent\(account\.student\)/,'general questi
 assert.match(gate,/gfield_question_bank_handoff_v1/,'named portal and bank use a session-scoped handoff');
 assert.match(gate,/gfield_question_bank_launch_v1/,'named portal and bank share a short-lived cross-tab launch');
 assert.match(gate,/mock-final-7/,'Final7 approval has a narrow practice-bank scope');
+assert.match(gate,/mock-signature-/,'Signature 1 and 2 retain separate practice-bank scopes');
 assert.match(gate,/scopedPermissionList/,'Final7 practice permission is checked separately from the general bank');
 assert.match(gate,/if\(scopedProductKey\(\)\)return listed\(scopedPermissionList\(\),account\.student\)/,'round-scoped permission cannot be bypassed by general bank access');
 assert.match(gate,/localStorage\.removeItem\(PORTAL_LAUNCH_KEY\)/,'cross-tab launch is consumed after one read');
@@ -31,13 +32,14 @@ assert.match(gate,/source:'saved-archive'/,'a previously selected registered arc
 assert.match(gate,/location\.replace\(archiveLoginUrl\(\)\)/,'direct entry returns to the archive name login');
 assert.doesNotMatch(gate,/bankAccessForm|bankAccessCode|승인번호<input|async function signIn/,'approval-number form and fallback login are removed');
 
-function gateApi(search,students,final7Access,storedStudent){
+function gateApi(search,students,final7Access,storedStudent,signature1Access,signature2Access,auth){
   const store={gfield_student:storedStudent||''};
   const storage={getItem:key=>store[key]||null,setItem:(key,value)=>{store[key]=String(value)},removeItem:key=>{delete store[key]}};
   const window={
-    GFIELD_DATA:{students,archiveProductAccess:{'mock-final-7':final7Access||[]}},
+    GFIELD_DATA:{students,archiveProductAccess:{'mock-final-7':final7Access||[],'mock-signature-1':signature1Access||[],'mock-signature-2':signature2Access||[]}},
     __GFIELD_BANK_ACCESS_FORCE__:true
   };
+  if(auth)window.GFIELD_AUTH=auth;
   const context={
     window,location:{hostname:'example.test',pathname:'/bank/index.html',search:search||'',hash:'',replace(){}},
     localStorage:storage,sessionStorage:storage,URLSearchParams,Promise,setTimeout,clearTimeout,
@@ -56,6 +58,10 @@ const deniedFinal7Api=gateApi('?bank=final7',['등록학생'],[],'등록학생')
 assert.equal(deniedFinal7Api.allowed({role:'student',student:'등록학생',active:true}),false,'general registration does not bypass Final7 approval');
 const grantedFinal7Api=gateApi('?bank=final7',['등록학생'],['등록학생'],'등록학생');
 assert.equal(grantedFinal7Api.allowed({role:'student',student:'등록학생',active:true}),true,'Final7 approval opens only the scoped bank');
+const deniedSignature1Api=gateApi('?bank=original1',['등록학생'],[],'등록학생',[],['등록학생']);
+assert.equal(deniedSignature1Api.allowed({role:'student',student:'등록학생',active:true}),false,'Signature 2 approval does not open Signature 1 practice');
+const grantedSignature2Api=gateApi('?practice=wrong&source=original%7C2',['등록학생'],[],'등록학생',[],['등록학생']);
+assert.equal(grantedSignature2Api.allowed({role:'student',student:'등록학생',active:true}),true,'Signature 2 approval opens its scoped wrong-answer practice');
 const queryApi=gateApi('?bank=final2&from=archive&name=%EB%93%B1%EB%A1%9D%ED%95%99%EC%83%9D',['등록학생'],[],'');
 assert.equal(queryApi.portalIdentity().student,'등록학생','archive query fallback survives unavailable handoff storage');
 
@@ -71,7 +77,16 @@ assert.match(home,/localStorage\.removeItem\(QUESTION_BANK_LAUNCH_KEY/,'leaving 
 
 const report=read('final.html');
 assert.match(report,/product:'mock-final-7'/,'Final7 report issues a round-scoped practice handoff');
+assert.match(report,/signatureAccess=.*mock-signature-/,'Signature diagnosis checks its own round permission');
+assert.match(report,/originalSummaryHTML\(ctx,weakSubs,attempts,repeated\)/,'Signature diagnosis has a separate concise summary');
+assert.match(report,/originalResourcesHTML\(ctx\)/,'Signature diagnosis reuses the original paper viewer and links its video');
+assert.match(report,/firstAttempt\.score\+secondAttempt\.score/,'Signature 2 cumulative average uses only the two original attempts');
+assert.match(report,/1회 성적 · 최초 응시[\s\S]*2회 성적 · 최초 응시[\s\S]*누적 성적 · 1·2회 평균/,'Signature 2 separates the two round scores from the cumulative result');
+assert.match(read('bank/index.html'),/signatureRequested[\s\S]*?시그니처 유사문항은 승인된 문항세트/,'Signature practice route does not fall back to unrelated general generators');
+assert.match(read('mock-data-original.js'),/FUq-XBAcP_8[\s\S]*?R5NN1K29__4/,'Signature video viewer uses the supplied 1 and 2 solution links');
 assert.match(report,/issueWrongPracticeHandoff\(ctx\)/,'Final7 practice launch refreshes the scoped handoff');
+assert.match(report,/teacherPrint:teacherEntry/,'staff report printing requests a separately verified staff bank session');
+assert.match(read('final-summary-practice-print.js'),/params\.set\('reportPrint','teacher'\)/,'staff print request is passed to the bank frame');
 
 const index=read('bank/index.html'),catalog=read('bank/catalog.html'),admin=read('admin.html');
 [index,catalog].forEach((html,i)=>{
@@ -84,3 +99,15 @@ assert.match(admin,/등록된 학생 전체가 승인번호 없이/,'admin conso
 assert.match(admin,/등록 학생 '\+S\.students\.length\+'명 자동 허용/,'admin console reports the automatic registered-student count');
 
 console.log('PASS question-bank permission contract: registered-student access without approval number, same-tab/cross-tab/query archive handoff, scoped Final7 approval, RLS self identity, direct-page archive return, fail-closed render');
+
+(async function(){
+  const api=gateApi('?bank=final4&reportPrint=teacher',['다른학생'],[],'다른학생',[],[],{
+    getUser:async slot=>slot==='admin'?{id:'staff-1'}:null,
+    rest:async()=>({ok:true,json:async()=>[{role:'teacher',active:true,student:''}]})
+  });
+  await api.start();
+  const account=await api.ready;
+  assert.equal(account.role,'teacher','verified teacher takes precedence over the saved student');
+  assert.equal(account.student,'','another student is not substituted into the teacher print');
+  console.log('PASS teacher report print uses verified staff identity over saved student identity');
+})().catch(error=>{console.error(error);process.exitCode=1;});

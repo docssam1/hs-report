@@ -19,7 +19,9 @@
     const action=body.action;
     if(!allowed.has(action))fail('INVALID_REQUEST',400);
     const keys=action==='apply-percentiles'?['action','exam']:action==='save-comment'?['action','exam','student','comment','expectedUpdatedAt']:['action','exam','student'];
-    if(Object.keys(body).some(k=>!keys.includes(k))||!/^final(?:[1-5]|7)$/.test(body.exam||''))fail('INVALID_REQUEST',400);
+    if(Object.keys(body).some(k=>!keys.includes(k))||!(/^(?:final(?:[1-5]|7)|original[12])$/.test(body.exam||'')))fail('INVALID_REQUEST',400);
+    const signature=/^original[12]$/.test(body.exam);
+    if(signature&&(action==='apply-percentiles'||action==='record-report'))fail('INVALID_REQUEST',400);
     const baseline=baselineFor(baselines,body.exam);
     const teacher=['admin','teacher'].includes(account.role);
     if((action==='apply-percentiles'||action==='save-comment')&&!teacher)fail('ACCESS_DENIED',403);
@@ -63,7 +65,7 @@
     }
     const {data:comment,error:commentError}=await service.from('hs_final_report_comments').select('comment,updated_at').eq('student',body.student).eq('round',body.exam).maybeSingle();
     if(commentError)fail('READ_FAILED',503);
-    const response={canEdit:teacher,comment:hasResult?comment?.comment||'':'',commentUpdatedAt:hasResult?comment?.updated_at||null:null,snapshot:null,resultOx:null};
+    const response={canEdit:teacher&&(!signature||hasResult),comment:hasResult?comment?.comment||'':'',commentUpdatedAt:hasResult?comment?.updated_at||null:null,snapshot:null,resultOx:null};
     if(!baseline||!validResult(result,core))return response;
     if(action==='record-report'){
       const snapshot=frozenSnapshot(core,baseline,core.scoreOf(result.ox));

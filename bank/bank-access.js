@@ -27,6 +27,8 @@
   function scopedProductKey(){
     var query=new URLSearchParams(location.search),bank=String(query.get('bank')||'');
     var source=String(query.get('source')||'').split('|');
+    if(bank==='original1'||bank==='original2')return 'mock-signature-'+bank.slice(-1);
+    if(query.get('practice')==='wrong'&&source[0]==='original'&&(source[1]==='1'||source[1]==='2'))return 'mock-signature-'+source[1];
     if(bank==='final7')return 'mock-final-7';
     if(query.get('practice')==='wrong'&&source[0]==='final'&&source[1]==='7')return 'mock-final-7';
     return '';
@@ -167,6 +169,15 @@
     injectStyle();shell();
     if(localHost&&!forceGate){reveal(localIdentity());return}
     try{
+      if(new URLSearchParams(location.search).get('reportPrint')==='teacher'){
+        // A report's teacher flag is only a hint: grant access solely after
+        // the server confirms an active staff account, never from saved student state.
+        var staff=await withinAccessTime(verifiedAccount('admin'));
+        if(!staff||!allowed(staff)||(staff.role!=='admin'&&staff.role!=='teacher')){
+          throw Object.assign(new Error('ACCESS_DENIED'),{code:'ACCESS_DENIED'});
+        }
+        reveal(staff);return;
+      }
       var portal=portalIdentity();
       if(portal){
         if(!allowed(portal))throw Object.assign(new Error('ACCESS_DENIED'),{code:'ACCESS_DENIED'});

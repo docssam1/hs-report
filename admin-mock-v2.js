@@ -200,7 +200,7 @@
 
   async function resetSlot(student,set,r,slot){
     const key=rawKey(set,r,slot);
-    const res=await fetch(MK_URL+'/rest/v1/mock_results',{method:'POST',headers:{apikey:MK_KEY,Authorization:'Bearer '+MK_KEY,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates'},body:JSON.stringify({student:student,round:key,ox:'RESET',score:0,wrong:0,source:'reset'})});
+    const res=await fetch(MK_URL+'/rest/v1/mock_results',{method:'POST',headers:{apikey:MK_KEY,Authorization:'Bearer '+MK_KEY,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates'},body:JSON.stringify({student:student,round:key,ox:'RESET',score:0,wrong:0,source:'reset',answer_states:null})});
     if(!res.ok)throw new Error('reset '+res.status);
     MK_ROWS=(MK_ROWS||[]).filter(x=>!(x.student===student&&String(x.round)===key));
   }

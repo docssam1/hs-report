@@ -169,6 +169,21 @@ tr.cau td{border-bottom:1px solid var(--line);font-size:11.5px;color:var(--ink2)
 .sign b{font-family:'Jua';color:var(--navy);font-size:15px}
 @media print{body{background:#fff}.doc{box-shadow:none}section{break-inside:avoid}.cause li{break-inside:avoid}.original-repeat-block{break-inside:avoid;page-break-inside:avoid}}
 @media print{.original-report>.cover{padding:32px 34px 28px}.original-report>section{padding:22px 34px}.original-report .cmt{padding:14px 18px}}
+.original-report .report-cover-qr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px;position:relative;z-index:1}
+.original-report .report-qr-card{display:flex;align-items:center;gap:12px;min-width:0;padding:10px;border:1px solid #d8dee8;border-radius:6px;background:#fff;color:#182230;text-decoration:none}
+.original-report .report-qr-code{display:block;flex:0 0 82px;width:82px;height:82px;padding:3px;background:#fff}
+.original-report .report-qr-code svg{display:block;width:100%;height:100%}
+.original-report .report-qr-text{display:block;min-width:0;flex:1}
+.original-report .report-qr-card b{display:block;font-size:13px}.original-report .report-qr-card small{display:block;color:#566274;font-size:11px;line-height:1.4}
+.original-summary{color:#182230}.original-summary .report-cover-qr{margin:16px 0 0}.original-summary .original-summary-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.original-summary .original-summary-actions button{min-height:44px;padding:9px 15px;border:1px solid #2456c4;border-radius:6px;background:#2456c4;color:#fff;font:700 14px 'Noto Sans KR',sans-serif;cursor:pointer}.original-summary .original-summary-actions button:focus-visible{outline:3px solid #2456c4;outline-offset:3px}.original-summary .week-plan{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:12px 0 0;padding:0}.original-summary .week-plan li{padding:8px 10px;border:1px solid #d8dee8;font-size:12px;line-height:1.5}.original-summary .week-plan b{color:#2456c4}
+.original-summary .cumulative-title{margin:18px 0 9px;font-size:16px;color:#1f3864}.original-summary .cumulative-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.original-summary .cumulative-grid div{padding:12px;border:1px solid #d8dee8;background:#f5f6f8}.original-summary .cumulative-grid span{display:block;font-size:12px;color:#566274}.original-summary .cumulative-grid b{display:block;margin-top:4px;font-size:20px;color:#182230}
+.original-resources .resource-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.original-resources .resource-actions button,.original-resources .resource-actions a{display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;border:1px solid #2456c4;border-radius:6px;background:#fff;color:#2456c4;font:700 13px 'Noto Sans KR',sans-serif;text-decoration:none;cursor:pointer}.original-resources .resource-actions button:focus-visible,.original-resources .resource-actions a:focus-visible{outline:3px solid #2456c4;outline-offset:3px}.original-resources details{margin-top:12px}.original-resources summary{cursor:pointer;font-weight:700}.original-resources .video-frame{position:relative;width:100%;aspect-ratio:16/9;margin-top:12px;background:#101828}.original-resources iframe{display:block;width:100%;height:100%;border:0}
+.original-summary .exam-skill-tips{margin:12px 0 0;padding-left:20px;font-size:12px;line-height:1.7;color:#344054}
+.original-summary .docssam-summary{margin:18px 0;padding:12px 14px;border-left:3px solid #2456c4;background:#f5f8ff}.original-summary .docssam-summary h2{margin:0 0 8px;font-size:16px}.original-summary .docssam-summary p{margin:5px 0;font-size:12px;line-height:1.6}
+.report-docssam-signature .docssam-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.report-docssam-signature .docssam-field{display:block;padding:11px;border:1px solid #d8dee8;border-radius:6px;background:#fff;font-size:13px;font-weight:700}.report-docssam-signature .docssam-field h3{margin:0 0 6px;font-size:13px;color:#1f3864}.report-docssam-signature .docssam-field p{margin:0;font-size:12px;font-weight:400;line-height:1.65;white-space:normal}.report-docssam-signature textarea{box-sizing:border-box;display:block;width:100%;min-height:74px;margin-top:7px;padding:8px;border:1px solid #aeb8c8;border-radius:4px;font:400 13px/1.5 'Noto Sans KR',sans-serif}.report-docssam-signature textarea:focus-visible,.report-docssam-signature button:focus-visible{outline:3px solid #2456c4;outline-offset:2px}.report-docssam-signature button{min-height:44px;padding:8px 16px;border:0;border-radius:5px;background:#2456c4;color:#fff;font:700 13px 'Noto Sans KR',sans-serif;cursor:pointer}.report-docssam-signature [role=status]{display:inline-block;margin-left:10px;font-size:12px}
+@media(max-width:600px){.original-report .report-cover-qr,.original-summary .week-plan,.original-summary .cumulative-grid{grid-template-columns:1fr}.original-report .report-qr-code{flex-basis:72px;width:72px;height:72px}}
+@media(max-width:600px){.report-docssam-signature .docssam-field-grid{grid-template-columns:1fr}}
+@media print{.original-report .report-cover-qr{gap:5mm}.original-report .report-qr-card{break-inside:avoid}.original-summary .week-plan{gap:2mm}.original-summary .week-plan li{break-inside:avoid}.original-summary .original-summary-actions{display:none!important}body.print-original-summary .original-report>.cover,body.print-original-summary .original-report>section:not(.original-summary){display:none!important}body.print-original-summary .original-report{box-shadow:none}body.print-original-summary .original-summary{border:0;padding-top:12px;padding-bottom:8px}body.print-original-summary .original-summary .lead{margin-bottom:7px}body.print-original-summary .original-summary .docssam-summary{margin:9px 0;padding:7px 12px}body.print-original-summary .original-summary .week-plan li{padding:5px 8px;line-height:1.35}body.print-original-summary .original-summary .exam-skill-tips{margin-top:7px;line-height:1.5}body.print-original-summary .original-summary h2[style]{margin-top:13px!important}}
 
 /* ===== 나만의 약점 유형 (weak-type bookmarking) ===== */
 .weakbtn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;border:1.5px solid #fdba74;background:#fff;color:var(--orange-d);cursor:pointer;font-family:inherit;line-height:1.4;white-space:nowrap}
@@ -210,6 +225,12 @@ td.weak-cell{white-space:nowrap}
 .abtn.correct{background:#EAF0FF;border:2px solid #2456C4;color:#2456C4;box-shadow:none}
 .abtn.correct::after{content:'✓';position:absolute;right:4px;top:1px;font:700 11px 'Noto Sans KR',sans-serif}
 .abtn:focus-visible{outline:3px solid #2456C4;outline-offset:3px}
+.signature-state-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;margin:14px 0}
+.signature-state-item{border:1px solid #b8c2d1;border-radius:8px;padding:7px;background:#fff;font:700 12px 'Noto Sans KR',sans-serif;color:#182230}
+.signature-state-item span{display:block;margin-bottom:4px}
+.signature-state-item select{width:100%;min-height:40px;border:1px solid #566274;border-radius:5px;background:#fff;color:#182230;font:700 13px 'Noto Sans KR',sans-serif}
+.signature-state-item select:focus-visible{outline:3px solid #2456C4;outline-offset:2px}
+@media(max-width:560px){.signature-state-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .answer-entry-doc .hint2{background:#F5F6F8;border-color:#D8DEE8;color:#182230;line-height:1.8}
 .answer-entry-doc .answerbtns .btn-primary{background:#2456C4;color:#fff;border-radius:6px}
 .answer-entry-doc .answerbtns .btn-secondary{background:#fff;border:1px solid #566274;color:#182230;border-radius:6px}
@@ -546,7 +567,8 @@ td.weak-cell{white-space:nowrap}
   if(!isOriginal) files.push('mock-data-original.js');
   files.push('bank/bank-registry.js');
   if(!isOriginal) files.push('mock-rx-data.js');
-  if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js','final-report-state.js');
+  if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js');
+  if(!isLast) files.push('final-report-state.js');
   if(!isLast&&!isOriginal) files.push('final-parent-report.js');
   if(isFinal1) files.push('final1-detailed-data.js','final-detailed-solutions.js');
   if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js');
@@ -672,6 +694,26 @@ td.weak-cell{white-space:nowrap}
     var s=Array.isArray(ox)?ox.join(''):String(ox==null?'':ox);
     return s.length===M.questions&&/^[OX]+$/.test(s);
   }
+  function validSignatureStates(states, draft){
+    var s=Array.isArray(states)?states.join(''):String(states==null?'':states);
+    return s.length===M.questions&&(draft?/^[OX\-?.]+$/:/^[OX\-]+$/).test(s);
+  }
+  function signatureProjection(states){
+    if(!validSignatureStates(states,false)) throw new Error('시그니처 답안에 미입력 또는 판독 보류가 남아 있습니다.');
+    return (Array.isArray(states)?states.join(''):String(states)).replace(/-/g,'X');
+  }
+  function signatureStateSummary(states){
+    if(!validSignatureStates(states,true)) throw new Error('시그니처 답안 형식 오류');
+    var values=Array.isArray(states)?states:String(states).split('');
+    var counts={O:0,X:0,'-':0,'?':0,'.':0},points=0,pendingPoints=0;
+    values.forEach(function(value,i){counts[value]++;if(value==='O')points+=BP(i+1).pts;if(value==='?'||value==='.')pendingPoints+=BP(i+1).pts;});
+    return {correct:counts.O,wrong:counts.X,blank:counts['-'],uncertain:counts['?'],unentered:counts['.'],score:round1(points),maxScore:round1(points+pendingPoints)};
+  }
+  function signatureStatesFromRow(row){
+    if(!row||row.answer_states==null) return null; // Legacy O/X cannot reveal blanks.
+    var states=String(row.answer_states);
+    return validSignatureStates(states,false)&&signatureProjection(states)===row.ox?states.split(''):null;
+  }
   function validateExamContract(){
     if(M.mode==='paper-only') return [];
     var errors=[],bp=M.blueprint||[],seen={},sum=0;
@@ -696,6 +738,10 @@ td.weak-cell{white-space:nowrap}
     if(preview||name.toLowerCase()==='docssam') return true;
     if(teacherEntry) return !!name;
     if(!(D.students||[]).includes(name)) return false;
+    if(isOriginal){
+      var signatureAccess=((D.archiveProductAccess||{})['mock-signature-'+roundNum])||[];
+      return Array.isArray(signatureAccess)&&(signatureAccess.indexOf('*')>=0||signatureAccess.indexOf(name)>=0);
+    }
     if(!isLast&&!isOriginal&&roundNum>=5){
       var access=((D.archiveProductAccess||{})['mock-final-'+roundNum])||[];
       return Array.isArray(access)&&(access.indexOf('*')>=0||access.indexOf(name)>=0);
@@ -804,12 +850,45 @@ td.weak-cell{white-space:nowrap}
   function publicCutVerified(S){
     if(!(S&&S.cutOnly&&M&&M.cutBasis)) return false;
     var rows=M.cutBasis.rows||[], sources=M.cutBasis.sources||[];
+    var norm=M.cutBasis.normalization||{};
+    var dist=M.cutBasis.distribution||{},a=dist.y2024,b=dist.y2025;
     var cuts=S.cuts||[];
+    var mean24=Number(norm.mean2024),mean25=Number(norm.mean2025);
+    var sd24=Number(norm.sd2024Approx),sd25=Number(norm.sd2025Approx);
+    function validCurve(y){
+      return !!(y&&Number(y.n)>0&&Array.isArray(y.knots)&&y.knots.length>2&&
+        Number(y.knots[y.knots.length-1][0])===0&&Number(y.knots[y.knots.length-1][1])===Number(y.n)&&
+        y.knots.every(function(k,i){return Array.isArray(k)&&Number.isFinite(Number(k[0]))&&Number.isFinite(Number(k[1]))&&
+          Number(k[1])>0&&Number(k[1])<=Number(y.n)&&(!i||(Number(k[0])<Number(y.knots[i-1][0])&&Number(k[1])>=Number(y.knots[i-1][1])));}));
+    }
+    function share(y,score){
+      if(score<=0) return 1;
+      var knots=y.knots;
+      if(score>Number(knots[0][0])) return 0;
+      for(var i=0;i<knots.length-1;i++){
+        var hi=knots[i],lo=knots[i+1];
+        if(score<=Number(hi[0])&&score>=Number(lo[0]))
+          return (Number(hi[1])+(Number(hi[0])-score)/(Number(hi[0])-Number(lo[0]))*(Number(lo[1])-Number(hi[1])))/Number(y.n);
+      }
+      return 1;
+    }
+    if(norm.status!=='approximate-merged-distribution'||Number(norm.yearWeight)!==0.5||
+       !Number.isFinite(mean24)||!Number.isFinite(mean25)||
+       !(sd24>0&&sd25>0)||!validCurve(a)||!validCurve(b)||
+       Number(a.mean)!==mean24||Number(b.mean)!==mean25||
+       Number(a.sdApprox)!==sd24||Number(b.sdApprox)!==sd25) return false;
     return sources.length>=2&&sources.every(function(s){return s.year&&/^https:\/\//.test(s.url||'');})&&rows.length>0&&cuts.length===rows.length+1&&rows.every(function(r){
-      return Number(r.average)===round1((Number(r.y2024)+Number(r.y2025))/2);
+      var oldCut=Number(r.y2024),newCut=Number(r.y2025);
+      if(!Number.isFinite(oldCut)||!Number.isFinite(newCut)) return false;
+      var target=(share(a,oldCut)+share(b,newCut))/2;
+      var point=Number(r.pooledPoint2025);
+      var mapped24=mean24+(sd24/sd25)*(point-mean25);
+      var pooled=(share(a,mapped24)+share(b,point))/2;
+      return Number.isFinite(point)&&Number(r.threshold2025)===point&&
+        Number(r.targetTopPct)===Math.round(target*1000)/10&&Math.abs(pooled-target)<0.005;
     })&&rows.every(function(r,i){
       var expectedLabel=i===0?r.grade+' 가능':rows[i-1].grade+'컷 · '+r.grade+'안정권';
-      return cuts[i]&&cuts[i][0]===expectedLabel&&Number(cuts[i][1])===Number(r.average);
+      return cuts[i]&&cuts[i][0]===expectedLabel&&Number(cuts[i][1])===Number(r.threshold2025);
     })&&cuts[rows.length]&&cuts[rows.length][0]===(M.cutBasis.belowLabel||'노력요함')&&Number(cuts[rows.length][1])===0;
   }
   /* 누적 성적: 최초 응시 회차별 석차 백분율 평균 -> 등급(band).
@@ -1001,6 +1080,7 @@ td.weak-cell{white-space:nowrap}
   }
   function cutWarnHTML(ctx){
     if(!ctx.near) return '';
+    if(isOriginal) return '<div class="cut-warn">예상 레벨 경계 근처입니다. 환산 기준이 근삿값이므로 한 구간의 합격 여부를 단정하지 않습니다.</div>';
     var parts=[];
     if(ctx.up) parts.push('<b>'+round1(ctx.up[1]-ctx.score)+'점</b>만 더 얻으면 '+esc(ctx.up[0])+'('+ctx.up[1]+'점)이 보이고');
     if(ctx.dn) parts.push('<b>'+round1(ctx.score-ctx.dn[1])+'점</b>을 잃으면 아래 구간으로 내려갑니다');
@@ -1249,8 +1329,8 @@ td.weak-cell{white-space:nowrap}
   }
   function reportQrHTML(ctx){
     var reportUrl=reportQrTarget(ctx),practiceUrl=practiceQrTarget(ctx);
-    var cards='<a class="report-qr-card" href="'+esc(reportUrl)+'"><span class="report-qr-code" data-qr-url="'+esc(reportUrl)+'" aria-hidden="true"></span><b>전체 진단 보기</b><small>휴대폰에서 이름 입력 후 바로 이동</small></a>';
-    if(practiceUrl)cards+='<a class="report-qr-card" href="'+esc(practiceUrl)+'"><span class="report-qr-code" data-qr-url="'+esc(practiceUrl)+'" aria-hidden="true"></span><b>내 유사문항 보기</b><small>이번 회차 오답 유형 바로 풀기</small></a>';
+    var cards='<a class="report-qr-card" href="'+esc(reportUrl)+'"><span class="report-qr-code" data-qr-url="'+esc(reportUrl)+'" aria-hidden="true"></span><span class="report-qr-text"><b>전체 진단 보기</b><small>휴대폰에서 이름 입력 후 바로 이동</small></span></a>';
+    if(practiceUrl)cards+='<a class="report-qr-card" href="'+esc(practiceUrl)+'"><span class="report-qr-code" data-qr-url="'+esc(practiceUrl)+'" aria-hidden="true"></span><span class="report-qr-text"><b>내 유사문항 보기</b><small>이번 회차 오답 유형 바로 풀기</small></span></a>';
     return '<div class="report-cover-qr" aria-label="휴대폰 바로가기">'+cards+'</div>';
   }
   function wireReportQr(root){
@@ -1462,7 +1542,7 @@ td.weak-cell{white-space:nowrap}
     return seriesLabel()+' '+prev.join('·')+'회에 이어 '+(ORD[cnt]||cnt)+' 번째입니다. 아직 해결되지 않았습니다.';
   }
 
-  /* 원본형은 공개 점수컷만 있고 응시자 분포·문항 정답률은 없다.
+  /* 원본형 앱에는 아직 검수·연결된 응시자 분포·문항 정답률이 없다.
      따라서 석차를 추정하지 않고 개인 배점 수행률로만 약점을 진단한다. */
   function originalWeakStatus(x){
     if(x.n===1 && x.wrongNos.length) return '확인 필요';
@@ -1498,13 +1578,12 @@ td.weak-cell{white-space:nowrap}
       .sort(function(a,b){return a.k.localeCompare(b.k,'ko');});
   }
   function originalCutBasisHTML(){
-    var B=M.cutBasis||{}, rows=B.rows||[], src=B.sources||[];
-    var links=src.map(function(s){return '<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.label)+'</a>';}).join(' · ');
-    return '<div class="lead">'+esc(B.note||'')+(links?'<br>확인 자료: '+links:'')+'</div>'+
-      '<table><tr><th>구간</th><th>2024 최저점</th><th>2025 최저점</th><th>적용 평균</th></tr>'+rows.map(function(r){
-        return '<tr><td><b>'+esc(r.grade)+'</b></td><td class="c">'+r.y2024+'점</td><td class="c">'+r.y2025+'점</td><td class="c"><b>'+r.average+'점</b></td></tr>';
+    var B=M.cutBasis||{}, rows=B.rows||[];
+    return '<p class="lead">시그니처 기출 점수를 2024·2025년 초2 성적분포와 비교해 2025년 기준으로 환산한 예상 합격 레벨입니다. 향후 선발 결과는 달라질 수 있습니다.</p>'+
+      '<table><tr><th>구간</th><th>2025 환산 참고점</th></tr>'+rows.map(function(r){
+        return '<tr><td><b>'+esc(r.grade)+'</b></td><td class="c"><b>약 '+Number(r.threshold2025).toFixed(1)+'점</b></td></tr>';
       }).join('')+'</table>'+
-      '<div class="lead" style="margin-top:8px">21.0점 미만은 사이트 운영 구간인 <b>'+esc(B.belowLabel||'노력요함')+'</b>으로 표시합니다. 공개 자료에 없는 인원·등수·석차 백분율은 계산하지 않았습니다.</div>';
+      '<p class="lead" style="margin-top:8px">기준 점수 미만은 <b>'+esc(B.belowLabel||'노력요함')+'</b>으로 표시합니다.</p>';
   }
   function originalAreaRowsHTML(A){
     return A.map(function(a){
@@ -1519,9 +1598,10 @@ td.weak-cell{white-space:nowrap}
     }).join('');
   }
   function originalWrongRowsHTML(ctx){
-    if(!ctx.wrongList.length) return '<tr><td colspan="7" class="c">오답이 없습니다.</td></tr>';
+    if(!ctx.wrongList.length) return '<tr><td colspan="8" class="c">미정답 문항이 없습니다.</td></tr>';
     return ctx.wrongList.map(function(it){
-      return '<tr><td class="c">'+it.no+'</td><td>'+esc(it.area)+'</td><td>'+esc(it.subarea||'-')+'</td><td><b>'+esc(it.type)+'</b></td><td class="c">'+BP(it.no).pts+'</td><td class="mono">'+esc(it.answer)+'</td><td class="c"><a href="'+esc(ctx.R.answerUrl||'')+'" target="_blank" rel="noopener">정답지</a></td></tr>';
+      var state=ctx.answerStates&&ctx.answerStates[it.no-1];
+      return '<tr><td class="c">'+it.no+'</td><td class="c">'+(state==='-'?'미응답':(state==='X'?'오답':'구분 미기록'))+'</td><td>'+esc(it.area)+'</td><td>'+esc(it.subarea||'-')+'</td><td><b>'+esc(it.type)+'</b></td><td class="c">'+BP(it.no).pts+'</td><td class="mono">'+esc(it.answer)+'</td><td class="c"><a href="'+esc(ctx.R.answerUrl||'')+'" target="_blank" rel="noopener">정답지</a></td></tr>';
     }).join('');
   }
   function originalCommentHTML(ctx, weakAreas, weakSubs, repeated){
@@ -1534,9 +1614,64 @@ td.weak-cell{white-space:nowrap}
     var focus=reliable.length?reliable.map(function(x){return '<b>'+esc(x.k)+'</b>('+x.perf+'%)';}).join(', '):'아직 두 문항 이상 출제된 취약 소영역이 없습니다';
     var singleTxt=singles.length?(' 한 문항만 출제되어 추가 확인이 필요한 소영역은 '+singles.map(function(x){return '<b>'+esc(x.k)+'</b>';}).join(', ')+'입니다.') : '';
     var repeatTxt=repeated.length?(' 두 회차에서 반복된 약점은 '+repeated.map(function(x){return '<b>'+esc(x.k)+'</b>';}).join(', ')+'입니다. 같은 풀이 구조를 다시 적용하는 연습이 우선입니다.'):' 아직 두 회차에 걸쳐 반복된 소영역 약점은 없습니다.';
-    return '<p><b>'+esc(ctx.name)+'</b> 학생은 '+esc(ctx.R.title)+'에서 <b>'+ctx.score+'점</b>, 30문항 중 <b>'+ctx.ncorr+'문항</b>을 맞혔습니다. 2024·2025년 공개 점수컷의 최저점 평균을 적용한 예상 구간은 <b>'+esc(ctx.grade)+'</b>입니다.</p>'+
+    return '<p><b>'+esc(ctx.name)+'</b> 학생은 '+esc(ctx.R.title)+'에서 <b>'+ctx.score+'점</b>, 30문항 중 <b>'+ctx.ncorr+'문항</b>을 맞혔습니다. 2025년 환산 참고 레벨은 <b>'+esc(ctx.grade)+'</b>입니다.</p>'+
       '<p>대영역에서는 <b>'+esc(area.k)+'</b> 수행률이 <b>'+area.perf+'%</b>로 가장 낮고, 이 영역에서 '+round1(area.tot-area.got)+'점을 잃었습니다. 소영역 우선순위는 '+focus+'입니다.'+singleTxt+'</p>'+
       '<p>'+repeatTxt+' 문항별 세부유형과 정답을 확인한 뒤, 정답만 외우지 말고 풀이 과정을 다시 적어 보세요.</p>';
+  }
+  function originalSummaryHTML(ctx, weakSubs, attempts, repeated){
+    var focus=weakSubs.filter(function(x){return x.n>=2;}).sort(function(a,b){return a.perf-b.perf||b.lost-a.lost;}).map(function(x){return x.k;});
+    ctx.wrongList.forEach(function(item){var label=item.subarea||item.type;if(label&&focus.indexOf(label)<0)focus.push(label);});
+    focus=focus.slice(0,2);
+    var first=focus[0]||'',second=focus[1]||first;
+    var practice=wrongPracticeModel(ctx),ready=practice.ready.length;
+    var practiceNote=ctx.wrongList.length?(ready?'검수 완료 유사문항 '+ready+'개 원문이 연결되어 있습니다. 승인되지 않은 오답 유형은 원문으로 복습하세요.':'오답 유사문항 연결은 검수·공개 승인 확인 중입니다. 승인 전 문제는 열리지 않습니다.'):'이번 회차는 오답이 없어 새 유사문항을 자동 배정하지 않습니다.';
+    var firstAttempt=attempts.filter(function(a){return a.n===1;})[0],secondAttempt=attempts.filter(function(a){return a.n===2;})[0];
+    var cumulative=firstAttempt&&secondAttempt?round1((firstAttempt.score+secondAttempt.score)/2):null;
+    var combined=ctx.roundNum===2?'<h3 class="cumulative-title">회차별 성적과 누적 성적</h3><div class="cumulative-grid">'+
+      '<div><span>1회 성적 · 최초 응시</span><b>'+(firstAttempt?firstAttempt.score+'점':'기록 없음')+'</b></div>'+
+      '<div><span>2회 성적 · 최초 응시</span><b>'+(secondAttempt?secondAttempt.score+'점':'기록 없음')+'</b></div>'+
+      '<div><span>누적 성적 · 1·2회 평균</span><b>'+(cumulative!==null?cumulative+'점':'산출 대기')+'</b></div></div>'+
+      '<p class="lead" style="margin-top:9px">누적 성적은 두 회차의 최초 응시 점수만으로 계산하며, 연습 재응시 점수는 넣지 않습니다.'+(cumulative!==null?(repeated.length?' 두 회차 반복 오답 소영역: '+esc(repeated.map(function(x){return x.k;}).join(', '))+'.':' 두 회차 반복 오답 소영역은 확인되지 않았습니다.'):' 두 회차를 모두 응시해야 누적 성적을 표시합니다.')+'</p>':'';
+    var days=ctx.wrongList.length&&ready===ctx.wrongList.length?[
+      '1일 · 원답과 조건·답 형식 확인',
+      '2일 · '+first+' 기본 유사문항',
+      '3일 · '+first+' 다른 수·그림으로 다시 풀기',
+      '4일 · '+second+' 시작 + 첫 유형 재확인',
+      '5일 · 두 유형 섞어 풀고 넘긴 문제 표시',
+      '6일 · 새 유사문항에서 식·답·단위 점검',
+      '7일 · 처음 보지 않은 문제로 재확인'
+    ]:ctx.wrongList.length?[
+      '1일 · 원답과 조건·답 형식 확인',
+      '2일 · '+first+' 원문 풀이 다시 적기',
+      '3일 · 정답·해설과 내 식 비교하기',
+      '4일 · '+second+' 원문에서 막힌 단계 찾기',
+      '5일 · 두 유형의 조건과 답 형식 비교하기',
+      '6일 · 식·답·단위 빠짐없이 재점검하기',
+      '7일 · 교사에게 남은 질문과 유사문항 공개 여부 확인하기'
+    ]:[
+      '1일 · 처음 풀이에서 확인한 조건 다시 읽기',
+      '2일 · 풀이식과 답 형식 점검',
+      '3일 · 시간이 걸린 문제 다시 풀기',
+      '4일 · 한 문제를 다른 방법으로 설명하기',
+      '5일 · 표시하고 넘어간 문제 확인',
+      '6일 · 새 문제에서 식·답·단위 점검',
+      '7일 · 전체 풀이 과정 스스로 확인하기'
+    ];
+    var attemptLabel=ctx.attemptNo>=2?ctx.attemptNo+'차 연습 기록':'최초 응시 기록';
+    var answerBreakdown=validSignatureStates(ctx.answerStates,false)?signatureStateSummary(ctx.answerStates):null;
+    var answerBreakdownHTML=answerBreakdown?'<p class="lead" style="margin-top:10px"><b>답안 상태</b> · 맞음 '+answerBreakdown.correct+'개 · 틀림 '+answerBreakdown.wrong+'개 · 미응답 '+answerBreakdown.blank+'개. 미응답은 채점상 미정답에 포함하지만, 복습할 때는 틀린 답과 구분합니다.</p>':'<p class="lead" style="margin-top:10px">기존 O/X 기록에는 틀린 답과 미응답의 구분이 저장되지 않았습니다. 아래 오답 수에는 미응답이 포함될 수 있으며, 시험지로 확인하기 전에는 추정하지 않습니다.</p>';
+    return '<section class="original-summary" id="originalSummary"><h2>진단 요약</h2><p class="lead">'+esc(ctx.name)+' 학생 · 시그니처 실전 '+ctx.roundNum+'회 · '+attemptLabel+'입니다.</p>'+
+      '<table><tr><th>점수</th><th>맞은 문제</th><th>미정답</th><th>2025 환산 예상 레벨</th></tr><tr><td>'+ctx.score+'점</td><td>'+ctx.ncorr+'개</td><td>'+ctx.wrong+'개</td><td>'+esc(ctx.grade)+'</td></tr></table>'+answerBreakdownHTML+
+      (first?'<p style="margin-top:12px;font-size:13px"><b>이번 주 시작 후보</b> · '+esc(first)+(focus[1]?' / '+esc(second):'')+'</p>':'')+combined+
+      '<div class="original-summary-actions no-print"><button type="button" data-original-summary-print>요약 진단지만 인쇄 / PDF 저장</button></div>'+reportQrHTML(ctx)+
+      '<div data-docssam-summary>'+(window.GFIELD_FINAL_REPORT_STATE&&window.GFIELD_FINAL_REPORT_STATE.summary?window.GFIELD_FINAL_REPORT_STATE.summary():'')+'</div>'+
+      '<h2 style="margin-top:20px">일주일 복습 안내</h2><p class="lead">하루 15~25분은 참고 범위입니다. 집중 상태에 따라 조절하고, 전체 80분 재응시와 구분하세요. '+esc(practiceNote)+'</p><ol class="week-plan">'+days.map(function(day){var split=day.split(' · ');return '<li><b>'+esc(split[0])+'</b> · '+esc(split.slice(1).join(' · '))+'</li>';}).join('')+'</ol>'+
+      '<h2 style="margin-top:20px">시험장에서 써 볼 방법</h2><ul class="exam-skill-tips"><li>시작이 막히면 ‘구할 것’과 ‘주어진 것’을 한 줄씩 적고 첫 식이나 그림부터 만듭니다.</li><li>막힌 문제는 표시하고 다음 문제로 간 뒤, 끝에 다시 돌아옵니다.</li><li>풀이식과 최종 답을 구분해 적고, 문제에서 요구한 답의 형식·단위를 확인합니다.</li><li>타이머는 현재 속도를 살피는 신호로만 씁니다. 목표 시각에 못 맞췄다고 서두르거나 풀이를 포기하지 않습니다.</li></ul><p class="lead">위 방법은 공통 제안입니다. 아이에게 맞는 적용 순서와 시간 기준은 독샘의 관찰 코멘트로 정합니다.</p></section>';
+  }
+  function originalResourcesHTML(ctx){
+    var video=String(ctx.R.video||''),match=video.match(/^https:\/\/www\.youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})$/);
+    var player=match?'<details><summary>풀이 영상 보기</summary><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/'+match[1]+'" title="시그니처 실전 '+ctx.roundNum+'회 풀이 영상" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div><p class="lead"><a href="'+esc(video)+'" target="_blank" rel="noopener">영상이 열리지 않으면 유튜브에서 보기</a></p></details>':'<p class="lead">풀이 영상 링크 확인 중</p>';
+    return '<section class="original-resources no-print"><h2>시험지·풀이 자료</h2><p class="lead">시험지는 기존 원본 뷰어에서 확인하고, 풀이 영상은 필요할 때 펼쳐 보세요.</p><div class="resource-actions"><button type="button" data-original-paper>시험지 보기·인쇄</button><a href="'+esc(ctx.R.answerUrl||'')+'" target="_blank" rel="noopener">정답·해설 보기</a></div>'+player+'</section>';
   }
   function renderOriginalReport(ctx, priorRows, attemptNo, fk, saveErr, saveConflict, saved){
     var attempts=originalFirstAttempts(roundNum,priorRows,attemptNo,fk,state.oxArr,preview||saved);
@@ -1553,21 +1688,35 @@ td.weak-cell{white-space:nowrap}
     app.innerHTML=previewBanner+teacherBanner+practiceBanner+saveErrBanner+
       '<div class="doc original-report"><div class="cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>시그니처 실전 모의고사 성적·약점 진단</h1>'+
       '<div class="sub">'+esc(ctx.R.title)+' · 생각하는 황소 초등선발 대비</div><div class="who"><b>'+esc(ctx.name)+'</b><span>학생</span></div>'+
-      '<div class="kpi"><div><i>점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>판정 기준</i><b style="font-size:15px">2개년 평균 컷</b></div><div><i>예상 결과</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div></div></div>'+
-      '<section><h2>성적 판정 기준</h2>'+originalCutBasisHTML()+cutWarnHTML(ctx)+'</section>'+
+      '<div class="kpi"><div><i>점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>비교 기준</i><b style="font-size:15px">2025 환산</b></div><div><i>예상 레벨</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div></div>'+reportQrHTML(ctx)+'</div>'+
+      originalSummaryHTML(ctx,weakSubs,attempts,repeated)+
+      originalResourcesHTML(ctx)+
+      '<section><h2>2025 환산 예상 레벨</h2>'+originalCutBasisHTML()+cutWarnHTML(ctx)+'</section>'+
       '<section><h2>대영역별 수행률</h2><div class="lead">학생이 맞힌 문항의 배점만으로 계산한 개인 수행률입니다. 전체 응시자 평균이나 문항 정답률을 섞지 않았습니다.</div>'+
       '<div class="split"><div>'+radarSVG(ctx.A,true)+'<div class="legend"><span><s style="background:rgba(249,115,22,.5);border:1px solid #ea580c"></s>'+esc(ctx.name)+'</span></div></div>'+
       '<table><tr><th>대영역</th><th>출제</th><th>정답</th><th>배점</th><th>득점</th><th>내 득점률</th><th>잃은 점수</th></tr>'+originalAreaRowsHTML(ctx.A)+'</table></div></section>'+
       '<section><h2>소영역별 약점</h2><div class="lead">두 문항 이상 출제된 소영역은 배점 수행률로 판정합니다. 한 문항뿐인 소영역은 약점으로 단정하지 않고 <b>확인 필요</b>로 표시합니다.</div>'+
       '<table><tr><th>소영역</th><th>출제</th><th>정답</th><th>내 득점률</th><th>잃은 점수</th><th>오답 번호</th><th>판정</th></tr>'+originalSubareaRowsHTML(ctx.SA)+'</table>'+
       '<div class="original-repeat-block"><h2 style="margin-top:26px;font-size:16px">두 회차 반복 약점</h2>'+repeatHTML+'</div></section>'+
-      '<section><h2>문항별 세부유형·정답</h2><div class="lead">오답 문항만 표시합니다. 문제의 소재가 아니라 실제 풀이 핵심을 기준으로 분류했습니다.</div>'+
-      '<table><tr><th>번호</th><th>대영역</th><th>소영역</th><th>세부유형</th><th>배점</th><th>정답</th><th>해설</th></tr>'+originalWrongRowsHTML(ctx)+'</table></section>'+wrongPracticeHTML(ctx)+
+      '<section><h2>문항별 세부유형·정답</h2><div class="lead">미정답 문항만 표시합니다. 오답과 미응답은 답안에 기록된 경우에만 구분합니다. 문제의 소재가 아니라 실제 풀이 핵심을 기준으로 분류했습니다.</div>'+
+      '<table><tr><th>번호</th><th>답안 상태</th><th>대영역</th><th>소영역</th><th>세부유형</th><th>배점</th><th>정답</th><th>해설</th></tr>'+originalWrongRowsHTML(ctx)+'</table></section>'+wrongPracticeHTML(ctx)+
       '<section><h2>최초 성적 기록</h2><div class="lead">선생님 입력과 온라인 회원 입력은 같은 중앙 기록을 사용합니다. 연습 재응시는 최초 성적을 바꾸지 않습니다.</div>'+historyHTML+'</section>'+
-      '<section style="border-bottom:none"><h2>전문 진단 코멘트</h2><div class="cmt">'+originalCommentHTML(ctx,weakAreas,weakSubs,repeated)+'</div>'+
+      '<section><h2>점수 기반 진단</h2><div class="cmt">'+originalCommentHTML(ctx,weakAreas,weakSubs,repeated)+'</div></section>'+
+      (window.GFIELD_FINAL_REPORT_STATE?window.GFIELD_FINAL_REPORT_STATE.render():'')+
+      '<section style="border-bottom:none">'+
       '<div class="sign">지필드 영재교육 원장 <b>DOCSSAM</b></div></section></div>';
-    showPrint(true); printBtn.onclick=function(){window.print();};
+    wireReportQr(app);
+    showPrint(true); printBtn.textContent='상세 분석지 인쇄 / PDF 저장'; printBtn.onclick=function(){window.print();};
+    var summaryButton=app.querySelector('[data-original-summary-print]');
+    if(summaryButton)summaryButton.onclick=function(){
+      document.body.classList.add('print-original-summary');
+      window.addEventListener('afterprint',function(){document.body.classList.remove('print-original-summary');},{once:true});
+      window.print();
+    };
+    var paperButton=app.querySelector('[data-original-paper]');
+    if(paperButton)paperButton.onclick=renderPaper;
     wireWrongPractice(ctx);
+    if(window.GFIELD_FINAL_REPORT_STATE)window.GFIELD_FINAL_REPORT_STATE.wire(app);
   }
   /* ===GF-CORE-END=== */
 
@@ -1754,6 +1903,8 @@ td.weak-cell{white-space:nowrap}
   /* ===GF-WEAK-END=== */
 
   window.GF_TEST = { M:M, BP:BP, round1:round1, validOx:validOx, validateExamContract:validateExamContract,
+    validSignatureStates:validSignatureStates, signatureProjection:signatureProjection,
+    signatureStateSummary:signatureStateSummary, signatureStatesFromRow:signatureStatesFromRow,
     computeScore:computeScore, percentileOf:percentileOf, populationStatsVerified:populationStatsVerified,
     publicCutVerified:publicCutVerified,
     cutInfo:cutInfo, areaAgg:areaAgg, subareaAgg:subareaAgg, ptsAgg:ptsAgg, missItems:missItems, causeGroups:causeGroups,
@@ -1771,7 +1922,8 @@ td.weak-cell{white-space:nowrap}
     curriculumPrescriptionForItem:curriculumPrescriptionForItem,
     curriculumConnectionHTML:curriculumConnectionHTML,
     originalFirstAttempts:originalFirstAttempts,
-    wrongPracticeModel:wrongPracticeModel, wrongPracticeHTML:wrongPracticeHTML };
+    wrongPracticeModel:wrongPracticeModel, wrongPracticeHTML:wrongPracticeHTML,
+    originalSummaryHTML:originalSummaryHTML, originalResourcesHTML:originalResourcesHTML };
 
   /* ===================== Supabase ===================== */
   function scoreOfOx(oxArr){ return computeScore(oxArr); }
@@ -1781,6 +1933,10 @@ td.weak-cell{white-space:nowrap}
     if(isLast) return {ok:false, conflict:false};
     var oxs = oxArr.join(''); var sc = scoreOfOx(oxArr);
     var payload={student:student, round:roundKey, ox:oxs, score:sc.score, wrong:sc.wrong, source:source||'parent', updated_at:new Date().toISOString()};
+    if(isOriginal){
+      if(!validSignatureStates(state.answerStates,false)||signatureProjection(state.answerStates)!==oxs) return {ok:false, conflict:false};
+      payload.answer_states=state.answerStates.join('');
+    }
     try{
       var res = await fetch(SUPA_URL+"/rest/v1/mock_results", {
         method:"POST",
@@ -1803,8 +1959,15 @@ td.weak-cell{white-space:nowrap}
     }catch(e){ return {ok:false, conflict:false}; }
   }
   async function supaLoadRows(student){
-    var url = SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq."+encodeURIComponent(student);
+    var url = SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at,answer_states&student=eq."+encodeURIComponent(student);
     var res = await fetch(url, {headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY}});
+    if(res.status===400){
+      var errorText=await res.text();
+      if(errorText.indexOf('answer_states')>=0){
+        var legacyUrl=SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq."+encodeURIComponent(student);
+        res=await fetch(legacyUrl,{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
+      }
+    }
     if(!res.ok) throw new Error('성적 조회 HTTP '+res.status);
     var rows = await res.json();
     var map={},duplicates={};
@@ -1812,6 +1975,7 @@ td.weak-cell{white-space:nowrap}
       if(r.source==='reset'||!validOx(r.ox)) return;
       var sc=computeScore(String(r.ox).split(''));
       if(Math.abs(Number(r.score)-sc.score)>0.0001||Number(r.wrong)!==sc.wrong) return;
+      if(r.answer_states!=null&&!signatureStatesFromRow(r)) return;
       if(map[r.round]){duplicates[r.round]=true;return;}
       map[r.round]=r;
     });
@@ -1917,7 +2081,7 @@ td.weak-cell{white-space:nowrap}
   var app = document.getElementById('app');
   var printBtn = document.getElementById('printBtn');
   var summaryPrintController = null;
-  var state = { name:'', oxArr:null, timerHandle:null, weak:{} };
+  var state = { name:'', oxArr:null, answerStates:null, timerHandle:null, weak:{} };
 
   function getRound(){ return M.rounds[String(roundNum)]; }
   function finalKey(){ return setPrefix()+roundNum; }
@@ -2210,7 +2374,7 @@ td.weak-cell{white-space:nowrap}
     };}):fallbackPlan);
     app.innerHTML =
       '<div class="timer-wrap">'+
-      '<div class="hd"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>'+esc(M.title||'파이널 모의고사')+' · '+timerMinutes+'분 실전 타이머</h1><p>시간 배분 훈련용입니다. 구간마다 음성으로 안내합니다.</p></div>'+
+      '<div class="hd"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>'+esc(M.title||'파이널 모의고사')+' · '+timerMinutes+'분 실전 타이머</h1><p>시간 배분 훈련용입니다. 안내 시각은 참고 기준이며, 그 번호까지 풀어야 정답인 것은 아닙니다.</p></div>'+
       '<div class="clock">'+
         '<div class="phase" id="ph">시작 대기</div>'+
         '<div class="time" id="tm">'+mmss(TOTAL)+'</div>'+
@@ -2361,8 +2525,53 @@ td.weak-cell{white-space:nowrap}
     paint();
   }
 
+  function renderSignatureAnswer(){
+    showPrint(false);
+    var R=getRound();
+    if(!validSignatureStates(state.answerStates,true)) state.answerStates=Array(M.questions).fill('.');
+    var previewBanner=preview?'<div class="banner preview no-print">🔎 관리자 미리보기 — 저장되지 않습니다</div>':'';
+    var teacherInputBanner=(!preview&&teacherEntry)?'<div class="banner preview no-print">🧑‍🏫 선생님 대리 입력 — 시험지에 적은 최초 답을 기준으로 기록해 주세요.</div>':'';
+    app.innerHTML=previewBanner+teacherInputBanner+
+      '<div class="doc start-doc answer-entry-doc"><div class="cover small-cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>'+esc(R.title||('시그니처 '+roundNum+'회'))+'</h1><div class="sub">'+esc(state.name)+' 학생 · 문항별 상태를 선택하세요</div></div><section>'+
+      '<div class="hint2"><b>각 문항을 따로 판정하세요.</b> O 맞음 · X 틀림 · — 풀지 않음 · ? 글씨나 답이 불확실함. 처음의 ‘선택 전’은 미응답이 아닙니다. ?가 남으면 확정 채점하지 않습니다.</div>'+
+      '<div class="signature-state-grid" id="signatureStateGrid"></div>'+
+      '<div class="countbar" id="signatureCount" role="status" aria-live="polite"></div>'+
+      '<div class="answerbtns"><button class="btn-secondary" id="btnClear">선택 모두 지우기</button><button class="btn-primary" id="btnGrade">확정 채점·분석 보기</button></div>'+
+      '<div class="no-print" style="text-align:center;margin-top:12px"><a href="#" id="toTimerLink" style="color:var(--dim);font-size:12px;text-decoration:underline">⏱ 타이머로 이동</a></div></section></div>';
+    var grid=document.getElementById('signatureStateGrid');
+    for(var n=1;n<=M.questions;n++){
+      var label=document.createElement('label');label.className='signature-state-item';
+      var number=document.createElement('span');number.textContent=n+'번';label.appendChild(number);
+      var select=document.createElement('select');select.setAttribute('aria-label',n+'번 채점 상태');select.dataset.qno=n;
+      [['.','선택 전'],['O','O 맞음'],['X','X 틀림'],['-','— 안 품'],['?','? 판독 보류']].forEach(function(option){
+        var item=document.createElement('option');item.value=option[0];item.textContent=option[1];select.appendChild(item);
+      });
+      select.value=state.answerStates[n-1];
+      select.onchange=function(){state.answerStates[Number(this.dataset.qno)-1]=this.value;updateSignatureCount();};
+      label.appendChild(select);grid.appendChild(label);
+    }
+    document.getElementById('btnClear').onclick=function(){state.answerStates=Array(M.questions).fill('.');grid.querySelectorAll('select').forEach(function(s){s.value='.';});updateSignatureCount();};
+    document.getElementById('btnGrade').onclick=function(){
+      var summary=signatureStateSummary(state.answerStates);
+      if(summary.unentered||summary.uncertain){
+        document.getElementById('signatureCount').textContent='확정 채점 전 선택 전 '+summary.unentered+'개와 판독 보류 '+summary.uncertain+'개를 확인해 주세요.';
+        return;
+      }
+      state.oxArr=signatureProjection(state.answerStates).split('');
+      if(summary.correct===0&&!window.confirm('맞은 문제가 0개입니다. 상태를 확인하고 0점으로 확정할까요?')) return;
+      gradeAndShowReport();
+    };
+    document.getElementById('toTimerLink').onclick=function(e){e.preventDefault();renderTimer();};
+    updateSignatureCount();
+    function updateSignatureCount(){
+      var s=signatureStateSummary(state.answerStates);
+      document.getElementById('signatureCount').textContent='맞음 '+s.correct+' · 틀림 '+s.wrong+' · 안 품 '+s.blank+' · 판독 보류 '+s.uncertain+' · 선택 전 '+s.unentered+' · 점수 '+(s.uncertain||s.unentered?s.score+'~'+s.maxScore:s.score)+'점';
+    }
+  }
+
   function renderAnswer(){
     if(M.mode==='paper-only'){ openAnswerPage(); return; }
+    if(isOriginal){ renderSignatureAnswer(); return; }
     showPrint(false);
     var R = getRound();
     if(!state.oxArr) state.oxArr = Array(M.questions).fill('X');
@@ -2440,6 +2649,7 @@ td.weak-cell{white-space:nowrap}
         return;
       }
       state.oxArr=String(selectedAttempt.ox).split('');
+      if(isOriginal) state.answerStates=signatureStatesFromRow(selectedAttempt);
     }
     var saveKey = attemptNo===1 ? fk : (attemptNo===2 ? fk2 : fk3);
     var saveSource = attemptNo===1 ? firstAttemptSource(state.name) : (teacherEntry?'practice-admin':'practice');
@@ -2458,6 +2668,7 @@ td.weak-cell{white-space:nowrap}
         if(!winningRow||typeof winningRow.ox!=='string'||winningRow.ox.length!==M.questions) throw new Error('최초 기록 재조회 실패');
         priorRows=refreshedRows;
         state.oxArr=winningRow.ox.split('');
+        if(isOriginal) state.answerStates=signatureStatesFromRow(winningRow);
       }catch(e){
         app.innerHTML='<div class="doc"><section><div class="banner saveerr no-print">다른 입력이 먼저 저장되어 현재 입력은 반영하지 않았습니다.</div><p class="lead">기존 최초 기록은 그대로 유지됩니다. 네트워크 상태를 확인한 뒤 다시 열어 주세요.</p></section></div>';
         return;
@@ -2465,6 +2676,9 @@ td.weak-cell{white-space:nowrap}
     }
     await refreshFinalPopulation(priorRows);
     var reportState=null;
+    if(isOriginal&&window.GFIELD_FINAL_REPORT_STATE){
+      await window.GFIELD_FINAL_REPORT_STATE.load(state.name,roundNum,state.oxArr.join(''),teacherEntry?'admin':'student',false,preview,'original');
+    }
     if(!isLast&&!isOriginal&&window.GFIELD_FINAL_REPORT_STATE){
       // 연습 응시도 같은 학생·회차의 코멘트를 읽는다. 백분율 기록은 최초 성적 저장에만 허용한다.
       reportState=await window.GFIELD_FINAL_REPORT_STATE.load(state.name,roundNum,state.oxArr.join(''),teacherEntry?'admin':'student',!!saved&&attemptNo===1,preview);
@@ -2478,6 +2692,7 @@ td.weak-cell{white-space:nowrap}
       }
     }
     var ctx = buildContext(state.name, roundNum, state.oxArr);
+    if(isOriginal) ctx.answerStates=state.answerStates;
     ctx.attemptNo=attemptNo;
 
     if(ctx.cutOnly){
@@ -2673,6 +2888,7 @@ td.weak-cell{white-space:nowrap}
         priorityNos:priorityNos,
         round:roundNum,
         name:ctx.name,
+        teacherPrint:teacherEntry,
         beforeOpen:function(){issueWrongPracticeHandoff(ctx);}
       });
     }else if(hasPreparedSummaryPrint&&window.GFIELD_FINAL_REPORT_PRINT&&typeof window.GFIELD_FINAL_REPORT_PRINT.attach==='function'){
