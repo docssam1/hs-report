@@ -1999,6 +1999,10 @@ td.weak-cell{white-space:nowrap}
 
   /* ===================== Supabase ===================== */
   function scoreOfOx(oxArr){ return computeScore(oxArr); }
+  async function signatureRest(path, options){
+    if(!window.GFIELD_AUTH||typeof window.GFIELD_AUTH.rest!=='function') throw new Error('시그니처 성적은 로그인 후 조회할 수 있습니다.');
+    return window.GFIELD_AUTH.rest(path,options,teacherEntry?'admin':'student');
+  }
   /* 새 응시 슬롯은 insert-only로 저장해 동시에 제출되어도 먼저 도착한 기록을 보존한다.
      관리자가 명시적으로 RESET한 슬롯만 조건부 PATCH로 다시 열 수 있다. */
   async function supaUpsert(student, roundKey, oxArr, source){
@@ -2008,23 +2012,34 @@ td.weak-cell{white-space:nowrap}
     if(isOriginal){
       if(!validSignatureStates(state.answerStates,false)||signatureProjection(state.answerStates)!==oxs) return {ok:false, conflict:false};
       payload.answer_states=state.answerStates.join('');
+      if(!teacherEntry){
+        var signatureUser=await window.GFIELD_AUTH.getUser('student');
+        if(!signatureUser) return {ok:false, conflict:false};
+        payload.owner_id=signatureUser.id;
+      }
     }
     try{
-      var res = await fetch(SUPA_URL+"/rest/v1/mock_results", {
+      var requestOptions={
         method:"POST",
-        headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY, "Content-Type":"application/json", Prefer:"return=minimal"},
+        headers:{"Content-Type":"application/json", Prefer:"return=minimal"},
         body:JSON.stringify(payload)
-      });
+      };
+      var res = isOriginal
+        ? await signatureRest('mock_results',requestOptions)
+        : await fetch(SUPA_URL+"/rest/v1/mock_results",Object.assign({},requestOptions,{headers:Object.assign({apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY},requestOptions.headers)}));
       if(res.ok) return {ok:true, conflict:false};
       if(res.status!==409) return {ok:false, conflict:false};
 
       var resetUrl=SUPA_URL+"/rest/v1/mock_results?student=eq."+encodeURIComponent(student)
         +"&round=eq."+encodeURIComponent(roundKey)+"&source=eq.reset&ox=eq.RESET&select=round";
-      var reopened=await fetch(resetUrl,{
+      var resetOptions={
         method:"PATCH",
-        headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY, "Content-Type":"application/json", Prefer:"return=representation"},
+        headers:{"Content-Type":"application/json", Prefer:"return=representation"},
         body:JSON.stringify(payload)
-      });
+      };
+      var reopened=isOriginal
+        ? await signatureRest(resetUrl.split('/rest/v1/')[1],resetOptions)
+        : await fetch(resetUrl,Object.assign({},resetOptions,{headers:Object.assign({apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY},resetOptions.headers)}));
       if(!reopened.ok) return {ok:false, conflict:false};
       var changed=await reopened.json();
       return {ok:Array.isArray(changed)&&changed.length===1, conflict:!Array.isArray(changed)||changed.length!==1};
@@ -2032,12 +2047,16 @@ td.weak-cell{white-space:nowrap}
   }
   async function supaLoadRows(student){
     var url = SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at,answer_states&student=eq."+encodeURIComponent(student);
-    var res = await fetch(url, {headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY}});
+    var res = isOriginal
+      ? await signatureRest(url.split('/rest/v1/')[1],{})
+      : await fetch(url, {headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY}});
     if(res.status===400){
       var errorText=await res.text();
       if(errorText.indexOf('answer_states')>=0){
         var legacyUrl=SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq."+encodeURIComponent(student);
-        res=await fetch(legacyUrl,{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
+        res=isOriginal
+          ? await signatureRest(legacyUrl.split('/rest/v1/')[1],{})
+          : await fetch(legacyUrl,{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
       }
     }
     if(!res.ok) throw new Error('성적 조회 HTTP '+res.status);

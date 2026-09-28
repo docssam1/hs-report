@@ -693,7 +693,7 @@
     if(!mkM()){ if(body) body.textContent='mock-data.js를 불러오지 못했습니다.'; return; }
     if(st) st.textContent='불러오는 중…';
     try{
-      const r=await fetch(MK_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at",{headers:{apikey:MK_KEY,Authorization:'Bearer '+MK_KEY}});
+      const r=await window.GFIELD_AUTH.rest("mock_results?select=student,round,ox,score,wrong,source,updated_at",{},'admin');
       const received=r.ok?await r.json():[];
       MK_ROWS=received.filter(mkValidRow);
       const rejected=received.length-MK_ROWS.length;
