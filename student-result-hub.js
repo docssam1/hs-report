@@ -57,7 +57,7 @@
     if(scriptPromises[kind]) return scriptPromises[kind];
     scriptPromises[kind]=new Promise(function(resolve,reject){
       var node=document.createElement('script');
-      node.src=spec.file+'?v=20260915a';node.async=true;
+      node.src=spec.file+'?v='+(kind==='original'?'20260928-signature-answer-keys-1':'20260915a');node.async=true;
       node.onload=function(){(!spec.global||root[spec.global])?resolve(spec.global?root[spec.global]:true):reject(new Error('성적 기준을 확인하지 못했습니다.'));};
       node.onerror=function(){reject(new Error('성적 기준을 불러오지 못했습니다.'));};
       document.head.appendChild(node);

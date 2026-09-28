@@ -54,7 +54,43 @@ assert.match(combined, /2회 성적 · 최초 응시[\s\S]*60점[\s\S]*상위 �
 assert.match(combined, /누적 성적 · 1·2회 평균[\s\S]*50점[\s\S]*명 기준 약 \d+등/);
 assert.match(combined, /회차별 난이도 차이는 미보정/);
 assert.equal(((combined.match(/<ol class="week-plan">([\s\S]*?)<\/ol>/) || [,''])[1].match(/<li>/g) || []).length, 7);
+assert.match(combined, /이것만은 꼭 하고[\s\S]*특정 번호를 배정하지 않습니다/);
+assert.doesNotMatch(combined, /data-week-no=/);
+const reviewItems = model.rounds['2'].items.filter(item => [2, 5, 16, 30].includes(item.no));
+const reviewStates = Array(30).fill('O');
+for (const item of reviewItems) reviewStates[item.no - 1] = 'X';
+reviewStates[1] = '-';
+const reviewCtx = { ...ctx, wrongList: reviewItems, wrong: 4, answerStates: reviewStates };
+const review = core.originalSummaryHTML(reviewCtx, [], attempts, [{ k: model.rounds['2'].items[4].subarea }]);
+assert.deepEqual(Array.from(review.matchAll(/data-week-no="(\d+)"/g), match => Number(match[1])), [5, 2, 30]);
+assert.match(review, /원문 5번[\s\S]*반복 유형 · 오답/);
+assert.match(review, /원문 2번[\s\S]*미응답/);
+assert.match(review, /2일[\s\S]*원문 5번[\s\S]*4일[\s\S]*원문 2번[\s\S]*6일[\s\S]*원문 30번/);
+assert.doesNotMatch(review, /data-week-no="16"/);
+const legacyReview = core.originalSummaryHTML({ ...reviewCtx, answerStates: null }, [], attempts, []);
+assert.match(legacyReview, /원문 30번[\s\S]*미정답/);
+assert.doesNotMatch(legacyReview, /<small>미응답<\/small>/);
 assert.match(combined, /타이머는 현재 속도를 살피는 신호/);
+const allCorrect = Array(30).fill('O');
+const lastWrong = allCorrect.slice(); lastWrong[29] = 'X';
+const actualAttempts = [
+  { n: 1, oxArr: allCorrect, score: core.computeScore(allCorrect).score },
+  { n: 2, oxArr: lastWrong, score: core.computeScore(lastWrong).score },
+];
+const comparison = core.originalComparisonHTML(actualAttempts);
+assert.match(comparison, /1·2회 변화와 누적 분석/);
+assert.match(comparison, /최초 응시 기록만 비교/);
+assert.match(comparison, /대영역[\s\S]*배점대/);
+assert.match(comparison, /도형<\/b><\/td><td class="c">100%<\/td><td class="c">81\.1%<\/td><td class="c"><b>91\.3%<\/b><\/td><td class="c delta-down">-18\.9%p/);
+assert.match(core.originalComparisonHTML([actualAttempts[1]]), /없는 회차를 0점으로 계산하지 않습니다/);
+const itemStates = allCorrect.slice(); itemStates[1] = 'X'; itemStates[29] = '-';
+const allItems = core.originalAllItemHTML({ ...ctx, oxArr: lastWrong, answerStates: itemStates });
+assert.equal((allItems.match(/<tr><td class="c">\d+<\/td>/g) || []).length, 30);
+assert.match(allItems, /original-status x">오답/);
+assert.match(allItems, /original-status blank">미응답/);
+const legacyItems = core.originalAllItemHTML({ ...ctx, oxArr: lastWrong, answerStates: null });
+assert.match(legacyItems, /original-status x">미정답/);
+assert.doesNotMatch(legacyItems, /original-status blank/);
 assert.match(html, /안내 시각은 참고 기준이며, 그 번호까지 풀어야 정답인 것은 아닙니다/);
 assert.doesNotMatch(JSON.stringify(model.exam.cues), /지금쯤 6번을 넘어가면 좋아/);
 const missing = core.originalSummaryHTML(ctx, [], [attempts[1]], []);

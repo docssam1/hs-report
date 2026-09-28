@@ -110,7 +110,7 @@ check('새 60문항의 핵심 정답과 분류', () => {
   );
   assert.deepEqual(
     [r2[3].answer, r2[7].answer, r2[8].answer, r2[9].answer, r2[18].answer, r2[21].answer, r2[22].answer, r2[23].answer, r2[25].answer, r2[27].answer, r2[28].answer, r2[29].answer],
-    ['7', '11마리', '171개', '2번', '360일 뒤', '0-2-5-7-4-6-3-1', '186cm', '24개', '1118', '5개', '6장', 'D6'],
+    ['7', '11마리', '171개', '2번', '360일 뒤', '0-2-5-7-4-6-3-1', '186cm', '21개', '1118', '5개', '6장', 'D6'],
   );
   assert.deepEqual(
     [r1[0].difficultyClass, r1[20].difficultyClass, r2[1].difficultyClass, r2[27].difficultyClass],

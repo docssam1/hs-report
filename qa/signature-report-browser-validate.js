@@ -79,7 +79,13 @@ const server=http.createServer((request,response)=>{
     page.on('pageerror',e=>errors.push(e.message));
     await page.goto(base+'&entry=teacher',{waitUntil:'domcontentloaded'});
     await page.locator('.original-summary .cumulative-grid').waitFor();
+    assert.deepEqual(await page.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['30']);
+    assert.match(await page.locator('.week-plan').innerText(),/2일[\s\S]*원문 30번[\s\S]*4일[\s\S]*원문 30번[\s\S]*6일[\s\S]*원문 30번/);
     assert.match(await page.locator('.cumulative-grid').innerText(),/1회 성적[\s\S]*100점[\s\S]*2회 성적[\s\S]*95\.8점[\s\S]*누적 성적[\s\S]*97\.9점/);
+    assert.match(await page.locator('#originalComparison').innerText(),/대영역[\s\S]*도형[\s\S]*81\.1%[\s\S]*배점대/);
+    assert.equal(await page.locator('#originalItemDetail tbody tr').count(),30);
+    assert.equal(await page.locator('#originalItemDetail .original-status').last().innerText(),'미정답');
+    assert.equal(await page.locator('#originalTeacherComment').count(),1);
     assert.match(await page.locator('.exam-skill-tips').innerText(),/타이머는 현재 속도를 살피는 신호/);
     assert.equal(await page.locator('[data-docssam-field]').count(),7);
     await page.locator('[data-docssam-field="strength"]').fill('문제 조건을 끝까지 읽고 식으로 옮긴다.');
@@ -94,6 +100,8 @@ const server=http.createServer((request,response)=>{
     if(OUT){fs.mkdirSync(OUT,{recursive:true});await page.screenshot({path:path.join(OUT,'signature-round2-desktop.png'),fullPage:true});}
     await page.goto(base.replace('round=2','round=1')+'&entry=teacher',{waitUntil:'domcontentloaded'});
     await page.locator('[data-docssam-field="strength"]').waitFor();
+    assert.equal(await page.locator('#originalComparison').count(),0,'round 1 stays a separate single-round report');
+    assert.match(await page.locator('.week-must-do').innerText(),/특정 번호를 배정하지 않습니다/);
     assert.equal(await page.locator('[data-docssam-field="strength"]').inputValue(),'','1회 코멘트는 2회 코멘트와 분리된다');
     await page.locator('[data-docssam-field="strength"]').fill('1회에서 확인한 장점');
     await page.locator('#docssam-comment-save').click();
@@ -112,6 +120,9 @@ const server=http.createServer((request,response)=>{
     if(OUT){
       fs.mkdirSync(OUT,{recursive:true});
       await phone.screenshot({path:path.join(OUT,'signature-round2-mobile.png'),fullPage:true});
+      const detailedPdf=await phone.pdf({format:'A4',printBackground:true});
+      assert.ok(detailedPdf.length>10000,'detailed A4 PDF is non-empty');
+      fs.writeFileSync(path.join(OUT,'signature-round2-detailed.pdf'),detailedPdf);
       await phone.evaluate(()=>document.body.classList.add('print-original-summary'));
       const pdf=await phone.pdf({format:'A4',printBackground:true});
       assert.ok(pdf.length>10000,'summary A4 PDF is non-empty');
@@ -143,6 +154,8 @@ const server=http.createServer((request,response)=>{
     assert.equal(gradeWrites[0].body.answer_states,'X-'+'O'.repeat(28));
     assert.equal(gradeWrites[0].body.ox,'XX'+'O'.repeat(28));
     assert.match(await entry.locator('.original-summary').innerText(),/틀림 1개 · 미응답 1개/);
+    assert.deepEqual(await entry.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['2','1']);
+    assert.match(await entry.locator('.week-must-do').innerText(),/2번\s+미응답[\s\S]*1번\s+오답/);
     assert.ok(await entry.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px answer and report do not overflow');
     await entry.goto(base.replace('attempt=1','attempt=3')+'&entry=teacher',{waitUntil:'domcontentloaded'});
     await entry.locator('.original-summary').waitFor();

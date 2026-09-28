@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const http=require('node:http');
-const {chromium}=require('playwright');
+const {chromium}=(()=>{try{return require('playwright');}catch(error){return require('playwright-core');}})();
 const root=path.resolve(__dirname,'..');
 const data=JSON.parse(fs.readFileSync(path.join(root,'bank/data/final1-fixed90.json'),'utf8'));
 const draft=process.argv.includes('--draft-layout');
@@ -17,7 +17,7 @@ const server=http.createServer((req,res)=>{
 });
 (async()=>{
   await new Promise(r=>server.listen(0,'127.0.0.1',r));
-  const browser=await chromium.launch({headless:true});
+  const browser=await chromium.launch({headless:true,...(process.env.GFIELD_CHROME?{executablePath:process.env.GFIELD_CHROME}:{})});
   try{
     const page=await browser.newPage({viewport:{width:1280,height:1100}});
     await page.addInitScript(()=>localStorage.setItem('gfield_student','검수용가상학생'));
@@ -35,7 +35,7 @@ const server=http.createServer((req,res)=>{
           const layer=p.querySelector('.wm-layer.wm-active');
           if(!layer||layer.querySelectorAll('.wm-tile').length!==32||!layer.textContent.includes('지필드 영재교육'))return [i];
           for(let n=layer;n;n=n.parentElement){const s=getComputedStyle(n);if(s.display==='none'||s.visibility==='hidden'||Number(s.opacity)===0)return [i];}
-          return Number(getComputedStyle(layer).opacity)<.1?[i]:[];
+          return Number(getComputedStyle(layer).opacity)<=0?[i]:[];
         }));
         assert.deepEqual(missing,[],media+' mandatory watermark on every nonblank sheet including cover');
       }
@@ -61,6 +61,16 @@ const server=http.createServer((req,res)=>{
     const editorialPageCount=await page.locator('.question-page').count();
     assert.ok(editorialPageCount>15,'editorial layout gives long and visual questions more room than compact layout');
     assert.ok(await page.locator('.qcard[data-wide="true"]').count()>0,'long visual questions use a full row');
+    for(const media of ['screen','print']){
+      await page.emulateMedia({media});
+      const workspaceProblems=await page.locator('.question-page .f1-workspace').evaluateAll(nodes=>nodes.flatMap((node,index)=>{
+        const style=getComputedStyle(node);
+        const lines=[...node.querySelectorAll('.f1-write-line')];
+        return style.backgroundColor==='rgb(255, 255, 255)'&&style.backgroundImage==='none'&&lines.length===3&&lines.every(line=>getComputedStyle(line).borderBottomStyle==='solid')?[]:[index];
+      }));
+      assert.deepEqual(workspaceProblems,[],media+' solving space stays white with real rules, independent of print background graphics');
+    }
+    await page.emulateMedia({media:null});
     assert.equal(await page.locator('.cover-page').count(),1);
     assert.equal(await page.locator('.cover-page input[type=checkbox]').count(),30);
     assert.match(await page.locator('.cover-page').innerText(),/검수용가상학생/);

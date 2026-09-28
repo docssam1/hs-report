@@ -32,11 +32,13 @@ assert.match(data.items.find(item=>item.no===10).steps[1].body,/1111111111108888
 assert.equal(data.items.find(item=>item.no===11).answer,'45');
 assert.match(data.items.find(item=>item.no===11).check,/121－76＝45.*127－16＝111/);
 const finalPage=fs.readFileSync(path.join(root,'final.html'),'utf8');
-assert.match(finalPage,/final4AnswerVersion='20260924-final4-q11-answer-1'/);
+assert.match(finalPage,/final4AnswerVersion='20260928-final4-q24-plan-2'/);
 assert.match(finalPage,/f==='mock-data-final\.js'\|\|f==='final4-detailed-data\.js'/);
 assert.match(data.items.find(item=>item.no===21).caution,/‘10이’/);
 assert.match(data.items.find(item=>item.no===27).caution,/‘8450이며’/);
 assert.equal(data.items.find(item=>item.no===17).answer,'450m');
-assert.equal(data.items.find(item=>item.no===24).answer,'14일');
+assert.equal(data.items.find(item=>item.no===24).answer,'10일 2시간');
+assert.match(data.items.find(item=>item.no===24).displayAnswer,/11일도 정답 인정/);
+assert.match(data.items.find(item=>item.no===24).check,/40\/3일.*24일.*32\/3일/);
 assert.equal(data.items.find(item=>item.no===26).answer,'241×83=20003');
 console.log('PASS Final4 all 30: detailed solutions, supplied-source reread, canonical answers and corrected calculations');

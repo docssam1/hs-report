@@ -51,7 +51,8 @@ body.fixed-bank-mode .topbar,body.fixed-bank-mode .panel,body.fixed-bank-mode .h
 #final1Worksheet[data-layout="editorial"] .qcard[data-source-no="16"] .qfigure img{max-height:44mm}
 #final1Worksheet[data-layout="editorial"] .qcard[data-source-no="16"] .f1-workspace{flex-basis:10mm;min-height:10mm}
 #final1Worksheet[data-layout="editorial"] .qcard[data-source-no="28"] .qfigure img{max-height:58mm}
-#final1Worksheet[data-layout="editorial"] .f1-workspace{display:block;flex:1 1 16mm;min-height:16mm;margin-top:7px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 8.2mm,var(--f1-line) 8.2mm,var(--f1-line) 8.5mm)}
+#final1Worksheet[data-layout="editorial"] .f1-workspace{display:flex;flex-direction:column;flex:1 1 16mm;min-height:16mm;margin-top:7px;background:#fff!important;background-image:none!important}
+#final1Worksheet[data-layout="editorial"] .f1-write-line{display:block;flex:1 1 0;min-height:0;border-bottom:1px solid #d8dee8}
 #final1Worksheet[data-layout="editorial"] .f1-qcard[data-wide="true"] .f1-workspace{min-height:12mm}
 #final1Worksheet[data-layout="editorial"] .f1-answerline{font-size:12px;padding-top:5px;margin-top:5px}
 #final1Worksheet[data-layout="editorial"] .question-page.f1-last-two .f1-qpage{grid-template-rows:auto minmax(0,1fr)}
@@ -64,7 +65,8 @@ body.fixed-bank-mode .topbar,body.fixed-bank-mode .panel,body.fixed-bank-mode .h
 .f1-page.f1-batch-capture-editorial .f1-qpage[data-wide-lead="true"]>.f1-qcard:nth-of-type(1){grid-column:1/-1!important;grid-row:2!important}
 .f1-page.f1-batch-capture-editorial .f1-qpage[data-wide-lead="true"]>.f1-qcard:nth-of-type(2){grid-column:1!important;grid-row:3!important}
 .f1-page.f1-batch-capture-editorial .f1-qpage[data-wide-lead="true"]>.f1-qcard:nth-of-type(3){grid-column:2!important;grid-row:3!important}
-.f1-page.f1-batch-capture-editorial .f1-workspace{display:block;flex:1 1 16mm;min-height:16mm;margin-top:7px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 8.2mm,var(--f1-line) 8.2mm,var(--f1-line) 8.5mm)}
+.f1-page.f1-batch-capture-editorial .f1-workspace{display:flex;flex-direction:column;flex:1 1 16mm;min-height:16mm;margin-top:7px;background:#fff!important;background-image:none!important}
+.f1-page.f1-batch-capture-editorial .f1-write-line{display:block;flex:1 1 0;min-height:0;border-bottom:1px solid #d8dee8}
 .f1-page.f1-batch-capture-editorial .f1-qcard[data-wide="true"] .f1-workspace{min-height:12mm}
 .f1-page.f1-batch-capture-editorial .f1-answerline{padding-top:5px;margin-top:5px}
 .f1-page.f1-batch-capture-answer .f1-answer-flow,.f1-page.f1-batch-capture-answer .f1-solution{box-sizing:border-box;width:100%;max-width:100%;min-width:0;overflow:hidden}
