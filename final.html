@@ -542,6 +542,7 @@ td.weak-cell{white-space:nowrap}
 <link rel="stylesheet" href="final-report-package.css">
 <link rel="stylesheet" href="final-report-print.css">
 <link rel="stylesheet" href="final-parent-report.css">
+<link rel="stylesheet" href="final-score-trend.css">
 <link rel="stylesheet" href="final7-original-tutor.css?v=20260920a">
 </head>
 <body>
@@ -553,7 +554,7 @@ td.weak-cell{white-space:nowrap}
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
   // between releases, so only that one file needs a fresh URL per visit.
-  var staticVersion='20260923-final-print-1';
+  var staticVersion='20260928-final-cumulative-trend-1';
   var final4AnswerVersion='20260928-final4-q24-plan-2';
   var signatureAnswerVersion='20260928-signature-answer-keys-1';
   var dataVersion=Date.now();
@@ -571,7 +572,8 @@ td.weak-cell{white-space:nowrap}
   if(!isOriginal) files.push('mock-data-original.js');
   files.push('bank/bank-registry.js');
   if(!isOriginal) files.push('mock-rx-data.js');
-  if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js');
+  if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js','last-score-data.js');
+  if(!isOriginal) files.push('final-score-trend.js');
   if(!isLast) files.push('final-report-state.js');
   if(!isLast&&!isOriginal) files.push('final-parent-report.js');
   if(isFinal1) files.push('final1-detailed-data.js','final-detailed-solutions.js');
@@ -1886,16 +1888,14 @@ td.weak-cell{white-space:nowrap}
     var considered = []; // {n, pct, oxArr}
     if(M.rounds[String(roundNum)]&&M.rounds[String(roundNum)].standalone) return considered;
     if(isLast){
-      if(roundNum===1){
-        for(var finalNo=1;finalNo<=4;finalNo++){
-          var finalKey='final'+finalNo,finalRow=priorRows[finalKey],finalStats=lastFinalPopulationByRound[String(finalNo)];
-          if(!finalRow||!validOx(finalRow.ox)||!populationStatsVerified(finalStats)) continue;
-          var finalOx=finalRow.ox.split(''),finalScore=computeScore(finalOx).score;
-          var finalPct=percentileFor(finalScore,finalStats);
-          if(finalPct!==null) considered.push({n:finalNo,label:'파이널 '+finalNo+'회',pct:finalPct,oxArr:finalOx,sourceModel:finalModel,sourceRound:finalNo});
-        }
+      for(var finalNo=1;finalNo<=4;finalNo++){
+        var finalKey='final'+finalNo,finalRow=priorRows[finalKey],finalStats=lastFinalPopulationByRound[String(finalNo)]||finalBaseStats[String(finalNo)];
+        if(!finalRow||!validOx(finalRow.ox)||!populationStatsVerified(finalStats)) continue;
+        var finalOx=finalRow.ox.split(''),finalScore=computeScore(finalOx).score;
+        var finalPct=percentileFor(finalScore,finalStats);
+        if(finalPct!==null) considered.push({n:finalNo,label:'파이널 '+finalNo+'회',pct:finalPct,oxArr:finalOx,sourceModel:finalModel,sourceRound:finalNo});
       }
-      for(var lastNo=1;lastNo<=roundNum;lastNo++){
+      for(var lastNo=1;lastNo<=4;lastNo++){
         if(!M.rounds[String(lastNo)]) continue;
         var lastOx,lastKey='last'+lastNo;
         if(lastNo===roundNum){
@@ -1948,6 +1948,43 @@ td.weak-cell{white-space:nowrap}
       if(oxa&&validOx(oxa)) out.push({n:n,oxArr:oxa,score:computeScore(oxa).score});
     }
     return out;
+  }
+
+  function finalLastTrendModel(priorRows,attemptNo,fk,curOxArr,includeCurrent){
+    var api=window.GFIELD_FINAL_SCORE_TREND;
+    if(!api||isOriginal||!finalModel)return null;
+    var rows=[];
+    function firstOx(key){
+      if(key===fk&&attemptNo===1&&includeCurrent!==false&&validOx(curOxArr))return curOxArr;
+      var saved=priorRows&&priorRows[key];
+      return saved&&saved.source!=='reset'&&validOx(saved.ox)?String(saved.ox).split(''):null;
+    }
+    function lastStats(n){
+      if(isLast)return M.rounds[String(n)]&&M.rounds[String(n)].stats;
+      var source=window.GFIELD_LAST_SCORE_DATA&&window.GFIELD_LAST_SCORE_DATA.rounds[String(n)];
+      if(!source)return null;
+      return {mean:Number(source.average),n:Number(source.cohortSize)||0,
+        dist:Array.isArray(source.scoreDist)?source.scoreDist.slice():[],
+        percentileTable:Array.isArray(source.percentileTable)?source.percentileTable.map(function(row){return row.slice();}):null,
+        cuts:(source.scoreBands||[]).map(function(row){return [String(row[0]).replace(/,/g,' · '),Number(row[1])];}),
+        rankEvidence:{status:'verified-source-rank',sourceId:'last-score-data-'+n,
+          sourceRef:'2024 최종 모의고사 '+n+'회 회차별 원점수 석차 백분율 기준',verifiedAt:'2026-09-11'}};
+    }
+    ['final','last'].forEach(function(series){
+      for(var n=1;n<=4;n++){
+        var key=series+n,ox=firstOx(key);
+        if(!ox)continue;
+        var score=computeScore(ox).score;
+        var S=series==='final'?(isLast?(lastFinalPopulationByRound[String(n)]||finalBaseStats[String(n)]):finalModel.rounds[String(n)]&&finalModel.rounds[String(n)].stats):lastStats(n);
+        var base=series==='final'?finalBaseStats[String(n)]:S;
+        var cuts=base&&Array.isArray(base.cuts)?base.cuts:[];
+        var gradeLabel=cuts.length?cutInfo(score,cuts).grade:null;
+        var verified=populationStatsVerified(S);
+        rows.push({key:key,score:score,average:verified?Number(S.mean):(series==='last'&&S&&Number.isFinite(S.mean)?S.mean:null),
+          percentile:verified?percentileFor(score,S):null,grade:gradeLabel});
+      }
+    });
+    return api.model(rows,finalModel.cumulative&&finalModel.cumulative.bands);
   }
 
   /* =====================================================
@@ -2081,7 +2118,7 @@ td.weak-cell{white-space:nowrap}
     if(M.rounds[String(roundNum)]&&M.rounds[String(roundNum)].standalone) return;
     if(isLast){
       lastFinalPopulationByRound={};
-      if(roundNum!==1||!api) return;
+      if(!api) return;
       for(var lastBaseRound=1;lastBaseRound<=4;lastBaseRound++){
         var lastExam='final'+lastBaseRound,lastBase=finalBaseStats[String(lastBaseRound)];
         var lastRow=priorRows&&priorRows[lastExam];
@@ -2801,6 +2838,9 @@ td.weak-cell{white-space:nowrap}
       return {round:Number(row.n),oxArr:row.oxArr.slice(),items:M.rounds[String(row.n)].items};
     });
     var considered = isStandaloneRound?[]:computeCumulativeConsidered(roundNum, priorRows, attemptNo, fk, state.oxArr, includeCurrent);
+    var trendVM=isStandaloneRound||isOriginal||(!isLast&&roundNum>4)?null:finalLastTrendModel(priorRows,attemptNo,fk,state.oxArr,includeCurrent);
+    var trendHTML=trendVM&&window.GFIELD_FINAL_SCORE_TREND?window.GFIELD_FINAL_SCORE_TREND.render(trendVM):'';
+    document.body.classList.toggle('final-cumulative-trend-page',!!trendHTML);
     var cmpOnline = isOnlineStudent(ctx.name);
     var cmpNoteHTML = ctx.populationVerified?compareNoteHTML(ctx.R, M.compare, cmpOnline, considered.length):'';
     if(!isLast&&!isOriginal)cmpNoteHTML='';
@@ -2832,7 +2872,7 @@ td.weak-cell{white-space:nowrap}
         cumHTML = '<p style="font-size:14px;color:var(--ink2)">아직 누적 계산에 쓸 이전 '+esc(seriesLabel())+' 회차 기록이 없습니다.</p>';
       } else {
         var avgPct = round1(considered.reduce(function(s,c){return s+c.pct;},0)/considered.length);
-        var band = cumulativeGrade(avgPct, M.cumulative.bands) || ['-', 0];
+        var band = cumulativeGrade(avgPct, isLast&&finalModel?finalModel.cumulative.bands:M.cumulative.bands) || ['-', 0];
         var trend = considered.map(function(c){ return '<tr><td>'+esc(c.label||seriesLabel()+' '+c.n+'회')+'</td><td class="c">'+c.pct+'%</td></tr>'; }).join('');
         var repMap = {};
         considered.forEach(function(c){
@@ -2894,11 +2934,13 @@ td.weak-cell{white-space:nowrap}
         rounds:M.rounds,
         taxonomy:taxonomyOf,
         points:function(no){return BP(no).pts;},
+        overallTrend:trendVM,
         cumulativeBands:M.cumulative&&M.cumulative.bands
       });
       var reportStateHTML=window.GFIELD_FINAL_REPORT_STATE?window.GFIELD_FINAL_REPORT_STATE.render():'';
       var parentBody=reportHead+reportCompactPrintHeaderHTML(ctx)+
         reportStateHTML+
+        trendHTML+
         parentAPI.summaryHTML(parentVM)+
         '<section id="report-plan" class="report-action-plan-section parent-core-section"><h2>이번 주 학습</h2>'+parentAPI.priorityHTML(parentVM)+'<div class="report-study-plan-host"></div></section>'+
         '<section class="parent-summary-support parent-core-section">'+
@@ -2931,7 +2973,9 @@ td.weak-cell{white-space:nowrap}
       app.innerHTML = personalReportBanner+previewBanner+teacherBanner+practiceBanner+saveErrBanner+
         '<div class="doc'+(isStandardFinal?' final-report-package':'')+'">'+
         reportHead+
+        (isLast&&trendHTML?reportCompactPrintHeaderHTML(ctx):'')+
         (isStandardFinal&&window.GFIELD_FINAL_REPORT_STATE?window.GFIELD_FINAL_REPORT_STATE.render():'')+
+        trendHTML+
         (cmpNoteHTML ? '<div class="cmp-band">'+cmpNoteHTML+'</div>' : '')+
         cutReferenceHTML(ctx)+
         '<section class="report-analysis-section">'+

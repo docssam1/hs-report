@@ -1,0 +1,17 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Final score trend visual QA</title><link rel="stylesheet" href="../final-report-package.css"><link rel="stylesheet" href="../final-parent-report.css"><link rel="stylesheet" href="../final-score-trend.css">
+<style>@page{size:A4;margin:12mm}body{margin:0;background:#f5f6f8;font-family:'Noto Sans KR',Arial,sans-serif}.page{max-width:860px;min-height:100vh;margin:auto;background:#fff;padding:22px;box-sizing:border-box}.report-compact-print-header{display:flex;justify-content:space-between;align-items:center;padding:10px 0 18px;border-bottom:2px solid #2456c4;font-weight:800;color:#182230}@media print{.page{width:auto;max-width:none;min-height:0;padding:0}}</style>
+<body class="final-cumulative-trend-page"><main class="page final-report-package"><header class="report-compact-print-header"><span>G·FIELD · 파이널·최종 성적 진단</span><span>검수용 가상 학생</span></header><div id="preview"></div><section class="next-page">다음 페이지 검수용 내용</section></main></body>
+<script src="../final-score-trend.js"></script><script>
+var rows=[
+  {key:'final1',score:39.7,average:27,percentile:31.2,grade:'심화컷 · 실력안정권'},
+  {key:'final2',score:43.1,average:25.2,percentile:22.5,grade:'경시컷 · 심화안정권'},
+  {key:'final3',score:35.4,average:27,percentile:39.4,grade:'심화컷 · 실력안정권'},
+  {key:'final4',score:42.2,average:25.2,percentile:16.9,grade:'경시컷 · 심화안정권'},
+  {key:'last1',score:34.1,average:32.4,percentile:37.3,grade:'심화컷 · 실력가능'},
+  {key:'last2',score:38.2,average:26.4,percentile:17.0,grade:'경시컷 · 심화안정권'},
+  {key:'last3',score:31.7,average:23.8,percentile:29.8,grade:'심화컷 · 실력안정권'},
+  {key:'last4',score:40.1,average:29.6,percentile:18.3,grade:'경시컷 · 심화안정권'}
+];
+document.getElementById('preview').innerHTML=GFIELD_FINAL_SCORE_TREND.render(GFIELD_FINAL_SCORE_TREND.model(rows,[['경시 가능',23.1],['경시컷 · 심화안정권',39],['노력요함',100]]));
+</script></html>

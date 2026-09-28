@@ -157,6 +157,7 @@
       roundNum:roundNum,
       standalone:standalone,
       isPractice:Number(ctx.attemptNo)>=2,
+      overallTrend:options.overallTrend||null,
       current:{label:(Number(ctx.attemptNo)>=2?'이번 연습 결과':'이번 회차')+' · '+(standalone?(ctx.R&&ctx.R.title||'최종 실전 '+roundNum+'회'):'파이널 '+roundNum+'회'),score:number(ctx.score),percentile:number(ctx.pct),grade:ctx.grade||null},
       cumulative:{label:'파이널 1~'+roundNum+'회',personalRounds:personalRounds,rankRounds:rankRounds,missingPersonalRounds:missingRounds(roundNum,personalRounds),missingRankRounds:missingRounds(roundNum,rankRounds),personalHistory:attempts.map(function(row){return {n:Number(row.n),score:number(row.score)};}),rankHistory:considered.map(function(row){return {n:Number(row.n),pct:number(row.pct)};}),scoreAverage:scoreAverage,percentileAverage:percentileAverage,band:band?band[0]:null},
       areas:areas,
@@ -180,6 +181,11 @@
   function summaryHTML(vm){
     var current='<article class="parent-summary-column current"><p>'+escapeHTML(vm.current.label)+'</p>'+metric('점수',vm.current.score,'점')+metric('석차 백분율',vm.current.percentile,'%')+metric('예상 등급',vm.current.grade,'')+'</article>';
     if(vm.standalone)return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison is-single">'+current+'</div></section>';
+    if(vm.overallTrend){
+      var overall=vm.overallTrend;
+      var total='<article class="parent-summary-column cumulative"><p>파이널 1~4회 · 최종 1~4회 누적</p>'+metric('응시 회차',overall.rows.length,'/8회')+metric('원점수 평균',overall.scoreAverage,'점')+metric('예상 석차 백분율',overall.percentileAverage,'%')+metric('누적 예상 등급',overall.cumulativeGrade,'')+'</article>';
+      return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison">'+current+total+'</div><p class="parent-report-note">누적 석차는 백분율이 확인된 '+overall.rankedCount+'회만 평균합니다. 특강·재응시는 제외합니다.</p>'+(vm.isPractice?'<p class="parent-report-note">이번 연습 결과는 누적에 포함하지 않고 최초 응시 성적을 유지합니다.</p>':'')+'</section>';
+    }
     if(vm.roundNum<2)return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison is-single">'+current+'</div><p class="parent-report-note">누적 비교는 파이널 2회부터 표시됩니다.</p></section>';
     var cumulative='<article class="parent-summary-column cumulative"><p>'+escapeHTML(vm.cumulative.label)+' 누적</p>'+metric('회차 평균 점수',vm.cumulative.scoreAverage,'점')+metric('회차별 석차 백분율 평균',vm.cumulative.percentileAverage,'%')+metric('누적 판정',vm.cumulative.band,'')+'</article>';
     var scope='<div class="parent-report-scope"><span>개인 성적 반영: '+roundsText(vm.cumulative.personalRounds)+'</span><span>석차 반영: '+roundsText(vm.cumulative.rankRounds)+'</span></div>';
@@ -230,6 +236,10 @@
   }
   function historyHTML(vm){
     if(vm.standalone)return '';
+    if(vm.overallTrend){
+      var rows=vm.overallTrend.rows.map(function(row){return '<tr><th scope="row">'+escapeHTML(row.label)+'</th><td>'+row.score.toFixed(1)+'점</td><td>'+(row.percentile==null?'확인 필요':row.percentile.toFixed(1)+'%')+'</td><td>'+(row.grade?escapeHTML(row.grade):'확인 필요')+'</td></tr>';}).join('');
+      return '<h3>파이널·최종 최초 응시 기록</h3><table><thead><tr><th>회차</th><th>원점수</th><th>예상 석차</th><th>예상 등급</th></tr></thead><tbody>'+rows+'</tbody></table><p class="parent-report-note">영역·배점대 누적 비교는 현재 열어 본 시리즈의 응시 회차만 반영합니다.</p>';
+    }
     var personal=vm.cumulative.personalHistory.length?'<table><thead><tr><th>회차</th><th>최초 응시 점수</th></tr></thead><tbody>'+vm.cumulative.personalHistory.map(function(row){return '<tr><td>파이널 '+row.n+'회</td><td class="c">'+(row.score==null?'확인 필요':row.score+'점')+'</td></tr>';}).join('')+'</tbody></table>':'<p class="lead">반영할 최초 응시 기록이 없습니다.</p>';
     var rank=vm.cumulative.rankHistory.length?'<table><thead><tr><th>회차</th><th>석차 백분율</th></tr></thead><tbody>'+vm.cumulative.rankHistory.map(function(row){return '<tr><td>파이널 '+row.n+'회</td><td class="c">'+row.pct+'%</td></tr>';}).join('')+'</tbody></table>':'<p class="lead">반영할 석차 자료가 없습니다.</p>';
     var repeated=vm.repeatedWeaknesses.length?vm.repeatedWeaknesses.map(function(row){return '<div class="repwk"><b>'+escapeHTML(row.label)+'</b> — 파이널 '+row.rounds.join('·')+'회 반복 오답</div>';}).join(''):'<div class="repwk">승인된 같은 유형이 서로 다른 두 회차 이상 반복된 오답은 없습니다.</div>';
