@@ -62,6 +62,7 @@ const server=http.createServer((request,response)=>{
           return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(records)});
         }
         if(url.includes('/rest/v1/weak_types'))return route.fulfill({status:200,contentType:'application/json',body:'[]'});
+        if(url.includes('/rest/v1/hs_final_report_comments'))return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([{comment:comments[url.includes('original1')?'original1':'original2'],updated_at:'qa-version'}])});
         if(url.includes('/functions/v1/hs-final-population')){
           if(body.action==='read-report')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({canEdit:role==='admin',comment:comments[body.exam]||'',commentUpdatedAt:comments[body.exam]?'qa-version':null,snapshot:null,resultOx:null})});
           if(body.action==='save-comment'){
@@ -81,10 +82,21 @@ const server=http.createServer((request,response)=>{
       const source=fs.readFileSync(path.join(ROOT,'data.js'),'utf8');
       route.fulfill({status:200,contentType:'text/javascript',body:source+'\nwindow.GFIELD_DATA.students.push('+JSON.stringify(student)+');window.GFIELD_DATA.archiveProductAccess["mock-signature-2"].push('+JSON.stringify(student)+');'});
     });
+    await unsigned.route('https://fgahqumaldheqettmvqg.supabase.co/**',async route=>{
+      const request=route.request(),url=request.url();
+      if(url.includes('/auth/v1/token'))return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(makeSession('student'))});
+      if(url.includes('/auth/v1/user'))return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(makeSession('student').user)});
+      if(url.includes('/rest/v1/mock_results'))return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(records)});
+      if(url.includes('/rest/v1/weak_types'))return route.fulfill({status:200,contentType:'application/json',body:'[]'});
+      if(url.includes('/rest/v1/hs_final_report_comments'))return route.fulfill({status:200,contentType:'application/json',body:'[]'});
+      if(url.includes('/functions/v1/hs-final-population'))return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({canEdit:false,comment:'',commentUpdatedAt:null,snapshot:null,resultOx:null})});
+      return route.abort();
+    });
     const unsignedPage=await unsigned.newPage();
     await unsignedPage.goto(base,{waitUntil:'domcontentloaded'});
-    await unsignedPage.getByRole('heading',{name:'시그니처 성적 연결 대기'}).waitFor();
-    assert.match(await unsignedPage.locator('body').innerText(),/승인번호 발급/,'missing student account is not misreported as a network error');
+    await unsignedPage.locator('.original-summary').waitFor();
+    assert.equal(await unsignedPage.locator('#signatureApprovalCode').count(),0,'이름 입장 후 추가 승인번호를 묻지 않음');
+    assert.match(await unsignedPage.locator('.cumulative-grid').innerText(),/1회 성적[\s\S]*100점[\s\S]*2회 성적[\s\S]*95\.8점/,'이름 입장 후 저장된 진단지 확인');
     await unsigned.close();
     const teacher=await contextFor('admin',1280),page=await teacher.newPage(),errors=[];
     page.on('pageerror',e=>errors.push(e.message));

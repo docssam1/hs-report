@@ -29,6 +29,7 @@ const ORIGINAL_FORM_BOOKS = [
     imageDir: 'original_form_1',
     pdf: 'output/pdf/hwangso-original-form-mock-01-rebuilt.pdf',
     answer: 'output/pdf/hwangso-original-form-mock-01-rebuilt-answer.pdf',
+    video: 'https://www.youtube.com/watch?v=FUq-XBAcP_8',
   },
   {
     round: 2,
@@ -36,6 +37,7 @@ const ORIGINAL_FORM_BOOKS = [
     imageDir: 'original_form_2_v2',
     pdf: 'output/pdf/hwangso-original-form-mock-02-rebuilt.pdf',
     answer: 'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf',
+    video: 'https://www.youtube.com/watch?v=R5NN1K29__4',
   },
 ];
 const ONLINE_STUDENT = '검수온라인';
@@ -240,13 +242,20 @@ function assertOriginalFormBooks(data) {
     assert.equal(book.pages, 6, `${expected.title} pages`);
     assert.equal(book.pdf, expected.pdf, `${expected.title} 원본 PDF`);
     assert.equal(book.desc, '80분 · 30문항 · 100점', `${expected.title} 시험 정보`);
+    assert.equal(book.video, expected.video, `${expected.title} 풀이 강의`);
     const answer = linkFor(book, '정답지 PDF');
     assert.equal(answer.url, expected.answer, `${expected.title} 정답 PDF`);
     assertRoute(
-      linkFor(book, '성적·약점 진단'),
+      linkFor(book, '내 성적·약점 진단'),
       '/final.html',
-      { set: 'original', round: String(expected.round), go: 'answer' },
-      `${expected.title} 성적·약점 진단`,
+      { set: 'original', round: String(expected.round), go: 'report', name: ONSITE_STUDENT },
+      `${expected.title} 저장된 개인 진단`,
+    );
+    assertRoute(
+      linkFor(book, '맞은 문제 체크·진단'),
+      '/final.html',
+      { set: 'original', round: String(expected.round), go: 'answer', name: ONSITE_STUDENT },
+      `${expected.title} 답 입력`,
     );
     assertImageSet(expected.imageDir, 6);
     assert.equal(fs.existsSync(path.join(ROOT, expected.pdf)), true, `${expected.title} 원본 PDF 파일`);
@@ -341,8 +350,8 @@ check('final.html 시작 화면은 파이널 paper 데이터가 있으면 시험
   );
   assert.match(source, /if\s*\(goParam===['"]paper['"]\)\s*\{\s*renderPaper\(\)/, 'go=paper 직접 진입 누락');
   assert.match(source, /paper-time-correction/, '첫 쪽 시험 시간 인쇄 보정 누락');
-  assert.match(source, /Number\(M\.exam\.minutes\|\|90\)\+'분<\/div>'/, '시험 시간 보정이 현재 시험 설정을 사용하지 않음');
-  assert.match(source, /시험 시간은 '\+Number\(M\.exam\.minutes\|\|90\)\+'분입니다\./, '정정 안내 시험 시간이 현재 시험 설정을 사용하지 않음');
+  assert.match(source, /제한시간 : '\+examMinutes\(\)\+'분<\/div>'/, '시험 시간 보정이 현재 회차 설정을 사용하지 않음');
+  assert.match(source, /시험 시간은 '\+examMinutes\(\)\+'분입니다\./, '정정 안내 시험 시간이 현재 회차 설정을 사용하지 않음');
   assert.match(source, /paper-image-watermark/, '이미지 시험지 워터마크 누락');
   assert.match(source, /\.paper-image-page\{[^}]*margin:0 auto;[^}]*padding:0;[^}]*border:0;/, '시험지 화면 가운데 정렬·여백 초기화 누락');
   assert.match(source, /\.paper-stack\{display:block;width:210mm;margin:0 auto\}/, '인쇄용 A4 스택 가운데 정렬 누락');

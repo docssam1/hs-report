@@ -144,22 +144,22 @@
     return {title:title,score:item.score.score,percentile:Number.isFinite(percentile)?round1(percentile):null,grade:grade,link:reportLink(item,options,model)};
   }
   function canShow(item,options){
+    if(item&&item.meta.kind==='original'){
+      var key='mock-signature-'+item.meta.round;
+      var names=options.data&&options.data.archiveProductAccess&&options.data.archiveProductAccess[key];
+      return Array.isArray(names)&&(names.indexOf('*')>=0||names.indexOf(options.student)>=0);
+    }
     if(!item||item.meta.kind!=='middle'||!root.GFIELD_MIDDLE_ACCESS) return true;
     return root.GFIELD_MIDDLE_ACCESS.allowsRound(options.data||{},options.student,item.meta.round,root.GFIELD_MOCK);
   }
   function fetchRows(options,signal){
     var path='mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq.'+encodeURIComponent(options.student);
     var url=options.supabaseUrl+'/rest/v1/'+path;
-    var legacy=fetch(url,{method:'GET',headers:{apikey:options.supabaseKey,Authorization:'Bearer '+options.supabaseKey},signal:signal}).then(function(response){
+    var studentHeader=btoa(unescape(encodeURIComponent(options.student)));
+    return fetch(url,{method:'GET',headers:{apikey:options.supabaseKey,Authorization:'Bearer '+options.supabaseKey,'x-gfield-student':studentHeader},signal:signal}).then(function(response){
       if(!response.ok) throw new Error('성적을 불러오지 못했습니다.');
       return response.json();
     });
-    if(!root.GFIELD_AUTH||typeof root.GFIELD_AUTH.rest!=='function')return legacy;
-    var signature=root.GFIELD_AUTH.rest(path+'&round=in.(original1,original2)',{signal:signal},'student').then(function(response){
-      if(!response.ok)return [];
-      return response.json();
-    }).catch(function(){return [];});
-    return Promise.all([legacy,signature]).then(function(parts){return parts[0].concat(parts[1]);});
   }
   function stateHtml(message,kind){
     if(kind==='loading') return '<div class="srh-state" role="status"><span class="srh-loading-dot" aria-hidden="true"></span>'+esc(message)+'</div>';

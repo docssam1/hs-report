@@ -520,7 +520,7 @@
 <script src="bank/important-types.js?v=20260913a"></script>
 <script src="middle-access.js?v=20260915b"></script>
 <script src="hs-auth.js?v=20260928-signature-private-1"></script>
-<script src="student-result-hub.js?v=20260928-signature-private-1"></script>
+<script src="student-result-hub.js?v=20260929-signature-named-1"></script>
 <script>
   const D = window.GFIELD_DATA;
   let currentStudent = null;
@@ -1118,8 +1118,8 @@
       stage.className='bv-stage';
       stage.innerHTML=docPane;
     }
-    let acts = (mode==='link'&&b.video)
-      ? `<a class="bv-act" href="${escAttr(b.video)}" target="_blank" rel="noopener">▶ 영상 보기</a>` : '';
+    let acts = (b.video&&(mode==='link'||/초등선발 대비 시그니처 실전 모의고사 [12]회/.test(String(b.title||''))))
+      ? `<a class="bv-act" href="${escAttr(b.video)}" target="_blank" rel="noopener">▶ 강의 새 창</a>` : '';
     if(b.imgdir && b.pages) acts += `<button class="bv-act" onclick="printBvBook()">🖨 인쇄</button>`;
     else if(b.pdf && isRealPdf(b.pdf)) acts += `<button class="bv-act" onclick="printBvBook()">🖨 시험지 인쇄 / PDF 저장</button>`;
     (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=bookLinkUrl(b, l.url); acts+=`<a class="bv-act" href="${escAttr(lurl)}" target="_blank" rel="noopener">🔗 ${escHtml(l.label||'링크')}</a>`; } });
@@ -1363,6 +1363,6 @@
     }catch(e){}
   })();
 </script>
-<script src="index-enhancements.js?v=20260920a"></script>
+<script src="index-enhancements.js?v=20260929-signature-lecture-report"></script>
 </body>
 </html>

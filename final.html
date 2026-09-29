@@ -554,7 +554,7 @@ td.weak-cell{white-space:nowrap}
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
   // between releases, so only that one file needs a fresh URL per visit.
-  var staticVersion='20260928-final-cumulative-trend-1';
+  var staticVersion='20260929-signature-named-report-1';
   var final4AnswerVersion='20260928-final4-q24-plan-2';
   var signatureAnswerVersion='20260928-signature-answer-keys-1';
   var dataVersion=Date.now();
@@ -1422,7 +1422,8 @@ td.weak-cell{white-space:nowrap}
     if(!ctx.wrongList.length) return '<section class="no-print"><h2>틀린 문제 유사문제 학습</h2><div class="wrong-practice">이번 회차는 오답이 없어 별도의 유사문제가 필요하지 않습니다.</div></section>';
     var model=wrongPracticeModel(ctx);
     if(isOriginal&&!model.ready.length){
-      return '<section class="no-print" id="originalPracticeStatus"><h2>오답 유사문제</h2><div class="wrong-practice">이 회차의 유사문제는 원문 구조와 정답을 대조하고 공개 승인을 받은 뒤 제공됩니다. 현재 열 수 있는 문항은 없습니다. 위 오답표의 정답지와 풀이를 먼저 확인해 주세요.</div></section>';
+      var recommended=ctx.wrongList.map(function(item){return '<span class="wp-source-no">'+Number(item.no)+'번</span>';}).join(' ');
+      return '<section class="no-print" id="originalPracticeStatus"><h2>오답 유형 유사문제 추천</h2><div class="wrong-practice"><p>이번 회차에서 다시 연습할 원문 번호: '+recommended+'</p><p>이 회차의 유사문제는 원문 구조와 정답을 대조하고 공개 승인을 받은 뒤 연결됩니다. 현재 학생에게 열 수 있는 유사문항은 없습니다. 원문 정답지와 풀이로 먼저 복습해 주세요.</p></div></section>';
     }
     var items=model.ready.map(function(row){
       return '<article class="wp-item" data-wp-points="'+esc(row.points)+'" data-wp-gen="'+esc(row.generator.generatorId)+'" data-wp-no="'+row.item.no+'"><b>'+row.item.no+'번 · '+esc(row.tx.detailType||row.tx.displayType||row.item.type)+'</b><span>'+esc(row.tx.area||row.item.area)+' › '+esc(row.tx.subarea||row.item.subarea||'분류 확인 중')+' · '+esc(row.points)+'점</span></article>';
@@ -2098,16 +2099,14 @@ td.weak-cell{white-space:nowrap}
   }
   async function supaLoadRows(student){
     var url = SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at,answer_states&student=eq."+encodeURIComponent(student);
-    var res = isOriginal
-      ? await signatureRest(url.split('/rest/v1/')[1],{})
-      : await fetch(url, {headers:{apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY}});
+    var readHeaders={apikey:SUPA_KEY, Authorization:"Bearer "+SUPA_KEY};
+    if(isOriginal) readHeaders['x-gfield-student']=btoa(unescape(encodeURIComponent(student)));
+    var res = await fetch(url, {headers:readHeaders});
     if(res.status===400){
       var errorText=await res.text();
       if(errorText.indexOf('answer_states')>=0){
         var legacyUrl=SUPA_URL+"/rest/v1/mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq."+encodeURIComponent(student);
-        res=isOriginal
-          ? await signatureRest(legacyUrl.split('/rest/v1/')[1],{})
-          : await fetch(legacyUrl,{headers:{apikey:SUPA_KEY,Authorization:"Bearer "+SUPA_KEY}});
+        res=await fetch(legacyUrl,{headers:readHeaders});
       }
     }
     if(!res.ok) throw new Error('성적 조회 HTTP '+res.status);
@@ -2764,15 +2763,6 @@ td.weak-cell{white-space:nowrap}
   async function gradeAndShowReport(options){
     var viewOnly=!!(options&&options.viewOnly);
     app.innerHTML = '<div class="doc"><section><div class="lead">채점 중입니다…</div></section></div>';
-
-    if(isOriginal&&!preview&&!teacherEntry){
-      var signedInStudent=window.GFIELD_AUTH&&typeof window.GFIELD_AUTH.getUser==='function'
-        ? await window.GFIELD_AUTH.getUser('student').catch(function(){return null;}) : null;
-      if(!signedInStudent){
-        app.innerHTML='<div class="doc"><section><h2>시그니처 성적 연결 대기</h2><p class="lead">이름이 응시 명단에 있어도 개인 성적표에는 학생 계정이 필요합니다. 선생님에게 승인번호 발급을 요청하고 학생 계정으로 로그인해 주세요. 기존 채점 기록은 그대로 보관되어 있습니다.</p></section></div>';
-        return;
-      }
-    }
 
     var priorRows = null;
     try{ priorRows = await supaLoadRows(state.name); }catch(e){}

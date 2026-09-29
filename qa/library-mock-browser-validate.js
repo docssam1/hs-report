@@ -121,6 +121,12 @@ function expectedHref(locator, pattern, label) {
     assert.equal(await page.locator('#bookviewer .wm3 span').count(), 18, '원본형 1회 워터마크 수');
     assert.equal(await page.locator('#bookviewer .wm3 span').evaluateAll(nodes => nodes.filter(node => Number(getComputedStyle(node).opacity) > 0).length), 6, '원본형 화면은 쪽마다 흐린 워터마크 한 줄');
     assert.equal(await page.getByRole('link', { name: /정답지 PDF/ }).getAttribute('href'), 'output/pdf/hwangso-original-form-mock-01-rebuilt-answer.pdf', '원본형 1회 정답 링크');
+    const originalVideo1=page.locator('#bookviewer .bv-stage.split .bv-vid iframe');
+    assert.equal(await originalVideo1.count(),1,'시그니처 1회 강의·시험지 나란히 보기');
+    assert.match(await originalVideo1.getAttribute('src'),/youtube\.com\/embed\/FUq-XBAcP_8/,'시그니처 1회 공식 풀이 강의');
+    assert.equal(await page.getByRole('link',{name:/강의 새 창/}).getAttribute('href'),'https://www.youtube.com/watch?v=FUq-XBAcP_8','시그니처 1회 강의 대체 링크');
+    await expectedHref(page.getByRole('link',{name:/내 성적·약점 진단/}),/final\.html\?set=original&round=1&go=report/,'시그니처 1회 개인 진단');
+    await expectedHref(page.getByRole('link',{name:/맞은 문제 체크·진단/}),/final\.html\?set=original&round=1&go=answer/,'시그니처 1회 답 입력');
     await capture(page, 'original-form-viewer-desktop.png');
     const originalPopupPromise = page.waitForEvent('popup');
     await page.getByRole('button', { name: /인쇄/ }).click();
@@ -148,6 +154,11 @@ function expectedHref(locator, pattern, label) {
     assert.equal(await page.locator('#bookviewer .bv-pg').count(), 6, '원본형 2회 서재 이미지 쪽수');
     assert.equal(await page.locator('#bookviewer .wm3 span').count(), 18, '원본형 2회 워터마크 수');
     assert.equal(await page.getByRole('link', { name: /정답지 PDF/ }).getAttribute('href'), 'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf', '원본형 2회 정답 링크');
+    const originalVideo2=page.locator('#bookviewer .bv-stage.split .bv-vid iframe');
+    assert.equal(await originalVideo2.count(),1,'시그니처 2회 강의·시험지 나란히 보기');
+    assert.match(await originalVideo2.getAttribute('src'),/youtube\.com\/embed\/R5NN1K29__4/,'시그니처 2회 공식 풀이 강의');
+    assert.equal(await page.getByRole('link',{name:/강의 새 창/}).getAttribute('href'),'https://www.youtube.com/watch?v=R5NN1K29__4','시그니처 2회 강의 대체 링크');
+    await expectedHref(page.getByRole('link',{name:/내 성적·약점 진단/}),/final\.html\?set=original&round=2&go=report/,'시그니처 2회 개인 진단');
     const originalRound2PopupPromise = page.waitForEvent('popup');
     await page.getByRole('button', { name: /인쇄/ }).click();
     const originalRound2PrintPage = await originalRound2PopupPromise;

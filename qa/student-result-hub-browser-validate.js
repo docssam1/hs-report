@@ -13,7 +13,7 @@ const dataAddon=`\n;(function(){
   d.students=d.students||[];if(d.students.indexOf(${JSON.stringify(student)})<0)d.students.push(${JSON.stringify(student)});
   d.archiveAccess=d.archiveAccess||{};
   ['중급 모의고사','파이널 모의고사','최종 모의고사'].forEach(function(key){d.archiveAccess[key]=d.archiveAccess[key]||[];if(d.archiveAccess[key].indexOf(${JSON.stringify(student)})<0)d.archiveAccess[key].push(${JSON.stringify(student)});});
-  d.archiveProductAccess=d.archiveProductAccess||{};d.archiveProductAccess['mock-final-7']=[${JSON.stringify(student)}];
+  d.archiveProductAccess=d.archiveProductAccess||{};d.archiveProductAccess['mock-final-7']=[${JSON.stringify(student)}];d.archiveProductAccess['mock-signature-1']=[${JSON.stringify(student)}];
   d.studentTypes=d.studentTypes||{};d.studentTypes[${JSON.stringify(student)}]='online';
 })();`;
 
@@ -61,6 +61,7 @@ const server=http.createServer((req,res)=>{
       if(url.hostname==='fgahqumaldheqettmvqg.supabase.co'&&url.pathname==='/rest/v1/mock_results'){
         mockResultMethods.push(request.method());
         assert.equal(url.searchParams.get('student'),'eq.'+student,"only the logged-in student's rows are requested");
+        assert.equal(request.headers()['x-gfield-student'],Buffer.from(student,'utf8').toString('base64'),'named Signature read is scoped to the entered student');
         return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(records)});
       }
       if(url.hostname==='fgahqumaldheqettmvqg.supabase.co'&&url.pathname==='/rest/v1/access_log')return route.fulfill({status:204,body:''});
@@ -97,6 +98,7 @@ const server=http.createServer((req,res)=>{
     for(const title of ['중급 모의고사 1회','활용 모의고사 1회','시그니처 실전 1회']){
       assert.match(await hub.locator('tbody tr',{hasText:title}).innerText(),/자료 없음/,'unsupported rank data is not invented');
     }
+    assert.match(await hub.locator('tbody tr',{hasText:'시그니처 실전 1회'}).locator('a').getAttribute('href'),/^final\.html\?set=original&round=1&go=report&name=/);
     assert.doesNotMatch(await hub.innerText(),/응시\s*인원|전체\s*\d+명|\d+명\s*중|null%|NaN|undefined/);
     if(process.env.GFIELD_RESULT_HUB_QA_DIR){
       fs.mkdirSync(process.env.GFIELD_RESULT_HUB_QA_DIR,{recursive:true});

@@ -5,6 +5,14 @@
   var esc=function(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
   var signatureFields=[['lesson','수업에서 확인한 모습'],['habit','풀이 습관'],['strength','장점'],['growth','보완할 점'],['caution','주의 사항'],['recommendation','추천 지도'],['examStrategy','시험 운영·타이머 활용'],['paperEvidence','시험지에서 확인한 풀이']];
   var cacheKey=function(student,round,slot,series){return [student,(series||'final')+round,slot].join('\n');};
+  async function readNamedSignatureComment(student,exam){
+    var config=root.GFIELD_AUTH;
+    var url=config.SUPABASE_URL+'/rest/v1/hs_final_report_comments?select=comment,updated_at&student=eq.'+encodeURIComponent(student)+'&round=eq.'+encodeURIComponent(exam);
+    var response=await fetch(url,{headers:{apikey:config.PUBLISHABLE_KEY,Authorization:'Bearer '+config.PUBLISHABLE_KEY,'x-gfield-student':btoa(unescape(encodeURIComponent(student)))}});
+    if(!response.ok)throw new Error('코멘트 조회 실패');
+    var rows=await response.json();
+    return {canEdit:false,comment:rows[0]&&rows[0].comment||'',commentUpdatedAt:rows[0]&&rows[0].updated_at||null,snapshot:null,resultOx:null};
+  }
   async function load(student,round,ox,slot,record,preview,series){
     var kind=series==='original'?'original':'final';
     current={student:student,exam:kind+round,slot:slot,canEdit:false,comment:'',commentUpdatedAt:null,snapshot:null,error:false,preview:preview};
@@ -16,7 +24,9 @@
       reportReadCache.delete(key);
       var data=cached
         ?cached
-        :await root.GFIELD_AUTH.functionCall('hs-final-population',{action:record?'record-report':'read-report',exam:target.exam,student:student},slot);
+        :kind==='original'&&slot!=='admin'
+          ?await readNamedSignatureComment(student,target.exam)
+          :await root.GFIELD_AUTH.functionCall('hs-final-population',{action:record?'record-report':'read-report',exam:target.exam,student:student},slot);
       if(current!==target)return null;
       target.canEdit=data.canEdit===true;target.comment=typeof data.comment==='string'?data.comment:'';
       target.commentUpdatedAt=data.commentUpdatedAt||null;

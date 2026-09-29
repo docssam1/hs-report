@@ -106,7 +106,7 @@ check('새 60문항의 핵심 정답과 분류', () => {
   const r2 = model.rounds['2'].items;
   assert.deepEqual(
     [r1[1].answer, r1[2].answer, r1[3].answer, r1[6].answer, r1[17].answer, r1[25].answer],
-    ['18개', '7개', '9마리', '78', '300일', '9711'],
+    ['18개', '8개', '9마리', '78', '300일', '9711'],
   );
   assert.deepEqual(
     [r2[3].answer, r2[7].answer, r2[8].answer, r2[9].answer, r2[18].answer, r2[21].answer, r2[22].answer, r2[23].answer, r2[25].answer, r2[27].answer, r2[28].answer, r2[29].answer],
@@ -277,6 +277,7 @@ check('검수·공개 승인 전 원본형 오답 유사문제는 열리지 않�
   assert.equal(practice.pending.length, 1);
   const html = core.wrongPracticeHTML(ctx);
   assert.match(html, /id="originalPracticeStatus"/);
+  assert.match(html, /다시 연습할 원문 번호:[\s\S]*8번/);
   assert.match(html, /원문 구조와 정답을 대조하고 공개 승인/);
   assert.doesNotMatch(html, /id="wpStart"/);
 });
