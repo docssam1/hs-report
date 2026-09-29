@@ -89,16 +89,18 @@ const server=http.createServer((request,response)=>{
     assert.equal(await page.locator('#originalItemDetail .original-status').last().innerText(),'미정답');
     assert.equal(await page.locator('#originalTeacherComment').count(),1);
     assert.match(await page.locator('.exam-skill-tips').innerText(),/타이머는 현재 속도를 살피는 신호/);
-    assert.equal(await page.locator('[data-docssam-field]').count(),7);
+    assert.equal(await page.locator('[data-docssam-field]').count(),8);
     await page.locator('[data-docssam-field="strength"]').fill('문제 조건을 끝까지 읽고 식으로 옮긴다.');
     await page.locator('[data-docssam-field="recommendation"]').fill('막히면 번호를 표시하고 다음 문제 뒤 다시 돌아온다.');
     await page.locator('[data-docssam-field="examStrategy"]').fill('타이머는 속도 확인용으로만 활용한다.');
+    await page.locator('[data-docssam-field="paperEvidence"]').fill('시험지에 1+1=2를 적었다.');
     await page.locator('#docssam-comment-save').click();
     await page.locator('#docssam-comment-status').getByText('저장했습니다.').waitFor();
     assert.match(await page.locator('.docssam-summary').innerText(),/타이머는 속도 확인용/);
     await page.reload({waitUntil:'domcontentloaded'});
     await page.locator('.docssam-summary').waitFor();
     assert.match(await page.locator('[data-docssam-field="strength"]').inputValue(),/문제 조건을 끝까지/);
+    assert.match(await page.locator('.report-docssam-note').innerText(),/시험지에서 확인한 풀이[\s\S]*1\+1=2/);
     if(OUT){fs.mkdirSync(OUT,{recursive:true});await page.screenshot({path:path.join(OUT,'signature-round2-desktop.png'),fullPage:true});}
     await page.goto(base.replace('round=2','round=1')+'&entry=teacher',{waitUntil:'domcontentloaded'});
     await page.locator('[data-docssam-field="strength"]').waitFor();

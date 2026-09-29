@@ -3,7 +3,7 @@
   var current=null;
   var reportReadCache=new Map();
   var esc=function(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
-  var signatureFields=[['lesson','수업에서 확인한 모습'],['habit','풀이 습관'],['strength','장점'],['growth','보완할 점'],['caution','주의 사항'],['recommendation','추천 지도'],['examStrategy','시험 운영·타이머 활용']];
+  var signatureFields=[['lesson','수업에서 확인한 모습'],['habit','풀이 습관'],['strength','장점'],['growth','보완할 점'],['caution','주의 사항'],['recommendation','추천 지도'],['examStrategy','시험 운영·타이머 활용'],['paperEvidence','시험지에서 확인한 풀이']];
   var cacheKey=function(student,round,slot,series){return [student,(series||'final')+round,slot].join('\n');};
   async function load(student,round,ox,slot,record,preview,series){
     var kind=series==='original'?'original':'final';
