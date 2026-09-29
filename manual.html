@@ -101,6 +101,21 @@
     .intro{box-shadow:none}
     *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   }
+
+  /* ── 사용법 영상 + 접속 버튼 ── */
+  .vguide{margin:-14px 0 44px}
+  .vguide .vh{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-family:'Jua';font-size:20px;color:var(--navy)}
+  .vguide .vh span{font-family:'Noto Sans KR';font-size:12.5px;color:var(--dim);font-weight:500}
+  .vguide .vbox{border-radius:18px;overflow:hidden;background:#000;box-shadow:0 14px 34px rgba(194,65,12,.16);border:1px solid var(--line)}
+  .vguide video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
+  .go{text-align:center;background:var(--card);border:1.5px solid #fcd9b6;border-radius:18px;padding:24px 20px 26px;margin-top:18px;box-shadow:0 6px 20px rgba(194,65,12,.07)}
+  .go p{font-family:'Jua';font-size:21px;color:var(--navy);line-height:1.45;margin-bottom:14px}
+  .go p b{color:var(--orange-d);font-weight:400}
+  .go a.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--orange),var(--orange-d));color:#fff;text-decoration:none;font-weight:700;font-size:17px;padding:15px 34px;border-radius:14px;box-shadow:0 10px 22px rgba(234,88,12,.32);transition:transform .15s,box-shadow .15s}
+  .go a.btn:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(234,88,12,.38)}
+  .go a.btn:active{transform:translateY(0)}
+  .go .u{display:block;margin-top:10px;font-size:12.5px;color:var(--dim)}
+  @media(max-width:560px){ .go p{font-size:18px} .go a.btn{width:100%;justify-content:center;padding:15px 20px} }
 </style>
 </head>
 <body>
@@ -117,6 +132,21 @@
   <div class="intro">
     <p>합격뿐만 아니라 <b>황소 합격 이후의 관리</b>를 위해서라도, 지금부터 스스로 약점을 찾고 복습하는 연습이 필요합니다.</p>
     <p>아직 어린 나이입니다. <span class="hl">부모님께서 반드시 도와주셔야 합니다.</span></p>
+  </div>
+
+
+  <div class="vguide">
+    <div class="vh vtitle">▶ 영상으로 보는 사용법 <span>약 1분 20초</span></div>
+    <div class="vbox">
+      <video controls playsinline preload="metadata">
+        <source src="parent-guide.mp4#t=3" type="video/mp4" onerror="var g=this.closest('.vguide');g.querySelector('.vbox').style.display='none';g.querySelector('.vtitle').style.display='none'">
+      </video>
+    </div>
+    <div class="go">
+      <p>지금 <b>아이의 이름</b>으로 접속하세요</p>
+      <a class="btn" href="https://hs.gfieldacademy.net/" target="_blank" rel="noopener">아이 이름으로 접속하기 →</a>
+      <span class="u">hs.gfieldacademy.net</span>
+    </div>
   </div>
 
   <div class="sec">
@@ -221,6 +251,12 @@
       <div class="org">생각하는 황소 대비 아카이브</div>
     </div>
   </div>
+
+  <div style="margin-top:30px"><div class="go">
+      <p>지금 <b>아이의 이름</b>으로 접속하세요</p>
+      <a class="btn" href="https://hs.gfieldacademy.net/" target="_blank" rel="noopener">아이 이름으로 접속하기 →</a>
+      <span class="u">hs.gfieldacademy.net</span>
+    </div></div>
 
   <div class="foot">G!FIELD GIFTED EDUCATION · hs.gfieldacademy.net</div>
 </div>
