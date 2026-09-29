@@ -208,9 +208,9 @@ const adminSession = {
       return route.abort();
     });
     await teacherPage.goto(`${BASE_URL}/${await teacherEntry.getAttribute('href')}`, { waitUntil: 'domcontentloaded' });
-    await teacherPage.waitForSelector('#signatureStateGrid select').catch(async error => { throw new Error(`${error.message}\nTeacher screen: ${(await teacherPage.locator('body').innerText()).slice(0, 1000)}`); });
-    assert.equal(await teacherPage.locator('#signatureStateGrid select').count(), 30, 'teacher entry opens all 30 original-form answer states');
-    for(let no=1;no<=30;no++)await teacherPage.locator('#signatureStateGrid select').nth(no-1).selectOption('O');
+    await teacherPage.waitForSelector('#signatureStateGrid button').catch(async error => { throw new Error(`${error.message}\nTeacher screen: ${(await teacherPage.locator('body').innerText()).slice(0, 1000)}`); });
+    assert.equal(await teacherPage.locator('#signatureStateGrid button').count(), 30, 'teacher entry opens all 30 original-form answer checks');
+    await teacherPage.evaluate(()=>document.querySelectorAll('#signatureStateGrid button').forEach(button=>button.click()));
     await teacherPage.click('#btnGrade');
     await teacherPage.getByRole('heading', { name: '시그니처 실전 모의고사 성적·약점 진단' }).waitFor();
     await teacherPage.locator('#originalSummary').waitFor();
