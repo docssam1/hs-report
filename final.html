@@ -1633,7 +1633,7 @@ td.weak-cell{white-space:nowrap}
       return Number(br)-Number(ar)||Number(bs==='-')-Number(as==='-')||BP(b.no).pts-BP(a.no).pts||a.no-b.no;
     }).slice(0,3).map(function(item){
       var state=ctx.answerStates&&ctx.answerStates[item.no-1];
-      return {no:item.no,reason:(repeatedNames[item.subarea||item.type]?'반복 유형 · ':'')+(state==='-'?'미응답':state==='X'?'오답':'미정답')};
+      return {no:item.no,type:item.type||item.subarea||'문항 유형 확인',reason:(repeatedNames[item.subarea||item.type]?'반복 유형 · ':'')+(state==='-'?'미응답':state==='X'?'오답':'미정답')};
     });
   }
   function originalComparisonHTML(attempts){
@@ -1708,7 +1708,7 @@ td.weak-cell{white-space:nowrap}
       '<p class="lead" style="margin-top:9px">누적 점수는 두 회차의 최초 성적 평균이며 재응시는 제외합니다. 예상 석차는 2개년 참고 분포 기준으로, 회차별 난이도 차이는 미보정입니다.'+(cumulative!==null?(repeated.length?' 반복 오답 소영역: '+esc(repeated.map(function(x){return x.k;}).join(', '))+'.':' 반복 오답 소영역은 확인되지 않았습니다.'):' 두 회차를 모두 응시해야 누적 성적을 표시합니다.')+'</p>':'';
     var mustDo=originalWeekMustDo(ctx,repeated);
     var mustDoHTML='<div class="week-must-do"><h3>이것만은 꼭 하고</h3>'+(mustDo.length?
-      '<div class="week-must-do-items">'+mustDo.map(function(row){return '<span data-week-no="'+row.no+'"><b>원문 '+row.no+'번</b><small>'+esc(row.reason)+'</small></span>';}).join('')+'</div><p>답을 가리고 다시 풀며 조건 표시, 식·그림, 최종 답의 형식까지 확인하세요.</p>':
+      '<div class="week-must-do-items">'+mustDo.map(function(row){return '<span data-week-no="'+row.no+'"><b>원문 '+row.no+'번</b><small>'+esc(row.reason)+' · '+esc(row.type)+'</small></span>';}).join('')+'</div><p>정오 기록과 문항 유형에 따른 추천입니다. 풀이 습관이나 오답 원인을 확인했다는 뜻은 아닙니다. 답을 가리고 조건·식·그림·최종 답을 다시 확인하세요.</p>':
       '<p>이번 회차 미정답이 없어 특정 번호를 배정하지 않습니다. 시간이 오래 걸린 문제의 풀이식과 답 형식을 다시 확인하세요.</p>')+'</div>';
     var days=ctx.wrongList.length&&ready===ctx.wrongList.length?[
       '1일 · 원답과 조건·답 형식 확인',
@@ -1748,7 +1748,7 @@ td.weak-cell{white-space:nowrap}
       '<div class="original-summary-actions no-print"><button type="button" data-original-summary-print>요약 진단지만 인쇄 / PDF 저장</button></div>'+reportQrHTML(ctx)+
       '<div data-docssam-summary>'+(window.GFIELD_FINAL_REPORT_STATE&&window.GFIELD_FINAL_REPORT_STATE.summary?window.GFIELD_FINAL_REPORT_STATE.summary():'')+'</div>'+
       '<h2 style="margin-top:20px">일주일 복습 안내</h2><p class="lead">하루 15~25분은 참고입니다. 집중 상태에 맞춰 조절하고 80분 재응시와 구분하세요. '+esc(practiceNote)+'</p>'+mustDoHTML+'<ol class="week-plan">'+days.map(function(day){var split=day.split(' · ');return '<li><b>'+esc(split[0])+'</b> · '+esc(split.slice(1).join(' · '))+'</li>';}).join('')+'</ol>'+
-      '<h2 style="margin-top:20px">시험장에서 써 볼 방법</h2><ul class="exam-skill-tips"><li>시작이 막히면 ‘구할 것’과 ‘주어진 것’을 한 줄씩 적고 첫 식이나 그림부터 만듭니다.</li><li>막힌 문제는 표시하고 다음 문제로 간 뒤, 끝에 다시 돌아옵니다.</li><li>풀이식과 최종 답을 구분해 적고, 문제에서 요구한 답의 형식·단위를 확인합니다.</li><li>타이머는 현재 속도를 살피는 신호로만 씁니다. 목표 시각에 못 맞췄다고 서두르거나 풀이를 포기하지 않습니다.</li></ul><p class="lead">적용 순서와 시간 기준은 독샘의 관찰 코멘트를 따릅니다.</p></section>';
+      '<h2 style="margin-top:20px">시험장에서 써 볼 방법</h2><ul class="exam-skill-tips"><li>시작이 막히면 ‘구할 것’과 ‘주어진 것’을 한 줄씩 적고 첫 식이나 그림부터 만듭니다.</li><li>막힌 문제는 표시하고 다음 문제로 간 뒤, 끝에 다시 돌아옵니다.</li><li>풀이식과 최종 답을 구분해 적고, 문제에서 요구한 답의 형식·단위를 확인합니다.</li><li>타이머는 현재 속도를 살피는 신호로만 씁니다. 목표 시각에 못 맞췄다고 서두르거나 풀이를 포기하지 않습니다.</li></ul></section>';
   }
   function originalResourcesHTML(ctx){
     var video=String(ctx.R.video||''),match=video.match(/^https:\/\/www\.youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})$/);

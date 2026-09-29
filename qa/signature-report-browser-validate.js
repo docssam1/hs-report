@@ -161,11 +161,19 @@ const server=http.createServer((request,response)=>{
     assert.match(await entry.locator('.original-summary').innerText(),/틀림 1개 · 미응답 1개/);
     assert.deepEqual(await entry.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['2','1']);
     assert.match(await entry.locator('.week-must-do').innerText(),/2번\s+미응답[\s\S]*1번\s+오답/);
+    assert.match(await entry.locator('.week-must-do').innerText(),/정오 기록과 문항 유형에 따른 추천/);
+    assert.match(await entry.locator('.week-must-do').innerText(),/풀이 습관이나 오답 원인을 확인했다는 뜻은 아닙니다/);
     assert.ok(await entry.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px answer and report do not overflow');
     await entry.goto(base.replace('attempt=1','attempt=3')+'&entry=teacher',{waitUntil:'domcontentloaded'});
     await entry.locator('.original-summary').waitFor();
     assert.match(await entry.locator('.original-summary').innerText(),/틀림 1개 · 미응답 1개/,'saved blank status survives reload');
     assert.match(await entry.locator('.original-report').innerText(),/2번[\s\S]*미응답/,'detail table separates blank from wrong');
+    Object.assign(records[0],{ox:'XX'+'O'.repeat(28),score:94.6,wrong:2});
+    await entry.goto(base.replace('round=2','round=1')+'&entry=teacher',{waitUntil:'domcontentloaded'});
+    await entry.locator('.week-must-do-items [data-week-no]').first().waitFor();
+    assert.deepEqual(await entry.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['1','2']);
+    assert.match(await entry.locator('.week-must-do').innerText(),/정오 기록과 문항 유형에 따른 추천/,'round 1 answer-only record still receives targeted practice advice');
+    assert.match(await entry.locator('.week-must-do').innerText(),/풀이 습관이나 오답 원인을 확인했다는 뜻은 아닙니다/,'recommendation does not assert unobserved paper habits');
     await entryContext.close();
     console.log('PASS Signature 1/2/cumulative report, separate Docssam comments/save/reload/student view, 390px, A4 summary PDF, grade-write zero, learner-fit 초등 2학년 선발 대비');
   }finally{await browser.close();server.close();}
