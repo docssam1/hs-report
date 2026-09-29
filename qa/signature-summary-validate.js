@@ -81,6 +81,20 @@ const comparison = core.originalComparisonHTML(actualAttempts);
 assert.match(comparison, /1·2회 변화와 누적 분석/);
 assert.match(comparison, /최초 응시 기록만 비교/);
 assert.match(comparison, /대영역[\s\S]*배점대/);
+assert.equal((comparison.match(/data-original-pair=/g) || []).length, 10);
+assert.match(comparison, /data-original-pair="30-30"[\s\S]*30번 O → 30번 X[\s\S]*이번 회차 미정답/);
+assert.match(comparison, /조건·그림·답 형식이 다르므로/);
+const pairedFirst = allCorrect.slice();
+const pairedSecond = allCorrect.slice();
+pairedFirst[4] = 'X'; pairedSecond[19] = 'X';
+pairedFirst[28] = 'X'; pairedSecond[23] = 'X';
+const pairedComparison = core.originalComparisonHTML([
+  { n: 1, oxArr: pairedFirst, score: core.computeScore(pairedFirst).score },
+  { n: 2, oxArr: pairedSecond, score: core.computeScore(pairedSecond).score },
+]);
+assert.match(pairedComparison, /data-original-pair="5-4"[\s\S]*5번 X → 4번 O[\s\S]*이번 회차 정답/);
+assert.match(pairedComparison, /data-original-pair="10-20"[\s\S]*10번 O → 20번 X[\s\S]*이번 회차 미정답/);
+assert.match(pairedComparison, /data-original-pair="29-24"[\s\S]*29번 X → 24번 X[\s\S]*두 회차 미정답/);
 assert.match(comparison, /도형<\/b><\/td><td class="c">100%<\/td><td class="c">81\.1%<\/td><td class="c"><b>91\.3%<\/b><\/td><td class="c delta-down">-18\.9%p/);
 assert.match(core.originalComparisonHTML([actualAttempts[1]]), /없는 회차를 0점으로 계산하지 않습니다/);
 const itemStates = allCorrect.slice(); itemStates[1] = 'X'; itemStates[29] = '-';

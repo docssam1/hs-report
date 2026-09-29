@@ -83,6 +83,8 @@ const server=http.createServer((request,response)=>{
     assert.match(await page.locator('.week-plan').innerText(),/2일[\s\S]*원문 30번[\s\S]*4일[\s\S]*원문 30번[\s\S]*6일[\s\S]*원문 30번/);
     assert.match(await page.locator('.cumulative-grid').innerText(),/1회 성적[\s\S]*100점[\s\S]*2회 성적[\s\S]*95\.8점[\s\S]*누적 성적[\s\S]*97\.9점/);
     assert.match(await page.locator('#originalComparison').innerText(),/대영역[\s\S]*도형[\s\S]*81\.1%[\s\S]*배점대/);
+    assert.equal(await page.locator('#originalComparison .original-pair-table [data-original-pair]').count(),10);
+    assert.match(await page.locator('[data-original-pair="30-30"]').innerText(),/30번 O → 30번 X[\s\S]*이번 회차 미정답/);
     assert.equal(await page.locator('#originalItemDetail tbody tr').count(),30);
     assert.equal(await page.locator('#originalItemDetail .original-status').last().innerText(),'미정답');
     assert.equal(await page.locator('#originalTeacherComment').count(),1);
@@ -116,6 +118,7 @@ const server=http.createServer((request,response)=>{
     await phone.locator('.docssam-summary').waitFor();
     assert.equal(await phone.locator('[data-docssam-field]').count(),0,'student cannot edit teacher comment');
     assert.match(await phone.locator('.report-docssam-note').innerText(),/풀이 습관|장점/);
+    assert.equal(await phone.locator('#originalComparison .original-pair-table [data-original-pair]').count(),10);
     assert.ok(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px report does not overflow horizontally');
     if(OUT){
       fs.mkdirSync(OUT,{recursive:true});
