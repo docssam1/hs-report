@@ -187,6 +187,7 @@ tr.cau td{border-bottom:1px solid var(--line);font-size:11.5px;color:var(--ink2)
 @media(max-width:600px){.original-report .original-compare-table,.original-report .original-item-table{font-size:11px}.original-report .original-compare-table th,.original-report .original-compare-table td,.original-report .original-item-table th,.original-report .original-item-table td{padding:5px 3px}.original-report .original-item-table .original-item-type{max-width:110px;overflow-wrap:anywhere}}
 @media print{.original-report .original-index{display:none}.original-report>section:not(.original-summary){break-inside:auto}.original-report h2,.original-report h3{break-after:avoid}.original-report .original-compare-table tr,.original-report .original-item-table tr{break-inside:avoid}}
 @media print{.original-report .report-cover-qr{gap:5mm}.original-report .report-qr-card{break-inside:avoid}.original-summary .week-plan{gap:2mm}.original-summary .week-plan li{break-inside:avoid}.original-summary .original-summary-actions{display:none!important}body.print-original-summary .original-report>.cover,body.print-original-summary .original-report>section:not(.original-summary){display:none!important}body.print-original-summary .original-report{box-shadow:none}body.print-original-summary .original-summary{border:0;padding-top:10px;padding-bottom:6px}body.print-original-summary .original-summary .lead{margin-bottom:5px}body.print-original-summary .original-summary .report-cover-qr{margin-top:10px}body.print-original-summary .original-summary .report-qr-card{padding:6px}body.print-original-summary .original-summary .report-qr-code{flex-basis:64px;width:64px;height:64px}body.print-original-summary .original-summary .cumulative-title{margin:10px 0 6px}body.print-original-summary .original-summary .cumulative-grid div{padding:8px}body.print-original-summary .original-summary .docssam-summary{margin:7px 0;padding:6px 10px}body.print-original-summary .original-summary .week-must-do{margin:7px 0;padding:6px 10px}body.print-original-summary .original-summary .week-plan li{padding:4px 8px;line-height:1.3}body.print-original-summary .original-summary .exam-skill-tips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px;margin-top:5px;line-height:1.45}body.print-original-summary .original-summary .exam-skill-tips li{break-inside:avoid}body.print-original-summary .original-summary h2[style]{margin-top:10px!important}}
+@media print{body.print-original-summary .original-summary{padding-top:4px;padding-bottom:2px}body.print-original-summary .original-summary .report-cover-qr{margin-top:5px}body.print-original-summary .original-summary .cumulative-title{margin:6px 0 4px}body.print-original-summary .original-summary .cumulative-grid div{padding:5px 8px}body.print-original-summary .original-summary .docssam-summary{margin:4px 0;padding:4px 8px}body.print-original-summary .original-summary .week-must-do{margin:4px 0;padding:4px 8px}body.print-original-summary .original-summary .week-plan{margin-top:5px;gap:1mm}body.print-original-summary .original-summary .week-plan li{padding:2px 6px;line-height:1.2}body.print-original-summary .original-summary .exam-skill-tips{font-size:11px;line-height:1.25;column-gap:10px;margin-top:3px}body.print-original-summary .original-summary h2[style]{margin-top:6px!important}}
 
 /* ===== 나만의 약점 유형 (weak-type bookmarking) ===== */
 .weakbtn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;border:1.5px solid #fdba74;background:#fff;color:var(--orange-d);cursor:pointer;font-family:inherit;line-height:1.4;white-space:nowrap}
@@ -569,6 +570,7 @@ td.weak-cell{white-space:nowrap}
   var isFinal7=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===7;
   var mockFile=isLast?'mock-data-last.js':(isOriginal?'mock-data-original.js':'mock-data-final.js');
   var files=['hs-auth.js','data.js',mockFile,'vendor/qrcode-generator/2.0.4/qrcode.js'];
+  if(isOriginal) files.push('mock-data-final.js','signature-forecast.js');
   if(!isOriginal) files.push('mock-data-original.js');
   files.push('bank/bank-registry.js');
   if(!isOriginal) files.push('mock-rx-data.js');
@@ -619,7 +621,7 @@ td.weak-cell{white-space:nowrap}
   var M = isLast ? window.GFIELD_MOCK_LAST : (isOriginal ? window.GFIELD_MOCK_ORIGINAL : window.GFIELD_MOCK_FINAL);
   var finalModel = window.GFIELD_MOCK_FINAL;
   var finalBaseStats = {};
-  if(!isOriginal&&finalModel&&finalModel.rounds){
+  if(finalModel&&finalModel.rounds){
     for(var baseRound=1;baseRound<=4;baseRound++){
       var baseStats=finalModel.rounds[String(baseRound)]&&finalModel.rounds[String(baseRound)].stats;
       if(baseStats) finalBaseStats[String(baseRound)]=baseStats;
@@ -1574,6 +1576,23 @@ td.weak-cell{white-space:nowrap}
     }
     return out.sort(function(a,b){return a.n-b.n;});
   }
+  function originalForecast(scores,priorRows){
+    var api=window.GFIELD_SIGNATURE_FORECAST;
+    var stats=M.rounds[String(roundNum)]&&M.rounds[String(roundNum)].stats;
+    if(!api||!stats||!Array.isArray(stats.cuts))return null;
+    var finalRecords=[];
+    for(var n=1;n<=4;n++){
+      var row=priorRows&&priorRows['final'+n],finalStats=finalBaseStats[String(n)];
+      if(row&&validOx(row.ox)&&finalStats&&Array.isArray(finalStats.cuts))
+        finalRecords.push({score:computeScore(row.ox.split('')).score,cuts:finalStats.cuts});
+    }
+    return api.estimate(scores,finalRecords,stats.cuts);
+  }
+  function originalExpectedClass(score,cuts){
+    var api=window.GFIELD_SIGNATURE_FORECAST;
+    var placement=api&&api.levelPlacement(score,cuts,M&&M.estimatedPosition);
+    return placement?placement.label:'산출 대기';
+  }
   function repeatedOriginalSubareas(attempts){
     var map={};
     attempts.forEach(function(a){
@@ -1694,7 +1713,7 @@ td.weak-cell{white-space:nowrap}
       '<table class="original-item-table"><thead><tr><th>번호</th><th>상태</th><th>대영역</th><th>세부영역</th><th>배점</th></tr></thead><tbody>'+rows+'</tbody></table>'+
       '<p class="original-evidence">이 표는 저장된 정오·미응답 기록을 보여 줍니다. 시험지 풀이식의 유무나 오답 원인을 자동 판정하지 않습니다. 독샘 관찰 코멘트와 실제 시험지를 함께 확인하세요.</p></section>';
   }
-  function originalSummaryHTML(ctx, weakSubs, attempts, repeated){
+  function originalSummaryHTML(ctx, weakSubs, attempts, repeated, forecasts){
     var focus=weakSubs.filter(function(x){return x.n>=2;}).sort(function(a,b){return a.perf-b.perf||b.lost-a.lost;}).map(function(x){return x.k;});
     ctx.wrongList.forEach(function(item){var label=item.subarea||item.type;if(label&&focus.indexOf(label)<0)focus.push(label);});
     focus=focus.slice(0,2);
@@ -1703,16 +1722,21 @@ td.weak-cell{white-space:nowrap}
     var practiceNote=ctx.wrongList.length?(ready?'검수 완료 유사문항 '+ready+'개 원문이 연결되어 있습니다. 승인되지 않은 오답 유형은 원문으로 복습하세요.':'오답 유사문항 연결은 검수·공개 승인 확인 중입니다. 승인 전 문제는 열리지 않습니다.'):'이번 회차는 오답이 없어 새 유사문항을 자동 배정하지 않습니다.';
     var firstAttempt=attempts.filter(function(a){return a.n===1;})[0],secondAttempt=attempts.filter(function(a){return a.n===2;})[0];
     var cumulative=firstAttempt&&secondAttempt?round1((firstAttempt.score+secondAttempt.score)/2):null;
+    var currentForecast=forecasts&&forecasts.current;
+    var firstForecast=forecasts&&forecasts.first;
+    var secondForecast=forecasts&&forecasts.second;
+    var cumulativeForecast=forecasts&&forecasts.cumulative;
+    var expectedClass=currentForecast?originalExpectedClass(currentForecast.expected,ctx.S.cuts):'산출 대기';
     function positionText(score){
       var p=ctx.cutVerified&&typeof M.estimatedPosition==='function'?M.estimatedPosition(score):null;
       return p?'상위 '+(p.topPercent<0.1?'0.1% 미만':'약 '+p.topPercent+'%')+' · '+p.cohortSize.toLocaleString('ko-KR')+'명 기준 약 '+p.rank.toLocaleString('ko-KR')+'등':'';
     }
     var currentPosition=positionText(ctx.score);
     var combined=ctx.roundNum===2?'<h3 class="cumulative-title">회차별 성적과 누적 성적</h3><div class="cumulative-grid">'+
-      '<div><span>1회 성적 · 최초 응시</span><b>'+(firstAttempt?firstAttempt.score+'점':'기록 없음')+'</b>'+(firstAttempt?'<small>'+positionText(firstAttempt.score)+'</small>':'')+'</div>'+
-      '<div><span>2회 성적 · 최초 응시</span><b>'+(secondAttempt?secondAttempt.score+'점':'기록 없음')+'</b>'+(secondAttempt?'<small>'+positionText(secondAttempt.score)+'</small>':'')+'</div>'+
-      '<div><span>누적 성적 · 1·2회 평균</span><b>'+(cumulative!==null?cumulative+'점':'산출 대기')+'</b>'+(cumulative!==null?'<small>'+positionText(cumulative)+'</small>':'')+'</div></div>'+
-      '<p class="lead" style="margin-top:9px">누적 점수는 두 회차의 최초 성적 평균이며 재응시는 제외합니다. 예상 석차는 2개년 참고 분포 기준으로, 회차별 난이도 차이는 미보정입니다.'+(cumulative!==null?(repeated.length?' 반복 오답 소영역: '+esc(repeated.map(function(x){return x.k;}).join(', '))+'.':' 반복 오답 소영역은 확인되지 않았습니다.'):' 두 회차를 모두 응시해야 누적 성적을 표시합니다.')+'</p>':'';
+      '<div><span>1회 실제 점수 · 최초 응시</span><b>'+(firstAttempt?firstAttempt.score+'점':'기록 없음')+'</b>'+(firstForecast?'<small>실전 예상 '+firstForecast.expected+'점</small>':'')+(firstAttempt?'<small>'+positionText(firstAttempt.score)+'</small>':'')+'</div>'+
+      '<div><span>2회 실제 점수 · 최초 응시</span><b>'+(secondAttempt?secondAttempt.score+'점':'기록 없음')+'</b>'+(secondForecast?'<small>실전 예상 '+secondForecast.expected+'점</small>':'')+(secondAttempt?'<small>'+positionText(secondAttempt.score)+'</small>':'')+'</div>'+
+      '<div><span>누적 실제 점수 · 1·2회 평균</span><b>'+(cumulative!==null?cumulative+'점':'산출 대기')+'</b>'+(cumulativeForecast?'<small>실전 예상 '+cumulativeForecast.expected+'점 · '+esc(originalExpectedClass(cumulativeForecast.expected,ctx.S.cuts))+'</small>':'')+(cumulative!==null?'<small>'+positionText(cumulative)+'</small>':'')+'</div></div>'+
+      '<p class="lead" style="margin-top:9px">누적 실제 점수는 두 회차의 최초 성적 평균이며 재응시는 제외합니다. 실전 예상 점수와 예상 반은 난도·교차 응시 성적을 반영한 참고 추정치입니다. 예상 석차는 실제 점수의 2개년 참고 분포 기준입니다.'+(cumulative!==null?(repeated.length?' 반복 오답 소영역: '+esc(repeated.map(function(x){return x.k;}).join(', '))+'.':' 반복 오답 소영역은 확인되지 않았습니다.'):' 두 회차를 모두 응시해야 누적 성적을 표시합니다.')+'</p>':'';
     var mustDo=originalWeekMustDo(ctx,repeated);
     var mustDoHTML='<div class="week-must-do"><h3>이것만은 꼭 하고</h3>'+(mustDo.length?
       '<div class="week-must-do-items">'+mustDo.map(function(row){return '<span data-week-no="'+row.no+'"><b>원문 '+row.no+'번</b><small>'+esc(row.reason)+' · '+esc(row.type)+'</small></span>';}).join('')+'</div><p>정오 기록과 문항 유형에 따른 추천입니다. 풀이 습관이나 오답 원인을 확인했다는 뜻은 아닙니다. 답을 가리고 조건·식·그림·최종 답을 다시 확인하세요.</p>':
@@ -1749,13 +1773,15 @@ td.weak-cell{white-space:nowrap}
     var answerBreakdown=validSignatureStates(ctx.answerStates,false)?signatureStateSummary(ctx.answerStates):null;
     var answerBreakdownHTML=answerBreakdown?'<p class="lead" style="margin-top:10px"><b>답안 상태</b> · 맞음 '+answerBreakdown.correct+'개 · 틀림 '+answerBreakdown.wrong+'개 · 미응답 '+answerBreakdown.blank+'개. 미응답은 채점상 미정답에 포함하지만, 복습할 때는 틀린 답과 구분합니다.</p>':'<p class="lead" style="margin-top:10px">기존 O/X 기록에는 틀린 답과 미응답의 구분이 저장되지 않았습니다. 아래 오답 수에는 미응답이 포함될 수 있으며, 시험지로 확인하기 전에는 추정하지 않습니다.</p>';
     return '<section class="original-summary" id="originalSummary"><h2>진단 요약</h2><p class="lead">'+esc(ctx.name)+' 학생 · 시그니처 실전 '+ctx.roundNum+'회 · '+attemptLabel+'입니다.</p>'+
-      '<table><tr><th>점수</th><th>맞은 문제</th><th>미정답</th><th>2025 환산 예상 레벨</th></tr><tr><td>'+ctx.score+'점</td><td>'+ctx.ncorr+'개</td><td>'+ctx.wrong+'개</td><td>'+esc(ctx.grade)+'</td></tr></table>'+
+      '<table><tr><th>실제 점수</th><th>실전 예상 점수</th><th>예상 반</th></tr><tr><td>'+ctx.score+'점</td><td>'+(currentForecast?currentForecast.expected+'점':'산출 대기')+'</td><td>'+esc(expectedClass)+'</td></tr></table>'+
+      '<p class="lead" style="margin-top:9px">맞은 문제 '+ctx.ncorr+'개 · 미정답 '+ctx.wrong+'개</p>'+
+      '<p class="lead" style="margin-top:9px">실제 점수는 시그니처 채점 결과입니다. 실전 예상 점수·예상 반은 참고 추정치이며 공식 성적이나 합격 판정이 아닙니다.</p>'+
       (currentPosition&&ctx.roundNum===1?'<p class="lead" style="margin-top:9px"><b>예상 위치</b> · '+currentPosition+'. 실제 이번 모의고사 석차가 아닌 참고 추정치입니다.</p>':'')+answerBreakdownHTML+
       (first?'<p style="margin-top:12px;font-size:13px"><b>이번 주 시작 후보</b> · '+esc(first)+(focus[1]?' / '+esc(second):'')+'</p>':'')+combined+
       '<div class="original-summary-actions no-print"><button type="button" data-original-summary-print>요약 진단지만 인쇄 / PDF 저장</button></div>'+reportQrHTML(ctx)+
       '<div data-docssam-summary>'+(window.GFIELD_FINAL_REPORT_STATE&&window.GFIELD_FINAL_REPORT_STATE.summary?window.GFIELD_FINAL_REPORT_STATE.summary():'')+'</div>'+
       '<h2 style="margin-top:20px">일주일 복습 안내</h2><p class="lead">하루 15~25분은 참고입니다. 집중 상태에 맞춰 조절하고 80분 재응시와 구분하세요. '+esc(practiceNote)+'</p>'+mustDoHTML+'<ol class="week-plan">'+days.map(function(day){var split=day.split(' · ');return '<li><b>'+esc(split[0])+'</b> · '+esc(split.slice(1).join(' · '))+'</li>';}).join('')+'</ol>'+
-      '<h2 style="margin-top:20px">시험장에서 써 볼 방법</h2><ul class="exam-skill-tips"><li>시작이 막히면 ‘구할 것’과 ‘주어진 것’을 한 줄씩 적고 첫 식이나 그림부터 만듭니다.</li><li>막힌 문제는 표시하고 다음 문제로 간 뒤, 끝에 다시 돌아옵니다.</li><li>풀이식과 최종 답을 구분해 적고, 문제에서 요구한 답의 형식·단위를 확인합니다.</li><li>타이머는 현재 속도를 살피는 신호로만 씁니다. 목표 시각에 못 맞췄다고 서두르거나 풀이를 포기하지 않습니다.</li></ul></section>';
+      '<h2 style="margin-top:20px">시험장에서 써 볼 방법</h2><ul class="exam-skill-tips"><li>막히면 ‘구할 것·주어진 것’을 적고 첫 식이나 그림부터 만듭니다.</li><li>막힌 문제는 표시하고 다음 문제 뒤에 돌아옵니다.</li><li>풀이식과 최종 답을 나눠 쓰고 답 형식·단위를 점검합니다.</li><li>타이머는 속도 확인용입니다. 목표 시각에 못 맞춰도 서두르거나 포기하지 않습니다.</li></ul></section>';
   }
   function originalResourcesHTML(ctx){
     var video=String(ctx.R.video||''),match=video.match(/^https:\/\/www\.youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})$/);
@@ -1764,6 +1790,11 @@ td.weak-cell{white-space:nowrap}
   }
   function renderOriginalReport(ctx, priorRows, attemptNo, fk, saveErr, saveConflict, saved){
     var attempts=originalFirstAttempts(roundNum,priorRows,attemptNo,fk,state.oxArr,preview||saved);
+    var firstAttempt=attempts.filter(function(a){return a.n===1;})[0],secondAttempt=attempts.filter(function(a){return a.n===2;})[0];
+    var forecasts={current:originalForecast([ctx.score],priorRows),
+      first:firstAttempt?originalForecast([firstAttempt.score],priorRows):null,
+      second:secondAttempt?originalForecast([secondAttempt.score],priorRows):null,
+      cumulative:firstAttempt&&secondAttempt?originalForecast([firstAttempt.score,secondAttempt.score],priorRows):null};
     var repeated=repeatedOriginalSubareas(attempts);
     var weakAreas=ctx.A.filter(function(a){return a.perf<100;}).sort(function(a,b){return a.perf-b.perf || (b.tot-b.got)-(a.tot-a.got);});
     if(!weakAreas.length) weakAreas=ctx.A.slice();
@@ -1777,9 +1808,9 @@ td.weak-cell{white-space:nowrap}
     app.innerHTML=previewBanner+teacherBanner+practiceBanner+saveErrBanner+
       '<div class="doc original-report"><div class="cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>시그니처 실전 모의고사 성적·약점 진단</h1>'+
       '<div class="sub">'+esc(ctx.R.title)+' · 생각하는 황소 초등선발 대비</div><div class="who"><b>'+esc(ctx.name)+'</b><span>학생</span></div>'+
-      '<div class="kpi"><div><i>점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>비교 기준</i><b style="font-size:15px">2025 환산</b></div><div><i>예상 레벨</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div></div>'+reportQrHTML(ctx)+'</div>'+
+      '<div class="kpi"><div><i>실제 점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>실전 예상 점수</i><b>'+(forecasts.current?forecasts.current.expected:'—')+'<small> / 100</small></b></div><div><i>예상 반</i><b style="font-size:15px">'+esc(forecasts.current?originalExpectedClass(forecasts.current.expected,ctx.S.cuts):'산출 대기')+'</b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div></div>'+reportQrHTML(ctx)+'</div>'+
       '<section class="original-index no-print"><h2>분석지 바로가기</h2><nav class="original-index-links" aria-label="시그니처 분석지 목차"><a href="#originalSummary">성적·일주일 복습</a>'+(roundNum===2?'<a href="#originalComparison">1·2회 변화</a>':'')+'<a href="#originalItemDetail">30문항 상태</a><a href="#originalTeacherComment">독샘 코멘트</a></nav></section>'+
-      originalSummaryHTML(ctx,weakSubs,attempts,repeated)+
+      originalSummaryHTML(ctx,weakSubs,attempts,repeated,forecasts)+
       originalResourcesHTML(ctx)+
       '<section><h2>2025 환산 예상 레벨</h2>'+originalCutBasisHTML()+cutWarnHTML(ctx)+'</section>'+
       (roundNum===2?originalComparisonHTML(attempts):'')+
@@ -2046,6 +2077,7 @@ td.weak-cell{white-space:nowrap}
     attemptTrendHTML:attemptTrendHTML,
     markWeak:markWeak, unmarkWeak:unmarkWeak, isWeakMarked:isWeakMarked, weakListRows:weakListRows,
     originalWeakStatus:originalWeakStatus, repeatedOriginalSubareas:repeatedOriginalSubareas,
+    originalExpectedClass:originalExpectedClass, originalForecast:originalForecast,
     detailedAnswersSectionHTML:detailedAnswersSectionHTML,
     reviewedFinal2CurriculumApproval:reviewedFinal2CurriculumApproval,
     curriculumPrescriptionForItem:curriculumPrescriptionForItem,

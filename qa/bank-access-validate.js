@@ -78,10 +78,10 @@ assert.match(home,/localStorage\.removeItem\(QUESTION_BANK_LAUNCH_KEY/,'leaving 
 const report=read('final.html');
 assert.match(report,/product:'mock-final-7'/,'Final7 report issues a round-scoped practice handoff');
 assert.match(report,/signatureAccess=.*mock-signature-/,'Signature diagnosis checks its own round permission');
-assert.match(report,/originalSummaryHTML\(ctx,weakSubs,attempts,repeated\)/,'Signature diagnosis has a separate concise summary');
+assert.match(report,/originalSummaryHTML\(ctx,weakSubs,attempts,repeated,forecasts\)/,'Signature diagnosis has a separate concise summary');
 assert.match(report,/originalResourcesHTML\(ctx\)/,'Signature diagnosis reuses the original paper viewer and links its video');
 assert.match(report,/firstAttempt\.score\+secondAttempt\.score/,'Signature 2 cumulative average uses only the two original attempts');
-assert.match(report,/1회 성적 · 최초 응시[\s\S]*2회 성적 · 최초 응시[\s\S]*누적 성적 · 1·2회 평균/,'Signature 2 separates the two round scores from the cumulative result');
+assert.match(report,/1회 실제 점수 · 최초 응시[\s\S]*2회 실제 점수 · 최초 응시[\s\S]*누적 실제 점수 · 1·2회 평균/,'Signature 2 separates the two round scores from the cumulative result');
 assert.match(read('bank/index.html'),/original\[12\][\s\S]*?window\.FINAL1_WORKSHEET\.mount/,'Signature practice uses the scoped fixed worksheet, not unrelated general generators');
 assert.match(read('mock-data-original.js'),/FUq-XBAcP_8[\s\S]*?R5NN1K29__4/,'Signature video viewer uses the supplied 1 and 2 solution links');
 assert.match(report,/issueWrongPracticeHandoff\(ctx\)/,'Final7 practice launch refreshes the scoped handoff');
