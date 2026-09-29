@@ -154,7 +154,8 @@
       links:[
         {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-01-rebuilt-answer.pdf'},
         {label:'내 성적·약점 진단',url:'final.html?set=original&round=1&go=report'},
-        {label:'맞은 문제 체크·진단',url:'final.html?set=original&round=1&go=answer'}
+        {label:'맞은 문제 체크·진단',url:'final.html?set=original&round=1&go=answer'},
+        {label:'전체 유형 유사문제',url:'bank/index.html?bank=original1&printMode=both'}
       ]
     },
     {
@@ -170,7 +171,8 @@
       links:[
         {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-02-rebuilt-answer.pdf'},
         {label:'내 성적·약점 진단',url:'final.html?set=original&round=2&go=report'},
-        {label:'맞은 문제 체크·진단',url:'final.html?set=original&round=2&go=answer'}
+        {label:'맞은 문제 체크·진단',url:'final.html?set=original&round=2&go=answer'},
+        {label:'전체 유형 유사문제',url:'bank/index.html?bank=original2&printMode=both'}
       ]
     }
   ];
@@ -306,7 +308,8 @@
         book.links=[
           {label:'정답지 PDF',url:'output/pdf/hwangso-original-form-mock-0'+round+'-rebuilt-answer.pdf'},
           {label:'내 성적·약점 진단',url:withName('final.html?set=original&round='+round+'&go=report')},
-          {label:'맞은 문제 체크·진단',url:withName('final.html?set=original&round='+round+'&go=answer')}
+          {label:'맞은 문제 체크·진단',url:withName('final.html?set=original&round='+round+'&go=answer')},
+          {label:'전체 유형 유사문제',url:'bank/index.html?bank=original'+round+'&printMode=both&from=archive&name='+encodeURIComponent(studentName())+'#student='+encodeURIComponent(studentName())}
         ];
       }
     });

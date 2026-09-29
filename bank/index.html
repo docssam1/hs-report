@@ -251,17 +251,11 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
 (function(){
   var q=new URLSearchParams(location.search);
   var sourceParts=String(q.get('source')||'').split('|');
-  var signatureRequested=/^original[12]$/.test(q.get('bank')||'') || (q.get('practice')==='wrong'&&sourceParts[0]==='original'&&/^[12]$/.test(sourceParts[1]));
-  if(signatureRequested){
-    document.body.classList.add('fixed-bank-mode');
-    document.getElementById('stage').textContent='시그니처 유사문항은 승인된 문항세트가 학습지에 연결된 뒤 열립니다. 현재는 원문과 해설을 먼저 확인해 주세요.';
-    return;
-  }
-  var bankCode=/^(?:final[12347]|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^(?:1|2|3|4|7)$/.test(sourceParts[1])?'final'+sourceParts[1]:'');
+  var bankCode=/^(?:final[12347]|original[12]|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^(?:1|2|3|4|7)$/.test(sourceParts[1])?'final'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='original'&&/^[12]$/.test(sourceParts[1])?'original'+sourceParts[1]:''));
   var fixed=!!bankCode;
   if(!fixed)return;
   document.body.classList.add('fixed-bank-mode');
-  var s=document.createElement('script');s.src='final1-worksheet.js?v=20260928-white-workspace';s.onload=function(){
+  var s=document.createElement('script');s.src='final1-worksheet.js?v=20260929-signature-fixed';s.onload=function(){
     var hasGens=q.has('gens'), raw=hasGens?(q.get('gens')||'').split(','):(q.get('practice')==='wrong'?[]:null);
     if(!hasGens&&q.get('gen')&&q.get('gen')!=='mix')raw=[q.get('gen')];
     var typeIds=bankCode==='important'?(q.get('types')||'').split(',').filter(Boolean):null;

@@ -810,6 +810,17 @@
     );
   });
 
+  /* Teacher-approved Signature 1/2 fixed variants; each source has three items. */
+  [1,2].forEach(function(round){
+    var visualNos=round===1?[1,2,3,4,5,6,7,9,10,11,13,14,15,16,18,20,21,24,25,26,28,29,30]:[1,2,3,4,5,6,7,10,11,13,14,17,18,20,21,22,23,24,26,28,29,30];
+    for(var no=1;no<=30;no++){
+      var sourceKey=['original',round,no].join('|');
+      var link=sourceItemReviewGeneratorLink('original'+round+'-q'+String(no).padStart(2,'0'),'bank/bank-fixed.js','same Signature source item, teacher-reviewed fixed variants','original:'+round+':'+no,visualNos.indexOf(no)>=0);
+      link.qaEvidence={suite:'qa/signature-fixed-validate.js',generatedQuestions:3,levels:['same','same','hard'],seedsPerLevel:0,date:'2026-09-29'};
+      SOURCE_ITEM_GENERATOR_LINKS[sourceKey]=link;
+    }
+  });
+
   function sourceItemGenerator(sourceKey) {
     return SOURCE_ITEM_GENERATOR_LINKS[clean(sourceKey)] ? clone(SOURCE_ITEM_GENERATOR_LINKS[clean(sourceKey)]) : null;
   }

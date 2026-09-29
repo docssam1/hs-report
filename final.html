@@ -1419,11 +1419,12 @@ td.weak-cell{white-space:nowrap}
     return {ready:ready,pending:pending};
   }
   function wrongPracticeHTML(ctx){
-    if(!ctx.wrongList.length) return '<section class="no-print"><h2>틀린 문제 유사문제 학습</h2><div class="wrong-practice">이번 회차는 오답이 없어 별도의 유사문제가 필요하지 않습니다.</div></section>';
+    var allTypes=isOriginal?'<section class="no-print"><h2>응시 회차 전체 유형 복습</h2><p class="lead">맞고 틀린 결과와 관계없이 이번 회차 1~30번의 유사문제를 연습합니다. 공식 성적은 바뀌지 않습니다.</p><button type="button" class="wp-start" id="signatureAllPractice">'+ctx.roundNum+'회 전체 유형 학습지 열기</button></section>':'';
+    if(!ctx.wrongList.length) return '<section class="no-print"><h2>틀린 문제 유사문제 학습</h2><div class="wrong-practice">이번 회차는 오답이 없어 별도의 유사문제가 필요하지 않습니다.</div></section>'+allTypes;
     var model=wrongPracticeModel(ctx);
     if(isOriginal&&!model.ready.length){
       var recommended=ctx.wrongList.map(function(item){return '<span class="wp-source-no">'+Number(item.no)+'번</span>';}).join(' ');
-      return '<section class="no-print" id="originalPracticeStatus"><h2>오답 유형 유사문제 추천</h2><div class="wrong-practice"><p>이번 회차에서 다시 연습할 원문 번호: '+recommended+'</p><p>이 회차의 유사문제는 원문 구조와 정답을 대조하고 공개 승인을 받은 뒤 연결됩니다. 현재 학생에게 열 수 있는 유사문항은 없습니다. 원문 정답지와 풀이로 먼저 복습해 주세요.</p></div></section>';
+      return '<section class="no-print" id="originalPracticeStatus"><h2>오답 유형 유사문제 추천</h2><div class="wrong-practice"><p>이번 회차에서 다시 연습할 원문 번호: '+recommended+'</p><p>이 회차의 유사문제는 원문 구조와 정답을 대조하고 공개 승인을 받은 뒤 연결됩니다. 현재 학생에게 열 수 있는 유사문항은 없습니다. 원문 정답지와 풀이로 먼저 복습해 주세요.</p></div></section>'+allTypes;
     }
     var items=model.ready.map(function(row){
       return '<article class="wp-item" data-wp-points="'+esc(row.points)+'" data-wp-gen="'+esc(row.generator.generatorId)+'" data-wp-no="'+row.item.no+'"><b>'+row.item.no+'번 · '+esc(row.tx.detailType||row.tx.displayType||row.item.type)+'</b><span>'+esc(row.tx.area||row.item.area)+' › '+esc(row.tx.subarea||row.item.subarea||'분류 확인 중')+' · '+esc(row.points)+'점</span></article>';
@@ -1431,7 +1432,7 @@ td.weak-cell{white-space:nowrap}
     var pending=model.pending.length?'<div class="wp-pending">유사문제 검수·공개 승인 전인 문항: '+model.pending.map(function(row){return row.item.no+'번';}).join(', ')+'</div>':'';
     return '<section class="no-print"><h2>틀린 문제와 비슷한 문제 풀기</h2><div class="lead">배점대를 고르면 틀린 문제마다 비슷한 문제를 3개씩 연습할 수 있습니다.</div><div class="wrong-practice" id="wrongPractice" data-set="'+esc(TAX_SET_KEY)+'" data-round="'+ctx.roundNum+'">'+
       '<div class="wp-filters" role="group" aria-label="오답 배점대 선택"><button type="button" class="wp-chip on" data-wp-filter="all">전체문제</button><button type="button" class="wp-chip" data-wp-filter="2.7">2점대</button><button type="button" class="wp-chip" data-wp-filter="3.4">3점대</button><button type="button" class="wp-chip" data-wp-filter="4.2">4점대</button></div>'+
-      '<div class="wp-summary" id="wpSummary"></div><div class="wp-list" id="wpList">'+items+'</div>'+pending+'<div class="wp-starts"><button type="button" class="wp-start" id="wpStart" data-wp-view="grouped">문제별로 보기</button><button type="button" class="wp-start wp-mixed" data-wp-view="mixed">섞어서 보기</button></div></div></section>';
+      '<div class="wp-summary" id="wpSummary"></div><div class="wp-list" id="wpList">'+items+'</div>'+pending+'<div class="wp-starts"><button type="button" class="wp-start" id="wpStart" data-wp-view="grouped">문제별로 보기</button><button type="button" class="wp-start wp-mixed" data-wp-view="mixed">섞어서 보기</button></div></div></section>'+allTypes;
   }
   function issueWrongPracticeHandoff(ctx){
     if(!ctx||Number(ctx.roundNum)!==7||!ctx.name)return;
@@ -1440,6 +1441,11 @@ td.weak-cell{white-space:nowrap}
     try{localStorage.setItem('gfield_question_bank_launch_v1',payload);}catch(error){}
   }
   function wireWrongPractice(ctx){
+    var allButton=document.getElementById('signatureAllPractice');
+    if(allButton)allButton.onclick=function(){
+      var query=new URLSearchParams({bank:'original'+ctx.roundNum,points:'all',printMode:'both',view:'grouped'});
+      window.open('bank/index.html?'+query.toString()+'#'+new URLSearchParams({student:ctx.name}).toString(),'_blank','noopener');
+    };
     var root=document.getElementById('wrongPractice'); if(!root)return;
     var selected='all',chips=Array.prototype.slice.call(root.querySelectorAll('.wp-chip'));
     function rows(){return Array.prototype.slice.call(root.querySelectorAll('.wp-item')).filter(function(row){return selected==='all'||row.getAttribute('data-wp-points')===selected;});}

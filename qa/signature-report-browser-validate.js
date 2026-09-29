@@ -105,6 +105,9 @@ const server=http.createServer((request,response)=>{
     assert.deepEqual(await page.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['30']);
     assert.match(await page.locator('.week-plan').innerText(),/2일[\s\S]*원문 30번[\s\S]*4일[\s\S]*원문 30번[\s\S]*6일[\s\S]*원문 30번/);
     assert.match(await page.locator('.cumulative-grid').innerText(),/1회 성적[\s\S]*100점[\s\S]*2회 성적[\s\S]*95\.8점[\s\S]*누적 성적[\s\S]*97\.9점/);
+    assert.equal(await page.locator('#wrongPractice .wp-item').count(),1,'2회 오답 30번은 검수된 고정 유사문항으로 연결됨');
+    assert.equal(await page.locator('#wrongPractice .wp-item').getAttribute('data-wp-gen'),'original2-q30');
+    assert.match(await page.locator('#signatureAllPractice').innerText(),/2회 전체 유형/);
     assert.match(await page.locator('#originalComparison').innerText(),/대영역[\s\S]*도형[\s\S]*81\.1%[\s\S]*배점대/);
     assert.equal(await page.locator('#originalComparison .original-pair-table [data-original-pair]').count(),10);
     assert.match(await page.locator('[data-original-pair="30-30"]').innerText(),/30번 O → 30번 X[\s\S]*이번 회차 미정답/);
@@ -128,6 +131,7 @@ const server=http.createServer((request,response)=>{
     await page.goto(base.replace('round=2','round=1')+'&entry=teacher',{waitUntil:'domcontentloaded'});
     await page.locator('[data-docssam-field="strength"]').waitFor();
     assert.equal(await page.locator('#originalComparison').count(),0,'round 1 stays a separate single-round report');
+    assert.match(await page.locator('#signatureAllPractice').innerText(),/1회 전체 유형/);
     assert.match(await page.locator('.week-must-do').innerText(),/특정 번호를 배정하지 않습니다/);
     assert.equal(await page.locator('[data-docssam-field="strength"]').inputValue(),'','1회 코멘트는 2회 코멘트와 분리된다');
     await page.locator('[data-docssam-field="strength"]').fill('1회에서 확인한 장점');
