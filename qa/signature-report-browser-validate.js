@@ -96,7 +96,7 @@ const server=http.createServer((request,response)=>{
     await unsignedPage.goto(base,{waitUntil:'domcontentloaded'});
     await unsignedPage.locator('.original-summary').waitFor();
     assert.equal(await unsignedPage.locator('#signatureApprovalCode').count(),0,'이름 입장 후 추가 승인번호를 묻지 않음');
-    assert.match(await unsignedPage.locator('.cumulative-grid').innerText(),/1회 성적[\s\S]*100점[\s\S]*2회 성적[\s\S]*95\.8점/,'이름 입장 후 저장된 진단지 확인');
+    assert.match(await unsignedPage.locator('.cumulative-grid').innerText(),/1회 실제 점수[\s\S]*100점[\s\S]*2회 실제 점수[\s\S]*95\.8점/,'이름 입장 후 저장된 진단지 확인');
     await unsigned.close();
     const teacher=await contextFor('admin',1280),page=await teacher.newPage(),errors=[];
     page.on('pageerror',e=>errors.push(e.message));
@@ -104,7 +104,8 @@ const server=http.createServer((request,response)=>{
     await page.locator('.original-summary .cumulative-grid').waitFor();
     assert.deepEqual(await page.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['30']);
     assert.match(await page.locator('.week-plan').innerText(),/2일[\s\S]*원문 30번[\s\S]*4일[\s\S]*원문 30번[\s\S]*6일[\s\S]*원문 30번/);
-    assert.match(await page.locator('.cumulative-grid').innerText(),/1회 성적[\s\S]*100점[\s\S]*2회 성적[\s\S]*95\.8점[\s\S]*누적 성적[\s\S]*97\.9점/);
+    assert.match(await page.locator('.cumulative-grid').innerText(),/1회 실제 점수[\s\S]*100점[\s\S]*2회 실제 점수[\s\S]*95\.8점[\s\S]*누적 실제 점수[\s\S]*97\.9점/);
+    assert.match(await page.locator('.original-summary table').first().innerText(),/실제 점수[\s\S]*실전 예상 점수[\s\S]*예상 반/);
     assert.equal(await page.locator('#wrongPractice .wp-item').count(),1,'2회 오답 30번은 검수된 고정 유사문항으로 연결됨');
     assert.equal(await page.locator('#wrongPractice .wp-item').getAttribute('data-wp-gen'),'original2-q30');
     assert.match(await page.locator('#signatureAllPractice').innerText(),/2회 전체 유형/);
@@ -114,7 +115,7 @@ const server=http.createServer((request,response)=>{
     assert.equal(await page.locator('#originalItemDetail tbody tr').count(),30);
     assert.equal(await page.locator('#originalItemDetail .original-status').last().innerText(),'미정답');
     assert.equal(await page.locator('#originalTeacherComment').count(),1);
-    assert.match(await page.locator('.exam-skill-tips').innerText(),/타이머는 현재 속도를 살피는 신호/);
+    assert.match(await page.locator('.exam-skill-tips').innerText(),/타이머는 속도 확인용/);
     assert.equal(await page.locator('[data-docssam-field]').count(),8);
     await page.locator('[data-docssam-field="strength"]').fill('문제 조건을 끝까지 읽고 식으로 옮긴다.');
     await page.locator('[data-docssam-field="recommendation"]').fill('막히면 번호를 표시하고 다음 문제 뒤 다시 돌아온다.');
@@ -164,6 +165,20 @@ const server=http.createServer((request,response)=>{
     assert.deepEqual(mobileErrors,[]);
     assert.deepEqual(writes,[{kind:'comment',exam:'original2'},{kind:'comment',exam:'original1'}],'viewing and printing do not write grades');
     await mobile.close();
+    const secondRecord=records.splice(1,1)[0];
+    const singleContext=await contextFor('student',390),singlePage=await singleContext.newPage();
+    await singlePage.goto(base.replace('round=2','round=1'),{waitUntil:'domcontentloaded'});
+    await singlePage.locator('.original-summary').waitFor();
+    assert.match(await singlePage.locator('.original-summary table').first().innerText(),/실제 점수[\s\S]*실전 예상 점수[\s\S]*예상 반[\s\S]*100점[\s\S]*90점[\s\S]*경시 가능 예상/,'한 회차 응시도 실제·예상·반을 표시');
+    assert.equal(await singlePage.locator('.cumulative-grid').count(),0,'한 회차 응시는 누적을 만들지 않음');
+    records.push({student,round:'final1',ox:'X'.repeat(30),score:0,wrong:30,source:'admin'});
+    await singlePage.reload({waitUntil:'domcontentloaded'});
+    await singlePage.locator('.original-summary').waitFor();
+    assert.match(await singlePage.locator('.original-summary table').first().innerText(),/100점[\s\S]*81점[\s\S]*경시 가능 예상/,'파이널이 낮으면 예상치만 보수적으로 조정');
+    assert.ok(await singlePage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px 단독 응시 성적표 가로 넘침 없음');
+    if(OUT)await singlePage.screenshot({path:path.join(OUT,'signature-single-round-mobile.png'),fullPage:true});
+    await singleContext.close();
+    records.pop();records.splice(1,0,secondRecord);
     const entryContext=await contextFor('admin',390),entry=await entryContext.newPage();
     await entry.goto(base.replace('go=report','go=answer')+'&entry=teacher',{waitUntil:'domcontentloaded'});
     await entry.locator('#signatureStateGrid button').first().waitFor();
