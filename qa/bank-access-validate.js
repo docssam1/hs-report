@@ -78,7 +78,7 @@ assert.match(home,/localStorage\.removeItem\(QUESTION_BANK_LAUNCH_KEY/,'leaving 
 const report=read('final.html');
 assert.match(report,/product:'mock-final-7'/,'Final7 report issues a round-scoped practice handoff');
 assert.match(report,/signatureAccess=.*mock-signature-/,'Signature diagnosis checks its own round permission');
-assert.match(report,/originalSummaryHTML\(ctx,weakSubs,attempts,repeated,forecasts\)/,'Signature diagnosis has a separate concise summary');
+assert.match(report,/originalSummaryHTML\(ctx,\s*weakSubs,\s*attempts,\s*repeated,\s*forecasts,\s*recommendations\)/,'Signature diagnosis has a separate concise summary');
 assert.match(report,/originalResourcesHTML\(ctx\)/,'Signature diagnosis reuses the original paper viewer and links its video');
 assert.match(report,/firstAttempt\.score\+secondAttempt\.score/,'Signature 2 cumulative average uses only the two original attempts');
 assert.match(report,/1회 실제 점수 · 최초 응시[\s\S]*2회 실제 점수 · 최초 응시[\s\S]*누적 실제 점수 · 1·2회 평균/,'Signature 2 separates the two round scores from the cumulative result');

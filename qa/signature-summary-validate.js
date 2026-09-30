@@ -8,6 +8,7 @@ const root = path.resolve(__dirname, '..');
 const data = { window: {} };
 vm.createContext(data);
 vm.runInContext(fs.readFileSync(path.join(root, 'mock-data-original.js'), 'utf8'), data);
+vm.runInContext(fs.readFileSync(path.join(root, 'signature-study-priority.js'), 'utf8'), data);
 const model = data.window.GFIELD_MOCK_ORIGINAL;
 const html = fs.readFileSync(path.join(root, 'final.html'), 'utf8');
 const marker = html.indexOf('지필드 영재교육 · 파이널 모의고사 진단 LMS (final.html)');
@@ -22,6 +23,7 @@ const sandbox = {
   localStorage: { getItem() { return ''; } },
   setTimeout() {}, clearTimeout() {}, setInterval() {}, clearInterval() {},
   GFIELD_MOCK_ORIGINAL: model, GFIELD_DATA: { students: [] },
+  GFIELD_SIGNATURE_STUDY_PRIORITY: data.window.GFIELD_SIGNATURE_STUDY_PRIORITY,
 };
 sandbox.window = sandbox;
 vm.createContext(sandbox);
@@ -63,7 +65,7 @@ assert.equal(((combined.match(/<ol class="week-plan">([\s\S]*?)<\/ol>/) || [,'']
 assert.match(combined,/시험 한 달 전 · 첫 주 복습/);
 assert.equal(((combined.match(/<ol class="month-plan">([\s\S]*?)<\/ol>/) || [,''])[1].match(/<li>/g) || []).length,4);
 assert.match(combined,/2주 차[\s\S]*3주 차[\s\S]*마지막 주/);
-assert.match(combined, /이것만은 꼭 하고[\s\S]*특정 번호를 배정하지 않습니다/);
+assert.match(combined, /이것만은 꼭 하고[\s\S]*기본 미정답 유형이 없어 특정 번호를 필수로 배정하지 않습니다/);
 assert.doesNotMatch(combined, /data-week-no=/);
 const reviewItems = model.rounds['2'].items.filter(item => [2, 5, 16, 30].includes(item.no));
 const reviewStates = Array(30).fill('O');
@@ -71,13 +73,14 @@ for (const item of reviewItems) reviewStates[item.no - 1] = 'X';
 reviewStates[1] = '-';
 const reviewCtx = { ...ctx, wrongList: reviewItems, wrong: 4, answerStates: reviewStates };
 const review = core.originalSummaryHTML(reviewCtx, [], attempts, [{ k: model.rounds['2'].items[4].subarea }]);
-assert.deepEqual(Array.from(review.matchAll(/data-week-no="(\d+)"/g), match => Number(match[1])), [5, 2, 30]);
-assert.match(review, /원문 5번[\s\S]*반복 유형 · 오답/);
+assert.deepEqual(Array.from(review.matchAll(/data-week-no="(\d+)"/g), match => Number(match[1])), [2, 5]);
+assert.match(review, /원문 5번 · 거울시계와 지난 시간[\s\S]*오답/);
 assert.match(review, /원문 2번[\s\S]*미응답/);
-assert.match(review, /2일[\s\S]*원문 5번[\s\S]*4일[\s\S]*원문 2번[\s\S]*6일[\s\S]*원문 30번/);
+assert.match(review, /2일[\s\S]*원문 2번\(같은 전체 길이\)[\s\S]*4일[\s\S]*원문 5번\(거울시계와 지난 시간\)/);
+assert.doesNotMatch(review, /data-week-no="30"/);
 assert.doesNotMatch(review, /data-week-no="16"/);
 const legacyReview = core.originalSummaryHTML({ ...reviewCtx, answerStates: null }, [], attempts, []);
-assert.match(legacyReview, /원문 30번[\s\S]*미정답/);
+assert.match(legacyReview, /원문 2번[\s\S]*미정답\(오답·미응답 미구분\)/);
 assert.doesNotMatch(legacyReview, /<small>미응답<\/small>/);
 assert.match(combined, /타이머는 속도 확인용/);
 const allCorrect = Array(30).fill('O');
