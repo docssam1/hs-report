@@ -202,7 +202,7 @@ const server=http.createServer((req,res)=>{
     await page.locator('.final-report-package').waitFor();
     assert.equal(await page.locator('#final3DetailedSolutions .is-ready').count(),30,'local preview uses the same reviewed 30-item set');
     assert.equal(await page.locator('#final3DetailedSolutions .is-pending').count(),0,'no reviewed Final3 item remains pending on screen');
-    assert.match(await page.locator('#final3DetailedSolutions .final1-solutions-head').innerText(),/30문항 \/ 전체 30문항/);
+    assert.match(await page.locator('#final3DetailedSolutions .final1-solutions-head').textContent(),/30문항 \/ 전체 30문항/);
     assert.ok(await page.locator('#final3DetailedSolutions .final1-data-table').count()>=25,'all reviewed Final3 teaching tables render');
     assert.equal(await page.locator('#final3DetailedSolutions .f3-back-diagram').count(),7,'seven reviewed back-half diagrams render');
     for(const [no,svgCount] of Object.entries(FINAL3_DIAGRAM_SVG_COUNTS)){
@@ -232,11 +232,11 @@ const server=http.createServer((req,res)=>{
    if(n===4){
     assert.equal(await page.locator('#final4DetailedSolutions .is-ready').count(),30,'all source-linked Final4 solutions are public');
     assert.equal(await page.locator('#final4DetailedSolutions .is-pending').count(),0,'no Final4 item remains pending');
-    assert.match(await page.locator('#final4DetailedSolutions .final1-solutions-head').innerText(),/30문항 \/ 전체 30문항/);
+    assert.match(await page.locator('#final4DetailedSolutions .final1-solutions-head').textContent(),/30문항 \/ 전체 30문항/);
     assert.ok(await page.locator('#final4DetailedSolutions .final1-data-table').count()>=9,'complex Final4 items keep teaching tables where useful');
     assert.equal(await page.locator('#final4-solution-9').evaluate(node=>node.classList.contains('is-ready')),true,'Q9 supplied answer condition is connected');
-    assert.match(await page.locator('#final4-solution-21').innerText(),/10이.*100/,'Q21 Korean particle reread is explained');
-    assert.match(await page.locator('#final4-solution-27').innerText(),/8450이며/,'Q27 Korean particle reread is explained');
+    assert.match(await page.locator('#final4-solution-21').textContent(),/10이.*100/,'Q21 Korean particle reread is explained');
+    assert.match(await page.locator('#final4-solution-27').textContent(),/8450이며/,'Q27 Korean particle reread is explained');
     await page.setViewportSize({width:390,height:900});
     assert.ok(await page.locator('#final4DetailedSolutions').evaluate(node=>node.scrollWidth<=node.clientWidth+1&&[...node.querySelectorAll('.is-ready')].every(card=>card.scrollWidth<=card.clientWidth+1)),'Final4 released cards fit at 390px');
     await page.emulateMedia({media:'print'});
