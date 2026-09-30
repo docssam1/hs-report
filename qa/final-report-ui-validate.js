@@ -1,7 +1,8 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict'),{chromium}=require('playwright');
 const core=require('../supabase/functions/hs-final-population/population-core.js'),root=path.resolve(__dirname,'..');
-const baseline=JSON.parse(fs.readFileSync(path.join(root,'supabase/functions/hs-final-population/baseline.private.json'),'utf8'));
+const baselinePath=process.env.GFIELD_QA_FINAL_BASELINE_PATH||path.join(root,'supabase/functions/hs-final-population/baseline.private.json');
+const baseline=JSON.parse(fs.readFileSync(baselinePath,'utf8'));
 const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!f.startsWith(root+path.sep)||f.includes('.private')||!fs.existsSync(f)||!fs.statSync(f).isFile()){res.writeHead(404);return res.end();}res.setHeader('Content-Type',({'.js':'application/javascript','.html':'text/html; charset=utf-8','.css':'text/css'})[path.extname(f)]||'application/octet-stream');fs.createReadStream(f).pipe(res);});
 (async()=>{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch();
@@ -19,6 +20,7 @@ const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL
     if(url.pathname==='/data.js')return route.fulfill({contentType:'application/javascript',body:'window.GFIELD_DATA={students:[],archiveAccess:{},archiveProductAccess:{}};'});
     return route.continue();
    }
+   if(url.pathname==='/auth/v1/user')return route.fulfill({json:{app_metadata:{role:'admin'}}});
    if(url.pathname.endsWith('/hs-final-population')){
     const body=req.postDataJSON();requests.push(body);assert.equal(req.headers().authorization,'Bearer qa-only-token','real hs-auth sends stored token');
     if(offline&&!(savedRead&&body.action))return route.fulfill({status:503,json:{error:'OFFLINE'}});
@@ -41,7 +43,7 @@ const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+new URL
   assert.equal(await page.locator('#detailWrap td.rt .bar').count(),30,'offline still shows all fixed rates');
   assert.match(await page.locator('.report-expected-grade').innerText(),/경시/);
   assert.match(await page.locator('.cut-reference').textContent(),/92\.9%/,'cut percentiles remain in the expandable reference');
-  assert.match(await page.locator('#detailWrap').innerText(),/★ 꼭 다시 맞히기/);
+  assert.match(await page.locator('#detailWrap').textContent(),/★ 꼭 다시 맞히기/);
   assert.ok(await page.evaluate(()=>document.querySelector('.report-tier-section').nextElementSibling.classList.contains('report-item-section')));
   const text=await page.locator('.final-report-package').innerText();assert.deepEqual(text.match(/.{0,30}(?:원본 통계|로그인과 연결|점수만으로 원인|원문|출처·표본|응시 인원|null%|NaN).{0,60}/g),null);
   const rateText=await page.locator('#detailWrap td.rt').allTextContents();
