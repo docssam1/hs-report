@@ -176,14 +176,14 @@
     button.addEventListener('click',function(){state.open=!state.open;button.setAttribute('aria-expanded',state.open?'true':'false');panel.hidden=!state.open;});
     return panel;
   }
-  function tableHtml(rows){
+  function tableHtml(rows,student){
     var body=rows.map(function(row){
       var rank=row.percentile===null?'<span class="srh-na">자료 없음</span>':'<span class="srh-rank">'+row.percentile.toFixed(1)+'%</span>';
       var level=row.grade?'<span class="srh-level">'+esc(row.grade)+'</span>':'<span class="srh-na">자료 없음</span>';
       var action=row.link.url?'<a class="srh-detail" href="'+esc(row.link.url)+'">'+esc(row.link.label)+'</a>':'<span class="srh-detail" aria-disabled="true">'+esc(row.link.label)+'</span>';
       return '<tr><td class="srh-exam-cell" data-label="시험"><span class="srh-exam-name">'+esc(row.title)+'</span></td><td data-label="점수"><span class="srh-score">'+row.score.toFixed(1)+'점</span></td><td data-label="석차 백분율">'+rank+'</td><td data-label="예상 등급">'+level+'</td><td class="srh-action-col" data-label="보기">'+action+'</td></tr>';
     }).join('');
-    return '<div class="srh-panel-head"><div><h2>응시한 시험</h2><p>석차 백분율은 작을수록 상위입니다.</p></div><span class="srh-count">'+rows.length+'회</span></div>'+
+    return '<div class="srh-panel-head"><div><h2>응시한 시험</h2><p>석차 백분율은 작을수록 상위입니다.</p><p><a class="srh-detail" href="bank/personal-mock.html?from=archive&name='+encodeURIComponent(student)+'">모의고사 생성기 · 10·20·30문항 만들기</a></p></div><span class="srh-count">'+rows.length+'회</span></div>'+
       '<div class="srh-table-wrap"><table class="srh-table"><thead><tr><th class="srh-exam-col">시험</th><th class="srh-score-col">점수</th><th class="srh-rank-col">석차 백분율</th><th class="srh-level-col">예상 등급</th><th class="srh-action-col">학습하기</th></tr></thead><tbody>'+body+'</tbody></table></div>';
   }
   function render(options){
@@ -201,7 +201,7 @@
       panel=container.querySelector('.srh-panel');
       if(!described.length){container.querySelector('.srh-summary').textContent='등록된 응시 성적이 없습니다.';panel.innerHTML=stateHtml('아직 등록된 응시 성적이 없습니다.','empty');return;}
       container.querySelector('.srh-summary').textContent='응시 '+described.length+'회 · 시험별 진단과 복습을 한곳에서 봅니다.';
-      panel.innerHTML=tableHtml(described);
+      panel.innerHTML=tableHtml(described,options.student);
     }).catch(function(error){
       if(revision!==state.revision||error&&error.name==='AbortError'&&state.revision!==revision) return;
       container.querySelector('.srh-summary').textContent='성적을 불러오지 못했습니다.';
@@ -213,5 +213,5 @@
     state.revision++;if(state.controller)state.controller.abort();state.controller=null;state.options=null;state.open=false;
     var container=document.getElementById('student-result-hub');if(container){container.innerHTML='';container.classList.add('hidden');}
   }
-  root.GFIELD_STUDENT_RESULT_HUB={render:render,clear:clear,_test:{officialRows:officialRows,parseRound:parseRound,scoreOf:scoreOf,percentileFromTable:percentileFromTable,percentileFromDistribution:percentileFromDistribution,gradeFromCuts:gradeFromCuts}};
+  root.GFIELD_STUDENT_RESULT_HUB={render:render,clear:clear,officialAttempts:officialRows,_test:{officialRows:officialRows,parseRound:parseRound,scoreOf:scoreOf,percentileFromTable:percentileFromTable,percentileFromDistribution:percentileFromDistribution,gradeFromCuts:gradeFromCuts}};
 })(window);

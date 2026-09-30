@@ -106,7 +106,8 @@ const server=http.createServer((req,res)=>{
     }
     await page.setViewportSize({width:390,height:844});
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'result hub fits 390px without horizontal overflow');
-    assert.equal(await hub.locator('.srh-detail').count(),7);
+    assert.equal(await hub.locator('.srh-detail').count(),8);
+    assert.match(await hub.locator('.srh-panel-head a').getAttribute('href'),/^bank\/personal-mock\.html\?from=archive&name=/);
     if(process.env.GFIELD_RESULT_HUB_QA_DIR){
       await hub.screenshot({path:path.join(process.env.GFIELD_RESULT_HUB_QA_DIR,'student-result-hub-390.png')});
     }

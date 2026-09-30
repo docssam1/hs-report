@@ -15,7 +15,8 @@
     }).sort(function (a,b) {return a.variantNo-b.variantNo;});
     if(items.length!==3||items.some(function (item,index) {
       return item.reviewStatus!=='verified'||item.id!==row.generatorId+'-v'+(index+1)||
-        item.sourceSet!=='original'||Number(item.sourceRound)!==round||!item.text||item.answer==null;
+        item.sourceSet!=='original'||Number(item.sourceRound)!==round||!item.text||item.answer==null||
+        !['2.7','3.4'].includes(String(item.pointBand))||item.detailType!==row.type||Number(item.pointBand)!==Number(row.point);
     }))return null;
     return {row:row,items:items};
   }
@@ -43,7 +44,7 @@
       return (ai<0?99:ai)-(bi<0?99:bi)||a.no-b.no;
     });
     if(!rows.length){
-      list.textContent=options.hasWrong?'승인된 유사문제가 아직 연결되지 않았습니다. 위 원문 번호부터 복습하세요.':'이번 회차 미정답이 없어 자동 배정한 유사문제가 없습니다.';
+      list.textContent=options.hasWrong?'이번 주 필수로 선정된 2.7·3.4점 기본 유형이 없습니다. 4.2점 고난도 문항은 필수 유사문제로 자동 배정하지 않습니다.':'이번 회차 미정답이 없어 자동 배정한 유사문제가 없습니다.';
       return;
     }
     if(printButton)printButton.disabled=true;

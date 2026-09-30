@@ -7,6 +7,7 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const http=require('node:http');
+const os=require('node:os');
 const path=require('node:path');
 const {chromium}=require(process.env.GFIELD_QA_PLAYWRIGHT||'playwright');
 
@@ -105,20 +106,18 @@ const server=http.createServer((request,response)=>{
     assert.equal(await page.locator('.original-summary .signature-distribution').count(),1,'컷과 학생 위치를 성적 아래 표시');
     assert.match(await page.locator('.signature-distribution').innerText(),/실제 95\.8점[\s\S]*실전 예상/);
     assert.match(await page.locator('.signature-distribution svg').getAttribute('aria-labelledby'),/signatureCurveTitle signatureCurveDesc/);
-    assert.deepEqual(await page.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['30']);
-    await page.locator('#signatureMustStudy [data-signature-study-id]').nth(2).waitFor();
-    assert.deepEqual(await page.locator('#signatureMustStudy [data-signature-study-id]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-signature-study-id'))),['original2-q30-v1','original2-q30-v2','original2-q30-v3'],'한 오답 유형의 승인된 고정 유사문제 세 개를 진단지에 표시');
-    assert.equal(await page.locator('#signatureMustStudy .signature-study-asset').count(),3,'문제에 필요한 그림도 함께 표시');
-    assert.match(await page.locator('#signatureMustStudy .signature-study-link').getAttribute('href'),/bank=original2[\s\S]*sourceNos=30/,'전체 학습지는 같은 승인 유형에 연결');
+    assert.equal(await page.locator('.week-must-do-items [data-week-no]').count(),0,'4.2점 단독 미정답은 필수에서 제외');
+    assert.equal(await page.locator('#signatureMustStudy [data-signature-study-id]').count(),0,'4.2점 유사문제를 필수에 자동 배정하지 않음');
     assert.equal(await page.locator('[data-original-summary-print]').isDisabled(),false,'문제 로딩 후 요약 인쇄 가능');
     const threeTypes=await page.evaluate(async()=>{
       const root=document.createElement('div');root.innerHTML='<div class="signature-study-list"></div>';document.body.appendChild(root);
-      await window.GFIELD_SIGNATURE_MUST_STUDY.mount(root,{round:2,student:'QA 검증학생',ready:[1,2,3].map(no=>({no,type:'검증 유형',generatorId:'original2-q'+String(no).padStart(2,'0')})),preferred:[3,2,1],hasWrong:true});
+      const items=window.GFIELD_MOCK_ORIGINAL.rounds['2'].items;
+      await window.GFIELD_SIGNATURE_MUST_STUDY.mount(root,{round:2,student:'QA 검증학생',ready:[1,2,3].map(no=>({no,type:items[no-1].type,point:items[no-1].pts,generatorId:'original2-q'+String(no).padStart(2,'0')})),preferred:[3,2,1],hasWrong:true});
       const ids=Array.from(root.querySelectorAll('[data-signature-study-id]'),node=>node.getAttribute('data-signature-study-id'));
       root.remove();return ids;
     });
     assert.deepEqual(threeTypes,['original2-q03-v1','original2-q02-v1','original2-q01-v1'],'세 유형이 있으면 유형마다 승인된 한 문제씩 우선 추천');
-    assert.match(await page.locator('.week-plan').innerText(),/2일[\s\S]*원문 30번[\s\S]*4일[\s\S]*원문 30번[\s\S]*6일[\s\S]*원문 30번/);
+    assert.doesNotMatch(await page.locator('.week-plan').innerText(),/원문 30번/);
     assert.match(await page.locator('.original-summary').innerText(),/시험 한 달 전 · 첫 주 복습[\s\S]*이후 3주 연결/);
     assert.equal(await page.locator('.month-plan li').count(),4);
     assert.match(await page.locator('.cumulative-grid').innerText(),/1회 실제 점수[\s\S]*100점[\s\S]*2회 실제 점수[\s\S]*95\.8점[\s\S]*누적 실제 점수[\s\S]*97\.9점/);
@@ -153,7 +152,7 @@ const server=http.createServer((request,response)=>{
     assert.match(await page.locator('.report-docssam-note').innerText(),/타이머 활용[\s\S]*타이머는 속도 확인용/);
     assert.match(await page.locator('.original-summary .docssam-summary').innerText(),/시험지에서 확인한 풀이[\s\S]*1\+1=2/,'시험지 근거가 성적 아래 요약에 표시');
     assert.match(await page.locator('.original-summary .signature-profile-results').innerText(),/식은 잘 쓰지만 계산 점검 필요[\s\S]*4번/);
-    assert.match(await page.locator('[data-signature-action-plan]').innerText(),/이번 주 우선[\s\S]*4번[\s\S]*다음 응시에서 확인/,'saved priority refreshes this week plan without reload');
+    assert.match(await page.locator('[data-signature-action-plan]').innerText(),/교사 관찰 · 별도 지도[\s\S]*4번[\s\S]*다음 응시에서 확인/,'saved teacher observation refreshes without altering must-study choices');
     assert.match(await page.locator('.original-summary .signature-profile-results').innerText(),/이번 주 우선 · 식은 잘 쓰지만/);
     await page.reload({waitUntil:'domcontentloaded'});
     await page.locator('.docssam-summary').waitFor();
@@ -166,13 +165,45 @@ const server=http.createServer((request,response)=>{
     await page.locator('[data-docssam-field="strength"]').waitFor();
     assert.equal(await page.locator('#originalComparison').count(),0,'round 1 stays a separate single-round report');
     assert.match(await page.locator('#signatureAllPractice').innerText(),/1회 전체 유형/);
-    assert.match(await page.locator('.week-must-do').innerText(),/특정 번호를 배정하지 않습니다/);
+    assert.match(await page.locator('.week-must-do').innerText(),/특정 번호를 필수로 배정하지 않습니다/);
     assert.equal(await page.locator('#signatureMustStudy [data-signature-study-id]').count(),0,'미정답이 없는 회차에 문제를 임의 배정하지 않음');
     assert.equal(await page.locator('[data-docssam-field="strength"]').inputValue(),'','1회 코멘트는 2회 코멘트와 분리된다');
     await page.locator('[data-docssam-field="strength"]').fill('1회에서 확인한 장점');
     await page.locator('#docssam-comment-save').click();
     await page.locator('#docssam-comment-status').getByText('저장했습니다.').waitFor();
     assert.match(await page.locator('.docssam-summary').innerText(),/1회에서 확인한 장점/);
+    const byeonPage=await teacher.newPage();
+    function correctOx(numbers){return Array.from({length:30},(_,i)=>numbers.includes(i+1)?'O':'X').join('');}
+    function rawScore(ox){return Math.round([...ox].reduce((sum,value,i)=>sum+(value==='O'?(i<12?2.7:i<22?3.4:4.2):0),0)*10)/10;}
+    const byeonFirst=correctOx([5,7,8,9,10,11,12,14,16,17,20,23,26]);
+    const byeonSecond=correctOx([1,2,4,6,7,8,13,14,23,25,29]);
+    const byeonRecords=[{student,round:'original1',ox:byeonFirst,score:rawScore(byeonFirst),wrong:17,source:'admin'},
+      {student,round:'original2',ox:byeonSecond,score:rawScore(byeonSecond),wrong:19,source:'admin'}];
+    await byeonPage.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(byeonRecords)}));
+    await byeonPage.goto(base+'&entry=teacher',{waitUntil:'domcontentloaded'});
+    await byeonPage.locator('.week-must-do-items [data-week-no]').first().waitFor();
+    assert.deepEqual(await byeonPage.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>Number(node.getAttribute('data-week-no')))),[3,5,12],'변서진 2회 정오 사례는 저배점 기본 유형을 우선 선정');
+    const selectedTypes=await byeonPage.evaluate(()=>[3,5,12].map(no=>window.GFIELD_MOCK_ORIGINAL.rounds['2'].items[no-1].type));
+    assert.deepEqual(await byeonPage.locator('.week-must-do-items [data-week-type]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-type'))),selectedTypes);
+    const weekText=await byeonPage.locator('.week-plan').innerText();
+    for(const no of [3,5,12])assert.match(weekText,new RegExp('원문 '+no+'번\\('+selectedTypes[[3,5,12].indexOf(no)]+'\\)'));
+    assert.doesNotMatch(weekText,/원문 (24|28|30)번/);
+    await byeonPage.locator('#signatureMustStudy [data-signature-study-id]').nth(2).waitFor();
+    assert.deepEqual(await byeonPage.locator('#signatureMustStudy [data-signature-study-id]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-signature-study-id'))),['original2-q03-v1','original2-q05-v1','original2-q12-v1']);
+    const studyHeads=await byeonPage.locator('#signatureMustStudy h4').allInnerTexts();
+    for(let i=0;i<3;i++)assert.ok(studyHeads[i].includes('원문 '+[3,5,12][i]+'번 유형 · '+selectedTypes[i]));
+    const studyLink=new URL(await byeonPage.locator('#signatureMustStudy .signature-study-link').getAttribute('href'),base);
+    assert.equal(studyLink.searchParams.get('sourceNos'),'3,5,12');
+    await byeonPage.emulateMedia({media:'print'});
+    assert.equal(await byeonPage.locator('#signatureMustStudy [data-signature-study-id]').count(),3,'인쇄 화면도 같은 추천 세 문항');
+    const byeonPdf=await byeonPage.pdf({format:'A4',printBackground:true});
+    assert.ok(byeonPdf.length>10000);
+    await byeonPage.evaluate(()=>document.body.classList.add('print-original-summary'));
+    assert.equal(await byeonPage.locator('#signatureMustStudy [data-signature-study-id]').count(),3,'요약 인쇄본도 같은 추천 세 문항');
+    const byeonSummaryPdf=await byeonPage.pdf({format:'A4',printBackground:true});
+    assert.ok(byeonSummaryPdf.length>10000);
+    fs.writeFileSync(path.join(os.tmpdir(),'gfield-signature-study-priority-qa.pdf'),byeonSummaryPdf);
+    await byeonPage.close();
     assert.deepEqual(errors,[]);
     await teacher.close();
 
@@ -180,7 +211,7 @@ const server=http.createServer((request,response)=>{
     phone.on('pageerror',e=>mobileErrors.push(e.message));
     await phone.goto(base,{waitUntil:'domcontentloaded'});
     await phone.locator('.docssam-summary').waitFor();
-    await phone.locator('#signatureMustStudy [data-signature-study-id]').nth(2).waitFor();
+    await phone.locator('#signatureMustStudy').waitFor();
     assert.equal(await phone.locator('[data-docssam-field]').count(),0,'student cannot edit teacher comment');
     assert.equal(await phone.locator('[data-signature-profile]').count(),0,'student cannot edit learning profile');
     assert.match(await phone.locator('.original-summary .signature-profile-results').innerText(),/식은 잘 쓰지만 계산 점검 필요/);
@@ -240,10 +271,10 @@ const server=http.createServer((request,response)=>{
     assert.equal(gradeWrites[0].body.answer_states,'XX'+'O'.repeat(28));
     assert.equal(gradeWrites[0].body.ox,'XX'+'O'.repeat(28));
     assert.match(await entry.locator('.original-summary').innerText(),/틀림 2개 · 미응답 0개/);
-    assert.deepEqual(await entry.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['1','2']);
-    assert.match(await entry.locator('.week-must-do').innerText(),/1번\s+오답[\s\S]*2번\s+오답/);
-    assert.match(await entry.locator('.week-must-do').innerText(),/정오 기록과 문항 유형에 따른 추천/);
-    assert.match(await entry.locator('.week-must-do').innerText(),/풀이 습관이나 오답 원인을 확인했다는 뜻은 아닙니다/);
+    assert.deepEqual(await entry.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['2','1']);
+    assert.match(await entry.locator('.week-must-do').innerText(),/원문 2번 · 같은 전체 길이[\s\S]*오답[\s\S]*원문 1번 · 연속 확장과 공유 꼭짓점[\s\S]*오답/);
+    assert.match(await entry.locator('.week-must-do').innerText(),/2\.7·3\.4점의 기본 미정답 유형/);
+    assert.match(await entry.locator('.week-must-do').innerText(),/미응답·오답 구분이 없는 기록은 원인을 추정하지 않습니다/);
     assert.ok(await entry.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px answer and report do not overflow');
     await entry.goto(base.replace('attempt=1','attempt=3')+'&entry=teacher',{waitUntil:'domcontentloaded'});
     await entry.locator('.original-summary').waitFor();
@@ -252,9 +283,9 @@ const server=http.createServer((request,response)=>{
     Object.assign(records[0],{ox:'XX'+'O'.repeat(28),score:94.6,wrong:2});
     await entry.goto(base.replace('round=2','round=1')+'&entry=teacher',{waitUntil:'domcontentloaded'});
     await entry.locator('.week-must-do-items [data-week-no]').first().waitFor();
-    assert.deepEqual(await entry.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['1','2']);
-    assert.match(await entry.locator('.week-must-do').innerText(),/정오 기록과 문항 유형에 따른 추천/,'round 1 answer-only record still receives targeted practice advice');
-    assert.match(await entry.locator('.week-must-do').innerText(),/풀이 습관이나 오답 원인을 확인했다는 뜻은 아닙니다/,'recommendation does not assert unobserved paper habits');
+    assert.deepEqual(await entry.locator('.week-must-do-items [data-week-no]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-week-no'))),['1']);
+    assert.match(await entry.locator('.week-must-do').innerText(),/2\.7·3\.4점의 기본 미정답 유형/,'round 1 answer-only record still receives targeted practice advice');
+    assert.match(await entry.locator('.week-must-do').innerText(),/미응답·오답 구분이 없는 기록은 원인을 추정하지 않습니다/,'recommendation does not assert unobserved paper habits');
     await entryContext.close();
     console.log('PASS Signature 1/2/cumulative report, separate Docssam comments/save/reload/student view, 390px, A4 summary PDF, grade-write zero, learner-fit 초등 2학년 선발 대비');
   }finally{await browser.close();server.close();}

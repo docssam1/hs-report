@@ -572,7 +572,7 @@ td.weak-cell{white-space:nowrap}
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
   // between releases, so only that one file needs a fresh URL per visit.
-  var staticVersion='20260930-signature-distribution-3';
+  var staticVersion='20260930-signature-study-priority-1';
   var final4AnswerVersion='20260928-final4-q24-plan-2';
   var signatureAnswerVersion='20260928-signature-answer-keys-1';
   var dataVersion=Date.now();
@@ -587,7 +587,7 @@ td.weak-cell{white-space:nowrap}
   var isFinal7=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===7;
   var mockFile=isLast?'mock-data-last.js':(isOriginal?'mock-data-original.js':'mock-data-final.js');
   var files=['hs-auth.js','data.js',mockFile,'vendor/qrcode-generator/2.0.4/qrcode.js'];
-  if(isOriginal) files.push('mock-data-final.js','signature-forecast.js','signature-must-study.js');
+  if(isOriginal) files.push('mock-data-final.js','signature-forecast.js','signature-study-priority.js','signature-must-study.js');
   if(!isOriginal) files.push('mock-data-original.js');
   files.push('bank/bank-registry.js');
   if(!isOriginal) files.push('mock-rx-data.js');
@@ -1686,17 +1686,11 @@ td.weak-cell{white-space:nowrap}
       '<p>대영역에서는 <b>'+esc(area.k)+'</b> 수행률이 <b>'+area.perf+'%</b>로 가장 낮고, 이 영역에서 '+round1(area.tot-area.got)+'점을 잃었습니다. 소영역 우선순위는 '+focus+'입니다.'+singleTxt+'</p>'+
       '<p>'+repeatTxt+' 문항별 세부유형과 정답을 확인한 뒤, 정답만 외우지 말고 풀이 과정을 다시 적어 보세요.</p>';
   }
-  function originalWeekMustDo(ctx, repeated){
-    var repeatedNames={};
-    (repeated||[]).forEach(function(row){repeatedNames[row.k]=true;});
-    return (ctx.wrongList||[]).slice().sort(function(a,b){
-      var ar=!!repeatedNames[a.subarea||a.type],br=!!repeatedNames[b.subarea||b.type];
-      var as=ctx.answerStates&&ctx.answerStates[a.no-1],bs=ctx.answerStates&&ctx.answerStates[b.no-1];
-      return Number(br)-Number(ar)||Number(bs==='-')-Number(as==='-')||BP(b.no).pts-BP(a.no).pts||a.no-b.no;
-    }).slice(0,3).map(function(item){
-      var state=ctx.answerStates&&ctx.answerStates[item.no-1];
-      return {no:item.no,type:item.type||item.subarea||'문항 유형 확인',reason:(repeatedNames[item.subarea||item.type]?'반복 유형 · ':'')+(state==='-'?'미응답':state==='X'?'오답':'미정답')};
-    });
+  function originalWeekMustDo(ctx,attempts){
+    var study=window.GFIELD_SIGNATURE_STUDY_PRIORITY;
+    if(!study||typeof study.select!=='function')return [];
+    return study.select({round:ctx.roundNum,wrongItems:ctx.wrongList,answerStates:ctx.answerStates,
+      attempts:attempts,pairs:originalPairedTypes,priorItems:M.rounds['1'].items});
   }
   // 원문을 직접 대조한 대응 구조만 비교한다. 같은 난이도나 같은 실수라는 뜻은 아니다.
   var originalPairedTypes=[
@@ -1771,10 +1765,10 @@ td.weak-cell{white-space:nowrap}
     var state=window.GFIELD_FINAL_REPORT_STATE,plan=state&&state.plan?state.plan():null;
     if(!plan)return '<p class="lead">풀이 습관별 연습량은 선생님이 시험지·수업 관찰을 확인한 뒤 조절합니다. 정오 기록만으로 실전 횟수나 행동 특성을 정하지 않습니다.</p>';
     var ready=practice.ready.filter(function(row){return plan.numbers.indexOf(Number(row.item.no))>=0;}).map(function(row){return Number(row.item.no);});
-    var source=plan.numbers.length?'확인한 원문 '+plan.numbers.join('·')+'번. ':'원문 번호는 관찰 근거에서 확인해 주세요. ';
-    var variants=ready.length?'이 중 승인된 유사문항 '+ready.join('·')+'번은 아래 오답 유사문제에서 연습할 수 있습니다. ':'승인된 오답 유사문항 연결은 아래 학습 자료에서 확인하세요. ';
+    var source=plan.numbers.length?'관찰 근거 원문 '+plan.numbers.join('·')+'번. ':'원문 번호는 관찰 근거에서 확인해 주세요. ';
+    var variants=ready.length?'이 중 승인된 유사문항 '+ready.join('·')+'번은 별도 학습 자료에서 연습할 수 있습니다. ':'관찰 근거 번호는 위 필수 추천 번호와 별개입니다. ';
     var dose=plan.needsShortBlocks?'처음에는 20~30분 짧은 구간으로 시작해 후반 집중을 확인한 뒤 시간을 늘립니다.':plan.needsMock?'주 1회 이내 실전 한 회와 짧은 오답 복습을 병행합니다.':'이번 주는 원문·승인 유사문항을 짧게 반복하고, 실전 전 과정을 늘리기보다 풀이 근거를 확인합니다.';
-    return '<div class="signature-profile-plan"><b>관찰 기반 이번 주 우선 · '+esc(plan.priority.title)+'</b><p>'+esc(source+variants)+'</p><p>'+esc(dose)+'</p><p><b>다음 응시에서 확인</b> · '+esc(plan.priority.check)+'</p></div>';
+    return '<div class="signature-profile-plan"><b>교사 관찰 · 별도 지도 · '+esc(plan.priority.title)+'</b><p>'+esc(source+variants)+'</p><p>'+esc(dose)+'</p><p><b>다음 응시에서 확인</b> · '+esc(plan.priority.check)+'</p></div>';
   }
   function signatureThirdWeekHTML(){
     var state=window.GFIELD_FINAL_REPORT_STATE,plan=state&&state.plan?state.plan():null;
@@ -1784,13 +1778,11 @@ td.weak-cell{white-space:nowrap}
     return '원문과 승인된 유사문항을 섞어 풀며 조건·식·답 형식이 바뀐 때도 적용되는지 확인합니다.';
   }
   var signaturePlanRefresh=null;
-  function originalSummaryHTML(ctx, weakSubs, attempts, repeated, forecasts){
-    var focus=weakSubs.filter(function(x){return x.n>=2;}).sort(function(a,b){return a.perf-b.perf||b.lost-a.lost;}).map(function(x){return x.k;});
-    ctx.wrongList.forEach(function(item){var label=item.subarea||item.type;if(label&&focus.indexOf(label)<0)focus.push(label);});
-    focus=focus.slice(0,2);
-    var first=focus[0]||'',second=focus[1]||first;
-    var practice=wrongPracticeModel(ctx),ready=practice.ready.length;
-    var practiceNote=ctx.wrongList.length?(ready?'검수 완료 유사문항 '+ready+'개 원문이 연결되어 있습니다. 승인되지 않은 오답 유형은 원문으로 복습하세요.':'오답 유사문항 연결은 검수·공개 승인 확인 중입니다. 승인 전 문제는 열리지 않습니다.'):'이번 회차는 오답이 없어 새 유사문항을 자동 배정하지 않습니다.';
+  function originalSummaryHTML(ctx, weakSubs, attempts, repeated, forecasts, recommendations){
+    var mustDo=Array.isArray(recommendations)?recommendations:originalWeekMustDo(ctx,attempts);
+    var practice=wrongPracticeModel(ctx);
+    var approvedRecommended=mustDo.filter(function(row){return practice.ready.some(function(ready){return Number(ready.item.no)===row.no;});});
+    var practiceNote=mustDo.length?(approvedRecommended.length?'이번 주 필수 '+approvedRecommended.length+'개 유형에 검수 완료 유사문항이 연결되어 있습니다.':'이번 주 필수 유형의 유사문항은 검수·공개 승인 확인 중입니다. 승인 전 문제는 열리지 않습니다.'):'2.7·3.4점의 기본 미정답 유형이 없어 필수 유사문항을 자동 배정하지 않습니다.';
     var firstAttempt=attempts.filter(function(a){return a.n===1;})[0],secondAttempt=attempts.filter(function(a){return a.n===2;})[0];
     var cumulative=firstAttempt&&secondAttempt?round1((firstAttempt.score+secondAttempt.score)/2):null;
     var currentForecast=forecasts&&forecasts.current;
@@ -1807,27 +1799,19 @@ td.weak-cell{white-space:nowrap}
       '<div><span>1회 실제 점수 · 최초 응시</span><b>'+(firstAttempt?firstAttempt.score+'점':'기록 없음')+'</b>'+(firstForecast?'<small>실전 예상 '+firstForecast.expected+'점</small>':'')+(firstAttempt?'<small>'+positionText(firstAttempt.score)+'</small>':'')+'</div>'+
       '<div><span>2회 실제 점수 · 최초 응시</span><b>'+(secondAttempt?secondAttempt.score+'점':'기록 없음')+'</b>'+(secondForecast?'<small>실전 예상 '+secondForecast.expected+'점</small>':'')+(secondAttempt?'<small>'+positionText(secondAttempt.score)+'</small>':'')+'</div>'+
       '<div><span>누적 실제 점수 · 1·2회 평균</span><b>'+(cumulative!==null?cumulative+'점':'산출 대기')+'</b>'+(cumulativeForecast?'<small>실전 예상 '+cumulativeForecast.expected+'점 · '+esc(originalExpectedClass(cumulativeForecast.expected,ctx.S.cuts))+'</small>':'')+(cumulative!==null?'<small>'+positionText(cumulative)+'</small>':'')+'</div></div>'+
-      '<p class="lead" style="margin-top:9px">누적 실제 점수는 두 회차의 최초 성적 평균이며 재응시는 제외합니다. 실전 예상 점수와 예상 반은 난도·교차 응시 성적을 반영한 참고 추정치입니다. 예상 석차는 실제 점수의 2개년 참고 분포 기준입니다.'+(cumulative!==null?(repeated.length?' 반복 오답 소영역: '+esc(repeated.map(function(x){return x.k;}).join(', '))+'.':' 반복 오답 소영역은 확인되지 않았습니다.'):' 두 회차를 모두 응시해야 누적 성적을 표시합니다.')+'</p>':'';
-    var mustDo=originalWeekMustDo(ctx,repeated);
+      '<p class="lead" style="margin-top:9px">누적 실제 점수는 두 회차의 최초 성적 평균이며 재응시는 제외합니다. 실전 예상 점수와 예상 반은 난도·교차 응시 성적을 반영한 참고 추정치입니다. 예상 석차는 실제 점수의 2개년 참고 분포 기준입니다.'+(cumulative!==null?(repeated.length?' 반복 미정답 소영역: '+esc(repeated.map(function(x){return x.k;}).join(', '))+'.':' 반복 미정답 소영역은 확인되지 않았습니다.'):' 두 회차를 모두 응시해야 누적 성적을 표시합니다.')+'</p>':'';
     var mustDoHTML='<div class="week-must-do"><h3>이것만은 꼭 하고</h3>'+(mustDo.length?
-      '<div class="week-must-do-items">'+mustDo.map(function(row){return '<span data-week-no="'+row.no+'"><b>원문 '+row.no+'번</b><small>'+esc(row.reason)+' · '+esc(row.type)+'</small></span>';}).join('')+'</div><p>정오 기록과 문항 유형에 따른 추천입니다. 풀이 습관이나 오답 원인을 확인했다는 뜻은 아닙니다. 답을 가리고 조건·식·그림·최종 답을 다시 확인하세요.</p>':
-      '<p>이번 회차 미정답이 없어 특정 번호를 배정하지 않습니다. 시간이 오래 걸린 문제의 풀이식과 답 형식을 다시 확인하세요.</p>')+'</div>';
-    var days=ctx.wrongList.length&&ready===ctx.wrongList.length?[
-      '1일 · 원답과 조건·답 형식 확인',
-      '2일 · '+first+' 기본 유사문항',
-      '3일 · '+first+' 다른 수·그림으로 다시 풀기',
-      '4일 · '+second+' 시작 + 첫 유형 재확인',
-      '5일 · 두 유형 섞어 풀고 넘긴 문제 표시',
-      '6일 · 새 유사문항에서 식·답·단위 점검',
-      '7일 · 처음 보지 않은 문제로 재확인'
-    ]:ctx.wrongList.length?[
-      '1일 · 원답과 조건·답 형식 확인',
-      '2일 · '+first+' 원문 풀이 다시 적기',
-      '3일 · 정답·해설과 내 식 비교하기',
-      '4일 · '+second+' 원문에서 막힌 단계 찾기',
-      '5일 · 두 유형의 조건과 답 형식 비교하기',
-      '6일 · 식·답·단위 빠짐없이 재점검하기',
-      '7일 · 교사에게 남은 질문과 유사문항 공개 여부 확인하기'
+      '<div class="week-must-do-items">'+mustDo.map(function(row){return '<span data-week-no="'+row.no+'" data-week-type="'+esc(row.type)+'"><b>원문 '+row.no+'번 · '+esc(row.type)+'</b><small>'+esc(row.reason)+' · '+row.point+'점</small></span>';}).join('')+'</div><p>2.7·3.4점의 기본 미정답 유형부터 복습합니다. 4.2점은 이번 주 필수에서 제외합니다. 미응답·오답 구분이 없는 기록은 원인을 추정하지 않습니다.</p>':
+      '<p>2.7·3.4점의 기본 미정답 유형이 없어 특정 번호를 필수로 배정하지 않습니다. 4.2점 고난도 문항은 필수 추천에서 제외합니다.</p>')+'</div>';
+    function studyLabel(row){return '원문 '+row.no+'번('+row.type+')';}
+    var days=mustDo.length?[
+      '1일 · '+studyLabel(mustDo[0])+'의 조건과 답 형식 확인',
+      '2일 · '+studyLabel(mustDo[0])+'의 첫 식·그림을 쓰고 원문 다시 풀기',
+      '3일 · '+studyLabel(mustDo[Math.min(1,mustDo.length-1)])+'의 조건 표시와 풀이 비교',
+      '4일 · '+studyLabel(mustDo[Math.min(1,mustDo.length-1)])+'의 검수 유사문항 풀기',
+      '5일 · '+studyLabel(mustDo[Math.min(2,mustDo.length-1)])+'의 풀이와 답 형식 점검',
+      '6일 · 추천한 '+mustDo.map(function(row){return row.no+'번';}).join('·')+' 유형을 섞어 풀고 미응답·오답을 기록대로 구분하기',
+      '7일 · 추천 유형의 새 조건을 스스로 설명하고 남은 질문 확인'
     ]:[
       '1일 · 처음 풀이에서 확인한 조건 다시 읽기',
       '2일 · 풀이식과 답 형식 점검',
@@ -1837,9 +1821,6 @@ td.weak-cell{white-space:nowrap}
       '6일 · 새 문제에서 식·답·단위 점검',
       '7일 · 전체 풀이 과정 스스로 확인하기'
     ];
-    [1,3,5].forEach(function(dayIndex,rank){
-      if(mustDo.length) days[dayIndex]+=' (원문 '+mustDo[Math.min(rank,mustDo.length-1)].no+'번)';
-    });
     var attemptLabel=ctx.attemptNo>=2?ctx.attemptNo+'차 연습 기록':'최초 응시 기록';
     var answerBreakdown=validSignatureStates(ctx.answerStates,false)?signatureStateSummary(ctx.answerStates):null;
     var answerBreakdownHTML=answerBreakdown?'<p class="lead" style="margin-top:10px"><b>답안 상태</b> · 맞음 '+answerBreakdown.correct+'개 · 틀림 '+answerBreakdown.wrong+'개 · 미응답 '+answerBreakdown.blank+'개. 미응답은 채점상 미정답에 포함하지만, 복습할 때는 틀린 답과 구분합니다.</p>':'<p class="lead" style="margin-top:10px">기존 O/X 기록에는 틀린 답과 미응답의 구분이 저장되지 않았습니다. 아래 오답 수에는 미응답이 포함될 수 있으며, 시험지로 확인하기 전에는 추정하지 않습니다.</p>';
@@ -1852,11 +1833,11 @@ td.weak-cell{white-space:nowrap}
       '<p class="lead" style="margin-top:9px">맞은 문제 '+ctx.ncorr+'개 · 미정답 '+ctx.wrong+'개</p>'+
       '<p class="lead" style="margin-top:9px">실제 점수는 시그니처 채점 결과입니다. 실전 예상 점수·예상 반은 참고 추정치이며 공식 성적이나 합격 판정이 아닙니다.</p>'+
       (currentPosition&&ctx.roundNum===1?'<p class="lead" style="margin-top:9px"><b>예상 위치</b> · '+currentPosition+'. 실제 이번 모의고사 석차가 아닌 참고 추정치입니다.</p>':'')+answerBreakdownHTML+firstFiveHTML+(ctx.roundNum===2?originalPairInsightsHTML(attempts):'')+
-      (first?'<p style="margin-top:12px;font-size:13px"><b>이번 주 시작 후보</b> · '+esc(first)+(focus[1]?' / '+esc(second):'')+'</p>':'')+combined+
+      (mustDo.length?'<p style="margin-top:12px;font-size:13px"><b>이번 주 필수 유형</b> · '+mustDo.map(function(row){return '원문 '+row.no+'번 '+esc(row.type);}).join(' / ')+'</p>':'')+combined+
       '<div class="original-summary-actions no-print"><button type="button" data-original-summary-print>요약 진단지만 인쇄 / PDF 저장</button></div>'+reportQrHTML(ctx)+
       '<h2 style="margin-top:20px">시험 한 달 전 · 첫 주 복습</h2><p class="lead">아래 7일은 4주 실행안의 첫 주입니다. 실제 남은 기간과 집중 상태에 맞춰 조절하세요. 하루 15~25분은 참고입니다. '+esc(practiceNote)+'</p>'+mustDoHTML+'<div data-signature-action-plan>'+signaturePlanHTML(ctx,practice)+'</div><ol class="week-plan">'+days.map(function(day){var split=day.split(' · ');return '<li><b>'+esc(split[0])+'</b> · '+esc(split.slice(1).join(' · '))+'</li>';}).join('')+'</ol>'+
-      '<h3 class="cumulative-title">이후 3주 연결</h3><ol class="month-plan"><li><b>2주 차</b> · 첫 주에 남은 오답을 승인된 유사문항의 새 조건에 적용하고, 막힌 첫 단계를 짚습니다.</li><li><b>3주 차</b> · <span data-signature-third-week>'+esc(signatureThirdWeekHTML())+'</span></li><li><b>마지막 주</b> · 반복 오답과 이전에 맞혔다가 틀린 유형을 짧게 재확인하고, 새 범위를 무리하게 늘리지 않습니다.</li><li><b>매주 공통</b> · 결과보다 풀이 흔적을 비교하고 교사 관찰에 따라 연습량을 조절합니다. 타이머는 확인 도구일 뿐 목표 번호의 정답 기준이 아닙니다.</li></ol>'+
-      '<h2 style="margin-top:20px">시험장에서 써 볼 방법</h2><ul class="exam-skill-tips"><li>시작 5분간 전체 문항을 훑고 바로 풀 수 있는 문제 번호에 연필 ★·○·✓로 표시합니다.</li><li>막히면 ‘구할 것·주어진 것’을 적고 첫 식이나 그림부터 만듭니다. 막힌 번호도 표시하고 다음 문제 뒤에 돌아옵니다.</li><li>풀이식과 최종 답을 나눠 쓰고 답 형식·단위를 점검합니다.</li><li>타이머는 속도 확인용입니다. 목표 시각에 못 맞춰도 서두르거나 포기하지 않습니다.</li></ul><div class="signature-must-study" id="signatureMustStudy"><h3>꼭 공부하기 · 추천 유사문제 3개</h3><p>이번 회차의 미정답 유형에서 승인된 문제를 골랐습니다. 원문을 다시 푼 다음, 아래 문제에는 조건·식·그림과 최종 답을 직접 남겨 보세요.</p><div class="signature-study-list" role="status">유사문제를 불러오는 중입니다.</div></div></section>';
+      '<h3 class="cumulative-title">이후 3주 연결</h3><ol class="month-plan"><li><b>2주 차</b> · 첫 주에 남은 미정답을 승인된 유사문항의 새 조건에 적용하고, 막힌 첫 단계를 짚습니다.</li><li><b>3주 차</b> · <span data-signature-third-week>'+esc(signatureThirdWeekHTML())+'</span></li><li><b>마지막 주</b> · 반복 미정답과 이전에 맞혔다가 틀린 유형을 짧게 재확인하고, 새 범위를 무리하게 늘리지 않습니다.</li><li><b>매주 공통</b> · 결과보다 풀이 흔적을 비교하고 교사 관찰에 따라 연습량을 조절합니다. 타이머는 확인 도구일 뿐 목표 번호의 정답 기준이 아닙니다.</li></ol>'+
+      '<h2 style="margin-top:20px">시험장에서 써 볼 방법</h2><ul class="exam-skill-tips"><li>시작 5분간 전체 문항을 훑고 바로 풀 수 있는 문제 번호에 연필 ★·○·✓로 표시합니다.</li><li>막히면 ‘구할 것·주어진 것’을 적고 첫 식이나 그림부터 만듭니다. 막힌 번호도 표시하고 다음 문제 뒤에 돌아옵니다.</li><li>풀이식과 최종 답을 나눠 쓰고 답 형식·단위를 점검합니다.</li><li>타이머는 속도 확인용입니다. 목표 시각에 못 맞춰도 서두르거나 포기하지 않습니다.</li></ul><div class="signature-must-study" id="signatureMustStudy"><h3>이번 주 필수 유형 · 추천 유사문제</h3><p>위에 선정된 2.7·3.4점 유형의 검수 유사문제입니다. 원문을 다시 푼 다음, 조건·식·그림과 최종 답을 직접 남겨 보세요. 4.2점 고난도 문항은 필수 추천에 포함하지 않습니다.</p><div class="signature-study-list" role="status">유사문제를 불러오는 중입니다.</div></div></section>';
   }
   function originalResourcesHTML(ctx){
     var video=String(ctx.R.video||''),match=video.match(/^https:\/\/www\.youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})$/);
@@ -1871,10 +1852,11 @@ td.weak-cell{white-space:nowrap}
       second:secondAttempt?originalForecast([secondAttempt.score],priorRows):null,
       cumulative:firstAttempt&&secondAttempt?originalForecast([firstAttempt.score,secondAttempt.score],priorRows):null};
     var repeated=repeatedOriginalSubareas(attempts);
+    var recommended=originalWeekMustDo(ctx,attempts);
     var weakAreas=ctx.A.filter(function(a){return a.perf<100;}).sort(function(a,b){return a.perf-b.perf || (b.tot-b.got)-(a.tot-a.got);});
     if(!weakAreas.length) weakAreas=ctx.A.slice();
     var weakSubs=ctx.SA.filter(function(x){return x.wrongNos.length;});
-    var repeatHTML=repeated.length?repeated.map(function(x){return '<div class="repwk"><b>'+esc(x.k)+'</b> — 시그니처 실전 '+x.rounds.join('·')+'회에서 반복 오답</div>';}).join(''):'<div class="repwk">두 회차에 걸쳐 반복된 소영역 약점은 아직 없습니다.</div>';
+    var repeatHTML=repeated.length?repeated.map(function(x){return '<div class="repwk"><b>'+esc(x.k)+'</b> — 시그니처 실전 '+x.rounds.join('·')+'회에서 반복 미정답</div>';}).join(''):'<div class="repwk">두 회차에 걸쳐 반복된 소영역 약점은 아직 없습니다.</div>';
     var historyHTML=attempts.length?'<table><tr><th>최초 응시</th><th>점수</th></tr>'+attempts.map(function(a){return '<tr><td>시그니처 실전 '+a.n+'회</td><td class="c"><b>'+a.score+'점</b></td></tr>';}).join('')+'</table>':'<div class="lead">아직 누적할 최초 응시 기록이 없습니다.</div>';
     var teacherBanner=(!preview&&teacherEntry)?'<div class="banner preview no-print">🧑‍🏫 선생님 대리 입력 — 재원생의 답안을 대신 기록했습니다.</div>':'';
     var practiceBanner=(!preview&&attemptNo>=2)?'<div class="banner practice no-print">연습 응시 '+attemptNo+'차 — 최초 성적과 반복 약점 계산에는 1차 기록만 사용합니다.</div>':'';
@@ -1885,7 +1867,7 @@ td.weak-cell{white-space:nowrap}
       '<div class="sub">'+esc(ctx.R.title)+' · 생각하는 황소 초등선발 대비</div><div class="who"><b>'+esc(ctx.name)+'</b><span>학생</span></div>'+
       '<div class="kpi"><div><i>실제 점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>실전 예상 점수</i><b>'+(forecasts.current?forecasts.current.expected:'—')+'<small> / 100</small></b></div><div><i>예상 반</i><b style="font-size:15px">'+esc(forecasts.current?originalExpectedClass(forecasts.current.expected,ctx.S.cuts):'산출 대기')+'</b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div></div>'+reportQrHTML(ctx)+'</div>'+
       '<section class="original-index no-print"><h2>분석지 바로가기</h2><nav class="original-index-links" aria-label="시그니처 분석지 목차"><a href="#originalSummary">성적·일주일 복습</a>'+(roundNum===2?'<a href="#originalComparison">1·2회 변화</a>':'')+'<a href="#originalItemDetail">30문항 상태</a><a href="#originalTeacherComment">독샘 코멘트</a></nav></section>'+
-      originalSummaryHTML(ctx,weakSubs,attempts,repeated,forecasts)+
+      originalSummaryHTML(ctx,weakSubs,attempts,repeated,forecasts,recommended)+
       originalResourcesHTML(ctx)+
       '<section><h2>2025 환산 예상 레벨</h2>'+originalCutBasisHTML()+cutWarnHTML(ctx)+'</section>'+
       (roundNum===2?originalComparisonHTML(attempts):'')+
@@ -1917,9 +1899,12 @@ td.weak-cell{white-space:nowrap}
     if(paperButton)paperButton.onclick=renderPaper;
     wireWrongPractice(ctx);
     if(window.GFIELD_SIGNATURE_MUST_STUDY){
-      var recommendedNos=originalWeekMustDo(ctx,repeated).map(function(row){return row.no;});
-      var recommendedRows=wrongPracticeModel(ctx).ready.map(function(row){return {no:row.item.no,type:row.tx.detailType||row.tx.displayType||row.item.type,generatorId:row.generator.generatorId};});
-      window.GFIELD_SIGNATURE_MUST_STUDY.mount(app.querySelector('#signatureMustStudy'),{round:ctx.roundNum,student:ctx.name,ready:recommendedRows,preferred:recommendedNos,hasWrong:ctx.wrongList.length>0,printButton:summaryButton});
+      var approved=wrongPracticeModel(ctx).ready;
+      var recommendedRows=recommended.map(function(row){
+        var match=approved.find(function(ready){return Number(ready.item.no)===row.no;});
+        return match?{no:row.no,type:row.type,point:row.point,generatorId:match.generator.generatorId}:null;
+      }).filter(Boolean);
+      window.GFIELD_SIGNATURE_MUST_STUDY.mount(app.querySelector('#signatureMustStudy'),{round:ctx.roundNum,student:ctx.name,ready:recommendedRows,preferred:recommended.map(function(row){return row.no;}),hasWrong:ctx.wrongList.length>0,printButton:summaryButton});
     }
     if(signaturePlanRefresh)window.removeEventListener('gfield-signature-comment-saved',signaturePlanRefresh);
     signaturePlanRefresh=function(event){
@@ -2165,6 +2150,7 @@ td.weak-cell{white-space:nowrap}
     attemptTrendHTML:attemptTrendHTML,
     markWeak:markWeak, unmarkWeak:unmarkWeak, isWeakMarked:isWeakMarked, weakListRows:weakListRows,
     originalWeakStatus:originalWeakStatus, repeatedOriginalSubareas:repeatedOriginalSubareas,
+    originalWeekMustDo:originalWeekMustDo,
     originalExpectedClass:originalExpectedClass, originalForecast:originalForecast,
     detailedAnswersSectionHTML:detailedAnswersSectionHTML,
     reviewedFinal2CurriculumApproval:reviewedFinal2CurriculumApproval,
