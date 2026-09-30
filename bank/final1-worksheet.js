@@ -40,7 +40,7 @@
     if(groups.length>1&&groups[groups.length-1].length===1){
       var last=groups[groups.length-1],previous=groups[groups.length-2],moveIndex=-1;
       for(var j=previous.length-1;j>=0;j-=1){if(!editorialWide(previous[j])){moveIndex=j;break;}}
-      if(moveIndex>=0)last.unshift(previous.splice(moveIndex,1)[0]);
+      if(moveIndex>=0&&previous.length>2)last.unshift(previous.splice(moveIndex,1)[0]);
     }
     return groups;
   }
@@ -96,6 +96,9 @@
     }
     function questionPage(group,n,total){
       var wideLead=layout==='editorial'&&group.length===3&&editorialWide(group[0]);
+      var single=layout==='editorial'&&group.length===1;
+      var twoWithWide=layout==='editorial'&&group.length===2&&group.some(editorialWide);
+      var writeLines=Array.from({length:single?10:3},()=>'<span class="f1-write-line"></span>').join('');
       var html='<div class="f1-qpage qpage" data-wide-lead="'+String(wideLead)+'"><div class="f1-qhead qhead"><span>'+roundLabel+' 약점 유형</span><small>문제 '+n+' / '+total+'</small></div>';
       group.forEach(x=>{
         var legacyGiven=bankCode==='final1'&&[12,14,23].includes(Number(x.sourceNo))&&Array.isArray(x.conditionLines)?x.conditionLines:[];
@@ -103,10 +106,10 @@
         var given=Array.isArray(x.promptDataLines)&&x.promptDataLines.length?x.promptDataLines:[];
         var givenBlock=given.length?'<div class="f1-qgiven"><b>'+esc(x.promptDataLabel||'주어진 조건')+'</b><div class="f1-qgiven-lines">'+given.map(t=>'<span>'+mathText(t)+'</span>').join('')+'</div></div>':'';
         var sourceLabel=important?'파이널 '+x.sourceRound+'회 '+x.sourceNo+'번':'원문 '+x.sourceNo+'번';
-        html+='<article class="f1-qcard qcard" data-index="'+x.index+'" data-source-no="'+x.sourceNo+'" data-source-round="'+x.sourceRound+'" data-points="'+esc(x.pointBand)+'" data-gen="'+esc(x.genId)+'" data-wide="'+String(layout==='editorial'&&editorialWide(x))+'"><div class="f1-qcard-head"><span class="f1-qno">'+x.index+'.</span><span class="f1-qtype">['+esc(x.importantTypeTitle||x.detailType)+']</span></div><div class="f1-qtext qtext">'+mathText(promptText)+'</div>'+givenBlock+'<div class="f1-qmeta qmeta fixed-item" data-item-id="'+esc(x.id)+'">'+sourceLabel+' / 유사문제 '+x.variantNo+' / '+esc(x.pointBand)+'점</div>'+(x.asset?'<div class="f1-qfigure qfigure">'+raster(x.asset,'')+'</div>':'')+'<div class="f1-workspace" aria-hidden="true"><span class="f1-write-line"></span><span class="f1-write-line"></span><span class="f1-write-line"></span></div><div class="f1-answerline answerline"><span>답</span><span class="f1-answer-blank" aria-hidden="true"></span></div></article>';
+        html+='<article class="f1-qcard qcard" data-index="'+x.index+'" data-source-no="'+x.sourceNo+'" data-source-round="'+x.sourceRound+'" data-points="'+esc(x.pointBand)+'" data-gen="'+esc(x.genId)+'" data-wide="'+String(layout==='editorial'&&editorialWide(x))+'"><div class="f1-qcard-head"><span class="f1-qno">'+x.index+'.</span><span class="f1-qtype">['+esc(x.importantTypeTitle||x.detailType)+']</span></div><div class="f1-qtext qtext">'+mathText(promptText)+'</div>'+givenBlock+'<div class="f1-qmeta qmeta fixed-item" data-item-id="'+esc(x.id)+'">'+sourceLabel+' / 유사문제 '+x.variantNo+' / '+esc(x.pointBand)+'점</div>'+(x.asset?'<div class="f1-qfigure qfigure">'+raster(x.asset,'')+'</div>':'')+'<div class="f1-workspace" aria-hidden="true">'+writeLines+'</div><div class="f1-answerline answerline"><span>답</span><span class="f1-answer-blank" aria-hidden="true"></span></div></article>';
       });
       var lastTwo=layout==='editorial'&&n===total&&group.length===2&&group.every(x=>!editorialWide(x));
-      return sheet('question-page'+(lastTwo?' f1-last-two':''),html+'</div>');
+      return sheet('question-page'+(lastTwo?' f1-last-two':'')+(single?' f1-single-question':'')+(twoWithWide?' f1-two-with-wide':''),html+'</div>');
     }
     function answerCard(x){
       var steps=Array.isArray(x.solutionSteps)?x.solutionSteps:[];

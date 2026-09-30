@@ -56,6 +56,9 @@ body.fixed-bank-mode .topbar,body.fixed-bank-mode .panel,body.fixed-bank-mode .h
 #final1Worksheet[data-layout="editorial"] .f1-qcard[data-wide="true"] .f1-workspace{min-height:12mm}
 #final1Worksheet[data-layout="editorial"] .f1-answerline{font-size:12px;padding-top:5px;margin-top:5px}
 #final1Worksheet[data-layout="editorial"] .question-page.f1-last-two .f1-qpage{grid-template-rows:auto minmax(0,1fr)}
+#final1Worksheet[data-layout="editorial"] .question-page.f1-single-question .f1-qpage{grid-template-rows:auto minmax(0,1fr)}
+#final1Worksheet[data-layout="editorial"] .question-page.f1-single-question .f1-qcard{grid-column:1/-1!important;grid-row:2!important}
+#final1Worksheet[data-layout="editorial"] .question-page.f1-two-with-wide .f1-qcard:not([data-wide="true"]){grid-column:1/-1!important}
 /* html2canvas renders a detached page in the administrator batch exporter.
    Keep the editorial geometry attached to the page itself so the clone cannot
    fall back to the legacy compact grid after losing ancestor context. */
@@ -133,6 +136,10 @@ body.fixed-bank-mode #final1Worksheet .f1-qhead{color:var(--f1-ink);border-botto
   body.fixed-bank-mode #final1Worksheet .f1-checks{grid-template-rows:repeat(15,minmax(10mm,11mm));max-height:none;overflow:visible}
   body.fixed-bank-mode #final1Worksheet .f1-page + .f1-page.answer-page{break-before:page!important;page-break-before:always!important}
   body.fixed-bank-mode #final1Worksheet .wm-layer{overflow:hidden;max-height:270mm}
+  body.fixed-bank-mode #final1Worksheet .f1-qcard,
+  body.fixed-bank-mode #final1Worksheet .f1-workspace,
+  body.fixed-bank-mode #final1Worksheet .f1-answerline{background-color:#fff!important;background-image:none!important;box-shadow:none!important}
+  body.fixed-bank-mode #final1Worksheet .f1-write-line{border-bottom-color:#bcbcbc!important}
 }
 
 #final1Worksheet .f1-solution-asset,

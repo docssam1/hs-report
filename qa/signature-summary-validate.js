@@ -47,6 +47,12 @@ const ctx = {
 };
 const attempts = [{ n: 1, score: 40 }, { n: 2, score: 60 }];
 const combined = core.originalSummaryHTML(ctx, [], attempts, []);
+assert.match(combined, /점수 분포와 내 위치/);
+assert.match(combined, /일품 컷[\s\S]*20\.6점[\s\S]*실력 컷[\s\S]*30\.0점[\s\S]*심화 컷[\s\S]*38\.0점[\s\S]*경시 컷[\s\S]*46\.8점/);
+assert.match(combined, /실제 60\.0점/);
+assert.match(combined, /실제 응시자 빈도나 합격 판정은 아닙니다/);
+assert.ok(combined.indexOf('signature-distribution') < combined.indexOf('회차별 성적과 누적 성적'));
+assert.match(combined, /기출 변화에 맞춘 확인 기준/);
 assert.match(combined, /1회 실제 점수 · 최초 응시[\s\S]*40점/);
 assert.match(combined, /2회 실제 점수 · 최초 응시[\s\S]*60점/);
 assert.match(combined, /누적 실제 점수 · 1·2회 평균[\s\S]*50점/);
@@ -54,6 +60,9 @@ assert.match(combined, /2회 실제 점수 · 최초 응시[\s\S]*60점[\s\S]*�
 assert.match(combined, /누적 실제 점수 · 1·2회 평균[\s\S]*50점[\s\S]*명 기준 약 \d+등/);
 assert.match(combined, /실전 예상 점수와 예상 반은 난도·교차 응시 성적을 반영한 참고 추정치/);
 assert.equal(((combined.match(/<ol class="week-plan">([\s\S]*?)<\/ol>/) || [,''])[1].match(/<li>/g) || []).length, 7);
+assert.match(combined,/시험 한 달 전 · 첫 주 복습/);
+assert.equal(((combined.match(/<ol class="month-plan">([\s\S]*?)<\/ol>/) || [,''])[1].match(/<li>/g) || []).length,4);
+assert.match(combined,/2주 차[\s\S]*3주 차[\s\S]*마지막 주/);
 assert.match(combined, /이것만은 꼭 하고[\s\S]*특정 번호를 배정하지 않습니다/);
 assert.doesNotMatch(combined, /data-week-no=/);
 const reviewItems = model.rounds['2'].items.filter(item => [2, 5, 16, 30].includes(item.no));
@@ -95,6 +104,15 @@ const pairedComparison = core.originalComparisonHTML([
 assert.match(pairedComparison, /data-original-pair="5-4"[\s\S]*5번 X → 4번 O[\s\S]*이번 회차 정답/);
 assert.match(pairedComparison, /data-original-pair="10-20"[\s\S]*10번 O → 20번 X[\s\S]*이번 회차 미정답/);
 assert.match(pairedComparison, /data-original-pair="29-24"[\s\S]*29번 X → 24번 X[\s\S]*두 회차 미정답/);
+const pairedInsights = core.originalPairInsightsHTML([
+  { n: 1, oxArr: pairedFirst, score: core.computeScore(pairedFirst).score },
+  { n: 2, oxArr: pairedSecond, score: core.computeScore(pairedSecond).score },
+]);
+assert.match(pairedInsights, /이번에 맞힌 대응 유형[\s\S]*전체합에서 한 수 찾기/);
+assert.match(pairedInsights, /두 회차 모두 미정답[\s\S]*삼각형 개수 세기/);
+assert.match(pairedInsights, /이전에 맞혔지만 이번에 미정답[\s\S]*반복문자 세기/);
+assert.match(pairedInsights, /수업 집중도를 단정하지 않습니다/);
+assert.equal(core.originalPairInsightsHTML([actualAttempts[1]]),'');
 assert.match(comparison, /도형<\/b><\/td><td class="c">100%<\/td><td class="c">81\.1%<\/td><td class="c"><b>91\.3%<\/b><\/td><td class="c delta-down">-18\.9%p/);
 assert.match(core.originalComparisonHTML([actualAttempts[1]]), /없는 회차를 0점으로 계산하지 않습니다/);
 const itemStates = allCorrect.slice(); itemStates[1] = 'X'; itemStates[29] = '-';
@@ -105,6 +123,13 @@ assert.match(allItems, /original-status blank">미응답/);
 const legacyItems = core.originalAllItemHTML({ ...ctx, oxArr: lastWrong, answerStates: null });
 assert.match(legacyItems, /original-status x">미정답/);
 assert.doesNotMatch(legacyItems, /original-status blank/);
+const fiveBlanks=Array(30).fill('O');
+for(const n of [1,2,3,4,5])fiveBlanks[n-1]='-';
+const fiveBlankItems=model.rounds['2'].items.filter(item=>item.no<=5);
+const firstFive=core.originalSummaryHTML({...ctx,answerStates:fiveBlanks,wrong:5,wrongList:fiveBlankItems},[],attempts,[]);
+assert.match(firstFive,/미응답 5개[\s\S]*연필 ★·○·✓ 표시/);
+assert.match(firstFive,/표시가 없었다면 시작 5분간/);
+assert.doesNotMatch(legacyReview,/class="signature-first-five"/,'O\/X alone cannot prove unanswered items or absent paper marks');
 assert.match(html, /안내 시각은 참고 기준이며, 그 번호까지 풀어야 정답인 것은 아닙니다/);
 assert.doesNotMatch(JSON.stringify(model.exam.cues), /지금쯤 6번을 넘어가면 좋아/);
 const missing = core.originalSummaryHTML(ctx, [], [attempts[1]], []);

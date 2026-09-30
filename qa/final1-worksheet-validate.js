@@ -66,7 +66,8 @@ const server=http.createServer((req,res)=>{
       const workspaceProblems=await page.locator('.question-page .f1-workspace').evaluateAll(nodes=>nodes.flatMap((node,index)=>{
         const style=getComputedStyle(node);
         const lines=[...node.querySelectorAll('.f1-write-line')];
-        return style.backgroundColor==='rgb(255, 255, 255)'&&style.backgroundImage==='none'&&lines.length===3&&lines.every(line=>getComputedStyle(line).borderBottomStyle==='solid')?[]:[index];
+        const expectedLines=node.closest('.f1-single-question')?10:3;
+        return style.backgroundColor==='rgb(255, 255, 255)'&&style.backgroundImage==='none'&&lines.length===expectedLines&&lines.every(line=>getComputedStyle(line).borderBottomStyle==='solid')?[]:[index];
       }));
       assert.deepEqual(workspaceProblems,[],media+' solving space stays white with real rules, independent of print background graphics');
     }
