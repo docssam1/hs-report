@@ -31,6 +31,17 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     assert.equal(await page.locator('.pm-q').count(),30);
     assert.equal(await page.locator('.pm-q').filter({hasText:'자료실 보충'}).count(),6);
     assert.equal(await page.locator('.pm-answer').filter({hasText:'자료실 공개 보충'}).count(),6);
+    await page.locator('#pmFresh').click();
+    await page.locator('#pmStatus').getByText('새 문제 9문항').waitFor({timeout:30000});
+    assert.equal(await page.locator('.pm-q').count(),30);
+    assert.equal(await page.locator('.pm-q').filter({hasText:'새 문제'}).count(),9);
+    assert.equal(await page.locator('.pm-answer').filter({hasText:'자료실 공개 생성형'}).count(),9);
+    assert.equal(await page.locator('.pm-q strong').count(),0);
+    const freshIds=await page.locator('.pm-q').filter({hasText:'새 문제'}).evaluateAll(cards=>cards.map(card=>card.dataset.itemId));
+    await page.locator('#pmFresh').click();
+    await page.locator('#pmStatus').getByText('새 문제 9문항').waitFor({timeout:30000});
+    const nextFreshIds=await page.locator('.pm-q').filter({hasText:'새 문제'}).evaluateAll(cards=>cards.map(card=>card.dataset.itemId));
+    assert.notDeepEqual(nextFreshIds,freshIds,'fresh button must change generated variants');
     await page.emulateMedia({media:'print'});
     const pageOrder=await page.evaluate(()=>({questions:document.querySelectorAll('.pm-question-page').length,blanks:document.querySelectorAll('.pm-duplex-blank').length,firstAnswer:[...document.querySelectorAll('.pm-page')].findIndex(node=>node.classList.contains('pm-answer-page'))+1}));
     assert.equal(pageOrder.firstAnswer%2,1,'the answer section must start on a front-facing odd page');
@@ -77,6 +88,7 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await ready.locator('[data-scope="wrong"]').click();
     await ready.locator('#pmStatus').getByText('선택한 조건의 검수 유사문제가 없습니다.').waitFor();
     assert.equal(await ready.locator('#pmPrint').isDisabled(),true);
+    assert.equal(await ready.locator('#pmFresh').isDisabled(),true);
     await ready.locator('[data-scope="correct"]').click();
     await ready.locator('#pmStatus').getByText('30문항 준비 완료').waitFor();
     await ready.waitForFunction(()=>!document.getElementById('pmPrint').disabled);
