@@ -17,7 +17,7 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
 (async()=>{
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   const base='http://127.0.0.1:'+server.address().port;
-  const browser=await chromium.launch({headless:true});
+  const browser=await chromium.launch({headless:true,...(process.env.GFIELD_QA_BROWSER?{executablePath:process.env.GFIELD_QA_BROWSER}:{})});
   try{
     const page=await browser.newPage({viewport:{width:1440,height:900}});
     page.on('pageerror',error=>console.error('PAGE ERROR',error.message));
@@ -26,9 +26,31 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await page.goto(base+'/bank/personal-mock.html');
     await page.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000});
     await page.locator('[data-band="4.2"]').click();
-    await page.locator('#pmStatus').getByText('30문항 중 24문항 확보 · 6문항 부족').waitFor({timeout:30000});
+    await page.locator('#pmStatus').getByText('자료실 공개 보충 6문항').waitFor({timeout:30000});
     await page.waitForFunction(()=>!document.getElementById('pmPrint').disabled);
-    assert.equal(await page.locator('.pm-q').count(),24);
+    assert.equal(await page.locator('.pm-q').count(),30);
+    assert.equal(await page.locator('.pm-q').filter({hasText:'자료실 보충'}).count(),6);
+    assert.equal(await page.locator('.pm-answer').filter({hasText:'자료실 공개 보충'}).count(),6);
+    await page.locator('#pmFresh').click();
+    await page.locator('#pmStatus').getByText('새 문제 9문항').waitFor({timeout:30000});
+    assert.equal(await page.locator('.pm-q').count(),30);
+    assert.equal(await page.locator('.pm-q').filter({hasText:'새 문제'}).count(),9);
+    assert.equal(await page.locator('.pm-answer').filter({hasText:'자료실 공개 생성형'}).count(),9);
+    assert.equal(await page.locator('.pm-q strong').count(),0);
+    const freshIds=await page.locator('.pm-q').filter({hasText:'새 문제'}).evaluateAll(cards=>cards.map(card=>card.dataset.itemId));
+    await page.locator('#pmFresh').click();
+    await page.locator('#pmStatus').getByText('새 문제 9문항').waitFor({timeout:30000});
+    const nextFreshIds=await page.locator('.pm-q').filter({hasText:'새 문제'}).evaluateAll(cards=>cards.map(card=>card.dataset.itemId));
+    assert.notDeepEqual(nextFreshIds,freshIds,'fresh button must change generated variants');
+    await page.emulateMedia({media:'print'});
+    const pageOrder=await page.evaluate(()=>({questions:document.querySelectorAll('.pm-question-page').length,blanks:document.querySelectorAll('.pm-duplex-blank').length,firstAnswer:[...document.querySelectorAll('.pm-page')].findIndex(node=>node.classList.contains('pm-answer-page'))+1}));
+    assert.equal(pageOrder.firstAnswer%2,1,'the answer section must start on a front-facing odd page');
+    assert.equal(pageOrder.blanks,pageOrder.questions%2);
+    assert.deepEqual(await page.evaluate(()=>[...document.querySelectorAll('.pm-q,.pm-answer')].filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>card.getAttribute('data-item-id')||card.getAttribute('data-answer-id'))),[],'supplemented A4 cards must not clip');
+    const supplementPdf=path.join(os.tmpdir(),'gfield-personal-mock-supplement-qa.pdf');
+    await page.pdf({path:supplementPdf,format:'A4',printBackground:true,preferCSSPageSize:true});
+    assert.ok(fs.statSync(supplementPdf).size>10000);
+    await page.emulateMedia({media:'screen'});
     await page.locator('[data-count="20"]').click();
     await page.locator('#pmStatus').getByText('20문항 준비 완료').waitFor({timeout:30000});
     assert.equal(await page.locator('.pm-q').count(),20);
@@ -66,6 +88,7 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await ready.locator('[data-scope="wrong"]').click();
     await ready.locator('#pmStatus').getByText('선택한 조건의 검수 유사문제가 없습니다.').waitFor();
     assert.equal(await ready.locator('#pmPrint').isDisabled(),true);
+    assert.equal(await ready.locator('#pmFresh').isDisabled(),true);
     await ready.locator('[data-scope="correct"]').click();
     await ready.locator('#pmStatus').getByText('30문항 준비 완료').waitFor();
     await ready.waitForFunction(()=>!document.getElementById('pmPrint').disabled);
@@ -76,7 +99,7 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await mobile.goto(base+'/bank/personal-mock.html');
     await mobile.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000});
     await mobile.locator('[data-band="4.2"]').click();
-    await mobile.locator('#pmStatus').getByText('30문항 중 24문항 확보 · 6문항 부족').waitFor({timeout:30000});
+    await mobile.locator('#pmStatus').getByText('자료실 공개 보충 6문항').waitFor({timeout:30000});
     assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),'390px horizontal overflow');
     const output=path.join(os.tmpdir(),'gfield-personal-mock-qa.pdf');
     await ready.emulateMedia({media:'print'});

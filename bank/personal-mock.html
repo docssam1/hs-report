@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>모의고사 생성기 | 지필드 영재교육</title>
-<link rel="stylesheet" href="personal-mock.css?v=20260930a">
+<link rel="stylesheet" href="personal-mock.css?v=20261001b">
 </head>
 <body class="bank-access-pending">
 <main id="personalMock" aria-live="polite">
@@ -12,11 +12,12 @@
     <a href="../index.html">← 자료실</a>
     <div><p>G·FIELD MOCK EXAM</p><h1>모의고사 생성기</h1></div>
   </header>
-  <p class="pm-intro">지금까지 응시한 모의고사의 검수된 유사문제로 새 시험지를 만듭니다. 응시 시험 전체·틀린 문제·맞은 문제 중 고르고, 10·20·30문항을 선택하세요. 모의고사형 30문항은 2점대 12개, 3점대 10개, 4점대 8개로 구성합니다. 선택한 조건의 문항이 적으면 확보된 문항만 인쇄되며, 진단·채점은 하지 않습니다.</p>
+  <p class="pm-intro">지금까지 응시한 모의고사의 검수 유사문제를 먼저 골라 새 시험지를 만듭니다. ‘응시 시험 전체’에서 부족하면 자료실에 공개된 중요 유형 문제은행의 검수 문항으로 같은 배점대를 보충합니다. ‘새 문제 섞기’를 누르면 그 문제은행의 검증된 생성형 문항도 일부 섞습니다. ‘틀린 문제’와 ‘맞은 문제’는 실제 정오답 범위만 사용합니다. 10·20·30문항을 선택할 수 있으며, 모의고사형 30문항은 2점대 12개, 3점대 10개, 4점대 8개로 구성합니다. 그래도 부족하면 확보된 문항만 인쇄되며, 진단·채점은 하지 않습니다.</p>
   <section class="pm-controls" aria-label="문항 선택 기준">
     <div class="pm-control-row"><strong>출제 범위</strong><button type="button" data-scope="all">응시 시험 전체</button><button type="button" data-scope="wrong">틀린 문제</button><button type="button" data-scope="correct">맞은 문제</button></div>
     <div class="pm-control-row"><strong>배점대</strong><button type="button" data-band="all">전체</button><button type="button" data-band="2.7">2점대</button><button type="button" data-band="3.4">3점대</button><button type="button" data-band="4.2">4점대</button></div>
     <div class="pm-control-row"><strong>문항 수</strong><button type="button" data-count="10">10문항</button><button type="button" data-count="20">20문항</button><button type="button" data-count="30">모의고사형 · 30문항</button></div>
+    <div class="pm-control-row"><strong>추가 연습</strong><button type="button" id="pmFresh" disabled>새 문제 섞기</button><span>응시 시험 전체에서만 사용 · 공개된 파이널 중요 유형 생성기</span></div>
     <div class="pm-actions"><p id="pmStatus" role="status">응시 기록을 확인하고 있습니다.</p><button id="pmPrint" type="button" disabled>시험지·답안 인쇄 / PDF 저장</button></div>
   </section>
   <div id="pmPages"></div>
@@ -25,10 +26,15 @@
 <script>document.write('<script src="../data.js?v='+Date.now()+'"><\/script>');</script>
 <script src="bank-access.js?v=20260930-personal-mock"></script>
 <script src="../student-result-hub.js?v=20260930-personal-mock"></script>
+<script src="important-types.js?v=20260913.1"></script>
 <script src="core/adapter-registry.js?v=20260930-personal-mock"></script>
 <script src="adapters/final7-reviewed-adapter.js?v=20260930-personal-mock"></script>
 <script src="bank-core.js?v=20260930-personal-mock"></script>
 <script src="bank-fixed.js?v=20260930-personal-mock"></script>
-<script src="personal-mock.js?v=20260930a"></script>
+<script src="bank-raster.js?v=20261001-personal-mock"></script>
+<script src="shape-network.js?v=20261001-personal-mock"></script>
+<script src="gens/g-final1.js?v=20261001-personal-mock"></script>
+<script src="important-generators.js?v=20261001-personal-mock"></script>
+<script src="personal-mock.js?v=20261001c"></script>
 </body>
 </html>

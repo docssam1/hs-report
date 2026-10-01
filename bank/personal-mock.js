@@ -1,4 +1,4 @@
-/* A printable 30-question paper made only from reviewed items in official attempts. */
+/* Official-attempt practice, supplemented only with the published important-types bank. */
 (function(root){
   'use strict';
   var SUPPORTED=/^(?:final[12347]|original[12])$/;
@@ -18,7 +18,7 @@
     return true; // Final 1–4 follow the existing registered-student bank access.
   }
   function signature(item){return JSON.stringify([item.text,item.promptDataLines||[],item.asset&&item.asset.src||'',item.answer]);}
-  function buildPool(attempts,datasets,scope,band,target){
+  function buildPool(attempts,datasets,scope,band,target,library,dynamic,freshRound){
     target=Object.prototype.hasOwnProperty.call(COUNTS,target)?Number(target):30;
     var groups=[];
     (attempts||[]).forEach(function(attempt){
@@ -53,8 +53,58 @@
       }
     }
     var chosen=band==='all'?['2.7','3.4','4.2'].flatMap(function(point){return selected.filter(function(entry){return entry.item.pointBand===point;}).slice(0,COUNTS[target][point]);}):selected.slice(0,target);
-    return {target:target,available:chosen.length,missing:Math.max(0,target-chosen.length),questions:chosen.map(function(entry,index){
-      return {index:index+1,item:entry.item,code:entry.code};
+    if(scope==='all'&&library&&Array.isArray(library.items)&&chosen.length<target){
+      var usedIds=new Set(chosen.map(function(entry){return entry.item.id;}));
+      var usedContent=new Set(chosen.map(function(entry){return signature(entry.item);}));
+      var publicItems=library.items.filter(function(item){
+        return item&&item.reviewStatus==='verified'&&item.sourceSet==='final'&&[1,2].includes(Number(item.sourceRound))&&
+          [1,2,3].includes(Number(item.variantNo))&&item.text&&item.answer!=null&&item.solution&&
+          ['2.7','3.4','4.2'].includes(item.pointBand);
+      });
+      function supplement(point,limit){
+        var current=chosen.filter(function(entry){return entry.item.pointBand===point;}).length;
+        publicItems.filter(function(item){return item.pointBand===point;}).forEach(function(item){
+          if(current>=limit||usedIds.has(item.id)||usedContent.has(signature(item)))return;
+          chosen.push({item:item,code:'final'+item.sourceRound,origin:'library'});
+          usedIds.add(item.id);usedContent.add(signature(item));current++;
+        });
+      }
+      if(band==='all') ['2.7','3.4','4.2'].forEach(function(point){supplement(point,COUNTS[target][point]);});
+      else supplement(band,target);
+    }
+    if(scope==='all'&&Number(freshRound)>0&&library&&dynamic&&typeof dynamic.has==='function'&&typeof dynamic.generate==='function'){
+      var anchors=library.items.filter(function(item){return item&&item.variantNo===1&&item.importantTypeId&&dynamic.has(item.importantTypeId);});
+      var seenFresh=new Set(chosen.map(signature));
+      ['2.7','3.4','4.2'].forEach(function(point){
+        if(band!=='all'&&band!==point)return;
+        var positions=[];
+        chosen.forEach(function(entry,index){if(entry.item.pointBand===point)positions.push(index);});
+        var candidates=anchors.filter(function(item){return item.pointBand===point;});
+        var needed=Math.min(Math.round(positions.length*0.3),positions.length);
+        var made=0,guard=0;
+        while(made<needed&&candidates.length&&guard<needed*40){
+          var anchor=candidates[(guard+Number(freshRound)-1)%candidates.length];
+          var serial=4+((Number(freshRound)-1)*7+guard)%37;
+          guard++;
+          var item;
+          try{item=dynamic.generate(anchor.importantTypeId,serial,anchor);}catch(error){continue;}
+          var proof=item&&item.verification,content=item&&signature(item);
+          if(!item||item.reviewStatus!=='runtime-verified'||item.pointBand!==point||
+             !proof||!proof.primary||!proof.independent||String(proof.primary.answer)!==String(proof.independent.answer)||
+             !proof.visibleEvidence||proof.visibleEvidence.passed!==true||!item.text||item.answer==null||!item.solution||
+             !Array.isArray(item.acceptedAnswers)||!item.acceptedAnswers.map(String).includes(String(proof.primary.answer))||seenFresh.has(content))continue;
+          seenFresh.add(content);
+          chosen[positions[positions.length-1-made]]={item:item,code:'final'+item.sourceRound,origin:'generated'};
+          made++;
+        }
+      });
+    }
+    if(band==='all')chosen.sort(function(a,b){return ['2.7','3.4','4.2'].indexOf(a.item.pointBand)-['2.7','3.4','4.2'].indexOf(b.item.pointBand);});
+    var attemptCount=chosen.filter(function(entry){return !entry.origin;}).length;
+    var libraryCount=chosen.filter(function(entry){return entry.origin==='library';}).length;
+    var generatedCount=chosen.filter(function(entry){return entry.origin==='generated';}).length;
+    return {target:target,attemptCount:attemptCount,libraryCount:libraryCount,generatedCount:generatedCount,available:chosen.length,missing:Math.max(0,target-chosen.length),questions:chosen.map(function(entry,index){
+      return {index:index+1,item:entry.item,code:entry.code,origin:entry.origin||'attempt'};
     })};
   }
   function figure(asset){
@@ -63,7 +113,7 @@
     return '<img src="'+esc(asset.src)+'" alt="'+esc(asset.description||'문항 그림')+'">';
   }
   function page(title,number,total,content,kind){
-    return '<section class="pm-page pm-'+kind+'-page"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content"><header><span>지필드 영재교육 · 응시 기록 모의고사</span><span>'+esc(title)+' · '+number+'/'+total+'</span></header><div class="pm-'+kind+'-grid">'+content+'</div></div></section>';
+    return '<section class="pm-page pm-'+kind+'-page"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content"><header><span>지필드 영재교육 · 맞춤 모의고사</span><span>'+esc(title)+' · '+number+'/'+total+'</span></header><div class="pm-'+kind+'-grid">'+content+'</div></div></section>';
   }
   function questionWide(entry){
     var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' '):'';
@@ -94,20 +144,21 @@
   }
   function questionCard(entry){
     var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines:[];
-    return '<article class="pm-q'+(questionWide(entry)?' pm-wide':'')+'" data-item-id="'+esc(x.id)+'"><h3>'+entry.index+'번 <span class="pm-type">'+esc(x.detailType||'')+' · '+esc(x.pointBand)+'점</span></h3><p>'+esc(x.text)+'</p>'+
+    return '<article class="pm-q'+(questionWide(entry)?' pm-wide':'')+'" data-item-id="'+esc(x.id)+'"><h3>'+entry.index+'번 <span class="pm-type">'+esc(x.detailType||'')+' · '+esc(x.pointBand)+'점'+(entry.origin==='library'?' · 자료실 보충':entry.origin==='generated'?' · 새 문제':'')+'</span></h3><p>'+esc(x.text)+'</p>'+
       (given.length?'<div class="pm-given">'+given.map(esc).join('<br>')+'</div>':'')+figure(x.asset)+
       '<div class="pm-work" aria-hidden="true"><span></span><span></span><span></span><span></span></div><div class="pm-answerline">답 <span></span></div></article>';
   }
   function answerCard(entry){
     var x=entry.item,steps=Array.isArray(x.solutionSteps)&&x.solutionSteps.length?x.solutionSteps:[x.solution];
-    return '<article class="pm-answer'+(answerWide(entry)?' pm-wide':'')+(answerTall(entry)?' pm-tall':'')+'" data-answer-id="'+esc(x.id)+'"><h3>'+entry.index+'번 · '+esc(x.detailType||'')+'</h3><p class="pm-source">'+esc(label(entry.code))+' 원문 '+x.sourceNo+'번 · 검수 유사문제 '+x.variantNo+'</p><strong>답 '+esc(x.answer)+'</strong><ol>'+steps.map(function(step){return '<li>'+esc(step)+'</li>';}).join('')+'</ol>'+figure(x.solutionAsset)+'</article>';
+    return '<article class="pm-answer'+(answerWide(entry)?' pm-wide':'')+(answerTall(entry)?' pm-tall':'')+'" data-answer-id="'+esc(x.id)+'"><h3>'+entry.index+'번 · '+esc(x.detailType||'')+'</h3><p class="pm-source">'+(entry.origin==='library'?'자료실 공개 보충 · ':entry.origin==='generated'?'자료실 공개 생성형 · ':'')+esc(label(entry.code))+' 원문 '+x.sourceNo+'번 · '+(entry.origin==='generated'?'추가 연습문제':'검수 유사문제 '+x.variantNo)+'</p><strong>답 '+esc(x.answer)+'</strong><ol>'+steps.map(function(step){return '<li>'+esc(step)+'</li>';}).join('')+'</ol>'+figure(x.solutionAsset)+'</article>';
   }
   function renderPaper(paper,scope,band,student){
     if(!paper.questions.length||paper.questions.length>paper.target)throw Error('인쇄할 검수 문항이 없습니다.');
     var qPages=[],aPages=[],questionGroups=rows(paper.questions,questionWide),answerGroups=rows(paper.questions,answerWide,answerTall);
     questionGroups.forEach(function(group,index){qPages.push(page('문제',index+1,questionGroups.length,group.map(questionCard).join(''),'question'));});
     answerGroups.forEach(function(group,index){aPages.push(page('정답과 풀이',index+1,answerGroups.length,group.map(answerCard).join(''),'answer'));});
-    return qPages.concat(aPages).join('');
+    var duplexBlank=qPages.length%2?['<section class="pm-page pm-duplex-blank" aria-hidden="true"></section>']:[];
+    return qPages.concat(duplexBlank,aPages).join('');
   }
   async function fetchAttempts(student){
     var auth=root.GFIELD_AUTH,path='mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq.'+encodeURIComponent(student);
@@ -122,18 +173,30 @@
     if(!student){status.textContent='학생 이름으로 자료실에 입장해 주세요.';return;}
     var scope=Object.prototype.hasOwnProperty.call(SCOPE_LABEL,query.get('scope'))?query.get('scope'):'all',band=Object.prototype.hasOwnProperty.call(BAND_LABEL,query.get('band'))?query.get('band'):'all';
     var count=COUNTS[query.get('count')]?Number(query.get('count')):30;
-    var attempts=[],datasets={},unavailable=[],revision=0,currentPaperCount=0;
+    var attempts=[],datasets={},unavailable=[],revision=0,currentPaperCount=0,library=null,libraryPromise=null,freshRound=0;
     function controls(){
       document.querySelectorAll('[data-scope]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.scope===scope));});
       document.querySelectorAll('[data-band]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.band===band));});
       document.querySelectorAll('[data-count]').forEach(function(button){button.setAttribute('aria-pressed',String(Number(button.dataset.count)===count));});
+      var fresh=document.getElementById('pmFresh');
+      fresh.disabled=scope!=='all'||!attempts.length;
+      fresh.textContent=freshRound?'다른 새 문제로 바꾸기':'새 문제 섞기';
     }
     async function render(){
       var current=++revision;controls();print.disabled=true;pages.innerHTML='';currentPaperCount=0;
       var paper=buildPool(attempts,datasets,scope,band,count),note=unavailable.length?' · 유사문제 미등록/권한 확인: '+unavailable.join(', '):'';
       if(!attempts.length){status.textContent='확인된 최초 응시 기록이 없습니다.';return;}
+      if(scope==='all'&&(paper.missing||freshRound>0)&&Array.isArray(root.GFIELD_DATA&&root.GFIELD_DATA.students)&&root.GFIELD_DATA.students.includes(student)){
+        try{
+          if(!libraryPromise)libraryPromise=root.BANK_FIXED.load('important');
+          library=await libraryPromise;
+          if(current!==revision)return;
+          paper=buildPool(attempts,datasets,scope,band,count,library,root.BANK_IMPORTANT_GENERATORS,freshRound);
+        }catch(error){libraryPromise=null;note+=' · 자료실 공개 문제를 불러오지 못했습니다.';}
+      }
       if(!paper.available){status.innerHTML='<span class="pm-short">선택한 조건의 검수 유사문제가 없습니다.</span>'+esc(note);return;}
-      status.innerHTML=paper.missing?'<span class="pm-short">'+count+'문항 중 '+paper.available+'문항 확보 · '+paper.missing+'문항 부족</span> · 응시한 회차가 적거나 선택한 유형의 문항이 적습니다. 확보된 '+paper.available+'문항은 인쇄할 수 있습니다.'+esc(note):'<span class="pm-ready">'+count+'문항 준비 완료</span> · '+esc(SCOPE_LABEL[scope])+' · '+esc(BAND_LABEL[band])+esc(note);
+      var sourceNote=paper.libraryCount||paper.generatedCount?' · 응시 기반 '+paper.attemptCount+'문항 + 자료실 공개 보충 '+paper.libraryCount+'문항 + 새 문제 '+paper.generatedCount+'문항':'';
+      status.innerHTML=paper.missing?'<span class="pm-short">'+count+'문항 중 '+paper.available+'문항 확보 · '+paper.missing+'문항 부족</span> · 확보된 문항은 인쇄할 수 있습니다.'+esc(sourceNote+note):'<span class="pm-ready">'+count+'문항 준비 완료</span> · '+esc(SCOPE_LABEL[scope])+' · '+esc(BAND_LABEL[band]+sourceNote+note);
       try{
         pages.innerHTML=renderPaper(paper,scope,band,student);
         await Promise.all([document.fonts.ready].concat(Array.from(pages.querySelectorAll('img')).map(function(img){return img.decode();})));
@@ -145,6 +208,7 @@
     document.querySelectorAll('[data-scope]').forEach(function(button){button.addEventListener('click',function(){scope=button.dataset.scope;render();});});
     document.querySelectorAll('[data-band]').forEach(function(button){button.addEventListener('click',function(){band=button.dataset.band;render();});});
     document.querySelectorAll('[data-count]').forEach(function(button){button.addEventListener('click',function(){count=Number(button.dataset.count);render();});});
+    document.getElementById('pmFresh').addEventListener('click',function(){if(scope!=='all')return;freshRound++;render();});
     print.addEventListener('click',function(){if(!print.disabled&&currentPaperCount>0&&pages.querySelectorAll('.pm-q').length===currentPaperCount)root.print();});
     try{
       attempts=await fetchAttempts(student);
