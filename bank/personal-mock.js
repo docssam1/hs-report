@@ -1,4 +1,4 @@
-/* Official-attempt practice, supplemented only with the published important-types bank. */
+/* Official-attempt practice, supplemented with reviewed public source-linked items. */
 (function(root){
   'use strict';
   var SUPPORTED=/^(?:final[12347]|original[12])$/;
@@ -18,7 +18,7 @@
     return true; // Final 1–4 follow the existing registered-student bank access.
   }
   function signature(item){return JSON.stringify([item.text,item.promptDataLines||[],item.asset&&item.asset.src||'',item.answer]);}
-  function buildPool(attempts,datasets,scope,band,target,library,dynamic,freshRound){
+  function buildPool(attempts,datasets,scope,band,target,library,dynamic,freshRound,sourceDynamic){
     target=Object.prototype.hasOwnProperty.call(COUNTS,target)?Number(target):30;
     var groups=[];
     (attempts||[]).forEach(function(attempt){
@@ -72,8 +72,20 @@
       if(band==='all') ['2.7','3.4','4.2'].forEach(function(point){supplement(point,COUNTS[target][point]);});
       else supplement(band,target);
     }
-    if(scope==='all'&&Number(freshRound)>0&&library&&dynamic&&typeof dynamic.has==='function'&&typeof dynamic.generate==='function'){
-      var anchors=library.items.filter(function(item){return item&&item.variantNo===1&&item.importantTypeId&&dynamic.has(item.importantTypeId);});
+    if(scope==='all'&&Number(freshRound)>0){
+      var anchors=library&&dynamic&&typeof dynamic.has==='function'&&typeof dynamic.generate==='function'?
+        library.items.filter(function(item){return item&&item.variantNo===1&&item.importantTypeId&&dynamic.has(item.importantTypeId);}):[];
+      if(sourceDynamic&&typeof sourceDynamic.has==='function'&&typeof sourceDynamic.generate==='function'){
+        var attendedAnchors=[];
+        groups.forEach(function(group){
+          if(!['final3','final4'].includes(group.code))return;
+          group.sources.forEach(function(source){
+            var anchor=source[0];
+            if(anchor&&anchor.variantNo===1&&sourceDynamic.has(anchor.genId))attendedAnchors.push(anchor);
+          });
+        });
+        anchors=attendedAnchors.concat(anchors);
+      }
       var seenFresh=new Set(chosen.map(signature));
       ['2.7','3.4','4.2'].forEach(function(point){
         if(band!=='all'&&band!==point)return;
@@ -87,7 +99,7 @@
           var serial=4+((Number(freshRound)-1)*7+guard)%37;
           guard++;
           var item;
-          try{item=dynamic.generate(anchor.importantTypeId,serial,anchor);}catch(error){continue;}
+          try{item=anchor.importantTypeId?dynamic.generate(anchor.importantTypeId,serial,anchor):sourceDynamic.generate(anchor.genId,serial,anchor);}catch(error){continue;}
           var proof=item&&item.verification,content=item&&signature(item);
           if(!item||item.reviewStatus!=='runtime-verified'||item.pointBand!==point||
              !proof||!proof.primary||!proof.independent||String(proof.primary.answer)!==String(proof.independent.answer)||
@@ -191,7 +203,7 @@
           if(!libraryPromise)libraryPromise=root.BANK_FIXED.load('important');
           library=await libraryPromise;
           if(current!==revision)return;
-          paper=buildPool(attempts,datasets,scope,band,count,library,root.BANK_IMPORTANT_GENERATORS,freshRound);
+          paper=buildPool(attempts,datasets,scope,band,count,library,root.BANK_IMPORTANT_GENERATORS,freshRound,root.BANK_FINAL_SOURCE_GENERATORS);
         }catch(error){libraryPromise=null;note+=' · 자료실 공개 문제를 불러오지 못했습니다.';}
       }
       if(!paper.available){status.innerHTML='<span class="pm-short">선택한 조건의 검수 유사문제가 없습니다.</span>'+esc(note);return;}

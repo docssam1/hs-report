@@ -2,6 +2,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const bank=require('../bank/personal-mock.js');
+const sourceDynamic=require('../bank/final-source-generators.js');
 function dataset(code){return JSON.parse(fs.readFileSync(path.join(__dirname,'../bank/data',code+'-fixed90.json'),'utf8'));}
 function attempt(code,ox='O'.repeat(30)){return {key:code,score:{ox}};}
 const original1=dataset('original1'),original2=dataset('original2');
@@ -49,6 +50,15 @@ assert.equal(wrongFilled.libraryCount,0);
 assert.equal(bank.buildPool([attempt('original1','XXXX'+'O'.repeat(26))],{original1},'wrong','all',30,library,dynamic,1).generatedCount,0);
 assert.equal(wrongFilled.attemptCount,12);
 assert.equal(bank.buildPool([attempt('original1')],{original1},'wrong','all',30,library).available,0);
+for(const code of ['final3','final4']){
+  const data=dataset(code),allowed=code==='final3'?[9,10]:[2,7];
+  const expanded=bank.buildPool([attempt(code)],{[code]:data},'all','2.7',30,null,null,1,sourceDynamic);
+  assert.ok(expanded.generatedCount>0,`${code}: 응시 회차의 원문형 새 문제 포함`);
+  assert.ok(expanded.questions.filter(row=>row.origin==='generated').every(row=>row.item.sourceRound===Number(code.slice(5))&&allowed.includes(row.item.sourceNo)));
+  const other=bank.buildPool([attempt(code)],{[code]:data},'all','2.7',30,null,null,2,sourceDynamic);
+  assert.notDeepEqual(other.questions.filter(row=>row.origin==='generated').map(row=>row.item.id),expanded.questions.filter(row=>row.origin==='generated').map(row=>row.item.id));
+  assert.equal(bank.buildPool([attempt(code)],{[code]:data},'wrong','2.7',30,null,null,1,sourceDynamic).generatedCount,0);
+}
 const correct=bank.buildPool([attempt('original1','XXXX'+'O'.repeat(26))],{original1},'correct','all',10);
 assert.equal(correct.target,10);
 assert.equal(correct.missing,0);
