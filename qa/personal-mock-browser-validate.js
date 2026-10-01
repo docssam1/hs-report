@@ -55,6 +55,19 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await page.locator('#pmStatus').getByText('20문항 준비 완료').waitFor({timeout:30000});
     assert.equal(await page.locator('.pm-q').count(),20);
     await page.close();
+    const later=await browser.newPage({viewport:{width:1280,height:900}});
+    await later.addInitScript(()=>localStorage.setItem('gfield_student','김서연'));
+    await later.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([
+      record('김서연','final3','O'.repeat(30)),record('김서연','final4','O'.repeat(30))])}));
+    await later.goto(base+'/bank/personal-mock.html');
+    await later.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000});
+    await later.locator('#pmFresh').click();
+    await later.locator('#pmStatus').getByText(/새 문제 [1-9]/).waitFor({timeout:30000});
+    const laterGenerated=await later.locator('.pm-q').filter({hasText:'새 문제'}).evaluateAll(cards=>cards.map(card=>card.dataset.itemId));
+    assert.ok(laterGenerated.length>0);
+    assert.equal(laterGenerated.filter(id=>/^final[34]-q(?:02|07|09|10)-g\d+$/.test(id)).length,4,JSON.stringify(laterGenerated));
+    assert.equal(await later.locator('.pm-q').count(),30);
+    await later.close();
     const ready=await browser.newPage({viewport:{width:1440,height:900}});
     await ready.addInitScript(()=>localStorage.setItem('gfield_student','박서진'));
     await ready.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([record('박서진','original1','O'.repeat(30)),record('박서진','original2','O'.repeat(30))])}));

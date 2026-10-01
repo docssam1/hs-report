@@ -210,11 +210,34 @@
         });
       }
     }
+    var generatedCount=0;
+    if(opts.fresh){
+      if(opts.wrongPracticeMode||!['final3','final4'].includes(config.code)||ids.length!==1||groups.length!==1)
+        throw new Error('새 문제는 검수된 파이널 3·4회 단일 유형에서만 만들 수 있습니다.');
+      var sourceGroup=groups[0],generator=global.BANK_FINAL_SOURCE_GENERATORS;
+      if(!generator||!generator.has(ids[0]))throw new Error('이 유형의 새 문제는 아직 검수 중입니다.');
+      var target=[4,8,20,40].includes(Number(opts.n))?Number(opts.n):20;
+      var seen=new Set(selected.map(function(item){return item.text+'|'+item.answer;}));
+      for(var serial=4;serial<=43&&selected.length<target;serial++){
+        var candidate=generator.generate(ids[0],serial,sourceGroup[0]),proof=candidate&&candidate.verification;
+        if(!candidate||candidate.reviewStatus!=='runtime-verified'||candidate.genId!==ids[0]||
+           candidate.sourceRound!==config.round||candidate.pointBand!==sourceGroup[0].pointBand||
+           !proof||!proof.primary||!proof.independent||String(proof.primary.answer)!==String(proof.independent.answer)||
+           !proof.visibleEvidence||proof.visibleEvidence.passed!==true||!Array.isArray(candidate.acceptedAnswers)||
+           !candidate.acceptedAnswers.map(String).includes(String(proof.primary.answer))||!candidate.text||
+           candidate.answer==null||!candidate.solution)throw new Error('생성 문항의 정답·근거 검수가 일치하지 않습니다.');
+        var fingerprint=candidate.text+'|'+candidate.answer;
+        if(seen.has(fingerprint))continue;
+        seen.add(fingerprint);
+        var copy=JSON.parse(JSON.stringify(candidate));copy.index=selected.length+1;selected.push(copy);generatedCount++;
+      }
+      if(selected.length<target)throw new Error('요청한 수만큼 서로 다른 검수 문제를 만들지 못했습니다.');
+    }
     return {
       bankVersion:data.version, bankCode:config.code, sourceSet:config.sourceSet, sourceRound:config.round, bankLabel:config.label,
       fixed:true, seedStr:'F' + config.round + 'V1', seedNum:0,
       genIds:ids.slice(), pointBand:opts.pointBand || 'all', difficultyMode:'standard', difficultyMix:'single', orderMode:orderMode,
-      perGenerator:3, n:selected.length, questions:selected
+      perGenerator:3, generatedCount:generatedCount, n:selected.length, questions:selected
     };
   }
   global.BANK_FIXED = {load:load, validate:validate, select:select, buildPaper:function (opts) {return load(opts.bankCode).then(function (data) {return select(data, opts);});}};
