@@ -591,7 +591,7 @@
     const next=qrNextTarget();
     if(next){
       const helper=window.GFIELD_FINAL_LAST_ROUTES;
-      if(/(?:^|\/)bank\/(?:index|catalog)\.html(?:[?#]|$)/i.test(next)){
+      if(/(?:^|\/)bank\/(?:index|catalog|personal-mock)\.html(?:[?#]|$)/i.test(next)){
         issueQuestionBankHandoff();
         location.href=withQuestionBankIdentity(next);
       }else location.href=helper&&helper.withStudent?helper.withStudent(next,currentStudent):next+(next.includes('?')?'&':'?')+'name='+encodeURIComponent(currentStudent);
@@ -610,7 +610,7 @@
       if(url.origin!==location.origin) return '';
       const path=url.pathname.replace(/^\/+/, '').toLowerCase();
       const page=path.split('/').pop();
-      if(page!=='final.html'&&!/(?:^|\/)bank\/(?:index|catalog)\.html$/.test(path)) return '';
+      if(page!=='final.html'&&!/(?:^|\/)bank\/(?:index|catalog|personal-mock)\.html$/.test(path)) return '';
       return url.pathname.replace(/^\//,'')+url.search+url.hash;
     }catch(e){ return ''; }
   }
@@ -1007,7 +1007,7 @@
     const folders=(D.archiveFolders||[]).filter(canSeeArchiveFolder);
     if(!folders.length&&!bankVisible){ wrap.innerHTML='<div class="empty-note">열람 가능한 자료실이 없습니다.</div>'; return; }
     if(bankVisible){wrap.insertAdjacentHTML('beforeend',studentBankHtml());wireStudentBank(wrap);}
-    const generatorHtml=`<section class="shelf-sec" aria-label="모의고사 생성기"><div class="shelf-h disp">📝 모의고사 생성기</div><div style="padding:15px 18px;background:#edf3ff;border:1px solid #cbd8ec;border-radius:12px;margin:12px 0 20px"><p style="font-size:13px;line-height:1.6;margin:0 0 10px">응시했던 모의고사의 검수 유사문제로 시험지와 답안을 만듭니다. ‘응시 시험 전체’에서 부족한 문항은 자료실 공개 중요 유형 문제로 보충하고 출처를 표시합니다. 맞은 문제·틀린 문제는 실제 정오답 범위만 사용합니다. 10·20·30문항을 선택할 수 있습니다.</p><a href="bank/personal-mock.html?from=archive&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-block;background:#2456c4;color:#fff;padding:10px 15px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:800">모의고사 생성기 열기 ›</a></div></section>`;
+    const generatorHtml=`<section class="shelf-sec" aria-label="모의고사 생성기"><div class="shelf-h disp">📝 모의고사 생성기</div><div style="padding:15px 18px;background:#edf3ff;border:1px solid #cbd8ec;border-radius:12px;margin:12px 0 20px"><p style="font-size:13px;line-height:1.6;margin:0 0 10px">응시했던 모의고사의 검수 유사문제로 시험지와 답안을 만듭니다. ‘응시 시험 전체’에서 부족한 문항은 자료실 공개 중요 유형 문제로 보충하고 출처를 표시합니다. 맞은 문제·틀린 문제는 실제 정오답 범위만 사용합니다. 10·20·30문항을 선택할 수 있습니다.</p><a href="bank/personal-mock.html?from=archive&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-block;background:#2456c4;color:#fff;padding:10px 15px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:800;margin-right:12px">모의고사 생성기 열기 ›</a><a href="mock-generator-guide.html" style="display:inline-block;color:#2456c4;padding:10px 0;text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:800">사용 안내 영상 보기 ›</a></div></section>`;
     let total=0, generatorShown=false;
     if(bankVisible&&!folders.some(folder=>/모의고사/.test(folder))){wrap.insertAdjacentHTML('beforeend',generatorHtml);generatorShown=true;}
     folders.forEach(folder=>{
