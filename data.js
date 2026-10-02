@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 10. 1. 오후 3:37:38
+ * 생성: 2026. 10. 2. 오후 9:08:15
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -789,7 +789,7 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "oct-5"
     ],
     "김현우": [
       "may-w34",
@@ -808,7 +808,8 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "김유준": [
       "may-w34",
@@ -827,7 +828,8 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "이하린": [
       "may-w34",
@@ -846,7 +848,8 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "정지안": [
       "jul-w1",
@@ -872,7 +875,8 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "박서진": [
       "may-w34",
@@ -891,7 +895,8 @@ window.GFIELD_DATA = {
       "sep-14",
       "sep-21",
       "jul-w5",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "민준기": [
       "may-w34",
@@ -910,7 +915,8 @@ window.GFIELD_DATA = {
       "aug-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "김서연": [
       "may-w34",
@@ -929,7 +935,8 @@ window.GFIELD_DATA = {
       "sep-14",
       "sep-21",
       "aug-w2",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "김명서": [
       "may-w34",
@@ -948,7 +955,8 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "임유준": [
       "may-w34",
@@ -966,7 +974,8 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "김시후": [
       "jul-w1",
@@ -1012,7 +1021,8 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "DEMO": [
       "jul-w2",
@@ -1030,7 +1040,8 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "유호연": [
       "jul-w2",
@@ -1073,7 +1084,8 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "김주한": [
       "may-w34",
@@ -1096,7 +1108,8 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "박재연": [],
     "김신유": [],
@@ -1107,23 +1120,27 @@ window.GFIELD_DATA = {
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "정윤성": [
       "sep-w1",
       "sep-14",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "이재아": [
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "이민혁": [
       "sep-14",
       "sep-w1",
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "0836": [
       "sep-14"
@@ -1132,16 +1149,19 @@ window.GFIELD_DATA = {
     "최지안": [],
     "김주빈": [
       "sep-21",
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "김나율": [
-      "sep-28"
+      "sep-28",
+      "oct-5"
     ],
     "김유현": [
       "sep-28",
       "sep-21",
       "sep-14",
-      "sep-w1"
+      "sep-w1",
+      "oct-5"
     ],
     "남기현": [],
     "이동윤": [],
