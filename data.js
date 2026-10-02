@@ -640,24 +640,80 @@ window.GFIELD_DATA = {
       ]
     },
     "oct-5": {
-      "notice": "",
+      "notice": "[[hlb:초등 선발 모의고사 최종 1회]]\nhttps://youtu.be/T9LbJLG2BRQ\n\n기존에 배웠던 내용과 선행없이 풀 수 있는 영재성검사 유형들을 추가하였습니다.\n경우에 따라 더 어렵게 느껴지는 아이들도 있고 오히려 파이널 시험보다 쉽다고 생각하는 친구들이 있지만 평균은 똑같아요. 오늘 시험 성적이 지난 번보다 높았던 친구들은 아마 유형에 대한 이해도와 지문의 중간까지의 해석능력이 좋았던 학생입니다. 결국 지난 시험까지 마무리 조건이 부족했다고도 할수 있습니다.",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "최종 실전 모의고사 1회 · 원본 시험지",
+          "folder": "last_final_1",
+          "pages": 6
+        },
+        {
+          "title": "최종 실전 모의고사 1회 · 답안·해설",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1&go=answer"
+        },
+        {
+          "title": "최종 실전 모의고사 1회 · 성적 확인·진단",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=1&go=report"
+        }
+      ]
     },
     "oct-12": {
-      "notice": "",
+      "notice": "[[hlb:최종 실전 모의고사 2회 풀이 영상]]\nhttps://youtu.be/YiKvaYUlIp4",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "최종 실전 모의고사 2회 · 원본 시험지",
+          "folder": "last_final_2",
+          "pages": 6
+        },
+        {
+          "title": "최종 실전 모의고사 2회 · 답안·해설",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=2&go=answer"
+        },
+        {
+          "title": "최종 실전 모의고사 2회 · 성적 확인·진단",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=2&go=report"
+        }
+      ]
     },
     "oct-19": {
-      "notice": "",
+      "notice": "[[hlb:최종 실전 모의고사 3회 풀이 영상]]\nhttps://youtu.be/M4EHgd42ReU",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "최종 실전 모의고사 3회 · 원본 시험지",
+          "folder": "last_final_3",
+          "pages": 6
+        },
+        {
+          "title": "최종 실전 모의고사 3회 · 답안·해설",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=3&go=answer"
+        },
+        {
+          "title": "최종 실전 모의고사 3회 · 성적 확인·진단",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=3&go=report"
+        }
+      ]
     },
     "oct-26": {
-      "notice": "",
+      "notice": "[[hlb:최종 실전 모의고사 4회 풀이 영상]]\nhttps://youtu.be/ZiOpTckV_wM",
       "homework": "",
-      "textbooks": []
+      "textbooks": [
+        {
+          "title": "최종 실전 모의고사 4회 · 원본 시험지",
+          "folder": "last_final_4",
+          "pages": 6
+        },
+        {
+          "title": "최종 실전 모의고사 4회 · 답안·해설",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=4&go=answer"
+        },
+        {
+          "title": "최종 실전 모의고사 4회 · 성적 확인·진단",
+          "url": "https://hs.gfieldacademy.net/final.html?set=last&round=4&go=report"
+        }
+      ]
     },
     "extra-mocks": {
       "notice": "서재에서 승인된 추가 모의고사만 이곳에 표시됩니다.",
