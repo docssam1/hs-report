@@ -27,6 +27,10 @@ assert.equal(model.rounds['1'].items[23].prescriptionOverride.label,'연속한 1
 assert.equal(model.rounds['1'].items[24].prescriptionOverride.label,'이진법');
 assert.equal(model.rounds['1'].items[25].prescriptionOverride.books['지필드'][0].u,'CH1 NUMBERS · 재치 있게 계산하기');
 assert.equal(items[6].answer,'ㄱ이 28개 더 많다');
+assert.match(items[0].check,/19\+19\+13=51/);
+assert.match(items[5].steps[2].body,/묶음은 접힐 때 통째로 뒤집히므로/);
+assert.match(items[9].steps[1].body,/b\+c는 39/);
+assert.match(items[14].check,/6\+5\+4\+8=23/);
 assert.match(items[11].steps.map(x=>x.body).join(' '),/1,3,6,2,7,5,4,4,5,7,2,6,3,1,8/);
 assert.equal(items[12].answer,'3, 6, 7, 8, 11, 12, 13, 17, 18, 22, 23, 24');
 assert.match(items[19].steps.map(x=>x.body).join(' '),/3,5,1,2,6,3,1,2,6,5,4,6,3,2/);
