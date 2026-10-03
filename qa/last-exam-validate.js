@@ -517,7 +517,7 @@ check('온라인 회원 직접 입력과 재원생 교사 기록 경로 분리',
   assert.match(adminEnhancementsSource, /set==='original'\?'set=original&':''/);
   assert.match(adminEnhancementsSource, /'round='\+r\+'&go=answer&entry=teacher&name='\+encodeURIComponent\(student\)/);
   assert.match(adminSource, /<script src="mock-data-final\.js\?v=[^"]+"><\/script>/);
-  assert.match(adminSource, /<script src="mock-data-original\.js\?v=20260827"><\/script>/);
+  assert.match(adminSource, /<script src="mock-data-original\.js\?v=[^"]+"><\/script>/);
   assert.match(resultSource, /source==='online'.*온라인 회원이 직접 입력한 최초 성적/);
   assert.match(resultSource, /source==='admin'\|\|source==='teacher'/);
 });
@@ -638,7 +638,7 @@ check('통합 백분율은 파이널 최초 응시부터 최종 1회까지 평�
   assert.match(answerSource, /각 회차 최초 응시의 상위 백분율을 평균/);
   assert.match(answerSource, /누적 백분율 19\.1% 이하/);
   assert.match(answerSource, /누적 백분율 76\.5% 이상/);
-  assert.match(finalSource, /if\(roundNum===1\)\{/);
+  assert.match(resultSource, /if\(roundNo===1\)\{/);
   assert.match(finalSource, /finalKey='final'\+finalNo/);
   assert.match(finalSource, /label:'파이널 '\+finalNo\+'회'/);
   assert.match(finalSource, /label:'최종 '\+lastNo\+'회'/);

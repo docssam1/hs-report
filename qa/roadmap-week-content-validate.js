@@ -29,7 +29,22 @@ assert.equal(august.node.desc, '', '8월 5주차 설명 비움');
 assert.equal(august.node.focus, '', '8월 5주차 핵심훈련 비움');
 assert.equal(String(august.content.notice || '').trim(), '', '8월 5주차 학습 내용 비움');
 assert.equal(String(august.content.homework || '').trim(), '', '8월 5주차 과제 비움');
-assert.deepEqual(Array.from(august.content.textbooks || []), [], '8월 5주차 교재 비움');
+const augustBooks = Array.from(august.content.textbooks || []);
+assert.equal(augustBooks.length, 1, '8월 5주차 리뷰 자료 유지');
+assert.equal(augustBooks[0].title, '초등과정 대비 실전 모의고사 5,6회 리뷰');
+assert.match(String(augustBooks[0].url || ''), /materials\/[^/]+\.pdf$/);
+
+const last1 = contentFor('10월 1주차');
+assert.equal(last1.node.title, '최종 실전 모의고사 1회');
+assert.match(String(last1.content.notice || ''), /youtu\.be\/T9LbJLG2BRQ/);
+assert.match(String(last1.content.notice || ''), /선행없이 풀 수 있는 영재성검사 유형/);
+assert.equal(String(last1.content.homework || '').trim(), '', '임의 과제 추가 금지');
+const last1Books = Array.from(last1.content.textbooks || []);
+assert.equal(last1Books.length, 3, '최종 1회 원본·답안·진단 자료');
+assert.equal(last1Books[0].folder, 'last_final_1');
+assert.equal(last1Books[0].pages, 6);
+assert.match(String(last1Books[1].url || ''), /final\.html\?set=last&round=1&go=answer$/);
+assert.match(String(last1Books[2].url || ''), /final\.html\?set=last&round=1&go=report$/);
 
 const finalWeeks = [
   ['9월 1주차', 1],
@@ -43,10 +58,14 @@ for (const [date, round] of finalWeeks) {
   assert.equal(node.title, `파이널 실전 모의고사 ${round}회`, `${date} 제목`);
   assert.match(String(content.notice || ''), new RegExp(`파이널\\s*모의고사\\s*${round}회`), `${date} 상세 내용 회차`);
   const textbooks = Array.from(content.textbooks || []);
-  assert.equal(textbooks.length, 3, `${date} 파이널 ${round}회 연결 자료 3개`);
-  for (const textbook of textbooks) {
+  assert.ok(textbooks.length >= 4, `${date} 파이널 ${round}회 기능 링크와 원본 자료`);
+  for (const textbook of textbooks.slice(0, 3)) {
     assert.match(String(textbook.title || ''), new RegExp(`파이널\\s*모의고사\\s*${round}회`), `${date} 교재 제목 회차`);
     assert.match(String(textbook.url || ''), new RegExp(`[?&]round=${round}(?:&|$)`), `${date} 교재 링크 회차`);
+  }
+  for (const textbook of textbooks.slice(3)) {
+    assert.match(String(textbook.title || ''), new RegExp(`파이널\\s*모의고사\\s*${round}회`), `${date} 원본 제목 회차`);
+    assert.match(String(textbook.url || ''), /\/materials\/[^/]+\.pdf$/, `${date} 원본 PDF 연결`);
   }
 }
 
@@ -61,4 +80,4 @@ for (const filename of ['index-enhancements.js', 'admin-mock-v2.js']) {
   assert.match(source, /hasOwnProperty\.call\(o,'focus'\)/, `${filename} 빈 핵심훈련 적용 가능`);
 }
 
-console.log('로드맵 주차 콘텐츠 QA 통과: 8월 5주차 제목만 유지, 파이널 1~4회 상세 내용은 9월 1~4주차에 일치');
+console.log('로드맵 주차 콘텐츠 QA 통과: 8월 리뷰 자료, 파이널 1~4회, 최종 1회 원본·영상·답안·진단 연결 일치');
