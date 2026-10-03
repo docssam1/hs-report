@@ -34,10 +34,10 @@ async function waitForPaperImages(page) {
   await context.route('https://fonts.gstatic.com/**', route => route.fulfill({ status: 200, contentType: 'font/woff2', body: '' }));
 
   try {
-    for (const [round, expectedCorrections] of Object.entries({ '3': [8, 11], '4': [19] })) {
+    for (const [round, expectedCorrections] of Object.entries({ '1': [29], '3': [8, 11], '4': [19] })) {
       const page = await context.newPage();
       const failures = pageMonitor(page);
-      const paperUrl = `${BASE_URL}/final.html?set=last&round=${round}&name=${encodeURIComponent('검수학생')}&go=paper`;
+      const paperUrl = `${BASE_URL}/final.html?set=last&round=${round}&name=${encodeURIComponent('검수학생')}&go=paper&preview=1`;
       await page.goto(paperUrl, { waitUntil: 'networkidle' });
       await page.waitForSelector('.paper-correction-page');
       await waitForPaperImages(page);
@@ -118,7 +118,7 @@ async function waitForPaperImages(page) {
 
     const timerPage = await context.newPage();
     const timerFailures = pageMonitor(timerPage);
-    await timerPage.goto(`${BASE_URL}/final.html?set=last&round=4&name=${encodeURIComponent('검수학생')}`, { waitUntil: 'networkidle' });
+    await timerPage.goto(`${BASE_URL}/final.html?set=last&round=4&name=${encodeURIComponent('검수학생')}&preview=1`, { waitUntil: 'networkidle' });
     await timerPage.waitForSelector('#btnTimer');
     assert.match(await timerPage.locator('.examinfo').innerText(), /90분/);
     await timerPage.click('#btnTimer');
@@ -144,7 +144,7 @@ async function waitForPaperImages(page) {
       await page.close();
     }
 
-    console.log('PASS final rounds 3-4 desktop/mobile/print/timer/answers');
+    console.log('PASS final rounds 1, 3, 4 desktop/mobile/print/timer/answers');
   } finally {
     await context.close();
     await browser.close();

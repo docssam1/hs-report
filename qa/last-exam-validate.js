@@ -335,6 +335,8 @@ check('27·29번 승인 교정 반영과 회차 공개 준비 상태', () => {
   assert.equal(question(round, 29).reviewReason, undefined);
   assert.match(question(round, 29).body, /1211/);
   assert.doesNotMatch(question(round, 29).body, /8878/);
+  assert.deepEqual(Array.from(round.paper.corrections, item => item.qno), [29]);
+  assert.match(round.paper.corrections[0].text, /1211/);
   assert.equal(round.ready, true);
   assert.equal(round.lockedQuestions, undefined);
   assert.equal(round.reviewNote, undefined);

@@ -272,6 +272,13 @@
   .bv-doc .empty-note{margin:auto;color:#fff;}
   .bv-doc.scroll{display:block;overflow:auto;background:#525659;padding:16px 0;}
   .bv-doc.scroll .bv-pg{position:relative;width:820px;max-width:94%;margin:0 auto 14px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4);}
+  .bv-doc.scroll .bv-correction{position:relative;width:820px;max-width:94%;aspect-ratio:210/297;margin:0 auto 14px;padding:7% 8%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4);box-sizing:border-box;overflow:hidden;}
+  .last1-correction-head{position:relative;z-index:1;border-bottom:3px solid #1e3c72;padding-bottom:18px;color:#1e3c72;font-size:12px;font-weight:800;letter-spacing:.04em;}
+  .last1-correction-head h2{margin:12px 0 0;font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:0;}
+  .last1-correction-note{position:relative;z-index:1;margin-top:28px;padding:24px;border:2px solid #e6a16e;border-radius:12px;background:#fffaf5;color:#18212f;}
+  .last1-correction-note strong{display:block;margin-bottom:12px;color:#a34813;font-size:clamp(16px,2vw,21px);}
+  .last1-correction-note p{margin:0;font-size:clamp(14px,1.8vw,18px);line-height:1.8;word-break:keep-all;}
+  .last1-correction-foot{position:absolute;z-index:1;left:8%;right:8%;bottom:7%;padding-top:12px;border-top:1px solid #cbd5e1;color:#536173;font-size:12px;}
   .bv-doc.scroll .bv-pg img{width:100%;display:block;-webkit-user-drag:none;user-select:none;}
   .bv-doc.scroll .bv-copyright{position:absolute;right:6.5%;bottom:5.1%;z-index:2;width:34%;color:#111827;text-align:right;font-size:8px;font-weight:500;line-height:1.45;pointer-events:none;}
   .bv-doc.scroll .wm3{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
@@ -1056,6 +1063,11 @@
   }
 
   function wmLines(){ const t=escHtml((currentStudent||'')+' · 지필드 영재교육'); return `<span>${t}</span><span>${t}</span><span>${t}</span>`; }
+  function last1Q29CorrectionBody(){
+    return '<header class="last1-correction-head">최종 실전 모의고사 1회<h2>문항 정정 안내</h2></header>'+
+      '<div class="last1-correction-note" data-correction-qno="29"><strong>29번 · 예시 정정</strong><p>29번의 예시 숫자는 1211로 읽으세요. 나머지 조건은 그대로입니다.</p></div>'+
+      '<footer class="last1-correction-foot">원본 시험지 이미지는 그대로 보존합니다.</footer>';
+  }
   let _bvBook=null;
   function printBvBook(){
     const b=_bvBook; if(!b) return;
@@ -1102,7 +1114,9 @@
         const copyright=copyrightPages.includes(i)?'<div class="bv-copyright">이 시험지의 전부 또는 일부의 무단전재와 무단복제를<br>금합니다. 저작권 등록번호 C-2025-032626</div>':'';
         imgs+=`<div class="bv-pg"><img src="${base}${String(i).padStart(3,'0')}.jpg" loading="lazy" draggable="false" oncontextmenu="return false">${copyright}<div class="wm3"><span>${nm}</span><span>${nm}</span><span>${nm}</span></div></div>`;
       }
-      docPane=`<div class="bv-doc scroll" oncontextmenu="return false">${imgs}</div>`;
+      const correction=b.imgdir==='last_final_1'
+        ? `<section class="bv-correction" aria-label="29번 문항 정정 안내">${last1Q29CorrectionBody()}<div class="wm3">${wmLines()}</div></section>` : '';
+      docPane=`<div class="bv-doc scroll" oncontextmenu="return false">${correction}${imgs}</div>`;
     } else if(b.pdf){
       const wm = currentStudent ? `<div class="bv-wm">${wmLines()}</div>` : '';
       /* 우리 저장소의 raw 링크는 같은 도메인 경로로 바꿔 브라우저 내장 PDF 뷰어를 사용 */
@@ -1315,9 +1329,10 @@
     const w=window.open('','_blank'); if(!w){ toast('팝업을 허용해 주세요'); return; }
     let imgs='';
     for(let i=1;i<=pages;i++){ const nm=String(i).padStart(3,'0')+'.jpg'; const copyright=copyrightPages.includes(i)?'<div class="copy">이 시험지의 전부 또는 일부의 무단전재와 무단복제를<br>금합니다. 저작권 등록번호 C-2025-032626</div>':''; imgs+='<div class="pg"><img src="'+base+nm+'">'+copyright+'<div class="wm"><span></span><span></span><span></span></div></div>'; }
-    const css='*{margin:0;padding:0;box-sizing:border-box}body{font-family:sans-serif;background:#525659}#bar{position:fixed;top:0;left:0;right:0;background:#1e3c72;color:#fff;padding:12px;text-align:center;font-weight:700;z-index:10}#wrap{padding:56px 0 40px}.pg{position:relative;width:820px;max-width:96%;margin:0 auto 16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4)}.pg img{width:100%;display:block}.copy{position:absolute;right:6.5%;bottom:5.1%;z-index:2;width:34%;color:#111827;text-align:right;font-size:8px;font-weight:500;line-height:1.45}.wm{position:absolute;inset:0;pointer-events:none;overflow:hidden}.wm span{position:absolute;left:-10%;width:120%;text-align:center;color:#000;opacity:.13;font-size:28px;font-weight:800;white-space:nowrap;transform:rotate(-30deg)}.wm span:nth-child(1){top:24%}.wm span:nth-child(2){top:50%}.wm span:nth-child(3){top:76%}@media print{#bar{display:none}body{background:#fff}#wrap{padding:0}.pg{width:100%;max-width:100%;margin:0;box-shadow:none;page-break-after:always}}';
+    const correction=folder==='last_final_1'?'<section class="pg correction" aria-label="29번 문항 정정 안내">'+last1Q29CorrectionBody()+'<div class="wm"><span></span><span></span><span></span></div></section>':'';
+    const css='*{margin:0;padding:0;box-sizing:border-box}body{font-family:sans-serif;background:#525659}#bar{position:fixed;top:0;left:0;right:0;background:#1e3c72;color:#fff;padding:12px;text-align:center;font-weight:700;z-index:10}#wrap{padding:56px 0 40px}.pg{position:relative;width:820px;max-width:96%;margin:0 auto 16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4)}.pg.correction{aspect-ratio:210/297;padding:7% 8%;overflow:hidden}.last1-correction-head{position:relative;z-index:1;border-bottom:3px solid #1e3c72;padding-bottom:18px;color:#1e3c72;font-size:12px;font-weight:800;letter-spacing:.04em}.last1-correction-head h2{margin:12px 0 0;font-size:34px;letter-spacing:0}.last1-correction-note{position:relative;z-index:1;margin-top:28px;padding:24px;border:2px solid #e6a16e;border-radius:12px;background:#fffaf5;color:#18212f}.last1-correction-note strong{display:block;margin-bottom:12px;color:#a34813;font-size:21px}.last1-correction-note p{font-size:18px;line-height:1.8;word-break:keep-all}.last1-correction-foot{position:absolute;z-index:1;left:8%;right:8%;bottom:7%;padding-top:12px;border-top:1px solid #cbd5e1;color:#536173;font-size:12px}.pg img{width:100%;display:block}.copy{position:absolute;right:6.5%;bottom:5.1%;z-index:2;width:34%;color:#111827;text-align:right;font-size:8px;font-weight:500;line-height:1.45}.wm{position:absolute;inset:0;pointer-events:none;overflow:hidden}.wm span{position:absolute;left:-10%;width:120%;text-align:center;color:#000;opacity:.13;font-size:28px;font-weight:800;white-space:nowrap;transform:rotate(-30deg)}.wm span:nth-child(1){top:24%}.wm span:nth-child(2){top:50%}.wm span:nth-child(3){top:76%}@media print{#bar{display:none}body{background:#fff}#wrap{padding:0}.pg{width:100%;max-width:100%;margin:0;box-shadow:none;page-break-after:always}.pg.correction{padding:7% 8%}}'+(folder==='last_final_1'?'@page{size:A4;margin:0}@media print{.pg{width:210mm;height:296mm;overflow:hidden}.pg img{width:100%;height:100%;object-fit:contain}}':'');
     const js='(function(){var name='+JSON.stringify(name)+';var sp=document.querySelectorAll(".wm span");for(var k=0;k<sp.length;k++)sp[k].textContent=name;var ims=[].slice.call(document.images),total=ims.length,done=0,bar=document.getElementById("bar"),pct=document.getElementById("pct");function up(){done++;pct.textContent=Math.round(done/total*100)+"%";if(done>=total){bar.textContent="인쇄 준비 완료";setTimeout(function(){window.print();},400);}}ims.forEach(function(im){if(im.complete)up();else{im.onload=up;im.onerror=up;}});})();';
-    w.document.write('<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>'+(title||'교재')+'</title><style>'+css+'</style></head><body><div id="bar">생성 중입니다… <span id="pct">0%</span></div><div id="wrap">'+imgs+'</div><scr'+'ipt>'+js+'</scr'+'ipt></body></html>');
+    w.document.write('<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>'+(title||'교재')+'</title><style>'+css+'</style></head><body><div id="bar">생성 중입니다… <span id="pct">0%</span></div><div id="wrap">'+correction+imgs+'</div><scr'+'ipt>'+js+'</scr'+'ipt></body></html>');
     w.document.close();
   }
 

@@ -312,10 +312,18 @@
         ready:true,
         title:'초등과정 대비 최종 모의고사 1회',
         video:'https://youtu.be/T9LbJLG2BRQ',
-        sourceRevision:'2026-08-23-q24-correction-q27-q29-approved',
+        sourceRevision:'2026-10-03-q29-visible-example-correction',
         paper:{
           imageDir:'last_final_1',
           imagePages:6,
+          corrections:[
+            {
+              qno:29,
+              heading:'예시 숫자 정정',
+              instruction:'29번의 예시만 아래와 같이 바꾸어 읽고 풉니다.',
+              text:'29번의 예시 숫자는 1211로 읽으세요. 나머지 조건은 그대로입니다.'
+            }
+          ],
           questions:questions,
           pages:[
             {page:1,left:[1,2,3],right:[4,5,6],leftRows:'1fr 1fr 1fr',rightRows:'.82fr 1fr 1.65fr',band:'1번부터 12번까지는 [2.7점]짜리 문제입니다.'},
