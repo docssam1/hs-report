@@ -142,6 +142,12 @@
 
   window.GFIELD_MOCK_ORIGINAL = {
     estimatedPosition: estimatedPosition,
+    // 최종 실전 모의고사의 난도 보정에서도 같은 2024·2025 합산 분포를 사용한다.
+    scoreForTopPercent: function(percent){
+      var value=Number(percent);
+      if(!Number.isFinite(value)||value<0||value>100)return null;
+      return pooledScoreFor(value/100);
+    },
     title: '초등선발 대비 시그니처 실전 모의고사',
     label: '시그니처 실전',
     setKey: 'original',
