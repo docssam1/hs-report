@@ -114,7 +114,12 @@ check('최종 시험지는 공통 90분 JPG 뷰어이며 PDF 뷰어를 사용하
   assert.match(finalPage, /\.paper-correction-page\{width:210mm;height:297mm/);
 });
 
-check('최종 1회 시험지 구조', () => inspectRound('1'));
+check('최종 1회 시험지 구조·29번 예시 정정 안내', () => {
+  const result = inspectRound('1');
+  assert.deepEqual(result.corrections.map(item => item.qno), [29]);
+  assert.match(result.corrections[0].text, /1211/);
+  assert.match(result.corrections[0].text, /나머지 조건은 그대로/);
+});
 
 check('최종 2회 시험지 구조·그림 자산', () => {
   const result = inspectRound('2');
