@@ -238,6 +238,10 @@
     book.links=[{label:reportLabel(),url:reportUrl(series,round)}].concat(links);
   }
   function syncAdditionalFinalAlias(book,legacyRound){
+    if(legacyRound===8){
+      book.links=[{label:'8회 검수 대기 안내',url:withName(window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('final',8,''):'final.html?round=8')}];
+      return;
+    }
     var independentFinal=legacyRound===5||legacyRound===7;
     var series=independentFinal?'final':'last';
     var round=independentFinal?legacyRound:legacyRound-5;

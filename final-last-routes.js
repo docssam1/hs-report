@@ -25,7 +25,7 @@
     round=Number(round);
     if(name.toLowerCase()==='docssam') return true;
     if(!name||!Array.isArray(data.students)||data.students.indexOf(name)<0) return false;
-    if(series==='final'&&(round===5||round===7)){
+    if(series==='final'&&(round===5||round===7||round===8)){
       return includesName((data.archiveProductAccess||{})['mock-final-'+round],name);
     }
     if(series==='final'&&round>=1&&round<=4){
@@ -85,16 +85,17 @@
     return target('final.html',{set:'last',round:round,go:action||''});
   }
   function finalTarget(action,round){
+    if(round===8&&action==='answer-page') return target('final.html',{round:round,go:'answer'});
     if(action==='answer-page') return target('answer.html',{set:'final',round:round});
     return target('final.html',{round:round,go:action||''});
   }
   function canonicalSeriesRound(series,round){
     series=String(series||'').toLowerCase();
     round=roundNumber(round);
-    /* Final 7 is a source-backed independent product, not a Last 2 alias. */
-    if(series==='final'&&round===7) return {series:'final',round:round};
+    /* Final 7 has its own source; Final 8 remains an independent pending product. */
+    if(series==='final'&&(round===7||round===8)) return {series:'final',round:round};
     /* Other unmigrated additional-library names retain their legacy aliases. */
-    if(series==='final'&&(round===6||round===8||round===9)){series='last';round-=5;}
+    if(series==='final'&&(round===6||round===9)){series='last';round-=5;}
     if(series==='final'&&round>=1&&round<=5) return {series:'final',round:round};
     if(series==='last'&&round>=1&&round<=4) return {series:'last',round:round};
     return null;
@@ -115,17 +116,18 @@
     var page=basename(source),series=explicitSeries(source,options.title),round=roundNumber(source.searchParams.get('round'));
     var mappedSeries=series,mappedRound=round,action='',dest=null;
 
-    /* Final 7 now has its own source and must never be rewritten to Last 2. */
-    if(series==='final'&&(round===6||round===8||round===9)){mappedSeries='last';mappedRound=round-5;}
+    /* Final 7 and pending Final 8 must never be rewritten to Last rounds. */
+    if(series==='final'&&(round===6||round===9)){mappedSeries='last';mappedRound=round-5;}
 
     if(page==='mock.html'&&mappedSeries){
-      if(mappedSeries==='final'&&(mappedRound>=1&&mappedRound<=5||mappedRound===7)) dest=finalTarget(source.searchParams.get('go'),mappedRound);
+      if(mappedSeries==='final'&&(mappedRound>=1&&mappedRound<=5||mappedRound===7||mappedRound===8)) dest=finalTarget(source.searchParams.get('go'),mappedRound);
       if(mappedSeries==='last'&&mappedRound>=1&&mappedRound<=4) dest=lastTarget(source.searchParams.get('go'),mappedRound);
     }else if(page==='answer.html'&&mappedSeries){
       if(mappedSeries==='last'&&mappedRound>=1&&mappedRound<=4) dest=lastTarget('answer-page',mappedRound);
+      if(mappedSeries==='final'&&mappedRound===8) dest=finalTarget('answer-page',mappedRound);
       if(mappedSeries==='final'&&(mappedRound>=1&&mappedRound<=5||mappedRound===7)&&!source.searchParams.get('set')) dest=finalTarget('answer-page',mappedRound);
     }else if(page==='final.html'){
-      if(!mappedSeries&&(round===6||round===8||round===9)){mappedSeries='last';mappedRound=round-5;}
+      if(!mappedSeries&&(round===6||round===9)){mappedSeries='last';mappedRound=round-5;}
       action=String(source.searchParams.get('go')||'');
       if(mappedSeries==='last'&&mappedRound>=1&&mappedRound<=4){
         dest=action==='report'?lastTarget('report',mappedRound):lastTarget(action,mappedRound);
@@ -155,14 +157,41 @@
     url.searchParams.set('name',name);
     return relative(url);
   }
+  function isPendingFinal8(input){
+    var url=localUrl(input);
+    if(!url||!sameSite(url,input)||basename(url)!=='final.html'||roundNumber(url.searchParams.get('round'))!==8) return false;
+    var set=String(url.searchParams.get('set')||'').toLowerCase();
+    return !set||set==='final';
+  }
+  function showPendingFinal8(){
+    var doc=root.document;
+    if(!doc) return;
+    var app=doc.getElementById('app');
+    if(!app){
+      if(doc.readyState==='loading') doc.addEventListener('DOMContentLoaded',showPendingFinal8,{once:true});
+      return;
+    }
+    doc.title='최종 실전 모의고사 8회 · 검수 대기 | 지필드 영재교육';
+    app.innerHTML='<div class="gate-wrap"><div class="paper-lock">'+
+      '<h2>최종 실전 모의고사 8회 · 검수 대기</h2>'+
+      '<p>8회 원본의 일부 정답 충돌과 학생용 자료 확인이 끝나면 공개됩니다.<br>시험지·답안·성적 분석은 아직 제공되지 않습니다.</p>'+
+      '</div></div>';
+  }
   function redirectCurrent(page){
     if(!root.location) return false;
     var current=page+root.location.search+root.location.hash;
     var next=normalizeUrl(current);
-    if(next===current) return false;
-    root.GFIELD_ROUTE_REDIRECTING=true;
-    root.location.replace(next);
-    return true;
+    if(next!==current){
+      root.GFIELD_ROUTE_REDIRECTING=true;
+      root.location.replace(next);
+      return true;
+    }
+    if(isPendingFinal8(current)){
+      root.GFIELD_ROUTE_REDIRECTING=true;
+      showPendingFinal8();
+      return true;
+    }
+    return false;
   }
   function route(series,round,action){
     var exam=canonicalSeriesRound(series,round);

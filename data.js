@@ -2050,12 +2050,8 @@ window.GFIELD_DATA = {
       "date": "2026-07-28",
       "links": [
         {
-          "label": "오답 입력·분석",
-          "url": "https://hs.gfieldacademy.net/mock.html?set=final&round=8"
-        },
-        {
-          "label": "답안·교재 연결표",
-          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=8"
+          "label": "8회 검수 대기 안내",
+          "url": "https://hs.gfieldacademy.net/final.html?round=8"
         }
       ]
     },

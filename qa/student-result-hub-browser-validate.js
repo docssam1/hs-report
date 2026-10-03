@@ -13,7 +13,7 @@ const dataAddon=`\n;(function(){
   d.students=d.students||[];if(d.students.indexOf(${JSON.stringify(student)})<0)d.students.push(${JSON.stringify(student)});
   d.archiveAccess=d.archiveAccess||{};
   ['중급 모의고사','파이널 모의고사','최종 모의고사'].forEach(function(key){d.archiveAccess[key]=d.archiveAccess[key]||[];if(d.archiveAccess[key].indexOf(${JSON.stringify(student)})<0)d.archiveAccess[key].push(${JSON.stringify(student)});});
-  d.archiveProductAccess=d.archiveProductAccess||{};d.archiveProductAccess['mock-final-7']=[${JSON.stringify(student)}];d.archiveProductAccess['mock-signature-1']=[${JSON.stringify(student)}];
+  d.archiveProductAccess=d.archiveProductAccess||{};d.archiveProductAccess['mock-final-7']=[${JSON.stringify(student)}];d.archiveProductAccess['mock-final-8']=[${JSON.stringify(student)}];d.archiveProductAccess['mock-signature-1']=[${JSON.stringify(student)}];
   d.studentTypes=d.studentTypes||{};d.studentTypes[${JSON.stringify(student)}]='online';
 })();`;
 
@@ -30,8 +30,14 @@ const records=[
   row('hw1',13,'2026-07-08T00:00:00Z'),
   row('final1',15,'2026-09-01T00:00:00Z'),
   row('final2',18,'2026-09-08T00:00:00Z'),
+  row('final3',19,'2026-09-15T00:00:00Z'),
+  row('final4',22,'2026-09-22T00:00:00Z'),
   row('final7',7,'2026-09-20T00:00:00Z'),
+  row('final8',20,'2026-09-27T00:00:00Z'),
+  row('last1',16,'2026-10-01T00:00:00Z'),
   row('last2',20,'2026-10-08T00:00:00Z'),
+  row('last3',24,'2026-10-15T00:00:00Z'),
+  row('last4',30,'2026-10-22T00:00:00Z'),
   row('original1',17,'2026-11-01T00:00:00Z'),
   Object.assign(row('final1@2',30,'2026-09-02T00:00:00Z'),{source:'practice-student'}),
   {student,round:'final3',ox:'RESET',score:0,wrong:0,source:'reset',updated_at:'2026-09-15T00:00:00Z'},
@@ -71,9 +77,9 @@ const server=http.createServer((req,res)=>{
     await page.goto(`http://127.0.0.1:${server.address().port}/index.html`);
     if(await page.locator('#skipBtn').count())await page.locator('#skipBtn').click();
     await page.locator('#name-input').fill(student);await page.locator('.enter').click();
-    const hub=page.locator('#student-result-hub');await hub.locator('.srh-summary').filter({hasText:'응시 7회'}).waitFor();
+    const hub=page.locator('#student-result-hub');await hub.locator('.srh-summary').filter({hasText:'응시 13회 · 파이널·최종 누적 8/8회'}).waitFor();
     assert.equal(await hub.locator('.srh-banner').getAttribute('aria-expanded'),'false','result table starts collapsed');
-    assert.equal(await hub.locator('tbody tr').count(),7,'all seven valid first attempts, including Final 7, are shown');
+    assert.equal(await hub.locator('tbody tr').count(),13,'valid first attempts include Final 8 and all eight cumulative rounds');
     assert.deepEqual(mockResultMethods,['GET'],'the result hub never writes grades');
     await hub.locator('.srh-banner').click();
     assert.equal(await hub.locator('.srh-banner').getAttribute('aria-expanded'),'true');
@@ -91,10 +97,24 @@ const server=http.createServer((req,res)=>{
     const last2=hub.locator('tbody tr',{hasText:'최종 모의고사 2회'});
     assert.match(await last2.innerText(),/\d+\.\d%/);
     assert.match(await last2.locator('a').getAttribute('href'),/^final\.html\?set=last&round=2&go=report&name=/);
+    for(const n of [1,2,3,4]) assert.equal(await hub.locator('tbody tr',{hasText:'최종 모의고사 '+n+'회'}).count(),1,'Last '+n+' has one official row');
+    const last4=hub.locator('tbody tr',{hasText:'최종 모의고사 4회'});
+    assert.match(await last4.innerText(),/0\.8%/,'Last 4 top score uses the source cohort of 120, not its 98 score entries');
     const final7=hub.locator('tbody tr',{hasText:'최종 실전 모의고사 7회'});
     assert.equal(await final7.count(),1,'Final 7 appears in this-week result hub');
     assert.match(await final7.innerText(),/\d+\.\d%/,'Final 7 uses the verified process percentile');
     assert.match(await final7.locator('a').getAttribute('href'),/^final\.html\?round=7&go=report&name=.*&v=20260920b$/,'Final 7 opens its own cache-safe report, not Last 2');
+    const final8=hub.locator('tbody tr',{hasText:'최종 실전 모의고사 8회'});
+    assert.equal(await final8.count(),1,'Final 8 has its own official result row');
+    assert.match(await final8.innerText(),new RegExp(scoreOf(ox(20)).score.toFixed(1)+'점'));
+    assert.equal(await final8.locator('.srh-na').count(),2,'Final 8 has no invented percentile or grade');
+    assert.equal(await final8.locator('a').count(),0,'Final 8 does not link to legacy Last 3');
+    assert.match(await final8.innerText(),/상세 분석 준비 중/);
+    const cumulative=hub.locator('[data-final-last-count]');
+    assert.equal(await cumulative.getAttribute('data-final-last-count'),'8','cumulative summary excludes Final 7 and Final 8');
+    const expectedCoreAverage=Math.round([15,18,19,22,16,20,24,30].reduce((sum,count)=>sum+scoreOf(ox(count)).score,0)/8*10)/10;
+    assert.match(await cumulative.innerText(),new RegExp('원점수 평균 '+expectedCoreAverage.toFixed(1)+'점'));
+    assert.match(await cumulative.innerText(),/예상 석차 백분율 \d+\.\d% · 예상 등급/);
     for(const title of ['중급 모의고사 1회','활용 모의고사 1회','시그니처 실전 1회']){
       assert.match(await hub.locator('tbody tr',{hasText:title}).innerText(),/자료 없음/,'unsupported rank data is not invented');
     }
@@ -106,12 +126,28 @@ const server=http.createServer((req,res)=>{
     }
     await page.setViewportSize({width:390,height:844});
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'result hub fits 390px without horizontal overflow');
-    assert.equal(await hub.locator('.srh-detail').count(),8);
+    assert.equal(await hub.locator('.srh-detail').count(),14);
     assert.match(await hub.locator('.srh-panel-head a').getAttribute('href'),/^bank\/personal-mock\.html\?from=archive&name=/);
     if(process.env.GFIELD_RESULT_HUB_QA_DIR){
       await hub.screenshot({path:path.join(process.env.GFIELD_RESULT_HUB_QA_DIR,'student-result-hub-390.png')});
     }
+    await page.evaluate(async name=>{
+      const data=structuredClone(window.GFIELD_DATA);data.archiveProductAccess['mock-final-8']=[];
+      await window.GFIELD_STUDENT_RESULT_HUB.render({student:name,container:document.getElementById('student-result-hub'),data,supabaseUrl:'https://fgahqumaldheqettmvqg.supabase.co',supabaseKey:'test-key'});
+    },student);
+    assert.equal(await hub.locator('tbody tr',{hasText:'최종 실전 모의고사 8회'}).count(),0,'revoked Final 8 entitlement hides its score');
+    assert.equal(await hub.locator('[data-final-last-count]').getAttribute('data-final-last-count'),'8','Final 8 does not affect the eight-round cumulative result');
+    await page.evaluate(async name=>{
+      const data=structuredClone(window.GFIELD_DATA);data.archiveProductAccess['mock-final-8']=[];
+      data.archiveAccess['파이널 모의고사']=[];data.archiveAccess['최종 모의고사']=[];data.attendance[name]=[];
+      await window.GFIELD_STUDENT_RESULT_HUB.render({student:name,container:document.getElementById('student-result-hub'),data,supabaseUrl:'https://fgahqumaldheqettmvqg.supabase.co',supabaseKey:'test-key'});
+    },student);
+    for(const title of ['파이널 모의고사 1회','최종 모의고사 1회','최종 실전 모의고사 8회']){
+      assert.equal(await hub.locator('tbody tr',{hasText:title}).count(),0,'revoked access hides '+title+' score');
+    }
+    assert.equal(await hub.locator('[data-final-last-count]').count(),0,'hidden scores do not contribute to cumulative summary');
+    assert.ok(mockResultMethods.every(method=>method==='GET'),'entitlement checks and rerenders make no score writes');
     assert.deepEqual(errors,[],'student result hub has no browser errors');
-    console.log('student result hub browser validation passed: 7 official first attempts including Final 7, score/percentile/grade, routes, 390px, zero result writes');
+    console.log('student result hub browser validation passed: Final 8 independent row, Last 1-4, eight-round cumulative result, cohort percentile, permissions, 390px, zero result writes');
   }finally{await browser.close();server.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -8,7 +8,8 @@
     final:{file:'mock-data-final.js',global:'GFIELD_MOCK_FINAL'},
     final7:{file:'final7-benchmark.js',global:''},
     original:{file:'mock-data-original.js',global:'GFIELD_MOCK_ORIGINAL'},
-    last:{file:'last-score-data.js',global:'GFIELD_LAST_SCORE_DATA'}
+    last:{file:'last-score-data.js',global:'GFIELD_LAST_SCORE_DATA'},
+    trend:{file:'final-score-trend.js',global:'GFIELD_FINAL_SCORE_TREND'}
   };
   var scriptPromises={};
 
@@ -31,7 +32,7 @@
     var match;
     if(/^\d+$/.test(key)&&Number(key)>=1&&Number(key)<=8) return {kind:'middle',round:Number(key),order:100+Number(key)};
     if((match=/^hw([1-9])$/.exec(key))) return {kind:'hw',round:Number(match[1]),order:200+Number(match[1])};
-    if((match=/^final([1-5]|7)$/.exec(key))) return {kind:'final',round:Number(match[1]),order:300+Number(match[1])};
+    if((match=/^final([1-5]|[78])$/.exec(key))) return {kind:'final',round:Number(match[1]),order:300+Number(match[1])};
     if((match=/^last([1-4])$/.exec(key))) return {kind:'last',round:Number(match[1]),order:400+Number(match[1])};
     if((match=/^original([1-2])$/.exec(key))) return {kind:'original',round:Number(match[1]),order:500+Number(match[1])};
     return null;
@@ -67,7 +68,9 @@
   function loadModels(items){
     var kinds={};items.forEach(function(item){kinds[item.meta.kind]=true;});
     var needsFinal7=items.some(function(item){return item.meta.kind==='final'&&item.meta.round===7;});
+    var needsTrend=items.some(function(item){return /^(final|last)[1-4]$/.test(item.key);});
     if(needsFinal7) kinds.last=true;
+    if(needsTrend){kinds.final=true;kinds.trend=true;}
     return Promise.all(Object.keys(kinds).map(loadScript)).then(function(){
       return needsFinal7?loadScript('final7'):null;
     });
@@ -77,10 +80,12 @@
     for(var i=0;i<table.length;i++) if(score>=Number(table[i][0])) return Number(table[i][1]);
     return Number(table[table.length-1][1]);
   }
-  function percentileFromDistribution(score,dist){
+  function percentileFromDistribution(score,dist,cohortSize){
     if(!Array.isArray(dist)||!dist.length) return null;
     var greater=dist.filter(function(value){return Number(value)>score;}).length;
-    return Math.min(100,round1((greater+1)/dist.length*100));
+    var size=Number(cohortSize);
+    if(!Number.isFinite(size)||size<=0) size=dist.length;
+    return Math.min(100,round1((greater+1)/size*100));
   }
   function gradeFromCuts(score,cuts){
     if(!Array.isArray(cuts)) return null;
@@ -105,6 +110,8 @@
   }
   function reportLink(item,options,model){
     var m=item.meta,name=options.student,helper=root.GFIELD_FINAL_LAST_ROUTES;
+    // Final 8 has no verified analysis yet; never substitute another round's report.
+    if(m.kind==='final'&&m.round===8) return {url:'',label:'상세 분석 준비 중'};
     if((m.kind==='final'||m.kind==='last')&&helper){
       var allowed=helper.accessAllowed(options.data||{},name,m.kind,m.round);
       var url=allowed?helper.reportUrl(m.kind,m.round,name):'';
@@ -124,13 +131,13 @@
     var m=item.meta,model,round,stats,percentile=null,grade=null,title='';
     if(m.kind==='final'){
       model=root.GFIELD_MOCK_FINAL;round=model&&model.rounds&&model.rounds[String(m.round)];stats=round&&round.stats;
-      title=m.round===7?'최종 실전 모의고사 7회':'파이널 모의고사 '+m.round+'회';
+      title=m.round===7||m.round===8?'최종 실전 모의고사 '+m.round+'회':'파이널 모의고사 '+m.round+'회';
       if(verifiedFinalStats(stats)) percentile=percentileFromTable(item.score.score,stats.percentileTable);
-      grade=gradeFromCuts(item.score.score,stats&&stats.cuts);
+      if(m.round!==8||verifiedFinalStats(stats)) grade=gradeFromCuts(item.score.score,stats&&stats.cuts);
     }else if(m.kind==='last'){
       model=root.GFIELD_LAST_SCORE_DATA;round=model&&model.rounds&&model.rounds[String(m.round)];
       title='최종 모의고사 '+m.round+'회';
-      percentile=Array.isArray(round&&round.percentileTable)?percentileFromTable(item.score.score,round.percentileTable):percentileFromDistribution(item.score.score,round&&round.scoreDist);
+      percentile=Array.isArray(round&&round.percentileTable)?percentileFromTable(item.score.score,round.percentileTable):percentileFromDistribution(item.score.score,round&&round.scoreDist,round&&round.cohortSize);
       grade=gradeFromCuts(item.score.score,round&&round.scoreBands);
     }else if(m.kind==='original'){
       model=root.GFIELD_MOCK_ORIGINAL;title='시그니처 실전 '+m.round+'회';grade=originalGrade(item.score.score,model);
@@ -141,16 +148,26 @@
       model=root.GFIELD_MOCK;
       title='중급 모의고사 '+m.round+'회';
     }
-    return {title:title,score:item.score.score,percentile:Number.isFinite(percentile)?round1(percentile):null,grade:grade,link:reportLink(item,options,model)};
+    return {key:item.key,title:title,score:item.score.score,percentile:Number.isFinite(percentile)?round1(percentile):null,grade:grade,link:reportLink(item,options,model)};
   }
   function canShow(item,options){
+    if(!item) return false;
+    if(item.meta.kind==='final'||item.meta.kind==='last'){
+      var helper=root.GFIELD_FINAL_LAST_ROUTES;
+      return !!(helper&&helper.accessAllowed(options.data||{},options.student,item.meta.kind,item.meta.round));
+    }
     if(item&&item.meta.kind==='original'){
       var key='mock-signature-'+item.meta.round;
       var names=options.data&&options.data.archiveProductAccess&&options.data.archiveProductAccess[key];
       return Array.isArray(names)&&(names.indexOf('*')>=0||names.indexOf(options.student)>=0);
     }
-    if(!item||item.meta.kind!=='middle'||!root.GFIELD_MIDDLE_ACCESS) return true;
+    if(item.meta.kind!=='middle'||!root.GFIELD_MIDDLE_ACCESS) return true;
     return root.GFIELD_MIDDLE_ACCESS.allowsRound(options.data||{},options.student,item.meta.round,root.GFIELD_MOCK);
+  }
+  function cumulativeModel(rows){
+    var api=root.GFIELD_FINAL_SCORE_TREND,model=root.GFIELD_MOCK_FINAL;
+    if(!api||typeof api.model!=='function') return null;
+    return api.model(rows.map(function(row){return {key:row.key,score:row.score,percentile:row.percentile,grade:row.grade};}),model&&model.cumulative&&model.cumulative.bands);
   }
   function fetchRows(options,signal){
     var path='mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq.'+encodeURIComponent(options.student);
@@ -176,14 +193,17 @@
     button.addEventListener('click',function(){state.open=!state.open;button.setAttribute('aria-expanded',state.open?'true':'false');panel.hidden=!state.open;});
     return panel;
   }
-  function tableHtml(rows,student){
+  function tableHtml(rows,student,cumulative){
     var body=rows.map(function(row){
       var rank=row.percentile===null?'<span class="srh-na">자료 없음</span>':'<span class="srh-rank">'+row.percentile.toFixed(1)+'%</span>';
       var level=row.grade?'<span class="srh-level">'+esc(row.grade)+'</span>':'<span class="srh-na">자료 없음</span>';
       var action=row.link.url?'<a class="srh-detail" href="'+esc(row.link.url)+'">'+esc(row.link.label)+'</a>':'<span class="srh-detail" aria-disabled="true">'+esc(row.link.label)+'</span>';
       return '<tr><td class="srh-exam-cell" data-label="시험"><span class="srh-exam-name">'+esc(row.title)+'</span></td><td data-label="점수"><span class="srh-score">'+row.score.toFixed(1)+'점</span></td><td data-label="석차 백분율">'+rank+'</td><td data-label="예상 등급">'+level+'</td><td class="srh-action-col" data-label="보기">'+action+'</td></tr>';
     }).join('');
-    return '<div class="srh-panel-head"><div><h2>응시한 시험</h2><p>석차 백분율은 작을수록 상위입니다.</p><p><a class="srh-detail" href="bank/personal-mock.html?from=archive&name='+encodeURIComponent(student)+'">모의고사 생성기 · 10·20·30문항 만들기</a></p></div><span class="srh-count">'+rows.length+'회</span></div>'+
+    var cumulativeHtml=cumulative&&cumulative.rows.length
+      ?'<p class="srh-cumulative" data-final-last-count="'+cumulative.rows.length+'"><b>파이널·최종 누적 '+cumulative.rows.length+'/8회</b> · 원점수 평균 '+cumulative.scoreAverage.toFixed(1)+'점 · 예상 석차 백분율 '+(cumulative.percentileAverage===null?'자료 없음':cumulative.percentileAverage.toFixed(1)+'%')+' · 예상 등급 '+esc(cumulative.cumulativeGrade||'자료 없음')+'</p><p>파이널 1~4회와 최종 1~4회의 공식 첫 기록만 반영합니다. 백분율 자료 '+cumulative.rankedCount+'/'+cumulative.rows.length+'회, 없는 기록은 0점으로 계산하지 않습니다.</p>'
+      :'';
+    return '<div class="srh-panel-head"><div><h2>응시한 시험</h2><p>석차 백분율은 작을수록 상위입니다.</p>'+cumulativeHtml+'<p><a class="srh-detail" href="bank/personal-mock.html?from=archive&name='+encodeURIComponent(student)+'">모의고사 생성기 · 10·20·30문항 만들기</a></p></div><span class="srh-count">'+rows.length+'회</span></div>'+
       '<div class="srh-table-wrap"><table class="srh-table"><thead><tr><th class="srh-exam-col">시험</th><th class="srh-score-col">점수</th><th class="srh-rank-col">석차 백분율</th><th class="srh-level-col">예상 등급</th><th class="srh-action-col">학습하기</th></tr></thead><tbody>'+body+'</tbody></table></div>';
   }
   function render(options){
@@ -198,10 +218,11 @@
     }).then(function(items){
       if(revision!==state.revision) return;
       var described=items.filter(function(item){return canShow(item,options);}).map(function(item){return describe(item,options);});
+      var cumulative=cumulativeModel(described);
       panel=container.querySelector('.srh-panel');
       if(!described.length){container.querySelector('.srh-summary').textContent='등록된 응시 성적이 없습니다.';panel.innerHTML=stateHtml('아직 등록된 응시 성적이 없습니다.','empty');return;}
-      container.querySelector('.srh-summary').textContent='응시 '+described.length+'회 · 시험별 진단과 복습을 한곳에서 봅니다.';
-      panel.innerHTML=tableHtml(described,options.student);
+      container.querySelector('.srh-summary').textContent='응시 '+described.length+'회'+(cumulative&&cumulative.rows.length?' · 파이널·최종 누적 '+cumulative.rows.length+'/8회':'')+' · 시험별 진단과 복습을 한곳에서 봅니다.';
+      panel.innerHTML=tableHtml(described,options.student,cumulative);
     }).catch(function(error){
       if(revision!==state.revision||error&&error.name==='AbortError'&&state.revision!==revision) return;
       container.querySelector('.srh-summary').textContent='성적을 불러오지 못했습니다.';

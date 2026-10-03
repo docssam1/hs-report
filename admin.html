@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <link rel="stylesheet" href="admin-final-batch.css?v=20260919a">
 <link rel="stylesheet" href="admin-original-batch.css?v=20260923a">
+<link rel="stylesheet" href="admin-last-score-entry.css?v=20261003a">
 <style>
   :root{--navy:#1e3c72;--navy2:#2a5298;--gold:#f39c12;--gold-d:#e67e22;--ink:#2d3436;--muted:#6b7280;--bg:#eef1f6;--card:#fff;--line:#e3e8ef;--ok:#27ae60;--danger:#e74c3c;}
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Pretendard',sans-serif;}
@@ -225,8 +226,8 @@
         <div class="matrix-scroll"><table id="bank-acc-matrix"></table></div>
       </div>
       <div class="card">
-        <h3>최종 7회 회차 승인</h3>
-        <div class="hint"><b>최종 실전 모의고사 7회만</b> 여는 승인입니다. 파이널 3회 출석 권한이나 다른 모의고사 권한과 섞이지 않습니다. 이 명단은 시험지·답안·진단과 검수된 유사문제 3개씩의 진입에 함께 적용됩니다. 일반 문제은행 전체 기능은 위의 문제은행 학생 권한을 따로 사용하며, 검수 대기 자료는 승인과 별개로 잠금이 유지됩니다.</div>
+        <h3>최종 7·8회 회차 승인</h3>
+        <div class="hint">두 회차의 승인 명단은 각각 따로 저장됩니다. 파이널 출석이나 다른 최종 회차 권한과 섞이지 않습니다. <b>8회 원본은 문항별 대조를 했지만 정답 충돌과 학생용 유사문제 승인이 남아 있습니다.</b> 명단 승인은 콘텐츠 공개와 별개입니다.</div>
         <div class="matrix-scroll"><table id="final7-acc-matrix"></table></div>
       </div>
       <div class="card">
@@ -323,6 +324,19 @@
     </section>
 
     <section id="tab-mock" class="hidden">
+      <div class="card" id="admin-last-score-entry">
+        <h3>최종 실전 모의고사 · 회차별 성적 입력</h3>
+        <div class="hint">최종 1~4회와 독립된 최종 8회의 <b>맞은 번호만 O로 체크</b>합니다. 나머지 번호는 미응답을 포함해 X로 기록하며, 점수는 배점에 따라 자동 계산됩니다. 최초 기록은 덮어쓰지 않습니다. 8회 정답·진단 자료의 공개는 원본 검수와 별개입니다.</div>
+        <div class="admin-last-controls">
+          <label>학생 <select id="admin-last-student" aria-label="성적을 입력할 학생"></select></label>
+          <label>시험 <select id="admin-last-round" aria-label="성적을 입력할 최종 모의고사 회차"><option value="last1">최종 1회</option><option value="last2">최종 2회</option><option value="last3">최종 3회</option><option value="last4">최종 4회</option><option value="final8">최종 8회</option></select></label>
+          <button class="btn" type="button" id="admin-last-reload">기록 새로고침</button>
+        </div>
+        <div id="admin-last-status" role="status" aria-live="polite"></div>
+        <div class="admin-last-quick"><label for="admin-last-correct-nos">맞은 번호 한꺼번에 입력</label><input id="admin-last-correct-nos" type="text" inputmode="numeric" placeholder="예: 1, 3, 5, 12"><button class="btn" type="button" id="admin-last-apply">번호 적용</button></div>
+        <div id="admin-last-grid" class="admin-last-grid" aria-label="최종 모의고사 문항별 O/X"></div>
+        <div class="admin-last-footer"><strong id="admin-last-summary">기록 불러오는 중</strong><button class="btn save" type="button" id="admin-last-save" disabled>최초 성적 저장</button></div>
+      </div>
       <div class="card">
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <h3 style="margin:0">⑩ 모의고사 결과</h3>
@@ -385,7 +399,7 @@
 </div>
 
 <script src="vendor/pdfjs/3.11.174/pdf.min.js"></script>
-<script src="data.js"></script>
+<script src="data.js?v=20261003-final8-admin"></script>
 <script src="mock-data.js"></script>
 <script src="hs-auth.js?v=20260825c"></script>
 <script>
@@ -531,6 +545,7 @@
   function tab(name){
     ['attend','students','content','settings','archive','vip','mag','report','exam','mock'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+    if(name==='mock' && window.GFIELD_ADMIN_LAST_ENTRY) window.GFIELD_ADMIN_LAST_ENTRY.mount(S.students);
     if(name==='mock' && window.loadMockResults) loadMockResults();
     if(name==='mock' && window.loadWeakTypes) loadWeakTypes();
   }
@@ -890,22 +905,30 @@
   function bankAccessAll(){S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=S.students.slice();renderBankAccessMatrix();dirty()}
   function bankAccessToggleStudent(studentIndex){const student=S.students[studentIndex];if(!student)return;let acc=bankAccessArr();if(acc.includes('*'))acc=S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=[];const i=acc.indexOf(student);if(i>=0)acc.splice(i,1);else acc.push(student);renderBankAccessMatrix();dirty()}
 
-  /* 최종 7회는 파이널 3회 출석 권한과 무관한 독립 회차 승인이다. */
+  /* 최종 7·8회는 파이널 출석 및 서로의 명단과 무관한 독립 회차 승인이다. */
   const FINAL7_ACCESS_KEY='mock-final-7';
-  function final7AccessArr(){ if(!Array.isArray(S.archiveProductAccess[FINAL7_ACCESS_KEY])) S.archiveProductAccess[FINAL7_ACCESS_KEY]=[]; return S.archiveProductAccess[FINAL7_ACCESS_KEY]; }
+  const FINAL8_ACCESS_KEY='mock-final-8';
+  function finalRoundAccessKey(round){ return Number(round)===8?FINAL8_ACCESS_KEY:FINAL7_ACCESS_KEY; }
+  function finalRoundAccessArr(round){ const key=finalRoundAccessKey(round); if(!Array.isArray(S.archiveProductAccess[key])) S.archiveProductAccess[key]=[]; return S.archiveProductAccess[key]; }
   function renderFinal7AccessMatrix(){
     const el=document.getElementById('final7-acc-matrix'); if(!el) return;
-    const acc=final7AccessArr(),open=acc.includes('*');
     let html='<thead><tr><th>회차</th><th>전체공개</th><th>모두<br>체크</th>';
     S.students.forEach(s=>{ html+=stuTh(s); });
-    html+='</tr></thead><tbody><tr><th>최종 7회</th><td class="cell '+(open?'on':'off')+'" onclick="final7AccessToggleOpen()"></td><td style="text-align:center"><button class="mini" onclick="final7AccessAll()" title="전원 개별 체크로 전환">☑</button></td>';
-    S.students.forEach((student,studentIndex)=>{ const on=!open&&acc.includes(student); html+='<td class="cell '+(on?'on':'off')+'" style="'+(open?'opacity:.4':'')+'" onclick="final7AccessToggleStudent('+studentIndex+')"></td>'; });
-    html+='</tr></tbody>';
+    html+='</tr></thead><tbody>';
+    [7,8].forEach(round=>{
+      const acc=finalRoundAccessArr(round),open=acc.includes('*');
+      html+='<tr><th>최종 '+round+'회'+(round===8?'<br><small>학생용 자료 보류</small>':'')+'</th>';
+      html+='<td class="cell '+(open?'on':'off')+'" role="button" tabindex="0" aria-label="최종 '+round+'회 전체공개 '+(open?'해제':'설정')+'" onclick="finalRoundAccessToggleOpen('+round+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();finalRoundAccessToggleOpen('+round+')}"></td>';
+      html+='<td style="text-align:center"><button class="mini" onclick="finalRoundAccessAll('+round+')" title="최종 '+round+'회 전원 개별 체크로 전환">☑</button></td>';
+      S.students.forEach((student,studentIndex)=>{ const on=!open&&acc.includes(student); html+='<td class="cell '+(on?'on':'off')+'" role="button" tabindex="0" aria-label="최종 '+round+'회 '+esc(student)+' '+(on?'승인 해제':'승인')+'" style="'+(open?'opacity:.4':'')+'" onclick="finalRoundAccessToggleStudent('+round+','+studentIndex+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();finalRoundAccessToggleStudent('+round+','+studentIndex+')}"></td>'; });
+      html+='</tr>';
+    });
+    html+='</tbody>';
     el.innerHTML=html;
   }
-  function final7AccessToggleOpen(){ const acc=final7AccessArr(); S.archiveProductAccess[FINAL7_ACCESS_KEY]=acc.includes('*')?[]:['*']; renderFinal7AccessMatrix(); renderBooks(); dirty(); }
-  function final7AccessAll(){ S.archiveProductAccess[FINAL7_ACCESS_KEY]=S.students.slice(); renderFinal7AccessMatrix(); renderBooks(); dirty(); }
-  function final7AccessToggleStudent(studentIndex){ const student=S.students[studentIndex]; if(!student)return; let acc=final7AccessArr(); if(acc.includes('*'))acc=S.archiveProductAccess[FINAL7_ACCESS_KEY]=[]; const i=acc.indexOf(student); if(i>=0)acc.splice(i,1);else acc.push(student); renderFinal7AccessMatrix(); renderBooks(); dirty(); }
+  function finalRoundAccessToggleOpen(round){ const key=finalRoundAccessKey(round),acc=finalRoundAccessArr(round); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderFinal7AccessMatrix(); renderBooks(); dirty(); }
+  function finalRoundAccessAll(round){ S.archiveProductAccess[finalRoundAccessKey(round)]=S.students.slice(); renderFinal7AccessMatrix(); renderBooks(); dirty(); }
+  function finalRoundAccessToggleStudent(round,studentIndex){ const student=S.students[studentIndex],key=finalRoundAccessKey(round); if(!student)return; let acc=finalRoundAccessArr(round); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const i=acc.indexOf(student); if(i>=0)acc.splice(i,1);else acc.push(student); renderFinal7AccessMatrix(); renderBooks(); dirty(); }
   /* ── VIP 라운지 메뉴별 열람 권한 ── */
   const VIP_MENUS=[['report','진단 결과·코멘트'],['ses','프리미엄 설명회'],['cou','신규 강좌 공지'],['clinic','결석·클리닉 신청'],['col','DOCSSAM 칼럼'],['mag','교육 매거진']];
   function vipArr(k){ if(!Array.isArray(S.vipAccess[k])) S.vipAccess[k]=["*"]; return S.vipAccess[k]; }
@@ -980,9 +1003,9 @@
     </div></div>`;
   }
   function bookAccessKey(bookIndex){ const book=S.books&&S.books[bookIndex]; return book&&String(book.accessKey||''); }
-  function bookToggleOpen(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; const acc=productArr(key); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderBooks(); if(key===FINAL7_ACCESS_KEY)renderFinal7AccessMatrix(); dirty(); }
-  function bookAllStudents(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; S.archiveProductAccess[key]=S.students.slice(); renderBooks(); if(key===FINAL7_ACCESS_KEY)renderFinal7AccessMatrix(); dirty(); }
-  function bookToggleStudent(bookIndex,studentIndex){ const key=bookAccessKey(bookIndex),student=S.students[studentIndex]; if(!key||!student)return; let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const pos=acc.indexOf(student); if(pos>=0)acc.splice(pos,1);else acc.push(student); renderBooks(); if(key===FINAL7_ACCESS_KEY)renderFinal7AccessMatrix(); dirty(); }
+  function bookToggleOpen(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; const acc=productArr(key); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderBooks(); if(key===FINAL7_ACCESS_KEY||key===FINAL8_ACCESS_KEY)renderFinal7AccessMatrix(); dirty(); }
+  function bookAllStudents(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; S.archiveProductAccess[key]=S.students.slice(); renderBooks(); if(key===FINAL7_ACCESS_KEY||key===FINAL8_ACCESS_KEY)renderFinal7AccessMatrix(); dirty(); }
+  function bookToggleStudent(bookIndex,studentIndex){ const key=bookAccessKey(bookIndex),student=S.students[studentIndex]; if(!key||!student)return; let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const pos=acc.indexOf(student); if(pos>=0)acc.splice(pos,1);else acc.push(student); renderBooks(); if(key===FINAL7_ACCESS_KEY||key===FINAL8_ACCESS_KEY)renderFinal7AccessMatrix(); dirty(); }
 
   function renderBooks(){
     let h='';
@@ -1557,6 +1580,7 @@ restoreAdminSession();
 <script src="mock-data-final.js?v=20260909d"></script>
 <script src="mock-data-original.js?v=20260928-signature-answer-keys-1"></script>
 <script src="admin-mock-v2.js?v=20260923a"></script>
+<script src="admin-last-score-entry.js?v=20261003a"></script>
 <script src="vendor/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="vendor/jspdf/2.5.2/jspdf.umd.min.js"></script>
 <script src="vendor/jszip/3.10.1/jszip.min.js"></script>
