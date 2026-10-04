@@ -534,13 +534,14 @@
       link.assetKind = 'raster';
       link.sourceAudit.visualRequired = true;
     }
-    var fixedRound=/^final([2347])-q/.exec(generatorId);
+    var fixedRound=/^final([23478])-q/.exec(generatorId)||/^last1-q/.exec(generatorId)&&['x','last1'];
+    var isLast1=/^last1-q/.exec(generatorId);
     link.qaEvidence = {
-      suite: fixedRound ? (fixedRound[1]==='3'?'qa/final3-fixed90-validate.js':(fixedRound[1]==='4'?'qa/final4-fixed90-validate.js':(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':'qa/final2-fixed90-math-validate.js'))) : 'qa/bank-final1-generators-validate.js',
+      suite: isLast1?'qa/last1-variant-review-validate.js':(fixedRound?(fixedRound[1]==='3'?'qa/final3-fixed90-validate.js':(fixedRound[1]==='4'?'qa/final4-fixed90-validate.js':(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':(fixedRound[1]==='8'?'qa/final8-variant-review-validate.js':'qa/final2-fixed90-math-validate.js')))):'qa/bank-final1-generators-validate.js'),
       generatedQuestions: fixedRound ? 3 : 5000,
       levels: fixedRound ? ['fixed-reviewed-variants'] : [1, 2, 3, 4, 5],
       seedsPerLevel: fixedRound ? 0 : 1000,
-      date: fixedRound ? (fixedRound[1]==='3'?'2026-09-20':(fixedRound[1]==='4'?'2026-09-21':(fixedRound[1]==='7'?'2026-09-18':'2026-09-12'))) : '2026-09-05'
+      date: isLast1?'2026-10-05':(fixedRound?(fixedRound[1]==='3'?'2026-09-20':(fixedRound[1]==='4'?'2026-09-21':(fixedRound[1]==='7'?'2026-09-18':(fixedRound[1]==='8'?'2026-10-05':'2026-09-12')))):'2026-09-05')
     };
     return link;
   }
@@ -677,6 +678,34 @@
       row[2] === true
     );
   });
+
+  /* 최종 8회 검수 문항 (2026-10) */
+  for (var _f8no = 1; _f8no <= 30; _f8no++) {
+    (function(no) {
+      var sourceKey = ['final', 8, no].join('|');
+      SOURCE_ITEM_GENERATOR_LINKS[sourceKey] = sourceItemReviewGeneratorLink(
+        'final8-q' + String(no).padStart(2, '0'),
+        'bank/bank-fixed.js',
+        'Final 8 reviewed variant for question ' + no,
+        'final:8:' + no,
+        false
+      );
+    })(_f8no);
+  }
+
+  /* 최종 1회 검수 문항 (2026-10) */
+  for (var _l1no = 1; _l1no <= 30; _l1no++) {
+    (function(no) {
+      var sourceKey = ['last', 1, no].join('|');
+      SOURCE_ITEM_GENERATOR_LINKS[sourceKey] = sourceItemReviewGeneratorLink(
+        'last1-q' + String(no).padStart(2, '0'),
+        'bank/bank-fixed.js',
+        'Last 1 reviewed variant for question ' + no,
+        'last:1:' + no,
+        false
+      );
+    })(_l1no);
+  }
 
   /* 파이널 3회는 사용자 눈검수까지 통과한 고정 문항 3개씩을 연결한다. */
   [

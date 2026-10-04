@@ -4,18 +4,21 @@
   var loaded = {};
   function bankConfig(bankCode) {
     if(String(bankCode||'')==='important')return {code:'important',round:null,label:'중요 유형',prefix:''};
-    var match = /^(final[12347]|original[12])$/.exec(String(bankCode || 'final1'));
+    var match = /^(final[123478]|original[12]|last1)$/.exec(String(bankCode || 'final1'));
     if (!match) throw new Error('등록된 파이널 유사문제 회차를 확인해 주세요.');
     var original=match[1].startsWith('original');
-    var round = Number(match[1].slice(original?8:5));
+    var isLast=match[1]==='last1';
+    var round = isLast?1:Number(match[1].slice(original?8:5));
+    var roundLabel=original?'시그니처 실전 '+round+'회':(round===7?'최종 7회':round===8?'최종 8회':isLast?'최종 1회':'파이널 ' + round + '회');
+    var adId=!original&&!isLast&&round===7?'gfield-final7-reviewed':(!original&&!isLast&&round===8?'gfield-final8-reviewed':(isLast?'gfield-last1-reviewed':null));
     return {
       code:match[1],
       round:round,
-      sourceSet:original?'original':'final',
-      label:original?'시그니처 실전 '+round+'회':(round===7?'최종 7회':'파이널 ' + round + '회'),
+      sourceSet:isLast?'last':(original?'original':'final'),
+      label:roundLabel,
       prefix:match[1]+'-q',
-      adapterId:!original&&round===7?'gfield-final7-reviewed':null,
-      file:!original&&round===7?null:match[1]+'-fixed90.json'
+      adapterId:adId,
+      file:adId?null:match[1]+'-fixed90.json'
     };
   }
 

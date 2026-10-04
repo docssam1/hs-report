@@ -1349,7 +1349,8 @@ td.weak-cell{white-space:nowrap}
     if(!rows.length)return '';
     var query={practice:'wrong',gens:rows.map(function(row){return row.generator.generatorId;}).join(','),per:'3',points:'all',printMode:'both',source:TAX_SET_KEY+'|'+ctx.roundNum,sourceNos:rows.map(function(row){return row.item.no;}).join(','),seed:TAX_SET_KEY+'-'+ctx.roundNum+'-personal-review'};
     if(isOriginal&&[1,2].indexOf(ctx.roundNum)>=0)query.bank='original'+ctx.roundNum;
-    else if(!isLast&&[1,2,3,4,7].indexOf(ctx.roundNum)>=0)query.bank='final'+ctx.roundNum;
+    else if(!isLast&&[1,2,3,4,7,8].indexOf(ctx.roundNum)>=0)query.bank='final'+ctx.roundNum;
+    else if(isLast&&ctx.roundNum===1)query.bank='last1';
     var target='bank/index.html?'+new URLSearchParams(query).toString();
     return publicSiteUrl('index.html?'+new URLSearchParams({next:target}).toString());
   }
@@ -1486,7 +1487,8 @@ td.weak-cell{white-space:nowrap}
       var nos=scope.map(function(row){return row.getAttribute('data-wp-no');});
       var queryParams={practice:'wrong',gens:ids.join(','),per:'3',points:selected,source:TAX_SET_KEY+'|'+ctx.roundNum,sourceNos:nos.join(','),seed:'',view:start.getAttribute('data-wp-view')||'grouped'};
       if(isOriginal&&[1,2].indexOf(ctx.roundNum)>=0)queryParams.bank='original'+ctx.roundNum;
-      else if(!isLast&&[1,2,3,4,7].indexOf(ctx.roundNum)>=0)queryParams.bank='final'+ctx.roundNum;
+      else if(!isLast&&[1,2,3,4,7,8].indexOf(ctx.roundNum)>=0)queryParams.bank='final'+ctx.roundNum;
+      else if(isLast&&ctx.roundNum===1)queryParams.bank='last1';
       var query=new URLSearchParams(queryParams);
       // Display-only name in the fragment: not a request parameter or authority.
       issueWrongPracticeHandoff(ctx);

@@ -1,17 +1,17 @@
 /* Official-attempt practice, supplemented with reviewed public source-linked items. */
 (function(root){
   'use strict';
-  var SUPPORTED=/^(?:final[12347]|original[12])$/;
+  var SUPPORTED=/^(?:final[123478]|original[12]|last1)$/;
   var BAND_LABEL={all:'전체 배점','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
   var SCOPE_LABEL={all:'응시 시험 전체',wrong:'틀린 문제',correct:'맞은 문제'};
   var COUNTS={10:{'2.7':4,'3.4':3,'4.2':3},20:{'2.7':8,'3.4':7,'4.2':5},30:{'2.7':12,'3.4':10,'4.2':8}};
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-  function label(code){if(code.indexOf('original')===0)return '시그니처 '+code.slice(8)+'회';var n=Number(code.slice(5));return n===7?'최종 실전 7회':'파이널 '+n+'회';}
+  function label(code){if(code==='last1')return '최종 실전 1회';if(code.indexOf('original')===0)return '시그니처 '+code.slice(8)+'회';var n=Number(code.slice(5));return n===7?'최종 실전 7회':n===8?'최종 실전 8회':'파이널 '+n+'회';}
   function codeOf(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||'');return SUPPORTED.test(key)?key:'';}
   function isAllowed(code,student,data){
     if(!code||!student)return false;
-    if(code.indexOf('original')===0||code==='final7'){
-      var key=code.indexOf('original')===0?'mock-signature-'+code.slice(8):'mock-final-7';
+    if(code.indexOf('original')===0||code==='final7'||code==='final8'||code==='last1'){
+      var key=code.indexOf('original')===0?'mock-signature-'+code.slice(8):(code==='final7'?'mock-final-7':(code==='final8'?'mock-final-8':'mock-last-1'));
       var list=data&&data.archiveProductAccess&&data.archiveProductAccess[key];
       return Array.isArray(list)&&(list.indexOf('*')>=0||list.indexOf(student)>=0);
     }
