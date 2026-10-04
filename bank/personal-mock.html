@@ -18,6 +18,7 @@
     <div class="pm-control-row"><strong>배점대</strong><button type="button" data-band="all">전체</button><button type="button" data-band="2.7">2점대</button><button type="button" data-band="3.4">3점대</button><button type="button" data-band="4.2">4점대</button></div>
     <div class="pm-control-row"><strong>문항 수</strong><button type="button" data-count="10">10문항</button><button type="button" data-count="20">20문항</button><button type="button" data-count="30">모의고사형 · 30문항</button></div>
     <div class="pm-control-row"><strong>추가 연습</strong><button type="button" id="pmFresh" disabled>새 문제 섞기</button><span>응시 시험 전체에서만 사용 · 공개된 파이널 중요 유형 생성기</span></div>
+    <div class="pm-control-row"><strong>중복 방지</strong><button type="button" id="pmSkipDone" aria-pressed="true">이미 푼 문제 제외 · 켜짐</button><span id="pmSkipInfo">인쇄한 문항은 다음 시험지에서 빠집니다</span></div>
     <div class="pm-actions"><p id="pmStatus" role="status">응시 기록을 확인하고 있습니다.</p><button id="pmPrint" type="button" disabled>시험지·답안 인쇄 / PDF 저장</button></div>
   </section>
   <div id="pmPages"></div>
@@ -36,6 +37,6 @@
 <script src="gens/g-final1.js?v=20261001-personal-mock"></script>
 <script src="important-generators.js?v=20261001-personal-mock"></script>
 <script src="final-source-generators.js?v=20261001-final34-pilot"></script>
-<script src="personal-mock.js?v=20261001c"></script>
+<script src="personal-mock.js?v=20261004-skipdone"></script>
 </body>
 </html>
