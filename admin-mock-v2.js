@@ -5,20 +5,41 @@
 
   function parseRoundKey(raw){
     raw=String(raw||'');
-    const set=raw.startsWith('original')?'original':(raw.startsWith('final')?'final':(raw.startsWith('hw')?'hw':'mid'));
-    const body=set==='original'?raw.slice(8):(set==='final'?raw.slice(5):(set==='hw'?raw.slice(2):raw));
+    let set=raw.startsWith('original')?'original':(raw.startsWith('final')?'final':(raw.startsWith('last')?'last':(raw.startsWith('hw')?'hw':'mid')));
+    const body=set==='original'?raw.slice(8):(set==='final'?raw.slice(5):(set==='last'?raw.slice(4):(set==='hw'?raw.slice(2):raw)));
     const m=body.match(/^(\d+)(?:@([123]))?$/);
-    return m?{set,round:String(+m[1]),slot:+(m[2]||1),raw}:null;
+    if(!m) return null;
+    const round=String(+m[1]);
+    /* 최종 5~8회(추가 모의고사)는 저장 키 final5~8을 그대로 두고 화면에서만 분리한다 */
+    if(set==='final'&&/^[5-8]$/.test(round)) set='extra';
+    return {set,round,slot:+(m[2]||1),raw};
   }
+  /* 2026-10-04 통합: 최종 1~4회(last1~4, 누적) · 추가 모의고사 5~8회(final5~8, 누적 제외) */
+  const LAST_ROUNDS=['1','2','3','4'],EXTRA_ROUNDS=['5','6','7','8'];
+  function sharedBlueprint(){return (window.GFIELD_MOCK_FINAL||{}).blueprint||[];}
   function dataFor(set){
     if(set==='original') return window.GFIELD_MOCK_ORIGINAL||{};
+    if(set==='last'){const rounds={};LAST_ROUNDS.forEach(r=>{rounds[r]={title:'최종 모의고사 '+r+'회'};});return {questions:30,blueprint:sharedBlueprint(),rounds};}
+    if(set==='extra'){const rounds={};EXTRA_ROUNDS.forEach(r=>{rounds[r]={title:'추가 모의고사 '+r+'회'+(r==='6'?' (준비 중)':'')};});return {questions:30,blueprint:sharedBlueprint(),rounds};}
     if(set==='final') return window.GFIELD_MOCK_FINAL||{};
     return set==='hw'?(window.GFIELD_MOCK_HW||{}):(window.GFIELD_MOCK||{});
   }
   function roundTitle(set,r){const M=dataFor(set);return((M.rounds||{})[r]||{}).title||r+'회'}
-  function rawKey(set,r,slot){return(set==='original'?'original':(set==='final'?'final':(set==='hw'?'hw':'')))+r+(Number(slot)===1?'':'@'+slot)}
-  function teacherEntryUrl(set,r,student){return 'final.html?'+(set==='original'?'set=original&':'')+'round='+r+'&go=answer&entry=teacher&name='+encodeURIComponent(student)}
-  function teacherReportUrl(set,r,student,slot){return 'final.html?'+(set==='original'?'set=original&':'')+'round='+r+'&go=report&attempt='+(Number(slot)||1)+'&entry=teacher&name='+encodeURIComponent(student)}
+  function rawKey(set,r,slot){return(set==='original'?'original':(set==='final'||set==='extra'?'final':(set==='last'?'last':(set==='hw'?'hw':''))))+r+(Number(slot)===1?'':'@'+slot)}
+  function teacherEntryUrl(set,r,student){if(set==='last')return 'last1-analysis.html?round='+r+'&mode=teacher&name='+encodeURIComponent(student);return 'final.html?'+(set==='original'?'set=original&':'')+'round='+r+'&go=answer&entry=teacher&name='+encodeURIComponent(student)}
+  function teacherReportUrl(set,r,student,slot){return 'final.html?'+(set==='original'?'set=original&':(set==='last'?'set=last&':''))+'round='+r+'&go=report&attempt='+(Number(slot)||1)+'&entry=teacher&name='+encodeURIComponent(student)}
+  function isEntrySet(set){return ['final','original','last','extra'].includes(set)}
+  function inlineEntryKey(set,r){if(set==='last')return 'last'+r;if(set==='extra'&&String(r)==='8')return 'final8';return '';}
+  function entryButton(set,r,student){
+    if(set==='extra'&&String(r)==='6')return '<span style="color:#a0a8b3;font-size:12px">준비 중</span>';
+    const key=inlineEntryKey(set,r);
+    if(key)return `<button class="btn sm" style="background:#dcfce7;color:#166534" onclick="openLastEntryV2('${esc(student)}','${key}')">✍️ ${esc(student)} 맞은 문제 체크</button>`+(set==='last'?` <a class="btn sm" style="background:#eef4ff;color:#1e3c72;text-decoration:none" target="_blank" href="last1-analysis.html?round=${r}&mode=teacher&name=${encodeURIComponent(student)}">📊 분석지</a>`:'');
+    return `<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(set,r,student)}">✍️ ${esc(student)} 맞은 문제 체크</a>`;
+  }
+  function reportButton(set,r,student,slot){
+    if(set==='extra'&&String(r)==='8')return '<span style="color:#a0a8b3;font-size:12px">상세 분석 준비 중</span>';
+    return `<a class="btn sm" target="_blank" href="${teacherReportUrl(set,r,student,slot)}">${slot===1?'공식 1차':'연습 '+slot+'차'} 성적표</a>`;
+  }
   function previewUrl(set,r,student){return 'mock.html?set='+set+'&round='+r+'&name='+encodeURIComponent(student)+'&preview=1'}
   function sourceLabel(source){
     return ({online:'온라인 회원',admin:'선생님',teacher:'선생님',parent:'학생·학부모',practice:'연습',
@@ -67,7 +88,7 @@
   });
 
   if(typeof mkM==='function') mkM=function(){return dataFor(window.mkSet)};
-  if(typeof mkRoundKeys==='function') mkRoundKeys=function(){return Object.keys((dataFor(window.mkSet).rounds)||{}).sort((a,b)=>+a-+b)};
+  if(typeof mkRoundKeys==='function') mkRoundKeys=function(){if(window.mkSet==='final')return ['1','2','3','4'];return Object.keys((dataFor(window.mkSet).rounds)||{}).sort((a,b)=>+a-+b)};
   if(typeof mkLatest==='function') mkLatest=latestOxV2;
   if(typeof mkStudents==='function') mkStudents=function(){
     const list=((window.GFIELD_DATA&&window.GFIELD_DATA.students)||[]).slice();
@@ -120,6 +141,8 @@
         <button class="btn sm ${window.mkSet==='mid'?'add':''}" onclick="setMockSetV2('mid')">중급 모의고사</button>
         <button class="btn sm ${window.mkSet==='hw'?'ai':''}" onclick="setMockSetV2('hw')">활용 모의고사</button>
         <button class="btn sm ${window.mkSet==='final'?'add':''}" onclick="setMockSetV2('final')">파이널 모의고사</button>
+        <button class="btn sm ${window.mkSet==='last'?'add':''}" onclick="setMockSetV2('last')">최종 모의고사</button>
+        <button class="btn sm ${window.mkSet==='extra'?'ai':''}" onclick="setMockSetV2('extra')">추가 모의고사</button>
         <button class="btn sm ${window.mkSet==='original'?'ai':''}" onclick="setMockSetV2('original')">시그니처 실전 모의고사</button>
         <span style="margin-left:auto;font-size:11.5px;color:#6b7280">2차만 초기화하면 1·3차는 그대로 유지됩니다.</span>
       </div>
@@ -129,8 +152,8 @@
     mkRoundKeys().forEach(r=>{
       const list=grouped[r]||[];
       if(!list.length){
-        const action=window.mkSet==='final'||window.mkSet==='original'
-          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student)}">✍️ ${esc(student)} 맞은 문제 체크</a>`
+        const action=isEntrySet(window.mkSet)
+          ?entryButton(window.mkSet,r,student)
           :`<a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="${previewUrl(window.mkSet,r,student)}">🔎 미리보기</a>`;
         panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td colspan="5" style="color:#a0a8b3">기록 없음</td><td>${action}</td></tr>`;
         return;
@@ -138,27 +161,29 @@
       list.forEach((o,i)=>{
         const x=o.x,p=o.p,sc=mkScore(x.ox),score=sc?sc.score:'-',wrong=sc?sc.wrong:'-';
         const at=x.updated_at?new Date(x.updated_at).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'-';
-        const openAction=window.mkSet==='final'||window.mkSet==='original'
-          ?`<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(window.mkSet,r,student)}">✍️ ${esc(student)} 맞은 문제 체크</a>`
+        const openAction=isEntrySet(window.mkSet)
+          ?entryButton(window.mkSet,r,student)
           :`<a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="${previewUrl(window.mkSet,r,student)}">🔎 미리보기</a>`;
         const protectedFinalRound=window.mkSet==='final'&&/^[1-4]$/.test(r)&&p.slot===1;
         panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b>${protectedFinalRound?`<small data-final-percentile="${r}" style="display:block;color:#2456c4">백분율 미반영</small>`:''}</td><td>${wrong}</td><td>${esc(sourceLabel(x.source))}</td><td>${esc(at)}</td><td>
           <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">
             ${openAction}
-            ${window.mkSet==='final'||window.mkSet==='original'?`<a class="btn sm" target="_blank" href="${teacherReportUrl(window.mkSet,r,student,p.slot)}">${p.slot===1?'공식 1차':'연습 '+p.slot+'차'} 성적표</a>`:''}
+            ${isEntrySet(window.mkSet)?reportButton(window.mkSet,r,student,p.slot):''}
             <button class="btn del sm" onclick="deleteMockAttemptV2('${esc(student)}','${window.mkSet}','${r}',${p.slot})">${p.slot}차 초기화</button>
             ${i===0?`<button class="btn sm" style="background:#fff3e0;color:#b45309" onclick="deleteMockRoundV2('${esc(student)}','${window.mkSet}','${r}')">회차 전체</button>`:''}
           </div></td></tr>`;
       });
     });
     panel+='</tbody></table></div>';
+    if(window.mkSet==='last')panel+='<div style="margin-top:9px;padding:8px 10px;border-radius:8px;background:#eef4ff;color:#1e3c72;font-size:11.5px;line-height:1.6"><b>최종 1회는 파이널 1~4회와 함께, 최종 2회부터는 최종 회차만으로 누적 판정합니다.</b> 회차별 1차(최초) 기록만 반영되고 재응시는 연습으로 분리됩니다. 「맞은 문제 체크」를 누르면 위에 입력 창이 열립니다.</div>';
+    if(window.mkSet==='extra')panel+='<div style="margin-top:9px;padding:8px 10px;border-radius:8px;background:#f5f3ff;color:#5b21b6;font-size:11.5px;line-height:1.6"><b>추가 모의고사(5~8회)는 누적에 포함하지 않습니다.</b> 회차별 성적만 따로 기록하며, 학생 승인은 자료실 항목에서 합니다.</div>';
     if(window.mkSet==='final'||window.mkSet==='original'){
       panel+='<div style="margin-top:9px;padding:8px 10px;border-radius:8px;background:#fff7ed;color:#9a3412;font-size:11.5px;line-height:1.6"><b>학생 아이디로 다시 로그인할 필요가 없습니다.</b> 위 학생 선택에서 이름을 고르고 해당 회차의 「학생 이름 맞은 문제 체크」을 누르세요. 공식 누적 기준은 회차별 1차 기록이며, 입력이 끝나면 그 학생 로드맵의 「내 파이널 성적표」에서 본인 성적만 열립니다.</div>';
     }
     panel+='</div>';
     body.insertAdjacentHTML('afterbegin',panel);
     body.insertAdjacentHTML('afterbegin',originalPanel);
-    body.insertAdjacentHTML('afterbegin',last1);
+    /* 최종 진단 분석지 별도 패널은 「최종 모의고사」 탭으로 통합 (2026-10-04) */
     const pctCells=body.querySelectorAll('[data-final-percentile]');
     if(pctCells.length&&window.GFIELD_AUTH){
       pctCells.forEach(pctCell=>{
@@ -174,12 +199,26 @@
       });
     }
     const hint=document.querySelector('#tab-mock .card > .hint');
-    if(hint)hint.textContent='중급·활용·파이널·시그니처 실전 모의고사 결과를 분리해 확인합니다. 파이널과 시그니처 실전은 온라인 회원이 직접 입력하거나 선생님이 재원생 답안을 대신 기록할 수 있으며, 회차별 최초 기록만 누적에 반영됩니다.';
+    if(hint)hint.textContent='중급·활용·파이널·최종·추가·시그니처 실전 모의고사 결과를 분리해 확인합니다. 파이널·최종·추가·시그니처 실전은 온라인 회원이 직접 입력하거나 선생님이 재원생 답안을 대신 기록할 수 있으며, 회차별 최초 기록만 누적에 반영됩니다.';
     if(window.GFIELD_ADMIN_FINAL_BATCH&&typeof window.GFIELD_ADMIN_FINAL_BATCH.refresh==='function')window.GFIELD_ADMIN_FINAL_BATCH.refresh();
     if(window.GFIELD_ADMIN_ORIGINAL_BATCH&&typeof window.GFIELD_ADMIN_ORIGINAL_BATCH.refresh==='function')window.GFIELD_ADMIN_ORIGINAL_BATCH.refresh();
   };
 
-  window.setMockSetV2=function(set){window.mkSet=set==='original'?'original':(set==='final'?'final':(set==='hw'?'hw':'mid'));renderMock()};
+  window.setMockSetV2=function(set){window.mkSet=['original','final','last','extra','hw'].includes(set)?set:'mid';renderMock()};
+
+  /* 최종 1~4회 · 추가 8회 입력 창(admin-last-score-entry.js)은 행의 「맞은 문제 체크」로만 연다 */
+  (function(){var st=document.createElement('style');st.textContent='#admin-last-score-entry:not(.mk-open){display:none}';document.head.appendChild(st);})();
+  window.openLastEntryV2=function(student,key){
+    const card=document.getElementById('admin-last-score-entry');
+    const st=document.getElementById('admin-last-student'),rd=document.getElementById('admin-last-round');
+    if(!card||!st||!rd){toast('입력 창을 찾지 못했습니다. 새로고침해 주세요.');return;}
+    card.classList.add('mk-open');
+    if(window.GFIELD_ADMIN_LAST_ENTRY)window.GFIELD_ADMIN_LAST_ENTRY.mount(mkStudents());
+    if(![...st.options].some(o=>o.value===student))st.add(new Option(student,student));
+    st.value=student;rd.value=key;
+    rd.dispatchEvent(new Event('change',{bubbles:true}));
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+  };
 
   window.applyFinalPercentiles=async function(){
     const button=document.getElementById('apply-final-percentiles'),status=document.getElementById('mock-status');
