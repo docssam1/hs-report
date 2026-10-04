@@ -18,7 +18,10 @@
     return true; // Final 1–4 follow the existing registered-student bank access.
   }
   function signature(item){return JSON.stringify([item.text,item.promptDataLines||[],item.asset&&item.asset.src||'',item.answer]);}
-  function buildPool(attempts,datasets,scope,band,target,library,dynamic,freshRound,sourceDynamic){
+  /* 이미 푼(인쇄한) 문항 식별: 검수 문항은 id, 생성형은 내용 서명 */
+  function itemKey(item){return String(item&&item.id||signature(item)).slice(0,300);}
+  function buildPool(attempts,datasets,scope,band,target,library,dynamic,freshRound,sourceDynamic,excluded){
+    excluded=excluded instanceof Set?excluded:new Set();
     target=Object.prototype.hasOwnProperty.call(COUNTS,target)?Number(target):30;
     var groups=[];
     (attempts||[]).forEach(function(attempt){
@@ -30,7 +33,7 @@
       data.items.forEach(function(item){
         var no=Number(item&&item.sourceNo);
         if(!Number.isInteger(no)||no<1||no>30||item.reviewStatus!=='verified'||
-           band!=='all'&&item.pointBand!==band||scope==='wrong'&&ox[no-1]!=='X'||scope==='correct'&&ox[no-1]!=='O')return;
+           band!=='all'&&item.pointBand!==band||scope==='wrong'&&ox[no-1]!=='X'||scope==='correct'&&ox[no-1]!=='O'||excluded.has(itemKey(item)))return;
         if(!byNo.has(no))byNo.set(no,[]);
         byNo.get(no).push(item);
       });
@@ -64,7 +67,7 @@
       function supplement(point,limit){
         var current=chosen.filter(function(entry){return entry.item.pointBand===point;}).length;
         publicItems.filter(function(item){return item.pointBand===point;}).forEach(function(item){
-          if(current>=limit||usedIds.has(item.id)||usedContent.has(signature(item)))return;
+          if(current>=limit||usedIds.has(item.id)||usedContent.has(signature(item))||excluded.has(itemKey(item)))return;
           chosen.push({item:item,code:'final'+item.sourceRound,origin:'library'});
           usedIds.add(item.id);usedContent.add(signature(item));current++;
         });
@@ -104,7 +107,7 @@
           if(!item||item.reviewStatus!=='runtime-verified'||item.pointBand!==point||
              !proof||!proof.primary||!proof.independent||String(proof.primary.answer)!==String(proof.independent.answer)||
              !proof.visibleEvidence||proof.visibleEvidence.passed!==true||!item.text||item.answer==null||!item.solution||
-             !Array.isArray(item.acceptedAnswers)||!item.acceptedAnswers.map(String).includes(String(proof.primary.answer))||seenFresh.has(content))continue;
+             !Array.isArray(item.acceptedAnswers)||!item.acceptedAnswers.map(String).includes(String(proof.primary.answer))||seenFresh.has(content)||excluded.has(itemKey(item)))continue;
           seenFresh.add(content);
           chosen[positions[positions.length-1-made]]={item:item,code:'final'+item.sourceRound,origin:'generated'};
           made++;
@@ -186,6 +189,19 @@
     var scope=Object.prototype.hasOwnProperty.call(SCOPE_LABEL,query.get('scope'))?query.get('scope'):'all',band=Object.prototype.hasOwnProperty.call(BAND_LABEL,query.get('band'))?query.get('band'):'all';
     var count=COUNTS[query.get('count')]?Number(query.get('count')):30;
     var attempts=[],datasets={},unavailable=[],revision=0,currentPaperCount=0,library=null,libraryPromise=null,freshRound=0;
+    var doneKeys=new Set(),skipDone=true,currentKeys=[];
+    function skipSet(){return skipDone?doneKeys:new Set();}
+    function hdr(){var auth=root.GFIELD_AUTH;return {apikey:auth.PUBLISHABLE_KEY,Authorization:'Bearer '+auth.PUBLISHABLE_KEY,'x-gfield-student':btoa(unescape(encodeURIComponent(student))),'Content-Type':'application/json'};}
+    async function loadHistory(){
+      try{var auth=root.GFIELD_AUTH;var r=await fetch(auth.SUPABASE_URL+'/rest/v1/bank_print_history?select=item_key&student=eq.'+encodeURIComponent(student)+'&limit=5000',{headers:hdr()});
+        if(r.ok)(await r.json()).forEach(function(row){doneKeys.add(row.item_key);});}catch(error){}
+    }
+    function saveHistory(){
+      var rows=currentKeys.filter(function(k){return !doneKeys.has(k.key);}).map(function(k){return {student:student,item_key:k.key,source_code:k.code||null};});
+      if(!rows.length)return;
+      var auth=root.GFIELD_AUTH,h=hdr();h.Prefer='resolution=ignore-duplicates,return=minimal';
+      fetch(auth.SUPABASE_URL+'/rest/v1/bank_print_history?on_conflict=student,item_key',{method:'POST',headers:h,body:JSON.stringify(rows)}).then(function(r){if(r.ok){rows.forEach(function(x){doneKeys.add(x.item_key);});controls();}}).catch(function(){});
+    }
     function controls(){
       document.querySelectorAll('[data-scope]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.scope===scope));});
       document.querySelectorAll('[data-band]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.band===band));});
@@ -193,17 +209,22 @@
       var fresh=document.getElementById('pmFresh');
       fresh.disabled=scope!=='all'||!attempts.length;
       fresh.textContent=freshRound?'다른 새 문제로 바꾸기':'새 문제 섞기';
+      var skip=document.getElementById('pmSkipDone');
+      if(skip){skip.setAttribute('aria-pressed',String(skipDone));skip.textContent=skipDone?'이미 푼 문제 제외 · 켜짐':'이미 푼 문제 제외 · 꺼짐';}
+      var skipInfo=document.getElementById('pmSkipInfo');
+      if(skipInfo)skipInfo.textContent='지금까지 인쇄한 문항 '+doneKeys.size+'개 · 인쇄하면 다음 시험지에서 빠집니다';
     }
     async function render(){
       var current=++revision;controls();print.disabled=true;pages.innerHTML='';currentPaperCount=0;
-      var paper=buildPool(attempts,datasets,scope,band,count),note=unavailable.length?' · 유사문제 미등록/권한 확인: '+unavailable.join(', '):'';
+      var paper=buildPool(attempts,datasets,scope,band,count,null,null,0,null,skipSet()),note=unavailable.length?' · 유사문제 미등록/권한 확인: '+unavailable.join(', '):'';
+      if(skipDone&&doneKeys.size)note+=' · 이미 푼 문제 제외';
       if(!attempts.length){status.textContent='확인된 최초 응시 기록이 없습니다.';return;}
       if(scope==='all'&&(paper.missing||freshRound>0)&&Array.isArray(root.GFIELD_DATA&&root.GFIELD_DATA.students)&&root.GFIELD_DATA.students.includes(student)){
         try{
           if(!libraryPromise)libraryPromise=root.BANK_FIXED.load('important');
           library=await libraryPromise;
           if(current!==revision)return;
-          paper=buildPool(attempts,datasets,scope,band,count,library,root.BANK_IMPORTANT_GENERATORS,freshRound,root.BANK_FINAL_SOURCE_GENERATORS);
+          paper=buildPool(attempts,datasets,scope,band,count,library,root.BANK_IMPORTANT_GENERATORS,freshRound,root.BANK_FINAL_SOURCE_GENERATORS,skipSet());
         }catch(error){libraryPromise=null;note+=' · 자료실 공개 문제를 불러오지 못했습니다.';}
       }
       if(!paper.available){status.innerHTML='<span class="pm-short">선택한 조건의 검수 유사문제가 없습니다.</span>'+esc(note);return;}
@@ -215,15 +236,19 @@
         if(current!==revision)return;
         pages.querySelectorAll('.wm-layer').forEach(function(layer){root.BANK_CORE.buildWatermarkTiles(layer,student);});
         currentPaperCount=paper.questions.length;print.disabled=false;
+        currentKeys=paper.questions.map(function(q){return {key:itemKey(q.item),code:q.code};});
       }catch(error){pages.innerHTML='';status.innerHTML='<span class="pm-error">'+esc(error.message||'시험지를 만들지 못했습니다.')+'</span>';}
     }
     document.querySelectorAll('[data-scope]').forEach(function(button){button.addEventListener('click',function(){scope=button.dataset.scope;render();});});
     document.querySelectorAll('[data-band]').forEach(function(button){button.addEventListener('click',function(){band=button.dataset.band;render();});});
     document.querySelectorAll('[data-count]').forEach(function(button){button.addEventListener('click',function(){count=Number(button.dataset.count);render();});});
     document.getElementById('pmFresh').addEventListener('click',function(){if(scope!=='all')return;freshRound++;render();});
-    print.addEventListener('click',function(){if(!print.disabled&&currentPaperCount>0&&pages.querySelectorAll('.pm-q').length===currentPaperCount)root.print();});
+    var skipBtn=document.getElementById('pmSkipDone');
+    if(skipBtn)skipBtn.addEventListener('click',function(){skipDone=!skipDone;render();});
+    print.addEventListener('click',function(){if(!print.disabled&&currentPaperCount>0&&pages.querySelectorAll('.pm-q').length===currentPaperCount){root.print();saveHistory();}});
     try{
       attempts=await fetchAttempts(student);
+      await loadHistory();
       await Promise.all(attempts.map(async function(attempt){
         var code=codeOf(attempt);
         if(!code||!isAllowed(code,student,root.GFIELD_DATA)){unavailable.push(code?label(code):String(attempt.key)+'회');return;}
