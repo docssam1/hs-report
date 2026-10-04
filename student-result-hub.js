@@ -110,12 +110,11 @@
   }
   function reportLink(item,options,model){
     var m=item.meta,name=options.student,helper=root.GFIELD_FINAL_LAST_ROUTES;
-    // Final 8 has no verified analysis yet; never substitute another round's report.
-    if(m.kind==='final'&&m.round===8) return {url:'',label:'상세 분석 준비 중'};
     if((m.kind==='final'||m.kind==='last')&&helper){
       var allowed=helper.accessAllowed(options.data||{},name,m.kind,m.round);
       var url=allowed?helper.reportUrl(m.kind,m.round,name):'';
       if(url&&m.kind==='final'&&m.round===7) url+='&v=20260920b';
+      if(url&&m.kind==='final'&&m.round===8) url+='&v=20261004-final8';
       return {url:url,label:allowed?'상세 분석·유사문제':'자료실 승인 필요'};
     }
     if(m.kind==='original') return {url:'final.html?set=original&round='+m.round+'&go=report&name='+encodeURIComponent(name),label:'상세 분석·유사문제'};
