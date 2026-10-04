@@ -31,6 +31,10 @@
     if(query.get('practice')==='wrong'&&source[0]==='original'&&(source[1]==='1'||source[1]==='2'))return 'mock-signature-'+source[1];
     if(bank==='final7')return 'mock-final-7';
     if(query.get('practice')==='wrong'&&source[0]==='final'&&source[1]==='7')return 'mock-final-7';
+    if(bank==='final8')return 'mock-final-8';
+    if(query.get('practice')==='wrong'&&source[0]==='final'&&source[1]==='8')return 'mock-final-8';
+    if(bank==='last1')return 'mock-last-1';
+    if(query.get('practice')==='wrong'&&source[0]==='last'&&source[1]==='1')return 'mock-last-1';
     return '';
   }
   function scopedPermissionList(){

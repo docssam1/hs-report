@@ -534,13 +534,13 @@
       link.assetKind = 'raster';
       link.sourceAudit.visualRequired = true;
     }
-    var fixedRound=/^final([2347])-q/.exec(generatorId);
+    var fixedRound=/^final([23478])-q/.exec(generatorId);
     link.qaEvidence = {
-      suite: fixedRound ? (fixedRound[1]==='3'?'qa/final3-fixed90-validate.js':(fixedRound[1]==='4'?'qa/final4-fixed90-validate.js':(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':'qa/final2-fixed90-math-validate.js'))) : 'qa/bank-final1-generators-validate.js',
+      suite: fixedRound ? (fixedRound[1]==='3'?'qa/final3-fixed90-validate.js':(fixedRound[1]==='4'?'qa/final4-fixed90-validate.js':(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':(fixedRound[1]==='8'?'qa/final8-variant-review-validate.js':'qa/final2-fixed90-math-validate.js')))) : 'qa/bank-final1-generators-validate.js',
       generatedQuestions: fixedRound ? 3 : 5000,
       levels: fixedRound ? ['fixed-reviewed-variants'] : [1, 2, 3, 4, 5],
       seedsPerLevel: fixedRound ? 0 : 1000,
-      date: fixedRound ? (fixedRound[1]==='3'?'2026-09-20':(fixedRound[1]==='4'?'2026-09-21':(fixedRound[1]==='7'?'2026-09-18':'2026-09-12'))) : '2026-09-05'
+      date: fixedRound ? (fixedRound[1]==='3'?'2026-09-20':(fixedRound[1]==='4'?'2026-09-21':(fixedRound[1]==='7'?'2026-09-18':(fixedRound[1]==='8'?'2026-10-04':'2026-09-12')))) : '2026-09-05'
     };
     return link;
   }
@@ -674,6 +674,94 @@
       'bank/bank-fixed.js',
       'same Final 7 source reasoning with a user-reviewed visual variant: ' + row[1],
       'final:7:' + no,
+      row[2] === true
+    );
+  });
+
+  /* 최종 실전 8회는 사용자 눈검수와 독립 계산을 통과한 고정 문항 3개씩을 연결한다. */
+  [
+    [1, '두 도로의 길이 차로 자동차 길이 역산', true],
+    [2, '자리 숫자의 합·곱으로 네 자리 수 극값 찾기', false],
+    [3, '두 명제의 참·거짓으로 주사위 곱 극값 찾기', false],
+    [4, '네 수의 여섯 쌍 평균으로 가장 큰 수 찾기', false],
+    [5, '숫자 이어 쓰기와 나눗셈 조건', false],
+    [6, '방향이 바뀌는 수 배열의 같은 열 찾기', true],
+    [7, '그려진 선으로 만들어지는 삼각형 전수 세기', true],
+    [8, '위·앞·옆 투영으로 쌓기나무 개수 범위', true],
+    [9, '시침·분침이 직각을 이루는 횟수', false],
+    [10, '연속 집 번호 합에서 빠진 번지 역산', false],
+    [11, '정육면체 전개도 다섯 보기 비교', true],
+    [12, '같은 요일 두 날짜의 합으로 말일 요일 찾기', false],
+    [13, '연속 자연수 합의 배수 판별', false],
+    [14, '네 수의 모든 두 수 합으로 각 수 역산', false],
+    [15, '검은색·흰색이 번갈아 놓인 마름모 바둑돌', false],
+    [16, '가로 세 칸 가림막으로 남은 수 합의 극값', false],
+    [17, '관계 이야기와 표로 두 직업씩 가진 세 사람 추리', false],
+    [18, '반복 숫자 곱셈에서 홀짝 숫자의 개수', false],
+    [19, '다섯 수 묶음의 반복으로 수의 순번 찾기', false],
+    [20, '원형 이웃 간 최소 전달로 수량 같게 하기', false],
+    [21, '가운데 빈 한 층 정사각형 테두리의 단계 합', true],
+    [22, '두 사람 계단 위치 차로 승리 횟수 역산', false],
+    [23, '지나갈 수 없는 변이 있는 격자 최단경로', false],
+    [24, '출발 주기와 소요 시간으로 마감 전 도착 인원 세기', false],
+    [25, '방향 블록을 한 번씩 놓는 최단시간', true],
+    [26, '서로 다른 두 주기의 출입으로 처음 만원 되는 시각', false],
+    [27, '점프 거리가 차례로 증가하는 원형 이동', false],
+    [28, '1에서 멈추는 홀짝 계산기의 시작 수 역산', false],
+    [29, '자릿수·받아올림으로 다섯 덧셈식의 성립 판단', true],
+    [30, '면 하나를 공유하며 붙이는 정육면체 성냥개비', true]
+  ].forEach(function (row) {
+    var no = row[0];
+    var sourceKey = ['final', 8, no].join('|');
+    SOURCE_ITEM_GENERATOR_LINKS[sourceKey] = sourceItemReviewGeneratorLink(
+      'final8-q' + String(no).padStart(2, '0'),
+      'bank/bank-fixed.js',
+      'same Final 8 source reasoning with a user-reviewed visual variant: ' + row[1],
+      'final:8:' + no,
+      row[2] === true
+    );
+  });
+
+  /* 최종 실전 1회는 사용자 눈검수와 독립 계산을 통과한 고정 문항 3개씩을 연결한다. */
+  [
+    [1, '책 쪽수 범위에서 특정 숫자가 적힌 쪽 세기', false],
+    [2, '두 요일의 날짜 합으로 1일의 요일 찾기', false],
+    [3, '순환소수의 특정 자리 숫자 찾기', false],
+    [4, '등차수열의 부분합으로 첫째와 끝 수 찾기', false],
+    [5, '두 시계의 오차 합 구하기', false],
+    [6, '수 배열 규칙에서 특정 위치의 수 찾기', true],
+    [7, '그림 자료에서 두 수량의 차 비교하기', true],
+    [8, '원형으로 앉은 사람의 맞은편 번호 찾기', false],
+    [9, '자리 숫자의 합이 주어진 값인 수의 개수', false],
+    [10, '네 사람의 여섯 쌍합으로 가장 큰 개인 수 찾기', false],
+    [11, '조건에 맞는 수 찾기', false],
+    [12, '달력 조건에서 개수 구하기', true],
+    [13, '조건에 맞는 수 전체 구하기', true],
+    [14, '조건에 맞는 세 수 구하기', false],
+    [15, '도형 배열 규칙에서 특정 수 구하기', true],
+    [16, '가정하여 조건에 맞는 수 구하기', false],
+    [17, '그림 조건에서 개수 구하기', true],
+    [18, '조건에 맞는 경우의 수 구하기', true],
+    [19, '조건에 맞는 장수 구하기', false],
+    [20, '도형 조건에서 특정 수 구하기', true],
+    [21, '규칙 배열에서 개수 구하기', false],
+    [22, '두 집단의 여집합 수와 두 집단의 합으로 나머지 인원 구하기', false],
+    [23, '수 배열 규칙에서 수 찾기', true],
+    [24, '연산 규칙에서 특정 값 구하기', false],
+    [25, '조건에 맞는 경우의 수 구하기', false],
+    [26, '수식에서 조건에 맞는 값 구하기', true],
+    [27, '여섯 조건으로 세 사람의 직업 쌍 결정하기', false],
+    [28, '조건에 맞는 경우의 수 구하기', false],
+    [29, '조건에 맞는 경우의 수 구하기', false],
+    [30, '기호 연산에서 각 기호 값 구하기', true]
+  ].forEach(function (row) {
+    var no = row[0];
+    var sourceKey = ['last', 1, no].join('|');
+    SOURCE_ITEM_GENERATOR_LINKS[sourceKey] = sourceItemReviewGeneratorLink(
+      'last1-q' + String(no).padStart(2, '0'),
+      'bank/bank-fixed.js',
+      'same Last 1 source reasoning with a user-reviewed visual variant: ' + row[1],
+      'last:1:' + no,
       row[2] === true
     );
   });
