@@ -21,11 +21,27 @@
     });
     var keys=['final1','final2','final3','final4','last1','last2','last3','last4'];
     var rows=keys.map(function(key){return known[key]||null;}).filter(Boolean);
-    var ranked=rows.filter(function(row){return row.percentile!==null;});
-    var scoreAverage=rows.length?one(rows.reduce(function(sum,row){return sum+row.score;},0)/rows.length):null;
+    /* 누적 판정 기준 (2026-10-04 원장님 확정)
+       - 최종 응시 없음: 파이널 1~4회 · 파이널 누적 기준표
+       - 최종 1회까지: 파이널 1~4회 + 최종 1회
+       - 최종 2회부터: 최종 1~N회만 (N = 응시한 가장 늦은 최종 회차)
+       최종 기준표는 last-score-data.js 의 그 회차 cumulativeBands.
+       회차별 점수표·그래프(rows/slots)는 응시한 모든 회차를 그대로 보여 준다. */
+    var lastNo=0;rows.forEach(function(row){if(row.key.indexOf('last')===0)lastNo=Math.max(lastNo,Number(row.key.slice(-1)));});
+    var judge=rows,judgeLabel='파이널 1~4회',judgeBands=bands;
+    if(lastNo>=1){
+      judge=lastNo===1?rows:rows.filter(function(row){return row.key.indexOf('last')===0;});
+      judgeLabel=lastNo===1?'파이널 1~4회 + 최종 1회':'최종 1~'+lastNo+'회';
+      var lastData=root.GFIELD_LAST_SCORE_DATA,lastRound=lastData&&lastData.rounds&&lastData.rounds[String(lastNo)];
+      judgeBands=lastRound&&Array.isArray(lastRound.cumulativeBands)&&lastRound.cumulativeBands.length
+        ?lastRound.cumulativeBands.map(function(b){return [String(b[1]).replace(/,/g,' · '),Number(b[0])];}):null;
+    }
+    var ranked=judge.filter(function(row){return row.percentile!==null;});
+    var scoreAverage=judge.length?one(judge.reduce(function(sum,row){return sum+row.score;},0)/judge.length):null;
     var percentileAverage=ranked.length?one(ranked.reduce(function(sum,row){return sum+row.percentile;},0)/ranked.length):null;
     return {rows:rows,slots:keys.map(function(key){return known[key]||null;}),scoreAverage:scoreAverage,
-      percentileAverage:percentileAverage,cumulativeGrade:grade(percentileAverage,bands),rankedCount:ranked.length};
+      percentileAverage:percentileAverage,cumulativeGrade:grade(percentileAverage,judgeBands),rankedCount:ranked.length,
+      judgeLabel:judgeLabel,judgeCount:judge.length,lastRound:lastNo};
   }
   function chart(vm,field,meanField,title,reverse){
     var left=35,right=625,top=18,bottom=105,width=right-left,height=bottom-top;
@@ -48,8 +64,8 @@
     var rows=vm.rows.map(function(row){return '<tr><th scope="row">'+esc(row.label)+'</th><td>'+row.score.toFixed(1)+'</td><td>'+(row.average===null?'—':row.average.toFixed(1))+'</td><td>'+(row.percentile===null?'—':row.percentile.toFixed(1)+'%')+'</td><td>'+(row.grade?esc(row.grade):'—')+'</td></tr>';}).join('');
     return '<section class="final-score-trend" id="report-score-trend"><h2>파이널·최종 성적 추이</h2><p class="score-trend-lead">파이널 1~4회와 최종 1~4회 중 응시한 최초 성적만 반영합니다. 시그니처 특강과 재응시는 제외합니다.</p>'+
       (vm.rows.length?'<div class="score-trend-charts">'+chart(vm,'score','average','원점수와 회차 평균',false)+chart(vm,'percentile',null,'예상 석차 백분율',true)+'</div><div class="score-trend-table-wrap"><table><thead><tr><th>응시 회차</th><th>원점수</th><th>회차 평균</th><th>석차 백분율</th><th>예상 등급</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<p class="score-trend-empty">반영할 최초 응시 성적이 없습니다.</p>')+
-      '<div class="score-trend-cumulative"><span>누적 '+vm.rows.length+'/8회</span><span>원점수 평균 <b>'+(vm.scoreAverage===null?'—':vm.scoreAverage.toFixed(1)+'점')+'</b></span><span>누적 예상 석차 백분율 <b>'+(vm.percentileAverage===null?'—':vm.percentileAverage.toFixed(1)+'%')+'</b></span><span>누적 예상 등급 <b>'+(vm.cumulativeGrade?esc(vm.cumulativeGrade):'—')+'</b></span></div>'+
-      '<p class="score-trend-note">누적 백분율은 확인된 회차별 예상 석차 백분율의 평균('+vm.rankedCount+'/'+vm.rows.length+'회)입니다. 자료가 없는 칸은 0점으로 처리하지 않습니다. 백분율이 작을수록 상위이며, 등급은 예상치입니다.</p></section>';
+      '<div class="score-trend-cumulative"><span>누적 판정 · '+esc(vm.judgeLabel||'파이널·최종')+' ('+(vm.judgeCount==null?vm.rows.length:vm.judgeCount)+'회)</span><span>원점수 평균 <b>'+(vm.scoreAverage===null?'—':vm.scoreAverage.toFixed(1)+'점')+'</b></span><span>누적 예상 석차 백분율 <b>'+(vm.percentileAverage===null?'—':vm.percentileAverage.toFixed(1)+'%')+'</b></span><span>누적 예상 등급 <b>'+(vm.cumulativeGrade?esc(vm.cumulativeGrade):'—')+'</b></span></div>'+
+      '<p class="score-trend-note">누적 백분율은 확인된 회차별 예상 석차 백분율의 평균('+vm.rankedCount+'/'+(vm.judgeCount==null?vm.rows.length:vm.judgeCount)+'회)입니다. 최종 2회부터는 최종 모의고사 성적만으로 판정하며, 위 점수표와 그래프에는 응시한 모든 회차를 표시합니다. 자료가 없는 칸은 0점으로 처리하지 않습니다. 백분율이 작을수록 상위이며, 등급은 예상치입니다.</p></section>';
   }
   var api={model:model,render:render,grade:grade};
   if(typeof module==='object'&&module.exports)module.exports=api;
