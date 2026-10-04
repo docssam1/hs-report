@@ -147,13 +147,14 @@
       }).join(' ');
     }else if(group.practiceVerified){
       generator='<a class="badge practice" href="index.html?gen='+encodeURIComponent(group.generator.legacyId)+'">일반 연습문제 만들기</a>';
-    }else if(group.sourceLinkedReview){
-      var sourceRef=group.generatorRef||{};
+    }else if(group.sourceLinkedReview&&group.generatorRef&&group.generatorRef.set){
+      /* 출처 시리즈(final/last/original)를 반드시 명시: 빠지면 시그니처로 오인되므로 링크를 만들지 않는다. */
+      var sourceRef=group.generatorRef;
       var sourceDifficulty=group.bankDifficulty||R.bankDifficulty(null,sourceRef.points);
       var level={highest:5,high:4,middle:3,low:2,lowest:1}[sourceDifficulty.id]||3;
       var params='gen='+encodeURIComponent(group.generator.generatorId)+
         '&level='+level+'&n=8&review=1&type='+encodeURIComponent(group.displayType)+
-        '&source='+encodeURIComponent((sourceRef.set||'original')+'|'+sourceRef.round+'|'+sourceRef.no)+
+        '&source='+encodeURIComponent(sourceRef.set+'|'+sourceRef.round+'|'+sourceRef.no)+
         '&points='+encodeURIComponent(sourceRef.points)+'&difficulty='+encodeURIComponent(sourceDifficulty.label);
       generator='<a class="badge practice" href="index.html?'+params+'">이 유형 유사문제 검토하기</a>';
     }
