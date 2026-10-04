@@ -592,6 +592,7 @@ td.weak-cell{white-space:nowrap}
   files.push('bank/bank-registry.js');
   if(!isOriginal) files.push('mock-rx-data.js');
   if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js','last-score-data.js');
+  if(isLast) files.push('last-score-data.js');
   if(!isOriginal) files.push('final-score-trend.js');
   if(!isLast) files.push('final-report-state.js');
   if(!isLast&&!isOriginal) files.push('final-parent-report.js');
@@ -2009,18 +2010,35 @@ td.weak-cell{white-space:nowrap}
      @2/@3(연습 재응시)는 절대 섞이지 않습니다 -- 현재 회차라도 attemptNo>1이면
      priorRows[fk](저장된 1차 응시)를 쓰고, curOxArr(이번 화면의 응시 데이터)는
      attemptNo===1일 때만 사용합니다. */
+  /* 최종 N회 누적 판정 (2026-10-04 원장님 확정): 최종 1회 = 파이널 1~4회 + 최종 1회, 최종 2회부터 = 최종 1~N회.
+     최종 회차 통계·누적 기준표는 last-score-data.js 에서 읽는다. */
+  function lastSourceStats(n){
+    var own=M&&M.rounds&&M.rounds[String(n)]&&M.rounds[String(n)].stats;
+    if(own) return own;
+    var source=window.GFIELD_LAST_SCORE_DATA&&window.GFIELD_LAST_SCORE_DATA.rounds&&window.GFIELD_LAST_SCORE_DATA.rounds[String(n)];
+    if(!source) return null;
+    return {mean:Number(source.average),n:Number(source.cohortSize)||0,dist:Array.isArray(source.scoreDist)?source.scoreDist.slice():[],
+      percentileTable:Array.isArray(source.percentileTable)?source.percentileTable.map(function(row){return row.slice();}):null,
+      cuts:(source.scoreBands||[]).map(function(row){return [String(row[0]).replace(/,/g,' · '),Number(row[1])];}),
+      rankEvidence:{status:'verified-source-rank',sourceId:'last-score-data-'+n,sourceRef:'2024 최종 모의고사 '+n+'회 회차별 원점수 석차 백분율 기준',verifiedAt:'2026-09-11'}};
+  }
+  function lastCumBands(n){
+    var source=window.GFIELD_LAST_SCORE_DATA&&window.GFIELD_LAST_SCORE_DATA.rounds&&window.GFIELD_LAST_SCORE_DATA.rounds[String(n)];
+    var bands=source&&Array.isArray(source.cumulativeBands)?source.cumulativeBands:null;
+    return bands&&bands.length?bands.map(function(row){return [String(row[1]).replace(/,/g,' · '),Number(row[0])];}):null;
+  }
   function computeCumulativeConsidered(roundNum, priorRows, attemptNo, fk, curOxArr, includeCurrent){
     var considered = []; // {n, pct, oxArr}
     if(M.rounds[String(roundNum)]&&M.rounds[String(roundNum)].standalone) return considered;
     if(isLast){
-      for(var finalNo=1;finalNo<=4;finalNo++){
+      for(var finalNo=1;roundNum===1&&finalNo<=4;finalNo++){
         var finalKey='final'+finalNo,finalRow=priorRows[finalKey],finalStats=lastFinalPopulationByRound[String(finalNo)]||finalBaseStats[String(finalNo)];
         if(!finalRow||!validOx(finalRow.ox)||!populationStatsVerified(finalStats)) continue;
         var finalOx=finalRow.ox.split(''),finalScore=computeScore(finalOx).score;
         var finalPct=percentileFor(finalScore,finalStats);
         if(finalPct!==null) considered.push({n:finalNo,label:'파이널 '+finalNo+'회',pct:finalPct,oxArr:finalOx,sourceModel:finalModel,sourceRound:finalNo});
       }
-      for(var lastNo=1;lastNo<=4;lastNo++){
+      for(var lastNo=1;lastNo<=roundNum&&lastNo<=4;lastNo++){
         if(!M.rounds[String(lastNo)]) continue;
         var lastOx,lastKey='last'+lastNo;
         if(lastNo===roundNum){
@@ -2029,7 +2047,7 @@ td.weak-cell{white-space:nowrap}
           else continue;
         }else if(priorRows[lastKey]&&validOx(priorRows[lastKey].ox)) lastOx=priorRows[lastKey].ox.split('');
         else continue;
-        var lastStats=M.rounds[String(lastNo)].stats;
+        var lastStats=lastSourceStats(lastNo);
         if(!populationStatsVerified(lastStats)) continue;
         var lastPct=percentileFor(computeScore(lastOx).score,lastStats);
         if(lastPct!==null) considered.push({n:lastNo,label:'최종 '+lastNo+'회',pct:lastPct,oxArr:lastOx,sourceModel:M,sourceRound:lastNo});
@@ -2085,7 +2103,7 @@ td.weak-cell{white-space:nowrap}
       return saved&&saved.source!=='reset'&&validOx(saved.ox)?String(saved.ox).split(''):null;
     }
     function lastStats(n){
-      if(isLast)return M.rounds[String(n)]&&M.rounds[String(n)].stats;
+      if(isLast&&M.rounds[String(n)]&&M.rounds[String(n)].stats)return M.rounds[String(n)].stats;
       var source=window.GFIELD_LAST_SCORE_DATA&&window.GFIELD_LAST_SCORE_DATA.rounds[String(n)];
       if(!source)return null;
       return {mean:Number(source.average),n:Number(source.cohortSize)||0,
@@ -2097,6 +2115,7 @@ td.weak-cell{white-space:nowrap}
     }
     ['final','last'].forEach(function(series){
       for(var n=1;n<=4;n++){
+        if(isLast&&series==='last'&&n>roundNum)continue;
         var key=series+n,ox=firstOx(key);
         if(!ox)continue;
         var score=computeScore(ox).score;
@@ -2994,7 +3013,7 @@ td.weak-cell{white-space:nowrap}
         cumHTML = '<p style="font-size:14px;color:var(--ink2)">아직 누적 계산에 쓸 이전 '+esc(seriesLabel())+' 회차 기록이 없습니다.</p>';
       } else {
         var avgPct = round1(considered.reduce(function(s,c){return s+c.pct;},0)/considered.length);
-        var band = cumulativeGrade(avgPct, isLast&&finalModel?finalModel.cumulative.bands:M.cumulative.bands) || ['-', 0];
+        var band = cumulativeGrade(avgPct, isLast?(lastCumBands(roundNum)||(finalModel&&finalModel.cumulative.bands)):M.cumulative.bands) || ['-', 0];
         var trend = considered.map(function(c){ return '<tr><td>'+esc(c.label||seriesLabel()+' '+c.n+'회')+'</td><td class="c">'+c.pct+'%</td></tr>'; }).join('');
         var repMap = {};
         considered.forEach(function(c){
@@ -3008,7 +3027,7 @@ td.weak-cell{white-space:nowrap}
         var repHTML = repEntries.length
           ? repEntries.map(function(e){ return '<div class="repwk"><b>'+esc(e.type)+'</b> — '+(isLast?esc(e.rounds.join(' · ')):repeatLabel(e.rounds))+'</div>'; }).join('')
           : '<div class="repwk">회차를 건너 반복해서 틀린 유형은 아직 없습니다.</div>';
-        var cumLabel = esc(M.cumulative.label || M.cumulative.method || '석차 백분율 평균');
+        var cumLabel = esc((isLast?(roundNum===1?'파이널 1~4회 + 최종 1회 ':'최종 1~'+roundNum+'회 '):'')+((M.cumulative&&(M.cumulative.label||M.cumulative.method))||'석차 백분율 평균'));
         cumHTML = '<table><tr><th>회차</th><th>석차 백분율</th></tr>'+trend+'</table>'+
           '<div class="cause-sum" style="margin-top:14px">'+cumLabel+' <b>'+avgPct+'%</b> → <b>'+esc(band[0])+'</b></div>'+
           cmpNoteHTML+
