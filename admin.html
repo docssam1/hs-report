@@ -562,7 +562,8 @@
     html+='</tr></thead><tbody>';
     S.students.forEach(name=>{
       ensureStudent(name);
-      html+=`<tr><th>${name}</th>`;
+      const onl=(S.studentTypes&&S.studentTypes[name]==='online');
+      html+=`<tr><th>${name} <span style="font-size:10px;font-weight:800;padding:1px 6px;border-radius:8px;${onl?'background:#faeeda;color:#854f0b':'background:#e6f1fb;color:#185fa5'}">${onl?'온라인':'재원생'}</span></th>`;
       weeks.forEach(w=>{ const on=S.attendance[name].includes(w.id); html+=`<td class="cell ${on?'on':'off'}" onclick="toggleCell('${name}','${w.id}',this)"></td>`; });
       if(sp){ const on=S.specialStudents.includes(name); html+=`<td class="cell special-col ${on?'on':'off'}" onclick="toggleSpecial('${name}',this)"></td>`; }
       html+='</tr>';
