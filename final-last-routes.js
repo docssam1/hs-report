@@ -85,7 +85,6 @@
     return target('final.html',{set:'last',round:round,go:action||''});
   }
   function finalTarget(action,round){
-    if(round===8&&action==='answer-page') return target('final.html',{round:round,go:'answer'});
     if(action==='answer-page') return target('answer.html',{set:'final',round:round});
     return target('final.html',{round:round,go:action||''});
   }

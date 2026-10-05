@@ -157,6 +157,11 @@
     btn.title=canFull
       ? '30문항 상세 풀이까지 모두 포함해서 인쇄합니다. 준비에 몇 초 걸립니다.'
       : '상세 풀이를 모두 펼친 뒤 브라우저 인쇄로 저장합니다.';
+    if(Number(pkg.getAttribute('data-report-round'))===8&&pkg.querySelector('.report-answer-table')){
+      btn.textContent='📄 진단 전체·답안 인쇄 / PDF 저장';
+      btn.setAttribute('aria-label','최종 8회 전체 진단과 30문항 정답표를 인쇄하거나 PDF로 저장');
+      btn.title='전체 진단과 30문항 정답표, 확인된 풀이를 인쇄합니다.';
+    }
 
     if(canFull){
       var fellBack=false;

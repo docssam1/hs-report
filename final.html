@@ -7,6 +7,11 @@
 <title>파이널 모의고사 진단 · 지필드 영재교육</title>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
+/* Final 8 uses a four-column canonical answer table, not the five-column wrong summary. */
+.report-answer-table.report-wrong-summary th:nth-child(1){width:9%}
+.report-answer-table.report-wrong-summary th:nth-child(2){width:10%}
+.report-answer-table.report-wrong-summary th:nth-child(3){width:40%}
+.report-answer-table.report-wrong-summary th:nth-child(4){width:41%}
 :root{--navy:#1F3864;--navy2:#2a5298;--orange:#f97316;--orange-d:#ea580c;--ink:#2d2a26;--ink2:#5b5148;--dim:#9a8f83;--bg:#f7f5f2;--line:#e8ded1;--soft:#fff7ed}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-text-size-adjust:100%}
@@ -578,7 +583,7 @@ td.weak-cell{white-space:nowrap}
 <div id="app"></div>
 <button class="print-btn no-print" id="printBtn" style="display:none">🖨 인쇄</button>
 
-<script src="final-last-routes.js?v=20261005-final8-report"></script>
+<script src="final-last-routes.js?v=20261005-final8-answers"></script>
 <script>(function(){
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
@@ -633,7 +638,7 @@ td.weak-cell{white-space:nowrap}
   );
   files.push('exam-cues.js');
   files.forEach(function(f){
-    var version=f==='data.js'?dataVersion:(f==='final-last-routes.js'?'20261005-final8-report':(f==='mock-data-final.js'&&isFinal8?'20261005-final8-q20-43':(f==='mock-data-original.js'?signatureAnswerVersion:((f==='mock-data-final.js'||f==='final4-detailed-data.js')?final4AnswerVersion:staticVersion))));
+    var version=f==='data.js'?dataVersion:(f==='final-last-routes.js'||(f==='exam-cues.js'&&isFinal8)?'20261005-final8-answers':(f==='mock-data-final.js'&&isFinal8?'20261005-final8-q20-43':(f==='mock-data-original.js'?signatureAnswerVersion:((f==='mock-data-final.js'||f==='final4-detailed-data.js')?final4AnswerVersion:staticVersion))));
     document.write('<scr'+'ipt src="'+f+'?v='+version+'"><\/scr'+'ipt>');
   });
 })();</script>
@@ -1195,6 +1200,15 @@ td.weak-cell{white-space:nowrap}
   }
   function detailedAnswersSectionHTML(ctx){
     if(isOriginal) return '';
+    if(isFinal8){
+      var answerRows=ctx.items.map(function(it){
+        return '<tr data-answer-no="'+Number(it.no)+'"><td class="c">'+Number(it.no)+'번</td><td class="c">'+BP(it.no).pts+'점</td><td><b>'+esc(it.answer)+'</b></td><td>'+esc(it.detailType||it.type)+'</td></tr>';
+      }).join('');
+      var verifiedExplanations=ctx.items.filter(function(it){return it.comment&&(it.detailedSolution===true||/^✓ 답안 검수:/.test(it.caution||''));}).map(function(it){
+        return '<article class="detailed-solution" data-solution-no="'+Number(it.no)+'"><h3>'+Number(it.no)+'번 풀이 · 정답 '+esc(it.answer)+'</h3><p>'+esc(it.comment)+'</p></article>';
+      }).join('');
+      return '<section class="detail-section report-detailed-section" id="detailedAnswersSection" aria-label="최종 8회 답안"><details class="report-resource-details"><summary><b>최종 8회 · 30문항 답안 보기</b><span>정답과 유형을 확인하세요.</span></summary><div class="report-table-scroll"><table class="report-wrong-summary report-answer-table"><thead><tr><th>번호</th><th>배점</th><th>정답</th><th>문항 유형</th></tr></thead><tbody>'+answerRows+'</tbody></table></div>'+verifiedExplanations+'</details></section>';
+    }
     if(isLast&&(ctx.roundNum===1||ctx.roundNum===2)&&window.GFIELD_FINAL1_DETAILED_RENDERER){
       var lastDetailed=ctx.roundNum===1?window.GFIELD_LAST1_DETAILED:window.GFIELD_LAST2_DETAILED;
       if(!lastDetailed) return '';
@@ -1439,6 +1453,16 @@ td.weak-cell{white-space:nowrap}
       actions.appendChild(toggle);
     }
     var video=ctx&&ctx.R&&String(ctx.R.video||'');
+    if(isFinal8){
+      var answerLink=document.createElement('a');
+      answerLink.className='report-screen-action report-answer-link';
+      var answerRoute=window.GFIELD_FINAL_LAST_ROUTES;
+      answerLink.href=answerRoute?answerRoute.withStudent(answerRoute.route('final',8,'answer-page'),ctx.name):'answer.html?set=final&round=8&name='+encodeURIComponent(ctx.name);
+      if(preview)answerLink.href+=(answerLink.href.indexOf('?')>=0?'&':'?')+'preview=1';
+      answerLink.textContent='답안 보기';
+      answerLink.setAttribute('aria-label','최종 실전 모의고사 8회 답안 보기');
+      actions.appendChild(answerLink);
+    }
     if(/^https?:\/\//i.test(video)){
       var lecture=document.createElement('a');
       lecture.className='report-screen-action report-lecture-link';

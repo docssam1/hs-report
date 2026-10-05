@@ -19,13 +19,14 @@ for(let n=1;n<=9;n++){
  assert.equal(u.searchParams.get('set'),n>5&&!independent?'last':null);
 }
 assert.equal(R.canonicalSeriesRound('final',8).series,'final','Final 8 is an independent pending product');
-for(const oldUrl of ['mock.html?set=final&round=8','answer.html?set=final&round=8']){
+for(const oldUrl of ['mock.html?set=final&round=8']){
  const u=U(R.normalizeUrl(oldUrl));
  assert.equal(u.pathname,'/final.html','old Final 8 links go to the pending page');
  assert.equal(u.searchParams.get('round'),'8','old Final 8 links keep their own round');
  assert.equal(u.searchParams.get('set'),null,'old Final 8 links never become Last 3');
 }
-assert.equal(R.route('final',8,'answer-page'),'final.html?round=8&go=answer','Final 8 answer route is pending, not a scored answer table');
+assert.equal(R.route('final',8,'answer-page'),'answer.html?set=final&round=8','Final 8 answer sheet is distinct from O/X entry');
+assert.equal(R.normalizeUrl('answer.html?set=final&round=8'),'answer.html?set=final&round=8','Final 8 answer sheet is not redirected to input or Last 3');
 assert.equal(R.route('final',6,'report'),'final.html?set=last&round=1&go=report','Final 6 keeps its Last 1 alias');
 assert.equal(R.route('final',9,'report'),'final.html?set=last&round=4&go=report','Final 9 keeps its Last 4 alias');
 for(let n=1;n<=4;n++){
