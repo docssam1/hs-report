@@ -560,7 +560,13 @@
     weeks.forEach(w=>{ html+=`<th title="${w.title}">${w.date.replace('주차','주').replace(' ','')}</th>`; });
     if(sp) html+='<th>⭐특강</th>';
     html+='</tr></thead><tbody>';
-    S.students.forEach(name=>{
+    const isOn=n=>(S.studentTypes&&S.studentTypes[n]==='online');
+    const byName=(x,y)=>x.localeCompare(y,'ko');
+    const ordered=S.students.filter(n=>!isOn(n)).sort(byName).concat(S.students.filter(isOn).sort(byName));
+    const colspan=weeks.length+(sp?2:1);let lastGrp='';
+    ordered.forEach(name=>{
+      const grp=isOn(name)?'온라인 회원':'재원생';
+      if(grp!==lastGrp){const cnt=ordered.filter(n=>(isOn(n)?'온라인 회원':'재원생')===grp).length;html+=`<tr><th colspan="${colspan}" style="text-align:left;background:${grp==='재원생'?'#e6f1fb;color:#185fa5':'#faeeda;color:#854f0b'};font-size:12px">${grp} ${cnt}명</th></tr>`;lastGrp=grp;}
       ensureStudent(name);
       const onl=(S.studentTypes&&S.studentTypes[name]==='online');
       html+=`<tr><th>${name} <span style="font-size:10px;font-weight:800;padding:1px 6px;border-radius:8px;${onl?'background:#faeeda;color:#854f0b':'background:#e6f1fb;color:#185fa5'}">${onl?'온라인':'재원생'}</span></th>`;
