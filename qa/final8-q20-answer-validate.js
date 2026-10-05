@@ -1,0 +1,23 @@
+'use strict';
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const root = path.join(__dirname, '..');
+const context = {window: {}};
+vm.runInNewContext(fs.readFileSync(path.join(root, 'mock-data-final.js'), 'utf8'), context);
+const round = context.window.GFIELD_MOCK_FINAL.rounds['8'];
+const item = round.items.find(item => item.no === 20);
+assert.equal(round.items.length, 30);
+assert.equal(item.answer, '병호에게 4개, 태영에게 3개');
+assert.equal(item.pts, 3.4);
+assert.match(item.comment, /병호에게 4개, 태영에게 3개/);
+assert.match(item.caution, /유일성을 주장하거나/);
+// Clockwise: 철수, 태영, 영희, 민수, 병호. Negative flow is counter-clockwise.
+const original = [17, 9, 8, 5, 11];
+const flow = [3, 2, 0, -5, -4];
+const after = original.map((count, i) => count - flow[i] + flow[(i + 4) % 5]);
+assert.equal(original.reduce((a, b) => a + b, 0), 50);
+assert.deepEqual(after, [10, 10, 10, 10, 10]);
+assert.match(fs.readFileSync(path.join(root, 'final.html'), 'utf8'), /20261005-final8-q20-43/);
+console.log('PASS Final 8 Q20: approved answer 4/3, five-way balance, explanation and cache version');
