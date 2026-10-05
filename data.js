@@ -2494,7 +2494,7 @@ window.GFIELD_DATA = {
         },
         {
           "label": "CH5 Semi 5회",
-          "url": "https://youtu.be/-d8FB2id0l0"
+          "url": "https://youtu.be/NiY1gz2XGx4?t=1942"
         }
       ]
     },
