@@ -134,7 +134,8 @@
     4:'https://youtu.be/ZiOpTckV_wM'
   };
   var additionalFinalVideos={
-    7:'https://youtu.be/NpGefamVXp8'
+    7:'https://youtu.be/NpGefamVXp8',
+    8:'https://youtu.be/R-ntnWKyRsQ'
   };
   var originalVideos={
     1:'https://www.youtube.com/watch?v=FUq-XBAcP_8',
@@ -238,11 +239,7 @@
     book.links=[{label:reportLabel(),url:reportUrl(series,round)}].concat(links);
   }
   function syncAdditionalFinalAlias(book,legacyRound){
-    if(legacyRound===8){
-      book.links=[{label:'8회 검수 대기 안내',url:withName(window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('final',8,''):'final.html?round=8')}];
-      return;
-    }
-    var independentFinal=legacyRound===5||legacyRound===7;
+    var independentFinal=legacyRound===5||legacyRound===7||legacyRound===8;
     var series=independentFinal?'final':'last';
     var round=independentFinal?legacyRound:legacyRound-5;
     if(additionalFinalVideos[legacyRound]) book.video=additionalFinalVideos[legacyRound];
