@@ -54,11 +54,12 @@
     var legacy=document.getElementById('btnPrint');if(legacy)legacy.id='legacyPrint';
     var root=document.createElement('main');root.id='final1Worksheet';root.className='gfield-ui';document.body.appendChild(root);
     var q=new URLSearchParams(location.search),wrong=!!opts.wrongPracticeMode,ids=opts.genIds;
-    var bankCode=/^(?:final[12347]|original[12]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
+    var bankCode=/^(?:final[123478]|original[12]|last1|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
     var important=bankCode==='important';
     var signature=bankCode.startsWith('original');
     root.dataset.bankCode=bankCode;
-    var round=important?null:Number(bankCode.slice(signature?8:5)),roundLabel=important?'선생님이 고른 중요 유형':(signature?'시그니처 실전 '+round+'회':(round===7?'최종 7회':'파이널 '+round+'회')),idPrefix=important?'':bankCode+'-q';
+    var isLast1=bankCode==='last1';
+    var round=important?null:(isLast1?1:Number(bankCode.slice(signature?8:5))),roundLabel=important?'선생님이 고른 중요 유형':(signature?'시그니처 실전 '+round+'회':(isLast1?'최종 실전 1회':(round===7?'최종 7회':(round===8?'최종 8회':'파이널 '+round+'회')))),idPrefix=important?'':bankCode+'-q';
     if(important)ids=Array.isArray(opts.typeIds)?opts.typeIds:[];
     else if(!Array.isArray(ids))ids=wrong?[]:Array.from({length:30},(_,i)=>idPrefix+String(i+1).padStart(2,'0'));
     var labels={all:'전체문제','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
