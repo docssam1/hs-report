@@ -564,7 +564,7 @@
     if (data) return Promise.resolve(data);
     if (!loadPromise) loadPromise = fetch('data/last1-reviewed.json?v=20261005-last1', {cache:'no-cache'})
       .then(function (r) { if (!r.ok) throw new Error('최종 1회 검수 문항을 불러오지 못했습니다.'); return r.json(); })
-      .then(function (v) { data = v; return v; })
+      .then(function (v) { (v.items||[]).forEach(function (it) { ['asset','solutionAsset'].forEach(function (k) { if (typeof it[k] === 'string' && /^data:image\/png;base64,/.test(it[k])) it[k] = {kind:'raster', src:it[k], mimeType:'image/png', description:'문항 그림'}; }); if (!it.solution && Array.isArray(it.solutionSteps)) it.solution = it.solutionSteps.join(' '); }); data = v; return v; })
       .catch(function (e) { loadPromise = null; throw e; });
     return loadPromise;
   }
