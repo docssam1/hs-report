@@ -2,9 +2,9 @@
 (function(global){
   'use strict';
 
-  var VERSION='1.1.0';
+  var VERSION='1.2.0';
   var selectedStudents=new Set();
-  var selectedRounds=new Set([1,2,3,4]);
+  var selectedRounds=new Set([1,2,3,4,'last1','last2','last3','last4']);
   var running=false;
   var cancelled=false;
   var activeFrame=null;
@@ -12,13 +12,20 @@
   function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});}
   function safeName(value){return String(value||'학생').replace(/[\\/:*?"<>|\u0000-\u001f]/g,'_').replace(/[. ]+$/g,'').slice(0,80)||'학생';}
   function api(){return global.GFIELD_ADMIN_MOCK_V2;}
-  function entries(){var source=api()&&api().finalOfficialEntries();return Array.isArray(source)?source:null;}
+  function entries(){var model=api();if(!model)return null;var finals=model.finalOfficialEntries(),lasts=model.lastOfficialEntries();return Array.isArray(finals)&&Array.isArray(lasts)?finals.concat(lasts):null;}
+  function series(task){return task.set==='last'?'최종':'파이널';}
+  function examKey(task){return task.set==='last'?'last'+task.round:Number(task.round);}
+  function examLabel(task){return series(task)+' '+task.round+'회';}
+  function fileName(task){return safeName(task.student)+'_'+series(task)+'_'+task.round+'회_진단과복습.pdf';}
+  function detailsAvailable(task){return task.set!=='last'||[1,2].includes(Number(task.round));}
+  function similarAvailable(task){return task.set!=='last'||Number(task.round)===1;}
+  function roundChecks(set){return '<div class="final-batch-series-title">'+(set==='last'?'최종':'파이널')+' 1~4회</div>'+[1,2,3,4].map(function(round){var key=set==='last'?'last'+round:round;return '<label class="final-batch-check"><input type="checkbox" data-exam-set="'+set+'" value="'+key+'" checked>'+examLabel({set:set,round:round})+'<small data-exam-count="'+key+'"></small></label>';}).join('');}
   function uniqueStudents(rows){return Array.from(new Set((rows||[]).map(function(row){return row.student;}))).sort(function(a,b){return a.localeCompare(b,'ko');});}
   function byStudent(rows,name){return rows.filter(function(row){return row.student===name;});}
   function status(message,state){var node=document.getElementById('final-batch-status');if(!node)return;node.textContent=message||'';node.dataset.state=state||'';}
   function setBusy(value){
     running=value;
-    document.querySelectorAll('[data-final-batch-action],#final-batch-rounds input,#final-batch-students input').forEach(function(node){node.disabled=value;});
+    document.querySelectorAll('[data-final-batch-action],#final-batch-rounds input,#final-batch-students input,#final-batch-select-all,#final-batch-clear').forEach(function(node){node.disabled=value;});
     var cancel=document.getElementById('final-batch-cancel');if(cancel)cancel.hidden=!value;
   }
   function ensurePanel(){
@@ -28,17 +35,17 @@
     panel.id='final-batch-panel';
     panel.className='final-batch-panel';
     panel.setAttribute('aria-labelledby','final-batch-title');
-    panel.innerHTML='<div class="final-batch-head"><div><h4 id="final-batch-title">파이널 진단·유사문제 한 번에 저장</h4><p>응시 학생과 회차를 고르면 학생별 PDF를 회차 폴더에 나누어 저장합니다. 성적 기록은 읽기만 합니다.</p></div><span class="final-batch-count" id="final-batch-count">선택 0건</span></div>'+
+    panel.innerHTML='<div class="final-batch-head"><div><h4 id="final-batch-title">파이널·최종 진단·유사문제 한 번에 저장</h4><p>공식 1차 성적이 있는 응시 학생과 회차를 고르면 학생별 PDF를 회차 폴더에 나누어 저장합니다. 성적 기록은 읽기만 합니다.</p></div><span class="final-batch-count" id="final-batch-count">선택 0건</span></div>'+
       '<div class="final-batch-body"><fieldset class="final-batch-fieldset"><legend>1. 회차 선택</legend><div class="final-batch-rounds" id="final-batch-rounds">'+
-      [1,2,3,4].map(function(round){return '<label class="final-batch-check"><input type="checkbox" value="'+round+'" checked>파이널 '+round+'회</label>';}).join('')+
+      roundChecks('final')+roundChecks('last')+
       '<label class="final-batch-check"><input type="checkbox" id="final-batch-similar" checked>오답 유사문제·풀이 포함</label><label class="final-batch-check"><input type="checkbox" id="final-batch-details">원문 30문항 상세 풀이도 포함</label></div></fieldset>'+
       '<fieldset class="final-batch-fieldset"><legend>2. 응시 학생 선택</legend><div class="final-batch-tools"><button type="button" id="final-batch-select-all">응시 학생 전체 선택</button><button type="button" id="final-batch-clear">선택 비우기</button><span id="final-batch-student-count"></span></div><div class="final-batch-students" id="final-batch-students"></div></fieldset></div>'+
-      '<div class="final-batch-actions"><button type="button" class="btn final-batch-primary" id="final-batch-folder" data-final-batch-action>진단+유사문제 한 번에 저장</button><button type="button" class="btn final-batch-secondary" id="final-batch-zip" data-final-batch-action>ZIP 한 개로 받기</button><button type="button" class="btn final-batch-cancel" id="final-batch-cancel" hidden>중단</button><p class="final-batch-note">기본 파일에는 진단 요약·이번 주 학습 계획·오답 유사문제·풀이가 함께 들어갑니다. 원문 30문항 상세 풀이는 필요할 때만 추가하세요.</p></div><div class="final-batch-status" id="final-batch-status" role="status" aria-live="polite"></div>';
+      '<div class="final-batch-actions"><button type="button" class="btn final-batch-primary" id="final-batch-folder" data-final-batch-action>진단+유사문제 한 번에 저장</button><button type="button" class="btn final-batch-secondary" id="final-batch-zip" data-final-batch-action>ZIP 한 개로 받기</button><button type="button" class="btn final-batch-cancel" id="final-batch-cancel" hidden>중단</button><p class="final-batch-note">진단 요약·이번 주 학습 계획·QR을 저장합니다. 선택한 부록은 검수 완료 자료만 포함합니다. 최종 2~4회 유사문제와 최종 3~4회 원문 상세 풀이는 준비 중이며, 해당 회차도 진단 요약은 저장됩니다.</p></div><div class="final-batch-status" id="final-batch-status" role="status" aria-live="polite"></div>';
     body.parentNode.insertBefore(panel,body);
 
     document.getElementById('final-batch-rounds').addEventListener('change',function(event){
       if(event.target.id==='final-batch-similar'||event.target.id==='final-batch-details')return;
-      var round=Number(event.target.value);if(event.target.checked)selectedRounds.add(round);else selectedRounds.delete(round);refresh();
+      var round=event.target.dataset.examSet==='last'?event.target.value:Number(event.target.value);if(event.target.checked)selectedRounds.add(round);else selectedRounds.delete(round);refresh();
     });
     document.getElementById('final-batch-students').addEventListener('change',function(event){
       var name=event.target.getAttribute('data-student');if(!name)return;if(event.target.checked)selectedStudents.add(name);else selectedStudents.delete(name);updateCount();
@@ -51,7 +58,7 @@
   }
 
   function taskList(){
-    return (entries()||[]).filter(function(row){return selectedStudents.has(row.student)&&selectedRounds.has(row.round);});
+    return (entries()||[]).filter(function(row){return selectedStudents.has(row.student)&&selectedRounds.has(examKey(row));});
   }
   function updateCount(){
     var tasks=taskList(),count=document.getElementById('final-batch-count');
@@ -64,11 +71,11 @@
     var names=uniqueStudents(rows),available=new Set(names);
     Array.from(selectedStudents).forEach(function(name){if(!available.has(name))selectedStudents.delete(name);});
     list.innerHTML=names.length?names.map(function(name){
-      var mine=byStudent(rows,name),summary=mine.map(function(row){return row.round+'회 '+row.score+'점';}).join(' · ');
+      var mine=byStudent(rows,name),summary=mine.map(function(row){return examLabel(row)+' '+row.score+'점';}).join(' · ');
       return '<label class="final-batch-student"><input type="checkbox" data-student="'+esc(name)+'" '+(selectedStudents.has(name)?'checked':'')+'><b>'+esc(name)+'</b><small>'+esc(summary)+'</small></label>';
-    }).join(''):'<div class="final-batch-empty">파이널 1~4회 공식 1차 성적이 있는 학생이 없습니다.</div>';
+    }).join(''):'<div class="final-batch-empty">파이널·최종 1~4회 공식 1차 성적이 있는 학생이 없습니다.</div>';
     var studentCount=document.getElementById('final-batch-student-count');if(studentCount)studentCount.textContent=names.length+'명 응시';
-    document.querySelectorAll('#final-batch-rounds input:not(#final-batch-similar)').forEach(function(input){input.checked=selectedRounds.has(Number(input.value));});
+    document.querySelectorAll('#final-batch-rounds input[data-exam-set]').forEach(function(input){var key=input.dataset.examSet==='last'?input.value:Number(input.value);input.checked=selectedRounds.has(key);var count=rows.filter(function(row){return examKey(row)===key;}).length;input.parentNode.querySelector('small').textContent=count+'건';});
     updateCount();
   }
 
@@ -114,8 +121,10 @@
   }
   function wrongBankUrl(doc,task){
     var rows=Array.from(doc.querySelectorAll('#wrongPractice .wp-item'));if(!rows.length)return '';
-    var params=new URLSearchParams({practice:'wrong',gens:rows.map(function(row){return row.dataset.wpGen;}).join(','),per:'3',points:'all',printMode:'both',source:'final|'+task.round,sourceNos:rows.map(function(row){return row.dataset.wpNo;}).join(','),seed:task.student+'-final'+task.round+'-batch'});
-    if(task.round===1||task.round===2)params.set('bank','final'+task.round);
+    var set=task.set==='last'?'last':'final';
+    if(!similarAvailable(task))return '';
+    var params=new URLSearchParams({practice:'wrong',gens:rows.map(function(row){return row.dataset.wpGen;}).join(','),per:'3',points:'all',printMode:'both',source:set+'|'+task.round,sourceNos:rows.map(function(row){return row.dataset.wpNo;}).join(','),seed:task.student+'-'+set+task.round+'-batch',reportPrint:'teacher'});
+    params.set('bank',set+task.round);
     return 'bank/index.html?'+params.toString()+'#'+new URLSearchParams({student:task.student}).toString();
   }
   function reviewedBankPages(doc,requireReviewed,forBatch){
@@ -214,10 +223,10 @@
     if(!global.jspdf||!global.jspdf.jsPDF||!global.html2canvas)throw new Error('PDF 저장 도구를 불러오지 못했습니다.');
     var reportFrame,prepared,detailPages,bankFrame;
     try{
-      status((index+1)+'/'+total+' · '+task.student+' · 파이널 '+task.round+'회 진단지를 준비하고 있습니다.');
+      status((index+1)+'/'+total+' · '+task.student+' · '+examLabel(task)+' 진단지를 준비하고 있습니다.');
       reportFrame=await loadFrame(api().reportUrl(task),'진단지');
       var reportDoc=reportFrame.contentDocument;
-      var includeDetails=document.getElementById('final-batch-details').checked;
+      var includeDetails=document.getElementById('final-batch-details').checked&&detailsAvailable(task);
       await waitFor(function(){
         var ready=reportDoc.querySelectorAll('.final1-detailed-card.is-ready').length;
         return reportDoc.querySelector('.final-report-package')&&(!includeDetails||(ready>=30&&!reportDoc.querySelector('.final1-detailed-card.is-pending')))&&reportFrame.contentWindow.GFIELD_FINAL_REPORT_PRINT;
@@ -230,7 +239,7 @@
       if(!prelude.length)throw new Error('진단지 쪽을 만들지 못했습니다.');
       if(includeDetails)detailPages=await paginateDetails(prepared);
       var PDF=global.jspdf.jsPDF,pdf=new PDF({orientation:'portrait',unit:'mm',format:'a4',compress:true,putOnlyUsedFonts:true});
-      pdf.setProperties({title:task.student+' 파이널 '+task.round+'회 진단과 복습',subject:'지필드 파이널 진단 결과와 유사문제',creator:'GFIELD 관리자'});
+      pdf.setProperties({title:task.student+' '+examLabel(task)+' 진단과 복습',subject:'지필드 '+series(task)+' 진단 결과와 복습',creator:'GFIELD 관리자'});
       var pageNo=0;
       for(var p=0;p<prelude.length;p++){status((index+1)+'/'+total+' · '+task.student+' · 진단 '+(p+1)+'/'+prelude.length+'쪽');await addPage(pdf,prelude[p],pageNo++===0);}
       if(includeDetails&&prepared.metrics.blankPages){addBlank(pdf,pageNo++===0);}
@@ -239,7 +248,7 @@
         status((index+1)+'/'+total+' · '+task.student+' · 유사문제를 준비하고 있습니다.');
         bankFrame=await loadFrame(bankUrl,'유사문제');
         var bankDoc=bankFrame.contentDocument;
-        var requireReviewed=/(?:\?|&)bank=final(?:1|2)(?:&|$)/.test(bankUrl);
+        var requireReviewed=/(?:\?|&)bank=(?:final[1234]|last1)(?:&|$)/.test(bankUrl);
         var bankPages=await waitFor(function(){var pages=reviewedBankPages(bankDoc,requireReviewed,true);return pages.length&&!(bankDoc.getElementById('btnPrint')||{}).disabled?pages:null;},45000,'유사문제와 풀이를 준비하지 못했습니다.');
         await waitImages(bankDoc.getElementById('f1Pages')||bankDoc.getElementById('stage'));
         for(var b=0;b<bankPages.length;b++){status((index+1)+'/'+total+' · '+task.student+' · 유사문제 '+(b+1)+'/'+bankPages.length+'쪽');await addPage(pdf,bankPages[b],pageNo++===0);}
@@ -253,8 +262,8 @@
   }
 
   async function writeFile(directory,task,blob){
-    var folder=await directory.getDirectoryHandle('파이널 '+task.round+'회',{create:true});
-    var file=await folder.getFileHandle(safeName(task.student)+'_파이널_'+task.round+'회_진단과복습.pdf',{create:true});
+    var folder=await directory.getDirectoryHandle(examLabel(task),{create:true});
+    var file=await folder.getFileHandle(fileName(task),{create:true});
     var writable=await file.createWritable();await writable.write(blob);await writable.close();
   }
   function validateStart(){
@@ -276,24 +285,26 @@
     var tasks=validateStart();if(!tasks)return;
     if(!global.JSZip){status('ZIP 저장 도구를 불러오지 못했습니다.','error');return;}
     var zip=new global.JSZip();
-    await runTasks(tasks,function(task,blob){zip.folder('파이널 '+task.round+'회').file(safeName(task.student)+'_파이널_'+task.round+'회_진단과복습.pdf',blob);},'ZIP을 만들었습니다.',async function(){
+    await runTasks(tasks,function(task,blob){zip.folder(examLabel(task)).file(fileName(task),blob);},'ZIP을 만들었습니다.',async function(){
       status('PDF를 모두 만들었습니다. ZIP 파일을 묶고 있습니다.');
       var blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}});
-      var url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='지필드_파이널_진단과복습_'+new Date().toISOString().slice(0,10)+'.zip';document.body.appendChild(link);link.click();link.remove();setTimeout(function(){URL.revokeObjectURL(url);},30000);
+      var url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='지필드_파이널_최종_진단과복습_'+new Date().toISOString().slice(0,10)+'.zip';document.body.appendChild(link);link.click();link.remove();setTimeout(function(){URL.revokeObjectURL(url);},30000);
     });
   }
   async function runTasks(tasks,save,doneMessage,finish){
     cancelled=false;setBusy(true);var completed=0,failures=[];
+    var pending=tasks.filter(function(task){return (document.getElementById('final-batch-similar').checked&&!similarAvailable(task))||(document.getElementById('final-batch-details').checked&&!detailsAvailable(task));}).map(examLabel);
+    var pendingNote=pending.length?'\n준비 중인 부록은 제외했습니다: '+Array.from(new Set(pending)).join(', ')+' (진단 요약은 포함)':'';
     try{
       for(var i=0;i<tasks.length;i++){
         if(cancelled)break;
         try{var blob=await buildPackage(tasks[i],i,tasks.length);await save(tasks[i],blob);completed++;}
-        catch(error){failures.push(tasks[i].student+' · '+tasks[i].round+'회: '+(error&&error.message||'저장 실패'));}
+        catch(error){failures.push(tasks[i].student+' · '+examLabel(tasks[i])+': '+(error&&error.message||'저장 실패'));}
       }
       if(finish&&completed)await finish();
       if(cancelled)status(completed+'건 저장 후 중단했습니다.'+(failures.length?'\n저장하지 못한 항목: '+failures.join(' / '):''),'error');
       else if(failures.length)status(completed+'건 저장했습니다. '+failures.length+'건은 다시 확인해 주세요.\n'+failures.join('\n'),'error');
-      else status(completed+'건을 '+doneMessage,'done');
+      else status(completed+'건을 '+doneMessage+pendingNote,'done');
     }finally{cleanupFrame(activeFrame);setBusy(false);}
   }
 

@@ -83,8 +83,9 @@
 
   window.GFIELD_ADMIN_MOCK_V2=Object.freeze({
     finalOfficialEntries:function(){return officialEntries('final');},
+    lastOfficialEntries:function(){return officialEntries('last');},
     originalOfficialEntries:function(){return officialEntries('original');},
-    reportUrl:function(entry){return entry&&entry.set==='original'?teacherReportUrl('original',entry.round,entry.student,1):teacherEntryUrl('final',entry.round,entry.student).replace('go=answer','go=report');}
+    reportUrl:function(entry){return entry&&['original','last'].includes(entry.set)?teacherReportUrl(entry.set,entry.round,entry.student,1):teacherEntryUrl('final',entry.round,entry.student).replace('go=answer','go=report');}
   });
 
   if(typeof mkM==='function') mkM=function(){return dataFor(window.mkSet)};

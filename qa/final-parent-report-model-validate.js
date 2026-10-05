@@ -43,4 +43,9 @@ assert.equal(allMiss.targetScore,60,'displayed first three contribute 10+20+30 p
 const customPriority=report.model(ctx,{...opts,priorityNos:[4,1],priorityLabel:'선택 기준 검증'});
 assert.deepEqual(customPriority.priorityItems.map(row=>row.no),[4,1],'series-specific priority order is preserved');
 assert.equal(customPriority.priorityLabel,'선택 기준 검증');
+const lastLabels=report.model(ctx,{...opts,currentLabel:'최종 2회',cumulativeLabel:'최종 1~2회',seriesLabel:'최종'});
+assert.equal(lastLabels.current.label,'이번 회차 · 최종 2회');
+assert.equal(lastLabels.cumulative.label,'최종 1~2회');
+assert.doesNotMatch(report.historyHTML(lastLabels),/— 파이널/);
+assert.equal(lastLabels.current.score,report.model(ctx,opts).current.score,'series labels do not change scores');
 console.log('PASS parent report model: weighted rates, percentile scope, missing data, first-attempt history, distinct-round types, recommendation target');

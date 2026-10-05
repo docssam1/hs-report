@@ -53,7 +53,7 @@ const server=http.createServer((req,res)=>{
     await page.waitForFunction(()=>window.GFIELD_ADMIN_FINAL_BATCH&&window.GFIELD_ADMIN_MOCK_V2);
     await page.evaluate(()=>loadMockResults());
     await page.waitForFunction(name=>document.querySelector(`[data-student="${name}"]`),student);
-    assert.match(await page.locator('#final-batch-panel').innerText(),/파이널 진단·유사문제 한 번에 저장/);
+    assert.match(await page.locator('#final-batch-panel').innerText(),/파이널·최종 진단·유사문제 한 번에 저장/);
     assert.match(await page.locator('#final-batch-students').innerText(),/일괄저장검수학생/);
     assert.match(await page.locator('#final-batch-students').innerText(),/2회 87\.4점/);
     assert.equal(await page.locator('#final-batch-similar').isChecked(),true,'similar questions and solutions are included by default');

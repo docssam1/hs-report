@@ -588,7 +588,7 @@ td.weak-cell{white-space:nowrap}
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
   // between releases, so only that one file needs a fresh URL per visit.
-  var staticVersion='20261005-final1-final8-parent-report-2';
+  var staticVersion='20261005-last14-batch-report';
   var final4AnswerVersion='20260928-final4-q24-plan-2';
   var signatureAnswerVersion='20260928-signature-answer-keys-1';
   var dataVersion=Date.now();
@@ -619,7 +619,7 @@ td.weak-cell{white-space:nowrap}
   if(isFinal4) files.push('final4-detailed-data.js','final-detailed-solutions.js','final4-question-coach.js');
   if(isFinal7) files.push('last-score-data.js','final7-benchmark.js','final7-original-tutor.js');
   if(isFinal8) files.push('final8-benchmark.js');
-  if((!isLast&&!isOriginal)||(isLast&&Number(requestedRound)===1)) files.push('final-report-print.js');
+  if((!isLast&&!isOriginal)||(isLast&&[1,2,3,4].includes(Number(requestedRound)))) files.push('final-report-print.js');
   if(isFinal1||isFinal2||isFinal3||isFinal4||isFinal7||isFinal8||(isLast&&Number(requestedRound)===1)) files.push('final-summary-practice-print.js');
   if(isLast) files.push(
     'mock-data-final.js',
@@ -3125,7 +3125,7 @@ td.weak-cell{white-space:nowrap}
       ? '<div><i>점수 / 평균</i><b>'+ctx.score+'<small> / '+ctx.S.mean+'</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>석차</i><b>'+ctx.pct+'%</b></div><div><i>예상 결과</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div>'
       : '<div><i>개인 점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>오답</i><b>'+ctx.wrong+'<small>문항</small></b></div>'+(ctx.R&&Number.isFinite(Number(ctx.R.reportedAverage))?'<div><i>제공 평균</i><b>'+Number(ctx.R.reportedAverage)+'<small>점</small></b></div>':'<div><i>진단 기준</i><b style="font-size:15px">개인 수행</b></div>');
     var isStandardFinal=!isOriginal;
-    var hasPreparedSummaryPrint=!isOriginal&&(!isLast||roundNum===1);
+    var hasPreparedSummaryPrint=!isOriginal;
     var personalColor=isStandardFinal?'파란색':'주황색';
     var areaLead=ctx.ratesVerified?personalColor+'은 '+esc(ctx.name)+' 학생의 결과, 회색 점선은 평균입니다.':'영역별로 맞힌 문제와 더 연습할 문제를 살펴보세요.';
     var areaLegend='<div class="legend"><span><s style="background:rgba(249,115,22,.5);border:1px solid #ea580c"></s>'+esc(ctx.name)+'</span>'+(ctx.ratesVerified?'<span><s style="background:rgba(148,163,184,.4);border:1px dashed #94a3b8"></s>평균</span>':'')+'</div>';
@@ -3158,7 +3158,8 @@ td.weak-cell{white-space:nowrap}
         priorityLabel:isLast&&roundNum===1?'틀린 문항 중 문항 정답률이 내 전체 정답률보다 높은 문제를 먼저 풉니다.':(isFinal8?'시그니처와 같은 기준으로 틀린 2·3점대 기본 문항부터 복습합니다.':null),
         overallTrend:trendVM,
         cumulativeBands:isLast&&roundNum===1?lastCumBands(1):(M.cumulative&&M.cumulative.bands),
-        cumulativeLabel:isLast&&roundNum===1?'파이널 1~4회 + 최종 1회':null,
+        cumulativeLabel:isLast?(roundNum===1?'파이널 1~4회 + 최종 1회':'최종 1~'+roundNum+'회'):null,
+        seriesLabel:isLast?'최종':'파이널',
         currentLabel:isLast?'최종 '+roundNum+'회':null
       });
       if(isLast&&roundNum===1){
@@ -3195,7 +3196,7 @@ td.weak-cell{white-space:nowrap}
         '</section>'+
         '<section id="report-materials" class="report-materials-section parent-core-section"><h2>학습 자료</h2><p class="lead">이번 주 문항의 교재 위치를 먼저 확인하고, 풀이는 막힌 문항만 보세요.</p>'+curriculumConnectionHTML(ctx)+detailedAnswersSectionHTML(ctx)+'</section>';
       app.innerHTML=personalReportBanner+previewBanner+teacherBanner+practiceBanner+saveErrBanner+
-        '<div class="report-layout final-parent-report">'+parentAPI.indexHTML()+'<div class="doc final-report-package" data-report-round="'+roundNum+'">'+parentBody+'</div></div>';
+        '<div class="report-layout final-parent-report">'+parentAPI.indexHTML()+'<div class="doc final-report-package" data-set="'+esc(TAX_SET_KEY)+'" data-report-round="'+roundNum+'">'+parentBody+'</div></div>';
       parentAPI.wire(app);
     }else{
       document.body.classList.remove('final-parent-report-page');
@@ -3235,7 +3236,7 @@ td.weak-cell{white-space:nowrap}
     if(isStandardFinal){
       var reportActions=reportHeaderActions(app,ctx);
       if(reportActions) reportActions.appendChild(printBtn);
-      if(reportActions&&hasPreparedSummaryPrint&&priorityNos.length&&[1,2,3,4,7,8].indexOf(roundNum)>=0&&!hasSimilarPrinter){
+      if(reportActions&&hasPreparedSummaryPrint&&priorityNos.length&&(!isLast||roundNum===1)&&[1,2,3,4,7,8].indexOf(roundNum)>=0&&!hasSimilarPrinter){
         var printWarning=document.createElement('div');
         printWarning.className='no-print';
         printWarning.setAttribute('role','alert');
