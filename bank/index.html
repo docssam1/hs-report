@@ -255,7 +255,7 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
   var fixed=!!bankCode;
   if(!fixed)return;
   document.body.classList.add('fixed-bank-mode');
-  var s=document.createElement('script');s.src='final1-worksheet.js?v=20260930-fill-page';s.onload=function(){
+  var s=document.createElement('script');s.src='final1-worksheet.js?v=20261005-last1-final8';s.onload=function(){
     var hasGens=q.has('gens'), raw=hasGens?(q.get('gens')||'').split(','):(q.get('practice')==='wrong'?[]:null);
     if(!hasGens&&q.get('gen')&&q.get('gen')!=='mix')raw=[q.get('gen')];
     var typeIds=bankCode==='important'?(q.get('types')||'').split(',').filter(Boolean):null;
