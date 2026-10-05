@@ -564,7 +564,10 @@
     if (data) return Promise.resolve(data);
     if (!loadPromise) loadPromise = fetch('data/last1-reviewed.json?v=20261005-last1', {cache:'no-cache'})
       .then(function (r) { if (!r.ok) throw new Error('최종 1회 검수 문항을 불러오지 못했습니다.'); return r.json(); })
-      .then(function (v) { (v.items||[]).forEach(function (it) { ['asset','solutionAsset'].forEach(function (k) { if (typeof it[k] === 'string' && /^data:image\/png;base64,/.test(it[k])) it[k] = {kind:'raster', src:it[k], mimeType:'image/png', description:'문항 그림'}; }); if (!it.solution && Array.isArray(it.solutionSteps)) it.solution = it.solutionSteps.join(' '); }); data = v; return v; })
+      .then(function (v) { var A='수·규칙찾기',B='식의 계산',C='도형',D='경우의 수';
+        var TX=[['특정 숫자가 들어 있는 수의 개수',A,'수와 숫자'],['요일',A,'달력·요일'],['순환소수의 자릿수',A,'주기와 나머지'],['가우스 덧셈의 활용',A,'수열의 합'],['고장 난 시계의 시간 차',B,'달력·요일(시계)'],['종이 접기',C,'공간지각'],['특정 칸을 포함하는 사각형의 개수',C,'도형의 개수'],['원에서 마주보고 있는 수 구하기',A,'원형 배열'],['합이 일정한 수',A,'조건에 맞는 수'],['두 수의 합으로 원래의 수 구하기',B,'합과 차'],['도형이 나타내는 수',A,'암호와 기호'],['도형을 이용한 계차수열의 활용',A,'수 배열의 규칙'],['자리 수하기',A,'원형 배열'],['곱과 합이 일정한 수 구하기',A,'곱과 합'],['연속으로 이웃하는 칸의 합이 같은 수 구하기',A,'수 배열의 규칙'],['바둑돌 채우기(그림 그려 해결하기)',B,'정사각형 배열'],['간격의 활용',B,'간격·자르기'],['깃발의 가짓수',D,'순서 있는 선택'],['서랍원리',D,'서랍원리'],['주사위 움직이기',C,'공간지각'],['상자에 구슬을 서로 다르게 담기',D,'최대·최소'],['그림 그려 해결하기',B,'포함과 배제'],['반복마디의 활용',A,'주기와 나머지'],['조건에 맞는 수의 활용',A,'조건에 맞는 수'],['이진법',A,'진법과 암호'],['재치 있게 계산하기(덧셈)',B,'규칙 있는 덧셈'],['논리추리(이중 조건)',D,'논리추리'],['줄 세우기(활용)',D,'자리 바꾸기'],['두 종류의 수로 만든 수의 가짓수',A,'조건에 맞는 수'],['복면산',B,'복면산']];
+        (v.items||[]).forEach(function (it) { var tx=TX[Number(it.sourceNo)-1]||['','',''];
+          if(!it.detailType)it.detailType=tx[0]; if(!it.area)it.area=tx[1]; if(!it.subarea)it.subarea=tx[2]; ['asset','solutionAsset'].forEach(function (k) { if (typeof it[k] === 'string' && /^data:image\/png;base64,/.test(it[k])) it[k] = {kind:'raster', src:it[k], mimeType:'image/png', description:'문항 그림'}; }); if (!it.solution && Array.isArray(it.solutionSteps)) it.solution = it.solutionSteps.join(' '); }); data = v; return v; })
       .catch(function (e) { loadPromise = null; throw e; });
     return loadPromise;
   }
