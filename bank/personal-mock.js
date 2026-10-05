@@ -10,7 +10,8 @@
   function codeOf(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||'');return SUPPORTED.test(key)?key:'';}
   function isAllowed(code,student,data){
     if(!code||!student)return false;
-    if(code.indexOf('original')===0||code==='final7'||code==='final8'||code==='last1'){
+    if(code==='last1'){var acc=(data&&data.archiveAccess||{})['최종 모의고사'],att=data&&data.attendance||{};return Array.isArray(acc)&&(acc.indexOf('*')>=0||acc.indexOf(student)>=0)||Array.isArray(att[student])&&att[student].indexOf('oct-5')>=0;}
+    if(code.indexOf('original')===0||code==='final7'||code==='final8'){
       var key=code.indexOf('original')===0?'mock-signature-'+code.slice(8):(code==='final7'?'mock-final-7':(code==='final8'?'mock-final-8':'mock-last-1'));
       var list=data&&data.archiveProductAccess&&data.archiveProductAccess[key];
       return Array.isArray(list)&&(list.indexOf('*')>=0||list.indexOf(student)>=0);
