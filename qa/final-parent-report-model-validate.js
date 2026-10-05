@@ -40,4 +40,7 @@ assert.deepEqual(unreviewed.repeatedWeaknesses,[],'unreviewed type labels cannot
 const allMiss=report.model({...ctx,miss:[1,2,3,4],score:0,newScore:100},opts);
 assert.equal(allMiss.priorityItems.length,3);
 assert.equal(allMiss.targetScore,60,'displayed first three contribute 10+20+30 points');
+const customPriority=report.model(ctx,{...opts,priorityNos:[4,1],priorityLabel:'선택 기준 검증'});
+assert.deepEqual(customPriority.priorityItems.map(row=>row.no),[4,1],'series-specific priority order is preserved');
+assert.equal(customPriority.priorityLabel,'선택 기준 검증');
 console.log('PASS parent report model: weighted rates, percentile scope, missing data, first-attempt history, distinct-round types, recommendation target');

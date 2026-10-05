@@ -19,7 +19,7 @@
     const action=body.action;
     if(!allowed.has(action))fail('INVALID_REQUEST',400);
     const keys=action==='apply-percentiles'?['action','exam']:action==='save-comment'?['action','exam','student','comment','expectedUpdatedAt']:['action','exam','student'];
-    if(Object.keys(body).some(k=>!keys.includes(k))||!(/^(?:final(?:[1-5]|7)|original[12])$/.test(body.exam||'')))fail('INVALID_REQUEST',400);
+    if(Object.keys(body).some(k=>!keys.includes(k))||!(/^(?:final(?:[1-5]|7)|last1|original[12])$/.test(body.exam||'')))fail('INVALID_REQUEST',400);
     const signature=/^original[12]$/.test(body.exam);
     if(signature&&(action==='apply-percentiles'||action==='record-report'))fail('INVALID_REQUEST',400);
     const baseline=baselineFor(baselines,body.exam);

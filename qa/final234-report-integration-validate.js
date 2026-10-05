@@ -11,9 +11,11 @@ const FINAL2_DIAGRAM_SVG_COUNTS={2:1,5:1,9:9,12:1,13:2,16:4,23:1,27:1,28:2};
 const FINAL3_DIAGRAM_SVG_COUNTS={1:1,3:4,4:2,6:5,7:3,8:2,13:1};
 const records=[1,2,3,4].map(n=>({student,round:'final'+n,ox,score,wrong:10,source:'admin'}));
 records.push({student,round:'last1',ox,score,wrong:10,source:'admin'});
+const final8Ox='O'.repeat(8)+'X'.repeat(22),final8Score=core.scoreOf(final8Ox);
+records.push({student,round:'final8',ox:final8Ox,score:final8Score,wrong:22,source:'admin'});
 records.push({student,round:'final2@2',ox:'O'.repeat(30),score:100,wrong:0,source:'practice-admin'});
 const source=JSON.stringify(records),writes=[],calls=[],errors=[];
-const data=fs.readFileSync(path.join(root,'data.js'),'utf8')+`\n;(()=>{let d=window.GFIELD_DATA,n=${JSON.stringify(student)};d.students.push(n);d.studentTypes[n]='resident';d.archiveAccess['파이널 모의고사']=[n];d.attendance[n]=d.nodes.filter(x=>/파이널/.test(x.title||'')).map(x=>x.id);})();`;
+const data=fs.readFileSync(path.join(root,'data.js'),'utf8')+`\n;(()=>{let d=window.GFIELD_DATA,n=${JSON.stringify(student)};d.students.push(n);d.studentTypes[n]='resident';d.archiveAccess['파이널 모의고사']=[n];d.archiveProductAccess['mock-final-8']=[n];d.attendance[n]=d.nodes.filter(x=>/파이널/.test(x.title||'')).map(x=>x.id);})();`;
 const server=http.createServer((req,res)=>{
  const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
  if(!file.startsWith(root+path.sep)||/\.private(?:-work|\.json)/.test(file)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);return res.end();}
@@ -42,6 +44,20 @@ const server=http.createServer((req,res)=>{
  const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
  try{
   const results=[];
+  const final8Page=await context.newPage();
+  await final8Page.goto(base+'/final.html?round=8&go=report&name='+encodeURIComponent(student));
+  await final8Page.locator('.final-report-package').waitFor();
+  const final8Summary=await final8Page.locator('#report-summary').innerText();
+  assert.match(final8Summary,/최종 실전 모의고사 8회/,'Final8 is connected as its own standalone result');
+  assert.ok(await final8Page.locator('.report-compact-print-header .report-qr-code svg').count()>=1,'Final8 summary renders its report QR');
+  assert.match(decodeURIComponent(await final8Page.locator('.report-compact-print-header .report-qr-code').first().getAttribute('data-qr-url')),/round=8&go=report/,'Final8 QR remains in its own series and round');
+  assert.equal(final8Summary.includes('최종 1~4회'),false,'Final8 is not added to the Final1-4 cumulative group');
+  assert.equal(await final8Page.locator('.final8-benchmark').count(),1,'Final8 shows the Signature-based difficulty-adjusted estimate');
+  assert.match(await final8Page.locator('.final8-benchmark').innerText(),/실제 원점수[\s\S]*실전 예상점수[\s\S]*예상 반[\s\S]*예상 석차 백분율/,'Final8 shows all requested actual and expected measures');
+  const final8Priorities=await final8Page.locator('#report-plan .parent-priority-list li').evaluateAll(nodes=>nodes.map(node=>node.innerText));
+  assert.ok(final8Priorities.length<=3,'Final8 recommends at most three questions');
+  assert.ok(final8Priorities.every(text=>/2\.7점|3\.4점/.test(text)),'Final8 priority set excludes 4.2-point difficult questions');
+  assert.match(await final8Page.locator('#report-plan').innerText(),/시그니처와 같은 기준.*틀린 2·3점대/,'Final8 explains its Signature-aligned basic-question rule');
   for(const n of [2,3,4]){
    await page.goto(base+'/final.html?round='+n+'&go=report&name='+encodeURIComponent(student));
    await page.locator('.final-report-package').waitFor();
@@ -253,8 +269,40 @@ const server=http.createServer((req,res)=>{
    return GF_TEST.computeCumulativeConsidered(1,map,2,'last1',ox.split(''),false).map(row=>row.label);
   },{records,ox});
   assert.deepEqual(lastCumulative,['파이널 1회','파이널 2회','파이널 3회','파이널 4회','최종 1회'],'Last1 includes all four Final first records plus Last1');
-  const cumulativeText=await page.locator('section').filter({has:page.getByRole('heading',{name:'누적 성적',exact:true})}).innerText();
-  for(const label of lastCumulative)assert.match(cumulativeText,new RegExp(label));
+  assert.equal(lastCumulative.length,5,'Last1 cumulative source still contains the four Final and one Last results');
+  await page.goto(base+'/final.html?set=last&round=1&go=report&name='+encodeURIComponent(student));
+  await page.locator('.final-report-package').waitFor();
+  assert.equal(await page.locator('#report-summary').count(),1,'Last1 uses the shared parent report summary');
+  assert.match(await page.locator('#report-summary').innerText(),/최종 1회/);
+  assert.match(await page.locator('#report-summary').innerText(),/파이널 1~4회.*최종 1회/,'Last1 cumulative label keeps the distinct Final+Last scope');
+  assert.ok(await page.locator('.report-compact-print-header .report-qr-code svg').count()>=1,'Last1 print summary renders its report QR');
+  assert.match(decodeURIComponent(await page.locator('.report-compact-print-header .report-qr-code').first().getAttribute('data-qr-url')),/round=1&go=report&set=last/,'Last1 QR keeps its own series and round');
+  assert.match(await page.locator('#report-plan').innerText(),/문항 정답률이 내 전체 정답률보다 높은/,'Last1 priority note explains its personal-vs-item accuracy rule');
+  const last1Priorities=await page.locator('#report-plan .parent-priority-list li').evaluateAll(nodes=>nodes.map(node=>({text:node.innerText,no:Number((node.innerText.match(/^\s*\d+/)||[])[0])})));
+  assert.ok(last1Priorities.length<=3,'Last1 recommends at most three qualifying questions');
+  const last1Rates=await page.evaluate(()=>{const ctx=GF_TEST.buildContext('검수',1,('O'.repeat(20)+'X'.repeat(10)).split(''));return {own:ctx.ncorr/ctx.items.length,rates:ctx.rate,wrong:ctx.wrongList.map(item=>item.no)};});
+  assert.ok(last1Priorities.every(row=>last1Rates.wrong.includes(row.no)&&Number(last1Rates.rates[row.no])>last1Rates.own),'Last1 priorities are wrong answers with question accuracy above the student accuracy');
+  for(const selector of ['#report-plan','#report-strengths','#report-tiers','#report-items','#report-review','#report-materials'])assert.equal(await page.locator(selector).count(),1,'Last1 parent section '+selector);
+  assert.equal(await page.locator('#detailWrap .bar').count(),30,'Last1 keeps its own verified 30-item rates');
+  assert.equal(await page.locator('.final1-detailed-card.is-ready').count(),30,'Last1 retains its own reviewed solutions');
+  assert.equal(await page.locator('#wrongPractice .wp-item').count(),10,'Last1 practice lists only missed items');
+  const practicePopup=page.waitForEvent('popup');
+  await page.locator('#wpStart').click();
+  await practicePopup.then(async popup=>{await popup.waitForLoadState('domcontentloaded');assert.match(popup.url(),/bank=last1/);assert.match(popup.url(),/source=last%7C1/);await popup.close();});
+  for(const width of [1280,390]){
+   await page.setViewportSize({width,height:900});
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Last1 report fits '+width+'px');
+   if(process.env.GFIELD_LAST1_QA_ARTIFACT_DIR){const dir=process.env.GFIELD_LAST1_QA_ARTIFACT_DIR;fs.mkdirSync(dir,{recursive:true});await page.screenshot({path:path.join(dir,'last1-report-'+width+'.png'),fullPage:true});}
+  }
+  await page.evaluate(()=>window.dispatchEvent(new Event('beforeprint')));
+  await page.emulateMedia({media:'print'});
+  assert.equal(await page.locator('.report-fixed-watermark').count(),1,'Last1 native print keeps the student watermark');
+  assert.ok(await page.locator('#report-materials .report-resource-details[open]').count()>=1,'Last1 expands learning material details in print');
+  assert.notEqual(await page.locator('#report-materials .final1-detailed-card.is-ready').first().evaluate(node=>getComputedStyle(node).display),'none','Last1 detailed solutions remain printable');
+  await page.evaluate(()=>window.dispatchEvent(new Event('afterprint')));
+  if(process.env.GFIELD_LAST1_QA_ARTIFACT_DIR){const dir=process.env.GFIELD_LAST1_QA_ARTIFACT_DIR;await page.setViewportSize({width:1280,height:900});await page.pdf({path:path.join(dir,'last1-report-print.pdf'),format:'A4',printBackground:true,preferCSSPageSize:true});}
+  await page.emulateMedia({media:'screen'});
+  assert.ok(calls.some(call=>call.action==='read-report'&&call.exam==='last1'),'Last1 reads its isolated comment key');
   failedExam='final3';
   await page.goto(base+'/final.html?round=3&go=report&name='+encodeURIComponent(student));await page.locator('.final-report-package').waitFor();
   assert.equal(await page.evaluate(()=>GF_TEST.buildContext('검수',3,('O'.repeat(20)+'X'.repeat(10)).split('')).populationVerified),true,'approved public aggregate remains trusted when the authenticated lookup is unavailable');

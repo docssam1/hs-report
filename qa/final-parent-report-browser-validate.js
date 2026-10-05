@@ -43,7 +43,7 @@ const server=http.createServer((req,res)=>{
   const open=async n=>{await page.goto(base+'/final.html?round='+n+'&go=report&name='+encodeURIComponent(student));await page.locator('#report-summary').waitFor();};
   try{
     await open(2);
-    assert.equal(await page.locator('.parent-report-index a').count(),7,'seven parent navigation destinations');
+    assert.equal(await page.locator('.parent-report-index a').count(),5,'five parent navigation destinations');
     const targets=await page.locator('.parent-report-index a').evaluateAll(links=>links.map(a=>({href:a.getAttribute('href'),exists:!!document.getElementById(a.hash.slice(1))})));
     assert.ok(targets.every(t=>t.exists),'every index link resolves');
     assert.match(await page.locator('.docssam-saved-comment').innerText(),/잘하는 영역/);
@@ -52,7 +52,7 @@ const server=http.createServer((req,res)=>{
     assert.ok(await page.locator('.personal-study-plan').isVisible(),'personal study plan remains directly accessible');
     assert.doesNotMatch(await page.locator('#report-summary').innerText(),/null|NaN|undefined|응시\s*인원|합격\s*확률/);
     assert.ok(await page.locator('details.parent-report-details:not([open])').count()>0,'long explanations are collapsed initially');
-    const source=await page.locator('.final-report-package').textContent();
+    const source=await page.locator('#report-summary').innerText();
     for(const width of [1280,390]){
       await page.setViewportSize({width,height:900});
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'page fits '+width+'px');
@@ -62,18 +62,18 @@ const server=http.createServer((req,res)=>{
       if(output){fs.mkdirSync(output,{recursive:true});await page.screenshot({path:path.join(output,'parent-report-'+width+'.png')});await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:path.join(output,'parent-report-top-'+width+'.png')});}
     }
     await page.setViewportSize({width:1280,height:900});
-    await page.locator('.parent-report-index a[href="#report-review"]').focus();await page.keyboard.press('Enter');
-    assert.ok(await page.locator('#report-review').isVisible(),'index works with keyboard');
-    // First-round reports do not claim a two-round history.
-    await open(1);assert.match(await page.locator('#report-summary').innerText(),/2회부터/);
+    await page.locator('.parent-report-index a[href="#report-items"]').focus();await page.keyboard.press('Enter');
+    assert.ok(await page.locator('#report-items').isVisible(),'index works with keyboard');
+    // First-round Final reports keep the established overall-trend summary.
+    await open(1);assert.match(await page.locator('#report-summary').innerText(),/파이널 1~4회 · 최종 1~4회 누적/);
     // Missing intermediate round must remain missing, not become a zero.
     const fullRecords=records;records=records.filter(r=>r.round!=='final2');await open(4);
-    assert.match(await page.locator('#report-summary').innerText(),/미등록|미반영|2회/);
+    assert.match(await page.locator('#report-summary').innerText(),/3\/8회/,'missing Final2 does not enter the cumulative count');
     records=fullRecords;failPopulation=true;await open(2);
     assert.equal(await page.locator('#detailWrap td.rt .bar').count(),30,'offline population lookup does not remove fixed rates');
     assert.doesNotMatch(await page.locator('#report-summary').innerText(),/null%|NaN|undefined/);
     failPopulation=false;await open(2);
-    assert.equal(await page.locator('.final-report-package').textContent(),source,'returning to the same result restores identical content');
+    assert.equal(await page.locator('#report-summary').innerText(),source,'returning to the same result restores the same score summary');
     if(output){
       await page.evaluate(()=>{document.querySelectorAll('details.parent-report-details').forEach(d=>d.open=true);});
       await page.screenshot({path:path.join(output,'parent-report-full.png'),fullPage:true});

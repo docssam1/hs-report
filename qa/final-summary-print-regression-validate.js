@@ -257,18 +257,25 @@ async function saveFinal2Review(page){
         return result;
       }finally{Object.assign(record,before);}
     });
-    await check('Last report print label matches native print action',async()=>{
+    await check('Last1 report uses the compact summary print action',async()=>{
       await page.goto(base+'/final.html?set=last&round=1&go=report&name='+encodeURIComponent(student));
       await page.locator('.report-screen-header').waitFor();
       const button=page.locator('#printBtn');
       assert.equal(await button.isVisible(),true);
       assert.equal(await button.evaluate(node=>node.isConnected),true);
       assert.match(await button.innerText(),/인쇄/);
-      assert.doesNotMatch(await button.innerText(),/요약/,'Last uses native full-report print');
+      assert.match(await button.innerText(),/요약.*인쇄|인쇄.*요약/,'Last1 uses the same compact QR summary print flow');
       await button.click();
-      assert.equal(await page.evaluate(()=>window.__qaNativePrintCalls),1,'one native print action');
+      await page.locator('iframe.gfield-final-report-print-frame').waitFor({state:'attached',timeout:60000});
+      await page.frameLocator('iframe.gfield-final-report-print-frame').locator('.pagedjs_pages > .pagedjs_page').first().waitFor({state:'attached',timeout:60000});
+      await page.waitForFunction(()=>!document.querySelector('#printBtn').textContent.includes('준비 중'),null,{timeout:60000});
+      const counts=await page.locator('iframe.gfield-final-report-print-frame').evaluate(frame=>({practicePages:frame.contentDocument.querySelectorAll('.gfield-summary-practice-page').length,summaryPages:frame.contentDocument.querySelectorAll('.pagedjs_pages > .pagedjs_page').length}));
+      const priorityCount=await page.locator('#report-plan .parent-priority-list li').count();
+      if(priorityCount){assert.ok(counts.practicePages>0,'Last1 attaches its approved similar questions and answers to the summary print');}
+      else{assert.equal(counts.practicePages,0,'Last1 without qualifying high-correct-rate misses prints a summary only');assert.ok(counts.summaryPages>0);assert.match(await button.innerText(),/요약만 인쇄/);}
+      assert.equal(await page.evaluate(()=>window.__qaNativePrintCalls||0),0,'summary printing does not also invoke native full-report print');
       assert.equal(await page.locator('.report-screen-header').count(),1,'the report remains visible');
-      return {label:await button.innerText(),nativePrintCalls:1};
+      return {label:await button.innerText(),counts};
     });
     await check('no browser errors or production writes',async()=>{
       assert.deepEqual(errors,[]);

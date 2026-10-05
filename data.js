@@ -2052,12 +2052,22 @@ window.GFIELD_DATA = {
       "title": "최종 실전 모의고사 8회",
       "accessKey": "mock-final-8",
       "pdf": "",
-      "cover": "",
+      "imgdir": "final_8",
+      "pages": 8,
+      "cover": "materials/final_8/001.jpg",
       "date": "2026-07-28",
       "links": [
         {
-          "label": "8회 검수 대기 안내",
-          "url": "https://hs.gfieldacademy.net/final.html?round=8"
+          "label": "실전 타이머",
+          "url": "https://hs.gfieldacademy.net/final.html?round=8&go=timer"
+        },
+        {
+          "label": "오답 입력·분석",
+          "url": "https://hs.gfieldacademy.net/final.html?round=8&go=answer"
+        },
+        {
+          "label": "답안·교재 연결표",
+          "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=8"
         }
       ]
     },

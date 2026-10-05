@@ -146,7 +146,7 @@
     var itemByNo={};(ctx.items||[]).forEach(function(item){itemByNo[Number(item.no)]=item;});
     var recoveryNos=(ctx.miss||[]).slice();
     var fallbackNos=(ctx.wrongList||[]).map(function(item){return Number(item.no);});
-    var priorityNos=(recoveryNos.length?recoveryNos:fallbackNos).slice(0,3);
+    var priorityNos=Array.isArray(options.priorityNos)?options.priorityNos.slice(0,3):(recoveryNos.length?recoveryNos:fallbackNos).slice(0,3);
     var priorityItems=priorityNos.map(function(no){
       var item=itemByNo[Number(no)];if(!item)return null;
       var meta=taxonomyValue(options.taxonomy,roundNum,item);
@@ -170,6 +170,7 @@
       cumulativeImprovements:focusRows(cumulativeAreas,false),
       repeatedWeaknesses:repeatedWeaknesses(attempts,rounds,options.taxonomy),
       priorityItems:priorityItems,
+      priorityLabel:options.priorityLabel||null,
       targetScore:priorityItems.length?round1(Math.min(100,(number(ctx.score)||0)+priorityItems.reduce(function(sum,item){return sum+item.points;},0))):null,
       currentScore:number(ctx.score),
       currentWrongCount:number(ctx.wrong)
@@ -183,7 +184,7 @@
     if(vm.standalone)return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison is-single">'+current+'</div></section>';
     if(vm.overallTrend){
       var overall=vm.overallTrend;
-      var total='<article class="parent-summary-column cumulative"><p>파이널 1~4회 · 최종 1~4회 누적</p>'+metric('응시 회차',overall.rows.length,'/8회')+metric('원점수 평균',overall.scoreAverage,'점')+metric('예상 석차 백분율',overall.percentileAverage,'%')+metric('누적 예상 등급',overall.cumulativeGrade,'')+'</article>';
+      var total='<article class="parent-summary-column cumulative"><p>'+escapeHTML(overall.label||'파이널 1~4회 · 최종 1~4회 누적')+'</p>'+metric('응시 회차',overall.rows.length,overall.roundCountLabel||'/8회')+metric('원점수 평균',overall.scoreAverage,'점')+metric('예상 석차 백분율',overall.percentileAverage,'%')+metric('누적 예상 등급',overall.cumulativeGrade,'')+'</article>';
       return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison">'+current+total+'</div><p class="parent-report-note">누적 석차는 백분율이 확인된 '+overall.rankedCount+'회만 평균합니다. 특강·재응시는 제외합니다.</p>'+(vm.isPractice?'<p class="parent-report-note">이번 연습 결과는 누적에 포함하지 않고 최초 응시 성적을 유지합니다.</p>':'')+'</section>';
     }
     if(vm.roundNum<2)return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison is-single">'+current+'</div><p class="parent-report-note">누적 비교는 파이널 2회부터 표시됩니다.</p></section>';
@@ -227,11 +228,14 @@
     return '<div class="parent-tier-comparison"><p class="lead">포함된 모든 문항의 득점 합을 배점 합으로 나눈 결과입니다.</p><div class="report-table-scroll"><table><thead>'+head+'</thead><tbody>'+rows+'</tbody></table></div></div>';
   }
   function priorityHTML(vm){
-    if(!vm.priorityItems.length)return '<div class="parent-priority-empty">'+(vm.currentWrongCount===0?'이번 회차는 오답이 없습니다.':'이번 회차에는 ★ 우선 복습 추천 문항이 없습니다. 아래 학습 계획에 따라 오답을 차근차근 복습하세요.')+'</div>';
+    if(!vm.priorityItems.length){
+      var empty=vm.currentWrongCount===0?'이번 회차는 오답이 없습니다.':'이번 회차에는 ★ 우선 복습 추천 문항이 없습니다. 아래 학습 계획에 따라 오답을 차근차근 복습하세요.';
+      return '<div class="parent-priority-empty">'+empty+(vm.priorityLabel?'<p>'+escapeHTML(vm.priorityLabel)+'</p>':'')+'</div>';
+    }
     var items=vm.priorityItems.map(function(item,index){return '<li><a href="#report-items"><span>'+String(index+1).padStart(2,'0')+'</span><b>'+item.no+'번 · '+escapeHTML(item.label)+'</b><small>'+escapeHTML(item.area)+(item.subarea?' › '+escapeHTML(item.subarea):'')+' · '+item.points+'점'+(item.rate==null?'':' · 정답률 '+item.rate.toFixed(0)+'%')+'</small></a></li>';}).join('');
     var target=vm.targetScore==null?'':' 이 문항들을 모두 맞히고 다른 답안이 같다면 '+vm.currentScore+'점에서 '+vm.targetScore+'점이 됩니다.';
     var recovery=vm.priorityItems.some(function(item){return item.recovery;});
-    var reason=recovery?'현재 실력에서 먼저 회복할 가능성이 큰 문항입니다.':'오답 중 앞에서부터 3문항만 먼저 복습합니다.';
+    var reason=vm.priorityLabel||(recovery?'현재 실력에서 먼저 회복할 가능성이 큰 문항입니다.':'오답 중 앞에서부터 3문항만 먼저 복습합니다.');
     return '<div class="parent-priority"><h3>이번 주 우선 '+vm.priorityItems.length+'문항</h3><p>'+reason+target+'</p><ol class="parent-priority-list">'+items+'</ol></div>';
   }
   function historyHTML(vm){

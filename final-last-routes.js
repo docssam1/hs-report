@@ -186,11 +186,6 @@
       root.location.replace(next);
       return true;
     }
-    if(isPendingFinal8(current)){
-      root.GFIELD_ROUTE_REDIRECTING=true;
-      showPendingFinal8();
-      return true;
-    }
     return false;
   }
   function route(series,round,action){

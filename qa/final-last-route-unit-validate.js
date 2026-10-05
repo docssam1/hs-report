@@ -57,18 +57,13 @@ assert.equal(JSON.stringify(data),before,'authorization check cannot mutate appr
 const published={window:{}};
 vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../data.js'),'utf8'),published);
 const final8=published.window.GFIELD_DATA.books.find(book=>book&&book.accessKey==='mock-final-8');
-assert.deepEqual(Array.from(published.window.GFIELD_DATA.archiveProductAccess['mock-final-8']),[],'Final 8 remains unapproved');
-assert.equal(final8.links.length,1,'pending Final 8 offers no test or answer links');
-assert.match(final8.links[0].label,/검수 대기/);
-assert.equal(U(R.normalizeUrl(final8.links[0].url)).searchParams.get('round'),'8');
-let pendingHtml='';
-const pendingWindow={
- location:{href:'https://hs.gfieldacademy.net/final.html?round=8&go=answer',origin:'https://hs.gfieldacademy.net',search:'?round=8&go=answer',hash:'',replace(){throw new Error('Final 8 must render pending without redirecting to Last 3');}},
- document:{title:'',getElementById(id){return id==='app'?{set innerHTML(value){pendingHtml=value;}}:null;}}
-};
-vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../final-last-routes.js'),'utf8'),{window:pendingWindow,URL});
-assert.equal(pendingWindow.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html'),true,'Final 8 stops the scored exam bootstrap');
-assert.equal(pendingWindow.GFIELD_ROUTE_REDIRECTING,true);
-assert.match(pendingWindow.document.title,/8회 · 검수 대기/);
-assert.match(pendingHtml,/시험지·답안·성적 분석은 아직 제공되지 않습니다/);
+assert.ok(Array.isArray(published.window.GFIELD_DATA.archiveProductAccess['mock-final-8']),'Final 8 keeps its existing separate approval list');
+assert.equal(final8.links.length,3,'Final 8 keeps timer, answer-entry, and answer-sheet routes');
+assert.match(final8.links[0].label,/타이머/);
+assert.match(final8.links[1].label,/분석/);
+assert.match(final8.links[2].label,/답안/);
+for(const link of final8.links){const u=U(R.normalizeUrl(link.url));assert.equal(u.searchParams.get('round'),'8','Final 8 links stay on round 8');}
+for(const page of ['final.html?round=8&go=report','final.html?round=8&go=answer','answer.html?set=final&round=8']){
+ const normalized=R.normalizeUrl(page);assert.match(normalized,/round=8/,'Final 8 canonical link remains distinct');assert.doesNotMatch(normalized,/set=last|round=3/,'Final 8 never becomes Last 3');
+}
 console.log('PASS route matrix, explicit-series precedence, external URL privacy, per-round access and approval immutability');

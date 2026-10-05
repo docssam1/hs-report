@@ -56,7 +56,8 @@
     var nos=options.priorityNos;
     if(requireButton&&(!button||button.nodeType!==1))fail('button-missing','인쇄 단추를 찾지 못했습니다.');
     if(!source||source.nodeType!==1||!source.classList.contains('final-report-package'))fail('source-missing','인쇄할 진단 요약을 찾지 못했습니다.');
-    if(![1,2,3,4,7].includes(round)||Number(source.getAttribute('data-report-round'))!==round)fail('round-invalid','진단지 회차와 유사문제 회차가 다릅니다.');
+    var set=String(options.set||source.getAttribute('data-set')||'final');
+    if(!((set==='last'&&round===1)||(set==='final'&&[1,2,3,4,7,8].includes(round)))||Number(source.getAttribute('data-report-round'))!==round)fail('round-invalid','진단지 회차와 유사문제 회차가 다릅니다.');
     if(!Array.isArray(nos)||nos.length>3||nos.some(function(no){return !Number.isInteger(Number(no))||Number(no)<1||Number(no)>30;})||new Set(nos.map(Number)).size!==nos.length){
       fail('priority-invalid','이번 주 우선 복습 문항을 확인할 수 없습니다.');
     }
@@ -65,16 +66,18 @@
       return match?Number(match[1]):NaN;
     });
     if(printedPriority.length!==nos.length||printedPriority.some(function(no,index){return no!==Number(nos[index]);}))fail('priority-mismatch','화면의 우선 복습 추천과 인쇄할 문항이 다릅니다.');
-    return {doc:doc,button:button,source:source,round:round,nos:nos.map(Number),name:String(options.name||'').trim(),teacherPrint:options.teacherPrint===true,timeout:Number(options.timeoutMs)||DEFAULT_TIMEOUT};
+    return {doc:doc,button:button,source:source,set:set,round:round,nos:nos.map(Number),name:String(options.name||'').trim(),teacherPrint:options.teacherPrint===true,timeout:Number(options.timeoutMs)||DEFAULT_TIMEOUT};
   }
 
   function bankUrl(input){
+    var prefix=input.set==='last'?'last1':'final'+input.round;
+    var source=input.set==='last'?'last|1':'final|'+input.round;
     var params=new URLSearchParams({
-      bank:'final'+input.round,
+      bank:prefix,
       practice:'wrong',
-      source:'final|'+input.round,
+      source:source,
       sourceNos:input.nos.join(','),
-      gens:input.nos.map(function(no){return 'final'+input.round+'-q'+String(no).padStart(2,'0');}).join(','),
+      gens:input.nos.map(function(no){return prefix+'-q'+String(no).padStart(2,'0');}).join(','),
       per:'3',
       points:'all',
       view:'grouped',

@@ -557,6 +557,17 @@ td.weak-cell{white-space:nowrap}
   #final3DetailedSolutions #final3-solution-13 .final1-steps::before{content:'13번 풀이 계속'}
 }
 </style>
+<style>
+  .final8-benchmark{margin:14px 0;padding:16px 18px;border:1px solid #bfcee4;border-radius:14px;background:linear-gradient(135deg,#f5f8ff,#fff);color:#24344b;break-inside:avoid;page-break-inside:avoid}
+  .final8-benchmark h2{margin:0 0 12px;font-size:17px;color:#234c91}
+  .final8-benchmark-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .final8-benchmark-grid>div{padding:10px;border-radius:9px;background:#fff;border:1px solid #e0e7f0;min-width:0}
+  .final8-benchmark-grid small{display:block;color:#64748b;font-size:11px}
+  .final8-benchmark-grid b{display:block;margin-top:4px;font-size:18px;overflow-wrap:anywhere}
+  .final8-benchmark p{margin:11px 0 0;color:#64748b;font-size:11px;line-height:1.5}
+  @media(max-width:560px){.final8-benchmark-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media print{.final8-benchmark{margin:3mm 0;padding:3mm 4mm}.final8-benchmark h2{font-size:11pt}.final8-benchmark-grid b{font-size:11pt}.final8-benchmark-grid small,.final8-benchmark p{font-size:8pt}}
+</style>
 <link rel="stylesheet" href="final-report-package.css">
 <link rel="stylesheet" href="final-report-print.css">
 <link rel="stylesheet" href="final-parent-report.css">
@@ -567,12 +578,12 @@ td.weak-cell{white-space:nowrap}
 <div id="app"></div>
 <button class="print-btn no-print" id="printBtn" style="display:none">🖨 인쇄</button>
 
-<script src="final-last-routes.js?v=20261003-final8-independent"></script>
+<script src="final-last-routes.js?v=20261005-final8-report"></script>
 <script>(function(){
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
   // between releases, so only that one file needs a fresh URL per visit.
-  var staticVersion='20260930-signature-study-priority-1';
+  var staticVersion='20261005-final1-final8-parent-report-2';
   var final4AnswerVersion='20260928-final4-q24-plan-2';
   var signatureAnswerVersion='20260928-signature-answer-keys-1';
   var dataVersion=Date.now();
@@ -585,6 +596,7 @@ td.weak-cell{white-space:nowrap}
   var isFinal3=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===3;
   var isFinal4=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===4;
   var isFinal7=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===7;
+  var isFinal8=!isLast&&!isOriginal&&/^\d+$/.test(requestedRound||'')&&Number(requestedRound)===8;
   var mockFile=isLast?'mock-data-last.js':(isOriginal?'mock-data-original.js':'mock-data-final.js');
   var files=['hs-auth.js','data.js',mockFile,'vendor/qrcode-generator/2.0.4/qrcode.js'];
   if(isOriginal) files.push('mock-data-final.js','signature-forecast.js','signature-study-priority.js','signature-must-study.js');
@@ -594,15 +606,16 @@ td.weak-cell{white-space:nowrap}
   if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js','last-score-data.js');
   if(isLast) files.push('last-score-data.js');
   if(!isOriginal) files.push('final-score-trend.js');
-  if(!isLast) files.push('final-report-state.js');
-  if(!isLast&&!isOriginal) files.push('final-parent-report.js');
+  if(!isOriginal) files.push('final-report-state.js');
+  if(!isOriginal) files.push('final-parent-report.js');
   if(isFinal1) files.push('final1-detailed-data.js','final-detailed-solutions.js');
   if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js');
   if(isFinal3) files.push('final3-solution-diagrams.js','final3-backhalf-solution-diagrams.js','final3-detailed-data.js','final-detailed-solutions.js','final3-question-coach.js');
   if(isFinal4) files.push('final4-detailed-data.js','final-detailed-solutions.js','final4-question-coach.js');
   if(isFinal7) files.push('last-score-data.js','final7-benchmark.js','final7-original-tutor.js');
-  if(!isLast&&!isOriginal) files.push('final-report-print.js');
-  if(isFinal1||isFinal2||isFinal3||isFinal4||isFinal7) files.push('final-summary-practice-print.js');
+  if(isFinal8) files.push('final8-benchmark.js');
+  if((!isLast&&!isOriginal)||(isLast&&Number(requestedRound)===1)) files.push('final-report-print.js');
+  if(isFinal1||isFinal2||isFinal3||isFinal4||isFinal7||isFinal8||(isLast&&Number(requestedRound)===1)) files.push('final-summary-practice-print.js');
   if(isLast) files.push(
     'mock-data-final.js',
     'final-population.js',
@@ -620,7 +633,7 @@ td.weak-cell{white-space:nowrap}
   );
   files.push('exam-cues.js');
   files.forEach(function(f){
-    var version=f==='data.js'?dataVersion:(f==='mock-data-original.js'?signatureAnswerVersion:((f==='mock-data-final.js'||f==='final4-detailed-data.js')?final4AnswerVersion:staticVersion));
+    var version=f==='data.js'?dataVersion:(f==='final-last-routes.js'?'20261005-final8-report':(f==='mock-data-final.js'&&isFinal8?'20261005-final8-report':(f==='mock-data-original.js'?signatureAnswerVersion:((f==='mock-data-final.js'||f==='final4-detailed-data.js')?final4AnswerVersion:staticVersion))));
     document.write('<scr'+'ipt src="'+f+'?v='+version+'"><\/scr'+'ipt>');
   });
 })();</script>
@@ -635,6 +648,7 @@ td.weak-cell{white-space:nowrap}
   var params = new URLSearchParams(location.search);
   var isLast = params.get('set')==='last';
   var isOriginal = params.get('set')==='original';
+  var isFinal8 = !isLast&&!isOriginal&&Number(params.get('round')||1)===8;
   var isFinal2 = !isLast&&!isOriginal&&Number(params.get('round')||1)===2;
   var M = isLast ? window.GFIELD_MOCK_LAST : (isOriginal ? window.GFIELD_MOCK_ORIGINAL : window.GFIELD_MOCK_FINAL);
   var finalModel = window.GFIELD_MOCK_FINAL;
@@ -1026,7 +1040,7 @@ td.weak-cell{white-space:nowrap}
   }
   function buildContext(name, rNum, oxArr){
     var R = M.rounds[String(rNum)];
-    var items = R.items, S = R.stats;
+    var items = R.items, S = isLast ? (R.stats||lastSourceStats(rNum)) : R.stats;
     var cutOnly=!!S.cutOnly;
     var populationVerified=populationStatsVerified(S);
     var ratesVerified=fixedRatesVerified(S);
@@ -1155,6 +1169,14 @@ td.weak-cell{white-space:nowrap}
     return '<div class="report-table-scroll"><table><thead><tr><th>번호</th><th>내 답</th><th>유형 / 영역</th><th>배점</th><th>정답</th>'+popHead+'<th>영상</th><th class="weak-cell no-print">약점 표시</th></tr></thead>'+detailRowsHTML(ctx)+'</table></div>';
   }
   function reportPriorityNos(ctx){
+    if(isLast&&Number(ctx.roundNum)===1){
+      if(!ctx.ratesVerified)return [];
+      var ownRate=Number(ctx.ncorr)/Math.max(1,ctx.items.length);
+      return (ctx.wrongList||[]).filter(function(item){return Number.isFinite(Number(ctx.rate[item.no]))&&Number(ctx.rate[item.no])>ownRate;})
+        .sort(function(a,b){return Number(ctx.rate[b.no])-Number(ctx.rate[a.no])||Number(a.no)-Number(b.no);})
+        .slice(0,3).map(function(item){return Number(item.no);});
+    }
+    if(isFinal8)return (ctx.wrongList||[]).filter(function(item){return BP(item.no).pts<=3.4;}).sort(function(a,b){return BP(a.no).pts-BP(b.no).pts||Number(a.no)-Number(b.no);}).slice(0,3).map(function(item){return Number(item.no);});
     var nos=(ctx.miss||[]).slice();
     if(!nos.length) nos=(ctx.wrongList||[]).map(function(item){return Number(item.no);});
     return nos.slice(0,3);
@@ -1360,6 +1382,17 @@ td.weak-cell{white-space:nowrap}
     if(practiceUrl)cards+='<a class="report-qr-card" href="'+esc(practiceUrl)+'"><span class="report-qr-code" data-qr-url="'+esc(practiceUrl)+'" aria-hidden="true"></span><span class="report-qr-text"><b>내 유사문항 보기</b><small>이번 회차 오답 유형 바로 풀기</small></span></a>';
     return '<div class="report-cover-qr" aria-label="휴대폰 바로가기">'+cards+'</div>';
   }
+  function final8BenchmarkHTML(ctx){
+    var result=ctx&&ctx.final8Benchmark;
+    if(!result)return '';
+    return '<section class="final8-benchmark" aria-label="최종 8회 시그니처 기준 난도 보정 참고 추정">'+
+      '<h2>시그니처 기준 난도 보정 참고 추정</h2><div class="final8-benchmark-grid">'+
+      '<div><small>실제 원점수</small><b>'+result.actualScore+'점</b></div>'+
+      '<div><small>실전 예상점수</small><b>'+result.adjustedScore+'점</b></div>'+
+      '<div><small>예상 반</small><b>'+esc(result.tier||'확인 필요')+'</b></div>'+
+      '<div><small>예상 석차 백분율</small><b>'+result.topPercent+'%</b></div></div>'+
+      '<p>최종 1~4회 성적을 난도 보정한 뒤 시그니처 2024·2025 통합 분포를 참조한 추정치입니다. 실제 최종 8회 석차나 반 배정이 아니며, 최종 1~4회 누적 성적에는 포함되지 않습니다.</p></section>';
+  }
   function wireReportQr(root){
     if(typeof window.qrcode!=='function')return;
     Array.prototype.forEach.call((root||document).querySelectorAll('.report-qr-code[data-qr-url]'),function(node){
@@ -1372,6 +1405,10 @@ td.weak-cell{white-space:nowrap}
     });
   }
   function reportScreenHeaderHTML(ctx){
+    if(isFinal8&&ctx.final8Benchmark){
+      var estimate=ctx.final8Benchmark;
+      return '<header class="report-screen-header"><div><span>초등선발 대비 최종 실전 모의고사 8회 · 독립 분석</span><h1>'+esc(ctx.name)+' 학생</h1><p>예상 반 · <b>'+esc(estimate.tier)+'</b> · 예상 석차 백분율 '+estimate.topPercent+'%</p></div><dl><div><dt>실제 점수</dt><dd>'+ctx.score+'<small>/100</small></dd></div><div><dt>실전 예상점수</dt><dd>'+estimate.adjustedScore+'<small>/100</small></dd></div><div><dt>정답</dt><dd>'+ctx.ncorr+'<small>/30</small></dd></div></dl></header>';
+    }
     var comparison=ctx.populationVerified&&Number.isFinite(ctx.pct);
     var practice=Number(ctx.attemptNo)>=2;
     var finalMetric=comparison?'<div><dt>'+(practice?'연습 점수 기준 백분율':'석차 백분율')+'</dt><dd>'+ctx.pct+'<small>%</small></dd></div>':'<div><dt>오답</dt><dd>'+ctx.wrong+'<small>문항</small></dd></div>';
@@ -1418,6 +1455,7 @@ td.weak-cell{white-space:nowrap}
   function reportPrintCoverHTML(ctx){
     var practice=Number(ctx.attemptNo)>=2;
     var stats=(ctx.ratesVerified?'<small>평균 '+ctx.S.mean+'점'+(Number.isFinite(ctx.pct)?' · '+(practice?'연습 점수 기준 백분율 ':'석차 백분율 ')+ctx.pct+'%':'')+'</small>':'')+(ctx.cutVerified?'<small>'+(practice?'연습 점수 기준 예상 등급':'예상 등급')+' · '+esc(ctx.grade)+'</small>':'');
+    if(isFinal8&&ctx.final8Benchmark)stats='<small>실전 예상점수 '+ctx.final8Benchmark.adjustedScore+'점 · 예상 반 '+esc(ctx.final8Benchmark.tier)+'</small><small>예상 석차 백분율 '+ctx.final8Benchmark.topPercent+'%</small><small>참고 추정치 · 실제 석차가 아닙니다</small>';
     return '<section class="report-print-cover" aria-label="'+esc(seriesLabel())+' 진단 학습 패키지 표지"><div class="report-cover-mark" aria-hidden="true">G·FIELD</div><div class="report-cover-brand">지필드 영재교육</div><div class="report-cover-main"><p>초등선발 대비</p><h1>'+esc(seriesLabel())+' 모의고사<br>진단 학습 패키지</h1><strong>'+esc(seriesLabel())+' '+ctx.roundNum+'회 · '+reportAttemptLabel(ctx)+'</strong></div><div class="report-cover-student"><span>STUDENT</span><b>'+esc(ctx.name)+'</b><i>'+ctx.score+'점</i>'+stats+'</div>'+reportQrHTML(ctx)+'<div class="report-cover-index"><span>01 진단 요약</span><span>02 이번 주 학습</span><span>03 필요 자료</span></div><footer>G·FIELD GIFTED EDUCATION · 개인 학습 자료</footer></section>';
   }
   function reportCompactPrintHeaderHTML(ctx){
@@ -1519,7 +1557,7 @@ td.weak-cell{white-space:nowrap}
     return html;
   }
   function buildComment(ctx, weakMap){
-    if(!isLast&&!isOriginal&&window.GFIELD_DIAGNOSTIC_COMMENT&&typeof window.GFIELD_DIAGNOSTIC_COMMENT.render==='function'){
+    if(!isOriginal&&window.GFIELD_DIAGNOSTIC_COMMENT&&typeof window.GFIELD_DIAGNOSTIC_COMMENT.render==='function'){
       try{
         var diagnostic=window.GFIELD_DIAGNOSTIC_COMMENT.render(ctx,{escape:esc,taxonomy:taxonomyOf,points:function(no){return BP(no).pts;},verifyPopulation:fixedRatesVerified,percentile:percentileFor,history:ctx.personalHistory||[],books:function(no){
           var item=ctx.items.filter(function(row){return Number(row.no)===Number(no);})[0];
@@ -2019,7 +2057,8 @@ td.weak-cell{white-space:nowrap}
     if(own) return own;
     var source=window.GFIELD_LAST_SCORE_DATA&&window.GFIELD_LAST_SCORE_DATA.rounds&&window.GFIELD_LAST_SCORE_DATA.rounds[String(n)];
     if(!source) return null;
-    return {mean:Number(source.average),n:Number(source.cohortSize)||0,dist:Array.isArray(source.scoreDist)?source.scoreDist.slice():[],
+    var rates={};(source.rates||[]).forEach(function(value,index){rates[index+1]=Number(value);});
+    return {mean:Number(source.average),n:Number(source.cohortSize)||0,dist:Array.isArray(source.scoreDist)?source.scoreDist.slice():[],rate:rates,
       percentileTable:Array.isArray(source.percentileTable)?source.percentileTable.map(function(row){return row.slice();}):null,
       cuts:(source.scoreBands||[]).map(function(row){return [String(row[0]).replace(/,/g,' · '),Number(row[1])];}),
       rankEvidence:{status:'verified-source-rank',sourceId:'last-score-data-'+n,sourceRef:'2024 최종 모의고사 '+n+'회 회차별 원점수 석차 백분율 기준',verifiedAt:'2026-09-11'}};
@@ -2950,6 +2989,9 @@ td.weak-cell{white-space:nowrap}
     if(isOriginal&&window.GFIELD_FINAL_REPORT_STATE){
       await window.GFIELD_FINAL_REPORT_STATE.load(state.name,roundNum,state.oxArr.join(''),teacherEntry?'admin':'student',false,preview,'original');
     }
+    if(isLast&&roundNum===1&&window.GFIELD_FINAL_REPORT_STATE){
+      reportState=await window.GFIELD_FINAL_REPORT_STATE.load(state.name,roundNum,state.oxArr.join(''),teacherEntry?'admin':'student',false,preview,'last');
+    }
     if(!isLast&&!isOriginal&&window.GFIELD_FINAL_REPORT_STATE){
       // 연습 응시도 같은 학생·회차의 코멘트를 읽는다. 백분율 기록은 최초 성적 저장에만 허용한다.
       reportState=await window.GFIELD_FINAL_REPORT_STATE.load(state.name,roundNum,state.oxArr.join(''),teacherEntry?'admin':'student',!!saved&&attemptNo===1,preview);
@@ -2965,6 +3007,16 @@ td.weak-cell{white-space:nowrap}
     var ctx = buildContext(state.name, roundNum, state.oxArr);
     if(isOriginal) ctx.answerStates=state.answerStates;
     ctx.attemptNo=attemptNo;
+    if(isFinal8&&ctx.R&&ctx.R.standalone&&window.GFIELD_FINAL8_BENCHMARK){
+      var projected=window.GFIELD_FINAL8_BENCHMARK.project(ctx.score);
+      var signatureBasis=window.GFIELD_MOCK_ORIGINAL&&window.GFIELD_MOCK_ORIGINAL.cutBasis;
+      var signatureRows=signatureBasis&&Array.isArray(signatureBasis.rows)?signatureBasis.rows.slice().sort(function(a,b){return Number(b.threshold2025)-Number(a.threshold2025);}):[];
+      if(projected){
+        var matchedTier=signatureRows.filter(function(row){return projected.adjustedScore>=Number(row.threshold2025);})[0];
+        projected.tier=matchedTier?matchedTier.grade:(signatureBasis&&signatureBasis.belowLabel||'노력요함');
+        ctx.final8Benchmark=projected;
+      }
+    }
 
     if(ctx.cutOnly){
       renderOriginalReport(ctx, priorRows, attemptNo, fk, saveErr, saveConflict, saved);
@@ -2986,7 +3038,7 @@ td.weak-cell{white-space:nowrap}
     document.body.classList.toggle('final-cumulative-trend-page',!!trendHTML);
     var cmpOnline = isOnlineStudent(ctx.name);
     var cmpNoteHTML = ctx.populationVerified?compareNoteHTML(ctx.R, M.compare, cmpOnline, considered.length):'';
-    if(!isLast&&!isOriginal)cmpNoteHTML='';
+    if(!isOriginal)cmpNoteHTML='';
 
     var cumHTML;
     if(!ctx.populationVerified){
@@ -3049,7 +3101,7 @@ td.weak-cell{white-space:nowrap}
       ? '<div><i>점수 / 평균</i><b>'+ctx.score+'<small> / '+ctx.S.mean+'</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>석차</i><b>'+ctx.pct+'%</b></div><div><i>예상 결과</i><b style="font-size:15px">'+esc(ctx.grade)+'</b></div>'
       : '<div><i>개인 점수</i><b>'+ctx.score+'<small> / 100</small></b></div><div><i>맞은 개수</i><b>'+ctx.ncorr+'<small> / 30</small></b></div><div><i>오답</i><b>'+ctx.wrong+'<small>문항</small></b></div>'+(ctx.R&&Number.isFinite(Number(ctx.R.reportedAverage))?'<div><i>제공 평균</i><b>'+Number(ctx.R.reportedAverage)+'<small>점</small></b></div>':'<div><i>진단 기준</i><b style="font-size:15px">개인 수행</b></div>');
     var isStandardFinal=!isOriginal;
-    var hasPreparedSummaryPrint=!isLast&&!isOriginal;
+    var hasPreparedSummaryPrint=!isOriginal&&(!isLast||roundNum===1);
     var personalColor=isStandardFinal?'파란색':'주황색';
     var areaLead=ctx.ratesVerified?personalColor+'은 '+esc(ctx.name)+' 학생의 결과, 회색 점선은 평균입니다.':'영역별로 맞힌 문제와 더 연습할 문제를 살펴보세요.';
     var areaLegend='<div class="legend"><span><s style="background:rgba(249,115,22,.5);border:1px solid #ea580c"></s>'+esc(ctx.name)+'</span>'+(ctx.ratesVerified?'<span><s style="background:rgba(148,163,184,.4);border:1px dashed #94a3b8"></s>평균</span>':'')+'</div>';
@@ -3059,17 +3111,18 @@ td.weak-cell{white-space:nowrap}
     var ptsTable=ctx.ratesVerified
       ? '<table><tr><th>구분</th><th>출제</th><th>정답</th><th>배점</th><th>득점</th><th>내 득점률</th><th>평균</th></tr>'+ptsRowsHTML(ctx.P)+'</table>'
       : '<table><tr><th>구분</th><th>출제</th><th>정답</th><th>배점</th><th>득점</th><th>내 득점률</th></tr>'+ptsRowsPersonalHTML(ctx.P)+'</table>';
-    var detailLead='★ 꼭 다시 맞히기: 잘하는 영역에서 놓친 문제 중 정답률이 높은 문제입니다. 먼저 다시 풀어 보세요.';
+    var detailLead=isLast&&roundNum===1?'★ 꼭 다시 맞히기: 틀린 문제 중 문항 정답률이 내 전체 정답률보다 높은 문항을 최대 3개 골랐습니다.':(isFinal8?'★ 꼭 다시 맞히기: 시그니처와 같은 기준으로 틀린 2·3점대 기본 문항을 최대 3개 골랐습니다.':'★ 꼭 다시 맞히기: 잘하는 영역에서 놓친 문제 중 정답률이 높은 문제입니다. 먼저 다시 풀어 보세요.');
     var cumulativeLead='그동안의 점수 변화와 반복해서 틀린 유형을 살펴보세요.';
     var reportHead=isStandardFinal
       ? reportPrintCoverHTML(ctx)+'<div class="report-fixed-watermark" aria-hidden="true">지필드 영재교육 · '+esc(ctx.name)+' 학생</div>'+reportScreenHeaderHTML(ctx)
       : '<div class="cover"><div class="brand">G-FIELD GIFTED EDUCATION</div><h1>'+esc(seriesLabel())+' 모의고사 진단분석지</h1><div class="sub">초등선발 대비 '+esc(seriesLabel())+' 모의고사 '+roundNum+'회 · 생각하는 황소 대비</div><div class="who"><b>'+esc(ctx.name)+'</b><span>학생</span></div><div class="kpi">'+kpiHTML+'</div></div>';
     var coachingHTML=isStandardFinal?'<div class="report-coaching"><h2>다음 학습을 위한 조언</h2><div class="cmt" id="cmtBody">'+buildComment(ctx,state.weak)+'</div></div>':'';
     var legacyCommentHTML=isStandardFinal?'':'<section style="border-bottom:none"><h2>원장 코멘트</h2><div class="cmt" id="cmtBody">'+buildComment(ctx,state.weak)+'</div><div class="sign">지필드 영재교육 원장 <b>DOCSSAM</b></div></section>';
-    var isParentFinal=!isLast&&!isOriginal&&window.GFIELD_FINAL_PARENT_REPORT;
+    var isParentFinal=!isOriginal&&window.GFIELD_FINAL_PARENT_REPORT;
     if(isParentFinal){
       document.body.classList.add('final-parent-report-page');
       var parentAPI=window.GFIELD_FINAL_PARENT_REPORT;
+      var reportPriority=reportPriorityNos(ctx);
       var parentVM=parentAPI.model(ctx,{
         standalone:isStandaloneRound,
         attempts:personalAttempts,
@@ -3077,11 +3130,20 @@ td.weak-cell{white-space:nowrap}
         rounds:M.rounds,
         taxonomy:taxonomyOf,
         points:function(no){return BP(no).pts;},
+        priorityNos:(isLast&&roundNum===1)||isFinal8?reportPriority:null,
+        priorityLabel:isLast&&roundNum===1?'틀린 문항 중 문항 정답률이 내 전체 정답률보다 높은 문제를 먼저 풉니다.':(isFinal8?'시그니처와 같은 기준으로 틀린 2·3점대 기본 문항부터 복습합니다.':null),
         overallTrend:trendVM,
-        cumulativeBands:M.cumulative&&M.cumulative.bands
+        cumulativeBands:isLast&&roundNum===1?lastCumBands(1):(M.cumulative&&M.cumulative.bands),
+        cumulativeLabel:isLast&&roundNum===1?'파이널 1~4회 + 최종 1회':null,
+        currentLabel:isLast?'최종 '+roundNum+'회':null
       });
+      if(isLast&&roundNum===1){
+        parentVM.current.label='최종 1회 · '+(attemptNo>=2?'이번 연습 결과':'이번 회차');
+        parentVM.cumulative.label='파이널 1~4회 + 최종 1회';
+        if(parentVM.overallTrend){parentVM.overallTrend.label='파이널 1~4회 + 최종 1회 누적';parentVM.overallTrend.roundCountLabel='/5회';}
+      }
       var reportStateHTML=window.GFIELD_FINAL_REPORT_STATE?window.GFIELD_FINAL_REPORT_STATE.render():'';
-      var parentBody=reportHead+reportCompactPrintHeaderHTML(ctx)+
+      var parentBody=reportHead+reportCompactPrintHeaderHTML(ctx)+final8BenchmarkHTML(ctx)+
         reportStateHTML+
         trendHTML+
         parentAPI.summaryHTML(parentVM)+
@@ -3116,7 +3178,7 @@ td.weak-cell{white-space:nowrap}
       app.innerHTML = personalReportBanner+previewBanner+teacherBanner+practiceBanner+saveErrBanner+
         '<div class="doc'+(isStandardFinal?' final-report-package':'')+'">'+
         reportHead+
-        (isLast&&trendHTML?reportCompactPrintHeaderHTML(ctx):'')+
+        ((isLast||isFinal8)&&trendHTML?reportCompactPrintHeaderHTML(ctx):'')+final8BenchmarkHTML(ctx)+
         (isStandardFinal&&window.GFIELD_FINAL_REPORT_STATE?window.GFIELD_FINAL_REPORT_STATE.render():'')+
         trendHTML+
         (cmpNoteHTML ? '<div class="cmp-band">'+cmpNoteHTML+'</div>' : '')+
@@ -3141,7 +3203,7 @@ td.weak-cell{white-space:nowrap}
     showPrint(true);
     var similarPrinter=window.GFIELD_FINAL_SUMMARY_PRACTICE_PRINT;
     var priorityNos=(parentVM&&parentVM.priorityItems||[]).map(function(item){return Number(item.no);});
-    var hasSimilarPrinter=hasPreparedSummaryPrint&&[1,2,3,4,7].indexOf(roundNum)>=0&&similarPrinter&&typeof similarPrinter.attach==='function';
+    var hasSimilarPrinter=hasPreparedSummaryPrint&&[1,2,3,4,7,8].indexOf(roundNum)>=0&&similarPrinter&&typeof similarPrinter.attach==='function';
     var hasRecommendedSimilar=hasSimilarPrinter&&priorityNos.length>0;
     printBtn.textContent=hasRecommendedSimilar?'진단 요약·추천 유사문제 인쇄 / PDF 저장':(hasPreparedSummaryPrint?'진단 요약만 인쇄 / PDF 저장':'🖨 성적표 인쇄');
     printBtn.setAttribute('aria-label',hasRecommendedSimilar?'이번 주 우선 복습 문항의 검수된 유사문제와 풀이까지 진단 요약에 이어서 인쇄하거나 PDF로 저장':(hasPreparedSummaryPrint?'추천 유사문제 없이 진단 요약만 인쇄하거나 PDF로 저장':'현재 성적표 인쇄'));
@@ -3149,7 +3211,7 @@ td.weak-cell{white-space:nowrap}
     if(isStandardFinal){
       var reportActions=reportHeaderActions(app,ctx);
       if(reportActions) reportActions.appendChild(printBtn);
-      if(reportActions&&hasPreparedSummaryPrint&&priorityNos.length&&[1,2,3,4,7].indexOf(roundNum)>=0&&!hasSimilarPrinter){
+      if(reportActions&&hasPreparedSummaryPrint&&priorityNos.length&&[1,2,3,4,7,8].indexOf(roundNum)>=0&&!hasSimilarPrinter){
         var printWarning=document.createElement('div');
         printWarning.className='no-print';
         printWarning.setAttribute('role','alert');
@@ -3165,6 +3227,7 @@ td.weak-cell{white-space:nowrap}
         source:app.querySelector('.final-report-package'),
         priorityNos:priorityNos,
         round:roundNum,
+        set:TAX_SET_KEY,
         name:ctx.name,
         teacherPrint:teacherEntry,
         beforeOpen:function(){issueWrongPracticeHandoff(ctx);}

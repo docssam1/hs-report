@@ -23,7 +23,7 @@ const server=http.createServer((req,res)=>{
  const browser=await chromium.launch();
  const context=await browser.newContext({viewport:{width:1280,height:900}});
  const source=fs.readFileSync(path.join(root,'data.js'),'utf8');
- const fixture=source+'\n;(()=>{const d=window.GFIELD_DATA,n='+JSON.stringify(student)+',z='+JSON.stringify(denied)+';d.students.push(n,z);d.studentTypes[n]="resident";d.studentTypes[z]="resident";d.attendance[n]=d.nodes.filter(x=>/파이널|최종/.test(x.title||"")).map(x=>x.id);d.attendance[z]=[];d.archiveAccess["파이널 모의고사"]=(d.archiveAccess["파이널 모의고사"]||[]).filter(x=>x!==n&&x!==z);d.archiveProductAccess["mock-final-5"]=[n];const answer=d.content["sep-w1"].textbooks.find(t=>t.title.includes("답안·교재 연결표"));answer.url="answer.html?set=final&round=1";})();';
+ const fixture=source+'\n;(()=>{const d=window.GFIELD_DATA,n='+JSON.stringify(student)+',z='+JSON.stringify(denied)+';d.students.push(n,z);d.studentTypes[n]="resident";d.studentTypes[z]="resident";d.attendance[n]=d.nodes.filter(x=>/파이널|최종/.test(x.title||"")).map(x=>x.id);d.attendance[z]=[];d.archiveAccess["파이널 모의고사"]=(d.archiveAccess["파이널 모의고사"]||[]).filter(x=>x!==n&&x!==z);d.archiveProductAccess["mock-final-5"]=[n];d.archiveProductAccess["mock-final-8"]=[n];const answer=d.content["sep-w1"].textbooks.find(t=>t.title.includes("답안·교재 연결표"));answer.url="answer.html?set=final&round=1";})();';
  const writes=[];
  await context.route(/^https?:\/\//,route=>{
    const req=route.request(),u=new URL(req.url());
@@ -58,15 +58,14 @@ const server=http.createServer((req,res)=>{
   await target('mock.html?set=final&round=7&go=timer'+name,'final.html',{round:7,go:'timer'});
   await target('answer.html?set=final&round=7'+name,'answer.html',{set:'final',round:7});
   await target('mock.html?set=final&round=8&go=timer'+name,'final.html',{round:8,go:'timer'});
-  await page.locator('#app .paper-lock').waitFor();
-  assert.match(await page.locator('#app').innerText(),/최종 실전 모의고사 8회 · 검수 대기/,'Final 8 shows its own pending state');
-  assert.equal(await page.locator('#agrid').count(),0,'pending Final 8 has no answer input');
   await target('answer.html?set=final&round=8'+name,'final.html',{round:8,go:'answer'});
-  await page.locator('#app .paper-lock').waitFor();
-  assert.match(await page.locator('#app').innerText(),/시험지·답안·성적 분석은 아직 제공되지 않습니다/,'old Final 8 answer link cannot show Last 3 answers');
+  await page.locator('#app').waitFor();
+  assert.equal(new URL(page.url()).searchParams.get('round'),'8','Final 8 answer-entry path stays on the approved eighth round');
+  await target('answer.html?set=final&round=8'+name,'final.html',{round:8,go:'answer'});
+  assert.match(await page.locator('#app').innerText(),/최종 실전 모의고사 8회/,'Final 8 displays its own answer-entry heading');
   if(process.env.GFIELD_QA_ROUTE_ONLY==='1'){
    assert.equal(writes.length,0,'route and pending checks make no production writes');
-   console.log(JSON.stringify({pass:true,routeChecks:checks.length,final8Pending:true,legacyFinal6And9:true,productionWrites:0}));
+   console.log(JSON.stringify({pass:true,routeChecks:checks.length,final8Independent:true,legacyFinal6And9:true,productionWrites:0}));
    return;
   }
   await target('mock.html?set=final&round=1&preview=1'+name,'final.html',{round:1,preview:1});

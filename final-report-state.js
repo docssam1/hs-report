@@ -47,7 +47,7 @@
     return {canEdit:false,comment:rows[0]&&rows[0].comment||'',commentUpdatedAt:rows[0]&&rows[0].updated_at||null,snapshot:null,resultOx:null};
   }
   async function load(student,round,ox,slot,record,preview,series){
-    var kind=series==='original'?'original':'final';
+    var kind=series==='original'?'original':(series==='last'?'last':'final');
     current={student:student,exam:kind+round,slot:slot,canEdit:false,comment:'',commentUpdatedAt:null,snapshot:null,error:false,preview:preview};
     var target=current;
     if(preview)return target;
