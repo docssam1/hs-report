@@ -550,7 +550,9 @@
     if(name==='mock' && window.loadWeakTypes) loadWeakTypes();
   }
 
-  function renderAll(){ renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderExam(); renderGhStat(); }
+  /* 학생 순서: 재원생 먼저, 온라인 회원 다음, 각각 가나다순 — 모든 표가 같은 순서를 씀 */
+  function sortStudents(){ if(!Array.isArray(S.students)) return; const on=n=>(S.studentTypes&&S.studentTypes[n]==='online')?1:0; S.students.sort((x,y)=>on(x)-on(y)||x.localeCompare(y,'ko')); }
+  function renderAll(){ sortStudents(); renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderExam(); renderGhStat(); }
 
   function ensureStudent(name){ if(!S.attendance[name]) S.attendance[name]=[]; }
 
