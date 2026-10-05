@@ -27,7 +27,8 @@ assert.match(moduleSource,/docssam-saved-comment\{orphans:2;widows:2\}/);
 assert.match(moduleSource,/\.able-box\{break-inside:avoid!important;page-break-inside:avoid!important\}/);
 const finalHtml=fs.readFileSync(path.join(root,'final.html'),'utf8');
 assert.match(finalHtml,/<link rel="stylesheet" href="final-report-print\.css">/,'print layout is loaded by the report page');
-assert.match(finalHtml,/if\(!isLast&&!isOriginal\) files\.push\('final-report-print\.js'\)/,'print controller is loaded for every standard Final round');
+assert.match(finalHtml,/if\(\(!isLast&&!isOriginal\)\|\|\(isLast&&Number\(requestedRound\)===1\)\) files\.push\('final-report-print\.js'\)/,'print controller is loaded for standard Final rounds and Last1 summary printing');
+assert.match(finalHtml,/mode:'summary'/,'Last1 fallback uses summary-only printing, not the detailed Final print contract');
 
 const student='인쇄모듈합성검수학생';
 const ox='O'.repeat(30);

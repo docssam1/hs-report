@@ -1,9 +1,11 @@
-# 파이널 2회 양면 인쇄 준비 모듈 계약
+# 최종 1회 요약·파이널 1~4회 상세 인쇄 모듈 계약
 
 ## 현재 범위
 
-- `final-report-print.js`는 파이널 2회 진단 패키지만 받습니다. `#final2DetailedSolutions[data-detailed-round="2"]`가 없는 문서는 안전하게 거부합니다.
-- 실제 PDF 다섯 조건과 독립 검수를 마쳐 `final.html`의 파이널 2회 인쇄 단추에만 연결합니다. 다른 회차의 기존 인쇄 동작은 그대로 유지합니다.
+- `final-report-print.js`는 진단 패키지 인쇄에 공유됩니다. `mode:'summary'`는 진단 요약만 인쇄하며 유효한 회차 번호를 받습니다. 최종 1회 요약 인쇄의 기본 경로가 이 모드입니다.
+- 최종 1회에 승인된 추천 유사문제가 있으면 `final-summary-practice-print.js`가 요약 뒤에 유사문제와 풀이를 이어 인쇄합니다. 추천 문항이 없을 때는 `final-report-print.js`가 요약만 인쇄합니다.
+- `mode:'full'`은 파이널 1~4회에 한해 상세 답안이 검수 완료된 문서만 받습니다. `#final2DetailedSolutions[data-detailed-round="2"]`는 파이널 2회 검수 fixture의 예이며 전체 모듈의 단일 허용 문서가 아닙니다.
+- `final.html`은 일반 파이널 회차와 최종 1회에서 공유 모듈을 불러옵니다. 최종 1회의 인쇄 동작을 파이널 2회 상세 답안 인쇄와 혼동하지 않습니다.
 - 원래 화면의 진단 내용, 상세 답안, 학생 기록, 저장소, 주소를 고치지 않습니다. 준비 중에는 연결한 인쇄 단추만 잠시 비활성화하고 원래 상태로 되돌립니다.
 
 ## API
@@ -39,7 +41,7 @@
 
 ## 자동 검증
 
-`qa/final-report-print-validate.js`는 390px 화면에서 실제 A4 준비 프레임을 만들고 다음을 확인합니다.
+`qa/final-report-print-validate.js`는 파이널 2회 상세 인쇄의 조판 경계를 확인합니다. 최종 1회 요약 버튼의 실제 연결·인쇄는 `qa/final-summary-print-regression-validate.js`의 Last1 브라우저 검사가 확인합니다.
 
 - 파이널 2회 상세 답안 30문항, 도식 7개, 인쇄 표의 열 비율·반복 머리행
 - 상세 답안의 홀수 쪽 시작, 원래 화면·주소·세션 식별 정보 불변, 외부 쓰기 0회
