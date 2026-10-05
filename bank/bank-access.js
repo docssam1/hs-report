@@ -40,6 +40,8 @@
   function scopedPermissionList(){
     var key=scopedProductKey();if(!key)return [];
     var data=root.GFIELD_DATA||{},products=data.archiveProductAccess||{};
+    /* 최종 1회 유사문제는 정규 최종 모의고사 권한(10월 1주 출석 또는 자료실 '최종 모의고사' 승인)을 따른다. */
+    if(key==='mock-last-1'){var acc=(data.archiveAccess||{})['최종 모의고사'],att=data.attendance||{},list=Array.isArray(acc)?acc.slice():[];Object.keys(att).forEach(function(n){if(Array.isArray(att[n])&&att[n].indexOf('oct-5')>=0&&list.indexOf(n)<0)list.push(n);});return list;}
     return Array.isArray(products[key])?products[key]:[];
   }
   function listed(list,student){return list.indexOf('*')>=0||list.indexOf(student)>=0;}
