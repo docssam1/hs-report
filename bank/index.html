@@ -251,7 +251,7 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
 (function(){
   var q=new URLSearchParams(location.search);
   var sourceParts=String(q.get('source')||'').split('|');
-  var bankCode=/^(?:final[12347]|original[12]|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^(?:1|2|3|4|7)$/.test(sourceParts[1])?'final'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='original'&&/^[12]$/.test(sourceParts[1])?'original'+sourceParts[1]:''));
+  var bankCode=/^(?:final[123478]|original[12]|last1|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^(?:1|2|3|4|7|8)$/.test(sourceParts[1])?'final'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='last'&&sourceParts[1]==='1'?'last1':(q.get('practice')==='wrong'&&sourceParts[0]==='original'&&/^[12]$/.test(sourceParts[1])?'original'+sourceParts[1]:'')));
   var fixed=!!bankCode;
   if(!fixed)return;
   document.body.classList.add('fixed-bank-mode');
