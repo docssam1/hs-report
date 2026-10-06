@@ -12,15 +12,19 @@ const vm=trend.model([
   {key:'original1',score:100,average:20,percentile:1,grade:'특강'}
 ],bands);
 assert.deepEqual(vm.rows.map(row=>row.key),['final1','final3','last2']);
-assert.equal(vm.scoreAverage,35);
-assert.equal(vm.percentileAverage,30);
-assert.equal(vm.cumulativeGrade,'심화안정권');
-assert.equal(vm.rankedCount,2);
+assert.equal(vm.scoreAverage,30,'approved Last 2+ judgement excludes Final scores');
+assert.equal(vm.percentileAverage,40);
+assert.equal(vm.cumulativeGrade,null,'missing Last-specific bands cannot use Final bands');
+assert.equal(vm.rankedCount,1);
 assert.equal(vm.slots[1],null,'not attended is a gap, not zero');
 const html=trend.render(vm);
 assert.match(html,/원점수와 회차 평균/);
 assert.match(html,/예상 석차 백분율/);
-assert.match(html,/누적 3\/8회/);
+assert.match(html,/누적 판정 · 최종 1~2회 \(1회\)/);
+assert.match(html,/평균\(1\/1회\)/);
+assert.equal((html.match(/class="trend-round-label"/g)||[]).length,16,'both charts identify all eight rounds');
+assert.match(html,/aria-label="파이널 1회"/);
+assert.match(html,/aria-label="최종 4회"/);
 assert.doesNotMatch(html,/original1|특강<\/td>/);
 const page=fs.readFileSync(require('node:path').join(__dirname,'../final.html'),'utf8');
 let inlineScripts=0;

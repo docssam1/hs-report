@@ -44,7 +44,7 @@
       judgeLabel:judgeLabel,judgeCount:judge.length,lastRound:lastNo};
   }
   function chart(vm,field,meanField,title,reverse){
-    var left=35,right=625,top=18,bottom=105,width=right-left,height=bottom-top;
+    var left=52,right=448,top=22,bottom=178,width=right-left,height=bottom-top;
     function xy(index,value){return [left+width*index/7,reverse?top+height*value/100:bottom-height*value/100];}
     function paths(key){
       var runs=[],run=[];vm.slots.forEach(function(row,index){
@@ -53,12 +53,12 @@
       });if(run.length)runs.push(run);
       return runs.map(function(points){return points.length>1?'<polyline points="'+points.map(function(p){return p.join(',');}).join(' ')+'"/>':'';}).join('');
     }
-    function dots(key,cls){return vm.slots.map(function(row,index){var value=row&&finite(row[key]);if(value===null)return '';var p=xy(index,value);return '<circle class="'+cls+'" cx="'+p[0]+'" cy="'+p[1]+'" r="3.6"/>';}).join('');}
-    var axis=[0,50,100].map(function(value){var y=reverse?top+height*value/100:bottom-height*value/100;return '<line x1="'+left+'" x2="'+right+'" y1="'+y+'" y2="'+y+'"/><text x="29" y="'+(y+3)+'" text-anchor="end">'+value+'</text>';}).join('');
-    var labels=vm.slots.map(function(_,index){return '<text x="'+(left+width*index/7)+'" y="125" text-anchor="middle">'+(index<4?'파'+(index+1):'최'+(index-3))+'</text>';}).join('');
-    return '<div class="score-trend-chart"><h3>'+esc(title)+'</h3><svg viewBox="0 0 650 132" role="img" aria-label="'+esc(title)+' 회차별 꺾은선 그래프"><g class="trend-axis">'+axis+labels+'</g>'+
+    function dots(key,cls){return vm.slots.map(function(row,index){var value=row&&finite(row[key]);if(value===null)return '';var p=xy(index,value);return '<circle class="'+cls+'" cx="'+p[0]+'" cy="'+p[1]+'" r="4.5"><title>'+esc(row.label)+' · '+value.toFixed(1)+(key==='percentile'?'%':'점')+'</title></circle>';}).join('');}
+    var axis=[0,25,50,75,100].map(function(value){var y=reverse?top+height*value/100:bottom-height*value/100;return '<line x1="'+left+'" x2="'+right+'" y1="'+y+'" y2="'+y+'"/><text x="39" y="'+(y+5)+'" text-anchor="end">'+value+'</text>';}).join('');
+    var labels=vm.slots.map(function(_,index){var x=left+width*index/7;return '<text class="trend-round-label" x="'+x+'" y="205" text-anchor="middle" aria-label="'+(index<4?'파이널 ':'최종 ')+(index<4?index+1:index-3)+'회"><tspan x="'+x+'">'+(index<4?'파이널':'최종')+'</tspan><tspan x="'+x+'" dy="22">'+(index<4?index+1:index-3)+'회</tspan></text>';}).join('');
+    return '<div class="score-trend-chart"><h3>'+esc(title)+'</h3><div class="score-trend-plot"><svg viewBox="0 0 480 240" role="img" aria-label="'+esc(title)+' 회차별 꺾은선 그래프"><g class="trend-axis">'+axis+labels+'</g>'+
       (meanField?'<g class="trend-mean">'+paths(meanField)+dots(meanField,'mean-dot')+'</g>':'')+
-      '<g class="trend-personal">'+paths(field)+dots(field,'personal-dot')+'</g></svg><p>'+(meanField?'<span class="legend-personal">● 원점수</span> <span class="legend-mean">● 회차 평균</span>':'● 석차 백분율 · 위쪽이 상위')+'</p></div>';
+      '<g class="trend-personal">'+paths(field)+dots(field,'personal-dot')+'</g></svg></div><p>'+(meanField?'<span class="legend-personal">● 원점수</span> <span class="legend-mean">┄ 회차 평균</span>':'● 석차 백분율 · 위쪽이 상위')+'</p><p class="score-trend-scroll-hint">좌우로 밀면 모든 회차를 볼 수 있습니다.</p></div>';
   }
   function render(vm){
     var rows=vm.rows.map(function(row){return '<tr><th scope="row">'+esc(row.label)+'</th><td>'+row.score.toFixed(1)+'</td><td>'+(row.average===null?'—':row.average.toFixed(1))+'</td><td>'+(row.percentile===null?'—':row.percentile.toFixed(1)+'%')+'</td><td>'+(row.grade?esc(row.grade):'—')+'</td></tr>';}).join('');
