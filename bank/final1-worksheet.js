@@ -7,7 +7,7 @@
     });
   }
   function chunks(a,n){var out=[];for(var i=0;i<a.length;i+=n)out.push(a.slice(i,i+n));return out;}
-  function largeFigure(x){return x.sourceSet==='final'&&Number(x.sourceRound)===8&&Number(x.sourceNo)===25;}
+  function largeFigure(x){return x.sourceSet==='final'&&Number(x.sourceRound)===8&&Number(x.sourceNo)===25||x.sourceSet==='last'&&Number(x.sourceRound)===1&&Number(x.sourceNo)===6&&[2,3].includes(Number(x.variantNo));}
   function editorialWide(x){
     var dataLength=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0;
     var total=(x.text||'').length+dataLength;
@@ -17,7 +17,7 @@
     return total>210||!!x.asset&&(total>180||Number(x.sourceNo)===28);
   }
   function questionGroups(items,layout){
-    // Keep the approved tall route diagram readable, rather than clip or miniaturize it.
+    // Keep approved tall diagrams readable, rather than clip or miniaturize them.
     if(items.some(largeFigure)){
       var pages=[],pending=[];
       function flush(){if(pending.length){pages.push.apply(pages,questionGroups(pending,layout));pending=[];}}
@@ -88,7 +88,7 @@
     var viewControls=important?'':'<div class="f1-bands f1-view-modes" role="group" aria-label="약점 유형 보기 방식"><button type="button" data-role="view" data-val="grouped">문제별로 보기</button><button type="button" data-role="view" data-val="mixed">섞어서 보기</button></div>';
     root.innerHTML='<header class="f1-toolbar"><a class="f1-back" href="'+esc(back)+'">← '+(wrong?'성적표':'자료실')+'</a><div class="f1-title">'+roundLabel+(important?'':' 약점 유형')+'</div><div class="f1-bands" role="group" aria-label="오답 배점대">'+Object.keys(labels).map(k=>'<button type="button" data-role="points" data-val="'+k+'">'+labels[k]+'</button>').join('')+'</div>'+viewControls+freshControl+countControls+'<label class="f1-layout-label">문제 배치 <select id="pageLayout"><option value="editorial">읽기 편한 4문항</option><option value="compact">간결한 6문항</option></select></label><label class="f1-print-label">인쇄 구성 <select id="printMode"><option value="questions">문제만</option><option value="answers">답안·풀이만</option><option value="both">둘 다</option><option value="quick">빠른 정답만</option></select></label><button type="button" id="btnPrint" disabled>인쇄</button></header><div class="f1-status" id="f1Status" role="status" aria-live="polite"></div><div id="f1Pages"></div>';
     if(signature&&!wrong)root.querySelector('.f1-title').textContent=roundLabel+' 전체 유형';
-    if(bankCode==='final8')root.querySelector('#pageLayout option[value="compact"]').textContent='간결한 6문항 · 큰 그림은 별도 쪽';
+    if(bankCode==='final8'||bankCode==='last1')root.querySelector('#pageLayout option[value="compact"]').textContent='간결한 6문항 · 큰 그림은 별도 쪽';
     var pageRoot=root.querySelector('#f1Pages'),print=root.querySelector('#btnPrint');
     function sheet(cls,html){return '<section class="f1-page page '+cls+'"><div class="f1-watermark-clip"><div class="wm-layer"></div></div>'+html+'</section>';}
     function cleanUrl(){
