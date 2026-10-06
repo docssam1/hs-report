@@ -232,8 +232,40 @@
     var canvas;
     try{
       await new Promise(function(resolve){bank.win.requestAnimationFrame(function(){bank.win.requestAnimationFrame(resolve);});});
+      // The renderer's detached clone can lose automatic grid placement,
+      // notably the last two full-width cards. Freeze the already laid-out
+      // rectangles in the clone only; keep the worksheet itself unchanged.
+      var originalGrid=isQuestion&&page.querySelector('.f1-qpage');
+      var gridRect=originalGrid&&originalGrid.getBoundingClientRect();
+      var placements=originalGrid?list(originalGrid.children).map(function(node){
+        var rect=node.getBoundingClientRect();
+        var computed=bank.win.getComputedStyle(node);
+        return {left:rect.left-gridRect.left,top:rect.top-gridRect.top,width:rect.width,height:rect.height,
+          children:node.classList.contains('f1-qcard')?list(node.children).map(function(child){
+            var box=child.getBoundingClientRect();
+            return {left:box.left-rect.left-parseFloat(computed.borderLeftWidth||0),top:box.top-rect.top-parseFloat(computed.borderTopWidth||0),width:box.width,height:box.height};
+          }):[]};
+      }):[];
+      var captureOptions={backgroundColor:'#ffffff',scale:1.5,useCORS:true,allowTaint:false,logging:false,imageTimeout:20000,removeContainer:true};
+      if(originalGrid)captureOptions.onclone=function(cloneDoc){
+        var clonePage=cloneDoc.querySelector('[data-gfield-summary-token="'+token+'"]');
+        var grid=clonePage&&clonePage.querySelector('.f1-qpage');
+        if(!grid)return;
+        var frozen={display:'block',position:'relative',width:gridRect.width+'px',height:gridRect.height+'px',minHeight:gridRect.height+'px',maxHeight:gridRect.height+'px'};
+        Object.keys(frozen).forEach(function(key){grid.style.setProperty(key.replace(/[A-Z]/g,function(c){return '-'+c.toLowerCase();}),frozen[key],'important');});
+        list(grid.children).forEach(function(node,index){
+          var rect=placements[index];if(!rect)return;
+          var styles={position:'absolute',boxSizing:'border-box',left:rect.left+'px',top:rect.top+'px',width:rect.width+'px',height:rect.height+'px',margin:'0',transform:'none',gridColumn:'auto',gridRow:'auto'};
+          Object.keys(styles).forEach(function(key){node.style.setProperty(key.replace(/[A-Z]/g,function(c){return '-'+c.toLowerCase();}),styles[key],'important');});
+          list(node.children).forEach(function(child,childIndex){
+            var box=rect.children[childIndex];if(!box)return;
+            var inner={position:'absolute',boxSizing:'border-box',left:box.left+'px',top:box.top+'px',width:box.width+'px',height:box.height+'px',minHeight:box.height+'px',maxHeight:box.height+'px',margin:'0',flex:'none'};
+            Object.keys(inner).forEach(function(key){child.style.setProperty(key.replace(/[A-Z]/g,function(c){return '-'+c.toLowerCase();}),inner[key],'important');});
+          });
+        });
+      };
       var renderInFrame=bank.win.Function('token','options','return window.html2canvas(document.querySelector(\'[data-gfield-summary-token="\'+token+\'"]\'),options);');
-      canvas=await renderInFrame(token,{backgroundColor:'#ffffff',scale:1.5,useCORS:true,allowTaint:false,logging:false,imageTimeout:20000,removeContainer:true});
+      canvas=await renderInFrame(token,captureOptions);
     }finally{
       page.removeAttribute('data-gfield-summary-token');
       saved.reverse().forEach(function(entry){if(entry[1]===null)entry[0].removeAttribute('style');else entry[0].setAttribute('style',entry[1]);});

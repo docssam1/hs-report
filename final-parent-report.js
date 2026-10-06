@@ -210,7 +210,7 @@
   }
   function focusHTML(vm){
     function list(rows,empty){return rows.length?'<ul>'+rows.map(function(row){return '<li><b>'+escapeHTML(row.label)+'</b><span>'+row.perf.toFixed(1)+'% · '+row.n+'문항</span></li>';}).join('')+'</ul>':'<p>'+empty+'</p>';}
-    function column(title,strengths,improvements){return '<article><h3>'+title+'</h3><h4>강점</h4>'+list(strengths,'확인 필요')+'<h4>우선 보완</h4>'+list(improvements,'확인 필요')+'</article>';}
+    function column(title,strengths,improvements){return '<article><h3>'+title+'</h3><h4>강점</h4>'+list(strengths,'아직 강점으로 분류된 영역은 없습니다. 맞힌 문항의 풀이를 다시 확인하며 안정적인 유형을 늘려 보세요.')+'<h4>우선 보완</h4>'+list(improvements,'이번 기록에서 우선 보완으로 분류된 영역은 없습니다.')+'</article>';}
     var current=column('이번 회차',vm.currentStrengths,vm.currentImprovements);
     var cumulative=!vm.standalone&&vm.roundNum>=2?column('1~'+vm.roundNum+'회 누적',vm.cumulativeStrengths,vm.cumulativeImprovements):'';
     return '<div class="parent-focus-grid'+(vm.standalone||vm.roundNum<2?' is-single':'')+'">'+current+cumulative+'</div>';

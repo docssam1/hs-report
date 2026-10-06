@@ -64,6 +64,15 @@ check('누적 판정표가 회차별 독립 기준으로 등록됨', () => {
   assert.deepEqual(Array.from(model.rounds['4'].cumulativeBands, row => Array.from(row)), [[23.9,'경시 가능'],[32.4,'경시컷,심화안정권'],[46,'심화컷,실력안정권'],[63.7,'실력컷,일품안정권'],[75.6,'일품컷'],[101,'노력요함']]);
 });
 
+check('최종 1회 경시 가능은 56.2점부터이며 다른 기준은 보존됨', () => {
+  const bands = model.rounds['1'].scoreBands;
+  assert.deepEqual(Array.from(bands, row => Array.from(row)), [['경시 가능',56.2],['경시컷,심화안정권',40.9],['심화컷,실력안정권',35],['심화컷,실력가능',32.5],['실력컷,일품안정권',23.2],['일품컷',17.2],['노력요함',0]]);
+  const grade = score => bands.find(row => score >= row[1])[0];
+  assert.equal(grade(56.1), '경시컷,심화안정권');
+  assert.equal(grade(56.2), '경시 가능');
+  assert.equal(grade(56.3), '경시 가능');
+});
+
 check('학생·교사 입력과 결과 화면은 동일한 lastN 키를 사용', () => {
   const analysis = read('last1-analysis.html');
   const entry = read('last1-entry.html');

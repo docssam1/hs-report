@@ -97,6 +97,25 @@ async function saveFinal2Review(page,prefix='final2'){
     localStorage.setItem('gfield_student',name);
     localStorage.setItem('gfield_hs_student_session_v1',JSON.stringify({access_token:'synthetic-only',refresh_token:'synthetic-only',expires_at:Math.floor(Date.now()/1000)+3600,login_name:name}));
     window.print=()=>{window.__qaNativePrintCalls=(window.__qaNativePrintCalls||0)+1;};
+    // Inspect the actual detached renderer document, not just the source grid.
+    window.__qaCaptureLayouts=[];
+    let renderer;
+    Object.defineProperty(window,'html2canvas',{configurable:true,get:()=>renderer,set:fn=>{
+      renderer=(element,options)=>{
+        if(!element.classList.contains('question-page'))return fn(element,options);
+        const onclone=options.onclone,token=element.dataset.gfieldSummaryToken;
+        return fn(element,{...options,onclone:async(doc,...rest)=>{
+          if(onclone)await onclone(doc,...rest);
+          const page=doc.querySelector('[data-gfield-summary-token="'+token+'"]');
+          const cards=[...page.querySelectorAll('.f1-qcard')];
+          const boxes=cards.map(card=>{
+            const r=card.getBoundingClientRect(),answer=card.querySelector('.f1-answerline').getBoundingClientRect();
+            return {id:card.querySelector('[data-item-id]').dataset.itemId,left:r.left,top:r.top,right:r.right,bottom:r.bottom,answerBottom:answer.bottom};
+          });
+          window.top.__qaCaptureLayouts.push(boxes);
+        }});
+      };
+    }});
   },student);
   await context.route(/^https?:\/\//,route=>{
     const request=route.request(),url=new URL(request.url());
@@ -262,8 +281,10 @@ async function saveFinal2Review(page,prefix='final2'){
     await check('Last1 summary retains learning, strengths, books and approved recommendations',async()=>{
       const record=records.find(row=>row.round==='last1'),before={...record};
       try{
-        const lowOx=Array.from({length:30},(_,i)=>[1,6,10,13].includes(i+1)?'O':'X').join('');
-        Object.assign(record,{ox:lowOx,score:core.scoreOf(lowOx),wrong:26});
+        const lowOx=process.env.GFIELD_LAST1_QA_OX||Array.from({length:30},(_,i)=>[1,6,10,13].includes(i+1)?'O':'X').join('');
+        const expectedNos=process.env.GFIELD_LAST1_QA_PRIORITY?process.env.GFIELD_LAST1_QA_PRIORITY.split(',').map(Number):[3,11,2];
+        assert.match(lowOx,/^[OX]{30}$/);
+        Object.assign(record,{ox:lowOx,score:core.scoreOf(lowOx),wrong:[...lowOx].filter(x=>x==='X').length});
         await page.goto(base+'/final.html?set=last&round=1&go=report&name='+encodeURIComponent(student));
         await page.locator('.report-screen-header').waitFor();
         const screen=await page.evaluate(()=>({
@@ -275,8 +296,8 @@ async function saveFinal2Review(page,prefix='final2'){
         console.log('LAST1_SCREEN '+JSON.stringify({plan:!!screen.plan,strengths:!!screen.strengths,priorities:screen.priorities,books:screen.books}));
         assert.ok(screen.plan.includes('이번 주 학습 계획'),'the weekly learning plan is populated');
         assert.ok(screen.strengths.includes('강점과 보완점'),'strengths and improvements remain in the report');
-        assert.deepEqual(screen.priorities,[3,11,2],'use Last1 item rates above personal correct rate, not generic Final priority');
-        assert.deepEqual(screen.books.slice().sort((a,b)=>a-b),[2,3,11]);
+        assert.deepEqual(screen.priorities,expectedNos,'use Last1 item rates above personal correct rate, not generic Final priority');
+        assert.deepEqual(screen.books.slice().sort((a,b)=>a-b),expectedNos.slice().sort((a,b)=>a-b));
         const coaching=await page.locator('.diagnostic-coaching').textContent();
         assert.match(coaching,/이번 최종 1회/,'do not label Last1 coaching as Final1');
         const reviewNos=await page.locator('.diagnostic-coaching > ol > li > b').allTextContents();
@@ -286,6 +307,15 @@ async function saveFinal2Review(page,prefix='final2'){
           const frame=document.querySelector('iframe.gfield-final-report-print-frame');
           return frame?.contentDocument?.body.dataset.practiceQuestionCount==='9';
         },null,{timeout:90000});
+        const layouts=await page.evaluate(()=>window.__qaCaptureLayouts);
+        assert.ok(layouts.length,'renderer clone layouts were checked');
+        for(const cards of layouts){
+          for(const card of cards)assert.ok(card.answerBottom<=card.bottom+2,'answer line is not clipped: '+card.id);
+          for(let i=0;i<cards.length;i++)for(let j=i+1;j<cards.length;j++){
+            const a=cards[i],b=cards[j];
+            assert.ok(a.right<=b.left+1||b.right<=a.left+1||a.bottom<=b.top+1||b.bottom<=a.top+1,'captured question cards do not overlap: '+JSON.stringify([a,b]));
+          }
+        }
         const printed=await page.locator('iframe.gfield-final-report-print-frame').evaluate(frame=>{
           const doc=frame.contentDocument,pages=[...doc.querySelectorAll('.pagedjs_pages > .pagedjs_page')];
           return {
@@ -300,7 +330,7 @@ async function saveFinal2Review(page,prefix='final2'){
         });
         for(const title of ['이번 주 학습','강점과 보완점','오답 교재 연결','이번 주 학습 계획'])assert.ok(printed.text.includes(title),'printed pages include '+title);
         assert.match(printed.bank,/bank=last1/);
-        assert.deepEqual(printed.ids,[3,11,2].flatMap(no=>[1,2,3].map(v=>'last1-q'+String(no).padStart(2,'0')+'-v'+v)));
+        assert.deepEqual(printed.ids,expectedNos.flatMap(no=>[1,2,3].map(v=>'last1-q'+String(no).padStart(2,'0')+'-v'+v)));
         assert.equal(printed.questions,'9');assert.equal(printed.answers,'9');assert.ok(printed.practicePages>0);
         if(reviewDir){
           const target=path.join(reviewDir,'last1-summary');
