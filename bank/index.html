@@ -6,7 +6,7 @@
 <title>지필드 생각하는 초등 황소 약점 유형 문제은행 | 지필드 영재교육</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="final1-worksheet.css?v=20260930-neutral-workspace">
+<link rel="stylesheet" href="final1-worksheet.css?v=20261006-final8-figures">
 <style>
   :root{
     --bg:#f5f7fb; --card:#ffffff; --soft:#eef5ff;
@@ -255,7 +255,7 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
   var fixed=!!bankCode;
   if(!fixed)return;
   document.body.classList.add('fixed-bank-mode');
-  var s=document.createElement('script');s.src='final1-worksheet.js?v=20261005-last1-final8';s.onload=function(){
+  var s=document.createElement('script');s.src='final1-worksheet.js?v=20261006-final8-figures';s.onload=function(){
     var hasGens=q.has('gens'), raw=hasGens?(q.get('gens')||'').split(','):(q.get('practice')==='wrong'?[]:null);
     if(!hasGens&&q.get('gen')&&q.get('gen')!=='mix')raw=[q.get('gen')];
     var typeIds=bankCode==='important'?(q.get('types')||'').split(',').filter(Boolean):null;
@@ -267,7 +267,7 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
   var CORE = window.BANK_CORE;
   var fixedQuery = new URLSearchParams(location.search);
   var fixedSource=String(fixedQuery.get('source')||'').split('|');
-  var fixedEarly = /^(?:final[12347]|important|original[12])$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && ((fixedSource[0]==='final' && /^(?:1|2|3|4|7)$/.test(fixedSource[1])) || (fixedSource[0]==='original' && /^[12]$/.test(fixedSource[1]))));
+  var fixedEarly = /^(?:final[123478]|important|original[12])$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && ((fixedSource[0]==='final' && /^(?:1|2|3|4|7|8)$/.test(fixedSource[1])) || (fixedSource[0]==='original' && /^[12]$/.test(fixedSource[1]))));
   if(fixedEarly)return;
 
   var GEN_NAMES = {

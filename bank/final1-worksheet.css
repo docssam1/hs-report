@@ -79,6 +79,16 @@ body.fixed-bank-mode .topbar,body.fixed-bank-mode .panel,body.fixed-bank-mode .h
 .f1-pagination-probe{box-sizing:border-box!important;width:210mm!important;height:288mm!important;min-height:288mm!important;max-height:288mm!important;padding:12mm!important;position:absolute!important;left:-10000px!important;top:0!important;visibility:hidden!important;overflow:hidden!important}
 .f1-answer-flow{display:block}
 
+/* Final 8 compact print: preserve the whole circular diagram below the full prompt. */
+#final1Worksheet[data-bank-code="final8"][data-layout="compact"] .qcard[data-source-no="20"] .f1-qtext{font-size:13.5px;line-height:1.4}
+#final1Worksheet[data-bank-code="final8"][data-layout="compact"] .qcard[data-source-no="20"] .f1-qmeta{margin-top:3px}
+#final1Worksheet[data-bank-code="final8"][data-layout="compact"] .qcard[data-source-no="20"] .f1-qfigure{margin:2px 0}
+#final1Worksheet[data-bank-code="final8"][data-layout="compact"] .qcard[data-source-no="20"] .f1-qfigure img{max-height:26mm}
+body.fixed-bank-mode #final1Worksheet .question-page.f1-large-figure .f1-qpage{grid-template-rows:auto minmax(0,1fr)}
+body.fixed-bank-mode #final1Worksheet .question-page.f1-large-figure .f1-qcard{grid-column:1/-1!important;grid-row:2!important;display:flex;flex-direction:column}
+body.fixed-bank-mode #final1Worksheet .question-page.f1-large-figure .f1-qfigure{min-height:0;margin:10px 0}
+body.fixed-bank-mode #final1Worksheet .question-page.f1-large-figure .f1-qfigure img{max-height:160mm}
+
 .f1-watermark-clip{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 #final1Worksheet .wm-layer.wm-active{opacity:.04}
 .f1-bands{display:flex;gap:4px;flex-wrap:wrap}
@@ -146,6 +156,8 @@ body.fixed-bank-mode #final1Worksheet .f1-qhead{color:var(--f1-ink);border-botto
 .f1-page.f1-batch-capture-answer .f1-solution-asset{max-height:24mm;margin-top:3px;margin-bottom:3px}
 
 @media screen and (max-width:880px){
+  #final1Worksheet[data-bank-code="final8"][data-layout="compact"] .qcard[data-source-no="20"] .f1-qtext{font-size:16px;line-height:1.7}
+  #final1Worksheet[data-bank-code="final8"][data-layout="compact"] .qcard[data-source-no="20"] .f1-qfigure img{max-height:none}
   body.fixed-bank-mode #final1Worksheet .f1-page,
   body.fixed-bank-mode #final1Worksheet .f1-page.page{width:100%;height:auto;min-height:0;max-height:none;padding:24px 18px;margin:0 auto 14px;overflow:visible}
   body.fixed-bank-mode #final1Worksheet .f1-qpage{height:auto;min-height:0;max-height:none;display:block}
