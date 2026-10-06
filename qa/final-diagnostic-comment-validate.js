@@ -48,4 +48,14 @@ assert.equal(a.priority[0].recovery,true);
 assert.equal(a.wrong.find(x=>x.no===1).recovery,false);
 c=fixture([1,2,3,4,5,6,7,8,9,10]);c.A.forEach(x=>{x.perf=100;x.got=x.tot;});c.P[0].perf=100;
 assert.equal(mod.analyze(c,opts).strengths.length,0);assert.equal(mod.analyze(c,opts).tiers[0].perf,0);
+// Last1 owns the recommendation threshold. The shared coaching must not
+// reselect generic low-point questions or replace an intentionally empty set.
+c=fixture([1,2,3,4]);
+a=mod.analyze(c,{...opts,priorityNos:[4,2]});
+assert.deepEqual(a.priority.map(row=>row.no),[4,2]);assert.equal(a.target,80);
+assert.equal(mod.analyze(c,{...opts,priorityNos:[]}).priority.length,0);
+h=mod.render(c,{...opts,priorityNos:[],seriesLabel:'최종'});
+assert.match(h,/이번 최종 1회/);assert.doesNotMatch(h,/이번 파이널 1회|우선 0문항/);
+assert.match(h,/우선 추천 기준에 해당하는 문항은 없습니다/);
+assert.deepEqual(mod.analyze(c,opts).priority.map(row=>row.no),[1,2,3],'ordinary Final selection is unchanged');
 console.log('PASS diagnostic arithmetic, candidate evidence, ties, zero/full score, missing/duplicate data, no mutation, HTML escaping, no counts');

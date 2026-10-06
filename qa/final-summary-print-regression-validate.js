@@ -39,7 +39,7 @@ function variantsForSource(ids,source){
     .filter(match=>match&&Number(match[1])===Number(source))
     .map(match=>match[2]).sort();
 }
-async function saveFinal2Review(page){
+async function saveFinal2Review(page,prefix='final2'){
   if(!reviewDir)return [];
   const allowed=path.join(root,'.private-work','ignored')+path.sep;
   assert.ok(path.resolve(reviewDir).startsWith(allowed),'review images stay in the ignored private-work folder');
@@ -48,7 +48,7 @@ async function saveFinal2Review(page){
     const frame=document.querySelector('iframe.gfield-final-report-print-frame');
     frame.style.cssText='position:fixed!important;left:0!important;top:0!important;width:800px!important;height:1200px!important;opacity:1!important;visibility:visible!important;z-index:99999!important';
   });
-  const transition=path.join(reviewDir,'final2-summary-to-practice.png');
+  const transition=path.join(reviewDir,prefix+'-summary-to-practice.png');
   await page.frameLocator('iframe.gfield-final-report-print-frame').locator('.pagedjs_pages > .pagedjs_page').last().screenshot({path:transition});
   const images=await page.evaluate(async()=>{
     const frame=document.querySelector('iframe.gfield-final-report-print-frame');
@@ -63,7 +63,7 @@ async function saveFinal2Review(page){
   });
   const saved=[transition];
   images.forEach(item=>{
-    const target=path.join(reviewDir,'final2-'+item.kind+'-'+String(item.index).padStart(2,'0')+'.png');
+    const target=path.join(reviewDir,prefix+'-'+item.kind+'-'+String(item.index).padStart(2,'0')+'.png');
     fs.writeFileSync(target,Buffer.from(item.base64,'base64'));
     saved.push(target);
   });
@@ -80,7 +80,7 @@ async function saveFinal2Review(page){
     await pdfPage.setContent(printHTML,{waitUntil:'load'});
     await pdfPage.waitForFunction(()=>[...document.images].every(image=>image.complete&&image.naturalWidth>0),null,{timeout:30000});
     await pdfPage.evaluate(()=>document.fonts.ready);
-    const target=path.join(reviewDir,'final2-summary-practice.pdf');
+    const target=path.join(reviewDir,prefix+'-summary-practice.pdf');
     await pdfPage.pdf({path:target,format:'A4',preferCSSPageSize:true,printBackground:true,margin:{top:'0',bottom:'0',left:'0',right:'0'}});
     saved.push(target);
   }finally{await pdfPage.close();}
@@ -88,7 +88,7 @@ async function saveFinal2Review(page){
 }
 (async()=>{
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
-  const base='http://127.0.0.1:'+server.address().port;
+  const base=process.env.GFIELD_SUMMARY_LIVE_BASE||'http://127.0.0.1:'+server.address().port;
   const executablePath=process.env.GFIELD_QA_BROWSER_EXECUTABLE||'';
   const browser=await chromium.launch(executablePath?{executablePath}:{});
   const context=await browser.newContext({viewport:{width:1280,height:900}});
@@ -121,6 +121,7 @@ async function saveFinal2Review(page){
   page.on('pageerror',error=>errors.push(error.message));
   const reportUrl=base+'/final.html?round=2&go=report&name='+encodeURIComponent(student);
   try{
+    if(!process.env.GFIELD_LAST1_SUMMARY_ONLY){
     await page.goto(reportUrl);
     await page.locator('.report-screen-header').waitFor();
     await check('summary button remains attached after report UI updates',async()=>{
@@ -255,6 +256,72 @@ async function saveFinal2Review(page){
         assert.equal(result.practicePages,0);
         assert.ok(result.summaryPages>=1,'diagnostic summary still prints');
         return result;
+      }finally{Object.assign(record,before);}
+    });
+    }
+    await check('Last1 summary retains learning, strengths, books and approved recommendations',async()=>{
+      const record=records.find(row=>row.round==='last1'),before={...record};
+      try{
+        const lowOx=Array.from({length:30},(_,i)=>[1,6,10,13].includes(i+1)?'O':'X').join('');
+        Object.assign(record,{ox:lowOx,score:core.scoreOf(lowOx),wrong:26});
+        await page.goto(base+'/final.html?set=last&round=1&go=report&name='+encodeURIComponent(student));
+        await page.locator('.report-screen-header').waitFor();
+        const screen=await page.evaluate(()=>({
+          plan:document.querySelector('.report-study-plan-host')?.textContent||'',
+          strengths:document.querySelector('#report-strengths')?.textContent||'',
+          priorities:[...document.querySelectorAll('#report-plan .parent-priority-list li b')].map(x=>Number(/^(\d+)번/.exec(x.textContent)[1])),
+          books:[...document.querySelectorAll('.curriculum-table tr.report-print-priority')].map(x=>Number(x.dataset.curriculumNo))
+        }));
+        console.log('LAST1_SCREEN '+JSON.stringify({plan:!!screen.plan,strengths:!!screen.strengths,priorities:screen.priorities,books:screen.books}));
+        assert.ok(screen.plan.includes('이번 주 학습 계획'),'the weekly learning plan is populated');
+        assert.ok(screen.strengths.includes('강점과 보완점'),'strengths and improvements remain in the report');
+        assert.deepEqual(screen.priorities,[3,11,2],'use Last1 item rates above personal correct rate, not generic Final priority');
+        assert.deepEqual(screen.books.slice().sort((a,b)=>a-b),[2,3,11]);
+        const coaching=await page.locator('.diagnostic-coaching').textContent();
+        assert.match(coaching,/이번 최종 1회/,'do not label Last1 coaching as Final1');
+        const reviewNos=await page.locator('.diagnostic-coaching > ol > li > b').allTextContents();
+        assert.deepEqual(reviewNos.map(x=>Number(/^(\d+)번/.exec(x)[1])),screen.priorities,'coaching uses the same approved recommendation order');
+        await page.locator('#printBtn').click();
+        await page.waitForFunction(()=>{
+          const frame=document.querySelector('iframe.gfield-final-report-print-frame');
+          return frame?.contentDocument?.body.dataset.practiceQuestionCount==='9';
+        },null,{timeout:90000});
+        const printed=await page.locator('iframe.gfield-final-report-print-frame').evaluate(frame=>{
+          const doc=frame.contentDocument,pages=[...doc.querySelectorAll('.pagedjs_pages > .pagedjs_page')];
+          return {
+            text:pages.map(x=>x.textContent).join('\n'),
+            summaryPages:pages.length,
+            practicePages:doc.querySelectorAll('.gfield-summary-practice-page').length,
+            questions:doc.body.dataset.practiceQuestionCount,
+            answers:doc.body.dataset.practiceAnswerCount,
+            bank:doc.body.dataset.practiceBankUrl||'',
+            ids:JSON.parse(doc.body.dataset.practicePromptFingerprints||'[]').map(x=>x.id)
+          };
+        });
+        for(const title of ['이번 주 학습','강점과 보완점','오답 교재 연결','이번 주 학습 계획'])assert.ok(printed.text.includes(title),'printed pages include '+title);
+        assert.match(printed.bank,/bank=last1/);
+        assert.deepEqual(printed.ids,[3,11,2].flatMap(no=>[1,2,3].map(v=>'last1-q'+String(no).padStart(2,'0')+'-v'+v)));
+        assert.equal(printed.questions,'9');assert.equal(printed.answers,'9');assert.ok(printed.practicePages>0);
+        if(reviewDir){
+          const target=path.join(reviewDir,'last1-summary');
+          fs.mkdirSync(target,{recursive:true});
+          await page.screenshot({path:path.join(target,'screen.png'),fullPage:true});
+          await page.evaluate(()=>{
+            const frame=document.querySelector('iframe.gfield-final-report-print-frame');
+            frame.style.cssText='position:fixed!important;left:0!important;top:0!important;width:800px!important;height:1200px!important;opacity:1!important;visibility:visible!important;z-index:99999!important';
+          });
+          const pages=page.frameLocator('iframe.gfield-final-report-print-frame').locator('.pagedjs_pages > .pagedjs_page');
+          for(let i=0;i<await pages.count();i++)await pages.nth(i).screenshot({path:path.join(target,'summary-'+(i+1)+'.png')});
+          await saveFinal2Review(page,'last1');
+        }
+        await page.locator('iframe.gfield-final-report-print-frame').evaluate(frame=>frame.contentWindow.dispatchEvent(new Event('afterprint')));
+        await page.setViewportSize({width:390,height:844});
+        await page.goto(base+'/final.html?set=last&round=1&go=report&name='+encodeURIComponent(student));
+        await page.locator('.report-study-plan-host .personal-study-plan').waitFor();
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,'mobile report does not overflow');
+        if(reviewDir)await page.screenshot({path:path.join(reviewDir,'last1-summary','mobile.png'),fullPage:true});
+        await page.setViewportSize({width:1280,height:900});
+        return {priorities:screen.priorities,summaryPages:printed.summaryPages,practicePages:printed.practicePages,questions:printed.questions,answers:printed.answers};
       }finally{Object.assign(record,before);}
     });
     await check('Last1 report uses the compact summary print action',async()=>{

@@ -588,7 +588,7 @@ td.weak-cell{white-space:nowrap}
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
   // between releases, so only that one file needs a fresh URL per visit.
-  var staticVersion='20261005-last14-batch-report';
+  var staticVersion='20261006-last1-summary-learning';
   var final4AnswerVersion='20260928-final4-q24-plan-2';
   var signatureAnswerVersion='20260928-signature-answer-keys-1';
   var dataVersion=Date.now();
@@ -609,6 +609,7 @@ td.weak-cell{white-space:nowrap}
   files.push('bank/bank-registry.js');
   if(!isOriginal) files.push('mock-rx-data.js');
   if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js','last-score-data.js');
+  if(isLast&&Number(requestedRound)===1) files.push('final-diagnostic-comment.js');
   if(isLast) files.push('last-score-data.js');
   if(!isOriginal) files.push('final-score-trend.js');
   if(!isOriginal) files.push('final-report-state.js');
@@ -1584,7 +1585,7 @@ td.weak-cell{white-space:nowrap}
   function buildComment(ctx, weakMap){
     if(!isOriginal&&window.GFIELD_DIAGNOSTIC_COMMENT&&typeof window.GFIELD_DIAGNOSTIC_COMMENT.render==='function'){
       try{
-        var diagnostic=window.GFIELD_DIAGNOSTIC_COMMENT.render(ctx,{escape:esc,taxonomy:taxonomyOf,points:function(no){return BP(no).pts;},verifyPopulation:fixedRatesVerified,percentile:percentileFor,history:ctx.personalHistory||[],books:function(no){
+        var diagnostic=window.GFIELD_DIAGNOSTIC_COMMENT.render(ctx,{escape:esc,taxonomy:taxonomyOf,points:function(no){return BP(no).pts;},verifyPopulation:fixedRatesVerified,percentile:percentileFor,history:ctx.personalHistory||[],seriesLabel:seriesLabel(),priorityNos:isLast&&ctx.roundNum===1?reportPriorityNos(ctx):null,books:function(no){
           var item=ctx.items.filter(function(row){return Number(row.no)===Number(no);})[0];
           if(!item||taxonomyOf(ctx.roundNum,item).reviewRequired) return [];
           return curriculumBooksForItem(ctx,item).map(function(book){return {title:book.title,unit:book.unit};});

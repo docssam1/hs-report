@@ -51,6 +51,8 @@
     // Teacher's prioritisation is distinct from evidence and never compares
     // item response rate with the student's rank percentile.
     var priority=wrong.slice().sort(function(a,b){return Number(b.recovery)-Number(a.recovery)||(a.recovery&&b.recovery?b.rate-a.rate:0)||Number(b.related.length>0)-Number(a.related.length>0)||Number(b.strongArea)-Number(a.strongArea)||a.points-b.points||a.no-b.no;}).slice(0,3);
+    // Preserve an approved exam-specific selection, including an empty one.
+    if(Array.isArray(options.priorityNos))priority=options.priorityNos.map(function(no){return wrong.find(function(row){return row.no===Number(no);});}).filter(Boolean);
     var gain=round(priority.reduce(function(s,r){return s+r.points;},0));
     var weak=areas.filter(function(a){return a.cor<a.n;}).sort(function(a,b){return round(b.tot-b.got)-round(a.tot-a.got)||a.perf-b.perf;});
     var tiers=aggregate('points').sort(function(a,b){return a.k-b.k;});
@@ -86,13 +88,13 @@
       '<figcaption>파랑은 현재 득점, 초록은 선택한 오답의 배점입니다. 두 막대의 눈금은 같습니다.</figcaption></figure>';
   }
   function planHTML(a,ctx,options,e){
-    var allCorrect=a.wrong.length===0;
+    var allCorrect=a.wrong.length===0,noPriority=!allCorrect&&!a.priority.length;
     var stage1='<article class="personal-plan-stage"><h4>1차 · 오답 다시 풀기</h4><p class="plan-when">20분</p>'+
-      (allCorrect?'<p>풀이가 길었던 2문항을 해설 없이 다시 풉니다.</p>':'<p>이번 주 우선 '+a.priority.length+'문항을 해설 없이 다시 풀고, 막힌 단계만 확인합니다.</p>')+
+      (allCorrect?'<p>풀이가 길었던 2문항을 해설 없이 다시 풉니다.</p>':noPriority?'<p>우선 추천 기준에 해당하는 문항은 없습니다. 오답을 차근차근 다시 풀고, 막힌 단계만 확인합니다.</p>':'<p>이번 주 우선 '+a.priority.length+'문항을 해설 없이 다시 풀고, 막힌 단계만 확인합니다.</p>')+
       '<p class="plan-check"><b>완료</b> 식이나 그림을 쓴 이유를 설명한다.</p></article>';
     var stage2='<article class="personal-plan-stage"><h4>2차 · 연결 학습</h4><p class="plan-when">25분</p>'+
-      (allCorrect?'<p>풀이가 길었던 유형의 유사문제를 2문제씩 풉니다.</p><p class="plan-check"><b>완료</b> 2문제를 도움 없이 푼다.</p>':'<p>우선 문항의 교재 위치를 확인하고 유사문제를 유형별 3문제씩 풉니다.</p><p class="plan-check"><b>완료</b> 3문제를 도움 없이 푼다.</p>')+'</article>';
-    var stage3='<article class="personal-plan-stage"><h4>3차 · 다음 날 확인</h4><p class="plan-when">15분</p><p>우선 문항을 빈 종이에 다시 풀고 풀이를 말로 설명합니다.</p><p class="plan-check"><b>완료</b> 전부 맞히고 도움 없이 설명한다.</p></article>';
+      (allCorrect?'<p>풀이가 길었던 유형의 유사문제를 2문제씩 풉니다.</p><p class="plan-check"><b>완료</b> 2문제를 도움 없이 푼다.</p>':noPriority?'<p>다시 풀며 막힌 오답의 교재 연결과 유사문제를 확인합니다.</p><p class="plan-check"><b>완료</b> 연습한 유형을 도움 없이 푼다.</p>':'<p>우선 문항의 교재 위치를 확인하고 유사문제를 유형별 3문제씩 풉니다.</p><p class="plan-check"><b>완료</b> 3문제를 도움 없이 푼다.</p>')+'</article>';
+    var stage3='<article class="personal-plan-stage"><h4>3차 · 다음 날 확인</h4><p class="plan-when">15분</p><p>'+(noPriority?'연습한 오답을':'우선 문항을')+' 빈 종이에 다시 풀고 풀이를 말로 설명합니다.</p><p class="plan-check"><b>완료</b> 전부 맞히고 도움 없이 설명한다.</p></article>';
     return '<section class="personal-study-plan" aria-label="이번 주 학습 계획"><div class="plan-title-row"><div><h3>'+e(ctx.name)+' 학생의 이번 주 학습 계획</h3><p>각 차수의 완료 기준을 통과하면 다음으로 넘어갑니다. 시간은 권장치이며 관찰된 풀이 시간이 아닙니다.</p></div>'+(allCorrect?'':'<strong>'+a.score+'점 → '+a.target+'점</strong>')+'</div><div class="personal-plan-grid">'+stage1+stage2+stage3+'</div></section>';
   }
   function render(ctx,options){
@@ -126,7 +128,7 @@
       }
       else scenario+='<p class="coaching-caution">점수 변화만 먼저 살펴보세요.</p>';
     }else if(a.priority.length){scenario+='<p class="coaching-caution">점수 변화만 먼저 살펴보세요.</p>';}
-    return '<div class="diagnostic-coaching"><p><b>'+e(ctx.name)+'</b> 학생, 이번 파이널 '+e(ctx.roundNum)+'회에서 <b>'+a.score+'점</b>을 받았습니다. 맞힌 문제는 풀이 방법을 익히고, 틀린 문제는 다시 풀며 다음 공부를 준비해 봅시다.</p><div class="coaching-grid"><div class="coaching-block"><h3>이번 시험에서 잘한 점</h3>'+strength+'</div><div class="coaching-block"><h3>다시 살펴볼 영역</h3>'+weakness+'</div></div><h3>점수별 문제 보기</h3><p>'+e(tierText)+'</p><p>점수가 같은 문제라도 쓰는 방법은 다를 수 있습니다. 틀린 문제는 풀이 과정을 다시 적어 보세요.</p>'+scenario+planHTML(a,ctx,options,e)+(review?'<h3>문제별로 이렇게 복습하세요</h3><ol>'+review+'</ol>':'')+'<h3>교재와 연결하는 복습 순서</h3><p>교재 연결표에서 해당 유형의 학습 위치를 찾으세요. 조건을 읽고 표시하기 → 필요한 식·표·그림 만들기 → 막힌 단계만 상세답안과 비교하기 → 연결된 유사문제 풀기 → 다음 날 해설 없이 다시 설명하기 순서로 공부해 보세요. 교재 쪽수는 선생님과 함께 확인합니다.</p><p class="coaching-caution">틀린 이유는 한 가지가 아닐 수 있습니다. 풀이를 보며 어떤 부분이 어려웠는지 학생과 선생님이 함께 찾아보세요.</p></div>';
+    return '<div class="diagnostic-coaching"><p><b>'+e(ctx.name)+'</b> 학생, 이번 '+e(options.seriesLabel||'파이널')+' '+e(ctx.roundNum)+'회에서 <b>'+a.score+'점</b>을 받았습니다. 맞힌 문제는 풀이 방법을 익히고, 틀린 문제는 다시 풀며 다음 공부를 준비해 봅시다.</p><div class="coaching-grid"><div class="coaching-block"><h3>이번 시험에서 잘한 점</h3>'+strength+'</div><div class="coaching-block"><h3>다시 살펴볼 영역</h3>'+weakness+'</div></div><h3>점수별 문제 보기</h3><p>'+e(tierText)+'</p><p>점수가 같은 문제라도 쓰는 방법은 다를 수 있습니다. 틀린 문제는 풀이 과정을 다시 적어 보세요.</p>'+scenario+planHTML(a,ctx,options,e)+(review?'<h3>문제별로 이렇게 복습하세요</h3><ol>'+review+'</ol>':'')+'<h3>교재와 연결하는 복습 순서</h3><p>교재 연결표에서 해당 유형의 학습 위치를 찾으세요. 조건을 읽고 표시하기 → 필요한 식·표·그림 만들기 → 막힌 단계만 상세답안과 비교하기 → 연결된 유사문제 풀기 → 다음 날 해설 없이 다시 설명하기 순서로 공부해 보세요. 교재 쪽수는 선생님과 함께 확인합니다.</p><p class="coaching-caution">틀린 이유는 한 가지가 아닐 수 있습니다. 풀이를 보며 어떤 부분이 어려웠는지 학생과 선생님이 함께 찾아보세요.</p></div>';
   }
   root.GFIELD_DIAGNOSTIC_COMMENT={analyze:analyze,render:render};
   if(typeof module==='object'&&module.exports)module.exports=root.GFIELD_DIAGNOSTIC_COMMENT;

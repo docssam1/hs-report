@@ -138,8 +138,9 @@
   }
   function verifyBank(input,bank){
     var doc=bank.doc,win=bank.win,expected=input.nos.length*3;
+    var prefix=input.set==='last'?'last1':'final'+input.round;
     if(!win.BANK_FIXED||typeof win.BANK_FIXED.buildPaper!=='function')fail('bank-missing','검수된 문제은행을 확인할 수 없습니다.');
-    return win.BANK_FIXED.buildPaper({bankCode:'final'+input.round,genIds:input.nos.map(function(no){return 'final'+input.round+'-q'+String(no).padStart(2,'0');}),pointBand:'all',orderMode:'grouped'}).then(function(paper){
+    return win.BANK_FIXED.buildPaper({bankCode:prefix,genIds:input.nos.map(function(no){return prefix+'-q'+String(no).padStart(2,'0');}),pointBand:'all',orderMode:'grouped'}).then(function(paper){
       var questions=list(doc.querySelectorAll('#final1Worksheet #f1Pages .question-page .f1-qcard'));
       var answers=list(doc.querySelectorAll('#final1Worksheet #f1Pages .answer-page .f1-solution'));
       var pages=list(doc.querySelectorAll('#final1Worksheet #f1Pages .page')).filter(function(page){return !page.classList.contains('cover-page')&&!page.classList.contains('duplex-blank');});
@@ -148,7 +149,7 @@
       questions.forEach(function(card,index){
         var item=paper.questions[index],id=card.querySelector('.fixed-item')&&card.querySelector('.fixed-item').getAttribute('data-item-id');
         var no=input.nos[Math.floor(index/3)],variant=index%3+1;
-        var expectedId='final'+input.round+'-q'+String(no).padStart(2,'0')+'-v'+variant;
+        var expectedId=prefix+'-q'+String(no).padStart(2,'0')+'-v'+variant;
         var prompt=compact(card.querySelector('.f1-qtext')&&card.querySelector('.f1-qtext').textContent)+' '+compact(card.querySelector('.f1-qgiven')&&card.querySelector('.f1-qgiven').textContent);
         if(!item||item.reviewStatus!=='verified'||item.id!==expectedId||id!==expectedId||Number(card.getAttribute('data-source-no'))!==no||Number(item.sourceNo)!==no||Number(item.variantNo)!==variant||compact(prompt).length<8){
           fail('bank-unreviewed',no+'번의 검수된 유사문제 3개를 확인할 수 없습니다.');
