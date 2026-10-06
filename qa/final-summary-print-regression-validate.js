@@ -360,11 +360,11 @@ async function saveFinal2Review(page,prefix='final2'){
         return {priorities:screen.priorities,summaryPages:printed.summaryPages,practicePages:printed.practicePages,questions:printed.questions,answers:printed.answers};
       }finally{Object.assign(record,before);}
     });
-    await check('Last1 report uses the compact summary print action',async()=>{
+    await check('Last1 fills three recommendations when none exceed the personal correct rate',async()=>{
       const record=records.find(row=>row.round==='last1'),before={...record};
       try{
-      const noPriorityOx='XOOXOXOOXXOOOOXXOOOXOXOXXXOOOX';
-      Object.assign(record,{ox:noPriorityOx,score:core.scoreOf(noPriorityOx),wrong:13});
+      const fallbackOx='XOOXOXOOXXOOOOXXOOOXOXOXXXOOOX',expectedNos=[20,15,22];
+      Object.assign(record,{ox:fallbackOx,score:core.scoreOf(fallbackOx),wrong:13});
       await page.goto(base+'/final.html?set=last&round=1&go=report&name='+encodeURIComponent(student));
       await page.locator('.report-screen-header').waitFor();
       const button=page.locator('#printBtn');
@@ -372,22 +372,55 @@ async function saveFinal2Review(page,prefix='final2'){
       assert.equal(await button.evaluate(node=>node.isConnected),true);
       assert.match(await button.innerText(),/인쇄/);
       assert.match(await button.innerText(),/요약.*인쇄|인쇄.*요약/,'Last1 uses the same compact QR summary print flow');
+      const screenNos=await page.locator('#report-plan .parent-priority-list li b').allTextContents();
+      assert.deepEqual(screenNos.map(text=>Number(/^(\d+)번/.exec(text)[1])),expectedNos);
+      const reviewNos=await page.locator('.diagnostic-coaching > ol > li > b').allTextContents();
+      assert.deepEqual(reviewNos.map(text=>Number(/^(\d+)번/.exec(text)[1])),expectedNos,'coaching uses the same fallback items');
+      assert.doesNotMatch(await page.locator('.diagnostic-coaching').textContent(),/이번에는 틀린 문제가 없습니다/);
+      const bookNos=await page.locator('.curriculum-table tr.report-print-priority').evaluateAll(rows=>rows.map(row=>Number(row.dataset.curriculumNo)));
+      assert.deepEqual(bookNos.slice().sort((a,b)=>a-b),expectedNos.slice().sort((a,b)=>a-b),'books use the fallback recommendations');
       await button.click();
       await page.locator('iframe.gfield-final-report-print-frame').waitFor({state:'attached',timeout:60000});
       await page.frameLocator('iframe.gfield-final-report-print-frame').locator('.pagedjs_pages > .pagedjs_page').first().waitFor({state:'attached',timeout:60000});
       await page.waitForFunction(()=>!document.querySelector('#printBtn').textContent.includes('준비 중'),null,{timeout:60000});
-      const counts=await page.locator('iframe.gfield-final-report-print-frame').evaluate(frame=>({practicePages:frame.contentDocument.querySelectorAll('.gfield-summary-practice-page').length,summaryPages:frame.contentDocument.querySelectorAll('.pagedjs_pages > .pagedjs_page').length,wrongRows:[...frame.contentDocument.querySelectorAll('.pagedjs_pages .report-wrong-summary tbody tr')].map(row=>({no:Number(/^(\d+)번/.exec(row.cells[0].textContent)[1]),height:row.getBoundingClientRect().height}))}));
+      const counts=await page.locator('iframe.gfield-final-report-print-frame').evaluate(frame=>({practicePages:frame.contentDocument.querySelectorAll('.gfield-summary-practice-page').length,summaryPages:frame.contentDocument.querySelectorAll('.pagedjs_pages > .pagedjs_page').length,questions:frame.contentDocument.body.dataset.practiceQuestionCount,answers:frame.contentDocument.body.dataset.practiceAnswerCount,ids:JSON.parse(frame.contentDocument.body.dataset.practicePromptFingerprints||'[]').map(item=>item.id),wrongRows:[...frame.contentDocument.querySelectorAll('.pagedjs_pages .report-wrong-summary tbody tr')].map(row=>({no:Number(/^(\d+)번/.exec(row.cells[0].textContent)[1]),height:row.getBoundingClientRect().height}))}));
       const priorityCount=await page.locator('#report-plan .parent-priority-list li').count();
-      assert.equal(priorityCount,0,'do not invent recommendations below the approved correct-rate threshold');
-      assert.deepEqual(counts.wrongRows.map(row=>row.no),[...noPriorityOx].flatMap((value,i)=>value==='X'?[i+1]:[]),'all thirteen wrong items remain without qualifying recommendations');
+      assert.equal(priorityCount,3,'fill missing recommendations from actual wrong items');
+      assert.deepEqual(counts.wrongRows.map(row=>row.no),[...fallbackOx].flatMap((value,i)=>value==='X'?[i+1]:[]),'all thirteen wrong items still remain in the summary');
       assert.ok(counts.wrongRows.every(row=>row.height>0),'the actual wrong items are visible in the print pages');
-      assert.equal(await page.locator('iframe.gfield-final-report-print-frame').evaluate(frame=>frame.contentDocument.querySelectorAll('.pagedjs_pages .curriculum-table').length),0,'no empty textbook table header when no items qualify');
-      if(priorityCount){assert.ok(counts.practicePages>0,'Last1 attaches its approved similar questions and answers to the summary print');}
-      else{assert.equal(counts.practicePages,0,'Last1 without qualifying high-correct-rate misses prints a summary only');assert.ok(counts.summaryPages>0);assert.match(await button.innerText(),/요약만 인쇄/);}
+      assert.equal(counts.questions,'9');assert.equal(counts.answers,'9');assert.ok(counts.practicePages>0);
+      assert.deepEqual(counts.ids,expectedNos.flatMap(no=>[1,2,3].map(v=>'last1-q'+String(no).padStart(2,'0')+'-v'+v)),'printed practice uses exactly the fallback three sources');
       assert.equal(await page.evaluate(()=>window.__qaNativePrintCalls||0),0,'summary printing does not also invoke native full-report print');
       assert.equal(await page.locator('.report-screen-header').count(),1,'the report remains visible');
-      if(reviewDir)await saveFinal2Review(page,'last1-no-priority');
+      if(reviewDir)await saveFinal2Review(page,'last1-fallback');
+      await page.setViewportSize({width:390,height:844});
+      await page.goto(base+'/final.html?set=last&round=1&go=report&name='+encodeURIComponent(student));
+      await page.locator('.report-study-plan-host .personal-study-plan').waitFor();
+      assert.deepEqual((await page.locator('#report-plan .parent-priority-list li b').allTextContents()).map(text=>Number(/^(\d+)번/.exec(text)[1])),expectedNos,'mobile shows the same fallback recommendations');
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+      if(reviewDir)await page.locator('#report-plan').screenshot({path:path.join(reviewDir,'last1-fallback-mobile.png')});
+      await page.setViewportSize({width:1280,height:900});
       return {label:await button.innerText(),counts};
+      }finally{Object.assign(record,before);}
+    });
+    await check('Last1 recommends only available wrong items and keeps a perfect result empty',async()=>{
+      const record=records.find(row=>row.round==='last1'),before={...record};
+      try{
+        for(const wrong of [[24],[24,30],[],[3,25,26]]){
+          const value=Array.from({length:30},(_,i)=>wrong.includes(i+1)?'X':'O').join('');
+          Object.assign(record,{ox:value,score:core.scoreOf(value),wrong:wrong.length});
+          await page.goto(base+'/final.html?set=last&round=1&go=report&name='+encodeURIComponent(student));
+          await page.locator('.report-screen-header').waitFor();
+          const expected=wrong.length===2?[30,24]:wrong;
+          assert.deepEqual((await page.locator('#report-plan .parent-priority-list li b').allTextContents()).map(text=>Number(/^(\d+)번/.exec(text)[1])),expected);
+          const coaching=await page.locator('.diagnostic-coaching').textContent();
+          if(wrong.length)assert.doesNotMatch(coaching,/이번에는 틀린 문제가 없습니다/);
+          else{
+            assert.match(coaching,/이번에는 틀린 문제가 없습니다/);
+            assert.match(await page.locator('#printBtn').innerText(),/요약만 인쇄/);
+            assert.equal(await page.locator('#report-items .report-wrong-summary').count(),0);
+          }
+        }
       }finally{Object.assign(record,before);}
     });
     await check('no browser errors or production writes',async()=>{

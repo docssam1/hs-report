@@ -588,7 +588,7 @@ td.weak-cell{white-space:nowrap}
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
   // between releases, so only that one file needs a fresh URL per visit.
-  var staticVersion='20261006-last1-wrong-summary';
+  var staticVersion='20261007-last1-priority-fill';
   var final4AnswerVersion='20260928-final4-q24-plan-2';
   var signatureAnswerVersion='20260928-signature-answer-keys-1';
   var dataVersion=Date.now();
@@ -1179,9 +1179,13 @@ td.weak-cell{white-space:nowrap}
     if(isLast&&Number(ctx.roundNum)===1){
       if(!ctx.ratesVerified)return [];
       var ownRate=Number(ctx.ncorr)/Math.max(1,ctx.items.length);
-      return (ctx.wrongList||[]).filter(function(item){return Number.isFinite(Number(ctx.rate[item.no]))&&Number(ctx.rate[item.no])>ownRate;})
-        .sort(function(a,b){return Number(ctx.rate[b.no])-Number(ctx.rate[a.no])||Number(a.no)-Number(b.no);})
-        .slice(0,3).map(function(item){return Number(item.no);});
+      var ranked=(ctx.wrongList||[]).filter(function(item){return Number.isFinite(Number(ctx.rate[item.no]));})
+        .sort(function(a,b){return Number(ctx.rate[b.no])-Number(ctx.rate[a.no])||Number(a.no)-Number(b.no);});
+      var preferred=ranked.filter(function(item){return Number(ctx.rate[item.no])>ownRate;});
+      var remaining=ranked.filter(function(item){return Number(ctx.rate[item.no])<=ownRate;});
+      // Keep the original high-response-rate misses first, then fill from
+      // remaining actual wrong items. Never insert correct items or duplicates.
+      return preferred.concat(remaining).slice(0,3).map(function(item){return Number(item.no);});
     }
     if(isFinal8)return (ctx.wrongList||[]).filter(function(item){return BP(item.no).pts<=3.4;}).sort(function(a,b){return BP(a.no).pts-BP(b.no).pts||Number(a.no)-Number(b.no);}).slice(0,3).map(function(item){return Number(item.no);});
     var nos=(ctx.miss||[]).slice();
@@ -3157,7 +3161,7 @@ td.weak-cell{white-space:nowrap}
         taxonomy:taxonomyOf,
         points:function(no){return BP(no).pts;},
         priorityNos:(isLast&&roundNum===1)||isFinal8?reportPriority:null,
-        priorityLabel:isLast&&roundNum===1?'틀린 문항 중 문항 정답률이 내 전체 정답률보다 높은 문제를 먼저 풉니다.':(isFinal8?'시그니처와 같은 기준으로 틀린 2·3점대 기본 문항부터 복습합니다.':null),
+        priorityLabel:isLast&&roundNum===1?'내 전체 정답률보다 문항 정답률이 높은 오답을 먼저 고르고, 부족하면 남은 오답 중 정답률이 높은 순으로 최대 3문항을 추천합니다.':(isFinal8?'시그니처와 같은 기준으로 틀린 2·3점대 기본 문항부터 복습합니다.':null),
         overallTrend:trendVM,
         cumulativeBands:isLast&&roundNum===1?lastCumBands(1):(M.cumulative&&M.cumulative.bands),
         cumulativeLabel:isLast?(roundNum===1?'파이널 1~4회 + 최종 1회':'최종 1~'+roundNum+'회'):null,

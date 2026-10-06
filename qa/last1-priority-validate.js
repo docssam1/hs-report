@@ -1,0 +1,32 @@
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const root=path.resolve(__dirname,'..');
+const html=fs.readFileSync(path.join(root,'final.html'),'utf8');
+const start=html.indexOf('  function reportPriorityNos(ctx){');
+const end=html.indexOf('  function wrongSummaryTableHTML(ctx){',start);
+assert.ok(start>=0&&end>start);
+const scope={window:{},isLast:true,isFinal8:false,BP:no=>({pts:no<=12?2.7:no<=22?3.4:4.2})};
+vm.createContext(scope);
+vm.runInContext(fs.readFileSync(path.join(root,'last-score-data.js'),'utf8'),scope);
+vm.runInContext(html.slice(start,end),scope);
+const rate=Object.fromEntries(scope.window.GFIELD_LAST_SCORE_DATA.rounds['1'].rates.map((value,i)=>[i+1,value]));
+function pick(wrong,verified=true){
+  const ctx={roundNum:1,ratesVerified:verified,ncorr:30-wrong.length,items:Array.from({length:30},(_,i)=>({no:i+1})),wrongList:wrong.map(no=>({no})),rate};
+  const original=JSON.stringify(ctx),result=Array.from(scope.reportPriorityNos(ctx));
+  assert.equal(JSON.stringify(ctx),original,'selection never changes student answers');
+  assert.equal(new Set(result).size,result.length);
+  assert.ok(result.every(no=>wrong.includes(no)));
+  return result;
+}
+assert.deepEqual(pick([1,4,6,9,10,15,16,20,22,24,25,26,30]),[20,15,22],'no preferred items: fill three actual misses');
+assert.deepEqual(pick([3,25,26]),[3,25,26],'one preferred item: fill two remaining misses');
+assert.deepEqual(pick([2,3,25,26,30,24,27,21,22,15,16,17]),[3,2,15],'two preferred items: fill one');
+assert.deepEqual(pick([2,3,11,18,20,15,21,22,23,24,25,26,27,28,29,30]),[3,11,2],'three preferred items retain priority');
+assert.deepEqual(pick([24]),[24]);assert.deepEqual(pick([24,30]),[30,24]);
+assert.deepEqual(pick([]),[]);assert.deepEqual(pick([3,20,22],false),[],'unverified rates are not invented');
+scope.isLast=false;
+assert.deepEqual(Array.from(scope.reportPriorityNos({roundNum:4,miss:[14],wrongList:[{no:3},{no:14},{no:20}]})),[14],'ordinary Final4 rule stays unchanged');
+scope.isFinal8=true;
+assert.deepEqual(Array.from(scope.reportPriorityNos({wrongList:[{no:24},{no:20},{no:3},{no:14}]})),[3,14,20],'Final8 remains wrong 2/3-point items only');
+console.log('PASS Last1 priority fill: 0/1/2/3 preferred, 0/1/2 wrong, verified rates, no mutation, other exams unchanged');

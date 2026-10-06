@@ -57,5 +57,6 @@ assert.equal(mod.analyze(c,{...opts,priorityNos:[]}).priority.length,0);
 h=mod.render(c,{...opts,priorityNos:[],seriesLabel:'최종'});
 assert.match(h,/이번 최종 1회/);assert.doesNotMatch(h,/이번 파이널 1회|우선 0문항/);
 assert.match(h,/우선 추천 기준에 해당하는 문항은 없습니다/);
+assert.doesNotMatch(h,/이번에는 틀린 문제가 없습니다/,'no recommendations does not mean no wrong answers');
 assert.deepEqual(mod.analyze(c,opts).priority.map(row=>row.no),[1,2,3],'ordinary Final selection is unchanged');
 console.log('PASS diagnostic arithmetic, candidate evidence, ties, zero/full score, missing/duplicate data, no mutation, HTML escaping, no counts');
