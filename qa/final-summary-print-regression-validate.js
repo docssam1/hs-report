@@ -290,6 +290,7 @@ async function saveFinal2Review(page,prefix='final2'){
         const screen=await page.evaluate(()=>({
           plan:document.querySelector('.report-study-plan-host')?.textContent||'',
           strengths:document.querySelector('#report-strengths')?.textContent||'',
+          wrongRows:[...document.querySelectorAll('#report-items .report-wrong-summary tbody tr')].map(row=>Number(/^(\d+)번/.exec(row.cells[0].textContent)[1])),
           priorities:[...document.querySelectorAll('#report-plan .parent-priority-list li b')].map(x=>Number(/^(\d+)번/.exec(x.textContent)[1])),
           books:[...document.querySelectorAll('.curriculum-table tr.report-print-priority')].map(x=>Number(x.dataset.curriculumNo))
         }));
@@ -297,6 +298,7 @@ async function saveFinal2Review(page,prefix='final2'){
         assert.ok(screen.plan.includes('이번 주 학습 계획'),'the weekly learning plan is populated');
         assert.ok(screen.strengths.includes('강점과 보완점'),'strengths and improvements remain in the report');
         assert.deepEqual(screen.priorities,expectedNos,'use Last1 item rates above personal correct rate, not generic Final priority');
+        assert.deepEqual(screen.wrongRows,[...lowOx].flatMap((value,i)=>value==='X'?[i+1]:[]),'screen lists every wrong item from the existing O/X');
         assert.deepEqual(screen.books.slice().sort((a,b)=>a-b),expectedNos.slice().sort((a,b)=>a-b));
         const coaching=await page.locator('.diagnostic-coaching').textContent();
         assert.match(coaching,/이번 최종 1회/,'do not label Last1 coaching as Final1');
@@ -320,6 +322,7 @@ async function saveFinal2Review(page,prefix='final2'){
           const doc=frame.contentDocument,pages=[...doc.querySelectorAll('.pagedjs_pages > .pagedjs_page')];
           return {
             text:pages.map(x=>x.textContent).join('\n'),
+            wrongRows:pages.flatMap(x=>[...x.querySelectorAll('.report-wrong-summary tbody tr')]).map(row=>({no:Number(/^(\d+)번/.exec(row.cells[0].textContent)[1]),height:row.getBoundingClientRect().height})),
             summaryPages:pages.length,
             practicePages:doc.querySelectorAll('.gfield-summary-practice-page').length,
             questions:doc.body.dataset.practiceQuestionCount,
@@ -328,7 +331,10 @@ async function saveFinal2Review(page,prefix='final2'){
             ids:JSON.parse(doc.body.dataset.practicePromptFingerprints||'[]').map(x=>x.id)
           };
         });
-        for(const title of ['이번 주 학습','강점과 보완점','오답 교재 연결','이번 주 학습 계획'])assert.ok(printed.text.includes(title),'printed pages include '+title);
+        for(const title of ['이번 주 학습','강점과 보완점','오답 교재 연결','이번 주 학습 계획','오답 요약'])assert.ok(printed.text.includes(title),'printed pages include '+title);
+        console.log('LAST1_PRINT_WRONG '+JSON.stringify(printed.wrongRows));
+        assert.deepEqual(printed.wrongRows.map(row=>row.no),screen.wrongRows,'summary retains every actual wrong item, not only priority recommendations');
+        assert.ok(printed.wrongRows.every(row=>row.height>0),'printed weakness rows are visible');
         assert.match(printed.bank,/bank=last1/);
         assert.deepEqual(printed.ids,expectedNos.flatMap(no=>[1,2,3].map(v=>'last1-q'+String(no).padStart(2,'0')+'-v'+v)));
         assert.equal(printed.questions,'9');assert.equal(printed.answers,'9');assert.ok(printed.practicePages>0);
@@ -355,6 +361,10 @@ async function saveFinal2Review(page,prefix='final2'){
       }finally{Object.assign(record,before);}
     });
     await check('Last1 report uses the compact summary print action',async()=>{
+      const record=records.find(row=>row.round==='last1'),before={...record};
+      try{
+      const noPriorityOx='XOOXOXOOXXOOOOXXOOOXOXOXXXOOOX';
+      Object.assign(record,{ox:noPriorityOx,score:core.scoreOf(noPriorityOx),wrong:13});
       await page.goto(base+'/final.html?set=last&round=1&go=report&name='+encodeURIComponent(student));
       await page.locator('.report-screen-header').waitFor();
       const button=page.locator('#printBtn');
@@ -366,13 +376,19 @@ async function saveFinal2Review(page,prefix='final2'){
       await page.locator('iframe.gfield-final-report-print-frame').waitFor({state:'attached',timeout:60000});
       await page.frameLocator('iframe.gfield-final-report-print-frame').locator('.pagedjs_pages > .pagedjs_page').first().waitFor({state:'attached',timeout:60000});
       await page.waitForFunction(()=>!document.querySelector('#printBtn').textContent.includes('준비 중'),null,{timeout:60000});
-      const counts=await page.locator('iframe.gfield-final-report-print-frame').evaluate(frame=>({practicePages:frame.contentDocument.querySelectorAll('.gfield-summary-practice-page').length,summaryPages:frame.contentDocument.querySelectorAll('.pagedjs_pages > .pagedjs_page').length}));
+      const counts=await page.locator('iframe.gfield-final-report-print-frame').evaluate(frame=>({practicePages:frame.contentDocument.querySelectorAll('.gfield-summary-practice-page').length,summaryPages:frame.contentDocument.querySelectorAll('.pagedjs_pages > .pagedjs_page').length,wrongRows:[...frame.contentDocument.querySelectorAll('.pagedjs_pages .report-wrong-summary tbody tr')].map(row=>({no:Number(/^(\d+)번/.exec(row.cells[0].textContent)[1]),height:row.getBoundingClientRect().height}))}));
       const priorityCount=await page.locator('#report-plan .parent-priority-list li').count();
+      assert.equal(priorityCount,0,'do not invent recommendations below the approved correct-rate threshold');
+      assert.deepEqual(counts.wrongRows.map(row=>row.no),[...noPriorityOx].flatMap((value,i)=>value==='X'?[i+1]:[]),'all thirteen wrong items remain without qualifying recommendations');
+      assert.ok(counts.wrongRows.every(row=>row.height>0),'the actual wrong items are visible in the print pages');
+      assert.equal(await page.locator('iframe.gfield-final-report-print-frame').evaluate(frame=>frame.contentDocument.querySelectorAll('.pagedjs_pages .curriculum-table').length),0,'no empty textbook table header when no items qualify');
       if(priorityCount){assert.ok(counts.practicePages>0,'Last1 attaches its approved similar questions and answers to the summary print');}
       else{assert.equal(counts.practicePages,0,'Last1 without qualifying high-correct-rate misses prints a summary only');assert.ok(counts.summaryPages>0);assert.match(await button.innerText(),/요약만 인쇄/);}
       assert.equal(await page.evaluate(()=>window.__qaNativePrintCalls||0),0,'summary printing does not also invoke native full-report print');
       assert.equal(await page.locator('.report-screen-header').count(),1,'the report remains visible');
+      if(reviewDir)await saveFinal2Review(page,'last1-no-priority');
       return {label:await button.innerText(),counts};
+      }finally{Object.assign(record,before);}
     });
     await check('no browser errors or production writes',async()=>{
       assert.deepEqual(errors,[]);

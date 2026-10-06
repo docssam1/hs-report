@@ -137,7 +137,19 @@
       prelude.classList.add('gfield-summary-print');
       list(prelude.querySelectorAll('.report-print-cover,.parent-summary-support,#report-tiers,.parent-report-details')).forEach(function(node){node.remove();});
       list(prelude.querySelectorAll('.curriculum-table tbody tr:not(.report-print-priority)')).forEach(function(node){node.remove();});
-      list(prelude.querySelectorAll('.report-wrong-summary tbody tr:not(.report-print-priority)')).forEach(function(node){node.remove();});
+      // Last1's approved recommendation rule can legitimately return no items.
+      // Keep the actual wrong-item summary even then; recommendations are not
+      // the complete weakness record and must not erase it from the PDF.
+      var keepLast1Wrongs=source.getAttribute('data-set')==='last'&&round===1;
+      if(!keepLast1Wrongs)list(prelude.querySelectorAll('.report-wrong-summary tbody tr:not(.report-print-priority)')).forEach(function(node){node.remove();});
+      if(keepLast1Wrongs)list(prelude.querySelectorAll('.curriculum-table')).forEach(function(table){
+        if(table.querySelector('tbody tr'))return;
+        var note=prelude.ownerDocument.createElement('p');
+        note.className='report-empty';
+        note.textContent=prelude.querySelector('.report-wrong-summary tbody tr')?
+          '필수 추천 조건에 해당하는 문항은 없습니다. 위 오답 유형을 순차로 복습하고, 교재 연결은 상세 화면에서 확인하세요.':'이번 회차는 오답이 없습니다.';
+        table.replaceWith(note);
+      });
       // The screen keeps every linked book and learning point. The concise
       // print package keeps only the first priority location and first action
       // so a single table row can never exceed an A4 page and disappear while
@@ -405,6 +417,8 @@
       '#gfield-report-print-prelude>.report-docssam-note>.docssam-saved-comment{orphans:2;widows:2}'+
       '#gfield-report-print-prelude.gfield-summary-print .personal-study-plan{break-inside:avoid!important;page-break-inside:avoid!important}'+
       '#gfield-report-print-prelude.gfield-summary-print .report-materials-section,#gfield-report-print-prelude.gfield-summary-print .report-curriculum-section{break-before:auto!important;page-break-before:auto!important}'+
+      '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="1"] #report-items,#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="1"] .report-wrong-summary tbody{break-inside:auto!important;page-break-inside:auto!important}'+
+      '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="1"] .report-wrong-summary tr{break-inside:avoid!important;page-break-inside:avoid!important}'+
       '#gfield-report-print-prelude .diagnostic-coaching>h3:last-of-type{break-before:page!important;page-break-before:always!important;break-after:avoid!important;page-break-after:avoid!important}'+
       '#gfield-report-print-prelude .able-box{break-inside:avoid!important;page-break-inside:avoid!important}'+
       '@page{size:A4 portrait;margin:10mm}';

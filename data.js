@@ -1159,7 +1159,8 @@ window.GFIELD_DATA = {
     "김민재": [],
     "이서원": [],
     "박제아": [
-      "jun-w3"
+      "jun-w3",
+      "oct-5"
     ]
   },
   "specialStudents": [

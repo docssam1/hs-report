@@ -7,6 +7,7 @@
     hw:{file:'mock-data-hw.js',global:'GFIELD_MOCK_HW'},
     final:{file:'mock-data-final.js',global:'GFIELD_MOCK_FINAL'},
     final7:{file:'final7-benchmark.js',global:''},
+    final8:{file:'final8-benchmark.js',global:'GFIELD_FINAL8_BENCHMARK'},
     original:{file:'mock-data-original.js',global:'GFIELD_MOCK_ORIGINAL'},
     last:{file:'last-score-data.js',global:'GFIELD_LAST_SCORE_DATA'},
     trend:{file:'final-score-trend.js',global:'GFIELD_FINAL_SCORE_TREND'}
@@ -58,7 +59,8 @@
     if(scriptPromises[kind]) return scriptPromises[kind];
     scriptPromises[kind]=new Promise(function(resolve,reject){
       var node=document.createElement('script');
-      node.src=spec.file+'?v='+(kind==='original'?'20260928-signature-answer-keys-1':'20260915a');node.async=true;
+      var versions={original:'20260928-signature-answer-keys-1',last:'20261006-last1-cut562',final:'20261005-final8-q20-43',final8:'20261006-result-hub'};
+      node.src=spec.file+'?v='+(versions[kind]||'20260915a');node.async=true;
       node.onload=function(){(!spec.global||root[spec.global])?resolve(spec.global?root[spec.global]:true):reject(new Error('성적 기준을 확인하지 못했습니다.'));};
       node.onerror=function(){reject(new Error('성적 기준을 불러오지 못했습니다.'));};
       document.head.appendChild(node);
@@ -68,11 +70,13 @@
   function loadModels(items){
     var kinds={};items.forEach(function(item){kinds[item.meta.kind]=true;});
     var needsFinal7=items.some(function(item){return item.meta.kind==='final'&&item.meta.round===7;});
+    var needsFinal8=items.some(function(item){return item.meta.kind==='final'&&item.meta.round===8;});
     var needsTrend=items.some(function(item){return /^(final|last)[1-4]$/.test(item.key);});
     if(needsFinal7) kinds.last=true;
+    if(needsFinal8){kinds.last=true;kinds.original=true;}
     if(needsTrend){kinds.final=true;kinds.trend=true;}
     return Promise.all(Object.keys(kinds).map(loadScript)).then(function(){
-      return needsFinal7?loadScript('final7'):null;
+      return Promise.all([needsFinal7?loadScript('final7'):null,needsFinal8?loadScript('final8'):null]);
     });
   }
   function percentileFromTable(score,table){
@@ -110,8 +114,6 @@
   }
   function reportLink(item,options,model){
     var m=item.meta,name=options.student,helper=root.GFIELD_FINAL_LAST_ROUTES;
-    // Final 8 has no verified analysis yet; never substitute another round's report.
-    if(m.kind==='final'&&m.round===8) return {url:'',label:'상세 분석 준비 중'};
     if((m.kind==='final'||m.kind==='last')&&helper){
       var allowed=helper.accessAllowed(options.data||{},name,m.kind,m.round);
       var url=allowed?helper.reportUrl(m.kind,m.round,name):'';
@@ -136,6 +138,18 @@
       title=m.round===7||m.round===8?'최종 실전 모의고사 '+m.round+'회':'파이널 모의고사 '+m.round+'회';
       if(verifiedFinalStats(stats)) percentile=percentileFromTable(item.score.score,stats.percentileTable);
       if(m.round!==8||verifiedFinalStats(stats)) grade=gradeFromCuts(item.score.score,stats&&stats.cuts);
+      if(m.round===8&&root.GFIELD_FINAL8_BENCHMARK){
+        // Reuse the approved standalone report estimate, never a measured
+        // Final8 rank or an entry in the regular eight-round cumulative model.
+        var projected=root.GFIELD_FINAL8_BENCHMARK.project(item.score.score);
+        var basis=root.GFIELD_MOCK_ORIGINAL&&root.GFIELD_MOCK_ORIGINAL.cutBasis;
+        var tiers=basis&&Array.isArray(basis.rows)?basis.rows.slice().sort(function(a,b){return Number(b.threshold2025)-Number(a.threshold2025);}):[];
+        if(projected){
+          percentile=projected.topPercent;
+          var matched=tiers.filter(function(row){return projected.adjustedScore>=Number(row.threshold2025);})[0];
+          grade=matched?matched.grade:(basis&&basis.belowLabel||'노력요함');
+        }
+      }
     }else if(m.kind==='last'){
       model=root.GFIELD_LAST_SCORE_DATA;round=model&&model.rounds&&model.rounds[String(m.round)];
       title='최종 모의고사 '+m.round+'회';
@@ -197,7 +211,7 @@
   }
   function tableHtml(rows,student,cumulative){
     var body=rows.map(function(row){
-      var rank=row.percentile===null?'<span class="srh-na">자료 없음</span>':'<span class="srh-rank">'+row.percentile.toFixed(1)+'%</span>';
+      var rank=row.percentile===null?'<span class="srh-na">자료 없음</span>':'<span class="srh-rank">'+row.percentile.toFixed(1)+'%'+(row.key==='final8'?'<small> 예상</small>':'')+'</span>';
       var level=row.grade?'<span class="srh-level">'+esc(row.grade)+'</span>':'<span class="srh-na">자료 없음</span>';
       var action=row.link.url?'<a class="srh-detail" href="'+esc(row.link.url)+'">'+esc(row.link.label)+'</a>':'<span class="srh-detail" aria-disabled="true">'+esc(row.link.label)+'</span>';
       return '<tr><td class="srh-exam-cell" data-label="시험"><span class="srh-exam-name">'+esc(row.title)+'</span></td><td data-label="점수"><span class="srh-score">'+row.score.toFixed(1)+'점</span></td><td data-label="석차 백분율">'+rank+'</td><td data-label="예상 등급">'+level+'</td><td class="srh-action-col" data-label="보기">'+action+'</td></tr>';
