@@ -37,7 +37,6 @@
     return `<a class="btn sm" style="background:#dcfce7;color:#166534;text-decoration:none" target="_blank" href="${teacherEntryUrl(set,r,student)}">✍️ ${esc(student)} 맞은 문제 체크</a>`;
   }
   function reportButton(set,r,student,slot){
-    if(set==='extra'&&String(r)==='8')return '<span style="color:#a0a8b3;font-size:12px">상세 분석 준비 중</span>';
     return `<a class="btn sm" target="_blank" href="${teacherReportUrl(set,r,student,slot)}">${slot===1?'공식 1차':'연습 '+slot+'차'} 성적표</a>`;
   }
   function previewUrl(set,r,student){return 'mock.html?set='+set+'&round='+r+'&name='+encodeURIComponent(student)+'&preview=1'}
