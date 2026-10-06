@@ -49,6 +49,7 @@
     if(!account||account.active!==true)return false;
     if(account.role==='admin'||account.role==='teacher')return true;
     if(account.role!=='student'||!account.student)return false;
+    if(((root.GFIELD_DATA||{}).studentTypes||{})[account.student]==='withdrawn')return false;
     /* 일반 문제은행은 자료실 등록 학생 전체, 회차 자료는 해당 회차 승인만 허용한다. */
     if(scopedProductKey())return listed(scopedPermissionList(),account.student);
     return registeredStudent(account.student);

@@ -9,6 +9,7 @@
   function isOnline(data,name){return !!(data&&data.studentTypes&&data.studentTypes[name]==='online');}
   function rounds(data,name,model){
     data=data||{};name=clean(name);model=model||{};
+    if((data.studentTypes||{})[name]==='withdrawn')return [];
     var all=Object.keys(model.rounds||{}).filter(function(round){return /^\d+$/.test(round);}).sort(function(a,b){return Number(a)-Number(b);});
     if(!name||!isOnline(data,name))return all;
     var allowed={};

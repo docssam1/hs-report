@@ -25,6 +25,7 @@
     round=Number(round);
     if(name.toLowerCase()==='docssam') return true;
     if(!name||!Array.isArray(data.students)||data.students.indexOf(name)<0) return false;
+    if((data.studentTypes||{})[name]==='withdrawn') return false;
     if(series==='final'&&(round===5||round===7||round===8)){
       return includesName((data.archiveProductAccess||{})['mock-final-'+round],name);
     }

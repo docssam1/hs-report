@@ -583,7 +583,7 @@ td.weak-cell{white-space:nowrap}
 <div id="app"></div>
 <button class="print-btn no-print" id="printBtn" style="display:none">🖨 인쇄</button>
 
-<script src="final-last-routes.js?v=20261005-final8-answers"></script>
+<script src="final-last-routes.js?v=20261006-withdrawn"></script>
 <script>(function(){
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
@@ -783,6 +783,7 @@ td.weak-cell{white-space:nowrap}
     if(preview||name.toLowerCase()==='docssam') return true;
     if(teacherEntry) return !!name;
     if(!(D.students||[]).includes(name)) return false;
+    if((D.studentTypes||{})[name]==='withdrawn') return false;
     if(isOriginal){
       var signatureAccess=((D.archiveProductAccess||{})['mock-signature-'+roundNum])||[];
       return Array.isArray(signatureAccess)&&(signatureAccess.indexOf('*')>=0||signatureAccess.indexOf(name)>=0);

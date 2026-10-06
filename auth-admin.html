@@ -60,6 +60,7 @@
   function $(id){return document.getElementById(id)}
   function esc(value){return String(value==null?'':value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
   function online(name){return (D.studentTypes||{})[name]==='online'}
+  function withdrawn(name){return (D.studentTypes||{})[name]==='withdrawn'}
   function setBusy(button,busy,label){button.disabled=busy;if(label)button.textContent=busy?'처리 중…':label}
   function isAdmin(user){var role=user&&user.app_metadata&&user.app_metadata.role;return role==='admin'||role==='teacher'}
 
@@ -93,10 +94,10 @@
     $('sumRoster').textContent=students.length;$('sumIssued').textContent=issued;$('sumOnline').textContent=students.filter(online).length;$('sumUnowned').textContent=(lastStatus&&lastStatus.unownedStudents||[]).length;
     $('rows').innerHTML=students.map(function(name){
       var account=accountMap[name];var isOn=online(name);var issuedBadge=account?'<span class="badge ok">발급됨</span>':'<span class="badge wait">미발급</span>';
-      return '<tr><td><b>'+esc(name)+'</b></td><td class="c">'+(isOn?'<span class="badge online">온라인</span>':'<span class="badge">재원생</span>')+'</td><td class="c">'+issuedBadge+'</td>'+
+      return '<tr><td><b>'+esc(name)+'</b></td><td class="c">'+(withdrawn(name)?'<span class="badge wait">퇴원생</span>':isOn?'<span class="badge online">온라인</span>':'<span class="badge">재원생</span>')+'</td><td class="c">'+issuedBadge+'</td>'+
         '<td class="c"><input class="switch" type="checkbox" data-self="'+esc(name)+'" '+((account?account.can_self_enter:isOn)?'checked':'')+' '+(!account?'disabled':'')+'></td>'+
-        '<td class="c"><input class="switch" type="checkbox" data-active="'+esc(name)+'" '+((!account||account.active)?'checked':'')+' '+(!account?'disabled':'')+'></td>'+
-        '<td class="c"><button class="sm '+(account?'alt':'')+'" data-issue="'+esc(name)+'">'+(account?'재발급':'발급')+'</button></td></tr>';
+        '<td class="c"><input class="switch" type="checkbox" data-active="'+esc(name)+'" '+(!withdrawn(name)&&(!account||account.active)?'checked':'')+' '+(!account||withdrawn(name)?'disabled':'')+'></td>'+
+        '<td class="c"><button class="sm '+(account?'alt':'')+'" data-issue="'+esc(name)+'" '+(withdrawn(name)?'disabled title="회원 관리에서 재원생으로 복귀한 뒤 발급하세요."':'')+'>'+(account?'재발급':'발급')+'</button></td></tr>';
     }).join('');
     document.querySelectorAll('[data-issue]').forEach(function(button){button.onclick=function(){issue(button.dataset.issue,button)}});
     document.querySelectorAll('[data-self]').forEach(function(input){input.onchange=function(){setAccess(input.dataset.self,{canSelfEnter:input.checked},input)}});
@@ -104,6 +105,7 @@
   }
 
   async function issue(name,button){
+    if(withdrawn(name)){alert('회원 관리에서 재원생으로 복귀한 뒤 발급해 주세요.');return;}
     if(accountMap[name]&&!confirm(name+' 학생의 승인번호를 새로 발급할까요? 이전 번호로는 새 로그인할 수 없습니다.'))return;
     setBusy(button,true,accountMap[name]?'재발급':'발급');
      try{var result=await A.functionCall('hs-approval-admin',{action:'issue',student:name,canSelfEnter:online(name)},'admin');showCode(result.student+' 학생 승인번호',result.approvalCode);await loadStatus()}catch(error){alert(error.message||'발급하지 못했습니다.')}finally{setBusy(button,false,accountMap[name]?'재발급':'발급')}
@@ -121,7 +123,7 @@
   }
 
   async function bulkIssue(){
-    var students=(D.students||[]).filter(function(name){var lower=String(name).toLowerCase();return lower!=='demo'&&lower!=='docssam'&&!accountMap[name]}).map(function(name){return {student:name,canSelfEnter:online(name)}});
+    var students=(D.students||[]).filter(function(name){var lower=String(name).toLowerCase();return lower!=='demo'&&lower!=='docssam'&&!withdrawn(name)&&!accountMap[name]}).map(function(name){return {student:name,canSelfEnter:online(name)}});
     if(!students.length){alert('미발급 학생이 없습니다.');return}
     if(!confirm('미발급 학생 '+students.length+'명의 승인번호를 생성하고 CSV로 저장할까요?'))return;
     var button=$('bulkBtn');setBusy(button,true,'미발급 학생 전체 생성');

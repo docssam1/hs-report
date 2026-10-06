@@ -522,10 +522,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
-<script src="final-last-routes.js?v=20261005-final8-answers"></script>
+<script src="final-last-routes.js?v=20261006-withdrawn"></script>
 <script src="archive-info.js?v=20260825b"></script>
 <script src="bank/important-types.js?v=20260913a"></script>
-<script src="middle-access.js?v=20260915b"></script>
+<script src="middle-access.js?v=20261006-withdrawn"></script>
 <script src="hs-auth.js?v=20260928-signature-private-1"></script>
 <script src="student-result-hub.js?v=20261003-final8-independent"></script>
 <script>
@@ -580,6 +580,11 @@
     if(name.toLowerCase()==='docssam'){ location.href='admin.html'; return; }
     isDemo=(name.toLowerCase()==='demo');
     if(!isDemo && !((D.students||[]).includes(name))){ toast('등록된 학생만 입장할 수 있어요. 이름을 정확히 입력해 주세요.'); return; }
+    if(!isDemo&&(D.studentTypes||{})[name]==='withdrawn'){
+      try{localStorage.removeItem('gfield_student');localStorage.removeItem(QUESTION_BANK_LAUNCH_KEY);sessionStorage.removeItem(QUESTION_BANK_HANDOFF_KEY);}catch(e){}
+      if(window.GFIELD_AUTH)window.GFIELD_AUTH.clear('student');
+      toast('접속이 정지된 회원입니다. 학원에 문의해 주세요.');return;
+    }
     currentStudent=isDemo?'체험':name;
     reportUnlocked=false;
     const given=isDemo?'체험':givenName(name);

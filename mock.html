@@ -320,9 +320,9 @@
 <div class="toast" id="toast"></div>
 
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
-<script src="final-last-routes.js?v=20261003-final8-independent"></script>
+<script src="final-last-routes.js?v=20261006-withdrawn"></script>
 <script>if(window.GFIELD_FINAL_LAST_ROUTES)window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('mock.html');</script>
-<script src="middle-access.js?v=20260915b"></script>
+<script src="middle-access.js?v=20261006-withdrawn"></script>
 <script src="mock-data.js"></script>
 <script src="mock-data-hw.js"></script>
 <script src="mock-data-original.js?v=20260928-signature-answer-keys-1"></script>
@@ -607,6 +607,7 @@ function enter(){
   if(!v){ return; }
   if(v.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; startTeacher(); return; }
   if(!(D.students||[]).includes(v)){ document.getElementById('gate-err').textContent='등록된 학생만 입장할 수 있어요.'; return; }
+  if((D.studentTypes||{})[v]==='withdrawn'){ document.getElementById('gate-err').textContent='접속이 정지된 회원입니다. 학원에 문의해 주세요.'; return; }
   mode='parent'; me=v; if(!PREVIEW){ try{ localStorage.setItem('gfield_student',v); }catch(e){} }
   const pending=window._pendingRound; window._pendingRound=null;
   startParent({round:pending,reportOnly:REPORT_ONLY});
@@ -1395,7 +1396,7 @@ function typeset(){ if(!window.renderMathInElement) return; clearTimeout(_mathT)
   let stu=urlName;
   if(!stu){ try{ stu=localStorage.getItem('gfield_student')||''; }catch(e){} }
   if(stu && stu.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; try{ localStorage.setItem('gfield_student',stu); }catch(e){} startTeacher(); return; }
-  if(stu && (D.students||[]).includes(stu)){
+  if(stu && (D.students||[]).includes(stu)&&(D.studentTypes||{})[stu]!=='withdrawn'){
     mode='parent'; me=stu; if(!PREVIEW){ try{ localStorage.setItem('gfield_student',stu); }catch(e){} }
     startParent({round:rd,reportOnly:REPORT_ONLY});
     return;
