@@ -42,6 +42,10 @@ const server=http.createServer((req,res)=>{
     await page.evaluate(name=>{loadMockResults();mkSel=name;},student);
     await page.waitForFunction(()=>typeof MK_ROWS!=='undefined'&&Array.isArray(MK_ROWS)&&MK_ROWS.some(row=>row.round==='final8'));
     await page.evaluate(()=>{document.getElementById('gate').classList.add('hidden');document.getElementById('app').classList.remove('hidden');document.getElementById('tab-mock').classList.remove('hidden');setMockSetV2('extra');});
+    await page.evaluate(()=>renderFinal7AccessMatrix());
+    assert.deepEqual(await page.locator('#final7-acc-matrix tbody tr > th').allTextContents(),['최종 7회','최종 8회'],'round approvals have no obsolete hold label');
+    assert.doesNotMatch(await page.locator('body').innerText(),/학생용 자료 보류|정답 충돌과 학생용 유사문제 승인이 남아/);
+    assert.deepEqual(await page.evaluate(()=>window.GFIELD_DATA.archiveProductAccess['mock-final-8']),[student],'cleanup does not change approval list');
     const official=page.locator('#mock-body a').filter({hasText:'공식 1차 성적표'});
     await official.waitFor();
     const href=new URL(await official.getAttribute('href'),base);

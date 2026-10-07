@@ -92,7 +92,7 @@
   function canonicalSeriesRound(series,round){
     series=String(series||'').toLowerCase();
     round=roundNumber(round);
-    /* Final 7 has its own source; Final 8 remains an independent pending product. */
+    /* Final 7 and Final 8 are independent products with their own sources. */
     if(series==='final'&&(round===7||round===8)) return {series:'final',round:round};
     /* Other unmigrated additional-library names retain their legacy aliases. */
     if(series==='final'&&(round===6||round===9)){series='last';round-=5;}
@@ -116,7 +116,7 @@
     var page=basename(source),series=explicitSeries(source,options.title),round=roundNumber(source.searchParams.get('round'));
     var mappedSeries=series,mappedRound=round,action='',dest=null;
 
-    /* Final 7 and pending Final 8 must never be rewritten to Last rounds. */
+    /* Final 7 and Final 8 must never be rewritten to Last rounds. */
     if(series==='final'&&(round===6||round===9)){mappedSeries='last';mappedRound=round-5;}
 
     if(page==='mock.html'&&mappedSeries){
@@ -156,26 +156,6 @@
     if(!url||!sameSite(url,input)||!name) return String(input||'');
     url.searchParams.set('name',name);
     return relative(url);
-  }
-  function isPendingFinal8(input){
-    var url=localUrl(input);
-    if(!url||!sameSite(url,input)||basename(url)!=='final.html'||roundNumber(url.searchParams.get('round'))!==8) return false;
-    var set=String(url.searchParams.get('set')||'').toLowerCase();
-    return !set||set==='final';
-  }
-  function showPendingFinal8(){
-    var doc=root.document;
-    if(!doc) return;
-    var app=doc.getElementById('app');
-    if(!app){
-      if(doc.readyState==='loading') doc.addEventListener('DOMContentLoaded',showPendingFinal8,{once:true});
-      return;
-    }
-    doc.title='최종 실전 모의고사 8회 · 검수 대기 | 지필드 영재교육';
-    app.innerHTML='<div class="gate-wrap"><div class="paper-lock">'+
-      '<h2>최종 실전 모의고사 8회 · 검수 대기</h2>'+
-      '<p>8회 원본의 일부 정답 충돌과 학생용 자료 확인이 끝나면 공개됩니다.<br>시험지·답안·성적 분석은 아직 제공되지 않습니다.</p>'+
-      '</div></div>';
   }
   function redirectCurrent(page){
     if(!root.location) return false;

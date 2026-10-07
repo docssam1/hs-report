@@ -228,7 +228,7 @@
       </div>
       <div class="card">
         <h3>최종 7·8회 회차 승인</h3>
-        <div class="hint">두 회차의 승인 명단은 각각 따로 저장됩니다. 파이널 출석이나 다른 최종 회차 권한과 섞이지 않습니다. <b>8회 원본은 문항별 대조를 했지만 정답 충돌과 학생용 유사문제 승인이 남아 있습니다.</b> 명단 승인은 콘텐츠 공개와 별개입니다.</div>
+        <div class="hint">두 회차의 승인 명단은 각각 따로 저장됩니다. 파이널 출석이나 다른 최종 회차 권한과 섞이지 않습니다. 여기에서는 각 회차를 이용할 학생의 권한을 관리합니다.</div>
         <div class="matrix-scroll"><table id="final7-acc-matrix"></table></div>
       </div>
       <div class="card">
@@ -947,7 +947,7 @@
     html+='</tr></thead><tbody>';
     [7,8].forEach(round=>{
       const acc=finalRoundAccessArr(round),open=acc.includes('*');
-      html+='<tr><th>최종 '+round+'회'+(round===8?'<br><small>학생용 자료 보류</small>':'')+'</th>';
+      html+='<tr><th>최종 '+round+'회</th>';
       html+='<td class="cell '+(open?'on':'off')+'" role="button" tabindex="0" aria-label="최종 '+round+'회 전체공개 '+(open?'해제':'설정')+'" onclick="finalRoundAccessToggleOpen('+round+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();finalRoundAccessToggleOpen('+round+')}"></td>';
       html+='<td style="text-align:center"><button class="mini" onclick="finalRoundAccessAll('+round+')" title="최종 '+round+'회 전원 개별 체크로 전환">☑</button></td>';
       S.students.forEach((student,studentIndex)=>{ const on=!open&&acc.includes(student); html+='<td class="cell '+(on?'on':'off')+'" role="button" tabindex="0" aria-label="최종 '+round+'회 '+esc(student)+' '+(on?'승인 해제':'승인')+'" style="'+(open?'opacity:.4':'')+'" onclick="finalRoundAccessToggleStudent('+round+','+studentIndex+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();finalRoundAccessToggleStudent('+round+','+studentIndex+')}"></td>'; });
