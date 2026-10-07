@@ -2,7 +2,7 @@
 (function(global){
   'use strict';
 
-  var VERSION='1.2.0';
+  var VERSION='1.3.0';
   var selectedStudents=new Set();
   var selectedRounds=new Set([1,2,3,4,'last1','last2','last3','last4']);
   var running=false;
@@ -38,7 +38,7 @@
     panel.innerHTML='<div class="final-batch-head"><div><h4 id="final-batch-title">파이널·최종 진단·유사문제 한 번에 저장</h4><p>공식 1차 성적이 있는 응시 학생과 회차를 고르면 학생별 PDF를 회차 폴더에 나누어 저장합니다. 성적 기록은 읽기만 합니다.</p></div><span class="final-batch-count" id="final-batch-count">선택 0건</span></div>'+
       '<div class="final-batch-body"><fieldset class="final-batch-fieldset"><legend>1. 회차 선택</legend><div class="final-batch-rounds" id="final-batch-rounds">'+
       roundChecks('final')+roundChecks('last')+
-      '<label class="final-batch-check"><input type="checkbox" id="final-batch-similar" checked>오답 유사문제·풀이 포함</label><label class="final-batch-check"><input type="checkbox" id="final-batch-details">원문 30문항 상세 풀이도 포함</label></div></fieldset>'+
+      '<label class="final-batch-check"><input type="checkbox" id="final-batch-similar" checked>오답 유사문제·풀이 포함 (요약은 우선 3유형)</label><label class="final-batch-check"><input type="checkbox" id="final-batch-details">원문 30문항 상세 풀이도 포함</label></div></fieldset>'+
       '<fieldset class="final-batch-fieldset"><legend>2. 응시 학생 선택</legend><div class="final-batch-tools"><button type="button" id="final-batch-select-all">응시 학생 전체 선택</button><button type="button" id="final-batch-clear">선택 비우기</button><span id="final-batch-student-count"></span></div><div class="final-batch-students" id="final-batch-students"></div></fieldset></div>'+
       '<div class="final-batch-actions"><button type="button" class="btn final-batch-primary" id="final-batch-folder" data-final-batch-action>진단+유사문제 한 번에 저장</button><button type="button" class="btn final-batch-secondary" id="final-batch-zip" data-final-batch-action>ZIP 한 개로 받기</button><button type="button" class="btn final-batch-cancel" id="final-batch-cancel" hidden>중단</button><p class="final-batch-note">진단 요약·이번 주 학습 계획·QR을 저장합니다. 선택한 부록은 검수 완료 자료만 포함합니다. 최종 2~4회 유사문제와 최종 3~4회 원문 상세 풀이는 준비 중이며, 해당 회차도 진단 요약은 저장됩니다.</p></div><div class="final-batch-status" id="final-batch-status" role="status" aria-live="polite"></div>';
     body.parentNode.insertBefore(panel,body);
@@ -105,7 +105,14 @@
   function waitImages(root){
     return Promise.all(Array.from(root.querySelectorAll('img')).map(function(image){
       if(image.complete&&image.naturalWidth>0)return Promise.resolve();
-      return new Promise(function(resolve,reject){image.addEventListener('load',resolve,{once:true});image.addEventListener('error',function(){reject(new Error('PDF 그림을 불러오지 못했습니다.'));},{once:true});});
+      if(image.complete)return Promise.reject(new Error('PDF 그림을 불러오지 못했습니다.'));
+      return new Promise(function(resolve,reject){
+        var timer=setTimeout(function(){finish(new Error('PDF 그림 준비 시간이 초과되었습니다.'));},45000);
+        function loaded(){finish();}
+        function failed(){finish(new Error('PDF 그림을 불러오지 못했습니다.'));}
+        function finish(error){clearTimeout(timer);image.removeEventListener('load',loaded);image.removeEventListener('error',failed);if(error)reject(error);else resolve();}
+        image.addEventListener('load',loaded);image.addEventListener('error',failed);
+      });
     }));
   }
   function ensureLocalRenderer(doc){
@@ -231,17 +238,37 @@
         var ready=reportDoc.querySelectorAll('.final1-detailed-card.is-ready').length;
         return reportDoc.querySelector('.final-report-package')&&(!includeDetails||(ready>=30&&!reportDoc.querySelector('.final1-detailed-card.is-pending')))&&reportFrame.contentWindow.GFIELD_FINAL_REPORT_PRINT;
       },45000,includeDetails?'진단지와 상세 답안을 준비하지 못했습니다.':'진단 요약을 준비하지 못했습니다.');
-      var bankUrl=document.getElementById('final-batch-similar').checked?wrongBankUrl(reportDoc,task):'';
-      var job=reportFrame.contentWindow.GFIELD_FINAL_REPORT_PRINT.createPreparation({document:reportDoc,source:reportDoc.querySelector('.final-report-package'),mode:includeDetails?'full':'summary',requiredFontFamilies:[],timeoutMs:45000});
+      var includePractice=document.getElementById('final-batch-similar').checked&&similarAvailable(task);
+      var source=reportDoc.querySelector('.final-report-package');
+      var bankUrl=includePractice&&includeDetails?wrongBankUrl(reportDoc,task):'';
+      var options={document:reportDoc,source:source,mode:includeDetails?'full':'summary',requiredFontFamilies:[],timeoutMs:45000};
+      var printer=reportFrame.contentWindow.GFIELD_FINAL_REPORT_PRINT;
+      if(includePractice&&!includeDetails){
+        printer=reportFrame.contentWindow.GFIELD_FINAL_SUMMARY_PRACTICE_PRINT;
+        if(!printer)throw new Error('추천 유사문제 인쇄 기능을 불러오지 못했습니다.');
+        options.priorityNos=Array.from(source.querySelectorAll('.parent-priority-list li b')).map(function(node){var match=/^\s*(\d+)번/.exec(node.textContent||'');return match?Number(match[1]):NaN;});
+        options.set=task.set==='last'?'last':'final';options.round=Number(task.round);options.name=task.student;options.teacherPrint=true;
+        status((index+1)+'/'+total+' · '+task.student+' · 이번 주 우선 유형의 유사문제와 풀이를 준비하고 있습니다.');
+      }
+      var job=printer.createPreparation(options);
       prepared=await job.promise;
       var printDoc=prepared.frame.contentDocument;
-      var prelude=Array.from(printDoc.querySelectorAll('.pagedjs_pages > .pagedjs_page'));
+      if(global.__GFIELD_BATCH_QA_CAPTURE__){
+        global.__GFIELD_BATCH_QA_CAPTURE__.practice={sourceNos:prepared.metrics.practiceSourceNos||[],questions:prepared.metrics.practiceQuestions||0,answers:prepared.metrics.practiceAnswers||0,
+          questionIds:Array.from(printDoc.querySelectorAll('[data-practice-kind="questions"]')).flatMap(function(node){return node.dataset.practiceItemIds.split(',');}),
+          answerIds:Array.from(printDoc.querySelectorAll('[data-practice-kind="answers"]')).flatMap(function(node){return node.dataset.practiceItemIds.split(',');})};
+      }
+      var prelude=Array.from(printDoc.querySelectorAll('.pagedjs_pages > .pagedjs_page, .pagedjs_pages > .gfield-summary-practice-page, .pagedjs_pages > .gfield-summary-practice-blank'));
       if(!prelude.length)throw new Error('진단지 쪽을 만들지 못했습니다.');
       if(includeDetails)detailPages=await paginateDetails(prepared);
       var PDF=global.jspdf.jsPDF,pdf=new PDF({orientation:'portrait',unit:'mm',format:'a4',compress:true,putOnlyUsedFonts:true});
       pdf.setProperties({title:task.student+' '+examLabel(task)+' 진단과 복습',subject:'지필드 '+series(task)+' 진단 결과와 복습',creator:'GFIELD 관리자'});
       var pageNo=0;
-      for(var p=0;p<prelude.length;p++){status((index+1)+'/'+total+' · '+task.student+' · 진단 '+(p+1)+'/'+prelude.length+'쪽');await addPage(pdf,prelude[p],pageNo++===0);}
+      for(var p=0;p<prelude.length;p++){
+        status((index+1)+'/'+total+' · '+task.student+' · 진단·복습 '+(p+1)+'/'+prelude.length+'쪽');
+        if(prelude[p].classList.contains('gfield-summary-practice-blank'))addBlank(pdf,pageNo++===0);
+        else await addPage(pdf,prelude[p],pageNo++===0);
+      }
       if(includeDetails&&prepared.metrics.blankPages){addBlank(pdf,pageNo++===0);}
       if(includeDetails)for(var d=0;d<detailPages.pages.length;d++){status((index+1)+'/'+total+' · '+task.student+' · 상세 답안 '+(d+1)+'/'+detailPages.pages.length+'쪽');await addPage(pdf,detailPages.pages[d],pageNo++===0);}
       if(bankUrl){
@@ -285,29 +312,33 @@
     var tasks=validateStart();if(!tasks)return;
     if(!global.JSZip){status('ZIP 저장 도구를 불러오지 못했습니다.','error');return;}
     var zip=new global.JSZip();
-    await runTasks(tasks,function(task,blob){zip.folder(examLabel(task)).file(fileName(task),blob);},'ZIP을 만들었습니다.',async function(){
+    await runTasks(tasks,async function(task,blob){zip.folder(examLabel(task)).file(fileName(task),await blob.arrayBuffer());},'ZIP을 만들었습니다.',async function(){
       status('PDF를 모두 만들었습니다. ZIP 파일을 묶고 있습니다.');
-      var blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}});
+      // The PDFs already contain compressed JPEGs. Do not deflate every byte again.
+      var blob=await zip.generateAsync({type:'blob',compression:'STORE'},function(progress){status('ZIP 파일을 묶고 있습니다. '+Math.floor(progress.percent)+'%');});
       var url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='지필드_파이널_최종_진단과복습_'+new Date().toISOString().slice(0,10)+'.zip';document.body.appendChild(link);link.click();link.remove();setTimeout(function(){URL.revokeObjectURL(url);},30000);
     });
   }
-  async function runTasks(tasks,save,doneMessage,finish){
+  async function runTasks(tasks,save,doneMessage,finish,builder){
     cancelled=false;setBusy(true);var completed=0,failures=[];
     var pending=tasks.filter(function(task){return (document.getElementById('final-batch-similar').checked&&!similarAvailable(task))||(document.getElementById('final-batch-details').checked&&!detailsAvailable(task));}).map(examLabel);
     var pendingNote=pending.length?'\n준비 중인 부록은 제외했습니다: '+Array.from(new Set(pending)).join(', ')+' (진단 요약은 포함)':'';
     try{
       for(var i=0;i<tasks.length;i++){
         if(cancelled)break;
-        try{var blob=await buildPackage(tasks[i],i,tasks.length);await save(tasks[i],blob);completed++;}
+        try{var blob=await (builder||buildPackage)(tasks[i],i,tasks.length);await save(tasks[i],blob);completed++;}
         catch(error){failures.push(tasks[i].student+' · '+examLabel(tasks[i])+': '+(error&&error.message||'저장 실패'));}
       }
-      if(finish&&completed)await finish();
+      if(finish&&completed){
+        try{await finish();}
+        catch(error){status('ZIP 파일을 만들지 못해 PDF가 다운로드되지 않았습니다. 다시 시도해 주세요.\n'+(error&&error.message||'묶음 저장 실패'),'error');return;}
+      }
       if(cancelled)status(completed+'건 저장 후 중단했습니다.'+(failures.length?'\n저장하지 못한 항목: '+failures.join(' / '):''),'error');
       else if(failures.length)status(completed+'건 저장했습니다. '+failures.length+'건은 다시 확인해 주세요.\n'+failures.join('\n'),'error');
       else status(completed+'건을 '+doneMessage+pendingNote,'done');
     }finally{cleanupFrame(activeFrame);setBusy(false);}
   }
 
-  global.GFIELD_ADMIN_FINAL_BATCH=Object.freeze({version:VERSION,refresh:refresh,_test:Object.freeze({safeName:safeName,wrongBankUrl:wrongBankUrl,reviewedBankPages:reviewedBankPages,loadFrame:loadFrame,cleanupFrame:cleanupFrame,taskList:taskList,buildPackage:buildPackage,writeFile:writeFile})});
+  global.GFIELD_ADMIN_FINAL_BATCH=Object.freeze({version:VERSION,refresh:refresh,_test:Object.freeze({safeName:safeName,wrongBankUrl:wrongBankUrl,reviewedBankPages:reviewedBankPages,loadFrame:loadFrame,cleanupFrame:cleanupFrame,taskList:taskList,buildPackage:buildPackage,writeFile:writeFile,runTasks:runTasks,waitImages:waitImages})});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',refresh);else refresh();
 })(window);

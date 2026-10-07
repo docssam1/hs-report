@@ -212,6 +212,8 @@
       forceStyle(saved,qpage,{gridTemplateRows:'auto repeat(2,minmax(0,1fr))',rowGap:'6mm'});
       cards.forEach(function(card,index){
         forceStyle(saved,card,{display:'flex',flexDirection:'column',border:'1px solid #d8dee8',padding:'4mm',overflow:'hidden'});
+        // A wrapped type heading must not shrink into the question below it.
+        list(card.children).filter(function(child){return !child.classList.contains('f1-workspace');}).forEach(function(child){forceStyle(saved,child,{flexShrink:'0'});});
         if(card.dataset.wide==='true')forceStyle(saved,card,{gridColumn:'1 / -1'});
         if(qpage&&qpage.dataset.wideLead==='true'){
           if(index===0)forceStyle(saved,card,{gridColumn:'1 / -1',gridRow:'2'});
@@ -243,7 +245,8 @@
         return {left:rect.left-gridRect.left,top:rect.top-gridRect.top,width:rect.width,height:rect.height,
           children:node.classList.contains('f1-qcard')?list(node.children).map(function(child){
             var box=child.getBoundingClientRect();
-            return {left:box.left-rect.left-parseFloat(computed.borderLeftWidth||0),top:box.top-rect.top-parseFloat(computed.borderTopWidth||0),width:box.width,height:box.height};
+            var heading=child.classList.contains('f1-qcard-head')?list(child.children).map(function(span){var textStyle=bank.win.getComputedStyle(span);return {fontFamily:textStyle.fontFamily,fontSize:textStyle.fontSize,fontWeight:textStyle.fontWeight,lineHeight:textStyle.lineHeight,color:textStyle.color};}):[];
+            return {left:box.left-rect.left-parseFloat(computed.borderLeftWidth||0),top:box.top-rect.top-parseFloat(computed.borderTopWidth||0),width:box.width,height:box.height,heading:heading};
           }):[]};
       }):[];
       var captureOptions={backgroundColor:'#ffffff',scale:1.5,useCORS:true,allowTaint:false,logging:false,imageTimeout:20000,removeContainer:true};
@@ -261,6 +264,7 @@
             var box=rect.children[childIndex];if(!box)return;
             var inner={position:'absolute',boxSizing:'border-box',left:box.left+'px',top:box.top+'px',width:box.width+'px',height:box.height+'px',minHeight:box.height+'px',maxHeight:box.height+'px',margin:'0',flex:'none'};
             Object.keys(inner).forEach(function(key){child.style.setProperty(key.replace(/[A-Z]/g,function(c){return '-'+c.toLowerCase();}),inner[key],'important');});
+            list(child.children).forEach(function(span,spanIndex){var typography=box.heading[spanIndex];if(!typography)return;Object.keys(typography).forEach(function(key){span.style.setProperty(key.replace(/[A-Z]/g,function(c){return '-'+c.toLowerCase();}),typography[key],'important');});});
           });
         });
       };

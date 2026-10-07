@@ -9,6 +9,8 @@ assert.ok(out&&path.isAbsolute(out),'an explicit E: evidence directory is requir
 fs.mkdirSync(out,{recursive:true});
 const ox='O'.repeat(27)+'XXX';
 const records=['final1','last1','last2','last3','last4'].map(round=>({student,round,ox,score:core.scoreOf(ox),wrong:3,source:'admin'}));
+const last1Ox='XOOXOXOOXXOOOOXXOOOXOXOXXXOOOX';
+Object.assign(records[1],{ox:last1Ox,score:core.scoreOf(last1Ox),wrong:13});
 records.push({...records[0],round:'last1@2'},{...records[0],round:'last2',student:'잘못된점수',score:0},{...records[0],round:'last3',student:'초기화기록',source:'reset'});
 const data=fs.readFileSync(path.join(root,'data.js'),'utf8')+`\n;(()=>{let d=window.GFIELD_DATA,n=${JSON.stringify(student)};d.students.push(n);d.studentTypes[n]='resident';d.archiveAccess['최종 모의고사']=[n];})();`;
 const server=http.createServer((req,res)=>{
@@ -67,7 +69,7 @@ const server=http.createServer((req,res)=>{
       for(const set of ['final','last'])await GFIELD_ADMIN_FINAL_BATCH._test.writeFile(dir,{student:'同名',set,round:1},new Blob(['PDF']));return names;
     });
     assert.deepEqual(folders,['파이널 1회','同名_파이널_1회_진단과복습.pdf','최종 1회','同名_최종_1회_진단과복습.pdf']);
-    for(const round of [1,2,3,4]){
+    for(const round of (process.env.GFIELD_BATCH_PRIORITY_ONLY==='1'?[]:[1,2,3,4])){
       const result=await page.evaluate(async({student,round})=>{
         const task=GFIELD_ADMIN_MOCK_V2.lastOfficialEntries().find(x=>x.round===round);
         const frame=await GFIELD_ADMIN_FINAL_BATCH._test.loadFrame(GFIELD_ADMIN_MOCK_V2.reportUrl(task),'합성 검수');
@@ -90,20 +92,53 @@ const server=http.createServer((req,res)=>{
       fs.writeFileSync(path.join(out,'last'+round+'-batch-summary.pdf'),bytes);
       console.log('PASS Last '+round+' summary, QR, actual batch PDF ('+bytes.length+' bytes)');
     }
+    if(process.env.GFIELD_BATCH_PRIORITY_ONLY!=='1'){
     await page.locator('#final-batch-details').check();
     const detailed=await page.evaluate(async()=>{const task=GFIELD_ADMIN_MOCK_V2.lastOfficialEntries().find(x=>x.round===2);const blob=await GFIELD_ADMIN_FINAL_BATCH._test.buildPackage(task,0,1);return {size:blob.size,base64:await new Promise(resolve=>{const r=new FileReader();r.onload=()=>resolve(r.result.split(',')[1]);r.readAsDataURL(blob);})};});
     fs.writeFileSync(path.join(out,'last2-batch-with-details.pdf'),Buffer.from(detailed.base64,'base64'));
     assert.ok(detailed.size>400000,'Last2 full original detailed appendix is rendered');
+    }
     await page.locator('#final-batch-details').uncheck();await page.locator('#final-batch-similar').check();
-    const practice=await page.evaluate(async()=>{const task=GFIELD_ADMIN_MOCK_V2.lastOfficialEntries().find(x=>x.round===1);const blob=await GFIELD_ADMIN_FINAL_BATCH._test.buildPackage(task,0,1);return {size:blob.size,base64:await new Promise(resolve=>{const r=new FileReader();r.onload=()=>resolve(r.result.split(',')[1]);r.readAsDataURL(blob);})};});
+    const practice=await page.evaluate(async()=>{window.__GFIELD_BATCH_QA_CAPTURE__={};const task=GFIELD_ADMIN_MOCK_V2.lastOfficialEntries().find(x=>x.round===1);const blob=await GFIELD_ADMIN_FINAL_BATCH._test.buildPackage(task,0,1);return {size:blob.size,practice:window.__GFIELD_BATCH_QA_CAPTURE__.practice,base64:await new Promise(resolve=>{const r=new FileReader();r.onload=()=>resolve(r.result.split(',')[1]);r.readAsDataURL(blob);})};});
     fs.writeFileSync(path.join(out,'last1-batch-with-practice.pdf'),Buffer.from(practice.base64,'base64'));
     assert.ok(practice.size>400000,'Last1 reviewed practice appendix is rendered');
+    assert.deepEqual(practice.practice.sourceNos,[20,15,22]);
+    assert.equal(practice.practice.questions,9);assert.equal(practice.practice.answers,9);
+    assert.deepEqual(practice.practice.questionIds,practice.practice.answerIds);
+    assert.ok(practice.practice.questionIds.every(id=>/^last1-q(20|15|22)-v[123]$/.test(id)));
+    console.log('PASS 13 wrong items -> same 3 priority types, 9 actual questions + 9 solutions');
+    const finishFailure=await page.evaluate(async()=>{
+      await GFIELD_ADMIN_FINAL_BATCH._test.runTasks([{student:'합성',set:'last',round:1}],async()=>{},'완료',async()=>{throw new Error('QA ZIP failure');},async()=>new Blob(['PDF']));
+      return {status:document.getElementById('final-batch-status').textContent,busy:document.getElementById('final-batch-zip').disabled};
+    });
+    assert.match(finishFailure.status,/ZIP 파일을 만들지 못해 PDF가 다운로드되지 않았습니다/);assert.match(finishFailure.status,/QA ZIP failure/);assert.equal(finishFailure.busy,false);
+    const brokenImage=await page.evaluate(async()=>{
+      const doc=document.implementation.createHTMLDocument('broken'),image=doc.createElement('img');doc.body.appendChild(image);
+      try{await GFIELD_ADMIN_FINAL_BATCH._test.waitImages(doc.body);return 'incorrect success';}catch(error){return error.message;}
+    });
+    assert.match(brokenImage,/PDF 그림을 불러오지 못했습니다/);
+    await page.evaluate(()=>{document.querySelectorAll('#final-batch-rounds input[data-exam-set]').forEach(input=>{input.checked=input.value==='last1';input.dispatchEvent(new Event('change',{bubbles:true}));});});
+    const priorityDownloadPromise=page.waitForEvent('download',{timeout:180000});await page.locator('#final-batch-zip').click();
+    const priorityDownload=await priorityDownloadPromise,priorityZipPath=path.join(out,'last1-priority-batch.zip');await priorityDownload.saveAs(priorityZipPath);
+    const priorityZip=await page.evaluate(async bytes=>{
+      const archive=await JSZip.loadAsync(bytes,{base64:true}),file=Object.values(archive.files).find(entry=>!entry.dir);
+      return {names:Object.keys(archive.files),bytes:await file.async('base64'),practice:window.__GFIELD_BATCH_QA_CAPTURE__.practice};
+    },fs.readFileSync(priorityZipPath).toString('base64'));
+    assert.deepEqual(priorityZip.names,['최종 1회/','최종 1회/'+student+'_최종_1회_진단과복습.pdf']);
+    assert.equal(priorityZip.practice.questions,9);assert.equal(priorityZip.practice.answers,9);
+    fs.writeFileSync(path.join(out,'last1-priority-from-zip.pdf'),Buffer.from(priorityZip.bytes,'base64'));
+    await page.waitForFunction(()=>document.getElementById('final-batch-status').dataset.state==='done');
+    console.log('PASS actual ZIP download includes priority questions and solutions; compression failure/broken-image errors are visible');
     await page.evaluate(()=>{document.querySelectorAll('#final-batch-rounds input[data-exam-set]').forEach(input=>{input.checked=input.value==='last4';input.dispatchEvent(new Event('change',{bubbles:true}));});});
-    const downloadPromise=page.waitForEvent('download');await page.locator('#final-batch-zip').click();
+    const downloadPromise=page.waitForEvent('download',{timeout:120000});await page.locator('#final-batch-zip').click();
     const download=await downloadPromise,zipPath=path.join(out,'last4-batch.zip');await download.saveAs(zipPath);
     const zipEntries=await page.evaluate(async bytes=>Object.keys((await JSZip.loadAsync(bytes,{base64:true})).files),fs.readFileSync(zipPath).toString('base64'));
     assert.deepEqual(zipEntries,['최종 4회/','최종 4회/'+student+'_최종_4회_진단과복습.pdf']);
     assert.match(await page.locator('#final-batch-status').innerText(),/준비 중인 부록은 제외했습니다: 최종 4회/);
+    const finalPractice=await page.evaluate(async()=>{window.__GFIELD_BATCH_QA_CAPTURE__={};const task=GFIELD_ADMIN_MOCK_V2.finalOfficialEntries()[0];const blob=await GFIELD_ADMIN_FINAL_BATCH._test.buildPackage(task,0,1);return {practice:window.__GFIELD_BATCH_QA_CAPTURE__.practice,base64:await new Promise(resolve=>{const r=new FileReader();r.onload=()=>resolve(r.result.split(',')[1]);r.readAsDataURL(blob);})};});
+    assert.equal(finalPractice.practice.questions,9);assert.equal(finalPractice.practice.answers,9);assert.deepEqual(finalPractice.practice.questionIds,finalPractice.practice.answerIds);
+    fs.writeFileSync(path.join(out,'final1-priority-batch.pdf'),Buffer.from(finalPractice.base64,'base64'));
+    console.log('PASS existing Final recommendation printer is reused by the batch PDF');
     assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);
     console.log('PASS mixed-series selection, folders, option state, desktop/mobile; production writes: 0');
   }finally{await browser.close();server.close();}

@@ -640,6 +640,7 @@ td.weak-cell{white-space:nowrap}
   files.push('exam-cues.js');
   files.forEach(function(f){
     var version=f==='data.js'?dataVersion:(f==='final-last-routes.js'||(f==='exam-cues.js'&&isFinal8)?'20261005-final8-answers':(f==='mock-data-final.js'&&isFinal8?'20261005-final8-q20-43':(f==='mock-data-original.js'?signatureAnswerVersion:((f==='mock-data-final.js'||f==='final4-detailed-data.js')?final4AnswerVersion:staticVersion))));
+    if(f==='final-summary-practice-print.js')version='20261007-priority-zip';
     document.write('<scr'+'ipt src="'+f+'?v='+version+'"><\/scr'+'ipt>');
   });
 })();</script>
