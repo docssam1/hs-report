@@ -342,13 +342,17 @@
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <h3 style="margin:0">⑩ 모의고사 결과</h3>
           <label for="apply-final-round" style="font-size:12px;font-weight:700;color:var(--muted)">백분율 반영 회차</label>
-          <select class="select" id="apply-final-round" aria-label="백분율을 반영할 파이널 회차">
+          <select class="select" id="apply-final-round" aria-label="백분율을 반영할 파이널·최종 회차">
             <option value="1" selected>파이널 1회</option>
             <option value="2">파이널 2회</option>
             <option value="3">파이널 3회</option>
             <option value="4">파이널 4회</option>
+            <option value="last1">최종 1회</option>
+            <option value="last2">최종 2회</option>
+            <option value="last3">최종 3회</option>
+            <option value="last4">최종 4회</option>
           </select>
-          <button class="btn" id="apply-final-percentiles" onclick="applyFinalPercentiles()" title="선택한 파이널 회차의 학생 백분율과 컷 백분율을 저장합니다. 정답률은 바뀌지 않습니다.">백분율 반영하기</button>
+          <button class="btn" id="apply-final-percentiles" onclick="applyFinalPercentiles()" title="파이널은 학생 백분율과 컷 백분율을 저장하고, 최종은 진단지와 같은 회차별 기준으로 백분율을 표시합니다. 원점수와 정답률은 바뀌지 않습니다.">백분율 반영하기</button>
           <button class="btn" onclick="loadMockResults()">🔄 새로고침</button>
           <span id="mock-status" class="hint" style="margin:0"></span>
         </div>
@@ -1610,7 +1614,8 @@ restoreAdminSession();
 <script src="mock-data-hw.js?v=20260724"></script>
 <script src="mock-data-final.js?v=20260909d"></script>
 <script src="mock-data-original.js?v=20260928-signature-answer-keys-1"></script>
-<script src="admin-mock-v2.js?v=20261006-final8-report-link"></script>
+<script src="last-score-data.js?v=20261006-last1-cut562"></script>
+<script src="admin-mock-v2.js?v=20261007-last14-percentiles"></script>
 <script src="admin-last-score-entry.js?v=20261003a"></script>
 <script src="vendor/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="vendor/jspdf/2.5.2/jspdf.umd.min.js"></script>

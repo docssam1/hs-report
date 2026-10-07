@@ -8,6 +8,8 @@ const core=require('../supabase/functions/hs-final-population/population-core.js
 const root=path.resolve(__dirname,'..'),student='관리자회차검수학생';
 const ox='O'.repeat(20)+'X'.repeat(10),score=core.scoreOf(ox),scoreKey=String(Math.round(score*10));
 const rows=[1,2,3,4].map(round=>({student,round:'final'+round,ox,score,wrong:10,source:'admin',updated_at:'2026-09-09T0'+round+':00:00.000Z'}));
+rows.push(...[1,2,3,4].map(round=>({student,round:'last'+round,ox,score,wrong:10,source:'admin'})));
+rows.push({student,round:'last1@2',ox,score,wrong:10,source:'online'});
 const server=http.createServer((req,res)=>{
   const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
   if(!file.startsWith(root+path.sep)||/\.private(?:-work|\.json)/.test(file)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);return res.end();}
@@ -17,7 +19,7 @@ const server=http.createServer((req,res)=>{
 
 (async()=>{
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
-  const base='http://127.0.0.1:'+server.address().port,origin=new URL(base).origin;
+  const base=process.env.GFIELD_QA_BASE_URL||'http://127.0.0.1:'+server.address().port,origin=new URL(base).origin;
   const browser=await chromium.launch(),context=await browser.newContext({viewport:{width:1280,height:900}});
   const calls=[],writes=[],errors=[],confirmations=[];
   await context.addInitScript(()=>localStorage.setItem('gfield_hs_admin_session_v1',JSON.stringify({access_token:'synthetic-admin',refresh_token:'synthetic-admin',expires_at:Math.floor(Date.now()/1000)+3600,login_name:'DOCSSAM'})));
@@ -56,7 +58,7 @@ const server=http.createServer((req,res)=>{
     }
     assert.deepEqual(calls.filter(call=>call.action==='read-report').slice(0,4).map(call=>call.exam),['final1','final2','final3','final4']);
     const picker=page.locator('#apply-final-round');
-    assert.equal(await picker.locator('option').count(),4);assert.equal(await picker.inputValue(),'1');
+    assert.deepEqual(await picker.locator('option').allTextContents(),['파이널 1회','파이널 2회','파이널 3회','파이널 4회','최종 1회','최종 2회','최종 3회','최종 4회']);assert.equal(await picker.inputValue(),'1');
     for(let round=1;round<=4;round++){
       await picker.selectOption(String(round));
       const appliedBefore=calls.filter(call=>call.action==='apply-percentiles').length;
@@ -69,8 +71,33 @@ const server=http.createServer((req,res)=>{
     assert.deepEqual(applied.map(call=>call.exam),['final1','final2','final3','final4']);
     assert.ok(applied.every(call=>Object.keys(call).sort().join('|')==='action|exam'));
     for(let round=1;round<=4;round++)assert.match(confirmations[round-1],new RegExp('파이널 '+round+'회'));
+    await page.getByRole('button',{name:'최종 모의고사',exact:true}).click();
+    await page.locator('#mock-body select').selectOption({label:student});
+    assert.equal(await page.locator('[data-last-percentile]').count(),4,'retakes do not enter official percentile cells');
+    const expected=await page.evaluate(score=>Object.values(window.GFIELD_LAST_SCORE_DATA.rounds).map(round=>{
+      if(round.percentileTable){const row=round.percentileTable.find(row=>score>=row[0])||round.percentileTable.at(-1);return row[1];}
+      return Math.min(100,Math.round((round.scoreDist.filter(value=>value>score).length+1)/round.cohortSize*1000)/10);
+    }),score);
+    for(let round=1;round<=4;round++){
+      assert.equal(await page.locator('[data-last-percentile="'+round+'"]').innerText(),'백분율 '+expected[round-1].toFixed(1)+'%');
+      await picker.selectOption('last'+round);
+      await page.locator('#apply-final-percentiles').click();
+      assert.match(await page.locator('#mock-status').innerText(),new RegExp('최종 '+round+'회 백분율 기준을 적용했습니다'));
+    }
+    assert.deepEqual(calls.filter(call=>call.action==='apply-percentiles').map(call=>call.exam),['final1','final2','final3','final4'],'Last uses its existing automatic reference, not the Final-only snapshot service');
+    for(let round=1;round<=4;round++)assert.match(confirmations[round+3],new RegExp('최종 '+round+'회'));
+    await page.setViewportSize({width:390,height:844});
+    await page.locator('#apply-final-round').scrollIntoViewIfNeeded();
+    assert.ok(await page.locator('#apply-final-round').isVisible());
+    assert.ok(await page.locator('#apply-final-percentiles').isVisible());
+    for(const selector of ['#apply-final-round','#apply-final-percentiles']){
+      const box=await page.locator(selector).boundingBox();assert.ok(box.x>=0&&box.x+box.width<=390,'mobile control stays in viewport');
+    }
+    await page.evaluate(()=>{window.GFIELD_LAST_SCORE_DATA=null;});
+    await page.locator('#apply-final-percentiles').click();
+    assert.match(await page.locator('#mock-status').innerText(),/백분율 기준을 불러오지 못했습니다/);
     assert.deepEqual(writes,[],'no result-table write is attempted');
     assert.deepEqual(errors,[]);
-    console.log('PASS admin Final1-4 picker, per-round confirmations/apply calls/status, saved official percentiles and no learner writes');
+    console.log('PASS Final1-4 snapshot apply, Last1-4 existing reference display, confirmations, retake exclusion, missing reference and zero learner writes');
   }finally{await browser.close();server.close();}
 })().catch(error=>{console.error(error);server.close();process.exitCode=1;});

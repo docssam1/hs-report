@@ -16,6 +16,18 @@
   }
   /* 2026-10-04 통합: 최종 1~4회(last1~4, 누적) · 추가 모의고사 5~8회(final5~8, 누적 제외) */
   const LAST_ROUNDS=['1','2','3','4'],EXTRA_ROUNDS=['5','6','7','8'];
+  // Same approved Last reference and strict-greater tie rule used by final.html.
+  // This is display-only: never rebuild references from the current student list.
+  function lastRoundPercentile(round,score){
+    const data=window.GFIELD_LAST_SCORE_DATA,source=data&&data.rounds&&data.rounds[String(round)];
+    if(!source||!Number.isFinite(score))return null;
+    if(Array.isArray(source.percentileTable)&&source.percentileTable.length){
+      const row=source.percentileTable.find(row=>score>=Number(row[0]))||source.percentileTable[source.percentileTable.length-1];
+      return Number(row[1]);
+    }
+    return Array.isArray(source.scoreDist)&&source.cohortSize>0
+      ?Math.min(100,Math.round((source.scoreDist.filter(value=>value>score).length+1)/source.cohortSize*1000)/10):null;
+  }
   function sharedBlueprint(){return (window.GFIELD_MOCK_FINAL||{}).blueprint||[];}
   function dataFor(set){
     if(set==='original') return window.GFIELD_MOCK_ORIGINAL||{};
@@ -165,7 +177,9 @@
           ?entryButton(window.mkSet,r,student)
           :`<a class="btn sm" style="background:#eef1f6;color:#333;text-decoration:none" target="_blank" href="${previewUrl(window.mkSet,r,student)}">🔎 미리보기</a>`;
         const protectedFinalRound=window.mkSet==='final'&&/^[1-4]$/.test(r)&&p.slot===1;
-        panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b>${protectedFinalRound?`<small data-final-percentile="${r}" style="display:block;color:#2456c4">백분율 미반영</small>`:''}</td><td>${wrong}</td><td>${esc(sourceLabel(x.source))}</td><td>${esc(at)}</td><td>
+        const lastPct=window.mkSet==='last'&&p.slot===1&&sc?lastRoundPercentile(r,sc.score):null;
+        const lastPctHTML=window.mkSet==='last'&&p.slot===1?`<small data-last-percentile="${r}" style="display:block;color:#2456c4">${lastPct!==null?'백분율 '+lastPct.toFixed(1)+'%':'백분율 기준 확인 필요'}</small>`:'';
+        panel+=`<tr><td>${esc(roundTitle(window.mkSet,r))}</td><td><b>${p.slot}차</b></td><td><b>${score}</b>${protectedFinalRound?`<small data-final-percentile="${r}" style="display:block;color:#2456c4">백분율 미반영</small>`:''}${lastPctHTML}</td><td>${wrong}</td><td>${esc(sourceLabel(x.source))}</td><td>${esc(at)}</td><td>
           <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">
             ${openAction}
             ${isEntrySet(window.mkSet)?reportButton(window.mkSet,r,student,p.slot):''}
@@ -223,7 +237,16 @@
   window.applyFinalPercentiles=async function(){
     const button=document.getElementById('apply-final-percentiles'),status=document.getElementById('mock-status');
     const picker=document.getElementById('apply-final-round'),round=picker&&String(picker.value||'');
-    if(!/^[1-4]$/.test(round)){if(status)status.textContent='반영할 파이널 회차를 다시 선택해 주세요.';return;}
+    const last=/^last([1-4])$/.exec(round);
+    if(last){
+      const no=last[1],label='최종 '+no+'회';
+      if(lastRoundPercentile(no,0)===null){if(status)status.textContent=label+' 백분율 기준을 불러오지 못했습니다. 새로고침해 주세요.';return;}
+      if(!confirm(label+'의 백분율을 진단지와 같은 기존 회차 기준으로 표시할까요?\n진단지는 이 기준을 자동 적용하고 있습니다. 원점수·정답률·누적 기준은 바뀌지 않습니다.'))return;
+      window.mkSet='last';renderMock();
+      if(status)status.textContent=label+' 백분율 기준을 적용했습니다. 진단지에도 같은 기준이 자동 반영됩니다. 원점수와 정답률은 그대로입니다.';
+      return;
+    }
+    if(!/^[1-4]$/.test(round)){if(status)status.textContent='반영할 파이널·최종 회차를 다시 선택해 주세요.';return;}
     const exam='final'+round,label='파이널 '+round+'회';
     if(!confirm(label+'에 등록된 성적의 학생 백분율과 컷 백분율을 저장할까요?\n정답률과 비교 기준은 바뀌지 않습니다. 다른 회차는 이번 반영에 포함하지 않습니다.'))return;
     if(button)button.disabled=true;
