@@ -3078,7 +3078,7 @@ window.GFIELD_DATA = {
     "이재아": "online",
     "김도율": "online",
     "최지안": "online",
-    "김민재": "online",
+    "김민재": "withdrawn",
     "이서원": "online",
     "이용준": "online"
   },
