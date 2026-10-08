@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 10. 8. 오후 8:04:26
+ * 생성: 2026. 10. 8. 오후 9:27:38
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1194,7 +1194,8 @@ window.GFIELD_DATA = {
     "파이널 모의고사",
     "최종 모의고사",
     "추가 모의고사",
-    "규칙 보충학습"
+    "규칙 보충학습",
+    "3% 1과정 영역별 테스트"
   ],
   "archiveAccess": {
     "보충학습": [
@@ -1492,7 +1493,8 @@ window.GFIELD_DATA = {
       "김신유",
       "김라율",
       "김준서"
-    ]
+    ],
+    "3% 1과정 영역별 테스트": []
   },
   "archiveProductAccess": {
     "question-bank": [
@@ -2644,6 +2646,29 @@ window.GFIELD_DATA = {
       "title": "비둘기집의 원리(서랍원리)",
       "pdf": "",
       "video": "https://youtu.be/COxXGWvLB-A?si=Sgq7UIQvLic6L6CE&t=444",
+      "cover": "",
+      "date": "2026-10-08",
+      "links": []
+    },
+    {
+      "folder": "3% 1과정 영역별 테스트",
+      "title": "3% 1과정 영역별 테스트",
+      "pdf": "",
+      "video": "",
+      "cover": "",
+      "date": "2026-10-08",
+      "links": [
+        {
+          "label": "3% 1과정 테스트",
+          "url": "https://drive.google.com/file/d/1k6p-ZjXRnh40aR9b476HDPjARPFYUmAc/view?usp=sharing"
+        }
+      ]
+    },
+    {
+      "folder": "보충학습",
+      "title": "",
+      "pdf": "",
+      "video": "",
       "cover": "",
       "date": "2026-10-08",
       "links": []
