@@ -413,7 +413,8 @@
 </div>
 
 <script src="vendor/pdfjs/3.11.174/pdf.min.js"></script>
-<script src="data.js?v=20261006-last1-access"></script>
+<script src="data.js?v=20261010-docssam-columns"></script>
+<script src="docssam-columns.js?v=20261010a"></script>
 <script src="mock-data.js"></script>
 <script src="hs-auth.js?v=20260825c"></script>
 <script src="admin-student-membership.js?v=20261006a"></script>
@@ -434,6 +435,9 @@
   S.books = S.books || [];
   S.info = S.info || [];
   S.vip = S.vip || {};
+  let columnSaveBaseline = JSON.parse(JSON.stringify(S.vip.columns || []));
+  let columnSaveConflict = false;
+  let dataSaveBusy = false;
   S.pins = S.pins || {};
   S.reports = S.reports || {};
   S.examSets = S.examSets || [];
@@ -1253,7 +1257,7 @@
   }
   function addColumn(){ vip().columns.unshift({title:'',category:'프리미엄 칼럼',date:today(),html:''}); renderMag(); dirty(); }
   function setCol(i,k,v){ const a=vip().columns; if(a[i]){ a[i][k]=(k==='date'||k==='html')?v:v.trim(); dirty(); } }
-  function delCol(i){ if(!confirm('이 칼럼을 삭제할까요?')) return; vip().columns.splice(i,1); renderMag(); dirty(); }
+  function delCol(i){ if(vip().columns.length<=1){toast('마지막 칼럼은 원문 보호를 위해 삭제할 수 없습니다.');return;} if(!confirm('이 칼럼을 삭제할까요?')) return; vip().columns.splice(i,1); renderMag(); dirty(); }
   function addMag(){ vip().magazine.unshift({category:'교육뉴스',title:'',desc:'',source:'',sourceUrl:'',image:'',date:today()}); renderMag(); dirty(); }
   function setMag(i,k,v){ const a=vip().magazine; if(a[i]){ a[i][k]=(k==='date'||k==='desc')?v:v.trim(); dirty(); } }
   function delMag(i){ vip().magazine.splice(i,1); renderMag(); dirty(); }
@@ -1557,13 +1561,15 @@
 
   /* ===== 저장 ===== */
   function dirty(){ document.getElementById('save-status').textContent='● 저장되지 않은 변경 있음'; }
-  function buildFile(){
+  function buildFile(data=S){
+    if(!window.GFIELD_DOCSSAM_COLUMNS)throw new Error('칼럼 보호 파일을 불러오지 못했습니다. 새로고침 후 다시 저장해 주세요.');
+    window.GFIELD_DOCSSAM_COLUMNS.assertPreserved(data);
     return "/* =========================================================\n"
       + " * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)\n"
       + " * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨\n"
       + " * 생성: " + new Date().toLocaleString('ko-KR') + "\n"
       + " * ========================================================= */\n"
-      + "window.GFIELD_DATA = " + JSON.stringify(S, null, 2) + ";\n";
+      + "window.GFIELD_DATA = " + JSON.stringify(data, null, 2) + ";\n";
   }
   function exportFile(){ const blob=new Blob([buildFile()],{type:'text/javascript'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='data.js'; document.body.appendChild(a); a.click(); a.remove(); toast('data.js 다운로드됨'); }
   function showCode(){
@@ -1572,18 +1578,36 @@
     document.body.appendChild(bg); bg.querySelector('#code-area').value=buildFile(); bg.addEventListener('click',e=>{if(e.target===bg)bg.remove();});
   }
   async function saveToGitHub(){
+    if(dataSaveBusy){toast('저장이 진행 중입니다. 잠시 기다려 주세요.');return;}
+    if(columnSaveConflict){toast('저장 중 칼럼이 함께 변경됐습니다. 현재 글을 복사해 보관하고 새로고침해 주세요.');return;}
     if(membershipBusy){toast('회원 상태 저장이 끝난 뒤 저장해 주세요.');return;}
     const token=ghToken(); if(!token) return;
+    dataSaveBusy=true;
     document.getElementById('save-status').textContent='GitHub에 저장 중…';
     try{
-      let sha=null;
-      const getRes=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,{ headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}});
-      if(getRes.ok){ const j=await getRes.json(); sha=j.sha; }
-      const content=buildFile(); const b64=btoa(unescape(encodeURIComponent(content)));
+      const getRes=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,{ headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}, cache:'no-store'});
+      if(!getRes.ok)throw new Error('최신 데이터를 읽지 못해 저장을 중단했습니다 ('+getRes.status+').');
+      const j=await getRes.json(); const sha=j.sha;
+      if(!sha)throw new Error('최신 저장 이력을 확인하지 못해 저장을 중단했습니다.');
+      if(!window.GFIELD_DOCSSAM_COLUMNS)throw new Error('칼럼 보호 파일을 불러오지 못했습니다. 새로고침 후 다시 저장해 주세요.');
+      const latest=window.GFIELD_DOCSSAM_COLUMNS.parseGitHubFile(j);
+      const payload=JSON.parse(JSON.stringify(S));
+      const columnsAtSubmit=JSON.stringify(payload.vip.columns);
+      window.GFIELD_DOCSSAM_COLUMNS.reconcileForSave(payload,latest,columnSaveBaseline);
+      const savedColumns=JSON.parse(JSON.stringify(payload.vip.columns));
+      const content=buildFile(payload); const b64=btoa(unescape(encodeURIComponent(content)));
       const putRes=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,{ method:'PUT', headers:{Authorization:'token '+token, Accept:'application/vnd.github+json'}, body:JSON.stringify({message:'Update data.js via admin console', content:b64, sha:sha, branch:BRANCH}) });
-      if(putRes.ok){ document.getElementById('save-status').textContent='✅ 저장 완료 (1~2분 후 반영)'; toast('GitHub 저장 완료 ✅'); }
+      if(putRes.ok){
+        const editedWhileSaving=JSON.stringify(S.vip.columns)!==columnsAtSubmit;
+        columnSaveBaseline=savedColumns;
+        columnSaveConflict=editedWhileSaving&&JSON.stringify(savedColumns)!==columnsAtSubmit;
+        if(!editedWhileSaving){S.vip.columns=JSON.parse(JSON.stringify(savedColumns));renderMag();}
+        document.getElementById('save-status').textContent=editedWhileSaving?'✅ 저장 완료 · 입력 중인 칼럼 변경은 아직 저장되지 않았습니다.':'✅ 저장 완료 (1~2분 후 반영)';
+        toast(columnSaveConflict?'저장 중 칼럼이 함께 변경됐습니다. 현재 글을 복사해 보관하고 새로고침해 주세요.':editedWhileSaving?'전송한 내용은 저장됐습니다. 입력 중인 글도 저장하려면 다시 저장해 주세요.':'GitHub 저장 완료 ✅');
+      }
       else{ const e=await putRes.json(); document.getElementById('save-status').textContent='저장 실패: '+(e.message||putRes.status); if(putRes.status===401||putRes.status===403){ toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents: Read and write 권한 토큰을 넣어주세요 (저장된 토큰은 유지됩니다)'); } else toast('저장 실패 — 코드 보기로 수동 반영하세요'); }
-    }catch(err){ document.getElementById('save-status').textContent='네트워크 오류'; toast('저장 실패 — 코드 보기/내보내기를 사용하세요'); }
+    }catch(err){ const message=err.message||'최신 데이터를 확인하지 못했습니다.'; document.getElementById('save-status').textContent='저장 중단: '+message; toast(message); }
+    finally{dataSaveBusy=false;}
   }
 
   let tt=null;
