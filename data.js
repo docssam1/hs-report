@@ -3134,7 +3134,6 @@ window.GFIELD_DATA = {
     "최지안": "online",
     "이서원": "online",
     "이용준": "online",
-    "김준서": "withdrawn",
     "박제아": "withdrawn"
   },
   "vipAccess": {
