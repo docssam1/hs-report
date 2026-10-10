@@ -3153,7 +3153,7 @@ window.GFIELD_DATA = {
     "김소라": "online",
     "유현우": "online",
     "박재연": "online",
-    "김신유": "online",
+    "김신유": "withdrawn",
     "이현서": "online",
     "최지우": "online",
     "이재아": "online",
