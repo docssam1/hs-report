@@ -3140,7 +3140,8 @@ window.GFIELD_DATA = {
     "이용준": "online",
     "김준서": "online",
     "박제아": "withdrawn",
-    "허유민": "withdrawn"
+    "허유민": "withdrawn",
+    "정유현": "withdrawn"
   },
   "vipAccess": {
     "report": [
