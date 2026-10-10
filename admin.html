@@ -49,6 +49,10 @@
   td.on::after{content:'🔓';}
   td.off::after{content:'·';color:#cbd2dc;}
   td.special-col.on{background:#fff7d6;}
+  .signature-round-approvals td.cell,.signature-round-approvals .mini{min-width:44px;height:44px;}
+  .signature-round-approvals [role=button]:focus-visible,.signature-round-approvals button:focus-visible,.signature-book-approval input:focus-visible{outline:2px solid #2456C4;outline-offset:-2px;}
+  .signature-book-approval label{width:auto;min-height:44px;}
+  .signature-book-approval input[type=checkbox]{flex:none;width:18px;height:18px;min-width:18px;accent-color:#2456C4;}
 
   .student-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center;}
   input[type=text],input[type=url],input[type=password]{padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;outline:none;}
@@ -225,6 +229,11 @@
         <h3>문제은행 학생 이용</h3>
         <div class="hint">황소 약점 유형 문제은행은 <b>자료실에 등록된 학생 전체가 승인번호 없이</b> 이용합니다. 최종 7회처럼 회차별 승인이 필요한 자료는 아래의 별도 명단을 따릅니다.</div>
         <div class="matrix-scroll"><table id="bank-acc-matrix"></table></div>
+      </div>
+      <div class="card signature-round-approvals">
+        <h3>시그니처 1·2회 별도 승인</h3>
+        <div class="hint">시그니처는 추가 모의고사와 별도로 승인합니다. 서재에 항목이 없어도 각 회차의 학생을 체크할 수 있으며, 같은 회차의 서재 승인과 함께 바뀝니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
+        <div class="matrix-scroll"><table id="signature-acc-matrix" aria-label="시그니처 회차별 승인"></table></div>
       </div>
       <div class="card">
         <h3>최종 7·8회 회차 승인</h3>
@@ -927,6 +936,7 @@
     }
     renderVipAccMatrix();
     renderSpAccMatrix();
+    renderSignatureAccessMatrix();
   }
   function accAll(fi){ const f=S.archiveFolders[fi]; S.archiveAccess[f]=S.students.slice(); renderAccMatrix(); dirty(); }
   const QUESTION_BANK_ACCESS_KEY='question-bank';
@@ -938,6 +948,32 @@
   function bankAccessToggleOpen(){const acc=bankAccessArr();S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=acc.includes('*')?[]:['*'];renderBankAccessMatrix();dirty()}
   function bankAccessAll(){S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=S.students.slice();renderBankAccessMatrix();dirty()}
   function bankAccessToggleStudent(studentIndex){const student=S.students[studentIndex];if(!student)return;let acc=bankAccessArr();if(acc.includes('*'))acc=S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=[];const i=acc.indexOf(student);if(i>=0)acc.splice(i,1);else acc.push(student);renderBankAccessMatrix();dirty()}
+
+  const SIGNATURE_ROUND_ACCESS=[['mock-signature-1','시그니처 1회',1],['mock-signature-2','시그니처 2회',2]];
+  function signatureRoundAccessKey(round){ const item=SIGNATURE_ROUND_ACCESS.find(item=>item[2]===Number(round)); return item?item[0]:''; }
+  function isSignatureAccessKey(key){ return SIGNATURE_ROUND_ACCESS.some(item=>item[0]===key); }
+  function renderSignatureAccessMatrix(){
+    const el=document.getElementById('signature-acc-matrix'); if(!el)return;
+    let html='<thead><tr><th>회차</th><th>전체공개</th><th>모두<br>체크</th>';
+    S.students.forEach(student=>{html+=stuTh(student);});
+    html+='</tr></thead><tbody>';
+    SIGNATURE_ROUND_ACCESS.forEach(([key,label,round])=>{
+      const acc=Array.isArray(S.archiveProductAccess[key])?S.archiveProductAccess[key]:[],open=acc.includes('*');
+      const toggle='signatureRoundAccessToggleOpen('+round+')';
+      html+='<tr data-access-key="'+key+'"><th>'+label+'</th>';
+      html+='<td class="cell '+(open?'on':'off')+'" role="button" tabindex="0" aria-pressed="'+open+'" aria-label="'+label+' 전체공개 '+(open?'해제':'설정')+'" onclick="'+toggle+'" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();'+toggle+'}"></td>';
+      html+='<td style="text-align:center"><button class="mini" onclick="signatureRoundAccessAll('+round+')" title="'+label+' 전원 개별 체크로 전환">☑</button></td>';
+      S.students.forEach((student,index)=>{
+        const on=!open&&acc.includes(student),action='signatureRoundAccessToggleStudent('+round+','+index+')';
+        html+='<td class="cell '+(on?'on':'off')+'" role="button" tabindex="0" aria-pressed="'+on+'" aria-label="'+label+' '+esc(student)+' '+(on?'승인 해제':'승인')+'" style="'+(open?'opacity:.4':'')+'" onclick="'+action+'" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();'+action+'}"></td>';
+      });
+      html+='</tr>';
+    });
+    el.innerHTML=html+'</tbody>';
+  }
+  function signatureRoundAccessToggleOpen(round){ const key=signatureRoundAccessKey(round); if(!key)return; const acc=productArr(key); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderSignatureAccessMatrix(); renderBooks(); dirty(); }
+  function signatureRoundAccessAll(round){ const key=signatureRoundAccessKey(round); if(!key)return; S.archiveProductAccess[key]=S.students.slice(); renderSignatureAccessMatrix(); renderBooks(); dirty(); }
+  function signatureRoundAccessToggleStudent(round,index){ const key=signatureRoundAccessKey(round),student=S.students[index]; if(!key||!student)return; let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const i=acc.indexOf(student); if(i>=0)acc.splice(i,1);else acc.push(student); renderSignatureAccessMatrix(); renderBooks(); dirty(); }
 
   /* 최종 7·8회는 파이널 출석 및 서로의 명단과 무관한 독립 회차 승인이다. */
   const FINAL7_ACCESS_KEY='mock-final-7';
@@ -1032,14 +1068,14 @@
       const checked=open||acc.includes(student);
       return `<label style="display:inline-flex;align-items:center;gap:4px;margin:3px 8px 3px 0;font-size:12px"><input type="checkbox" ${checked?'checked':''} ${open?'disabled':''} onchange="bookToggleStudent(${bookIndex},${studentIndex})">${esc(student)}</label>`;
     }).join('');
-    return `<div class="field"><label>승인 학생</label><div style="flex:1;min-width:260px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff">
+    return `<div class="field"><label>승인 학생</label><div class="${isSignatureAccessKey(key)?'signature-book-approval':''}" style="flex:1;min-width:${isSignatureAccessKey(key)?'0':'260px'};border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff">
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:5px"><button class="btn ${open?'ok':'add'} sm" onclick="bookToggleOpen(${bookIndex})">${open?'🔓 전체 공개 중':'전체 공개'}</button><button class="btn sm" onclick="bookAllStudents(${bookIndex})">학생 모두 선택</button><span class="hint" style="margin:0">이 서재 항목에서 바로 승인합니다.</span></div>${students||'<span class="hint">등록된 학생이 없습니다.</span>'}
     </div></div>`;
   }
   function bookAccessKey(bookIndex){ const book=S.books&&S.books[bookIndex]; return book&&String(book.accessKey||''); }
-  function bookToggleOpen(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; const acc=productArr(key); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderBooks(); if(key===FINAL7_ACCESS_KEY||key===FINAL8_ACCESS_KEY)renderFinal7AccessMatrix(); dirty(); }
-  function bookAllStudents(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; S.archiveProductAccess[key]=S.students.slice(); renderBooks(); if(key===FINAL7_ACCESS_KEY||key===FINAL8_ACCESS_KEY)renderFinal7AccessMatrix(); dirty(); }
-  function bookToggleStudent(bookIndex,studentIndex){ const key=bookAccessKey(bookIndex),student=S.students[studentIndex]; if(!key||!student)return; let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const pos=acc.indexOf(student); if(pos>=0)acc.splice(pos,1);else acc.push(student); renderBooks(); if(key===FINAL7_ACCESS_KEY||key===FINAL8_ACCESS_KEY)renderFinal7AccessMatrix(); dirty(); }
+  function bookToggleOpen(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; const acc=productArr(key); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderBooks(); if(key===FINAL7_ACCESS_KEY||key===FINAL8_ACCESS_KEY)renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); dirty(); }
+  function bookAllStudents(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; S.archiveProductAccess[key]=S.students.slice(); renderBooks(); if(key===FINAL7_ACCESS_KEY||key===FINAL8_ACCESS_KEY)renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); dirty(); }
+  function bookToggleStudent(bookIndex,studentIndex){ const key=bookAccessKey(bookIndex),student=S.students[studentIndex]; if(!key||!student)return; let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const pos=acc.indexOf(student); if(pos>=0)acc.splice(pos,1);else acc.push(student); renderBooks(); if(key===FINAL7_ACCESS_KEY||key===FINAL8_ACCESS_KEY)renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); dirty(); }
 
   function renderBooks(){
     let h='';
