@@ -33,15 +33,15 @@
     if(query.get('practice')==='wrong'&&source[0]==='final'&&source[1]==='7')return 'mock-final-7';
     if(bank==='final8')return 'mock-final-8';
     if(query.get('practice')==='wrong'&&source[0]==='final'&&source[1]==='8')return 'mock-final-8';
-    if(bank==='last1')return 'mock-last-1';
-    if(query.get('practice')==='wrong'&&source[0]==='last'&&source[1]==='1')return 'mock-last-1';
+    if(/^last[12]$/.test(bank))return 'mock-last-'+bank.slice(4);
+    if(query.get('practice')==='wrong'&&source[0]==='last'&&/^[12]$/.test(source[1]))return 'mock-last-'+source[1];
     return '';
   }
   function scopedPermissionList(){
     var key=scopedProductKey();if(!key)return [];
     var data=root.GFIELD_DATA||{},products=data.archiveProductAccess||{};
-    /* 최종 1회 유사문제는 정규 최종 모의고사 권한(10월 1주 출석 또는 자료실 '최종 모의고사' 승인)을 따른다. */
-    if(key==='mock-last-1'){var acc=(data.archiveAccess||{})['최종 모의고사'],att=data.attendance||{},list=Array.isArray(acc)?acc.slice():[];Object.keys(att).forEach(function(n){if(Array.isArray(att[n])&&att[n].indexOf('oct-5')>=0&&list.indexOf(n)<0)list.push(n);});return list;}
+    /* 최종 1·2회는 기존 정규 최종 승인 또는 해당 회차 주차 출석을 따른다. */
+    if(/^mock-last-[12]$/.test(key)){var week=key==='mock-last-1'?'oct-5':'oct-12',acc=(data.archiveAccess||{})['최종 모의고사'],att=data.attendance||{},list=Array.isArray(acc)?acc.slice():[];Object.keys(att).forEach(function(n){if(Array.isArray(att[n])&&att[n].indexOf(week)>=0&&list.indexOf(n)<0)list.push(n);});return list;}
     return Array.isArray(products[key])?products[key]:[];
   }
   function listed(list,student){return list.indexOf('*')>=0||list.indexOf(student)>=0;}

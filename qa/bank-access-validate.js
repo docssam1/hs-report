@@ -32,11 +32,11 @@ assert.match(gate,/source:'saved-archive'/,'a previously selected registered arc
 assert.match(gate,/location\.replace\(archiveLoginUrl\(\)\)/,'direct entry returns to the archive name login');
 assert.doesNotMatch(gate,/bankAccessForm|bankAccessCode|승인번호<input|async function signIn/,'approval-number form and fallback login are removed');
 
-function gateApi(search,students,final7Access,storedStudent,signature1Access,signature2Access,auth){
+function gateApi(search,students,final7Access,storedStudent,signature1Access,signature2Access,auth,extraData){
   const store={gfield_student:storedStudent||''};
   const storage={getItem:key=>store[key]||null,setItem:(key,value)=>{store[key]=String(value)},removeItem:key=>{delete store[key]}};
   const window={
-    GFIELD_DATA:{students,archiveProductAccess:{'mock-final-7':final7Access||[],'mock-signature-1':signature1Access||[],'mock-signature-2':signature2Access||[]}},
+    GFIELD_DATA:Object.assign({students,archiveProductAccess:{'mock-final-7':final7Access||[],'mock-signature-1':signature1Access||[],'mock-signature-2':signature2Access||[]}},extraData||{}),
     __GFIELD_BANK_ACCESS_FORCE__:true
   };
   if(auth)window.GFIELD_AUTH=auth;
@@ -66,6 +66,11 @@ const queryApi=gateApi('?bank=final2&from=archive&name=%EB%93%B1%EB%A1%9D%ED%95%
 assert.equal(queryApi.portalIdentity().student,'등록학생','archive query fallback survives unavailable handoff storage');
 
 const home=read('index.html');
+for(const query of ['?bank=last2','?practice=wrong&source=last%7C2']){
+  const scoped=gateApi(query,['1회학생','2회학생','승인학생'],[],'2회학생',[],[],null,{attendance:{'1회학생':['oct-5'],'2회학생':['oct-12']},archiveAccess:{'최종 모의고사':['승인학생']}});
+  for(const [name,expected] of [['1회학생',false],['2회학생',true],['승인학생',true]])assert.equal(scoped.allowed({role:'student',student:name,active:true}),expected,'Last2 existing attendance/group permission: '+name);
+  assert.equal(scoped.allowed({role:'student',student:'2회학생',active:false}),false);
+}
 assert.match(home,/!\(\(D\.students\|\|\[\]\)\.includes\(name\)\)/,'the named portal still rejects unregistered student names');
 assert.match(home,/sessionStorage\.setItem\(QUESTION_BANK_HANDOFF_KEY/,'authorized archive entry creates the bank handoff');
 assert.match(home,/localStorage\.setItem\(QUESTION_BANK_LAUNCH_KEY/,'authorized archive entry creates the short-lived cross-tab launch');

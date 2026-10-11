@@ -57,7 +57,7 @@
     if(requireButton&&(!button||button.nodeType!==1))fail('button-missing','인쇄 단추를 찾지 못했습니다.');
     if(!source||source.nodeType!==1||!source.classList.contains('final-report-package'))fail('source-missing','인쇄할 진단 요약을 찾지 못했습니다.');
     var set=String(options.set||source.getAttribute('data-set')||'final');
-    if(!((set==='last'&&round===1)||(set==='final'&&[1,2,3,4,7,8].includes(round)))||Number(source.getAttribute('data-report-round'))!==round)fail('round-invalid','진단지 회차와 유사문제 회차가 다릅니다.');
+    if(!((set==='last'&&[1,2].includes(round))||(set==='final'&&[1,2,3,4,7,8].includes(round)))||Number(source.getAttribute('data-report-round'))!==round)fail('round-invalid','진단지 회차와 유사문제 회차가 다릅니다.');
     if(!Array.isArray(nos)||nos.length>3||nos.some(function(no){return !Number.isInteger(Number(no))||Number(no)<1||Number(no)>30;})||new Set(nos.map(Number)).size!==nos.length){
       fail('priority-invalid','이번 주 우선 복습 문항을 확인할 수 없습니다.');
     }
@@ -70,8 +70,8 @@
   }
 
   function bankUrl(input){
-    var prefix=input.set==='last'?'last1':'final'+input.round;
-    var source=input.set==='last'?'last|1':'final|'+input.round;
+    var prefix=input.set==='last'?'last'+input.round:'final'+input.round;
+    var source=input.set+'|'+input.round;
     var params=new URLSearchParams({
       bank:prefix,
       practice:'wrong',
@@ -138,7 +138,7 @@
   }
   function verifyBank(input,bank){
     var doc=bank.doc,win=bank.win,expected=input.nos.length*3;
-    var prefix=input.set==='last'?'last1':'final'+input.round;
+    var prefix=input.set==='last'?'last'+input.round:'final'+input.round;
     if(!win.BANK_FIXED||typeof win.BANK_FIXED.buildPaper!=='function')fail('bank-missing','검수된 문제은행을 확인할 수 없습니다.');
     return win.BANK_FIXED.buildPaper({bankCode:prefix,genIds:input.nos.map(function(no){return prefix+'-q'+String(no).padStart(2,'0');}),pointBand:'all',orderMode:'grouped'}).then(function(paper){
       var questions=list(doc.querySelectorAll('#final1Worksheet #f1Pages .question-page .f1-qcard'));
