@@ -103,6 +103,9 @@
   if(!extraContent.textbooks.some(function(t){return t&&t.accessKey==='mock-final-5';})){
     extraContent.textbooks.push({title:'최종 실전 모의고사 5회 · 강의·시험지·진단',accessKey:'mock-final-5'});
   }
+  if(!extraContent.textbooks.some(function(t){return t&&t.accessKey==='mock-mid-7';})){
+    extraContent.textbooks.push({title:'중급 모의고사 7회 · 추가 모의고사',accessKey:'mock-mid-7'});
+  }
 
   /* Phase 구분선 위치 정리 */
   function moveBefore(id, rx){
