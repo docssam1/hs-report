@@ -16,6 +16,8 @@ const ALLOWED_ORIGINS = new Set([
 const ROSTER_URL = "https://raw.githubusercontent.com/docssam1/hs-report/main/data.js";
 const EMAIL_PATTERN = /^[^\s@]{1,64}@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/;
 const CODE_PATTERN = /^\d{6,10}$/;
+const DEVICE_PATTERN = /^[A-Za-z0-9_-]{32,64}$/;
+const DEVICE_LIMIT = 3;
 const TOUCH_INTERVAL_MS = 5 * 60 * 1000;
 
 class HttpError extends Error {
@@ -245,6 +247,68 @@ async function findLink(studentUserId: string): Promise<Link | null> {
   return data as Link | null;
 }
 
+// 승인 기기: 브라우저가 만든 임의 값의 해시만 저장한다. 학생 1명당 DEVICE_LIMIT 대.
+async function deviceHash(value: unknown): Promise<string> {
+  const token = String(value ?? "");
+  if (!DEVICE_PATTERN.test(token)) throw new HttpError(400, "DEVICE_REQUIRED");
+  return sha256(`hs-device:${token}`);
+}
+
+function deviceLabel(req: Request): string {
+  const ua = req.headers.get("user-agent") || "";
+  const os = /iPhone/.test(ua) ? "iPhone" : /iPad/.test(ua) ? "iPad" : /Android/.test(ua) ? "Android"
+    : /Windows/.test(ua) ? "Windows" : /Mac OS X/.test(ua) ? "Mac" : /CrOS/.test(ua) ? "Chromebook" : "기기";
+  const browser = /Whale\//.test(ua) ? "Whale" : /SamsungBrowser\//.test(ua) ? "Samsung" : /KAKAOTALK/i.test(ua) ? "KakaoTalk"
+    : /NAVER\(inapp/i.test(ua) ? "NAVER" : /Edg\//.test(ua) ? "Edge" : /CriOS\/|Chrome\//.test(ua) ? "Chrome"
+    : /FxiOS\/|Firefox\//.test(ua) ? "Firefox" : /Safari\//.test(ua) ? "Safari" : "";
+  return `${os}${browser ? " " + browser : ""}`.slice(0, 40);
+}
+
+type Device = { id: string; device_hash: string; last_seen_at: string | null };
+
+async function listDevices(studentUserId: string): Promise<Device[]> {
+  const { data, error } = await service.from("hs_student_devices")
+    .select("id,device_hash,last_seen_at")
+    .eq("student_user_id", studentUserId);
+  if (error) throw new HttpError(500, "DEVICE_LOOKUP_FAILED");
+  return (data || []) as Device[];
+}
+
+async function assertDeviceAllowed(studentUserId: string, hash: string): Promise<Device | null> {
+  const devices = await listDevices(studentUserId);
+  const found = devices.find((device) => device.device_hash === hash) || null;
+  if (!found && devices.length >= DEVICE_LIMIT) throw new HttpError(409, "DEVICE_LIMIT");
+  return found;
+}
+
+function sessionIdOf(accessToken: string): string | null {
+  try {
+    const payload = JSON.parse(atob(accessToken.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+    return typeof payload.session_id === "string" ? payload.session_id : null;
+  } catch {
+    return null;
+  }
+}
+
+async function saveDevice(req: Request, studentUserId: string, hash: string, existing: Device | null, sessionId: string | null, now: string) {
+  if (existing) {
+    const { error } = await service.from("hs_student_devices").update({
+      label: deviceLabel(req), session_id: sessionId, last_verified_at: now, last_seen_at: now,
+    }).eq("id", existing.id);
+    if (error) throw new HttpError(500, "DEVICE_SAVE_FAILED");
+    return;
+  }
+  const { error } = await service.from("hs_student_devices").insert({
+    student_user_id: studentUserId, device_hash: hash, label: deviceLabel(req), session_id: sessionId,
+    first_verified_at: now, last_verified_at: now, last_seen_at: now,
+  });
+  if (error) {
+    // 동시 요청: 같은 기기가 먼저 저장됐으면 통과, 아니면 한도 초과로 본다.
+    const again = await listDevices(studentUserId);
+    if (!again.some((device) => device.device_hash === hash)) throw new HttpError(409, "DEVICE_LIMIT");
+  }
+}
+
 async function issueStudentSession(account: Account) {
   const { data: generated, error: generateError } = await service.auth.admin.generateLink({
     type: "magiclink",
@@ -260,12 +324,14 @@ async function issueStudentSession(account: Account) {
 async function start(req: Request, body: Record<string, unknown>) {
   await consumeRateLimit("start-ip", clientIp(req), 10, 600);
   const email = normalizeEmail(body.email);
+  const hash = await deviceHash(body.deviceToken);
   const { name, account } = await resolveStudent(body.name);
   await consumeRateLimit("start-email", email, 5, 3600);
   await consumeRateLimit("start-student", loginKey(name), 6, 3600);
   if (account) {
     const link = await findLink(account.user_id);
     if (link && link.parent_email !== email) throw new HttpError(409, "LINKED_TO_OTHER_EMAIL");
+    await assertDeviceAllowed(account.user_id, hash);
   }
   const { error } = await publicAuth.auth.signInWithOtp({ email, options: { shouldCreateUser: true } });
   if (error) {
@@ -281,8 +347,14 @@ async function verify(req: Request, body: Record<string, unknown>) {
   const code = String(body.code ?? "").replace(/\s+/g, "");
   await consumeRateLimit("verify-ip", clientIp(req), 20, 600);
   if (!CODE_PATTERN.test(code)) throw new HttpError(400, "INVALID_CODE");
+  const hash = await deviceHash(body.deviceToken);
   await consumeRateLimit("verify-email", email, 8, 600);
   const resolved = await resolveStudent(body.name);
+  if (resolved.account) {
+    const link = await findLink(resolved.account.user_id);
+    if (link && link.parent_email !== email) throw new HttpError(409, "LINKED_TO_OTHER_EMAIL");
+    await assertDeviceAllowed(resolved.account.user_id, hash);
+  }
 
   const { data: parent, error: otpError } = await publicAuth.auth.verifyOtp({ email, token: code, type: "email" });
   if (otpError || !parent?.session || !parent.user) throw new HttpError(401, "INVALID_CODE");
@@ -294,6 +366,7 @@ async function verify(req: Request, body: Record<string, unknown>) {
 
   const account = resolved.account || await createStudentAccount(resolved.name);
   const now = new Date().toISOString();
+  const device = await assertDeviceAllowed(account.user_id, hash);
   const existing = await findLink(account.user_id);
   let firstLink = false;
   if (existing) {
@@ -321,10 +394,12 @@ async function verify(req: Request, body: Record<string, unknown>) {
   }
 
   const session = await issueStudentSession(account);
+  await saveDevice(req, account.user_id, hash, device, sessionIdOf(session.access_token), now);
   return { session, student: account.student, firstLink };
 }
 
-async function touch(req: Request) {
+async function touch(req: Request, body: Record<string, unknown>) {
+  const hash = await deviceHash(body.deviceToken).catch(() => "");
   const header = req.headers.get("authorization") || "";
   const token = header.startsWith("Bearer ") ? header.slice(7) : "";
   if (!token) throw new HttpError(401, "UNAUTHORIZED");
@@ -343,11 +418,17 @@ async function touch(req: Request) {
   if (!account.active || withdrawn) throw new HttpError(403, "STUDENT_INACTIVE");
   const link = await findLink(account.user_id);
   if (!link) throw new HttpError(403, "EMAIL_NOT_VERIFIED");
-  const lastSeen = link.last_seen_at ? Date.parse(link.last_seen_at) : 0;
-  if (!lastSeen || Date.now() - lastSeen > TOUCH_INTERVAL_MS) {
-    const now = new Date().toISOString();
+  // 관리자가 기기를 초기화했거나 승인되지 않은 브라우저면 다시 인증하게 한다.
+  const device = hash ? (await listDevices(account.user_id)).find((row) => row.device_hash === hash) : null;
+  if (!device) throw new HttpError(403, "DEVICE_NOT_APPROVED");
+  const now = new Date().toISOString();
+  const stale = (value: string | null) => !value || Date.now() - Date.parse(value) > TOUCH_INTERVAL_MS;
+  if (stale(link.last_seen_at)) {
     await service.from("hs_parent_links").update({ last_seen_at: now, updated_at: now })
       .eq("student_user_id", account.user_id);
+  }
+  if (stale(device.last_seen_at)) {
+    await service.from("hs_student_devices").update({ last_seen_at: now }).eq("id", device.id);
   }
   return { ok: true, student: account.student };
 }
@@ -361,7 +442,7 @@ Deno.serve(async (req: Request) => {
     const action = String(body.action || "");
     if (action === "start") return json(req, await start(req, body));
     if (action === "verify") return json(req, await verify(req, body));
-    if (action === "touch") return json(req, await touch(req));
+    if (action === "touch") return json(req, await touch(req, body));
     throw new HttpError(400, "INVALID_ACTION");
   } catch (error) {
     const status = error instanceof HttpError ? error.status : 500;
