@@ -152,17 +152,36 @@ async function issueOne(rawName: unknown, canSelfEnter: unknown) {
 }
 
 async function listStatus() {
-  const [{ data: accounts, error: accountError }, { data: results, error: resultError }] = await Promise.all([
+  const [
+    { data: accounts, error: accountError },
+    { data: results, error: resultError },
+    { data: links, error: linkError },
+  ] = await Promise.all([
     service.from("hs_accounts")
-      .select("student,role,can_self_enter,active,created_at,updated_at")
+      .select("user_id,student,role,can_self_enter,active,created_at,updated_at")
       .order("student"),
     service.from("mock_results").select("student,owner_id"),
+    service.from("hs_parent_links").select("student_user_id,parent_email,first_verified_at,last_seen_at"),
   ]);
   if (accountError) throw new Error(accountError.message);
   if (resultError) throw new Error(resultError.message);
   const resultStudents = Array.from(new Set((results || []).map((row) => row.student)));
   const unownedStudents = Array.from(new Set((results || []).filter((row) => !row.owner_id).map((row) => row.student)));
-  return { accounts: accounts || [], resultStudents, unownedStudents };
+  // 이메일 인증 기록: 표가 아직 없거나 읽기 실패해도 기존 목록은 그대로 돌려준다.
+  const studentByUser = new Map((accounts || []).map((row) => [row.user_id, row.student]));
+  const emailLinks = linkError ? [] : (links || []).map((row) => ({
+    student: studentByUser.get(row.student_user_id) || "",
+    email: row.parent_email,
+    firstVerifiedAt: row.first_verified_at,
+    lastSeenAt: row.last_seen_at,
+  })).filter((row) => row.student);
+  return {
+    accounts: (accounts || []).map(({ user_id: _userId, ...row }) => row),
+    resultStudents,
+    unownedStudents,
+    emailLinks,
+    emailLinksAvailable: !linkError,
+  };
 }
 
 Deno.serve(async (req: Request) => {

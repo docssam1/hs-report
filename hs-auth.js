@@ -274,6 +274,42 @@
     return response;
   }
 
+  /* 학부모 이메일 인증(hs-parent-auth). 학부모 세션은 서버에서 끝내고 학생 세션만 받는다. */
+  async function parentAuth(action,body){
+    var response=await fetch(SUPABASE_URL+'/functions/v1/hs-parent-auth',{
+      method:'POST',
+      headers:{apikey:PUBLISHABLE_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify(Object.assign({},body||{},{action:action}))
+    });
+    var result=null;try{result=await response.json()}catch(e){}
+    if(!response.ok){
+      var error=new Error((result&&result.error)||'REQUEST_FAILED');
+      error.status=response.status;error.code=result&&result.error;
+      error.retryAfter=Number(response.headers.get('Retry-After')||0);
+      throw error;
+    }
+    return result;
+  }
+
+  async function startEmailLogin(name,email){
+    return parentAuth('start',{name:normalizeName(name),email:String(email||'').trim()});
+  }
+
+  async function verifyEmailLogin(name,email,code){
+    var result=await parentAuth('verify',{name:normalizeName(name),email:String(email||'').trim(),code:String(code||'').replace(/\s+/g,'')});
+    var saved=store(result&&result.session,result&&result.student||name,'student');
+    var verified=readStored('student');
+    if(!verified||verified.access_token!==saved.access_token){
+      var storageError=new Error('STORAGE_UNAVAILABLE');storageError.code='STORAGE_UNAVAILABLE';throw storageError;
+    }
+    return {student:result.student,firstLink:!!result.firstLink};
+  }
+
+  /* 같은 브라우저 재입장: 서버에서 활성 학생·이메일 연결을 확인하고 최근 접속을 남긴다. */
+  async function touchStudent(){
+    return functionCall('hs-parent-auth',{action:'touch'},'student');
+  }
+
   global.GFIELD_AUTH={
     SUPABASE_URL:SUPABASE_URL,
     PUBLISHABLE_KEY:PUBLISHABLE_KEY,
@@ -288,6 +324,9 @@
     functionCall:functionCall,
     rest:rest,
     clear:clear,
+    startEmailLogin:startEmailLogin,
+    verifyEmailLogin:verifyEmailLogin,
+    touchStudent:touchStudent,
     hasAdminDevice:function(){return !!readAdminDevice()},
     forgetAdminDevice:forgetAdminDevice
   };
