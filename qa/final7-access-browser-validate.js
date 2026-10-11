@@ -79,7 +79,7 @@ async function installRoundFixture(page) {
     });
     await admin.waitForSelector('#final7-acc-matrix tbody tr');
     assert.match(await admin.locator('#final7-acc-matrix').innerText(), /최종 7회/);
-    const cells = admin.locator('#final7-acc-matrix tbody tr td');
+    const cells = admin.locator('#final7-acc-matrix tbody tr[data-access-key="mock-final-7"] td');
     await cells.nth(2).click();
     assert.deepEqual(await admin.evaluate(() => Array.from(S.archiveProductAccess['mock-final-7'])), ['회차승인검수A']);
     const final7BookIndex = await admin.evaluate(() => S.books.findIndex(book => book && book.accessKey === 'mock-final-7'));
