@@ -6,6 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const http = require('node:http');
 const vm = require('node:vm');
+require('./email-login-test-stub'); // QA 전용: 학부모 이메일 인증 단계를 인증된 브라우저로 취급
 const { chromium } = require(process.env.GFIELD_QA_PLAYWRIGHT || 'playwright');
 const ROOT = path.resolve(__dirname, '..');
 let BASE_URL = process.env.GFIELD_QA_BASE_URL || '';
@@ -84,6 +85,11 @@ async function newPage(browser, width, data, role = 'admin') {
       if (url.hostname === 'fgahqumaldheqettmvqg.supabase.co' && url.pathname === '/rest/v1/access_log') {
         state.mockTelemetry++;
         return route.fulfill({ status: 204, body: '' });
+      }
+      // 학생 명단의 학부모 이메일 인증 표는 읽기 전용 list 호출(POST)이다. 쓰기로 세지 않고 빈 결과로 답한다.
+      if (url.hostname === 'fgahqumaldheqettmvqg.supabase.co' && url.pathname === '/functions/v1/hs-approval-admin') {
+        let body = {}; try { body = request.postDataJSON() || {}; } catch (e) {}
+        if (body.action === 'list') return route.fulfill({ json: { accounts: [], resultStudents: [], unownedStudents: [], emailLinks: [], emailLinksAvailable: true } });
       }
       state.blockedWrites.push(request.method() + ' ' + url.pathname);
       return route.abort();

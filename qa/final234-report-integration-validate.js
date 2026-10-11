@@ -1,6 +1,7 @@
 'use strict';
 // Synthetic records only. All off-site traffic is intercepted; no learner writes.
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
+require('./email-login-test-stub'); // QA 전용: 학부모 이메일 인증 단계를 인증된 브라우저로 취급
 const {chromium}=require(process.env.GFIELD_QA_PLAYWRIGHT||'playwright');
 const core=require('../supabase/functions/hs-final-population/population-core.js');
 const root=path.resolve(__dirname,'..'),student='회차연결검수학생';

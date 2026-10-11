@@ -61,6 +61,14 @@
   .btn.del{background:#fde8e8;color:var(--danger);}
   .btn.ai{background:#6d28d9;color:#fff;}
   .btn.save{background:var(--ok);color:#fff;}
+  .email-auth-head{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  .email-auth-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .email-auth-table th,.email-auth-table td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;white-space:nowrap;}
+  .email-auth-table th{font-size:11px;color:#6b7280;}
+  .email-auth-badge{display:inline-flex;padding:2px 7px;border-radius:20px;font-size:10.5px;font-weight:800;background:#f2f4f7;color:#667085;}
+  .email-auth-badge.ok{background:#e9f7ef;color:#16794d;}
+  .email-auth-badge.full{background:#fff1f0;color:#b42318;}
+  .email-auth-devices{font-size:11px;color:#6b7280;}
   .chip{display:inline-flex;align-items:center;gap:8px;background:#f2f5fa;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:13.5px;margin:0 6px 8px 0;}
   .chip button{background:none;border:none;color:var(--danger);font-weight:800;font-size:15px;}
 
@@ -181,6 +189,7 @@
         <div id="student-chips"></div>
         <div class="hint">회원 상태를 클릭하면 재원생 → 온라인 → 퇴원생 순서로 전환됩니다. 퇴원·복귀는 확인 후 자동 저장하며, 이름 로그인 차단은 사이트 반영 후 적용됩니다. 성적·출석·코멘트는 보존합니다.</div>
       </div>
+      <div class="card" id="student-email-auth"></div>
     </section>
 
     <section id="tab-content" class="hidden">
@@ -416,7 +425,8 @@
 <script src="data.js?v=20261010-docssam-columns"></script>
 <script src="docssam-columns.js?v=20261010a"></script>
 <script src="mock-data.js"></script>
-<script src="hs-auth.js?v=20260825c"></script>
+<script src="hs-auth.js?v=20261011-email-login-1"></script>
+<script src="admin-email-auth-view.js?v=20261011-email-login-1"></script>
 <script src="admin-student-membership.js?v=20261006a"></script>
 <script>
   const REPO = "docssam1/hs-report";
@@ -607,6 +617,7 @@
       html+=`<span class="chip">${name}<button type="button" class="membership-toggle" ${membershipBusy?'disabled':''} onclick="toggleType('${name}')" style="cursor:pointer;margin-left:5px;min-height:32px;font-size:11px;font-weight:800;padding:2px 7px;border-radius:9px;${studentTypeStyle(name)}" title="재원생 → 온라인 → 퇴원생 (퇴원생 클릭 시 복귀)" aria-label="${name} ${studentTypeLabel(name)} 회원 상태 변경">${studentTypeLabel(name)}</button><button onclick="removeStudent('${name}')">×</button></span>`;
     });
     document.getElementById('student-chips').innerHTML=html||'<span class="hint">등록된 학생이 없습니다.</span>';
+    if(window.GFIELD_EMAIL_AUTH_VIEW) window.GFIELD_EMAIL_AUTH_VIEW.render(S.students);
   }
   let membershipBusy=false;
   async function toggleType(name){

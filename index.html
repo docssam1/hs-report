@@ -47,9 +47,19 @@
   .login-box input{width:100%;padding:15px;border:1.5px solid var(--line2);border-radius:14px;font-size:16px;text-align:center;margin-bottom:14px;outline:none;background:var(--soft);color:var(--ink);}
   .login-box input::placeholder{color:var(--dim);}
   .login-box input:focus{border-color:var(--orange);background:#fff;}
-  .login-box .enter{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 22px rgba(249,115,22,.28);}
-  .login-box .enter:active{transform:scale(.97);}
+  .login-box .enter,.login-box .el-primary{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 22px rgba(249,115,22,.28);}
+  .login-box .enter:active,.login-box .el-primary:active{transform:scale(.97);}
   .login-box .hint{margin-top:18px;font-size:12px;color:var(--dim);line-height:1.6;}
+  .login-box .enter:disabled,.login-box .el-primary:disabled{opacity:.6;}
+  .email-login .el-who{font-size:15px;color:var(--ink);margin-bottom:10px;}
+  .email-login .el-guide{font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:14px;word-break:keep-all;}
+  .email-login .el-guide b{color:var(--ink);word-break:break-all;}
+  .email-login .el-links{margin-top:12px;font-size:13px;color:var(--dim);display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
+  .email-login .el-links button,.email-login .el-back{background:none;border:none;padding:6px 4px;font-size:13px;color:var(--orange-d);font-weight:700;}
+  .email-login .el-links button:disabled{color:var(--dim);font-weight:500;}
+  .email-login .el-back{margin-top:6px;color:var(--ink2);font-weight:600;}
+  .email-login .el-error{margin-top:12px;padding:10px 12px;border-radius:12px;background:#fff1f0;color:#b42318;font-size:13px;line-height:1.5;word-break:keep-all;}
+  .email-login .el-note{margin-top:10px;font-size:11.5px;color:var(--dim);line-height:1.6;word-break:keep-all;}
 
   /* 대시보드 */
   #dashboard{position:relative;z-index:10;max-width:760px;margin:0 auto;padding:18px 18px 80px;}
@@ -413,8 +423,27 @@
     <div class="mini">GFIELD GIFTED EDUCATION</div>
     <h2 class="disp" id="login-title">생각하는 황소 대비 아카이브</h2>
     <div class="sub">11월 생각하는 황소 초등 선발 대비 · 재원생 전용<br>학생 이름으로 입장하세요</div>
-    <input type="text" id="name-input" placeholder="이름" autocomplete="off" onkeypress="if(event.key==='Enter')doLogin()">
-    <button class="enter" onclick="doLogin()">입장하기</button>
+    <div id="name-step">
+      <input type="text" id="name-input" placeholder="이름" autocomplete="off" onkeypress="if(event.key==='Enter')doLogin()">
+      <button class="enter" id="name-enter" onclick="doLogin()">입장하기</button>
+    </div>
+    <div id="email-login" class="email-login hidden">
+      <div class="el-who"><b id="el-who"></b> 학생 입장</div>
+      <div id="el-step-email">
+        <p class="el-guide">이 기기는 아직 승인되지 않았어요.<br>학부모 이메일로 인증번호를 받아 한 번만 승인해 주세요.</p>
+        <input type="email" id="el-email" placeholder="학부모 이메일" autocomplete="email" inputmode="email">
+        <button class="el-primary" id="el-send" type="button">인증번호 받기</button>
+      </div>
+      <div id="el-step-code" class="hidden">
+        <p class="el-guide"><b id="el-sent-to"></b>(으)로 보낸 인증번호를 입력해 주세요.<br>메일이 보이지 않으면 스팸함도 확인해 주세요.</p>
+        <input type="text" id="el-code" placeholder="인증번호" inputmode="numeric" autocomplete="one-time-code" maxlength="10">
+        <button class="el-primary" id="el-verify" type="button">인증하고 입장하기</button>
+        <div class="el-links"><button type="button" id="el-resend">인증번호 다시 받기</button><span>·</span><button type="button" id="el-change">이메일 바꾸기</button></div>
+      </div>
+      <div id="el-error" class="el-error hidden" role="alert"></div>
+      <button type="button" class="el-back" id="el-back">← 이름 다시 입력</button>
+      <div class="el-note">승인받은 기기에서는 이메일 인증 없이 바로 입장해요.<br>학생 1명당 기기 3대까지 승인돼요. 나가기 뒤에는 다시 인증하고,<br>브라우저 기록을 지우면 새 기기로 등록돼요.</div>
+    </div>
     <div class="hint">출석이 확인된 주차의 영상과 자료만 열립니다.<br>문의는 담당 선생님께 해주세요.</div>
   </div>
 </section>
@@ -527,7 +556,8 @@
 <script src="archive-info.js?v=20260825b"></script>
 <script src="bank/important-types.js?v=20260913a"></script>
 <script src="middle-access.js?v=20261006-withdrawn"></script>
-<script src="hs-auth.js?v=20260928-signature-private-1"></script>
+<script src="hs-auth.js?v=20261011-email-login-1"></script>
+<script src="hs-email-login.js?v=20261011-email-login-1"></script>
 <script src="student-result-hub.js?v=20261006-final8-report-linked"></script>
 <script>
   const D = window.GFIELD_DATA;
@@ -575,17 +605,44 @@
     }catch(e){}
   }
 
-  function doLogin(){
+  /* 학부모 이메일 인증: 인증한 같은 브라우저는 바로 입장, 아니면 이메일 인증 단계 */
+  let loginInFlight=false;
+  async function doLogin(opts){
+    if(loginInFlight) return;
+    const auto=!!(opts&&opts.auto);
     const name=document.getElementById('name-input').value.trim();
     if(!name){ toast('이름을 입력해주세요'); return; }
     if(name.toLowerCase()==='docssam'){ location.href='admin.html'; return; }
-    isDemo=(name.toLowerCase()==='demo');
-    if(!isDemo && !((D.students||[]).includes(name))){ toast('등록된 학생만 입장할 수 있어요. 이름을 정확히 입력해 주세요.'); return; }
-    if(!isDemo&&(D.studentTypes||{})[name]==='withdrawn'){
+    const demo=(name.toLowerCase()==='demo');
+    if(!demo && !((D.students||[]).includes(name))){ toast('등록된 학생만 입장할 수 있어요. 이름을 정확히 입력해 주세요.'); return; }
+    if(!demo&&(D.studentTypes||{})[name]==='withdrawn'){
       try{localStorage.removeItem('gfield_student');localStorage.removeItem(QUESTION_BANK_LAUNCH_KEY);sessionStorage.removeItem(QUESTION_BANK_HANDOFF_KEY);}catch(e){}
       if(window.GFIELD_AUTH)window.GFIELD_AUTH.clear('student');
       toast('접속이 정지된 회원입니다. 학원에 문의해 주세요.');return;
     }
+    const EL=window.GFIELD_EMAIL_LOGIN;
+    if(!demo&&EL&&EL.REQUIRED){
+      loginInFlight=true;
+      const enterBtn=document.getElementById('name-enter');
+      if(enterBtn) enterBtn.disabled=true;
+      try{
+        const verified=await EL.check(name);
+        if(!verified.ok){
+          if(verified.reason==='INACTIVE'){ toast('접속이 정지된 회원입니다. 학원에 문의해 주세요.'); return; }
+          if(auto) return;
+          try{ await EL.prompt(name); }
+          catch(e){ if(e&&e.code==='STUDENT_INACTIVE') toast('접속이 정지된 회원입니다. 학원에 문의해 주세요.'); return; }
+        }
+      }finally{
+        loginInFlight=false;
+        if(enterBtn) enterBtn.disabled=false;
+      }
+    }
+    enterAs(name,demo);
+  }
+
+  function enterAs(name,demo){
+    isDemo=demo;
     currentStudent=isDemo?'체험':name;
     reportUnlocked=false;
     const given=isDemo?'체험':givenName(name);
@@ -623,7 +680,8 @@
       if(url.origin!==location.origin) return '';
       const path=url.pathname.replace(/^\/+/, '').toLowerCase();
       const page=path.split('/').pop();
-      if(page!=='final.html'&&!/(?:^|\/)bank\/(?:index|catalog|personal-mock)\.html$/.test(path)) return '';
+      const STUDENT_PAGES=['final.html','mock.html','answer.html','last1-entry.html','last1-analysis.html','last1-result.html'];
+      if(STUDENT_PAGES.indexOf(page)<0&&!/(?:^|\/)bank\/(?:index|catalog|personal-mock)\.html$/.test(path)) return '';
       return url.pathname.replace(/^\//,'')+url.search+url.hash;
     }catch(e){ return ''; }
   }
@@ -631,7 +689,8 @@
     const keep=currentStudent&&!isDemo?currentStudent:'';
     currentStudent=null; isDemo=false; reportUnlocked=false;
     if(window.GFIELD_STUDENT_RESULT_HUB) window.GFIELD_STUDENT_RESULT_HUB.clear();
-    /* 로그인 정보는 유지 — 다음 방문 시 이름 입력 없이 바로 입장 */
+    /* 이름은 다음 입력 칸에 남기되, 이메일 인증 세션은 끝낸다(다음 입장 때 다시 인증). */
+    if(window.GFIELD_EMAIL_LOGIN&&window.GFIELD_EMAIL_LOGIN.REQUIRED) window.GFIELD_EMAIL_LOGIN.signOut();
     try{ sessionStorage.removeItem(QUESTION_BANK_HANDOFF_KEY); }catch(e){}
     try{ localStorage.removeItem(QUESTION_BANK_LAUNCH_KEY); }catch(e){}
     if(briefTimer){ clearInterval(briefTimer); briefTimer=null; }
@@ -1380,12 +1439,16 @@
   function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2200); }
 
   (function init(){ if(D&&D.meta){ document.getElementById('login-title').textContent=D.meta.title; document.getElementById('brand-sub').textContent=D.meta.title; document.title=`${D.meta.academy} | ${D.meta.title}`; }
-    /* 저장된 학생 이름이 있으면 자동 입장 (나가기 후 재방문 포함) */
+    /* 저장된 학생 이름이 있으면 자동 입장. 이메일 인증을 쓰면 이 브라우저의 유효한 인증 세션이 있을 때만 바로 입장. */
     try{
-      const saved=(localStorage.getItem('gfield_student')||'').trim();
+      let saved=(localStorage.getItem('gfield_student')||'').trim();
+      /* 다른 학생 이름이 붙은 직접 주소에서 왔으면 그 학생으로 입장을 시작한다(자동 입장하지 않음). */
+      let nextName='';
+      try{ const n=qrNextTarget(); if(n) nextName=(new URL(n,location.href).searchParams.get('name')||'').trim(); }catch(e){}
+      if(nextName&&nextName!==saved){ document.getElementById('name-input').value=nextName; saved=''; }
       if(saved && saved.toLowerCase()!=='docssam' && (D.students||[]).includes(saved)){
         document.getElementById('name-input').value=saved;
-        doLogin();
+        doLogin({auto:true});
       }
     }catch(e){}
   })();

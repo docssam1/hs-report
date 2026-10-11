@@ -274,6 +274,62 @@
     return response;
   }
 
+  /* 승인 기기 식별값: 이 브라우저에서 만든 임의 값(학생·이메일 정보 없음). 서버에는 해시만 저장된다.
+     로그아웃해도 유지되고, 브라우저 저장내용을 지우면 새 기기로 취급된다. */
+  var DEVICE_KEY='gfield_hs_device_v1';
+  function deviceToken(){
+    try{
+      var saved=localStorage.getItem(DEVICE_KEY);
+      if(saved&&/^[A-Za-z0-9_-]{32,64}$/.test(saved))return saved;
+      var bytes=crypto.getRandomValues(new Uint8Array(24));
+      var token=btoa(String.fromCharCode.apply(null,bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+      localStorage.setItem(DEVICE_KEY,token);
+      return localStorage.getItem(DEVICE_KEY)===token?token:'';
+    }catch(e){return ''}
+  }
+
+  /* 학부모 이메일 인증(hs-parent-auth). 학부모 세션은 서버에서 끝내고 학생 세션만 받는다. */
+  async function parentAuth(action,body){
+    var response=await fetch(SUPABASE_URL+'/functions/v1/hs-parent-auth',{
+      method:'POST',
+      headers:{apikey:PUBLISHABLE_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify(Object.assign({},body||{},{action:action}))
+    });
+    var result=null;try{result=await response.json()}catch(e){}
+    if(!response.ok){
+      var error=new Error((result&&result.error)||'REQUEST_FAILED');
+      error.status=response.status;error.code=result&&result.error;
+      error.retryAfter=Number(response.headers.get('Retry-After')||0);
+      throw error;
+    }
+    return result;
+  }
+
+  function requireDevice(){
+    var token=deviceToken();
+    if(!token){var e=new Error('STORAGE_UNAVAILABLE');e.code='STORAGE_UNAVAILABLE';throw e}
+    return token;
+  }
+
+  async function startEmailLogin(name,email){
+    return parentAuth('start',{name:normalizeName(name),email:String(email||'').trim(),deviceToken:requireDevice()});
+  }
+
+  async function verifyEmailLogin(name,email,code){
+    var result=await parentAuth('verify',{name:normalizeName(name),email:String(email||'').trim(),code:String(code||'').replace(/\s+/g,''),deviceToken:requireDevice()});
+    var saved=store(result&&result.session,result&&result.student||name,'student');
+    var verified=readStored('student');
+    if(!verified||verified.access_token!==saved.access_token){
+      var storageError=new Error('STORAGE_UNAVAILABLE');storageError.code='STORAGE_UNAVAILABLE';throw storageError;
+    }
+    return {student:result.student,firstLink:!!result.firstLink};
+  }
+
+  /* 같은 브라우저 재입장: 서버에서 활성 학생·이메일 연결을 확인하고 최근 접속을 남긴다. */
+  async function touchStudent(){
+    return functionCall('hs-parent-auth',{action:'touch',deviceToken:deviceToken()},'student');
+  }
+
   global.GFIELD_AUTH={
     SUPABASE_URL:SUPABASE_URL,
     PUBLISHABLE_KEY:PUBLISHABLE_KEY,
@@ -288,6 +344,9 @@
     functionCall:functionCall,
     rest:rest,
     clear:clear,
+    startEmailLogin:startEmailLogin,
+    verifyEmailLogin:verifyEmailLogin,
+    touchStudent:touchStudent,
     hasAdminDevice:function(){return !!readAdminDevice()},
     forgetAdminDevice:forgetAdminDevice
   };

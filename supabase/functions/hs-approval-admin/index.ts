@@ -152,17 +152,49 @@ async function issueOne(rawName: unknown, canSelfEnter: unknown) {
 }
 
 async function listStatus() {
-  const [{ data: accounts, error: accountError }, { data: results, error: resultError }] = await Promise.all([
+  const [
+    { data: accounts, error: accountError },
+    { data: results, error: resultError },
+    { data: links, error: linkError },
+    { data: devices, error: deviceError },
+  ] = await Promise.all([
     service.from("hs_accounts")
-      .select("student,role,can_self_enter,active,created_at,updated_at")
+      .select("user_id,student,role,can_self_enter,active,created_at,updated_at")
       .order("student"),
     service.from("mock_results").select("student,owner_id"),
+    service.from("hs_parent_links").select("student_user_id,parent_email,first_verified_at,last_seen_at"),
+    service.from("hs_student_devices").select("student_user_id,label,first_verified_at,last_seen_at"),
   ]);
   if (accountError) throw new Error(accountError.message);
   if (resultError) throw new Error(resultError.message);
   const resultStudents = Array.from(new Set((results || []).map((row) => row.student)));
   const unownedStudents = Array.from(new Set((results || []).filter((row) => !row.owner_id).map((row) => row.student)));
-  return { accounts: accounts || [], resultStudents, unownedStudents };
+  // 이메일 인증 기록: 표가 아직 없거나 읽기 실패해도 기존 목록은 그대로 돌려준다.
+  const studentByUser = new Map((accounts || []).map((row) => [row.user_id, row.student]));
+  const emailLinks = linkError ? [] : (links || []).map((row) => ({
+    student: studentByUser.get(row.student_user_id) || "",
+    email: row.parent_email,
+    firstVerifiedAt: row.first_verified_at,
+    lastSeenAt: row.last_seen_at,
+  })).filter((row) => row.student);
+  // 승인 기기(학생당 최대 3대): 기기 식별 해시·세션 값은 내보내지 않는다.
+  const deviceMap: Record<string, { label: string; firstVerifiedAt: string; lastSeenAt: string | null }[]> = {};
+  for (const row of deviceError ? [] : (devices || [])) {
+    const student = studentByUser.get(row.student_user_id);
+    if (!student) continue;
+    (deviceMap[student] ||= []).push({ label: row.label, firstVerifiedAt: row.first_verified_at, lastSeenAt: row.last_seen_at });
+  }
+  const studentDevices = Object.entries(deviceMap).map(([student, list]) => ({ student, devices: list }));
+  return {
+    studentDevices,
+    deviceLimit: 3,
+    devicesAvailable: !deviceError,
+    accounts: (accounts || []).map(({ user_id: _userId, ...row }) => row),
+    resultStudents,
+    unownedStudents,
+    emailLinks,
+    emailLinksAvailable: !linkError,
+  };
 }
 
 Deno.serve(async (req: Request) => {
@@ -213,6 +245,21 @@ Deno.serve(async (req: Request) => {
         if (authError) throw new Error(`계정 상태 변경 실패: ${authError.message}`);
       }
       return json(req, { account: data });
+    }
+    if (action === "resetDevices") {
+      // 기기 초기화: 승인 기기 목록과 현재 로그인 세션만 지운다. 이메일 연결·계정·성적·권한은 그대로.
+      const student = normalizeName(body.student);
+      if (!validStudentName(student)) return json(req, { error: "학생 이름을 확인해 주세요." }, 400);
+      const { data: account, error: accountError } = await service.from("hs_accounts")
+        .select("user_id,role").eq("student", student).maybeSingle();
+      if (accountError) throw new Error(accountError.message);
+      if (!account || account.role !== "student") return json(req, { error: "학생 계정을 찾지 못했습니다." }, 404);
+      const { data: removed, error: deleteError } = await service.from("hs_student_devices")
+        .delete().eq("student_user_id", account.user_id).select("id");
+      if (deleteError) throw new Error(`기기 초기화 실패: ${deleteError.message}`);
+      const { data: sessions, error: revokeError } = await service.rpc("hs_revoke_student_sessions", { p_student_user_id: account.user_id });
+      if (revokeError) throw new Error(`로그인 종료 실패: ${revokeError.message}`);
+      return json(req, { student, removedDevices: (removed || []).length, endedSessions: Number(sessions || 0) });
     }
     return json(req, { error: "지원하지 않는 작업입니다." }, 400);
   } catch (error) {

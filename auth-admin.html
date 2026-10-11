@@ -38,7 +38,7 @@
     </div>
     <div class="panel">
       <div class="bar"><h2>학생별 승인번호</h2><span class="lead">승인된 기기에서는 다시 번호를 입력하지 않아도 됩니다.</span></div>
-      <div class="table-wrap"><table><thead><tr><th>학생</th><th class="c">구분</th><th class="c">발급</th><th class="c">직접 입력</th><th class="c">사용</th><th class="c">관리</th></tr></thead><tbody id="rows"></tbody></table></div>
+      <div class="table-wrap"><table><thead><tr><th>학생</th><th class="c">구분</th><th class="c">발급</th><th class="c">직접 입력</th><th class="c">사용</th><th class="c">관리</th><th>인증 이메일</th><th class="c">이메일 인증</th><th class="c">최초 인증</th><th class="c">최근 접속</th></tr></thead><tbody id="rows"></tbody></table></div>
     </div>
   </section>
 </main>
@@ -48,13 +48,14 @@
 </div>
 
 <script src="data.js"></script>
-<script src="hs-auth.js?v=20260825c"></script>
+<script src="hs-auth.js?v=20261011-email-login-1"></script>
 <script>
 (function(){
   'use strict';
   var D=window.GFIELD_DATA||{students:[],studentTypes:{}};
   var A=window.GFIELD_AUTH;
   var accountMap={};
+  var emailMap={};
   var lastStatus=null;
   var enrollmentToken='';
   function $(id){return document.getElementById(id)}
@@ -84,6 +85,7 @@
     try{
        lastStatus=await A.functionCall('hs-approval-admin',{action:'list'},'admin');
       accountMap={};(lastStatus.accounts||[]).forEach(function(row){accountMap[row.student]=row});
+      emailMap={};(lastStatus.emailLinks||[]).forEach(function(row){emailMap[row.student]=row});
       render();$('status').textContent='최신 상태로 확인했습니다.';
      }catch(error){$('status').textContent=error.message||'승인 현황을 불러오지 못했습니다.';if(error.status===401){await A.signOut('admin');showLogin()}}
   }
@@ -97,11 +99,26 @@
       return '<tr><td><b>'+esc(name)+'</b></td><td class="c">'+(withdrawn(name)?'<span class="badge wait">퇴원생</span>':isOn?'<span class="badge online">온라인</span>':'<span class="badge">재원생</span>')+'</td><td class="c">'+issuedBadge+'</td>'+
         '<td class="c"><input class="switch" type="checkbox" data-self="'+esc(name)+'" '+((account?account.can_self_enter:isOn)?'checked':'')+' '+(!account?'disabled':'')+'></td>'+
         '<td class="c"><input class="switch" type="checkbox" data-active="'+esc(name)+'" '+(!withdrawn(name)&&(!account||account.active)?'checked':'')+' '+(!account||withdrawn(name)?'disabled':'')+'></td>'+
-        '<td class="c"><button class="sm '+(account?'alt':'')+'" data-issue="'+esc(name)+'" '+(withdrawn(name)?'disabled title="회원 관리에서 재원생으로 복귀한 뒤 발급하세요."':'')+'>'+(account?'재발급':'발급')+'</button></td></tr>';
+        '<td class="c"><button class="sm '+(account?'alt':'')+'" data-issue="'+esc(name)+'" '+(withdrawn(name)?'disabled title="회원 관리에서 재원생으로 복귀한 뒤 발급하세요."':'')+'>'+(account?'재발급':'발급')+'</button></td>'+
+        emailCells(name)+'</tr>';
     }).join('');
     document.querySelectorAll('[data-issue]').forEach(function(button){button.onclick=function(){issue(button.dataset.issue,button)}});
     document.querySelectorAll('[data-self]').forEach(function(input){input.onchange=function(){setAccess(input.dataset.self,{canSelfEnter:input.checked},input)}});
     document.querySelectorAll('[data-active]').forEach(function(input){input.onchange=function(){setAccess(input.dataset.active,{active:input.checked},input)}});
+  }
+
+  function when(value){
+    if(!value)return '-';
+    var d=new Date(value);if(isNaN(d))return '-';
+    function p(n){return String(n).padStart(2,'0')}
+    return (d.getMonth()+1)+'/'+d.getDate()+' '+p(d.getHours())+':'+p(d.getMinutes());
+  }
+  /* 학부모 이메일 인증 기록(읽기 전용). 인증번호·토큰은 서버에도 저장하지 않는다. */
+  function emailCells(name){
+    if(lastStatus&&lastStatus.emailLinksAvailable===false)return '<td colspan="4" class="lead">인증 기록을 불러오지 못했습니다.</td>';
+    var link=emailMap[name];
+    if(!link)return '<td>-</td><td class="c"><span class="badge wait">미인증</span></td><td class="c">-</td><td class="c">-</td>';
+    return '<td>'+esc(link.email)+'</td><td class="c"><span class="badge ok">인증됨</span></td><td class="c">'+esc(when(link.firstVerifiedAt))+'</td><td class="c">'+esc(when(link.lastSeenAt))+'</td>';
   }
 
   async function issue(name,button){
