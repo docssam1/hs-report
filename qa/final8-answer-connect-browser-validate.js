@@ -2,6 +2,7 @@
 // Synthetic student; all external data calls are mocked. No production writes.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),vm=require('node:vm');
+require('./email-login-test-stub'); // QA 전용: 학부모 이메일 인증 단계를 인증된 브라우저로 취급
 const {chromium}=require(process.env.GFIELD_QA_PLAYWRIGHT||'playwright');
 const root=path.resolve(__dirname,'..'),student='답안연결검수학생',denied='미승인검수학생';
 const artifactDir=process.env.GFIELD_QA_ARTIFACT_DIR||'';

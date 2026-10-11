@@ -3,6 +3,7 @@
 // Synthetic pupils only. Every external request is intercepted.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+require('./email-login-test-stub'); // QA 전용: 학부모 이메일 인증 단계를 인증된 브라우저로 취급
 const {chromium}=require('playwright');
 const core=require('../supabase/functions/hs-final-population/population-core.js');
 const root=path.resolve(__dirname,'..'),student='학부모화면검수학생';

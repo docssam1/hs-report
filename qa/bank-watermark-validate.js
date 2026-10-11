@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const http = require('node:http');
+require('./email-login-test-stub'); // QA 전용: 학부모 이메일 인증 단계를 인증된 브라우저로 취급
 const {chromium} = require('playwright');
 const ROOT = path.resolve(__dirname, '..');
 const output = process.env.GFIELD_WATERMARK_REVIEW_DIR;

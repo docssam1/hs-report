@@ -47,10 +47,10 @@
   .login-box input{width:100%;padding:15px;border:1.5px solid var(--line2);border-radius:14px;font-size:16px;text-align:center;margin-bottom:14px;outline:none;background:var(--soft);color:var(--ink);}
   .login-box input::placeholder{color:var(--dim);}
   .login-box input:focus{border-color:var(--orange);background:#fff;}
-  .login-box .enter{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 22px rgba(249,115,22,.28);}
-  .login-box .enter:active{transform:scale(.97);}
+  .login-box .enter,.login-box .el-primary{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(135deg,#fb923c,var(--orange-d));color:#fff;font-size:16px;font-weight:800;box-shadow:0 10px 22px rgba(249,115,22,.28);}
+  .login-box .enter:active,.login-box .el-primary:active{transform:scale(.97);}
   .login-box .hint{margin-top:18px;font-size:12px;color:var(--dim);line-height:1.6;}
-  .login-box .enter:disabled{opacity:.6;}
+  .login-box .enter:disabled,.login-box .el-primary:disabled{opacity:.6;}
   .email-login .el-who{font-size:15px;color:var(--ink);margin-bottom:10px;}
   .email-login .el-guide{font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:14px;word-break:keep-all;}
   .email-login .el-guide b{color:var(--ink);word-break:break-all;}
@@ -432,12 +432,12 @@
       <div id="el-step-email">
         <p class="el-guide">처음 입장하는 기기에서는 학부모 이메일 인증이 필요해요.<br>입력한 이메일로 인증번호를 보내 드려요.</p>
         <input type="email" id="el-email" placeholder="학부모 이메일" autocomplete="email" inputmode="email">
-        <button class="enter" id="el-send" type="button">인증번호 받기</button>
+        <button class="el-primary" id="el-send" type="button">인증번호 받기</button>
       </div>
       <div id="el-step-code" class="hidden">
         <p class="el-guide"><b id="el-sent-to"></b>(으)로 보낸 인증번호를 입력해 주세요.<br>메일이 보이지 않으면 스팸함도 확인해 주세요.</p>
         <input type="text" id="el-code" placeholder="인증번호" inputmode="numeric" autocomplete="one-time-code" maxlength="10">
-        <button class="enter" id="el-verify" type="button">인증하고 입장하기</button>
+        <button class="el-primary" id="el-verify" type="button">인증하고 입장하기</button>
         <div class="el-links"><button type="button" id="el-resend">인증번호 다시 받기</button><span>·</span><button type="button" id="el-change">이메일 바꾸기</button></div>
       </div>
       <div id="el-error" class="el-error hidden" role="alert"></div>

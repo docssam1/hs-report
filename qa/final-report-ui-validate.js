@@ -1,4 +1,5 @@
 'use strict';
+require('./email-login-test-stub'); // QA 전용: 학부모 이메일 인증 단계를 인증된 브라우저로 취급
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict'),{chromium}=require('playwright');
 const core=require('../supabase/functions/hs-final-population/population-core.js'),root=path.resolve(__dirname,'..');
 const baselinePath=process.env.GFIELD_QA_FINAL_BASELINE_PATH||path.join(root,'supabase/functions/hs-final-population/baseline.private.json');
