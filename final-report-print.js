@@ -416,6 +416,9 @@
       '#gfield-report-print-prelude>.report-docssam-note>h2{break-after:avoid!important;page-break-after:avoid!important}'+
       '#gfield-report-print-prelude>.report-docssam-note>.docssam-saved-comment{orphans:2;widows:2}'+
       '#gfield-report-print-prelude.gfield-summary-print .personal-study-plan{break-inside:avoid!important;page-break-inside:avoid!important}'+
+      '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="2"] #report-summary{break-before:page!important;page-break-before:always!important}'+
+      '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="2"] #report-plan{break-inside:auto!important;page-break-inside:auto!important}'+
+      '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="2"]>.report-analysis-section{break-before:page!important;page-break-before:always!important;break-inside:auto!important;page-break-inside:auto!important}'+
       '#gfield-report-print-prelude.gfield-summary-print .report-materials-section,#gfield-report-print-prelude.gfield-summary-print .report-curriculum-section{break-before:auto!important;page-break-before:auto!important}'+
       '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="1"] #report-items,#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="1"] .report-wrong-summary tbody{break-inside:auto!important;page-break-inside:auto!important}'+
       '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="1"] .report-wrong-summary tr{break-inside:avoid!important;page-break-inside:avoid!important}'+

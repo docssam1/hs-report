@@ -534,7 +534,8 @@
       link.assetKind = 'raster';
       link.sourceAudit.visualRequired = true;
     }
-    var fixedRound=/^final([23478])-q/.exec(generatorId)||/^last1-q/.exec(generatorId)&&['x','last1'];
+    var isLast2=/^last2-q/.test(generatorId);
+    var fixedRound=/^final([23478])-q/.exec(generatorId)||/^last[12]-q/.exec(generatorId)&&['x','last'];
     var isLast1=/^last1-q/.exec(generatorId);
     link.qaEvidence = {
       suite: isLast1?'qa/last1-variant-review-validate.js':(fixedRound?(fixedRound[1]==='3'?'qa/final3-fixed90-validate.js':(fixedRound[1]==='4'?'qa/final4-fixed90-validate.js':(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':(fixedRound[1]==='8'?'qa/final8-variant-review-validate.js':'qa/final2-fixed90-math-validate.js')))):'qa/bank-final1-generators-validate.js'),
@@ -543,6 +544,7 @@
       seedsPerLevel: fixedRound ? 0 : 1000,
       date: isLast1?'2026-10-05':(fixedRound?(fixedRound[1]==='3'?'2026-09-20':(fixedRound[1]==='4'?'2026-09-21':(fixedRound[1]==='7'?'2026-09-18':(fixedRound[1]==='8'?'2026-10-05':'2026-09-12')))):'2026-09-05')
     };
+    if(isLast2){link.qaEvidence.suite='qa/last2-reviewed-data-validate.js';link.qaEvidence.date='2026-10-11';}
     return link;
   }
 
@@ -705,6 +707,13 @@
         false
       );
     })(_l1no);
+  }
+
+  /* 최종 2회: 자료실 원문 검수 및 사용자 유사문제 전체 승인(2026-10-11). */
+  for(var _l2no=1;_l2no<=30;_l2no++){
+    SOURCE_ITEM_GENERATOR_LINKS[['last',2,_l2no].join('|')]=sourceItemReviewGeneratorLink(
+      'last2-q'+String(_l2no).padStart(2,'0'),'bank/bank-fixed.js',
+      'Last 2 user-approved stored variants for question '+_l2no,'last:2:'+_l2no,false);
   }
 
   /* 파이널 3회는 사용자 눈검수까지 통과한 고정 문항 3개씩을 연결한다. */

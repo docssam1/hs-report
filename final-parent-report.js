@@ -185,7 +185,7 @@
     if(vm.standalone)return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison is-single">'+current+'</div></section>';
     if(vm.overallTrend){
       var overall=vm.overallTrend;
-      var total='<article class="parent-summary-column cumulative"><p>'+escapeHTML(overall.label||'파이널 1~4회 · 최종 1~4회 누적')+'</p>'+metric('응시 회차',overall.rows.length,overall.roundCountLabel||'/8회')+metric('원점수 평균',overall.scoreAverage,'점')+metric('예상 석차 백분율',overall.percentileAverage,'%')+metric('누적 예상 등급',overall.cumulativeGrade,'')+'</article>';
+      var total='<article class="parent-summary-column cumulative"><p>'+escapeHTML(overall.label||'파이널 1~4회 · 최종 1~4회 누적')+'</p>'+metric('응시 회차',overall.summaryCount==null?overall.rows.length:overall.summaryCount,overall.roundCountLabel||'/8회')+metric('원점수 평균',overall.scoreAverage,'점')+metric('예상 석차 백분율',overall.percentileAverage,'%')+metric('누적 예상 등급',overall.cumulativeGrade,'')+'</article>';
       return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison">'+current+total+'</div><p class="parent-report-note">누적 석차는 백분율이 확인된 '+overall.rankedCount+'회만 평균합니다. 특강·재응시는 제외합니다.</p>'+(vm.isPractice?'<p class="parent-report-note">이번 연습 결과는 누적에 포함하지 않고 최초 응시 성적을 유지합니다.</p>':'')+'</section>';
     }
     if(vm.roundNum<2)return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison is-single">'+current+'</div><p class="parent-report-note">누적 비교는 파이널 2회부터 표시됩니다.</p></section>';

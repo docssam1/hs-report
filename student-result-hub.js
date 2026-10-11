@@ -185,6 +185,11 @@
     if(!api||typeof api.model!=='function') return null;
     return api.model(rows.map(function(row){return {key:row.key,score:row.score,percentile:row.percentile,grade:row.grade};}),model&&model.cumulative&&model.cumulative.bands);
   }
+  function cumulativeCaption(cumulative){
+    if(!cumulative||!cumulative.rows.length)return '';
+    if(cumulative.lastRound===2)return '최종 1~2회 누적 '+cumulative.judgeCount+'/2회';
+    return '파이널·최종 누적 '+cumulative.rows.length+'/8회';
+  }
   function fetchRows(options,signal){
     var path='mock_results?select=student,round,ox,score,wrong,source,updated_at&student=eq.'+encodeURIComponent(options.student);
     var url=options.supabaseUrl+'/rest/v1/'+path;
@@ -217,7 +222,7 @@
       return '<tr><td class="srh-exam-cell" data-label="시험"><span class="srh-exam-name">'+esc(row.title)+'</span></td><td data-label="점수"><span class="srh-score">'+row.score.toFixed(1)+'점</span></td><td data-label="석차 백분율">'+rank+'</td><td data-label="예상 등급">'+level+'</td><td class="srh-action-col" data-label="보기">'+action+'</td></tr>';
     }).join('');
     var cumulativeHtml=cumulative&&cumulative.rows.length
-      ?'<p class="srh-cumulative" data-final-last-count="'+cumulative.rows.length+'"><b>파이널·최종 누적 '+cumulative.rows.length+'/8회</b> · 원점수 평균 '+cumulative.scoreAverage.toFixed(1)+'점 · 예상 석차 백분율 '+(cumulative.percentileAverage===null?'자료 없음':cumulative.percentileAverage.toFixed(1)+'%')+' · 예상 등급 '+esc(cumulative.cumulativeGrade||'자료 없음')+'</p><p>파이널 1~4회와 최종 1~4회의 공식 첫 기록만 반영합니다. 백분율 자료 '+cumulative.rankedCount+'/'+cumulative.rows.length+'회, 없는 기록은 0점으로 계산하지 않습니다.</p>'
+      ?'<p class="srh-cumulative" data-final-last-count="'+cumulative.rows.length+'"><b>'+esc(cumulativeCaption(cumulative))+'</b> · 원점수 평균 '+cumulative.scoreAverage.toFixed(1)+'점 · 예상 석차 백분율 '+(cumulative.percentileAverage===null?'자료 없음':cumulative.percentileAverage.toFixed(1)+'%')+' · 예상 등급 '+esc(cumulative.cumulativeGrade||'자료 없음')+'</p><p>'+(cumulative.lastRound===2?'최종 1~2회의 공식 첫 기록으로 누적을 판정하며, 전체 응시 이력은 아래 표에 표시합니다.':'파이널 1~4회와 최종 1~4회의 공식 첫 기록만 반영합니다.')+' 백분율 자료 '+cumulative.rankedCount+'/'+(cumulative.lastRound===2?cumulative.judgeCount:cumulative.rows.length)+'회, 없는 기록은 0점으로 계산하지 않습니다.</p>'
       :'';
     return '<div class="srh-panel-head"><div><h2>응시한 시험</h2><p>석차 백분율은 작을수록 상위입니다.</p>'+cumulativeHtml+'<p><a class="srh-detail" href="bank/personal-mock.html?from=archive&name='+encodeURIComponent(student)+'">모의고사 생성기 · 10·20·30문항 만들기</a></p></div><span class="srh-count">'+rows.length+'회</span></div>'+
       '<div class="srh-table-wrap"><table class="srh-table"><thead><tr><th class="srh-exam-col">시험</th><th class="srh-score-col">점수</th><th class="srh-rank-col">석차 백분율</th><th class="srh-level-col">예상 등급</th><th class="srh-action-col">학습하기</th></tr></thead><tbody>'+body+'</tbody></table></div>';
@@ -237,7 +242,7 @@
       var cumulative=cumulativeModel(described);
       panel=container.querySelector('.srh-panel');
       if(!described.length){container.querySelector('.srh-summary').textContent='등록된 응시 성적이 없습니다.';panel.innerHTML=stateHtml('아직 등록된 응시 성적이 없습니다.','empty');return;}
-      container.querySelector('.srh-summary').textContent='응시 '+described.length+'회'+(cumulative&&cumulative.rows.length?' · 파이널·최종 누적 '+cumulative.rows.length+'/8회':'')+' · 시험별 진단과 복습을 한곳에서 봅니다.';
+      container.querySelector('.srh-summary').textContent='응시 '+described.length+'회'+(cumulative&&cumulative.rows.length?' · '+cumulativeCaption(cumulative):'')+' · 시험별 진단과 복습을 한곳에서 봅니다.';
       panel.innerHTML=tableHtml(described,options.student,cumulative);
     }).catch(function(error){
       if(revision!==state.revision||error&&error.name==='AbortError'&&state.revision!==revision) return;

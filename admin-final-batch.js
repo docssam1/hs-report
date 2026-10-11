@@ -18,7 +18,7 @@
   function examLabel(task){return series(task)+' '+task.round+'회';}
   function fileName(task){return safeName(task.student)+'_'+series(task)+'_'+task.round+'회_진단과복습.pdf';}
   function detailsAvailable(task){return task.set!=='last'||[1,2].includes(Number(task.round));}
-  function similarAvailable(task){return task.set!=='last'||Number(task.round)===1;}
+  function similarAvailable(task){return task.set!=='last'||[1,2].includes(Number(task.round));}
   function roundChecks(set){return '<div class="final-batch-series-title">'+(set==='last'?'최종':'파이널')+' 1~4회</div>'+[1,2,3,4].map(function(round){var key=set==='last'?'last'+round:round;return '<label class="final-batch-check"><input type="checkbox" data-exam-set="'+set+'" value="'+key+'" checked>'+examLabel({set:set,round:round})+'<small data-exam-count="'+key+'"></small></label>';}).join('');}
   function uniqueStudents(rows){return Array.from(new Set((rows||[]).map(function(row){return row.student;}))).sort(function(a,b){return a.localeCompare(b,'ko');});}
   function byStudent(rows,name){return rows.filter(function(row){return row.student===name;});}
@@ -275,7 +275,7 @@
         status((index+1)+'/'+total+' · '+task.student+' · 유사문제를 준비하고 있습니다.');
         bankFrame=await loadFrame(bankUrl,'유사문제');
         var bankDoc=bankFrame.contentDocument;
-        var requireReviewed=/(?:\?|&)bank=(?:final[1234]|last1)(?:&|$)/.test(bankUrl);
+        var requireReviewed=/(?:\?|&)bank=(?:final[1234]|last[12])(?:&|$)/.test(bankUrl);
         var bankPages=await waitFor(function(){var pages=reviewedBankPages(bankDoc,requireReviewed,true);return pages.length&&!(bankDoc.getElementById('btnPrint')||{}).disabled?pages:null;},45000,'유사문제와 풀이를 준비하지 못했습니다.');
         await waitImages(bankDoc.getElementById('f1Pages')||bankDoc.getElementById('stage'));
         for(var b=0;b<bankPages.length;b++){status((index+1)+'/'+total+' · '+task.student+' · 유사문제 '+(b+1)+'/'+bankPages.length+'쪽');await addPage(pdf,bankPages[b],pageNo++===0);}

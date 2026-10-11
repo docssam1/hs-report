@@ -1,5 +1,22 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-12 최종 2회 프런트엔드 배포 준비
+
+- 사용자 전체 승인 90문항 및 기존 진단·추천·QR·문제은행·인쇄/ZIP 연결만 최신 main `bf6f492` 위에 통합한다. 최신 학생 명단·회원 상태·자료실 데이터는 수정하지 않는다. 원문 6번은 108개 그대로다.
+- 서버 함수와 Last2~4 코멘트 DB 제약 확장은 이 프런트엔드 배포에 포함하지 않는다. 별도 미적용 작업은 `8981d63`과 원래 작업본에 보존한다. 실제 서버의 비공개 기준 파일 4개를 빠뜨린 함수 배포를 하지 않는다.
+- 기존 수학 승인·독립 검산·로컬 PDF/ZIP 증거를 재사용하고, 통합 후 영향 검사 및 배포 후 공개 파일·PC/모바일·추천 문제·실제 출력만 확인한다. `qa/last2-approved-integration-validate.cjs`는 `GFIELD_LAST2_QA_BASE`와 별도 결과 경로로 공개 코드도 읽기 전용 검사할 수 있다.
+- 원격 메인·Pages·공개 확인 영수증은 E:\Codex\hs-admin-unify-20261004\last2-deployment-20261012.md에 별도로 기록한다. 이 문단 자체는 배포 성공 증거가 아니다.
+
+## 2026-10-12 최종 2회 유사문제 전체 승인 연결 (로컬, 미배포)
+
+- 사용자 확인: 원문 정답은 자료실 검수본이 공식 기준이며 6번은 **108개**. 유사문제 90개 전체 확정. 이전 보류 문구는 승인 이전 이력이며 현재 미승인 장벽으로 재사용하지 않는다. 원문 정답·상세 풀이·점수/컷/분포·성적 기록은 변경하지 않는다.
+- `bank/data/last2-reviewed.json` 90문항을 verified, availableSourceNos 1~30으로 등록. 지문·그림·변형 답·풀이를 그대로 가져오고 비공개 원문 비교와 내부 검산 자료는 공개 JSON에서 제외. 개인 검수 원본과 계산 증거는 `.private-work/last2-variants-20261011`에 보존한다.
+- 기존 BANK_FIXED/어댑터/학습지/개인 모의고사 생성기를 Last2에 연결. 진단 추천 3유형→유사문제 9개와 답안·풀이→요약 인쇄/일괄 PDF/ZIP/QR은 동일 원문 번호와 last2 ID를 사용. Last3/4 유사문제는 여전히 공개 연결하지 않는다.
+- 정규 최종 자료실 승인 또는 기존 `oct-12` 출석으로 Last2 문제은행 접근. Last1 출석 `oct-5`만으로 Last2를 열지 않는다. 실 학생 권한·DB·메일·인증 방식·teacher 주소 인증은 수정하지 않는다.
+- 출력 검수에서 6문항 배치의 20/28/29번 긴 지문·그림 잘림과 15번 작은 암호 그림을 확인해 해당 Last2 문항만 큰 그림 별도 쪽으로 처리. 문항 내용·원본 그림은 그대로. 다른 시험 레이아웃을 일괄 변경하지 않는다.
+- 근거: `qa/last2-reviewed-data-validate.js`, `qa/last2-adapter-pending-validate.js`, `qa/last2-approved-integration-validate.cjs`, `qa/last2-parent-report-browser-validate.js`, `qa/admin-last14-batch-browser-validate.js`. 실제 화면/PDF는 `E:\Codex\hs-admin-unify-20261004\qa\last2-approved`.
+- 로컬 작업이며 메인·공개 배포·서버/DB 적용 완료가 아니다. 사용자 배포 지시 시 최신 main과 겹치는 변경을 대조하고 실제 배포까지 별도 확인한다. 기존 서버 함수의 비공개 기준 파일 4개를 누락한 채 배포하지 않는다.
+
 ## 2026-10-11 중급 7회 승인·이메일 인증 배포본 통합 (로컬 검증 완료, 미배포)
 
 - 이메일 인증·승인 기기 3대 제한 배포 main `f390b9a4c9d16f06d88954e5096cdd5a8f057a3e`에서 분리했다. `hs-report-docssam-columns-preserve-20261010`의 미커밋 원본은 보존하고 중급 7회 변경만 이식했다. 옛 `admin.html` 전체 복사로 이메일 인증 카드·스크립트·학생 목록 연결을 되돌리지 않는다.
@@ -736,3 +753,44 @@ Set-Location 'C:\Users\user\OneDrive\그림\Desktop\hs-report'
 - 새 채점·진단 도구를 만들지 않았다. 기존 `final.html?round=8&go=report&attempt=N&entry=teacher`로 연결하며 공식 1차와 연습 2차를 구분한다. 성적/OX/권한/누적/추천 기준과 검수 문제 데이터는 변경하지 않는다.
 - `qa/admin-final8-report-link-browser-validate.js`는 합성 관리자·학생으로 실제 버튼 → 8회 성적표 → 오답 10유형 → `bank=final8&source=final|8` 학습지 준비 완료까지 검증한다. 외부 학생 데이터 쓰기 0건. 6회 준비 중 상태와 기존 결과 무결성·회차 권한 검사도 유지한다.
 - 기존 `qa/final-score-trend-validate.js`는 현재 승인된 ‘최종 2회부터 최종만 판정’과 달리 파이널을 합친 평균 35를 기대해 실패한다(실제 30). 해당 검사와 모듈은 이번 변경 전후 동일하며, 이 오래된 기대값 때문에 승인된 누적 규칙을 되돌리지 않는다.
+
+## 2026-10-11 최종 2회 공용 진단 연결·90개 비공개 검수본
+
+기준 main `9516a0efbcf268c8079cb22d2c5fbc3cfc5e8069`, 작업본 `E:/Codex/worktrees/hs-report-last2-diagnostic-20261011`, 브랜치 `codex/last2-diagnostic-20261011`. 로컬 구현/검수 완료 범위다. 운영 함수/DB 반영·main 병합·공개 배포·사람 공개 승인은 하지 않았다. 로컬 커밋 SHA는 이 작업 후속 영수증 `E:/Codex/hs-admin-unify-20261004/last2-local-result-20261011.md`에서 확인한다.
+
+### 기존 기능 연결 (새 엔진 없음)
+
+- `final.html:613,1596,3026`: 최종 2회도 기존 diagnostic-comment·report-state 호출. 하나의 실제 추천 목록을 코멘트/계획/표에 전달한다. 최종1 특별 추천 및 시그니처/8회 2·3점대 정책을 최종2에 복사하지 않았다.
+- `final.html:3170,3181`, `final-parent-report.js:188`: 최종1~2 공식 최초 기록만 누적 판정, `lastCumBands(2)`와 실제 judgeCount 사용. 전체 추이는 파이널1~4 + 최종1~2 이력 유지, 이후 회차/재응시 제외. 파이널 snapshot을 최종으로 복사하지 않음.
+- `student-result-hub.js:188,225,245`, `index.html`: 같은 판정 범위/회차수로 학생 메인 누적 제목/안내 및 캐시만 보완.
+- `final-report-print.js:418`: 최종2 요약 구획에만 페이지 나눔 보완. 실제 0점 PDF에서 DOM에는 있던 강점/보완 구획이 누락되던 문제를 수정했다.
+- `final-summary-practice-print.js`: 최종1/2 정확한 `lastN`·`last|N` 출처 계약으로 일반화. **최종2 학생 로더/유사문제 버튼은 승인 전 비활성 유지**. 최종1 또는 파이널 대체 없음.
+- `supabase/functions/hs-final-population/report-service.js:22`, `20261011103304_allow_last2_4_report_comments.sql`: last2~4 코멘트 허용만 준비; 기존 final8 허용 보존·로컬 함수 누락 보완. 인증/활성/소유권/교사 편집/학생 읽기/CAS 규칙 불변. 실제 운영은 확인 당시 함수v7·DB 모두 last1까지만 허용하므로 **온라인 last2 코멘트 완성/배포 완료로 보고하지 않는다**.
+
+### 비공개 문항과 승인 경계
+
+- 사용자 허용은 Q5·6·15·22·24·29의 일부 조건/구조 변경뿐이며 공개 승인 아님. 30원문×3=90개, 계산2방법 일치90/90, 9축 난도 비교90/90. 학생 실측 난도 승인 없음.
+- 교사용 한 문항/쪽 HTML: `E:/Codex/visualizations/2026/10/11/last2-review/last2-claude-variants-20261011.html`.
+- 교사용 실제 A4 PDF90쪽: `E:/Codex/hs-admin-unify-20261004/qa/last2-variants-review-a4.pdf`.
+- HTML의 JSON script에서 스크립트로 추출한 `bank/data/last2-reviewed.json`: 90개 모두 `pending-human-review`, `freezePolicy.availableSourceNos=[]`. **미추적 상태로 보존, 승인 전 stage/push/배포 금지**. ignored private CJS/근거/재생성 자료도 정리·삭제 금지.
+- `bank/adapters/last2-reviewed-adapter.js`와 `bank/index.html`에 잠긴 어댑터만 등록. 같은 원문 번호·타입·출처·서로 다른v1/v2/v3·3개 전부verified·허용 원문 목록의 교집합만 반환하며, caller/반환 데이터 변경으로 자동 승인할 수 없게 복제한다. 현재 실제 선택 유형/출처/생성기 모두0.
+- 승인 후에만 기존 `bank-fixed.js`, `final1-worksheet.js`, `personal-mock.js`, `bank-access.js` 및 학생 인쇄 로더에 정확한 last2 경로/권한/제외 계약을 연결. 현재 시점에는 아직 2단 학생 문제지/연속 답안/홀수 답안 시작/이미 푼 문제 제외의 승인 후 계약을 완료했다고 주장하지 않는다.
+
+### 원문/영상/계산 확인 필요 (보호 원본 불변)
+
+- Q6: 실제 선분망=126, 보호 상세=108. 저장 자막08:18.879~08:23.990은90+18이라는 설명(108은 추론), 실제 숫자108·126 발화는 확인 못함. 원문/108은 그대로 두고 새 선분망98/112/81만 독립 검산.
+- Q15: 실제 둘째예시=3, 인쇄=6. 자막17:18.600~17:44.909는 목표3+4+5−8=4만 설명하며 둘째예시6/3은 확인 필요. 보호 답4 유지, 새 예시 값7·3과 목표7/2/8은 실제 새 격자와 일치.
+- Q30: 원문/자막은‘차에 타기 전’, 자막46:15~46:25는50÷4=12.5 계산. 동시 경계 포함/미만·이하는 명시 안됨. 보호12.5 유지, 새 후보는12.5/17.5/12초 **미만**의 조건 답. 이 응답 형식도 사람 승인 대기.
+- 저장 자막 대조와 실제 음성/영상 프레임 재검수는 구분한다. 모든 영상 재검수 완료로 주장하지 않는다. 문항별 원문·변형·답·검산·9축 근거는 `.private-work/last2-variants-20261011/front-evidence.md`, `back-evidence.md` 및 검수HTML의 각 문항 JSON에 기록.
+- `last2-detailed-data.js` 30문항 재작성 없음, Q12=11,064·Q29=102 유지. 보호41개 파일 HEAD 동일; 기존 last1/final8 검수 자료, 성적/컷/백분율/권한/이메일/칼럼 불변.
+
+### 검증·증거·다음 단계
+
+- `E:/Codex/hs-admin-unify-20261004/last2-compat.md`: 코드 전 호환표와 최종 상태, 운영 함수/DB 차이, 원문/자막/계산 차이표.
+- `qa/last2-parent-report-browser-validate.js`: 합성 학생 PC390/1280·최종2만/1~2/파이널 포함/미래/재응시/0·100/추천0~3·3곳 누적 일치. 운영 쓰기0.
+- 실제 요약PDF0점5쪽/100점3쪽/혼합5쪽, 총13쪽 PNG 눈검수. 성적요약/이번주학습/강점보완/오답요약 모두 실제PDF 포함, blank0. 최종영수증 `E:/Codex/hs-admin-unify-20261004/qa/last2-parent-report-print-results.json`(초기 브라우저 영수증의 이전 실패를 이 후속 결과로 해결).
+- 검수HTML PC/390 가로넘침·겹침·잘림0,45그림 정상, 실제90쪽 PDF의 각 문항 내용/풀이/footer 누락0. `last2-variants-browser-results.json`, `last2-variants-visual-review.md`와90쪽 전수 축소판/위험문항 개별PNG가 위 qa폴더에 있음.
+- pending어댑터/data 검증, 코멘트 소유권·CAS·지연응답 격리, 최종2상세, 부모모델/화면/공통인쇄/요약인쇄, score-trend, 최종1우선추천/상세/유사문제, final8유사문제/Q20, 시그니처요약, bank-access/source-adapter/registry 회귀 통과.
+- `qa/bank-registry-validate.js`의870 기대는 기준HEAD 자체가900원문을 갖고 있어 실패한 오래된 검사였다. 검사 기대만 현재900/배점360·300·240으로 보정. 새 pending90을 원문catalog로 추가하거나 기존분류를 바꾼 것이 아니다.
+- 미공개 후보 JSON을 사용하는 `qa/last2-reviewed-data-validate.js`와 외부 검수HTML을 쓰는 `qa/last2-variant-review-browser-validate.js`는 현재 비공개 결과와 함께 보존. 공개 코드만 있는 checkout에서 해당 private QA까지 통과했다고 주장하지 않는다.
+- 다음은 원장 눈검수/확인사항 결정 → 승인된 문항만 연결 → 정확한 학생 2단 인쇄/권한/제외 검증 → 별도 서버 반영/배포 요청. 서버 배포 때 운영 private baseline4개를 확보·그대로 보존해야 하며 현재 로컬에 없다는 이유로 빈 baseline/옛 함수로 덮어쓰지 않는다. 최종3·4회로 넘어가지 않음.

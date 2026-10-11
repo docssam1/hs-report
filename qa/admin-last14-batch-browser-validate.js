@@ -36,6 +36,7 @@ const server=http.createServer((req,res)=>{
       if(url.hostname==='fgahqumaldheqettmvqg.supabase.co'){
         // This pre-existing POST is a read-only percentile lookup, not a result write.
         if(url.pathname==='/functions/v1/hs-final-population')return route.fulfill({status:503,contentType:'application/json',body:'{}'});
+        if(url.pathname==='/functions/v1/hs-approval-admin'&&req.postDataJSON()?.action==='list')return route.fulfill({json:{accounts:[],parentSessions:[]}});
         if(req.method()!=='GET'){writes.push(req.method()+' '+url.pathname);return route.abort();}
         const body=url.pathname==='/auth/v1/user'?{id:'qa-admin',app_metadata:{role:'admin'}}:url.pathname==='/rest/v1/hs_accounts'?[{role:'admin',active:true,student:null}]:url.pathname==='/rest/v1/mock_results'?records:[];
         return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(body)});
@@ -100,6 +101,12 @@ const server=http.createServer((req,res)=>{
     assert.ok(detailed.size>400000,'Last2 full original detailed appendix is rendered');
     }
     await page.locator('#final-batch-details').uncheck();await page.locator('#final-batch-similar').check();
+    const last2Practice=await page.evaluate(async()=>{window.__GFIELD_BATCH_QA_CAPTURE__={};const task=GFIELD_ADMIN_MOCK_V2.lastOfficialEntries().find(x=>x.round===2);const blob=await GFIELD_ADMIN_FINAL_BATCH._test.buildPackage(task,0,1);return {practice:window.__GFIELD_BATCH_QA_CAPTURE__.practice,base64:await new Promise(resolve=>{const r=new FileReader();r.onload=()=>resolve(r.result.split(',')[1]);r.readAsDataURL(blob);})};});
+    assert.equal(last2Practice.practice.questions,9);assert.equal(last2Practice.practice.answers,9);
+    assert.deepEqual(last2Practice.practice.questionIds,last2Practice.practice.answerIds);
+    assert.ok(last2Practice.practice.questionIds.every(id=>/^last2-q(?:28|29|30)-v[123]$/.test(id)));
+    fs.writeFileSync(path.join(out,'last2-batch-with-practice.pdf'),Buffer.from(last2Practice.base64,'base64'));
+    console.log('PASS Last2 approved priority questions and solutions included in actual batch PDF');
     const practice=await page.evaluate(async()=>{window.__GFIELD_BATCH_QA_CAPTURE__={};const task=GFIELD_ADMIN_MOCK_V2.lastOfficialEntries().find(x=>x.round===1);const blob=await GFIELD_ADMIN_FINAL_BATCH._test.buildPackage(task,0,1).catch(error=>{throw new Error((error.code||error.name)+': '+error.message);});return {size:blob.size,practice:window.__GFIELD_BATCH_QA_CAPTURE__.practice,base64:await new Promise(resolve=>{const r=new FileReader();r.onload=()=>resolve(r.result.split(',')[1]);r.readAsDataURL(blob);})};});
     fs.writeFileSync(path.join(out,'last1-batch-with-practice.pdf'),Buffer.from(practice.base64,'base64'));
     assert.ok(practice.size>400000,'Last1 reviewed practice appendix is rendered');
