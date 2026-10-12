@@ -16,7 +16,7 @@ const server=http.createServer((req,res)=>{
 });
 (async()=>{
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
-  const base='http://127.0.0.1:'+server.address().port,browser=await chromium.launch(),errors=[],writes=[];
+  const base=process.env.GFIELD_FINAL78_QA_BASE||'http://127.0.0.1:'+server.address().port,browser=await chromium.launch(),errors=[],writes=[];
   try{
     const context=await browser.newContext({viewport:{width:1280,height:900}});
     await context.addInitScript(name=>{
