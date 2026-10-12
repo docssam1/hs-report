@@ -9,6 +9,8 @@ assert.match(html, /<meta name="google" content="notranslate">/, 'Google 자동�
 assert.match(html, /utterance\.lang = "ko-KR"/, '대체 음성 언어는 한국어');
 assert.match(html, /getVoices\(\)\.find\(\(voice\) => \/\^ko/, '한국어 음성을 명시적으로 선택');
 assert.doesNotMatch(html, /utterance\.lang\s*=\s*["']en/i, '영어 대체 음성 금지');
+assert.match(html, /const TOTAL = 80 \* 60;/, '별도 시험 타이머는 80분 기준');
+assert.doesNotMatch(html, /90분|90:00|at: 5400/, '화면과 안내에 이전 90분 기준이 남지 않음');
 assert.match(finalHtml, /reviewStart\+"~"\+timerMinutes\+"분"/, '파이널 타이머 마지막 구간은 계산된 제한시간을 표시');
 assert.doesNotMatch(finalHtml, /reviewStart\+"~"\+examMinutes\+"분"/, '함수 본문이 타이머 문구로 출력되면 안 됨');
 console.log('PASS exam timer stays Korean and selects a Korean fallback voice');
