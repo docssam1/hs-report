@@ -108,19 +108,20 @@ const server=http.createServer((req,res)=>{
     assert.match(await last4.innerText(),/0\.8%/,'Last 4 top score uses the source cohort of 120, not its 98 score entries');
     const final7=hub.locator('tbody tr',{hasText:'최종 실전 모의고사 7회'});
     assert.equal(await final7.count(),1,'Final 7 appears in this-week result hub');
-    assert.match(await final7.innerText(),/\d+\.\d%/,'Final 7 uses the verified process percentile');
+    assert.match(await final7.innerText(),/\d+\.\d%/,'Final 7 uses the Signature historical percentile');
     assert.match(await final7.locator('a').getAttribute('href'),/^final\.html\?round=7&go=report&name=.*&v=20260920b$/,'Final 7 opens its own cache-safe report, not Last 2');
     const final8=hub.locator('tbody tr',{hasText:'최종 실전 모의고사 8회'});
     assert.equal(await final8.count(),1,'Final 8 has its own official result row');
     assert.match(await final8.innerText(),new RegExp(scoreOf(ox(20)).score.toFixed(1)+'점'));
-    const expectedFinal8=await page.evaluate(score=>{
-      const projected=window.GFIELD_FINAL8_BENCHMARK.project(score);
-      const basis=window.GFIELD_MOCK_ORIGINAL.cutBasis;
-      const tier=basis.rows.slice().sort((a,b)=>b.threshold2025-a.threshold2025).find(row=>projected.adjustedScore>=row.threshold2025);
-      return {pct:projected.topPercent,tier:tier?tier.grade:basis.belowLabel};
-    },scoreOf(ox(20)).score);
+    const expectedFinal8=await page.evaluate(input=>{
+      const model=window.GFIELD_MOCK_ORIGINAL,api=window.GFIELD_SIGNATURE_FORECAST,cuts=model.rounds['1'].stats.cuts;
+      const finals=input.scores.map((score,index)=>({score,cuts:window.GFIELD_MOCK_FINAL.rounds[String(index+1)].stats.cuts}));
+      const expected=api.estimate([input.score],finals,cuts).expected;
+      return {pct:model.estimatedPosition(input.score).topPercent,tier:api.levelPlacement(expected,cuts,model.estimatedPosition).label,expected};
+    },{score:scoreOf(ox(20)).score,scores:[15,18,19,22].map(count=>scoreOf(ox(count)).score)});
     assert.match(await final8.innerText(),new RegExp(expectedFinal8.pct.toFixed(1)+'%'));
     assert.match(await final8.innerText(),new RegExp(expectedFinal8.tier));
+    assert.match(await final8.innerText(),new RegExp('실전 예상 '+expectedFinal8.expected.toFixed(1)+'점'));
     assert.match(await final8.innerText(),/예상/,'historical estimate is not presented as a measured Final8 rank');
     assert.equal(await final8.locator('.srh-na').count(),0);
     assert.match(await final8.locator('a').getAttribute('href'),/^final\.html\?round=8&go=report&name=.*&v=20261005-final8$/,'Final8 opens its own approved report, not Last3');
