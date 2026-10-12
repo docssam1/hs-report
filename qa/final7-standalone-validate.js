@@ -9,6 +9,7 @@ const root=path.join(__dirname,'..');
 const window={};
 vm.runInNewContext(fs.readFileSync(path.join(root,'mock-data-final.js'),'utf8'),{window});
 vm.runInNewContext(fs.readFileSync(path.join(root,'last-score-data.js'),'utf8'),{window});
+['mock-data-original.js','signature-forecast.js','final8-benchmark.js'].forEach(file=>vm.runInNewContext(fs.readFileSync(path.join(root,file),'utf8'),{window}));
 vm.runInNewContext(fs.readFileSync(path.join(root,'final7-benchmark.js'),'utf8'),{window});
 const model=window.GFIELD_MOCK_FINAL;
 const round=model.rounds['7'];
@@ -22,9 +23,10 @@ assert.equal(round.items.every(item=>item.area&&item.subarea&&item.detailType),t
 assert.equal(round.paper.imagePages,8,'source paper has 8 pages');
 assert.equal(round.ready,true,'reviewed Final 7 is released to students with the dedicated round approval');
 assert.deepEqual(Array.from(round.lockedQuestions),[],'no Final 7 source question remains in the review lock');
-assert.equal(round.stats.rankEvidence.status,'verified-source-rank','Final 7 must use a verified process benchmark for rank percentile');
-assert.equal(round.stats.percentileTable.length>100,true,'process percentile table must cover score changes without coarse guessing');
-assert.equal(round.stats.cuts.length,6,'process grade cuts must contain the five shared levels and the floor');
+assert.equal(round.stats.rankEvidence,undefined,'historical forecast must not be marked as measured Final7 rank');
+assert.equal(round.stats.percentileTable,undefined,'other exams distributions must not be averaged into Final7 stats');
+assert.equal(window.GFIELD_FINAL7_BENCHMARK,window.GFIELD_FINAL_STANDALONE_BENCHMARK);
+assert.equal(window.GFIELD_FINAL7_BENCHMARK.project(45).adjustedScore,40.5);
 assert.equal(Object.prototype.hasOwnProperty.call(round.stats,'rate'),false,'other exams item rates must not be copied onto Final 7 questions');
 
 const expected=['37','95분','67개','102개','9가지','6마리','136','425','40','50','15개','$\\frac{1}{128}$','2가 12개','101, 148, 145','(3, 50)','165','210','병 16살','382개','216g','62','75명','169','4명','3마리','2014년','5주일','30','64가지','128'];

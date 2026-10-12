@@ -619,8 +619,8 @@ td.weak-cell{white-space:nowrap}
   if(isFinal2) files.push('final2-solution-diagrams.js','final2-detailed-data.js','final-detailed-solutions.js');
   if(isFinal3) files.push('final3-solution-diagrams.js','final3-backhalf-solution-diagrams.js','final3-detailed-data.js','final-detailed-solutions.js','final3-question-coach.js');
   if(isFinal4) files.push('final4-detailed-data.js','final-detailed-solutions.js','final4-question-coach.js');
-  if(isFinal7) files.push('last-score-data.js','final7-benchmark.js','final7-original-tutor.js');
-  if(isFinal8) files.push('final8-benchmark.js');
+  if(isFinal7||isFinal8) files.push('signature-forecast.js','final8-benchmark.js');
+  if(isFinal7) files.push('final7-benchmark.js','final7-original-tutor.js');
   if((!isLast&&!isOriginal)||(isLast&&[1,2,3,4].includes(Number(requestedRound)))) files.push('final-report-print.js');
   if(isFinal1||isFinal2||isFinal3||isFinal4||isFinal7||isFinal8||(isLast&&[1,2].includes(Number(requestedRound)))) files.push('final-summary-practice-print.js');
   if(isLast) files.push(
@@ -642,7 +642,7 @@ td.weak-cell{white-space:nowrap}
   files.forEach(function(f){
     var version=f==='data.js'?dataVersion:(f==='final-last-routes.js'||(f==='exam-cues.js'&&isFinal8)?'20261005-final8-answers':(f==='mock-data-final.js'&&isFinal8?'20261005-final8-q20-43':(f==='mock-data-original.js'?signatureAnswerVersion:((f==='mock-data-final.js'||f==='final4-detailed-data.js')?final4AnswerVersion:staticVersion))));
     if(f==='final-summary-practice-print.js')version='20261011-last2-source';
-    if(f==='final-parent-report.js')version='20261011-last2-summary';
+    if(f==='final-parent-report.js'||f==='final7-benchmark.js'||f==='final8-benchmark.js')version='20261012-final78-signature';
     if(f==='final-report-print.js')version='20261011-last2-pagination';
     if(f==='bank/bank-registry.js')version='20261012-last2-approved';
     document.write('<scr'+'ipt src="'+f+'?v='+version+'"><\/scr'+'ipt>');
@@ -660,6 +660,7 @@ td.weak-cell{white-space:nowrap}
   var isLast = params.get('set')==='last';
   var isOriginal = params.get('set')==='original';
   var isFinal8 = !isLast&&!isOriginal&&Number(params.get('round')||1)===8;
+  var isFinal78 = !isLast&&!isOriginal&&[7,8].includes(Number(params.get('round')||1));
   var isFinal2 = !isLast&&!isOriginal&&Number(params.get('round')||1)===2;
   var M = isLast ? window.GFIELD_MOCK_LAST : (isOriginal ? window.GFIELD_MOCK_ORIGINAL : window.GFIELD_MOCK_FINAL);
   var finalModel = window.GFIELD_MOCK_FINAL;
@@ -1410,13 +1411,13 @@ td.weak-cell{white-space:nowrap}
   function final8BenchmarkHTML(ctx){
     var result=ctx&&ctx.final8Benchmark;
     if(!result)return '';
-    return '<section class="final8-benchmark" aria-label="최종 8회 시그니처 기준 난도 보정 참고 추정">'+
+    return '<section class="final8-benchmark" aria-label="최종 '+ctx.roundNum+'회 시그니처 기준 참고 추정">'+
       '<h2>시그니처 기준 난도 보정 참고 추정</h2><div class="final8-benchmark-grid">'+
       '<div><small>실제 원점수</small><b>'+result.actualScore+'점</b></div>'+
       '<div><small>실전 예상점수</small><b>'+result.adjustedScore+'점</b></div>'+
       '<div><small>예상 반</small><b>'+esc(result.tier||'확인 필요')+'</b></div>'+
       '<div><small>예상 석차 백분율</small><b>'+result.topPercent+'%</b></div></div>'+
-      '<p>최종 1~4회 성적을 난도 보정한 뒤 시그니처 2024·2025 통합 분포를 참조한 추정치입니다. 실제 최종 8회 석차나 반 배정이 아니며, 최종 1~4회 누적 성적에는 포함되지 않습니다.</p></section>';
+      '<p>시그니처와 같은 기준의 참고 추정입니다. 백분율은 실제 점수, 예상 반은 실전 예상점수 기준이며 정규 누적 성적에는 포함되지 않습니다.</p></section>';
   }
   function wireReportQr(root){
     if(typeof window.qrcode!=='function')return;
@@ -1430,9 +1431,9 @@ td.weak-cell{white-space:nowrap}
     });
   }
   function reportScreenHeaderHTML(ctx){
-    if(isFinal8&&ctx.final8Benchmark){
+    if(isFinal78&&ctx.final8Benchmark){
       var estimate=ctx.final8Benchmark;
-      return '<header class="report-screen-header"><div><span>초등선발 대비 최종 실전 모의고사 8회 · 독립 분석</span><h1>'+esc(ctx.name)+' 학생</h1><p>예상 반 · <b>'+esc(estimate.tier)+'</b> · 예상 석차 백분율 '+estimate.topPercent+'%</p></div><dl><div><dt>실제 점수</dt><dd>'+ctx.score+'<small>/100</small></dd></div><div><dt>실전 예상점수</dt><dd>'+estimate.adjustedScore+'<small>/100</small></dd></div><div><dt>정답</dt><dd>'+ctx.ncorr+'<small>/30</small></dd></div></dl></header>';
+      return '<header class="report-screen-header"><div><span>초등선발 대비 최종 실전 모의고사 '+ctx.roundNum+'회 · 독립 분석</span><h1>'+esc(ctx.name)+' 학생</h1><p>예상 반 · <b>'+esc(estimate.tier)+'</b> · 예상 석차 백분율 '+estimate.topPercent+'%</p></div><dl><div><dt>실제 점수</dt><dd>'+ctx.score+'<small>/100</small></dd></div><div><dt>실전 예상점수</dt><dd>'+estimate.adjustedScore+'<small>/100</small></dd></div><div><dt>정답</dt><dd>'+ctx.ncorr+'<small>/30</small></dd></div></dl></header>';
     }
     var comparison=ctx.populationVerified&&Number.isFinite(ctx.pct);
     var practice=Number(ctx.attemptNo)>=2;
@@ -1490,14 +1491,19 @@ td.weak-cell{white-space:nowrap}
   function reportPrintCoverHTML(ctx){
     var practice=Number(ctx.attemptNo)>=2;
     var stats=(ctx.ratesVerified?'<small>평균 '+ctx.S.mean+'점'+(Number.isFinite(ctx.pct)?' · '+(practice?'연습 점수 기준 백분율 ':'석차 백분율 ')+ctx.pct+'%':'')+'</small>':'')+(ctx.cutVerified?'<small>'+(practice?'연습 점수 기준 예상 등급':'예상 등급')+' · '+esc(ctx.grade)+'</small>':'');
-    if(isFinal8&&ctx.final8Benchmark)stats='<small>실전 예상점수 '+ctx.final8Benchmark.adjustedScore+'점 · 예상 반 '+esc(ctx.final8Benchmark.tier)+'</small><small>예상 석차 백분율 '+ctx.final8Benchmark.topPercent+'%</small><small>참고 추정치 · 실제 석차가 아닙니다</small>';
+    if(isFinal78&&ctx.final8Benchmark)stats='<small>실전 예상점수 '+ctx.final8Benchmark.adjustedScore+'점 · 예상 반 '+esc(ctx.final8Benchmark.tier)+'</small><small>예상 석차 백분율 '+ctx.final8Benchmark.topPercent+'%</small><small>참고 추정치 · 실제 석차가 아닙니다</small>';
     return '<section class="report-print-cover" aria-label="'+esc(seriesLabel())+' 진단 학습 패키지 표지"><div class="report-cover-mark" aria-hidden="true">G·FIELD</div><div class="report-cover-brand">지필드 영재교육</div><div class="report-cover-main"><p>초등선발 대비</p><h1>'+esc(seriesLabel())+' 모의고사<br>진단 학습 패키지</h1><strong>'+esc(seriesLabel())+' '+ctx.roundNum+'회 · '+reportAttemptLabel(ctx)+'</strong></div><div class="report-cover-student"><span>STUDENT</span><b>'+esc(ctx.name)+'</b><i>'+ctx.score+'점</i>'+stats+'</div>'+reportQrHTML(ctx)+'<div class="report-cover-index"><span>01 진단 요약</span><span>02 이번 주 학습</span><span>03 필요 자료</span></div><footer>G·FIELD GIFTED EDUCATION · 개인 학습 자료</footer></section>';
   }
   function reportCompactPrintHeaderHTML(ctx){
     var rank=ctx.populationVerified&&Number.isFinite(ctx.pct)?'<span>석차 백분율 <b>'+ctx.pct+'%</b></span>':'';
+    var expected=ctx.cutVerified?'<span>예상 등급 <b>'+esc(ctx.grade)+'</b></span>':'';
+    if(isFinal78&&ctx.final8Benchmark){
+      rank='<span>예상 석차 백분율 <b>'+ctx.final8Benchmark.topPercent+'%</b></span>';
+      expected='<span>실전 예상점수 <b>'+ctx.final8Benchmark.adjustedScore+'점</b></span><span>예상 반 <b>'+esc(ctx.final8Benchmark.tier)+'</b></span>';
+    }
     var reportUrl=reportQrTarget(ctx),practiceUrl=practiceQrTarget(ctx);
     var qr='<div class="report-compact-qr"><a class="report-qr-card" href="'+esc(reportUrl)+'"><span class="report-qr-code" data-qr-url="'+esc(reportUrl)+'" aria-hidden="true"></span><b>전체 진단</b></a>'+(practiceUrl?'<a class="report-qr-card" href="'+esc(practiceUrl)+'"><span class="report-qr-code" data-qr-url="'+esc(practiceUrl)+'" aria-hidden="true"></span><b>내 유사문항</b></a>':'')+'</div>';
-    return '<header class="report-compact-print-header"><div><small>지필드 영재교육 · '+esc(seriesLabel())+' '+ctx.roundNum+'회</small><h1>'+esc(ctx.name)+' 학생 진단 요약</h1></div><div class="report-compact-metrics"><span>점수 <b>'+ctx.score+'점</b></span>'+rank+(ctx.cutVerified?'<span>예상 등급 <b>'+esc(ctx.grade)+'</b></span>':'')+'</div>'+qr+'</header>';
+    return '<header class="report-compact-print-header"><div><small>지필드 영재교육 · '+esc(seriesLabel())+' '+ctx.roundNum+'회</small><h1>'+esc(ctx.name)+' 학생 진단 요약</h1></div><div class="report-compact-metrics"><span>점수 <b>'+ctx.score+'점</b></span>'+rank+expected+'</div>'+qr+'</header>';
   }
 
   function wrongPracticeModel(ctx){
@@ -1673,13 +1679,16 @@ td.weak-cell{white-space:nowrap}
     var api=window.GFIELD_SIGNATURE_FORECAST;
     var stats=M.rounds[String(roundNum)]&&M.rounds[String(roundNum)].stats;
     if(!api||!stats||!Array.isArray(stats.cuts))return null;
+    return api.estimate(scores,signatureFinalRecords(priorRows),stats.cuts);
+  }
+  function signatureFinalRecords(priorRows){
     var finalRecords=[];
     for(var n=1;n<=4;n++){
       var row=priorRows&&priorRows['final'+n],finalStats=finalBaseStats[String(n)];
-      if(row&&validOx(row.ox)&&finalStats&&Array.isArray(finalStats.cuts))
+      if(row&&row.source!=='reset'&&validOx(row.ox)&&finalStats&&Array.isArray(finalStats.cuts))
         finalRecords.push({score:computeScore(row.ox.split('')).score,cuts:finalStats.cuts});
     }
-    return api.estimate(scores,finalRecords,stats.cuts);
+    return finalRecords;
   }
   function originalExpectedClass(score,cuts){
     var api=window.GFIELD_SIGNATURE_FORECAST;
@@ -3042,13 +3051,9 @@ td.weak-cell{white-space:nowrap}
     var ctx = buildContext(state.name, roundNum, state.oxArr);
     if(isOriginal) ctx.answerStates=state.answerStates;
     ctx.attemptNo=attemptNo;
-    if(isFinal8&&ctx.R&&ctx.R.standalone&&window.GFIELD_FINAL8_BENCHMARK){
-      var projected=window.GFIELD_FINAL8_BENCHMARK.project(ctx.score);
-      var signatureBasis=window.GFIELD_MOCK_ORIGINAL&&window.GFIELD_MOCK_ORIGINAL.cutBasis;
-      var signatureRows=signatureBasis&&Array.isArray(signatureBasis.rows)?signatureBasis.rows.slice().sort(function(a,b){return Number(b.threshold2025)-Number(a.threshold2025);}):[];
+    if(isFinal78&&ctx.R&&ctx.R.standalone&&window.GFIELD_FINAL_STANDALONE_BENCHMARK){
+      var projected=window.GFIELD_FINAL_STANDALONE_BENCHMARK.project(ctx.score,signatureFinalRecords(priorRows));
       if(projected){
-        var matchedTier=signatureRows.filter(function(row){return projected.adjustedScore>=Number(row.threshold2025);})[0];
-        projected.tier=matchedTier?matchedTier.grade:(signatureBasis&&signatureBasis.belowLabel||'노력요함');
         ctx.final8Benchmark=projected;
       }
     }

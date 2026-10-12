@@ -159,7 +159,7 @@
       standalone:standalone,
       isPractice:Number(ctx.attemptNo)>=2,
       overallTrend:options.overallTrend||null,
-      current:{label:(Number(ctx.attemptNo)>=2?'이번 연습 결과':'이번 회차')+' · '+(options.currentLabel||(standalone?(ctx.R&&ctx.R.title||'최종 실전 '+roundNum+'회'):'파이널 '+roundNum+'회')),score:number(ctx.score),percentile:number(ctx.pct),grade:ctx.grade||null},
+      current:{label:(Number(ctx.attemptNo)>=2?'이번 연습 결과':'이번 회차')+' · '+(options.currentLabel||(standalone?(ctx.R&&ctx.R.title||'최종 실전 '+roundNum+'회'):'파이널 '+roundNum+'회')),score:number(ctx.score),percentile:ctx.final8Benchmark?number(ctx.final8Benchmark.topPercent):number(ctx.pct),grade:ctx.final8Benchmark?ctx.final8Benchmark.tier:(ctx.grade||null),expectedScore:ctx.final8Benchmark?number(ctx.final8Benchmark.adjustedScore):null},
       cumulative:{label:options.cumulativeLabel||'파이널 1~'+roundNum+'회',personalRounds:personalRounds,rankRounds:rankRounds,missingPersonalRounds:missingRounds(roundNum,personalRounds),missingRankRounds:missingRounds(roundNum,rankRounds),personalHistory:attempts.map(function(row){return {n:Number(row.n),score:number(row.score)};}),rankHistory:considered.map(function(row){return {n:Number(row.n),pct:number(row.pct)};}),scoreAverage:scoreAverage,percentileAverage:percentileAverage,band:band?band[0]:null},
       areas:areas,
       tiers:tiers,
@@ -181,7 +181,8 @@
   function roundsText(rounds){return rounds.length?rounds.join('·')+'회':'없음';}
   function metric(label,value,unit){return '<div><dt>'+escapeHTML(label)+'</dt><dd>'+(value==null?'확인 필요':escapeHTML(value)+(unit||''))+'</dd></div>';}
   function summaryHTML(vm){
-    var current='<article class="parent-summary-column current"><p>'+escapeHTML(vm.current.label)+'</p>'+metric('점수',vm.current.score,'점')+metric('석차 백분율',vm.current.percentile,'%')+metric('예상 등급',vm.current.grade,'')+'</article>';
+    var forecast=vm.current.expectedScore!=null;
+    var current='<article class="parent-summary-column current"><p>'+escapeHTML(vm.current.label)+'</p>'+metric(forecast?'실제 점수':'점수',vm.current.score,'점')+(forecast?metric('실전 예상점수',vm.current.expectedScore,'점'):'')+metric(forecast?'예상 석차 백분율':'석차 백분율',vm.current.percentile,'%')+metric(forecast?'예상 반':'예상 등급',vm.current.grade,'')+'</article>';
     if(vm.standalone)return '<section id="report-summary" class="parent-summary-section"><h2>성적 요약</h2><div class="parent-report-comparison is-single">'+current+'</div></section>';
     if(vm.overallTrend){
       var overall=vm.overallTrend;

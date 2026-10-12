@@ -12,7 +12,7 @@
 
   /* 활용 모의고사는 기존 상세 진단 틀에 활용 데이터만 주입 */
   if(set==='hw'){
-    document.write('<script src="mock-data-hw.js?v=20260724"><\/script>');
+    document.write('<script src="mock-data-hw.js?v=20261012-hw1-q25"><\/script>');
     document.write('<script>(function(){var D=window.GFIELD_DATA||{},H=window.GFIELD_MOCK_HW||{};var p=new URLSearchParams(location.search),n=(p.get("name")||"").trim();if(!n){try{n=localStorage.getItem("gfield_student")||""}catch(e){}}if(n&&n.toLowerCase()!=="docssam"){var online=((D.studentTypes||{})[n])==="online",all=((D.archiveAccess||{})["활용 모의고사"]||[]).includes(n),ok=[];if(online&&all){ok=Object.keys(H.rounds||{})}else if(!online&&(D.specialStudents||[]).includes(n)){((((D.content||{})["special-summer"]||{}).textbooks)||[]).forEach(function(t){var m=String(t.title||"").match(/활용\\s*모의고사\\s*(\\d+)\\s*회/);if(m&&Array.isArray(t.access)&&t.access.includes(n))ok.push(String(+m[1]));});}var filtered={};ok.forEach(function(r){if(H.rounds&&H.rounds[r])filtered[r]=H.rounds[r];});H=Object.assign({},H,{rounds:filtered});}window.GFIELD_MOCK=H;})();<\/script>');
   }
 

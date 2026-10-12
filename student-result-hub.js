@@ -8,6 +8,7 @@
     final:{file:'mock-data-final.js',global:'GFIELD_MOCK_FINAL'},
     final7:{file:'final7-benchmark.js',global:''},
     final8:{file:'final8-benchmark.js',global:'GFIELD_FINAL8_BENCHMARK'},
+    forecast:{file:'signature-forecast.js',global:'GFIELD_SIGNATURE_FORECAST'},
     original:{file:'mock-data-original.js',global:'GFIELD_MOCK_ORIGINAL'},
     last:{file:'last-score-data.js',global:'GFIELD_LAST_SCORE_DATA'},
     trend:{file:'final-score-trend.js',global:'GFIELD_FINAL_SCORE_TREND'}
@@ -59,7 +60,7 @@
     if(scriptPromises[kind]) return scriptPromises[kind];
     scriptPromises[kind]=new Promise(function(resolve,reject){
       var node=document.createElement('script');
-      var versions={original:'20260928-signature-answer-keys-1',last:'20261006-last1-cut562',final:'20261005-final8-q20-43',final8:'20261006-result-hub'};
+      var versions={original:'20260928-signature-answer-keys-1',last:'20261006-last1-cut562',final:'20261005-final8-q20-43',final7:'20261012-final78-signature',final8:'20261012-final78-signature'};
       node.src=spec.file+'?v='+(versions[kind]||'20260915a');node.async=true;
       node.onload=function(){(!spec.global||root[spec.global])?resolve(spec.global?root[spec.global]:true):reject(new Error('성적 기준을 확인하지 못했습니다.'));};
       node.onerror=function(){reject(new Error('성적 기준을 불러오지 못했습니다.'));};
@@ -72,11 +73,10 @@
     var needsFinal7=items.some(function(item){return item.meta.kind==='final'&&item.meta.round===7;});
     var needsFinal8=items.some(function(item){return item.meta.kind==='final'&&item.meta.round===8;});
     var needsTrend=items.some(function(item){return /^(final|last)[1-4]$/.test(item.key);});
-    if(needsFinal7) kinds.last=true;
-    if(needsFinal8){kinds.last=true;kinds.original=true;}
+    if(needsFinal7||needsFinal8){kinds.original=true;kinds.forecast=true;}
     if(needsTrend){kinds.final=true;kinds.trend=true;}
     return Promise.all(Object.keys(kinds).map(loadScript)).then(function(){
-      return Promise.all([needsFinal7?loadScript('final7'):null,needsFinal8?loadScript('final8'):null]);
+      return (needsFinal7||needsFinal8?loadScript('final8'):Promise.resolve()).then(function(){return needsFinal7?loadScript('final7'):null;});
     });
   }
   function percentileFromTable(score,table){
@@ -131,23 +131,25 @@
     }
     return {url:'',label:'자료 없음'};
   }
-  function describe(item,options){
-    var m=item.meta,model,round,stats,percentile=null,grade=null,title='';
+  function signatureFinalRecords(items){
+    return items.filter(function(item){return item.meta.kind==='final'&&item.meta.round>=1&&item.meta.round<=4;}).map(function(item){
+      var model=root.GFIELD_MOCK_FINAL,round=model&&model.rounds&&model.rounds[String(item.meta.round)];
+      return {score:item.score.score,cuts:round&&round.stats&&round.stats.cuts};
+    }).filter(function(row){return Array.isArray(row.cuts);});
+  }
+  function describe(item,options,finalRecords){
+    var m=item.meta,model,round,stats,percentile=null,grade=null,title='',expectedScore=null;
     if(m.kind==='final'){
       model=root.GFIELD_MOCK_FINAL;round=model&&model.rounds&&model.rounds[String(m.round)];stats=round&&round.stats;
       title=m.round===7||m.round===8?'최종 실전 모의고사 '+m.round+'회':'파이널 모의고사 '+m.round+'회';
       if(verifiedFinalStats(stats)) percentile=percentileFromTable(item.score.score,stats.percentileTable);
       if(m.round!==8||verifiedFinalStats(stats)) grade=gradeFromCuts(item.score.score,stats&&stats.cuts);
-      if(m.round===8&&root.GFIELD_FINAL8_BENCHMARK){
-        // Reuse the approved standalone report estimate, never a measured
-        // Final8 rank or an entry in the regular eight-round cumulative model.
-        var projected=root.GFIELD_FINAL8_BENCHMARK.project(item.score.score);
-        var basis=root.GFIELD_MOCK_ORIGINAL&&root.GFIELD_MOCK_ORIGINAL.cutBasis;
-        var tiers=basis&&Array.isArray(basis.rows)?basis.rows.slice().sort(function(a,b){return Number(b.threshold2025)-Number(a.threshold2025);}):[];
+      if((m.round===7||m.round===8)&&root.GFIELD_FINAL_STANDALONE_BENCHMARK){
+        var projected=root.GFIELD_FINAL_STANDALONE_BENCHMARK.project(item.score.score,finalRecords);
         if(projected){
           percentile=projected.topPercent;
-          var matched=tiers.filter(function(row){return projected.adjustedScore>=Number(row.threshold2025);})[0];
-          grade=matched?matched.grade:(basis&&basis.belowLabel||'노력요함');
+          grade=projected.tier;
+          expectedScore=projected.adjustedScore;
         }
       }
     }else if(m.kind==='last'){
@@ -164,7 +166,7 @@
       model=root.GFIELD_MOCK;
       title='중급 모의고사 '+m.round+'회';
     }
-    return {key:item.key,title:title,score:item.score.score,percentile:Number.isFinite(percentile)?round1(percentile):null,grade:grade,link:reportLink(item,options,model)};
+    return {key:item.key,title:title,score:item.score.score,expectedScore:expectedScore,percentile:Number.isFinite(percentile)?round1(percentile):null,grade:grade,link:reportLink(item,options,model)};
   }
   function canShow(item,options){
     if(!item) return false;
@@ -216,10 +218,10 @@
   }
   function tableHtml(rows,student,cumulative){
     var body=rows.map(function(row){
-      var rank=row.percentile===null?'<span class="srh-na">자료 없음</span>':'<span class="srh-rank">'+row.percentile.toFixed(1)+'%'+(row.key==='final8'?'<small> 예상</small>':'')+'</span>';
+      var rank=row.percentile===null?'<span class="srh-na">자료 없음</span>':'<span class="srh-rank">'+row.percentile.toFixed(1)+'%'+(/^final[78]$/.test(row.key)?'<small> 예상</small>':'')+'</span>';
       var level=row.grade?'<span class="srh-level">'+esc(row.grade)+'</span>':'<span class="srh-na">자료 없음</span>';
       var action=row.link.url?'<a class="srh-detail" href="'+esc(row.link.url)+'">'+esc(row.link.label)+'</a>':'<span class="srh-detail" aria-disabled="true">'+esc(row.link.label)+'</span>';
-      return '<tr><td class="srh-exam-cell" data-label="시험"><span class="srh-exam-name">'+esc(row.title)+'</span></td><td data-label="점수"><span class="srh-score">'+row.score.toFixed(1)+'점</span></td><td data-label="석차 백분율">'+rank+'</td><td data-label="예상 등급">'+level+'</td><td class="srh-action-col" data-label="보기">'+action+'</td></tr>';
+      return '<tr><td class="srh-exam-cell" data-label="시험"><span class="srh-exam-name">'+esc(row.title)+'</span></td><td data-label="점수"><span class="srh-score">'+row.score.toFixed(1)+'점</span>'+(row.expectedScore!==null?'<br><small>실전 예상 '+row.expectedScore.toFixed(1)+'점</small>':'')+'</td><td data-label="석차 백분율">'+rank+'</td><td data-label="예상 등급">'+level+'</td><td class="srh-action-col" data-label="보기">'+action+'</td></tr>';
     }).join('');
     var cumulativeHtml=cumulative&&cumulative.rows.length
       ?'<p class="srh-cumulative" data-final-last-count="'+cumulative.rows.length+'"><b>'+esc(cumulativeCaption(cumulative))+'</b> · 원점수 평균 '+cumulative.scoreAverage.toFixed(1)+'점 · 예상 석차 백분율 '+(cumulative.percentileAverage===null?'자료 없음':cumulative.percentileAverage.toFixed(1)+'%')+' · 예상 등급 '+esc(cumulative.cumulativeGrade||'자료 없음')+'</p><p>'+(cumulative.lastRound===2?'최종 1~2회의 공식 첫 기록으로 누적을 판정하며, 전체 응시 이력은 아래 표에 표시합니다.':'파이널 1~4회와 최종 1~4회의 공식 첫 기록만 반영합니다.')+' 백분율 자료 '+cumulative.rankedCount+'/'+(cumulative.lastRound===2?cumulative.judgeCount:cumulative.rows.length)+'회, 없는 기록은 0점으로 계산하지 않습니다.</p>'
@@ -238,7 +240,8 @@
       var items=officialRows(rows,options.student);return loadModels(items).then(function(){return items;});
     }).then(function(items){
       if(revision!==state.revision) return;
-      var described=items.filter(function(item){return canShow(item,options);}).map(function(item){return describe(item,options);});
+      var finalRecords=signatureFinalRecords(items);
+      var described=items.filter(function(item){return canShow(item,options);}).map(function(item){return describe(item,options,finalRecords);});
       var cumulative=cumulativeModel(described);
       panel=container.querySelector('.srh-panel');
       if(!described.length){container.querySelector('.srh-summary').textContent='등록된 응시 성적이 없습니다.';panel.innerHTML=stateHtml('아직 등록된 응시 성적이 없습니다.','empty');return;}
