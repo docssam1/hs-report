@@ -109,7 +109,7 @@ const server=http.createServer((req,res)=>{
     const final7=hub.locator('tbody tr',{hasText:'최종 실전 모의고사 7회'});
     assert.equal(await final7.count(),1,'Final 7 appears in this-week result hub');
     assert.match(await final7.innerText(),/\d+\.\d%/,'Final 7 uses the Signature historical percentile');
-    assert.match(await final7.locator('a').getAttribute('href'),/^final\.html\?round=7&go=report&name=.*&v=20260920b$/,'Final 7 opens its own cache-safe report, not Last 2');
+    assert.equal(new URL(await final7.locator('a').getAttribute('href'),base).searchParams.get('v'),'20261013-report-qr','Final7 report receives the current HTML release token');
     const final8=hub.locator('tbody tr',{hasText:'최종 실전 모의고사 8회'});
     assert.equal(await final8.count(),1,'Final 8 has its own official result row');
     assert.match(await final8.innerText(),new RegExp(scoreOf(ox(20)).score.toFixed(1)+'점'));
@@ -124,7 +124,7 @@ const server=http.createServer((req,res)=>{
     assert.match(await final8.innerText(),new RegExp('실전 예상 '+expectedFinal8.expected.toFixed(1)+'점'));
     assert.match(await final8.innerText(),/예상/,'historical estimate is not presented as a measured Final8 rank');
     assert.equal(await final8.locator('.srh-na').count(),0);
-    assert.match(await final8.locator('a').getAttribute('href'),/^final\.html\?round=8&go=report&name=.*&v=20261005-final8$/,'Final8 opens its own approved report, not Last3');
+    assert.equal(new URL(await final8.locator('a').getAttribute('href'),base).searchParams.get('v'),'20261013-report-qr','Final8 report receives the current HTML release token');
     assert.doesNotMatch(await final8.innerText(),/상세 분석 준비 중/);
     const cumulative=hub.locator('[data-final-last-count]');
     assert.equal(await cumulative.getAttribute('data-final-last-count'),'8','cumulative summary excludes Final 7 and Final 8');

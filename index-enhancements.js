@@ -207,7 +207,6 @@
       var base=series==='last'?'final.html?set=last&round='+round+'&go=report':'final.html?round='+round+'&go=report';
       url=withName(base);
     }
-    if(series==='final'&&Number(round)===7) url+=(url.indexOf('?')>=0?'&':'?')+'v=20260920b';
     return url;
   }
   function reportLabel(){

@@ -87,7 +87,7 @@
   }
   function finalTarget(action,round){
     if(action==='answer-page') return target('answer.html',{set:'final',round:round});
-    return target('final.html',{round:round,go:action||''});
+    return target('final.html',{round:round,go:action||'',v:action==='report'&&(round===7||round===8)?'20261013-report-qr':null});
   }
   function canonicalSeriesRound(series,round){
     series=String(series||'').toLowerCase();

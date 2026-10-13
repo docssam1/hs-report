@@ -117,8 +117,6 @@
     if((m.kind==='final'||m.kind==='last')&&helper){
       var allowed=helper.accessAllowed(options.data||{},name,m.kind,m.round);
       var url=allowed?helper.reportUrl(m.kind,m.round,name):'';
-      if(url&&m.kind==='final'&&m.round===7) url+='&v=20260920b';
-      if(url&&m.kind==='final'&&m.round===8) url+='&v=20261005-final8';
       if(url&&m.kind==='last'&&m.round===1) url+='&v=20261005-last1';
       return {url:url,label:allowed?'상세 분석·유사문제':'자료실 승인 필요'};
     }

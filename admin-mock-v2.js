@@ -38,8 +38,8 @@
   }
   function roundTitle(set,r){const M=dataFor(set);return((M.rounds||{})[r]||{}).title||r+'회'}
   function rawKey(set,r,slot){return(set==='original'?'original':(set==='final'||set==='extra'?'final':(set==='last'?'last':(set==='hw'?'hw':''))))+r+(Number(slot)===1?'':'@'+slot)}
-  function teacherEntryUrl(set,r,student){if(set==='last')return 'last1-analysis.html?round='+r+'&mode=teacher&name='+encodeURIComponent(student);return 'final.html?'+(set==='original'?'set=original&':'')+'round='+r+'&go=answer&entry=teacher&name='+encodeURIComponent(student)}
-  function teacherReportUrl(set,r,student,slot){return 'final.html?'+(set==='original'?'set=original&':(set==='last'?'set=last&':''))+'round='+r+'&go=report&attempt='+(Number(slot)||1)+'&entry=teacher&name='+encodeURIComponent(student)}
+  function teacherEntryUrl(set,r,student){if(set==='last')return 'last1-analysis.html?round='+r+'&mode=teacher&name='+encodeURIComponent(student);return 'final.html?'+(set==='original'?'set=original&':'')+'round='+r+'&go=answer&entry=teacher&name='+encodeURIComponent(student)+(['final','extra'].includes(set)&&[7,8].includes(Number(r))?'&v=20261013-report-qr':'')}
+  function teacherReportUrl(set,r,student,slot){return 'final.html?'+(set==='original'?'set=original&':(set==='last'?'set=last&':''))+'round='+r+'&go=report&attempt='+(Number(slot)||1)+'&entry=teacher&name='+encodeURIComponent(student)+(['final','extra'].includes(set)&&[7,8].includes(Number(r))?'&v=20261013-report-qr':'')}
   function isEntrySet(set){return ['final','original','last','extra'].includes(set)}
   function inlineEntryKey(set,r){if(set==='last')return 'last'+r;if(set==='extra'&&String(r)==='8')return 'final8';return '';}
   function entryButton(set,r,student){
