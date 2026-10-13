@@ -584,7 +584,7 @@ td.weak-cell{white-space:nowrap}
 <div id="app"></div>
 <button class="print-btn no-print" id="printBtn" style="display:none">🖨 인쇄</button>
 
-<script src="final-last-routes.js?v=20261006-withdrawn"></script>
+<script src="final-last-routes.js?v=20261013-report-qr"></script>
 <script>(function(){
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
@@ -1386,11 +1386,11 @@ td.weak-cell{white-space:nowrap}
     return new URL(path,'https://hs.gfieldacademy.net/').href;
   }
   function reportQrTarget(ctx){
-    var route={round:String(ctx.roundNum),go:'report'};
+    var route={round:String(ctx.roundNum),go:'report',v:'20261013-report-qr'};
     if(isLast)route.set='last';
     else if(isOriginal)route.set='original';
     var target='final.html?'+new URLSearchParams(route).toString();
-    return publicSiteUrl('index.html?'+new URLSearchParams({next:target}).toString());
+    return publicSiteUrl('index.html?'+new URLSearchParams({v:'20261013-report-qr',next:target}).toString());
   }
   function practiceQrTarget(ctx){
     var model=wrongPracticeModel(ctx),rows=model.ready||[];
@@ -1400,7 +1400,7 @@ td.weak-cell{white-space:nowrap}
     else if(!isLast&&[1,2,3,4,7,8].indexOf(ctx.roundNum)>=0)query.bank='final'+ctx.roundNum;
     else if(isLast&&[1,2].includes(ctx.roundNum))query.bank='last'+ctx.roundNum;
     var target='bank/index.html?'+new URLSearchParams(query).toString();
-    return publicSiteUrl('index.html?'+new URLSearchParams({next:target}).toString());
+    return publicSiteUrl('index.html?'+new URLSearchParams({v:'20261013-report-qr',next:target}).toString());
   }
   function reportQrHTML(ctx){
     var reportUrl=reportQrTarget(ctx),practiceUrl=practiceQrTarget(ctx);
