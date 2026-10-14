@@ -12,7 +12,8 @@
 - `qa/parent-pin-server-validate.cjs`: 운영 Edge handler를 실행하며 E 검증 폴더에만 설치한 @electric-sql/pglite@0.5.9의 실제 로컬 PostgreSQL SQL을 호출. 이메일 검증 전 설정 불가, 앞자리 0, 잠금 후 정답 입력 거부, 실패 시 세션 미발급, 잘못된 이메일/퇴원/기기 제한, salt 경합, pepper 누락 차단, service_role 실행 허용 및 anon/authenticated 테이블/RPC 접근 거부 통과. 운영 DB/메일/성적 쓰기는 0건. 실제 다중 DB 연결 경쟁/운영 메일 왕복은 미검증.
 - 운영 반영 순서(아직 미실행): ① 서버 전용 `HS_PARENT_PIN_PEPPER`를 암호학적 랜덤 32바이트 이상으로 생성·비공개 등록(소스/채팅/로그에 값 금지) ② `supabase/parent-pin-schema.sql`을 새 migration으로 적용·RLS/advisors 검사 ③ hs-parent-auth index.ts+pin-security.ts 함께 배포 ④ 가상 전용 계정으로 운영 확인 후 frontend main/Pages 배포·공개 확인. Supabase CLI가 이 작업 환경 PATH에 없어 migration 파일명을 임의 생성하지 않았으며 준비 SQL로 남겼다.
 - PIN 기능 준비 전에 frontend만 먼저 공개하지 않는다. 새 frontend는 구형 서버가 PIN을 무시해 이메일 세션만 발급해도 pinReady 확인 없이는 인증 완료로 처리하지 않는다. 기존 이메일 전용 구형 클라이언트는 새 서버에서도 지원하며 PIN을 조용히 덮어쓰지 않는다.
-- 사용자 현재 요청은 기능 구현 승인이다. 운영 DB 적용·서버 secret 등록·main/공개 배포는 아직 수행하지 않았고 배포 완료로 보고하지 않는다.
+- 사용자 후속 ‘반영’으로 운영 설정·main·배포까지 승인(2026-10-14). 그러나 현재 Supabase MCP에 secret 등록 도구가 없고 CLI/인증 환경변수도 없다. 인증 저장소·브라우저 쿠키에서 자격 증명을 추출하거나 기존 서비스 키를 PIN pepper로 재사용하지 않는다. 별도 서버 비밀값 등록은 Dashboard/인증된 CLI에서 한 번 필요하다(공식 functions/secrets 문서 확인).
+- 배포 전 읽기 확인: hs-parent-auth 운영 v4 그대로, PIN 테이블 없음, hs_parent_links 존재, 실제 service_role bypassrls=true. 기존 기능을 깨뜨리는 부분 배포를 피하려고 DB/함수/frontend/main 적용은 아직 수행하지 않았다. 사용자 보조 스크립트 E:\Codex\work\parent-pin-qa-20261014\register-pin-secret.ps1는 안전 난수 생성→클립보드→공식 설정 페이지를 열며 원문을 파일/출력에 남기지 않는다. 아직 실행하지 않았다. 사용자가 등록했다고 하면 서버 설정을 다시 읽어 준비 여부를 확인하고 위 순서로 계속한다.
 
 ## 2026-10-13 보고서 진입 캐시·QR 연결 검사
 
