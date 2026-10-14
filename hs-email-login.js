@@ -1,6 +1,6 @@
 /* 학부모 이메일 인증 입장 (이름 → 학부모 이메일 → 인증번호).
  * - 인증한 같은 브라우저: 저장된 학생 세션 + 서버 확인(활성·이메일 연결)으로 바로 입장.
- * - 새 기기·다른 브라우저·로그아웃·저장내용 삭제·세션 만료/취소: 다시 인증.
+ * - 새 브라우저: 이름 + 학부모가 설정한 4자리 PIN. 처음/분실/5회 오류: 이메일 인증으로 설정.
  * - 이메일 인증은 접속 확인일 뿐 구매·회차·자료실 승인을 대신하지 않는다.
  * - 이메일 주소·인증번호는 브라우저에 저장하지 않는다.
  */
@@ -11,6 +11,13 @@
   var RESEND_SECONDS=60;
 
   var MESSAGES={
+    INVALID_PIN_FORMAT:'접속번호는 숫자 4자리로 입력해 주세요.',
+    INVALID_PIN:'접속번호가 맞지 않아요. 5회 틀리면 이메일로 재설정해야 해요.',
+    PIN_CHANGED:'접속번호가 변경됐어요. 다시 입력해 주세요.',
+    PIN_LOCKED:'접속번호를 5회 잘못 입력했어요. 이메일 인증으로 번호를 재설정해 주세요.',
+    PIN_NOT_READY:'아직 접속번호를 설정하지 않았어요. 이메일 인증으로 설정해 주세요.',
+    PIN_NOT_CONFIGURED:'접속번호 기능을 준비 중입니다. 잠시 후 다시 시도해 주세요.',
+    PIN_SAVE_FAILED:'접속번호를 저장하지 못했어요. 다시 인증해 주세요.',
     INVALID_EMAIL:'이메일 주소를 확인해 주세요.',
     STUDENT_NOT_FOUND:'등록된 학생만 입장할 수 있어요. 이름을 정확히 입력해 주세요.',
     STUDENT_INACTIVE:'접속이 정지된 회원입니다. 학원에 문의해 주세요.',
@@ -78,6 +85,7 @@
     box.classList.toggle('hidden',step==='name');
     el('el-step-email').classList.toggle('hidden',step!=='email');
     el('el-step-code').classList.toggle('hidden',step!=='code');
+    el('el-step-pin').classList.toggle('hidden',step!=='pin');
     setError('');
   }
 
@@ -88,7 +96,7 @@
 
   function setBusy(busy){
     state.busy=busy;
-    ['el-send','el-verify'].forEach(function(id){var b=el(id);if(b)b.disabled=busy});
+    ['el-send','el-verify','el-pin-enter','el-pin-reset','el-back','el-change'].forEach(function(id){var b=el(id);if(b)b.disabled=busy});
     var resend=el('el-resend');if(resend&&busy)resend.disabled=true;
   }
 
@@ -127,11 +135,15 @@
     if(state.busy)return;
     var code=String(el('el-code').value||'').replace(/\s+/g,'');
     if(!/^\d{6,10}$/.test(code)){setError('메일로 받은 숫자 인증번호를 입력해 주세요.');el('el-code').focus();return}
+    var pin=String(el('el-new-pin').value||'');
+    if(!/^\d{4}$/.test(pin)){setError(MESSAGES.INVALID_PIN_FORMAT);el('el-new-pin').focus();return}
+    if(pin!==el('el-confirm-pin').value){setError('접속번호 두 칸을 똑같이 입력해 주세요.');el('el-confirm-pin').focus();return}
     setBusy(true);setError('');
     try{
-      var result=await AUTH().verifyEmailLogin(state.name,state.email,code);
+      var result=await AUTH().verifyEmailLogin(state.name,state.email,code,pin);
       clearInterval(state.timer);
       el('el-code').value='';
+      el('el-new-pin').value='';el('el-confirm-pin').value='';el('el-pin').value='';
       show('name');
       var done=state.resolve;state.resolve=null;state.reject=null;
       if(done)done(result);
@@ -140,8 +152,24 @@
     }finally{setBusy(false)}
   }
 
+  async function enterPin(){
+    if(state.busy)return;
+    var pin=String(el('el-pin').value||'');
+    if(!/^\d{4}$/.test(pin)){setError(MESSAGES.INVALID_PIN_FORMAT);el('el-pin').focus();return}
+    setBusy(true);setError('');
+    try{
+      var result=await AUTH().pinLogin(state.name,pin);
+      el('el-pin').value='';show('name');
+      var done=state.resolve;state.resolve=null;state.reject=null;if(done)done(result);
+    }catch(error){
+      if(error&&['PIN_LOCKED','PIN_NOT_READY'].indexOf(error.code)>=0)show('email');
+      setError(messageFor(error));
+    }finally{setBusy(false)}
+  }
+
   function back(){
     clearInterval(state.timer);
+    el('el-pin').value='';el('el-code').value='';el('el-new-pin').value='';el('el-confirm-pin').value='';
     show('name');
     var cancel=state.reject;state.resolve=null;state.reject=null;
     if(cancel){var e=new Error('CANCELLED');e.code='CANCELLED';cancel(e)}
@@ -152,6 +180,9 @@
     if(wired||!el('email-login'))return;
     wired=true;
     el('el-send').addEventListener('click',send);
+    el('el-pin-enter').addEventListener('click',enterPin);
+    el('el-pin-reset').addEventListener('click',function(){show('email');el('el-email').focus()});
+    el('el-pin').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();enterPin()}});
     el('el-verify').addEventListener('click',verify);
     el('el-resend').addEventListener('click',function(){if(!el('el-resend').disabled){el('el-email').value=state.email;send()}});
     el('el-change').addEventListener('click',function(){clearInterval(state.timer);show('email');el('el-email').focus()});
@@ -167,8 +198,9 @@
     state.name=name;state.email='';
     el('el-who').textContent=name;
     el('el-email').value='';
-    show('email');
-    setTimeout(function(){el('el-email').focus()},50);
+    el('el-pin').value='';el('el-code').value='';el('el-new-pin').value='';el('el-confirm-pin').value='';
+    show('pin');
+    setTimeout(function(){el('el-pin').focus()},50);
     return new Promise(function(resolve,reject){state.resolve=resolve;state.reject=reject});
   }
 

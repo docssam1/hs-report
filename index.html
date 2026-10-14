@@ -36,9 +36,9 @@
     border:1px solid rgba(249,115,22,.6);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;}
 
   /* 로그인 */
-  #login{position:fixed;inset:0;z-index:40;display:flex;justify-content:center;align-items:center;padding:20px;
+  #login{position:fixed;inset:0;z-index:40;display:flex;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto;
     background:radial-gradient(900px 500px at 50% 0%,#ffe7c7,transparent 60%),var(--bg);}
-  .login-box{background:var(--card);padding:42px 32px;border-radius:24px;width:100%;max-width:380px;text-align:center;border:1px solid var(--line);box-shadow:0 22px 60px rgba(186,110,40,.16);}
+  .login-box{background:var(--card);padding:42px 32px;border-radius:24px;width:100%;max-width:380px;margin-block:auto;flex-shrink:0;text-align:center;border:1px solid var(--line);box-shadow:0 22px 60px rgba(186,110,40,.16);}
   .login-box .crest{width:78px;height:auto;border-radius:18px;margin-bottom:14px;filter:drop-shadow(0 8px 16px rgba(249,115,22,.25));animation:logoPulse 2.6s ease-in-out infinite;}
   @keyframes logoPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
   .login-box .mini{font-size:11px;letter-spacing:.26em;color:var(--orange-d);font-weight:700;margin-bottom:10px;}
@@ -429,20 +429,29 @@
     </div>
     <div id="email-login" class="email-login hidden">
       <div class="el-who"><b id="el-who"></b> 학생 입장</div>
+      <div id="el-step-pin" class="hidden">
+        <p class="el-guide">설정한 4자리 접속번호를 입력해 주세요.</p>
+        <input type="password" id="el-pin" aria-label="4자리 접속번호" placeholder="4자리 접속번호" inputmode="numeric" autocomplete="current-password" maxlength="4">
+        <button class="el-primary" id="el-pin-enter" type="button">접속번호로 입장하기</button>
+        <div class="el-links"><button type="button" id="el-pin-reset">처음 이용 · 접속번호를 잊었어요</button></div>
+      </div>
       <div id="el-step-email">
-        <p class="el-guide">이 기기는 아직 승인되지 않았어요.<br>학부모 이메일로 인증번호를 받아 한 번만 승인해 주세요.</p>
+        <p class="el-guide">학부모 이메일을 인증한 뒤 사용할 4자리 접속번호를 정해 주세요.<br>번호 재설정은 처음 등록한 이메일로 진행합니다.</p>
         <input type="email" id="el-email" placeholder="학부모 이메일" autocomplete="email" inputmode="email">
         <button class="el-primary" id="el-send" type="button">인증번호 받기</button>
       </div>
       <div id="el-step-code" class="hidden">
         <p class="el-guide"><b id="el-sent-to"></b>(으)로 보낸 인증번호를 입력해 주세요.<br>메일이 보이지 않으면 스팸함도 확인해 주세요.</p>
         <input type="text" id="el-code" placeholder="인증번호" inputmode="numeric" autocomplete="one-time-code" maxlength="10">
-        <button class="el-primary" id="el-verify" type="button">인증하고 입장하기</button>
+        <label for="el-new-pin" class="el-guide">앞으로 사용할 접속번호</label>
+        <input type="password" id="el-new-pin" placeholder="새 접속번호 4자리" inputmode="numeric" autocomplete="new-password" maxlength="4">
+        <input type="password" id="el-confirm-pin" aria-label="새 접속번호 확인" placeholder="접속번호 다시 입력" inputmode="numeric" autocomplete="new-password" maxlength="4">
+        <button class="el-primary" id="el-verify" type="button">이메일 인증 · 접속번호 설정하고 입장</button>
         <div class="el-links"><button type="button" id="el-resend">인증번호 다시 받기</button><span>·</span><button type="button" id="el-change">이메일 바꾸기</button></div>
       </div>
       <div id="el-error" class="el-error hidden" role="alert"></div>
       <button type="button" class="el-back" id="el-back">← 이름 다시 입력</button>
-      <div class="el-note">승인받은 기기에서는 이메일 인증 없이 바로 입장해요.<br>학생 1명당 기기 3대까지 승인돼요. 나가기 뒤에는 다시 인증하고,<br>브라우저 기록을 지우면 새 기기로 등록돼요.</div>
+      <div class="el-note">인증한 브라우저에서는 이름만 입력해 입장해요.<br>다른 브라우저에서는 이름과 4자리 접속번호를 사용해요.<br>5회 틀리면 이메일 인증으로 번호를 재설정해 주세요.<br>학생 1명당 승인 브라우저 3개까지 이용할 수 있어요.</div>
     </div>
     <div class="hint">출석이 확인된 주차의 영상과 자료만 열립니다.<br>문의는 담당 선생님께 해주세요.</div>
   </div>
@@ -457,6 +466,7 @@
       <button class="logout" onclick="window.open('manual.html','_blank')">📋 성적진단 매뉴얼</button>
       <button class="logout" onclick="window.open('https://open.kakao.com/me/gfield','_blank')">🆘 유형 요청</button>
       <button class="logout" onclick="logout()">나가기</button>
+      <button class="logout" onclick="logout(true)">로그아웃</button>
     </div>
   </div>
 
@@ -556,8 +566,8 @@
 <script src="archive-info.js?v=20260825b"></script>
 <script src="bank/important-types.js?v=20260913a"></script>
 <script src="middle-access.js?v=20261006-withdrawn"></script>
-<script src="hs-auth.js?v=20261011-email-login-1"></script>
-<script src="hs-email-login.js?v=20261011-email-login-1"></script>
+<script src="hs-auth.js?v=20261014-parent-pin"></script>
+<script src="hs-email-login.js?v=20261014-parent-pin"></script>
 <script src="student-result-hub.js?v=20261013-report-qr"></script>
 <script>
   const D = window.GFIELD_DATA;
@@ -685,12 +695,12 @@
       return url.pathname.replace(/^\//,'')+url.search+url.hash;
     }catch(e){ return ''; }
   }
-  function logout(){
+  function logout(forget){
     const keep=currentStudent&&!isDemo?currentStudent:'';
     currentStudent=null; isDemo=false; reportUnlocked=false;
     if(window.GFIELD_STUDENT_RESULT_HUB) window.GFIELD_STUDENT_RESULT_HUB.clear();
-    /* 이름은 다음 입력 칸에 남기되, 이메일 인증 세션은 끝낸다(다음 입장 때 다시 인증). */
-    if(window.GFIELD_EMAIL_LOGIN&&window.GFIELD_EMAIL_LOGIN.REQUIRED) window.GFIELD_EMAIL_LOGIN.signOut();
+    /* 나가기: 인증 유지. 공용 PC의 명시적 로그아웃만 인증 세션을 끝낸다. */
+    if(forget&&window.GFIELD_EMAIL_LOGIN&&window.GFIELD_EMAIL_LOGIN.REQUIRED) window.GFIELD_EMAIL_LOGIN.signOut();
     try{ sessionStorage.removeItem(QUESTION_BANK_HANDOFF_KEY); }catch(e){}
     try{ localStorage.removeItem(QUESTION_BANK_LAUNCH_KEY); }catch(e){}
     if(briefTimer){ clearInterval(briefTimer); briefTimer=null; }

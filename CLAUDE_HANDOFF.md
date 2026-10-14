@@ -1,5 +1,19 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-14 학부모가 정하는 4자리 접속번호 (로컬 구현·검증, 미배포)
+
+- 사용자 승인: 최초 이메일 인증과 함께 4자리 접속번호를 직접 설정. 새 브라우저는 이름+번호, 저장된 인증 브라우저는 이름만. 5회 오입력 후에는 등록 이메일 인증으로 번호 재설정. 엄밀한 MFA라고 표시하지 않는다.
+- 작업본: E:\Codex\worktrees\hs-report-last2-release-20261012, `codex/parent-pin-20261014`, origin/main `266e70d`에서 분리. 이전 로드맵 🔓 작업 `codex/roadmap-approval-icons-20261014`의 `dfe4f2b`/`2132811`은 별도 브랜치에 보존했으며 아직 미배포. 이번 인증 변경에 임의로 섞지 않았다.
+- 기존 index.html/hs-email-login.js/hs-auth.js와 hs-parent-auth만 확장. 별도 로그인/승인 도구를 만들지 않는다. 나가기는 세션 유지, 명시적 로그아웃만 해제. 긴 OTP/PIN 폼은 로그인 패널 안에서 세로 스크롤돼 윗부분/제출 버튼이 잘리지 않는다.
+- 서버: `hs-parent-auth/pin-security.ts`는 학생 UUID+PIN을 별도 pepper로 HMAC 후 랜덤 salt/PBKDF2-SHA256 600,000회 처리. 원문 PIN/OTP/이메일은 브라우저 저장에 추가하지 않고 서버 로그에도 기록하지 않는다. DB PIN hash/salt와 오류 횟수는 서비스 역할만 접근한다. security-invoker RPC 행 잠금으로 5번째 실패를 영구 잠금하며 이메일 검증 성공 시만 PIN과 실패 횟수를 재설정한다. PIN 교체 경합은 salt 불일치로 재입력을 요구한다.
+- 기존 학생 UUID, 성적 owner_id, 자료실/회차 승인, 이메일 소유권, 관리자 로그인, 퇴원생 차단, 기기 3대 제한 유지. 기기 제한은 실제 PC 3대가 아니라 브라우저 등록 3개다. 로컬 QA 역할 service_role은 실제 Supabase처럼 bypassrls로 만든 가상 역할이고 운영 권한을 완화한 것이 아니다.
+- 확인한 서버 배포본: MCP hs-parent-auth v4(verify_jwt=false, 함수 내부 OTP/세션 검증). 원격 index.ts와 origin/main 원문은 정규화 fingerprint 3343493016/454행 일치. 배포 시 최신 서버 파일을 다시 대조하고 새 pin-security.ts도 함께 포함한다. 공개 함수의 기존 verify_jwt=false를 무작정 true로 바꿔 OTP 시작을 막지 않는다.
+- 검사: Deno check, `qa/hs-auth-session.test.js`, 기존 확장 `qa/email-login-browser-validate.js` 통과. PC·390px 새 브라우저 PIN/저장 복구/나가기/로그아웃/5회 오류/이메일 재설정/형제/다른 이메일/직접링크/퇴원/3개 제한 및 브라우저 저장 PIN/이메일 미포함 확인. 화면 캡처 E:\Codex\work\parent-pin-qa-20261014. 지필드 디자인 스킬로 기존 화면 유지와 세로 잘림 검수, audit 스킬로 실제 상태 구분, Supabase 스킬로 인증/RLS/키 보호 적용.
+- `qa/parent-pin-server-validate.cjs`: 운영 Edge handler를 실행하며 E 검증 폴더에만 설치한 @electric-sql/pglite@0.5.9의 실제 로컬 PostgreSQL SQL을 호출. 이메일 검증 전 설정 불가, 앞자리 0, 잠금 후 정답 입력 거부, 실패 시 세션 미발급, 잘못된 이메일/퇴원/기기 제한, salt 경합, pepper 누락 차단, service_role 실행 허용 및 anon/authenticated 테이블/RPC 접근 거부 통과. 운영 DB/메일/성적 쓰기는 0건. 실제 다중 DB 연결 경쟁/운영 메일 왕복은 미검증.
+- 운영 반영 순서(아직 미실행): ① 서버 전용 `HS_PARENT_PIN_PEPPER`를 암호학적 랜덤 32바이트 이상으로 생성·비공개 등록(소스/채팅/로그에 값 금지) ② `supabase/parent-pin-schema.sql`을 새 migration으로 적용·RLS/advisors 검사 ③ hs-parent-auth index.ts+pin-security.ts 함께 배포 ④ 가상 전용 계정으로 운영 확인 후 frontend main/Pages 배포·공개 확인. Supabase CLI가 이 작업 환경 PATH에 없어 migration 파일명을 임의 생성하지 않았으며 준비 SQL로 남겼다.
+- PIN 기능 준비 전에 frontend만 먼저 공개하지 않는다. 새 frontend는 구형 서버가 PIN을 무시해 이메일 세션만 발급해도 pinReady 확인 없이는 인증 완료로 처리하지 않는다. 기존 이메일 전용 구형 클라이언트는 새 서버에서도 지원하며 PIN을 조용히 덮어쓰지 않는다.
+- 사용자 현재 요청은 기능 구현 승인이다. 운영 DB 적용·서버 secret 등록·main/공개 배포는 아직 수행하지 않았고 배포 완료로 보고하지 않는다.
+
 ## 2026-10-13 보고서 진입 캐시·QR 연결 검사
 
 - 사용자 요청: QR 연결이 안 된다는 제보 후 ‘진행’, 특정 사진/주소 없이 ‘그냥 해’. 확인된 옛 캐시 키는 허브 최종7·8회와 자료실 최종7회에 있었으며, 로그인 QR·목적지에는 버전이 없었다. 해당 제보의 실제 인쇄물/카메라 실패 원인은 확인하지 못했다.
