@@ -3294,8 +3294,7 @@ window.GFIELD_DATA = {
     "정유현": "withdrawn",
     "한재이": "online",
     "김시후": "withdrawn",
-    "주성현": "online",
-    "김나율": "withdrawn"
+    "주성현": "online"
   },
   "vipAccess": {
     "report": [
