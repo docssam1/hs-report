@@ -15,6 +15,7 @@ const INACTIVE = '이메일인증검수정지';
 const FULL = '이메일인증검수기기초과';
 const EMAIL = 'qa-parent@example.com';
 const GOOD_CODE = '12345678';
+const SITE_BASE = process.env.GFIELD_EMAIL_QA_BASE || 'http://localhost:8000/';
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.json': 'application/json' };
 
 const server = http.createServer((req, res) => {
@@ -33,13 +34,13 @@ async function setup(context, state) {
   await context.route(/^https?:\/\//, async (route) => {
     const req = route.request();
     const url = new URL(req.url());
-    if (url.pathname.endsWith('/data.js') && url.hostname === 'localhost') {
+    if (url.pathname.endsWith('/data.js') && url.origin === new URL(SITE_BASE).origin) {
       const resp = await route.fetch();
       const body = await resp.text();
       const addon = `\n;(function(){var d=window.GFIELD_DATA;${JSON.stringify([STUDENT, SIBLING, OTHER, INACTIVE, FULL])}.forEach(function(n){if(d.students.indexOf(n)<0)d.students.push(n)});})();`;
       return route.fulfill({ response: resp, body: body + addon, headers: { ...resp.headers(), 'content-type': 'text/javascript; charset=utf-8' } });
     }
-    if (url.hostname === 'localhost') return route.continue();
+    if (url.origin === new URL(SITE_BASE).origin) return route.continue();
     if (url.pathname === '/functions/v1/hs-parent-auth') {
       const body = req.postDataJSON() || {};
       state.calls.push(body.action);
@@ -98,7 +99,7 @@ async function setPin(page,pin='0472'){await page.fill('#el-new-pin',pin);await 
 
 (async () => {
   await new Promise((r) => server.listen(8000, '127.0.0.1', r));
-  const base = 'http://localhost:8000/';
+  const base = SITE_BASE;
   const browser = await chromium.launch({ headless: true });
   const state = makeServerState();
   const results = {};

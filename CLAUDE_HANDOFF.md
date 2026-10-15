@@ -1,5 +1,13 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-15 4자리 접속번호 운영 반영
+
+- 사용자 ‘반영’ 승인 및 ‘저장 완료’ 확인 뒤 진행. 사용자가 보호키를 직접 저장했고 새 서버에서 값 노출 없이 인식을 확인했다. 도움 스크립트는 사용자 ‘네가 실행해’ 지시로 Windows PC에서 실행했다. 보호키를 코드/PR/로그에 기록하거나 클립보드 값을 다시 출력하지 않았다.
+- 원격 hs-parent-auth v5는 기존 v4와 코드가 동일했다(fingerprint 3343493016). DB migration `20261015055504_hs_parent_pin_login` 적용. 기존 계정·성적·메일 연결·승인 명단 데이터 수정 없음.
+- hs-parent-auth v6 ACTIVE, index.ts+pin-security.ts 2파일이 검수본과 줄바꿈 정규화 후 일치. 기존 자체 인증을 위해 verify_jwt=false 유지. `hs_student_pins` RLS=true, anon/authenticated SELECT와 RPC EXECUTE=false, service_role만 허용, RPC security_invoker 확인. Advisors ERROR=0; 서비스 전용 테이블의 RLS/no-policy INFO는 의도한 차단 구조다(https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy). 허용 정책을 추가해 INFO를 지우지 않았다.
+- `qa/parent-pin-live-validate.cjs`로 실제 서버 보호키 존재, 구형 이메일 경로, PIN 형식/미등록 이름/세션 없음 거부, 익명 PIN 테이블/RPC 거부 확인. 이 검사는 OTP 발송·학생 데이터 쓰기를 하지 않는다. 실제 학부모 OTP 왕복과 실제 학생의 PIN 성공 로그인은 별도 첫 사용 확인 대상이며, 로컬 실제 SQL/Edge handler 및 브라우저 합성 검사 통과와 구분한다.
+- 기존 `qa/email-login-browser-validate.js`에 공개 URL 환경변수 `GFIELD_EMAIL_QA_BASE`만 추가해 공개 frontend도 합성 Auth 응답으로 검사한다. 학생 데이터·로그인 허용 규칙을 테스트 편의로 완화하지 않는다. 원격 PR #91, frontend main/Pages/공개 확인은 아래 실행 영수증으로 구분한다.
+
 ## 2026-10-14 학부모가 정하는 4자리 접속번호 (로컬 구현·검증, 미배포)
 
 - 사용자 승인: 최초 이메일 인증과 함께 4자리 접속번호를 직접 설정. 새 브라우저는 이름+번호, 저장된 인증 브라우저는 이름만. 5회 오입력 후에는 등록 이메일 인증으로 번호 재설정. 엄밀한 MFA라고 표시하지 않는다.
