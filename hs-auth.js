@@ -315,14 +315,25 @@
     return parentAuth('start',{name:normalizeName(name),email:String(email||'').trim(),deviceToken:requireDevice()});
   }
 
-  async function verifyEmailLogin(name,email,code){
-    var result=await parentAuth('verify',{name:normalizeName(name),email:String(email||'').trim(),code:String(code||'').replace(/\s+/g,''),deviceToken:requireDevice()});
+  async function verifyEmailLogin(name,email,code,pin){
+    var body={name:normalizeName(name),email:String(email||'').trim(),code:String(code||'').replace(/\s+/g,''),deviceToken:requireDevice()};
+    if(pin!==undefined)body.pin=String(pin);
+    var result=await parentAuth('verify',body);
+    if(pin!==undefined&&!result.pinReady){var notReady=new Error('PIN_NOT_CONFIGURED');notReady.code='PIN_NOT_CONFIGURED';throw notReady;}
     var saved=store(result&&result.session,result&&result.student||name,'student');
     var verified=readStored('student');
     if(!verified||verified.access_token!==saved.access_token){
       var storageError=new Error('STORAGE_UNAVAILABLE');storageError.code='STORAGE_UNAVAILABLE';throw storageError;
     }
     return {student:result.student,firstLink:!!result.firstLink};
+  }
+
+  async function pinLogin(name,pin){
+    var result=await parentAuth('pin',{name:normalizeName(name),pin:String(pin),deviceToken:requireDevice()});
+    var saved=store(result&&result.session,result&&result.student||name,'student');
+    var verified=readStored('student');
+    if(!verified||verified.access_token!==saved.access_token){var e=new Error('STORAGE_UNAVAILABLE');e.code='STORAGE_UNAVAILABLE';throw e;}
+    return {student:result.student};
   }
 
   /* 같은 브라우저 재입장: 서버에서 활성 학생·이메일 연결을 확인하고 최근 접속을 남긴다. */
@@ -346,6 +357,7 @@
     clear:clear,
     startEmailLogin:startEmailLogin,
     verifyEmailLogin:verifyEmailLogin,
+    pinLogin:pinLogin,
     touchStudent:touchStudent,
     hasAdminDevice:function(){return !!readAdminDevice()},
     forgetAdminDevice:forgetAdminDevice

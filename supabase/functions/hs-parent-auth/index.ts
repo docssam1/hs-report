@@ -1,11 +1,12 @@
 import "jsr:@supabase/functions-js@2.5.0/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2.112.4";
+import { validPin, pinSalt, pinDigest } from "./pin-security.ts";
 
 // 학부모 이메일 인증 → 기존 학생 계정 세션.
 // - 인증번호 발송·검증은 Supabase Auth(이메일 OTP, 프로젝트 SMTP)를 그대로 쓴다.
 // - 학부모 세션은 브라우저에 주지 않고 서버에서 바로 종료한다.
 // - 학생 권한 근거는 서버가 확인한 hs_accounts(active) + hs_parent_links 연결뿐이다.
-// - 인증번호·토큰·비밀번호는 저장하거나 기록하지 않는다.
+// - 인증번호·토큰·PIN 원문은 저장하거나 기록하지 않는다. PIN은 별도 서버 pepper + PBKDF2로 검증.
 
 const ALLOWED_ORIGINS = new Set([
   "https://hs.gfieldacademy.net",
@@ -343,6 +344,9 @@ async function start(req: Request, body: Record<string, unknown>) {
 }
 
 async function verify(req: Request, body: Record<string, unknown>) {
+  // 구형 이메일 전용 클라이언트도 계속 지원. 번호 변경은 OTP 검증 성공 뒤에만 저장.
+  const pin = body.pin === undefined ? null : validPin(body.pin);
+  if (pin !== null && (Deno.env.get("HS_PARENT_PIN_PEPPER") || "").length < 32) throw new HttpError(503, "PIN_NOT_CONFIGURED");
   const email = normalizeEmail(body.email);
   const code = String(body.code ?? "").replace(/\s+/g, "");
   await consumeRateLimit("verify-ip", clientIp(req), 20, 600);
@@ -393,9 +397,42 @@ async function verify(req: Request, body: Record<string, unknown>) {
     } else firstLink = true;
   }
 
+  if (pin !== null) {
+    const salt = pinSalt();
+    const digest = await pinDigest(account.user_id, pin, salt, Deno.env.get("HS_PARENT_PIN_PEPPER") || "");
+    const { error } = await service.from("hs_student_pins").upsert({
+      student_user_id: account.user_id, pin_hash: digest, pin_salt: salt, failed_attempts: 0, updated_at: now,
+    }, { onConflict: "student_user_id" });
+    if (error) throw new HttpError(500, "PIN_SAVE_FAILED");
+  }
   const session = await issueStudentSession(account);
   await saveDevice(req, account.user_id, hash, device, sessionIdOf(session.access_token), now);
-  return { session, student: account.student, firstLink };
+  return { session, student: account.student, firstLink, pinReady: pin !== null };
+}
+
+async function pinLogin(req: Request, body: Record<string, unknown>) {
+  await consumeRateLimit("pin-ip", clientIp(req), 30, 600);
+  const pin = validPin(body.pin);
+  const hash = await deviceHash(body.deviceToken);
+  const { account } = await resolveStudent(body.name);
+  if (!account || !await findLink(account.user_id)) throw new HttpError(401, "PIN_NOT_READY");
+  await consumeRateLimit("pin-student", account.user_id, 20, 600);
+  const { data: record, error } = await service.from("hs_student_pins")
+    .select("pin_salt,failed_attempts").eq("student_user_id", account.user_id).maybeSingle();
+  if (error) throw new HttpError(503, "AUTH_TEMPORARILY_UNAVAILABLE");
+  if (!record) throw new HttpError(401, "PIN_NOT_READY");
+  if (record.failed_attempts >= 5) throw new HttpError(403, "PIN_LOCKED");
+  const digest = await pinDigest(account.user_id, pin, record.pin_salt, Deno.env.get("HS_PARENT_PIN_PEPPER") || "");
+  const { data: result, error: checkError } = await service.rpc("check_hs_student_pin", {
+    p_student: account.user_id, p_digest: digest, p_salt: record.pin_salt,
+  });
+  if (checkError) throw new HttpError(503, "AUTH_TEMPORARILY_UNAVAILABLE");
+  if (result !== "OK") throw new HttpError(result === "PIN_LOCKED" ? 403 : 401, String(result || "INVALID_PIN"));
+  // PIN 인증은 자료 권한을 부여하지 않으며 기존 브라우저 등록/3대 제한을 그대로 따른다.
+  const device = await assertDeviceAllowed(account.user_id, hash);
+  const session = await issueStudentSession(account);
+  await saveDevice(req, account.user_id, hash, device, sessionIdOf(session.access_token), new Date().toISOString());
+  return { session, student: account.student };
 }
 
 async function touch(req: Request, body: Record<string, unknown>) {
@@ -442,11 +479,13 @@ Deno.serve(async (req: Request) => {
     const action = String(body.action || "");
     if (action === "start") return json(req, await start(req, body));
     if (action === "verify") return json(req, await verify(req, body));
+    if (action === "pin") return json(req, await pinLogin(req, body));
     if (action === "touch") return json(req, await touch(req, body));
     throw new HttpError(400, "INVALID_ACTION");
   } catch (error) {
-    const status = error instanceof HttpError ? error.status : 500;
-    const code = error instanceof HttpError ? error.code : "INTERNAL_ERROR";
+    const pinError = error instanceof Error && ["INVALID_PIN_FORMAT", "PIN_NOT_CONFIGURED"].includes(error.message);
+    const status = error instanceof HttpError ? error.status : pinError ? (error.message === "INVALID_PIN_FORMAT" ? 400 : 503) : 500;
+    const code = error instanceof HttpError ? error.code : pinError ? error.message : "INTERNAL_ERROR";
     const retryAfter = error instanceof HttpError ? error.retryAfter : undefined;
     return json(req, { error: code }, status, retryAfter);
   }
