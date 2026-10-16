@@ -18,3 +18,8 @@
 .pm-answer-grid .pm-tall img{max-height:90mm}
 @media(max-width:430px){.pm-question-grid,.pm-answer-grid{grid-template-columns:1fr;grid-template-rows:none;grid-auto-rows:minmax(220px,auto)}.pm-page{height:auto}.pm-question-grid .pm-wide,.pm-answer-grid .pm-wide{grid-column:1}}
 @media print{.pm-question-grid,.pm-answer-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}.pm-question-grid .pm-wide,.pm-answer-grid .pm-wide{grid-column:1/-1}.pm-duplex-blank{display:block}}
+
+.pm-question-grid .pm-tall{grid-row:1/-1}
+.pm-question-grid .pm-tall img{max-height:160mm}
+.pm-question-grid [data-item-id^="mid7-q13-"] img{height:85mm;max-height:85mm;width:auto}
+@media screen and (max-width:430px){.pm-question-grid [data-item-id^="mid7-q13-"] img{height:auto;max-height:none}}

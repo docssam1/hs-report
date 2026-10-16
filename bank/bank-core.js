@@ -343,6 +343,26 @@
     }
   }
 
+  // Render only the MathML subset already used by the reviewed worksheet.
+  // Everything outside a validated math element remains plain escaped text.
+  function reviewedMathText(value) {
+    function escaped(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    }); }
+    return String(value == null ? '' : value).split(/(<math\b[\s\S]*?<\/math>)/g).map(function(part) {
+      if (!part.startsWith('<math') || typeof global.DOMParser !== 'function') return escaped(part);
+      var doc = new global.DOMParser().parseFromString(part, 'application/xml');
+      if (doc.querySelector('parsererror')) return escaped(part);
+      var allowed = ['math','mfrac','mn','mi','mo','mrow','mtext','msup','msub','msqrt'];
+      var valid = Array.from(doc.querySelectorAll('*')).every(function(el) {
+        return allowed.includes(el.localName) && Array.from(el.attributes).every(function(a) {
+          return a.name === 'xmlns' && a.value === 'http://www.w3.org/1998/Math/MathML' ||
+            a.name === 'display' && ['block','inline'].includes(a.value);
+        });
+      });
+      return valid ? part : escaped(part);
+    }).join('');
+  }
   function buildWatermarkTiles(container, name) {
     if (!container) return;
     container.innerHTML = '';
@@ -388,6 +408,7 @@
     examNumber: examNumber,
     parseQuery: parseQuery,
     getStudentName: getStudentName,
+    reviewedMathText: reviewedMathText,
     buildWatermarkTiles: buildWatermarkTiles,
     initWatermarks: initWatermarks,
     POINT_BAND_BY_LEVEL: POINT_BAND_BY_LEVEL,

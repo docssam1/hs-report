@@ -7,7 +7,7 @@
 <title>지필드 생각하는 초등 황소 약점 유형 문제은행 | 지필드 영재교육</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="final1-worksheet.css?v=20261015-last3-approved">
+<link rel="stylesheet" href="final1-worksheet.css?v=20261016-existing-banks">
 <style>
   :root{
     --bg:#f5f7fb; --card:#ffffff; --soft:#eef5ff;
@@ -241,10 +241,10 @@
 
 <script src="../hs-auth.js?v=20260913-bank-access"></script>
 <script>document.write('<script src="../data.js?v='+Date.now()+'"><\/script>');</script>
-<script src="bank-access.js?v=20261015-last3-approved"></script>
+<script src="bank-access.js?v=20261016-existing-banks"></script>
 <script>
 (function(){var v=Date.now();
- ['important-types.js','core/adapter-registry.js','adapters/final7-reviewed-adapter.js','adapters/final8-reviewed-adapter.js','adapters/last1-reviewed-adapter.js','adapters/last2-reviewed-adapter.js','adapters/last3-reviewed-adapter.js','bank-core.js','bank-fixed.js','final-source-generators.js','bank-raster.js','shape-network.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js','important-generators.js'].forEach(function(f){
+ ['important-types.js','core/adapter-registry.js','adapters/final7-reviewed-adapter.js','adapters/final8-reviewed-adapter.js','adapters/last1-reviewed-adapter.js','adapters/last2-reviewed-adapter.js','adapters/last3-reviewed-adapter.js','adapters/middle7-reviewed-adapter.js','bank-core.js','bank-fixed.js','final-source-generators.js','bank-raster.js','shape-network.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js','important-generators.js'].forEach(function(f){
    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
 </script>
 <script>
@@ -252,11 +252,11 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
 (function(){
   var q=new URLSearchParams(location.search);
   var sourceParts=String(q.get('source')||'').split('|');
-  var bankCode=/^(?:final[123478]|original[12]|last[123]|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^(?:1|2|3|4|7|8)$/.test(sourceParts[1])?'final'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='last'&&/^[123]$/.test(sourceParts[1])?'last'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='original'&&/^[12]$/.test(sourceParts[1])?'original'+sourceParts[1]:'')));
+  var bankCode=/^(?:final[123478]|original[12]|last[123]|middle7|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^(?:1|2|3|4|7|8)$/.test(sourceParts[1])?'final'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='last'&&/^[123]$/.test(sourceParts[1])?'last'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='original'&&/^[12]$/.test(sourceParts[1])?'original'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='middle'&&sourceParts[1]==='7'?'middle7':''))));
   var fixed=!!bankCode;
   if(!fixed)return;
   document.body.classList.add('fixed-bank-mode');
-  var s=document.createElement('script');s.src='final1-worksheet.js?v=20261015-last3-approved';s.onload=function(){
+  var s=document.createElement('script');s.src='final1-worksheet.js?v=20261016-existing-banks';s.onload=function(){
     var hasGens=q.has('gens'), raw=hasGens?(q.get('gens')||'').split(','):(q.get('practice')==='wrong'?[]:null);
     if(!hasGens&&q.get('gen')&&q.get('gen')!=='mix')raw=[q.get('gen')];
     var typeIds=bankCode==='important'?(q.get('types')||'').split(',').filter(Boolean):null;
@@ -268,7 +268,7 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
   var CORE = window.BANK_CORE;
   var fixedQuery = new URLSearchParams(location.search);
   var fixedSource=String(fixedQuery.get('source')||'').split('|');
-  var fixedEarly = /^(?:final[123478]|last[123]|important|original[12])$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && ((fixedSource[0]==='final' && /^(?:1|2|3|4|7|8)$/.test(fixedSource[1])) || (fixedSource[0]==='last' && /^[123]$/.test(fixedSource[1])) || (fixedSource[0]==='original' && /^[12]$/.test(fixedSource[1]))));
+  var fixedEarly = /^(?:final[123478]|last[123]|middle7|important|original[12])$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && ((fixedSource[0]==='final' && /^(?:1|2|3|4|7|8)$/.test(fixedSource[1])) || (fixedSource[0]==='last' && /^[123]$/.test(fixedSource[1])) || (fixedSource[0]==='original' && /^[12]$/.test(fixedSource[1])) || (fixedSource[0]==='middle' && fixedSource[1]==='7')));
   if(fixedEarly)return;
 
   var GEN_NAMES = {

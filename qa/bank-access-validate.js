@@ -78,6 +78,12 @@ for(const query of ['?bank=last3','?practice=wrong&source=last%7C3']){
   assert.equal(scoped.allowed({role:'student',student:'3회학생',active:false}),false);
   assert.equal(scoped.allowed({role:'admin',active:true}),true);
 }
+for(const query of ['?bank=middle7','?practice=wrong&source=middle%7C7']){
+  const scoped=gateApi(query,['중급승인','최종승인','퇴원학생'],[],'중급승인',[],[],null,{archiveProductAccess:{'mock-mid-7':['중급승인','퇴원학생'],'mock-final-7':['최종승인']},studentTypes:{'퇴원학생':'withdrawn'}});
+  assert.equal(scoped.scopedProductKey(),'mock-mid-7');
+  for(const [name,expected] of [['중급승인',true],['최종승인',false],['퇴원학생',false]])assert.equal(scoped.allowed({role:'student',student:name,active:true}),expected,'Middle7 separate existing permission: '+name);
+  assert.equal(scoped.allowed({role:'student',student:'중급승인',active:false}),false);
+}
 assert.match(home,/!\(\(D\.students\|\|\[\]\)\.includes\(name\)\)/,'the named portal still rejects unregistered student names');
 assert.match(home,/sessionStorage\.setItem\(QUESTION_BANK_HANDOFF_KEY/,'authorized archive entry creates the bank handoff');
 assert.match(home,/localStorage\.setItem\(QUESTION_BANK_LAUNCH_KEY/,'authorized archive entry creates the short-lived cross-tab launch');
