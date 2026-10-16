@@ -71,6 +71,13 @@ for(const query of ['?bank=last2','?practice=wrong&source=last%7C2']){
   for(const [name,expected] of [['1회학생',false],['2회학생',true],['승인학생',true]])assert.equal(scoped.allowed({role:'student',student:name,active:true}),expected,'Last2 existing attendance/group permission: '+name);
   assert.equal(scoped.allowed({role:'student',student:'2회학생',active:false}),false);
 }
+for(const query of ['?bank=last3','?practice=wrong&source=last%7C3']){
+  const scoped=gateApi(query,['2회학생','3회학생','승인학생','퇴원학생'],[],'3회학생',[],[],null,{attendance:{'2회학생':['oct-12'],'3회학생':['oct-19'],'퇴원학생':['oct-19']},archiveAccess:{'최종 모의고사':['승인학생']},studentTypes:{'퇴원학생':'withdrawn'}});
+  assert.equal(scoped.scopedProductKey(),'mock-last-3');
+  for(const [name,expected] of [['2회학생',false],['3회학생',true],['승인학생',true],['퇴원학생',false]])assert.equal(scoped.allowed({role:'student',student:name,active:true}),expected,'Last3 existing round permission: '+name);
+  assert.equal(scoped.allowed({role:'student',student:'3회학생',active:false}),false);
+  assert.equal(scoped.allowed({role:'admin',active:true}),true);
+}
 assert.match(home,/!\(\(D\.students\|\|\[\]\)\.includes\(name\)\)/,'the named portal still rejects unregistered student names');
 assert.match(home,/sessionStorage\.setItem\(QUESTION_BANK_HANDOFF_KEY/,'authorized archive entry creates the bank handoff');
 assert.match(home,/localStorage\.setItem\(QUESTION_BANK_LAUNCH_KEY/,'authorized archive entry creates the short-lived cross-tab launch');

@@ -46,7 +46,7 @@
         throw new Error('최종 '+roundKey+'회 30문항 분류·시험지 연결을 확인할 수 없습니다.');
       }
       var mergedItems=scoreRound.items.map(function(item,index){
-        return Object.assign({},item,{body:paperQuestions[index]&&paperQuestions[index].body||''});
+        return Object.assign({},item,{type:Number(roundKey)===3&&Number(item.no)===26?'정육각형 단계별 넓이 합의 나머지':item.type,body:paperQuestions[index]&&paperQuestions[index].body||''});
       });
       rounds[roundKey]=Object.assign({},scoreRound,{items:mergedItems});
     });
@@ -84,6 +84,10 @@
         var fixedBank='final'+Number(item.sourceRef.round);
         if(!group.fixedRefs[fixedBank])group.fixedRefs[fixedBank]=[];
         group.fixedRefs[fixedBank].push(fixedBank+'-q'+String(item.sourceRef.no).padStart(2,'0'));
+      }
+      if(item.sourceRef.set==='last'&&Number(item.sourceRef.round)===3&&item.generator&&item.generator.studentWrongPracticeReady===true){
+        if(!group.fixedRefs.last3)group.fixedRefs.last3=[];
+        group.fixedRefs.last3.push('last3-q'+String(item.sourceRef.no).padStart(2,'0'));
       }
       if(item.reviewStatus==='confirmed')group.confirmedCount++;else group.candidateCount++;
       if(group.reviewBases.indexOf(item.reviewBasis)<0)group.reviewBases.push(item.reviewBasis);

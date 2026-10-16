@@ -186,7 +186,7 @@
 <script src="../mock-data-last4.js"></script>
 <script src="../last-score-data.js"></script>
 <script src="../mock-data-original.js?v=20260928-signature-answer-keys-1"></script>
-<script src="bank-registry.js?v=20261012-last2-approved"></script>
+<script src="bank-registry.js?v=20261015-last3-approved"></script>
 <script type="text/plain" id="legacy-catalog-script">
 (function(){
   'use strict';
@@ -210,7 +210,7 @@
       if(!Array.isArray(scoreRound.items)||scoreRound.items.length!==30||!Array.isArray(paperQuestions)||paperQuestions.length!==30){
         throw new Error('최종 '+roundKey+'회 30문항 분류·시험지 연결을 확인할 수 없습니다.');
       }
-      rounds[roundKey]={items:scoreRound.items};
+      rounds[roundKey]={items:scoreRound.items.map(function(item){return Number(roundKey)===3&&Number(item.no)===26?Object.assign({},item,{type:'정육각형 단계별 넓이 합의 나머지'}):item;})};
     });
     if(Object.keys(rounds).length!==4)throw new Error('최종 모의고사 1~4회 분류 데이터가 모두 필요합니다.');
     return {title:paper.title||'최종 모의고사',questions:30,rounds:rounds};
@@ -361,7 +361,7 @@
 <script>
 window.GFIELD_BANK_ACCESS.ready.then(function(){
   var script=document.createElement('script');
-  script.src='catalog.js?v=20260913-bank-access';
+  script.src='catalog.js?v=20261015-last3-approved';
   script.onerror=function(){document.getElementById('result-status').textContent='문제은행을 불러오지 못했습니다.';};
   document.body.appendChild(script);
 });
