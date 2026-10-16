@@ -86,6 +86,9 @@
     ]}
   };
 
+  // Last3 approved variant taxonomy; source answers, rates and grade bands stay intact.
+  var LAST3_SUBAREAS=['쌓기나무','시계의 겹침','고장 난 시계','수량 관계','몫과 나머지','금액의 경우의 수','수열과 규칙','고장 난 시계','악수의 경우의 수','달력·요일','합과 차','기호 넣기','수의 총합','포함과 배제','최단거리','조건에 맞는 수','영역의 개수','종이 접기','도형의 개수','수량 관계','몫과 나머지','수량 관계','일과 작업량','수열과 규칙','수열과 규칙','넓이와 규칙','자리배치','진법·암호','수량 관계','논리추리'];
+
   model.blueprint=Array.from({length:30},function(_,index){
     return {no:index+1,pts:point(index+1)};
   });
@@ -107,10 +110,10 @@
       var reviewedRound=round===1||round===2;
       return {
         no:index+1,
-        type:meta.type,
+        type:round===3&&index===25?'정육각형 단계별 넓이 합의 나머지':meta.type,
         area:meta.area,
-        subarea:round===1?LAST1_SUBAREAS[index]:(round===2?LAST2_SUBAREAS[index]:''),
-        taxonomyReviewStatus:reviewedRound?'verified-source-bound':'candidate',
+        subarea:round===1?LAST1_SUBAREAS[index]:(round===2?LAST2_SUBAREAS[index]:(round===3?LAST3_SUBAREAS[index]:'')),
+        taxonomyReviewStatus:reviewedRound||round===3?'verified-source-bound':'candidate',
         prescriptionType:round===1?LAST1_PRESCRIPTION_HINTS[index]:(round===2?LAST2_PRESCRIPTION_HINTS[index]:undefined),
         prescriptionOverride:round===1?LAST1_PRESCRIPTION_OVERRIDES[index+1]:(round===2?LAST2_PRESCRIPTION_OVERRIDES[index+1]:undefined),
         pts:point(index+1),

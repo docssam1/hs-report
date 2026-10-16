@@ -4,10 +4,10 @@
   var loaded = {};
   function bankConfig(bankCode) {
     if(String(bankCode||'')==='important')return {code:'important',round:null,label:'중요 유형',prefix:''};
-    var match = /^(final[123478]|original[12]|last[12])$/.exec(String(bankCode || 'final1'));
+    var match = /^(final[123478]|original[12]|last[123])$/.exec(String(bankCode || 'final1'));
     if (!match) throw new Error('등록된 파이널 유사문제 회차를 확인해 주세요.');
     var original=match[1].startsWith('original');
-    var isLast=/^last[12]$/.test(match[1]);
+    var isLast=/^last[123]$/.test(match[1]);
     var round = Number(match[1].slice(isLast?4:(original?8:5)));
     var roundLabel=original?'시그니처 실전 '+round+'회':(round===7?'최종 7회':round===8?'최종 8회':isLast?'최종 '+round+'회':'파이널 ' + round + '회');
     var adId=!original&&!isLast&&round===7?'gfield-final7-reviewed':(!original&&!isLast&&round===8?'gfield-final8-reviewed':(isLast?'gfield-last'+round+'-reviewed':null));

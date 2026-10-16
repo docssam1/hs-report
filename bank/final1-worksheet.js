@@ -7,7 +7,7 @@
     });
   }
   function chunks(a,n){var out=[];for(var i=0;i<a.length;i+=n)out.push(a.slice(i,i+n));return out;}
-  function largeFigure(x){return x.sourceSet==='final'&&Number(x.sourceRound)===8&&Number(x.sourceNo)===25||x.sourceSet==='last'&&Number(x.sourceRound)===1&&Number(x.sourceNo)===6&&[2,3].includes(Number(x.variantNo))||x.sourceSet==='last'&&Number(x.sourceRound)===2&&[15,20,28,29].includes(Number(x.sourceNo));}
+  function largeFigure(x){return x.sourceSet==='final'&&Number(x.sourceRound)===8&&Number(x.sourceNo)===25||x.sourceSet==='last'&&Number(x.sourceRound)===1&&Number(x.sourceNo)===6&&[2,3].includes(Number(x.variantNo))||x.sourceSet==='last'&&Number(x.sourceRound)===2&&[15,20,28,29].includes(Number(x.sourceNo))||x.sourceSet==='last'&&Number(x.sourceRound)===3&&[15,18,23,30].includes(Number(x.sourceNo));}
   function editorialWide(x){
     var dataLength=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0;
     var total=(x.text||'').length+dataLength;
@@ -62,11 +62,11 @@
     var legacy=document.getElementById('btnPrint');if(legacy)legacy.id='legacyPrint';
     var root=document.createElement('main');root.id='final1Worksheet';root.className='gfield-ui';document.body.appendChild(root);
     var q=new URLSearchParams(location.search),wrong=!!opts.wrongPracticeMode,ids=opts.genIds;
-    var bankCode=/^(?:final[123478]|original[12]|last[12]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
+    var bankCode=/^(?:final[123478]|original[12]|last[123]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
     var important=bankCode==='important';
     var signature=bankCode.startsWith('original');
     root.dataset.bankCode=bankCode;
-    var isLast=/^last[12]$/.test(bankCode);
+    var isLast=/^last[123]$/.test(bankCode);
     var round=important?null:Number(bankCode.slice(isLast?4:(signature?8:5))),roundLabel=important?'선생님이 고른 중요 유형':(signature?'시그니처 실전 '+round+'회':(isLast?'최종 실전 '+round+'회':(round===7?'최종 7회':(round===8?'최종 8회':'파이널 '+round+'회')))),idPrefix=important?'':bankCode+'-q';
     if(important)ids=Array.isArray(opts.typeIds)?opts.typeIds:[];
     else if(!Array.isArray(ids))ids=wrong?[]:Array.from({length:30},(_,i)=>idPrefix+String(i+1).padStart(2,'0'));

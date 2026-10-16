@@ -610,7 +610,7 @@ td.weak-cell{white-space:nowrap}
   files.push('bank/bank-registry.js');
   if(!isOriginal) files.push('mock-rx-data.js');
   if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js','last-score-data.js');
-  if(isLast&&[1,2].includes(Number(requestedRound))) files.push('final-diagnostic-comment.js');
+  if(isLast&&[1,2,3].includes(Number(requestedRound))) files.push('final-diagnostic-comment.js');
   if(isLast) files.push('last-score-data.js');
   if(!isOriginal) files.push('final-score-trend.js');
   if(!isOriginal) files.push('final-report-state.js');
@@ -622,7 +622,7 @@ td.weak-cell{white-space:nowrap}
   if(isFinal7||isFinal8) files.push('signature-forecast.js','final8-benchmark.js');
   if(isFinal7) files.push('final7-benchmark.js','final7-original-tutor.js');
   if((!isLast&&!isOriginal)||(isLast&&[1,2,3,4].includes(Number(requestedRound)))) files.push('final-report-print.js');
-  if(isFinal1||isFinal2||isFinal3||isFinal4||isFinal7||isFinal8||(isLast&&[1,2].includes(Number(requestedRound)))) files.push('final-summary-practice-print.js');
+  if(isFinal1||isFinal2||isFinal3||isFinal4||isFinal7||isFinal8||(isLast&&[1,2,3].includes(Number(requestedRound)))) files.push('final-summary-practice-print.js');
   if(isLast) files.push(
     'mock-data-final.js',
     'final-population.js',
@@ -641,10 +641,11 @@ td.weak-cell{white-space:nowrap}
   files.push('exam-cues.js');
   files.forEach(function(f){
     var version=f==='data.js'?dataVersion:(f==='final-last-routes.js'||(f==='exam-cues.js'&&isFinal8)?'20261005-final8-answers':(f==='mock-data-final.js'&&isFinal8?'20261005-final8-q20-43':(f==='mock-data-original.js'?signatureAnswerVersion:((f==='mock-data-final.js'||f==='final4-detailed-data.js')?final4AnswerVersion:staticVersion))));
-    if(f==='final-summary-practice-print.js')version='20261011-last2-source';
+    if(f==='final-summary-practice-print.js')version='20261015-last3-source';
     if(f==='final-parent-report.js'||f==='final7-benchmark.js'||f==='final8-benchmark.js')version='20261012-final78-signature';
-    if(f==='final-report-print.js')version='20261011-last2-pagination';
-    if(f==='bank/bank-registry.js')version='20261012-last2-approved';
+    if(f==='final-report-print.js')version='20261015-last3-pagination';
+    if(f==='bank/bank-registry.js')version='20261015-last3-approved';
+    if(f==='last-report-data.js')version='20261015-last3-approved';
     document.write('<scr'+'ipt src="'+f+'?v='+version+'"><\/scr'+'ipt>');
   });
 })();</script>
@@ -1398,7 +1399,7 @@ td.weak-cell{white-space:nowrap}
     var query={practice:'wrong',gens:rows.map(function(row){return row.generator.generatorId;}).join(','),per:'3',points:'all',printMode:'both',source:TAX_SET_KEY+'|'+ctx.roundNum,sourceNos:rows.map(function(row){return row.item.no;}).join(','),seed:TAX_SET_KEY+'-'+ctx.roundNum+'-personal-review'};
     if(isOriginal&&[1,2].indexOf(ctx.roundNum)>=0)query.bank='original'+ctx.roundNum;
     else if(!isLast&&[1,2,3,4,7,8].indexOf(ctx.roundNum)>=0)query.bank='final'+ctx.roundNum;
-    else if(isLast&&[1,2].includes(ctx.roundNum))query.bank='last'+ctx.roundNum;
+    else if(isLast&&[1,2,3].includes(ctx.roundNum))query.bank='last'+ctx.roundNum;
     var target='bank/index.html?'+new URLSearchParams(query).toString();
     return publicSiteUrl('index.html?'+new URLSearchParams({v:'20261013-report-qr',next:target}).toString());
   }
@@ -1567,7 +1568,7 @@ td.weak-cell{white-space:nowrap}
       var queryParams={practice:'wrong',gens:ids.join(','),per:'3',points:selected,source:TAX_SET_KEY+'|'+ctx.roundNum,sourceNos:nos.join(','),seed:'',view:start.getAttribute('data-wp-view')||'grouped'};
       if(isOriginal&&[1,2].indexOf(ctx.roundNum)>=0)queryParams.bank='original'+ctx.roundNum;
       else if(!isLast&&[1,2,3,4,7,8].indexOf(ctx.roundNum)>=0)queryParams.bank='final'+ctx.roundNum;
-      else if(isLast&&[1,2].includes(ctx.roundNum))queryParams.bank='last'+ctx.roundNum;
+      else if(isLast&&[1,2,3].includes(ctx.roundNum))queryParams.bank='last'+ctx.roundNum;
       var query=new URLSearchParams(queryParams);
       // Display-only name in the fragment: not a request parameter or authority.
       issueWrongPracticeHandoff(ctx);
@@ -1600,7 +1601,7 @@ td.weak-cell{white-space:nowrap}
   function buildComment(ctx, weakMap){
     if(!isOriginal&&window.GFIELD_DIAGNOSTIC_COMMENT&&typeof window.GFIELD_DIAGNOSTIC_COMMENT.render==='function'){
       try{
-        var diagnostic=window.GFIELD_DIAGNOSTIC_COMMENT.render(ctx,{escape:esc,taxonomy:taxonomyOf,points:function(no){return BP(no).pts;},verifyPopulation:fixedRatesVerified,percentile:percentileFor,history:ctx.personalHistory||[],seriesLabel:seriesLabel(),priorityNos:isLast&&[1,2].includes(ctx.roundNum)?reportPriorityNos(ctx):null,books:function(no){
+        var diagnostic=window.GFIELD_DIAGNOSTIC_COMMENT.render(ctx,{escape:esc,taxonomy:taxonomyOf,points:function(no){return BP(no).pts;},verifyPopulation:fixedRatesVerified,percentile:percentileFor,history:ctx.personalHistory||[],seriesLabel:seriesLabel(),priorityNos:isLast&&[1,2,3].includes(ctx.roundNum)?reportPriorityNos(ctx):null,books:function(no){
           var item=ctx.items.filter(function(row){return Number(row.no)===Number(no);})[0];
           if(!item||taxonomyOf(ctx.roundNum,item).reviewRequired) return [];
           return curriculumBooksForItem(ctx,item).map(function(book){return {title:book.title,unit:book.unit};});
@@ -3033,7 +3034,7 @@ td.weak-cell{white-space:nowrap}
     if(isOriginal&&window.GFIELD_FINAL_REPORT_STATE){
       await window.GFIELD_FINAL_REPORT_STATE.load(state.name,roundNum,state.oxArr.join(''),teacherEntry?'admin':'student',false,preview,'original');
     }
-    if(isLast&&[1,2].includes(roundNum)&&window.GFIELD_FINAL_REPORT_STATE){
+    if(isLast&&[1,2,3].includes(roundNum)&&window.GFIELD_FINAL_REPORT_STATE){
       reportState=await window.GFIELD_FINAL_REPORT_STATE.load(state.name,roundNum,state.oxArr.join(''),teacherEntry?'admin':'student',false,preview,'last');
     }
     if(!isLast&&!isOriginal&&window.GFIELD_FINAL_REPORT_STATE){
@@ -3170,10 +3171,10 @@ td.weak-cell{white-space:nowrap}
         rounds:M.rounds,
         taxonomy:taxonomyOf,
         points:function(no){return BP(no).pts;},
-        priorityNos:(isLast&&[1,2].includes(roundNum))||isFinal8?reportPriority:null,
+        priorityNos:(isLast&&[1,2,3].includes(roundNum))||isFinal8?reportPriority:null,
         priorityLabel:isLast&&roundNum===1?'내 전체 정답률보다 문항 정답률이 높은 오답을 먼저 고르고, 부족하면 남은 오답 중 정답률이 높은 순으로 최대 3문항을 추천합니다.':(isFinal8?'시그니처와 같은 기준으로 틀린 2·3점대 기본 문항부터 복습합니다.':null),
         overallTrend:trendVM,
-        cumulativeBands:isLast&&[1,2].includes(roundNum)?lastCumBands(roundNum):(M.cumulative&&M.cumulative.bands),
+        cumulativeBands:isLast&&[1,2,3].includes(roundNum)?lastCumBands(roundNum):(M.cumulative&&M.cumulative.bands),
         cumulativeLabel:isLast?(roundNum===1?'파이널 1~4회 + 최종 1회':'최종 1~'+roundNum+'회'):null,
         seriesLabel:isLast?'최종':'파이널',
         currentLabel:isLast?'최종 '+roundNum+'회':null
@@ -3183,9 +3184,9 @@ td.weak-cell{white-space:nowrap}
         parentVM.cumulative.label='파이널 1~4회 + 최종 1회';
         if(parentVM.overallTrend){parentVM.overallTrend.label='파이널 1~4회 + 최종 1회 누적';parentVM.overallTrend.roundCountLabel='/5회';}
       }
-      if(isLast&&roundNum===2&&parentVM.overallTrend){
-        parentVM.overallTrend.label='최종 1~2회 누적';
-        parentVM.overallTrend.roundCountLabel='/2회';
+      if(isLast&&[2,3].includes(roundNum)&&parentVM.overallTrend){
+        parentVM.overallTrend.label='최종 1~'+roundNum+'회 누적';
+        parentVM.overallTrend.roundCountLabel='/'+roundNum+'회';
         parentVM.overallTrend.summaryCount=parentVM.overallTrend.judgeCount;
       }
       var reportStateHTML=window.GFIELD_FINAL_REPORT_STATE?window.GFIELD_FINAL_REPORT_STATE.render():'';
@@ -3257,7 +3258,7 @@ td.weak-cell{white-space:nowrap}
     if(isStandardFinal){
       var reportActions=reportHeaderActions(app,ctx);
       if(reportActions) reportActions.appendChild(printBtn);
-      if(reportActions&&hasPreparedSummaryPrint&&priorityNos.length&&(!isLast||[1,2].includes(roundNum))&&[1,2,3,4,7,8].indexOf(roundNum)>=0&&!hasSimilarPrinter){
+      if(reportActions&&hasPreparedSummaryPrint&&priorityNos.length&&(!isLast||[1,2,3].includes(roundNum))&&[1,2,3,4,7,8].indexOf(roundNum)>=0&&!hasSimilarPrinter){
         var printWarning=document.createElement('div');
         printWarning.className='no-print';
         printWarning.setAttribute('role','alert');
