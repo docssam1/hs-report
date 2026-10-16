@@ -80,14 +80,14 @@
       if(Number.isFinite(item.points))group.points.push(item.points);
       if(item.bankDifficulty)group.difficultyCounts[item.bankDifficulty.label]=(group.difficultyCounts[item.bankDifficulty.label]||0)+1;
       group.itemCount++;
-      if(item.sourceRef.set==='final'&&[1,2,3].indexOf(Number(item.sourceRef.round))>=0){
-        var fixedBank='final'+Number(item.sourceRef.round);
+      var source=item.sourceRef,sourceRound=Number(source.round),fixedBank='';
+      if(source.set==='final'&&[1,2,3,4,7,8].includes(sourceRound))fixedBank='final'+sourceRound;
+      else if(source.set==='last'&&[1,2,3].includes(sourceRound))fixedBank='last'+sourceRound;
+      else if(source.set==='original'&&[1,2].includes(sourceRound))fixedBank='original'+sourceRound;
+      else if(source.set==='middle'&&sourceRound===7)fixedBank='middle7';
+      if(fixedBank&&item.generator&&item.generator.studentWrongPracticeReady===true){
         if(!group.fixedRefs[fixedBank])group.fixedRefs[fixedBank]=[];
-        group.fixedRefs[fixedBank].push(fixedBank+'-q'+String(item.sourceRef.no).padStart(2,'0'));
-      }
-      if(item.sourceRef.set==='last'&&Number(item.sourceRef.round)===3&&item.generator&&item.generator.studentWrongPracticeReady===true){
-        if(!group.fixedRefs.last3)group.fixedRefs.last3=[];
-        group.fixedRefs.last3.push('last3-q'+String(item.sourceRef.no).padStart(2,'0'));
+        group.fixedRefs[fixedBank].push(item.generator.generatorId);
       }
       if(item.reviewStatus==='confirmed')group.confirmedCount++;else group.candidateCount++;
       if(group.reviewBases.indexOf(item.reviewBasis)<0)group.reviewBases.push(item.reviewBasis);

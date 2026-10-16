@@ -2,18 +2,19 @@
   'use strict';
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function mathText(v){
-    return esc(v).replace(/(^|[^0-9])(\d{1,3})\/(\d{1,3})(?![0-9])/g,function(_,prefix,numerator,denominator){
+    var text=global.BANK_CORE.reviewedMathText(v);
+    return text.split(/(<math\b[\s\S]*?<\/math>)/g).map(function(part){return part.startsWith('<math')?part:part.replace(/(^|[^0-9])(\d{1,3})\/(\d{1,3})(?![0-9])/g,function(_,prefix,numerator,denominator){
       return prefix+'<span class="f1-frac" role="math" aria-label="'+denominator+'분의 '+numerator+'"><span>'+numerator+'</span><span>'+denominator+'</span></span>';
-    });
+    });}).join('');
   }
   function chunks(a,n){var out=[];for(var i=0;i<a.length;i+=n)out.push(a.slice(i,i+n));return out;}
-  function largeFigure(x){return x.sourceSet==='final'&&Number(x.sourceRound)===8&&Number(x.sourceNo)===25||x.sourceSet==='last'&&Number(x.sourceRound)===1&&Number(x.sourceNo)===6&&[2,3].includes(Number(x.variantNo))||x.sourceSet==='last'&&Number(x.sourceRound)===2&&[15,20,28,29].includes(Number(x.sourceNo))||x.sourceSet==='last'&&Number(x.sourceRound)===3&&[15,18,23,30].includes(Number(x.sourceNo));}
+  function largeFigure(x){return x.sourceSet==='middle'&&Number(x.sourceRound)===7&&Number(x.sourceNo)===13||x.sourceSet==='final'&&Number(x.sourceRound)===8&&Number(x.sourceNo)===25||x.sourceSet==='last'&&Number(x.sourceRound)===1&&Number(x.sourceNo)===6&&[2,3].includes(Number(x.variantNo))||x.sourceSet==='last'&&Number(x.sourceRound)===2&&[15,20,28,29].includes(Number(x.sourceNo))||x.sourceSet==='last'&&Number(x.sourceRound)===3&&[15,18,23,30].includes(Number(x.sourceNo));}
   function editorialWide(x){
     var dataLength=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0;
     var total=(x.text||'').length+dataLength;
     if(Number(x.sourceRound)===1)return total>180||!!x.asset&&(total>110||[18,20,28].includes(Number(x.sourceNo)));
-    if(Number(x.sourceRound)===7&&[5,6,12].includes(Number(x.sourceNo)))return true;
-    if(Number(x.sourceRound)===7&&[14,15,17,29].includes(Number(x.sourceNo)))return false;
+    if(x.sourceSet==='final'&&Number(x.sourceRound)===7&&[5,6,12].includes(Number(x.sourceNo)))return true;
+    if(x.sourceSet==='final'&&Number(x.sourceRound)===7&&[14,15,17,29].includes(Number(x.sourceNo)))return false;
     return total>210||!!x.asset&&(total>180||Number(x.sourceNo)===28);
   }
   function questionGroups(items,layout){
@@ -55,19 +56,20 @@
   function raster(a,cls){
     if(!a)return '';
     if(a.kind!=='raster'||!/^data:image\/png;base64,/.test(a.src||''))throw Error('문항 그림을 확인할 수 없습니다. 선생님께 문의해 주세요.');
-    return '<img class="'+cls+'" src="'+esc(a.src)+'" alt="'+esc(a.description||'문항 그림')+'">';
+    return '<img class="'+cls+'" src="'+esc(a.src)+'"'+(a.width&&a.height?' width="'+Number(a.width)+'" height="'+Number(a.height)+'"':'')+' alt="'+esc(a.description||'문항 그림')+'">';
   }
   function mount(opts){
     document.body.classList.add('fixed-bank-mode');
     var legacy=document.getElementById('btnPrint');if(legacy)legacy.id='legacyPrint';
     var root=document.createElement('main');root.id='final1Worksheet';root.className='gfield-ui';document.body.appendChild(root);
     var q=new URLSearchParams(location.search),wrong=!!opts.wrongPracticeMode,ids=opts.genIds;
-    var bankCode=/^(?:final[123478]|original[12]|last[123]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
+    var bankCode=/^(?:final[123478]|original[12]|last[123]|middle7|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
     var important=bankCode==='important';
     var signature=bankCode.startsWith('original');
     root.dataset.bankCode=bankCode;
     var isLast=/^last[123]$/.test(bankCode);
-    var round=important?null:Number(bankCode.slice(isLast?4:(signature?8:5))),roundLabel=important?'선생님이 고른 중요 유형':(signature?'시그니처 실전 '+round+'회':(isLast?'최종 실전 '+round+'회':(round===7?'최종 7회':(round===8?'최종 8회':'파이널 '+round+'회')))),idPrefix=important?'':bankCode+'-q';
+    var isMiddle7=bankCode==='middle7';
+    var round=important?null:isMiddle7?7:Number(bankCode.slice(isLast?4:(signature?8:5))),roundLabel=important?'선생님이 고른 중요 유형':isMiddle7?'중급 모의고사 7회':(signature?'시그니처 실전 '+round+'회':(isLast?'최종 실전 '+round+'회':(round===7?'최종 7회':(round===8?'최종 8회':'파이널 '+round+'회')))),idPrefix=important?'':isMiddle7?'mid7-q':bankCode+'-q';
     if(important)ids=Array.isArray(opts.typeIds)?opts.typeIds:[];
     else if(!Array.isArray(ids))ids=wrong?[]:Array.from({length:30},(_,i)=>idPrefix+String(i+1).padStart(2,'0'));
     var labels={all:'전체문제','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
@@ -80,15 +82,15 @@
     var layout=q.get('layout')||'editorial';
     if(!['editorial','compact'].includes(layout))layout='editorial';
     root.dataset.layout=layout;
-    var student=(new URLSearchParams(location.hash.slice(1)).get('student')||'').trim(),checked=new Set(),revision=0;
+    var student=(new URLSearchParams(location.hash.slice(1)).get('student')||'').trim(),checked=new Set(),revision=0,preparePrint=null;
     // Display-only name, never authority for reading or writing student results.
-    var back=wrong?'../final.html?'+(signature?'set=original&':(isLast?'set=last&':''))+'round='+round+'&go=report'+(student?'&name='+encodeURIComponent(student):''):'../index.html';
+    var back=wrong?(isMiddle7?'../mock.html?':'../final.html?')+(signature?'set=original&':(isLast?'set=last&':''))+'round='+round+'&go=report'+(student?'&name='+encodeURIComponent(student):''):'../index.html';
     var countControls=important||freshAvailable?'<div class="f1-bands f1-counts" role="group" aria-label="문항 수">'+counts.map(k=>'<button type="button" data-role="count" data-val="'+k+'">'+k+'문항</button>').join('')+'</div>':'';
     var freshControl=freshAvailable?'<button type="button" class="f1-fresh-toggle" data-role="fresh" aria-pressed="false">새 문제 섞기</button>':'';
     var viewControls=important?'':'<div class="f1-bands f1-view-modes" role="group" aria-label="약점 유형 보기 방식"><button type="button" data-role="view" data-val="grouped">문제별로 보기</button><button type="button" data-role="view" data-val="mixed">섞어서 보기</button></div>';
     root.innerHTML='<header class="f1-toolbar"><a class="f1-back" href="'+esc(back)+'">← '+(wrong?'성적표':'자료실')+'</a><div class="f1-title">'+roundLabel+(important?'':' 약점 유형')+'</div><div class="f1-bands" role="group" aria-label="오답 배점대">'+Object.keys(labels).map(k=>'<button type="button" data-role="points" data-val="'+k+'">'+labels[k]+'</button>').join('')+'</div>'+viewControls+freshControl+countControls+'<label class="f1-layout-label">문제 배치 <select id="pageLayout"><option value="editorial">읽기 편한 4문항</option><option value="compact">간결한 6문항</option></select></label><label class="f1-print-label">인쇄 구성 <select id="printMode"><option value="questions">문제만</option><option value="answers">답안·풀이만</option><option value="both">둘 다</option><option value="quick">빠른 정답만</option></select></label><button type="button" id="btnPrint" disabled>인쇄</button></header><div class="f1-status" id="f1Status" role="status" aria-live="polite"></div><div id="f1Pages"></div>';
     if(signature&&!wrong)root.querySelector('.f1-title').textContent=roundLabel+' 전체 유형';
-    if(bankCode==='final8'||isLast)root.querySelector('#pageLayout option[value="compact"]').textContent='간결한 6문항 · 큰 그림은 별도 쪽';
+    if(bankCode==='final8'||isLast||isMiddle7)root.querySelector('#pageLayout option[value="compact"]').textContent='간결한 6문항 · 큰 그림은 별도 쪽';
     var pageRoot=root.querySelector('#f1Pages'),print=root.querySelector('#btnPrint');
     function sheet(cls,html){return '<section class="f1-page page '+cls+'"><div class="f1-watermark-clip"><div class="wm-layer"></div></div>'+html+'</section>';}
     function cleanUrl(){
@@ -110,17 +112,18 @@
     }
     function questionPage(group,n,total){
       var wideLead=layout==='editorial'&&group.length===3&&editorialWide(group[0]);
-      var single=layout==='editorial'&&group.length===1;
+      var single=(layout==='editorial'||isMiddle7)&&group.length===1;
       var twoWithWide=layout==='editorial'&&group.length===2&&group.some(editorialWide);
       var writeLines=Array.from({length:single?10:3},()=>'<span class="f1-write-line"></span>').join('');
-      var html='<div class="f1-qpage qpage" data-wide-lead="'+String(wideLead)+'"><div class="f1-qhead qhead"><span>'+roundLabel+' 약점 유형</span><small>문제 '+n+' / '+total+'</small></div>';
+      var rowCount=isMiddle7?Math.ceil(group.reduce((sum,x)=>sum+(layout==='editorial'&&editorialWide(x)?2:1),0)/2):0;
+      var html='<div class="f1-qpage qpage" data-wide-lead="'+String(wideLead)+'"'+(rowCount?' style="grid-template-rows:auto repeat('+rowCount+',minmax(0,1fr))"':'')+'><div class="f1-qhead qhead"><span>'+roundLabel+' 약점 유형</span><small>문제 '+n+' / '+total+'</small></div>';
       group.forEach(x=>{
         var legacyGiven=bankCode==='final1'&&[12,14,23].includes(Number(x.sourceNo))&&Array.isArray(x.conditionLines)?x.conditionLines:[];
-        var promptText=[x.text].concat(legacyGiven).filter(Boolean).join(' ');
+        var promptText=[x.stemHtml||x.text].concat(legacyGiven).filter(Boolean).join(' ');
         var given=Array.isArray(x.promptDataLines)&&x.promptDataLines.length?x.promptDataLines:[];
         var givenBlock=given.length?'<div class="f1-qgiven"><b>'+esc(x.promptDataLabel||'주어진 조건')+'</b><div class="f1-qgiven-lines">'+given.map(t=>'<span>'+mathText(t)+'</span>').join('')+'</div></div>':'';
         var sourceLabel=important?'파이널 '+x.sourceRound+'회 '+x.sourceNo+'번':'원문 '+x.sourceNo+'번';
-        html+='<article class="f1-qcard qcard" data-index="'+x.index+'" data-source-no="'+x.sourceNo+'" data-source-round="'+x.sourceRound+'" data-points="'+esc(x.pointBand)+'" data-gen="'+esc(x.genId)+'" data-wide="'+String(layout==='editorial'&&editorialWide(x))+'"><div class="f1-qcard-head"><span class="f1-qno">'+x.index+'.</span><span class="f1-qtype">['+esc(x.importantTypeTitle||x.detailType)+']</span></div><div class="f1-qtext qtext">'+mathText(promptText)+'</div>'+givenBlock+'<div class="f1-qmeta qmeta fixed-item" data-item-id="'+esc(x.id)+'">'+sourceLabel+' / '+(x.reviewStatus==='runtime-verified'?'새 문제 '+(x.variantNo-3):'유사문제 '+x.variantNo)+' / '+esc(x.pointBand)+'점</div>'+(x.asset?'<div class="f1-qfigure qfigure">'+raster(x.asset,'')+'</div>':'')+'<div class="f1-workspace" aria-hidden="true">'+writeLines+'</div><div class="f1-answerline answerline"><span>답</span><span class="f1-answer-blank" aria-hidden="true"></span></div></article>';
+        html+='<article class="f1-qcard qcard" data-index="'+x.index+'" data-source-no="'+x.sourceNo+'" data-source-round="'+x.sourceRound+'" data-points="'+esc(x.pointBand)+'" data-gen="'+esc(x.genId)+'" data-wide="'+String(layout==='editorial'&&editorialWide(x))+'"><div class="f1-qcard-head"><span class="f1-qno">'+x.index+'.</span><span class="f1-qtype">['+esc(x.importantTypeTitle||x.detailType)+']</span></div><div class="f1-qtext qtext">'+mathText(promptText)+'</div>'+givenBlock+'<div class="f1-qmeta qmeta fixed-item" data-item-id="'+esc(x.id)+'">'+sourceLabel+' / '+(x.reviewStatus==='runtime-verified'?'새 문제 '+(x.variantNo-3):'유사문제 '+x.variantNo)+(x.variantRoleLabel?' · '+esc(x.variantRoleLabel):'')+' / '+(x.sourceEquivalentConfirmed===false?'원문 참고 배점 ':'')+esc(x.pointBand)+'점</div>'+(x.asset?'<div class="f1-qfigure qfigure">'+raster(x.asset,'')+'</div>':'')+'<div class="f1-workspace" aria-hidden="true">'+writeLines+'</div><div class="f1-answerline answerline"><span>답</span><span class="f1-answer-blank" aria-hidden="true"></span></div></article>';
       });
       var lastTwo=layout==='editorial'&&n===total&&group.length===2&&group.every(x=>!editorialWide(x));
       return sheet('question-page'+(lastTwo?' f1-last-two':'')+(single?' f1-single-question':'')+(twoWithWide?' f1-two-with-wide':'')+(group.length===1&&largeFigure(group[0])?' f1-large-figure':''),html+'</div>');
@@ -162,20 +165,46 @@
         var paper=await global.BANK_FIXED.buildPaper({bankCode:bankCode,genIds:important?null:ids.slice(),typeIds:important?ids.slice():null,n:requestedCount,pointBand:band,orderMode:orderMode,fresh:fresh,wrongPracticeMode:wrong});if(current!==revision)return;
         if(!paper.questions.length){cleanUrl();root.querySelector('#f1Status').textContent='선택한 배점대의 '+(wrong?'오답':'문항')+'이 없습니다.';return;}
         var pages=[],groups=questionGroups(paper.questions,layout);
+        function assemblePages(){pages=[];
         if(mode==='questions'||mode==='both'){
           pages.push(cover(paper));groups.forEach((g,i)=>pages.push(questionPage(g,i+1,groups.length)));
           if(mode==='both'&&(1+groups.length)%2===1)pages.push('<section class="f1-page page duplex-blank"><span>양면 인쇄용 빈 면 · 답안은 새 종이 앞면에서 시작합니다.</span></section>');
         }
         if(mode==='answers'||mode==='both')pages.push(answerPages(paper.questions));if(mode==='quick')pages.push(quickPages(paper.questions));
-        pageRoot.innerHTML=pages.join('');cleanUrl();
+        pageRoot.innerHTML=pages.join('');}
+        assemblePages();cleanUrl();
         if(signature&&!wrong){
           pageRoot.querySelectorAll('.f1-cover-heading h1').forEach(node=>{node.textContent=roundLabel+' 전체 유형';});
           pageRoot.querySelectorAll('.f1-qhead span').forEach(node=>{node.textContent=roundLabel+' 전체 유형';});
         }
         await Promise.all([document.fonts.ready].concat(Array.from(pageRoot.querySelectorAll('img')).map(img=>img.decode())));
+        // Reuse the same approved cards. Only Middle 7 reduces page density
+        // when a full-size prompt or figure will not fit; never shrink the text.
+        function fitMiddle7Groups(){
+        if(isMiddle7&&(mode==='questions'||mode==='both')&&pageRoot.querySelector('.qpage')&&getComputedStyle(pageRoot.querySelector('.qpage')).display==='grid'){
+          for(var attempt=0;attempt<5;attempt++){
+            var bad=Array.from(pageRoot.querySelectorAll('.question-page')).map((page,index)=>
+              Array.from(page.querySelectorAll('.qcard')).some(card=>card.scrollHeight>card.clientHeight+1)?index:-1).filter(i=>i>=0);
+            if(!bad.length)break;
+            groups=groups.flatMap((group,index)=>{
+              if(!bad.includes(index))return [group];
+              if(group.length===1)throw Error('이 문항의 인쇄 영역을 확인해 주세요.');
+              return chunks(group,group.length>4?4:group.length>2?2:1);
+            });
+            assemblePages();
+          }
+        }
+        }
+        fitMiddle7Groups();
+        await Promise.all(Array.from(pageRoot.querySelectorAll('img')).map(img=>img.decode()));
         compactAnswerPages();
         var watermarkName=student||global.BANK_CORE.getStudentName()||'학습 자료';
         pageRoot.querySelectorAll('.wm-layer').forEach(layer=>global.BANK_CORE.buildWatermarkTiles(layer,watermarkName));
+        if(isMiddle7)preparePrint=function(){
+          if(current!==revision)return;
+          assemblePages();fitMiddle7Groups();compactAnswerPages();
+          pageRoot.querySelectorAll('.wm-layer').forEach(layer=>global.BANK_CORE.buildWatermarkTiles(layer,watermarkName));
+        };
         if(current!==revision)return;root.querySelector('#f1Status').textContent=paper.questions.length+'문항 / '+labels[band]+' / '+(layout==='editorial'?'읽기 편한 4문항':'간결한 6문항')+' / '+(fresh?'새 문제 '+paper.generatedCount+'개 포함':important?'선택 유형':(orderMode==='grouped'?'문제별로 보기':'섞어서 보기'));print.disabled=false;
       }catch(error){if(current!==revision)return;pageRoot.innerHTML='';root.querySelector('#f1Status').innerHTML='<div class="f1-error" role="alert">'+esc(error.message||'문항을 불러오지 못했습니다.')+'</div>';}
     }
@@ -187,6 +216,10 @@
     root.querySelector('#printMode').addEventListener('change',e=>{mode=e.target.value;render();});
     root.addEventListener('change',e=>{if(e.target.matches('.f1-check input')){var key=e.target.dataset.source;if(e.target.checked)checked.add(key);else checked.delete(key);}});
     print.addEventListener('click',()=>{if(!print.disabled)global.print();});render();
+    if(isMiddle7){
+      global.addEventListener('beforeprint',()=>{if(preparePrint)preparePrint();});
+      global.matchMedia('print').addEventListener('change',event=>{if(event.matches&&preparePrint)preparePrint();});
+    }
   }
   global.FINAL1_WORKSHEET={mount:mount};
 })(window);

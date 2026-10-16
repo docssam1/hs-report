@@ -1,18 +1,22 @@
 /* Official-attempt practice, supplemented with reviewed public source-linked items. */
 (function(root){
   'use strict';
-  var SUPPORTED=/^(?:final[123478]|original[12]|last[123])$/;
+  var SUPPORTED=/^(?:final[123478]|original[12]|last[123]|middle7)$/;
   var BAND_LABEL={all:'전체 배점','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
   var SCOPE_LABEL={all:'응시 시험 전체',wrong:'틀린 문제',correct:'맞은 문제'};
   var COUNTS={10:{'2.7':4,'3.4':3,'4.2':3},20:{'2.7':8,'3.4':7,'4.2':5},30:{'2.7':12,'3.4':10,'4.2':8}};
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-  function label(code){if(/^last[123]$/.test(code))return '최종 실전 '+code.slice(4)+'회';if(code.indexOf('original')===0)return '시그니처 '+code.slice(8)+'회';var n=Number(code.slice(5));return n===7?'최종 실전 7회':n===8?'최종 실전 8회':'파이널 '+n+'회';}
-  function codeOf(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||'');return SUPPORTED.test(key)?key:'';}
+  function mathText(v){return root.BANK_CORE&&root.BANK_CORE.reviewedMathText?root.BANK_CORE.reviewedMathText(v):esc(v);}
+  function label(code){if(code==='middle7')return '중급 모의고사 7회';if(/^last[123]$/.test(code))return '최종 실전 '+code.slice(4)+'회';if(code.indexOf('original')===0)return '시그니처 '+code.slice(8)+'회';var n=Number(code.slice(5));return n===7?'최종 실전 7회':n===8?'최종 실전 8회':'파이널 '+n+'회';}
+  function codeOf(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||'');if(key==='7')return 'middle7';return SUPPORTED.test(key)?key:'';}
+  function attemptLabel(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||''),code=codeOf(attempt),m;if(code)return label(code);if(/^\d+$/.test(key))return '중급 모의고사 '+Number(key)+'회';if((m=/^hw(\d+)$/.exec(key)))return '활용 모의고사 '+Number(m[1])+'회';if((m=/^last(\d+)$/.exec(key)))return '최종 실전 '+Number(m[1])+'회';if((m=/^final(\d+)$/.exec(key)))return '파이널 '+Number(m[1])+'회';return '응시 회차 '+key;}
+  function availability(attempt,student,data){var code=codeOf(attempt);return {code:code,label:attemptLabel(attempt),reason:!code?'preparing':isAllowed(code,student,data)?'ready':'denied'};}
+  function availabilityNote(issues){return [['preparing','유사문제 준비 중'],['denied','열람 권한 없음'],['failed','자료 불러오기 실패']].filter(function(pair){return issues[pair[0]]&&issues[pair[0]].length;}).map(function(pair){return ' · '+pair[1]+': '+Array.from(new Set(issues[pair[0]])).join(', ');}).join('');}
   function isAllowed(code,student,data){
     if(!code||!student)return false;
     if(/^last[123]$/.test(code)){var acc=(data&&data.archiveAccess||{})['최종 모의고사'],att=data&&data.attendance||{},week={last1:'oct-5',last2:'oct-12',last3:'oct-19'}[code];return Array.isArray(acc)&&(acc.indexOf('*')>=0||acc.indexOf(student)>=0)||Array.isArray(att[student])&&att[student].indexOf(week)>=0;}
-    if(code.indexOf('original')===0||code==='final7'||code==='final8'){
-      var key=code.indexOf('original')===0?'mock-signature-'+code.slice(8):(code==='final7'?'mock-final-7':(code==='final8'?'mock-final-8':'mock-last-1'));
+    if(code==='middle7'||code.indexOf('original')===0||code==='final7'||code==='final8'){
+      var key=code==='middle7'?'mock-mid-7':code.indexOf('original')===0?'mock-signature-'+code.slice(8):(code==='final7'?'mock-final-7':(code==='final8'?'mock-final-8':'mock-last-1'));
       var list=data&&data.archiveProductAccess&&data.archiveProductAccess[key];
       return Array.isArray(list)&&(list.indexOf('*')>=0||list.indexOf(student)>=0);
     }
@@ -135,6 +139,7 @@
     var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' '):'';
     return String(x.text||'').length+given.length>210||!!x.asset&&(String(x.text||'').length+given.length>125||[28,30].includes(Number(x.sourceNo)));
   }
+  function questionTall(entry){return entry.item.sourceSet==='middle'&&Number(entry.item.sourceRound)===7&&Number(entry.item.sourceNo)===13;}
   function answerWide(entry){var x=entry.item;return !!x.solutionAsset||String(x.solution||'').length>190||Array.isArray(x.solutionSteps)&&x.solutionSteps.join('').length>190;}
   function answerTall(entry){var x=entry.item;return !!x.solutionAsset&&Array.isArray(x.solutionSteps)&&x.solutionSteps.join('').length>190;}
   function rows(items,wide,tall){
@@ -160,17 +165,17 @@
   }
   function questionCard(entry){
     var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines:[];
-    return '<article class="pm-q'+(questionWide(entry)?' pm-wide':'')+'" data-item-id="'+esc(x.id)+'"><h3>'+entry.index+'번 <span class="pm-type">'+esc(x.detailType||'')+' · '+esc(x.pointBand)+'점'+(entry.origin==='library'?' · 자료실 보충':entry.origin==='generated'?' · 새 문제':'')+'</span></h3><p>'+esc(x.text)+'</p>'+
-      (given.length?'<div class="pm-given">'+given.map(esc).join('<br>')+'</div>':'')+figure(x.asset)+
+    return '<article class="pm-q'+(questionWide(entry)||questionTall(entry)?' pm-wide':'')+(questionTall(entry)?' pm-tall':'')+'" data-item-id="'+esc(x.id)+'"><h3>'+entry.index+'번 <span class="pm-type">'+esc(x.detailType||'')+' · '+(x.sourceEquivalentConfirmed===false?'원문 참고 배점 ':'')+esc(x.pointBand)+'점'+(x.variantRoleLabel?' · '+esc(x.variantRoleLabel):'')+(entry.origin==='library'?' · 자료실 보충':entry.origin==='generated'?' · 새 문제':'')+'</span></h3><p>'+mathText(x.stemHtml||x.text)+'</p>'+
+      (given.length?'<div class="pm-given">'+given.map(mathText).join('<br>')+'</div>':'')+figure(x.asset)+
       '<div class="pm-work" aria-hidden="true"><span></span><span></span><span></span><span></span></div><div class="pm-answerline">답 <span></span></div></article>';
   }
   function answerCard(entry){
     var x=entry.item,steps=Array.isArray(x.solutionSteps)&&x.solutionSteps.length?x.solutionSteps:[x.solution];
-    return '<article class="pm-answer'+(answerWide(entry)?' pm-wide':'')+(answerTall(entry)?' pm-tall':'')+'" data-answer-id="'+esc(x.id)+'"><h3>'+entry.index+'번 · '+esc(x.detailType||'')+'</h3><p class="pm-source">'+(entry.origin==='library'?'자료실 공개 보충 · ':entry.origin==='generated'?'자료실 공개 생성형 · ':'')+esc(label(entry.code))+' 원문 '+x.sourceNo+'번 · '+(entry.origin==='generated'?'추가 연습문제':'검수 유사문제 '+x.variantNo)+'</p><strong>답 '+esc(x.answer)+'</strong><ol>'+steps.map(function(step){return '<li>'+esc(step)+'</li>';}).join('')+'</ol>'+figure(x.solutionAsset)+'</article>';
+    return '<article class="pm-answer'+(answerWide(entry)?' pm-wide':'')+(answerTall(entry)?' pm-tall':'')+'" data-answer-id="'+esc(x.id)+'"><h3>'+entry.index+'번 · '+esc(x.detailType||'')+'</h3><p class="pm-source">'+(entry.origin==='library'?'자료실 공개 보충 · ':entry.origin==='generated'?'자료실 공개 생성형 · ':'')+esc(label(entry.code))+' 원문 '+x.sourceNo+'번 · '+(entry.origin==='generated'?'추가 연습문제':'검수 유사문제 '+x.variantNo)+'</p><strong>답 '+mathText(x.answer)+'</strong><ol>'+steps.map(function(step){return '<li>'+mathText(step)+'</li>';}).join('')+'</ol>'+figure(x.solutionAsset)+'</article>';
   }
   function renderPaper(paper,scope,band,student){
     if(!paper.questions.length||paper.questions.length>paper.target)throw Error('인쇄할 검수 문항이 없습니다.');
-    var qPages=[],aPages=[],questionGroups=rows(paper.questions,questionWide),answerGroups=rows(paper.questions,answerWide,answerTall);
+    var qPages=[],aPages=[],questionGroups=rows(paper.questions,questionWide,questionTall),answerGroups=rows(paper.questions,answerWide,answerTall);
     questionGroups.forEach(function(group,index){qPages.push(page('문제',index+1,questionGroups.length,group.map(questionCard).join(''),'question'));});
     answerGroups.forEach(function(group,index){aPages.push(page('정답과 풀이',index+1,answerGroups.length,group.map(answerCard).join(''),'answer'));});
     var duplexBlank=qPages.length%2?['<section class="pm-page pm-duplex-blank" aria-hidden="true"></section>']:[];
@@ -189,7 +194,7 @@
     if(!student){status.textContent='학생 이름으로 자료실에 입장해 주세요.';return;}
     var scope=Object.prototype.hasOwnProperty.call(SCOPE_LABEL,query.get('scope'))?query.get('scope'):'all',band=Object.prototype.hasOwnProperty.call(BAND_LABEL,query.get('band'))?query.get('band'):'all';
     var count=COUNTS[query.get('count')]?Number(query.get('count')):30;
-    var attempts=[],datasets={},unavailable=[],revision=0,currentPaperCount=0,library=null,libraryPromise=null,freshRound=0;
+    var attempts=[],datasets={},unavailable={preparing:[],denied:[],failed:[]},revision=0,currentPaperCount=0,library=null,libraryPromise=null,freshRound=0;
     var doneKeys=new Set(),skipDone=true,currentKeys=[];
     function skipSet(){return skipDone?doneKeys:new Set();}
     function hdr(){var auth=root.GFIELD_AUTH;return {apikey:auth.PUBLISHABLE_KEY,Authorization:'Bearer '+auth.PUBLISHABLE_KEY,'x-gfield-student':btoa(unescape(encodeURIComponent(student))),'Content-Type':'application/json'};}
@@ -217,7 +222,7 @@
     }
     async function render(){
       var current=++revision;controls();print.disabled=true;pages.innerHTML='';currentPaperCount=0;
-      var paper=buildPool(attempts,datasets,scope,band,count,null,null,0,null,skipSet()),note=unavailable.length?' · 유사문제 미등록/권한 확인: '+unavailable.join(', '):'';
+      var paper=buildPool(attempts,datasets,scope,band,count,null,null,0,null,skipSet()),note=availabilityNote(unavailable);
       if(skipDone&&doneKeys.size)note+=' · 이미 푼 문제 제외';
       if(!attempts.length){status.textContent='확인된 최초 응시 기록이 없습니다.';return;}
       if(scope==='all'&&(paper.missing||freshRound>0)&&Array.isArray(root.GFIELD_DATA&&root.GFIELD_DATA.students)&&root.GFIELD_DATA.students.includes(student)){
@@ -251,14 +256,14 @@
       attempts=await fetchAttempts(student);
       await loadHistory();
       await Promise.all(attempts.map(async function(attempt){
-        var code=codeOf(attempt);
-        if(!code||!isAllowed(code,student,root.GFIELD_DATA)){unavailable.push(code?label(code):String(attempt.key)+'회');return;}
-        try{datasets[code]=await root.BANK_FIXED.load(code);}catch(error){unavailable.push(label(code));}
+        var state=availability(attempt,student,root.GFIELD_DATA),code=state.code;
+        if(state.reason!=='ready'){unavailable[state.reason].push(state.label);return;}
+        try{datasets[code]=await root.BANK_FIXED.load(code);}catch(error){unavailable.failed.push(state.label);}
       }));
       render();
     }catch(error){status.innerHTML='<span class="pm-error">'+esc(error.message||'응시 기록을 확인하지 못했습니다.')+'</span>';}
   }
-  root.GFIELD_PERSONAL_MOCK={buildPool:buildPool,isAllowed:isAllowed,renderPaper:renderPaper};
+  root.GFIELD_PERSONAL_MOCK={buildPool:buildPool,isAllowed:isAllowed,renderPaper:renderPaper,availability:availability,availabilityNote:availabilityNote};
   if(typeof module!=='undefined'&&module.exports)module.exports=root.GFIELD_PERSONAL_MOCK;
   if(typeof document!=='undefined')mount();
 })(typeof window!=='undefined'?window:globalThis);
