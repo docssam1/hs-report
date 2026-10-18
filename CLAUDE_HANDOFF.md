@@ -8,7 +8,6 @@
 - Drive 기존 중급8회 검수 폴더 `1ksibH1e-3kVmbATQQKSDwnoJZvhl9Aci`의 초안 `1DmG-hMjdvWbzfx3rBjPsV5gEPEhawsAc`, 4/6문항 PDF `15DU7hkCXda-TQk4iy0JW7nJ75cd1o85U`/`1GeteMsC1Ae8yjg62hxYYxWTei9Uedf4T`, 합본 `1nr-LAUTUtu1o-7hKjZvz_8vPLdY7mLqt`, 비공개 검토 HTML `1vF2D4UK2gozm0TuS-81_iDw6wihGqFHx`, 전체 QA `12X26aAEZc4hEYdepRvuiNCQ3oC8aJv9p`와 변경 해시를 참조하는 기록을 같은 ID로 갱신하고 주요 크기·부모 폴더를 재조회했다. 9·10·11번 전용 검수 기록은 Drive `1_w7LHqyQ24IRENmG-P_s5zKZlMSWqT8m`에 새로 저장했다. 로컬 작업·렌더·스크립트는 `.private-work/middle8-20261018`에 둔다.
 - 12·30번은 사용자의 기존 정답 판단을 기준으로 존중하고 같은 판정 자료를 다시 요청하지 않는다. 별도 계산 차이는 검수 이력에만 유지한다. 전90문항 난도 9축·실물 인쇄·교사 최종 승인, 3번 중복 카드 난도와 그림 검수 등이 남아 교사 승인0·학생 공개0·신규 진단 연결0을 유지한다.
 
-
 ## 2026-10-18 중급 8회 5·7·8번 원문 계약과 8번 시계 변형 보정 (Mac)
 
 - 원본 PDF 1쪽 5번 막대 그림·지문과 강의 답안 6쪽의 29cm, 원본 PDF 2쪽 7번 원 그림·지문과 답안 8쪽의 14cm, 8번 지문과 답안 9·10쪽을 직접 대조했다. 5번 원본 크롭은 가·나·다와 두 겹침만, 7번 크롭은 원의 중심·양끝과 생략 부호만 표시해 변형의 새 수치·작은 원 개수와 충돌하지 않는다. 5번 변형 답 32·27·34cm의 단일 겹침과 가운데 막대에서 두 겹침이 서로 분리됨을 확인했다. 7번 변형 답 12·18·16cm는 지름을 작은 반지름 `N＋1`개로 나누는 원본 관계와 일치한다.
