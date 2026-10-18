@@ -21,7 +21,7 @@
   function requireData() { if (!data) throw new Error('중급 8회 검수 문항 데이터를 먼저 불러와 주세요.'); return data; }
   function load() {
     if (data) return Promise.resolve(data);
-    if (!loadPromise) loadPromise = fetch('data/middle8-reviewed.json?v=1', {cache:'no-cache'}).then(function (response) {
+    if (!loadPromise) loadPromise = fetch('data/middle8-reviewed.json?v=20261019-q20-neutral-type', {cache:'no-cache'}).then(function (response) {
       if (!response.ok) throw new Error('중급 8회 검수 문항을 불러오지 못했습니다.');
       return response.json();
     }).then(function (value) { useData(value); return data; }).catch(function (error) { loadPromise = null; throw error; });

@@ -444,7 +444,7 @@
       "id": "mid8-q20-type",
       "domain": "도형",
       "middle": "도형",
-      "label": "주사위를 굴렸을 때 바닥 눈의 합",
+      "label": "주사위를 굴렸을 때 면의 눈의 합",
       "gradeBand": {
         "from": null,
         "to": null,
@@ -457,6 +457,7 @@
       "rendererId": "reviewed-raster",
       "searchAliases": [
         "도형",
+        "주사위를 굴렸을 때 면의 눈의 합",
         "주사위를 굴렸을 때 바닥 눈의 합"
       ]
     },
@@ -3509,8 +3510,8 @@
       "points": 3.4,
       "pointBand": "3.4",
       "area": "도형",
-      "subarea": "주사위를 굴렸을 때 바닥 눈의 합",
-      "detailType": "주사위를 굴렸을 때 바닥 눈의 합",
+      "subarea": "주사위를 굴렸을 때 면의 눈의 합",
+      "detailType": "주사위를 굴렸을 때 면의 눈의 합",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {
@@ -3558,8 +3559,8 @@
       "points": 3.4,
       "pointBand": "3.4",
       "area": "도형",
-      "subarea": "주사위를 굴렸을 때 바닥 눈의 합",
-      "detailType": "주사위를 굴렸을 때 바닥 눈의 합",
+      "subarea": "주사위를 굴렸을 때 면의 눈의 합",
+      "detailType": "주사위를 굴렸을 때 면의 눈의 합",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {
@@ -3607,8 +3608,8 @@
       "points": 3.4,
       "pointBand": "3.4",
       "area": "도형",
-      "subarea": "주사위를 굴렸을 때 바닥 눈의 합",
-      "detailType": "주사위를 굴렸을 때 바닥 눈의 합",
+      "subarea": "주사위를 굴렸을 때 면의 눈의 합",
+      "detailType": "주사위를 굴렸을 때 면의 눈의 합",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {
