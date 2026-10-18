@@ -106,6 +106,9 @@
   if(!extraContent.textbooks.some(function(t){return t&&t.accessKey==='mock-mid-7';})){
     extraContent.textbooks.push({title:'중급 모의고사 7회 · 추가 모의고사',accessKey:'mock-mid-7'});
   }
+  if(!extraContent.textbooks.some(function(t){return t&&t.accessKey==='mock-mid-8';})){
+    extraContent.textbooks.push({title:'중급 모의고사 8회 · 추가 모의고사',accessKey:'mock-mid-8'});
+  }
   [7,8].forEach(function(round){
     var key='mock-final-'+round;
     if(!extraContent.textbooks.some(function(t){return t&&t.accessKey===key;}))

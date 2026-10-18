@@ -13,18 +13,19 @@ let BASE_URL = process.env.GFIELD_QA_BASE_URL || '';
 const ARTIFACTS = process.env.GFIELD_QA_ARTIFACT_DIR || path.join(ROOT, '.private-work', 'middle7-additional-approval-20261011');
 const STUDENTS = ['추가회차검수A', '추가회차검수B'];
 const MID7 = 'mock-mid-7';
-const ROUND_KEYS = [MID7, 'mock-final-7', 'mock-final-8'];
-const LABELS = ['중급 7회', '최종 7회', '최종 8회'];
+const MID8 = 'mock-mid-8';
+const ROUND_KEYS = [MID7, MID8, 'mock-final-7', 'mock-final-8'];
+const LABELS = ['중급 7회', '중급 8회', '최종 7회', '최종 8회'];
 const clone = value => JSON.parse(JSON.stringify(value));
 const INITIAL_PERMISSIONS = {
   'concept-basic': [STUDENTS[0]], 'question-bank': [STUDENTS[1]],
-  'mock-mid-6': [STUDENTS[1]], [MID7]: [], 'mock-mid-8': ['*'],
+  'mock-mid-6': [STUDENTS[1]], [MID7]: [], [MID8]: [],
   'mock-final-5': [], 'mock-final-6': [], 'mock-final-7': [STUDENTS[1]],
   'mock-final-8': [STUDENTS[0]], 'mock-final-9': STUDENTS.slice(),
   'mock-signature-1': [STUDENTS[0]], 'mock-signature-2': [STUDENTS[1]],
 };
 function book(key) {
-  return { folder: '추가 모의고사', title: key === MID7 ? '중급 모의고사 7회 · 합성 교재' : '합성 교재 ' + key,
+  return { folder: '추가 모의고사', title: key === MID7 ? '중급 모의고사 7회 · 합성 교재' : key === MID8 ? '중급 모의고사 8회 · 합성 교재' : '합성 교재 ' + key,
     accessKey: key, pdf: '', cover: '', video: '', date: '', links: [] };
 }
 function fixture(includeMiddleBook = true) {
@@ -157,7 +158,7 @@ async function verifyAdmin(browser, width) {
     assert.equal(await page.locator('.additional-round-approvals').count(), 1);
     assert.equal(await page.locator('.additional-round-approvals').locator('..').locator('h3').innerText(), '추가 모의고사 회차 승인');
     assert.deepEqual(await page.locator('#signature-acc-matrix tbody tr > th').allTextContents(), ['시그니처 1회', '시그니처 2회']);
-    assert.equal(await roundRow(page, 'mock-mid-8').count(), 0, 'Middle 8 is not added');
+    assert.equal(await roundRow(page, MID8).count(), 1, 'Middle 8 has its own approval row');
     assert.deepEqual(await approvals(page), INITIAL_PERMISSIONS, 'rendering grants no approvals');
     checkGroups++;
 
@@ -245,19 +246,20 @@ async function verifyAdmin(browser, width) {
     await page.locator('.signature-round-approvals').evaluate(el => el.scrollIntoView({ block: 'center' }));
     await page.locator('.signature-round-approvals').screenshot({ path: path.join(ARTIFACTS, 'admin-signature-preserved-' + width + '.png') });
     assertSafe(state); checkGroups++;
-    return { width, scenario: 'admin-additional-rounds', rows: 3, checkGroups,
+    return { width, scenario: 'admin-additional-rounds', rows: 4, checkGroups,
       mockPuts: state.puts.length, actualExternalWrites: 0, errors: state.errors.length, measured };
   } finally { await context.close(); }
 }
 
-async function verifyStudent(browser, width, scenario) {
+async function verifyStudent(browser, width, scenario, targetKey = MID7) {
   const data = fixture();
-  // Admin-matrix fixture grants Final 8 to student A; isolate Middle 7 scenarios from the now-connected Final 7/8 roadmap keys.
+  // Isolate each Middle round from sibling approvals and the connected Final 7/8 roadmap keys.
   data.archiveProductAccess['mock-final-7'] = [];
   data.archiveProductAccess['mock-final-8'] = [];
+  data.archiveProductAccess[targetKey === MID7 ? MID8 : MID7] = [];
   const allowed = scenario === 'approved' || scenario === 'public';
-  data.archiveProductAccess[MID7] = scenario === 'public' ? ['*'] : scenario === 'approved' ? [STUDENTS[0]] : [];
-  if (scenario === 'missing-key') delete data.archiveProductAccess[MID7];
+  data.archiveProductAccess[targetKey] = scenario === 'public' ? ['*'] : scenario === 'approved' ? [STUDENTS[0]] : [];
+  if (scenario === 'missing-key') delete data.archiveProductAccess[targetKey];
   if (scenario === 'folder-only' || scenario === 'missing-key') data.archiveAccess['추가 모의고사'] = ['*'];
   if (scenario === 'other-extra-only') data.archiveProductAccess['mock-final-5'] = [STUDENTS[0]];
   const originalApprovals = clone(data.archiveProductAccess);
@@ -269,8 +271,8 @@ async function verifyStudent(browser, width, scenario) {
     await page.waitForSelector('#dashboard:not(.hidden)');
     await page.locator('button.nav-btn[data-v="roadmap"]').click();
     const entries = await page.evaluate(() => D.content['extra-mocks'].textbooks.map(item => item.accessKey));
-    assert.equal(entries.filter(key => key === 'mock-mid-7').length, 1, 'Middle 7 is connected once');
-    assert.equal(entries.includes('mock-mid-8'), false, 'Middle 8 is not added to the extra node');
+    assert.equal(entries.filter(key => key === MID7).length, 1, 'Middle 7 is connected once');
+    assert.equal(entries.filter(key => key === MID8).length, 1, 'Middle 8 is connected once');
     assert.ok(entries.includes('mock-final-5'), 'existing extra Final 5 is preserved');
     const unlocked = allowed || scenario === 'other-extra-only';
     const node = page.locator('#timeline .special-branch .node').filter({ has: page.locator('h3').filter({ hasText: '[선택] 추가 모의고사' }) });
@@ -279,31 +281,33 @@ async function verifyStudent(browser, width, scenario) {
     await node.click();
     if (unlocked) {
       await page.waitForSelector('#overlay:not(.hidden)');
-      assert.equal(await page.locator('#modal-body .tb-btn[data-book-key="mock-mid-7"]').count(), allowed ? 1 : 0,
-        'only approved Middle 7 appears inside the extra node');
+      assert.equal(await page.locator('#modal-body .tb-btn[data-book-key="' + targetKey + '"]').count(), allowed ? 1 : 0,
+        'only approved target Middle round appears inside the extra node');
+      assert.equal(await page.locator('#modal-body .tb-btn[data-book-key="' + (targetKey === MID7 ? MID8 : MID7) + '"]').count(), 0,
+        'unapproved sibling Middle round stays hidden');
       if (allowed) {
-        await page.locator('#overlay').screenshot({ path: path.join(ARTIFACTS, 'student-middle7-' + scenario + '-' + width + '.png') });
-        await page.locator('#modal-body .tb-btn[data-book-key="mock-mid-7"]').click();
+        await page.locator('#overlay').screenshot({ path: path.join(ARTIFACTS, 'student-' + targetKey + '-' + scenario + '-' + width + '.png') });
+        await page.locator('#modal-body .tb-btn[data-book-key="' + targetKey + '"]').click();
         await page.locator('#bookviewer.open').waitFor();
-        assert.equal(await page.locator('#bv-name').innerText(), book(MID7).title, 'extra-node button opens the same Middle 7 book');
-        await page.locator('#bookviewer').screenshot({ path: path.join(ARTIFACTS, 'student-middle7-viewer-' + scenario + '-' + width + '.png') });
+        assert.equal(await page.locator('#bv-name').innerText(), book(targetKey).title, 'extra-node button opens the matching Middle book');
+        await page.locator('#bookviewer').screenshot({ path: path.join(ARTIFACTS, 'student-' + targetKey + '-viewer-' + scenario + '-' + width + '.png') });
       }
     } else {
       assert.equal(await page.locator('#overlay:not(.hidden)').count(), 0, 'denied student cannot open the extra node');
-      assert.equal(await page.locator('#modal-body .tb-btn[data-book-key="mock-mid-7"]').count(), 0);
+      assert.equal(await page.locator('#modal-body .tb-btn[data-book-key="' + targetKey + '"]').count(), 0);
     }
     if (!allowed) {
-      await page.evaluate(() => openBook(D.books.find(item => item.accessKey === 'mock-mid-7')));
-      assert.equal(await page.locator('#bookviewer.open').count(), 0, 'unapproved Middle 7 book stays closed');
+      await page.evaluate(key => openBook(D.books.find(item => item.accessKey === key)), targetKey);
+      assert.equal(await page.locator('#bookviewer.open').count(), 0, 'unapproved Middle book stays closed');
     }
     assert.deepEqual(await page.evaluate(() => D.archiveProductAccess), originalApprovals, 'student rendering grants no approvals');
     assert.deepEqual(await page.evaluate(() => ({ students: D.students, reports: D.reports, attendance: D.attendance })),
       { students: data.students, reports: data.reports, attendance: data.attendance }, 'student data and scores unchanged');
-    if (!allowed) await page.locator('#timeline').screenshot({ path: path.join(ARTIFACTS, 'student-middle7-' + scenario + '-' + width + '.png') });
+    if (!allowed) await page.locator('#timeline').screenshot({ path: path.join(ARTIFACTS, 'student-' + targetKey + '-' + scenario + '-' + width + '.png') });
     const pageWidth = await page.evaluate(() => document.documentElement.scrollWidth);
     assert.ok(pageWidth <= width + 1, 'student page fits viewport');
     assertSafe(state);
-    return { width, scenario: 'student-' + scenario, visibleMiddle7: allowed, extraNodeUnlocked: unlocked,
+    return { width, scenario: 'student-' + targetKey + '-' + scenario, visibleTarget: allowed, extraNodeUnlocked: unlocked,
       actualExternalWrites: 0, mockedTelemetry: state.mockedTelemetry, errors: state.errors.length };
   } finally { await context.close(); }
 }
@@ -328,8 +332,8 @@ async function verifyStudent(browser, width, scenario) {
     const results = [];
     for (const width of [1280, 390]) {
       results.push(await verifyAdmin(browser, width));
-      for (const scenario of ['approved', 'public', 'folder-only', 'no-approval', 'missing-key', 'other-extra-only']) {
-        results.push(await verifyStudent(browser, width, scenario));
+      for (const targetKey of [MID7, MID8]) for (const scenario of ['approved', 'public', 'folder-only', 'no-approval', 'missing-key', 'other-extra-only']) {
+        results.push(await verifyStudent(browser, width, scenario, targetKey));
       }
     }
     const result = { pass: true, syntheticStudentsOnly: true, scenarios: results.length, actualExternalWrites: 0, results };

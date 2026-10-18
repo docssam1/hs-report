@@ -125,7 +125,7 @@ async function verifyViewport(browser, width) {
     await page.waitForSelector('#app:not(.hidden)');
     await page.click('button[data-tab="archive"]');
     assert.deepEqual(await page.locator('#signature-acc-matrix tbody tr > th').allTextContents(), ['시그니처 1회', '시그니처 2회']);
-    assert.deepEqual(await page.locator('#final7-acc-matrix tbody tr > th').allTextContents(), ['중급 7회', '최종 7회', '최종 8회']);
+    assert.deepEqual(await page.locator('#final7-acc-matrix tbody tr > th').allTextContents(), ['중급 7회', '중급 8회', '최종 7회', '최종 8회']);
     assert.equal(await page.locator('#mid-acc-matrix').count(), 0, 'focused release does not add an unrelated Mid table');
     assert.deepEqual(await permissions(page), INITIAL_PERMISSIONS, 'rendering does not change synthetic approval lists');
     assert.equal(await page.evaluate(() => S.books.some(book => String(book.accessKey).includes('signature'))), false);
@@ -219,7 +219,7 @@ async function verifyViewport(browser, width) {
       assert.deepEqual((await permissions(page))[key], beforeFinal[key], 'Final controls must not change ' + key);
     }
     assert.deepEqual(await unrelatedState(page), protectedState);
-    assert.deepEqual(await page.locator('#final7-acc-matrix tbody tr > th').allTextContents(), ['중급 7회', '최종 7회', '최종 8회']);
+    assert.deepEqual(await page.locator('#final7-acc-matrix tbody tr > th').allTextContents(), ['중급 7회', '중급 8회', '최종 7회', '최종 8회']);
     assertions += 8;
 
     const measured = await page.evaluate(() => {

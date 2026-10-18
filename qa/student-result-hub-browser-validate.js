@@ -100,6 +100,22 @@ const server=http.createServer((req,res)=>{
     assert.match(await middle1.locator('a').getAttribute('href'),/^mock\.html\?round=1&go=report&name=/);
     assert.equal(await middle1.locator('a').innerText(),'상세 분석·복습문제');
     assert.equal(await hub.locator('tbody tr',{hasText:'중급 모의고사 8회'}).count(),0,'구매하지 않은 중급 회차는 기존 기록이 있어도 숨긴다');
+    await page.evaluate(async name=>{
+      const data=structuredClone(window.GFIELD_DATA);data.archiveProductAccess['mock-mid-8']=[name];
+      await window.GFIELD_STUDENT_RESULT_HUB.render({student:name,container:document.getElementById('student-result-hub'),data,
+        supabaseUrl:'https://fgahqumaldheqettmvqg.supabase.co',supabaseKey:'test-key'});
+    },student);
+    await hub.locator('.srh-banner').click();
+    const middle8=hub.locator('tbody tr',{hasText:'중급 모의고사 8회'});
+    assert.equal(await middle8.count(),1,'중급 8회만 승인하면 기존 8회 성적이 나타난다');
+    assert.match(await middle8.locator('a').getAttribute('href'),/^mock\.html\?round=8&go=report&name=/);
+    assert.match(await middle8.innerText(),/100\.0점/);
+    await page.evaluate(async name=>{
+      await window.GFIELD_STUDENT_RESULT_HUB.render({student:name,container:document.getElementById('student-result-hub'),
+        data:window.GFIELD_DATA,supabaseUrl:'https://fgahqumaldheqettmvqg.supabase.co',supabaseKey:'test-key'});
+    },student);
+    await hub.locator('.srh-banner').click();
+    assert.equal(await hub.locator('tbody tr',{hasText:'중급 모의고사 8회'}).count(),0,'원래 미승인 상태에서는 8회 성적이 다시 숨겨진다');
     const last2=hub.locator('tbody tr',{hasText:'최종 모의고사 2회'});
     assert.match(await last2.innerText(),/\d+\.\d%/);
     assert.match(await last2.locator('a').getAttribute('href'),/^final\.html\?set=last&round=2&go=report&name=/);
