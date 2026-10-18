@@ -404,7 +404,7 @@
       "id": "mid8-q18-type",
       "domain": "수·규칙찾기",
       "middle": "수·규칙찾기",
-      "label": "달력(토요일 날짜의 합)",
+      "label": "달력(요일 날짜의 합)",
       "gradeBand": {
         "from": null,
         "to": null,
@@ -417,6 +417,7 @@
       "rendererId": "text-block",
       "searchAliases": [
         "수·규칙찾기",
+        "달력(요일 날짜의 합)",
         "달력(토요일 날짜의 합)"
       ]
     },
@@ -3236,8 +3237,8 @@
       "points": 3.4,
       "pointBand": "3.4",
       "area": "수·규칙찾기",
-      "subarea": "달력(토요일 날짜의 합)",
-      "detailType": "달력(토요일 날짜의 합)",
+      "subarea": "달력(요일 날짜의 합)",
+      "detailType": "달력(요일 날짜의 합)",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {
@@ -3280,8 +3281,8 @@
       "points": 3.4,
       "pointBand": "3.4",
       "area": "수·규칙찾기",
-      "subarea": "달력(토요일 날짜의 합)",
-      "detailType": "달력(토요일 날짜의 합)",
+      "subarea": "달력(요일 날짜의 합)",
+      "detailType": "달력(요일 날짜의 합)",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {
@@ -3324,8 +3325,8 @@
       "points": 3.4,
       "pointBand": "3.4",
       "area": "수·규칙찾기",
-      "subarea": "달력(토요일 날짜의 합)",
-      "detailType": "달력(토요일 날짜의 합)",
+      "subarea": "달력(요일 날짜의 합)",
+      "detailType": "달력(요일 날짜의 합)",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {
