@@ -84,7 +84,7 @@
       "id": "mid8-q02-type",
       "domain": "경우의 수",
       "middle": "경우의 수",
-      "label": "9로 나눈 나머지가 3인 두 자리 수",
+      "label": "9로 나눈 나머지 조건(두 자리 수)",
       "gradeBand": {
         "from": null,
         "to": null,
@@ -97,6 +97,7 @@
       "rendererId": "text-block",
       "searchAliases": [
         "경우의 수",
+        "9로 나눈 나머지 조건(두 자리 수)",
         "9로 나눈 나머지가 3인 두 자리 수"
       ]
     },
@@ -823,8 +824,8 @@
       "points": 2.7,
       "pointBand": "2.7",
       "area": "경우의 수",
-      "subarea": "9로 나눈 나머지가 3인 두 자리 수",
-      "detailType": "9로 나눈 나머지가 3인 두 자리 수",
+      "subarea": "9로 나눈 나머지 조건(두 자리 수)",
+      "detailType": "9로 나눈 나머지 조건(두 자리 수)",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {
@@ -863,8 +864,8 @@
       "points": 2.7,
       "pointBand": "2.7",
       "area": "경우의 수",
-      "subarea": "9로 나눈 나머지가 3인 두 자리 수",
-      "detailType": "9로 나눈 나머지가 3인 두 자리 수",
+      "subarea": "9로 나눈 나머지 조건(두 자리 수)",
+      "detailType": "9로 나눈 나머지 조건(두 자리 수)",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {
@@ -903,8 +904,8 @@
       "points": 2.7,
       "pointBand": "2.7",
       "area": "경우의 수",
-      "subarea": "9로 나눈 나머지가 3인 두 자리 수",
-      "detailType": "9로 나눈 나머지가 3인 두 자리 수",
+      "subarea": "9로 나눈 나머지 조건(두 자리 수)",
+      "detailType": "9로 나눈 나머지 조건(두 자리 수)",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {

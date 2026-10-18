@@ -32,6 +32,9 @@ const fixture='window.GFIELD_DATA={students:["검수학생"],studentTypes:{},arc
       catch(error){throw new Error('Middle 8 worksheet load: '+JSON.stringify({status:await page.locator('#f1Status').allTextContents(),errors,body:(await page.locator('body').innerText()).slice(0,500)}));}
       assert.equal(await page.locator('#final1Worksheet .qcard').count(),90);
       assert.equal(await page.locator('#final1Worksheet [data-answer-id]').count(),90);
+      const q02Cards=page.locator('#final1Worksheet .qcard[data-source-no="2"]');
+      assert.deepEqual(await q02Cards.locator('.f1-qtype').allTextContents(),Array(3).fill('[9로 나눈 나머지 조건(두 자리 수)]'));
+      assert.deepEqual((await q02Cards.locator('.f1-qtext').allTextContents()).map(x=>x.match(/나머지가 (\d+)/)[1]),['4','5','6']);
       const q10Cards=page.locator('#final1Worksheet .qcard[data-source-no="10"]');
       assert.deepEqual(await q10Cards.locator('.f1-qtype').allTextContents(),Array(3).fill('[순서쌍 배열의 규칙]'));
       assert.deepEqual((await q10Cards.locator('.f1-qtext').allTextContents()).map(x=>x.match(/\d+번째/)[0]),['42번째','59번째','72번째']);

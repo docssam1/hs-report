@@ -107,6 +107,8 @@ const server=http.createServer((req,res)=>{
     if(outputDir)await approved.screenshot({path:path.join(outputDir,'middle-round8-report-mobile.png'),fullPage:true});
     assert.equal(await approved.evaluate(()=>window.GFIELD_MOCK.rounds['8'].items.find(item=>item.no===4).answer),
       '176, 170, 174, 168, 173 (합 516)','round 8 loads all five cells from the source answer');
+    assert.equal(await approved.evaluate(()=>window.GFIELD_MOCK.rounds['8'].items.find(item=>item.no===2).type),
+      '9로 나눈 나머지 조건(두 자리 수)','round 8 diagnostic uses the reusable q02 type label');
     assert.equal(await approved.evaluate(()=>window.GFIELD_MOCK.rounds['8'].items.find(item=>item.no===10).type),
       '순서쌍 배열의 규칙','round 8 diagnostic uses the reusable q10 type label');
     const approvedPicker=await context.newPage();approvedPicker.on('pageerror',error=>errors.push(error.message));
