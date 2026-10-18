@@ -1,5 +1,11 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 22번 Apple Vision·현행 인쇄 PDF 재검수 (Mac, 최신)
+
+- Mac `main`의 문제은행 SHA-256 `14875841a9e6173c7384e599423fab559b308939b2b3b2f51f4c7cc764cea126`을 고정하고 원본 문제 PDF 4쪽의 **22번 지문과 실제 네 삼각형**을 직접 다시 열었다. 원본 꼭짓점은 `2·3·4`, `3·4·5`, `6·7·8`, `7·8·9`로 모두 연속수다. 공개 은행의 22번 변형 그림 래스터 3개를 바이트 해시로 대조했고, 각 그림·`compact` PDF 21쪽(64~66번)을 화면에서 직접 확인했다. 유사문제 꼭짓점의 연속수 배열은 각각 4개 중 2·1·1개뿐이어서 원본의 시각적 규칙 발견 단서와 다르다.
+- Apple Vision OCR은 원본 PDF를 400dpi로 렌더한 22번 확대 그림에서 숫자 **8/15개**만 읽었다. 공개 `compact` PDF의 같은 세 그림은 200dpi에서 각각 **9/15·6/15·5/15개**, 300dpi에서 각 삼각형 숫자 대조 **45/45개**를 읽었다. 이는 디지털 PDF 확대 판독의 근거이며 실물 종이 인쇄 합격을 뜻하지 않는다. 독립 곱셈으로 원문 물음표 `7×8×9=504→4`, 세 변형 `4×7×9=252→2`, `4×8×9=288→8`, `2×7×9=126→6`을 확인해 저장 답 `2·8·6`과 일치했다.
+- [Drive 판독·계산 요약 JSON](https://drive.google.com/file/d/1mf0T5Q9BA4NCNLLtnCwKYefabe8_cA1a/view), [원본·현행 그림 크롭, OCR 원본값, 재실행 코드 ZIP](https://drive.google.com/file/d/1MRdPuWVqVH5kAzYltfywXKQKXKksHDG2/view)을 기존 검수 폴더에 저장하고 파일 크기·부모 폴더를 재조회했다. Mac 재실행 파일은 `.private-work/middle8-20261018/q22-current-ocr-20261019/`에 있다. 3변형의 `reasoningSteps`·`calculationLoad`·`visualCue`·`accidentalShortcut` **12축은 계속 보류**한다. `lpstat -p`에 등록 프린터가 없어서 실물 출력은 미검증이다. 문제은행·원본 그림·정답·학생 기록은 바꾸지 않았다.
+
 ## 2026-10-19 중급 8회 현행 공개본 198축 보류 검토 순서표 (Mac, 최신)
 
 - 현재 문제은행 SHA-256 `14875841a9e6173c7384e599423fab559b308939b2b3b2f51f4c7cc764cea126`와 810축 재연결 기록을 대조해 **26개 원문·64개 변형의 보류 198축**을 문항별 검토표로 정리했다. 각 행에는 원문 PDF 쪽수, 해당 변형 ID, 축별 보류 수, 현재 위험 표시, 원문 직접 대조·Apple Vision/계산 기록의 Drive 링크, 기존 근거 문장과 다음 판정 사항을 넣었다. 직접 대조 파일 **23개**의 로컬 SHA-256을 기록값과 재검사했고, 원문 쪽수·Drive 직접 대조 링크·계산/OCR 링크가 빠진 행은 0개다. [26행 Drive CSV](https://drive.google.com/file/d/1vhyK_Tk1-JluOTBIJ8EX_lcWO5i_MWUP/view), [198축 상세 JSON](https://drive.google.com/file/d/17pr6hzAEpCP4TtRXxlP3FMbvXH47MmdN/view), [로컬 재생성 코드 포함 ZIP](https://drive.google.com/file/d/19wqWfJHn8cjCo2znwhyTdV_7YRDExKCW/view)을 기존 검수 폴더에 보관하고 크기·부모 폴더를 확인했다. Mac 실행본은 `.private-work/middle8-20261018/build-held-review-queue-20261019.py`와 `held-review-queue-20261019`에 둔다.
