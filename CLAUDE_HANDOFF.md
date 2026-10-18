@@ -3,7 +3,8 @@
 ## 2026-10-18 중급 8회 90문항 9축 검수 작업표 연결 (Mac)
 
 - 제작 기준 v2.7의 9축(선수 개념·추론 단계·조건 추적·경우 분류·계산량·표현 전환·읽기 부담·시각 단서·우연한 지름길)을 기존 비공개 초안 90문항에 펼쳐 810행의 작업표를 만들었다. 초안의 9축 문장은 제작자 메모로 분리하고, 실제 직접 검수 상태는 `미검수` 721행·`보류` 89행·`통과` 0행이다. Q3 중복 카드, Q6 v3 기호 배치, Q12/30의 사용자 판정과 독립 계산 차이, Q14 추가 조건, Q20 면 방향, Q22 규칙, Q24 연못 모양, Q25 조건 문단화, Q28 반복수 표기, Q29 경우 분류 등은 문항·축별로 보류 사유를 적었다.
-- 작업표 JSON/CSV를 기존 Drive 중급 8회 검수 폴더 `1ksibH1e-3kVmbATQQKSDwnoJZvhl9Aci`의 새 ID `12XGTyhWYxgGaXndJYtkKKRfCu3R-t91K` / `1WVdJPPQ8p6DfoIzk9RbAcwLdzQ9GbYh8`에 저장하고, 원문 장부 `1E6Wel6JGjtKXIpuyIWEJ2w76j73ftzc7`와 전체 QA `12X26aAEZc4hEYdepRvuiNCQ3oC8aJv9p`를 같은 ID로 갱신했다. 네 파일의 크기·부모 폴더를 재조회했고, 작업표 SHA-256은 JSON `6d2e365173b0573bf2f4d6f7089edcef318294039fc99551f9156f2def05b76f`, CSV `17d2378b817fea6a1c148c8fc56434e7805bca3195282754db8c9e3610817293`이다. 로컬 생성 코드와 검수표는 `.private-work/middle8-20261018`에 보존한다.
+- 작업표 JSON/CSV를 기존 Drive 중급 8회 검수 폴더 `1ksibH1e-3kVmbATQQKSDwnoJZvhl9Aci`의 ID `12XGTyhWYxgGaXndJYtkKKRfCu3R-t91K` / `1WVdJPPQ8p6DfoIzk9RbAcwLdzQ9GbYh8`에 저장하고, 원문 장부 `1E6Wel6JGjtKXIpuyIWEJ2w76j73ftzc7`와 전체 QA `12X26aAEZc4hEYdepRvuiNCQ3oC8aJv9p`를 같은 ID로 갱신했다. 작업표 SHA-256은 JSON `78c129ff7bd54e92b5fe56f8a74b10e5bc361478d056e5298d3715b40e1c8ef9`, CSV `25e3124119d75020076dcad8454190a28b4147de461a2b5e5baac55f07b20c05`이다. 로컬 생성 코드와 검수표는 `.private-work/middle8-20261018`에 보존한다.
+- 1·2번은 원본 1쪽·강의 답안 1~2쪽·현재 6문항 인쇄 시안 1쪽을 직접 대조해 여섯 변형×9축=54개의 잠정 근거를 따로 적었다(Drive `1DQ_F9uZmDOzMD1RBkCbD5T2yBQkj4uOp`). 1번 v2의 증가→감소 역방향 추론·읽기, 1번 v3의 잘못된 초안 계산 메모, 2번 세 변형이 모두 답 10을 공유해 묶음에서 답 복사가 가능한 점 등 7개 축은 차이 판정 보류다. 이 기록은 작업표의 최종 미검수/보류 수나 교사 승인 수를 올리지 않는다. 관련 Drive 다섯 파일의 크기·부모 폴더를 재조회했다.
 - 이번에는 초안·그림·문제/답안 PDF·원본 답·학생 데이터·공개 코드를 바꾸지 않았다. Q12 원본 저장 답 17과 Q30 원본 저장 답 120은 사용자 판정대로 유지하고 같은 판정 자료를 다시 요청하지 않는다. 9축 작업표는 완료 판정이 아니며 직접 원문·실물 인쇄·교사 검수가 남았다. 교사 승인0·학생 공개0·중급 8회 신규 진단 연결0을 유지한다.
 
 ## 2026-10-18 중급 8회 26~29번 원문 계약과 30번 사용자 판정 기록 (Mac)
