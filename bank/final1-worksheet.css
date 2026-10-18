@@ -90,6 +90,11 @@ body.fixed-bank-mode #final1Worksheet .question-page.f1-large-figure .f1-qcard{g
 body.fixed-bank-mode #final1Worksheet .question-page.f1-large-figure .f1-qfigure{min-height:0;margin:10px 0}
 body.fixed-bank-mode #final1Worksheet .question-page.f1-large-figure .f1-qfigure img{max-height:160mm}
 
+/* Keep the original Q13 example labels clear without changing the source image.
+   The page watermark remains around the figure and on every printed page. */
+#final1Worksheet[data-bank-code="middle8"] .question-page.f1-large-figure .qpage{z-index:6}
+#final1Worksheet[data-bank-code="middle8"] .qcard[data-source-no="13"] .f1-qfigure{position:relative;z-index:6;background:#fff}
+
 .f1-watermark-clip{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 #final1Worksheet .wm-layer.wm-active{opacity:.04}
 .f1-bands{display:flex;gap:4px;flex-wrap:wrap}
