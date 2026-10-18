@@ -993,7 +993,7 @@
   /* 추가 모의고사: 기존 회차 승인 표와 서재의 제품별 명단을 함께 사용한다. */
   const FINAL7_ACCESS_KEY='mock-final-7';
   const FINAL8_ACCESS_KEY='mock-final-8';
-  const ADDITIONAL_ROUND_ACCESS=[['mock-mid-7','중급 7회','middle7'],[FINAL7_ACCESS_KEY,'최종 7회',7],[FINAL8_ACCESS_KEY,'최종 8회',8]];
+  const ADDITIONAL_ROUND_ACCESS=[['mock-mid-7','중급 7회','middle7'],['mock-mid-8','중급 8회','middle8'],[FINAL7_ACCESS_KEY,'최종 7회',7],[FINAL8_ACCESS_KEY,'최종 8회',8]];
   function finalRoundAccessKey(round){ const item=ADDITIONAL_ROUND_ACCESS.find(item=>String(item[2])===String(round)); return item?item[0]:''; }
   function isAdditionalAccessKey(key){ return ADDITIONAL_ROUND_ACCESS.some(item=>item[0]===key); }
   function finalRoundAccessArr(round){ const key=finalRoundAccessKey(round); return Array.isArray(S.archiveProductAccess[key])?S.archiveProductAccess[key]:[]; }

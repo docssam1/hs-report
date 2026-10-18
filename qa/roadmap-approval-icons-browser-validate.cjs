@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),
 require('./email-login-test-stub');
 const {chromium}=require('playwright');
 const root=path.resolve(__dirname,'..'),student='잠금표시검수',before=process.argv.includes('--before'),out=process.env.GFIELD_ROADMAP_QA_DIR;
-const data=fs.readFileSync(path.join(root,'data.js'),'utf8')+`\n;(()=>{const d=window.GFIELD_DATA,n=${JSON.stringify(student)};d.students.push(n);d.studentTypes[n]='resident';d.attendance[n]=[];for(const key of ['mock-final-5','mock-final-7','mock-final-8','mock-mid-7'])d.archiveProductAccess[key]=[];})();`;
+const data=fs.readFileSync(path.join(root,'data.js'),'utf8')+`\n;(()=>{const d=window.GFIELD_DATA,n=${JSON.stringify(student)};d.students.push(n);d.studentTypes[n]='resident';d.attendance[n]=[];for(const key of ['mock-final-5','mock-final-7','mock-final-8','mock-mid-7','mock-mid-8'])d.archiveProductAccess[key]=[];})();`;
 const host=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!file.startsWith(root+path.sep)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);return res.end();}res.setHeader('content-type',({'.html':'text/html; charset=utf-8','.js':'application/javascript','.css':'text/css','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml'})[path.extname(file)]||'application/octet-stream');fs.createReadStream(file).pipe(res);});
 (async()=>{
  await new Promise(r=>host.listen(0,'127.0.0.1',r));const base=process.env.GFIELD_ROADMAP_QA_BASE||'http://127.0.0.1:'+host.address().port,browser=await chromium.launch(),writes=[],errors=[];
@@ -15,8 +15,8 @@ const host=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new UR
   await p.evaluate(()=>document.getElementById('video-intro')?.remove());await p.fill('#name-input',student);await p.click('#name-enter');
   await p.locator('#dashboard:not(.hidden)').waitFor();await p.click('.nav-btn[data-v="roadmap"]');
   const extra=p.locator('#timeline .node').filter({has:p.locator('h3',{hasText:'[선택] 추가 모의고사'})});
-  for(const key of ['mock-final-7','mock-final-8','mock-final-5','mock-mid-7']){
-   await p.evaluate(({key,name})=>{const d=window.GFIELD_DATA;for(const k of ['mock-final-5','mock-final-7','mock-final-8','mock-mid-7'])d.archiveProductAccess[k]=[];d.archiveProductAccess[key]=[name];renderTimeline();},{key,name:student});
+  for(const key of ['mock-final-7','mock-final-8','mock-final-5','mock-mid-7','mock-mid-8']){
+   await p.evaluate(({key,name})=>{const d=window.GFIELD_DATA;for(const k of ['mock-final-5','mock-final-7','mock-final-8','mock-mid-7','mock-mid-8'])d.archiveProductAccess[k]=[];d.archiveProductAccess[key]=[name];renderTimeline();},{key,name:student});
    const state=await p.evaluate(key=>({archive:canSeeProduct(key),roadmap:isUnlocked(window.GFIELD_DATA.nodes.find(n=>n.id==='extra-mocks'))}),key);
    if(before&&['mock-final-7','mock-final-8'].includes(key)){assert.equal(state.archive,true);assert.equal(state.roadmap,false);console.log('REPRO '+key+': archive approved / roadmap locked');continue;}
    assert.equal(state.archive,true);assert.equal(state.roadmap,true,'approved '+key+' is reflected in the roadmap');
@@ -48,7 +48,7 @@ const host=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new UR
    await p.evaluate(name=>{window.GFIELD_DATA.attendance[name]=['sep-w1'];renderTimeline();},student);
    for(const width of [1280,390]){await p.setViewportSize({width,height:900});await week.scrollIntoViewIfNeeded();assert.ok((await week.locator('.icon-status').boundingBox()).x>=0);if(out)await p.screenshot({path:path.join(out,'regular-week-'+width+'.png')});}
    for(const width of [1280,390]){await p.setViewportSize({width,height:900});await extra.scrollIntoViewIfNeeded();assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.ok((await extra.locator('.icon-status').boundingBox()).x>=0,'approval marker stays inside the viewport');if(out){fs.mkdirSync(out,{recursive:true});await p.screenshot({path:path.join(out,'approved-extra-'+width+'.png')});}}
-   await p.evaluate(()=>{for(const key of ['mock-final-5','mock-final-7','mock-final-8','mock-mid-7'])window.GFIELD_DATA.archiveProductAccess[key]=[];renderTimeline();});
+   await p.evaluate(()=>{for(const key of ['mock-final-5','mock-final-7','mock-final-8','mock-mid-7','mock-mid-8'])window.GFIELD_DATA.archiveProductAccess[key]=[];renderTimeline();});
    assert.equal(await extra.locator('.icon-status').innerText(),'🔒');await extra.click();assert.equal(await p.locator('#overlay').isVisible(),false);
   }
   assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);console.log(before?'PASS baseline approval mismatch reproduced':'PASS approved roadmap icons, per-exam child filtering, normal/future weeks, revoked access, PC/390px, zero writes');

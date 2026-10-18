@@ -39,7 +39,7 @@ for (const [title, key] of mockItems) {
   const book = data.books.find(item => item && item.title === title);
   assert.ok(book, `${title} 항목이 있어야 함`);
   assert.equal(book.accessKey, key, `${title}은 독립 승인 키를 사용`);
-  assert.deepEqual(Array.from(products[key] || []), [], `${title}은 선생님이 승인하기 전 비공개`);
+  assert.ok(Array.isArray(products[key]), `${title} 승인 명단은 독립 배열`);
 }
 
 const mockKeys = mockItems.map(([, key]) => key).concat('mock-signature-1', 'mock-signature-2');

@@ -17,6 +17,7 @@ const dataAddon=`\n;(function(){
   d.studentTypes=d.studentTypes||{};d.studentTypes[${JSON.stringify(student)}]='online';
   d.archiveAccess=d.archiveAccess||{};d.archiveAccess['중급 모의고사']=[${JSON.stringify(student)}];
 })();`;
+let approveRound8=false;
 const records=[
   {student,round:'2',ox:'O'.repeat(30),score:100,wrong:0,source:'online',updated_at:'2026-09-15T00:00:00.000Z'},
   {student,round:'8',ox:'X'.repeat(30),score:0,wrong:30,source:'online',updated_at:'2026-09-15T01:00:00.000Z'}
@@ -26,7 +27,7 @@ const server=http.createServer((req,res)=>{
   const url=new URL(req.url,'http://localhost'),file=path.resolve(root,'.'+decodeURIComponent(url.pathname));
   if(!file.startsWith(root+path.sep)||file.includes('.private')||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);res.end();return;}
   res.setHeader('Content-Type',types[path.extname(file)]||'application/octet-stream');
-  if(url.pathname==='/data.js')return res.end(actualData+dataAddon);
+  if(url.pathname==='/data.js')return res.end(actualData+dataAddon+(approveRound8?`\n;window.GFIELD_DATA.archiveProductAccess['mock-mid-8']=[${JSON.stringify(student)}];`:''));
   fs.createReadStream(file).pipe(res);
 });
 
@@ -71,9 +72,20 @@ const server=http.createServer((req,res)=>{
     await denied.goto(`${base}/mock.html?round=8&go=report&name=${encodeURIComponent(student)}`);
     await denied.getByText('이용할 수 없는 회차입니다',{exact:true}).waitFor();
     assert.equal(await denied.locator('.qgrid').count(),0,'unowned direct round never opens answer input');
+    approveRound8=true;
+    const approved=await context.newPage();approved.on('pageerror',error=>errors.push(error.message));
+    await approved.goto(`${base}/mock.html?round=8&go=report&name=${encodeURIComponent(student)}`);
+    await approved.locator('.card',{hasText:'분석 결과'}).first().waitFor();
+    assert.match(await approved.locator('#main').innerText(),/8회.*분석 결과/,'separately approved round 8 opens its saved report');
+    assert.match(await approved.locator('#main').innerText(),/0\s*점 \/ 100점/,'round 8 reads its own saved result');
+    const approvedPicker=await context.newPage();approvedPicker.on('pageerror',error=>errors.push(error.message));
+    await approvedPicker.goto(`${base}/mock.html?name=${encodeURIComponent(student)}`);
+    await approvedPicker.locator('.round-card').first().waitFor();
+    assert.deepEqual(await approvedPicker.locator('.round-card .rn').allTextContents(),['1회','2회','3회','4회','8회'],
+      'round 8 approval adds only its own exam to the existing online product');
     assert.deepEqual(Array.from(new Set(methods)),['GET'],'student report flow never writes grades');
     assert.ok(queries.every(value=>value==='eq.'+student),'only the current student result is requested');
     assert.deepEqual(errors,[]);
-    console.log(JSON.stringify({pass:true,visibleRounds:[1,2,3,4],savedRound2Report:true,directRound8Blocked:true,resultWrites:0}));
+    console.log(JSON.stringify({pass:true,baselineVisibleRounds:[1,2,3,4],approvedVisibleRounds:[1,2,3,4,8],savedRound2Report:true,directRound8BlockedBeforeApproval:true,approvedRound8Report:true,resultWrites:0}));
   }finally{await browser.close();server.close();}
 })().catch(error=>{console.error(error);server.close();process.exitCode=1;});
