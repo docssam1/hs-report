@@ -9,7 +9,7 @@ const {chromium}=require(process.env.GFIELD_QA_PLAYWRIGHT||'E:/Codex/tooling/ele
 const core=require('../supabase/functions/hs-final-population/population-core.js');
 const approved=require('../bank/data/last3-reviewed.json');
 const root=path.resolve(__dirname,'..');
-const output=path.join(root,'.private-work/last3-reuse-20261015/qa-report');
+const output=process.env.GFIELD_LAST3_QA_OUTPUT||path.join(root,'.private-work/last3-reuse-20261015/qa-report');
 const student='최종3합성검수학생';
 const allO='O'.repeat(30),allX='X'.repeat(30);
 const makeOx=wrong=>Array.from({length:30},(_,i)=>wrong.includes(i+1)?'X':'O').join('');
@@ -35,12 +35,14 @@ if(process.env.GFIELD_LAST3_SKIP_PDF){
   const saved=path.join(output,'last3-parent-report-browser-results.json');
   if(fs.existsSync(saved))evidence.pdfs=JSON.parse(fs.readFileSync(saved,'utf8')).pdfs||[];
 }
-async function check(label,fn){try{const detail=await fn();evidence.cases.push({label,pass:true,detail});console.log('PASS '+label+' '+JSON.stringify(detail||{}));}catch(e){evidence.failures.push({label,message:e.message});evidence.cases.push({label,pass:false});console.error('FAIL '+label+' '+e.message);}}
+async function check(label,fn){try{const detail=await fn();evidence.cases.push({label,pass:true,detail});console.log('PASS '+label+' '+JSON.stringify(detail||{}));}catch(e){evidence.failures.push({label,message:e.message,stack:e.stack});evidence.cases.push({label,pass:false});console.error('FAIL '+label+' '+e.stack);}}
 
 (async()=>{
   fs.mkdirSync(output,{recursive:true});
   await new Promise(r=>server.listen(0,'127.0.0.1',r));
-  const base='http://127.0.0.1:'+server.address().port;
+  const base=process.env.GFIELD_LAST3_PUBLIC_BASE_URL||'http://127.0.0.1:'+server.address().port;
+  evidence.testBaseUrl=base;
+  evidence.sourceMode=process.env.GFIELD_LAST3_PUBLIC_BASE_URL?'public-static-with-synthetic-records':'local-static-with-synthetic-records';
   const browser=await chromium.launch();
   const context=await browser.newContext({viewport:{width:1280,height:900}});
   await context.addInitScript(n=>{
@@ -170,7 +172,12 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
     });
     await check('Last3 summary print embeds the same approved variants and answers',async()=>{
       records=[row('last3',makeOx([12,15,28]))];await open();
-      await page.waitForFunction(()=>document.querySelectorAll('#last3PriorityProblems .last3-practice-question').length===9);
+      try{
+        await page.waitForFunction(()=>document.querySelectorAll('#last3PriorityProblems .last3-practice-question').length===9,undefined,{timeout:45000});
+      }catch(error){
+        const state=await page.evaluate(()=>({summary:document.querySelector('#report-summary')?.innerText,practice:document.querySelector('#last3PriorityProblems')?.innerText,priority:window.__qaParentVM?.priorityItems?.map(x=>x.no),resources:performance.getEntriesByType('resource').map(x=>x.name).filter(x=>/last3|practice|bank/.test(x))}));
+        throw new Error(error.message+'; state='+JSON.stringify(state));
+      }
       const screen=await page.locator('#last3PriorityProblems').evaluate(host=>({ids:[...host.querySelectorAll('.last3-practice-question')].map(x=>x.dataset.itemId),given:host.querySelectorAll('.last3-practice-given').length,figures:host.querySelectorAll('.last3-practice-figure').length,drawing:host.querySelectorAll('.last3-practice-draw').length}));
       assert.equal(screen.given,3);assert.equal(screen.figures,6);assert.equal(screen.drawing,3);
       const prepared=await page.evaluate(async()=>{
@@ -190,8 +197,10 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
         });
         const exportPage=await context.newPage();
         try{
-          await exportPage.goto(base+'/qa-last3-print-blank');await exportPage.setContent(html,{waitUntil:'load'});
-          await exportPage.waitForFunction(()=>[...document.images].every(x=>x.complete&&x.naturalWidth));await exportPage.evaluate(()=>document.fonts.ready);
+          await exportPage.goto(base+(process.env.GFIELD_LAST3_PUBLIC_BASE_URL?'/final.html':'/qa-last3-print-blank'));await exportPage.setContent(html,{waitUntil:'load'});
+          try{await exportPage.waitForFunction(()=>[...document.images].every(x=>x.complete&&x.naturalWidth),undefined,{timeout:15000});}
+          catch(error){const broken=await exportPage.evaluate(()=>[...document.images].filter(x=>!x.complete||!x.naturalWidth).map(x=>({src:x.src,complete:x.complete,naturalWidth:x.naturalWidth})));throw new Error(error.message+'; brokenImages='+JSON.stringify(broken));}
+          await exportPage.evaluate(()=>document.fonts.ready);
           await exportPage.emulateMedia({media:'print'});const file=path.join(output,'최종3회_합성학생_진단과복습.pdf');
           await exportPage.pdf({path:file,format:'A4',preferCSSPageSize:true,printBackground:true});evidence.pdfs.push(file);
         }finally{await exportPage.close();}
