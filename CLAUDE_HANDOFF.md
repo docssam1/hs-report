@@ -1,5 +1,11 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 20번 유형명·Apple Vision 인쇄 PDF 검수 (Mac, 최신)
+
+- 원본 문제 PDF 4쪽의 20번 지문·주사위 그림을 다시 확인했다. 원문은 바닥면의 합을 묻지만 승인된 현행 유사문제 58~60번은 각각 윗면·앞면·오른쪽 면을 묻는다. 기존 출력 유형명 `주사위를 굴렸을 때 바닥 눈의 합`은 세 지문과 달라, 표시 유형명과 세 문항의 분류만 `주사위를 굴렸을 때 면의 눈의 합`으로 바로잡고 이전 유형명을 검색 별칭으로 남겼다. 승인된 문제 지문·정답·해설·그림·채점·학생 기록은 바꾸지 않았다. 문제은행 SHA-256은 `1149cacf48a1036683863d826822f654e42cd1db9dc2e20b8c8436a91de6ba35`다.
+- `compact` PDF 18~20쪽을 300dpi로 렌더하고 Apple Vision `.accurate` OCR로 세 새 유형명과 각 면의 물음을 확인했다. 문제은행·브라우저 검사는 90문항, `editorial`/`compact`, 개인연습 10/20/30문항, 운영 쓰기 0으로 통과했다. 이는 유형명과 출력 연결의 확인이다. 원문과 현행 유사문제의 면·집계 계약 차이는 그대로이며 20번의 9축 보류 **19개**, 전체 최종 승인 0축, 실물 종이 미검수를 유지한다.
+- [Drive 유형명·OCR 검수 JSON](https://drive.google.com/file/d/1pY1QA669rpl9w5Hw0zS92qNoydfMmBGq/view), [변경 전후 OCR·300dpi 출력·재실행 코드 ZIP](https://drive.google.com/file/d/1XcN_Dd_pcHg9C3MnXDA3gDWYfhSTG7B-/view)을 기존 검수 폴더에 저장하고 크기·부모 폴더를 확인했다. Mac 재실행 위치는 `.private-work/middle8-20261018/q20-current-ocr-20261019/`이다. GitHub 메인 코드 커밋 `68266bec4ff0ed4b70d06c1a061e2d38c4db024f`의 트리·파일 해시를 로컬과 대조했다. Pages 실행 `39149485795` 성공 후 공개 사이트의 문제은행 JSON·어댑터 JS를 HTTP 200으로 받아 **두 파일 모두 로컬과 바이트·SHA-256 완전 일치**를 확인하고 [Drive 공개 배포 검수 기록](https://drive.google.com/file/d/1s-ZFxx5VjN-TuOTEvaZTSQWBoxZYhgiO/view)에 저장했다. 실제 학생 로그인과 실물 인쇄는 별도다.
+
 ## 2026-10-19 중급 8회 30번 현행 인쇄 PDF·숨은 블록 모델 검수 (Mac, 최신)
 
 - 사용자 확정 **원본 30번 답 120개**를 유지한 채 원본 문제 PDF 6쪽의 지문·두 쌓기나무 `20개` 예시·오른쪽 13개 모양을 직접 확인했다. 현행 `compact` PDF 31~33쪽(88~90번)을 300dpi로 렌더해 세 원본 예시와 새 입체 그림을 화면에서 확인했고, Apple Vision `.accurate` OCR이 세 지문에서 각각 `20개`·`13개`를 읽었다. 답안 50~51쪽 OCR은 저장 답 `102·101·104개`와 방향별 개수 `41+30+31`, `40+30+31`, `42+30+32`를 읽었다. 13개 블록의 좌표에서 단위 변을 독립적으로 합쳐 세 저장 답과 다시 일치했다.
@@ -20,7 +26,7 @@
 
 ## 2026-10-19 중급 8회 현행 공개본 198축 보류 검토 순서표 (Mac, 최신)
 
-- 현재 문제은행 SHA-256 `14875841a9e6173c7384e599423fab559b308939b2b3b2f51f4c7cc764cea126`와 810축 재연결 기록을 대조해 **26개 원문·64개 변형의 보류 198축**을 문항별 검토표로 정리했다. 각 행에는 원문 PDF 쪽수, 해당 변형 ID, 축별 보류 수, 현재 위험 표시, 원문 직접 대조·Apple Vision/계산 기록의 Drive 링크, 기존 근거 문장과 다음 판정 사항을 넣었다. 직접 대조 파일 **23개**의 로컬 SHA-256을 기록값과 재검사했고, 원문 쪽수·Drive 직접 대조 링크·계산/OCR 링크가 빠진 행은 0개다. [26행 Drive CSV](https://drive.google.com/file/d/1vhyK_Tk1-JluOTBIJ8EX_lcWO5i_MWUP/view), [198축 상세 JSON](https://drive.google.com/file/d/17pr6hzAEpCP4TtRXxlP3FMbvXH47MmdN/view), [로컬 재생성 코드 포함 ZIP](https://drive.google.com/file/d/19wqWfJHn8cjCo2znwhyTdV_7YRDExKCW/view)을 기존 검수 폴더에 보관하고 크기·부모 폴더를 확인했다. Mac 실행본은 `.private-work/middle8-20261018/build-held-review-queue-20261019.py`와 `held-review-queue-20261019`에 둔다.
+- 현재 문제은행 SHA-256 `1149cacf48a1036683863d826822f654e42cd1db9dc2e20b8c8436a91de6ba35`와 810축 재연결 기록을 대조해 **26개 원문·64개 변형의 보류 198축**을 문항별 검토표로 정리했다. 810축 재연결 당시 문제은행은 SHA-256 `14875841a9e6173c7384e599423fab559b308939b2b3b2f51f4c7cc764cea126`이며, 현재본과의 차이는 20번 표시 유형명·검색 별칭뿐임을 전 문항 깊은 비교로 검사했다. 각 행에는 원문 PDF 쪽수, 해당 변형 ID, 축별 보류 수, 현재 위험 표시, 원문 직접 대조·Apple Vision/계산 기록의 Drive 링크, 기존 근거 문장과 다음 판정 사항을 넣었다. 직접 대조 파일 **23개**의 로컬 SHA-256을 기록값과 재검사했고, 원문 쪽수·Drive 직접 대조 링크·계산/OCR 링크가 빠진 행은 0개다. [26행 Drive CSV](https://drive.google.com/file/d/1vhyK_Tk1-JluOTBIJ8EX_lcWO5i_MWUP/view), [198축 상세 JSON](https://drive.google.com/file/d/17pr6hzAEpCP4TtRXxlP3FMbvXH47MmdN/view), [로컬 재생성 코드 포함 ZIP](https://drive.google.com/file/d/19wqWfJHn8cjCo2znwhyTdV_7YRDExKCW/view)을 기존 검수 폴더에 갱신하고 크기·부모 폴더를 재확인했다. Mac 실행본은 `.private-work/middle8-20261018/build-held-review-queue-20261019.py`와 `held-review-queue-20261019`에 둔다.
 - 보류 축이 많은 순서는 14번25, 30번21, 20번19, 12번18, 24번15, 22번12축이다. **12번 원본 답17개·30번 원본 답120개는 사용자 판정대로 유지**하고 같은 판정을 다시 요구하지 않는다. 검토표 작성은 기존 612축을 최종 통과로 바꾸거나 198축 보류를 해제하지 않았다. 전체 9축 최종 승인0·실물 종이 승인0이며 문제은행·채점·학생 기록은 변경하지 않았다.
 
 ## 2026-10-19 중급 8회 13번 원본 그림·워터마크 인쇄 가독성 보정 (Mac, 최신)
