@@ -33,21 +33,26 @@ const server=http.createServer((req,res)=>{
 
 (async()=>{
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  const base=process.env.GFIELD_MIDDLE_PUBLIC_BASE_URL||`http://127.0.0.1:${server.address().port}`;
+  const siteOrigin=new URL(base).origin;
   const executablePath=process.env.GFIELD_QA_BROWSER_EXECUTABLE||'';
   const browser=await chromium.launch(executablePath?{executablePath}:{});
-  const methods=[],queries=[],errors=[];
+  const methods=[],queries=[],errors=[],writes=[];
   try{
     const context=await browser.newContext({viewport:{width:1280,height:900}});
     await context.route(/^https?:\/\//,async route=>{
       const request=route.request(),url=new URL(request.url());
-      if(url.hostname==='127.0.0.1')return route.continue();
       if(url.pathname==='/rest/v1/mock_results'){
         methods.push(request.method());queries.push(url.searchParams.get('student'));
         return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(records)});
       }
+      if(url.origin===siteOrigin){
+        if(url.pathname==='/data.js')return route.fulfill({contentType:'application/javascript',body:actualData+dataAddon+(approveRound8?`\n;window.GFIELD_DATA.archiveProductAccess['mock-mid-8']=[${JSON.stringify(student)}];`:'')});
+        return route.continue();
+      }
+      if(!['GET','HEAD','OPTIONS'].includes(request.method()))writes.push(request.method()+' '+url.pathname);
       return route.abort();
     });
-    const base=`http://127.0.0.1:${server.address().port}`;
     const report=await context.newPage();report.on('pageerror',error=>errors.push(error.message));
     await report.goto(`${base}/mock.html?round=2&go=report&name=${encodeURIComponent(student)}`);
     await report.locator('.card',{hasText:'분석 결과'}).first().waitFor();
@@ -88,6 +93,14 @@ const server=http.createServer((req,res)=>{
     assert.deepEqual(recommendationCoverage,{wrong:30,study:30,points:30},'each wrong Middle 8 source has its own study location and point');
     const studyLinks=await approved.locator('.middle8-study a').evaluateAll(links=>links.map(link=>new URL(link.href).searchParams.get('gens')));
     assert.deepEqual(studyLinks,Array.from({length:30},(_,i)=>'mid8-q'+String(i+1).padStart(2,'0')));
+    const linkedBank=await context.newPage();linkedBank.on('pageerror',error=>errors.push(error.message));
+    await linkedBank.addInitScript(name=>localStorage.setItem('gfield_student',name),student);
+    await linkedBank.goto(variantUrl.href);
+    await linkedBank.waitForFunction(()=>document.querySelector('#final1Worksheet #btnPrint')?.disabled===false);
+    assert.equal(await linkedBank.locator('#final1Worksheet .qcard').count(),90,'report link opens all 90 approved Middle 8 variants');
+    assert.equal(await linkedBank.locator('#final1Worksheet [data-answer-id]').count(),90,'report link includes 90 matching answers');
+    if(outputDir)await linkedBank.screenshot({path:path.join(outputDir,'middle-round8-report-linked-bank.png'),fullPage:true});
+    await linkedBank.close();
     if(outputDir)await approved.screenshot({path:path.join(outputDir,'middle-round8-report-desktop.png'),fullPage:true});
     await approved.setViewportSize({width:390,height:844});
     assert.ok(await approved.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Middle 8 study links fit a mobile report');
@@ -108,7 +121,10 @@ const server=http.createServer((req,res)=>{
       'round 8 answer sheet prints the corrected five-cell answer');
     assert.deepEqual(Array.from(new Set(methods)),['GET'],'student report flow never writes grades');
     assert.ok(queries.every(value=>value==='eq.'+student),'only the current student result is requested');
+    assert.deepEqual(writes,[],'public report flow makes no external writes');
     assert.deepEqual(errors,[]);
-    console.log(JSON.stringify({pass:true,baselineVisibleRounds:[1,2,3,4],approvedVisibleRounds:[1,2,3,4,8],savedRound2Report:true,directRound8BlockedBeforeApproval:true,approvedRound8Report:true,recommendationCoverage,resultWrites:0}));
+    const result={pass:true,baseUrl:base,sourceMode:process.env.GFIELD_MIDDLE_PUBLIC_BASE_URL?'public-static-with-synthetic-records':'local-static-with-synthetic-records',baselineVisibleRounds:[1,2,3,4],approvedVisibleRounds:[1,2,3,4,8],savedRound2Report:true,directRound8BlockedBeforeApproval:true,approvedRound8Report:true,linkedApprovedVariants:90,linkedAnswers:90,recommendationCoverage,resultWrites:0,externalWrites:writes.length,browserErrors:errors.length};
+    if(outputDir)fs.writeFileSync(path.join(outputDir,'middle-online-report-results.json'),JSON.stringify(result,null,2));
+    console.log(JSON.stringify(result));
   }finally{await browser.close();server.close();}
 })().catch(error=>{console.error(error);server.close();process.exitCode=1;});

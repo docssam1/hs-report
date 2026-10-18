@@ -9,7 +9,7 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+deco
 });
 const fixture='window.GFIELD_DATA={students:["검수학생"],studentTypes:{},archiveAccess:{"최종 모의고사":["검수학생"]},archiveProductAccess:{"mock-mid-8":["검수학생"]},attendance:{}};';
 (async()=>{fs.mkdirSync(out,{recursive:true});await new Promise(r=>server.listen(0,'127.0.0.1',r));
-  const base='http://127.0.0.1:'+server.address().port,browser=await chromium.launch({headless:true}),page=await browser.newPage({viewport:{width:1280,height:960}}),errors=[],writes=[],report=[];
+  const base=process.env.GFIELD_MIDDLE_BANK_PUBLIC_BASE_URL||'http://127.0.0.1:'+server.address().port,browser=await chromium.launch({headless:true}),page=await browser.newPage({viewport:{width:1280,height:960}}),errors=[],writes=[],report=[];
   page.on('pageerror',e=>errors.push(e.message));
   await page.addInitScript(()=>localStorage.setItem('gfield_student','검수학생'));
   await page.route('**/*',route=>{const req=route.request(),u=new URL(req.url());
@@ -66,7 +66,7 @@ const fixture='window.GFIELD_DATA={students:["검수학생"],studentTypes:{},arc
     assert.ok((await page.locator('.pm-answer').first().textContent()).includes('중급 모의고사 8회'));
     for(const count of [10,20]){await page.locator('[data-count="'+count+'"]').click();await page.waitForFunction(n=>document.querySelectorAll('.pm-q').length===n,count);}
     assert.deepEqual(errors,[]);assert.deepEqual(writes,[]);
-    fs.writeFileSync(path.join(out,'browser-report.json'),JSON.stringify({passed:true,report,errors,productionWrites:0},null,2));
-    console.log(JSON.stringify({passed:true,middle8:90,reusedApproval:true,layouts:['editorial','compact'],personalMock:[10,20,30],productionWrites:0,out}));
+    fs.writeFileSync(path.join(out,'browser-report.json'),JSON.stringify({passed:true,baseUrl:base,sourceMode:process.env.GFIELD_MIDDLE_BANK_PUBLIC_BASE_URL?'public-static-with-synthetic-access':'local-static-with-synthetic-access',report,errors,productionWrites:0},null,2));
+    console.log(JSON.stringify({passed:true,baseUrl:base,middle8:90,reusedApproval:true,layouts:['editorial','compact'],personalMock:[10,20,30],productionWrites:0,out}));
   }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

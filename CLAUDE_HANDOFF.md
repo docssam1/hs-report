@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 공개 성적표→문제은행·Apple Vision 답안 연결 재검수 (Mac, 최신)
+
+- 공개 `https://hs.gfieldacademy.net`의 정적 학생 화면을 합성 온라인 학생·저장 성적으로 실행했다. `mock-mid-8` 승인 전 직접 8회 성적표 주소는 차단되고, 승인 후 기존 성적표가 열린다. 오답 30개인 합성 결과에 **권장 학습 위치 30/30·학습 포인트 30/30**과 `원문 30유형 → 유사문제 90문항` 링크가 보였다. 그 링크를 실제로 따라가 공개 문제은행 **문제 90개·답안 90개**가 로드되는 것을 확인했다. 공개 문제은행의 `editorial`/`compact` 배치와 개인 문제지 10·20·30개도 그림 로드·잘림 없이 통과했다. `qa/middle-online-report-access-browser-validate.js`와 `qa/bank-middle8-browser-validate.cjs`에 공개 사이트 합성 검수 모드를 추가했고, 기본 로컬 모드도 재검사했다. 두 공개 검사 모두 학생 성적·외부 쓰기 0, 브라우저 오류 0이다.
+- 공개 정적 화면에서 새로 생성한 `compact` A4 **51쪽 PDF**(SHA-256 `78bd93c76499e798dc90511a0a8092b0a4cb0117474b08928f904d61c7f347f7`)의 답안 34~51쪽을 300dpi로 렌더해 Apple Vision `.accurate` OCR로 다시 읽었다. 34쪽 빈 면 뒤 35~51쪽의 답 90개와 각 문항 번호를 1:1로 묶어 현행 문제은행(SHA-256 `5a785a313807e66dd05249622f78282d705100025cc248c17204baf8c95506e0`) 저장 답과 엄격 대조한 결과 **90/90 일치**다. 문제 17쪽의 52~54번 수정 유형명 `달력(요일 날짜의 합)`도 재확인했다. [Drive 공개 연결·OCR 검수 JSON](https://drive.google.com/file/d/133mgAHFXvZuBagVbeo5MATv2_sfjVfPh/view), [공개 PDF·19개 Vision 값·브라우저/재실행 코드 ZIP](https://drive.google.com/file/d/1AEKxjIBHh4zXpLsxoT2qJ7t3NERKZvO3/view)을 기존 중급 8회 검수 폴더에 보관하고 크기·부모 폴더를 재조회했다. Mac 위치는 `.private-work/middle8-public-report-20261019/`와 `.private-work/middle8-public-bank-20261019/`다. 이는 **합성 계정의 공개 정적 연결·출력 답 표기 검사**이며 실제 OTP·운영 학생 성적, 원문 대비 난도 **보류 198축**, 수학적 정답성 전체·실물 종이 승인으로 확대하지 않는다. 문제·채점·권한·성적은 변경하지 않았다.
+
 ## 2026-10-19 최종 3회 공개 진단·유사문제 인쇄 Apple Vision 재검수 (Mac, 최신)
 
 - 공개 `https://hs.gfieldacademy.net`의 정적 화면을 운영 쓰기 없는 **합성 학생 성적**으로 브라우저 검사했다. 오답 0·1·2·11개에서 화면 유사문제가 각각 0·3·6·9개로 보였고, 30개 원문 유형 모두 학습 위치·학습 포인트 연결이 있었다. 별도 오답 12·15·28번 인쇄 준비는 승인 유사문제 **9개와 답·풀이 9개**를 같은 우선 복습 번호로 묶어 A4 **10쪽 PDF**를 만들었다. 공개 정적 파일 검수 5개 시나리오 전부 통과, 운영 쓰기·브라우저 오류 0이다. QA 전용 빈 페이지는 공개 사이트에 없으므로 PDF 내보내기 검사는 공개 `final.html`을 시작점으로 쓰도록 `qa/last3-parent-report-browser-validate.cjs`에 `GFIELD_LAST3_PUBLIC_BASE_URL` 공개 모드를 추가했다. `GFIELD_LAST3_QA_OUTPUT`으로 로컬 결과 경로를 분리하며 기본 로컬 모드도 5/5 재검사 통과했다. 서비스 코드·문항·채점·학생 기록은 바꾸지 않았다.
