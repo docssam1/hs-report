@@ -2,7 +2,7 @@
 (function(global){
   'use strict';
 
-  var VERSION='1.3.0';
+  var VERSION='1.3.1';
   var selectedStudents=new Set();
   var selectedRounds=new Set([1,2,3,4,'last1','last2','last3','last4']);
   var running=false;
@@ -18,7 +18,7 @@
   function examLabel(task){return series(task)+' '+task.round+'회';}
   function fileName(task){return safeName(task.student)+'_'+series(task)+'_'+task.round+'회_진단과복습.pdf';}
   function detailsAvailable(task){return task.set!=='last'||[1,2].includes(Number(task.round));}
-  function similarAvailable(task){return task.set!=='last'||[1,2].includes(Number(task.round));}
+  function similarAvailable(task){return task.set!=='last'||[1,2,3].includes(Number(task.round));}
   function roundChecks(set){return '<div class="final-batch-series-title">'+(set==='last'?'최종':'파이널')+' 1~4회</div>'+[1,2,3,4].map(function(round){var key=set==='last'?'last'+round:round;return '<label class="final-batch-check"><input type="checkbox" data-exam-set="'+set+'" value="'+key+'" checked>'+examLabel({set:set,round:round})+'<small data-exam-count="'+key+'"></small></label>';}).join('');}
   function uniqueStudents(rows){return Array.from(new Set((rows||[]).map(function(row){return row.student;}))).sort(function(a,b){return a.localeCompare(b,'ko');});}
   function byStudent(rows,name){return rows.filter(function(row){return row.student===name;});}
@@ -40,7 +40,7 @@
       roundChecks('final')+roundChecks('last')+
       '<label class="final-batch-check"><input type="checkbox" id="final-batch-similar" checked>오답 유사문제·풀이 포함 (요약은 우선 3유형)</label><label class="final-batch-check"><input type="checkbox" id="final-batch-details">원문 30문항 상세 풀이도 포함</label></div></fieldset>'+
       '<fieldset class="final-batch-fieldset"><legend>2. 응시 학생 선택</legend><div class="final-batch-tools"><button type="button" id="final-batch-select-all">응시 학생 전체 선택</button><button type="button" id="final-batch-clear">선택 비우기</button><span id="final-batch-student-count"></span></div><div class="final-batch-students" id="final-batch-students"></div></fieldset></div>'+
-      '<div class="final-batch-actions"><button type="button" class="btn final-batch-primary" id="final-batch-folder" data-final-batch-action>진단+유사문제 한 번에 저장</button><button type="button" class="btn final-batch-secondary" id="final-batch-zip" data-final-batch-action>ZIP 한 개로 받기</button><button type="button" class="btn final-batch-cancel" id="final-batch-cancel" hidden>중단</button><p class="final-batch-note">진단 요약·이번 주 학습 계획·QR을 저장합니다. 선택한 부록은 검수 완료 자료만 포함합니다. 최종 2~4회 유사문제와 최종 3~4회 원문 상세 풀이는 준비 중이며, 해당 회차도 진단 요약은 저장됩니다.</p></div><div class="final-batch-status" id="final-batch-status" role="status" aria-live="polite"></div>';
+      '<div class="final-batch-actions"><button type="button" class="btn final-batch-primary" id="final-batch-folder" data-final-batch-action>진단+유사문제 한 번에 저장</button><button type="button" class="btn final-batch-secondary" id="final-batch-zip" data-final-batch-action>ZIP 한 개로 받기</button><button type="button" class="btn final-batch-cancel" id="final-batch-cancel" hidden>중단</button><p class="final-batch-note">진단 요약·이번 주 학습 계획·QR을 저장합니다. 선택한 부록은 검수 완료 자료만 포함합니다. 최종 4회 유사문제와 최종 3~4회 원문 상세 풀이는 준비 중이며, 해당 회차도 진단 요약은 저장됩니다.</p></div><div class="final-batch-status" id="final-batch-status" role="status" aria-live="polite"></div>';
     body.parentNode.insertBefore(panel,body);
 
     document.getElementById('final-batch-rounds').addEventListener('change',function(event){
@@ -321,7 +321,12 @@
   }
   async function runTasks(tasks,save,doneMessage,finish,builder){
     cancelled=false;setBusy(true);var completed=0,failures=[];
-    var pending=tasks.filter(function(task){return (document.getElementById('final-batch-similar').checked&&!similarAvailable(task))||(document.getElementById('final-batch-details').checked&&!detailsAvailable(task));}).map(examLabel);
+    var pending=tasks.map(function(task){
+      var missing=[];
+      if(document.getElementById('final-batch-similar').checked&&!similarAvailable(task))missing.push('오답 유사문제·풀이');
+      if(document.getElementById('final-batch-details').checked&&!detailsAvailable(task))missing.push('원문 30문항 상세 풀이');
+      return missing.length?examLabel(task)+'('+missing.join(', ')+')':'';
+    }).filter(Boolean);
     var pendingNote=pending.length?'\n준비 중인 부록은 제외했습니다: '+Array.from(new Set(pending)).join(', ')+' (진단 요약은 포함)':'';
     try{
       for(var i=0;i<tasks.length;i++){
