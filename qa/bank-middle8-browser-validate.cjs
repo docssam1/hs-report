@@ -32,6 +32,9 @@ const fixture='window.GFIELD_DATA={students:["검수학생"],studentTypes:{},arc
       catch(error){throw new Error('Middle 8 worksheet load: '+JSON.stringify({status:await page.locator('#f1Status').allTextContents(),errors,body:(await page.locator('body').innerText()).slice(0,500)}));}
       assert.equal(await page.locator('#final1Worksheet .qcard').count(),90);
       assert.equal(await page.locator('#final1Worksheet [data-answer-id]').count(),90);
+      const q10Cards=page.locator('#final1Worksheet .qcard[data-source-no="10"]');
+      assert.deepEqual(await q10Cards.locator('.f1-qtype').allTextContents(),Array(3).fill('[순서쌍 배열의 규칙]'));
+      assert.deepEqual((await q10Cards.locator('.f1-qtext').allTextContents()).map(x=>x.match(/\d+번째/)[0]),['42번째','59번째','72번째']);
       assert.equal(await page.locator('#stage .question-page').count(),0);
       const pc=await measure();await page.emulateMedia({media:'print'});const print=await measure();
       report.push({bank:'middle8',layout,pc,print});

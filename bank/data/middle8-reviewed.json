@@ -244,7 +244,7 @@
       "id": "mid8-q10-type",
       "domain": "수·규칙찾기",
       "middle": "수·규칙찾기",
-      "label": "순서쌍 배열의 50번째",
+      "label": "순서쌍 배열의 규칙",
       "gradeBand": {
         "from": null,
         "to": null,
@@ -257,6 +257,7 @@
       "rendererId": "reviewed-raster",
       "searchAliases": [
         "수·규칙찾기",
+        "순서쌍 배열의 규칙",
         "순서쌍 배열의 50번째"
       ]
     },
@@ -2013,8 +2014,8 @@
       "points": 2.7,
       "pointBand": "2.7",
       "area": "수·규칙찾기",
-      "subarea": "순서쌍 배열의 50번째",
-      "detailType": "순서쌍 배열의 50번째",
+      "subarea": "순서쌍 배열의 규칙",
+      "detailType": "순서쌍 배열의 규칙",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {
@@ -2065,8 +2066,8 @@
       "points": 2.7,
       "pointBand": "2.7",
       "area": "수·규칙찾기",
-      "subarea": "순서쌍 배열의 50번째",
-      "detailType": "순서쌍 배열의 50번째",
+      "subarea": "순서쌍 배열의 규칙",
+      "detailType": "순서쌍 배열의 규칙",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {
@@ -2117,8 +2118,8 @@
       "points": 2.7,
       "pointBand": "2.7",
       "area": "수·규칙찾기",
-      "subarea": "순서쌍 배열의 50번째",
-      "detailType": "순서쌍 배열의 50번째",
+      "subarea": "순서쌍 배열의 규칙",
+      "detailType": "순서쌍 배열의 규칙",
       "reviewStatus": "verified",
       "teacherApproved": true,
       "sourceMeta": {

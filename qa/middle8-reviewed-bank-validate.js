@@ -10,6 +10,12 @@ assert.equal(data.sourceSet,'middle');assert.equal(data.sourceRound,8);
 assert.equal(data.items.length,90);assert.equal(data.types.length,30);
 assert.equal(data.approval.teacherApprovedCount,90);
 assert.equal(data.approval.draftSha256,'7bdc4fa4bf6d006a96135e1798b4421b5cbb25dda4768592c2732d4f9db79375');
+const q10Type=data.types.find(x=>x.generatorId==='mid8-q10');
+assert.equal(q10Type.label,'순서쌍 배열의 규칙');
+assert.ok(q10Type.searchAliases.includes('순서쌍 배열의 50번째'));
+assert.deepEqual(data.items.filter(x=>x.sourceNo===10).map(x=>[x.detailType,x.text.match(/\d+번째/)[0]]),[
+  ['순서쌍 배열의 규칙','42번째'],['순서쌍 배열의 규칙','59번째'],['순서쌍 배열의 규칙','72번째']
+]);
 adapter.useData(data);
 assert.equal(adapter.listTypes().length,30);
 const sources=adapter.listSourceItems();assert.equal(sources.length,30);
