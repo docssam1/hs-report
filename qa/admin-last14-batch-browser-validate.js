@@ -173,6 +173,20 @@ const server=http.createServer((req,res)=>{
     const zipEntries=await page.evaluate(async bytes=>Object.keys((await JSZip.loadAsync(bytes,{base64:true})).files),fs.readFileSync(zipPath).toString('base64'));
     assert.deepEqual(zipEntries,['최종 4회/','최종 4회/'+student+'_최종_4회_진단과복습.pdf']);
     assert.match(await page.locator('#final-batch-status').innerText(),/준비 중인 부록은 제외했습니다: 최종 4회\(오답 유사문제·풀이\)/);
+    await page.evaluate(()=>{document.querySelectorAll('#final-batch-rounds input[data-exam-set]').forEach(input=>{input.checked=['last3','last4'].includes(input.value);input.dispatchEvent(new Event('change',{bubbles:true}));});});
+    const mixedPromise=page.waitForEvent('download',{timeout:180000});await page.locator('#final-batch-zip').click();
+    const mixedDownload=await mixedPromise,mixedZipPath=path.join(out,'last3-last4-mixed-batch.zip');await mixedDownload.saveAs(mixedZipPath);
+    const mixed=await page.evaluate(async bytes=>{
+      const archive=await JSZip.loadAsync(bytes,{base64:true}),names=Object.keys(archive.files),last3=Object.values(archive.files).find(entry=>!entry.dir&&entry.name.startsWith('최종 3회/'));
+      return {names,bytes:await last3.async('base64')};
+    },fs.readFileSync(mixedZipPath).toString('base64'));
+    assert.deepEqual(mixed.names,['최종 3회/','최종 3회/'+student+'_최종_3회_진단과복습.pdf','최종 4회/','최종 4회/'+student+'_최종_4회_진단과복습.pdf']);
+    fs.writeFileSync(path.join(out,'last3-from-mixed-zip.pdf'),Buffer.from(mixed.bytes,'base64'));
+    await page.waitForFunction(()=>document.getElementById('final-batch-status').dataset.state==='done');
+    const mixedStatus=await page.locator('#final-batch-status').innerText();
+    assert.match(mixedStatus,/준비 중인 부록은 제외했습니다: 최종 4회\(오답 유사문제·풀이\)/);
+    assert.doesNotMatch(mixedStatus,/최종 3회\(오답 유사문제·풀이\)/);
+    console.log('PASS mixed Last3+Last4 ZIP keeps Last3 PDF; pending notice identifies Last4 only');
     const finalPractice=await page.evaluate(async()=>{window.__GFIELD_BATCH_QA_CAPTURE__={};const task=GFIELD_ADMIN_MOCK_V2.finalOfficialEntries()[0];const blob=await GFIELD_ADMIN_FINAL_BATCH._test.buildPackage(task,0,1);return {practice:window.__GFIELD_BATCH_QA_CAPTURE__.practice,base64:await new Promise(resolve=>{const r=new FileReader();r.onload=()=>resolve(r.result.split(',')[1]);r.readAsDataURL(blob);})};});
     assert.equal(finalPractice.practice.questions,9);assert.equal(finalPractice.practice.answers,9);assert.deepEqual(finalPractice.practice.questionIds,finalPractice.practice.answerIds);
     fs.writeFileSync(path.join(out,'final1-priority-batch.pdf'),Buffer.from(finalPractice.base64,'base64'));
