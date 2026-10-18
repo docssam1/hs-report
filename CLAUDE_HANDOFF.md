@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 30번 강의 영상 직접 대조 (Mac, 최신)
+
+- 사용자 제공 Drive 중급 자료 폴더의 [영상 링크 HTML](https://drive.google.com/file/d/13WYeBp-drizQYLb44RUwYOuFHVPQaMUZ/view)에서 [중급 8회 원강의](https://www.youtube.com/watch?v=UR28dko8N6c)를 확인했다. [29:55부터의 30번 구간](https://www.youtube.com/watch?v=UR28dko8N6c&t=1795s)을 직접 재생해 원본 정육면체 13개 그림과 교사의 방향별 계수·붉은 필기를 대조했다. 영상은 최종 합계 식이 완성되기 전에 끝나므로 답안 PDF의 120개와 계수 과정의 연결을 새로 확증하지 못했다. 자동 자막의 수학 숫자는 오인식이 많아 판정 근거에서 제외했다.
+- **사용자 확정 원본 답 120개와 공개 승인 문제은행·채점은 그대로 유지**한다. 30번의 기존 보류 21축, 전체 191축 보류·9축 최종 승인 0도 변화가 없다. [Drive 강의 대조 기록](https://drive.google.com/file/d/1e8jYd1_IHgu53gPWAaq0FkJHB21hk4tR/view)은 영상 구간·관찰·판정 경계를 담고, Mac 원본 기록은 `.private-work/middle8-20261018/q30-lecture-video-evidence-20261019.md`다. 다음은 원본 입체의 숨은 결합 관계 또는 완결된 교사 계산의 추가 근거가 확보될 때 검토하고, 실물 종이·학생 풀이 난도 판정은 별도로 진행한다.
+
 ## 2026-10-19 중급 8회 공개 메인·추가 모의고사 승인/서재 연결 재검수 (Mac, 최신)
 
 - 공개 `https://hs.gfieldacademy.net`의 `index.html`, `index-enhancements.js`, 보호 대상 `data.js`, 중급 8회 어댑터와 승인 JSON **5개 파일**을 현재 메인과 바이트 단위로 비교해 모두 일치했다. 공개 정적 파일을 합성 학생에게만 보이게 한 은행 브라우저 검사에서 승인 **90문항**, `editorial`/`compact` 두 인쇄 배치, 개인연습 **10·20·30문항**, 그림·답안 잘림 없음, 운영 쓰기 **0**을 재확인했다. 로컬 은행·서재 승인 정적 검사도 통과했다.
