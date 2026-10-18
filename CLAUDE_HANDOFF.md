@@ -5,6 +5,7 @@
 - 현행 중급 8회 `compact` 13번의 원본 필수 그림(은행 내 원본 래스터 SHA-256 `5f4d32557ece8cb40820dde1859705692ecfe6fcd4af3eb2f5bd30b698802b55`)은 여섯 예시 격자 아래의 `1·2·4·5·13·24`가 작은 획으로 인쇄된다. 400dpi PDF 확대에서 페이지 워터마크가 격자와 숫자 위를 지나갔다. `bank/final1-worksheet.css`에서 **중급 8회 큰 그림 페이지의 본문 층을 워터마크 위로 올리고 13번 원본 그림 상자만 흰 배경**으로 두어 격자 위 워터마크를 제거했다. 페이지 나머지 부분의 워터마크와 원본 그림 바이트·지문·답은 유지한다.
 - Apple Vision은 400dpi 예시 부분 확대 전에는 `2·4·|3·24`, 보정 후에는 `2·4·5·| 3·24`를 읽었다. `1`과 원본 래스터의 좁은 `13`은 여전히 안정적으로 판독하지 못하므로 OCR 전체 통과나 실물 종이 가독성 승인으로 세지 않는다. [Drive 비교 요약](https://drive.google.com/file/d/1QfcWnWa8pXNeoLAy9A0haUL5lYsnCzhf/view)과 [원본 그림·변경 전후 400dpi 그림·OCR·보정 후 51쪽 PDF·브라우저 결과 ZIP](https://drive.google.com/file/d/1a1fq4wpIbfEn14VygwBotR8TcCGTMHOC/view)을 기존 중급 8회 검수 폴더에 보관했다.
 - `qa/bank-middle8-browser-validate.cjs`는 90문항·답안, `editorial`/`compact`, 390px, 개인 10/20/30문항, 잘림0·운영 쓰기0으로 통과했다. `qa/middle8-reviewed-bank-validate.js`도 통과했고 문제은행 SHA-256은 `14875841a9e6173c7384e599423fab559b308939b2b3b2f51f4c7cc764cea126` 그대로다. 실제 프린터 출력과 9축 최종 검수는 남는다.
+- 학생 브라우저의 이전 CSS 캐시를 피하려고 `bank/index.html`의 CSS 버전 주소를 `20261019-middle8-q13-figure-clear`로 갱신했다. 공개 사이트의 `bank/index.html`과 그 화면이 지정하는 버전 URL의 `bank/final1-worksheet.css`가 GitHub `main` 코드 커밋 `0032983c90da5a3b9e12f4a64f037d952743744e`의 파일과 **각각 HTTP 200·SHA-256·바이트 일치**함을 확인했다. [Drive 공개 배포 검수 기록](https://drive.google.com/file/d/1aADaW00gR9H8qDT7LUI3ogPDGrUNWFAn/view). 이는 정적 배포 확인이며 실제 학생 로그인·실물 종이·9축 승인은 별도다.
 
 ## 2026-10-19 최종 3회 공개 사이트·GitHub main 정적 파일 대조 (Mac, 최신)
 
