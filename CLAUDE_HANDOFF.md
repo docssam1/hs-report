@@ -1,5 +1,11 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 25번 문장 독해 부담 보류 3축 해소 (Mac, 최신)
+
+- 원본 PDF 5쪽 25번과 현행 `compact` A4 PDF 23쪽 73~75번을 같은 300dpi로 직접 대조했다. 원문은 짧은 1학기 물음 뒤 ㉮~㉱ 네 조건에서 `38·106·140일`을 제시하고, 세 승인 변형은 같은 네 조건의 순서·오전/오후 대응·문장 절 구조를 유지하며 수치만 `42·104·136 / 44·107·139 / 40·105·133일`로 바꾼다. 학교 이름을 `관호네`에서 `한 학교`로 바꾸고 띄어쓰기·어미를 다듬었지만 새 독해 조건은 없다. Apple Vision `.accurate`는 원문과 세 변형의 핵심 수치·문장을 읽었으나 ㉮~㉱ 표식 일부를 오독해 렌더링 화면으로 교차 확인했다. 로컬 90문항·`editorial`/`compact`·개인연습 10/20/30 브라우저 검사는 통과했고 운영 쓰기는 0이었다.
+- 25번 세 변형의 `readingLoad` **3축만** `보류`에서 `임시 일치`로 옮겼다. 이는 문장 독해 부담 판정이며, 새 흑백 조건 상자의 글자·표식·테두리와 실물 종이 가독성은 각 변형의 `representationChange`·`visualCue` **6축 보류**에 남겼다. 현행 승인 문항·그림·답·채점·학생 기록과 문제은행 SHA-256 `89be2de73d408d3e16731a42ec7b7176417a627b071c7fe1357e6a14f878320c`는 변경하지 않았다. 최신 검토표는 **193축·63문항·25개 원문 보류**, 임시 일치 617축, 9축 최종 승인 **0**이다. 실물 종이·실제 학생/교사 난도 판단은 남는다.
+- [Drive 문장·OCR 판정 JSON](https://drive.google.com/file/d/1cgcuZnVWNXD1nYsk61AGyRkKGF_JuFNF/view), [원본/현행 300dpi 쪽·Apple Vision·브라우저 검사 근거 ZIP](https://drive.google.com/file/d/18f3idbIGdKWrJ3M1ZQhrOcQ60ZwjZHO0/view), [최신 25개 원문 검토표 JSON](https://drive.google.com/file/d/1svcbZ-EUWhAhTM0tTcTcByYHqggx7Hr7/view), [검토표 CSV](https://drive.google.com/file/d/1e8RMTHSdXWu_TqHj6W9dvqom5-rHZhuI/view), [검토표 재생성 코드 ZIP](https://drive.google.com/file/d/1HPOJXySLTFLohmEWt_gQ53SAL10qfU7q/view)을 기존 중급 8회 검수 폴더에 보관하고 크기·부모를 재조회했다. Mac 실행 위치는 `.private-work/middle8-20261018/q25-reading-20261019/`이다.
+
 ## 2026-10-19 중급 8회 20번 바닥면 경로 3문항 비공개 교체 후보 (Mac, 최신)
 
 - 원본 PDF 4쪽 20번의 지문·주사위 위2·앞1·오른쪽3·빨간 이동 경로와 답안 22쪽의 처음 자리 포함 바닥면 `5·3·2·4·1·3·5 = 23`을 직접 다시 대조했다. 현행 승인 유사문제는 같은 그림에서 윗면·앞면·오른쪽 면을 각각 물어 `26·19·28`이며, 원문 동등성 Q20 보류 **19축**은 그대로다. 승인된 지문·답·그림·채점·학생 기록, 전체 문제은행 SHA-256 `89be2de73d408d3e16731a42ec7b7176417a627b071c7fe1357e6a14f878320c`를 변경하지 않았다.
