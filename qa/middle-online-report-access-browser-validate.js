@@ -78,11 +78,20 @@ const server=http.createServer((req,res)=>{
     await approved.locator('.card',{hasText:'분석 결과'}).first().waitFor();
     assert.match(await approved.locator('#main').innerText(),/8회.*분석 결과/,'separately approved round 8 opens its saved report');
     assert.match(await approved.locator('#main').innerText(),/0\s*점 \/ 100점/,'round 8 reads its own saved result');
+    assert.equal(await approved.evaluate(()=>window.GFIELD_MOCK.rounds['8'].items.find(item=>item.no===4).answer),
+      '176, 170, 174, 168, 173 (합 516)','round 8 loads all five cells from the source answer');
     const approvedPicker=await context.newPage();approvedPicker.on('pageerror',error=>errors.push(error.message));
     await approvedPicker.goto(`${base}/mock.html?name=${encodeURIComponent(student)}`);
     await approvedPicker.locator('.round-card').first().waitFor();
     assert.deepEqual(await approvedPicker.locator('.round-card .rn').allTextContents(),['1회','2회','3회','4회','8회'],
       'round 8 approval adds only its own exam to the existing online product');
+    await approvedPicker.evaluate(()=>{
+      window.__printedAnswerHtml='';
+      window.open=()=>({document:{write(html){window.__printedAnswerHtml=html;},close(){}}});
+    });
+    await approvedPicker.locator('.round-card',{hasText:'8회'}).locator('.rcprint').click();
+    assert.match(await approvedPicker.evaluate(()=>window.__printedAnswerHtml),/176, 170, 174, 168, 173 \(합 516\)/,
+      'round 8 answer sheet prints the corrected five-cell answer');
     assert.deepEqual(Array.from(new Set(methods)),['GET'],'student report flow never writes grades');
     assert.ok(queries.every(value=>value==='eq.'+student),'only the current student result is requested');
     assert.deepEqual(errors,[]);
