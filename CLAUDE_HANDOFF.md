@@ -1,9 +1,14 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
-## 2026-10-19 중급 8회 5번 계산 부담 보류 1축 추가 (Mac, 최신)
+## 2026-10-19 중급 8회 13번 계산 부담 보류 1축 해소 (Mac, 최신)
+
+- 원본 PDF 3쪽 13번의 여섯 예시·빈 3×3 격자와 강의 답안 15쪽의 열 값 `16·4·1`, 현행 공개 인쇄본 37번을 직접 대조했다. Apple Vision `.accurate`가 원문 `45`와 공개 `46` 지문을 읽었다. 아래 칸부터 연속 색칠하는 사용자 확정 기준에서 원문은 열별 `2·3·1칸`, 변형은 `2·3·2칸`으로 모두 64가지 열 조합 중 단일해다. 계산 경로는 공통으로 `2×16=32`, `3×4=12`와 두 번의 빼기이며, `45−32=13, 13−12=1`과 `46−32=14, 14−12=2`는 모두 받아내림 0회다. 변형의 색칠 한 칸 증가는 **계산 단계·자리올림/받아내림 증가가 아니므로** 13번 유사문제 1의 `calculationLoad`를 보류에서 **일치 추정**으로 옮겼다. 실물 종이·학생 난도·9축 최종 승인은 여전히 보류다.
+- [Drive 13번 계산·OCR 보충 기록](https://drive.google.com/file/d/1ZqO5i1k1oHaSMZrNBRRfHDuXGinUj6DE/view), [원문·공개 그림·Vision 값·재실행 코드 ZIP](https://drive.google.com/file/d/1d007ycq-Zpyqyzoq7SIeVCcwFMxzRufh/view), [최신 검토표 JSON](https://drive.google.com/file/d/1jrpenIB7_stQsSolZKDg0WkGGBqMXBQJ/view), [25개 원문별 CSV](https://drive.google.com/file/d/1mR3zFD9ecTVpimX_f0elQDzD9GZMvfRf/view)을 기존 중급8회 검수 폴더에 저장하고 크기·부모를 재조회했다. Mac 재실행 파일은 `.private-work/middle8-20261018/q13-calculation-load-20261019/`다. 현재 **25개 원문·64문항·198축 보류, 612축 추정, 최종 승인 0**이다. 초기 198축 표와 숫자는 같아도 항목은 다르다(Q5-v3 추가, Q13-v1 제거). 승인 문항·답·채점·성적과 문제은행 SHA-256 `5a785a313807e66dd05249622f78282d705100025cc248c17204baf8c95506e0`는 바꾸지 않았다.
+
+## 2026-10-19 중급 8회 5번 계산 부담 보류 1축 추가 (Mac, 당시 기록)
 
 - 원본 문제 PDF 1쪽 5번·강의 답안 6쪽과 현행 공개 `compact` PDF 4쪽의 13~15번을 직접 대조하고 Apple Vision `.accurate` OCR로 네 수치씩 재확인했다. 원문과 세 유사문제 모두 `다=가+추가 길이 → 세 막대 합 → 전체 길이 차 → 2로 나눔` 관계 및 저장 답 29·32·27·34cm가 맞다. 강의의 원문 풀이와 같은 **왼쪽부터 세로셈하는 경로**에서 원문은 자리올림 5회·받아내림 2회, 변형은 각각 **3·2 / 3·1 / 1·2회**다. 세 번째 유사문제의 계산 부담은 기존 `일치 추정`보다 낮아질 근거가 있으므로 그 1축을 최종 판정 전 `보류`로 올렸다. 계산 횟수는 한 풀이 경로의 객관 지표이며 학생의 실제 체감 난도 판정은 남는다.
-- [Drive 계산·OCR 보충 기록](https://drive.google.com/file/d/1Y5-EwHlEZAPQPUzjCnm0FbF6SV8zdGnB/view), [원본/현행 렌더·Vision 원본값·재실행 코드 ZIP](https://drive.google.com/file/d/1T9D9l_3ktYAKXrrmFrn4VCq08a7wOgt7/view), [현행 199축 검토표 JSON](https://drive.google.com/file/d/1nB1FW5L_2cVMPZpEoZKoyo248x_JTui-/view), [26개 원문별 CSV](https://drive.google.com/file/d/1IK0P10dTFZPxIJkgwyF2JjNsDKQ6Ou5N/view)을 기존 중급 8회 검수 폴더에 저장하고 크기·부모를 재조회했다. Mac 재실행 파일은 `.private-work/middle8-20261018/q05-calculation-load-20261019/`에 있다. 이전 **198축·64문항** 검토표는 역사적 스냅샷으로 보존하며 현재 보류는 **199축·65문항**, 나머지 611축은 추정, 최종 9축 승인 0이다. 사용자 승인 90문항·채점·학생 성적과 문제은행 SHA-256 `5a785a313807e66dd05249622f78282d705100025cc248c17204baf8c95506e0`는 변경하지 않았다.
+- [Drive 계산·OCR 보충 기록](https://drive.google.com/file/d/1Y5-EwHlEZAPQPUzjCnm0FbF6SV8zdGnB/view), [원본/현행 렌더·Vision 원본값·재실행 코드 ZIP](https://drive.google.com/file/d/1T9D9l_3ktYAKXrrmFrn4VCq08a7wOgt7/view), [당시 199축 검토표 JSON](https://drive.google.com/file/d/1nB1FW5L_2cVMPZpEoZKoyo248x_JTui-/view), [26개 원문별 CSV](https://drive.google.com/file/d/1IK0P10dTFZPxIJkgwyF2JjNsDKQ6Ou5N/view)을 기존 중급 8회 검수 폴더에 저장하고 크기·부모를 재조회했다. Mac 재실행 파일은 `.private-work/middle8-20261018/q05-calculation-load-20261019/`에 있다. 이전 **198축·64문항** 검토표는 역사적 스냅샷으로 보존하며 당시 보류는 **199축·65문항**, 나머지 611축은 추정, 최종 9축 승인 0이었다. 사용자 승인 90문항·채점·학생 성적과 문제은행 SHA-256 `5a785a313807e66dd05249622f78282d705100025cc248c17204baf8c95506e0`는 변경하지 않았다.
 
 ## 2026-10-19 중급 8회 14번 현행 공개본 Apple Vision 재확인 (Mac, 최신)
 
