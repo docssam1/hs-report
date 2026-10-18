@@ -18,7 +18,6 @@ const ROSTER_URL = "https://raw.githubusercontent.com/docssam1/hs-report/main/da
 const EMAIL_PATTERN = /^[^\s@]{1,64}@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/;
 const CODE_PATTERN = /^\d{6,10}$/;
 const DEVICE_PATTERN = /^[A-Za-z0-9_-]{32,64}$/;
-const DEVICE_LIMIT = 3;
 const TOUCH_INTERVAL_MS = 5 * 60 * 1000;
 
 class HttpError extends Error {
@@ -248,7 +247,7 @@ async function findLink(studentUserId: string): Promise<Link | null> {
   return data as Link | null;
 }
 
-// 승인 기기: 브라우저가 만든 임의 값의 해시만 저장한다. 학생 1명당 DEVICE_LIMIT 대.
+// 승인 브라우저: 임의 식별값의 해시만 저장한다. 등록 대수에는 제한을 두지 않는다.
 async function deviceHash(value: unknown): Promise<string> {
   const token = String(value ?? "");
   if (!DEVICE_PATTERN.test(token)) throw new HttpError(400, "DEVICE_REQUIRED");
@@ -267,19 +266,14 @@ function deviceLabel(req: Request): string {
 
 type Device = { id: string; device_hash: string; last_seen_at: string | null };
 
-async function listDevices(studentUserId: string): Promise<Device[]> {
+async function findDevice(studentUserId: string, hash: string): Promise<Device | null> {
   const { data, error } = await service.from("hs_student_devices")
     .select("id,device_hash,last_seen_at")
-    .eq("student_user_id", studentUserId);
+    .eq("student_user_id", studentUserId)
+    .eq("device_hash", hash)
+    .maybeSingle();
   if (error) throw new HttpError(500, "DEVICE_LOOKUP_FAILED");
-  return (data || []) as Device[];
-}
-
-async function assertDeviceAllowed(studentUserId: string, hash: string): Promise<Device | null> {
-  const devices = await listDevices(studentUserId);
-  const found = devices.find((device) => device.device_hash === hash) || null;
-  if (!found && devices.length >= DEVICE_LIMIT) throw new HttpError(409, "DEVICE_LIMIT");
-  return found;
+  return data as Device | null;
 }
 
 function sessionIdOf(accessToken: string): string | null {
@@ -304,9 +298,8 @@ async function saveDevice(req: Request, studentUserId: string, hash: string, exi
     first_verified_at: now, last_verified_at: now, last_seen_at: now,
   });
   if (error) {
-    // 동시 요청: 같은 기기가 먼저 저장됐으면 통과, 아니면 한도 초과로 본다.
-    const again = await listDevices(studentUserId);
-    if (!again.some((device) => device.device_hash === hash)) throw new HttpError(409, "DEVICE_LIMIT");
+    // 동시 요청으로 같은 브라우저가 먼저 저장된 경우만 통과한다.
+    if (!await findDevice(studentUserId, hash)) throw new HttpError(500, "DEVICE_SAVE_FAILED");
   }
 }
 
@@ -325,14 +318,13 @@ async function issueStudentSession(account: Account) {
 async function start(req: Request, body: Record<string, unknown>) {
   await consumeRateLimit("start-ip", clientIp(req), 10, 600);
   const email = normalizeEmail(body.email);
-  const hash = await deviceHash(body.deviceToken);
+  await deviceHash(body.deviceToken);
   const { name, account } = await resolveStudent(body.name);
   await consumeRateLimit("start-email", email, 5, 3600);
   await consumeRateLimit("start-student", loginKey(name), 6, 3600);
   if (account) {
     const link = await findLink(account.user_id);
     if (link && link.parent_email !== email) throw new HttpError(409, "LINKED_TO_OTHER_EMAIL");
-    await assertDeviceAllowed(account.user_id, hash);
   }
   const { error } = await publicAuth.auth.signInWithOtp({ email, options: { shouldCreateUser: true } });
   if (error) {
@@ -357,7 +349,6 @@ async function verify(req: Request, body: Record<string, unknown>) {
   if (resolved.account) {
     const link = await findLink(resolved.account.user_id);
     if (link && link.parent_email !== email) throw new HttpError(409, "LINKED_TO_OTHER_EMAIL");
-    await assertDeviceAllowed(resolved.account.user_id, hash);
   }
 
   const { data: parent, error: otpError } = await publicAuth.auth.verifyOtp({ email, token: code, type: "email" });
@@ -370,7 +361,7 @@ async function verify(req: Request, body: Record<string, unknown>) {
 
   const account = resolved.account || await createStudentAccount(resolved.name);
   const now = new Date().toISOString();
-  const device = await assertDeviceAllowed(account.user_id, hash);
+  const device = await findDevice(account.user_id, hash);
   const existing = await findLink(account.user_id);
   let firstLink = false;
   if (existing) {
@@ -428,8 +419,8 @@ async function pinLogin(req: Request, body: Record<string, unknown>) {
   });
   if (checkError) throw new HttpError(503, "AUTH_TEMPORARILY_UNAVAILABLE");
   if (result !== "OK") throw new HttpError(result === "PIN_LOCKED" ? 403 : 401, String(result || "INVALID_PIN"));
-  // PIN 인증은 자료 권한을 부여하지 않으며 기존 브라우저 등록/3대 제한을 그대로 따른다.
-  const device = await assertDeviceAllowed(account.user_id, hash);
+  // PIN 인증은 자료 권한을 부여하지 않는다. 새 브라우저는 상한 없이 등록한다.
+  const device = await findDevice(account.user_id, hash);
   const session = await issueStudentSession(account);
   await saveDevice(req, account.user_id, hash, device, sessionIdOf(session.access_token), new Date().toISOString());
   return { session, student: account.student };
@@ -456,7 +447,7 @@ async function touch(req: Request, body: Record<string, unknown>) {
   const link = await findLink(account.user_id);
   if (!link) throw new HttpError(403, "EMAIL_NOT_VERIFIED");
   // 관리자가 기기를 초기화했거나 승인되지 않은 브라우저면 다시 인증하게 한다.
-  const device = hash ? (await listDevices(account.user_id)).find((row) => row.device_hash === hash) : null;
+  const device = hash ? await findDevice(account.user_id, hash) : null;
   if (!device) throw new HttpError(403, "DEVICE_NOT_APPROVED");
   const now = new Date().toISOString();
   const stale = (value: string | null) => !value || Date.now() - Date.parse(value) > TOUCH_INTERVAL_MS;

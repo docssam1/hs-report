@@ -75,7 +75,7 @@ async function newPage(browser, width, data, role = 'admin', student = STUDENTS[
         state.mockedAuthReads++;
         return route.fulfill({ json: { accounts: [], resultStudents: [], unownedStudents: [], emailLinksAvailable: true,
           emailLinks: [{ student: STUDENTS[0], email: 'qa-parent@example.com', firstVerifiedAt: '2026-10-11T01:00:00Z', lastSeenAt: '2026-10-11T02:00:00Z' }],
-          studentDevices: [{ student: STUDENTS[0], devices: [1, 2, 3].map(number => ({ label: '합성 기기' + number, lastSeenAt: '2026-10-11T02:00:00Z' })) }], deviceLimit: 3 } });
+          studentDevices: [{ student: STUDENTS[0], devices: [1, 2, 3].map(number => ({ label: '합성 기기' + number, lastSeenAt: '2026-10-11T02:00:00Z' })) }], deviceLimit: null } });
       }
       state.blockedWrites.push(request.method() + ' ' + url.pathname); return route.abort();
     }
@@ -143,9 +143,12 @@ async function verifyAdmin(browser, width) {
   try {
     await page.locator('#student-email-auth').getByText('qa-parent@example.com', { exact: true }).waitFor({ state: 'attached' });
     assert.equal(await page.locator('#student-email-auth tbody tr').count(), STUDENTS.length, 'existing email authentication table is preserved');
-    assert.equal(await page.locator('#student-email-auth').getByText('3/3', { exact: true }).count(), 1, 'existing three-device limit is preserved');
-    assert.equal(await page.locator('#student-email-auth').getByText('0/3', { exact: true }).count(), 1);
+    assert.equal(await page.locator('#student-email-auth').getByText('3개', { exact: true }).count(), 1, 'registered browser count is shown without a cap');
+    assert.equal(await page.locator('#student-email-auth').getByText('0개', { exact: true }).count(), 1);
+    assert.equal(await page.locator('#student-email-auth').getByText('등록 브라우저 수에는 제한이 없습니다.', { exact: false }).count(), 1);
+    assert.equal(await page.locator('#student-email-auth .email-auth-badge.full').count(), 0);
     assert.equal(await page.locator('#student-email-auth [data-reset-devices]').count(), 1, 'existing device-reset control is preserved, never activated');
+    assert.equal(await page.locator('#student-email-auth [data-reset-devices]').innerText(), '전체 로그아웃');
     assert.equal(state.mockedAuthReads, 1, 'authentication records are read through the existing endpoint');
     checkGroups++;
     await page.locator('button[data-tab="archive"]').click();
@@ -249,6 +252,9 @@ async function verifyAdmin(browser, width) {
 
 async function verifyStudent(browser, width, scenario) {
   const data = fixture();
+  // Admin-matrix fixture grants Final 8 to student A; isolate Middle 7 scenarios from the now-connected Final 7/8 roadmap keys.
+  data.archiveProductAccess['mock-final-7'] = [];
+  data.archiveProductAccess['mock-final-8'] = [];
   const allowed = scenario === 'approved' || scenario === 'public';
   data.archiveProductAccess[MID7] = scenario === 'public' ? ['*'] : scenario === 'approved' ? [STUDENTS[0]] : [];
   if (scenario === 'missing-key') delete data.archiveProductAccess[MID7];

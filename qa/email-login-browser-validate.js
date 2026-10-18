@@ -12,7 +12,7 @@ const STUDENT = '이메일인증검수학생';
 const SIBLING = '이메일인증검수형제';
 const OTHER = '이메일인증검수타학생';
 const INACTIVE = '이메일인증검수정지';
-const FULL = '이메일인증검수기기초과';
+const FOURTH = '이메일인증검수추가브라우저';
 const EMAIL = 'qa-parent@example.com';
 const GOOD_CODE = '12345678';
 const SITE_BASE = process.env.GFIELD_EMAIL_QA_BASE || 'http://localhost:8000/';
@@ -37,7 +37,7 @@ async function setup(context, state) {
     if (url.pathname.endsWith('/data.js') && url.origin === new URL(SITE_BASE).origin) {
       const resp = await route.fetch();
       const body = await resp.text();
-      const addon = `\n;(function(){var d=window.GFIELD_DATA;${JSON.stringify([STUDENT, SIBLING, OTHER, INACTIVE, FULL])}.forEach(function(n){if(d.students.indexOf(n)<0)d.students.push(n)});})();`;
+      const addon = `\n;(function(){var d=window.GFIELD_DATA;${JSON.stringify([STUDENT, SIBLING, OTHER, INACTIVE, FOURTH])}.forEach(function(n){if(d.students.indexOf(n)<0)d.students.push(n)});})();`;
       return route.fulfill({ response: resp, body: body + addon, headers: { ...resp.headers(), 'content-type': 'text/javascript; charset=utf-8' } });
     }
     if (url.origin === new URL(SITE_BASE).origin) return route.continue();
@@ -47,7 +47,6 @@ async function setup(context, state) {
       const reply = (status, json) => route.fulfill({ status, json });
       if ((body.action === 'start' || body.action === 'verify' || body.action === 'touch') && !/^[A-Za-z0-9_-]{32,64}$/.test(body.deviceToken || '')) return reply(400, { error: 'DEVICE_REQUIRED' });
       if (body.action === 'start') {
-        if (body.name === FULL) return reply(409, { error: 'DEVICE_LIMIT' });
         if (state.inactive.has(body.name)) return reply(403, { error: 'STUDENT_INACTIVE' });
         if (!/@/.test(body.email || '')) return reply(400, { error: 'INVALID_EMAIL' });
         if (state.links[body.name] && state.links[body.name] !== body.email) return reply(409, { error: 'LINKED_TO_OTHER_EMAIL' });
@@ -235,19 +234,18 @@ async function setPin(page,pin='0472'){await page.fill('#el-new-pin',pin);await 
     assert.equal(await page.evaluate(() => localStorage.getItem('gfield_hs_student_session_v1')), null);
     results.inactiveBlocked = true;
 
-    // 기기 3대 초과: 인증번호를 보내지 않고 학원 기기 초기화 안내
+    // 추가 브라우저에서도 상한 오류 없이 이메일 인증 단계가 열린다.
     await page.goto(base + 'index.html');
-    await enterName(page, FULL);
+    await enterName(page, FOURTH);
     await page.waitForSelector('#email-login:not(.hidden)');
     await emailStep(page);
     await page.fill('#el-email', EMAIL);
     await page.click('#el-send');
-    await page.waitForSelector('#el-error:not(.hidden)');
-    assert.match(await page.textContent('#el-error'), /3대/);
-    assert.equal(await page.isVisible('#el-step-code'), false);
+    await page.waitForSelector('#el-step-code:not(.hidden)');
+    assert.equal(await page.isVisible('#el-error'), false);
     const deviceId = await page.evaluate(() => localStorage.getItem('gfield_hs_device_v1'));
     assert.match(deviceId || '', /^[A-Za-z0-9_-]{32,64}$/);
-    results.deviceLimitBlocked = true;
+    results.fourthBrowserAllowed = true;
 
     // 모바일 화면
     const mobile = await context.newPage();
