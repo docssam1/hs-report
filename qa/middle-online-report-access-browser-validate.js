@@ -89,16 +89,43 @@ const server=http.createServer((req,res)=>{
     assert.equal(variantUrl.searchParams.get('bank'),'middle8');
     assert.equal(variantUrl.searchParams.get('source'),'middle|8|all');
     assert.equal(variantUrl.searchParams.get('gens').split(',').length,30);
+    assert.equal(variantUrl.searchParams.get('view'),'mixed','multiple wrong types interleave their three variants');
+    const threeTypeUrl=new URL(await approved.evaluate(()=>middle8VariantUrl([2,5,8])),base+'/mock.html');
+    assert.equal(threeTypeUrl.searchParams.get('view'),'mixed','three recommended types interleave their variants');
+    assert.equal(threeTypeUrl.searchParams.get('gens'),'mid8-q02,mid8-q05,mid8-q08');
     const recommendationCoverage=await approved.locator('.wt-item').evaluateAll(rows=>({wrong:rows.length,study:rows.filter(row=>row.textContent.includes('권장 학습 위치')&&row.querySelector('.middle8-study a')).length,points:rows.filter(row=>row.textContent.includes('학습 포인트')).length}));
     assert.deepEqual(recommendationCoverage,{wrong:30,study:30,points:30},'each wrong Middle 8 source has its own study location and point');
     const studyLinks=await approved.locator('.middle8-study a').evaluateAll(links=>links.map(link=>new URL(link.href).searchParams.get('gens')));
     assert.deepEqual(studyLinks,Array.from({length:30},(_,i)=>'mid8-q'+String(i+1).padStart(2,'0')));
+    assert.ok(await approved.locator('.middle8-study a').evaluateAll(links=>links.every(link=>new URL(link.href).searchParams.get('view')==='grouped')),
+      'single-type study links keep the three variants together');
+    const threeTypeBank=await context.newPage();threeTypeBank.on('pageerror',error=>errors.push(error.message));
+    await threeTypeBank.addInitScript(name=>localStorage.setItem('gfield_student',name),student);
+    await threeTypeBank.goto(threeTypeUrl.href);
+    await threeTypeBank.waitForFunction(()=>document.querySelector('#final1Worksheet #btnPrint')?.disabled===false);
+    assert.deepEqual(await threeTypeBank.locator('#final1Worksheet .qcard .fixed-item[data-item-id]').evaluateAll(items=>items.map(item=>item.dataset.itemId)),
+      [1,2,3].flatMap(variant=>[2,5,8].map(no=>'mid8-q'+String(no).padStart(2,'0')+'-v'+variant)),
+      'three wrong types show three approved variants each in mixed order');
+    assert.equal(await threeTypeBank.locator('#final1Worksheet [data-answer-id]').count(),9,'three-type worksheet includes nine matching answers');
+    if(outputDir)await threeTypeBank.pdf({path:path.join(outputDir,'middle-round8-three-type-mixed.pdf'),preferCSSPageSize:true,printBackground:true});
+    await threeTypeBank.close();
+    const singleTypeUrl=new URL(await approved.locator('.middle8-study a').first().getAttribute('href'),base+'/mock.html');
+    const singleTypeBank=await context.newPage();singleTypeBank.on('pageerror',error=>errors.push(error.message));
+    await singleTypeBank.addInitScript(name=>localStorage.setItem('gfield_student',name),student);
+    await singleTypeBank.goto(singleTypeUrl.href);
+    await singleTypeBank.waitForFunction(()=>document.querySelector('#final1Worksheet #btnPrint')?.disabled===false);
+    assert.deepEqual(await singleTypeBank.locator('#final1Worksheet .qcard .fixed-item[data-item-id]').evaluateAll(items=>items.map(item=>item.dataset.itemId)),
+      ['mid8-q01-v1','mid8-q01-v2','mid8-q01-v3'],'one learning-location link retains its three focused variants');
+    assert.equal(await singleTypeBank.locator('#final1Worksheet [data-answer-id]').count(),3);
+    await singleTypeBank.close();
     const linkedBank=await context.newPage();linkedBank.on('pageerror',error=>errors.push(error.message));
     await linkedBank.addInitScript(name=>localStorage.setItem('gfield_student',name),student);
     await linkedBank.goto(variantUrl.href);
     await linkedBank.waitForFunction(()=>document.querySelector('#final1Worksheet #btnPrint')?.disabled===false);
     assert.equal(await linkedBank.locator('#final1Worksheet .qcard').count(),90,'report link opens all 90 approved Middle 8 variants');
     assert.equal(await linkedBank.locator('#final1Worksheet [data-answer-id]').count(),90,'report link includes 90 matching answers');
+    assert.deepEqual(await linkedBank.locator('#final1Worksheet .qcard[data-source-no="2"]').evaluateAll(cards=>cards.map(card=>Number(card.dataset.index))),
+      [2,32,62],'approved Q2 variants are separated across the mixed 90-question worksheet');
     if(outputDir)await linkedBank.screenshot({path:path.join(outputDir,'middle-round8-report-linked-bank.png'),fullPage:true});
     await linkedBank.close();
     if(outputDir)await approved.screenshot({path:path.join(outputDir,'middle-round8-report-desktop.png'),fullPage:true});
