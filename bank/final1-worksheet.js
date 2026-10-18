@@ -17,11 +17,19 @@
     if(x.sourceSet==='final'&&Number(x.sourceRound)===7&&[14,15,17,29].includes(Number(x.sourceNo)))return false;
     return total>210||!!x.asset&&(total>180||Number(x.sourceNo)===28);
   }
-  function questionGroups(items,layout){
+  function questionGroups(items,layout,reportColumns){
+    if(reportColumns)return chunks(items,6).flatMap(function(group){
+      // Give long text or a diagram with a long stem a half-page cell.
+      var dense=group.some(function(x){
+        var length=String(x.stemHtml||x.text||'').length+(Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0);
+        return length>270||!!x.asset&&length>95;
+      });
+      return dense?chunks(group,3):[group];
+    });
     // Keep approved tall diagrams readable, rather than clip or miniaturize them.
     if(items.some(largeFigure)){
       var pages=[],pending=[];
-      function flush(){if(pending.length){pages.push.apply(pages,questionGroups(pending,layout));pending=[];}}
+      function flush(){if(pending.length){pages.push.apply(pages,questionGroups(pending,layout,false));pending=[];}}
       items.forEach(function(x){if(largeFigure(x)){flush();pages.push([x]);}else pending.push(x);});
       flush();return pages;
     }
@@ -81,6 +89,7 @@
     if(!['questions','answers','both','quick'].includes(mode))mode='both';
     var layout=q.get('layout')||'editorial';
     if(!['editorial','compact'].includes(layout))layout='editorial';
+    var reportColumns=isLast&&round===3&&wrong&&layout==='compact'&&q.get('reportColumns')==='1';
     root.dataset.layout=layout;
     var student=(new URLSearchParams(location.hash.slice(1)).get('student')||'').trim(),checked=new Set(),revision=0,preparePrint=null;
     // Display-only name, never authority for reading or writing student results.
@@ -111,19 +120,20 @@
       return sheet('f1-cover cover-page','<div class="f1-mast"><div class="f1-brand">지필드 영재교육</div><div class="f1-issue">'+labels[band]+' / '+paper.questions.length+'문항</div></div><div class="f1-cover-heading"><div class="f1-owner">'+(student?esc(student)+' 학생의':'이름 ____________________')+'</div><h1>'+roundLabel+(important?'':' <span>약점 유형</span>')+'</h1></div><div class="f1-check-title">'+(wrong?'오답':'선택')+' 유형 자기 점검</div><p class="lead">풀이를 보지 않고 다시 풀 수 있으면 체크하세요.</p><div class="f1-checks">'+list+'</div><div class="f1-rule">'+(important?'검수 문제 3개를 기준으로 같은 유형의 새 문제를 이어서 공부합니다.':fresh?'검수된 유사문제 3개와 같은 원문 유형의 새 문제를 이어서 공부합니다.':'원문 한 문제마다 유사문제 3개씩 공부합니다.')+' 체크는 성적에 반영되지 않습니다.</div>');
     }
     function questionPage(group,n,total){
+      var reportRows=reportColumns?Math.min(3,Math.max(1,Math.ceil(group.length/2))):0;
       var wideLead=layout==='editorial'&&group.length===3&&editorialWide(group[0]);
       var single=(layout==='editorial'||isMiddle7)&&group.length===1;
       var twoWithWide=layout==='editorial'&&group.length===2&&group.some(editorialWide);
       var writeLines=Array.from({length:single?10:3},()=>'<span class="f1-write-line"></span>').join('');
       var rowCount=isMiddle7?Math.ceil(group.reduce((sum,x)=>sum+(layout==='editorial'&&editorialWide(x)?2:1),0)/2):0;
-      var html='<div class="f1-qpage qpage" data-wide-lead="'+String(wideLead)+'"'+(rowCount?' style="grid-template-rows:auto repeat('+rowCount+',minmax(0,1fr))"':'')+'><div class="f1-qhead qhead"><span>'+roundLabel+' 약점 유형</span><small>문제 '+n+' / '+total+'</small></div>';
-      group.forEach(x=>{
+      var html='<div class="f1-qpage qpage" data-wide-lead="'+String(wideLead)+'"'+(reportColumns?' data-report-columns="true" data-report-rows="'+reportRows+'" style="grid-auto-flow:column;grid-template-rows:auto repeat('+reportRows+',minmax(0,1fr))"':rowCount?' style="grid-template-rows:auto repeat('+rowCount+',minmax(0,1fr))"':'')+'><div class="f1-qhead qhead"><span>'+roundLabel+' 약점 유형</span><small>문제 '+n+' / '+total+'</small></div>';
+      group.forEach((x,index)=>{
         var legacyGiven=bankCode==='final1'&&[12,14,23].includes(Number(x.sourceNo))&&Array.isArray(x.conditionLines)?x.conditionLines:[];
         var promptText=[x.stemHtml||x.text].concat(legacyGiven).filter(Boolean).join(' ');
         var given=Array.isArray(x.promptDataLines)&&x.promptDataLines.length?x.promptDataLines:[];
         var givenBlock=given.length?'<div class="f1-qgiven"><b>'+esc(x.promptDataLabel||'주어진 조건')+'</b><div class="f1-qgiven-lines">'+given.map(t=>'<span>'+mathText(t)+'</span>').join('')+'</div></div>':'';
         var sourceLabel=important?'파이널 '+x.sourceRound+'회 '+x.sourceNo+'번':'원문 '+x.sourceNo+'번';
-        html+='<article class="f1-qcard qcard" data-index="'+x.index+'" data-source-no="'+x.sourceNo+'" data-source-round="'+x.sourceRound+'" data-points="'+esc(x.pointBand)+'" data-gen="'+esc(x.genId)+'" data-wide="'+String(layout==='editorial'&&editorialWide(x))+'"><div class="f1-qcard-head"><span class="f1-qno">'+x.index+'.</span><span class="f1-qtype">['+esc(x.importantTypeTitle||x.detailType)+']</span></div><div class="f1-qtext qtext">'+mathText(promptText)+'</div>'+givenBlock+'<div class="f1-qmeta qmeta fixed-item" data-item-id="'+esc(x.id)+'">'+sourceLabel+' / '+(x.reviewStatus==='runtime-verified'?'새 문제 '+(x.variantNo-3):'유사문제 '+x.variantNo)+(x.variantRoleLabel?' · '+esc(x.variantRoleLabel):'')+' / '+(x.sourceEquivalentConfirmed===false?'원문 참고 배점 ':'')+esc(x.pointBand)+'점</div>'+(x.asset?'<div class="f1-qfigure qfigure">'+raster(x.asset,'')+'</div>':'')+'<div class="f1-workspace" aria-hidden="true">'+writeLines+'</div><div class="f1-answerline answerline"><span>답</span><span class="f1-answer-blank" aria-hidden="true"></span></div></article>';
+        html+='<article class="f1-qcard qcard"'+(reportColumns?' style="grid-column:'+String(Math.floor(index/reportRows)+1)+';grid-row:'+String(index%reportRows+2)+'"':'')+' data-index="'+x.index+'" data-source-no="'+x.sourceNo+'" data-source-round="'+x.sourceRound+'" data-points="'+esc(x.pointBand)+'" data-gen="'+esc(x.genId)+'" data-wide="'+String(layout==='editorial'&&editorialWide(x))+'"><div class="f1-qcard-head"><span class="f1-qno">'+x.index+'.</span><span class="f1-qtype">['+esc(x.importantTypeTitle||x.detailType)+']</span></div><div class="f1-qtext qtext">'+mathText(promptText)+'</div>'+givenBlock+'<div class="f1-qmeta qmeta fixed-item" data-item-id="'+esc(x.id)+'">'+sourceLabel+' / '+(x.reviewStatus==='runtime-verified'?'새 문제 '+(x.variantNo-3):'유사문제 '+x.variantNo)+(x.variantRoleLabel?' · '+esc(x.variantRoleLabel):'')+' / '+(x.sourceEquivalentConfirmed===false?'원문 참고 배점 ':'')+esc(x.pointBand)+'점</div>'+(x.asset?'<div class="f1-qfigure qfigure">'+raster(x.asset,'')+'</div>':'')+'<div class="f1-workspace" aria-hidden="true">'+writeLines+'</div><div class="f1-answerline answerline"><span>답</span><span class="f1-answer-blank" aria-hidden="true"></span></div></article>';
       });
       var lastTwo=layout==='editorial'&&n===total&&group.length===2&&group.every(x=>!editorialWide(x));
       return sheet('question-page'+(lastTwo?' f1-last-two':'')+(single?' f1-single-question':'')+(twoWithWide?' f1-two-with-wide':'')+(group.length===1&&largeFigure(group[0])?' f1-large-figure':''),html+'</div>');
@@ -164,7 +174,7 @@
       try{
         var paper=await global.BANK_FIXED.buildPaper({bankCode:bankCode,genIds:important?null:ids.slice(),typeIds:important?ids.slice():null,n:requestedCount,pointBand:band,orderMode:orderMode,fresh:fresh,wrongPracticeMode:wrong});if(current!==revision)return;
         if(!paper.questions.length){cleanUrl();root.querySelector('#f1Status').textContent='선택한 배점대의 '+(wrong?'오답':'문항')+'이 없습니다.';return;}
-        var pages=[],groups=questionGroups(paper.questions,layout);
+        var pages=[],groups=questionGroups(paper.questions,layout,reportColumns);
         function assemblePages(){pages=[];
         if(mode==='questions'||mode==='both'){
           pages.push(cover(paper));groups.forEach((g,i)=>pages.push(questionPage(g,i+1,groups.length)));

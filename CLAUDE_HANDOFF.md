@@ -1,5 +1,11 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-18 최종 3회 ZIP 유사문제 다단 배치 수정 (Mac, 최신)
+
+- 관리자 최종 3회 ZIP의 실제 PDF에서 유사문제 9개가 큰 한 단 카드 6쪽으로 나뉘던 배치 오류를 수정했다. 진단 요약 4쪽 뒤의 문제지는 **왼쪽 단 위→아래, 오른쪽 단 위→아래** 순서다. 28·29·30번 우선 유형 표본은 문제 1~6을 2단×3행, 긴 7~9를 2단×2행으로 나눠 문제 2쪽·답안 2쪽, 합계 A4 8쪽이다. 지문·그림·문항 ID·풀이 데이터는 변경하지 않았다.
+- 최종 3회 요약 인쇄에서 길거나 그림이 큰 다른 우선 유형 조합은 한 면의 6칸이 넘치면 3문항씩 나눈다. 합성 12·15·28번 조합의 문제9개·답안9개, 인쇄 부록5쪽이 통과했다. 캡처 시 단 읽기 순서와 칸 넘침을 검사하고 실패하면 PDF 생성을 중단한다.
+- 실제 ZIP에서 추출한 [다단 배치 검수 PDF](https://drive.google.com/file/d/1CTlwAcixghWrQ7CV2O4wLfyYahnW-rl3/view)는 기존 Drive ID를 갱신했다. 8쪽, 1,513,715바이트, SHA-256 `c551ade9ea782fd24f22a4965ceed466b767224c67046908d4092ef45856f8f6`. 문제 5·6쪽을 렌더하여 순서·겹침 없음·답칸을 확인했다. `qa/admin-last14-batch-browser-validate.js`, `qa/last3-parent-report-browser-validate.cjs`, `qa/last3-approved-integration-validate.cjs`, `qa/last3-reviewed-data-validate.cjs`, `qa/final3-fixed90-validate.js`, `qa/final3-taxonomy-validate.js` 통과, 운영 쓰기0. 사용한 Mac 작업본은 `main`의 `/Users/docssam/Developer/GFIELD/hs-report`이고, 새 코드는 `bank/final1-worksheet.js`, `final-summary-practice-print.js`, 오류 표시를 명확히 한 QA는 `qa/last3-parent-report-browser-validate.cjs`에 있다.
+
 ## 2026-10-18 중급 8회 25번 조건 상자·2단 배치 반영 (Mac, 최신)
 
 - 사용자 판정이 맞다. **원본 12번 답 17개, 30번 답 120개**를 유지한다. 동일한 판정 자료를 다시 요청하지 않고, 학생 채점·성적은 변경하지 않았다.

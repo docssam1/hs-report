@@ -82,8 +82,9 @@
       points:'all',
       view:'grouped',
       printMode:'both',
-      layout:'editorial'
+      layout:input.set==='last'&&input.round===3?'compact':'editorial'
     });
+    if(input.set==='last'&&input.round===3)params.set('reportColumns','1');
     if(input.teacherPrint)params.set('reportPrint','teacher');
     return 'bank/index.html?'+params.toString();
   }
@@ -206,21 +207,25 @@
     await waitForImages(page,job,input.timeout);
     var saved=[],isQuestion=page.classList.contains('question-page'),isAnswer=page.classList.contains('answer-page');
     forceStyle(saved,page.querySelector('.wm-layer.wm-active'),{opacity:'.04'});
+    var compactColumns=isQuestion&&input.set==='last'&&input.round===3;
     if(isQuestion){
-      page.classList.add('f1-batch-capture-editorial');
+      if(!compactColumns)page.classList.add('f1-batch-capture-editorial');
       var qpage=page.querySelector('.f1-qpage'),cards=list(page.querySelectorAll('.f1-qcard'));
-      forceStyle(saved,qpage,{gridTemplateRows:'auto repeat(2,minmax(0,1fr))',rowGap:'6mm'});
+      if(compactColumns&&(!qpage||qpage.dataset.reportColumns!=='true'))fail('column-layout','최종 3회 다단 문제 배치를 확인할 수 없습니다.');
+      var reportRows=compactColumns?Number(qpage.dataset.reportRows):0;
+      if(compactColumns&&(!Number.isInteger(reportRows)||reportRows<1||reportRows>3))fail('column-layout','최종 3회 다단 행 수를 확인할 수 없습니다.');
+      forceStyle(saved,qpage,compactColumns?{gridTemplateRows:'auto repeat('+reportRows+',minmax(0,1fr))',gridAutoFlow:'column',rowGap:'4mm'}:{gridTemplateRows:'auto repeat(2,minmax(0,1fr))',rowGap:'6mm'});
       cards.forEach(function(card,index){
-        forceStyle(saved,card,{display:'flex',flexDirection:'column',border:'1px solid #d8dee8',padding:'4mm',overflow:'hidden'});
+        if(!compactColumns)forceStyle(saved,card,{display:'flex',flexDirection:'column',border:'1px solid #d8dee8',padding:'4mm',overflow:'hidden'});
         // A wrapped type heading must not shrink into the question below it.
         list(card.children).filter(function(child){return !child.classList.contains('f1-workspace');}).forEach(function(child){forceStyle(saved,child,{flexShrink:'0'});});
-        if(card.dataset.wide==='true')forceStyle(saved,card,{gridColumn:'1 / -1'});
-        if(qpage&&qpage.dataset.wideLead==='true'){
+        if(!compactColumns&&card.dataset.wide==='true')forceStyle(saved,card,{gridColumn:'1 / -1'});
+        if(!compactColumns&&qpage&&qpage.dataset.wideLead==='true'){
           if(index===0)forceStyle(saved,card,{gridColumn:'1 / -1',gridRow:'2'});
           if(index===1)forceStyle(saved,card,{gridColumn:'1',gridRow:'3'});
           if(index===2)forceStyle(saved,card,{gridColumn:'2',gridRow:'3'});
         }
-        forceStyle(saved,card.querySelector('.f1-workspace'),{display:'block',flex:'1 1 16mm',minHeight:card.dataset.wide==='true'?'12mm':'16mm',marginTop:'7px'});
+        if(!compactColumns)forceStyle(saved,card.querySelector('.f1-workspace'),{display:'block',flex:'1 1 16mm',minHeight:card.dataset.wide==='true'?'12mm':'16mm',marginTop:'7px'});
       });
     }
     if(isAnswer){
@@ -249,6 +254,17 @@
             return {left:box.left-rect.left-parseFloat(computed.borderLeftWidth||0),top:box.top-rect.top-parseFloat(computed.borderTopWidth||0),width:box.width,height:box.height,heading:heading};
           }):[]};
       }):[];
+      if(compactColumns){
+        var slots=placements.slice(1);
+        if(slots.length<1||slots.length>6||slots.some(function(slot,index){
+          var column=Math.floor(index/reportRows);
+          return index>0&&((column===Math.floor((index-1)/reportRows)&&slot.top<=slots[index-1].top)||
+            (column!==Math.floor((index-1)/reportRows)&&slot.left<=slots[index-1].left))||
+            (column===0&&index>0&&Math.abs(slot.left-slots[0].left)>2)||
+            (column===1&&Math.abs(slot.left-slots[reportRows].left)>2);
+        }))fail('column-order','최종 3회 문제의 다단 읽기 순서가 올바르지 않습니다.');
+        if(cards.some(function(card){return card.scrollHeight>card.clientHeight+2;}))fail('column-overflow','최종 3회 문제 글이 다단 칸을 벗어났습니다.');
+      }
       var captureOptions={backgroundColor:'#ffffff',scale:1.5,useCORS:true,allowTaint:false,logging:false,imageTimeout:20000,removeContainer:true};
       if(originalGrid)captureOptions.onclone=function(cloneDoc){
         var clonePage=cloneDoc.querySelector('[data-gfield-summary-token="'+token+'"]');
@@ -273,7 +289,7 @@
     }finally{
       page.removeAttribute('data-gfield-summary-token');
       saved.reverse().forEach(function(entry){if(entry[1]===null)entry[0].removeAttribute('style');else entry[0].setAttribute('style',entry[1]);});
-      if(isQuestion)page.classList.remove('f1-batch-capture-editorial');
+      if(isQuestion&&!compactColumns)page.classList.remove('f1-batch-capture-editorial');
       if(isAnswer)page.classList.remove('f1-batch-capture-answer');
     }
     check(job);

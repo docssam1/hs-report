@@ -174,7 +174,7 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
       const screen=await page.locator('#last3PriorityProblems').evaluate(host=>({ids:[...host.querySelectorAll('.last3-practice-question')].map(x=>x.dataset.itemId),given:host.querySelectorAll('.last3-practice-given').length,figures:host.querySelectorAll('.last3-practice-figure').length,drawing:host.querySelectorAll('.last3-practice-draw').length}));
       assert.equal(screen.given,3);assert.equal(screen.figures,6);assert.equal(screen.drawing,3);
       const prepared=await page.evaluate(async()=>{
-        const prep=await window.__qaSimilarController.prepareAndPrint(),doc=prep.frame.contentDocument;
+        const prep=await window.__qaSimilarController.prepareAndPrint().catch(error=>{throw new Error((error.code||error.name)+': '+error.message);}),doc=prep.frame.contentDocument;
         window.__qaPrepared=prep;
         return {metrics:prep.metrics,practice:doc.querySelectorAll('.gfield-summary-practice-page').length,priority:window.__qaParentVM.priorityItems.map(x=>x.no),text:doc.body.innerText,frames:prep.frame.isConnected};
       });
