@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 완료된 최종 3회 26번 로컬 중복 QA 정리 (Mac, 최신)
+
+- 26번 검수의 로컬 `qa`·`qa-after`·`qa-public` 화면 PNG 7개씩은 SHA-256이 서로 같았다. 환경별 결과 JSON 3개와 고유 화면 7개를 [Drive 화면 검수 ZIP](https://drive.google.com/file/d/1YDY4hKUVn3dhQE4Izt8k8P2aj2jJc0Q_/view)에 보관했다. ZIP 14078437바이트를 Drive에서 다시 내려받아 SHA-256 `207a962fabac0ec16d15c5b8281b497cea8ff27b048db252fcd171f2f9c26b60`으로 로컬 생성본과 일치함을 확인했다.
+- ZIP 내부 모든 화면·결과가 원본 파일과 같은지 검사하고, Git 추적 파일이 아닌 중복 QA 파일 25개만 정리해 Mac 로컬 **57201335바이트**를 회수했다. `.private-work/last3-study-q26-20261019/`에는 재현 코드·독립 대조 기록·기존 릴리스 요약 ZIP만 남겼다. 원본 자료·승인 은행·Git 코드·학생 기록은 건드리지 않았다.
+
 ## 2026-10-19 Mac 다음 작업·실제 로그인/프린터 상태 (최신)
 
 - Mac Chrome에서 공개 `admin.html`은 관리자 암호 입력 화면, `final.html`은 학생 이름 입력 화면으로 직접 확인했다. Mac UI는 접근 가능하지만 **실제 계정 인증 전**이다. `lpstat -p`에는 등록 프린터가 없다. 따라서 합성 성적 ZIP·PDF QA와 달리 실제 계정 ZIP 저장·실물 A4 인쇄는 아직 미완료다.
