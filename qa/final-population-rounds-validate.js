@@ -57,6 +57,15 @@ for(const invalid of [
   vm.runInContext(edgeSource,runtime);
   const request=body=>new Request('https://example.invalid/statistics',{method:'POST',headers:{authorization:'Bearer valid',origin:'https://hs.gfieldacademy.net'},body:JSON.stringify(body)});
   const served=await handler(request({exam:'final3',scores:[50]}));assert.equal(served.status,200);assert.equal((await served.json()).exam,'final3');
+  account.active=false;
+  assert.equal((await handler(request({action:'read-report',exam:'last2',student:'qa'}))).status,403,'inactive accounts cannot reach report actions');
+  account.active=true;account.role='unapproved';
+  assert.equal((await handler(request({action:'read-report',exam:'last2',student:'qa'}))).status,403,'unknown roles cannot reach report actions');
+  account.role='student';
+  const verifiedUser=authService.auth.getUser;
+  authService.auth.getUser=async()=>({data:{user:null},error:{message:'invalid session'}});
+  assert.equal((await handler(request({action:'read-report',exam:'last2',student:'qa'}))).status,401,'an invalid verified session cannot reach report actions');
+  authService.auth.getUser=verifiedUser;
   assert.equal((await handler(request({exam:'final5',scores:[50]}))).status,400);
   assert.equal((await handler(request({exam:'final2',scores:[50],round:2}))).status,400);
 

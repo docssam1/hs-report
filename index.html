@@ -954,8 +954,8 @@
       const unlocked=isUnlocked(node), isCurrent=(node.id===D.meta.currentWeekId);
       const el=document.createElement('div');
       el.className=`node ${node.track}${unlocked?'':' locked'}${isCurrent?' current':''}`;
-      const icon=(node.type==='special'||node.type==='extra')?(unlocked?'⭐':'🔒'):(unlocked?'🔓':'🔒');
-      el.innerHTML=`${isCurrent?'<div class="marker">'+runner+'</div>':''}<div class="icon-status">${icon}</div>`
+      const icon=unlocked?'🔓':'🔒',accessLabel=unlocked?'열림 · 이용 가능':'잠김 · 이용 불가';
+      el.innerHTML=`${isCurrent?'<div class="marker">'+runner+'</div>':''}<div class="icon-status" role="img" aria-label="${accessLabel}" title="${accessLabel}">${icon}</div>`
         +`<div class="date">${node.date}${isCurrent?' · 현재 진행 중':''}</div><h3 class="disp">${escHtml(node.title)}</h3>`
         +`<div class="desc">${escHtml(node.desc)}</div>${node.focus?`<div class="focus">${escHtml(node.focus)}</div>`:''}`;
       el.onclick=()=>openModal(node,unlocked);
@@ -1465,6 +1465,6 @@
     }catch(e){}
   })();
 </script>
-<script src="index-enhancements.js?v=20261013-report-qr"></script>
+<script src="index-enhancements.js?v=20261017-roadmap-approval"></script>
 </body>
 </html>

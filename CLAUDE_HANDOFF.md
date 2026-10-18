@@ -1,5 +1,17 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-17 Mac 보류 작업 복구·연결 검증 (로컬 완료, 운영 미반영)
+
+- 사용자 ‘진행’에 따라 Mac `/Users/docssam/Developer/GFIELD/hs-report`의 기존 main `643baf27dfb784d8e0438b7bcbb0e9a32488c8b9`에서 `codex/mac-pending-followup-20261017`로 이어 작업했다. PR93은 이미 배포 완료된 기준이며 재배포하지 않았다. 현재 변경은 미커밋·미푸시·미배포다.
+- Windows `E:\Codex\worktrees\hs-report-last2-release-20261012`의 HEAD `99375adb353c24ad3dae3a95085602a7c1c2b9f6`와 깨끗한 Git 상태를 보존했다. `codex/recovered-last2-diagnostic-20261011`, `codex/recovered-roadmap-approval-icons-20261014` 두 로컬 보존 브랜치로 필요한 이력을 가져왔다. `8981d63` 서버 변경은 실제로 diagnostic 브랜치에 남아 있었으며, 이름이 비슷한 last2-comment-server 브랜치 끝은 이미 main에 포함된 관리자 데이터 변경이라 그대로 적용하지 않았다.
+- Last2 비공개 제작 원본·승인 영수증, Last3 원본·승인 영수증·검수 PDF·QA JSON, Last2 연결/배포 기록을 기존 Drive `코딩관련/codex/codex`의 원래 상대 경로로 복구하고 파일 해시를 대조했다. `.private-work/last2-variants-20261011`, `.private-work/last3-reuse-20261015`는 해당 Drive 폴더로 연결된다. Last2 승인 HTML(`1d57d9c2…`) 및 Last3 승인 draft(`60e03b53…`)가 각 승인 영수증과 일치한다. 이전 대기 문구로 재승인을 요구하지 않는다. 그 밖의 오래된 QA 캡처/PDF는 Windows에 남고 Drive 서버 업로드 확인은 하지 않았다.
+- 운영 읽기 확인: `hs-final-population` v8은 `last1`까지만 허용하며 DB 코멘트 제약도 Last2~4를 허용하지 않는다. DB에는 Final8 허용이 있으나 함수 허용 목록에는 빠져 있었다. `hs-parent-auth` v6의 두 코드 파일은 현재 Mac과 줄바꿈 정규화 후 일치한다. 학생 데이터 행·로그인 비밀값은 조회하거나 수정하지 않았다.
+- 로컬 변경은 복구한 원본의 필요한 부분만 적용했다. 로드맵 추가 모의고사에 기존 최종7·8 `accessKey`를 연결하고 기존 열림 판정에 맞춰 🔓/🔒 및 접근 가능한 설명을 통일했다. 학생 승인 명단과 하위 자료 필터는 유지한다. 서버는 `report-service.js` 허용 회차 1줄과 기존 `20261011103304_allow_last2_4_report_comments.sql`만 복구해 Last2~4·Final8 코멘트를 지원하도록 준비했다. 성적·기준표·학생 소유권·교사 편집 권한·CAS 로직은 바꾸지 않았다.
+- 검증: 수정 전 최종7·8 ‘자료실 승인/로드맵 잠김’을 재현했고, 수정 후 회차별 하위 자료 격리·일반 주차·미승인/철회·1280/390px 검사 통과. 코멘트/서버 단위검사 2개에서 비활성·잘못된 역할/세션 거부, 소유권·학생 읽기 전용·회차 분리·동시 저장 충돌·지연 응답 격리·성적 불변 통과. Mac 및 공개 사이트 합성 PIN 로그인 각 14개 그룹 통과. QR 원본 QA의 옛 이메일 fixture 실패를 재현한 뒤 현 PIN 단계·`pinReady` 응답으로 수정하여 신규8+기존2 목적지와 새 모바일 로그인2개 흐름 통과. DOCSSAM 칼럼 보존 21검사와 diff 검사 통과. 실제 운영 쓰기·OTP 발송·설치·삭제 0건.
+- 배포 준비본: `.private-work/mac-continuation-20261017/server-candidate/`에 운영에서 읽은 함수 7개 파일 중 허용 회차 1줄만 바꾼 후보와 SQL을 보존했다. 기존 비공개 baseline 4개는 운영 원문 바이트 그대로이며 manifest로 검사했다. 공개 함수 폴더에는 이 private 파일들이 없으므로 해당 폴더만 그대로 배포하지 않는다. 적용 직전에 운영 버전/파일/DB 제약을 다시 읽고 완전한 패키지를 대조해야 한다.
+- 결과는 `.private-work/mac-continuation-20261017/summary.json`, 복구 영수증은 `/Users/docssam/Documents/Codex/GFIELD-Hermes/state/mac-continuation-20261017/hs-report-transfer/`에 있다. 적용 스킬은 Supabase 및 Windows 실물의 `gfield-design-system`/`references/design-rules.md`이며 `DESIGN.md`도 확인했다. 독립 코드 검토에서 새 결함·권한 약화는 발견되지 않았다.
+- 남은 작업: 운영 DB 제약·함수와 프런트 메인/Pages 반영, 실제 PostgreSQL migration 실행 및 운영 코멘트 저장/읽기 확인, 실제 학부모 OTP/PIN 첫 사용과 휴대폰의 인쇄 QR 판독이다. 이번에는 새 문제·최종4회 유사문제·상세풀이를 제작하지 않았고 `data.js`, 칼럼, 원문/정답/성적, 인증 코드와 기존 승인 문항은 보존했다.
+
 ## 2026-10-16 기존 승인 은행 연결 메인 반영 요청
 
 - 사용자 ‘메인반영 문제은행과도 연결’ 요청으로 아래 로컬 검증 완료본을 릴리스한다. 승인 은행 12회차·1080문항·360원문 유형 연결과 상태 안내 구분만 대상이며, 학생 성적·권한과 data.js는 변경하지 않는다.

@@ -106,6 +106,11 @@
   if(!extraContent.textbooks.some(function(t){return t&&t.accessKey==='mock-mid-7';})){
     extraContent.textbooks.push({title:'중급 모의고사 7회 · 추가 모의고사',accessKey:'mock-mid-7'});
   }
+  [7,8].forEach(function(round){
+    var key='mock-final-'+round;
+    if(!extraContent.textbooks.some(function(t){return t&&t.accessKey===key;}))
+      extraContent.textbooks.push({title:'최종 실전 모의고사 '+round+'회 · 강의·시험지·진단',accessKey:key});
+  });
 
   /* Phase 구분선 위치 정리 */
   function moveBefore(id, rx){
@@ -548,9 +553,9 @@
         if(node.type==='goal'){const g=document.createElement('div');g.className='node goal';g.innerHTML=`<div class="date">${esc2(node.date)}</div><h3 class="disp">${esc2(node.title)}</h3><div class="desc">${esc2(node.desc)}</div>`;tl.appendChild(g);return}
         const unlocked=isUnlocked(node),isCurrent=node.id===D.meta.currentWeekId,el=document.createElement('div');
         el.className=`node ${node.track}${unlocked?'':' locked'}${isCurrent?' current':''}`;
-        const icon=(node.type==='special'||node.type==='extra')?(unlocked?'⭐':'🔒'):(unlocked?'🔓':'🔒');
+        const icon=unlocked?'🔓':'🔒',accessLabel=unlocked?'열림 · 이용 가능':'잠김 · 이용 불가';
         const friends=isCurrent?`<div class="companion-marker"><div class="friend boy">${RUNNER_BOY}</div><div class="friend girl">${RUNNER_GIRL}</div><div class="companion-bubble">${esc2(roadmapBubble(node))}</div></div>`:'';
-        el.innerHTML=`${friends}<div class="icon-status">${icon}</div><div class="date">${esc2(node.date)}${isCurrent?' · 현재 진행 중':''}</div><h3 class="disp">${esc2(node.title)}</h3><div class="desc">${esc2(node.desc)}</div>${node.focus?`<div class="focus">${esc2(node.focus)}</div>`:''}`;
+        el.innerHTML=`${friends}<div class="icon-status" role="img" aria-label="${accessLabel}" title="${accessLabel}">${icon}</div><div class="date">${esc2(node.date)}${isCurrent?' · 현재 진행 중':''}</div><h3 class="disp">${esc2(node.title)}</h3><div class="desc">${esc2(node.desc)}</div>${node.focus?`<div class="focus">${esc2(node.focus)}</div>`:''}`;
         el.onclick=()=>openModal(node,unlocked);
         if(node.type==='special'||node.type==='extra'){const w=document.createElement('div');w.className='special-branch';w.innerHTML='<span class="branch-tag">'+(node.type==='extra'?'추가':'특강')+'</span>';w.appendChild(el);tl.appendChild(w)}else tl.appendChild(el);
       });
