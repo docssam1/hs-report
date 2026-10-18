@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 완료된 최종 3회 레이아웃 시험본 Drive 보관·Mac 정리 (최신)
+
+- `.private-work/last3-layout-check/`의 2026-10-18 시험 출력 **156개 파일·163867857바이트**는 Git 추적 대상이 아니고 현재 코드의 경로 참조·열린 파일도 없었다. 기존 폴더 구조·각 파일 SHA-256을 manifest에 넣은 [Drive A ZIP](https://drive.google.com/file/d/1Hf2mpS-oU_M3FzahosVaNMy0VpxnZwp2/view) **77629070바이트**와 [Drive B ZIP](https://drive.google.com/file/d/1nuydwgGxO766tIVmYWrmq2s5IbjCgG_T/view) **60481125바이트**로 보관했다. 단일 138MB ZIP은 Drive 업로드 100MB 제한으로 거절돼 서버에 저장하지 않았다.
+- 두 Drive ZIP을 다시 내려받아 각각 SHA-256 `f85a49170d7c5ff580b9c7392ebd8ea4053d4b077c204e5197da74e19d619f3f`·`24798e8a5c742b82a2956119174f5a7dc0106231db2b742f6bef82c21e28644b`가 로컬 생성본과 일치하는지 확인했다. ZIP 내부 156개 파일도 원래 경로·크기·SHA-256과 1:1 대조한 뒤 완료된 로컬 시험 폴더와 임시 ZIP을 정리했다. Mac 순감소량은 원본 폴더 **163867857바이트**다. 승인 코드·문제은행·원본 자료·학생 기록은 변경하지 않았다.
+
 ## 2026-10-19 완료된 최종 3회 26번 로컬 중복 QA 정리 (Mac, 최신)
 
 - 26번 검수의 로컬 `qa`·`qa-after`·`qa-public` 화면 PNG 7개씩은 SHA-256이 서로 같았다. 환경별 결과 JSON 3개와 고유 화면 7개를 [Drive 화면 검수 ZIP](https://drive.google.com/file/d/1YDY4hKUVn3dhQE4Izt8k8P2aj2jJc0Q_/view)에 보관했다. ZIP 14078437바이트를 Drive에서 다시 내려받아 SHA-256 `207a962fabac0ec16d15c5b8281b497cea8ff27b048db252fcd171f2f9c26b60`으로 로컬 생성본과 일치함을 확인했다.
