@@ -7,7 +7,6 @@
 - Drive의 기존 중급 8회 검수 폴더 `1ksibH1e-3kVmbATQQKSDwnoJZvhl9Aci`에서 초안 `1DmG-hMjdvWbzfx3rBjPsV5gEPEhawsAc`, 그림 ZIP `1vm1V3y9uSCAfHk1OAasIBxvOSIoBK3-z`, 6문항 PDF `1GeteMsC1Ae8yjg62hxYYxWTei9Uedf4T`, 4문항 PDF `15DU7hkCXda-TQk4iy0JW7nJ75cd1o85U`, 합본 `1nr-LAUTUtu1o-7hKjZvz_8vPLdY7mLqt`, 사전 QA `12X26aAEZc4hEYdepRvuiNCQ3oC8aJv9p`, 4문항 QA `1tFshrcIuXsqSaU6gYyrZ2YjY7mfxokTp`, 합본 QA `1LdwGcDkYIBEGrAztxt6jdJzc3NLO45E0`, 위험도 장부 `1tTtkMshBo6UwZnEDAccwF9ywpaKMuQuc`을 **같은 파일 ID로** 갱신하고 크기·부모 폴더를 재조회했다. 최신 초안 SHA-256 `be79bc047509ae95b5f6a75085230aa78473cbc0629ad7e44aa140676c13fdb1`, 합본 SHA-256 `9d4a72fb3c7818f619409ebf905d85f4b592b54bc42f7b81cc351e0058e3570e`다. 아래의 57그림·49쪽·예전 해시는 당시 이력이며 현재 파일의 값은 이 절을 따른다. 로컬 생성 코드와 이전 스냅샷은 `.private-work/middle8-20261018`에 보존했다.
 - 다음은 Q3 카드 수 차이의 난도 판정, Q12/Q30 원본 그림과 저장 답 충돌의 공식 판정, Q25 문장 통합 부담, 전90문항 9축·정답 유일성·그림/인쇄·풀이와 교사 승인이다. 승인 전에는 학생 문제은행·진단 추천 유사문제로 연결하지 않는다.
 
-
 ## 2026-10-18 최종 3회 관리자 일괄 ZIP 부록 연결 (Mac)
 
 - 최종 3회 진단 화면·개별 요약 인쇄에는 승인된 우선 유형 3개×유사문제 3개가 연결돼 있었지만, 관리자 폴더/ZIP 저장의 `similarAvailable`이 최종 1·2회만 허용해 최종 3회를 요약만 저장했다. `admin-final-batch.js`에서 최종 3회에 한해 기존 검수된 요약+유사문제 인쇄 경로를 열고, 관리자 안내의 오래된 준비 중 범위를 고쳤다. 준비 중 안내는 회차뿐 아니라 실제 제외된 부록 종류를 표시한다. 원문 30문항 상세 풀이는 최종 3회에서 여전히 미검수이므로 선택 시 그 부록만 제외하고 유사문제는 포함한다.
