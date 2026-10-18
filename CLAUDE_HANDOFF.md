@@ -4,6 +4,7 @@
 
 - 사용자가 제작 기준 링크로 준 Drive ID `1LjpYZDs74UiI2wrbMi7ME3jWxILTck71`을 메타데이터로 확인한 결과, `GFIELD_QUESTION_BANK_PRODUCTION_STANDARD_20260913.md` 파일이 아니라 `생각하는 황소 초등 선발 대비 중급 모의고사` **폴더**다. 이 폴더는 원문·답안 확인에 사용하고, 제작 기준 원본으로 인용하지 않는다. 파일명 `GFIELD_QUESTION_BANK_PRODUCTION_STANDARD`와 `PRODUCTION_STANDARD_20260913` 검색에서 원본은 발견되지 않았다. Mac 전달본 2.7(2026-09-20, SHA-256 `6044b894b8f58b94cfaff5dd331e7367f76e44f70076be7facee443a77499b18`)은 [Drive에 출처 표시된 참고 사본](https://drive.google.com/file/d/1HJTPi1tNBCzjM_R4Ui_H9jBB_4CNrgtH/view)으로 보존했다. Drive 원본의 동일성·최신성은 확인되지 않았다.
 - 중급 8회 14번 원문은 신호등 세 불의 독립 켜짐/꺼짐에서 모두 꺼짐만 빼 **7가지**다. 현행 승인 유사문제 세 개는 각각 원문에 없는 추가 제한을 두어 독립 검산 답이 **5·6·5가지**이고, 직접 대조 기록에서 관련 25축을 보류했다. 사용자의 90문항 콘텐츠 승인과 새 그림 허용은 유지하지만, 이 세 문항을 원문 난도 동등성·9축 최종 승인으로 승격하지 않는다. 공개 문제은행·답·채점·학생 성적은 바꾸지 않았다. 근거는 기존 14번 직접 대조와 이번 [Drive 출처·판정 경계 기록](https://drive.google.com/file/d/1CCT9-gsH5qYX1THdICNvH-IkK028hfZi/view)을 함께 본다.
+- Apple Vision `.accurate` 한국어·영어 OCR로 원문 문제 PDF 3쪽, 원문 답안 16쪽 캡처, 현행 14번 v1 문제 카드를 다시 판독했다. 원문에서 세 불 조건과 원답 `7가지`, 현행 v1에서 빨간불·노란불 동시 켜기 금지 문장을 확인했다. OCR 원본 JSON·세 이미지·판독 한계는 [Drive 근거 ZIP](https://drive.google.com/file/d/139Bcdxx3hG476UWHDQCStUFRPUJN-o3i/view)에 보관했다. OCR은 v2·v3의 그림과 실물 인쇄 또는 난도 동등성을 증명하지 않는다.
 
 ## 2026-10-19 중급 8회 메인 PDF 전 페이지 Apple Vision OCR (Mac, 최신)
 
