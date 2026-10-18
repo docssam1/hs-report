@@ -97,6 +97,7 @@ const server=http.createServer((req,res)=>{
     assert.equal(threeTypeUrl.searchParams.get('gens'),'mid8-q02,mid8-q05,mid8-q08');
     const recommendationCoverage=await approved.locator('.wt-item').evaluateAll(rows=>({wrong:rows.length,study:rows.filter(row=>row.textContent.includes('권장 학습 위치')&&row.querySelector('.middle8-study a')).length,points:rows.filter(row=>row.textContent.includes('학습 포인트')).length}));
     assert.deepEqual(recommendationCoverage,{wrong:30,study:30,points:30},'each wrong Middle 8 source has its own study location and point');
+    assert.match(await approved.locator('.wt-item').first().innerText(),/자리를 바꾸면 45 차이 나는 네 자리 수/,'Q1 report uses the shared direction-neutral label');
     const studyLinks=await approved.locator('.middle8-study a').evaluateAll(links=>links.map(link=>new URL(link.href).searchParams.get('gens')));
     assert.deepEqual(studyLinks,Array.from({length:30},(_,i)=>'mid8-q'+String(i+1).padStart(2,'0')));
     assert.ok(await approved.locator('.middle8-study a').evaluateAll(links=>links.every(link=>new URL(link.href).searchParams.get('view')==='grouped')),

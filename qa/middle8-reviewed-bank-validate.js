@@ -10,6 +10,15 @@ assert.equal(data.sourceSet,'middle');assert.equal(data.sourceRound,8);
 assert.equal(data.items.length,90);assert.equal(data.types.length,30);
 assert.equal(data.approval.teacherApprovedCount,90);
 assert.equal(data.approval.draftSha256,'7bdc4fa4bf6d006a96135e1798b4421b5cbb25dda4768592c2732d4f9db79375');
+const q01Type=data.types.find(x=>x.generatorId==='mid8-q01');
+assert.equal(q01Type.label,'자리를 바꾸면 45 차이 나는 네 자리 수');
+assert.ok(q01Type.searchAliases.includes('자리를 바꾸면 커지는 네 자리 수'));
+assert.ok(q01Type.searchAliases.includes('자리를 바꾸면 작아지는 네 자리 수'));
+assert.deepEqual(data.items.filter(x=>x.sourceNo===1).map(x=>[x.detailType,/45 (큰|작은) 수/.exec(x.text)[1]]),[
+  ['자리를 바꾸면 45 차이 나는 네 자리 수','큰'],
+  ['자리를 바꾸면 45 차이 나는 네 자리 수','작은'],
+  ['자리를 바꾸면 45 차이 나는 네 자리 수','큰']
+]);
 const q02Type=data.types.find(x=>x.generatorId==='mid8-q02');
 assert.equal(q02Type.label,'9로 나눈 나머지 조건(두 자리 수)');
 assert.ok(q02Type.searchAliases.includes('9로 나눈 나머지가 3인 두 자리 수'));

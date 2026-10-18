@@ -32,6 +32,9 @@ const fixture='window.GFIELD_DATA={students:["검수학생"],studentTypes:{},arc
       catch(error){throw new Error('Middle 8 worksheet load: '+JSON.stringify({status:await page.locator('#f1Status').allTextContents(),errors,body:(await page.locator('body').innerText()).slice(0,500)}));}
       assert.equal(await page.locator('#final1Worksheet .qcard').count(),90);
       assert.equal(await page.locator('#final1Worksheet [data-answer-id]').count(),90);
+      const q01Cards=page.locator('#final1Worksheet .qcard[data-source-no="1"]');
+      assert.deepEqual(await q01Cards.locator('.f1-qtype').allTextContents(),Array(3).fill('[자리를 바꾸면 45 차이 나는 네 자리 수]'));
+      assert.deepEqual((await q01Cards.locator('.f1-qtext').allTextContents()).map(x=>x.match(/45 (큰|작은) 수/)[1]),['큰','작은','큰']);
       const q02Cards=page.locator('#final1Worksheet .qcard[data-source-no="2"]');
       assert.deepEqual(await q02Cards.locator('.f1-qtype').allTextContents(),Array(3).fill('[9로 나눈 나머지 조건(두 자리 수)]'));
       assert.deepEqual((await q02Cards.locator('.f1-qtext').allTextContents()).map(x=>x.match(/나머지가 (\d+)/)[1]),['4','5','6']);
@@ -48,7 +51,7 @@ const fixture='window.GFIELD_DATA={students:["검수학생"],studentTypes:{},arc
         const page=card.closest('.f1-answer-page');return card.getBoundingClientRect().bottom>page.getBoundingClientRect().bottom+2||card.scrollHeight>card.clientHeight+2;
       }).map(card=>card.dataset.answerId));assert.deepEqual(answerOverflow,[],'Answer pagination must fit.');
       await page.locator('.solution-card[data-source-no="13"]').first().screenshot({path:path.join(out,'middle8-'+layout+'-q13-solution.png')});
-      for(const no of [3,13,14,16,17,20,25,26,27,30])await page.locator('#final1Worksheet .qcard[data-source-no="'+no+'"]').first().screenshot({path:path.join(out,'middle8-'+layout+'-q'+no+'.png')});
+      for(const no of [1,3,13,14,16,17,20,25,26,27,30])await page.locator('#final1Worksheet .qcard[data-source-no="'+no+'"]').first().screenshot({path:path.join(out,'middle8-'+layout+'-q'+no+'.png')});
       const sanitization=await page.evaluate(()=>({safe:window.BANK_CORE.reviewedMathText('<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>'),bad:window.BANK_CORE.reviewedMathText('<math><mtext onclick="alert(1)">1</mtext></math>')}));
       assert.ok(sanitization.safe.startsWith('<math>'));assert.ok(sanitization.bad.startsWith('&lt;math&gt;'));
       await page.emulateMedia({media:'screen'});await page.setViewportSize({width:390,height:844});const mobile=await measure();
