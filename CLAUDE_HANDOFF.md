@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 최종 3회 공개 사이트·GitHub main 정적 파일 대조 (Mac, 최신)
+
+- 공개 주소 `https://hs.gfieldacademy.net`에서 최종 3회 학생 화면·관리자 화면·진단/학습 연결·출력·문제은행 관련 **17개 정적 파일**을 HTTP 200으로 읽어 현 GitHub `main` (`bfde56dc3ed3e8534d1f820775cb1f8dc1b5fc08`)의 Mac 작업본과 크기·SHA-256·바이트를 대조했다. **17/17 완전 일치**했다. `admin-final-batch.js`의 임의 캐시 확인 URL은 처음에 503이었으나 관리자 화면이 실제 지정한 버전 URL은 200으로 정상 응답하고 로컬 파일과 일치했다. [파일별 Drive 검수 기록](https://drive.google.com/file/d/1surMARecTyh3VeOiDYQFtJxrwq6BVTVp/view)에 URL·해시·크기·판정 경계를 보관했다.
+- 이로써 앞서 로컬 합성 성적에서 확인한 유사문제 0/3/6/9개, 권장 학습 연결, 기본 ZIP 문제·답안 9개를 만드는 **정적 자산의 공개 배포**는 확인됐다. 실제 학생 계정의 성적 데이터·인증 세션·서버 상태와 실물 인쇄는 이 바이트 대조만으로 확인되지 않는다. 코드·문항·채점·학생 기록은 변경하지 않았다.
+
 ## 2026-10-19 제작 기준 Drive 출처 정정·중급 8회 14번 판정 경계 (Mac, 최신)
 
 - 사용자가 제작 기준 링크로 준 Drive ID `1LjpYZDs74UiI2wrbMi7ME3jWxILTck71`을 메타데이터로 확인한 결과, `GFIELD_QUESTION_BANK_PRODUCTION_STANDARD_20260913.md` 파일이 아니라 `생각하는 황소 초등 선발 대비 중급 모의고사` **폴더**다. 이 폴더는 원문·답안 확인에 사용하고, 제작 기준 원본으로 인용하지 않는다. 파일명 `GFIELD_QUESTION_BANK_PRODUCTION_STANDARD`와 `PRODUCTION_STANDARD_20260913` 검색에서 원본은 발견되지 않았다. Mac 전달본 2.7(2026-09-20, SHA-256 `6044b894b8f58b94cfaff5dd331e7367f76e44f70076be7facee443a77499b18`)은 [Drive에 출처 표시된 참고 사본](https://drive.google.com/file/d/1HJTPi1tNBCzjM_R4Ui_H9jBB_4CNrgtH/view)으로 보존했다. Drive 원본의 동일성·최신성은 확인되지 않았다.
