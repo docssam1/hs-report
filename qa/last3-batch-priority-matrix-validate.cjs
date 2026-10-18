@@ -87,8 +87,44 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
       assert.deepEqual(result.practice.questionIds, expectedIds);
       assert.deepEqual(result.practice.answerIds, expectedIds);
       if (result.pdfBase64) fs.writeFileSync(path.join(out, 'last3-three-priority.pdf'), Buffer.from(result.pdfBase64, 'base64'));
-      evidence.cases.push({ wrong, sourceNos: result.practice.sourceNos, questions: result.practice.questions, answers: result.practice.answers, questionIds: result.practice.questionIds, bytes: result.bytes });
-      console.log('PASS Last3 wrong ' + wrong.join(',') + ': ' + expectedCount + ' questions + ' + expectedCount + ' answers');
+      await page.locator('#final-batch-select-all').click();
+      await page.evaluate(() => {
+        document.querySelectorAll('#final-batch-rounds input[data-exam-set]').forEach(input => {
+          input.checked = input.value === 'last3';
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+        window.__GFIELD_BATCH_QA_CAPTURE__ = {};
+      });
+      assert.equal(await page.evaluate(() => GFIELD_ADMIN_FINAL_BATCH._test.taskList().length), 1);
+      const zipDownload = page.waitForEvent('download', { timeout: 180000 });
+      await page.locator('#final-batch-zip').click();
+      const zipPath = path.join(out, 'last3-wrong-' + (wrong.join('-') || 'none') + '.zip');
+      await (await zipDownload).saveAs(zipPath);
+      await page.waitForFunction(() => document.getElementById('final-batch-status').dataset.state === 'done');
+      const zipCheck = await page.evaluate(async bytes => {
+        const archive = await JSZip.loadAsync(bytes, { base64: true });
+        const names = Object.keys(archive.files);
+        const pdfFile = Object.values(archive.files).find(entry => !entry.dir);
+        const pdf = await pdfFile.async('uint8array');
+        return {
+          names,
+          pdfSignature: new TextDecoder().decode(pdf.subarray(0, 5)),
+          pdfBytes: pdf.length,
+          practice: window.__GFIELD_BATCH_QA_CAPTURE__.practice,
+          status: document.getElementById('final-batch-status').textContent
+        };
+      }, fs.readFileSync(zipPath).toString('base64'));
+      assert.deepEqual(zipCheck.names, ['최종 3회/', '최종 3회/' + student + '_최종_3회_진단과복습.pdf']);
+      assert.equal(zipCheck.pdfSignature, '%PDF-');
+      assert.ok(zipCheck.pdfBytes > 40000);
+      assert.deepEqual(zipCheck.practice.sourceNos, result.practice.sourceNos);
+      assert.deepEqual(zipCheck.practice.questionIds, expectedIds);
+      assert.deepEqual(zipCheck.practice.answerIds, expectedIds);
+      assert.equal(zipCheck.practice.questions, expectedCount);
+      assert.equal(zipCheck.practice.answers, expectedCount);
+      assert.doesNotMatch(zipCheck.status, /준비 중인 부록/);
+      evidence.cases.push({ wrong, sourceNos: result.practice.sourceNos, questions: result.practice.questions, answers: result.practice.answers, questionIds: result.practice.questionIds, bytes: result.bytes, zip: { file: path.basename(zipPath), bytes: fs.statSync(zipPath).size, pdfBytes: zipCheck.pdfBytes, status: zipCheck.status } });
+      console.log('PASS Last3 ZIP wrong ' + wrong.join(',') + ': ' + expectedCount + ' questions + ' + expectedCount + ' answers');
     }
     assert.deepEqual(evidence.writes, []);
     assert.deepEqual(evidence.browserErrors, []);
