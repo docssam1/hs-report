@@ -1,5 +1,12 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-18 중급 8회 25번 조건 상자 초안 반영 (Mac, 최신)
+
+- 사용자 판정이 맞다. **원본 12번 답 17개, 30번 답 120개**를 유지한다. 동일한 판정 자료를 다시 요청하지 않고, 학생 채점·성적은 변경하지 않았다.
+- 중급 8회 비공개 90문항 초안을 v0.7로 올렸다. 원본 25번의 ㉮~㉱ 네 조건을 세 유사문제의 새 SVG 상자에 원본 순서대로 표시했다. 문제 지문에는 물음만 남기고 정답·풀이 힌트는 넣지 않았다. 답 141·145·139일은 사용자 해석 ‘비가 오지 않은 때는 모두 개인 때’로 예비 검산했다. 이전 v0.6 대비 **25번 세 문항만 변경, 다른 87문항 JSON 완전 일치**한다. [비공개 초안](https://drive.google.com/file/d/1DmG-hMjdvWbzfx3rBjPsV5gEPEhawsAc/view) SHA-256 `7bdc4fa4bf6d006a96135e1798b4421b5cbb25dda4768592c2732d4f9db79375`, [변경 범위·검수 기록](https://drive.google.com/file/d/1i7SkdTfkkwRAxW9M0X-IfmnVc0L1PNng/view).
+- [4문항 인쇄 시안](https://drive.google.com/file/d/15DU7hkCXda-TQk4iy0JW7nJ75cd1o85U/view) 23쪽, [6문항 인쇄 시안](https://drive.google.com/file/d/1GeteMsC1Ae8yjg62hxYYxWTei9Uedf4T/view) 15쪽, [문제·답안 합본](https://drive.google.com/file/d/1nr-LAUTUtu1o-7hKjZvz_8vPLdY7mLqt/view) 51쪽을 같은 Drive ID에서 갱신했다. 90문항×문제·답안 값 및 풀이 267단계 PDF 읽기, 그림 66개 로드·DOM 잘림0을 확인하고 25번 변경 면(4문항 19쪽·6문항 13쪽·답안 28~29쪽)을 화면으로 보았다. [그림 묶음](https://drive.google.com/file/d/1vm1V3y9uSCAfHk1OAasIBxvOSIoBK3-z/view)은 40개 파일이다. 종이 실물 인쇄 검수는 아직이다.
+- [23~25번 원문 계약](https://drive.google.com/file/d/17vuLkHixlmzz6s5jljZcUhhZ8UUthX48/view), [25번 직접 9축 기록](https://drive.google.com/file/d/1r8KJOIoeKxebLs60IDqyb06sLixy8x01/view), [원문 장부](https://drive.google.com/file/d/1E6Wel6JGjtKXIpuyIWEJ2w76j73ftzc7/view), [전90문항 9축 작업표](https://drive.google.com/file/d/12XGTyhWYxgGaXndJYtkKKRfCu3R-t91K/view)를 갱신했다. 25번은 상자 복원으로 보류 15→9축, 전체 810축은 **미검수622·보류188·통과0**이다. 25번 새 상자의 종이 가독성·원본과의 읽기/시각 단서 동등성, 14·20번 구조 재설계, 그 밖의 보류 축과 교사 판정이 남는다. **교사 승인0·학생 공개0·중급 8회 신규 진단 연결0**이다. 최신 작업 코드는 로컬 `.private-work/middle8-20261018`에만 보존한다.
+
 ## 2026-10-18 최종 3회 연결 재확인·중급 8회 25번 조건 상자 후보 (Mac)
 
 - 현재 메인에서 최종 3회 승인 고정은행 90문항·30유형×3 링크와 분류 검사가 통과했다. 관리자 최종 3회 ZIP을 합성 기록으로 다시 내려받아 **추천 3유형×3문제=문제9개·풀이9개**가 들어 있고 기본 저장에서 ‘준비 중인 부록’ 안내가 없음을 확인했다. 학생 진단은 0/1/2/11개 오답 표본에서 우선 문제 0/3/6/9개, 30개 전체 오답 표본에서 권장 학습 위치·학습 포인트 30/30과 우선 문제9개를 확인했다. 승인 문제은행·개인 생성기·카탈로그 연결 및 외부 쓰기0도 통과했다. 사용한 검사는 `qa/final3-fixed90-validate.js`, `qa/final3-taxonomy-validate.js`, `qa/last3-reviewed-data-validate.cjs`, `qa/admin-last14-batch-browser-validate.js`, `qa/last3-parent-report-browser-validate.cjs`, `qa/last3-approved-integration-validate.cjs`다. 마지막 세 브라우저 검사는 Mac 번들 Playwright 경로를 환경변수로 지정했다.
