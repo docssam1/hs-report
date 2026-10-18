@@ -156,6 +156,7 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
       assert.ok(all.studyRows.every(x=>x.books>0&&x.points>0&&!/확인 중/.test(x.text)),'all 30 Last3 source types need linked learning locations and points');
       assert.match(all.studyRows.find(x=>x.no===3).text,/이상한 시계/);
       assert.match(all.studyRows.find(x=>x.no===26).text,/도형의 분할과 넓이/);
+      await page.waitForFunction(()=>document.querySelectorAll('#last3PriorityProblems .last3-practice-question').length===9);
       const preview=await page.locator('#last3PriorityProblems .last3-practice-question').evaluateAll(cards=>cards.map(card=>({id:card.dataset.itemId,prompt:card.querySelector('.last3-practice-prompt').textContent,answerVisible:!!card.querySelector('.ans,.solution'),imageBroken:[...card.querySelectorAll('img')].some(img=>img.complete&&img.naturalWidth===0)})));
       assert.equal(preview.length,9);
       for(const item of preview){assert.equal(item.prompt,approved.items.find(row=>row.id===item.id).text);assert.equal(item.answerVisible,false);assert.equal(item.imageBroken,false);}
