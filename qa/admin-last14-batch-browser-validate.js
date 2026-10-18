@@ -111,6 +111,7 @@ const server=http.createServer((req,res)=>{
     assert.deepEqual(last3Practice.practice.sourceNos,[28,29,30]);
     assert.equal(last3Practice.practice.questions,9);assert.equal(last3Practice.practice.answers,9);
     assert.deepEqual(last3Practice.practice.questionIds,last3Practice.practice.answerIds);
+    assert.deepEqual(last3Practice.practice.questionIds,[1,2,3].flatMap(variant=>[28,29,30].map(no=>'last3-q'+no+'-v'+variant)));
     assert.ok(last3Practice.practice.questionIds.every(id=>/^last3-q(?:28|29|30)-v[123]$/.test(id)));
     fs.writeFileSync(path.join(out,'last3-batch-with-practice.pdf'),Buffer.from(last3Practice.base64,'base64'));
     console.log('PASS Last3 approved priority questions and solutions included in actual batch PDF');
@@ -155,6 +156,7 @@ const server=http.createServer((req,res)=>{
     assert.equal(last3Zip.practice.questions,9);assert.equal(last3Zip.practice.answers,9);
     assert.deepEqual(last3Zip.practice.questionIds,last3Zip.practice.answerIds);
     assert.deepEqual(last3Zip.practice.sourceNos,[28,29,30]);
+    assert.deepEqual(last3Zip.practice.questionIds,[1,2,3].flatMap(variant=>[28,29,30].map(no=>'last3-q'+no+'-v'+variant)));
     fs.writeFileSync(path.join(out,'last3-priority-from-zip.pdf'),Buffer.from(last3Zip.bytes,'base64'));
     await page.waitForFunction(()=>document.getElementById('final-batch-status').dataset.state==='done');
     assert.doesNotMatch(await page.locator('#final-batch-status').innerText(),/준비 중인 부록/);

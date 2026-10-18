@@ -150,6 +150,15 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
         if(wrong.length){
           assert.ok(practice.length);for(const link of practice){const url=new URL(new URL(link).searchParams.get('next'),'https://hs.gfieldacademy.net/');assert.equal(url.searchParams.get('bank'),'last3');assert.equal(url.searchParams.get('source'),'last|3');}
         }else assert.equal(practice.length,0);
+        if(wrong.length===1){
+          const singlePrint=await page.evaluate(async()=>{
+            const prep=await window.__qaSimilarController.prepareAndPrint(),doc=prep.frame.contentDocument;
+            const result={ids:JSON.parse(doc.body.dataset.practicePromptFingerprints||'[]').map(x=>x.id),answers:JSON.parse(doc.body.dataset.practiceAnswerFingerprints||'[]').map(x=>x.id),view:new URL(doc.body.dataset.practiceBankUrl,location.href).searchParams.get('view')};
+            prep.cleanup();return result;
+          });
+          const expected=[1,2,3].map(variant=>'last3-q12-v'+variant);
+          assert.deepEqual(singlePrint.ids,expected);assert.deepEqual(singlePrint.answers,expected);assert.equal(singlePrint.view,'grouped');
+        }
         cases.push({wrong:wrong.length,priority:v.priority,qr:practice.length,visibleProblems:ready.practiceIds.length,studyRows:ready.studyRows.length});
       }
       records=[row('last3',makeOx(Array.from({length:30},(_,index)=>index+1)))];await open();
@@ -183,11 +192,16 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
       const prepared=await page.evaluate(async()=>{
         const prep=await window.__qaSimilarController.prepareAndPrint().catch(error=>{throw new Error((error.code||error.name)+': '+error.message);}),doc=prep.frame.contentDocument;
         window.__qaPrepared=prep;
-        return {metrics:prep.metrics,practice:doc.querySelectorAll('.gfield-summary-practice-page').length,priority:window.__qaParentVM.priorityItems.map(x=>x.no),text:doc.body.innerText,frames:prep.frame.isConnected};
+        return {metrics:prep.metrics,practice:doc.querySelectorAll('.gfield-summary-practice-page').length,priority:window.__qaParentVM.priorityItems.map(x=>x.no),text:doc.body.innerText,frames:prep.frame.isConnected,
+          printIds:JSON.parse(doc.body.dataset.practicePromptFingerprints||'[]').map(x=>x.id),answerIds:JSON.parse(doc.body.dataset.practiceAnswerFingerprints||'[]').map(x=>x.id),bankUrl:doc.body.dataset.practiceBankUrl};
       });
       assert.equal(prepared.frames,true);assert.ok(prepared.practice>0);
       assert.equal(prepared.metrics.practiceQuestions,9);assert.equal(prepared.metrics.practiceAnswers,9);assert.deepEqual(prepared.metrics.practiceSourceNos,prepared.priority);
       assert.deepEqual(screen.ids,prepared.metrics.practiceSourceNos.flatMap(no=>[1,2,3].map(variant=>'last3-q'+String(no).padStart(2,'0')+'-v'+variant)));
+      const mixedIds=[1,2,3].flatMap(variant=>prepared.priority.map(no=>'last3-q'+String(no).padStart(2,'0')+'-v'+variant));
+      assert.deepEqual(prepared.printIds,mixedIds,'printed questions interleave the three priority types');
+      assert.deepEqual(prepared.answerIds,mixedIds,'printed answers follow the same numbers');
+      assert.equal(new URL(prepared.bankUrl,'https://hs.gfieldacademy.net/').searchParams.get('view'),'mixed');
       assert.doesNotMatch(prepared.text,/파이널 3회|last2-q|final3-q/);
       if(process.env.GFIELD_LAST3_EXPORT_PDF==='1'){
         const html=await page.evaluate(()=>{
@@ -206,7 +220,7 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
         }finally{await exportPage.close();}
       }
       await page.evaluate(()=>window.__qaPrepared.cleanup());
-      return {priority:prepared.priority,questions:9,answers:9,practicePages:prepared.practice};
+      return {priority:prepared.priority,questions:9,answers:9,practicePages:prepared.practice,printIds:prepared.printIds};
     });
     await check('Last3 personal mock generator uses actual Last3 correct or wrong item scopes',async()=>{
       records=[row('last3',makeOx([1,12,15,18,19,24,26,28,30]))];
