@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 최종 3회 운영 패턴 QA 근거 보완·Mac 정리 (최신)
+
+- 기존 [Drive 운영 패턴 PDF 17개·Vision 근거 ZIP](https://drive.google.com/file/d/1yTrobo9e0jveClMrtEPyxRG_GNoJN4Hx/view)은 로컬 `operational-batch-vision-evidence-20261019.zip`과 20408685바이트·SHA-256 `823af2b4874671b842e45c76d99da60ba71c77976972e5c9d6ddc7501fa948db`로 일치했다. 다만 이 ZIP에는 공통 관리자 PDF·화면 렌더 등 112개 파일이 없어서 [Drive 보충 ZIP](https://drive.google.com/file/d/1bXcjtP5NDOx1f0cLtp9mHa6557zV8ccQ/view)에 경로·해시 목록과 함께 추가했다. 보충 ZIP 62064596바이트를 다시 내려받아 SHA-256 `edda7388d1e6e9404e9cb25cc409462d94a6b6f0ff1c9efd8d69a03f100e8c5b` 일치를 확인했다.
+- 두 ZIP의 113개+112개 파일을 Mac 원본 225개와 바이트 단위로 1:1 대조했다. Git 추적·현재 코드 경로 참조·열린 파일이 없는 완료된 `.private-work/last3-operational-batch-20261019/`와 임시 보충 ZIP만 정리해 Mac 순감소량 **111069106바이트**를 기록했다. 합성 성적 QA의 보존이며 실제 관리자 계정 ZIP 저장·학생 로그인·실물 A4 인쇄를 검수 통과로 바꾸지 않는다. 승인 문제은행·성적·원본 자료는 그대로다.
+
 ## 2026-10-19 완료된 최종 3회 레이아웃 시험본 Drive 보관·Mac 정리 (최신)
 
 - `.private-work/last3-layout-check/`의 2026-10-18 시험 출력 **156개 파일·163867857바이트**는 Git 추적 대상이 아니고 현재 코드의 경로 참조·열린 파일도 없었다. 기존 폴더 구조·각 파일 SHA-256을 manifest에 넣은 [Drive A ZIP](https://drive.google.com/file/d/1Hf2mpS-oU_M3FzahosVaNMy0VpxnZwp2/view) **77629070바이트**와 [Drive B ZIP](https://drive.google.com/file/d/1nuydwgGxO766tIVmYWrmq2s5IbjCgG_T/view) **60481125바이트**로 보관했다. 단일 138MB ZIP은 Drive 업로드 100MB 제한으로 거절돼 서버에 저장하지 않았다.
