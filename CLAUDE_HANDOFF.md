@@ -1,5 +1,11 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 13번 원본 그림·워터마크 인쇄 가독성 보정 (Mac, 최신)
+
+- 현행 중급 8회 `compact` 13번의 원본 필수 그림(은행 내 원본 래스터 SHA-256 `5f4d32557ece8cb40820dde1859705692ecfe6fcd4af3eb2f5bd30b698802b55`)은 여섯 예시 격자 아래의 `1·2·4·5·13·24`가 작은 획으로 인쇄된다. 400dpi PDF 확대에서 페이지 워터마크가 격자와 숫자 위를 지나갔다. `bank/final1-worksheet.css`에서 **중급 8회 큰 그림 페이지의 본문 층을 워터마크 위로 올리고 13번 원본 그림 상자만 흰 배경**으로 두어 격자 위 워터마크를 제거했다. 페이지 나머지 부분의 워터마크와 원본 그림 바이트·지문·답은 유지한다.
+- Apple Vision은 400dpi 예시 부분 확대 전에는 `2·4·|3·24`, 보정 후에는 `2·4·5·| 3·24`를 읽었다. `1`과 원본 래스터의 좁은 `13`은 여전히 안정적으로 판독하지 못하므로 OCR 전체 통과나 실물 종이 가독성 승인으로 세지 않는다. [Drive 비교 요약](https://drive.google.com/file/d/1QfcWnWa8pXNeoLAy9A0haUL5lYsnCzhf/view)과 [원본 그림·변경 전후 400dpi 그림·OCR·보정 후 51쪽 PDF·브라우저 결과 ZIP](https://drive.google.com/file/d/1a1fq4wpIbfEn14VygwBotR8TcCGTMHOC/view)을 기존 중급 8회 검수 폴더에 보관했다.
+- `qa/bank-middle8-browser-validate.cjs`는 90문항·답안, `editorial`/`compact`, 390px, 개인 10/20/30문항, 잘림0·운영 쓰기0으로 통과했다. `qa/middle8-reviewed-bank-validate.js`도 통과했고 문제은행 SHA-256은 `14875841a9e6173c7384e599423fab559b308939b2b3b2f51f4c7cc764cea126` 그대로다. 실제 프린터 출력과 9축 최종 검수는 남는다.
+
 ## 2026-10-19 최종 3회 공개 사이트·GitHub main 정적 파일 대조 (Mac, 최신)
 
 - 공개 주소 `https://hs.gfieldacademy.net`에서 최종 3회 학생 화면·관리자 화면·진단/학습 연결·출력·문제은행 관련 **17개 정적 파일**을 HTTP 200으로 읽어 현 GitHub `main` (`bfde56dc3ed3e8534d1f820775cb1f8dc1b5fc08`)의 Mac 작업본과 크기·SHA-256·바이트를 대조했다. **17/17 완전 일치**했다. `admin-final-batch.js`의 임의 캐시 확인 URL은 처음에 503이었으나 관리자 화면이 실제 지정한 버전 URL은 200으로 정상 응답하고 로컬 파일과 일치했다. [파일별 Drive 검수 기록](https://drive.google.com/file/d/1surMARecTyh3VeOiDYQFtJxrwq6BVTVp/view)에 URL·해시·크기·판정 경계를 보관했다.
