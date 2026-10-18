@@ -1,10 +1,11 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
-## 2026-10-18 중급 8회 25번 조건 상자 초안 반영 (Mac, 최신)
+## 2026-10-18 중급 8회 25번 조건 상자·2단 배치 반영 (Mac, 최신)
 
 - 사용자 판정이 맞다. **원본 12번 답 17개, 30번 답 120개**를 유지한다. 동일한 판정 자료를 다시 요청하지 않고, 학생 채점·성적은 변경하지 않았다.
 - 중급 8회 비공개 90문항 초안을 v0.7로 올렸다. 원본 25번의 ㉮~㉱ 네 조건을 세 유사문제의 새 SVG 상자에 원본 순서대로 표시했다. 문제 지문에는 물음만 남기고 정답·풀이 힌트는 넣지 않았다. 답 141·145·139일은 사용자 해석 ‘비가 오지 않은 때는 모두 개인 때’로 예비 검산했다. 이전 v0.6 대비 **25번 세 문항만 변경, 다른 87문항 JSON 완전 일치**한다. [비공개 초안](https://drive.google.com/file/d/1DmG-hMjdvWbzfx3rBjPsV5gEPEhawsAc/view) SHA-256 `7bdc4fa4bf6d006a96135e1798b4421b5cbb25dda4768592c2732d4f9db79375`, [변경 범위·검수 기록](https://drive.google.com/file/d/1i7SkdTfkkwRAxW9M0X-IfmnVc0L1PNng/view).
 - [4문항 인쇄 시안](https://drive.google.com/file/d/15DU7hkCXda-TQk4iy0JW7nJ75cd1o85U/view) 23쪽, [6문항 인쇄 시안](https://drive.google.com/file/d/1GeteMsC1Ae8yjg62hxYYxWTei9Uedf4T/view) 15쪽, [문제·답안 합본](https://drive.google.com/file/d/1nr-LAUTUtu1o-7hKjZvz_8vPLdY7mLqt/view) 51쪽을 같은 Drive ID에서 갱신했다. 90문항×문제·답안 값 및 풀이 267단계 PDF 읽기, 그림 66개 로드·DOM 잘림0을 확인하고 25번 변경 면(4문항 19쪽·6문항 13쪽·답안 28~29쪽)을 화면으로 보았다. [그림 묶음](https://drive.google.com/file/d/1vm1V3y9uSCAfHk1OAasIBxvOSIoBK3-z/view)은 40개 파일이다. 종이 실물 인쇄 검수는 아직이다.
+- 사용자 지적에 따라 4/6문항 시안과 합본 문제 부분의 **2단 읽기 순서를 왼쪽 위→아래, 다음 오른쪽 위→아래**로 고쳤다. 이전 가로 우선 격자 순서가 배치 오류였다. 6문항 시안 13쪽은 25번 세 문제가 왼쪽 단에 순서대로, 26번 세 문제가 오른쪽 단에 순서대로 나온다. 전15쪽·23쪽의 PDF 좌표에서 단 순서를 재검증하고 해당 면을 눈으로 확인했다. [2단 배치 검수 기록](https://drive.google.com/file/d/19xV6TxWl0KzM46WSMK-rpJX531Aby0ry/view). 최신 4문항/6문항/합본 SHA-256은 `820a3c89c1f5386b2216d2e1d859b85024d28d0287573e2e62cf39aa434f5c64` / `92c27fdc202b6a8bded9230075bb88e04ee9d2a436425d46347b9b5acfdff4a0` / `9cb7b05722e48e648d087210e3f50e61e3e2aa4e9c7e694cca303d0ccd1ccbb6`이다.
 - [23~25번 원문 계약](https://drive.google.com/file/d/17vuLkHixlmzz6s5jljZcUhhZ8UUthX48/view), [25번 직접 9축 기록](https://drive.google.com/file/d/1r8KJOIoeKxebLs60IDqyb06sLixy8x01/view), [원문 장부](https://drive.google.com/file/d/1E6Wel6JGjtKXIpuyIWEJ2w76j73ftzc7/view), [전90문항 9축 작업표](https://drive.google.com/file/d/12XGTyhWYxgGaXndJYtkKKRfCu3R-t91K/view)를 갱신했다. 25번은 상자 복원으로 보류 15→9축, 전체 810축은 **미검수622·보류188·통과0**이다. 25번 새 상자의 종이 가독성·원본과의 읽기/시각 단서 동등성, 14·20번 구조 재설계, 그 밖의 보류 축과 교사 판정이 남는다. **교사 승인0·학생 공개0·중급 8회 신규 진단 연결0**이다. 최신 작업 코드는 로컬 `.private-work/middle8-20261018`에만 보존한다.
 
 ## 2026-10-18 최종 3회 연결 재확인·중급 8회 25번 조건 상자 후보 (Mac)
