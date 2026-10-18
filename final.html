@@ -647,6 +647,7 @@ td.weak-cell{white-space:nowrap}
     if(f==='final-report-print.js')version='20261015-last3-pagination';
     if(f==='bank/bank-registry.js')version='20261015-last3-approved';
     if(f==='last-report-data.js'||f==='last3-report-practice.js'||f==='mock-rx-data.js')version='20261018-last3-study';
+    if(f==='last3-report-practice.js')version='20261018-last3-priority9';
     document.write('<scr'+'ipt src="'+f+'?v='+version+'"><\/scr'+'ipt>');
   });
 })();</script>
@@ -3195,7 +3196,7 @@ td.weak-cell{white-space:nowrap}
         reportStateHTML+
         trendHTML+
         parentAPI.summaryHTML(parentVM)+
-        '<section id="report-plan" class="report-action-plan-section parent-core-section"><h2>이번 주 학습</h2>'+parentAPI.priorityHTML(parentVM)+'<div class="report-study-plan-host"></div></section>'+
+        '<section id="report-plan" class="report-action-plan-section parent-core-section"><h2>이번 주 학습</h2>'+parentAPI.priorityHTML(parentVM)+'<div class="report-study-plan-host"></div>'+(isLast&&roundNum===3?'<div id="last3PriorityProblems" class="last3-practice-preview no-print" aria-live="polite"></div>':'')+'</section>'+
         '<section class="parent-summary-support parent-core-section">'+
           '<details class="parent-report-details"><summary>판정 기준과 회차 기록 보기</summary><div class="parent-details-body">'+
             cutReferenceHTML(ctx)+parentAPI.historyHTML(parentVM)+attemptHTML+
@@ -3212,7 +3213,7 @@ td.weak-cell{white-space:nowrap}
           '</div>'+
           '<section id="report-items" class="report-item-section parent-core-section"><h2>오답 요약</h2><div class="lead">이번 주 문항부터 풀고 나머지 오답을 순차로 복습하세요.</div>'+wrongSummaryTableHTML(ctx)+'<details class="parent-report-details report-item-full-details"><summary>30문항 전체 결과 보기</summary><div class="parent-details-body" id="detailWrap">'+detailTableHTML(ctx)+'</div></details></section>'+
         '</section>'+
-        '<section id="report-review" class="report-review-section parent-core-section no-print"><h2>오답 연습</h2>'+(isLast&&roundNum===3?'<div id="last3PriorityProblems" class="last3-practice-preview" aria-live="polite"></div>':'')+wrongPracticeHTML(ctx)+
+        '<section id="report-review" class="report-review-section parent-core-section no-print"><h2>오답 연습</h2>'+wrongPracticeHTML(ctx)+
           '<details class="parent-report-details"><summary>자동 조언·오답 점검·연습 이력 보기</summary><div class="parent-details-body">'+
             coachingHTML+'<div class="cause-sum">'+causeSumHTML(ctx)+'</div><div id="causeWrap">'+causeWrapHTML(ctx)+'</div>'+weakSectionHTML(ctx)+
           '</div></details>'+
