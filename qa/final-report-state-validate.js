@@ -7,6 +7,11 @@ function client(){return {from(table){let filters=[],operation='select',payload,
 async function run(single){let rows=tables[table];if(!rows)return {error:{message:'unknown table'},data:null};let found=rows.filter(r=>filters.every(f=>f(r)));if(operation!=='select'){writes.push(table);let values=Array.isArray(payload)?payload:[payload],saved=[];for(const value of values){let keys=table==='hs_final_report_references'?['exam']:['student','round'];let existing=operation==='update'?found[0]:rows.find(r=>keys.every(k=>r[k]===value[k]));if(operation==='insert'&&existing)return {data:null,error:{code:'23505'}};if(operation==='update'&&!existing)return {data:null,error:null};if(existing){if(!options.ignoreDuplicates)Object.assign(existing,structuredClone(value));saved.push(existing);}else{let row=structuredClone(value);rows.push(row);saved.push(row);}}found=saved;}else if(range)found=found.slice(range[0],range[1]+1);return {data:single?structuredClone(found[0]||null):structuredClone(found),error:null};}return q;}};}
 const service=client(),student={role:'student',student:'qa-one'},teacher={role:'admin',student:'qa-admin'},user={id:'one'};
 const call=(body,account=student,who=user)=>reports.handle(service,account,who,body,core,baseline);
+const commentExams=['last2','last3','last4','final8'];
+for(const exam of commentExams){
+ tables.mock_results.push({student:'qa-comments',round:exam,ox:'O'.repeat(30),score:100,wrong:0,source:'admin',owner_id:'comments-owner'});
+ tables.mock_results.push({student:'qa-other',round:exam,ox:'X'.repeat(30),score:0,wrong:30,source:'admin',owner_id:'other-owner'});
+}
 (async()=>{
  const original=JSON.stringify(tables.mock_results),source=JSON.stringify(baseline);
  await assert.rejects(call({action:'read-report',exam:'final1',student:'qa-two'}),e=>e.status===403);
@@ -30,6 +35,37 @@ const call=(body,account=student,who=user)=>reports.handle(service,account,who,b
  assert.equal((await call({action:'read-report',exam:'last1',student:'qa-last1'},teacher,{id:'teacher'})).comment,last1Note.comment);
  assert.equal((await call({action:'read-report',exam:'final1',student:'qa-one'},teacher,{id:'teacher'})).comment,note.comment,'Final1 and Last1 comments remain isolated');
  await assert.rejects(call({action:'apply-percentiles',exam:'last1'},teacher,{id:'teacher'}),e=>e.status===409,'Last1 comment support does not add an unapproved population reference');
+ for(const exam of commentExams){
+  const ownAccount={role:'student',student:'qa-comments'},ownUser={id:'comments-owner'};
+  const editor={role:'teacher',student:'qa-teacher'},editorUser={id:'teacher'};
+  const initial=await call({action:'read-report',exam,student:'qa-comments'},ownAccount,ownUser);
+  assert.equal(initial.comment,'',exam+' starts with its own empty comment');
+  assert.equal(initial.canEdit,false);assert.equal(initial.snapshot,null);
+  const beforeSave=JSON.stringify(tables.mock_results);
+  const saved=await call({action:'save-comment',exam,student:'qa-comments',comment:'  '+exam+' teacher note  ',expectedUpdatedAt:null},editor,editorUser);
+  assert.equal(saved.comment,exam+' teacher note');
+  await assert.rejects(call({action:'save-comment',exam,student:'qa-comments',comment:'student edit',expectedUpdatedAt:saved.updatedAt},ownAccount,ownUser),e=>e.status===403);
+  await assert.rejects(call({action:'read-report',exam,student:'qa-other'},ownAccount,ownUser),e=>e.status===403);
+  await assert.rejects(call({action:'read-report',exam,student:'qa-comments'},ownAccount,{id:'wrong-owner'}),e=>e.status===403);
+  const read=await call({action:'read-report',exam,student:'qa-comments'},ownAccount,ownUser);
+  assert.equal(read.comment,saved.comment);assert.equal(read.canEdit,false);
+  assert.equal((await call({action:'read-report',exam,student:'qa-other'},editor,editorUser)).comment,'','another student has no leaked comment');
+  await assert.rejects(call({action:'save-comment',exam,student:'qa-comments',comment:'duplicate insert',expectedUpdatedAt:null},editor,editorUser),e=>e.status===409&&e.message==='COMMENT_CONFLICT');
+  await assert.rejects(call({action:'save-comment',exam,student:'qa-comments',comment:'stale edit',expectedUpdatedAt:'2000-01-01T00:00:00.000Z'},editor,editorUser),e=>e.status===409&&e.message==='COMMENT_CONFLICT');
+  const updated=await call({action:'save-comment',exam,student:'qa-comments',comment:exam+' updated note',expectedUpdatedAt:saved.updatedAt},editor,editorUser);
+  assert.equal((await call({action:'read-report',exam,student:'qa-comments'},ownAccount,ownUser)).comment,updated.comment);
+  const beforeRead=writes.length;
+  const recorded=await call({action:'record-report',exam,student:'qa-comments'},editor,editorUser);
+  assert.equal(recorded.snapshot,null);assert.equal(writes.length,beforeRead,'no snapshot write without an approved round baseline');
+  await assert.rejects(call({action:'apply-percentiles',exam},editor,editorUser),e=>e.status===409&&e.message==='REFERENCE_NOT_READY');
+  await assert.rejects(call({action:'apply-percentiles',exam},ownAccount,ownUser),e=>e.status===403);
+  await assert.rejects(call({action:'save-comment',exam,student:'qa-missing',comment:'missing result',expectedUpdatedAt:null},editor,editorUser),e=>e.status===409&&e.message==='RESULT_NOT_FOUND');
+  assert.equal(JSON.stringify(tables.mock_results),beforeSave,'comments do not change grades');
+  assert.equal(writes.length,beforeRead,'unsupported percentile actions do not write');
+ }
+ for(const exam of ['last0','last5','last2@2','last22','final6','final9','original3']){
+  await assert.rejects(call({action:'read-report',exam,student:'qa-comments'},teacher,{id:'teacher'}),e=>e.status===400);
+ }
  const signatureComment=JSON.stringify({schema:'signature-teacher-comment-v1',fields:{lesson:'수업에서 실제 확인한 모습',examStrategy:'타이머는 참고 신호'}});
  const sigSaved=await call({action:'save-comment',exam:'original2',student:'qa-signature',comment:signatureComment,expectedUpdatedAt:null},teacher,{id:'teacher'});
  assert.equal(sigSaved.comment,signatureComment);
@@ -53,5 +89,32 @@ const call=(body,account=student,who=user)=>reports.handle(service,account,who,b
  assert.match(sigMigration,/original\[12\]/,'Signature comments need a separate database round constraint');
  const lastMigration=fs.readFileSync(path.join(__dirname,'..','supabase','migrations','20261005090000_allow_last1_report_comments.sql'),'utf8');
  assert.match(lastMigration,/last1/,'Last1 comments need a separate database round constraint');
+ const migrationRoot=path.join(__dirname,'..','supabase','migrations');
+ const additiveName=fs.readdirSync(migrationRoot).find(name=>/^\d+_allow_last2_4_report_comments\.sql$/.test(name));
+ assert.ok(additiveName,'Last2-4 use a separate additive migration');
+ const additive=fs.readFileSync(path.join(migrationRoot,additiveName),'utf8');
+ const constraint=new RegExp(additive.match(/check\s*\(round\s*~\s*'([^']+)'/i)[1]);
+ for(const exam of ['final1','final2','final3','final4','final5','final7','final8','last1',...commentExams,'original1','original2'])assert.equal(constraint.test(exam),true,'DB constraint preserves '+exam);
+ for(const exam of ['final6','final9','last0','last5','last2@2','original3'])assert.equal(constraint.test(exam),false,'DB constraint rejects '+exam);
+ assert.doesNotMatch(additive,/\b(?:insert|update|delete|grant|policy|create\s+table)\b/i,'migration changes only the existing round constraint');
+ const vm=require('node:vm'),requests=[];
+ const context={GFIELD_AUTH:{functionCall:async(_slug,body)=>{requests.push(body);return {canEdit:false,comment:body.exam+' '+body.student,commentUpdatedAt:null,snapshot:null,resultOx:null};}}};
+ context.window=context;vm.createContext(context);
+ vm.runInContext(fs.readFileSync(path.join(__dirname,'..','final-report-state.js'),'utf8'),context);
+ for(const round of [2,3,4]){
+  const state=await context.GFIELD_FINAL_REPORT_STATE.load('qa-comments',round,'O'.repeat(30),'admin',false,false,'last');
+  assert.equal(requests.at(-1).action,'read-report');assert.equal(requests.at(-1).exam,'last'+round);
+  assert.equal(state.comment,'last'+round+' qa-comments');assert.equal(state.snapshot,null);
+ }
+ const final8State=await context.GFIELD_FINAL_REPORT_STATE.load('qa-comments',8,'O'.repeat(30),'admin',false,false,'final');
+ assert.equal(requests.at(-1).exam,'final8');assert.equal(final8State.comment,'final8 qa-comments');
+ let releaseOld;
+ context.GFIELD_AUTH.functionCall=async(_slug,body)=>body.student==='qa-old'?new Promise(resolve=>{releaseOld=resolve;}):{canEdit:false,comment:'last3 current student'};
+ const oldLoad=context.GFIELD_FINAL_REPORT_STATE.load('qa-old',2,'O'.repeat(30),'admin',false,false,'last');
+ const currentLoad=await context.GFIELD_FINAL_REPORT_STATE.load('qa-current',3,'O'.repeat(30),'admin',false,false,'last');
+ releaseOld({canEdit:true,comment:'last2 old student'});
+ assert.equal(await oldLoad,null,'late old student/round response is discarded');
+ assert.equal(currentLoad.comment,'last3 current student');assert.equal(currentLoad.canEdit,false);
  console.log('PASS report ownership, student/admin permissions, live and persisted percentile/rates, immutable reference, comments/CAS, stale snapshot, no source writes/counts');
+ console.log('PASS Last2-4/Final8 isolated teacher comments, student read-only/owner checks, CAS, no invented baseline/grade writes, additive constraint and stale front-end response isolation');
 })().catch(e=>{console.error(e);process.exitCode=1;});

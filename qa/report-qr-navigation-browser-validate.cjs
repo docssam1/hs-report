@@ -19,7 +19,7 @@ const session={access_token:'qa-student',refresh_token:'qa-refresh',login_name:s
      const body=req.postDataJSON();
      if(body.action==='touch')return route.fulfill({json:{ok:true,student}});
      if(body.action==='start')return route.fulfill({json:{ok:true}});
-     if(body.action==='verify')return route.fulfill({json:{student,firstLink:true,session:Object.assign({},session,{expires_in:3600,user:{id:'qa-student'}})}});
+     if(body.action==='verify'){assert.equal(body.pin,'0472','email verification includes the newly selected PIN');return route.fulfill({json:{student,firstLink:true,pinReady:true,session:Object.assign({},session,{expires_in:3600,user:{id:'qa-student'}})}});}
     }
     if(u.pathname==='/functions/v1/hs-final-population')return route.fulfill({json:{canEdit:false,comment:'',snapshot:null,resultOx:ox}});
     if(u.pathname==='/rest/v1/access_log')return route.fulfill({status:204,body:''});
@@ -54,14 +54,15 @@ const session={access_token:'qa-student',refresh_token:'qa-refresh',login_name:s
    await page.goto(base+link,{waitUntil:'networkidle'});await page.evaluate(()=>document.getElementById('video-intro')?.remove());
    await page.fill('#name-input',student);await page.click('#name-enter');
    await page.locator('#email-login:not(.hidden)').waitFor();
+   await page.click('#el-pin-reset');await page.locator('#el-step-email:not(.hidden)').waitFor();
    await page.fill('#el-email','qa-parent@example.com');await page.click('#el-send');
-   await page.locator('#el-step-code:not(.hidden)').waitFor();await page.fill('#el-code','12345678');await page.click('#el-verify');
+   await page.locator('#el-step-code:not(.hidden)').waitFor();await page.fill('#el-code','12345678');await page.fill('#el-new-pin','0472');await page.fill('#el-confirm-pin','0472');await page.click('#el-verify');
    const target=new URL(new URL(link,base).searchParams.get('next'),base);
    await page.waitForURL(u=>u.pathname===target.pathname&&u.searchParams.get('name')===student);
    if(target.pathname.endsWith('final.html'))await page.locator('.report-qr-code svg').first().waitFor({state:'attached'});else await page.locator('#f1Pages .page').first().waitFor();
    await fresh.close();
   }
   assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);
-  console.log('PASS 8 new + 2 legacy QR targets (Final7/8, Last1, Signature1 report/practice), authenticated mobile navigation and new-browser email handoff; no real mail/result/permission writes');
+  console.log('PASS 8 new + 2 legacy QR targets (Final7/8, Last1, Signature1 report/practice), authenticated mobile navigation and new-browser email/PIN setup handoff; no real mail/result/permission writes');
  }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});
