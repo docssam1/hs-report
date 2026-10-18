@@ -177,7 +177,7 @@ async function listStatus() {
     firstVerifiedAt: row.first_verified_at,
     lastSeenAt: row.last_seen_at,
   })).filter((row) => row.student);
-  // 승인 기기(학생당 최대 3대): 기기 식별 해시·세션 값은 내보내지 않는다.
+  // 등록 브라우저: 기기 식별 해시·세션 값은 내보내지 않는다.
   const deviceMap: Record<string, { label: string; firstVerifiedAt: string; lastSeenAt: string | null }[]> = {};
   for (const row of deviceError ? [] : (devices || [])) {
     const student = studentByUser.get(row.student_user_id);
@@ -187,7 +187,7 @@ async function listStatus() {
   const studentDevices = Object.entries(deviceMap).map(([student, list]) => ({ student, devices: list }));
   return {
     studentDevices,
-    deviceLimit: 3,
+    deviceLimit: null,
     devicesAvailable: !deviceError,
     accounts: (accounts || []).map(({ user_id: _userId, ...row }) => row),
     resultStudents,

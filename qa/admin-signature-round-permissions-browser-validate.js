@@ -96,7 +96,7 @@ async function verifyViewport(browser, width) {
     const request = route.request(), url = new URL(request.url());
     if (!['GET', 'HEAD'].includes(request.method())) {
       if (url.hostname === 'fgahqumaldheqettmvqg.supabase.co' && url.pathname === '/functions/v1/hs-approval-admin' && request.postDataJSON().action === 'list') {
-        return route.fulfill({ json: { accounts: [], resultStudents: [], unownedStudents: [], emailLinks: [], emailLinksAvailable: true, studentDevices: [], deviceLimit: 3 } });
+        return route.fulfill({ json: { accounts: [], resultStudents: [], unownedStudents: [], emailLinks: [], emailLinksAvailable: true, studentDevices: [], deviceLimit: null } });
       }
       writes.push(request.method() + ' ' + url.pathname);
       return route.abort();

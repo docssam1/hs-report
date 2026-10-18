@@ -24,7 +24,12 @@ async function run(){
     if(operation==='upsert')await db.query('insert into hs_student_pins(student_user_id,pin_hash,pin_salt,failed_attempts) values($1,$2,$3,0) on conflict(student_user_id) do update set pin_hash=excluded.pin_hash,pin_salt=excluded.pin_salt,failed_attempts=0',[value.student_user_id,value.pin_hash,value.pin_salt]);
     const result=await db.query('select * from hs_student_pins where student_user_id=$1',[id]);return {data:single?result.rows[0]||null:result.rows};
    }
-   if(table==='hs_student_devices'){if(operation==='insert')deviceRecords.push({...value,id:String(deviceRecords.length)});if(operation==='update'){const d=deviceRecords.find(d=>filters.every(([k,v])=>d[k]===v));if(d)Object.assign(d,value);}return {data:deviceRecords};}
+   if(table==='hs_student_devices'){
+    if(operation==='insert')deviceRecords.push({...value,id:String(deviceRecords.length)});
+    if(operation==='update'){const d=deviceRecords.find(d=>filters.every(([k,v])=>d[k]===v));if(d)Object.assign(d,value);}
+    const found=deviceRecords.filter(d=>filters.every(([k,v])=>d[k]===v));
+    return {data:single?found[0]||null:found};
+   }
    throw new Error('Unexpected table: '+table);
   }return q;
  }};
@@ -55,7 +60,10 @@ async function run(){
   row=(await db.query('select * from hs_student_pins')).rows[0];assert.equal(row.failed_attempts,0);
   const race=await db.query('select check_hs_student_pin($1,$2,$3) as status',[id,row.pin_hash,'0'.repeat(32)]);assert.equal(race.rows[0].status,'PIN_CHANGED');
   account.active=false;await fails('pin',{pin:'0826'},403,'STUDENT_INACTIVE');account.active=true;
-  deviceRecords=[0,1,2].map(i=>({id:String(i),device_hash:'different-'+i,last_seen_at:null}));await fails('pin',{pin:'0826'},409,'DEVICE_LIMIT');
+  deviceRecords=[0,1,2].map(i=>({id:String(i),student_user_id:id,device_hash:'different-'+i,last_seen_at:null}));
+  assert.equal((await call('start',{email:'qa@example.com'})).status,200,'email setup may begin on a fourth browser');
+  assert.equal((await call('pin',{pin:'0826'})).status,200,'PIN login registers a fourth browser');
+  assert.equal(deviceRecords.length,4);
   await fails('pin',{pin:'12345'},400,'INVALID_PIN_FORMAT');
   pepper='';await fails('pin',{pin:'0826'},503,'PIN_NOT_CONFIGURED');pepper='qa-only-private-pepper-that-is-never-deployed';
   const deniedTouch=await call('touch');assert.equal(deniedTouch.status,401);
@@ -66,7 +74,7 @@ async function run(){
    await db.exec('set role '+role);await assert.rejects(db.query('select * from hs_student_pins'),/permission denied/);
    await assert.rejects(db.query('select check_hs_student_pin($1,$2,$3)',[id,row.pin_hash,row.pin_salt]),/permission denied/);await db.exec('reset role');
   }
-  const before=otpCount;assert.equal(before,3);console.log('PASS real local SQL + Edge handler: OTP-only setup/reset, leading zero PIN, permanent fifth-failure lock, no session on failure, wrong email/inactive/device limit blocked, salt race, anon/auth denied');
+  const before=otpCount;assert.equal(before,3);console.log('PASS real local SQL + Edge handler: OTP-only setup/reset, leading zero PIN, permanent fifth-failure lock, no session on failure, wrong email/inactive, fourth browser allowed, salt race, anon/auth denied');
  }finally{await db.close();}
 }
 run().catch(e=>{console.error(e);process.exitCode=1});
