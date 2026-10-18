@@ -88,6 +88,52 @@
 
   // Last3 approved variant taxonomy; source answers, rates and grade bands stay intact.
   var LAST3_SUBAREAS=['쌓기나무','시계의 겹침','고장 난 시계','수량 관계','몫과 나머지','금액의 경우의 수','수열과 규칙','고장 난 시계','악수의 경우의 수','달력·요일','합과 차','기호 넣기','수의 총합','포함과 배제','최단거리','조건에 맞는 수','영역의 개수','종이 접기','도형의 개수','수량 관계','몫과 나머지','수량 관계','일과 작업량','수열과 규칙','수열과 규칙','넓이와 규칙','자리배치','진법·암호','수량 관계','논리추리'];
+  // These are source-question matches to existing curriculum chapters. Keep the
+  // exact learning action separate from the broad keyword library so a clock
+  // error cannot inherit the clock-angle tip, for example.
+  var LAST3_STUDY=[
+    ['쌓기나무','겉면에 닿은 블록을 한꺼번에 걷어낼 때 내부에 남는 층을 세기'],
+    ['시침','시침과 분침이 12시간 동안 11번 겹치는 규칙으로 시간 구간 세기'],
+    ['고장난 시계','시계가 빨라진 누적 시간이 12시간이 되는 때 구하기'],
+    ['합과 차','전체 합과 두 부분의 합의 차로 각 사람의 수를 차례로 구하기'],
+    ['약수','연속한 수의 곱에 들어 있는 2의 개수를 세어 4로 나눌 횟수 구하기'],
+    ['지폐','세 장을 고른 금액을 작은 단위로 환산해 중복 없이 세기'],
+    ['숫자카드','자릿수를 나누고 앞자리보다 작은 숫자를 골라 내림차순으로 배열하기'],
+    ['고장난 시계','빠른 시계와 느린 시계의 표시 차이를 시간당 차이로 나누기'],
+    ['리그','전체 악수 쌍에서 부부 쌍을 뺀 뒤 동시 진행 횟수로 시간 구하기'],
+    ['요일','두 날짜 사이의 날수를 세고 7로 나눈 나머지로 요일 옮기기'],
+    ['합과 차','처음 수가 같은 두 약병의 남은 양 차이로 지난 날수 구하기'],
+    ['기호를 넣','모두 더한 합에서 목표값을 뺀 뒤 마이너스로 바꿀 수의 합 구하기'],
+    ['숫자카드','맨 앞자리의 0과 끝자리의 짝수 조건을 구분해 자릿값별 합 구하기'],
+    ['포함과 배제','한 문제도 풀지 않은 학생을 제외하고 겹쳐 푼 인원을 분리하기'],
+    ['최단거리','필수로 지나는 점과 지나면 안 되는 점을 구분해 최단 경로 세기'],
+    ['특정 숫자 세기','같은 숫자가 반복되지 않는 수를 자릿수별로 세어 목표 순서 찾기'],
+    ['도형의 개수','새 직선이 기존 직선과 내부에서 만나는 횟수로 영역 증가량 구하기'],
+    ['색종이','접은 순서를 거꾸로 펼쳐 겹친 부분과 구멍의 위치 확인하기'],
+    ['사각형의 개수','필수 칸을 포함하는 직사각형에서 제외 칸을 함께 포함한 경우 빼기'],
+    ['우기기','남은 학생을 모두 같은 정답 개수로 가정하고 실제 총합의 차이 비교하기'],
+    ['나머지','세 수의 나머지가 같다는 조건과 전체 합을 함께 이용하기'],
+    ['분수','전체를 같은 묶음으로 놓고 버스별 운송량의 비를 비교하기'],
+    ['일률','전체 일을 사람·일로 환산하고 마감일부터 필요한 근무일을 거꾸로 세기'],
+    ['묶음 수열','분자와 분모의 합이 같은 묶음으로 나눠 가분수를 세기'],
+    ['수열','나무 수와 해마다 열리는 사과 수의 배율을 구분하기'],
+    ['도형의 개수','단계별 정육각형 넓이를 구하고 12로 나눈 나머지의 주기 찾기'],
+    ['경우의 수','붙어 앉는 두 사람을 한 묶음으로 세고 묶음 안의 순서 곱하기'],
+    ['논리','개수·모양·채움 여부를 각각 대응시켜 그림 암호 해석하기'],
+    ['우기기','모든 구간을 짧은 길로 가정하고 실제 거리와의 차이로 긴 구간 수 구하기'],
+    ['줄 세우기','순위 조건을 표로 정리하고 확정된 자리부터 채우기']
+  ];
+  var LAST3_STUDY_OVERRIDES={
+    5:{label:'소인수분해 기초',connectionKind:'prerequisite',books:{'지필드':[{b:'ThinkingCore',u:'CH1 소인수분해'}]}},
+    9:{label:'악수의 경우의 수',connectionKind:'same-type',books:{'필즈더클래식':[{b:'더클래식 1과정 5권',u:'삼각수와 사각수 · 악수 총 횟수'}]}},
+    12:{label:'연산기호 넣기 기초',connectionKind:'prerequisite',books:{'소마':[{b:'프리미어 중급 4',u:'1호 자동차 번호판 · 사칙연산'}]}},
+    17:{label:'교점과 영역의 개수',connectionKind:'same-type',books:{'지필드':[{b:'GM중급',u:'5-1 도형의 개수 · 교점과 영역의 개수'}]}},
+    22:{label:'비로 나타낸 운송량',connectionKind:'prerequisite',books:{'필즈더클래식':[{b:'더클래식 2과정 A-1권',u:'CH3 분수와 비'}]}},
+    23:{label:'일률',connectionKind:'same-type',books:{'지필드':[{b:'ThinkingCore',u:'CH2 Algebra 일률'}]}},
+    26:{label:'도형의 넓이와 규칙',connectionKind:'prerequisite',books:{'필즈더클래식':[{b:'더클래식 1과정 9권',u:'도형의 분할과 넓이'}]}},
+    27:{label:'붙어 앉는 자리배치',connectionKind:'prerequisite',books:{'지필드':[{b:'ThinkingCore',u:'CH5 경우의 수'}]}},
+    28:{label:'논리 암호 기초',connectionKind:'prerequisite',books:{'지필드':[{b:'GIFTED MATH V1-2',u:'CH2 마방진·논리추리'}]}}
+  };
 
   model.blueprint=Array.from({length:30},function(_,index){
     return {no:index+1,pts:point(index+1)};
@@ -114,8 +160,9 @@
         area:meta.area,
         subarea:round===1?LAST1_SUBAREAS[index]:(round===2?LAST2_SUBAREAS[index]:(round===3?LAST3_SUBAREAS[index]:'')),
         taxonomyReviewStatus:reviewedRound||round===3?'verified-source-bound':'candidate',
-        prescriptionType:round===1?LAST1_PRESCRIPTION_HINTS[index]:(round===2?LAST2_PRESCRIPTION_HINTS[index]:undefined),
-        prescriptionOverride:round===1?LAST1_PRESCRIPTION_OVERRIDES[index+1]:(round===2?LAST2_PRESCRIPTION_OVERRIDES[index+1]:undefined),
+        prescriptionType:round===1?LAST1_PRESCRIPTION_HINTS[index]:(round===2?LAST2_PRESCRIPTION_HINTS[index]:(round===3?LAST3_STUDY[index][0]:undefined)),
+        prescriptionOverride:round===1?LAST1_PRESCRIPTION_OVERRIDES[index+1]:(round===2?LAST2_PRESCRIPTION_OVERRIDES[index+1]:(round===3?LAST3_STUDY_OVERRIDES[index+1]:undefined)),
+        studyPoints:round===3?[LAST3_STUDY[index][1]]:undefined,
         pts:point(index+1),
         answer:String(row.answer==null?'':row.answer),
         comment:String(row.explanation||''),
