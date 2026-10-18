@@ -444,9 +444,14 @@ function gfieldPrescriptionOf(type){
 }
 
 function gfieldCurriculumPrescription(set,round,item){
-  if(item&&item.prescriptionOverride)return item.prescriptionOverride;
+  if(item&&item.prescriptionOverride){
+    if(String(set)==='last'&&Number(round)===3&&Array.isArray(item.studyPoints))return Object.assign({},item.prescriptionOverride,{pts:item.studyPoints});
+    return item.prescriptionOverride;
+  }
   if(item&&Object.prototype.hasOwnProperty.call(item,'prescriptionType')){
-    return item.prescriptionType?gfieldPrescriptionOf(item.prescriptionType):null;
+    const found=item.prescriptionType?gfieldPrescriptionOf(item.prescriptionType):null;
+    if(String(set)==='last'&&Number(round)===3&&found&&Array.isArray(item.studyPoints))return Object.assign({},found,{connectionKind:'prerequisite',pts:item.studyPoints});
+    return found;
   }
   const series=String(set||'').toLowerCase(),roundNumber=Number(round),sourceKey=[series,roundNumber,Number(item&&item.no)].join('|');
   const matches=FINAL2_REVIEWED_CURRICULUM_LINKS.filter(row=>row.sourceKey===sourceKey&&row.area===String(item&&item.area||'')&&row.displayType===String(item&&item.type||'')&&row.independentReviewStatus==='verified'&&row.releaseStatus==='eligible');

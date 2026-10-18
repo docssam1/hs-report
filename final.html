@@ -611,6 +611,7 @@ td.weak-cell{white-space:nowrap}
   if(!isOriginal) files.push('mock-rx-data.js');
   if(!isLast&&!isOriginal) files.push('final-diagnostic-comment.js','final-population.js','last-score-data.js');
   if(isLast&&[1,2,3].includes(Number(requestedRound))) files.push('final-diagnostic-comment.js');
+  if(isLast&&Number(requestedRound)===3) files.push('last3-report-practice.js');
   if(isLast) files.push('last-score-data.js');
   if(!isOriginal) files.push('final-score-trend.js');
   if(!isOriginal) files.push('final-report-state.js');
@@ -645,7 +646,7 @@ td.weak-cell{white-space:nowrap}
     if(f==='final-parent-report.js'||f==='final7-benchmark.js'||f==='final8-benchmark.js')version='20261012-final78-signature';
     if(f==='final-report-print.js')version='20261015-last3-pagination';
     if(f==='bank/bank-registry.js')version='20261015-last3-approved';
-    if(f==='last-report-data.js')version='20261015-last3-approved';
+    if(f==='last-report-data.js'||f==='last3-report-practice.js'||f==='mock-rx-data.js')version='20261018-last3-study';
     document.write('<scr'+'ipt src="'+f+'?v='+version+'"><\/scr'+'ipt>');
   });
 })();</script>
@@ -3211,7 +3212,7 @@ td.weak-cell{white-space:nowrap}
           '</div>'+
           '<section id="report-items" class="report-item-section parent-core-section"><h2>오답 요약</h2><div class="lead">이번 주 문항부터 풀고 나머지 오답을 순차로 복습하세요.</div>'+wrongSummaryTableHTML(ctx)+'<details class="parent-report-details report-item-full-details"><summary>30문항 전체 결과 보기</summary><div class="parent-details-body" id="detailWrap">'+detailTableHTML(ctx)+'</div></details></section>'+
         '</section>'+
-        '<section id="report-review" class="report-review-section parent-core-section no-print"><h2>오답 연습</h2>'+wrongPracticeHTML(ctx)+
+        '<section id="report-review" class="report-review-section parent-core-section no-print"><h2>오답 연습</h2>'+(isLast&&roundNum===3?'<div id="last3PriorityProblems" class="last3-practice-preview" aria-live="polite"></div>':'')+wrongPracticeHTML(ctx)+
           '<details class="parent-report-details"><summary>자동 조언·오답 점검·연습 이력 보기</summary><div class="parent-details-body">'+
             coachingHTML+'<div class="cause-sum">'+causeSumHTML(ctx)+'</div><div id="causeWrap">'+causeWrapHTML(ctx)+'</div>'+weakSectionHTML(ctx)+
           '</div></details>'+
@@ -3289,6 +3290,9 @@ td.weak-cell{white-space:nowrap}
     }
     wireWeakToggles(ctx);
     wireWrongPractice(ctx);
+    if(isLast&&roundNum===3&&window.GFIELD_LAST3_REPORT_PRACTICE){
+      window.GFIELD_LAST3_REPORT_PRACTICE.render(app.querySelector('#last3PriorityProblems'),priorityNos);
+    }
     if(isStandardFinal&&window.GFIELD_FINAL_REPORT_STATE)window.GFIELD_FINAL_REPORT_STATE.wire(app);
     if((roundNum===1||roundNum===2||roundNum===3||roundNum===4)&&window.GFIELD_FINAL1_DETAILED_RENDERER&&typeof window.GFIELD_FINAL1_DETAILED_RENDERER.wire==='function') window.GFIELD_FINAL1_DETAILED_RENDERER.wire();
     if(roundNum===3&&window.GFIELD_FINAL3_QUESTION_COACH&&typeof window.GFIELD_FINAL3_QUESTION_COACH.wire==='function') window.GFIELD_FINAL3_QUESTION_COACH.wire(app);

@@ -7,6 +7,7 @@ const {execFileSync}=require('node:child_process');
 require('./email-login-test-stub');
 const {chromium}=require(process.env.GFIELD_QA_PLAYWRIGHT||'E:/Codex/tooling/elementary-playwright/node_modules/playwright');
 const core=require('../supabase/functions/hs-final-population/population-core.js');
+const approved=require('../bank/data/last3-reviewed.json');
 const root=path.resolve(__dirname,'..');
 const output=path.join(root,'.private-work/last3-reuse-20261015/qa-report');
 const student='최종3합성검수학생';
@@ -102,6 +103,8 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
       priority:numbers('.parent-priority-list li b'),
       table:numbers('#report-items .report-wrong-summary tr.report-print-priority td:first-child'),
       curriculum:numbers('#curriculumConnection tr.report-print-priority td:first-child'),
+      practiceIds:[...document.querySelectorAll('#last3PriorityProblems .last3-practice-question')].map(x=>x.dataset.itemId),
+      studyRows:[...document.querySelectorAll('#curriculumConnection tbody tr')].map(row=>({no:Number(row.dataset.curriculumNo),books:row.querySelectorAll('.curriculum-books li').length,points:row.querySelectorAll('.curriculum-points li').length,text:row.textContent})),
       coaching:numbers('.coaching-priority tbody tr td:first-child'),
       planText:document.querySelector('#report-plan .personal-study-plan')?.innerText||'',
       resources:performance.getEntriesByType('resource').map(x=>x.name)
@@ -128,6 +131,11 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
         assertPriority(v,genericExpected(v));
         assert.equal(v.ctx.items.length,30);assert.equal(v.ctx.items[25].type,'정육각형 단계별 넓이 합의 나머지');
         assert.ok(v.ctx.items.every(x=>x.subarea&&x.taxonomyReviewStatus==='verified-source-bound'));
+        if(wrong.length)await page.waitForFunction(expected=>document.querySelectorAll('#last3PriorityProblems .last3-practice-question').length===expected,Math.min(3,wrong.length)*3);
+        const ready=await view();
+        assert.deepEqual(ready.practiceIds,ready.priority.flatMap(no=>[1,2,3].map(variant=>'last3-q'+String(no).padStart(2,'0')+'-v'+variant)));
+        assert.equal(ready.studyRows.length,wrong.length);
+        assert.ok(ready.studyRows.every(x=>x.books>0&&x.points>0&&!/확인 중/.test(x.text)),'every wrong item has a real learning location and a source-specific point');
         assert.ok(v.resources.some(x=>x.includes('final-summary-practice-print.js')));
         assert.ok(v.resources.some(x=>x.includes('final-diagnostic-comment.js')));
         assert.ok(!v.resources.some(x=>x.includes('final3-detailed-data.js')));
@@ -136,14 +144,30 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
         if(wrong.length){
           assert.ok(practice.length);for(const link of practice){const url=new URL(new URL(link).searchParams.get('next'),'https://hs.gfieldacademy.net/');assert.equal(url.searchParams.get('bank'),'last3');assert.equal(url.searchParams.get('source'),'last|3');}
         }else assert.equal(practice.length,0);
-        cases.push({wrong:wrong.length,priority:v.priority,qr:practice.length});
+        cases.push({wrong:wrong.length,priority:v.priority,qr:practice.length,visibleProblems:ready.practiceIds.length,studyRows:ready.studyRows.length});
       }
+      records=[row('last3',makeOx(Array.from({length:30},(_,index)=>index+1)))];await open();
+      const all=await view();
+      assert.equal(all.studyRows.length,30);
+      assert.ok(all.studyRows.every(x=>x.books>0&&x.points>0&&!/확인 중/.test(x.text)),'all 30 Last3 source types need linked learning locations and points');
+      assert.match(all.studyRows.find(x=>x.no===3).text,/이상한 시계/);
+      assert.match(all.studyRows.find(x=>x.no===26).text,/도형의 분할과 넓이/);
+      const preview=await page.locator('#last3PriorityProblems .last3-practice-question').evaluateAll(cards=>cards.map(card=>({id:card.dataset.itemId,prompt:card.querySelector('.last3-practice-prompt').textContent,answerVisible:!!card.querySelector('.ans,.solution'),imageBroken:[...card.querySelectorAll('img')].some(img=>img.complete&&img.naturalWidth===0)})));
+      assert.equal(preview.length,9);
+      for(const item of preview){assert.equal(item.prompt,approved.items.find(row=>row.id===item.id).text);assert.equal(item.answerVisible,false);assert.equal(item.imageBroken,false);}
+      await page.locator('#last3PriorityProblems').screenshot({path:path.join(output,'last3-priority-problems-1280.png')});
+      await page.setViewportSize({width:390,height:844});
+      await page.locator('#last3PriorityProblems').screenshot({path:path.join(output,'last3-priority-problems-390.png')});
+      await page.setViewportSize({width:1280,height:900});
       await page.screenshot({path:path.join(output,'last3-report-1280.png'),fullPage:true});
       await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(output,'last3-report-390.png'),fullPage:true});await page.setViewportSize({width:1280,height:900});
       return cases;
     });
     await check('Last3 summary print embeds the same approved variants and answers',async()=>{
       records=[row('last3',makeOx([12,15,28]))];await open();
+      await page.waitForFunction(()=>document.querySelectorAll('#last3PriorityProblems .last3-practice-question').length===9);
+      const screen=await page.locator('#last3PriorityProblems').evaluate(host=>({ids:[...host.querySelectorAll('.last3-practice-question')].map(x=>x.dataset.itemId),given:host.querySelectorAll('.last3-practice-given').length,figures:host.querySelectorAll('.last3-practice-figure').length,drawing:host.querySelectorAll('.last3-practice-draw').length}));
+      assert.equal(screen.given,3);assert.equal(screen.figures,6);assert.equal(screen.drawing,3);
       const prepared=await page.evaluate(async()=>{
         const prep=await window.__qaSimilarController.prepareAndPrint(),doc=prep.frame.contentDocument;
         window.__qaPrepared=prep;
@@ -151,6 +175,7 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
       });
       assert.equal(prepared.frames,true);assert.ok(prepared.practice>0);
       assert.equal(prepared.metrics.practiceQuestions,9);assert.equal(prepared.metrics.practiceAnswers,9);assert.deepEqual(prepared.metrics.practiceSourceNos,prepared.priority);
+      assert.deepEqual(screen.ids,prepared.metrics.practiceSourceNos.flatMap(no=>[1,2,3].map(variant=>'last3-q'+String(no).padStart(2,'0')+'-v'+variant)));
       assert.doesNotMatch(prepared.text,/파이널 3회|last2-q|final3-q/);
       if(process.env.GFIELD_LAST3_EXPORT_PDF==='1'){
         const html=await page.evaluate(()=>{
