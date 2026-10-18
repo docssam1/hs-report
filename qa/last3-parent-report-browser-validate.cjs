@@ -104,6 +104,8 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
       table:numbers('#report-items .report-wrong-summary tr.report-print-priority td:first-child'),
       curriculum:numbers('#curriculumConnection tr.report-print-priority td:first-child'),
       practiceIds:[...document.querySelectorAll('#last3PriorityProblems .last3-practice-question')].map(x=>x.dataset.itemId),
+      practiceLocation:document.querySelector('#last3PriorityProblems')?.parentElement?.id||'',
+      practiceHeading:document.querySelector('#last3PriorityProblems > h3')?.textContent||'',
       studyRows:[...document.querySelectorAll('#curriculumConnection tbody tr')].map(row=>({no:Number(row.dataset.curriculumNo),books:row.querySelectorAll('.curriculum-books li').length,points:row.querySelectorAll('.curriculum-points li').length,text:row.textContent})),
       coaching:numbers('.coaching-priority tbody tr td:first-child'),
       planText:document.querySelector('#report-plan .personal-study-plan')?.innerText||'',
@@ -134,6 +136,8 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
         if(wrong.length)await page.waitForFunction(expected=>document.querySelectorAll('#last3PriorityProblems .last3-practice-question').length===expected,Math.min(3,wrong.length)*3);
         const ready=await view();
         assert.deepEqual(ready.practiceIds,ready.priority.flatMap(no=>[1,2,3].map(variant=>'last3-q'+String(no).padStart(2,'0')+'-v'+variant)));
+        assert.equal(ready.practiceLocation,'report-plan','the nine questions belong to this week’s priority diagnosis');
+        if(wrong.length)assert.match(ready.practiceHeading,new RegExp('총 '+Math.min(3,wrong.length)*3+'문제'));
         assert.equal(ready.studyRows.length,wrong.length);
         assert.ok(ready.studyRows.every(x=>x.books>0&&x.points>0&&!/확인 중/.test(x.text)),'every wrong item has a real learning location and a source-specific point');
         assert.ok(v.resources.some(x=>x.includes('final-summary-practice-print.js')));

@@ -66,7 +66,7 @@
       var groups=selected.map(function(no){return {no:no,items:group(data,no)};});
       if(groups.some(function(entry){return !entry.items;}))throw new Error('approved group missing');
       host.replaceChildren();
-      host.appendChild(node('h3','', '이번 주 우선 복습 · 원문마다 유사문제 3개'));
+      host.appendChild(node('h3','', '이번 주 추천 '+groups.length+'문항 · 문항마다 유사문제 3개 (총 '+(groups.length*3)+'문제)'));
       groups.forEach(function(entry){
         var section=node('section','last3-practice-group');
         section.dataset.sourceNo=String(entry.no);
