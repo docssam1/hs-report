@@ -37,6 +37,8 @@
     if(query.get('practice')==='wrong'&&source[0]==='last'&&/^[123]$/.test(source[1]))return 'mock-last-'+source[1];
     if(bank==='middle7')return 'mock-mid-7';
     if(query.get('practice')==='wrong'&&source[0]==='middle'&&source[1]==='7')return 'mock-mid-7';
+    if(bank==='middle8')return 'mock-mid-8';
+    if(query.get('practice')==='wrong'&&source[0]==='middle'&&source[1]==='8')return 'mock-mid-8';
     return '';
   }
   function scopedPermissionList(){

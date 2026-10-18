@@ -183,3 +183,12 @@ body.fixed-bank-mode #final1Worksheet .f1-qhead{color:var(--f1-ink);border-botto
 #final1Worksheet[data-bank-code="middle7"] .f1-solution p,#final1Worksheet[data-bank-code="middle7"] .f1-solution ol{font-size:12pt;line-height:1.5}
 
 @media screen and (max-width:880px){#final1Worksheet[data-bank-code="middle7"] .qcard[data-source-no="13"] .f1-qfigure img{height:auto;max-height:none;width:100%}}
+
+#final1Worksheet[data-bank-code="middle8"] .f1-qtext{font-size:13pt;line-height:1.55}
+#final1Worksheet[data-bank-code="middle8"] .f1-single-question .qcard{grid-column:1/-1}
+#final1Worksheet[data-bank-code="middle8"] .f1-qtext,#final1Worksheet[data-bank-code="middle8"] .f1-qfigure,#final1Worksheet[data-bank-code="middle8"] .f1-qgiven{flex-shrink:0}
+#final1Worksheet[data-bank-code="middle8"] .qcard[data-source-no="13"] .f1-qfigure img,
+#final1Worksheet[data-bank-code="middle8"] .qcard[data-source-no="30"] .f1-qfigure img{max-height:90mm;width:auto}
+#final1Worksheet[data-bank-code="middle8"] .f1-solution p,#final1Worksheet[data-bank-code="middle8"] .f1-solution ol{font-size:12pt;line-height:1.5}
+
+@media screen and (max-width:880px){#final1Worksheet[data-bank-code="middle8"] .qcard[data-source-no="13"] .f1-qfigure img,#final1Worksheet[data-bank-code="middle8"] .qcard[data-source-no="30"] .f1-qfigure img{height:auto;max-height:none;width:100%}}

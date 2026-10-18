@@ -84,6 +84,17 @@ for(const query of ['?bank=middle7','?practice=wrong&source=middle%7C7']){
   for(const [name,expected] of [['중급승인',true],['최종승인',false],['퇴원학생',false]])assert.equal(scoped.allowed({role:'student',student:name,active:true}),expected,'Middle7 separate existing permission: '+name);
   assert.equal(scoped.allowed({role:'student',student:'중급승인',active:false}),false);
 }
+{
+  const grants={archiveProductAccess:{'mock-mid-7':['7회학생'],'mock-mid-8':['8회학생']}};
+  const students=['7회학생','8회학생'];
+  const direct=gateApi('?bank=middle8',students,[],'8회학생',[],[],null,grants);
+  assert.equal(direct.scopedProductKey(),'mock-mid-8');
+  assert.equal(direct.allowed({role:'student',student:'8회학생',active:true}),true);
+  assert.equal(direct.allowed({role:'student',student:'7회학생',active:true}),false,'Middle 7 approval does not open Middle 8 variants');
+  const wrong=gateApi('?practice=wrong&source=middle%7C8%7C13',students,[],'8회학생',[],[],null,grants);
+  assert.equal(wrong.scopedProductKey(),'mock-mid-8');
+  assert.equal(wrong.allowed({role:'student',student:'7회학생',active:true}),false);
+}
 assert.match(home,/!\(\(D\.students\|\|\[\]\)\.includes\(name\)\)/,'the named portal still rejects unregistered student names');
 assert.match(home,/sessionStorage\.setItem\(QUESTION_BANK_HANDOFF_KEY/,'authorized archive entry creates the bank handoff');
 assert.match(home,/localStorage\.setItem\(QUESTION_BANK_LAUNCH_KEY/,'authorized archive entry creates the short-lived cross-tab launch');

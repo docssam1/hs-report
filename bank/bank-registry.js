@@ -734,6 +734,17 @@
     SOURCE_ITEM_GENERATOR_LINKS[['middle',7,_m7no].join('|')]=middle7Link;
   }
 
+  /* Middle 8 stored practice: user approved all 90 variants; original-answer and equivalence audits remain separate. */
+  for(var _m8no=1;_m8no<=30;_m8no++){
+    var middle8Link=sourceItemReviewGeneratorLink('mid8-q'+String(_m8no).padStart(2,'0'),'bank/bank-fixed.js',
+      'Middle 8 user-approved stored practice variants for question '+_m8no,'middle:8:'+_m8no,
+      ![1,2,8,11,15,16,18,29].includes(_m8no));
+    middle8Link.sourceAudit.structureCompared=false;
+    middle8Link.sourceFaithfulBlockers=['user approval of practice content is not an original answer correction or source-equivalence finding'];
+    middle8Link.qaEvidence={suite:'qa/middle8-reviewed-bank-validate.js',generatedQuestions:3,levels:['fixed-user-approved-variants'],seedsPerLevel:0,date:'2026-10-19'};
+    SOURCE_ITEM_GENERATOR_LINKS[['middle',8,_m8no].join('|')]=middle8Link;
+  }
+
   /* 파이널 3회는 사용자 눈검수까지 통과한 고정 문항 3개씩을 연결한다. */
   [
     [1, '두 항을 더해 이어지는 과일 수열', true],

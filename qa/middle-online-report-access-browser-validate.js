@@ -78,6 +78,20 @@ const server=http.createServer((req,res)=>{
     await approved.locator('.card',{hasText:'분석 결과'}).first().waitFor();
     assert.match(await approved.locator('#main').innerText(),/8회.*분석 결과/,'separately approved round 8 opens its saved report');
     assert.match(await approved.locator('#main').innerText(),/0\s*점 \/ 100점/,'round 8 reads its own saved result');
+    const variantLink=approved.locator('.middle-review-practice a',{hasText:'오답 30유형 · 유사문제 90문항'});
+    assert.equal(await variantLink.count(),1,'approved round 8 report links three stored variants per wrong question');
+    const variantUrl=new URL(await variantLink.getAttribute('href'),base+'/mock.html');
+    assert.equal(variantUrl.searchParams.get('bank'),'middle8');
+    assert.equal(variantUrl.searchParams.get('source'),'middle|8|all');
+    assert.equal(variantUrl.searchParams.get('gens').split(',').length,30);
+    const recommendationCoverage=await approved.locator('.wt-item').evaluateAll(rows=>({wrong:rows.length,study:rows.filter(row=>row.textContent.includes('권장 학습 위치')&&row.querySelector('.middle8-study a')).length,points:rows.filter(row=>row.textContent.includes('학습 포인트')).length}));
+    assert.deepEqual(recommendationCoverage,{wrong:30,study:30,points:30},'each wrong Middle 8 source has its own study location and point');
+    const studyLinks=await approved.locator('.middle8-study a').evaluateAll(links=>links.map(link=>new URL(link.href).searchParams.get('gens')));
+    assert.deepEqual(studyLinks,Array.from({length:30},(_,i)=>'mid8-q'+String(i+1).padStart(2,'0')));
+    if(outputDir)await approved.screenshot({path:path.join(outputDir,'middle-round8-report-desktop.png'),fullPage:true});
+    await approved.setViewportSize({width:390,height:844});
+    assert.ok(await approved.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Middle 8 study links fit a mobile report');
+    if(outputDir)await approved.screenshot({path:path.join(outputDir,'middle-round8-report-mobile.png'),fullPage:true});
     assert.equal(await approved.evaluate(()=>window.GFIELD_MOCK.rounds['8'].items.find(item=>item.no===4).answer),
       '176, 170, 174, 168, 173 (합 516)','round 8 loads all five cells from the source answer');
     const approvedPicker=await context.newPage();approvedPicker.on('pageerror',error=>errors.push(error.message));
@@ -95,6 +109,6 @@ const server=http.createServer((req,res)=>{
     assert.deepEqual(Array.from(new Set(methods)),['GET'],'student report flow never writes grades');
     assert.ok(queries.every(value=>value==='eq.'+student),'only the current student result is requested');
     assert.deepEqual(errors,[]);
-    console.log(JSON.stringify({pass:true,baselineVisibleRounds:[1,2,3,4],approvedVisibleRounds:[1,2,3,4,8],savedRound2Report:true,directRound8BlockedBeforeApproval:true,approvedRound8Report:true,resultWrites:0}));
+    console.log(JSON.stringify({pass:true,baselineVisibleRounds:[1,2,3,4],approvedVisibleRounds:[1,2,3,4,8],savedRound2Report:true,directRound8BlockedBeforeApproval:true,approvedRound8Report:true,recommendationCoverage,resultWrites:0}));
   }finally{await browser.close();server.close();}
 })().catch(error=>{console.error(error);server.close();process.exitCode=1;});

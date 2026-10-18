@@ -328,6 +328,7 @@
 <script src="mock-data-hw.js?v=20261012-hw1-q25"></script>
 <script src="mock-data-original.js?v=20260928-signature-answer-keys-1"></script>
 <script src="bank/bank-registry.js"></script>
+<script src="bank/middle8-learning-map.js?v=20261019-approved"></script>
 <script src="mock-rx.js?v=20261012-hw1-q25"></script>
 <script>
 /* =========================================================
@@ -498,17 +499,43 @@ function parentRoundKeys(){
   if(SET!=='mid'||!window.GFIELD_MIDDLE_ACCESS) return roundKeys();
   return window.GFIELD_MIDDLE_ACCESS.rounds(D,me,M);
 }
-function middleReviewPracticeHTML(r){
+function middle8CanPractice(r){
+  const approved=(D.archiveProductAccess||{})['mock-mid-8'];
+  return SET==='mid'&&Number(r)===8&&(mode==='teacher'||Array.isArray(approved)&&(approved.includes('*')||approved.includes(me)));
+}
+function middle8VariantUrl(numbers){
+  const query=new URLSearchParams({bank:'middle8',printMode:'both',layout:'editorial',view:'grouped',from:'archive',name:me||''});
+  if(numbers.length){
+    query.set('practice','wrong');
+    query.set('source','middle|8|'+(numbers.length===1?numbers[0]:'all'));
+    query.set('gens',numbers.map(no=>'mid8-q'+String(no).padStart(2,'0')).join(','));
+  }
+  return 'bank/index.html?'+query.toString()+'#student='+encodeURIComponent(me||'');
+}
+function middle8StudyHTML(r,no){
+  const point=(window.GFIELD_MIDDLE8_LEARNING_MAP||{})[Number(no)];
+  if(!middle8CanPractice(r)||!point)return '';
+  const url=middle8VariantUrl([Number(no)]);
+  return '<div class="middle8-study" style="margin-top:7px;padding:8px 10px;border-radius:7px;background:#f0fdf4;font-size:12px;line-height:1.55">'+
+    '<b>권장 학습 위치</b> <a href="'+esc(url)+'">중급 모의고사 8회 원문 '+Number(no)+'번 → 유사문제 3문항·답안</a><br>'+
+    '<b>학습 포인트</b> '+esc(point)+'</div>';
+}
+function middleReviewPracticeHTML(r,wrongItems){
   if(SET!=='mid'||!window.GFIELD_MIDDLE_ACCESS) return '';
   const book=(D.books||[]).find(item=>item&&item.folder==='중급 모의고사'&&window.GFIELD_MIDDLE_ACCESS.roundOf(item)===Number(r));
-  if(!book) return '';
-  const links=(book.links||[]).filter(link=>link&&/리뷰/.test(String(link.label||''))&&link.url);
-  if(!links.length) return '';
+  const links=(book&&book.links||[]).filter(link=>link&&/리뷰/.test(String(link.label||''))&&link.url);
   const actions=links.map(link=>{
     const video=/youtu(?:\.be|be\.com)/i.test(String(link.url));
     return '<a class="btn '+(video?'gray':'navy')+'" href="'+esc(link.url)+'" target="_blank" rel="noopener">'+(video?'복습 풀이 강의':'인쇄용 복습 문제')+'</a>';
   }).join('');
-  return '<div class="card middle-review-practice"><h3>복습 유사문제</h3><div class="hint">이번 회차와 연결된 복습 문제를 종이로 다시 풀고, 풀이 강의로 확인하세요.</div><div class="row-inline">'+actions+'</div></div>';
+  let bankAction='';
+  if(middle8CanPractice(r)){
+    const numbers=Array.from(new Set((wrongItems||[]).map(item=>Number(item.no)).filter(no=>Number.isInteger(no)&&no>=1&&no<=30)));
+    const url=middle8VariantUrl(numbers);
+    bankAction='<a class="btn navy" href="'+esc(url)+'">'+(numbers.length?'오답 '+numbers.length+'유형 · 유사문제 '+(numbers.length*3)+'문항':'전체 유사문제 90문항')+' · 답안/풀이</a>';
+  }
+  if(!actions&&!bankAction)return '';
+  return '<div class="card middle-review-practice"><h3>복습 유사문제</h3><div class="hint">이번 회차와 연결된 복습 문제를 종이로 다시 풀고, 풀이 강의로 확인하세요.</div><div class="row-inline">'+actions+bankAction+'</div></div>';
 }
 function parentCanOpenRound(r){ return mode!=='parent'||parentRoundKeys().indexOf(String(Number(r)))>=0; }
 function roundItems(r){ return (M.rounds[r]&&M.rounds[r].items)||[]; }
@@ -926,12 +953,13 @@ function renderReport(student,r,prevOx,sent){
         </div>
         <div class="wt-c">${esc(typeComment(it))}</div>
         ${miniRxHTML(w.type,!w.reviewRequired)}
+        ${middle8StudyHTML(r,w.no)}
       </div>`;
     });
   }
   h+='</div>';
 
-  h+=middleReviewPracticeHTML(r);
+  h+=middleReviewPracticeHTML(r,wl);
 
   /* ── 처방 교재 ── */
   const rxHtml=prescriptionHTML(wl,5);

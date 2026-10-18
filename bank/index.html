@@ -244,7 +244,7 @@
 <script src="bank-access.js?v=20261016-existing-banks"></script>
 <script>
 (function(){var v=Date.now();
- ['important-types.js','core/adapter-registry.js','adapters/final7-reviewed-adapter.js','adapters/final8-reviewed-adapter.js','adapters/last1-reviewed-adapter.js','adapters/last2-reviewed-adapter.js','adapters/last3-reviewed-adapter.js','adapters/middle7-reviewed-adapter.js','bank-core.js','bank-fixed.js','final-source-generators.js','bank-raster.js','shape-network.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js','important-generators.js'].forEach(function(f){
+ ['important-types.js','core/adapter-registry.js','adapters/final7-reviewed-adapter.js','adapters/final8-reviewed-adapter.js','adapters/last1-reviewed-adapter.js','adapters/last2-reviewed-adapter.js','adapters/last3-reviewed-adapter.js','adapters/middle7-reviewed-adapter.js','adapters/middle8-reviewed-adapter.js','bank-core.js','bank-fixed.js','final-source-generators.js','bank-raster.js','shape-network.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js','important-generators.js'].forEach(function(f){
    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
 </script>
 <script>
@@ -252,7 +252,7 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
 (function(){
   var q=new URLSearchParams(location.search);
   var sourceParts=String(q.get('source')||'').split('|');
-  var bankCode=/^(?:final[123478]|original[12]|last[123]|middle7|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^(?:1|2|3|4|7|8)$/.test(sourceParts[1])?'final'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='last'&&/^[123]$/.test(sourceParts[1])?'last'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='original'&&/^[12]$/.test(sourceParts[1])?'original'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='middle'&&sourceParts[1]==='7'?'middle7':''))));
+  var bankCode=/^(?:final[123478]|original[12]|last[123]|middle[78]|important)$/.test(q.get('bank')||'')?q.get('bank'):(q.get('practice')==='wrong'&&sourceParts[0]==='final'&&/^(?:1|2|3|4|7|8)$/.test(sourceParts[1])?'final'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='last'&&/^[123]$/.test(sourceParts[1])?'last'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='original'&&/^[12]$/.test(sourceParts[1])?'original'+sourceParts[1]:(q.get('practice')==='wrong'&&sourceParts[0]==='middle'&&/^[78]$/.test(sourceParts[1])?'middle'+sourceParts[1]:''))));
   var fixed=!!bankCode;
   if(!fixed)return;
   document.body.classList.add('fixed-bank-mode');
@@ -268,7 +268,7 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
   var CORE = window.BANK_CORE;
   var fixedQuery = new URLSearchParams(location.search);
   var fixedSource=String(fixedQuery.get('source')||'').split('|');
-  var fixedEarly = /^(?:final[123478]|last[123]|middle7|important|original[12])$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && ((fixedSource[0]==='final' && /^(?:1|2|3|4|7|8)$/.test(fixedSource[1])) || (fixedSource[0]==='last' && /^[123]$/.test(fixedSource[1])) || (fixedSource[0]==='original' && /^[12]$/.test(fixedSource[1])) || (fixedSource[0]==='middle' && fixedSource[1]==='7')));
+  var fixedEarly = /^(?:final[123478]|last[123]|middle[78]|important|original[12])$/.test(fixedQuery.get('bank')||'') || (fixedQuery.get('practice')==='wrong' && ((fixedSource[0]==='final' && /^(?:1|2|3|4|7|8)$/.test(fixedSource[1])) || (fixedSource[0]==='last' && /^[123]$/.test(fixedSource[1])) || (fixedSource[0]==='original' && /^[12]$/.test(fixedSource[1])) || (fixedSource[0]==='middle' && /^[78]$/.test(fixedSource[1]))));
   if(fixedEarly)return;
 
   var GEN_NAMES = {

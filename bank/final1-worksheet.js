@@ -8,7 +8,7 @@
     });}).join('');
   }
   function chunks(a,n){var out=[];for(var i=0;i<a.length;i+=n)out.push(a.slice(i,i+n));return out;}
-  function largeFigure(x){return x.sourceSet==='middle'&&Number(x.sourceRound)===7&&Number(x.sourceNo)===13||x.sourceSet==='final'&&Number(x.sourceRound)===8&&Number(x.sourceNo)===25||x.sourceSet==='last'&&Number(x.sourceRound)===1&&Number(x.sourceNo)===6&&[2,3].includes(Number(x.variantNo))||x.sourceSet==='last'&&Number(x.sourceRound)===2&&[15,20,28,29].includes(Number(x.sourceNo))||x.sourceSet==='last'&&Number(x.sourceRound)===3&&[15,18,23,30].includes(Number(x.sourceNo));}
+  function largeFigure(x){return x.sourceSet==='middle'&&(Number(x.sourceRound)===7&&Number(x.sourceNo)===13||Number(x.sourceRound)===8&&[13,17,20,26,27,30].includes(Number(x.sourceNo)))||x.sourceSet==='final'&&Number(x.sourceRound)===8&&Number(x.sourceNo)===25||x.sourceSet==='last'&&Number(x.sourceRound)===1&&Number(x.sourceNo)===6&&[2,3].includes(Number(x.variantNo))||x.sourceSet==='last'&&Number(x.sourceRound)===2&&[15,20,28,29].includes(Number(x.sourceNo))||x.sourceSet==='last'&&Number(x.sourceRound)===3&&[15,18,23,30].includes(Number(x.sourceNo));}
   function editorialWide(x){
     var dataLength=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0;
     var total=(x.text||'').length+dataLength;
@@ -71,13 +71,13 @@
     var legacy=document.getElementById('btnPrint');if(legacy)legacy.id='legacyPrint';
     var root=document.createElement('main');root.id='final1Worksheet';root.className='gfield-ui';document.body.appendChild(root);
     var q=new URLSearchParams(location.search),wrong=!!opts.wrongPracticeMode,ids=opts.genIds;
-    var bankCode=/^(?:final[123478]|original[12]|last[123]|middle7|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
+    var bankCode=/^(?:final[123478]|original[12]|last[123]|middle[78]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
     var important=bankCode==='important';
     var signature=bankCode.startsWith('original');
     root.dataset.bankCode=bankCode;
     var isLast=/^last[123]$/.test(bankCode);
-    var isMiddle7=bankCode==='middle7';
-    var round=important?null:isMiddle7?7:Number(bankCode.slice(isLast?4:(signature?8:5))),roundLabel=important?'선생님이 고른 중요 유형':isMiddle7?'중급 모의고사 7회':(signature?'시그니처 실전 '+round+'회':(isLast?'최종 실전 '+round+'회':(round===7?'최종 7회':(round===8?'최종 8회':'파이널 '+round+'회')))),idPrefix=important?'':isMiddle7?'mid7-q':bankCode+'-q';
+    var isMiddle=/^middle[78]$/.test(bankCode);
+    var round=important?null:isMiddle?Number(bankCode.slice(6)):Number(bankCode.slice(isLast?4:(signature?8:5))),roundLabel=important?'선생님이 고른 중요 유형':isMiddle?'중급 모의고사 '+round+'회':(signature?'시그니처 실전 '+round+'회':(isLast?'최종 실전 '+round+'회':(round===7?'최종 7회':(round===8?'최종 8회':'파이널 '+round+'회')))),idPrefix=important?'':isMiddle?'mid'+round+'-q':bankCode+'-q';
     if(important)ids=Array.isArray(opts.typeIds)?opts.typeIds:[];
     else if(!Array.isArray(ids))ids=wrong?[]:Array.from({length:30},(_,i)=>idPrefix+String(i+1).padStart(2,'0'));
     var labels={all:'전체문제','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
@@ -93,13 +93,13 @@
     root.dataset.layout=layout;
     var student=(new URLSearchParams(location.hash.slice(1)).get('student')||'').trim(),checked=new Set(),revision=0,preparePrint=null;
     // Display-only name, never authority for reading or writing student results.
-    var back=wrong?(isMiddle7?'../mock.html?':'../final.html?')+(signature?'set=original&':(isLast?'set=last&':''))+'round='+round+'&go=report'+(student?'&name='+encodeURIComponent(student):''):'../index.html';
+    var back=wrong?(isMiddle?'../mock.html?':'../final.html?')+(signature?'set=original&':(isLast?'set=last&':''))+'round='+round+'&go=report'+(student?'&name='+encodeURIComponent(student):''):'../index.html';
     var countControls=important||freshAvailable?'<div class="f1-bands f1-counts" role="group" aria-label="문항 수">'+counts.map(k=>'<button type="button" data-role="count" data-val="'+k+'">'+k+'문항</button>').join('')+'</div>':'';
     var freshControl=freshAvailable?'<button type="button" class="f1-fresh-toggle" data-role="fresh" aria-pressed="false">새 문제 섞기</button>':'';
     var viewControls=important?'':'<div class="f1-bands f1-view-modes" role="group" aria-label="약점 유형 보기 방식"><button type="button" data-role="view" data-val="grouped">문제별로 보기</button><button type="button" data-role="view" data-val="mixed">섞어서 보기</button></div>';
     root.innerHTML='<header class="f1-toolbar"><a class="f1-back" href="'+esc(back)+'">← '+(wrong?'성적표':'자료실')+'</a><div class="f1-title">'+roundLabel+(important?'':' 약점 유형')+'</div><div class="f1-bands" role="group" aria-label="오답 배점대">'+Object.keys(labels).map(k=>'<button type="button" data-role="points" data-val="'+k+'">'+labels[k]+'</button>').join('')+'</div>'+viewControls+freshControl+countControls+'<label class="f1-layout-label">문제 배치 <select id="pageLayout"><option value="editorial">읽기 편한 4문항</option><option value="compact">간결한 6문항</option></select></label><label class="f1-print-label">인쇄 구성 <select id="printMode"><option value="questions">문제만</option><option value="answers">답안·풀이만</option><option value="both">둘 다</option><option value="quick">빠른 정답만</option></select></label><button type="button" id="btnPrint" disabled>인쇄</button></header><div class="f1-status" id="f1Status" role="status" aria-live="polite"></div><div id="f1Pages"></div>';
     if(signature&&!wrong)root.querySelector('.f1-title').textContent=roundLabel+' 전체 유형';
-    if(bankCode==='final8'||isLast||isMiddle7)root.querySelector('#pageLayout option[value="compact"]').textContent='간결한 6문항 · 큰 그림은 별도 쪽';
+    if(bankCode==='final8'||isLast||isMiddle)root.querySelector('#pageLayout option[value="compact"]').textContent='간결한 6문항 · 큰 그림은 별도 쪽';
     var pageRoot=root.querySelector('#f1Pages'),print=root.querySelector('#btnPrint');
     function sheet(cls,html){return '<section class="f1-page page '+cls+'"><div class="f1-watermark-clip"><div class="wm-layer"></div></div>'+html+'</section>';}
     function cleanUrl(){
@@ -122,10 +122,10 @@
     function questionPage(group,n,total){
       var reportRows=reportColumns?Math.min(3,Math.max(1,Math.ceil(group.length/2))):0;
       var wideLead=layout==='editorial'&&group.length===3&&editorialWide(group[0]);
-      var single=(layout==='editorial'||isMiddle7)&&group.length===1;
+      var single=(layout==='editorial'||isMiddle)&&group.length===1;
       var twoWithWide=layout==='editorial'&&group.length===2&&group.some(editorialWide);
       var writeLines=Array.from({length:single?10:3},()=>'<span class="f1-write-line"></span>').join('');
-      var rowCount=isMiddle7?Math.ceil(group.reduce((sum,x)=>sum+(layout==='editorial'&&editorialWide(x)?2:1),0)/2):0;
+      var rowCount=isMiddle?Math.ceil(group.reduce((sum,x)=>sum+(layout==='editorial'&&editorialWide(x)?2:1),0)/2):0;
       var html='<div class="f1-qpage qpage" data-wide-lead="'+String(wideLead)+'"'+(reportColumns?' data-report-columns="true" data-report-rows="'+reportRows+'" style="grid-auto-flow:column;grid-template-rows:auto repeat('+reportRows+',minmax(0,1fr))"':rowCount?' style="grid-template-rows:auto repeat('+rowCount+',minmax(0,1fr))"':'')+'><div class="f1-qhead qhead"><span>'+roundLabel+' 약점 유형</span><small>문제 '+n+' / '+total+'</small></div>';
       group.forEach((x,index)=>{
         var legacyGiven=bankCode==='final1'&&[12,14,23].includes(Number(x.sourceNo))&&Array.isArray(x.conditionLines)?x.conditionLines:[];
@@ -191,7 +191,7 @@
         // Reuse the same approved cards. Only Middle 7 reduces page density
         // when a full-size prompt or figure will not fit; never shrink the text.
         function fitMiddle7Groups(){
-        if(isMiddle7&&(mode==='questions'||mode==='both')&&pageRoot.querySelector('.qpage')&&getComputedStyle(pageRoot.querySelector('.qpage')).display==='grid'){
+        if(isMiddle&&(mode==='questions'||mode==='both')&&pageRoot.querySelector('.qpage')&&getComputedStyle(pageRoot.querySelector('.qpage')).display==='grid'){
           for(var attempt=0;attempt<5;attempt++){
             var bad=Array.from(pageRoot.querySelectorAll('.question-page')).map((page,index)=>
               Array.from(page.querySelectorAll('.qcard')).some(card=>card.scrollHeight>card.clientHeight+1)?index:-1).filter(i=>i>=0);
@@ -210,7 +210,7 @@
         compactAnswerPages();
         var watermarkName=student||global.BANK_CORE.getStudentName()||'학습 자료';
         pageRoot.querySelectorAll('.wm-layer').forEach(layer=>global.BANK_CORE.buildWatermarkTiles(layer,watermarkName));
-        if(isMiddle7)preparePrint=function(){
+        if(isMiddle)preparePrint=function(){
           if(current!==revision)return;
           assemblePages();fitMiddle7Groups();compactAnswerPages();
           pageRoot.querySelectorAll('.wm-layer').forEach(layer=>global.BANK_CORE.buildWatermarkTiles(layer,watermarkName));
@@ -226,7 +226,7 @@
     root.querySelector('#printMode').addEventListener('change',e=>{mode=e.target.value;render();});
     root.addEventListener('change',e=>{if(e.target.matches('.f1-check input')){var key=e.target.dataset.source;if(e.target.checked)checked.add(key);else checked.delete(key);}});
     print.addEventListener('click',()=>{if(!print.disabled)global.print();});render();
-    if(isMiddle7){
+    if(isMiddle){
       global.addEventListener('beforeprint',()=>{if(preparePrint)preparePrint();});
       global.matchMedia('print').addEventListener('change',event=>{if(event.matches&&preparePrint)preparePrint();});
     }

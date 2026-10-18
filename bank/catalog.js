@@ -85,6 +85,7 @@
       else if(source.set==='last'&&[1,2,3].includes(sourceRound))fixedBank='last'+sourceRound;
       else if(source.set==='original'&&[1,2].includes(sourceRound))fixedBank='original'+sourceRound;
       else if(source.set==='middle'&&sourceRound===7)fixedBank='middle7';
+      else if(source.set==='middle'&&sourceRound===8)fixedBank='middle8';
       if(fixedBank&&item.generator&&item.generator.studentWrongPracticeReady===true){
         if(!group.fixedRefs[fixedBank])group.fixedRefs[fixedBank]=[];
         group.fixedRefs[fixedBank].push(item.generator.generatorId);
