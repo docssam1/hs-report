@@ -1,5 +1,11 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 1번 유형명 중립화·공개 검증 (Mac, 최신)
+
+- GitHub `main` 커밋 `6e11a200972a3268469a5b78a63aedc435a05094`에서 1번 유사문제의 공통 유형명을 **「자리를 바꾸면 45 차이 나는 네 자리 수」**로 바꿨다. 승인된 세 문제의 교환 결과는 1·3번이 **45 큰 수**, 2번이 **45 작은 수**인데 종전 유형명은 모두 “커지는”이라고 표시해 2번의 지문과 충돌했다. 원본 및 변형 **90개 지문·답·풀이·그림·승인·채점은 그대로**이며, 검색 별칭과 화면·인쇄 유형명만 정리했다. `data.js`와 보호 칼럼은 불변이다.
+- 원본 PDF **1쪽 1번**과 2단 A4 인쇄 화면을 직접 보고, 네 수의 가능한 십·일 자리 조합을 각각 전수 대입해 원문·세 변형 답을 재확인했다. Apple Vision OCR이 공개 인쇄물의 중립 유형명 세 번과 2번의 “작은 수”를 판독했다. 로컬·공개 사이트에서 문제은행 **90문항**, 2단 문제지·답안, 학습 위치·포인트 **30개씩**, 학생 보고서·관리자 연결, 외부 쓰기 **0** 검사가 통과했다. `qa/docssam-columns-preservation-validate.js`도 **21개 PASS**다. [GitHub Pages 실행 39174606918](https://github.com/docssam1/hs-report/actions/runs/39174606918)은 성공했고 공개 주요 4파일이 메인과 SHA-256으로 일치한다. 현행 문제은행 SHA-256은 `680d8648201f88d2366f1900e406eae708ffed4d9f6a1f77c3c75981c895b6d1`이다.
+- [Drive 1번 변경·독립 검산 JSON](https://drive.google.com/file/d/1xZuuK_gxvvpVVDqf4mNaIK_RQIMNbPG2/view), [로컬 PDF·Apple Vision·QA ZIP](https://drive.google.com/file/d/1X_yRTvIh589eLTrRMQJkp2ObPZH5w2Gq/view), [공개 검증 JSON](https://drive.google.com/file/d/1hcDhgU9emhukNDtU325QtUC6wHC2h_VA/view), [공개 PDF·브라우저 QA ZIP](https://drive.google.com/file/d/1lbBmqOzejWz1QVZOXor_UPy1uUSdno0f/view), [현행 검수 대기표](https://drive.google.com/file/d/1pB4BsVGui85B-qUR7pO4DZ4nQaDxYvLl/view)를 기존 중급 8회 폴더에 저장했다. 검수 대기표는 현재 코드 해시로 갱신했지만 **189축·62문항·24개 원문 보류**, 특히 **1번 2번 변형의 3축 보류**는 유지한다. 실제 계정의 최종 3회 ZIP·실물 A4 인쇄·교사 및 학생 체감 난도 확인은 남아 있다. Mac 로컬 근거는 `.private-work/middle8-20261018/q01-neutral-type-20261019/`이다.
+
 ## 2026-10-19 중급 8회 23번 비공개 교체 후보 123·125 세트 지름길 재판정 (Mac, 최신)
 
 - 원본 PDF **4쪽 23번**의 실제 괄호 수열 그림과 강의 답안 **26쪽**, 현행 승인 3번 변형 `161`, 비공개 후보 `123`의 2단 비교 PDF 문제 1쪽·답안 3쪽을 직접 열었다. Apple Vision 보조 판독과 별도 묶음 열거·삼각수 계산을 대조했다. 원문 `121`은 61번째 홀수로 **11번째 괄호의 6번째**, 후보 `123`은 62번째 홀수로 **11번째 괄호의 7번째**다. 모두 앞 10묶음 55개를 빼며, 현행 승인 `161`은 81번째 홀수·13번째 괄호의 3번째여서 원문보다 누적 계산 범위가 길다.
