@@ -90,8 +90,10 @@ const server=http.createServer((req,res)=>{
     assert.equal(variantUrl.searchParams.get('source'),'middle|8|all');
     assert.equal(variantUrl.searchParams.get('gens').split(',').length,30);
     assert.equal(variantUrl.searchParams.get('view'),'mixed','multiple wrong types interleave their three variants');
+    assert.equal(variantUrl.searchParams.get('layout'),'compact','multi-type report worksheet uses two columns and three rows');
     const threeTypeUrl=new URL(await approved.evaluate(()=>middle8VariantUrl([2,5,8])),base+'/mock.html');
     assert.equal(threeTypeUrl.searchParams.get('view'),'mixed','three recommended types interleave their variants');
+    assert.equal(threeTypeUrl.searchParams.get('layout'),'compact');
     assert.equal(threeTypeUrl.searchParams.get('gens'),'mid8-q02,mid8-q05,mid8-q08');
     const recommendationCoverage=await approved.locator('.wt-item').evaluateAll(rows=>({wrong:rows.length,study:rows.filter(row=>row.textContent.includes('권장 학습 위치')&&row.querySelector('.middle8-study a')).length,points:rows.filter(row=>row.textContent.includes('학습 포인트')).length}));
     assert.deepEqual(recommendationCoverage,{wrong:30,study:30,points:30},'each wrong Middle 8 source has its own study location and point');
@@ -107,9 +109,13 @@ const server=http.createServer((req,res)=>{
       [1,2,3].flatMap(variant=>[2,5,8].map(no=>'mid8-q'+String(no).padStart(2,'0')+'-v'+variant)),
       'three wrong types show three approved variants each in mixed order');
     assert.equal(await threeTypeBank.locator('#final1Worksheet [data-answer-id]').count(),9,'three-type worksheet includes nine matching answers');
+    assert.ok(await threeTypeBank.locator('#final1Worksheet .qcard').evaluateAll(cards=>cards.every(card=>
+      card.scrollHeight<=card.clientHeight+2&&card.lastElementChild.getBoundingClientRect().bottom<=card.getBoundingClientRect().bottom+2)),
+      'three-type compact worksheet keeps all question content inside its print cells');
     if(outputDir)await threeTypeBank.pdf({path:path.join(outputDir,'middle-round8-three-type-mixed.pdf'),preferCSSPageSize:true,printBackground:true});
     await threeTypeBank.close();
     const singleTypeUrl=new URL(await approved.locator('.middle8-study a').first().getAttribute('href'),base+'/mock.html');
+    assert.equal(singleTypeUrl.searchParams.get('layout'),'editorial','single-type worksheet keeps its wider writing space');
     const singleTypeBank=await context.newPage();singleTypeBank.on('pageerror',error=>errors.push(error.message));
     await singleTypeBank.addInitScript(name=>localStorage.setItem('gfield_student',name),student);
     await singleTypeBank.goto(singleTypeUrl.href);

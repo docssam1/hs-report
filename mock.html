@@ -504,7 +504,7 @@ function middle8CanPractice(r){
   return SET==='mid'&&Number(r)===8&&(mode==='teacher'||Array.isArray(approved)&&(approved.includes('*')||approved.includes(me)));
 }
 function middle8VariantUrl(numbers){
-  const query=new URLSearchParams({bank:'middle8',printMode:'both',layout:'editorial',view:numbers.length===1?'grouped':'mixed',from:'archive',name:me||''});
+  const query=new URLSearchParams({bank:'middle8',printMode:'both',layout:numbers.length===1?'editorial':'compact',view:numbers.length===1?'grouped':'mixed',from:'archive',name:me||''});
   if(numbers.length){
     query.set('practice','wrong');
     query.set('source','middle|8|'+(numbers.length===1?numbers[0]:'all'));
