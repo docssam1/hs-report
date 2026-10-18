@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 14번 현행 공개본 Apple Vision 재확인 (Mac, 최신)
+
+- 현행 `compact` 인쇄본 42번(원문 14번 유사문제 3)을 Apple Vision `.accurate`로 다시 읽어 `노란색 불을 켜면 초록색 불도 켜야` 조건이 실제 인쇄본에 있음을 확인했다. OCR은 앞부분의 `초록색`을 한 번 `초색`으로 오독했으므로 저장 문항·화면과 대조했다. 앞선 Vision 원문 3쪽·답안 16쪽 및 인쇄본 40~42번 대조 기록의 결론은 그대로다. 원문은 세 불의 자유로운 켜짐/꺼짐에서 모두 꺼진 경우만 제외한 **7가지**, 공개 유사문제는 추가 조건으로 **5·6·5가지**다.
+- OCR 작성 당시 문제은행 커밋 `5ec01fd`와 현행 문제은행(SHA-256 `5a785a313807e66dd05249622f78282d705100025cc248c17204baf8c95506e0`)의 14번 세 문항을 깊은 비교한 결과 지문·답·그림·승인 필드가 모두 같다. `teacherApproved=true`와 `sourceEquivalentConfirmed=false`도 그대로다. [Drive 현행본·Apple Vision 연결 검수 기록](https://drive.google.com/file/d/1WRYSTJhB7XQi_N7MCX5IIaSTLqEOrI6i/view)에 새 OCR 해시, 앞선 원문·공개 OCR 해시, 현행 은행 해시를 남겼다. Mac 파일은 `.private-work/middle8-20261018/q14-current-ocr-20261019/q14-current-bank-ocr-reconciliation-20261019.json`이다. 사용자 콘텐츠 승인은 보존하고 9축 원문 동등성·실물 종이 최종 승인은 보류한다. 이번 작업은 문항·채점·성적을 변경하지 않았다.
+
 ## 2026-10-19 중급 8회 공개 성적표→문제은행·Apple Vision 답안 연결 재검수 (Mac, 최신)
 
 - 공개 `https://hs.gfieldacademy.net`의 정적 학생 화면을 합성 온라인 학생·저장 성적으로 실행했다. `mock-mid-8` 승인 전 직접 8회 성적표 주소는 차단되고, 승인 후 기존 성적표가 열린다. 오답 30개인 합성 결과에 **권장 학습 위치 30/30·학습 포인트 30/30**과 `원문 30유형 → 유사문제 90문항` 링크가 보였다. 그 링크를 실제로 따라가 공개 문제은행 **문제 90개·답안 90개**가 로드되는 것을 확인했다. 공개 문제은행의 `editorial`/`compact` 배치와 개인 문제지 10·20·30개도 그림 로드·잘림 없이 통과했다. `qa/middle-online-report-access-browser-validate.js`와 `qa/bank-middle8-browser-validate.cjs`에 공개 사이트 합성 검수 모드를 추가했고, 기본 로컬 모드도 재검사했다. 두 공개 검사 모두 학생 성적·외부 쓰기 0, 브라우저 오류 0이다.
