@@ -13,7 +13,8 @@ const core = require('../supabase/functions/hs-final-population/population-core.
 const root = path.resolve(__dirname, '..');
 const out = process.env.GFIELD_LAST3_MATRIX_OUTPUT || path.join(root, '.private-work', 'last3-priority-matrix-20261019');
 const student = '최종3매트릭스합성검수학생';
-const cases = [[], [12], [3, 26], [1, 15, 30], [1, 2, 3, 4, 5, 6]];
+const all30 = process.env.GFIELD_LAST3_ALL30_ZIP === '1';
+const cases = all30 ? Array.from({ length: 30 }, (_, index) => [index + 1]) : [[], [12], [3, 26], [1, 15, 30], [1, 2, 3, 4, 5, 6]];
 const data = fs.readFileSync(path.join(root, 'data.js'), 'utf8') +
   '\n;(()=>{const d=window.GFIELD_DATA,n=' + JSON.stringify(student) +
   ';d.students.push(n);d.studentTypes[n]="resident";d.archiveAccess["최종 모의고사"]=[n];})();';
@@ -34,7 +35,7 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
   fs.mkdirSync(out, { recursive: true });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const base = process.env.GFIELD_LAST3_MATRIX_BASE_URL || 'http://127.0.0.1:' + server.address().port;
-  const evidence = { base, mode: process.env.GFIELD_LAST3_MATRIX_BASE_URL ? 'public-static-synthetic-records' : 'local-static-synthetic-records', cases: [], writes: [], browserErrors: [] };
+  const evidence = { base, mode: process.env.GFIELD_LAST3_MATRIX_BASE_URL ? 'public-static-synthetic-records' : 'local-static-synthetic-records', caseMode: all30 ? 'all-30-single-wrong-sources' : 'priority-count-matrix', cases: [], writes: [], browserErrors: [] };
   let record = rowFor([]);
   const browser = await chromium.launch({ headless: true });
   try {

@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 최종 3회 원문 1~30번 관리자 ZIP 전수 확인 (Mac, 최신)
+
+- `qa/last3-batch-priority-matrix-validate.cjs`에 `GFIELD_LAST3_ALL30_ZIP=1` 모드를 추가했다. 공개 `https://hs.gfieldacademy.net` 정적 코드와 **합성 관리자·학생 성적**으로 원문 1~30번을 각각 단독 오답으로 넣어 관리자 **ZIP 한 개로 받기**를 30회 실행했다. 매번 해당 원문의 승인 유사문제 **3개·풀이 3개**와 ID 1~3이 정확했고 `준비 중인 부록` 안내, 외부 운영 쓰기, 브라우저 오류는 모두 **0**이었다. ZIP 30개를 별도로 CRC 검사하고 PDF 서명·쪽수를 확인했으며 PDF는 **7~9쪽**이었다. 기존 기본 모드의 오답 0·1·2·3·6개 **5조합**도 로컬에서 다시 통과했다. 이전 30문항 부모 보고서 검사는 권장 학습 위치·학습 포인트 **30/30**을 확인했으며, 이번 ZIP 검사는 그 데이터의 교재 적합성을 새로 판정한 것은 아니다.
+- [Drive 전수 검수 요약](https://drive.google.com/file/d/1dXp6syx0V93dukH05c-dAq9Ho_I_Ty70/view), [1~10번 ZIP·재실행 코드](https://drive.google.com/file/d/1vZufo_fuke4l2p3nCzeexjrQ6oA35fHo/view), [11~20번 ZIP](https://drive.google.com/file/d/1QNx7Df0mx0Kyulf-UMVqFo0akNDZdxCt/view), [21~30번 ZIP](https://drive.google.com/file/d/1y_JrscbKhZLLhkbgh_0cHPg7s6RHcyGY/view)을 기존 최종 3회 검수 폴더에 저장하고 크기·부모를 재조회했다. Mac 로컬은 `.private-work/last3-all30-zip-20261019/`이다. 실제 Chrome 관리자 주소는 여전히 로그인 화면이고, Mac 등록 프린터가 없어 **실제 계정 ZIP·실물 A4 검수는 미완료**다. [로그인·프린터 확인 기록](https://drive.google.com/file/d/1mObIGr3ONqJV1O9fu9DeRGHYz1nwxzXS/view)을 같은 폴더에 보관했다. 승인 문항·성적·채점·보호 데이터는 바꾸지 않았다.
+
 ## 2026-10-19 중급 8회 1번 유형명 중립화·공개 검증 (Mac, 최신)
 
 - GitHub `main` 커밋 `6e11a200972a3268469a5b78a63aedc435a05094`에서 1번 유사문제의 공통 유형명을 **「자리를 바꾸면 45 차이 나는 네 자리 수」**로 바꿨다. 승인된 세 문제의 교환 결과는 1·3번이 **45 큰 수**, 2번이 **45 작은 수**인데 종전 유형명은 모두 “커지는”이라고 표시해 2번의 지문과 충돌했다. 원본 및 변형 **90개 지문·답·풀이·그림·승인·채점은 그대로**이며, 검색 별칭과 화면·인쇄 유형명만 정리했다. `data.js`와 보호 칼럼은 불변이다.
