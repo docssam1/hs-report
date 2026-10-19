@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 원문·답안 Drive 원자료 ID·해시 확인 (최신)
+
+- Mac 현행 검수 원문 `original.pdf`와 답안 `answer.pdf`, 7·8회 리뷰, 2023·2024 과제, 별도 2024 8회 PDF **6개**를 기존 Drive 원파일에서 다시 내려받아 각각 길이·SHA-256이 Mac 작업본과 일치함을 확인했다. 사용자 제공 [원자료 상위 폴더](https://drive.google.com/drive/folders/1LjpYZDs74UiI2wrbMi7ME3jWxILTck71)에는 8회 원본 HWP `1rR7RlwGsfuR05RaERc5Ae_J0WPxNTCFt`도 있다. [Drive 원자료 식별·해시 기록](https://drive.google.com/file/d/1l3v6vwITaxo3mUHs3g5SK2U42Bv4cS0z/view)에 6개 PDF의 정확한 파일 ID·원래 제목·크기·SHA-256과 HWP 위치를 저장하고 3900바이트·SHA-256 `e3d8e3d8824b607b39aa4a69b1de037c608fae02f2e64c9f9a72f293e4719f8f`로 재다운로드 일치를 확인했다.
+- 로컬 `folder-source-pdf.pdf`와 `folder-answer.pdf`는 각각 `original.pdf`·`answer.pdf`와 바이트 단위로 동일했다. `hwp-converted.pdf`는 HWP에서 나온 작업용 PDF이므로 HWP와 바이트 동일성으로 판정하지 않았다. 현행 원문·답안 작업본은 중급 8회 9축 검수에 계속 필요해 유지했고 승인 은행·문항·학생 기록은 변경하지 않았다. 이 대조는 원자료 식별이며 수학적 답·난도·그림 동등성 승인이 아니다.
+
 ## 2026-10-19 중급 8회 현행 은행·9축 보류표 구조 재검증 (최신)
 
 - Mac 메인 은행 `bank/data/middle8-reviewed.json` SHA-256 `680d8648201f88d2366f1900e406eae708ffed4d9f6a1f77c3c75981c895b6d1`가 기존 [Drive 최신 9축 보류표](https://drive.google.com/file/d/1_Nw7FA90p6EOysvp5flm6Mss7PTlFeZy/view)의 기준 해시와 일치했다. Drive 보류표도 Mac 사본과 152071바이트·SHA-256 `b09c8e8d32a6f342ee7159bb14ed7f7dd5a3b7595f85cad0af8fce4eb28a19b2`로 재다운로드 일치했다. 승인 은행 90문항·30유형, 보류 189축·62문항·원문 24개, 임시 해소 기록 13행의 참조·중복·집계 무결성 **14항목**을 확인했고 [Drive 구조 검사 기록](https://drive.google.com/file/d/1YSSYUlSQ4ZtGVB_Ku9ODdYzrZQUIWmAD/view)에 보관했다(1314바이트·SHA-256 `123fa53bf2ba339d99103610236ba81dff86ba242ae1c1f842965de8eb326ba9` 재다운로드 일치).
