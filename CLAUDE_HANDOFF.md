@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 최종 3회 학생 PDF·관리자 ZIP 재검수 완전 보관·Mac 정리 (최신)
+
+- 기존 [Drive 학생 PDF·관리자 ZIP·Vision 재검수 근거](https://drive.google.com/file/d/1mpZFCoti6wzTD6-IdtrFVIh1XvL1-vwo/view)는 Mac 원본 ZIP과 9300139바이트·SHA-256 `872c5a381cfd980c5325491453d90ae2e4c004c7005f2361515c58497b304e2c`로 일치했고, 로컬 3개 폴더 파일 중 16개를 보관했다. 빠진 학생 화면 PNG·관리자 공통 PDF/ZIP 등 **35개**는 같은 상대 경로와 SHA-256 목록을 넣어 [Drive 보충 ZIP](https://drive.google.com/file/d/1MvULi7ZdUlyEJQqCfU9li3ZmxvbKlbyd/view)에 보관했다. 보충 ZIP 44988262바이트·SHA-256 `fe67e3b424d56f120657e193a3951ec43404bb6ffed16a5a09ca4c7c8c5900a1`로 재다운로드 일치를 확인했다.
+- 두 ZIP의 로컬 **51개 파일**을 바이트 단위로 대조한 뒤 Git 추적·현재 코드 참조·열린 파일이 없는 완료된 `.private-work/last3-public-recheck-20261019/`, `.private-work/last3-admin-zip-recheck-20261019/`, `.private-work/last3-admin-zip-local-recheck-20261019/`와 임시 보충 ZIP만 정리했다. Mac 순감소량 **70791406바이트**다. 합성 성적 검수 근거의 보존이며 실제 계정 ZIP·실물 A4 인쇄는 미검수다. 승인 문제은행·학생 성적·원본 자료는 변경하지 않았다.
+
 ## 2026-10-19 최종 3회 공개 관리자 ZIP QA 완전 보관·Mac 정리 (최신)
 
 - 기존 [Drive 공개 관리자 단독·혼합 ZIP·Vision 근거](https://drive.google.com/file/d/1pxkaPLMxThLjp_CDfXYmUPPRvnQeYPtd/view)는 Mac 원본과 11348855바이트·SHA-256 `a32edf95124f976dce0b362c52b0ecae02748507906e0b11284354b61873309e`로 일치했고, 해당 폴더 파일 24개를 담고 있었다. 빠진 공통 관리자 PDF·렌더 등 17개는 경로·SHA-256 목록과 함께 [Drive 보충 ZIP](https://drive.google.com/file/d/1p4ueXWXsfx4mz76SiTKxMpM54eFwWq23/view)에 보관했다. 보충 ZIP 16860763바이트·SHA-256 `a3dd93ab91960933b22c82c5c49ae67fc6ca1b5edbd86ec49ba3fa84ea9cadbf`를 재다운로드로 확인했다.
