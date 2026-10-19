@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 현행 은행·9축 보류표 구조 재검증 (최신)
+
+- Mac 메인 은행 `bank/data/middle8-reviewed.json` SHA-256 `680d8648201f88d2366f1900e406eae708ffed4d9f6a1f77c3c75981c895b6d1`가 기존 [Drive 최신 9축 보류표](https://drive.google.com/file/d/1_Nw7FA90p6EOysvp5flm6Mss7PTlFeZy/view)의 기준 해시와 일치했다. Drive 보류표도 Mac 사본과 152071바이트·SHA-256 `b09c8e8d32a6f342ee7159bb14ed7f7dd5a3b7595f85cad0af8fce4eb28a19b2`로 재다운로드 일치했다. 승인 은행 90문항·30유형, 보류 189축·62문항·원문 24개, 임시 해소 기록 13행의 참조·중복·집계 무결성 **14항목**을 확인했고 [Drive 구조 검사 기록](https://drive.google.com/file/d/1YSSYUlSQ4ZtGVB_Ku9ODdYzrZQUIWmAD/view)에 보관했다(1314바이트·SHA-256 `123fa53bf2ba339d99103610236ba81dff86ba242ae1c1f842965de8eb326ba9` 재다운로드 일치).
+- 이 검사는 보류표가 현행 은행을 정확히 가리키는지 확인한 것이며 수학적 원문 동등성·정답·9축 최종 승인으로 확대하지 않는다. Mac Chrome 공개 관리자 탭은 다시 열렸지만 여전히 인증 입력 화면이고 `lpstat -p`에 등록 프린터가 없어 실제 계정 ZIP·실물 A4 인쇄는 대기 중이다. 서비스 코드·승인 은행·학생 기록은 변경하지 않았다.
+
 ## 2026-10-19 중급 8회 공개 은행·진단 출력 재검수본 Drive 보관·Mac 정리 (최신)
 
 - 공개 은행/진단 화면과 로컬 재검수의 완료된 4개 폴더 **107개 파일·63604814바이트**를 원래 경로·파일별 SHA-256 manifest와 함께 기존 중급 8회 Drive 검수 폴더의 [전체 ZIP](https://drive.google.com/file/d/1Agk_EcQPzQXP99Aka640lTdvglhQ0KCM/view)에 보관했다. ZIP **59386489바이트**, SHA-256 `ddd1d2a3bb9a17c1e9d5d8ff1d27487358891865e2984b3066dca24f151dffc1`로 Drive 재다운로드 일치를 확인했다.
