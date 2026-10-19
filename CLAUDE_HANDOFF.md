@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 최종 3회 원문 1~30번 관리자 ZIP QA 완전 보관·Mac 정리 (최신)
+
+- 기존 Drive [1~10번](https://drive.google.com/file/d/1vZufo_fuke4l2p3nCzeexjrQ6oA35fHo/view)·[11~20번](https://drive.google.com/file/d/1QNx7Df0mx0Kyulf-UMVqFo0akNDZdxCt/view)·[21~30번](https://drive.google.com/file/d/1y_JrscbKhZLLhkbgh_0cHPg7s6RHcyGY/view) ZIP을 다시 내려받아 각 로컬 SHA-256과 일치함을 확인했다. 세 묶음에는 단독 오답 30회 ZIP과 검수 기록이 있으나 기본 조합 회귀 파일 7개는 빠져 있었다. 이를 [Drive 기본 조합 보충 ZIP](https://drive.google.com/file/d/1_plSTHSbyAqKyvS3OSHtU0epRJ8lBYC3/view)에 경로·해시 목록과 함께 보관하고, 5639084바이트·SHA-256 `43f314b8a5699d04b5fe058c575541646e2bb343f6fc2319a4403e5cea3710db`로 재다운로드 일치를 확인했다.
+- 네 ZIP의 기존 로컬 파일 **40개**를 바이트 단위로 1:1 대조한 뒤 Git 추적·코드 참조·열린 파일이 없는 완료된 `.private-work/last3-all30-zip-20261019/`와 임시 보충 ZIP만 정리했다. Mac 순감소량 **55664263바이트**다. 합성 관리자·학생 성적 ZIP 전수 검수의 보존이며 실제 계정 저장·실물 인쇄는 아직 별도다. 승인 문항·성적·원본 자료는 그대로다.
+
 ## 2026-10-19 최종 3회 원문 30문항 PDF QA 완전 보관·Mac 정리 (최신)
 
 - 기존 [Drive 전수 PDF·Apple Vision 근거 ZIP](https://drive.google.com/file/d/1kVp875NlIKMg6KuiK5rYy9GUv_qU-MqI/view)은 Mac 원본과 16807238바이트·SHA-256 `dc00bbcd86d57407309cf5375f83e51acf1c053e7bff37d9b75f09958ec17783`로 일치했다. 이 ZIP에 빠졌던 렌더·화면 파일 54개는 [Drive 보충 ZIP](https://drive.google.com/file/d/1gx9C_tIpCCqyP9Ks-h1Pku4qMHyylwUz/view)에 경로·SHA-256 목록과 함께 보관했다. 보충 ZIP 43021809바이트를 다시 내려받아 SHA-256 `7c95c7678b97f5456b0589f73afd0bd28f5a093608423613dd77ede0f576ac94` 일치를 확인했다.
