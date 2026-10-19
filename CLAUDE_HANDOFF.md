@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 최종 3회·중급 8회 공개 정적 파일 메인 일치 재검증 (최신)
+
+- 공개 `https://hs.gfieldacademy.net/`에서 캐시 회피 쿼리로 최종 3회 진단 `final.html`, 인쇄 `final-summary-practice-print.js`, 관리자 일괄 `admin-final-batch.js`, 관리자 화면, 최종 3회 승인 은행·인덱스·어댑터, 중급 8회 승인 은행·어댑터 **10개 파일**을 읽었다. 모두 HTTP 200이며 현재 GitHub 메인 작업본과 **10/10 바이트 단위 일치**했다. 파일별 크기·SHA-256·커밋 `17553bbe30a925ba8bb0db35470f09903f27926d`는 [Drive 공개 정적 파일 대조 기록](https://drive.google.com/file/d/1b3eU7bkbIWjHu7TRR4rdzAjqHrjdG9eF/view)에 남기고, 기록 자체도 2746바이트·SHA-256 `acb399182a844b72eb60113fbd9312b79645a23b168afc5678eafea3f67a4ebf`로 재다운로드 일치했다.
+- 이 검사는 공개 배포 파일과 메인 코드의 동일성만 확인한다. 실제 학생·관리자 인증 뒤 최종 3회 ZIP 저장, 실물 인쇄, 중급 8회 수학적 9축 동등성의 완료 근거는 아니다. 운영 데이터 쓰기·문항·승인 은행·학생 기록 변경은 없었다.
+
 ## 2026-10-19 중급 8회 완료 회귀검사 출력본 Drive 보관·Mac 정리 (최신)
 
 - 중급 7회 회귀·은행 브라우저·현행 연결/릴리스 재검사 등 완료 폴더 6개의 **151개 파일·58017074바이트**를 원래 경로·파일별 SHA-256 manifest와 함께 기존 중급 8회 Drive 검수 폴더의 [전체 ZIP](https://drive.google.com/file/d/1SUtt_H3TG2bW5g5ADsTKa12091156TWZ/view)에 보관했다. ZIP 48550776바이트·SHA-256 `a7c7a10710b6d2b24464d7ada67a588f6dbd139ba9ba175aea96497392546fab`로 Drive 재다운로드 일치를 확인했다.
