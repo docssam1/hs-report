@@ -1,5 +1,11 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 최종 3회 30문항 조합 QA 보충 보관·Mac 정리 (최신)
+
+- 기존 [Drive 30문항 조합 QA ZIP](https://drive.google.com/file/d/1Vpq_QXnMqmZo_B20a9x6X8TW5pG6dbb1/view)은 2106125바이트·SHA-256 `975171cd898a008ba69061a7c920b866e72010fb97afedf586568e125b9e94bc`로 Mac 원본과 일치했지만 화면 PNG 3개가 빠져 있었다. 3개·12130422바이트를 [Drive 보충 ZIP](https://drive.google.com/file/d/14pxkHICC7eF8SM0FOboyzBj5b6yItYef/view)에 원래 경로·파일별 SHA-256 목록과 함께 저장했고, 11974216바이트·SHA-256 `ed3b4e6c94303ff44bcc44d0a112537c75f8b0b063331620bfeaee4405a112ba`로 재다운로드 일치를 확인했다.
+- 두 ZIP의 12개 파일을 Mac 원본과 바이트 단위로 대조하고 Git 추적·현행 코드 참조·열린 파일·심볼릭 링크가 없는 완료된 `.private-work/last3-all30-matrix-20261019/`와 임시 보충 ZIP만 정리했다. Mac 순감소량은 **16498796바이트**다. 이 근거는 합성 학생의 30문항 조합 검수이며 실제 계정 ZIP과 실물 A4 인쇄는 아직 미검수다. 원본·승인 은행·학생 기록은 변경하지 않았다.
+
+
 ## 2026-10-19 최종 3회 당일 합성 QA 시험본 보관·Mac 정리 (최신)
 
 - 10월 19일 합성 배치·공개 화면/PDF·운영 패턴·로컬 재검수·연결 회귀 폴더 5개의 **89개 파일·109576224바이트**를 원래 경로와 파일별 SHA-256 manifest를 담아 기존 최종 3회 Drive 검수 폴더의 [A ZIP](https://drive.google.com/file/d/1uXym7-w3ruG7qIUeJIc8WaV3R3pJy8aV/view) **61582723바이트** 및 [B ZIP](https://drive.google.com/file/d/1OaP-_1qrfAbAt6djJ4hqQVtztUR6-Iag/view) **42237157바이트**으로 보관했다. 두 파일을 Drive에서 재다운로드해 SHA-256 `b9822bb457745e742a6ac3cd3e3457c6cd7ebb4b58c742a01855449667e93c0b`·`b3d58942133dad8db1ea5ee7b640b62c12afdaee481e05789af18d5f6faa9fc1` 일치를 확인했다.
