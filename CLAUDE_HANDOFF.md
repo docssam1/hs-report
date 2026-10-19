@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 완료 회귀검사 출력본 Drive 보관·Mac 정리 (최신)
+
+- 중급 7회 회귀·은행 브라우저·현행 연결/릴리스 재검사 등 완료 폴더 6개의 **151개 파일·58017074바이트**를 원래 경로·파일별 SHA-256 manifest와 함께 기존 중급 8회 Drive 검수 폴더의 [전체 ZIP](https://drive.google.com/file/d/1SUtt_H3TG2bW5g5ADsTKa12091156TWZ/view)에 보관했다. ZIP 48550776바이트·SHA-256 `a7c7a10710b6d2b24464d7ada67a588f6dbd139ba9ba175aea96497392546fab`로 Drive 재다운로드 일치를 확인했다.
+- ZIP 내부 파일을 Mac 원본과 바이트 단위로 재대조하고 Git 추적·현행 코드 경로 참조·열린 파일·심볼릭 링크가 없는 `.private-work/middle8-20261018/` 아래 `middle7-regression/`, `middle7-browser-regression/`, `bank-browser-qa/`, `current-regression-20261019/`, `middle8-link-change-regression-20261019/`, `release-reconciliation-browser-20261019/`만 정리했다. Mac 순감소량은 **58017074바이트**다. 이전 문항 초안 두 폴더와 현행 원문·변형·9축 검수 작업본은 유지했고 승인 문제은행·학생 기록은 변경하지 않았다.
+
 ## 2026-10-19 중급 8회 HWP 변환 시험본 판정·Mac 정리 (최신)
 
 - Mac 전달 제작 기준 v2.7은 기존 [Drive 출처 표시 참고 사본](https://drive.google.com/file/d/1HJTPi1tNBCzjM_R4Ui_H9jBB_4CNrgtH/view)과 124006바이트·SHA-256 `6044b894b8f58b94cfaff5dd331e7367f76e44f70076be7facee443a77499b18`로 다시 일치했다. 사용자 제공 Drive ID `1LjpYZDs74UiI2wrbMi7ME3jWxILTck71`은 여전히 원자료 **폴더**이며 제작 기준 원본 파일 ID로 간주하지 않는다.
