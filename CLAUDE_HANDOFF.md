@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 최종 3회 혼합 순서·다단 QA 완전 보관·Mac 정리 (최신)
+
+- 기존 [Drive 혼합 순서 PDF·ZIP·Vision 근거](https://drive.google.com/file/d/1Z_EqFMOeB2gT8CNCC_2-UNAIEEd6e3pw/view)은 최상위 `last3-mixed-order-20261019/` 접두 경로를 포함해 Mac 원본 22개를 보관하고 있었다. 7445059바이트·SHA-256 `92999c8204c2752b758edc46a8444d7ccde8ee2c2a04d6670c9331b3faa63bc5`로 재다운로드 일치를 확인했다. 빠진 관리자 공통 PDF·화면 렌더 등 35개는 같은 접두 경로와 파일 해시 목록을 넣어 [Drive 보충 ZIP](https://drive.google.com/file/d/1oggkGHzeQkrGNlrjlhIDOttNtqEzXNnD/view)에 보관했다. 보충 ZIP 47861820바이트·SHA-256 `aee92e356e1ff6238e52526cf584e62a7103c6d1fd5701bfa97eb52f43ed8b05`도 재다운로드 일치했다.
+- 두 ZIP과 Mac 원본 **57개 파일**을 바이트 단위로 1:1 대조한 뒤 Git 추적·현행 코드 참조·열린 파일이 없는 완료된 `.private-work/last3-mixed-order-20261019/`와 임시 보충 ZIP만 정리해 Mac 순감소량 **68693680바이트**를 기록했다. `qa/last3-batch-priority-matrix-validate.cjs`가 기본 출력 경로로 참조하는 `.private-work/last3-priority-matrix-20261019/`는 현재 QA 재실행용으로 보존했다. 실제 계정 ZIP·실물 인쇄 검수는 별도다.
+
 ## 2026-10-19 최종 3회 원문 1~30번 관리자 ZIP QA 완전 보관·Mac 정리 (최신)
 
 - 기존 Drive [1~10번](https://drive.google.com/file/d/1vZufo_fuke4l2p3nCzeexjrQ6oA35fHo/view)·[11~20번](https://drive.google.com/file/d/1QNx7Df0mx0Kyulf-UMVqFo0akNDZdxCt/view)·[21~30번](https://drive.google.com/file/d/1y_JrscbKhZLLhkbgh_0cHPg7s6RHcyGY/view) ZIP을 다시 내려받아 각 로컬 SHA-256과 일치함을 확인했다. 세 묶음에는 단독 오답 30회 ZIP과 검수 기록이 있으나 기본 조합 회귀 파일 7개는 빠져 있었다. 이를 [Drive 기본 조합 보충 ZIP](https://drive.google.com/file/d/1_plSTHSbyAqKyvS3OSHtU0epRJ8lBYC3/view)에 경로·해시 목록과 함께 보관하고, 5639084바이트·SHA-256 `43f314b8a5699d04b5fe058c575541646e2bb343f6fc2319a4403e5cea3710db`로 재다운로드 일치를 확인했다.
