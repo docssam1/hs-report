@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 HWP 변환 시험본 판정·Mac 정리 (최신)
+
+- Mac 전달 제작 기준 v2.7은 기존 [Drive 출처 표시 참고 사본](https://drive.google.com/file/d/1HJTPi1tNBCzjM_R4Ui_H9jBB_4CNrgtH/view)과 124006바이트·SHA-256 `6044b894b8f58b94cfaff5dd331e7367f76e44f70076be7facee443a77499b18`로 다시 일치했다. 사용자 제공 Drive ID `1LjpYZDs74UiI2wrbMi7ME3jWxILTck71`은 여전히 원자료 **폴더**이며 제작 기준 원본 파일 ID로 간주하지 않는다.
+- Drive [8회 원본 HWP](https://drive.google.com/file/d/1rR7RlwGsfuR05RaERc5Ae_J0WPxNTCFt/view)는 1323520바이트·SHA-256 `62d9b7cb1c8c22d109f81e5cb3c0dfe20d4506d402cdfbc8fb8665cd5feb7278`로 재다운로드 확인했다. Mac `hwp-converted.pdf`는 **5952쪽**으로 Drive 원본과 바이트 일치한 정상 `original.pdf` **7쪽**의 대체 원문으로 쓸 수 없다. [Drive 비정상 변환 기록](https://drive.google.com/file/d/1cTyMWAkd153CFOstHj-KV8JzDIjgelQG/view)을 1305바이트·SHA-256 `76e2f97161ddacf5b0ef2a9241290ea685623ca92f973238a3b461ac9deb6144`로 재다운로드 확인한 뒤, Git 추적·코드 참조·열린 파일이 없는 실패한 로컬 임시 PDF **9141997바이트**만 정리했다. 원본 HWP·정상 PDF·현행 원문 검수 작업본과 승인 은행은 유지했다.
+
 ## 2026-10-19 중급 8회 원문·답안 Drive 원자료 ID·해시 확인 (최신)
 
 - Mac 현행 검수 원문 `original.pdf`와 답안 `answer.pdf`, 7·8회 리뷰, 2023·2024 과제, 별도 2024 8회 PDF **6개**를 기존 Drive 원파일에서 다시 내려받아 각각 길이·SHA-256이 Mac 작업본과 일치함을 확인했다. 사용자 제공 [원자료 상위 폴더](https://drive.google.com/drive/folders/1LjpYZDs74UiI2wrbMi7ME3jWxILTck71)에는 8회 원본 HWP `1rR7RlwGsfuR05RaERc5Ae_J0WPxNTCFt`도 있다. [Drive 원자료 식별·해시 기록](https://drive.google.com/file/d/1l3v6vwITaxo3mUHs3g5SK2U42Bv4cS0z/view)에 6개 PDF의 정확한 파일 ID·원래 제목·크기·SHA-256과 HWP 위치를 저장하고 3900바이트·SHA-256 `e3d8e3d8824b607b39aa4a69b1de037c608fae02f2e64c9f9a72f293e4719f8f`로 재다운로드 일치를 확인했다.
