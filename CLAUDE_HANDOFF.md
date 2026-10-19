@@ -1,5 +1,10 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 중급 8회 공개 은행·진단 출력 재검수본 Drive 보관·Mac 정리 (최신)
+
+- 공개 은행/진단 화면과 로컬 재검수의 완료된 4개 폴더 **107개 파일·63604814바이트**를 원래 경로·파일별 SHA-256 manifest와 함께 기존 중급 8회 Drive 검수 폴더의 [전체 ZIP](https://drive.google.com/file/d/1Agk_EcQPzQXP99Aka640lTdvglhQ0KCM/view)에 보관했다. ZIP **59386489바이트**, SHA-256 `ddd1d2a3bb9a17c1e9d5d8ff1d27487358891865e2984b3066dca24f151dffc1`로 Drive 재다운로드 일치를 확인했다.
+- ZIP 안의 파일 107개를 Mac 원본과 바이트 단위로 대조하고 Git 추적·현행 코드 참조·열린 파일·심볼릭 링크가 없는 `.private-work/middle8-public-bank-20261019/`, `.private-work/middle8-public-report-20261019/`, `.private-work/middle8-local-bank-recheck-20261019/`, `.private-work/middle8-local-report-recheck-20261019/`만 정리했다. Mac 순감소량은 **63604814바이트**다. 원문·변형·답·그림의 현행 9축 검수 작업본 `.private-work/middle8-20261018/`와 공개 연결 현장 대조본 `.private-work/middle8-20261019-live-parity/`는 유지했다. 승인 문제은행·학생 성적·원본 자료는 변경하지 않았고 9축 보류는 해제하지 않았다.
+
 ## 2026-10-19 최종 3회 30문항 조합 QA 보충 보관·Mac 정리 (최신)
 
 - 기존 [Drive 30문항 조합 QA ZIP](https://drive.google.com/file/d/1Vpq_QXnMqmZo_B20a9x6X8TW5pG6dbb1/view)은 2106125바이트·SHA-256 `975171cd898a008ba69061a7c920b866e72010fb97afedf586568e125b9e94bc`로 Mac 원본과 일치했지만 화면 PNG 3개가 빠져 있었다. 3개·12130422바이트를 [Drive 보충 ZIP](https://drive.google.com/file/d/14pxkHICC7eF8SM0FOboyzBj5b6yItYef/view)에 원래 경로·파일별 SHA-256 목록과 함께 저장했고, 11974216바이트·SHA-256 `ed3b4e6c94303ff44bcc44d0a112537c75f8b0b063331620bfeaee4405a112ba`로 재다운로드 일치를 확인했다.
