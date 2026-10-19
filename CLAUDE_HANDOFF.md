@@ -1,5 +1,11 @@
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
+## 2026-10-19 최종 3회 당일 합성 QA 시험본 보관·Mac 정리 (최신)
+
+- 10월 19일 합성 배치·공개 화면/PDF·운영 패턴·로컬 재검수·연결 회귀 폴더 5개의 **89개 파일·109576224바이트**를 원래 경로와 파일별 SHA-256 manifest를 담아 기존 최종 3회 Drive 검수 폴더의 [A ZIP](https://drive.google.com/file/d/1uXym7-w3ruG7qIUeJIc8WaV3R3pJy8aV/view) **61582723바이트** 및 [B ZIP](https://drive.google.com/file/d/1OaP-_1qrfAbAt6djJ4hqQVtztUR6-Iag/view) **42237157바이트**으로 보관했다. 두 파일을 Drive에서 재다운로드해 SHA-256 `b9822bb457745e742a6ac3cd3e3457c6cd7ebb4b58c742a01855449667e93c0b`·`b3d58942133dad8db1ea5ee7b640b62c12afdaee481e05789af18d5f6faa9fc1` 일치를 확인했다.
+- ZIP 안의 89개 파일을 Mac 원본과 바이트 단위로 대조한 뒤 Git 추적·현행 코드 경로 참조·열린 파일·심볼릭 링크가 없는 완료 폴더 `.private-work/last3-batch-qa-20261019/`, `.private-work/last3-public-qa-20261019/`, `.private-work/last3-operational-pattern-20261019/`, `.private-work/last3-local-recheck-20261019/`, `.private-work/last3-mock-link-regression-20261019/`만 정리했다. Mac 원본 순감소량은 **109576224바이트**다. 이는 합성 QA 근거 보관이며 실제 학생/관리자 계정의 ZIP 저장과 실물 종이 인쇄는 아직 검수 대기다. 중급 8회 현행 검수 작업본·원본·승인 은행·학생 기록은 변경하지 않았다.
+
+
 ## 2026-10-19 최종 3회 10월 18일 배치 QA 시험본 보관·Mac 정리 (최신)
 
 - 현행 코드가 참조하지 않는 2026-10-18 배치 QA 폴더 6개의 **87개 파일·112690104바이트**를 원래 경로·파일별 SHA-256 manifest와 함께 [Drive A ZIP](https://drive.google.com/file/d/1p4NTCXbcIjoW_CfABKkVybW2nwX3gj5m/view) **57160640바이트**, [Drive B ZIP](https://drive.google.com/file/d/1scOsESGFbSs5rh_bRxcj6D6M9u6yDwZI/view) **37831802바이트**로 보관했다. 두 ZIP을 재다운로드해 SHA-256 `d723f8bb95597c3835827d80bdc2a06599525a141012b1d9efd839ad5beae09b`·`c62b0dbe0d242283be8056418b2e5c76fff69bc410608ec755718df3dada53e4`가 일치함을 확인했다.
