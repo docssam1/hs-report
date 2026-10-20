@@ -69,7 +69,7 @@ function libraryEnhancementSource() {
   return source.slice(0, uiBlockStart);
 }
 
-function configuredData(student) {
+function configuredData(student, clearMiddlePdf = false) {
   const sandbox = {
     URL,
     location: {href:'https://hs.gfieldacademy.net/index.html',origin:'https://hs.gfieldacademy.net'},
@@ -85,6 +85,11 @@ function configuredData(student) {
   });
   sandbox.GFIELD_DATA.studentTypes = sandbox.GFIELD_DATA.studentTypes || {};
   sandbox.GFIELD_DATA.studentTypes[student] = student === ONLINE_STUDENT ? 'online' : 'onsite';
+  if (clearMiddlePdf) {
+    (sandbox.GFIELD_DATA.books || []).forEach((book) => {
+      if (book && (book.accessKey === 'mock-mid-7' || book.accessKey === 'mock-mid-8')) book.pdf = '';
+    });
+  }
   vm.runInContext(fs.readFileSync(path.join(ROOT,'final-last-routes.js'),'utf8'),sandbox);
   vm.runInContext(libraryEnhancementSource(), sandbox, {
     filename: 'index-enhancements.library.js',
@@ -277,6 +282,20 @@ check('최종 1~4회 온라인 회원 성적 입력 링크', () => {
 
 check('추가 모의고사 원본형 1·2회 이미지·PDF·정답 연결', () => {
   assertOriginalFormBooks(configuredData(ONSITE_STUDENT));
+});
+
+check('중급 7·8회 자료실 시험지 PDF와 관리자 재저장 후 보정', () => {
+  for (const clearMiddlePdf of [false, true]) {
+    const data = configuredData(ONSITE_STUDENT, clearMiddlePdf);
+    for (const round of [7, 8]) {
+      const key = `mock-mid-${round}`;
+      const books = (data.books || []).filter((book) => book && book.folder === '추가 모의고사' && book.accessKey === key);
+      assert.equal(books.length, 1, `${key} 자료실 카드 수`);
+      const expected = `materials/초등과정 대비 실전 모의고사활용 ${round}회.pdf`;
+      assert.equal(books[0].pdf, expected, `${key} 시험지 경로`);
+      assert.equal(fs.existsSync(path.join(ROOT, expected)), true, `${key} 시험지 파일`);
+    }
+  }
 });
 
 check('Thinking Core 강의 버튼 통합과 종료 후 자동 연결', () => {

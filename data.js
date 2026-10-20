@@ -2189,7 +2189,7 @@ window.GFIELD_DATA = {
       "folder": "추가 모의고사",
       "title": "중급 모의고사 7회",
       "accessKey": "mock-mid-7",
-      "pdf": "",
+      "pdf": "materials/초등과정 대비 실전 모의고사활용 7회.pdf",
       "cover": "",
       "date": "2026-07-28",
       "links": [
@@ -2207,7 +2207,7 @@ window.GFIELD_DATA = {
       "folder": "추가 모의고사",
       "title": "중급 모의고사 8회",
       "accessKey": "mock-mid-8",
-      "pdf": "",
+      "pdf": "materials/초등과정 대비 실전 모의고사활용 8회.pdf",
       "cover": "",
       "date": "2026-07-28",
       "links": [

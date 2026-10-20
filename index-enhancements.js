@@ -279,6 +279,10 @@
       var round=roundOf(book);
       if(!round) return;
 
+      if(book.folder==='추가 모의고사'&&book.accessKey==='mock-mid-'+round&&(round===7||round===8)){
+        book.pdf='materials/초등과정 대비 실전 모의고사활용 '+round+'회.pdf';
+      }
+
       if(book.folder==='파이널 모의고사'&&round>=1&&round<=5&&/파이널\s*실전\s*모의고사/.test(String(book.title||''))){
         var finalBase=window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('final',round,''):'final.html?round='+round;
         if(finalPages[round]){
