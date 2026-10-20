@@ -4,7 +4,7 @@ require('./email-login-test-stub'); // QA 전용: 학부모 이메일 인증 단
 const {chromium}=require('playwright');
 const core=require('../supabase/functions/hs-final-population/population-core.js');
 const root=path.resolve(__dirname,'..'),student='연결검수학생';
-const baselines=Object.fromEntries([1,2,3,4].map(round=>['final'+round,{schemaVersion:1,exam:'final'+round,scope:'provided-original-records',approved:true,version:'final'+round+'-'+String(round).repeat(64),rows:[{id:'one',ox:'O'.repeat(30),score:100},{id:'two',ox:'X'.repeat(30),score:0}]}]));
+const baselines=Object.fromEntries(['final','last'].flatMap(series=>[1,2,3,4].map(round=>{const exam=series+round;return[exam,{schemaVersion:1,exam,scope:'provided-original-records',approved:true,version:exam+'-'+String(round).repeat(64),rows:[{id:'one',ox:'O'.repeat(30),score:100},{id:'two',ox:'X'.repeat(30),score:0}]}];})));
 const ox='O'.repeat(20)+'X'.repeat(10),score=core.scoreOf(ox);
 const rows=['final1','final2','final3','final4','last1','last2'].map(round=>({student,round,ox,score,wrong:10,source:'admin',updated_at:'2026-09-01T00:00:00Z'}));
 rows.push({student,round:'final1@2',ox:'O'.repeat(30),score:100,wrong:0,source:'practice-admin',updated_at:'2026-09-02T00:00:00Z'});
@@ -32,7 +32,7 @@ const server=http.createServer((req,res)=>{
    return route.fulfill({json:empty?[]:rows});
   }
   if(u.pathname.endsWith('/hs-final-population')){
-   const b=req.postDataJSON();if(b.action){actions.push(b.action);if(b.action!=='read-report')writes.push(b);if(populationOffline)return route.fulfill({status:401,json:{error:'LOGIN_REQUIRED'}});return route.fulfill({json:{canEdit:false,comment:'조건을 표시하고 풀이를 확인해 보세요.',snapshot:core.createResponse(baselines[b.exam],[score]),resultOx:ox}});}
+   const b=req.postDataJSON();if(b.action){actions.push(b.action);if(b.action!=='read-report')writes.push(b);if(populationOffline)return route.fulfill({status:401,json:{error:'LOGIN_REQUIRED'}});if(/^last/.test(b.exam))return route.fulfill({status:503,json:{error:'STATISTICS_UNAVAILABLE'}});return route.fulfill({json:{canEdit:false,comment:'조건을 표시하고 풀이를 확인해 보세요.',snapshot:core.createResponse(baselines[b.exam],[score]),resultOx:ox}});}
    if(populationOffline)return route.fulfill({status:503,json:{error:'STATISTICS_UNAVAILABLE'}});
    return route.fulfill({json:core.createResponse(baselines[b.exam],b.scores)});
   }
@@ -47,15 +47,23 @@ const server=http.createServer((req,res)=>{
   let covered=0;
   for(const b of catalog){
    const n=Number((b.title.match(/(\d+)\s*회/)||[])[1]);if(!n)continue;
-   let series=b.folder==='파이널 모의고사'?'final':b.folder==='최종 모의고사'?'last':n===5?'final':'last';
-   const round=b.folder==='추가 모의고사'&&n>=6?n-5:n;
+   if(b.folder==='추가 모의고사'&&[7,8].includes(n))continue; // independent Final 7·8 report fixtures live in their own suite
+   let series=b.folder==='파이널 모의고사'?'final':b.folder==='최종 모의고사'?'last':([5,7,8].includes(n)?'final':'last');
+   const round=b.folder==='추가 모의고사'&&series==='last'?n-5:n;
    const reports=(b.links||[]).filter(l=>{const u=new URL(l.url,base);return u.pathname.endsWith('/last1-result.html')||u.searchParams.get('go')==='report';});
    assert.equal(reports.length,1,b.title+' exactly one report action');
    const expected=await page.evaluate(({series,round,student})=>GFIELD_FINAL_LAST_ROUTES.withStudent(GFIELD_FINAL_LAST_ROUTES.route(series,round,'report'),student),{series,round,student});
    assert.equal(new URL(reports[0].url,base).href,new URL(expected,base).href,b.title+' canonical personal report');
-   assert.ok(!(b.links||[]).some(l=>/go=answer|last1-entry/.test(l.url)),b.title+' resident not prompted to reenter scores');covered++;
+   if(b.folder==='최종 모의고사') assert.equal((b.links||[]).filter(l=>/last1-entry\.html/.test(l.url)).length,1,b.title+' resident practice entry');
+   else assert.ok(!(b.links||[]).some(l=>/go=answer|last1-entry/.test(l.url)),b.title+' original result kept separate from practice entry');
+   covered++;
   }
-  assert.equal(covered,13,'Final1-4, Last1-4, additional Final5 and four Last aliases');
+  assert.equal(covered,11,'Final1-4, Last1-4, additional Final5 and Last 6·9 aliases');
+  if(process.env.GFIELD_QA_LINK_ONLY==='1'){
+   assert.deepEqual(writes,[],'link inspection writes nothing');
+   console.log(JSON.stringify({pass:true,catalogReportLinks:covered,lastPracticeLinks:4,productionWrites:0}));
+   return;
+  }
   async function openRoadmap(pattern){
    await page.evaluate(()=>nav('roadmap'));
    const card=page.locator('#timeline .node').filter({has:page.locator('h3',{hasText:pattern})}).first();

@@ -223,16 +223,12 @@ function assertLastLibraryBooks(data, online) {
       `최종 ${round}회 성적 확인`,
     );
 
-    const entryLinks = (book.links || []).filter((link) => link && link.label === '성적 입력');
-    assert.equal(entryLinks.length, online ? 1 : 0, `최종 ${round}회 성적 입력 링크 노출`);
-    if (online) {
-      assertRoute(
-        entryLinks[0],
-        '/last1-entry.html',
-        { round },
-        `최종 ${round}회 성적 입력`,
-      );
-    }
+    assertRoute(
+      linkFor(book, '오답 입력·분석'),
+      '/last1-entry.html',
+      { round, name: online ? ONLINE_STUDENT : ONSITE_STUDENT },
+      `최종 ${round}회 성적 입력`,
+    );
   });
 }
 
@@ -294,6 +290,9 @@ check('중급 7·8회 자료실 시험지 PDF와 관리자 재저장 후 보정'
       const expected = `materials/초등과정 대비 실전 모의고사활용 ${round}회.pdf`;
       assert.equal(books[0].pdf, expected, `${key} 시험지 경로`);
       assert.equal(fs.existsSync(path.join(ROOT, expected)), true, `${key} 시험지 파일`);
+      assert.equal(books[0].video, round === 7 ? 'https://youtu.be/J8BNb-tHiM0' : 'https://youtu.be/UR28dko8N6c', `${key} 강의 영상`);
+      assertRoute(linkFor(books[0], '실전 타이머'), '/exam-timer-voice.html', {}, `${key} 80분 타이머`);
+      assertRoute(linkFor(books[0], '오답 입력·분석'), '/mock.html', { round }, `${key} 오답 입력`);
     }
   }
 });

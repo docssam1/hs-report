@@ -23,22 +23,23 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
 </head>
 <body>
 <div class="wrap"><div class="card">
-  <header class="hd"><div class="tag">온라인 회원 직접 입력</div><h1 id="pageTitle">최종 모의고사 성적 입력</h1><p>90분 시험을 마치고 채점한 뒤, 틀린 문항만 눌러 주세요.</p></header>
+  <header class="hd"><div class="tag">최초 응시·연습 재응시</div><h1 id="pageTitle">최종 모의고사 성적 입력</h1><p>90분 시험을 마치고 채점한 뒤, 틀린 문항만 눌러 주세요.</p></header>
   <main class="bd">
     <div id="member" class="member hide"><span>입력 학생</span><b id="studentName"></b></div>
     <div id="loading" class="state"><span class="ico">⏳</span>최초 성적 기록을 확인하고 있어요…</div>
     <div id="blocked" class="state hide"></div>
     <section id="entry" class="hide">
-      <div class="notice">한 번 저장된 <b>최초 성적은 누적 기준으로 유지</b>됩니다. O는 맞은 문항이고, 아래에서 눌러 빨간 X로 바꾼 문항만 오답으로 저장됩니다.</div>
+      <div class="notice" id="entryNotice">한 번 저장된 <b>최초 성적은 누적 기준으로 유지</b>됩니다. O는 맞은 문항이고, 아래에서 눌러 빨간 X로 바꾼 문항만 오답으로 저장됩니다.</div>
       <div id="grid" class="grid" aria-label="문항별 정오 입력"></div>
       <div class="summary"><div class="sum"><span>예상 점수</span><b id="score">100.0점</b></div><div class="sum"><span>맞은 문항</span><b id="correct">30개</b></div><div class="sum"><span>틀린 문항</span><b id="wrong">0개</b></div></div>
-      <button id="saveBtn" class="save" type="button">✅ 내 최초 성적 저장</button>
+      <button id="saveBtn" class="save" type="button">✅ 성적 저장</button>
       <div id="error" class="err hide"></div>
     </section>
   </main>
-  <footer class="ft">온라인 회원은 직접 입력 · 재원생은 선생님이 기록 · 누적에는 회차별 최초 성적만 반영</footer>
+  <footer class="ft">학생 직접 입력은 회차당 최대 3회 · 2·3차 연습은 최초 점수와 누적 성적을 바꾸지 않습니다</footer>
 </div></div>
 <script src="data.js"></script>
+<script src="final-last-routes.js?v=20261020-last-entry"></script>
 <script src="mock-data-last.js?v=20260823c"></script>
 <script src="mock-data-last3.js?v=20260823c"></script>
 <script src="mock-data-last4.js?v=20260823c"></script>
@@ -55,6 +56,7 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
   var round=scoreModel.rounds&&scoreModel.rounds[String(roundNo)];
   var paperRound=window.GFIELD_MOCK_LAST&&window.GFIELD_MOCK_LAST.rounds&&window.GFIELD_MOCK_LAST.rounds[String(roundNo)];
   var ROUND=round&&round.key||('last'+roundNo);
+  var SLOT_KEYS=[ROUND,ROUND+'@2',ROUND+'@3'];
   var requestedStudent=(params.get('name')||'').trim();
   var student='';
   try{ student=(localStorage.getItem('gfield_student')||'').trim(); }catch(e){}
@@ -62,7 +64,7 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
   var D=window.GFIELD_DATA||{};
   var questions=round&&Array.isArray(round.items)?round.items.slice().sort(function(a,b){return a.no-b.no;}):[];
   var wrong={};
-  var existing=null;
+  var existing=null,attemptNo=1,activeKey=ROUND;
 
   function byId(id){return document.getElementById(id);}
   function show(id){byId(id).classList.remove('hide');}
@@ -72,7 +74,7 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
   function isOnlineMember(name){return !!(name&&D.studentTypes&&D.studentTypes[name]==='online');}
   function isReset(row){return !!(row&&row.source==='reset'&&row.ox==='RESET');}
   function isActive(row){return !!(row&&!isReset(row));}
-  function resultUrl(){return 'last1-result.html?round='+roundNo+'&name='+encodeURIComponent(student);}
+  function resultUrl(){return 'final.html?set=last&round='+roundNo+'&go=report&attempt='+attemptNo+'&name='+encodeURIComponent(student);}
   function block(icon,html,withResult){
     hide('loading'); hide('entry');
     var box=byId('blocked');
@@ -100,37 +102,48 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
       paintSummary();
     });
   }
-  async function fetchOfficial(){
+  async function fetchSlot(key){
     var url=SB_URL+'/rest/v1/mock_results?student=eq.'+encodeURIComponent(student)
-      +'&round=eq.'+ROUND+'&select=student,round,ox,score,wrong,source,updated_at&order=updated_at.asc&limit=1';
+      +'&round=eq.'+encodeURIComponent(key)+'&select=student,round,ox,score,wrong,source,updated_at&order=updated_at.asc&limit=1';
     var response=await fetch(url,{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}});
     if(!response.ok) throw new Error('조회 HTTP '+response.status);
     var rows=await response.json(); return rows[0]||null;
   }
+  async function fetchSlots(){return Promise.all(SLOT_KEYS.map(fetchSlot));}
+  function nextSlot(rows){return rows.findIndex(function(row){return !isActive(row);});}
+  function showAttempt(index,rows){
+    attemptNo=index+1; activeKey=SLOT_KEYS[index]; existing=rows[index];
+    byId('pageTitle').textContent='최종 모의고사 '+roundNo+'회 · '+(attemptNo===1?'최초 성적 입력':attemptNo+'차 연습 입력');
+    byId('entryNotice').innerHTML=attemptNo===1
+      ?'이번 입력은 <b>최초 성적</b>으로 누적 기준에 반영됩니다. 틀린 문항만 눌러 빨간 X로 바꿔 주세요.'
+      :'<b>'+attemptNo+'차 연습 기록</b>입니다. 이미 저장된 최초 점수와 누적 성적은 바뀌지 않습니다. 틀린 문항만 눌러 빨간 X로 바꿔 주세요.';
+    byId('saveBtn').textContent='✅ '+(attemptNo===1?'내 최초 성적':'내 '+attemptNo+'차 연습 성적')+' 저장';
+  }
   async function save(){
     var button=byId('saveBtn'),error=byId('error'); hide('error'); button.disabled=true;
     try{
-      existing=await fetchOfficial();
-      if(isActive(existing)){ block('🔒','이미 최초 성적이 기록되어 있어요.<br>기존 기록은 덮어쓰지 않았습니다.',true); return; }
+      var rows=await fetchSlots();
+      if(nextSlot(rows)!==attemptNo-1){ block('🔒','다른 입력이 먼저 저장됐어요.<br>기존 기록은 바꾸지 않았습니다. 새로고침해 다음 연습을 시작해 주세요.',true); return; }
+      existing=rows[attemptNo-1];
       var t=totals();
       var wrongNos=questions.filter(function(q){return !!wrong[q.no];}).map(function(q){return q.no;});
-      if(!confirm(student+' 학생의 최초 성적을 저장할까요?\n\n점수 '+t.score.toFixed(1)+'점 · 오답 '+t.wrong+'개'+(wrongNos.length?'\n오답: '+wrongNos.join(', ')+'번':'')+'\n\n저장 후에는 일반 입력으로 바꿀 수 없습니다.')) return;
+      if(!confirm(student+' 학생의 '+(attemptNo===1?'최초 성적':attemptNo+'차 연습 성적')+'을 저장할까요?\n\n점수 '+t.score.toFixed(1)+'점 · 오답 '+t.wrong+'개'+(wrongNos.length?'\n오답: '+wrongNos.join(', ')+'번':'')+'\n\n저장 후 이 기록은 바꿀 수 없고, 연습 성적은 최초 점수에 영향을 주지 않습니다.')) return;
       var ox=questions.map(function(q){return wrong[q.no]?'X':'O';}).join('');
-      var payload={student:student,round:ROUND,ox:ox,score:t.score,wrong:t.wrong,source:'online',updated_at:new Date().toISOString()};
+      var payload={student:student,round:activeKey,ox:ox,score:t.score,wrong:t.wrong,source:attemptNo===1?(isOnlineMember(student)?'online':'parent'):'practice',updated_at:new Date().toISOString()};
       var saveUrl=SB_URL+'/rest/v1/mock_results';
       var method='POST',prefer='return=minimal';
       if(isReset(existing)){
         method='PATCH'; prefer='return=representation';
-        saveUrl+='?student=eq.'+encodeURIComponent(student)+'&round=eq.'+ROUND+'&source=eq.reset&ox=eq.RESET&select=round';
+        saveUrl+='?student=eq.'+encodeURIComponent(student)+'&round=eq.'+encodeURIComponent(activeKey)+'&source=eq.reset&ox=eq.RESET&select=round';
       }
       var response=await fetch(saveUrl,{method:method,headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json',Prefer:prefer},body:JSON.stringify(payload)});
-      if(response.status===409){ block('🔒','다른 입력이 먼저 최초 성적으로 기록됐어요.<br>먼저 저장된 기록을 유지했습니다.',true); return; }
+      if(response.status===409){ block('🔒','다른 입력이 먼저 기록됐어요.<br>먼저 저장된 기록을 유지했습니다.',true); return; }
       if(!response.ok) throw new Error('저장 HTTP '+response.status);
       if(method==='PATCH'){
         var changed=await response.json();
-        if(!Array.isArray(changed)||changed.length!==1){ block('🔒','다른 입력이 먼저 최초 성적으로 기록됐어요.<br>먼저 저장된 기록을 유지했습니다.',true); return; }
+        if(!Array.isArray(changed)||changed.length!==1){ block('🔒','다른 입력이 먼저 기록됐어요.<br>먼저 저장된 기록을 유지했습니다.',true); return; }
       }
-      block('✅','최초 성적을 안전하게 저장했습니다.<br>이 기록이 통합 석차 백분율에 반영됩니다.',true);
+      block('✅',attemptNo===1?'최초 성적을 저장했습니다.<br>이 기록이 통합 석차 백분율에 반영됩니다.':attemptNo+'차 연습 성적을 저장했습니다.<br>최초 점수와 누적 성적은 그대로 유지됩니다.',true);
     }catch(e){ error.textContent='성적을 저장하지 못했습니다. 잠시 후 다시 시도해 주세요. ('+e.message+')'; show('error'); }
     finally{ button.disabled=false; }
   }
@@ -139,14 +152,16 @@ body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#eef1f6;colo
     document.title='최종 모의고사 '+roundNo+'회 성적 입력 | 지필드 영재교육';
     byId('pageTitle').textContent='최종 모의고사 '+roundNo+'회 성적 입력';
     if(!paperRound||paperRound.ready!==true){ block('🔒','최종 '+roundNo+'회는 현재 검수 대기 중입니다.<br>시험 공개 후 최초 성적을 입력할 수 있습니다.',false); return; }
-    if(!student){ block('🔐','홈페이지에서 온라인 회원 이름으로 로그인한 뒤 다시 열어 주세요.',false); return; }
+    if(!student){ block('🔐','홈페이지에서 학생 이름으로 로그인한 뒤 다시 열어 주세요.',false); return; }
     if(identityMismatch){ block('🔒','현재 로그인한 학생과 요청한 이름이 다릅니다.<br>홈페이지에서 본인 계정으로 다시 열어 주세요.',false); return; }
     byId('studentName').textContent=student+' 학생'; show('member');
-    if(!isOnlineMember(student)){ block('🧑‍🏫','이 화면은 온라인 회원 직접 입력 전용입니다.<br>재원생 성적은 선생님이 대신 기록합니다.',false); return; }
+    var routes=window.GFIELD_FINAL_LAST_ROUTES;
+    if(!routes||!routes.accessAllowed(D,student,'last',roundNo)){ block('🔒','이 회차의 학생 열람 권한을 확인하지 못했습니다.',false); return; }
     if(!round||questions.length!==30){ block('🔒','아직 최종 '+roundNo+'회 입력이 열리지 않았습니다.',false); return; }
     try{
-      existing=await fetchOfficial();
-      if(isActive(existing)){ block('📌','이미 최초 성적이 기록되어 있습니다.<br>누적에는 먼저 저장된 성적이 반영됩니다.',true); return; }
+      var rows=await fetchSlots(),index=nextSlot(rows);
+      if(index<0){ attemptNo=1; block('📌','이 회차는 최초 응시와 2·3차 연습까지 모두 기록했습니다.<br>최초 성적은 그대로 유지됩니다.',true); return; }
+      showAttempt(index,rows);
     }catch(e){ block('⚠️','최초 성적을 확인하지 못했습니다.<br>네트워크 상태를 확인한 뒤 새로고침해 주세요.',false); return; }
     hide('loading'); renderGrid(); paintSummary(); show('entry');
   }

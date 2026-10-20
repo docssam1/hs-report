@@ -84,7 +84,7 @@ check('학생·교사 입력과 결과 화면은 동일한 lastN 키를 사용',
   assert.match(adapter, /paper\.items=source\.items\.map/);
   assert.match(analysis, /order=updated_at\.asc/);
   assert.match(result, /student=eq\."\+encodeURIComponent\(student\)/);
-  assert.match(entry, /source:'online'/);
+  assert.match(entry, /isOnlineMember\(student\)\?'online':'parent'/);
   assert.match(analysis, /source:'admin'/);
 });
 

@@ -59,7 +59,7 @@ function expectedHref(locator, pattern, label) {
       const qaData = `\n;(function(){var D=window.GFIELD_DATA;var n=${JSON.stringify(STUDENT)};`+
         `if(!D.students.includes(n))D.students.push(n);D.studentTypes[n]='online';`+
         `['파이널 모의고사','최종 모의고사','추가 모의고사','약점 유형','개념 교재'].forEach(function(f){if(!Array.isArray(D.archiveAccess[f]))D.archiveAccess[f]=[];if(!D.archiveAccess[f].includes(n))D.archiveAccess[f].push(n);});`+
-        `D.archiveProductAccess=D.archiveProductAccess||{};['concept-basic','concept-core','mock-signature-1','mock-signature-2'].forEach(function(k){if(!Array.isArray(D.archiveProductAccess[k]))D.archiveProductAccess[k]=[];if(!D.archiveProductAccess[k].includes(n))D.archiveProductAccess[k].push(n);});})();`;
+        `D.archiveProductAccess=D.archiveProductAccess||{};['concept-basic','concept-core','mock-signature-1','mock-signature-2','mock-mid-7','mock-mid-8'].forEach(function(k){if(!Array.isArray(D.archiveProductAccess[k]))D.archiveProductAccess[k]=[];if(!D.archiveProductAccess[k].includes(n))D.archiveProductAccess[k].push(n);});})();`;
       await route.fulfill({ status: 200, contentType: 'application/javascript; charset=utf-8', body: source + qaData });
     });
 
@@ -73,6 +73,20 @@ function expectedHref(locator, pattern, label) {
 
     const originalRound1Card = page.getByRole('button', { name: /초등선발 대비 시그니처 실전 모의고사 1회/ });
     const originalRound2Card = page.getByRole('button', { name: /초등선발 대비 시그니처 실전 모의고사 2회/ });
+    for (const [round, videoId] of [[7, 'J8BNb-tHiM0'], [8, 'UR28dko8N6c']]) {
+      await page.getByRole('button', { name: new RegExp(`중급 모의고사 ${round}회`) }).click();
+      await page.waitForSelector('#bookviewer.open .bv-stage.split');
+      assert.match(await page.locator('#bookviewer .bv-vid iframe').getAttribute('src'), new RegExp(videoId), `중급 ${round}회 강의`);
+      assert.match(decodeURIComponent(await page.locator('#bookviewer .bv-doc iframe').getAttribute('src')), new RegExp(`실전 모의고사활용 ${round}회\\.pdf`), `중급 ${round}회 시험지`);
+      for (const label of ['실전 타이머', '오답 입력·분석', '답안·교재 연결표']) {
+        assert.equal(await page.locator('#bv-actions a').filter({ hasText: label }).count(), 1, `중급 ${round}회 ${label}`);
+      }
+      await page.click('#bookviewer .bv-back');
+    }
+    if (process.env.GFIELD_QA_MIDDLE_ONLY === '1') {
+      console.log('PASS middle 7·8 split video/PDF viewer and timer/input/answer actions');
+      return;
+    }
     assert.equal(await originalRound1Card.locator('.desc').textContent(), '80분 · 30문항 · 100점', '원본형 1회 카드 시험 정보');
     assert.equal(await originalRound2Card.locator('.desc').textContent(), '80분 · 30문항 · 100점', '원본형 2회 카드 시험 정보');
 
@@ -120,7 +134,7 @@ function expectedHref(locator, pattern, label) {
     assert.equal(await lastVideo.count(), 1, '최종 시험지·영상 결합 뷰어');
     assert.match(await lastVideo.getAttribute('src'), /youtube\.com\/embed\/T9LbJLG2BRQ/, '최종 1회 전체 풀이 영상');
     await expectedHref(page.getByRole('link', { name: /답안·해설/ }), /last1-answer\.html/, '최종 답안');
-    await expectedHref(page.getByRole('link', { name: /성적 입력/ }), /last1-entry\.html\?round=1/, '최종 성적 입력');
+    await expectedHref(page.getByRole('link', { name: /오답 입력·분석/ }), /last1-entry\.html\?round=1/, '최종 성적 입력');
     await expectedHref(page.getByRole('link', { name: new RegExp(`${STUDENT} 학생 진단 분석지`) }), /final\.html\?set=last&round=1&go=report/, '최종 성적 진단');
     const lastPopupPromise = page.waitForEvent('popup');
     await page.getByRole('button', { name: /인쇄/ }).click();

@@ -467,24 +467,24 @@ check('학생 홈페이지의 최종 1~4회가 이미지 시험지·타이머·�
   assert.doesNotMatch(generatedDataSource, /hs\.gfieldacademy\.net\/last1-answer\.html/);
 });
 
-check('온라인 회원 직접 입력과 재원생 교사 기록 경로 분리', () => {
+check('최종 1~4회 학생 직접 입력과 교사 기록의 최초·연습 슬롯 분리', () => {
   assert.match(indexEnhancementsSource, /var ENTRY_URL='last1-entry\.html'/);
   assert.match(indexEnhancementsSource, /studentTypes\[nm\]==='online'/);
-  assert.match(indexEnhancementsSource, /if\(onlineMember\(\)\)/);
-  assert.match(indexEnhancementsSource, /e\.innerHTML='✍️ 성적 입력'/);
+  assert.match(indexEnhancementsSource, /e\.innerHTML='✍️ 오답 입력·분석 열기'/);
   assert.match(indexEnhancementsSource, /b\.innerHTML='📊 성적 확인'/);
 
   assert.match(entrySource, /<script src="data\.js"><\/script>/);
   assert.match(entrySource, /<script src="last-score-data\.js(?:\?v=[^"]+)?"><\/script>/);
   assert.match(entrySource, /var paperRound=.*GFIELD_MOCK_LAST/);
   assert.match(entrySource, /paperRound\.ready!==true/);
-  assert.match(entrySource, /D\.studentTypes\[name\]==='online'/);
-  assert.match(entrySource, /round:ROUND,ox:ox,score:t\.score,wrong:t\.wrong,source:'online'/);
+  assert.match(entrySource, /routes\.accessAllowed\(D,student,'last',roundNo\)/);
+  assert.match(entrySource, /SLOT_KEYS=\[ROUND,ROUND\+'@2',ROUND\+'@3'\]/);
+  assert.match(entrySource, /source:attemptNo===1\?\(isOnlineMember\(student\)\?'online':'parent'\):'practice'/);
   assert.match(entrySource, /function isReset\(row\)\{return !!\(row&&row\.source==='reset'&&row\.ox==='RESET'\);\}/);
   assert.match(entrySource, /var method='POST',prefer='return=minimal'/);
   assert.match(entrySource, /method='PATCH'; prefer='return=representation'/);
   assert.match(entrySource, /source=eq\.reset&ox=eq\.RESET&select=round/);
-  assert.match(entrySource, /if\(isActive\(existing\)\)\{ block\('🔒'/);
+  assert.match(entrySource, /if\(nextSlot\(rows\)!==attemptNo-1\)\{ block\('🔒'/);
   assert.match(entrySource, /response\.status===409/);
   assert.doesNotMatch(entrySource, /source:'admin'|source:'teacher'/);
 

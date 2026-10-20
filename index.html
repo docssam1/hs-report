@@ -910,10 +910,17 @@
     const _rt=((node&&((node.desc||'')+' '+(node.title||'')+' '+(node.focus||'')))||'')+' '+(c.homework||'')+' '+(c.notice||'');
     const _rm=_rt.match(/중급\s*모의고사\s*(\d+)\s*회/)||_rt.match(/모의고사\s*중급\s*(\d+)\s*회/);
     if(_rm){ const rn=_rm[1]; h+=`<div class="m-sec"><a href="mock.html?round=${rn}&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 10px rgba(234,88,12,.3)"><span>📝</span> 중급 모의고사 ${rn}회 진단하기 ›</a><div style="font-size:11.5px;color:#94794f;margin-top:6px">집에서 푼 시험지의 틀린 번호만 체크하면 약점·점수가 바로 나와요.</div></div>`; }
+    const lastRound=({'oct-5':1,'oct-12':2,'oct-19':3,'oct-26':4})[node&&node.id];
+    if(lastRound){
+      const student=encodeURIComponent(currentStudent||'');
+      h+=`<div class="m-sec"><h4>📝 최종 ${lastRound}회 실전·성적</h4><a class="tb-btn" href="final.html?set=last&round=${lastRound}&go=timer&name=${student}" target="_blank" rel="noopener">⏱ 실전 타이머 열기</a>`;
+      h+=`<a class="tb-btn" href="last1-entry.html?round=${lastRound}&name=${student}" target="_blank" rel="noopener">✍️ 오답 입력·분석 열기</a>`;
+      h+='</div>';
+    }
     const tbs=(c.textbooks||[]).filter(t=>t&&((t.folder&&t.pages)||t.url||t.accessKey)&&canSeeTB(t));
     if(tbs.length){
       h+=`<div class="m-sec"><h4>📕 교재 자료 <span class="wm-tag">(이름 워터마크 인쇄)</span></h4>`;
-      tbs.forEach(t=>{ if(t.accessKey){ h+=`<button class="tb-btn" data-book-key="${escAttr(t.accessKey)}"><span class="ico">📝</span> ${escHtml(t.title||'추가 모의고사')} 열기</button>`; } else if(t.folder&&t.pages){ h+=`<button class="tb-btn" data-tbf="${escAttr(t.folder)}" data-tbp="${t.pages}" data-tbt="${escAttr(t.title)}"><span class="ico">🖨</span> ${escHtml(t.title||'교재 자료')} 인쇄</button>`; } else if(/\.html(?:[?#]|$)/i.test(t.url||'')){ h+=`<a class="tb-btn" href="${escAttr(t.url)}" target="_blank" rel="noopener"><span class="ico">🔗</span> ${escHtml(t.title||'학습 자료')} 열기</a>`; } else { h+=`<button class="tb-btn" data-tb="${encodeURIComponent(t.url)}" data-tbt="${escAttr(t.title)}"><span class="ico">📕</span> ${escHtml(t.title||'교재 자료')} 받기</button>`; } });
+      tbs.forEach(t=>{ if(t.accessKey){ h+=`<button class="tb-btn" data-book-key="${escAttr(t.accessKey)}"><span class="ico">📝</span> ${escHtml(t.title||'추가 모의고사')} 열기</button>`; } else if(lastRound&&t.folder==='last_final_'+lastRound){ h+=`<button class="tb-btn" data-last-round="${lastRound}"><span class="ico">🎬</span> ${escHtml(t.title||'원본 시험지')} · 강의와 함께 보기</button>`; } else if(t.folder&&t.pages){ h+=`<button class="tb-btn" data-tbf="${escAttr(t.folder)}" data-tbp="${t.pages}" data-tbt="${escAttr(t.title)}"><span class="ico">🖨</span> ${escHtml(t.title||'교재 자료')} 인쇄</button>`; } else if(/\.html(?:[?#]|$)/i.test(t.url||'')){ h+=`<a class="tb-btn" href="${escAttr(t.url)}" target="_blank" rel="noopener"><span class="ico">🔗</span> ${escHtml(t.title||'학습 자료')} 열기</a>`; } else { h+=`<button class="tb-btn" data-tb="${encodeURIComponent(t.url)}" data-tbt="${escAttr(t.title)}"><span class="ico">📕</span> ${escHtml(t.title||'교재 자료')} 받기</button>`; } });
       h+=`<div class="watermark-note">🖨 인쇄물에는 ${escHtml(currentStudent)} 님의 이름이 흐린 대각선 워터마크로 새겨집니다. 무단 공유를 삼가주세요.</div></div>`;
     }
     if(!h) h='<div class="empty-note">아직 등록된 학습 자료가 없습니다. 준비되면 열립니다.</div>';
@@ -923,6 +930,12 @@
     scope.querySelectorAll('.lnk.yt[data-embed]').forEach(b=>b.onclick=()=>playInto(target,b.dataset.embed));
     scope.querySelectorAll('.tb-btn[data-tb]').forEach(b=>b.onclick=()=>downloadWatermarked(decodeURIComponent(b.dataset.tb), b.dataset.tbt));
     scope.querySelectorAll('.tb-btn[data-tbf]').forEach(b=>b.onclick=()=>printMaterial(b.dataset.tbf, +b.dataset.tbp, b.dataset.tbt));
+    scope.querySelectorAll('.tb-btn[data-last-round]').forEach(b=>b.onclick=()=>{
+      const book=(D.books||[]).find(item=>item&&item.folder==='최종 모의고사'&&item.title===`최종 실전 모의고사 ${b.dataset.lastRound}회`);
+      if(!book){ toast('최종 모의고사 시험지를 찾지 못했습니다.'); return; }
+      if(!document.getElementById('overlay').classList.contains('hidden')) closeModal();
+      openBook(book);
+    });
     scope.querySelectorAll('.tb-btn[data-book-key]').forEach(b=>b.onclick=()=>{
       const book=(D.books||[]).find(item=>item&&item.accessKey===b.dataset.bookKey&&canSeeBook(item));
       if(book) openBook(book); else toast('서재에서 승인된 모의고사를 찾지 못했습니다.');
@@ -1465,6 +1478,6 @@
     }catch(e){}
   })();
 </script>
-<script src="index-enhancements.js?v=20261018-middle8-approval"></script>
+<script src="index-enhancements.js?v=20261020-roadmap-middle-viewer"></script>
 </body>
 </html>

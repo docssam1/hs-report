@@ -108,6 +108,33 @@ const server=http.createServer((req,res)=>{
   assert.equal(new URL(popup.url()).searchParams.get('go'),'report');
   assert.equal(new URL(popup.url()).searchParams.get('round'),'1');
   assert.equal(new URL(popup.url()).searchParams.get('name'),student);await popup.close();
+  for(const round of [1,2,3,4]){
+   const nodeId=['oct-5','oct-12','oct-19','oct-26'][round-1];
+   const card=page.locator('#timeline .node').filter({has:page.locator('h3',{hasText:new RegExp('최종.*모의고사\\s*'+round+'\\s*회')})}).first();
+   await card.getByRole('button',{name:'강의·시험지 보기'}).click();
+   await page.locator('#bookviewer.open .bv-stage.split .bv-vid iframe').waitFor();
+   assert.equal(await page.locator('#bookviewer .bv-pg').count(),6,'최종 '+round+'회 원본 시험지 6쪽');
+   for(const label of ['실전 타이머','답안·해설','오답 입력·분석'])assert.equal(await page.locator('#bv-actions a').filter({hasText:label}).count(),1,'최종 '+round+'회 '+label);
+   await page.evaluate(()=>closeBook());
+   popupWait=page.waitForEvent('popup');await card.getByRole('button',{name:'실전 타이머 열기'}).click();
+   popup=await popupWait;await popup.waitForLoadState('domcontentloaded');
+   const timerUrl=new URL(popup.url());
+   assert.equal(timerUrl.pathname,'/final.html');
+   assert.equal(timerUrl.searchParams.get('set'),'last');
+   assert.equal(timerUrl.searchParams.get('round'),String(round));
+   assert.equal(timerUrl.searchParams.get('go'),'timer');
+   assert.equal(timerUrl.searchParams.get('name'),student);await popup.close();
+   await page.evaluate(id=>openModal(D.nodes.find(n=>n.id===id),true),nodeId);
+   assert.match(await page.locator('#overlay .tb-btn').filter({hasText:'실전 타이머 열기'}).getAttribute('href'),new RegExp('round='+round+'&go=timer'));
+   assert.equal(await page.locator('#overlay .tb-btn').filter({hasText:'오답 입력·분석 열기'}).count(),1,'재원생 직접 입력 버튼');
+   assert.equal(await page.locator('#overlay .tb-btn[data-last-round]').count(),1,'로드맵 시험지 버튼은 강의·시험지 뷰어 연결');
+   await page.evaluate(()=>closeModal());
+   popupWait=page.waitForEvent('popup');await card.getByRole('button',{name:'오답 입력·분석 열기'}).click();
+   popup=await popupWait;await popup.waitForLoadState('domcontentloaded');
+   assert.equal(new URL(popup.url()).pathname,'/last1-entry.html');
+   assert.equal(new URL(popup.url()).searchParams.get('round'),String(round));
+   assert.equal(new URL(popup.url()).searchParams.get('name'),student);await popup.close();
+  }
   await page.setViewportSize({width:390,height:844});
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)<=1,'mobile roadmap overflow');
   const out=process.env.GFIELD_QA_ARTIFACT_DIR;

@@ -148,6 +148,7 @@
     7:'https://youtu.be/NpGefamVXp8',
     8:'https://youtu.be/R-ntnWKyRsQ'
   };
+  var middleVideos={7:'https://youtu.be/J8BNb-tHiM0',8:'https://youtu.be/UR28dko8N6c'};
   var originalVideos={
     1:'https://www.youtube.com/watch?v=FUq-XBAcP_8',
     2:'https://www.youtube.com/watch?v=R5NN1K29__4'
@@ -281,6 +282,10 @@
 
       if(book.folder==='추가 모의고사'&&book.accessKey==='mock-mid-'+round&&(round===7||round===8)){
         book.pdf='materials/초등과정 대비 실전 모의고사활용 '+round+'회.pdf';
+        book.video=middleVideos[round];
+        var middleLinks=(book.links||[]).filter(function(link){return link&&link.label!=='실전 타이머';});
+        middleLinks.unshift({label:'실전 타이머',url:'exam-timer-voice.html'});
+        book.links=middleLinks;
       }
 
       if(book.folder==='파이널 모의고사'&&round>=1&&round<=5&&/파이널\s*실전\s*모의고사/.test(String(book.title||''))){
@@ -304,9 +309,9 @@
         book.video=lastVideos[round];
         var lastLinks=[
           {label:'실전 타이머',url:withName(lastBase+'&go=timer')},
-          {label:'답안·해설',url:withName(window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('last',round,'answer-page'):lastBase+'&go=answer')}
+          {label:'답안·해설',url:withName(window.GFIELD_FINAL_LAST_ROUTES?window.GFIELD_FINAL_LAST_ROUTES.route('last',round,'answer-page'):lastBase+'&go=answer')},
+          {label:'오답 입력·분석',url:withName('last1-entry.html?round='+round)}
         ];
-        if(onlineMember()) lastLinks.push({label:'성적 입력',url:withName('last1-entry.html?round='+round)});
         withReportFirst(book,'last',round,lastLinks);
       }
 
@@ -598,9 +603,18 @@
   function openResult(round){
     window.open(reportUrl('last',round),'_blank');
   }
+  function openLastBook(round){
+    var book=(window.GFIELD_DATA.books||[]).find(function(item){return item&&item.folder==='최종 모의고사'&&item.title==='최종 실전 모의고사 '+round+'회';});
+    if(book&&typeof openBook==='function') openBook(book);
+  }
   function openEntry(round){
     var nm=studentName();
     window.open(ENTRY_URL+'?round='+round+(nm?('&name='+encodeURIComponent(nm)):''),'_blank');
+  }
+  function openTimer(round){
+    var nm=studentName(),helper=window.GFIELD_FINAL_LAST_ROUTES;
+    var url=helper?helper.route('last',round,'timer'):'final.html?set=last&round='+round+'&go=timer';
+    window.open(helper?helper.withStudent(url,nm):url+(nm?('&name='+encodeURIComponent(nm)):''),'_blank');
   }
   function openFinalResult(round){
     var nm=studentName();
@@ -632,11 +646,15 @@
           if(el.classList.contains('locked')) return;
           if(el.querySelector('.last1-node-actions')) return;
           var actions=document.createElement('div'); actions.className='last1-node-actions';
-          if(onlineMember()){
-            var e=document.createElement('button');
-            e.type='button'; e.className='last1-node-btn entry'; e.innerHTML='✍️ 성적 입력';
-            e.onclick=function(ev){ev.stopPropagation();openEntry(round);}; actions.appendChild(e);
-          }
+          var bookButton=document.createElement('button');
+          bookButton.type='button'; bookButton.className='last1-node-btn'; bookButton.textContent='🎬 강의·시험지 보기';
+          bookButton.onclick=function(ev){ev.stopPropagation();openLastBook(round);}; actions.appendChild(bookButton);
+          var timerButton=document.createElement('button');
+          timerButton.type='button'; timerButton.className='last1-node-btn'; timerButton.textContent='⏱ 실전 타이머 열기';
+          timerButton.onclick=function(ev){ev.stopPropagation();openTimer(round);}; actions.appendChild(timerButton);
+          var e=document.createElement('button');
+          e.type='button'; e.className='last1-node-btn entry'; e.innerHTML='✍️ 오답 입력·분석 열기';
+          e.onclick=function(ev){ev.stopPropagation();openEntry(round);}; actions.appendChild(e);
           var b=document.createElement('button');
           b.type='button'; b.className='last1-node-btn';
           b.innerHTML='📊 성적 확인';

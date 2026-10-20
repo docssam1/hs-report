@@ -13,13 +13,18 @@ const index = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const start = index.indexOf('  function sectionsHTML(c, node){');
 const end = index.indexOf('  function wireSections(scope, target){', start);
 assert.ok(start > 0 && end > start, '로드맵 자료 표시 함수');
-const render = vm.runInNewContext(`${index.slice(start, end)}\nsectionsHTML`, {
-  currentStudent: '검수',
-  canSeeTB: () => true,
-  escHtml: (value) => String(value || ''),
-  escAttr: (value) => String(value || ''),
-  linkify: (value) => String(value || ''),
-});
+function sectionRenderer(online) {
+  return vm.runInNewContext(`${index.slice(start, end)}\nsectionsHTML`, {
+    currentStudent: '검수',
+    isOnline: () => online,
+    canSeeTB: () => true,
+    escHtml: (value) => String(value || ''),
+    escAttr: (value) => String(value || ''),
+    linkify: (value) => String(value || ''),
+  });
+}
+const render = sectionRenderer(false);
+const renderOnline = sectionRenderer(true);
 
 for (let round = 1; round <= 4; round += 1) {
   const week = data.nodes.find((node) => node.date === `10월 ${round}주차`);
@@ -46,9 +51,14 @@ for (let round = 1; round <= 4; round += 1) {
   }
 
   const markup = render(content, week);
-  assert.ok(markup.includes(`data-tbf="${book.imgdir}"`), `최종 ${round}회 원본 시험지 인쇄 버튼`);
+  assert.ok(markup.includes(`data-last-round="${round}"`), `최종 ${round}회 강의·시험지 뷰어 버튼`);
   assert.ok(markup.includes(`href="${book.links.find((link) => link.label === '답안·해설').url}"`),
     `최종 ${round}회 답안 링크는 PDF 인쇄가 아닌 화면 이동`);
+  assert.ok(markup.includes(`final.html?set=last&round=${round}&go=timer&name=${encodeURIComponent('검수')}`), `최종 ${round}회 실전 타이머`);
+  assert.ok(markup.includes(`last1-entry.html?round=${round}&name=${encodeURIComponent('검수')}`), `최종 ${round}회 재원생 오답 입력`);
+  const onlineMarkup = renderOnline(content, week);
+  assert.ok(onlineMarkup.includes(`last1-entry.html?round=${round}&name=${encodeURIComponent('검수')}`), `최종 ${round}회 온라인 오답 입력`);
+  assert.ok(onlineMarkup.includes('오답 입력·분석 열기'), `최종 ${round}회 버튼 이름`);
 }
 
 console.log('최종 1~4회 10월 로드맵 영상·시험지·답안·진단 연결 검증 통과');
