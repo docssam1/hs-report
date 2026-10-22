@@ -2,7 +2,7 @@
 (function(root){
   'use strict';
 
-  var DATA_URL='bank/data/last4-reviewed.json?v=20261022-reviewed';
+  var DATA_URL='bank/data/last4-reviewed.json?v=20261022-figures-r2';
   var dataPromise=null;
   function load(){
     if(!dataPromise)dataPromise=fetch(DATA_URL,{cache:'no-cache'}).then(function(response){

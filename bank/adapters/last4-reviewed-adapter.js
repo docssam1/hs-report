@@ -16,7 +16,7 @@
   }
   function load(){
     if(data)return Promise.resolve(data);
-    if(!promise)promise=fetch('data/last4-reviewed.json?v=20261022-reviewed',{cache:'no-cache'}).then(function(response){if(!response.ok)throw new Error('최종 4회 유사문제를 불러오지 못했습니다.');return response.json();}).then(function(value){useData(value);return data;}).catch(function(error){promise=null;throw error;});
+    if(!promise)promise=fetch('data/last4-reviewed.json?v=20261022-figures-r2',{cache:'no-cache'}).then(function(response){if(!response.ok)throw new Error('최종 4회 유사문제를 불러오지 못했습니다.');return response.json();}).then(function(value){useData(value);return data;}).catch(function(error){promise=null;throw error;});
     return promise;
   }
   function approvedGroup(no){

@@ -209,3 +209,5 @@ body.fixed-bank-mode #final1Worksheet .f1-qhead{color:var(--f1-ink);border-botto
 
 #final1Worksheet[data-bank-code="last4"] .f1-qcard > :not(.f1-workspace){flex-shrink:0}
 #final1Worksheet[data-bank-code="last4"][data-layout="editorial"] .qcard[data-source-no="19"] .f1-qfigure img{max-height:49mm}
+/* Last4 seating remains readable within the fixed two-column worksheet cells. */
+#final1Worksheet[data-bank-code="last4"][data-layout="compact"] .qcard[data-source-no="14"] .f1-qfigure img{max-height:32mm}
