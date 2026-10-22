@@ -82,7 +82,7 @@
       group.itemCount++;
       var source=item.sourceRef,sourceRound=Number(source.round),fixedBank='';
       if(source.set==='final'&&[1,2,3,4,7,8].includes(sourceRound))fixedBank='final'+sourceRound;
-      else if(source.set==='last'&&[1,2,3].includes(sourceRound))fixedBank='last'+sourceRound;
+      else if(source.set==='last'&&[1,2,3,4].includes(sourceRound))fixedBank='last'+sourceRound;
       else if(source.set==='original'&&[1,2].includes(sourceRound))fixedBank='original'+sourceRound;
       else if(source.set==='middle'&&sourceRound===7)fixedBank='middle7';
       else if(source.set==='middle'&&sourceRound===8)fixedBank='middle8';

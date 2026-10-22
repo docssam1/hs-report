@@ -33,8 +33,8 @@
     if(query.get('practice')==='wrong'&&source[0]==='final'&&source[1]==='7')return 'mock-final-7';
     if(bank==='final8')return 'mock-final-8';
     if(query.get('practice')==='wrong'&&source[0]==='final'&&source[1]==='8')return 'mock-final-8';
-    if(/^last[123]$/.test(bank))return 'mock-last-'+bank.slice(4);
-    if(query.get('practice')==='wrong'&&source[0]==='last'&&/^[123]$/.test(source[1]))return 'mock-last-'+source[1];
+    if(/^last[1234]$/.test(bank))return 'mock-last-'+bank.slice(4);
+    if(query.get('practice')==='wrong'&&source[0]==='last'&&/^[1234]$/.test(source[1]))return 'mock-last-'+source[1];
     if(bank==='middle7')return 'mock-mid-7';
     if(query.get('practice')==='wrong'&&source[0]==='middle'&&source[1]==='7')return 'mock-mid-7';
     if(bank==='middle8')return 'mock-mid-8';
@@ -44,8 +44,8 @@
   function scopedPermissionList(){
     var key=scopedProductKey();if(!key)return [];
     var data=root.GFIELD_DATA||{},products=data.archiveProductAccess||{};
-    /* 최종 1~3회는 기존 정규 최종 승인 또는 해당 회차 주차 출석을 따른다. */
-    if(/^mock-last-[123]$/.test(key)){var week={'mock-last-1':'oct-5','mock-last-2':'oct-12','mock-last-3':'oct-19'}[key],acc=(data.archiveAccess||{})['최종 모의고사'],att=data.attendance||{},list=Array.isArray(acc)?acc.slice():[];Object.keys(att).forEach(function(n){if(Array.isArray(att[n])&&att[n].indexOf(week)>=0&&list.indexOf(n)<0)list.push(n);});return list;}
+    /* 최종 1~4회는 기존 정규 최종 승인 또는 해당 회차 주차 출석을 따른다. */
+    if(/^mock-last-[1234]$/.test(key)){var week={'mock-last-1':'oct-5','mock-last-2':'oct-12','mock-last-3':'oct-19','mock-last-4':'oct-26'}[key],acc=(data.archiveAccess||{})['최종 모의고사'],att=data.attendance||{},list=Array.isArray(acc)?acc.slice():[];Object.keys(att).forEach(function(n){if(Array.isArray(att[n])&&att[n].indexOf(week)>=0&&list.indexOf(n)<0)list.push(n);});return list;}
     return Array.isArray(products[key])?products[key]:[];
   }
   function listed(list,student){return list.indexOf('*')>=0||list.indexOf(student)>=0;}

@@ -135,6 +135,9 @@
     28:{label:'논리 암호 기초',connectionKind:'prerequisite',books:{'지필드':[{b:'GIFTED MATH V1-2',u:'CH2 마방진·논리추리'}]}}
   };
 
+  var LAST4_SUBAREAS=["참·거짓 추론", "벌레먹은 셈", "세 방향 투영", "거꾸로 계산", "원형 간격", "도형 암호", "종이 접기", "세 항 합 수열", "두 계획의 배분", "이동 시간", "마방진", "직육면체 개수", "숫자 세기", "자리 추론", "직사각형 개수", "도형 숫자", "고장 난 시계", "숫자 배치", "조건식 완성", "서로 다른 합", "자리 배치", "일의 순서와 시간", "조각 채우기", "순서 있는 점수", "동전 구성", "풀의 성장과 소비", "갈림길 배분", "공간의 포함과 배제", "금지 숫자", "성냥개비와 정육면체"];
+  var LAST4_STUDY=[["논리", "각 상자가 비었다고 가정하여 참인 문장의 개수가 하나인 경우 찾기"], ["복면산", "일의 자리부터 받아내림과 서로 다른 숫자 사용 조건 함께 확인하기"], ["쌓기나무", "위 그림의 칸을 고정하고 앞·옆에서 보이는 최대 높이를 함께 적용하기"], ["거꾸로", "남은 길이에서 절반씩 사용한 횟수만큼 두 배로 거슬러 올라가기"], ["간격", "마주 보는 두 번호의 차이가 전체의 절반임을 이용하기"], ["논리", "기호의 둘레 선 모양을 표의 칸과 대응시켜 식으로 읽기"], ["종이 접기", "접을 때 이동하는 면과 뒤집히는 층 순서를 구분하기"], ["수열", "앞의 세 항의 합에서 일의 자리를 취하는 규칙을 반복하기"], ["합과 차", "두 배분 계획에서 추가되는 양과 받지 못한 학생의 몫 비교하기"], ["속력", "이동한 층수와 출발 시간 차이를 구분해 도착 시각 비교하기"], ["마방진", "같은 합을 갖는 행과 대각선을 비교해 공통 빈칸 소거하기"], ["직육면체의 개수", "세 방향에서 서로 다른 두 경계면을 고르는 경우의 수 곱하기"], ["특정 숫자 세기", "배수 조건을 먼저 적용하고 각 자릿수의 숫자 출현 횟수 세기"], ["줄 세우기", "한 자리를 고정한 뒤 시계 방향과 맞은편 조건으로 배치하기"], ["사각형의 개수", "가로·세로 방향과 기울어진 방향의 직사각형을 나누어 세기"], ["논리", "세로줄의 자릿값과 점의 높이에 따른 값을 구분해 수로 나타내기"], ["고장난 시계", "12시간 표시가 다시 일치하는 데 필요한 누적 지연 시간 구하기"], ["숫자카드", "가운데 짝수 조건부터 고정하고 숫자 중복 없이 식 완성하기"], ["마방진", "나눗셈과 곱셈 조건을 먼저 좁힌 뒤 여덟 수의 중복 확인하기"], ["경우의 수", "두 점수의 합을 모두 구하고 같은 합은 한 번만 세기"], ["경우의 수", "반드시 사용하는 의자에 앉는 학생을 나누고 자기 번호 자리 제외하기"], ["일률", "먼저 끝낼 일을 연결하고 두 사람이 동시에 할 일을 시간표로 배치하기"], ["타일", "조각을 모두 사용한 배치에서 같은 색칠 모양과 대칭 중복 제거하기"], ["경우의 수", "최대 점수에서 깎인 점수의 합으로 바꿔 순서 있는 경우 세기"], ["금액", "동전 수와 총액으로 처음 구성을 찾고 두 구매의 동전 수 함께 적용하기"], ["일률", "처음 풀과 매일 자라는 풀을 구분해 두 소비 기간의 차이 비교하기"], ["분수", "갈림길에서 전체의 몇 분의 몇이 각 전시실로 가는지 합하기"], ["포함과 배제", "세 방향 검은 줄의 겹침을 한 번만 세고 층별 합 확인하기"], ["특정 숫자 세기", "금지 숫자가 없는 수를 자릿수와 상한에 따라 나누어 세기"], ["성냥개비", "처음 한 개와 추가 한 개의 성냥 수를 구분하고 최대 개수와 남는 수 확인하기"]];
+
   model.blueprint=Array.from({length:30},function(_,index){
     return {no:index+1,pts:point(index+1)};
   });
@@ -158,11 +161,11 @@
         no:index+1,
         type:round===3&&index===25?'정육각형 단계별 넓이 합의 나머지':meta.type,
         area:meta.area,
-        subarea:round===1?LAST1_SUBAREAS[index]:(round===2?LAST2_SUBAREAS[index]:(round===3?LAST3_SUBAREAS[index]:'')),
-        taxonomyReviewStatus:reviewedRound||round===3?'verified-source-bound':'candidate',
-        prescriptionType:round===1?LAST1_PRESCRIPTION_HINTS[index]:(round===2?LAST2_PRESCRIPTION_HINTS[index]:(round===3?LAST3_STUDY[index][0]:undefined)),
+        subarea:round===1?LAST1_SUBAREAS[index]:(round===2?LAST2_SUBAREAS[index]:(round===3?LAST3_SUBAREAS[index]:(round===4?LAST4_SUBAREAS[index]:''))),
+        taxonomyReviewStatus:reviewedRound||round===3||round===4?'verified-source-bound':'candidate',
+        prescriptionType:round===1?LAST1_PRESCRIPTION_HINTS[index]:(round===2?LAST2_PRESCRIPTION_HINTS[index]:(round===3?LAST3_STUDY[index][0]:(round===4?LAST4_STUDY[index][0]:undefined))),
         prescriptionOverride:round===1?LAST1_PRESCRIPTION_OVERRIDES[index+1]:(round===2?LAST2_PRESCRIPTION_OVERRIDES[index+1]:(round===3?LAST3_STUDY_OVERRIDES[index+1]:undefined)),
-        studyPoints:round===3?[LAST3_STUDY[index][1]]:undefined,
+        studyPoints:round===3?[LAST3_STUDY[index][1]]:(round===4?[LAST4_STUDY[index][1]]:undefined),
         pts:point(index+1),
         answer:String(row.answer==null?'':row.answer),
         comment:String(row.explanation||''),

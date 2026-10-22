@@ -47,7 +47,8 @@ function report(old){
   return JSON.parse(JSON.stringify(window.GFIELD_MOCK_LAST));
 }
 const old=report(true),now=report(false);
-for(const n of ['1','2','4'])assert.deepEqual(now.rounds[n],old.rounds[n],'unrelated round '+n);
+// Last4 now has its own reviewed taxonomy; its original answers/stats are checked in last4-completion-validate.cjs.
+for(const n of ['1','2'])assert.deepEqual(now.rounds[n],old.rounds[n],'unrelated round '+n);
 assert.deepEqual(now.rounds['3'].stats,old.rounds['3'].stats,'source averages, percentages and cutoffs unchanged');
 for(const item of now.rounds['3'].items){
   const before=old.rounds['3'].items[item.no-1],variant=pack.items.find(x=>x.sourceNo===item.no);

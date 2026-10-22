@@ -18,6 +18,7 @@
     return total>210||!!x.asset&&(total>180||Number(x.sourceNo)===28);
   }
   function questionGroups(items,layout,reportColumns){
+    if(reportColumns&&items[0]&&items[0].sourceSet==='last'&&Number(items[0].sourceRound)===4)return chunks(items,6);
     if(reportColumns)return chunks(items,6).flatMap(function(group){
       // Give long text or a diagram with a long stem a half-page cell.
       var dense=group.some(function(x){
@@ -71,11 +72,11 @@
     var legacy=document.getElementById('btnPrint');if(legacy)legacy.id='legacyPrint';
     var root=document.createElement('main');root.id='final1Worksheet';root.className='gfield-ui';document.body.appendChild(root);
     var q=new URLSearchParams(location.search),wrong=!!opts.wrongPracticeMode,ids=opts.genIds;
-    var bankCode=/^(?:final[123478]|original[12]|last[123]|middle[78]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
+    var bankCode=/^(?:final[123478]|original[12]|last[1234]|middle[78]|important)$/.test(opts.bankCode||'')?opts.bankCode:'final1';
     var important=bankCode==='important';
     var signature=bankCode.startsWith('original');
     root.dataset.bankCode=bankCode;
-    var isLast=/^last[123]$/.test(bankCode);
+    var isLast=/^last[1234]$/.test(bankCode);
     var isMiddle=/^middle[78]$/.test(bankCode);
     var round=important?null:isMiddle?Number(bankCode.slice(6)):Number(bankCode.slice(isLast?4:(signature?8:5))),roundLabel=important?'선생님이 고른 중요 유형':isMiddle?'중급 모의고사 '+round+'회':(signature?'시그니처 실전 '+round+'회':(isLast?'최종 실전 '+round+'회':(round===7?'최종 7회':(round===8?'최종 8회':'파이널 '+round+'회')))),idPrefix=important?'':isMiddle?'mid'+round+'-q':bankCode+'-q';
     if(important)ids=Array.isArray(opts.typeIds)?opts.typeIds:[];
@@ -87,9 +88,9 @@
     var fresh=!!freshAvailable&&q.get('fresh')==='1';
     var orderMode=q.get('view')==='grouped'?'grouped':'mixed';
     if(!['questions','answers','both','quick'].includes(mode))mode='both';
-    var layout=q.get('layout')||'editorial';
+    var layout=q.get('layout')||(isLast&&round===4?'compact':'editorial');
     if(!['editorial','compact'].includes(layout))layout='editorial';
-    var reportColumns=isLast&&round===3&&wrong&&layout==='compact'&&q.get('reportColumns')==='1';
+    var reportColumns=isLast&&layout==='compact'&&(round===4||round===3&&wrong&&q.get('reportColumns')==='1');
     root.dataset.layout=layout;
     var student=(new URLSearchParams(location.hash.slice(1)).get('student')||'').trim(),checked=new Set(),revision=0,preparePrint=null;
     // Display-only name, never authority for reading or writing student results.
@@ -100,6 +101,7 @@
     root.innerHTML='<header class="f1-toolbar"><a class="f1-back" href="'+esc(back)+'">← '+(wrong?'성적표':'자료실')+'</a><div class="f1-title">'+roundLabel+(important?'':' 약점 유형')+'</div><div class="f1-bands" role="group" aria-label="오답 배점대">'+Object.keys(labels).map(k=>'<button type="button" data-role="points" data-val="'+k+'">'+labels[k]+'</button>').join('')+'</div>'+viewControls+freshControl+countControls+'<label class="f1-layout-label">문제 배치 <select id="pageLayout"><option value="editorial">읽기 편한 4문항</option><option value="compact">간결한 6문항</option></select></label><label class="f1-print-label">인쇄 구성 <select id="printMode"><option value="questions">문제만</option><option value="answers">답안·풀이만</option><option value="both">둘 다</option><option value="quick">빠른 정답만</option></select></label><button type="button" id="btnPrint" disabled>인쇄</button></header><div class="f1-status" id="f1Status" role="status" aria-live="polite"></div><div id="f1Pages"></div>';
     if(signature&&!wrong)root.querySelector('.f1-title').textContent=roundLabel+' 전체 유형';
     if(bankCode==='final8'||isLast||isMiddle)root.querySelector('#pageLayout option[value="compact"]').textContent='간결한 6문항 · 큰 그림은 별도 쪽';
+    if(isLast&&round===4)root.querySelector('#pageLayout option[value="compact"]').textContent='2단 · 세로 3문항';
     var pageRoot=root.querySelector('#f1Pages'),print=root.querySelector('#btnPrint');
     function sheet(cls,html){return '<section class="f1-page page '+cls+'"><div class="f1-watermark-clip"><div class="wm-layer"></div></div>'+html+'</section>';}
     function cleanUrl(){
@@ -120,7 +122,7 @@
       return sheet('f1-cover cover-page','<div class="f1-mast"><div class="f1-brand">지필드 영재교육</div><div class="f1-issue">'+labels[band]+' / '+paper.questions.length+'문항</div></div><div class="f1-cover-heading"><div class="f1-owner">'+(student?esc(student)+' 학생의':'이름 ____________________')+'</div><h1>'+roundLabel+(important?'':' <span>약점 유형</span>')+'</h1></div><div class="f1-check-title">'+(wrong?'오답':'선택')+' 유형 자기 점검</div><p class="lead">풀이를 보지 않고 다시 풀 수 있으면 체크하세요.</p><div class="f1-checks">'+list+'</div><div class="f1-rule">'+(important?'검수 문제 3개를 기준으로 같은 유형의 새 문제를 이어서 공부합니다.':fresh?'검수된 유사문제 3개와 같은 원문 유형의 새 문제를 이어서 공부합니다.':'원문 한 문제마다 유사문제 3개씩 공부합니다.')+' 체크는 성적에 반영되지 않습니다.</div>');
     }
     function questionPage(group,n,total){
-      var reportRows=reportColumns?Math.min(3,Math.max(1,Math.ceil(group.length/2))):0;
+      var reportRows=reportColumns?(isLast&&round===4?3:Math.min(3,Math.max(1,Math.ceil(group.length/2)))):0;
       var wideLead=layout==='editorial'&&group.length===3&&editorialWide(group[0]);
       var single=(layout==='editorial'||isMiddle)&&group.length===1;
       var twoWithWide=layout==='editorial'&&group.length===2&&group.some(editorialWide);

@@ -1,20 +1,20 @@
 /* Official-attempt practice, supplemented with reviewed public source-linked items. */
 (function(root){
   'use strict';
-  var SUPPORTED=/^(?:final[123478]|original[12]|last[123]|middle[78])$/;
+  var SUPPORTED=/^(?:final[123478]|original[12]|last[1234]|middle[78])$/;
   var BAND_LABEL={all:'전체 배점','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
   var SCOPE_LABEL={all:'응시 시험 전체',wrong:'틀린 문제',correct:'맞은 문제'};
   var COUNTS={10:{'2.7':4,'3.4':3,'4.2':3},20:{'2.7':8,'3.4':7,'4.2':5},30:{'2.7':12,'3.4':10,'4.2':8}};
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function mathText(v){return root.BANK_CORE&&root.BANK_CORE.reviewedMathText?root.BANK_CORE.reviewedMathText(v):esc(v);}
-  function label(code){if(/^middle[78]$/.test(code))return '중급 모의고사 '+code.slice(6)+'회';if(/^last[123]$/.test(code))return '최종 실전 '+code.slice(4)+'회';if(code.indexOf('original')===0)return '시그니처 '+code.slice(8)+'회';var n=Number(code.slice(5));return n===7?'최종 실전 7회':n===8?'최종 실전 8회':'파이널 '+n+'회';}
+  function label(code){if(/^middle[78]$/.test(code))return '중급 모의고사 '+code.slice(6)+'회';if(/^last[1234]$/.test(code))return '최종 실전 '+code.slice(4)+'회';if(code.indexOf('original')===0)return '시그니처 '+code.slice(8)+'회';var n=Number(code.slice(5));return n===7?'최종 실전 7회':n===8?'최종 실전 8회':'파이널 '+n+'회';}
   function codeOf(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||'');if(key==='7'||key==='8')return 'middle'+key;return SUPPORTED.test(key)?key:'';}
   function attemptLabel(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||''),code=codeOf(attempt),m;if(code)return label(code);if(/^\d+$/.test(key))return '중급 모의고사 '+Number(key)+'회';if((m=/^hw(\d+)$/.exec(key)))return '활용 모의고사 '+Number(m[1])+'회';if((m=/^last(\d+)$/.exec(key)))return '최종 실전 '+Number(m[1])+'회';if((m=/^final(\d+)$/.exec(key)))return '파이널 '+Number(m[1])+'회';return '응시 회차 '+key;}
   function availability(attempt,student,data){var code=codeOf(attempt);return {code:code,label:attemptLabel(attempt),reason:!code?'preparing':isAllowed(code,student,data)?'ready':'denied'};}
   function availabilityNote(issues){return [['preparing','유사문제 준비 중'],['denied','열람 권한 없음'],['failed','자료 불러오기 실패']].filter(function(pair){return issues[pair[0]]&&issues[pair[0]].length;}).map(function(pair){return ' · '+pair[1]+': '+Array.from(new Set(issues[pair[0]])).join(', ');}).join('');}
   function isAllowed(code,student,data){
     if(!code||!student)return false;
-    if(/^last[123]$/.test(code)){var acc=(data&&data.archiveAccess||{})['최종 모의고사'],att=data&&data.attendance||{},week={last1:'oct-5',last2:'oct-12',last3:'oct-19'}[code];return Array.isArray(acc)&&(acc.indexOf('*')>=0||acc.indexOf(student)>=0)||Array.isArray(att[student])&&att[student].indexOf(week)>=0;}
+    if(/^last[1234]$/.test(code)){var acc=(data&&data.archiveAccess||{})['최종 모의고사'],att=data&&data.attendance||{},week={last1:'oct-5',last2:'oct-12',last3:'oct-19',last4:'oct-26'}[code];return Array.isArray(acc)&&(acc.indexOf('*')>=0||acc.indexOf(student)>=0)||Array.isArray(att[student])&&att[student].indexOf(week)>=0;}
     if(/^middle[78]$/.test(code)||code.indexOf('original')===0||code==='final7'||code==='final8'){
       var key=/^middle[78]$/.test(code)?'mock-mid-'+code.slice(6):code.indexOf('original')===0?'mock-signature-'+code.slice(8):(code==='final7'?'mock-final-7':(code==='final8'?'mock-final-8':'mock-last-1'));
       var list=data&&data.archiveProductAccess&&data.archiveProductAccess[key];

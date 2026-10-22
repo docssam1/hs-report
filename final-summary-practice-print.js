@@ -57,7 +57,7 @@
     if(requireButton&&(!button||button.nodeType!==1))fail('button-missing','인쇄 단추를 찾지 못했습니다.');
     if(!source||source.nodeType!==1||!source.classList.contains('final-report-package'))fail('source-missing','인쇄할 진단 요약을 찾지 못했습니다.');
     var set=String(options.set||source.getAttribute('data-set')||'final');
-    if(!((set==='last'&&[1,2,3].includes(round))||(set==='final'&&[1,2,3,4,7,8].includes(round)))||Number(source.getAttribute('data-report-round'))!==round)fail('round-invalid','진단지 회차와 유사문제 회차가 다릅니다.');
+    if(!((set==='last'&&[1,2,3,4].includes(round))||(set==='final'&&[1,2,3,4,7,8].includes(round)))||Number(source.getAttribute('data-report-round'))!==round)fail('round-invalid','진단지 회차와 유사문제 회차가 다릅니다.');
     if(!Array.isArray(nos)||nos.length>3||nos.some(function(no){return !Number.isInteger(Number(no))||Number(no)<1||Number(no)>30;})||new Set(nos.map(Number)).size!==nos.length){
       fail('priority-invalid','이번 주 우선 복습 문항을 확인할 수 없습니다.');
     }
@@ -72,7 +72,7 @@
   function bankUrl(input){
     var prefix=input.set==='last'?'last'+input.round:'final'+input.round;
     var source=input.set+'|'+input.round;
-    var orderMode=input.set==='last'&&input.round===3&&input.nos.length>1?'mixed':'grouped';
+    var orderMode=input.set==='last'&&[3,4].includes(input.round)&&input.nos.length>1?'mixed':'grouped';
     var params=new URLSearchParams({
       bank:prefix,
       practice:'wrong',
@@ -83,9 +83,9 @@
       points:'all',
       view:orderMode,
       printMode:'both',
-      layout:input.set==='last'&&input.round===3?'compact':'editorial'
+      layout:input.set==='last'&&[3,4].includes(input.round)?'compact':'editorial'
     });
-    if(input.set==='last'&&input.round===3)params.set('reportColumns','1');
+    if(input.set==='last'&&[3,4].includes(input.round))params.set('reportColumns','1');
     if(input.teacherPrint)params.set('reportPrint','teacher');
     return 'bank/index.html?'+params.toString();
   }
@@ -141,7 +141,7 @@
   function verifyBank(input,bank){
     var doc=bank.doc,win=bank.win,expected=input.nos.length*3;
     var prefix=input.set==='last'?'last'+input.round:'final'+input.round;
-    var orderMode=input.set==='last'&&input.round===3&&input.nos.length>1?'mixed':'grouped';
+    var orderMode=input.set==='last'&&[3,4].includes(input.round)&&input.nos.length>1?'mixed':'grouped';
     if(!win.BANK_FIXED||typeof win.BANK_FIXED.buildPaper!=='function')fail('bank-missing','검수된 문제은행을 확인할 수 없습니다.');
     return win.BANK_FIXED.buildPaper({bankCode:prefix,genIds:input.nos.map(function(no){return prefix+'-q'+String(no).padStart(2,'0');}),pointBand:'all',orderMode:orderMode}).then(function(paper){
       var questions=list(doc.querySelectorAll('#final1Worksheet #f1Pages .question-page .f1-qcard'));
@@ -210,13 +210,13 @@
     await waitForImages(page,job,input.timeout);
     var saved=[],isQuestion=page.classList.contains('question-page'),isAnswer=page.classList.contains('answer-page');
     forceStyle(saved,page.querySelector('.wm-layer.wm-active'),{opacity:'.04'});
-    var compactColumns=isQuestion&&input.set==='last'&&input.round===3;
+    var compactColumns=isQuestion&&input.set==='last'&&[3,4].includes(input.round);
     if(isQuestion){
       if(!compactColumns)page.classList.add('f1-batch-capture-editorial');
       var qpage=page.querySelector('.f1-qpage'),cards=list(page.querySelectorAll('.f1-qcard'));
-      if(compactColumns&&(!qpage||qpage.dataset.reportColumns!=='true'))fail('column-layout','최종 3회 다단 문제 배치를 확인할 수 없습니다.');
+      if(compactColumns&&(!qpage||qpage.dataset.reportColumns!=='true'))fail('column-layout','최종 실전 다단 문제 배치를 확인할 수 없습니다.');
       var reportRows=compactColumns?Number(qpage.dataset.reportRows):0;
-      if(compactColumns&&(!Number.isInteger(reportRows)||reportRows<1||reportRows>3))fail('column-layout','최종 3회 다단 행 수를 확인할 수 없습니다.');
+      if(compactColumns&&(!Number.isInteger(reportRows)||reportRows<1||reportRows>3))fail('column-layout','최종 실전 다단 행 수를 확인할 수 없습니다.');
       forceStyle(saved,qpage,compactColumns?{gridTemplateRows:'auto repeat('+reportRows+',minmax(0,1fr))',gridAutoFlow:'column',rowGap:'4mm'}:{gridTemplateRows:'auto repeat(2,minmax(0,1fr))',rowGap:'6mm'});
       cards.forEach(function(card,index){
         if(!compactColumns)forceStyle(saved,card,{display:'flex',flexDirection:'column',border:'1px solid #d8dee8',padding:'4mm',overflow:'hidden'});
@@ -235,7 +235,7 @@
       page.classList.add('f1-batch-capture-answer');
       forceStyle(saved,page.querySelector('.f1-answer-flow'),{boxSizing:'border-box',width:'100%',maxWidth:'100%',overflow:'hidden'});
       list(page.querySelectorAll('.f1-solution')).forEach(function(card){forceStyle(saved,card,{boxSizing:'border-box',width:'100%',maxWidth:'100%',minWidth:'0',overflow:'hidden'});});
-      list(page.querySelectorAll('.f1-solution-asset')).forEach(function(img){forceStyle(saved,img,{display:'block',width:img.closest('[data-answer-id^="final2-q28-"]')?'68mm':'auto',maxWidth:'100%',height:'auto',maxHeight:img.closest('[data-answer-id^="final2-q28-"]')?'50mm':'24mm',objectFit:'contain',marginLeft:'auto',marginRight:'auto'});});
+      list(page.querySelectorAll('.f1-solution-asset')).forEach(function(img){forceStyle(saved,img,{display:'block',width:img.closest('[data-answer-id^="final2-q28-"]')?'68mm':'auto',maxWidth:'100%',height:'auto',maxHeight:img.closest('[data-answer-id^="final2-q28-"]')?'50mm':img.closest('[data-answer-id^="last4-q23-"]')?'60mm':'24mm',objectFit:'contain',marginLeft:'auto',marginRight:'auto'});});
     }
     var token='gf-summary-'+Date.now()+'-'+Math.random().toString(36).slice(2);
     page.setAttribute('data-gfield-summary-token',token);
@@ -265,8 +265,9 @@
             (column!==Math.floor((index-1)/reportRows)&&slot.left<=slots[index-1].left))||
             (column===0&&index>0&&Math.abs(slot.left-slots[0].left)>2)||
             (column===1&&Math.abs(slot.left-slots[reportRows].left)>2);
-        }))fail('column-order','최종 3회 문제의 다단 읽기 순서가 올바르지 않습니다.');
-        if(cards.some(function(card){return card.scrollHeight>card.clientHeight+2;}))fail('column-overflow','최종 3회 문제 글이 다단 칸을 벗어났습니다.');
+        }))fail('column-order','최종 실전 문제의 다단 읽기 순서가 올바르지 않습니다.');
+        var overflowing=cards.filter(function(card){return card.scrollHeight>card.clientHeight+2;});
+        if(overflowing.length)fail('column-overflow','최종 실전 '+overflowing.map(function(card){return card.dataset.index+'번 ('+card.scrollHeight+'/'+card.clientHeight+')';}).join(', ')+' 문제 글이 다단 칸을 벗어났습니다.');
       }
       var captureOptions={backgroundColor:'#ffffff',scale:1.5,useCORS:true,allowTaint:false,logging:false,imageTimeout:20000,removeContainer:true};
       if(originalGrid)captureOptions.onclone=function(cloneDoc){

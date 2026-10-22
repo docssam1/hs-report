@@ -445,12 +445,12 @@ function gfieldPrescriptionOf(type){
 
 function gfieldCurriculumPrescription(set,round,item){
   if(item&&item.prescriptionOverride){
-    if(String(set)==='last'&&Number(round)===3&&Array.isArray(item.studyPoints))return Object.assign({},item.prescriptionOverride,{pts:item.studyPoints});
+    if(String(set)==='last'&&[3,4].includes(Number(round))&&Array.isArray(item.studyPoints))return Object.assign({},item.prescriptionOverride,{pts:item.studyPoints});
     return item.prescriptionOverride;
   }
   if(item&&Object.prototype.hasOwnProperty.call(item,'prescriptionType')){
     const found=item.prescriptionType?gfieldPrescriptionOf(item.prescriptionType):null;
-    if(String(set)==='last'&&Number(round)===3&&found&&Array.isArray(item.studyPoints))return Object.assign({},found,{connectionKind:'prerequisite',pts:item.studyPoints});
+    if(String(set)==='last'&&[3,4].includes(Number(round))&&found&&Array.isArray(item.studyPoints))return Object.assign({},found,{connectionKind:'prerequisite',pts:item.studyPoints});
     return found;
   }
   const series=String(set||'').toLowerCase(),roundNumber=Number(round),sourceKey=[series,roundNumber,Number(item&&item.no)].join('|');

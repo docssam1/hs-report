@@ -197,3 +197,15 @@ body.fixed-bank-mode #final1Worksheet .f1-qhead{color:var(--f1-ink);border-botto
 #final1Worksheet[data-bank-code="middle8"] .f1-solution p,#final1Worksheet[data-bank-code="middle8"] .f1-solution ol{font-size:12pt;line-height:1.5}
 
 @media screen and (max-width:880px){#final1Worksheet[data-bank-code="middle8"] .qcard[data-source-no="13"] .f1-qfigure img,#final1Worksheet[data-bank-code="middle8"] .qcard[data-source-no="30"] .f1-qfigure img{height:auto;max-height:none;width:100%}}
+
+/* Last4 keeps six fixed cells, read down the left column then the right. */
+#final1Worksheet[data-bank-code="last4"][data-layout="compact"] .f1-qcard{display:flex;flex-direction:column}
+#final1Worksheet[data-bank-code="last4"] .f1-qtext,#final1Worksheet[data-bank-code="last4"] .f1-qgiven,#final1Worksheet[data-bank-code="last4"] .f1-qfigure{flex-shrink:0}
+#final1Worksheet[data-bank-code="last4"][data-layout="compact"] .f1-qfigure img{max-height:36mm}
+#final1Worksheet[data-bank-code="last4"] .solution-card[data-source-no="23"] .f1-solution-asset{max-height:60mm}
+#final1Worksheet[data-bank-code="last4"] .f1-solution-head{flex-wrap:wrap}
+#final1Worksheet[data-bank-code="last4"] .f1-solution .ans{flex-shrink:1;overflow-wrap:anywhere}
+@media screen and (max-width:880px){#final1Worksheet[data-bank-code="last4"][data-layout="compact"] .f1-qfigure img{max-height:none}}
+
+#final1Worksheet[data-bank-code="last4"] .f1-qcard > :not(.f1-workspace){flex-shrink:0}
+#final1Worksheet[data-bank-code="last4"][data-layout="editorial"] .qcard[data-source-no="19"] .f1-qfigure img{max-height:49mm}

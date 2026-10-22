@@ -535,7 +535,7 @@
       link.sourceAudit.visualRequired = true;
     }
     var isLast2=/^last2-q/.test(generatorId);
-    var fixedRound=/^final([23478])-q/.exec(generatorId)||/^last[123]-q/.exec(generatorId)&&['x','last'];
+    var fixedRound=/^final([23478])-q/.exec(generatorId)||/^last[1234]-q/.exec(generatorId)&&['x','last'];
     var isLast1=/^last1-q/.exec(generatorId);
     link.qaEvidence = {
       suite: isLast1?'qa/last1-variant-review-validate.js':(fixedRound?(fixedRound[1]==='3'?'qa/final3-fixed90-validate.js':(fixedRound[1]==='4'?'qa/final4-fixed90-validate.js':(fixedRound[1]==='7'?'qa/final7-reviewed-validate.js':(fixedRound[1]==='8'?'qa/final8-variant-review-validate.js':'qa/final2-fixed90-math-validate.js')))):'qa/bank-final1-generators-validate.js'),
@@ -545,6 +545,7 @@
       date: isLast1?'2026-10-05':(fixedRound?(fixedRound[1]==='3'?'2026-09-20':(fixedRound[1]==='4'?'2026-09-21':(fixedRound[1]==='7'?'2026-09-18':(fixedRound[1]==='8'?'2026-10-05':'2026-09-12')))):'2026-09-05')
     };
     if(isLast2){link.qaEvidence.suite='qa/last2-reviewed-data-validate.js';link.qaEvidence.date='2026-10-11';}
+    if(/^last4-q/.test(generatorId)){link.qaEvidence.suite='qa/last4-completion-validate.cjs';link.qaEvidence.date='2026-10-22';}
     if(/^last3-q/.test(generatorId)){link.qaEvidence.suite='qa/last3-approved-integration-validate.cjs';link.qaEvidence.date='2026-10-15';}
     return link;
   }
@@ -722,6 +723,13 @@
     SOURCE_ITEM_GENERATOR_LINKS[['last',3,_l3no].join('|')]=sourceItemReviewGeneratorLink(
       'last3-q'+String(_l3no).padStart(2,'0'),'bank/bank-fixed.js',
       'Last 3 user-approved stored variants for question '+_l3no,'last:3:'+_l3no,[1,15,18,19,24,26,28].includes(_l3no));
+  }
+
+  /* Last4: source-bound fixed variants; original scores/answers stay separate. */
+  for(var _l4no=1;_l4no<=30;_l4no++){
+    SOURCE_ITEM_GENERATOR_LINKS[['last',4,_l4no].join('|')]=sourceItemReviewGeneratorLink(
+      'last4-q'+String(_l4no).padStart(2,'0'),'bank/bank-fixed.js',
+      'Last 4 reviewed stored variants for question '+_l4no,'last:4:'+_l4no,[2,3,6,7,11,12,15,16,19,20,22,23,27,28,30].includes(_l4no));
   }
 
   /* Existing approved Middle7 export; not an original-answer/equivalence approval. */
