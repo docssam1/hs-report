@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied1-balanced15-r2",
+  "version": "20261024-applied1-balanced15-r3",
   "sourceSet": "applied",
   "sourceRound": 1,
   "policy": {
@@ -20,12 +20,12 @@
     3,
     4,
     5,
-    6
-  ],
-  "pendingSourceNos": [
+    6,
     7,
     8,
-    9,
+    9
+  ],
+  "pendingSourceNos": [
     10,
     11,
     12,
@@ -6328,17 +6328,3267 @@
         "sourceAnswerPage": 6,
         "studentDifficultyMeasured": false
       }
+    },
+    {
+      "id": "applied1-q09-v1",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "pointBand": "2.7",
+      "text": "길이가 150cm인 나무 막대의 한쪽 끝에서부터 3cm 간격으로 줄을 긋고, 같은 끝에서부터 다시 5cm 간격으로 줄을 그었습니다. 막대 안쪽에 표시된 곳을 모두 자르면 몇 도막이 됩니까?",
+      "answer": "70도막",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        70
+      ],
+      "acceptedAnswers": [
+        "70도막"
+      ],
+      "solutionSteps": [
+        "막대 안쪽의 3cm 간격 줄은 49개, 5cm 간격 줄은 29개입니다.",
+        "두 간격의 공배수인 15cm 간격 줄 9개는 두 번 세었으므로 한 번 뺍니다.",
+        "자르는 곳은 49＋29−9＝69곳이고, 도막은 그보다 하나 많은 70개입니다."
+      ],
+      "solution": "막대 안쪽의 3cm 간격 줄은 49개, 5cm 간격 줄은 29개입니다. 두 간격의 공배수인 15cm 간격 줄 9개는 두 번 세었으므로 한 번 뺍니다. 자르는 곳은 49＋29−9＝69곳이고, 도막은 그보다 하나 많은 70개입니다.",
+      "learningPoint": "공통인 자르는 곳을 빼고 도막 수에는 1을 더하기",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "verification": {
+        "primaryMethod": "inclusion exclusion internal cuts",
+        "parameters": {
+          "length": 150,
+          "a": 3,
+          "b": 5
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q09-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q09-v2",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "pointBand": "2.7",
+      "text": "길이가 168cm인 나무 막대의 한쪽 끝에서부터 4cm 간격으로 줄을 긋고, 같은 끝에서부터 다시 6cm 간격으로 줄을 그었습니다. 막대 안쪽에 표시된 곳을 모두 자르면 몇 도막이 됩니까?",
+      "answer": "56도막",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        56
+      ],
+      "acceptedAnswers": [
+        "56도막"
+      ],
+      "solutionSteps": [
+        "막대 안쪽의 4cm 간격 줄은 41개, 6cm 간격 줄은 27개입니다.",
+        "두 간격의 공배수인 12cm 간격 줄 13개는 두 번 세었으므로 한 번 뺍니다.",
+        "자르는 곳은 41＋27−13＝55곳이고, 도막은 그보다 하나 많은 56개입니다."
+      ],
+      "solution": "막대 안쪽의 4cm 간격 줄은 41개, 6cm 간격 줄은 27개입니다. 두 간격의 공배수인 12cm 간격 줄 13개는 두 번 세었으므로 한 번 뺍니다. 자르는 곳은 41＋27−13＝55곳이고, 도막은 그보다 하나 많은 56개입니다.",
+      "learningPoint": "공통인 자르는 곳을 빼고 도막 수에는 1을 더하기",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "verification": {
+        "primaryMethod": "inclusion exclusion internal cuts",
+        "parameters": {
+          "length": 168,
+          "a": 4,
+          "b": 6
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q09-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q09-v3",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "pointBand": "2.7",
+      "text": "길이가 168cm인 나무 막대의 한쪽 끝에서부터 3cm 간격으로 줄을 긋고, 같은 끝에서부터 다시 7cm 간격으로 줄을 그었습니다. 막대 안쪽에 표시된 곳을 모두 자르면 몇 도막이 됩니까?",
+      "answer": "72도막",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        72
+      ],
+      "acceptedAnswers": [
+        "72도막"
+      ],
+      "solutionSteps": [
+        "막대 안쪽의 3cm 간격 줄은 55개, 7cm 간격 줄은 23개입니다.",
+        "두 간격의 공배수인 21cm 간격 줄 7개는 두 번 세었으므로 한 번 뺍니다.",
+        "자르는 곳은 55＋23−7＝71곳이고, 도막은 그보다 하나 많은 72개입니다."
+      ],
+      "solution": "막대 안쪽의 3cm 간격 줄은 55개, 7cm 간격 줄은 23개입니다. 두 간격의 공배수인 21cm 간격 줄 7개는 두 번 세었으므로 한 번 뺍니다. 자르는 곳은 55＋23−7＝71곳이고, 도막은 그보다 하나 많은 72개입니다.",
+      "learningPoint": "공통인 자르는 곳을 빼고 도막 수에는 1을 더하기",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "verification": {
+        "primaryMethod": "inclusion exclusion internal cuts",
+        "parameters": {
+          "length": 168,
+          "a": 3,
+          "b": 7
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q09-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q09-v4",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "pointBand": "2.7",
+      "text": "길이가 180cm인 나무 막대의 한쪽 끝에서부터 4cm 간격으로 줄을 긋고, 같은 끝에서부터 다시 5cm 간격으로 줄을 그었습니다. 막대 안쪽에 표시된 곳을 모두 자르면 몇 도막이 됩니까?",
+      "answer": "72도막",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        72
+      ],
+      "acceptedAnswers": [
+        "72도막"
+      ],
+      "solutionSteps": [
+        "막대 안쪽의 4cm 간격 줄은 44개, 5cm 간격 줄은 35개입니다.",
+        "두 간격의 공배수인 20cm 간격 줄 8개는 두 번 세었으므로 한 번 뺍니다.",
+        "자르는 곳은 44＋35−8＝71곳이고, 도막은 그보다 하나 많은 72개입니다."
+      ],
+      "solution": "막대 안쪽의 4cm 간격 줄은 44개, 5cm 간격 줄은 35개입니다. 두 간격의 공배수인 20cm 간격 줄 8개는 두 번 세었으므로 한 번 뺍니다. 자르는 곳은 44＋35−8＝71곳이고, 도막은 그보다 하나 많은 72개입니다.",
+      "learningPoint": "공통인 자르는 곳을 빼고 도막 수에는 1을 더하기",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "verification": {
+        "primaryMethod": "inclusion exclusion internal cuts",
+        "parameters": {
+          "length": 180,
+          "a": 4,
+          "b": 5
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q09-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q09-v5",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "pointBand": "2.7",
+      "text": "길이가 210cm인 나무 막대의 한쪽 끝에서부터 5cm 간격으로 줄을 긋고, 같은 끝에서부터 다시 6cm 간격으로 줄을 그었습니다. 막대 안쪽에 표시된 곳을 모두 자르면 몇 도막이 됩니까?",
+      "answer": "70도막",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        70
+      ],
+      "acceptedAnswers": [
+        "70도막"
+      ],
+      "solutionSteps": [
+        "막대 안쪽의 5cm 간격 줄은 41개, 6cm 간격 줄은 34개입니다.",
+        "두 간격의 공배수인 30cm 간격 줄 6개는 두 번 세었으므로 한 번 뺍니다.",
+        "자르는 곳은 41＋34−6＝69곳이고, 도막은 그보다 하나 많은 70개입니다."
+      ],
+      "solution": "막대 안쪽의 5cm 간격 줄은 41개, 6cm 간격 줄은 34개입니다. 두 간격의 공배수인 30cm 간격 줄 6개는 두 번 세었으므로 한 번 뺍니다. 자르는 곳은 41＋34−6＝69곳이고, 도막은 그보다 하나 많은 70개입니다.",
+      "learningPoint": "공통인 자르는 곳을 빼고 도막 수에는 1을 더하기",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "verification": {
+        "primaryMethod": "inclusion exclusion internal cuts",
+        "parameters": {
+          "length": 210,
+          "a": 5,
+          "b": 6
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q09-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-low-v1",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하고 가로가 작은 칸 1개인 직사각형은 모두 몇 개입니까?",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "가로가 1칸이면서 깃발 칸을 포함하는 가로 위치는 1가지입니다.",
+        "깃발 칸의 위쪽 경계는2가지, 아래쪽 경계는3가지이므로 세로 구간은2×3＝6가지입니다.",
+        "가로 위치와 세로 구간을 짝지으면 1×6＝6개입니다."
+      ],
+      "solution": "가로가 1칸이면서 깃발 칸을 포함하는 가로 위치는 1가지입니다. 깃발 칸의 위쪽 경계는2가지, 아래쪽 경계는3가지이므로 세로 구간은2×3＝6가지입니다. 가로 위치와 세로 구간을 짝지으면 1×6＝6개입니다.",
+      "learningPoint": "깃발 칸을 포함하는 가로 위치와 위아래 경계 선택을 나누어 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "가로 칸 수를 고정해 깃발 칸을 포함하는 위치와 세로 경계를 셈",
+          "conditionTracking": "깃발 포함·가로 칸 수",
+          "caseSplitting": "가능한 가로 시작과 위아래 경계의 조합",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "rectangle size placement product",
+        "parameters": {
+          "width": 1
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-low-v2",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하고 가로가 작은 칸 2개인 직사각형은 모두 몇 개입니까?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "가로가 2칸이면서 깃발 칸을 포함하는 가로 위치는 2가지입니다.",
+        "깃발 칸의 위쪽 경계는2가지, 아래쪽 경계는3가지이므로 세로 구간은2×3＝6가지입니다.",
+        "가로 위치와 세로 구간을 짝지으면 2×6＝12개입니다."
+      ],
+      "solution": "가로가 2칸이면서 깃발 칸을 포함하는 가로 위치는 2가지입니다. 깃발 칸의 위쪽 경계는2가지, 아래쪽 경계는3가지이므로 세로 구간은2×3＝6가지입니다. 가로 위치와 세로 구간을 짝지으면 2×6＝12개입니다.",
+      "learningPoint": "깃발 칸을 포함하는 가로 위치와 위아래 경계 선택을 나누어 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "가로 칸 수를 고정해 깃발 칸을 포함하는 위치와 세로 경계를 셈",
+          "conditionTracking": "깃발 포함·가로 칸 수",
+          "caseSplitting": "가능한 가로 시작과 위아래 경계의 조합",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "rectangle size placement product",
+        "parameters": {
+          "width": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-low-v3",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하고 가로가 작은 칸 3개인 직사각형은 모두 몇 개입니까?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "가로가 3칸이면서 깃발 칸을 포함하는 가로 위치는 2가지입니다.",
+        "깃발 칸의 위쪽 경계는2가지, 아래쪽 경계는3가지이므로 세로 구간은2×3＝6가지입니다.",
+        "가로 위치와 세로 구간을 짝지으면 2×6＝12개입니다."
+      ],
+      "solution": "가로가 3칸이면서 깃발 칸을 포함하는 가로 위치는 2가지입니다. 깃발 칸의 위쪽 경계는2가지, 아래쪽 경계는3가지이므로 세로 구간은2×3＝6가지입니다. 가로 위치와 세로 구간을 짝지으면 2×6＝12개입니다.",
+      "learningPoint": "깃발 칸을 포함하는 가로 위치와 위아래 경계 선택을 나누어 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "가로 칸 수를 고정해 깃발 칸을 포함하는 위치와 세로 경계를 셈",
+          "conditionTracking": "깃발 포함·가로 칸 수",
+          "caseSplitting": "가능한 가로 시작과 위아래 경계의 조합",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "rectangle size placement product",
+        "parameters": {
+          "width": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-low-v4",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하고 가로가 작은 칸 4개인 직사각형은 모두 몇 개입니까?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "가로가 4칸이면서 깃발 칸을 포함하는 가로 위치는 2가지입니다.",
+        "깃발 칸의 위쪽 경계는2가지, 아래쪽 경계는3가지이므로 세로 구간은2×3＝6가지입니다.",
+        "가로 위치와 세로 구간을 짝지으면 2×6＝12개입니다."
+      ],
+      "solution": "가로가 4칸이면서 깃발 칸을 포함하는 가로 위치는 2가지입니다. 깃발 칸의 위쪽 경계는2가지, 아래쪽 경계는3가지이므로 세로 구간은2×3＝6가지입니다. 가로 위치와 세로 구간을 짝지으면 2×6＝12개입니다.",
+      "learningPoint": "깃발 칸을 포함하는 가로 위치와 위아래 경계 선택을 나누어 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "가로 칸 수를 고정해 깃발 칸을 포함하는 위치와 세로 경계를 셈",
+          "conditionTracking": "깃발 포함·가로 칸 수",
+          "caseSplitting": "가능한 가로 시작과 위아래 경계의 조합",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "rectangle size placement product",
+        "parameters": {
+          "width": 4
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-low-v5",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하고 가로가 작은 칸 5개인 직사각형은 모두 몇 개입니까?",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "가로가 5칸이면서 깃발 칸을 포함하는 가로 위치는 1가지입니다.",
+        "깃발 칸의 위쪽 경계는2가지, 아래쪽 경계는3가지이므로 세로 구간은2×3＝6가지입니다.",
+        "가로 위치와 세로 구간을 짝지으면 1×6＝6개입니다."
+      ],
+      "solution": "가로가 5칸이면서 깃발 칸을 포함하는 가로 위치는 1가지입니다. 깃발 칸의 위쪽 경계는2가지, 아래쪽 경계는3가지이므로 세로 구간은2×3＝6가지입니다. 가로 위치와 세로 구간을 짝지으면 1×6＝6개입니다.",
+      "learningPoint": "깃발 칸을 포함하는 가로 위치와 위아래 경계 선택을 나누어 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "가로 칸 수를 고정해 깃발 칸을 포함하는 위치와 세로 경계를 셈",
+          "conditionTracking": "깃발 포함·가로 칸 수",
+          "caseSplitting": "가능한 가로 시작과 위아래 경계의 조합",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "rectangle size placement product",
+        "parameters": {
+          "width": 5
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-middle-v1",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하고, 작은 칸을 모두 4개 포함하는 직사각형은 몇 개입니까?",
+      "answer": "7",
+      "answerParts": [
+        7
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "7"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은 칸 4개로 된 직사각형의 가로·세로 칸 수는 곱이 4이며 그림의 가로5칸·세로4칸을 넘을 수 없습니다.",
+        "각 크기마다 깃발 칸을 포함하는 가로 시작 위치와 세로 시작 위치를 짝지어 셉니다. 가로1칸·세로4칸: 1개、가로2칸·세로2칸: 4개、가로4칸·세로1칸: 2개입니다.",
+        "서로 다른 크기의 직사각형은 겹쳐 세지 않으므로 이 개수들을 더하면 7개입니다."
+      ],
+      "solution": "작은 칸 4개로 된 직사각형의 가로·세로 칸 수는 곱이 4이며 그림의 가로5칸·세로4칸을 넘을 수 없습니다. 각 크기마다 깃발 칸을 포함하는 가로 시작 위치와 세로 시작 위치를 짝지어 셉니다. 가로1칸·세로4칸: 1개、가로2칸·세로2칸: 4개、가로4칸·세로1칸: 2개입니다. 서로 다른 크기의 직사각형은 겹쳐 세지 않으므로 이 개수들을 더하면 7개입니다.",
+      "learningPoint": "작은 칸의 수를 가능한 가로·세로 칸 수로 나누고 깃발 포함 위치 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "작은 칸의 수를 가로·세로 칸 수의 곱으로 나누어 경우별 합산",
+          "conditionTracking": "깃발 포함·전체 작은 칸 수",
+          "caseSplitting": "그림 안에 들어가는 모든 가로/세로 칸 수 조합",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "factor pairs and placement product",
+        "parameters": {
+          "cellCount": 4
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-middle-v2",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하고, 작은 칸을 모두 6개 포함하는 직사각형은 몇 개입니까?",
+      "answer": "8",
+      "answerParts": [
+        8
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "8"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은 칸 6개로 된 직사각형의 가로·세로 칸 수는 곱이 6이며 그림의 가로5칸·세로4칸을 넘을 수 없습니다.",
+        "각 크기마다 깃발 칸을 포함하는 가로 시작 위치와 세로 시작 위치를 짝지어 셉니다. 가로2칸·세로3칸: 4개、가로3칸·세로2칸: 4개입니다.",
+        "서로 다른 크기의 직사각형은 겹쳐 세지 않으므로 이 개수들을 더하면 8개입니다."
+      ],
+      "solution": "작은 칸 6개로 된 직사각형의 가로·세로 칸 수는 곱이 6이며 그림의 가로5칸·세로4칸을 넘을 수 없습니다. 각 크기마다 깃발 칸을 포함하는 가로 시작 위치와 세로 시작 위치를 짝지어 셉니다. 가로2칸·세로3칸: 4개、가로3칸·세로2칸: 4개입니다. 서로 다른 크기의 직사각형은 겹쳐 세지 않으므로 이 개수들을 더하면 8개입니다.",
+      "learningPoint": "작은 칸의 수를 가능한 가로·세로 칸 수로 나누고 깃발 포함 위치 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "작은 칸의 수를 가로·세로 칸 수의 곱으로 나누어 경우별 합산",
+          "conditionTracking": "깃발 포함·전체 작은 칸 수",
+          "caseSplitting": "그림 안에 들어가는 모든 가로/세로 칸 수 조합",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "factor pairs and placement product",
+        "parameters": {
+          "cellCount": 6
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-middle-v3",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하고, 작은 칸을 모두 8개 포함하는 직사각형은 몇 개입니까?",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은 칸 8개로 된 직사각형의 가로·세로 칸 수는 곱이 8이며 그림의 가로5칸·세로4칸을 넘을 수 없습니다.",
+        "각 크기마다 깃발 칸을 포함하는 가로 시작 위치와 세로 시작 위치를 짝지어 셉니다. 가로2칸·세로4칸: 2개、가로4칸·세로2칸: 4개입니다.",
+        "서로 다른 크기의 직사각형은 겹쳐 세지 않으므로 이 개수들을 더하면 6개입니다."
+      ],
+      "solution": "작은 칸 8개로 된 직사각형의 가로·세로 칸 수는 곱이 8이며 그림의 가로5칸·세로4칸을 넘을 수 없습니다. 각 크기마다 깃발 칸을 포함하는 가로 시작 위치와 세로 시작 위치를 짝지어 셉니다. 가로2칸·세로4칸: 2개、가로4칸·세로2칸: 4개입니다. 서로 다른 크기의 직사각형은 겹쳐 세지 않으므로 이 개수들을 더하면 6개입니다.",
+      "learningPoint": "작은 칸의 수를 가능한 가로·세로 칸 수로 나누고 깃발 포함 위치 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "작은 칸의 수를 가로·세로 칸 수의 곱으로 나누어 경우별 합산",
+          "conditionTracking": "깃발 포함·전체 작은 칸 수",
+          "caseSplitting": "그림 안에 들어가는 모든 가로/세로 칸 수 조합",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "factor pairs and placement product",
+        "parameters": {
+          "cellCount": 8
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-middle-v4",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하고, 작은 칸을 모두 10개 포함하는 직사각형은 몇 개입니까?",
+      "answer": "2",
+      "answerParts": [
+        2
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "2"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은 칸 10개로 된 직사각형의 가로·세로 칸 수는 곱이 10이며 그림의 가로5칸·세로4칸을 넘을 수 없습니다.",
+        "각 크기마다 깃발 칸을 포함하는 가로 시작 위치와 세로 시작 위치를 짝지어 셉니다. 가로5칸·세로2칸: 2개입니다.",
+        "서로 다른 크기의 직사각형은 겹쳐 세지 않으므로 이 개수들을 더하면 2개입니다."
+      ],
+      "solution": "작은 칸 10개로 된 직사각형의 가로·세로 칸 수는 곱이 10이며 그림의 가로5칸·세로4칸을 넘을 수 없습니다. 각 크기마다 깃발 칸을 포함하는 가로 시작 위치와 세로 시작 위치를 짝지어 셉니다. 가로5칸·세로2칸: 2개입니다. 서로 다른 크기의 직사각형은 겹쳐 세지 않으므로 이 개수들을 더하면 2개입니다.",
+      "learningPoint": "작은 칸의 수를 가능한 가로·세로 칸 수로 나누고 깃발 포함 위치 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "작은 칸의 수를 가로·세로 칸 수의 곱으로 나누어 경우별 합산",
+          "conditionTracking": "깃발 포함·전체 작은 칸 수",
+          "caseSplitting": "그림 안에 들어가는 모든 가로/세로 칸 수 조합",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "factor pairs and placement product",
+        "parameters": {
+          "cellCount": 10
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-middle-v5",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하고, 작은 칸을 모두 12개 포함하는 직사각형은 몇 개입니까?",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은 칸 12개로 된 직사각형의 가로·세로 칸 수는 곱이 12이며 그림의 가로5칸·세로4칸을 넘을 수 없습니다.",
+        "각 크기마다 깃발 칸을 포함하는 가로 시작 위치와 세로 시작 위치를 짝지어 셉니다. 가로3칸·세로4칸: 2개、가로4칸·세로3칸: 4개입니다.",
+        "서로 다른 크기의 직사각형은 겹쳐 세지 않으므로 이 개수들을 더하면 6개입니다."
+      ],
+      "solution": "작은 칸 12개로 된 직사각형의 가로·세로 칸 수는 곱이 12이며 그림의 가로5칸·세로4칸을 넘을 수 없습니다. 각 크기마다 깃발 칸을 포함하는 가로 시작 위치와 세로 시작 위치를 짝지어 셉니다. 가로3칸·세로4칸: 2개、가로4칸·세로3칸: 4개입니다. 서로 다른 크기의 직사각형은 겹쳐 세지 않으므로 이 개수들을 더하면 6개입니다.",
+      "learningPoint": "작은 칸의 수를 가능한 가로·세로 칸 수로 나누고 깃발 포함 위치 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "작은 칸의 수를 가로·세로 칸 수의 곱으로 나누어 경우별 합산",
+          "conditionTracking": "깃발 포함·전체 작은 칸 수",
+          "caseSplitting": "그림 안에 들어가는 모든 가로/세로 칸 수 조합",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "factor pairs and placement product",
+        "parameters": {
+          "cellCount": 12
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-high-v1",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하는 것을 찾습니다. 가로 칸 수가 세로 칸 수보다 많고, 작은 칸을 4개 이상 포함하며, 가로와 세로의 칸 수를 합하면 6 이하인 직사각형은 모두 몇 개입니까?",
+      "answer": "11",
+      "answerParts": [
+        11
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "11"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "가로는1~5칸, 세로는1~4칸입니다. 가로가 세로보다 많고 두 칸 수의 곱이 4 이상이며 합이 6 이하인 크기를 고릅니다.",
+        "조건을 모두 만족하는 크기와, 각 크기에서 깃발을 포함하는 위치의 수는 가로3칸·세로2칸: 4개、가로4칸·세로1칸: 2개、가로4칸·세로2칸: 4개、가로5칸·세로1칸: 1개입니다.",
+        "이 크기 외에는 세 조건 중 적어도 하나를 만족하지 못합니다. 가능한 위치를 모두 더하면 11개입니다."
+      ],
+      "solution": "가로는1~5칸, 세로는1~4칸입니다. 가로가 세로보다 많고 두 칸 수의 곱이 4 이상이며 합이 6 이하인 크기를 고릅니다. 조건을 모두 만족하는 크기와, 각 크기에서 깃발을 포함하는 위치의 수는 가로3칸·세로2칸: 4개、가로4칸·세로1칸: 2개、가로4칸·세로2칸: 4개、가로5칸·세로1칸: 1개입니다. 이 크기 외에는 세 조건 중 적어도 하나를 만족하지 못합니다. 가능한 위치를 모두 더하면 11개입니다.",
+      "learningPoint": "세 크기 조건을 함께 적용한 뒤 깃발이 포함되는 모든 위치를 빠짐없이 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "방향·칸 수의 곱·두 방향 칸 수의 합을 동시에 적용",
+          "conditionTracking": "깃발 포함·가로>세로·작은 칸 수 하한·칸 수 합 상한",
+          "caseSplitting": "성립하는 크기와 각 크기의 위치를 분리하고 중복 없이 합산",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "three size predicates and placement product",
+        "parameters": {
+          "minimumCells": 4,
+          "maximumSideSum": 6
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-high-v2",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하는 것을 찾습니다. 가로 칸 수가 세로 칸 수보다 많고, 작은 칸을 6개 이상 포함하며, 가로와 세로의 칸 수를 합하면 7 이하인 직사각형은 모두 몇 개입니까?",
+      "answer": "14",
+      "answerParts": [
+        14
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "14"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "가로는1~5칸, 세로는1~4칸입니다. 가로가 세로보다 많고 두 칸 수의 곱이 6 이상이며 합이 7 이하인 크기를 고릅니다.",
+        "조건을 모두 만족하는 크기와, 각 크기에서 깃발을 포함하는 위치의 수는 가로3칸·세로2칸: 4개、가로4칸·세로2칸: 4개、가로4칸·세로3칸: 4개、가로5칸·세로2칸: 2개입니다.",
+        "이 크기 외에는 세 조건 중 적어도 하나를 만족하지 못합니다. 가능한 위치를 모두 더하면 14개입니다."
+      ],
+      "solution": "가로는1~5칸, 세로는1~4칸입니다. 가로가 세로보다 많고 두 칸 수의 곱이 6 이상이며 합이 7 이하인 크기를 고릅니다. 조건을 모두 만족하는 크기와, 각 크기에서 깃발을 포함하는 위치의 수는 가로3칸·세로2칸: 4개、가로4칸·세로2칸: 4개、가로4칸·세로3칸: 4개、가로5칸·세로2칸: 2개입니다. 이 크기 외에는 세 조건 중 적어도 하나를 만족하지 못합니다. 가능한 위치를 모두 더하면 14개입니다.",
+      "learningPoint": "세 크기 조건을 함께 적용한 뒤 깃발이 포함되는 모든 위치를 빠짐없이 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "방향·칸 수의 곱·두 방향 칸 수의 합을 동시에 적용",
+          "conditionTracking": "깃발 포함·가로>세로·작은 칸 수 하한·칸 수 합 상한",
+          "caseSplitting": "성립하는 크기와 각 크기의 위치를 분리하고 중복 없이 합산",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "three size predicates and placement product",
+        "parameters": {
+          "minimumCells": 6,
+          "maximumSideSum": 7
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-high-v3",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하는 것을 찾습니다. 가로 칸 수가 세로 칸 수보다 많고, 작은 칸을 8개 이상 포함하며, 가로와 세로의 칸 수를 합하면 8 이하인 직사각형은 모두 몇 개입니까?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "가로는1~5칸, 세로는1~4칸입니다. 가로가 세로보다 많고 두 칸 수의 곱이 8 이상이며 합이 8 이하인 크기를 고릅니다.",
+        "조건을 모두 만족하는 크기와, 각 크기에서 깃발을 포함하는 위치의 수는 가로4칸·세로2칸: 4개、가로4칸·세로3칸: 4개、가로5칸·세로2칸: 2개、가로5칸·세로3칸: 2개입니다.",
+        "이 크기 외에는 세 조건 중 적어도 하나를 만족하지 못합니다. 가능한 위치를 모두 더하면 12개입니다."
+      ],
+      "solution": "가로는1~5칸, 세로는1~4칸입니다. 가로가 세로보다 많고 두 칸 수의 곱이 8 이상이며 합이 8 이하인 크기를 고릅니다. 조건을 모두 만족하는 크기와, 각 크기에서 깃발을 포함하는 위치의 수는 가로4칸·세로2칸: 4개、가로4칸·세로3칸: 4개、가로5칸·세로2칸: 2개、가로5칸·세로3칸: 2개입니다. 이 크기 외에는 세 조건 중 적어도 하나를 만족하지 못합니다. 가능한 위치를 모두 더하면 12개입니다.",
+      "learningPoint": "세 크기 조건을 함께 적용한 뒤 깃발이 포함되는 모든 위치를 빠짐없이 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "방향·칸 수의 곱·두 방향 칸 수의 합을 동시에 적용",
+          "conditionTracking": "깃발 포함·가로>세로·작은 칸 수 하한·칸 수 합 상한",
+          "caseSplitting": "성립하는 크기와 각 크기의 위치를 분리하고 중복 없이 합산",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "three size predicates and placement product",
+        "parameters": {
+          "minimumCells": 8,
+          "maximumSideSum": 8
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-high-v4",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하는 것을 찾습니다. 가로 칸 수가 세로 칸 수보다 많고, 작은 칸을 9개 이상 포함하며, 가로와 세로의 칸 수를 합하면 8 이하인 직사각형은 모두 몇 개입니까?",
+      "answer": "8",
+      "answerParts": [
+        8
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "8"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "가로는1~5칸, 세로는1~4칸입니다. 가로가 세로보다 많고 두 칸 수의 곱이 9 이상이며 합이 8 이하인 크기를 고릅니다.",
+        "조건을 모두 만족하는 크기와, 각 크기에서 깃발을 포함하는 위치의 수는 가로4칸·세로3칸: 4개、가로5칸·세로2칸: 2개、가로5칸·세로3칸: 2개입니다.",
+        "이 크기 외에는 세 조건 중 적어도 하나를 만족하지 못합니다. 가능한 위치를 모두 더하면 8개입니다."
+      ],
+      "solution": "가로는1~5칸, 세로는1~4칸입니다. 가로가 세로보다 많고 두 칸 수의 곱이 9 이상이며 합이 8 이하인 크기를 고릅니다. 조건을 모두 만족하는 크기와, 각 크기에서 깃발을 포함하는 위치의 수는 가로4칸·세로3칸: 4개、가로5칸·세로2칸: 2개、가로5칸·세로3칸: 2개입니다. 이 크기 외에는 세 조건 중 적어도 하나를 만족하지 못합니다. 가능한 위치를 모두 더하면 8개입니다.",
+      "learningPoint": "세 크기 조건을 함께 적용한 뒤 깃발이 포함되는 모든 위치를 빠짐없이 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "방향·칸 수의 곱·두 방향 칸 수의 합을 동시에 적용",
+          "conditionTracking": "깃발 포함·가로>세로·작은 칸 수 하한·칸 수 합 상한",
+          "caseSplitting": "성립하는 크기와 각 크기의 위치를 분리하고 중복 없이 합산",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "three size predicates and placement product",
+        "parameters": {
+          "minimumCells": 9,
+          "maximumSideSum": 8
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "깃발 칸을 포함하는 격자 직사각형",
+      "learningLocation": "활용 1회 · 원문 7번 · 깃발을 포함하는 직사각형 세기",
+      "id": "applied1-q07-high-v5",
+      "genId": "applied1-q07",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 7,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "그림의 선을 따라 만든 직사각형 중 깃발이 있는 칸을 포함하는 것을 찾습니다. 가로 칸 수가 세로 칸 수보다 많고, 작은 칸을 10개 이상 포함하며, 가로와 세로의 칸 수를 합하면 9 이하인 직사각형은 모두 몇 개입니까?",
+      "answer": "9",
+      "answerParts": [
+        9
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "9"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "가로는1~5칸, 세로는1~4칸입니다. 가로가 세로보다 많고 두 칸 수의 곱이 10 이상이며 합이 9 이하인 크기를 고릅니다.",
+        "조건을 모두 만족하는 크기와, 각 크기에서 깃발을 포함하는 위치의 수는 가로4칸·세로3칸: 4개、가로5칸·세로2칸: 2개、가로5칸·세로3칸: 2개、가로5칸·세로4칸: 1개입니다.",
+        "이 크기 외에는 세 조건 중 적어도 하나를 만족하지 못합니다. 가능한 위치를 모두 더하면 9개입니다."
+      ],
+      "solution": "가로는1~5칸, 세로는1~4칸입니다. 가로가 세로보다 많고 두 칸 수의 곱이 10 이상이며 합이 9 이하인 크기를 고릅니다. 조건을 모두 만족하는 크기와, 각 크기에서 깃발을 포함하는 위치의 수는 가로4칸·세로3칸: 4개、가로5칸·세로2칸: 2개、가로5칸·세로3칸: 2개、가로5칸·세로4칸: 1개입니다. 이 크기 외에는 세 조건 중 적어도 하나를 만족하지 못합니다. 가능한 위치를 모두 더하면 9개입니다.",
+      "learningPoint": "세 크기 조건을 함께 적용한 뒤 깃발이 포함되는 모든 위치를 빠짐없이 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "방향·칸 수의 곱·두 방향 칸 수의 합을 동시에 적용",
+          "conditionTracking": "깃발 포함·가로>세로·작은 칸 수 하한·칸 수 합 상한",
+          "caseSplitting": "성립하는 크기와 각 크기의 위치를 분리하고 중복 없이 합산",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "three size predicates and placement product",
+        "parameters": {
+          "minimumCells": 10,
+          "maximumSideSum": 9
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "src": "assets/applied1/flag-grid.png",
+        "description": "원본 깃발 격자 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-low-v1",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "pointBand": "2.7",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. 다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "25",
+      "answerParts": [
+        25
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "25"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "ㄱㄴ은10×ㄱ＋ㄴ이고, ㄱㄱㄱㄴ은1110×ㄱ＋1×ㄴ입니다.",
+        "곱셈식을 정리하면 220×ㄱ＝88×ㄴ이므로 ㄱ과 ㄴ의 비는2:5입니다.",
+        "두 숫자가 모두1~9인 경우는 ㄱ＝2, ㄴ＝5뿐입니다. 실제로 89×25＝2225이므로 답은25입니다."
+      ],
+      "solution": "ㄱㄴ은10×ㄱ＋ㄴ이고, ㄱㄱㄱㄴ은1110×ㄱ＋1×ㄴ입니다. 곱셈식을 정리하면 220×ㄱ＝88×ㄴ이므로 ㄱ과 ㄴ의 비는2:5입니다. 두 숫자가 모두1~9인 경우는 ㄱ＝2, ㄴ＝5뿐입니다. 실제로 89×25＝2225이므로 답은25입니다.",
+      "learningPoint": "반복 문자를 자릿값에 따라 나타내고 서로 다른 한 자리 숫자 조건 확인",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "고정된 곱하는 수와 반복 문자의 자릿값 관계를 비교",
+          "conditionTracking": "서로 다른0이 아닌 숫자·같은 문자·주어진 곱셈식",
+          "caseSplitting": "1~9에서 자릿값 비를 만족하는 전체 숫자 쌍",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "place value coefficient ratio",
+        "parameters": {
+          "pattern": "AAAB",
+          "coefficient": 89
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "89 × ㄱㄴ ＝ ㄱㄱㄱㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-low-v2",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "pointBand": "2.7",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. 다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "18",
+      "answerParts": [
+        18
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "18"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "ㄱㄴ은10×ㄱ＋ㄴ이고, ㄱㄱㄴㄴ은1100×ㄱ＋11×ㄴ입니다.",
+        "곱셈식을 정리하면 440×ㄱ＝55×ㄴ이므로 ㄱ과 ㄴ의 비는1:8입니다.",
+        "두 숫자가 모두1~9인 경우는 ㄱ＝1, ㄴ＝8뿐입니다. 실제로 66×18＝1188이므로 답은18입니다."
+      ],
+      "solution": "ㄱㄴ은10×ㄱ＋ㄴ이고, ㄱㄱㄴㄴ은1100×ㄱ＋11×ㄴ입니다. 곱셈식을 정리하면 440×ㄱ＝55×ㄴ이므로 ㄱ과 ㄴ의 비는1:8입니다. 두 숫자가 모두1~9인 경우는 ㄱ＝1, ㄴ＝8뿐입니다. 실제로 66×18＝1188이므로 답은18입니다.",
+      "learningPoint": "반복 문자를 자릿값에 따라 나타내고 서로 다른 한 자리 숫자 조건 확인",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "고정된 곱하는 수와 반복 문자의 자릿값 관계를 비교",
+          "conditionTracking": "서로 다른0이 아닌 숫자·같은 문자·주어진 곱셈식",
+          "caseSplitting": "1~9에서 자릿값 비를 만족하는 전체 숫자 쌍",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "place value coefficient ratio",
+        "parameters": {
+          "pattern": "AABB",
+          "coefficient": 66
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "66 × ㄱㄴ ＝ ㄱㄱㄴㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-low-v3",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "pointBand": "2.7",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. 다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "45",
+      "answerParts": [
+        45
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "45"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "ㄱㄴ은10×ㄱ＋ㄴ이고, ㄱㄱㄴㄴ은1100×ㄱ＋11×ㄴ입니다.",
+        "곱셈식을 정리하면 110×ㄱ＝88×ㄴ이므로 ㄱ과 ㄴ의 비는4:5입니다.",
+        "두 숫자가 모두1~9인 경우는 ㄱ＝4, ㄴ＝5뿐입니다. 실제로 99×45＝4455이므로 답은45입니다."
+      ],
+      "solution": "ㄱㄴ은10×ㄱ＋ㄴ이고, ㄱㄱㄴㄴ은1100×ㄱ＋11×ㄴ입니다. 곱셈식을 정리하면 110×ㄱ＝88×ㄴ이므로 ㄱ과 ㄴ의 비는4:5입니다. 두 숫자가 모두1~9인 경우는 ㄱ＝4, ㄴ＝5뿐입니다. 실제로 99×45＝4455이므로 답은45입니다.",
+      "learningPoint": "반복 문자를 자릿값에 따라 나타내고 서로 다른 한 자리 숫자 조건 확인",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "고정된 곱하는 수와 반복 문자의 자릿값 관계를 비교",
+          "conditionTracking": "서로 다른0이 아닌 숫자·같은 문자·주어진 곱셈식",
+          "caseSplitting": "1~9에서 자릿값 비를 만족하는 전체 숫자 쌍",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "place value coefficient ratio",
+        "parameters": {
+          "pattern": "AABB",
+          "coefficient": 99
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "99 × ㄱㄴ ＝ ㄱㄱㄴㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-low-v4",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "pointBand": "2.7",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. 다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "91",
+      "answerParts": [
+        91
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "91"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "ㄱㄴ은10×ㄱ＋ㄴ이고, ㄴㄱㄴㄴ은100×ㄱ＋1011×ㄴ입니다.",
+        "곱셈식을 정리하면 110×ㄱ＝990×ㄴ이므로 ㄱ과 ㄴ의 비는9:1입니다.",
+        "두 숫자가 모두1~9인 경우는 ㄱ＝9, ㄴ＝1뿐입니다. 실제로 21×91＝1911이므로 답은91입니다."
+      ],
+      "solution": "ㄱㄴ은10×ㄱ＋ㄴ이고, ㄴㄱㄴㄴ은100×ㄱ＋1011×ㄴ입니다. 곱셈식을 정리하면 110×ㄱ＝990×ㄴ이므로 ㄱ과 ㄴ의 비는9:1입니다. 두 숫자가 모두1~9인 경우는 ㄱ＝9, ㄴ＝1뿐입니다. 실제로 21×91＝1911이므로 답은91입니다.",
+      "learningPoint": "반복 문자를 자릿값에 따라 나타내고 서로 다른 한 자리 숫자 조건 확인",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "고정된 곱하는 수와 반복 문자의 자릿값 관계를 비교",
+          "conditionTracking": "서로 다른0이 아닌 숫자·같은 문자·주어진 곱셈식",
+          "caseSplitting": "1~9에서 자릿값 비를 만족하는 전체 숫자 쌍",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "place value coefficient ratio",
+        "parameters": {
+          "pattern": "BABB",
+          "coefficient": 21
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "21 × ㄱㄴ ＝ ㄴㄱㄴㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-low-v5",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "pointBand": "2.7",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. 다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "65",
+      "answerParts": [
+        65
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "65"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "ㄱㄴ은10×ㄱ＋ㄴ이고, ㄴㄱㄴㄴ은100×ㄱ＋1011×ㄴ입니다.",
+        "곱셈식을 정리하면 770×ㄱ＝924×ㄴ이므로 ㄱ과 ㄴ의 비는6:5입니다.",
+        "두 숫자가 모두1~9인 경우는 ㄱ＝6, ㄴ＝5뿐입니다. 실제로 87×65＝5655이므로 답은65입니다."
+      ],
+      "solution": "ㄱㄴ은10×ㄱ＋ㄴ이고, ㄴㄱㄴㄴ은100×ㄱ＋1011×ㄴ입니다. 곱셈식을 정리하면 770×ㄱ＝924×ㄴ이므로 ㄱ과 ㄴ의 비는6:5입니다. 두 숫자가 모두1~9인 경우는 ㄱ＝6, ㄴ＝5뿐입니다. 실제로 87×65＝5655이므로 답은65입니다.",
+      "learningPoint": "반복 문자를 자릿값에 따라 나타내고 서로 다른 한 자리 숫자 조건 확인",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "고정된 곱하는 수와 반복 문자의 자릿값 관계를 비교",
+          "conditionTracking": "서로 다른0이 아닌 숫자·같은 문자·주어진 곱셈식",
+          "caseSplitting": "1~9에서 자릿값 비를 만족하는 전체 숫자 쌍",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "place value coefficient ratio",
+        "parameters": {
+          "pattern": "BABB",
+          "coefficient": 87
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "87 × ㄱㄴ ＝ ㄴㄱㄴㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-middle-v1",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. □에는1부터9까지의 숫자 중 하나가 들어갑니다. 다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "15",
+      "answerParts": [
+        15
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "15"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "곱하는 수의 백의 자리가 □이므로 가능한 수는 141, 241, 341, 441, 541, 641, 741, 841, 941입니다.",
+        "각 곱하는 수를 M이라 하면 M×(10×ㄱ＋ㄴ)＝110×ㄱ＋1001×ㄴ입니다. 따라서 (10×M−110)×ㄱ＝(1001−M)×ㄴ이 됩니다.",
+        "가능한 M마다 이 관계를 만족하는 서로 다른1~9의 숫자를 확인하면 M＝341, ㄱ＝1, ㄴ＝5인 경우만 남습니다. 다른 M에서는 두 숫자가 모두1~9인 쌍이 없습니다.",
+        "341×15＝5115로 곱셈식과 빈 백의 자리를 모두 확인할 수 있으므로 답은15입니다."
+      ],
+      "solution": "곱하는 수의 백의 자리가 □이므로 가능한 수는 141, 241, 341, 441, 541, 641, 741, 841, 941입니다. 각 곱하는 수를 M이라 하면 M×(10×ㄱ＋ㄴ)＝110×ㄱ＋1001×ㄴ입니다. 따라서 (10×M−110)×ㄱ＝(1001−M)×ㄴ이 됩니다. 가능한 M마다 이 관계를 만족하는 서로 다른1~9의 숫자를 확인하면 M＝341, ㄱ＝1, ㄴ＝5인 경우만 남습니다. 다른 M에서는 두 숫자가 모두1~9인 쌍이 없습니다. 341×15＝5115로 곱셈식과 빈 백의 자리를 모두 확인할 수 있으므로 답은15입니다.",
+      "learningPoint": "곱하는 수의 빈 자리까지 후보로 두고 반복 문자 자릿값과 함께 확인",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "곱하는 수의 백의 자리까지 미지수로 두고 자릿값 조건 결합",
+          "conditionTracking": "빈 백의 자리·서로 다른 문자 숫자·네 자리 곱",
+          "caseSplitting": "빈 숫자의1~9 경우마다 같은 문자 쌍인지 확인",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "missing coefficient hundreds and place value relation",
+        "parameters": {
+          "pattern": "BAAB",
+          "coefficientTail": 41
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "□41 × ㄱㄴ ＝ ㄴㄱㄱㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-middle-v2",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. □에는1부터9까지의 숫자 중 하나가 들어갑니다. 다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "18",
+      "answerParts": [
+        18
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "18"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "곱하는 수의 백의 자리가 □이므로 가능한 수는 151, 251, 351, 451, 551, 651, 751, 851, 951입니다.",
+        "각 곱하는 수를 M이라 하면 M×(10×ㄱ＋ㄴ)＝110×ㄱ＋1001×ㄴ입니다. 따라서 (10×M−110)×ㄱ＝(1001−M)×ㄴ이 됩니다.",
+        "가능한 M마다 이 관계를 만족하는 서로 다른1~9의 숫자를 확인하면 M＝451, ㄱ＝1, ㄴ＝8인 경우만 남습니다. 다른 M에서는 두 숫자가 모두1~9인 쌍이 없습니다.",
+        "451×18＝8118로 곱셈식과 빈 백의 자리를 모두 확인할 수 있으므로 답은18입니다."
+      ],
+      "solution": "곱하는 수의 백의 자리가 □이므로 가능한 수는 151, 251, 351, 451, 551, 651, 751, 851, 951입니다. 각 곱하는 수를 M이라 하면 M×(10×ㄱ＋ㄴ)＝110×ㄱ＋1001×ㄴ입니다. 따라서 (10×M−110)×ㄱ＝(1001−M)×ㄴ이 됩니다. 가능한 M마다 이 관계를 만족하는 서로 다른1~9의 숫자를 확인하면 M＝451, ㄱ＝1, ㄴ＝8인 경우만 남습니다. 다른 M에서는 두 숫자가 모두1~9인 쌍이 없습니다. 451×18＝8118로 곱셈식과 빈 백의 자리를 모두 확인할 수 있으므로 답은18입니다.",
+      "learningPoint": "곱하는 수의 빈 자리까지 후보로 두고 반복 문자 자릿값과 함께 확인",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "곱하는 수의 백의 자리까지 미지수로 두고 자릿값 조건 결합",
+          "conditionTracking": "빈 백의 자리·서로 다른 문자 숫자·네 자리 곱",
+          "caseSplitting": "빈 숫자의1~9 경우마다 같은 문자 쌍인지 확인",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "missing coefficient hundreds and place value relation",
+        "parameters": {
+          "pattern": "BAAB",
+          "coefficientTail": 51
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "□51 × ㄱㄴ ＝ ㄴㄱㄱㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-middle-v3",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. □에는1부터9까지의 숫자 중 하나가 들어갑니다. 다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "25",
+      "answerParts": [
+        25
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "25"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "곱하는 수의 백의 자리가 □이므로 가능한 수는 109, 209, 309, 409, 509, 609, 709, 809, 909입니다.",
+        "각 곱하는 수를 M이라 하면 M×(10×ㄱ＋ㄴ)＝110×ㄱ＋1001×ㄴ입니다. 따라서 (10×M−110)×ㄱ＝(1001−M)×ㄴ이 됩니다.",
+        "가능한 M마다 이 관계를 만족하는 서로 다른1~9의 숫자를 확인하면 M＝209, ㄱ＝2, ㄴ＝5인 경우만 남습니다. 다른 M에서는 두 숫자가 모두1~9인 쌍이 없습니다.",
+        "209×25＝5225로 곱셈식과 빈 백의 자리를 모두 확인할 수 있으므로 답은25입니다."
+      ],
+      "solution": "곱하는 수의 백의 자리가 □이므로 가능한 수는 109, 209, 309, 409, 509, 609, 709, 809, 909입니다. 각 곱하는 수를 M이라 하면 M×(10×ㄱ＋ㄴ)＝110×ㄱ＋1001×ㄴ입니다. 따라서 (10×M−110)×ㄱ＝(1001−M)×ㄴ이 됩니다. 가능한 M마다 이 관계를 만족하는 서로 다른1~9의 숫자를 확인하면 M＝209, ㄱ＝2, ㄴ＝5인 경우만 남습니다. 다른 M에서는 두 숫자가 모두1~9인 쌍이 없습니다. 209×25＝5225로 곱셈식과 빈 백의 자리를 모두 확인할 수 있으므로 답은25입니다.",
+      "learningPoint": "곱하는 수의 빈 자리까지 후보로 두고 반복 문자 자릿값과 함께 확인",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "곱하는 수의 백의 자리까지 미지수로 두고 자릿값 조건 결합",
+          "conditionTracking": "빈 백의 자리·서로 다른 문자 숫자·네 자리 곱",
+          "caseSplitting": "빈 숫자의1~9 경우마다 같은 문자 쌍인지 확인",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "missing coefficient hundreds and place value relation",
+        "parameters": {
+          "pattern": "BAAB",
+          "coefficientTail": 9
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "□09 × ㄱㄴ ＝ ㄴㄱㄱㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-middle-v4",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. □에는1부터9까지의 숫자 중 하나가 들어갑니다. 다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "35",
+      "answerParts": [
+        35
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "35"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "곱하는 수의 백의 자리가 □이므로 가능한 수는 153, 253, 353, 453, 553, 653, 753, 853, 953입니다.",
+        "각 곱하는 수를 M이라 하면 M×(10×ㄱ＋ㄴ)＝100×ㄱ＋1011×ㄴ입니다. 따라서 (10×M−100)×ㄱ＝(1011−M)×ㄴ이 됩니다.",
+        "가능한 M마다 이 관계를 만족하는 서로 다른1~9의 숫자를 확인하면 M＝153, ㄱ＝3, ㄴ＝5인 경우만 남습니다. 다른 M에서는 두 숫자가 모두1~9인 쌍이 없습니다.",
+        "153×35＝5355로 곱셈식과 빈 백의 자리를 모두 확인할 수 있으므로 답은35입니다."
+      ],
+      "solution": "곱하는 수의 백의 자리가 □이므로 가능한 수는 153, 253, 353, 453, 553, 653, 753, 853, 953입니다. 각 곱하는 수를 M이라 하면 M×(10×ㄱ＋ㄴ)＝100×ㄱ＋1011×ㄴ입니다. 따라서 (10×M−100)×ㄱ＝(1011−M)×ㄴ이 됩니다. 가능한 M마다 이 관계를 만족하는 서로 다른1~9의 숫자를 확인하면 M＝153, ㄱ＝3, ㄴ＝5인 경우만 남습니다. 다른 M에서는 두 숫자가 모두1~9인 쌍이 없습니다. 153×35＝5355로 곱셈식과 빈 백의 자리를 모두 확인할 수 있으므로 답은35입니다.",
+      "learningPoint": "곱하는 수의 빈 자리까지 후보로 두고 반복 문자 자릿값과 함께 확인",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "곱하는 수의 백의 자리까지 미지수로 두고 자릿값 조건 결합",
+          "conditionTracking": "빈 백의 자리·서로 다른 문자 숫자·네 자리 곱",
+          "caseSplitting": "빈 숫자의1~9 경우마다 같은 문자 쌍인지 확인",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "missing coefficient hundreds and place value relation",
+        "parameters": {
+          "pattern": "BABB",
+          "coefficientTail": 53
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "□53 × ㄱㄴ ＝ ㄴㄱㄴㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-middle-v5",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. □에는1부터9까지의 숫자 중 하나가 들어갑니다. 다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "27",
+      "answerParts": [
+        27
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "27"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "곱하는 수의 백의 자리가 □이므로 가능한 수는 186, 286, 386, 486, 586, 686, 786, 886, 986입니다.",
+        "각 곱하는 수를 M이라 하면 M×(10×ㄱ＋ㄴ)＝11×ㄱ＋1100×ㄴ입니다. 따라서 (10×M−11)×ㄱ＝(1100−M)×ㄴ이 됩니다.",
+        "가능한 M마다 이 관계를 만족하는 서로 다른1~9의 숫자를 확인하면 M＝286, ㄱ＝2, ㄴ＝7인 경우만 남습니다. 다른 M에서는 두 숫자가 모두1~9인 쌍이 없습니다.",
+        "286×27＝7722로 곱셈식과 빈 백의 자리를 모두 확인할 수 있으므로 답은27입니다."
+      ],
+      "solution": "곱하는 수의 백의 자리가 □이므로 가능한 수는 186, 286, 386, 486, 586, 686, 786, 886, 986입니다. 각 곱하는 수를 M이라 하면 M×(10×ㄱ＋ㄴ)＝11×ㄱ＋1100×ㄴ입니다. 따라서 (10×M−11)×ㄱ＝(1100−M)×ㄴ이 됩니다. 가능한 M마다 이 관계를 만족하는 서로 다른1~9의 숫자를 확인하면 M＝286, ㄱ＝2, ㄴ＝7인 경우만 남습니다. 다른 M에서는 두 숫자가 모두1~9인 쌍이 없습니다. 286×27＝7722로 곱셈식과 빈 백의 자리를 모두 확인할 수 있으므로 답은27입니다.",
+      "learningPoint": "곱하는 수의 빈 자리까지 후보로 두고 반복 문자 자릿값과 함께 확인",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "곱하는 수의 백의 자리까지 미지수로 두고 자릿값 조건 결합",
+          "conditionTracking": "빈 백의 자리·서로 다른 문자 숫자·네 자리 곱",
+          "caseSplitting": "빈 숫자의1~9 경우마다 같은 문자 쌍인지 확인",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "missing coefficient hundreds and place value relation",
+        "parameters": {
+          "pattern": "BBAA",
+          "coefficientTail": 86
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "□86 × ㄱㄴ ＝ ㄴㄴㄱㄱ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-high-v1",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. ㄱ과 ㄴ의 합은3입니다. 어떤100 이상400 이하의 자연수를 ㄱㄴ에 곱하면 다음과 같습니다. 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "서로 다른1~9의 두 숫자의 합이3인 두 자리 수 ㄱㄴ의 후보는 12, 21입니다.",
+        "곱하는 수는 ㄴㄱㄱㄴ을 ㄱㄴ으로 나눈 값이어야 합니다. 후보별로 나눗셈을 확인하면 12: 2112÷12、21: 1221÷21입니다.",
+        "이 중 나누어떨어지고 몫이100 이상400 이하인 것은 2112÷12＝176인 경우뿐입니다.",
+        "따라서 ㄱ＝1, ㄴ＝2이며 답은12입니다. 숫자의 합과 176×12＝2112도 모두 맞습니다."
+      ],
+      "solution": "서로 다른1~9의 두 숫자의 합이3인 두 자리 수 ㄱㄴ의 후보는 12, 21입니다. 곱하는 수는 ㄴㄱㄱㄴ을 ㄱㄴ으로 나눈 값이어야 합니다. 후보별로 나눗셈을 확인하면 12: 2112÷12、21: 1221÷21입니다. 이 중 나누어떨어지고 몫이100 이상400 이하인 것은 2112÷12＝176인 경우뿐입니다. 따라서 ㄱ＝1, ㄴ＝2이며 답은12입니다. 숫자의 합과 176×12＝2112도 모두 맞습니다.",
+      "learningPoint": "숫자 합으로 후보를 만들고 나누어떨어짐과 곱하는 수의 범위를 함께 적용",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "문자 숫자의 합과 미지의 곱하는 수 범위를 함께 역추론",
+          "conditionTracking": "숫자 합·곱하는 수 범위·반복 자리",
+          "caseSplitting": "가능한 문자 쌍 전체에서 나누어떨어짐과 범위 확인",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "digit sum candidates and inverse multiplier bounds",
+        "parameters": {
+          "pattern": "BAAB",
+          "digitSum": 3,
+          "coefficientMin": 100,
+          "coefficientMax": 400
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "어떤 자연수 × ㄱㄴ ＝ ㄴㄱㄱㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-high-v2",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. ㄱ과 ㄴ의 합은12입니다. 어떤100 이상400 이하의 자연수를 ㄱㄴ에 곱하면 다음과 같습니다. 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "48",
+      "answerParts": [
+        48
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "48"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "서로 다른1~9의 두 숫자의 합이12인 두 자리 수 ㄱㄴ의 후보는 39, 48, 57, 75, 84, 93입니다.",
+        "곱하는 수는 ㄴㄱㄱㄴ을 ㄱㄴ으로 나눈 값이어야 합니다. 후보별로 나눗셈을 확인하면 39: 9339÷39、48: 8448÷48、57: 7557÷57、75: 5775÷75、84: 4884÷84、93: 3993÷93입니다.",
+        "이 중 나누어떨어지고 몫이100 이상400 이하인 것은 8448÷48＝176인 경우뿐입니다.",
+        "따라서 ㄱ＝4, ㄴ＝8이며 답은48입니다. 숫자의 합과 176×48＝8448도 모두 맞습니다."
+      ],
+      "solution": "서로 다른1~9의 두 숫자의 합이12인 두 자리 수 ㄱㄴ의 후보는 39, 48, 57, 75, 84, 93입니다. 곱하는 수는 ㄴㄱㄱㄴ을 ㄱㄴ으로 나눈 값이어야 합니다. 후보별로 나눗셈을 확인하면 39: 9339÷39、48: 8448÷48、57: 7557÷57、75: 5775÷75、84: 4884÷84、93: 3993÷93입니다. 이 중 나누어떨어지고 몫이100 이상400 이하인 것은 8448÷48＝176인 경우뿐입니다. 따라서 ㄱ＝4, ㄴ＝8이며 답은48입니다. 숫자의 합과 176×48＝8448도 모두 맞습니다.",
+      "learningPoint": "숫자 합으로 후보를 만들고 나누어떨어짐과 곱하는 수의 범위를 함께 적용",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "문자 숫자의 합과 미지의 곱하는 수 범위를 함께 역추론",
+          "conditionTracking": "숫자 합·곱하는 수 범위·반복 자리",
+          "caseSplitting": "가능한 문자 쌍 전체에서 나누어떨어짐과 범위 확인",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "digit sum candidates and inverse multiplier bounds",
+        "parameters": {
+          "pattern": "BAAB",
+          "digitSum": 12,
+          "coefficientMin": 100,
+          "coefficientMax": 400
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "어떤 자연수 × ㄱㄴ ＝ ㄴㄱㄱㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-high-v3",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. ㄱ과 ㄴ의 합은4입니다. 어떤100 이상400 이하의 자연수를 ㄱㄴ에 곱하면 다음과 같습니다. 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "13",
+      "answerParts": [
+        13
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "13"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "서로 다른1~9의 두 숫자의 합이4인 두 자리 수 ㄱㄴ의 후보는 13, 31입니다.",
+        "곱하는 수는 ㄴㄱㄴㄴ을 ㄱㄴ으로 나눈 값이어야 합니다. 후보별로 나눗셈을 확인하면 13: 3133÷13、31: 1311÷31입니다.",
+        "이 중 나누어떨어지고 몫이100 이상400 이하인 것은 3133÷13＝241인 경우뿐입니다.",
+        "따라서 ㄱ＝1, ㄴ＝3이며 답은13입니다. 숫자의 합과 241×13＝3133도 모두 맞습니다."
+      ],
+      "solution": "서로 다른1~9의 두 숫자의 합이4인 두 자리 수 ㄱㄴ의 후보는 13, 31입니다. 곱하는 수는 ㄴㄱㄴㄴ을 ㄱㄴ으로 나눈 값이어야 합니다. 후보별로 나눗셈을 확인하면 13: 3133÷13、31: 1311÷31입니다. 이 중 나누어떨어지고 몫이100 이상400 이하인 것은 3133÷13＝241인 경우뿐입니다. 따라서 ㄱ＝1, ㄴ＝3이며 답은13입니다. 숫자의 합과 241×13＝3133도 모두 맞습니다.",
+      "learningPoint": "숫자 합으로 후보를 만들고 나누어떨어짐과 곱하는 수의 범위를 함께 적용",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "문자 숫자의 합과 미지의 곱하는 수 범위를 함께 역추론",
+          "conditionTracking": "숫자 합·곱하는 수 범위·반복 자리",
+          "caseSplitting": "가능한 문자 쌍 전체에서 나누어떨어짐과 범위 확인",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "digit sum candidates and inverse multiplier bounds",
+        "parameters": {
+          "pattern": "BABB",
+          "digitSum": 4,
+          "coefficientMin": 100,
+          "coefficientMax": 400
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "어떤 자연수 × ㄱㄴ ＝ ㄴㄱㄴㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-high-v4",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. ㄱ과 ㄴ의 합은5입니다. 어떤100 이상400 이하의 자연수를 ㄱㄴ에 곱하면 다음과 같습니다. 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "14",
+      "answerParts": [
+        14
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "14"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "서로 다른1~9의 두 숫자의 합이5인 두 자리 수 ㄱㄴ의 후보는 14, 23, 32, 41입니다.",
+        "곱하는 수는 ㄴㄱㄴㄴ을 ㄱㄴ으로 나눈 값이어야 합니다. 후보별로 나눗셈을 확인하면 14: 4144÷14、23: 3233÷23、32: 2322÷32、41: 1411÷41입니다.",
+        "이 중 나누어떨어지고 몫이100 이상400 이하인 것은 4144÷14＝296인 경우뿐입니다.",
+        "따라서 ㄱ＝1, ㄴ＝4이며 답은14입니다. 숫자의 합과 296×14＝4144도 모두 맞습니다."
+      ],
+      "solution": "서로 다른1~9의 두 숫자의 합이5인 두 자리 수 ㄱㄴ의 후보는 14, 23, 32, 41입니다. 곱하는 수는 ㄴㄱㄴㄴ을 ㄱㄴ으로 나눈 값이어야 합니다. 후보별로 나눗셈을 확인하면 14: 4144÷14、23: 3233÷23、32: 2322÷32、41: 1411÷41입니다. 이 중 나누어떨어지고 몫이100 이상400 이하인 것은 4144÷14＝296인 경우뿐입니다. 따라서 ㄱ＝1, ㄴ＝4이며 답은14입니다. 숫자의 합과 296×14＝4144도 모두 맞습니다.",
+      "learningPoint": "숫자 합으로 후보를 만들고 나누어떨어짐과 곱하는 수의 범위를 함께 적용",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "문자 숫자의 합과 미지의 곱하는 수 범위를 함께 역추론",
+          "conditionTracking": "숫자 합·곱하는 수 범위·반복 자리",
+          "caseSplitting": "가능한 문자 쌍 전체에서 나누어떨어짐과 범위 확인",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "digit sum candidates and inverse multiplier bounds",
+        "parameters": {
+          "pattern": "BABB",
+          "digitSum": 5,
+          "coefficientMin": 100,
+          "coefficientMax": 400
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "어떤 자연수 × ㄱㄴ ＝ ㄴㄱㄴㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "같은 문자의 자릿값을 이용한 곱셈식",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자 곱셈식",
+      "id": "applied1-q08-high-v5",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "ㄱ과 ㄴ은 서로 다른0이 아닌 한 자리 숫자이며, 같은 문자는 같은 숫자를 나타냅니다. ㄱ과 ㄴ의 합은10입니다. 어떤100 이상400 이하의 자연수를 ㄱㄴ에 곱하면 다음과 같습니다. 두 자리 수 ㄱㄴ을 구하시오.",
+      "answer": "28",
+      "answerParts": [
+        28
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "28"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "서로 다른1~9의 두 숫자의 합이10인 두 자리 수 ㄱㄴ의 후보는 19, 28, 37, 46, 64, 73, 82, 91입니다.",
+        "곱하는 수는 ㄴㄱㄴㄴ을 ㄱㄴ으로 나눈 값이어야 합니다. 후보별로 나눗셈을 확인하면 19: 9199÷19、28: 8288÷28、37: 7377÷37、46: 6466÷46、64: 4644÷64、73: 3733÷73、82: 2822÷82、91: 1911÷91입니다.",
+        "이 중 나누어떨어지고 몫이100 이상400 이하인 것은 8288÷28＝296인 경우뿐입니다.",
+        "따라서 ㄱ＝2, ㄴ＝8이며 답은28입니다. 숫자의 합과 296×28＝8288도 모두 맞습니다."
+      ],
+      "solution": "서로 다른1~9의 두 숫자의 합이10인 두 자리 수 ㄱㄴ의 후보는 19, 28, 37, 46, 64, 73, 82, 91입니다. 곱하는 수는 ㄴㄱㄴㄴ을 ㄱㄴ으로 나눈 값이어야 합니다. 후보별로 나눗셈을 확인하면 19: 9199÷19、28: 8288÷28、37: 7377÷37、46: 6466÷46、64: 4644÷64、73: 3733÷73、82: 2822÷82、91: 1911÷91입니다. 이 중 나누어떨어지고 몫이100 이상400 이하인 것은 8288÷28＝296인 경우뿐입니다. 따라서 ㄱ＝2, ㄴ＝8이며 답은28입니다. 숫자의 합과 296×28＝8288도 모두 맞습니다.",
+      "learningPoint": "숫자 합으로 후보를 만들고 나누어떨어짐과 곱하는 수의 범위를 함께 적용",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "문자 숫자의 합과 미지의 곱하는 수 범위를 함께 역추론",
+          "conditionTracking": "숫자 합·곱하는 수 범위·반복 자리",
+          "caseSplitting": "가능한 문자 쌍 전체에서 나누어떨어짐과 범위 확인",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "digit sum candidates and inverse multiplier bounds",
+        "parameters": {
+          "pattern": "BABB",
+          "digitSum": 10,
+          "coefficientMin": 100,
+          "coefficientMax": 400
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 8,
+        "studentDifficultyMeasured": false
+      },
+      "promptDataLines": [
+        "어떤 자연수 × ㄱㄴ ＝ ㄴㄱㄴㄴ"
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "id": "applied1-q09-middle-v1",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "나무 막대의 같은 한쪽 끝에서부터 4cm 간격과 6cm 간격으로 각각 줄을 그었습니다. 막대의 길이는 두 간격의 공배수입니다. 막대 안쪽에 표시된 곳을 모두 잘랐더니 36도막이 되었습니다. 처음 막대의 길이는 몇 cm입니까?",
+      "answer": "108",
+      "answerParts": [
+        108
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "108"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "두 간격의 최소공배수는12cm입니다. 길이가12cm의 □배라고 하겠습니다.",
+        "내부의 줄은 각각3×□−1개와2×□−1개이고, 겹친 줄은□−1개입니다. 도막 수는 줄의 수보다1 많아 4×□개입니다.",
+        "4×□＝36이므로 □＝9입니다. 처음 길이는12×9＝108cm입니다."
+      ],
+      "solution": "두 간격의 최소공배수는12cm입니다. 길이가12cm의 □배라고 하겠습니다. 내부의 줄은 각각3×□−1개와2×□−1개이고, 겹친 줄은□−1개입니다. 도막 수는 줄의 수보다1 많아 4×□개입니다. 4×□＝36이므로 □＝9입니다. 처음 길이는12×9＝108cm입니다.",
+      "learningPoint": "겹침이 되풀이되는 길이와 도막 수의 관계에서 막대 길이를 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "같은 표시가 되풀이되는 길이와 도막 수의 관계를 거꾸로 이용",
+          "conditionTracking": "두 간격·길이가 두 간격의 공배수·전체 도막 수",
+          "caseSplitting": "양 끝을 내부 절단점으로 세지 않음",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "inverse common-multiple length from cut count",
+        "parameters": {
+          "a": 4,
+          "b": 6,
+          "pieces": 36
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "id": "applied1-q09-middle-v2",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "나무 막대의 같은 한쪽 끝에서부터 5cm 간격과 8cm 간격으로 각각 줄을 그었습니다. 막대의 길이는 두 간격의 공배수입니다. 막대 안쪽에 표시된 곳을 모두 잘랐더니 72도막이 되었습니다. 처음 막대의 길이는 몇 cm입니까?",
+      "answer": "240",
+      "answerParts": [
+        240
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "240"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "두 간격의 최소공배수는40cm입니다. 길이가40cm의 □배라고 하겠습니다.",
+        "내부의 줄은 각각8×□−1개와5×□−1개이고, 겹친 줄은□−1개입니다. 도막 수는 줄의 수보다1 많아 12×□개입니다.",
+        "12×□＝72이므로 □＝6입니다. 처음 길이는40×6＝240cm입니다."
+      ],
+      "solution": "두 간격의 최소공배수는40cm입니다. 길이가40cm의 □배라고 하겠습니다. 내부의 줄은 각각8×□−1개와5×□−1개이고, 겹친 줄은□−1개입니다. 도막 수는 줄의 수보다1 많아 12×□개입니다. 12×□＝72이므로 □＝6입니다. 처음 길이는40×6＝240cm입니다.",
+      "learningPoint": "겹침이 되풀이되는 길이와 도막 수의 관계에서 막대 길이를 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "같은 표시가 되풀이되는 길이와 도막 수의 관계를 거꾸로 이용",
+          "conditionTracking": "두 간격·길이가 두 간격의 공배수·전체 도막 수",
+          "caseSplitting": "양 끝을 내부 절단점으로 세지 않음",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "inverse common-multiple length from cut count",
+        "parameters": {
+          "a": 5,
+          "b": 8,
+          "pieces": 72
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "id": "applied1-q09-middle-v3",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "나무 막대의 같은 한쪽 끝에서부터 6cm 간격과 9cm 간격으로 각각 줄을 그었습니다. 막대의 길이는 두 간격의 공배수입니다. 막대 안쪽에 표시된 곳을 모두 잘랐더니 32도막이 되었습니다. 처음 막대의 길이는 몇 cm입니까?",
+      "answer": "144",
+      "answerParts": [
+        144
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "144"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "두 간격의 최소공배수는18cm입니다. 길이가18cm의 □배라고 하겠습니다.",
+        "내부의 줄은 각각3×□−1개와2×□−1개이고, 겹친 줄은□−1개입니다. 도막 수는 줄의 수보다1 많아 4×□개입니다.",
+        "4×□＝32이므로 □＝8입니다. 처음 길이는18×8＝144cm입니다."
+      ],
+      "solution": "두 간격의 최소공배수는18cm입니다. 길이가18cm의 □배라고 하겠습니다. 내부의 줄은 각각3×□−1개와2×□−1개이고, 겹친 줄은□−1개입니다. 도막 수는 줄의 수보다1 많아 4×□개입니다. 4×□＝32이므로 □＝8입니다. 처음 길이는18×8＝144cm입니다.",
+      "learningPoint": "겹침이 되풀이되는 길이와 도막 수의 관계에서 막대 길이를 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "같은 표시가 되풀이되는 길이와 도막 수의 관계를 거꾸로 이용",
+          "conditionTracking": "두 간격·길이가 두 간격의 공배수·전체 도막 수",
+          "caseSplitting": "양 끝을 내부 절단점으로 세지 않음",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "inverse common-multiple length from cut count",
+        "parameters": {
+          "a": 6,
+          "b": 9,
+          "pieces": 32
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "id": "applied1-q09-middle-v4",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "나무 막대의 같은 한쪽 끝에서부터 7cm 간격과 10cm 간격으로 각각 줄을 그었습니다. 막대의 길이는 두 간격의 공배수입니다. 막대 안쪽에 표시된 곳을 모두 잘랐더니 80도막이 되었습니다. 처음 막대의 길이는 몇 cm입니까?",
+      "answer": "350",
+      "answerParts": [
+        350
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "350"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "두 간격의 최소공배수는70cm입니다. 길이가70cm의 □배라고 하겠습니다.",
+        "내부의 줄은 각각10×□−1개와7×□−1개이고, 겹친 줄은□−1개입니다. 도막 수는 줄의 수보다1 많아 16×□개입니다.",
+        "16×□＝80이므로 □＝5입니다. 처음 길이는70×5＝350cm입니다."
+      ],
+      "solution": "두 간격의 최소공배수는70cm입니다. 길이가70cm의 □배라고 하겠습니다. 내부의 줄은 각각10×□−1개와7×□−1개이고, 겹친 줄은□−1개입니다. 도막 수는 줄의 수보다1 많아 16×□개입니다. 16×□＝80이므로 □＝5입니다. 처음 길이는70×5＝350cm입니다.",
+      "learningPoint": "겹침이 되풀이되는 길이와 도막 수의 관계에서 막대 길이를 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "같은 표시가 되풀이되는 길이와 도막 수의 관계를 거꾸로 이용",
+          "conditionTracking": "두 간격·길이가 두 간격의 공배수·전체 도막 수",
+          "caseSplitting": "양 끝을 내부 절단점으로 세지 않음",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "inverse common-multiple length from cut count",
+        "parameters": {
+          "a": 7,
+          "b": 10,
+          "pieces": 80
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "id": "applied1-q09-middle-v5",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "나무 막대의 같은 한쪽 끝에서부터 8cm 간격과 12cm 간격으로 각각 줄을 그었습니다. 막대의 길이는 두 간격의 공배수입니다. 막대 안쪽에 표시된 곳을 모두 잘랐더니 28도막이 되었습니다. 처음 막대의 길이는 몇 cm입니까?",
+      "answer": "168",
+      "answerParts": [
+        168
+      ],
+      "answerLabels": [
+        "정답"
+      ],
+      "acceptedAnswers": [
+        "168"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "두 간격의 최소공배수는24cm입니다. 길이가24cm의 □배라고 하겠습니다.",
+        "내부의 줄은 각각3×□−1개와2×□−1개이고, 겹친 줄은□−1개입니다. 도막 수는 줄의 수보다1 많아 4×□개입니다.",
+        "4×□＝28이므로 □＝7입니다. 처음 길이는24×7＝168cm입니다."
+      ],
+      "solution": "두 간격의 최소공배수는24cm입니다. 길이가24cm의 □배라고 하겠습니다. 내부의 줄은 각각3×□−1개와2×□−1개이고, 겹친 줄은□−1개입니다. 도막 수는 줄의 수보다1 많아 4×□개입니다. 4×□＝28이므로 □＝7입니다. 처음 길이는24×7＝168cm입니다.",
+      "learningPoint": "겹침이 되풀이되는 길이와 도막 수의 관계에서 막대 길이를 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "같은 표시가 되풀이되는 길이와 도막 수의 관계를 거꾸로 이용",
+          "conditionTracking": "두 간격·길이가 두 간격의 공배수·전체 도막 수",
+          "caseSplitting": "양 끝을 내부 절단점으로 세지 않음",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "inverse common-multiple length from cut count",
+        "parameters": {
+          "a": 8,
+          "b": 12,
+          "pieces": 28
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "id": "applied1-q09-high-v1",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "길이가 88cm 이상 118cm 이하인 나무 막대가 있고 그 길이는 정수cm입니다. 같은 한쪽 끝에서부터 4cm 간격과 6cm 간격으로 각각 줄을 그은 뒤 막대 안쪽에 표시된 곳을 모두 잘랐더니 35도막이 되었습니다. 가능한 처음 길이를 모두 구하시오.",
+      "answer": "103, 104",
+      "answerParts": [
+        103,
+        104
+      ],
+      "answerLabels": [
+        "가능한 길이 모두 (쉼표로 구분)"
+      ],
+      "acceptedAnswers": [
+        "103, 104"
+      ],
+      "answerContract": "unordered-set",
+      "solutionSteps": [
+        "길이가 Lcm일 때 내부의4cm 간격 줄은 L보다 작은4의 배수의 수이고, 6cm 간격 줄도 같은 방식으로 셉니다. 겹친 줄은12의 배수 위치입니다.",
+        "내부 두 종류 줄의 수를 더하고 겹침을 한 번 뺀 뒤1을 더하면 도막 수가 됩니다. 길이를 늘릴 때 도막 수는 줄어들지 않습니다.",
+        "목표 도막 수의 경계에서 확인한 값은 102cm: 34도막、103cm: 35도막、104cm: 35도막、105cm: 36도막입니다.",
+        "따라서 88~118cm 범위에서 가능한 길이는 103, 104cm입니다. 바로 앞은35도막보다 적고 바로 뒤는 더 많으므로 다른 길이는 없습니다."
+      ],
+      "solution": "길이가 Lcm일 때 내부의4cm 간격 줄은 L보다 작은4의 배수의 수이고, 6cm 간격 줄도 같은 방식으로 셉니다. 겹친 줄은12의 배수 위치입니다. 내부 두 종류 줄의 수를 더하고 겹침을 한 번 뺀 뒤1을 더하면 도막 수가 됩니다. 길이를 늘릴 때 도막 수는 줄어들지 않습니다. 목표 도막 수의 경계에서 확인한 값은 102cm: 34도막、103cm: 35도막、104cm: 35도막、105cm: 36도막입니다. 따라서 88~118cm 범위에서 가능한 길이는 103, 104cm입니다. 바로 앞은35도막보다 적고 바로 뒤는 더 많으므로 다른 길이는 없습니다.",
+      "learningPoint": "막대 끝은 내부 절단점에서 제외하고 같은 도막 수가 되는 모든 정수 길이 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "공배수가 아닌 길이까지 허용하여 같은 도막 수가 되는 길이 전부 찾기",
+          "conditionTracking": "정수cm 범위·두 간격·도막 수",
+          "caseSplitting": "끝점이 표시와 일치하는 경우와 아닌 경우, 같은 답의 구간",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "inverse floor count plateau with endpoint exclusion",
+        "parameters": {
+          "a": 4,
+          "b": 6,
+          "pieces": 35,
+          "minimumLength": 88,
+          "maximumLength": 118
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "id": "applied1-q09-high-v2",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "길이가 132cm 이상 162cm 이하인 나무 막대가 있고 그 길이는 정수cm입니다. 같은 한쪽 끝에서부터 5cm 간격과 8cm 간격으로 각각 줄을 그은 뒤 막대 안쪽에 표시된 곳을 모두 잘랐더니 45도막이 되었습니다. 가능한 처음 길이를 모두 구하시오.",
+      "answer": "146, 147, 148, 149, 150",
+      "answerParts": [
+        146,
+        147,
+        148,
+        149,
+        150
+      ],
+      "answerLabels": [
+        "가능한 길이 모두 (쉼표로 구분)"
+      ],
+      "acceptedAnswers": [
+        "146, 147, 148, 149, 150"
+      ],
+      "answerContract": "unordered-set",
+      "solutionSteps": [
+        "길이가 Lcm일 때 내부의5cm 간격 줄은 L보다 작은5의 배수의 수이고, 8cm 간격 줄도 같은 방식으로 셉니다. 겹친 줄은40의 배수 위치입니다.",
+        "내부 두 종류 줄의 수를 더하고 겹침을 한 번 뺀 뒤1을 더하면 도막 수가 됩니다. 길이를 늘릴 때 도막 수는 줄어들지 않습니다.",
+        "목표 도막 수의 경계에서 확인한 값은 145cm: 44도막、146cm: 45도막、147cm: 45도막、148cm: 45도막、149cm: 45도막、150cm: 45도막、151cm: 46도막입니다.",
+        "따라서 132~162cm 범위에서 가능한 길이는 146, 147, 148, 149, 150cm입니다. 바로 앞은45도막보다 적고 바로 뒤는 더 많으므로 다른 길이는 없습니다."
+      ],
+      "solution": "길이가 Lcm일 때 내부의5cm 간격 줄은 L보다 작은5의 배수의 수이고, 8cm 간격 줄도 같은 방식으로 셉니다. 겹친 줄은40의 배수 위치입니다. 내부 두 종류 줄의 수를 더하고 겹침을 한 번 뺀 뒤1을 더하면 도막 수가 됩니다. 길이를 늘릴 때 도막 수는 줄어들지 않습니다. 목표 도막 수의 경계에서 확인한 값은 145cm: 44도막、146cm: 45도막、147cm: 45도막、148cm: 45도막、149cm: 45도막、150cm: 45도막、151cm: 46도막입니다. 따라서 132~162cm 범위에서 가능한 길이는 146, 147, 148, 149, 150cm입니다. 바로 앞은45도막보다 적고 바로 뒤는 더 많으므로 다른 길이는 없습니다.",
+      "learningPoint": "막대 끝은 내부 절단점에서 제외하고 같은 도막 수가 되는 모든 정수 길이 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "공배수가 아닌 길이까지 허용하여 같은 도막 수가 되는 길이 전부 찾기",
+          "conditionTracking": "정수cm 범위·두 간격·도막 수",
+          "caseSplitting": "끝점이 표시와 일치하는 경우와 아닌 경우, 같은 답의 구간",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "inverse floor count plateau with endpoint exclusion",
+        "parameters": {
+          "a": 5,
+          "b": 8,
+          "pieces": 45,
+          "minimumLength": 132,
+          "maximumLength": 162
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "id": "applied1-q09-high-v3",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "길이가 154cm 이상 184cm 이하인 나무 막대가 있고 그 길이는 정수cm입니다. 같은 한쪽 끝에서부터 6cm 간격과 9cm 간격으로 각각 줄을 그은 뒤 막대 안쪽에 표시된 곳을 모두 잘랐더니 38도막이 되었습니다. 가능한 처음 길이를 모두 구하시오.",
+      "answer": "169, 170, 171",
+      "answerParts": [
+        169,
+        170,
+        171
+      ],
+      "answerLabels": [
+        "가능한 길이 모두 (쉼표로 구분)"
+      ],
+      "acceptedAnswers": [
+        "169, 170, 171"
+      ],
+      "answerContract": "unordered-set",
+      "solutionSteps": [
+        "길이가 Lcm일 때 내부의6cm 간격 줄은 L보다 작은6의 배수의 수이고, 9cm 간격 줄도 같은 방식으로 셉니다. 겹친 줄은18의 배수 위치입니다.",
+        "내부 두 종류 줄의 수를 더하고 겹침을 한 번 뺀 뒤1을 더하면 도막 수가 됩니다. 길이를 늘릴 때 도막 수는 줄어들지 않습니다.",
+        "목표 도막 수의 경계에서 확인한 값은 168cm: 37도막、169cm: 38도막、170cm: 38도막、171cm: 38도막、172cm: 39도막입니다.",
+        "따라서 154~184cm 범위에서 가능한 길이는 169, 170, 171cm입니다. 바로 앞은38도막보다 적고 바로 뒤는 더 많으므로 다른 길이는 없습니다."
+      ],
+      "solution": "길이가 Lcm일 때 내부의6cm 간격 줄은 L보다 작은6의 배수의 수이고, 9cm 간격 줄도 같은 방식으로 셉니다. 겹친 줄은18의 배수 위치입니다. 내부 두 종류 줄의 수를 더하고 겹침을 한 번 뺀 뒤1을 더하면 도막 수가 됩니다. 길이를 늘릴 때 도막 수는 줄어들지 않습니다. 목표 도막 수의 경계에서 확인한 값은 168cm: 37도막、169cm: 38도막、170cm: 38도막、171cm: 38도막、172cm: 39도막입니다. 따라서 154~184cm 범위에서 가능한 길이는 169, 170, 171cm입니다. 바로 앞은38도막보다 적고 바로 뒤는 더 많으므로 다른 길이는 없습니다.",
+      "learningPoint": "막대 끝은 내부 절단점에서 제외하고 같은 도막 수가 되는 모든 정수 길이 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "공배수가 아닌 길이까지 허용하여 같은 도막 수가 되는 길이 전부 찾기",
+          "conditionTracking": "정수cm 범위·두 간격·도막 수",
+          "caseSplitting": "끝점이 표시와 일치하는 경우와 아닌 경우, 같은 답의 구간",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "inverse floor count plateau with endpoint exclusion",
+        "parameters": {
+          "a": 6,
+          "b": 9,
+          "pieces": 38,
+          "minimumLength": 154,
+          "maximumLength": 184
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "id": "applied1-q09-high-v4",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "길이가 178cm 이상 208cm 이하인 나무 막대가 있고 그 길이는 정수cm입니다. 같은 한쪽 끝에서부터 7cm 간격과 10cm 간격으로 각각 줄을 그은 뒤 막대 안쪽에 표시된 곳을 모두 잘랐더니 45도막이 되었습니다. 가능한 처음 길이를 모두 구하시오.",
+      "answer": "191, 192, 193, 194, 195, 196",
+      "answerParts": [
+        191,
+        192,
+        193,
+        194,
+        195,
+        196
+      ],
+      "answerLabels": [
+        "가능한 길이 모두 (쉼표로 구분)"
+      ],
+      "acceptedAnswers": [
+        "191, 192, 193, 194, 195, 196"
+      ],
+      "answerContract": "unordered-set",
+      "solutionSteps": [
+        "길이가 Lcm일 때 내부의7cm 간격 줄은 L보다 작은7의 배수의 수이고, 10cm 간격 줄도 같은 방식으로 셉니다. 겹친 줄은70의 배수 위치입니다.",
+        "내부 두 종류 줄의 수를 더하고 겹침을 한 번 뺀 뒤1을 더하면 도막 수가 됩니다. 길이를 늘릴 때 도막 수는 줄어들지 않습니다.",
+        "목표 도막 수의 경계에서 확인한 값은 190cm: 44도막、191cm: 45도막、192cm: 45도막、193cm: 45도막、194cm: 45도막、195cm: 45도막、196cm: 45도막、197cm: 46도막입니다.",
+        "따라서 178~208cm 범위에서 가능한 길이는 191, 192, 193, 194, 195, 196cm입니다. 바로 앞은45도막보다 적고 바로 뒤는 더 많으므로 다른 길이는 없습니다."
+      ],
+      "solution": "길이가 Lcm일 때 내부의7cm 간격 줄은 L보다 작은7의 배수의 수이고, 10cm 간격 줄도 같은 방식으로 셉니다. 겹친 줄은70의 배수 위치입니다. 내부 두 종류 줄의 수를 더하고 겹침을 한 번 뺀 뒤1을 더하면 도막 수가 됩니다. 길이를 늘릴 때 도막 수는 줄어들지 않습니다. 목표 도막 수의 경계에서 확인한 값은 190cm: 44도막、191cm: 45도막、192cm: 45도막、193cm: 45도막、194cm: 45도막、195cm: 45도막、196cm: 45도막、197cm: 46도막입니다. 따라서 178~208cm 범위에서 가능한 길이는 191, 192, 193, 194, 195, 196cm입니다. 바로 앞은45도막보다 적고 바로 뒤는 더 많으므로 다른 길이는 없습니다.",
+      "learningPoint": "막대 끝은 내부 절단점에서 제외하고 같은 도막 수가 되는 모든 정수 길이 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "공배수가 아닌 길이까지 허용하여 같은 도막 수가 되는 길이 전부 찾기",
+          "conditionTracking": "정수cm 범위·두 간격·도막 수",
+          "caseSplitting": "끝점이 표시와 일치하는 경우와 아닌 경우, 같은 답의 구간",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "inverse floor count plateau with endpoint exclusion",
+        "parameters": {
+          "a": 7,
+          "b": 10,
+          "pieces": 45,
+          "minimumLength": 178,
+          "maximumLength": 208
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "배수와 겹침",
+      "detailType": "두 간격으로 표시한 막대의 도막 수",
+      "learningLocation": "활용 1회 · 원문 9번 · 배수와 겹침",
+      "id": "applied1-q09-high-v5",
+      "genId": "applied1-q09",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 9,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r3",
+      "text": "길이가 212cm 이상 242cm 이하인 나무 막대가 있고 그 길이는 정수cm입니다. 같은 한쪽 끝에서부터 8cm 간격과 12cm 간격으로 각각 줄을 그은 뒤 막대 안쪽에 표시된 곳을 모두 잘랐더니 38도막이 되었습니다. 가능한 처음 길이를 모두 구하시오.",
+      "answer": "225, 226, 227, 228",
+      "answerParts": [
+        225,
+        226,
+        227,
+        228
+      ],
+      "answerLabels": [
+        "가능한 길이 모두 (쉼표로 구분)"
+      ],
+      "acceptedAnswers": [
+        "225, 226, 227, 228"
+      ],
+      "answerContract": "unordered-set",
+      "solutionSteps": [
+        "길이가 Lcm일 때 내부의8cm 간격 줄은 L보다 작은8의 배수의 수이고, 12cm 간격 줄도 같은 방식으로 셉니다. 겹친 줄은24의 배수 위치입니다.",
+        "내부 두 종류 줄의 수를 더하고 겹침을 한 번 뺀 뒤1을 더하면 도막 수가 됩니다. 길이를 늘릴 때 도막 수는 줄어들지 않습니다.",
+        "목표 도막 수의 경계에서 확인한 값은 224cm: 37도막、225cm: 38도막、226cm: 38도막、227cm: 38도막、228cm: 38도막、229cm: 39도막입니다.",
+        "따라서 212~242cm 범위에서 가능한 길이는 225, 226, 227, 228cm입니다. 바로 앞은38도막보다 적고 바로 뒤는 더 많으므로 다른 길이는 없습니다."
+      ],
+      "solution": "길이가 Lcm일 때 내부의8cm 간격 줄은 L보다 작은8의 배수의 수이고, 12cm 간격 줄도 같은 방식으로 셉니다. 겹친 줄은24의 배수 위치입니다. 내부 두 종류 줄의 수를 더하고 겹침을 한 번 뺀 뒤1을 더하면 도막 수가 됩니다. 길이를 늘릴 때 도막 수는 줄어들지 않습니다. 목표 도막 수의 경계에서 확인한 값은 224cm: 37도막、225cm: 38도막、226cm: 38도막、227cm: 38도막、228cm: 38도막、229cm: 39도막입니다. 따라서 212~242cm 범위에서 가능한 길이는 225, 226, 227, 228cm입니다. 바로 앞은38도막보다 적고 바로 뒤는 더 많으므로 다른 길이는 없습니다.",
+      "learningPoint": "막대 끝은 내부 절단점에서 제외하고 같은 도막 수가 되는 모든 정수 길이 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "격자 경계·자릿값·배수와 중복 세기를 원문에서 이어 사용",
+          "reasoning": "공배수가 아닌 길이까지 허용하여 같은 도막 수가 되는 길이 전부 찾기",
+          "conditionTracking": "정수cm 범위·두 간격·도막 수",
+          "caseSplitting": "끝점이 표시와 일치하는 경우와 아닌 경우, 같은 답의 구간",
+          "computation": "숫자 크기만으로 단계를 정하지 않고 역추론·경우 분기·조건 결합을 비교",
+          "representation": "7번은 실제 원본 그림의 모든 픽셀 보존;8번은 숫자를 바꾼 필수 곱셈식 자체만 제시",
+          "reading": "필수 조건은 지문 안에 명시하며 문제 아래 요약·힌트·풀이 순서 없음",
+          "visualCues": "깃발·선·칸·색·비율·라벨을 변경하거나 추가하지 않음",
+          "shortcuts": "경계 포함·0 제외·숫자 중복·공배수·복수해를 별도로 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "inverse floor count plateau with endpoint exclusion",
+        "parameters": {
+          "a": 8,
+          "b": 12,
+          "pieces": 38,
+          "minimumLength": 212,
+          "maximumLength": 242
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      }
     }
   ],
-  "preservedLegacyCount": 30,
-  "newAuthoredCount": 60,
+  "preservedLegacyCount": 35,
+  "newAuthoredCount": 100,
   "reviewSummary": {
-    "sourceTypes": 6,
+    "sourceTypes": 9,
     "perSource": 15,
     "perLevel": 5,
-    "count": 90,
-    "preservedLegacyCount": 30,
-    "newAuthoredCount": 60,
+    "count": 135,
+    "preservedLegacyCount": 35,
+    "newAuthoredCount": 100,
     "independentAnswers": true,
     "actualZipReviewed": true,
     "sourceGradeMutation": false,

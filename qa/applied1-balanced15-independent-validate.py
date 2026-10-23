@@ -147,6 +147,51 @@ def answer(item):
             layers += 1
         assert len(found) == 1
         return found
+    if no == 7:
+        rectangles = []
+        for left in range(4):
+            for right in range(4, 6):
+                for top in range(2):
+                    for bottom in range(2, 5):
+                        width, height = right-left, bottom-top
+                        keep = (width == p['width']) if level == 'low' else (
+                            width*height == p['cellCount'] if level == 'middle' else
+                            width > height and width*height >= p['minimumCells']
+                            and width+height <= p['maximumSideSum'])
+                        if keep:
+                            rectangles.append((left,right,top,bottom))
+        return [len(rectangles)]
+    if no == 8:
+        found = []
+        for value in range(11, 100):
+            a,b = divmod(value,10)
+            if b == 0 or a == b:
+                continue
+            for multiplier in range(10,1000):
+                if level == 'low' and multiplier != p['coefficient']:
+                    continue
+                if level == 'middle' and (multiplier < 100 or multiplier%100 != p['coefficientTail']):
+                    continue
+                if level == 'high' and (a+b != p['digitSum'] or not p['coefficientMin'] <= multiplier <= p['coefficientMax']):
+                    continue
+                product = str(value*multiplier)
+                if len(product)==4 and all(int(digit)==(a if letter=='A' else b)
+                                           for digit,letter in zip(product,p['pattern'])):
+                    found.append((value,multiplier))
+        assert len(found)==1,(item['id'],found)
+        return [found[0][0]]
+    if no == 9:
+        def cut_count(length):
+            cuts = set(range(p['a'],length,p['a'])) | set(range(p['b'],length,p['b']))
+            return len(cuts)+1
+        if level == 'low':
+            return [cut_count(p['length'])]
+        if level == 'high':
+            return [v for v in range(p['minimumLength'],p['maximumLength']+1) if cut_count(v)==p['pieces']]
+        found = [v for v in range(1,p['pieces']*max(p['a'],p['b'])+1)
+                 if v%p['a']==0 and v%p['b']==0 and cut_count(v)==p['pieces']]
+        assert len(found)==1
+        return found
     outcomes = set()
     states = set()
     for year in range(1900, 2400):
@@ -176,6 +221,10 @@ assert {datetime.date(y, 2, 18).weekday() for y in range(1900, 2400)
 assert Fraction(420, 11).numerator // Fraction(420, 11).denominator == 38
 assert [n for n in range(100, 1000) if n//36 == 26 and n%10 == 6] == [936, 946, 956, 966]
 assert geometry_edges(9) == 188 and geometry_edges(10) > 200
+assert sum(1 for left in range(4) for right in range(4,6)
+           for top in range(2) for bottom in range(2,5))==48
+assert [n for n in range(11,100) if str(77*n)==str(n%10)+str(n//10)*2+str(n%10)]==[75]
+assert len(set(range(3,120,3))|set(range(5,120,5)))+1==56
 
 evidence = []
 for item in data['items']:
@@ -184,30 +233,37 @@ for item in data['items']:
     assert len(item['solutionSteps']) >= 3 and item['learningLocation'] and item['learningPoint']
     assert item['sourcePointBand'] == '2.7'
     assert item['pointBand'] == dict(low='2.7', middle='3.4', high='4.2')[item['practiceLevel']]
-    if item['practiceLevel'] == 'low':
+    if item.get('preservedApprovedId'):
         old = legacy[item['id']]
         assert all(item[k] == v for k, v in old.items()), item['id']
     else:
         assert len(item['levelReview']['axes']) == 9
         assert item['difficultyEvidence']['measuredVariantRate'] is None
-        assert item['practiceRole'] == '단계형 확장'
+        assert item['practiceRole'] in ['기초 보완','단계형 확장']
     if item.get('asset'):
-        assert item['asset'] == next(x for x in legacy.values() if x['sourceNo'] == item['sourceNo'])['asset']
+        if item['sourceNo']==7:
+            from pypdf import PdfReader
+            image = next(x.image for x in PdfReader(ROOT/'materials/초등과정 대비 실전 모의고사 활용 1회.pdf').pages[1].images if x.name=='Im71.jp2')
+            from PIL import Image
+            actual_image = Image.open(ROOT/'bank'/item['asset']['src'])
+            assert image.mode==actual_image.mode and image.size==actual_image.size and image.tobytes()==actual_image.tobytes()
+        else:
+            assert item['asset'] == next(x for x in legacy.values() if x['sourceNo'] == item['sourceNo'])['asset']
         assert (ROOT / 'bank' / item['asset']['src']).is_file()
     evidence.append({'id': item['id'], 'passed': True, 'answer': actual})
 for no in data['availableSourceNos']:
     assert collections.Counter(x['practiceLevel'] for x in data['items'] if x['sourceNo'] == no) == dict(low=5, middle=5, high=5)
-assert len(data['items']) == 90 and len({x['id'] for x in data['items']}) == 90
-assert len({x['text'] + '\n' + str(x.get('promptDataLines', '')) for x in data['items']}) == 90
-previous = json.loads(subprocess.check_output(['git', 'show', '83a0433:bank/data/applied1-balanced15.json'], cwd=ROOT))
+assert len(data['items']) == 135 and len({x['id'] for x in data['items']}) == 135
+assert len({x['text'] + '\n' + str(x.get('promptDataLines', '')) for x in data['items']}) == 135
+previous = json.loads(subprocess.check_output(['git', 'show', 'a6a8973:bank/data/applied1-balanced15.json'], cwd=ROOT))
 for old in previous['items']:
     current = next(x for x in data['items'] if x['id'] == old['id'])
     assert all(current[k] == v for k, v in old.items())
-    assert current['practiceStorageVersion'] == previous['version']
+    assert current['practiceStorageVersion'] == old['practiceStorageVersion']
 out = ROOT / '.private-work/balanced15-20261024/independent-math.json'
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps({'dataSha256': hashlib.sha256(FILE.read_bytes()).hexdigest(),
-                           'count': len(evidence), 'sourceAnswersDirectlyCompared': [1, 2, 3, 4, 5, 6],
-                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges'],
+                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,10)),
+                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets'],
                            'items': evidence}, ensure_ascii=False, indent=2) + '\n')
-print('PASS 90 answers: six 5/5/5 groups; simulation/digit-DP/calendar/exact angles/division enumeration/unique grid edges; complete answer sets; first45 content and storage keys preserved')
+print('PASS 135 answers: nine 5/5/5 groups; independent full answer sets; original flag pixels and first90 content/storage preserved')

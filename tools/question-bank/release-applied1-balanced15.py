@@ -35,7 +35,9 @@ data['reviewSummary'] = dict(sourceTypes=source_count, perSource=15, perLevel=5,
                              sourceGradeMutation=False, studentDifficultyMeasured=False)
 file.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
 rows = {'applied|1|' + str(n): {'bank': 'applied1-balanced15', 'sourceNo': n,
-                               'count': 15, 'perLevel': 5, 'version': data['version']}
+                               'count': 15, 'perLevel': 5, 'version': data['version'],
+                               **{k: next(x for x in data['items'] if x['sourceNo']==n)[k]
+                                  for k in ['area','subarea','detailType','learningLocation','learningPoint']}}
         for n in data['availableSourceNos']}
 index = "/* Reviewed levelled extensions; original point bands and existing banks are preserved. */\n"
 index += "(function(root,factory){'use strict';var api=factory();if(typeof module==='object'&&module.exports)module.exports=api;if(root)root.GFIELD_BALANCED_PRACTICE=api;})(typeof window!=='undefined'?window:globalThis,function(){'use strict';var rows="
