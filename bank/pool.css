@@ -16,3 +16,5 @@
 
 /* Preserve native balance symbols at a readable size in Applied2 only. */
 .q-figure[data-round="2"][data-source="5"] img{max-height:200px}
+
+.q-figure[data-round="2"][data-source="7"] img,.q-figure[data-round="2"][data-source="9"] img{max-height:200px}
