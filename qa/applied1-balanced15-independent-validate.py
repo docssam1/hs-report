@@ -4,6 +4,8 @@ import datetime
 import functools
 import hashlib
 import json
+import subprocess
+from fractions import Fraction
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,6 +61,24 @@ def tally_to(n, excluded):
     return list(dp(0, True, False, 0)[1])
 
 
+@functools.lru_cache(None)
+def geometry_edges(layers):
+    edges = set()
+    for row in range(layers):
+        for col in range(-row, row + 1):
+            points = [(col, row), (col + 1, row), (col + 1, row + 1), (col, row + 1)]
+            for i in range(4):
+                edges.add(tuple(sorted((points[i], points[(i + 1) % 4]))))
+    return len(edges)
+
+
+def right_angle(t):
+    minute = (6 * t) % 360
+    hour = (t / 2) % 360
+    gap = abs(minute - hour)
+    return min(gap, 360 - gap) == 90
+
+
 def answer(item):
     no, level, p = item['sourceNo'], item['practiceLevel'], item['verification']['parameters']
     if no == 1:
@@ -74,6 +94,59 @@ def answer(item):
         totals = [x - y for x, y in zip(a, b)]
         assert totals.count(max(totals)) == 1
         return [totals.index(max(totals)), max(totals)]
+    if no == 4:
+        if level == 'low':
+            gaps = [Fraction(30 * p['hour']) + Fraction(m, 2) - 6 * m for m in range(61)]
+            result = [m for m in range(60) if gaps[m] > 0 and gaps[m+1] < 0]
+            assert len(result) == 1
+            return result
+        if level == 'middle':
+            events = [Fraction(k, 11) for k in range(1, 660)
+                      if right_angle(Fraction(p['hour'] * 60) + Fraction(k, 11))]
+            assert events
+            first = events[0]
+            assert first.denominator != 1
+            return [first.numerator // first.denominator]
+        return [sum(right_angle(Fraction(k, 11))
+                    for k in range(p['startMinute'] * 11, p['endMinute'] * 11 + 1))]
+    if no == 5:
+        if level == 'high':
+            found = {value for value in range(100, 1000)
+                     for divisor in range(p['divisorMin'], p['divisorMax'] + 1)
+                     if value // divisor == p['quotient'] and value % divisor == divisor - p['remainderGap']
+                     and value % 10 == p['lastDigit']}
+            assert found
+            return sorted(found)
+        found = [value for value in range(100, 2000)
+                 if value // p['divisor'] == p['quotient'] and value % 10 == p['lastDigit']
+                 and (level == 'low' or value < 1000 and value % p['multiple'] == 0)]
+        assert found
+        return found
+    if no == 6:
+        if level == 'low':
+            layers = 1
+            while geometry_edges(layers + 1) <= p['available']:
+                layers += 1
+            return [layers, p['available'] - geometry_edges(layers)]
+        if level == 'middle':
+            target = p['remaining'] + p['neededForNext']
+            increase = 1
+        else:
+            target = p['added'] + p['firstRemaining'] - p['secondRemaining']
+            increase = p['layerIncrease']
+        layers, found = 1, []
+        while geometry_edges(layers + increase) - geometry_edges(layers) <= target:
+            if geometry_edges(layers + increase) - geometry_edges(layers) == target:
+                if level == 'middle':
+                    assert 0 <= p['remaining'] < geometry_edges(layers+1)-geometry_edges(layers)
+                    found.append(geometry_edges(layers) + p['remaining'])
+                else:
+                    assert 0 <= p['firstRemaining'] < geometry_edges(layers+1)-geometry_edges(layers)
+                    assert 0 <= p['secondRemaining'] < geometry_edges(layers+increase+1)-geometry_edges(layers+increase)
+                    found.append(geometry_edges(layers) + p['firstRemaining'])
+            layers += 1
+        assert len(found) == 1
+        return found
     outcomes = set()
     states = set()
     for year in range(1900, 2400):
@@ -100,6 +173,9 @@ original_tally = [sum(str(n).count(str(d)) for n in range(465, 777)) for d in ra
 assert original_tally.index(max(original_tally)) == 6 and max(original_tally) == 167
 assert {datetime.date(y, 2, 18).weekday() for y in range(1900, 2400)
         if sum(d for d in range(1, 32) if datetime.date(y, 1, d).weekday() == 1) == 62} == {3}
+assert Fraction(420, 11).numerator // Fraction(420, 11).denominator == 38
+assert [n for n in range(100, 1000) if n//36 == 26 and n%10 == 6] == [936, 946, 956, 966]
+assert geometry_edges(9) == 188 and geometry_edges(10) > 200
 
 evidence = []
 for item in data['items']:
@@ -121,12 +197,17 @@ for item in data['items']:
     evidence.append({'id': item['id'], 'passed': True, 'answer': actual})
 for no in data['availableSourceNos']:
     assert collections.Counter(x['practiceLevel'] for x in data['items'] if x['sourceNo'] == no) == dict(low=5, middle=5, high=5)
-assert len(data['items']) == 45 and len({x['id'] for x in data['items']}) == 45
-assert len({x['text'] for x in data['items']}) == 45
+assert len(data['items']) == 90 and len({x['id'] for x in data['items']}) == 90
+assert len({x['text'] + '\n' + str(x.get('promptDataLines', '')) for x in data['items']}) == 90
+previous = json.loads(subprocess.check_output(['git', 'show', '83a0433:bank/data/applied1-balanced15.json'], cwd=ROOT))
+for old in previous['items']:
+    current = next(x for x in data['items'] if x['id'] == old['id'])
+    assert all(current[k] == v for k, v in old.items())
+    assert current['practiceStorageVersion'] == previous['version']
 out = ROOT / '.private-work/balanced15-20261024/independent-math.json'
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps({'dataSha256': hashlib.sha256(FILE.read_bytes()).hexdigest(),
-                           'count': len(evidence), 'sourceAnswersDirectlyCompared': [1, 2, 3],
-                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399'],
+                           'count': len(evidence), 'sourceAnswersDirectlyCompared': [1, 2, 3, 4, 5, 6],
+                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges'],
                            'items': evidence}, ensure_ascii=False, indent=2) + '\n')
-print('PASS 45 answers: 15 preserved +30 new, three complete 5/5/5 groups; independent simulation/digit-DP/calendar, unique answers; source points and bank unchanged')
+print('PASS 90 answers: six 5/5/5 groups; simulation/digit-DP/calendar/exact angles/division enumeration/unique grid edges; complete answer sets; first45 content and storage keys preserved')

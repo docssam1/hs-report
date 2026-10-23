@@ -15,19 +15,19 @@ assert.equal(quota({low: 4, middle: 5, high: 6}).missingTotal, 1);
 const result = audit();
 assert.equal(result.sourceCount, 900);
 assert.equal(result.bankCount, 20);
-assert.equal(result.storedVerified, 1965);
+assert.equal(result.storedVerified, 1995);
 assert.equal(result.appliedProjection.sourceCount, 270);
-assert.equal(result.appliedProjection.storedVerified, 705);
+assert.equal(result.appliedProjection.storedVerified, 735);
 assert.equal(result.appliedProjection.targetCount, 4050);
 assert.equal(result.perSourceProjection.unitsWithVariants, 495);
-assert.equal(result.perSourceProjection.readyByBenchmarkCounts, 3);
-assert.equal(result.appliedProjection.missingByBenchmarkCounts, 3645);
+assert.equal(result.perSourceProjection.readyByBenchmarkCounts, 6);
+assert.equal(result.appliedProjection.missingByBenchmarkCounts, 3615);
 assert.equal(result.scopeConfirmed, true);
 assert.equal(result.scope, 'per-source-question');
-assert.deepEqual(result.perSource.filter(x=>x.benchmarkQuota.ready).map(x=>x.sourceKey).sort(), ['applied|1|1','applied|1|2','applied|1|3']);
+assert.deepEqual(result.perSource.filter(x=>x.benchmarkQuota.ready).map(x=>x.sourceKey).sort(), ['applied|1|1','applied|1|2','applied|1|3','applied|1|4','applied|1|5','applied|1|6']);
 for (const file of result.files) {
   const bytes = fs.readFileSync(path.join(__dirname, '../bank/data', file.file));
   assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), file.sha256);
 }
 assert.equal(result.perSource.reduce((n, x) => n + x.storedVerified, 0), result.storedVerified);
-console.log('PASS balanced15 audit: 900 sources, 20 banks, 1965 distinct variants; preserved references counted once; exactly three 5/5/5 groups; excess cannot fill another level; source benchmark and authored estimates remain separate from measured rates');
+console.log('PASS balanced15 audit: 900 sources, 20 banks, 1995 distinct variants; preserved references counted once; exactly six 5/5/5 groups; excess cannot fill another level; source benchmark and authored estimates remain separate from measured rates');

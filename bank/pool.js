@@ -20,7 +20,7 @@
  function visiblePages(container,mode){return Array.from(container.querySelectorAll('.page')).filter(function(p){return mode==='both'?!p.classList.contains('quick-page'):p.classList.contains(mode+'-page');});}
  function renumber(container,mode){var pages=visiblePages(container,mode);pages.forEach(function(p,i){var n=p.querySelector('.page-number');if(n)n.textContent=(i+1)+' / '+pages.length;});}
  async function readyMedia(container){await document.fonts.ready;await document.fonts.load('14px "GFIELD Print Serif"','지필드 문제와 풀이');await document.fonts.load('14px Pretendard','지필드');await Promise.all(Array.from(container.querySelectorAll('img')).map(function(im){return im.complete?(im.naturalWidth?Promise.resolve():Promise.reject(Error('그림을 불러오지 못했습니다.'))):new Promise(function(ok,bad){im.onload=ok;im.onerror=function(){bad(Error('그림을 불러오지 못했습니다.'));};});}));}
- function storageKey(x){return 'gfield_practice_pool_v2:'+encodeURIComponent(identity&&identity.student||'local-tester')+':'+encodeURIComponent(data.version)+':'+x.id;}
+ function storageKey(x){return 'gfield_practice_pool_v2:'+encodeURIComponent(identity&&identity.student||'local-tester')+':'+encodeURIComponent(x.practiceStorageVersion||data.version)+':'+x.id;}
  function history(x){try{var v=JSON.parse(localStorage.getItem(storageKey(x))||'[]');return Array.isArray(v)?v.slice(0,3):[];}catch(e){return [];}}
  function norm(v){return String(v).normalize('NFKC').toUpperCase().replace(/\s+/g,'').replace(/새끼손가락|새끼/g,'소지').replace(/엄지손가락/g,'엄지').replace(/검지손가락/g,'검지').replace(/중지손가락/g,'중지').replace(/약지손가락/g,'약지');}
  function check(item,values){
