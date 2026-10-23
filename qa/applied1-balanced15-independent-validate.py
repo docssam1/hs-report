@@ -140,6 +140,61 @@ def shared_signed_totals(a,b):
     return states
 
 
+def neg(v):return tuple(-x for x in v)
+
+
+@functools.lru_cache(None)
+def folded_cube():
+    net={(0,0):'upperX',(-1,0):'cross',(0,1):'triple',(0,2):'single',(0,3):'dot',(1,2):'rightX'}
+    frames={(0,0):((1,0,0),(0,1,0),(0,0,-1))};queue=collections.deque([(0,0)])
+    while queue:
+        x,y=queue.popleft();u,v,n=frames[x,y]
+        for dx,dy,next_frame in [(1,0,(neg(n),v,u)),(-1,0,(n,v,neg(u))),
+                                  (0,1,(u,neg(n),v)),(0,-1,(u,n,neg(v)))]:
+            pos=x+dx,y+dy
+            if pos not in net:continue
+            if pos in frames:assert frames[pos]==next_frame
+            else:frames[pos]=next_frame;queue.append(pos)
+    assert len(frames)==6 and len({n for _,_,n in frames.values()})==6
+    return {net[pos]:frame for pos,frame in frames.items()}
+
+
+@functools.lru_cache(None)
+def cube_rotations():
+    frames=folded_cube();states=[]
+    for permutation in itertools.permutations(range(3)):
+        parity=(-1)**sum(permutation[i]>permutation[j]for i in range(3)for j in range(i+1,3))
+        for signs in itertools.product([-1,1],repeat=3):
+            if parity*signs[0]*signs[1]*signs[2]!=1:continue
+            def transform(v):return tuple(signs[i]*v[permutation[i]]for i in range(3))
+            moved={f:tuple(transform(v)for v in frame)for f,frame in frames.items()}
+            slot={name:next(f for f,(_,_,n)in moved.items()if n==normal)
+                  for name,normal in [('top',(0,0,1)),('front',(0,-1,0)),('right',(1,0,0))]}
+            states.append((slot,moved))
+    assert len(states)==24 and len({tuple(s.values())for s,_ in states})==24
+    return states
+
+
+def pattern(face):return {'upperX':'X','rightX':'X','cross':'C','triple':'H','single':'S','dot':'D'}[face]
+
+
+@functools.lru_cache(None)
+def cross_rectangles():
+    cells={(x,y)for x in range(3,8)for y in range(7)}|{(x,y)for x in range(10)for y in [2,3]}
+    edges=set()
+    for x,y in cells:
+        points=[(x,y),(x+1,y),(x+1,y+1),(x,y+1)]
+        edges.update(tuple(sorted([points[i],points[(i+1)%4]]))for i in range(4))
+    found=[]
+    def edge(a,b):return tuple(sorted([a,b]))in edges
+    for left,right in itertools.combinations(range(11),2):
+        for top,bottom in itertools.combinations(range(8),2):
+            if(all(edge((x,top),(x+1,top))and edge((x,bottom),(x+1,bottom))for x in range(left,right))
+               and all(edge((left,y),(left,y+1))and edge((right,y),(right,y+1))for y in range(top,bottom))):
+                found.append((left,right,top,bottom))
+    return found
+
+
 def answer(item):
     no, level, p = item['sourceNo'], item['practiceLevel'], item['verification']['parameters']
     if no == 1:
@@ -400,6 +455,48 @@ def answer(item):
         assert 1<count<signed_totals(p['first'])[p['firstTarget']]
         assert count<signed_totals(p['second'])[p['secondTarget']]
         return [count]
+    if no == 19:
+        if level=='low':
+            normals={f:n for f,(_,_,n)in folded_cube().items()};n=normals[p['face']]
+            if p['query']=='oppositeLineCount':
+                opposite=next(f for f,v in normals.items()if v==neg(n))
+                return [{'dot':0,'single':1,'triple':3,'cross':2,'upperX':2,'rightX':2}[opposite]]
+            if p['query']=='adjacentPatternCount':
+                return [sum(pattern(f)==p['other']and sum(a*b for a,b in zip(n,v))==0 for f,v in normals.items())]
+            assert p['query']=='sharedEdges'
+            return [int(sum(a*b for a,b in zip(n,normals[p['other']]))==0)]
+        conditions={'top':p['allowedTop'],'front':p['allowedFront']}
+        if level=='high':conditions['right']=p['allowedRight']
+        good=[s for s,_ in cube_rotations()if all(pattern(s[k])in allowed for k,allowed in conditions.items())]
+        for omitted in conditions:
+            assert sum(all(pattern(s[k])in allowed for k,allowed in conditions.items()if k!=omitted)for s,_ in cube_rotations())>len(good)
+        return [len(good)]
+    if no == 20:
+        if level=='low':
+            possible=[both for both in range(min(p['bread'],p['rice'])+1)if p['bread']+p['rice']-both==p['union']]
+        else:
+            possible=[]
+            for union in range(p['total']+1):
+                ratio=Fraction(*p['noneRatio'])if level=='middle'else Fraction(1,p['noneDenominator'])
+                none=union*ratio
+                if union+none+p['other']!=p['total']:continue
+                if level=='middle':
+                    possible += [both for both in range(min(p['bread'],p['rice'])+1)if p['bread']+p['rice']-both==union]
+                else:
+                    for bread_only in range(union+1):
+                        rice_only=p['exclusiveMultiple']*bread_only
+                        both=union-bread_only-rice_only
+                        if both>=0 and(rice_only+both)-(bread_only+both)==p['riceBreadDifference']:possible.append(both)
+        assert len(possible)==1,(item['id'],possible)
+        return possible
+    if no == 21:
+        rectangles=cross_rectangles()
+        if level=='low':return [sum(r-l==p['width']and b-t==p['height']for l,r,t,b in rectangles)]
+        if level=='middle':return [sum(r-l==p['width']for l,r,t,b in rectangles)]
+        tests=[lambda w,h:w>h,lambda w,h:w*h>=p['minimumArea'],lambda w,h:2*(w+h)<=p['maximumPerimeter']]
+        found=sum(all(test(r-l,b-t)for test in tests)for l,r,t,b in rectangles)
+        assert all(sum(all(test(r-l,b-t)for i,test in enumerate(tests)if i!=omitted)for l,r,t,b in rectangles)>found for omitted in range(3))
+        return [found]
     outcomes = set()
     states = set()
     for year in range(1900, 2400):
@@ -446,6 +543,24 @@ assert 495-Fraction(330,Fraction(11,2))==435
 assert len(boat_edges())-len(boat_edges()&boat_edges(0,True))==4
 assert min(17-len(boat_edges()&boat_edges(k,True))for k in range(-8,9))==4
 assert sorted(set(signed_totals([17,15,13,11,9,7,5]))&{0,5,10,15,20,50,51,52,53,54,57,71,73,77,81})==[5,15,51,53,77]
+# Directly read original19 views; include the single/triple line directions.
+option_patterns=[('D','C','C'),('S','X','H'),('C','X','X'),('H','X','C'),('X','D','C')]
+possible_options=[]
+for number,labels in enumerate(option_patterns,1):
+    fits=[]
+    for slots,moved in cube_rotations():
+        if tuple(pattern(slots[k])for k in ['top','front','right'])!=labels:continue
+        if number==2:
+            # The top single line is parallel to the top/front edge (worldX),
+            # and right-face triple lines parallel to the top/right edge (worldY).
+            if moved[slots['top']][1]not in [(1,0,0),(-1,0,0)]:continue
+            if moved[slots['right']][0]not in [(0,1,0),(0,-1,0)]:continue
+        if number==4 and moved[slots['top']][0]not in [(1,0,0),(-1,0,0)]:continue
+        fits.append(slots)
+    if fits:possible_options.append(number)
+assert possible_options==[2,4,5]
+assert (680-14)*5//6==555 and 124+451-555==20
+assert len(cross_rectangles())==540
 
 evidence = []
 for item in data['items']:
@@ -454,8 +569,8 @@ for item in data['items']:
     assert len(item['solutionSteps']) >= 3 and item['learningLocation'] and item['learningPoint']
     source_points={x['pointBand']for x in legacy.values()if x['sourceNo']==item['sourceNo']}
     if not source_points:
-        assert item['sourceNo']in [7,8,17]
-        source_points={'3.4'if item['sourceNo']==17 else'2.7'}
+        assert item['sourceNo']in [7,8,17,19,21]
+        source_points={'3.4'if item['sourceNo']in [17,19,21]else'2.7'}
     assert source_points=={item['sourcePointBand']}
     assert item['pointBand'] == dict(low='2.7', middle='3.4', high='4.2')[item['practiceLevel']]
     if item.get('preservedApprovedId'):
@@ -466,10 +581,11 @@ for item in data['items']:
         assert item['difficultyEvidence']['measuredVariantRate'] is None
         assert item['practiceRole'] in ['기초 보완','단계형 확장']
     if item.get('asset'):
-        if item['sourceNo']in [7,17]:
+        if item['sourceNo']in [7,17,19,21]:
             from pypdf import PdfReader
-            page_index,image_stem=(1,'Im71')if item['sourceNo']==7 else(2,'Im80')
+            page_index,image_stem={7:(1,'Im71'),17:(2,'Im80'),19:(3,'Im196'),21:(3,'Im192')}[item['sourceNo']]
             image = next(x.image for x in PdfReader(ROOT/'materials/초등과정 대비 실전 모의고사 활용 1회.pdf').pages[page_index].images if Path(x.name).stem==image_stem)
+            if item['sourceNo']==19:image=image.crop((748,20,965,300))
             from PIL import Image
             actual_image = Image.open(ROOT/'bank'/item['asset']['src'])
             assert image.mode==actual_image.mode and image.size==actual_image.size and image.tobytes()==actual_image.tobytes()
@@ -479,9 +595,9 @@ for item in data['items']:
     evidence.append({'id': item['id'], 'passed': True, 'answer': actual})
 for no in data['availableSourceNos']:
     assert collections.Counter(x['practiceLevel'] for x in data['items'] if x['sourceNo'] == no) == dict(low=5, middle=5, high=5)
-assert len(data['items']) == 270 and len({x['id'] for x in data['items']}) == 270
-assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 270
-previous = json.loads(subprocess.check_output(['git', 'show', 'f66fab5:bank/data/applied1-balanced15.json'], cwd=ROOT))
+assert len(data['items']) == 315 and len({x['id'] for x in data['items']}) == 315
+assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 315
+previous = json.loads(subprocess.check_output(['git', 'show', 'd596999:bank/data/applied1-balanced15.json'], cwd=ROOT))
 for old in previous['items']:
     current = next(x for x in data['items'] if x['id'] == old['id'])
     assert all(current[k] == v for k, v in old.items())
@@ -489,7 +605,7 @@ for old in previous['items']:
 out = ROOT / '.private-work/balanced15-20261024/independent-math.json'
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps({'dataSha256': hashlib.sha256(FILE.read_bytes()).hexdigest(),
-                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,19)),
-                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions', 'accumulated hand motion and all first/second study times', 'full17-stick endpoint graph intersections', 'one/two expression sign-sum dynamic programming'],
+                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,22)),
+                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions', 'accumulated hand motion and all first/second study times', 'full17-stick endpoint graph intersections', 'one/two expression sign-sum dynamic programming', 'BFS folded net plus24proper signed-permutation rotations and source line-direction checks', 'integer partition states and exclusive-group relations', 'all original cross-grid unit boundary edge rectangles'],
                            'items': evidence}, ensure_ascii=False, indent=2) + '\n')
-print('PASS270 answers in eighteen5/5/5 groups; original16/17/18 directly compared; native boat pixels unchanged; endpoint graphs and shared-sign DP; prior225 content/storage preserved')
+print('PASS315 answers in21complete5/5/5 groups; source19BFS/proper rotations/line directions, source20integer partitions, source21unit boundary edges; prior270unchanged')
