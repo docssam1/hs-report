@@ -55,6 +55,9 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
         return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(body) });
       }
       if (url.origin === new URL(base).origin) return route.continue();
+      // Match production typography: fallback-only QA can miss a wrapped line
+      // that pushes an illustrated question beyond a fixed two-column cell.
+      if (request.method() === 'GET' && ['fonts.googleapis.com', 'fonts.gstatic.com'].includes(url.hostname)) return route.continue();
       return route.abort();
     });
     const page = await context.newPage();

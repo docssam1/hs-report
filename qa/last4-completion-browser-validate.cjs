@@ -41,6 +41,7 @@ async function measure(page){return page.evaluate(()=>{
     const context=await browser.newContext({viewport:{width:1280,height:900}});
     await context.route(/^https?:\/\//,route=>{
       const req=route.request(),url=new URL(req.url());if(url.origin===base)return route.continue();
+      if(req.method()==='GET'&&['fonts.googleapis.com','fonts.gstatic.com'].includes(url.hostname))return route.continue();
       results.externalRequests.push({method:req.method(),host:url.hostname});
       if(!['GET','HEAD','OPTIONS'].includes(req.method()))results.writes.push(req.method()+' '+url.pathname);
       return route.fulfill({contentType:/css/.test(url.pathname)?'text/css':'application/json',body:/css/.test(url.pathname)?'':'[]'});
