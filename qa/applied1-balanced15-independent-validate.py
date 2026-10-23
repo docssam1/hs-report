@@ -79,6 +79,13 @@ def right_angle(t):
     return min(gap, 360 - gap) == 90
 
 
+def movement_states(draws, forward, backward):
+    states={(0,0)}
+    for _ in range(draws):
+        states={(pos+forward,white+1)for pos,white in states}|{(pos-backward,white)for pos,white in states}
+    return states
+
+
 def answer(item):
     no, level, p = item['sourceNo'], item['practiceLevel'], item['verification']['parameters']
     if no == 1:
@@ -192,6 +199,61 @@ def answer(item):
                  if v%p['a']==0 and v%p['b']==0 and cut_count(v)==p['pieces']]
         assert len(found)==1
         return found
+    if no == 10:
+        found=[]
+        numerator,denominator=p['ratio']
+        for teacher in range(1,p['presentSum']):
+            me=p['presentSum']-teacher
+            for brother in range(1,p['futureTotal']):
+                sister=brother+p['gap']
+                if level=='middle' and teacher-sister!=p['teacherSisterDifference']:
+                    continue
+                if level=='high' and teacher!=p['teacherSisterMultiple']*sister:
+                    continue
+                years=Fraction(p['futureTotal']-p['presentSum']-brother-sister,4)
+                if years<=0 or years.denominator!=1 or level=='low' and years!=p['years']:
+                    continue
+                if denominator*(brother+years)==numerator*(me+years):
+                    found.append((teacher,me,brother,sister,int(years)))
+        assert len(found)==1,(item['id'],found)
+        return [found[0][0]]
+    if no == 11:
+        if level=='high':
+            assert p['firstForward']+p['firstBackward']!=p['secondForward']+p['secondBackward']
+            found={(white1,white2)
+                   for pos1,white1 in movement_states(p['firstDraws'],p['firstForward'],p['firstBackward'])
+                   for pos2,white2 in movement_states(p['secondDraws'],p['secondForward'],p['secondBackward'])
+                   if pos1+pos2==p['end'] and white1-white2==p['firstWhiteExcess']}
+            assert len(found)==1
+            return list(found.pop())
+        if level=='middle':
+            found=[(black+p['whiteExcess'],black)for black in range(p['end']+1)
+                   if p['forward']*(black+p['whiteExcess'])-p['backward']*black==p['end']]
+        else:
+            found=[(white,p['draws']-white)for pos,white in movement_states(p['draws'],p['forward'],p['backward'])
+                   if pos+p['start']==p['end']]
+        assert len(found)==1
+        return list(found[0])
+    if no == 12:
+        candidates=[]
+        for start in range(1,720):
+            if level=='low':
+                display=Fraction(start)+Fraction(p['observed']-start,60)*(60-p['rate'])
+                if display==p['display']:
+                    candidates.append(start)
+            elif level=='middle':
+                display=(Fraction(start)+Fraction(p['changeAt']-start,60)*(60-p['beforeRate'])
+                         +Fraction(p['observed']-p['changeAt'],60)*(60-p['afterRate']))
+                if display==p['display']:
+                    candidates.append(start)
+            else:
+                # Slow display gives an exact possible observation for each candidate start.
+                observation=Fraction(p['slowDisplay']*60-start*p['slowRate'],60-p['slowRate'])
+                fast_display=Fraction(start)+Fraction(observation-start,60)*(60+p['fastRate'])
+                if p['actualObservationRange'][0]<=observation<=p['actualObservationRange'][1] and fast_display==p['fastDisplay']:
+                    candidates.append(start)
+        assert len(candidates)==1,(item['id'],candidates)
+        return [candidates[0]//60,candidates[0]%60]
     outcomes = set()
     states = set()
     for year in range(1900, 2400):
@@ -225,6 +287,11 @@ assert sum(1 for left in range(4) for right in range(4,6)
            for top in range(2) for bottom in range(2,5))==48
 assert [n for n in range(11,100) if str(77*n)==str(n%10)+str(n//10)*2+str(n%10)]==[75]
 assert len(set(range(3,120,3))|set(range(5,120,5)))+1==56
+source_brother=Fraction(112-56-6-4*9,2)
+source_me=Fraction(5,4)*(source_brother+9)-9
+assert source_brother==7 and source_me==11 and 56-source_me==45
+assert {(w,18-w)for pos,w in movement_states(18,7,3)if pos==46}=={(10,8)}
+assert Fraction((900-856)*60,8)==330 and 900-330==570
 
 evidence = []
 for item in data['items']:
@@ -253,9 +320,9 @@ for item in data['items']:
     evidence.append({'id': item['id'], 'passed': True, 'answer': actual})
 for no in data['availableSourceNos']:
     assert collections.Counter(x['practiceLevel'] for x in data['items'] if x['sourceNo'] == no) == dict(low=5, middle=5, high=5)
-assert len(data['items']) == 135 and len({x['id'] for x in data['items']}) == 135
-assert len({x['text'] + '\n' + str(x.get('promptDataLines', '')) for x in data['items']}) == 135
-previous = json.loads(subprocess.check_output(['git', 'show', 'a6a8973:bank/data/applied1-balanced15.json'], cwd=ROOT))
+assert len(data['items']) == 180 and len({x['id'] for x in data['items']}) == 180
+assert len({x['text'] + '\n' + str(x.get('promptDataLines', '')) for x in data['items']}) == 180
+previous = json.loads(subprocess.check_output(['git', 'show', '0e034b6:bank/data/applied1-balanced15.json'], cwd=ROOT))
 for old in previous['items']:
     current = next(x for x in data['items'] if x['id'] == old['id'])
     assert all(current[k] == v for k, v in old.items())
@@ -263,7 +330,7 @@ for old in previous['items']:
 out = ROOT / '.private-work/balanced15-20261024/independent-math.json'
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps({'dataSha256': hashlib.sha256(FILE.read_bytes()).hexdigest(),
-                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,10)),
-                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets'],
+                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,13)),
+                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift'],
                            'items': evidence}, ensure_ascii=False, indent=2) + '\n')
-print('PASS 135 answers: nine 5/5/5 groups; independent full answer sets; original flag pixels and first90 content/storage preserved')
+print('PASS180 answers in twelve5/5/5 groups; independent age states, movement paths, clock start minutes; prior135 content/storage preserved')

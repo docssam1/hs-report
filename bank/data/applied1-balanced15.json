@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied1-balanced15-r3",
+  "version": "20261024-applied1-balanced15-r4",
   "sourceSet": "applied",
   "sourceRound": 1,
   "policy": {
@@ -23,12 +23,12 @@
     6,
     7,
     8,
-    9
-  ],
-  "pendingSourceNos": [
+    9,
     10,
     11,
-    12,
+    12
+  ],
+  "pendingSourceNos": [
     13,
     14,
     15,
@@ -9578,17 +9578,3277 @@
         "sourceAnswerPage": 9,
         "studentDifficultyMeasured": false
       }
+    },
+    {
+      "id": "applied1-q10-v1",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "pointBand": "2.7",
+      "text": "지금 선생님과 내 나이의 합은 48살이고, 언니는 내 동생보다 6살 많습니다. 8년 후 네 사람의 나이의 합은 102살이며, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>4</mn><mn>5</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "36살",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        36
+      ],
+      "acceptedAnswers": [
+        "36살"
+      ],
+      "solutionSteps": [
+        "8년 후 선생님과 내 나이의 합은 48＋8×2＝64살입니다.",
+        "그때 언니와 동생의 합은 102−64＝38살입니다. 두 사람의 차는 6살이므로 동생은 (38−6)÷2＝16살입니다.",
+        "그때 내 나이는 16÷4×5＝20살이고, 지금 내 나이는 20−8＝12살입니다. 따라서 선생님의 현재 나이는 48−12＝36살입니다."
+      ],
+      "solution": "8년 후 선생님과 내 나이의 합은 48＋8×2＝64살입니다. 그때 언니와 동생의 합은 102−64＝38살입니다. 두 사람의 차는 6살이므로 동생은 (38−6)÷2＝16살입니다. 그때 내 나이는 16÷4×5＝20살이고, 지금 내 나이는 20−8＝12살입니다. 따라서 선생님의 현재 나이는 48−12＝36살입니다.",
+      "learningPoint": "미래의 나이 비와 현재의 나이를 구분해 역산하기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "verification": {
+        "primaryMethod": "future pair sums and ratio",
+        "parameters": {
+          "years": 8,
+          "presentSum": 48,
+          "futureTotal": 102,
+          "gap": 6,
+          "ratio": [
+            4,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q10-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q10-v2",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "pointBand": "2.7",
+      "text": "지금 선생님과 내 나이의 합은 48살이고, 언니는 내 동생보다 6살 많습니다. 9년 후 네 사람의 나이의 합은 104살이며, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>4</mn><mn>5</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "37살",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        37
+      ],
+      "acceptedAnswers": [
+        "37살"
+      ],
+      "solutionSteps": [
+        "9년 후 선생님과 내 나이의 합은 48＋9×2＝66살입니다.",
+        "그때 언니와 동생의 합은 104−66＝38살입니다. 두 사람의 차는 6살이므로 동생은 (38−6)÷2＝16살입니다.",
+        "그때 내 나이는 16÷4×5＝20살이고, 지금 내 나이는 20−9＝11살입니다. 따라서 선생님의 현재 나이는 48−11＝37살입니다."
+      ],
+      "solution": "9년 후 선생님과 내 나이의 합은 48＋9×2＝66살입니다. 그때 언니와 동생의 합은 104−66＝38살입니다. 두 사람의 차는 6살이므로 동생은 (38−6)÷2＝16살입니다. 그때 내 나이는 16÷4×5＝20살이고, 지금 내 나이는 20−9＝11살입니다. 따라서 선생님의 현재 나이는 48−11＝37살입니다.",
+      "learningPoint": "미래의 나이 비와 현재의 나이를 구분해 역산하기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "verification": {
+        "primaryMethod": "future pair sums and ratio",
+        "parameters": {
+          "years": 9,
+          "presentSum": 48,
+          "futureTotal": 104,
+          "gap": 6,
+          "ratio": [
+            4,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q10-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q10-v3",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "pointBand": "2.7",
+      "text": "지금 선생님과 내 나이의 합은 48살이고, 언니는 내 동생보다 6살 많습니다. 10년 후 네 사람의 나이의 합은 106살이며, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>4</mn><mn>5</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "38살",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        38
+      ],
+      "acceptedAnswers": [
+        "38살"
+      ],
+      "solutionSteps": [
+        "10년 후 선생님과 내 나이의 합은 48＋10×2＝68살입니다.",
+        "그때 언니와 동생의 합은 106−68＝38살입니다. 두 사람의 차는 6살이므로 동생은 (38−6)÷2＝16살입니다.",
+        "그때 내 나이는 16÷4×5＝20살이고, 지금 내 나이는 20−10＝10살입니다. 따라서 선생님의 현재 나이는 48−10＝38살입니다."
+      ],
+      "solution": "10년 후 선생님과 내 나이의 합은 48＋10×2＝68살입니다. 그때 언니와 동생의 합은 106−68＝38살입니다. 두 사람의 차는 6살이므로 동생은 (38−6)÷2＝16살입니다. 그때 내 나이는 16÷4×5＝20살이고, 지금 내 나이는 20−10＝10살입니다. 따라서 선생님의 현재 나이는 48−10＝38살입니다.",
+      "learningPoint": "미래의 나이 비와 현재의 나이를 구분해 역산하기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "verification": {
+        "primaryMethod": "future pair sums and ratio",
+        "parameters": {
+          "years": 10,
+          "presentSum": 48,
+          "futureTotal": 106,
+          "gap": 6,
+          "ratio": [
+            4,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q10-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q10-v4",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "pointBand": "2.7",
+      "text": "지금 선생님과 내 나이의 합은 48살이고, 언니는 내 동생보다 6살 많습니다. 11년 후 네 사람의 나이의 합은 108살이며, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>4</mn><mn>5</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "39살",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        39
+      ],
+      "acceptedAnswers": [
+        "39살"
+      ],
+      "solutionSteps": [
+        "11년 후 선생님과 내 나이의 합은 48＋11×2＝70살입니다.",
+        "그때 언니와 동생의 합은 108−70＝38살입니다. 두 사람의 차는 6살이므로 동생은 (38−6)÷2＝16살입니다.",
+        "그때 내 나이는 16÷4×5＝20살이고, 지금 내 나이는 20−11＝9살입니다. 따라서 선생님의 현재 나이는 48−9＝39살입니다."
+      ],
+      "solution": "11년 후 선생님과 내 나이의 합은 48＋11×2＝70살입니다. 그때 언니와 동생의 합은 108−70＝38살입니다. 두 사람의 차는 6살이므로 동생은 (38−6)÷2＝16살입니다. 그때 내 나이는 16÷4×5＝20살이고, 지금 내 나이는 20−11＝9살입니다. 따라서 선생님의 현재 나이는 48−9＝39살입니다.",
+      "learningPoint": "미래의 나이 비와 현재의 나이를 구분해 역산하기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "verification": {
+        "primaryMethod": "future pair sums and ratio",
+        "parameters": {
+          "years": 11,
+          "presentSum": 48,
+          "futureTotal": 108,
+          "gap": 6,
+          "ratio": [
+            4,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q10-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q10-v5",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "pointBand": "2.7",
+      "text": "지금 선생님과 내 나이의 합은 52살이고, 언니는 내 동생보다 6살 많습니다. 8년 후 네 사람의 나이의 합은 106살이며, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>4</mn><mn>5</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "40살",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        40
+      ],
+      "acceptedAnswers": [
+        "40살"
+      ],
+      "solutionSteps": [
+        "8년 후 선생님과 내 나이의 합은 52＋8×2＝68살입니다.",
+        "그때 언니와 동생의 합은 106−68＝38살입니다. 두 사람의 차는 6살이므로 동생은 (38−6)÷2＝16살입니다.",
+        "그때 내 나이는 16÷4×5＝20살이고, 지금 내 나이는 20−8＝12살입니다. 따라서 선생님의 현재 나이는 52−12＝40살입니다."
+      ],
+      "solution": "8년 후 선생님과 내 나이의 합은 52＋8×2＝68살입니다. 그때 언니와 동생의 합은 106−68＝38살입니다. 두 사람의 차는 6살이므로 동생은 (38−6)÷2＝16살입니다. 그때 내 나이는 16÷4×5＝20살이고, 지금 내 나이는 20−8＝12살입니다. 따라서 선생님의 현재 나이는 52−12＝40살입니다.",
+      "learningPoint": "미래의 나이 비와 현재의 나이를 구분해 역산하기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "verification": {
+        "primaryMethod": "future pair sums and ratio",
+        "parameters": {
+          "years": 8,
+          "presentSum": 52,
+          "futureTotal": 106,
+          "gap": 6,
+          "ratio": [
+            4,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q10-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q11-v1",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "pointBand": "2.7",
+      "text": "흰 공과 검은 공이 든 주머니에서 공을 한 개씩 꺼낸 뒤 다시 넣습니다. 말은 0번 칸에서 출발하여 흰 공이면 앞으로 7칸, 검은 공이면 뒤로 3칸 움직입니다. 17번 꺼낸 뒤 말이 39번 칸에 있다면 흰 공과 검은 공은 각각 몇 번 나왔습니까?",
+      "answer": "흰 공 9번, 검은 공 8번",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        9,
+        8
+      ],
+      "acceptedAnswers": [
+        "흰 공 9번, 검은 공 8번"
+      ],
+      "solutionSteps": [
+        "모두 흰 공이었다면 17×7＝119번 칸에 있게 됩니다.",
+        "흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다.",
+        "검은 공은 (119−39)÷10＝8번이고, 흰 공은 17−8＝9번입니다. 7×9−3×8＝39로 확인할 수 있습니다."
+      ],
+      "solution": "모두 흰 공이었다면 17×7＝119번 칸에 있게 됩니다. 흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다. 검은 공은 (119−39)÷10＝8번이고, 흰 공은 17−8＝9번입니다. 7×9−3×8＝39로 확인할 수 있습니다.",
+      "learningPoint": "모두 한 종류라고 가정한 값과 실제 값의 차 이용하기",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "all forward then replace with backward",
+        "parameters": {
+          "draws": 17,
+          "end": 39,
+          "forward": 7,
+          "backward": 3,
+          "start": 0
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q11-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q11-v2",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "pointBand": "2.7",
+      "text": "흰 공과 검은 공이 든 주머니에서 공을 한 개씩 꺼낸 뒤 다시 넣습니다. 말은 0번 칸에서 출발하여 흰 공이면 앞으로 7칸, 검은 공이면 뒤로 3칸 움직입니다. 19번 꺼낸 뒤 말이 53번 칸에 있다면 흰 공과 검은 공은 각각 몇 번 나왔습니까?",
+      "answer": "흰 공 11번, 검은 공 8번",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        11,
+        8
+      ],
+      "acceptedAnswers": [
+        "흰 공 11번, 검은 공 8번"
+      ],
+      "solutionSteps": [
+        "모두 흰 공이었다면 19×7＝133번 칸에 있게 됩니다.",
+        "흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다.",
+        "검은 공은 (133−53)÷10＝8번이고, 흰 공은 19−8＝11번입니다. 7×11−3×8＝53로 확인할 수 있습니다."
+      ],
+      "solution": "모두 흰 공이었다면 19×7＝133번 칸에 있게 됩니다. 흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다. 검은 공은 (133−53)÷10＝8번이고, 흰 공은 19−8＝11번입니다. 7×11−3×8＝53로 확인할 수 있습니다.",
+      "learningPoint": "모두 한 종류라고 가정한 값과 실제 값의 차 이용하기",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "all forward then replace with backward",
+        "parameters": {
+          "draws": 19,
+          "end": 53,
+          "forward": 7,
+          "backward": 3,
+          "start": 0
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q11-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q11-v3",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "pointBand": "2.7",
+      "text": "흰 공과 검은 공이 든 주머니에서 공을 한 개씩 꺼낸 뒤 다시 넣습니다. 말은 0번 칸에서 출발하여 흰 공이면 앞으로 7칸, 검은 공이면 뒤로 3칸 움직입니다. 20번 꺼낸 뒤 말이 60번 칸에 있다면 흰 공과 검은 공은 각각 몇 번 나왔습니까?",
+      "answer": "흰 공 12번, 검은 공 8번",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        12,
+        8
+      ],
+      "acceptedAnswers": [
+        "흰 공 12번, 검은 공 8번"
+      ],
+      "solutionSteps": [
+        "모두 흰 공이었다면 20×7＝140번 칸에 있게 됩니다.",
+        "흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다.",
+        "검은 공은 (140−60)÷10＝8번이고, 흰 공은 20−8＝12번입니다. 7×12−3×8＝60로 확인할 수 있습니다."
+      ],
+      "solution": "모두 흰 공이었다면 20×7＝140번 칸에 있게 됩니다. 흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다. 검은 공은 (140−60)÷10＝8번이고, 흰 공은 20−8＝12번입니다. 7×12−3×8＝60로 확인할 수 있습니다.",
+      "learningPoint": "모두 한 종류라고 가정한 값과 실제 값의 차 이용하기",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "all forward then replace with backward",
+        "parameters": {
+          "draws": 20,
+          "end": 60,
+          "forward": 7,
+          "backward": 3,
+          "start": 0
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q11-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q11-v4",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "pointBand": "2.7",
+      "text": "흰 공과 검은 공이 든 주머니에서 공을 한 개씩 꺼낸 뒤 다시 넣습니다. 말은 0번 칸에서 출발하여 흰 공이면 앞으로 7칸, 검은 공이면 뒤로 3칸 움직입니다. 21번 꺼낸 뒤 말이 67번 칸에 있다면 흰 공과 검은 공은 각각 몇 번 나왔습니까?",
+      "answer": "흰 공 13번, 검은 공 8번",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        13,
+        8
+      ],
+      "acceptedAnswers": [
+        "흰 공 13번, 검은 공 8번"
+      ],
+      "solutionSteps": [
+        "모두 흰 공이었다면 21×7＝147번 칸에 있게 됩니다.",
+        "흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다.",
+        "검은 공은 (147−67)÷10＝8번이고, 흰 공은 21−8＝13번입니다. 7×13−3×8＝67로 확인할 수 있습니다."
+      ],
+      "solution": "모두 흰 공이었다면 21×7＝147번 칸에 있게 됩니다. 흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다. 검은 공은 (147−67)÷10＝8번이고, 흰 공은 21−8＝13번입니다. 7×13−3×8＝67로 확인할 수 있습니다.",
+      "learningPoint": "모두 한 종류라고 가정한 값과 실제 값의 차 이용하기",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "all forward then replace with backward",
+        "parameters": {
+          "draws": 21,
+          "end": 67,
+          "forward": 7,
+          "backward": 3,
+          "start": 0
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q11-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q11-v5",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "pointBand": "2.7",
+      "text": "흰 공과 검은 공이 든 주머니에서 공을 한 개씩 꺼낸 뒤 다시 넣습니다. 말은 0번 칸에서 출발하여 흰 공이면 앞으로 7칸, 검은 공이면 뒤로 3칸 움직입니다. 22번 꺼낸 뒤 말이 74번 칸에 있다면 흰 공과 검은 공은 각각 몇 번 나왔습니까?",
+      "answer": "흰 공 14번, 검은 공 8번",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        14,
+        8
+      ],
+      "acceptedAnswers": [
+        "흰 공 14번, 검은 공 8번"
+      ],
+      "solutionSteps": [
+        "모두 흰 공이었다면 22×7＝154번 칸에 있게 됩니다.",
+        "흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다.",
+        "검은 공은 (154−74)÷10＝8번이고, 흰 공은 22−8＝14번입니다. 7×14−3×8＝74로 확인할 수 있습니다."
+      ],
+      "solution": "모두 흰 공이었다면 22×7＝154번 칸에 있게 됩니다. 흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다. 검은 공은 (154−74)÷10＝8번이고, 흰 공은 22−8＝14번입니다. 7×14−3×8＝74로 확인할 수 있습니다.",
+      "learningPoint": "모두 한 종류라고 가정한 값과 실제 값의 차 이용하기",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "all forward then replace with backward",
+        "parameters": {
+          "draws": 22,
+          "end": 74,
+          "forward": 7,
+          "backward": 3,
+          "start": 0
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q11-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q12-v1",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "pointBand": "2.7",
+      "text": "실제 시간으로 1시간에 4분씩 늦어지는 시계가 있습니다. 어느 날 오전에 이 시계를 정확하게 맞추었는데, 그날 오후 3시에 시계는 2시 34분을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?",
+      "answer": "오전 8시 30분",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        8,
+        30
+      ],
+      "acceptedAnswers": [
+        "오전 8시 30분"
+      ],
+      "solutionSteps": [
+        "오후 3시와 시계가 가리킨 시각의 차는 26분입니다.",
+        "4분 늦어지는 데 실제 1시간이 걸리므로 26분 늦어지는 데 26÷4시간, 곧 390분이 걸렸습니다.",
+        "오후 3시에서 390분을 거슬러 올라가면 오전 8시 30분입니다."
+      ],
+      "solution": "오후 3시와 시계가 가리킨 시각의 차는 26분입니다. 4분 늦어지는 데 실제 1시간이 걸리므로 26분 늦어지는 데 26÷4시간, 곧 390분이 걸렸습니다. 오후 3시에서 390분을 거슬러 올라가면 오전 8시 30분입니다.",
+      "learningPoint": "시계가 가리킨 경과 시간과 실제 경과 시간을 구분하기",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "verification": {
+        "primaryMethod": "clock lag divided by loss rate",
+        "parameters": {
+          "rate": 4,
+          "observed": 900,
+          "display": 874
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q12-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q12-v2",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "pointBand": "2.7",
+      "text": "실제 시간으로 1시간에 6분씩 늦어지는 시계가 있습니다. 어느 날 오전에 이 시계를 정확하게 맞추었는데, 그날 오후 3시에 시계는 2시 24분을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?",
+      "answer": "오전 9시 00분",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        9,
+        0
+      ],
+      "acceptedAnswers": [
+        "오전 9시 00분"
+      ],
+      "solutionSteps": [
+        "오후 3시와 시계가 가리킨 시각의 차는 36분입니다.",
+        "6분 늦어지는 데 실제 1시간이 걸리므로 36분 늦어지는 데 36÷6시간, 곧 360분이 걸렸습니다.",
+        "오후 3시에서 360분을 거슬러 올라가면 오전 9시 00분입니다."
+      ],
+      "solution": "오후 3시와 시계가 가리킨 시각의 차는 36분입니다. 6분 늦어지는 데 실제 1시간이 걸리므로 36분 늦어지는 데 36÷6시간, 곧 360분이 걸렸습니다. 오후 3시에서 360분을 거슬러 올라가면 오전 9시 00분입니다.",
+      "learningPoint": "시계가 가리킨 경과 시간과 실제 경과 시간을 구분하기",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "verification": {
+        "primaryMethod": "clock lag divided by loss rate",
+        "parameters": {
+          "rate": 6,
+          "observed": 900,
+          "display": 864
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q12-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q12-v3",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "pointBand": "2.7",
+      "text": "실제 시간으로 1시간에 8분씩 늦어지는 시계가 있습니다. 어느 날 오전에 이 시계를 정확하게 맞추었는데, 그날 오후 3시에 시계는 2시 20분을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?",
+      "answer": "오전 10시 00분",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        10,
+        0
+      ],
+      "acceptedAnswers": [
+        "오전 10시 00분"
+      ],
+      "solutionSteps": [
+        "오후 3시와 시계가 가리킨 시각의 차는 40분입니다.",
+        "8분 늦어지는 데 실제 1시간이 걸리므로 40분 늦어지는 데 40÷8시간, 곧 300분이 걸렸습니다.",
+        "오후 3시에서 300분을 거슬러 올라가면 오전 10시 00분입니다."
+      ],
+      "solution": "오후 3시와 시계가 가리킨 시각의 차는 40분입니다. 8분 늦어지는 데 실제 1시간이 걸리므로 40분 늦어지는 데 40÷8시간, 곧 300분이 걸렸습니다. 오후 3시에서 300분을 거슬러 올라가면 오전 10시 00분입니다.",
+      "learningPoint": "시계가 가리킨 경과 시간과 실제 경과 시간을 구분하기",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "verification": {
+        "primaryMethod": "clock lag divided by loss rate",
+        "parameters": {
+          "rate": 8,
+          "observed": 900,
+          "display": 860
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q12-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q12-v4",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "pointBand": "2.7",
+      "text": "실제 시간으로 1시간에 10분씩 늦어지는 시계가 있습니다. 어느 날 오전에 이 시계를 정확하게 맞추었는데, 그날 오후 3시에 시계는 2시 10분을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?",
+      "answer": "오전 10시 00분",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        10,
+        0
+      ],
+      "acceptedAnswers": [
+        "오전 10시 00분"
+      ],
+      "solutionSteps": [
+        "오후 3시와 시계가 가리킨 시각의 차는 50분입니다.",
+        "10분 늦어지는 데 실제 1시간이 걸리므로 50분 늦어지는 데 50÷10시간, 곧 300분이 걸렸습니다.",
+        "오후 3시에서 300분을 거슬러 올라가면 오전 10시 00분입니다."
+      ],
+      "solution": "오후 3시와 시계가 가리킨 시각의 차는 50분입니다. 10분 늦어지는 데 실제 1시간이 걸리므로 50분 늦어지는 데 50÷10시간, 곧 300분이 걸렸습니다. 오후 3시에서 300분을 거슬러 올라가면 오전 10시 00분입니다.",
+      "learningPoint": "시계가 가리킨 경과 시간과 실제 경과 시간을 구분하기",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "verification": {
+        "primaryMethod": "clock lag divided by loss rate",
+        "parameters": {
+          "rate": 10,
+          "observed": 900,
+          "display": 850
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q12-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q12-v5",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "pointBand": "2.7",
+      "text": "실제 시간으로 1시간에 4분씩 늦어지는 시계가 있습니다. 어느 날 오전에 이 시계를 정확하게 맞추었는데, 그날 오후 3시에 시계는 2시 42분을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?",
+      "answer": "오전 10시 30분",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        10,
+        30
+      ],
+      "acceptedAnswers": [
+        "오전 10시 30분"
+      ],
+      "solutionSteps": [
+        "오후 3시와 시계가 가리킨 시각의 차는 18분입니다.",
+        "4분 늦어지는 데 실제 1시간이 걸리므로 18분 늦어지는 데 18÷4시간, 곧 270분이 걸렸습니다.",
+        "오후 3시에서 270분을 거슬러 올라가면 오전 10시 30분입니다."
+      ],
+      "solution": "오후 3시와 시계가 가리킨 시각의 차는 18분입니다. 4분 늦어지는 데 실제 1시간이 걸리므로 18분 늦어지는 데 18÷4시간, 곧 270분이 걸렸습니다. 오후 3시에서 270분을 거슬러 올라가면 오전 10시 30분입니다.",
+      "learningPoint": "시계가 가리킨 경과 시간과 실제 경과 시간을 구분하기",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "verification": {
+        "primaryMethod": "clock lag divided by loss rate",
+        "parameters": {
+          "rate": 4,
+          "observed": 900,
+          "display": 882
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "low",
+      "sourcePointBand": "2.7",
+      "preservedApprovedId": "applied1-q12-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "id": "applied1-q10-middle-v1",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "지금 선생님과 내 나이의 합은 44살입니다. 언니는 내 동생보다 5살 많고, 선생님은 언니보다 24살 많습니다. 몇 년이 지난 뒤 네 사람의 나이의 합이 85살이 되었을 때, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>4</mn><mn>5</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "35",
+      "answerParts": [
+        35
+      ],
+      "answerLabels": [
+        "선생님의 현재 나이"
+      ],
+      "acceptedAnswers": [
+        "35"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "지금 선생님은 동생보다 24＋5＝29살 많습니다. 그러므로 지금 나와 동생의 나이의 합은 44−29＝15살입니다.",
+        "동생의 현재 나이를 □살, 지난 연수를 △년이라 하면 미래 전체 합에서 44살과 언니/동생 차 5살을 빼어 2×□＋4×△＝36를 얻습니다. 따라서 □＋2×△＝18입니다.",
+        "미래 나와 동생의 합은 15＋2×△살이고, 미래 동생은 □＋△＝18−△살입니다. 미래 비에 따라 9×(18−△)＝4×(15＋2×△)입니다.",
+        "정리하면 17×△＝102여서 △＝6년, 동생은 18−2×6＝6살입니다. 따라서 선생님은 6＋29＝35살입니다.",
+        "현재 네 나이는 선생님35·나9·언니11·동생6살입니다. 6년 뒤 합85살과 동생/나의 비 12/15를 모두 만족합니다."
+      ],
+      "solution": "지금 선생님은 동생보다 24＋5＝29살 많습니다. 그러므로 지금 나와 동생의 나이의 합은 44−29＝15살입니다. 동생의 현재 나이를 □살, 지난 연수를 △년이라 하면 미래 전체 합에서 44살과 언니/동생 차 5살을 빼어 2×□＋4×△＝36를 얻습니다. 따라서 □＋2×△＝18입니다. 미래 나와 동생의 합은 15＋2×△살이고, 미래 동생은 □＋△＝18−△살입니다. 미래 비에 따라 9×(18−△)＝4×(15＋2×△)입니다. 정리하면 17×△＝102여서 △＝6년, 동생은 18−2×6＝6살입니다. 따라서 선생님은 6＋29＝35살입니다. 현재 네 나이는 선생님35·나9·언니11·동생6살입니다. 6년 뒤 합85살과 동생/나의 비 12/15를 모두 만족합니다.",
+      "learningPoint": "현재 나이 차를 연결한 뒤 미래까지 지난 연수와 나이를 함께 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "미래까지 지난 연수도 미지수로 두어 현재 합·나이 차·미래 비를 연결",
+          "conditionTracking": "현재 합·두 나이 차·미래 전체 합·미래 나이 비",
+          "caseSplitting": "현재와 미래 시점을 분리하고 자연수 나이와 양의 경과 연수 확인",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "two age sums and future ratio with unknown elapsed years",
+        "parameters": {
+          "presentSum": 44,
+          "futureTotal": 85,
+          "gap": 5,
+          "ratio": [
+            4,
+            5
+          ],
+          "teacherSisterDifference": 24
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "id": "applied1-q10-middle-v2",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "지금 선생님과 내 나이의 합은 48살입니다. 언니는 내 동생보다 6살 많고, 선생님은 언니보다 25살 많습니다. 몇 년이 지난 뒤 네 사람의 나이의 합이 88살이 되었을 때, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>4</mn><mn>5</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "38",
+      "answerParts": [
+        38
+      ],
+      "answerLabels": [
+        "선생님의 현재 나이"
+      ],
+      "acceptedAnswers": [
+        "38"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "지금 선생님은 동생보다 25＋6＝31살 많습니다. 그러므로 지금 나와 동생의 나이의 합은 48−31＝17살입니다.",
+        "동생의 현재 나이를 □살, 지난 연수를 △년이라 하면 미래 전체 합에서 48살과 언니/동생 차 6살을 빼어 2×□＋4×△＝34를 얻습니다. 따라서 □＋2×△＝17입니다.",
+        "미래 나와 동생의 합은 17＋2×△살이고, 미래 동생은 □＋△＝17−△살입니다. 미래 비에 따라 9×(17−△)＝4×(17＋2×△)입니다.",
+        "정리하면 17×△＝85여서 △＝5년, 동생은 17−2×5＝7살입니다. 따라서 선생님은 7＋31＝38살입니다.",
+        "현재 네 나이는 선생님38·나10·언니13·동생7살입니다. 5년 뒤 합88살과 동생/나의 비 12/15를 모두 만족합니다."
+      ],
+      "solution": "지금 선생님은 동생보다 25＋6＝31살 많습니다. 그러므로 지금 나와 동생의 나이의 합은 48−31＝17살입니다. 동생의 현재 나이를 □살, 지난 연수를 △년이라 하면 미래 전체 합에서 48살과 언니/동생 차 6살을 빼어 2×□＋4×△＝34를 얻습니다. 따라서 □＋2×△＝17입니다. 미래 나와 동생의 합은 17＋2×△살이고, 미래 동생은 □＋△＝17−△살입니다. 미래 비에 따라 9×(17−△)＝4×(17＋2×△)입니다. 정리하면 17×△＝85여서 △＝5년, 동생은 17−2×5＝7살입니다. 따라서 선생님은 7＋31＝38살입니다. 현재 네 나이는 선생님38·나10·언니13·동생7살입니다. 5년 뒤 합88살과 동생/나의 비 12/15를 모두 만족합니다.",
+      "learningPoint": "현재 나이 차를 연결한 뒤 미래까지 지난 연수와 나이를 함께 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "미래까지 지난 연수도 미지수로 두어 현재 합·나이 차·미래 비를 연결",
+          "conditionTracking": "현재 합·두 나이 차·미래 전체 합·미래 나이 비",
+          "caseSplitting": "현재와 미래 시점을 분리하고 자연수 나이와 양의 경과 연수 확인",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "two age sums and future ratio with unknown elapsed years",
+        "parameters": {
+          "presentSum": 48,
+          "futureTotal": 88,
+          "gap": 6,
+          "ratio": [
+            4,
+            5
+          ],
+          "teacherSisterDifference": 25
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "id": "applied1-q10-middle-v3",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "지금 선생님과 내 나이의 합은 51살입니다. 언니는 내 동생보다 6살 많고, 선생님은 언니보다 26살 많습니다. 몇 년이 지난 뒤 네 사람의 나이의 합이 101살이 되었을 때, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>5</mn><mn>6</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "40",
+      "answerParts": [
+        40
+      ],
+      "answerLabels": [
+        "선생님의 현재 나이"
+      ],
+      "acceptedAnswers": [
+        "40"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "지금 선생님은 동생보다 26＋6＝32살 많습니다. 그러므로 지금 나와 동생의 나이의 합은 51−32＝19살입니다.",
+        "동생의 현재 나이를 □살, 지난 연수를 △년이라 하면 미래 전체 합에서 51살과 언니/동생 차 6살을 빼어 2×□＋4×△＝44를 얻습니다. 따라서 □＋2×△＝22입니다.",
+        "미래 나와 동생의 합은 19＋2×△살이고, 미래 동생은 □＋△＝22−△살입니다. 미래 비에 따라 11×(22−△)＝5×(19＋2×△)입니다.",
+        "정리하면 21×△＝147여서 △＝7년, 동생은 22−2×7＝8살입니다. 따라서 선생님은 8＋32＝40살입니다.",
+        "현재 네 나이는 선생님40·나11·언니14·동생8살입니다. 7년 뒤 합101살과 동생/나의 비 15/18를 모두 만족합니다."
+      ],
+      "solution": "지금 선생님은 동생보다 26＋6＝32살 많습니다. 그러므로 지금 나와 동생의 나이의 합은 51−32＝19살입니다. 동생의 현재 나이를 □살, 지난 연수를 △년이라 하면 미래 전체 합에서 51살과 언니/동생 차 6살을 빼어 2×□＋4×△＝44를 얻습니다. 따라서 □＋2×△＝22입니다. 미래 나와 동생의 합은 19＋2×△살이고, 미래 동생은 □＋△＝22−△살입니다. 미래 비에 따라 11×(22−△)＝5×(19＋2×△)입니다. 정리하면 21×△＝147여서 △＝7년, 동생은 22−2×7＝8살입니다. 따라서 선생님은 8＋32＝40살입니다. 현재 네 나이는 선생님40·나11·언니14·동생8살입니다. 7년 뒤 합101살과 동생/나의 비 15/18를 모두 만족합니다.",
+      "learningPoint": "현재 나이 차를 연결한 뒤 미래까지 지난 연수와 나이를 함께 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "미래까지 지난 연수도 미지수로 두어 현재 합·나이 차·미래 비를 연결",
+          "conditionTracking": "현재 합·두 나이 차·미래 전체 합·미래 나이 비",
+          "caseSplitting": "현재와 미래 시점을 분리하고 자연수 나이와 양의 경과 연수 확인",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "two age sums and future ratio with unknown elapsed years",
+        "parameters": {
+          "presentSum": 51,
+          "futureTotal": 101,
+          "gap": 6,
+          "ratio": [
+            5,
+            6
+          ],
+          "teacherSisterDifference": 26
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "id": "applied1-q10-middle-v4",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "지금 선생님과 내 나이의 합은 54살입니다. 언니는 내 동생보다 7살 많고, 선생님은 언니보다 26살 많습니다. 몇 년이 지난 뒤 네 사람의 나이의 합이 103살이 되었을 때, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>5</mn><mn>6</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "42",
+      "answerParts": [
+        42
+      ],
+      "answerLabels": [
+        "선생님의 현재 나이"
+      ],
+      "acceptedAnswers": [
+        "42"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "지금 선생님은 동생보다 26＋7＝33살 많습니다. 그러므로 지금 나와 동생의 나이의 합은 54−33＝21살입니다.",
+        "동생의 현재 나이를 □살, 지난 연수를 △년이라 하면 미래 전체 합에서 54살과 언니/동생 차 7살을 빼어 2×□＋4×△＝42를 얻습니다. 따라서 □＋2×△＝21입니다.",
+        "미래 나와 동생의 합은 21＋2×△살이고, 미래 동생은 □＋△＝21−△살입니다. 미래 비에 따라 11×(21−△)＝5×(21＋2×△)입니다.",
+        "정리하면 21×△＝126여서 △＝6년, 동생은 21−2×6＝9살입니다. 따라서 선생님은 9＋33＝42살입니다.",
+        "현재 네 나이는 선생님42·나12·언니16·동생9살입니다. 6년 뒤 합103살과 동생/나의 비 15/18를 모두 만족합니다."
+      ],
+      "solution": "지금 선생님은 동생보다 26＋7＝33살 많습니다. 그러므로 지금 나와 동생의 나이의 합은 54−33＝21살입니다. 동생의 현재 나이를 □살, 지난 연수를 △년이라 하면 미래 전체 합에서 54살과 언니/동생 차 7살을 빼어 2×□＋4×△＝42를 얻습니다. 따라서 □＋2×△＝21입니다. 미래 나와 동생의 합은 21＋2×△살이고, 미래 동생은 □＋△＝21−△살입니다. 미래 비에 따라 11×(21−△)＝5×(21＋2×△)입니다. 정리하면 21×△＝126여서 △＝6년, 동생은 21−2×6＝9살입니다. 따라서 선생님은 9＋33＝42살입니다. 현재 네 나이는 선생님42·나12·언니16·동생9살입니다. 6년 뒤 합103살과 동생/나의 비 15/18를 모두 만족합니다.",
+      "learningPoint": "현재 나이 차를 연결한 뒤 미래까지 지난 연수와 나이를 함께 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "미래까지 지난 연수도 미지수로 두어 현재 합·나이 차·미래 비를 연결",
+          "conditionTracking": "현재 합·두 나이 차·미래 전체 합·미래 나이 비",
+          "caseSplitting": "현재와 미래 시점을 분리하고 자연수 나이와 양의 경과 연수 확인",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "two age sums and future ratio with unknown elapsed years",
+        "parameters": {
+          "presentSum": 54,
+          "futureTotal": 103,
+          "gap": 7,
+          "ratio": [
+            5,
+            6
+          ],
+          "teacherSisterDifference": 26
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "id": "applied1-q10-middle-v5",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "지금 선생님과 내 나이의 합은 55살입니다. 언니는 내 동생보다 7살 많고, 선생님은 언니보다 32살 많습니다. 몇 년이 지난 뒤 네 사람의 나이의 합이 106살이 되었을 때, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>7</mn><mn>9</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "45",
+      "answerParts": [
+        45
+      ],
+      "answerLabels": [
+        "선생님의 현재 나이"
+      ],
+      "acceptedAnswers": [
+        "45"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "지금 선생님은 동생보다 32＋7＝39살 많습니다. 그러므로 지금 나와 동생의 나이의 합은 55−39＝16살입니다.",
+        "동생의 현재 나이를 □살, 지난 연수를 △년이라 하면 미래 전체 합에서 55살과 언니/동생 차 7살을 빼어 2×□＋4×△＝44를 얻습니다. 따라서 □＋2×△＝22입니다.",
+        "미래 나와 동생의 합은 16＋2×△살이고, 미래 동생은 □＋△＝22−△살입니다. 미래 비에 따라 16×(22−△)＝7×(16＋2×△)입니다.",
+        "정리하면 30×△＝240여서 △＝8년, 동생은 22−2×8＝6살입니다. 따라서 선생님은 6＋39＝45살입니다.",
+        "현재 네 나이는 선생님45·나10·언니13·동생6살입니다. 8년 뒤 합106살과 동생/나의 비 14/18를 모두 만족합니다."
+      ],
+      "solution": "지금 선생님은 동생보다 32＋7＝39살 많습니다. 그러므로 지금 나와 동생의 나이의 합은 55−39＝16살입니다. 동생의 현재 나이를 □살, 지난 연수를 △년이라 하면 미래 전체 합에서 55살과 언니/동생 차 7살을 빼어 2×□＋4×△＝44를 얻습니다. 따라서 □＋2×△＝22입니다. 미래 나와 동생의 합은 16＋2×△살이고, 미래 동생은 □＋△＝22−△살입니다. 미래 비에 따라 16×(22−△)＝7×(16＋2×△)입니다. 정리하면 30×△＝240여서 △＝8년, 동생은 22−2×8＝6살입니다. 따라서 선생님은 6＋39＝45살입니다. 현재 네 나이는 선생님45·나10·언니13·동생6살입니다. 8년 뒤 합106살과 동생/나의 비 14/18를 모두 만족합니다.",
+      "learningPoint": "현재 나이 차를 연결한 뒤 미래까지 지난 연수와 나이를 함께 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "미래까지 지난 연수도 미지수로 두어 현재 합·나이 차·미래 비를 연결",
+          "conditionTracking": "현재 합·두 나이 차·미래 전체 합·미래 나이 비",
+          "caseSplitting": "현재와 미래 시점을 분리하고 자연수 나이와 양의 경과 연수 확인",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "two age sums and future ratio with unknown elapsed years",
+        "parameters": {
+          "presentSum": 55,
+          "futureTotal": 106,
+          "gap": 7,
+          "ratio": [
+            7,
+            9
+          ],
+          "teacherSisterDifference": 32
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "id": "applied1-q10-high-v1",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "지금 선생님과 내 나이의 합은 42살이고, 선생님의 나이는 언니 나이의 3배입니다. 언니는 내 동생보다 5살 많습니다. 몇 년이 지난 뒤 네 사람의 나이의 합이 87살이 되었을 때, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>13</mn><mn>16</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "33",
+      "answerParts": [
+        33
+      ],
+      "answerLabels": [
+        "선생님의 현재 나이"
+      ],
+      "acceptedAnswers": [
+        "33"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "동생의 현재 나이를 □살, 지난 연수를 △년이라 합니다. 언니는 □＋5살, 선생님은 3×□＋15살, 나는 27−3×□살입니다.",
+        "미래 전체 합은 현재 선생님과 나의 합42에 언니/동생의 합2×□＋5, 네 사람이 늘어난 나이4×△를 더한 값입니다. 따라서 □＋2×△＝(87−42−5)÷2＝20입니다.",
+        "미래 나이 비에 따라 16×(□＋△)＝13×(27−3×□＋△)입니다. 정리하면 55×□＋3×△＝351입니다.",
+        "□＝20−2×△를 넣으면 107×△＝749여서 △＝7년, □＝6살입니다. 선생님의 현재 나이는 3×(6＋5)＝33살입니다.",
+        "현재 네 나이 33·9·11·6살과 7년 뒤 나이를 대조하면 주어진 두 합과 현재 배수, 미래 비가 모두 맞습니다. 현재의 배수 관계를 미래 나이에 그대로 적용하지 않습니다."
+      ],
+      "solution": "동생의 현재 나이를 □살, 지난 연수를 △년이라 합니다. 언니는 □＋5살, 선생님은 3×□＋15살, 나는 27−3×□살입니다. 미래 전체 합은 현재 선생님과 나의 합42에 언니/동생의 합2×□＋5, 네 사람이 늘어난 나이4×△를 더한 값입니다. 따라서 □＋2×△＝(87−42−5)÷2＝20입니다. 미래 나이 비에 따라 16×(□＋△)＝13×(27−3×□＋△)입니다. 정리하면 55×□＋3×△＝351입니다. □＝20−2×△를 넣으면 107×△＝749여서 △＝7년, □＝6살입니다. 선생님의 현재 나이는 3×(6＋5)＝33살입니다. 현재 네 나이 33·9·11·6살과 7년 뒤 나이를 대조하면 주어진 두 합과 현재 배수, 미래 비가 모두 맞습니다. 현재의 배수 관계를 미래 나이에 그대로 적용하지 않습니다.",
+      "learningPoint": "현재의 배수 관계와 미래의 나이 비를 구분하여 두 미지수를 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "선생님과 언니의 현재 배수 관계를 미래 나이 비와 함께 역산",
+          "conditionTracking": "현재 배수·현재 합·언니/동생 차·미래 전체 합과 비",
+          "caseSplitting": "현재 배수는 미래에도 같다고 쓰지 않고 각 시점의 나이를 따로 계산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "current multiplicative age relation and future ratio with unknown years",
+        "parameters": {
+          "presentSum": 42,
+          "futureTotal": 87,
+          "gap": 5,
+          "ratio": [
+            13,
+            16
+          ],
+          "teacherSisterMultiple": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "id": "applied1-q10-high-v2",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "지금 선생님과 내 나이의 합은 46살이고, 선생님의 나이는 언니 나이의 3배입니다. 언니는 내 동생보다 4살 많습니다. 몇 년이 지난 뒤 네 사람의 나이의 합이 86살이 되었을 때, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>13</mn><mn>15</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "36",
+      "answerParts": [
+        36
+      ],
+      "answerLabels": [
+        "선생님의 현재 나이"
+      ],
+      "acceptedAnswers": [
+        "36"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "동생의 현재 나이를 □살, 지난 연수를 △년이라 합니다. 언니는 □＋4살, 선생님은 3×□＋12살, 나는 34−3×□살입니다.",
+        "미래 전체 합은 현재 선생님과 나의 합46에 언니/동생의 합2×□＋4, 네 사람이 늘어난 나이4×△를 더한 값입니다. 따라서 □＋2×△＝(86−46−4)÷2＝18입니다.",
+        "미래 나이 비에 따라 15×(□＋△)＝13×(34−3×□＋△)입니다. 정리하면 54×□＋2×△＝442입니다.",
+        "□＝18−2×△를 넣으면 106×△＝530여서 △＝5년, □＝8살입니다. 선생님의 현재 나이는 3×(8＋4)＝36살입니다.",
+        "현재 네 나이 36·10·12·8살과 5년 뒤 나이를 대조하면 주어진 두 합과 현재 배수, 미래 비가 모두 맞습니다. 현재의 배수 관계를 미래 나이에 그대로 적용하지 않습니다."
+      ],
+      "solution": "동생의 현재 나이를 □살, 지난 연수를 △년이라 합니다. 언니는 □＋4살, 선생님은 3×□＋12살, 나는 34−3×□살입니다. 미래 전체 합은 현재 선생님과 나의 합46에 언니/동생의 합2×□＋4, 네 사람이 늘어난 나이4×△를 더한 값입니다. 따라서 □＋2×△＝(86−46−4)÷2＝18입니다. 미래 나이 비에 따라 15×(□＋△)＝13×(34−3×□＋△)입니다. 정리하면 54×□＋2×△＝442입니다. □＝18−2×△를 넣으면 106×△＝530여서 △＝5년, □＝8살입니다. 선생님의 현재 나이는 3×(8＋4)＝36살입니다. 현재 네 나이 36·10·12·8살과 5년 뒤 나이를 대조하면 주어진 두 합과 현재 배수, 미래 비가 모두 맞습니다. 현재의 배수 관계를 미래 나이에 그대로 적용하지 않습니다.",
+      "learningPoint": "현재의 배수 관계와 미래의 나이 비를 구분하여 두 미지수를 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "선생님과 언니의 현재 배수 관계를 미래 나이 비와 함께 역산",
+          "conditionTracking": "현재 배수·현재 합·언니/동생 차·미래 전체 합과 비",
+          "caseSplitting": "현재 배수는 미래에도 같다고 쓰지 않고 각 시점의 나이를 따로 계산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "current multiplicative age relation and future ratio with unknown years",
+        "parameters": {
+          "presentSum": 46,
+          "futureTotal": 86,
+          "gap": 4,
+          "ratio": [
+            13,
+            15
+          ],
+          "teacherSisterMultiple": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "id": "applied1-q10-high-v3",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "지금 선생님과 내 나이의 합은 50살이고, 선생님의 나이는 언니 나이의 3배입니다. 언니는 내 동생보다 5살 많습니다. 몇 년이 지난 뒤 네 사람의 나이의 합이 95살이 되었을 때, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>14</mn><mn>17</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "39",
+      "answerParts": [
+        39
+      ],
+      "answerLabels": [
+        "선생님의 현재 나이"
+      ],
+      "acceptedAnswers": [
+        "39"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "동생의 현재 나이를 □살, 지난 연수를 △년이라 합니다. 언니는 □＋5살, 선생님은 3×□＋15살, 나는 35−3×□살입니다.",
+        "미래 전체 합은 현재 선생님과 나의 합50에 언니/동생의 합2×□＋5, 네 사람이 늘어난 나이4×△를 더한 값입니다. 따라서 □＋2×△＝(95−50−5)÷2＝20입니다.",
+        "미래 나이 비에 따라 17×(□＋△)＝14×(35−3×□＋△)입니다. 정리하면 59×□＋3×△＝490입니다.",
+        "□＝20−2×△를 넣으면 115×△＝690여서 △＝6년, □＝8살입니다. 선생님의 현재 나이는 3×(8＋5)＝39살입니다.",
+        "현재 네 나이 39·11·13·8살과 6년 뒤 나이를 대조하면 주어진 두 합과 현재 배수, 미래 비가 모두 맞습니다. 현재의 배수 관계를 미래 나이에 그대로 적용하지 않습니다."
+      ],
+      "solution": "동생의 현재 나이를 □살, 지난 연수를 △년이라 합니다. 언니는 □＋5살, 선생님은 3×□＋15살, 나는 35−3×□살입니다. 미래 전체 합은 현재 선생님과 나의 합50에 언니/동생의 합2×□＋5, 네 사람이 늘어난 나이4×△를 더한 값입니다. 따라서 □＋2×△＝(95−50−5)÷2＝20입니다. 미래 나이 비에 따라 17×(□＋△)＝14×(35−3×□＋△)입니다. 정리하면 59×□＋3×△＝490입니다. □＝20−2×△를 넣으면 115×△＝690여서 △＝6년, □＝8살입니다. 선생님의 현재 나이는 3×(8＋5)＝39살입니다. 현재 네 나이 39·11·13·8살과 6년 뒤 나이를 대조하면 주어진 두 합과 현재 배수, 미래 비가 모두 맞습니다. 현재의 배수 관계를 미래 나이에 그대로 적용하지 않습니다.",
+      "learningPoint": "현재의 배수 관계와 미래의 나이 비를 구분하여 두 미지수를 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "선생님과 언니의 현재 배수 관계를 미래 나이 비와 함께 역산",
+          "conditionTracking": "현재 배수·현재 합·언니/동생 차·미래 전체 합과 비",
+          "caseSplitting": "현재 배수는 미래에도 같다고 쓰지 않고 각 시점의 나이를 따로 계산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "current multiplicative age relation and future ratio with unknown years",
+        "parameters": {
+          "presentSum": 50,
+          "futureTotal": 95,
+          "gap": 5,
+          "ratio": [
+            14,
+            17
+          ],
+          "teacherSisterMultiple": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "id": "applied1-q10-high-v4",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "지금 선생님과 내 나이의 합은 53살이고, 선생님의 나이는 언니 나이의 4배입니다. 언니는 내 동생보다 4살 많습니다. 몇 년이 지난 뒤 네 사람의 나이의 합이 95살이 되었을 때, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>13</mn><mn>15</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "44",
+      "answerParts": [
+        44
+      ],
+      "answerLabels": [
+        "선생님의 현재 나이"
+      ],
+      "acceptedAnswers": [
+        "44"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "동생의 현재 나이를 □살, 지난 연수를 △년이라 합니다. 언니는 □＋4살, 선생님은 4×□＋16살, 나는 37−4×□살입니다.",
+        "미래 전체 합은 현재 선생님과 나의 합53에 언니/동생의 합2×□＋4, 네 사람이 늘어난 나이4×△를 더한 값입니다. 따라서 □＋2×△＝(95−53−4)÷2＝19입니다.",
+        "미래 나이 비에 따라 15×(□＋△)＝13×(37−4×□＋△)입니다. 정리하면 67×□＋2×△＝481입니다.",
+        "□＝19−2×△를 넣으면 132×△＝792여서 △＝6년, □＝7살입니다. 선생님의 현재 나이는 4×(7＋4)＝44살입니다.",
+        "현재 네 나이 44·9·11·7살과 6년 뒤 나이를 대조하면 주어진 두 합과 현재 배수, 미래 비가 모두 맞습니다. 현재의 배수 관계를 미래 나이에 그대로 적용하지 않습니다."
+      ],
+      "solution": "동생의 현재 나이를 □살, 지난 연수를 △년이라 합니다. 언니는 □＋4살, 선생님은 4×□＋16살, 나는 37−4×□살입니다. 미래 전체 합은 현재 선생님과 나의 합53에 언니/동생의 합2×□＋4, 네 사람이 늘어난 나이4×△를 더한 값입니다. 따라서 □＋2×△＝(95−53−4)÷2＝19입니다. 미래 나이 비에 따라 15×(□＋△)＝13×(37−4×□＋△)입니다. 정리하면 67×□＋2×△＝481입니다. □＝19−2×△를 넣으면 132×△＝792여서 △＝6년, □＝7살입니다. 선생님의 현재 나이는 4×(7＋4)＝44살입니다. 현재 네 나이 44·9·11·7살과 6년 뒤 나이를 대조하면 주어진 두 합과 현재 배수, 미래 비가 모두 맞습니다. 현재의 배수 관계를 미래 나이에 그대로 적용하지 않습니다.",
+      "learningPoint": "현재의 배수 관계와 미래의 나이 비를 구분하여 두 미지수를 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "선생님과 언니의 현재 배수 관계를 미래 나이 비와 함께 역산",
+          "conditionTracking": "현재 배수·현재 합·언니/동생 차·미래 전체 합과 비",
+          "caseSplitting": "현재 배수는 미래에도 같다고 쓰지 않고 각 시점의 나이를 따로 계산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "current multiplicative age relation and future ratio with unknown years",
+        "parameters": {
+          "presentSum": 53,
+          "futureTotal": 95,
+          "gap": 4,
+          "ratio": [
+            13,
+            15
+          ],
+          "teacherSisterMultiple": 4
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "나이와 관계식",
+      "detailType": "미래 나이의 합과 비로 현재 나이 찾기",
+      "learningLocation": "활용 1회 · 원문 10번 · 나이와 관계식",
+      "id": "applied1-q10-high-v5",
+      "genId": "applied1-q10",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 10,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "지금 선생님과 내 나이의 합은 43살이고, 선생님의 나이는 언니 나이의 2배입니다. 언니는 내 동생보다 7살 많습니다. 몇 년이 지난 뒤 네 사람의 나이의 합이 100살이 되었을 때, 그때 동생의 나이는 그때 내 나이의 <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>17</mn><mn>19</mn></mfrac></math>입니다. 지금 선생님은 몇 살입니까?",
+      "answer": "32",
+      "answerParts": [
+        32
+      ],
+      "answerLabels": [
+        "선생님의 현재 나이"
+      ],
+      "acceptedAnswers": [
+        "32"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "동생의 현재 나이를 □살, 지난 연수를 △년이라 합니다. 언니는 □＋7살, 선생님은 2×□＋14살, 나는 29−2×□살입니다.",
+        "미래 전체 합은 현재 선생님과 나의 합43에 언니/동생의 합2×□＋7, 네 사람이 늘어난 나이4×△를 더한 값입니다. 따라서 □＋2×△＝(100−43−7)÷2＝25입니다.",
+        "미래 나이 비에 따라 19×(□＋△)＝17×(29−2×□＋△)입니다. 정리하면 53×□＋2×△＝493입니다.",
+        "□＝25−2×△를 넣으면 104×△＝832여서 △＝8년, □＝9살입니다. 선생님의 현재 나이는 2×(9＋7)＝32살입니다.",
+        "현재 네 나이 32·11·16·9살과 8년 뒤 나이를 대조하면 주어진 두 합과 현재 배수, 미래 비가 모두 맞습니다. 현재의 배수 관계를 미래 나이에 그대로 적용하지 않습니다."
+      ],
+      "solution": "동생의 현재 나이를 □살, 지난 연수를 △년이라 합니다. 언니는 □＋7살, 선생님은 2×□＋14살, 나는 29−2×□살입니다. 미래 전체 합은 현재 선생님과 나의 합43에 언니/동생의 합2×□＋7, 네 사람이 늘어난 나이4×△를 더한 값입니다. 따라서 □＋2×△＝(100−43−7)÷2＝25입니다. 미래 나이 비에 따라 19×(□＋△)＝17×(29−2×□＋△)입니다. 정리하면 53×□＋2×△＝493입니다. □＝25−2×△를 넣으면 104×△＝832여서 △＝8년, □＝9살입니다. 선생님의 현재 나이는 2×(9＋7)＝32살입니다. 현재 네 나이 32·11·16·9살과 8년 뒤 나이를 대조하면 주어진 두 합과 현재 배수, 미래 비가 모두 맞습니다. 현재의 배수 관계를 미래 나이에 그대로 적용하지 않습니다.",
+      "learningPoint": "현재의 배수 관계와 미래의 나이 비를 구분하여 두 미지수를 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "선생님과 언니의 현재 배수 관계를 미래 나이 비와 함께 역산",
+          "conditionTracking": "현재 배수·현재 합·언니/동생 차·미래 전체 합과 비",
+          "caseSplitting": "현재 배수는 미래에도 같다고 쓰지 않고 각 시점의 나이를 따로 계산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "current multiplicative age relation and future ratio with unknown years",
+        "parameters": {
+          "presentSum": 43,
+          "futureTotal": 100,
+          "gap": 7,
+          "ratio": [
+            17,
+            19
+          ],
+          "teacherSisterMultiple": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "id": "applied1-q11-middle-v1",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "앞뒤로 충분히 이어진 말판의 0번 칸에 말을 놓았습니다. 주머니에서 공을 한 개씩 꺼내어 흰 공이면 앞으로 7칸, 검은 공이면 뒤로 3칸 움직인 뒤 공을 다시 넣습니다. 흰 공이 검은 공보다 4번 더 나왔고 말이 56번 칸에 도착했다면, 흰 공과 검은 공은 각각 몇 번 나왔습니까?",
+      "answer": "11, 7",
+      "answerParts": [
+        11,
+        7
+      ],
+      "answerLabels": [
+        "흰 공 횟수",
+        "검은 공 횟수"
+      ],
+      "acceptedAnswers": [
+        "11, 7"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "흰 공과 검은 공을 한 번씩 짝지으면 앞으로 7−3＝4칸 움직입니다.",
+        "짝을 이루지 않는 흰 공 4번은 앞으로 7×4＝28칸 움직입니다. 따라서 짝지은 공들로 움직인 거리는 56−28＝28칸입니다.",
+        "흰 공과 검은 공의 짝은 28÷4＝7쌍이므로 검은 공은 7번, 흰 공은 7＋4＝11번입니다.",
+        "7×11−3×7＝56이며, 흰 공과 검은 공 횟수의 차도 4번으로 맞습니다."
+      ],
+      "solution": "흰 공과 검은 공을 한 번씩 짝지으면 앞으로 7−3＝4칸 움직입니다. 짝을 이루지 않는 흰 공 4번은 앞으로 7×4＝28칸 움직입니다. 따라서 짝지은 공들로 움직인 거리는 56−28＝28칸입니다. 흰 공과 검은 공의 짝은 28÷4＝7쌍이므로 검은 공은 7번, 흰 공은 7＋4＝11번입니다. 7×11−3×7＝56이며, 흰 공과 검은 공 횟수의 차도 4번으로 맞습니다.",
+      "learningPoint": "동수의 두 색을 짝지은 이동과 더 나온 흰 공의 이동을 나누어 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "전체 뽑기 횟수 대신 두 색 횟수 차와 최종 이동으로 각각의 횟수를 역산",
+          "conditionTracking": "출발0·교체 추출·두 이동량·최종 위치·색 횟수 차",
+          "caseSplitting": "동수의 흰/검은 공을 짝지은 이동과 초과 횟수를 구분",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "paired displacements plus excess forward events",
+        "parameters": {
+          "forward": 7,
+          "backward": 3,
+          "end": 56,
+          "whiteExcess": 4
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "id": "applied1-q11-middle-v2",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "앞뒤로 충분히 이어진 말판의 0번 칸에 말을 놓았습니다. 주머니에서 공을 한 개씩 꺼내어 흰 공이면 앞으로 8칸, 검은 공이면 뒤로 3칸 움직인 뒤 공을 다시 넣습니다. 흰 공이 검은 공보다 5번 더 나왔고 말이 75번 칸에 도착했다면, 흰 공과 검은 공은 각각 몇 번 나왔습니까?",
+      "answer": "12, 7",
+      "answerParts": [
+        12,
+        7
+      ],
+      "answerLabels": [
+        "흰 공 횟수",
+        "검은 공 횟수"
+      ],
+      "acceptedAnswers": [
+        "12, 7"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "흰 공과 검은 공을 한 번씩 짝지으면 앞으로 8−3＝5칸 움직입니다.",
+        "짝을 이루지 않는 흰 공 5번은 앞으로 8×5＝40칸 움직입니다. 따라서 짝지은 공들로 움직인 거리는 75−40＝35칸입니다.",
+        "흰 공과 검은 공의 짝은 35÷5＝7쌍이므로 검은 공은 7번, 흰 공은 7＋5＝12번입니다.",
+        "8×12−3×7＝75이며, 흰 공과 검은 공 횟수의 차도 5번으로 맞습니다."
+      ],
+      "solution": "흰 공과 검은 공을 한 번씩 짝지으면 앞으로 8−3＝5칸 움직입니다. 짝을 이루지 않는 흰 공 5번은 앞으로 8×5＝40칸 움직입니다. 따라서 짝지은 공들로 움직인 거리는 75−40＝35칸입니다. 흰 공과 검은 공의 짝은 35÷5＝7쌍이므로 검은 공은 7번, 흰 공은 7＋5＝12번입니다. 8×12−3×7＝75이며, 흰 공과 검은 공 횟수의 차도 5번으로 맞습니다.",
+      "learningPoint": "동수의 두 색을 짝지은 이동과 더 나온 흰 공의 이동을 나누어 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "전체 뽑기 횟수 대신 두 색 횟수 차와 최종 이동으로 각각의 횟수를 역산",
+          "conditionTracking": "출발0·교체 추출·두 이동량·최종 위치·색 횟수 차",
+          "caseSplitting": "동수의 흰/검은 공을 짝지은 이동과 초과 횟수를 구분",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "paired displacements plus excess forward events",
+        "parameters": {
+          "forward": 8,
+          "backward": 3,
+          "end": 75,
+          "whiteExcess": 5
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "id": "applied1-q11-middle-v3",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "앞뒤로 충분히 이어진 말판의 0번 칸에 말을 놓았습니다. 주머니에서 공을 한 개씩 꺼내어 흰 공이면 앞으로 6칸, 검은 공이면 뒤로 4칸 움직인 뒤 공을 다시 넣습니다. 흰 공이 검은 공보다 5번 더 나왔고 말이 46번 칸에 도착했다면, 흰 공과 검은 공은 각각 몇 번 나왔습니까?",
+      "answer": "13, 8",
+      "answerParts": [
+        13,
+        8
+      ],
+      "answerLabels": [
+        "흰 공 횟수",
+        "검은 공 횟수"
+      ],
+      "acceptedAnswers": [
+        "13, 8"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "흰 공과 검은 공을 한 번씩 짝지으면 앞으로 6−4＝2칸 움직입니다.",
+        "짝을 이루지 않는 흰 공 5번은 앞으로 6×5＝30칸 움직입니다. 따라서 짝지은 공들로 움직인 거리는 46−30＝16칸입니다.",
+        "흰 공과 검은 공의 짝은 16÷2＝8쌍이므로 검은 공은 8번, 흰 공은 8＋5＝13번입니다.",
+        "6×13−4×8＝46이며, 흰 공과 검은 공 횟수의 차도 5번으로 맞습니다."
+      ],
+      "solution": "흰 공과 검은 공을 한 번씩 짝지으면 앞으로 6−4＝2칸 움직입니다. 짝을 이루지 않는 흰 공 5번은 앞으로 6×5＝30칸 움직입니다. 따라서 짝지은 공들로 움직인 거리는 46−30＝16칸입니다. 흰 공과 검은 공의 짝은 16÷2＝8쌍이므로 검은 공은 8번, 흰 공은 8＋5＝13번입니다. 6×13−4×8＝46이며, 흰 공과 검은 공 횟수의 차도 5번으로 맞습니다.",
+      "learningPoint": "동수의 두 색을 짝지은 이동과 더 나온 흰 공의 이동을 나누어 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "전체 뽑기 횟수 대신 두 색 횟수 차와 최종 이동으로 각각의 횟수를 역산",
+          "conditionTracking": "출발0·교체 추출·두 이동량·최종 위치·색 횟수 차",
+          "caseSplitting": "동수의 흰/검은 공을 짝지은 이동과 초과 횟수를 구분",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "paired displacements plus excess forward events",
+        "parameters": {
+          "forward": 6,
+          "backward": 4,
+          "end": 46,
+          "whiteExcess": 5
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "id": "applied1-q11-middle-v4",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "앞뒤로 충분히 이어진 말판의 0번 칸에 말을 놓았습니다. 주머니에서 공을 한 개씩 꺼내어 흰 공이면 앞으로 9칸, 검은 공이면 뒤로 2칸 움직인 뒤 공을 다시 넣습니다. 흰 공이 검은 공보다 4번 더 나왔고 말이 78번 칸에 도착했다면, 흰 공과 검은 공은 각각 몇 번 나왔습니까?",
+      "answer": "10, 6",
+      "answerParts": [
+        10,
+        6
+      ],
+      "answerLabels": [
+        "흰 공 횟수",
+        "검은 공 횟수"
+      ],
+      "acceptedAnswers": [
+        "10, 6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "흰 공과 검은 공을 한 번씩 짝지으면 앞으로 9−2＝7칸 움직입니다.",
+        "짝을 이루지 않는 흰 공 4번은 앞으로 9×4＝36칸 움직입니다. 따라서 짝지은 공들로 움직인 거리는 78−36＝42칸입니다.",
+        "흰 공과 검은 공의 짝은 42÷7＝6쌍이므로 검은 공은 6번, 흰 공은 6＋4＝10번입니다.",
+        "9×10−2×6＝78이며, 흰 공과 검은 공 횟수의 차도 4번으로 맞습니다."
+      ],
+      "solution": "흰 공과 검은 공을 한 번씩 짝지으면 앞으로 9−2＝7칸 움직입니다. 짝을 이루지 않는 흰 공 4번은 앞으로 9×4＝36칸 움직입니다. 따라서 짝지은 공들로 움직인 거리는 78−36＝42칸입니다. 흰 공과 검은 공의 짝은 42÷7＝6쌍이므로 검은 공은 6번, 흰 공은 6＋4＝10번입니다. 9×10−2×6＝78이며, 흰 공과 검은 공 횟수의 차도 4번으로 맞습니다.",
+      "learningPoint": "동수의 두 색을 짝지은 이동과 더 나온 흰 공의 이동을 나누어 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "전체 뽑기 횟수 대신 두 색 횟수 차와 최종 이동으로 각각의 횟수를 역산",
+          "conditionTracking": "출발0·교체 추출·두 이동량·최종 위치·색 횟수 차",
+          "caseSplitting": "동수의 흰/검은 공을 짝지은 이동과 초과 횟수를 구분",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "paired displacements plus excess forward events",
+        "parameters": {
+          "forward": 9,
+          "backward": 2,
+          "end": 78,
+          "whiteExcess": 4
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "id": "applied1-q11-middle-v5",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "앞뒤로 충분히 이어진 말판의 0번 칸에 말을 놓았습니다. 주머니에서 공을 한 개씩 꺼내어 흰 공이면 앞으로 8칸, 검은 공이면 뒤로 5칸 움직인 뒤 공을 다시 넣습니다. 흰 공이 검은 공보다 5번 더 나왔고 말이 67번 칸에 도착했다면, 흰 공과 검은 공은 각각 몇 번 나왔습니까?",
+      "answer": "14, 9",
+      "answerParts": [
+        14,
+        9
+      ],
+      "answerLabels": [
+        "흰 공 횟수",
+        "검은 공 횟수"
+      ],
+      "acceptedAnswers": [
+        "14, 9"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "흰 공과 검은 공을 한 번씩 짝지으면 앞으로 8−5＝3칸 움직입니다.",
+        "짝을 이루지 않는 흰 공 5번은 앞으로 8×5＝40칸 움직입니다. 따라서 짝지은 공들로 움직인 거리는 67−40＝27칸입니다.",
+        "흰 공과 검은 공의 짝은 27÷3＝9쌍이므로 검은 공은 9번, 흰 공은 9＋5＝14번입니다.",
+        "8×14−5×9＝67이며, 흰 공과 검은 공 횟수의 차도 5번으로 맞습니다."
+      ],
+      "solution": "흰 공과 검은 공을 한 번씩 짝지으면 앞으로 8−5＝3칸 움직입니다. 짝을 이루지 않는 흰 공 5번은 앞으로 8×5＝40칸 움직입니다. 따라서 짝지은 공들로 움직인 거리는 67−40＝27칸입니다. 흰 공과 검은 공의 짝은 27÷3＝9쌍이므로 검은 공은 9번, 흰 공은 9＋5＝14번입니다. 8×14−5×9＝67이며, 흰 공과 검은 공 횟수의 차도 5번으로 맞습니다.",
+      "learningPoint": "동수의 두 색을 짝지은 이동과 더 나온 흰 공의 이동을 나누어 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "전체 뽑기 횟수 대신 두 색 횟수 차와 최종 이동으로 각각의 횟수를 역산",
+          "conditionTracking": "출발0·교체 추출·두 이동량·최종 위치·색 횟수 차",
+          "caseSplitting": "동수의 흰/검은 공을 짝지은 이동과 초과 횟수를 구분",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "paired displacements plus excess forward events",
+        "parameters": {
+          "forward": 8,
+          "backward": 5,
+          "end": 67,
+          "whiteExcess": 5
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "id": "applied1-q11-high-v1",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "앞뒤로 충분히 이어진 말판의 0번 칸에서 출발합니다. 공은 매번 주머니에서 한 개씩 꺼내어 확인한 뒤 다시 넣습니다. 처음 12번은 흰 공이면 앞으로 7칸, 검은 공이면 뒤로 3칸 움직였습니다. 이어서 10번은 흰 공이면 앞으로 5칸, 검은 공이면 뒤로 2칸 움직였습니다. 처음 단계에서 흰 공이 나왔던 횟수는 나중 단계보다 2번 많고, 마지막에 말은 66번 칸에 있었습니다. 각 단계에서 흰 공은 몇 번씩 나왔습니까?",
+      "answer": "8, 6",
+      "answerParts": [
+        8,
+        6
+      ],
+      "answerLabels": [
+        "처음 단계 흰 공 횟수",
+        "나중 단계 흰 공 횟수"
+      ],
+      "acceptedAnswers": [
+        "8, 6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나중 단계의 흰 공 횟수를 □번이라 하면 처음 단계는 □＋2번입니다. 검은 공 횟수는 처음 12−(□＋2)번, 나중 10−□번입니다.",
+        "모두 검은 공이었다면 처음은 뒤로 3×12＝36칸, 나중은 뒤로 2×10＝20칸 움직입니다. 따라서 실제 위치에 도달하려면 이 경우보다 앞으로 66＋56＝122칸 더 가야 합니다.",
+        "검은 공 한 번을 흰 공으로 바꾸면 처음 단계에서는 10칸, 나중 단계에서는 7칸 더 앞으로 갑니다. 그러므로 10×(□＋2)＋7×□＝122입니다.",
+        "정리하면 17×□＝122−20＝102여서 □＝6번입니다. 처음 단계의 흰 공은 6＋2＝8번입니다.",
+        "실제로 처음은 7×8−3×4＝44칸, 나중은 5×6−2×4＝22칸 이동하여 합이 66칸입니다."
+      ],
+      "solution": "나중 단계의 흰 공 횟수를 □번이라 하면 처음 단계는 □＋2번입니다. 검은 공 횟수는 처음 12−(□＋2)번, 나중 10−□번입니다. 모두 검은 공이었다면 처음은 뒤로 3×12＝36칸, 나중은 뒤로 2×10＝20칸 움직입니다. 따라서 실제 위치에 도달하려면 이 경우보다 앞으로 66＋56＝122칸 더 가야 합니다. 검은 공 한 번을 흰 공으로 바꾸면 처음 단계에서는 10칸, 나중 단계에서는 7칸 더 앞으로 갑니다. 그러므로 10×(□＋2)＋7×□＝122입니다. 정리하면 17×□＝122−20＝102여서 □＝6번입니다. 처음 단계의 흰 공은 6＋2＝8번입니다. 실제로 처음은 7×8−3×4＝44칸, 나중은 5×6−2×4＝22칸 이동하여 합이 66칸입니다.",
+      "learningPoint": "각 단계의 이동을 따로 나타낸 뒤 흰 공 횟수 차와 최종 위치로 연결",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "이동 규칙이 바뀌는 두 단계의 흰 공 횟수와 차를 함께 역산",
+          "conditionTracking": "두 단계별 횟수와 이동량·최종 위치·단계별 흰 공 횟수 차",
+          "caseSplitting": "각 단계의 검은 공을 해당 단계 전체 횟수에서 빼고 두 경로를 합산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "two displacement rules joined by a count difference",
+        "parameters": {
+          "firstDraws": 12,
+          "secondDraws": 10,
+          "firstForward": 7,
+          "firstBackward": 3,
+          "secondForward": 5,
+          "secondBackward": 2,
+          "end": 66,
+          "firstWhiteExcess": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "id": "applied1-q11-high-v2",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "앞뒤로 충분히 이어진 말판의 0번 칸에서 출발합니다. 공은 매번 주머니에서 한 개씩 꺼내어 확인한 뒤 다시 넣습니다. 처음 13번은 흰 공이면 앞으로 8칸, 검은 공이면 뒤로 3칸 움직였습니다. 이어서 11번은 흰 공이면 앞으로 6칸, 검은 공이면 뒤로 2칸 움직였습니다. 처음 단계에서 흰 공이 나왔던 횟수는 나중 단계보다 3번 많고, 마지막에 말은 86번 칸에 있었습니다. 각 단계에서 흰 공은 몇 번씩 나왔습니까?",
+      "answer": "9, 6",
+      "answerParts": [
+        9,
+        6
+      ],
+      "answerLabels": [
+        "처음 단계 흰 공 횟수",
+        "나중 단계 흰 공 횟수"
+      ],
+      "acceptedAnswers": [
+        "9, 6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나중 단계의 흰 공 횟수를 □번이라 하면 처음 단계는 □＋3번입니다. 검은 공 횟수는 처음 13−(□＋3)번, 나중 11−□번입니다.",
+        "모두 검은 공이었다면 처음은 뒤로 3×13＝39칸, 나중은 뒤로 2×11＝22칸 움직입니다. 따라서 실제 위치에 도달하려면 이 경우보다 앞으로 86＋61＝147칸 더 가야 합니다.",
+        "검은 공 한 번을 흰 공으로 바꾸면 처음 단계에서는 11칸, 나중 단계에서는 8칸 더 앞으로 갑니다. 그러므로 11×(□＋3)＋8×□＝147입니다.",
+        "정리하면 19×□＝147−33＝114여서 □＝6번입니다. 처음 단계의 흰 공은 6＋3＝9번입니다.",
+        "실제로 처음은 8×9−3×4＝60칸, 나중은 6×6−2×5＝26칸 이동하여 합이 86칸입니다."
+      ],
+      "solution": "나중 단계의 흰 공 횟수를 □번이라 하면 처음 단계는 □＋3번입니다. 검은 공 횟수는 처음 13−(□＋3)번, 나중 11−□번입니다. 모두 검은 공이었다면 처음은 뒤로 3×13＝39칸, 나중은 뒤로 2×11＝22칸 움직입니다. 따라서 실제 위치에 도달하려면 이 경우보다 앞으로 86＋61＝147칸 더 가야 합니다. 검은 공 한 번을 흰 공으로 바꾸면 처음 단계에서는 11칸, 나중 단계에서는 8칸 더 앞으로 갑니다. 그러므로 11×(□＋3)＋8×□＝147입니다. 정리하면 19×□＝147−33＝114여서 □＝6번입니다. 처음 단계의 흰 공은 6＋3＝9번입니다. 실제로 처음은 8×9−3×4＝60칸, 나중은 6×6−2×5＝26칸 이동하여 합이 86칸입니다.",
+      "learningPoint": "각 단계의 이동을 따로 나타낸 뒤 흰 공 횟수 차와 최종 위치로 연결",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "이동 규칙이 바뀌는 두 단계의 흰 공 횟수와 차를 함께 역산",
+          "conditionTracking": "두 단계별 횟수와 이동량·최종 위치·단계별 흰 공 횟수 차",
+          "caseSplitting": "각 단계의 검은 공을 해당 단계 전체 횟수에서 빼고 두 경로를 합산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "two displacement rules joined by a count difference",
+        "parameters": {
+          "firstDraws": 13,
+          "secondDraws": 11,
+          "firstForward": 8,
+          "firstBackward": 3,
+          "secondForward": 6,
+          "secondBackward": 2,
+          "end": 86,
+          "firstWhiteExcess": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "id": "applied1-q11-high-v3",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "앞뒤로 충분히 이어진 말판의 0번 칸에서 출발합니다. 공은 매번 주머니에서 한 개씩 꺼내어 확인한 뒤 다시 넣습니다. 처음 14번은 흰 공이면 앞으로 6칸, 검은 공이면 뒤로 4칸 움직였습니다. 이어서 12번은 흰 공이면 앞으로 8칸, 검은 공이면 뒤로 3칸 움직였습니다. 처음 단계에서 흰 공이 나왔던 횟수는 나중 단계보다 3번 많고, 마지막에 말은 85번 칸에 있었습니다. 각 단계에서 흰 공은 몇 번씩 나왔습니까?",
+      "answer": "10, 7",
+      "answerParts": [
+        10,
+        7
+      ],
+      "answerLabels": [
+        "처음 단계 흰 공 횟수",
+        "나중 단계 흰 공 횟수"
+      ],
+      "acceptedAnswers": [
+        "10, 7"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나중 단계의 흰 공 횟수를 □번이라 하면 처음 단계는 □＋3번입니다. 검은 공 횟수는 처음 14−(□＋3)번, 나중 12−□번입니다.",
+        "모두 검은 공이었다면 처음은 뒤로 4×14＝56칸, 나중은 뒤로 3×12＝36칸 움직입니다. 따라서 실제 위치에 도달하려면 이 경우보다 앞으로 85＋92＝177칸 더 가야 합니다.",
+        "검은 공 한 번을 흰 공으로 바꾸면 처음 단계에서는 10칸, 나중 단계에서는 11칸 더 앞으로 갑니다. 그러므로 10×(□＋3)＋11×□＝177입니다.",
+        "정리하면 21×□＝177−30＝147여서 □＝7번입니다. 처음 단계의 흰 공은 7＋3＝10번입니다.",
+        "실제로 처음은 6×10−4×4＝44칸, 나중은 8×7−3×5＝41칸 이동하여 합이 85칸입니다."
+      ],
+      "solution": "나중 단계의 흰 공 횟수를 □번이라 하면 처음 단계는 □＋3번입니다. 검은 공 횟수는 처음 14−(□＋3)번, 나중 12−□번입니다. 모두 검은 공이었다면 처음은 뒤로 4×14＝56칸, 나중은 뒤로 3×12＝36칸 움직입니다. 따라서 실제 위치에 도달하려면 이 경우보다 앞으로 85＋92＝177칸 더 가야 합니다. 검은 공 한 번을 흰 공으로 바꾸면 처음 단계에서는 10칸, 나중 단계에서는 11칸 더 앞으로 갑니다. 그러므로 10×(□＋3)＋11×□＝177입니다. 정리하면 21×□＝177−30＝147여서 □＝7번입니다. 처음 단계의 흰 공은 7＋3＝10번입니다. 실제로 처음은 6×10−4×4＝44칸, 나중은 8×7−3×5＝41칸 이동하여 합이 85칸입니다.",
+      "learningPoint": "각 단계의 이동을 따로 나타낸 뒤 흰 공 횟수 차와 최종 위치로 연결",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "이동 규칙이 바뀌는 두 단계의 흰 공 횟수와 차를 함께 역산",
+          "conditionTracking": "두 단계별 횟수와 이동량·최종 위치·단계별 흰 공 횟수 차",
+          "caseSplitting": "각 단계의 검은 공을 해당 단계 전체 횟수에서 빼고 두 경로를 합산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "two displacement rules joined by a count difference",
+        "parameters": {
+          "firstDraws": 14,
+          "secondDraws": 12,
+          "firstForward": 6,
+          "firstBackward": 4,
+          "secondForward": 8,
+          "secondBackward": 3,
+          "end": 85,
+          "firstWhiteExcess": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "id": "applied1-q11-high-v4",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "앞뒤로 충분히 이어진 말판의 0번 칸에서 출발합니다. 공은 매번 주머니에서 한 개씩 꺼내어 확인한 뒤 다시 넣습니다. 처음 15번은 흰 공이면 앞으로 9칸, 검은 공이면 뒤로 2칸 움직였습니다. 이어서 13번은 흰 공이면 앞으로 5칸, 검은 공이면 뒤로 4칸 움직였습니다. 처음 단계에서 흰 공이 나왔던 횟수는 나중 단계보다 3번 많고, 마지막에 말은 111번 칸에 있었습니다. 각 단계에서 흰 공은 몇 번씩 나왔습니까?",
+      "answer": "11, 8",
+      "answerParts": [
+        11,
+        8
+      ],
+      "answerLabels": [
+        "처음 단계 흰 공 횟수",
+        "나중 단계 흰 공 횟수"
+      ],
+      "acceptedAnswers": [
+        "11, 8"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나중 단계의 흰 공 횟수를 □번이라 하면 처음 단계는 □＋3번입니다. 검은 공 횟수는 처음 15−(□＋3)번, 나중 13−□번입니다.",
+        "모두 검은 공이었다면 처음은 뒤로 2×15＝30칸, 나중은 뒤로 4×13＝52칸 움직입니다. 따라서 실제 위치에 도달하려면 이 경우보다 앞으로 111＋82＝193칸 더 가야 합니다.",
+        "검은 공 한 번을 흰 공으로 바꾸면 처음 단계에서는 11칸, 나중 단계에서는 9칸 더 앞으로 갑니다. 그러므로 11×(□＋3)＋9×□＝193입니다.",
+        "정리하면 20×□＝193−33＝160여서 □＝8번입니다. 처음 단계의 흰 공은 8＋3＝11번입니다.",
+        "실제로 처음은 9×11−2×4＝91칸, 나중은 5×8−4×5＝20칸 이동하여 합이 111칸입니다."
+      ],
+      "solution": "나중 단계의 흰 공 횟수를 □번이라 하면 처음 단계는 □＋3번입니다. 검은 공 횟수는 처음 15−(□＋3)번, 나중 13−□번입니다. 모두 검은 공이었다면 처음은 뒤로 2×15＝30칸, 나중은 뒤로 4×13＝52칸 움직입니다. 따라서 실제 위치에 도달하려면 이 경우보다 앞으로 111＋82＝193칸 더 가야 합니다. 검은 공 한 번을 흰 공으로 바꾸면 처음 단계에서는 11칸, 나중 단계에서는 9칸 더 앞으로 갑니다. 그러므로 11×(□＋3)＋9×□＝193입니다. 정리하면 20×□＝193−33＝160여서 □＝8번입니다. 처음 단계의 흰 공은 8＋3＝11번입니다. 실제로 처음은 9×11−2×4＝91칸, 나중은 5×8−4×5＝20칸 이동하여 합이 111칸입니다.",
+      "learningPoint": "각 단계의 이동을 따로 나타낸 뒤 흰 공 횟수 차와 최종 위치로 연결",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "이동 규칙이 바뀌는 두 단계의 흰 공 횟수와 차를 함께 역산",
+          "conditionTracking": "두 단계별 횟수와 이동량·최종 위치·단계별 흰 공 횟수 차",
+          "caseSplitting": "각 단계의 검은 공을 해당 단계 전체 횟수에서 빼고 두 경로를 합산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "two displacement rules joined by a count difference",
+        "parameters": {
+          "firstDraws": 15,
+          "secondDraws": 13,
+          "firstForward": 9,
+          "firstBackward": 2,
+          "secondForward": 5,
+          "secondBackward": 4,
+          "end": 111,
+          "firstWhiteExcess": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "앞뒤 이동 횟수 역산",
+      "learningLocation": "활용 1회 · 원문 11번 · 합과 차의 관계",
+      "id": "applied1-q11-high-v5",
+      "genId": "applied1-q11",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 11,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "앞뒤로 충분히 이어진 말판의 0번 칸에서 출발합니다. 공은 매번 주머니에서 한 개씩 꺼내어 확인한 뒤 다시 넣습니다. 처음 16번은 흰 공이면 앞으로 8칸, 검은 공이면 뒤로 5칸 움직였습니다. 이어서 14번은 흰 공이면 앞으로 6칸, 검은 공이면 뒤로 3칸 움직였습니다. 처음 단계에서 흰 공이 나왔던 횟수는 나중 단계보다 3번 많고, 마지막에 말은 115번 칸에 있었습니다. 각 단계에서 흰 공은 몇 번씩 나왔습니까?",
+      "answer": "12, 9",
+      "answerParts": [
+        12,
+        9
+      ],
+      "answerLabels": [
+        "처음 단계 흰 공 횟수",
+        "나중 단계 흰 공 횟수"
+      ],
+      "acceptedAnswers": [
+        "12, 9"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나중 단계의 흰 공 횟수를 □번이라 하면 처음 단계는 □＋3번입니다. 검은 공 횟수는 처음 16−(□＋3)번, 나중 14−□번입니다.",
+        "모두 검은 공이었다면 처음은 뒤로 5×16＝80칸, 나중은 뒤로 3×14＝42칸 움직입니다. 따라서 실제 위치에 도달하려면 이 경우보다 앞으로 115＋122＝237칸 더 가야 합니다.",
+        "검은 공 한 번을 흰 공으로 바꾸면 처음 단계에서는 13칸, 나중 단계에서는 9칸 더 앞으로 갑니다. 그러므로 13×(□＋3)＋9×□＝237입니다.",
+        "정리하면 22×□＝237−39＝198여서 □＝9번입니다. 처음 단계의 흰 공은 9＋3＝12번입니다.",
+        "실제로 처음은 8×12−5×4＝76칸, 나중은 6×9−3×5＝39칸 이동하여 합이 115칸입니다."
+      ],
+      "solution": "나중 단계의 흰 공 횟수를 □번이라 하면 처음 단계는 □＋3번입니다. 검은 공 횟수는 처음 16−(□＋3)번, 나중 14−□번입니다. 모두 검은 공이었다면 처음은 뒤로 5×16＝80칸, 나중은 뒤로 3×14＝42칸 움직입니다. 따라서 실제 위치에 도달하려면 이 경우보다 앞으로 115＋122＝237칸 더 가야 합니다. 검은 공 한 번을 흰 공으로 바꾸면 처음 단계에서는 13칸, 나중 단계에서는 9칸 더 앞으로 갑니다. 그러므로 13×(□＋3)＋9×□＝237입니다. 정리하면 22×□＝237−39＝198여서 □＝9번입니다. 처음 단계의 흰 공은 9＋3＝12번입니다. 실제로 처음은 8×12−5×4＝76칸, 나중은 6×9−3×5＝39칸 이동하여 합이 115칸입니다.",
+      "learningPoint": "각 단계의 이동을 따로 나타낸 뒤 흰 공 횟수 차와 최종 위치로 연결",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "이동 규칙이 바뀌는 두 단계의 흰 공 횟수와 차를 함께 역산",
+          "conditionTracking": "두 단계별 횟수와 이동량·최종 위치·단계별 흰 공 횟수 차",
+          "caseSplitting": "각 단계의 검은 공을 해당 단계 전체 횟수에서 빼고 두 경로를 합산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "two displacement rules joined by a count difference",
+        "parameters": {
+          "firstDraws": 16,
+          "secondDraws": 14,
+          "firstForward": 8,
+          "firstBackward": 5,
+          "secondForward": 6,
+          "secondBackward": 3,
+          "end": 115,
+          "firstWhiteExcess": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "id": "applied1-q12-middle-v1",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "어느 날 오전에 고장 난 시계를 정확하게 맞추었습니다. 이 시계는 실제 정오 전에는 실제 1시간에 2분씩 늦어지고, 정오부터는 실제 1시간에 4분씩 늦어졌습니다. 그날 실제 시각이 오후 3시 30분일 때 시계는 오후 3시 9분을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?",
+      "answer": "8, 30",
+      "answerParts": [
+        8,
+        30
+      ],
+      "answerLabels": [
+        "오전 시",
+        "분"
+      ],
+      "acceptedAnswers": [
+        "8, 30"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관측한 순간의 전체 지연은 실제 시각과 표시 시각의 차인 21분입니다.",
+        "실제 정오부터 관측까지는 210분입니다. 이 구간의 지연은 4×210÷60＝14분입니다.",
+        "따라서 정오 전 구간에서 생긴 지연은 21−14＝7분이고, 이 구간의 실제 경과 시간은 7×60÷2＝210분입니다.",
+        "정오에서 210분을 거슬러 가면 오전 8시 30분입니다. 오전 지연7분과 오후 지연14분을 더하면 관측한 지연21분과 같습니다."
+      ],
+      "solution": "관측한 순간의 전체 지연은 실제 시각과 표시 시각의 차인 21분입니다. 실제 정오부터 관측까지는 210분입니다. 이 구간의 지연은 4×210÷60＝14분입니다. 따라서 정오 전 구간에서 생긴 지연은 21−14＝7분이고, 이 구간의 실제 경과 시간은 7×60÷2＝210분입니다. 정오에서 210분을 거슬러 가면 오전 8시 30분입니다. 오전 지연7분과 오후 지연14분을 더하면 관측한 지연21분과 같습니다.",
+      "learningPoint": "정오 전후의 지연을 분리하고 각 구간에서 실제로 지난 시간 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "늦어지는 비율이 정오에 달라진 시계를 두 구간으로 나누어 시작 시각 역산",
+          "conditionTracking": "실제 정오·전후 두 비율·실제 관측 시각·표시 시각",
+          "caseSplitting": "정오 후 지연을 먼저 분리하고 오전 구간의 지연으로 경과 분 수 역산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "subtract known afternoon drift then invert morning drift",
+        "parameters": {
+          "changeAt": 720,
+          "beforeRate": 2,
+          "afterRate": 4,
+          "observed": 930,
+          "display": 909
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "id": "applied1-q12-middle-v2",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "어느 날 오전에 고장 난 시계를 정확하게 맞추었습니다. 이 시계는 실제 정오 전에는 실제 1시간에 3분씩 늦어지고, 정오부터는 실제 1시간에 6분씩 늦어졌습니다. 그날 실제 시각이 오후 4시 0분일 때 시계는 오후 3시 24분을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?",
+      "answer": "8, 0",
+      "answerParts": [
+        8,
+        0
+      ],
+      "answerLabels": [
+        "오전 시",
+        "분"
+      ],
+      "acceptedAnswers": [
+        "8, 0"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관측한 순간의 전체 지연은 실제 시각과 표시 시각의 차인 36분입니다.",
+        "실제 정오부터 관측까지는 240분입니다. 이 구간의 지연은 6×240÷60＝24분입니다.",
+        "따라서 정오 전 구간에서 생긴 지연은 36−24＝12분이고, 이 구간의 실제 경과 시간은 12×60÷3＝240분입니다.",
+        "정오에서 240분을 거슬러 가면 오전 8시 0분입니다. 오전 지연12분과 오후 지연24분을 더하면 관측한 지연36분과 같습니다."
+      ],
+      "solution": "관측한 순간의 전체 지연은 실제 시각과 표시 시각의 차인 36분입니다. 실제 정오부터 관측까지는 240분입니다. 이 구간의 지연은 6×240÷60＝24분입니다. 따라서 정오 전 구간에서 생긴 지연은 36−24＝12분이고, 이 구간의 실제 경과 시간은 12×60÷3＝240분입니다. 정오에서 240분을 거슬러 가면 오전 8시 0분입니다. 오전 지연12분과 오후 지연24분을 더하면 관측한 지연36분과 같습니다.",
+      "learningPoint": "정오 전후의 지연을 분리하고 각 구간에서 실제로 지난 시간 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "늦어지는 비율이 정오에 달라진 시계를 두 구간으로 나누어 시작 시각 역산",
+          "conditionTracking": "실제 정오·전후 두 비율·실제 관측 시각·표시 시각",
+          "caseSplitting": "정오 후 지연을 먼저 분리하고 오전 구간의 지연으로 경과 분 수 역산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "subtract known afternoon drift then invert morning drift",
+        "parameters": {
+          "changeAt": 720,
+          "beforeRate": 3,
+          "afterRate": 6,
+          "observed": 960,
+          "display": 924
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "id": "applied1-q12-middle-v3",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "어느 날 오전에 고장 난 시계를 정확하게 맞추었습니다. 이 시계는 실제 정오 전에는 실제 1시간에 4분씩 늦어지고, 정오부터는 실제 1시간에 8분씩 늦어졌습니다. 그날 실제 시각이 오후 3시 0분일 때 시계는 오후 2시 18분을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?",
+      "answer": "7, 30",
+      "answerParts": [
+        7,
+        30
+      ],
+      "answerLabels": [
+        "오전 시",
+        "분"
+      ],
+      "acceptedAnswers": [
+        "7, 30"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관측한 순간의 전체 지연은 실제 시각과 표시 시각의 차인 42분입니다.",
+        "실제 정오부터 관측까지는 180분입니다. 이 구간의 지연은 8×180÷60＝24분입니다.",
+        "따라서 정오 전 구간에서 생긴 지연은 42−24＝18분이고, 이 구간의 실제 경과 시간은 18×60÷4＝270분입니다.",
+        "정오에서 270분을 거슬러 가면 오전 7시 30분입니다. 오전 지연18분과 오후 지연24분을 더하면 관측한 지연42분과 같습니다."
+      ],
+      "solution": "관측한 순간의 전체 지연은 실제 시각과 표시 시각의 차인 42분입니다. 실제 정오부터 관측까지는 180분입니다. 이 구간의 지연은 8×180÷60＝24분입니다. 따라서 정오 전 구간에서 생긴 지연은 42−24＝18분이고, 이 구간의 실제 경과 시간은 18×60÷4＝270분입니다. 정오에서 270분을 거슬러 가면 오전 7시 30분입니다. 오전 지연18분과 오후 지연24분을 더하면 관측한 지연42분과 같습니다.",
+      "learningPoint": "정오 전후의 지연을 분리하고 각 구간에서 실제로 지난 시간 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "늦어지는 비율이 정오에 달라진 시계를 두 구간으로 나누어 시작 시각 역산",
+          "conditionTracking": "실제 정오·전후 두 비율·실제 관측 시각·표시 시각",
+          "caseSplitting": "정오 후 지연을 먼저 분리하고 오전 구간의 지연으로 경과 분 수 역산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "subtract known afternoon drift then invert morning drift",
+        "parameters": {
+          "changeAt": 720,
+          "beforeRate": 4,
+          "afterRate": 8,
+          "observed": 900,
+          "display": 858
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "id": "applied1-q12-middle-v4",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "어느 날 오전에 고장 난 시계를 정확하게 맞추었습니다. 이 시계는 실제 정오 전에는 실제 1시간에 2분씩 늦어지고, 정오부터는 실제 1시간에 6분씩 늦어졌습니다. 그날 실제 시각이 오후 4시 30분일 때 시계는 오후 3시 57분을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?",
+      "answer": "9, 0",
+      "answerParts": [
+        9,
+        0
+      ],
+      "answerLabels": [
+        "오전 시",
+        "분"
+      ],
+      "acceptedAnswers": [
+        "9, 0"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관측한 순간의 전체 지연은 실제 시각과 표시 시각의 차인 33분입니다.",
+        "실제 정오부터 관측까지는 270분입니다. 이 구간의 지연은 6×270÷60＝27분입니다.",
+        "따라서 정오 전 구간에서 생긴 지연은 33−27＝6분이고, 이 구간의 실제 경과 시간은 6×60÷2＝180분입니다.",
+        "정오에서 180분을 거슬러 가면 오전 9시 0분입니다. 오전 지연6분과 오후 지연27분을 더하면 관측한 지연33분과 같습니다."
+      ],
+      "solution": "관측한 순간의 전체 지연은 실제 시각과 표시 시각의 차인 33분입니다. 실제 정오부터 관측까지는 270분입니다. 이 구간의 지연은 6×270÷60＝27분입니다. 따라서 정오 전 구간에서 생긴 지연은 33−27＝6분이고, 이 구간의 실제 경과 시간은 6×60÷2＝180분입니다. 정오에서 180분을 거슬러 가면 오전 9시 0분입니다. 오전 지연6분과 오후 지연27분을 더하면 관측한 지연33분과 같습니다.",
+      "learningPoint": "정오 전후의 지연을 분리하고 각 구간에서 실제로 지난 시간 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "늦어지는 비율이 정오에 달라진 시계를 두 구간으로 나누어 시작 시각 역산",
+          "conditionTracking": "실제 정오·전후 두 비율·실제 관측 시각·표시 시각",
+          "caseSplitting": "정오 후 지연을 먼저 분리하고 오전 구간의 지연으로 경과 분 수 역산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "subtract known afternoon drift then invert morning drift",
+        "parameters": {
+          "changeAt": 720,
+          "beforeRate": 2,
+          "afterRate": 6,
+          "observed": 990,
+          "display": 957
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "id": "applied1-q12-middle-v5",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "2.7",
+      "pointBand": "3.4",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "어느 날 오전에 고장 난 시계를 정확하게 맞추었습니다. 이 시계는 실제 정오 전에는 실제 1시간에 6분씩 늦어지고, 정오부터는 실제 1시간에 4분씩 늦어졌습니다. 그날 실제 시각이 오후 5시 0분일 때 시계는 오후 4시 10분을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?",
+      "answer": "7, 0",
+      "answerParts": [
+        7,
+        0
+      ],
+      "answerLabels": [
+        "오전 시",
+        "분"
+      ],
+      "acceptedAnswers": [
+        "7, 0"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관측한 순간의 전체 지연은 실제 시각과 표시 시각의 차인 50분입니다.",
+        "실제 정오부터 관측까지는 300분입니다. 이 구간의 지연은 4×300÷60＝20분입니다.",
+        "따라서 정오 전 구간에서 생긴 지연은 50−20＝30분이고, 이 구간의 실제 경과 시간은 30×60÷6＝300분입니다.",
+        "정오에서 300분을 거슬러 가면 오전 7시 0분입니다. 오전 지연30분과 오후 지연20분을 더하면 관측한 지연50분과 같습니다."
+      ],
+      "solution": "관측한 순간의 전체 지연은 실제 시각과 표시 시각의 차인 50분입니다. 실제 정오부터 관측까지는 300분입니다. 이 구간의 지연은 4×300÷60＝20분입니다. 따라서 정오 전 구간에서 생긴 지연은 50−20＝30분이고, 이 구간의 실제 경과 시간은 30×60÷6＝300분입니다. 정오에서 300분을 거슬러 가면 오전 7시 0분입니다. 오전 지연30분과 오후 지연20분을 더하면 관측한 지연50분과 같습니다.",
+      "learningPoint": "정오 전후의 지연을 분리하고 각 구간에서 실제로 지난 시간 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "늦어지는 비율이 정오에 달라진 시계를 두 구간으로 나누어 시작 시각 역산",
+          "conditionTracking": "실제 정오·전후 두 비율·실제 관측 시각·표시 시각",
+          "caseSplitting": "정오 후 지연을 먼저 분리하고 오전 구간의 지연으로 경과 분 수 역산",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "subtract known afternoon drift then invert morning drift",
+        "parameters": {
+          "changeAt": 720,
+          "beforeRate": 6,
+          "afterRate": 4,
+          "observed": 1020,
+          "display": 970
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "id": "applied1-q12-high-v1",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "어느 날 오전 같은 순간에 두 시계를 정확하게 맞추었습니다. 느린 시계는 실제 1시간에 4분씩 늦어지고, 빠른 시계는 실제 1시간에 6분씩 빨라집니다. 그날 오후 같은 순간에 보니 느린 시계는 14시 51분, 빠른 시계는 15시 51분을 가리켰습니다. 두 시계는 시각을 24시간제로 나타냅니다. 오전 몇 시 몇 분에 두 시계를 맞추었습니까?",
+      "answer": "9, 15",
+      "answerParts": [
+        9,
+        15
+      ],
+      "answerLabels": [
+        "오전 시",
+        "분"
+      ],
+      "acceptedAnswers": [
+        "9, 15"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "두 표시의 차는 60분입니다. 실제 1시간이 지날 때 느린 시계와 빠른 시계의 차는 4＋6＝10분씩 벌어집니다.",
+        "따라서 맞춘 뒤 실제로 지난 시간은 60×60÷10＝360분입니다.",
+        "이 동안 느린 시계의 지연은 4×360÷60＝24분입니다. 실제 관측 시각은 느린 표시14시 51분보다 24분 뒤인 15시 15분입니다.",
+        "실제 관측 시각에서 360분을 빼면 오전 9시 15분입니다. 빠른 시계도 실제보다 6×360÷60＝36분 앞서므로 표시가15시 51분으로 맞습니다."
+      ],
+      "solution": "두 표시의 차는 60분입니다. 실제 1시간이 지날 때 느린 시계와 빠른 시계의 차는 4＋6＝10분씩 벌어집니다. 따라서 맞춘 뒤 실제로 지난 시간은 60×60÷10＝360분입니다. 이 동안 느린 시계의 지연은 4×360÷60＝24분입니다. 실제 관측 시각은 느린 표시14시 51분보다 24분 뒤인 15시 15분입니다. 실제 관측 시각에서 360분을 빼면 오전 9시 15분입니다. 빠른 시계도 실제보다 6×360÷60＝36분 앞서므로 표시가15시 51분으로 맞습니다.",
+      "learningPoint": "두 시계의 표시 차로 경과 시간을 찾은 뒤 한 시계의 오차를 바로잡기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "빠른 시계와 느린 시계의 표시 차로 경과 시간을 찾고 실제 시각과 시작 시각을 함께 역산",
+          "conditionTracking": "동시 설정·같은 날 오전/오후·두 비율·두24시간 표시",
+          "caseSplitting": "두 시계 차가 벌어지는 속도와 각 시계의 오차를 구분하고 자정 순환 배제",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "relative clock drift then actual observation and common start",
+        "parameters": {
+          "slowRate": 4,
+          "fastRate": 6,
+          "slowDisplay": 891,
+          "fastDisplay": 951,
+          "actualObservationRange": [
+            720,
+            1439
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "id": "applied1-q12-high-v2",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "어느 날 오전 같은 순간에 두 시계를 정확하게 맞추었습니다. 느린 시계는 실제 1시간에 2분씩 늦어지고, 빠른 시계는 실제 1시간에 5분씩 빨라집니다. 그날 오후 같은 순간에 보니 느린 시계는 15시 26분, 빠른 시계는 16시 15분을 가리켰습니다. 두 시계는 시각을 24시간제로 나타냅니다. 오전 몇 시 몇 분에 두 시계를 맞추었습니까?",
+      "answer": "8, 40",
+      "answerParts": [
+        8,
+        40
+      ],
+      "answerLabels": [
+        "오전 시",
+        "분"
+      ],
+      "acceptedAnswers": [
+        "8, 40"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "두 표시의 차는 49분입니다. 실제 1시간이 지날 때 느린 시계와 빠른 시계의 차는 2＋5＝7분씩 벌어집니다.",
+        "따라서 맞춘 뒤 실제로 지난 시간은 49×60÷7＝420분입니다.",
+        "이 동안 느린 시계의 지연은 2×420÷60＝14분입니다. 실제 관측 시각은 느린 표시15시 26분보다 14분 뒤인 15시 40분입니다.",
+        "실제 관측 시각에서 420분을 빼면 오전 8시 40분입니다. 빠른 시계도 실제보다 5×420÷60＝35분 앞서므로 표시가16시 15분으로 맞습니다."
+      ],
+      "solution": "두 표시의 차는 49분입니다. 실제 1시간이 지날 때 느린 시계와 빠른 시계의 차는 2＋5＝7분씩 벌어집니다. 따라서 맞춘 뒤 실제로 지난 시간은 49×60÷7＝420분입니다. 이 동안 느린 시계의 지연은 2×420÷60＝14분입니다. 실제 관측 시각은 느린 표시15시 26분보다 14분 뒤인 15시 40분입니다. 실제 관측 시각에서 420분을 빼면 오전 8시 40분입니다. 빠른 시계도 실제보다 5×420÷60＝35분 앞서므로 표시가16시 15분으로 맞습니다.",
+      "learningPoint": "두 시계의 표시 차로 경과 시간을 찾은 뒤 한 시계의 오차를 바로잡기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "빠른 시계와 느린 시계의 표시 차로 경과 시간을 찾고 실제 시각과 시작 시각을 함께 역산",
+          "conditionTracking": "동시 설정·같은 날 오전/오후·두 비율·두24시간 표시",
+          "caseSplitting": "두 시계 차가 벌어지는 속도와 각 시계의 오차를 구분하고 자정 순환 배제",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "relative clock drift then actual observation and common start",
+        "parameters": {
+          "slowRate": 2,
+          "fastRate": 5,
+          "slowDisplay": 926,
+          "fastDisplay": 975,
+          "actualObservationRange": [
+            720,
+            1439
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "id": "applied1-q12-high-v3",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "어느 날 오전 같은 순간에 두 시계를 정확하게 맞추었습니다. 느린 시계는 실제 1시간에 6분씩 늦어지고, 빠른 시계는 실제 1시간에 4분씩 빨라집니다. 그날 오후 같은 순간에 보니 느린 시계는 14시 45분, 빠른 시계는 16시 0분을 가리켰습니다. 두 시계는 시각을 24시간제로 나타냅니다. 오전 몇 시 몇 분에 두 시계를 맞추었습니까?",
+      "answer": "8, 0",
+      "answerParts": [
+        8,
+        0
+      ],
+      "answerLabels": [
+        "오전 시",
+        "분"
+      ],
+      "acceptedAnswers": [
+        "8, 0"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "두 표시의 차는 75분입니다. 실제 1시간이 지날 때 느린 시계와 빠른 시계의 차는 6＋4＝10분씩 벌어집니다.",
+        "따라서 맞춘 뒤 실제로 지난 시간은 75×60÷10＝450분입니다.",
+        "이 동안 느린 시계의 지연은 6×450÷60＝45분입니다. 실제 관측 시각은 느린 표시14시 45분보다 45분 뒤인 15시 30분입니다.",
+        "실제 관측 시각에서 450분을 빼면 오전 8시 0분입니다. 빠른 시계도 실제보다 4×450÷60＝30분 앞서므로 표시가16시 0분으로 맞습니다."
+      ],
+      "solution": "두 표시의 차는 75분입니다. 실제 1시간이 지날 때 느린 시계와 빠른 시계의 차는 6＋4＝10분씩 벌어집니다. 따라서 맞춘 뒤 실제로 지난 시간은 75×60÷10＝450분입니다. 이 동안 느린 시계의 지연은 6×450÷60＝45분입니다. 실제 관측 시각은 느린 표시14시 45분보다 45분 뒤인 15시 30분입니다. 실제 관측 시각에서 450분을 빼면 오전 8시 0분입니다. 빠른 시계도 실제보다 4×450÷60＝30분 앞서므로 표시가16시 0분으로 맞습니다.",
+      "learningPoint": "두 시계의 표시 차로 경과 시간을 찾은 뒤 한 시계의 오차를 바로잡기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "빠른 시계와 느린 시계의 표시 차로 경과 시간을 찾고 실제 시각과 시작 시각을 함께 역산",
+          "conditionTracking": "동시 설정·같은 날 오전/오후·두 비율·두24시간 표시",
+          "caseSplitting": "두 시계 차가 벌어지는 속도와 각 시계의 오차를 구분하고 자정 순환 배제",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "relative clock drift then actual observation and common start",
+        "parameters": {
+          "slowRate": 6,
+          "fastRate": 4,
+          "slowDisplay": 885,
+          "fastDisplay": 960,
+          "actualObservationRange": [
+            720,
+            1439
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "id": "applied1-q12-high-v4",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "어느 날 오전 같은 순간에 두 시계를 정확하게 맞추었습니다. 느린 시계는 실제 1시간에 5분씩 늦어지고, 빠른 시계는 실제 1시간에 3분씩 빨라집니다. 그날 오후 같은 순간에 보니 느린 시계는 15시 0분, 빠른 시계는 15시 48분을 가리켰습니다. 두 시계는 시각을 24시간제로 나타냅니다. 오전 몇 시 몇 분에 두 시계를 맞추었습니까?",
+      "answer": "9, 30",
+      "answerParts": [
+        9,
+        30
+      ],
+      "answerLabels": [
+        "오전 시",
+        "분"
+      ],
+      "acceptedAnswers": [
+        "9, 30"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "두 표시의 차는 48분입니다. 실제 1시간이 지날 때 느린 시계와 빠른 시계의 차는 5＋3＝8분씩 벌어집니다.",
+        "따라서 맞춘 뒤 실제로 지난 시간은 48×60÷8＝360분입니다.",
+        "이 동안 느린 시계의 지연은 5×360÷60＝30분입니다. 실제 관측 시각은 느린 표시15시 0분보다 30분 뒤인 15시 30분입니다.",
+        "실제 관측 시각에서 360분을 빼면 오전 9시 30분입니다. 빠른 시계도 실제보다 3×360÷60＝18분 앞서므로 표시가15시 48분으로 맞습니다."
+      ],
+      "solution": "두 표시의 차는 48분입니다. 실제 1시간이 지날 때 느린 시계와 빠른 시계의 차는 5＋3＝8분씩 벌어집니다. 따라서 맞춘 뒤 실제로 지난 시간은 48×60÷8＝360분입니다. 이 동안 느린 시계의 지연은 5×360÷60＝30분입니다. 실제 관측 시각은 느린 표시15시 0분보다 30분 뒤인 15시 30분입니다. 실제 관측 시각에서 360분을 빼면 오전 9시 30분입니다. 빠른 시계도 실제보다 3×360÷60＝18분 앞서므로 표시가15시 48분으로 맞습니다.",
+      "learningPoint": "두 시계의 표시 차로 경과 시간을 찾은 뒤 한 시계의 오차를 바로잡기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "빠른 시계와 느린 시계의 표시 차로 경과 시간을 찾고 실제 시각과 시작 시각을 함께 역산",
+          "conditionTracking": "동시 설정·같은 날 오전/오후·두 비율·두24시간 표시",
+          "caseSplitting": "두 시계 차가 벌어지는 속도와 각 시계의 오차를 구분하고 자정 순환 배제",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "relative clock drift then actual observation and common start",
+        "parameters": {
+          "slowRate": 5,
+          "fastRate": 3,
+          "slowDisplay": 900,
+          "fastDisplay": 948,
+          "actualObservationRange": [
+            720,
+            1439
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "늦어지는 시계를 맞춘 시각",
+      "learningLocation": "활용 1회 · 원문 12번 · 시계와 시간",
+      "id": "applied1-q12-high-v5",
+      "genId": "applied1-q12",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 12,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "2.7",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r4",
+      "text": "어느 날 오전 같은 순간에 두 시계를 정확하게 맞추었습니다. 느린 시계는 실제 1시간에 3분씩 늦어지고, 빠른 시계는 실제 1시간에 7분씩 빨라집니다. 그날 오후 같은 순간에 보니 느린 시계는 16시 6분, 빠른 시계는 17시 26분을 가리켰습니다. 두 시계는 시각을 24시간제로 나타냅니다. 오전 몇 시 몇 분에 두 시계를 맞추었습니까?",
+      "answer": "8, 30",
+      "answerParts": [
+        8,
+        30
+      ],
+      "answerLabels": [
+        "오전 시",
+        "분"
+      ],
+      "acceptedAnswers": [
+        "8, 30"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "두 표시의 차는 80분입니다. 실제 1시간이 지날 때 느린 시계와 빠른 시계의 차는 3＋7＝10분씩 벌어집니다.",
+        "따라서 맞춘 뒤 실제로 지난 시간은 80×60÷10＝480분입니다.",
+        "이 동안 느린 시계의 지연은 3×480÷60＝24분입니다. 실제 관측 시각은 느린 표시16시 6분보다 24분 뒤인 16시 30분입니다.",
+        "실제 관측 시각에서 480분을 빼면 오전 8시 30분입니다. 빠른 시계도 실제보다 7×480÷60＝56분 앞서므로 표시가17시 26분으로 맞습니다."
+      ],
+      "solution": "두 표시의 차는 80분입니다. 실제 1시간이 지날 때 느린 시계와 빠른 시계의 차는 3＋7＝10분씩 벌어집니다. 따라서 맞춘 뒤 실제로 지난 시간은 80×60÷10＝480분입니다. 이 동안 느린 시계의 지연은 3×480÷60＝24분입니다. 실제 관측 시각은 느린 표시16시 6분보다 24분 뒤인 16시 30분입니다. 실제 관측 시각에서 480분을 빼면 오전 8시 30분입니다. 빠른 시계도 실제보다 7×480÷60＝56분 앞서므로 표시가17시 26분으로 맞습니다.",
+      "learningPoint": "두 시계의 표시 차로 경과 시간을 찾은 뒤 한 시계의 오차를 바로잡기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 나이 비·앞뒤 이동·시계 오차를 이어 사용하며 역추론을 추가",
+          "reasoning": "빠른 시계와 느린 시계의 표시 차로 경과 시간을 찾고 실제 시각과 시작 시각을 함께 역산",
+          "conditionTracking": "동시 설정·같은 날 오전/오후·두 비율·두24시간 표시",
+          "caseSplitting": "두 시계 차가 벌어지는 속도와 각 시계의 오차를 구분하고 자정 순환 배제",
+          "computation": "숫자의 크기만이 아니라 미지수·구간·시점의 결합으로 제작 단계를 구분",
+          "representation": "원문10~12번은 텍스트 문항이며 새 문제도 필요한 수·비·시각만 지문에 제시",
+          "reading": "필수 조건과 현재/미래·전/후의 지칭을 명시; 지문 아래 조건 요약이나 힌트 없음",
+          "visualCues": "문제에 풀이 그림·완성된 식·보조선·정답 단서를 추가하지 않음",
+          "shortcuts": "음수 횟수·잘못된 시점의 비·12시간 중복·다른 정수해를 독립 검산"
+        }
+      },
+      "verification": {
+        "primaryMethod": "relative clock drift then actual observation and common start",
+        "parameters": {
+          "slowRate": 3,
+          "fastRate": 7,
+          "slowDisplay": 966,
+          "fastDisplay": 1046,
+          "actualObservationRange": [
+            720,
+            1439
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      }
     }
   ],
-  "preservedLegacyCount": 35,
-  "newAuthoredCount": 100,
+  "preservedLegacyCount": 50,
+  "newAuthoredCount": 130,
   "reviewSummary": {
-    "sourceTypes": 9,
+    "sourceTypes": 12,
     "perSource": 15,
     "perLevel": 5,
-    "count": 135,
-    "preservedLegacyCount": 35,
-    "newAuthoredCount": 100,
+    "count": 180,
+    "preservedLegacyCount": 50,
+    "newAuthoredCount": 130,
     "independentAnswers": true,
     "actualZipReviewed": true,
     "sourceGradeMutation": false,
