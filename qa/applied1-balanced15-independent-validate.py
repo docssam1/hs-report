@@ -4,6 +4,8 @@ import datetime
 import functools
 import hashlib
 import json
+import itertools
+import re
 import subprocess
 from fractions import Fraction
 from pathlib import Path
@@ -84,6 +86,27 @@ def movement_states(draws, forward, backward):
     for _ in range(draws):
         states={(pos+forward,white+1)for pos,white in states}|{(pos-backward,white)for pos,white in states}
     return states
+
+
+def card_pairs(digits):
+    allowed=set(digits)
+    assert len(allowed)==6
+    mask=sum(1<<d for d in digits)
+    numbers=[]
+    for n in range(100,1000):
+        parts=list(map(int,str(n)))
+        if len(set(parts))==3 and set(parts)<=allowed:
+            numbers.append((n,sum(1<<d for d in parts)))
+    return [(a,b)for a,ma in numbers for b,mb in numbers if not ma&mb and ma|mb==mask]
+
+
+def fraction_stream():
+    numerator,denominator,group,start_denominator=1,4,2,4
+    while True:
+        yield numerator,denominator
+        numerator+=1;denominator-=1
+        if numerator>group:
+            group+=1;start_denominator+=2;numerator=1;denominator=start_denominator
 
 
 def answer(item):
@@ -254,6 +277,60 @@ def answer(item):
                     candidates.append(start)
         assert len(candidates)==1,(item['id'],candidates)
         return [candidates[0]//60,candidates[0]%60]
+    if no == 13:
+        pairs=card_pairs(p['digits'])
+        assert item['cards']==p['digits']
+        if level=='low':
+            candidates=[a*b for a,b in pairs if [a//100,b//100]==p['hundreds']]
+            assert len(candidates)==24
+            return [max(candidates)]
+        if level=='high':
+            pairs=[(a,b)for a,b in pairs if a<b]
+            by_difference=[a*b for a,b in pairs if p['minimumDifference']<=b-a<=p['maximumDifference']]
+            by_multiple=[a*b for a,b in pairs if a%p['divisor']==0 or b%p['divisor']==0]
+            candidates=[a*b for a,b in pairs if p['minimumDifference']<=b-a<=p['maximumDifference']
+                        and(a%p['divisor']==0 or b%p['divisor']==0)]
+            assert len(candidates)>=4
+            assert (min(candidates),max(candidates))!=(min(by_difference),max(by_difference))
+            assert (min(candidates),max(candidates))!=(min(by_multiple),max(by_multiple))
+        else:
+            candidates=[a*b for a,b in pairs]
+        return [max(candidates)-min(candidates)]
+    if no == 14:
+        assert p['ratio']==3
+        if level=='low':
+            bag=p['first']
+            for _ in range(2):bag=3*bag+p['extra']
+            return [bag]
+        states=[]
+        for first in range(1,p['total']):
+            if level=='middle':
+                second=3*first+p['extra'];third=3*second+p['extra']
+            else:
+                extra=Fraction(p['third']-9*first,4)
+                if extra<=0 or extra.denominator!=1:continue
+                second=3*first+extra;third=3*second+extra
+            if first+second+third==p['total']:
+                states.append((first,second,third))
+        assert len(states)==1,(item['id'],states)
+        return [int(states[0][2]if level=='middle'else states[0][0])]
+    if no == 15:
+        sequence=list(itertools.islice(fraction_stream(),17))
+        shown=[tuple(map(int,pair))for pair in re.findall(r'<mfrac><mn>(\d+)</mn><mn>(\d+)</mn></mfrac>',' '.join(item['promptDataLines']))]
+        if level=='low':
+            assert item['promptDataLines'][0].count('□')==1
+            assert shown==[pair for index,pair in enumerate(sequence,1)if index!=p['missingPosition']]
+            return list(sequence[p['missingPosition']-1])
+        assert shown==sequence
+        if level=='middle':
+            return list(next(itertools.islice(fraction_stream(),p['index']-1,None)))
+        matches=[]
+        for index,(numerator,denominator)in enumerate(fraction_stream(),1):
+            if numerator+denominator>p['writtenSum']:break
+            if numerator+denominator==p['writtenSum']and denominator-numerator==p['writtenDifference']:
+                matches.append(index)
+        assert len(matches)==1
+        return matches
     outcomes = set()
     states = set()
     for year in range(1900, 2400):
@@ -292,13 +369,21 @@ source_me=Fraction(5,4)*(source_brother+9)-9
 assert source_brother==7 and source_me==11 and 56-source_me==45
 assert {(w,18-w)for pos,w in movement_states(18,7,3)if pos==46}=={(10,8)}
 assert Fraction((900-856)*60,8)==330 and 900-330==570
+source_products=[a*b for a,b in card_pairs([5,7,3,6,9,8])]
+assert max(source_products)==842625 and min(source_products)==213072
+assert 13*450+250==6100 and 9*450+200==4250
+assert next(itertools.islice(fraction_stream(),110,None))==(7,24)
 
 evidence = []
 for item in data['items']:
     actual = answer(item)
     assert actual == item['answerParts'], (item['id'], actual, item['answerParts'])
     assert len(item['solutionSteps']) >= 3 and item['learningLocation'] and item['learningPoint']
-    assert item['sourcePointBand'] == '2.7'
+    source_points={x['pointBand']for x in legacy.values()if x['sourceNo']==item['sourceNo']}
+    if not source_points:
+        assert item['sourceNo']in [7,8]
+        source_points={'2.7'}
+    assert source_points=={item['sourcePointBand']}
     assert item['pointBand'] == dict(low='2.7', middle='3.4', high='4.2')[item['practiceLevel']]
     if item.get('preservedApprovedId'):
         old = legacy[item['id']]
@@ -320,9 +405,9 @@ for item in data['items']:
     evidence.append({'id': item['id'], 'passed': True, 'answer': actual})
 for no in data['availableSourceNos']:
     assert collections.Counter(x['practiceLevel'] for x in data['items'] if x['sourceNo'] == no) == dict(low=5, middle=5, high=5)
-assert len(data['items']) == 180 and len({x['id'] for x in data['items']}) == 180
-assert len({x['text'] + '\n' + str(x.get('promptDataLines', '')) for x in data['items']}) == 180
-previous = json.loads(subprocess.check_output(['git', 'show', '0e034b6:bank/data/applied1-balanced15.json'], cwd=ROOT))
+assert len(data['items']) == 225 and len({x['id'] for x in data['items']}) == 225
+assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 225
+previous = json.loads(subprocess.check_output(['git', 'show', '4e5376e:bank/data/applied1-balanced15.json'], cwd=ROOT))
 for old in previous['items']:
     current = next(x for x in data['items'] if x['id'] == old['id'])
     assert all(current[k] == v for k, v in old.items())
@@ -330,7 +415,7 @@ for old in previous['items']:
 out = ROOT / '.private-work/balanced15-20261024/independent-math.json'
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps({'dataSha256': hashlib.sha256(FILE.read_bytes()).hexdigest(),
-                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,13)),
-                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift'],
+                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,16)),
+                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions'],
                            'items': evidence}, ensure_ascii=False, indent=2) + '\n')
-print('PASS180 answers in twelve5/5/5 groups; independent age states, movement paths, clock start minutes; prior135 content/storage preserved')
+print('PASS225 answers in fifteen5/5/5 groups; source3.4 preserved in middle; disjoint factor masks, bag states, fraction stream; prior180 content/storage preserved')
