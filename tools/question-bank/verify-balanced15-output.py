@@ -4,6 +4,7 @@ This verifies selected IDs and PDF completeness, not mathematical or visual qual
 The contact sheets still require direct visual review before release.
 """
 import argparse
+import base64
 import csv
 import hashlib
 import io
@@ -54,6 +55,15 @@ with zipfile.ZipFile(zip_path)as z:
     assert manifest['items']==expected_items,'ZIP must contain the exact selected question/answer/solution data'
     assert re.findall('data-item-id="([^"]+)"',z.read('문제.html').decode())==ids
     assert re.findall('data-answer-id="([^"]+)"',z.read('답안과상세풀이.html').decode())==ids
+    question_html=z.read('문제.html').decode();answer_html=z.read('답안과상세풀이.html').decode()
+    assert 'class="solution-figure"'not in question_html,'Answer diagrams must never appear in question pages'
+    for html,field,pattern in [(question_html,'asset',r'<div class="q-figure"[^>]*><img src="([^"]+)"'),
+                               (answer_html,'solutionAsset',r'<figure class="solution-figure"><img src="([^"]+)"')]:
+        embedded=re.findall(pattern,html);assets=[x[field]for x in items if x.get(field)]
+        assert len(embedded)==len(assets),(field,len(embedded),len(assets))
+        for uri,asset in zip(embedded,assets):
+            assert uri.startswith('data:image/')and';base64,'in uri,'All image bytes must be embedded for offline ZIP reading'
+            assert base64.b64decode(uri.split(',',1)[1])==(ROOT/'bank'/asset['src']).read_bytes(),asset['src']
     quick=list(csv.reader(io.StringIO(z.read('빠른정답.csv').decode('utf-8-sig'))))
     assert[row[1]for row in quick[1:]]==ids
     assert json.loads(z.read('검수기록.json'))['selectedIds']==ids
