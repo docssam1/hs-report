@@ -40,12 +40,14 @@ const session={access_token:'qa-student',refresh_token:'qa-refresh',login_name:s
    for(const qr of urls){const outer=new URL(qr);assert.equal(outer.searchParams.get('v'),'20261013-report-qr');assert.equal(outer.searchParams.has('name'),false,'no student identity in QR');links.push(outer.pathname+outer.search);}
   }
   const legacyLinks=links.slice(0,2).map(link=>{const u=new URL(link,base),next=new URL(u.searchParams.get('next'),base);u.searchParams.delete('v');next.searchParams.delete('v');u.searchParams.set('next',next.pathname.replace(/^\//,'')+next.search);return u.pathname+u.search;});
-  for(const link of links.concat(legacyLinks)){
+  const poolLink='/index.html?next='+encodeURIComponent('bank/pool.html?bank=applied1&nos=2&count=3');
+  for(const link of links.concat(legacyLinks,[poolLink])){
    await p.goto(base+link,{waitUntil:'networkidle'});
    await p.evaluate(()=>{if(typeof skipIntro==='function')skipIntro();});
    const target=new URL(new URL(link,base).searchParams.get('next'),base);
    await p.waitForURL(u=>u.pathname===target.pathname&&u.searchParams.get('name')===student);
    if(target.pathname.endsWith('final.html'))await p.locator('.report-qr-code svg').first().waitFor({state:'attached'});
+   else if(target.pathname.endsWith('/pool.html'))await p.waitForFunction(()=>window.__POOL_QA__?.ready===true);
    else await p.locator('#f1Pages .page').first().waitFor();
   }
   await c.close();
@@ -64,6 +66,6 @@ const session={access_token:'qa-student',refresh_token:'qa-refresh',login_name:s
    await fresh.close();
   }
   assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);
-  console.log('PASS 8 new + 2 legacy QR targets (Final7/8, Last1, Signature1 report/practice), authenticated mobile navigation and new-browser email/PIN setup handoff; no real mail/result/permission writes');
+  console.log('PASS 8 new + 2 legacy QR targets + expanded-pool login return (Final7/8, Last1, Signature1 report/practice), authenticated mobile navigation and new-browser email/PIN setup handoff; no real mail/result/permission writes');
  }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});

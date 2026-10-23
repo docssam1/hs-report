@@ -100,7 +100,7 @@
   function bankReturnTarget(){
     var query=new URLSearchParams(location.search);
     query.delete('from');query.delete('name');
-    var page=/\/catalog\.html$/i.test(location.pathname)?'bank/catalog.html':(/\/personal-mock\.html$/i.test(location.pathname)?'bank/personal-mock.html':'bank/index.html');
+    var page=/\/pool\.html$/i.test(location.pathname)?'bank/pool.html':/\/catalog\.html$/i.test(location.pathname)?'bank/catalog.html':(/\/personal-mock\.html$/i.test(location.pathname)?'bank/personal-mock.html':'bank/index.html');
     var search=query.toString();
     return page+(search?'?'+search:'')+location.hash;
   }

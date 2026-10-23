@@ -1,0 +1,29 @@
+/* Scoped to the question-bank catalogue; reference: lete-on gfield-textbook-design, 2026-10-23. */
+@font-face{font-family:Pretendard;src:url('assets/fonts/pretendard-var.woff2') format('woff2');font-weight:100 700;font-display:swap}
+@font-face{font-family:'GFIELD Print Serif';src:url('assets/fonts/noto-serif-kr-korean-400-normal.woff2') format('woff2');font-weight:400;font-display:swap;unicode-range:U+1100-11FF,U+3130-318F,U+AC00-D7AF}
+@font-face{font-family:'GFIELD Print Serif';src:url('assets/fonts/noto-serif-kr-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap;unicode-range:U+0000-00FF,U+2000-206F}
+:root{--bg:#f1ece1;--paper:#fdfbf5;--ink:#2a241c;--muted:#7a6f5c;--line:#e2d9c6;--navy:#2f6b4a;--navy2:#1e4631;--orange:#2f6b4a;--orange-soft:#e9f0e7;--green:#2f6b4a;--green-soft:#e9f0e7;--amber:#b4512e;--amber-soft:#f7f2e7;--purple:#7a6f5c;--purple-soft:#f7f2e7;--blue-soft:#f7f2e7}
+body{font-family:Pretendard,sans-serif;font-weight:400;font-synthesis:none}
+:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
+.shell{width:min(1280px,calc(100% - 48px));padding-top:28px}
+.back,.reset,.finder-tab,.field input,.field select,.area-pick{min-height:44px;border-radius:3px;font-size:14px;font-weight:500;background:var(--paper);color:var(--ink);border-color:#c9bda2}
+.back{font-weight:600}.topnav .crumb{color:var(--muted)}
+.hero{padding:22px 0 26px;border-radius:0;background:none;color:var(--ink);box-shadow:none;border-bottom:2px solid var(--navy)}
+.hero:after{display:none}.eyebrow{font-size:11px;font-weight:500;color:var(--navy);letter-spacing:.16em}
+h1{font-size:clamp(25px,3vw,35px);font-weight:700;line-height:1.3}.hero p{font-size:15px;color:var(--muted)}
+.filters{position:relative;top:auto;padding:18px 20px;border-radius:0;background:var(--paper);box-shadow:none;backdrop-filter:none}
+.finder-tabs{gap:0;border-bottom:1px solid var(--line)}.finder-tab{border:0;border-bottom:2px solid transparent;background:none}.finder-tab.active{color:var(--navy);border-color:var(--navy);background:none;font-weight:700}
+.area-pick{padding:8px 13px}.area-pick.active{background:var(--green-soft);color:var(--navy);border-color:var(--navy)}
+.field label{font-weight:600;font-size:13px;color:var(--ink)}.difficulty-rule{font-size:13px;line-height:1.6}.learning-filter{width:min(100%,260px);margin-top:16px}
+#result-status{color:var(--muted);font-weight:500;font-size:13px}.filter-foot{margin-top:16px}
+.paper-context{background:var(--paper);border-color:var(--line);border-radius:0}.paper-context h2{color:var(--ink);font-weight:600}.paper-context p{font-size:13px}
+.paper-cuts span{border-color:var(--line);background:var(--paper);color:var(--ink);font-weight:500}.paper-context .badge{font-weight:500}
+.area-section{border-radius:0;box-shadow:none;background:var(--paper)}.area-head{background:var(--paper);color:var(--ink);border-bottom:2px solid var(--navy);padding:18px 20px}
+.area-head h2{font-size:22px;font-weight:600}.area-head span{font-size:13px;color:var(--muted)}.subarea{padding:18px 20px}.subarea h3{font-size:17px;font-weight:600;color:var(--navy)}.subarea-count{font-size:12px}
+.type-grid{display:block}.type-card{border:0;border-top:1px solid var(--line);padding:16px 0;border-radius:0;background:transparent;box-shadow:none}.type-card:first-child{border-top:0}
+.type-card h4{font-weight:500;font-size:16px;color:var(--ink);line-height:1.55}.badge{font-size:12px;font-weight:500;border-radius:2px;padding:4px 7px;line-height:1.4}
+.badge.source,.badge.na{background:#f7f2e7;color:var(--muted)}.badge.difficulty.high{background:#f7f2e7;color:#9c3d20}.badge.difficulty.middle{background:#f7f2e7;color:#685525}.badge.difficulty.low{background:var(--green-soft);color:var(--navy)}
+.badge.practice{background:var(--green-soft);color:var(--navy);min-height:44px;padding:10px 12px;font-weight:600}.raw-single{background:none;border:0;color:var(--muted);font-size:12px;padding-left:0}
+.empty,.error{border-radius:0;background:var(--paper)}
+@media(max-width:720px){.shell{width:calc(100% - 24px);padding-top:16px}.hero{padding:14px 0 22px}.hero p{font-size:14px}.filters,.subarea{padding:16px}.area-head{padding:16px}.filter-grid,.type-search{grid-template-columns:1fr}.finder-tab{font-size:14px}.type-card h4{font-size:15px}.learning-filter{width:100%}.paper-context{padding:16px}}
+@media print{html,body{background:#fff;color:#191511}.hero,.filters,.paper-context,.screen-only{display:none!important}.shell{width:auto;margin:0;padding:0}.area-section,.area-head,.subarea,.type-card{border-color:#999;background:#fff;color:#191511}.type-card h4{font-family:'GFIELD Print Serif',serif;font-weight:400;color:#191511}.badge{color:#191511!important;background:#fff!important}.development{display:none}}

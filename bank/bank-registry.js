@@ -1255,6 +1255,7 @@
             responseRateUse: rate == null ? 'source-points-fallback' : 'observed-source-and-variant-benchmark',
             bankDifficulty: bankLevel,
             difficultyClass: difficultyClass,
+            pointBandDifficulty: item.pointBandDifficulty || null,
             paperContextKey: [entry.setKey, Number(roundKey)].join('|'),
             searchEvidence: itemSearchEvidence(item),
             reviewStatus: isConfirmed ? 'confirmed' : 'candidate',

@@ -115,6 +115,7 @@
   @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
   @media print{.screen-only{display:none!important}.shell{width:100%;padding:0}.area-section{break-inside:avoid;box-shadow:none}}
 </style>
+<link rel="stylesheet" href="catalog-learning.css?v=20261023">
 </head>
 <body class="bank-access-pending">
 <main class="shell">
@@ -125,6 +126,7 @@
     <a class="back" href="index.html?bank=final2">파이널 2회 유사문제 90개</a>
     <a class="back" href="index.html?bank=final3">파이널 3회 유사문제 90개</a>
     <a class="back" href="index.html?bank=final4">파이널 4회 유사문제 90개</a>
+    <a class="back" href="pool.html?bank=applied1&amp;count=9">활용 1회 유사문제 216개</a>
     <span class="crumb">문제은행 유형 선택</span>
   </nav>
 
@@ -154,13 +156,14 @@
         </div>
         <div class="area-picks" role="group" aria-label="영역별 전체 유형">
           <button class="area-pick active" type="button" data-area="all">전체 유형</button>
-          <button class="area-pick" type="button" data-area="수·규칙찾기">수·규칙찾기</button>
-          <button class="area-pick" type="button" data-area="식의 계산">식의 계산</button>
+          <button class="area-pick" type="button" data-area="수와 식">수와 식</button>
+          <button class="area-pick" type="button" data-area="지문 이해">지문 이해</button>
           <button class="area-pick" type="button" data-area="도형">도형</button>
           <button class="area-pick" type="button" data-area="경우의 수">경우의 수</button>
         </div>
-        <div class="difficulty-rule">난이도는 실제 정답률을 우선해 최상·상·중간·하·최하로 표시하며, 정답률이 없을 때만 원문 배점을 사용합니다.</div>
+        <div class="difficulty-rule">활용: 2.7점대 하 · 3.4점대 중 · 4.2점대 상. 다른 시험은 정답률 우선이며, 없을 때 배점대와 세부 난도를 함께 봅니다. 2.7점대의 상은 전체 기준 중입니다.</div>
       </div>
+      <div class="field learning-filter"><label for="difficulty-filter">문제은행 난이도</label><select id="difficulty-filter"><option value="all">상·중·하 전체</option><option value="high">상</option><option value="middle">중</option><option value="low">하</option></select></div>
     </form>
     <div class="filter-foot">
       <div id="result-status" role="status" aria-live="polite">분류 데이터를 불러오는 중입니다.</div>
@@ -186,6 +189,7 @@
 <script src="../mock-data-last4.js"></script>
 <script src="../last-score-data.js"></script>
 <script src="../mock-data-original.js?v=20260928-signature-answer-keys-1"></script>
+<script src="learning-profile.js?v=20261023"></script>
 <script src="bank-registry.js?v=20261016-existing-banks"></script>
 <script type="text/plain" id="legacy-catalog-script">
 (function(){
@@ -361,7 +365,7 @@
 <script>
 window.GFIELD_BANK_ACCESS.ready.then(function(){
   var script=document.createElement('script');
-  script.src='catalog.js?v=20261022-last4';
+  script.src='catalog.js?v=20261023-learning-profile';
   script.onerror=function(){document.getElementById('result-status').textContent='문제은행을 불러오지 못했습니다.';};
   document.body.appendChild(script);
 });

@@ -674,7 +674,7 @@
       if(currentStudent!==(demo?'체험':name)) return;
       if(next){
         const helper=window.GFIELD_FINAL_LAST_ROUTES;
-        if(/(?:^|\/)bank\/(?:index|catalog|personal-mock)\.html(?:[?#]|$)/i.test(next)){
+        if(/(?:^|\/)bank\/(?:index|catalog|personal-mock|pool)\.html(?:[?#]|$)/i.test(next)){
           issueQuestionBankHandoff();
           location.href=withQuestionBankIdentity(next);
         }else location.href=helper&&helper.withStudent?helper.withStudent(next,currentStudent):next+(next.includes('?')?'&':'?')+'name='+encodeURIComponent(currentStudent);
@@ -695,7 +695,7 @@
       const path=url.pathname.replace(/^\/+/, '').toLowerCase();
       const page=path.split('/').pop();
       const STUDENT_PAGES=['final.html','mock.html','answer.html','last1-entry.html','last1-analysis.html','last1-result.html'];
-      if(STUDENT_PAGES.indexOf(page)<0&&!/(?:^|\/)bank\/(?:index|catalog|personal-mock)\.html$/.test(path)) return '';
+      if(STUDENT_PAGES.indexOf(page)<0&&!/(?:^|\/)bank\/(?:index|catalog|personal-mock|pool)\.html$/.test(path)) return '';
       return url.pathname.replace(/^\//,'')+url.search+url.hash;
     }catch(e){ return ''; }
   }

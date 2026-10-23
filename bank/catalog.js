@@ -2,9 +2,10 @@
   'use strict';
 
   var R=window.BANK_TYPE_REGISTRY;
+  var P=window.GFIELD_BANK_LEARNING_PROFILE;
   var SOURCE_LABELS={middle:'중급',applied:'활용',final:'파이널',last:'최종',original:'시그니처 실전'};
-  var TARGET_SETS=['applied','final','last','original'];
-  var AREA_ORDER=['수·규칙찾기','식의 계산','도형','경우의 수'];
+  var TARGET_SETS=['middle','applied','final','last','original'];
+  var AREA_ORDER=['도형','수와 식','경우의 수','지문 이해'];
   var POINT_LABELS={'source-2.7':'2.7점','source-3.4':'3.4점','source-4.2':'4.2점'};
   var $=function(id){return document.getElementById(id)};
   var FINDER_MODE='paper';
@@ -21,7 +22,8 @@
   function queryMatches(item,query){
     var cleanQuery=normalized(query);
     if(!cleanQuery)return true;
-    var fields=[item.area,item.subarea,item.displayType,item.detailType,item.detailTypeKey].concat(item.searchEvidence||[]);
+    var tax=P.taxonomy(item);
+    var fields=[tax.area,tax.subarea,item.area,item.subarea,item.displayType,item.detailType,item.detailTypeKey].concat(item.searchEvidence||[]);
     var haystack=normalized(fields.join(' '));
     if(haystack.replace(/ /g,'').indexOf(cleanQuery.replace(/ /g,''))>=0)return true;
     var tokens=unique(cleanQuery.split(/\s+/).filter(function(token){return token.length>=2&&!SEARCH_STOP[token]}));
@@ -59,16 +61,17 @@
     originalCatalog.forEach(function(entry){originalById[entry.id]=entry});
     var map={};
     items.forEach(function(item){
+      var tax=P.taxonomy(item);
       var sourceReviewed=item.reviewStatus==='confirmed'&&item.typeFamilyId==='reviewed-source-override';
       var groupKey=sourceReviewed?item.canonicalTypeId:item.objectiveTypeId;
       var group=map[groupKey];
       if(!group){
         group=map[groupKey]={
-          id:groupKey,area:item.area,subarea:item.subarea,displayType:item.displayType,
+          id:groupKey,area:tax.area,subarea:tax.subarea,displayType:item.displayType,learningDifficulties:[],
           detailTypes:[],detailTypeKeys:[],sourceReviewed:sourceReviewed,
           sourceCounts:{},pointCounts:{},difficultyCounts:{},canonicalTypeIds:[],
           rates:[],points:[],unmeasuredRateCount:0,confirmedCount:0,candidateCount:0,itemCount:0,reviewBases:[],
-          directGenerator:null,directGeneratorRef:null,fixedRefs:{}
+          directGenerator:null,directGeneratorRef:null,fixedRefs:{},expandedRefs:{}
         };
       }
       if(group.detailTypes.indexOf(item.detailType)<0)group.detailTypes.push(item.detailType);
@@ -79,6 +82,8 @@
       if(item.responseRateStatus==='measured')group.rates.push(item.responseRate);else group.unmeasuredRateCount++;
       if(Number.isFinite(item.points))group.points.push(item.points);
       if(item.bankDifficulty)group.difficultyCounts[item.bankDifficulty.label]=(group.difficultyCounts[item.bankDifficulty.label]||0)+1;
+      group.learningDifficulties.push(P.difficulty(item));
+      if(item.expandedPool){var pool=item.expandedPool;if(!group.expandedRefs[pool.bank])group.expandedRefs[pool.bank]=[];group.expandedRefs[pool.bank].push(pool.sourceNo);}
       group.itemCount++;
       var source=item.sourceRef,sourceRound=Number(source.round),fixedBank='';
       if(source.set==='final'&&[1,2,3,4,7,8].includes(sourceRound))fixedBank='final'+sourceRound;
@@ -117,6 +122,8 @@
         group.benchmarkRate=null;
         group.bankDifficulty=R.bankDifficulty(null,Math.max.apply(null,group.points));
       }
+      group.learningDifficulties.sort(function(a,b){return a.order-b.order;});
+      group.learningDifficulty=group.learningDifficulties[0];
       group.searchText=[group.area,group.subarea,group.displayType,group.studentDisplayName].concat(group.detailTypeKeys).join(' ').toLocaleLowerCase('ko-KR');
       return group;
     });
@@ -129,17 +136,13 @@
   }
 
   function evidenceBadges(group){
-    var difficulty=group.bankDifficulty||{id:'middle',label:'중간',evidenceLabel:''};
-    var html='<span class="badge difficulty '+esc(difficulty.id)+'">난이도 '+esc(difficulty.label)+'</span>';
-    if(group.benchmarkRate!=null){
-      html+='<span class="badge source">기준 정답률 '+percent(group.benchmarkRate)+'</span>';
-    }else{
-      html+='<span class="badge na">'+esc(difficulty.evidenceLabel)+'</span>';
-    }
-    html+=Object.keys(POINT_LABELS).filter(function(key){return group.pointCounts[key]}).map(function(key){
-      return '<span class="badge na">'+POINT_LABELS[key]+' '+group.pointCounts[key]+'</span>';
-    }).join('');
-    if(group.unmeasuredRateCount)html+='<span class="badge na">정답률 없음 '+group.unmeasuredRateCount+'</span>';
+    var rows=group.learningDifficulties||[],labels=unique(rows.map(function(row){return row.label;}));
+    var difficulty=group.learningDifficulty||{id:'unclassified',label:'미분류'};
+    var html='<span class="badge difficulty '+esc(difficulty.id)+'">난이도 '+esc(labels.join('·')||difficulty.label)+'</span>';
+    var rates=rows.filter(function(row){return row.basis==='response-rate';}).map(function(row){return row.responseRate;});
+    if(rates.length){var low=Math.min.apply(null,rates),high=Math.max.apply(null,rates);html+='<span class="badge source">기준 정답률 '+percent(low)+(low===high?'':'~'+percent(high))+'</span>';}
+    else html+='<span class="badge na">'+esc(unique(rows.map(function(row){return row.evidenceLabel||'난도 확인 필요';})).join(' / '))+'</span>';
+    html+=Object.keys(POINT_LABELS).filter(function(key){return group.pointCounts[key]}).map(function(key){return '<span class="badge na">'+POINT_LABELS[key]+' '+group.pointCounts[key]+'</span>';}).join('');
     return html;
   }
 
@@ -163,6 +166,7 @@
         '&points='+encodeURIComponent(sourceRef.points)+'&difficulty='+encodeURIComponent(sourceDifficulty.label);
       generator='<a class="badge practice" href="index.html?'+params+'">이 유형 유사문제 검토하기</a>';
     }
+    Object.keys(group.expandedRefs||{}).forEach(function(bank){generator+=' <a class="badge practice" href="pool.html?bank='+encodeURIComponent(bank)+'&amp;nos='+encodeURIComponent(unique(group.expandedRefs[bank]).join(','))+'&amp;count=9">문항별 유사문제 9개 공부하기</a>';});
     var originalType=group.sourceReviewed&&group.studentDisplayName!==group.displayType
       ?'<div class="raw-single">기존 유형명 · '+esc(group.displayType)+'</div>':'';
     return '<article class="type-card" data-type-id="'+esc(group.id)+'">'+
@@ -174,13 +178,15 @@
     var query=$('search').value;
     var scope=$('source-filter').value,round=$('round-filter').value;
     return unified.items.filter(function(item){
+      var difficulty=filterValue('difficulty-filter');
+      if(difficulty!=='all'&&P.difficulty(item).id!==difficulty)return false;
       if(FINDER_MODE==='paper'){
         if(item.sourceRef.set!==scope)return false;
         if(round!=='all'&&item.paperContextKey!==round)return false;
         return true;
       }
       if(TARGET_SETS.indexOf(item.sourceRef.set)<0)return false;
-      if(TYPE_AREA!=='all'&&item.area!==TYPE_AREA)return false;
+      if(TYPE_AREA!=='all'&&P.taxonomy(item).area!==TYPE_AREA)return false;
       if(!queryMatches(item,query))return false;
       return true;
     });
@@ -197,8 +203,8 @@
   }
 
   function scopeLabel(scope){
-    if(scope==='target')return '활용~시그니처 실전 600문항';
-    if(scope==='all')return '전체 840문항';
+    if(scope==='target')return '모든 모의고사';
+    if(scope==='all')return '모든 모의고사';
     return SOURCE_LABELS[scope]+' 범위';
   }
 
@@ -208,7 +214,7 @@
     box.hidden=FINDER_MODE!=='paper';
     if(box.hidden)return;
     if(roundKey==='all'){
-      box.innerHTML='<h2>1차 판단 · 시험지 점수대</h2><p>시험지·회차를 선택하면 그 회차의 평균과 실제 점수 구간을 먼저 보고, 문항별 실제 정답률을 이어서 비교합니다.</p>';
+      box.innerHTML='<h2>1차 판단 · 시험지 점수대</h2><p>회차를 선택하면 평균과 실제 점수 구간을 볼 수 있습니다. 활용 문항은 배점대로, 다른 시험은 원문 정답률을 우선해 상·중·하를 표시합니다.</p>';
       return;
     }
     var paper=unified.papers.filter(function(row){return row.set+'|'+row.round===roundKey})[0];
@@ -297,7 +303,7 @@
   }
 
   try{
-    if(!R)throw new Error('문제은행 분류 레지스트리가 없습니다.');
+    if(!R||!P)throw new Error('문제은행 분류 기준을 불러오지 못했습니다.');
     var models={
       middle:window.GFIELD_MOCK,applied:window.GFIELD_MOCK_HW,final:window.GFIELD_MOCK_FINAL,
       last:buildLastCatalogModel(),original:window.GFIELD_MOCK_ORIGINAL
@@ -306,7 +312,7 @@
     var originalCatalog=R.buildCatalog(window.GFIELD_MOCK_ORIGINAL);
     fillRoundFilter(unified);
     var groups=renderResults(unified,originalCatalog);
-    ['search','round-filter'].forEach(function(id){$(id).addEventListener(id==='search'?'input':'change',function(){groups=renderResults(unified,originalCatalog)})});
+    ['search','difficulty-filter','round-filter'].forEach(function(id){$(id).addEventListener(id==='search'?'input':'change',function(){groups=renderResults(unified,originalCatalog)})});
     $('source-filter').addEventListener('change',function(){fillRoundFilter(unified);groups=renderResults(unified,originalCatalog)});
     $('filter-form').addEventListener('submit',function(event){event.preventDefault();groups=renderResults(unified,originalCatalog)});
     $('paper-tab').addEventListener('click',function(){setFinderMode('paper',unified,originalCatalog)});
@@ -322,7 +328,12 @@
         groups=renderResults(unified,originalCatalog);
       });
     });
-    window.__BANK_CATALOG_QA__={summary:unified.summary,groups:groups,unified:unified,difficultyPolicy:R.difficultyEvidencePolicy};
+    window.__BANK_CATALOG_QA__={summary:unified.summary,groups:groups,unified:unified,difficultyPolicy:P.policy};
+    fetch('data/applied1-expanded-index.json?v=20261024-r1',{cache:'no-cache'}).then(function(response){if(!response.ok)throw Error('활용 확대 문항 색인을 불러오지 못했습니다.');return response.json();}).then(function(index){
+      if(index.sourceSet!=='applied'||index.sourceRound!==1||!Array.isArray(index.items)||index.items.length!==24||index.items.some(function(x){return x.variantCount!==9||x.reviewStatus!=='verified';}))throw Error('활용 확대 문항의 출처·검수 범위를 확인해 주세요.');
+      index.items.forEach(function(entry){var item=unified.items.find(function(x){return x.sourceRef.set==='applied'&&Number(x.sourceRef.round)===1&&Number(x.sourceRef.no)===entry.sourceNo;});if(!item)throw Error('활용 원문과 확대 문항의 연결이 없습니다.');item.expandedPool={bank:'applied1',sourceNo:entry.sourceNo,variantCount:9};item.searchEvidence=(item.searchEvidence||[]).concat([entry.detailType,entry.subarea]);});
+      window.__BANK_CATALOG_QA__.expandedIndexLoaded=true;groups=renderResults(unified,originalCatalog);
+    }).catch(function(error){window.__BANK_CATALOG_QA__.expandedIndexError=error.message;});
     Promise.all([1,2,3].map(function(round){
       return fetch('data/final'+round+'-fixed90-index.json?v=1',{cache:'no-cache'}).then(function(response){
         if(!response.ok)throw new Error('파이널 '+round+'회 유사문제 검색 자료를 불러오지 못했습니다.');
