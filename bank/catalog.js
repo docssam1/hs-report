@@ -71,7 +71,7 @@
           detailTypes:[],detailTypeKeys:[],sourceReviewed:sourceReviewed,
           sourceCounts:{},pointCounts:{},difficultyCounts:{},canonicalTypeIds:[],
           rates:[],points:[],unmeasuredRateCount:0,confirmedCount:0,candidateCount:0,itemCount:0,reviewBases:[],
-          directGenerator:null,directGeneratorRef:null,fixedRefs:{},expandedRefs:{}
+          directGenerator:null,directGeneratorRef:null,fixedRefs:{},expandedRefs:{},balancedRefs:{}
         };
       }
       if(group.detailTypes.indexOf(tax.detailType)<0)group.detailTypes.push(tax.detailType);
@@ -84,6 +84,7 @@
       if(item.bankDifficulty)group.difficultyCounts[item.bankDifficulty.label]=(group.difficultyCounts[item.bankDifficulty.label]||0)+1;
       group.learningDifficulties.push(P.difficulty(item));
       if(item.expandedPool){var pool=item.expandedPool;if(!group.expandedRefs[pool.bank])group.expandedRefs[pool.bank]=[];group.expandedRefs[pool.bank].push(pool.sourceNo);}
+      var graded=window.GFIELD_BALANCED_PRACTICE&&window.GFIELD_BALANCED_PRACTICE.get(item.sourceRef.set,item.sourceRef.round,item.sourceRef.no);if(graded){if(!group.balancedRefs[graded.bank])group.balancedRefs[graded.bank]=[];group.balancedRefs[graded.bank].push(item.sourceRef.no);}
       group.itemCount++;
       var source=item.sourceRef,sourceRound=Number(source.round),fixedBank='';
       if(source.set==='final'&&[1,2,3,4,7,8].includes(sourceRound))fixedBank='final'+sourceRound;
@@ -167,6 +168,7 @@
       generator='<a class="badge practice" href="index.html?'+params+'">이 유형 유사문제 검토하기</a>';
     }
     Object.keys(group.expandedRefs||{}).forEach(function(bank){generator+=' <a class="badge practice" href="pool.html?bank='+encodeURIComponent(bank)+'&amp;nos='+encodeURIComponent(unique(group.expandedRefs[bank]).join(','))+'&amp;count=9">문항별 유사문제 9개 공부하기</a>';});
+    Object.keys(group.balancedRefs||{}).forEach(function(bank){generator+=' <a class="badge practice" href="pool.html?bank='+encodeURIComponent(bank)+'&amp;nos='+encodeURIComponent(unique(group.balancedRefs[bank]).join(','))+'&amp;count=15">하·중·상 5개씩 · 15문제</a>';});
     var originalType=group.sourceReviewed&&group.studentDisplayName!==group.displayType
       ?'<div class="raw-single">기존 유형명 · '+esc(group.displayType)+'</div>':'';
     return '<article class="type-card" data-type-id="'+esc(group.id)+'">'+

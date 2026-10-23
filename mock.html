@@ -328,6 +328,7 @@
 <script src="mock-data.js?v=20261018-middle8-q4-answer"></script>
 <script src="mock-data-hw.js?v=20261012-hw1-q25"></script>
 <script src="bank/applied-learning-index.js?v=20261024-r5"></script>
+<script src="bank/balanced-practice-index.js?v=20261024-r1"></script>
 <script src="mock-data-original.js?v=20260928-signature-answer-keys-1"></script>
 <script src="bank/bank-registry.js"></script>
 <script src="bank/middle8-learning-map.js?v=20261019-approved"></script>
@@ -545,13 +546,15 @@ function appliedPoolUrl(r,numbers,count){ const info=appliedPoolRound(r); if(!in
 function appliedStudyHTML(r,no){
   const info=appliedPoolRound(r);if(!info)return '';const point=info.items[String(Number(no))];
   if(!point)return '<div class="applied-study" onclick="event.stopPropagation()">이 유형의 추가 연습은 준비 중입니다. 원문 풀이 영상을 먼저 확인하세요.</div>';
-  return '<div class="applied-study" onclick="event.stopPropagation()"><b>권장 학습 위치</b> '+esc(point.learningLocation)+'<br><b>학습 포인트</b> '+esc(point.learningPoint)+'<div class="applied-practice-actions"><a class="applied-practice-action" href="'+esc(appliedPoolUrl(r,[Number(no)],3))+'">유사문제 3개 · 답안 입력</a><a class="applied-practice-action" href="'+esc(appliedPoolUrl(r,[Number(no)],9))+'">같은 유형 9개</a></div></div>';
+  const graded=window.GFIELD_BALANCED_PRACTICE&&window.GFIELD_BALANCED_PRACTICE.url('applied',r,[Number(no)]);const gradedAction=graded?'<a class="applied-practice-action applied-practice-balanced" href="bank/'+esc(graded)+'">하·중·상 5개씩 · 15문제</a>':'';
+  return '<div class="applied-study" onclick="event.stopPropagation()"><b>권장 학습 위치</b> '+esc(point.learningLocation)+'<br><b>학습 포인트</b> '+esc(point.learningPoint)+'<div class="applied-practice-actions"><a class="applied-practice-action" href="'+esc(appliedPoolUrl(r,[Number(no)],3))+'">유사문제 3개 · 답안 입력</a><a class="applied-practice-action" href="'+esc(appliedPoolUrl(r,[Number(no)],9))+'">같은 유형 9개</a>'+gradedAction+'</div></div>';
 }
 function appliedReviewPracticeHTML(r,wrongItems){
   const info=appliedPoolRound(r);if(!info)return '';const wrong=Array.from(new Set((wrongItems||[]).map(x=>Number(x.no))));
   const covered=wrong.filter(no=>info.items[String(no)]),pending=wrong.filter(no=>!info.items[String(no)]),numbers=wrong.length?covered:Object.keys(info.items).map(Number);
   const actions=numbers.length?'<div class="applied-practice-actions"><a class="applied-practice-action applied-practice-default" href="'+esc(appliedPoolUrl(r,numbers,3))+'">'+(wrong.length?'오답 '+covered.length+'유형':'전체 '+numbers.length+'유형')+' · 유사문제 '+numbers.length*3+'개</a><a class="applied-practice-action applied-practice-expanded" href="'+esc(appliedPoolUrl(r,numbers,9))+'">유형별 9개 더 연습 · '+numbers.length*9+'개</a></div>':'';
-  return '<section class="card applied-review-practice"><h3>활용 '+Number(r)+'회 · 연결된 유사문제</h3><p>문제·상세 풀이·답안 입력·학습 포인트를 함께 엽니다. 원시험 점수는 바뀌지 않습니다.</p>'+actions+(pending.length?'<p class="hint">추가 연습 준비 중인 오답: '+pending.join(', ')+'번</p>':'')+'</section>';
+  const gradedNos=numbers.filter(no=>window.GFIELD_BALANCED_PRACTICE&&window.GFIELD_BALANCED_PRACTICE.get('applied',r,no));const gradedUrl=gradedNos.length?window.GFIELD_BALANCED_PRACTICE.url('applied',r,gradedNos):'';const gradedAction=gradedUrl?'<div class="applied-practice-actions"><a class="applied-practice-action applied-practice-balanced" href="bank/'+esc(gradedUrl)+'">'+gradedNos.join('·')+'번 유형 · 하·중·상 5개씩 · '+gradedNos.length*15+'문제</a></div>':'';
+  return '<section class="card applied-review-practice"><h3>활용 '+Number(r)+'회 · 연결된 유사문제</h3><p>문제·상세 풀이·답안 입력·학습 포인트를 함께 엽니다. 원시험 점수는 바뀌지 않습니다.</p>'+actions+gradedAction+(pending.length?'<p class="hint">추가 연습 준비 중인 오답: '+pending.join(', ')+'번</p>':'')+'</section>';
 }
 function parentCanOpenRound(r){ return mode!=='parent'||parentRoundKeys().indexOf(String(Number(r)))>=0; }
 function roundItems(r){ return (M.rounds[r]&&M.rounds[r].items)||[]; }
