@@ -42,6 +42,7 @@ const session={access_token:'qa-student',refresh_token:'qa-refresh',login_name:s
   const legacyLinks=links.slice(0,2).map(link=>{const u=new URL(link,base),next=new URL(u.searchParams.get('next'),base);u.searchParams.delete('v');next.searchParams.delete('v');u.searchParams.set('next',next.pathname.replace(/^\//,'')+next.search);return u.pathname+u.search;});
   for(const link of links.concat(legacyLinks)){
    await p.goto(base+link,{waitUntil:'networkidle'});
+   await p.evaluate(()=>{if(typeof skipIntro==='function')skipIntro();});
    const target=new URL(new URL(link,base).searchParams.get('next'),base);
    await p.waitForURL(u=>u.pathname===target.pathname&&u.searchParams.get('name')===student);
    if(target.pathname.endsWith('final.html'))await p.locator('.report-qr-code svg').first().waitFor({state:'attached'});

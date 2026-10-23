@@ -28,12 +28,13 @@
   @keyframes drift{0%{opacity:0;transform:translateY(100vh)}10%{opacity:.45}90%{opacity:.45}100%{opacity:0;transform:translateY(-20px)}}
 
   /* 인트로 영상 */
-  #video-intro{position:fixed;inset:0;z-index:70;background:#000;display:flex;align-items:center;justify-content:center;}
+  #video-intro{position:fixed;inset:0;z-index:100;background:#000;display:flex;align-items:center;justify-content:center;}
   #video-intro video{width:100%;height:100%;object-fit:cover;background:#000;}
-  #skipBtn{position:absolute;bottom:28px;right:20px;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.35);
-    padding:9px 18px;border-radius:999px;font-size:13px;font-weight:700;backdrop-filter:blur(6px);letter-spacing:.04em;}
-  #unmuteHint{position:absolute;top:22px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.45);color:#fff;
-    border:1px solid rgba(249,115,22,.6);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;}
+  #skipBtn{position:absolute;bottom:28px;right:20px;background:rgba(0,0,0,.65);color:#fff;border:1px solid rgba(255,255,255,.6);
+    min-height:44px;padding:9px 18px;border-radius:999px;font-size:13px;font-weight:700;backdrop-filter:blur(6px);letter-spacing:.04em;}
+  #unmuteHint{position:absolute;top:22px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.65);color:#fff;
+    border:1px solid rgba(255,255,255,.6);min-height:44px;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap;cursor:pointer;}
+  #skipBtn:focus-visible,#unmuteHint:focus-visible{outline:3px solid #7eafff;outline-offset:4px;}
 
   /* 로그인 */
   #login{position:fixed;inset:0;z-index:40;display:flex;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto;
@@ -409,11 +410,11 @@
 <div class="particles" id="particles"></div>
 
 <!-- 인트로 영상 -->
-<section id="video-intro">
+<section id="video-intro" aria-label="지필드 응원 인트로">
   <video id="introVideo" autoplay playsinline webkit-playsinline preload="auto"
-    src="https://raw.githubusercontent.com/docssam1/ad/main/fields-classic/KakaoTalk_20260619_023621724.mp4"></video>
-  <div id="unmuteHint" class="hidden" onclick="unmuteIntro()">🔊 탭하여 소리 켜기</div>
-  <button id="skipBtn" onclick="skipIntro()">SKIP →</button>
+    src="assets/intro/encouragement-20261023-v2.mp4"></video>
+  <button type="button" id="unmuteHint" class="hidden" onclick="unmuteIntro()">🔊 탭하여 소리 켜기</button>
+  <button type="button" id="skipBtn" onclick="skipIntro()">건너뛰기 →</button>
 </section>
 
 <!-- 로그인 -->
@@ -669,15 +670,18 @@
     if(!isDemo) briefTimer=setInterval(renderBriefing, 600000);
     applyMemberTabs(); nav(isOnline()?'archive':'home'); window.scrollTo(0,0);
     const next=qrNextTarget();
-    if(next){
-      const helper=window.GFIELD_FINAL_LAST_ROUTES;
-      if(/(?:^|\/)bank\/(?:index|catalog|personal-mock)\.html(?:[?#]|$)/i.test(next)){
-        issueQuestionBankHandoff();
-        location.href=withQuestionBankIdentity(next);
-      }else location.href=helper&&helper.withStudent?helper.withStudent(next,currentStudent):next+(next.includes('?')?'&':'?')+'name='+encodeURIComponent(currentStudent);
-      return;
-    }
-    if(!isDemo) showCheer(given);
+    afterIntroVideo(function(){
+      if(currentStudent!==(demo?'체험':name)) return;
+      if(next){
+        const helper=window.GFIELD_FINAL_LAST_ROUTES;
+        if(/(?:^|\/)bank\/(?:index|catalog|personal-mock)\.html(?:[?#]|$)/i.test(next)){
+          issueQuestionBankHandoff();
+          location.href=withQuestionBankIdentity(next);
+        }else location.href=helper&&helper.withStudent?helper.withStudent(next,currentStudent):next+(next.includes('?')?'&':'?')+'name='+encodeURIComponent(currentStudent);
+        return;
+      }
+      if(!isDemo) showCheer(given);
+    });
   }
 
   /* 인쇄물 QR 진입: 학생 개인정보는 QR에 넣지 않고 로그인 뒤 목적지로 이동한다. */
@@ -1400,14 +1404,37 @@
   function closeReader(){ document.getElementById('reader').classList.remove('open'); document.getElementById('rd-body').innerHTML=''; }
 
   /* 인트로 영상 제어 */
-  function endIntroVideo(){ const sec=document.getElementById('video-intro'); if(!sec) return; const vid=document.getElementById('introVideo'); try{ vid.pause(); vid.removeAttribute('src'); vid.load(); }catch(e){} sec.remove(); const ni=document.getElementById('name-input'); if(ni) setTimeout(()=>ni.focus(),100); }
+  function afterIntroVideo(action){
+    const sec=document.getElementById('video-intro');
+    if(sec) sec.addEventListener('gfield-intro-ended',action,{once:true});
+    else action();
+  }
+  function endIntroVideo(){
+    const sec=document.getElementById('video-intro'); if(!sec) return;
+    const vid=document.getElementById('introVideo');
+    try{ vid.pause(); vid.removeAttribute('src'); vid.load(); }catch(e){}
+    sec.remove();
+    sec.dispatchEvent(new Event('gfield-intro-ended'));
+    const ni=document.getElementById('name-input');
+    if(ni&&!currentStudent) setTimeout(()=>ni.focus(),100);
+  }
   function skipIntro(){ endIntroVideo(); }
-  function unmuteIntro(){ const vid=document.getElementById('introVideo'); if(!vid) return; vid.muted=false; vid.volume=1; const p=vid.play(); if(p&&p.catch) p.catch(()=>{}); const h=document.getElementById('unmuteHint'); if(h) h.remove(); }
+  function unmuteIntro(){
+    const vid=document.getElementById('introVideo'); if(!vid) return;
+    vid.muted=false; vid.volume=1;
+    const h=document.getElementById('unmuteHint'),p=vid.play();
+    if(p&&p.then) p.then(()=>{if(h) h.classList.add('hidden');}).catch(()=>{if(h){h.textContent='▶ 탭하여 영상 재생';h.classList.remove('hidden');}});
+  }
   (function wireIntroVideo(){
     const vid=document.getElementById('introVideo'); if(!vid) return;
     vid.addEventListener('ended', endIntroVideo); vid.addEventListener('error', endIntroVideo);
     vid.muted=false; vid.volume=1; const p=vid.play();
-    if(p&&p.catch) p.catch(()=>{ vid.muted=true; vid.play().catch(()=>{}); const h=document.getElementById('unmuteHint'); if(h) h.classList.remove('hidden'); });
+    if(p&&p.catch) p.catch(()=>{
+      if(!document.getElementById('video-intro')) return;
+      vid.muted=true;
+      const h=document.getElementById('unmuteHint'); if(h) h.classList.remove('hidden');
+      vid.play().catch(()=>{if(h) h.textContent='▶ 탭하여 영상 재생';});
+    });
   })();
 
   /* 이미지 분할 교재 인쇄 (이름 워터마크) */

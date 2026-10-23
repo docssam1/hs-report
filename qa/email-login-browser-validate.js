@@ -144,6 +144,7 @@ async function setPin(page,pin='0472'){await page.fill('#el-new-pin',pin);await 
     await page.waitForSelector('#dashboard:not(.hidden)');
     assert.equal(await page.isVisible('#email-login'), false);
     results.sameBrowserRestore = true;
+    await page.evaluate(()=>{if(typeof skipIntro==='function')skipIntro();});
     await page.click('#dashboard button[onclick="logout()"]');
     await page.waitForSelector('#login:not(.hidden)');
     const previousCalls=state.calls.length;
@@ -186,6 +187,7 @@ async function setPin(page,pin='0472'){await page.fill('#el-new-pin',pin);await 
     // 형제자매: 같은 이메일로 다른 학생 연결 → 그 학생으로 세션 교체
     await page.goto(base + 'index.html');
     await page.waitForSelector('#dashboard:not(.hidden)');
+    await page.evaluate(()=>{if(typeof skipIntro==='function')skipIntro();});
     await page.click('#dashboard button[onclick="logout()"]');
     await page.waitForSelector('#login:not(.hidden)');
     await enterName(page, SIBLING);
