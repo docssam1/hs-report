@@ -1,0 +1,193 @@
+{
+  "version": "20261024-applied3-expansion-r1",
+  "sourceSet": "applied",
+  "sourceRound": 3,
+  "itemCount": 153,
+  "pendingSourceNos": [
+    4,
+    6,
+    7,
+    12,
+    13,
+    14,
+    16,
+    18,
+    19,
+    21,
+    24,
+    27,
+    29
+  ],
+  "items": [
+    {
+      "sourceNo": 1,
+      "genId": "applied3-q01",
+      "area": "수와 식",
+      "subarea": "분수 배열의 규칙",
+      "detailType": "삼각수 묶음 속 분수 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 2,
+      "genId": "applied3-q02",
+      "area": "수와 식",
+      "subarea": "연속한 수와 곱",
+      "detailType": "펼친 책의 쪽수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 3,
+      "genId": "applied3-q03",
+      "area": "도형",
+      "subarea": "평면의 분할",
+      "detailType": "직선으로 원을 나누는 최대 조각 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 5,
+      "genId": "applied3-q05",
+      "area": "도형",
+      "subarea": "둘레와 중복",
+      "detailType": "세 겹의 정사각 테두리의 점 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 8,
+      "genId": "applied3-q08",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "달 길이를 이어 다음 해 요일 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 9,
+      "genId": "applied3-q09",
+      "area": "도형",
+      "subarea": "둘레와 간격",
+      "detailType": "닫힌 둘레에서 두 종류 나무 세기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 10,
+      "genId": "applied3-q10",
+      "area": "수와 식",
+      "subarea": "배수와 나머지",
+      "detailType": "공통 나머지 차를 이용한 수 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 11,
+      "genId": "applied3-q11",
+      "area": "수와 식",
+      "subarea": "수의 삼각 배열",
+      "detailType": "한 행에 들어가는 연속수의 합",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 15,
+      "genId": "applied3-q15",
+      "area": "수와 식",
+      "subarea": "자릿수와 최댓값",
+      "detailType": "자릿수 합과 중복 없는 가장 큰 수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 17,
+      "genId": "applied3-q17",
+      "area": "도형",
+      "subarea": "접기와 펼치기",
+      "detailType": "단계별 구멍의 복원 배수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 20,
+      "genId": "applied3-q20",
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "분배법칙으로 반복수의 자리 합 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 22,
+      "genId": "applied3-q22",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "요일별 용돈으로 시작 요일 찾기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 23,
+      "genId": "applied3-q23",
+      "area": "수와 식",
+      "subarea": "속력과 만남",
+      "detailType": "정지 시간을 제외한 두 사람의 이동",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 25,
+      "genId": "applied3-q25",
+      "area": "경우의 수",
+      "subarea": "중복과 순열",
+      "detailType": "곱이 0인 네 자리 수의 합 조건",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 26,
+      "genId": "applied3-q26",
+      "area": "수와 식",
+      "subarea": "자릿수와 관계식",
+      "detailType": "뒷자리를 지운 세 수의 합",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 28,
+      "genId": "applied3-q28",
+      "area": "수와 식",
+      "subarea": "수의 크기와 자리",
+      "detailType": "이어 쓴 수에서 숫자를 지워 최솟값",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 30,
+      "genId": "applied3-q30",
+      "area": "수와 식",
+      "subarea": "시각과 경과 시간",
+      "detailType": "잘못 맞춘 시계와 왕복 시간",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    }
+  ]
+}
