@@ -26,6 +26,8 @@ visual=json.loads((work/'visual-review.json').read_text())
 assert all(x['dataSha256']==before and x['count']==count for x in [math,browser,visual])
 assert {x['id']for x in math['items']}=={x['id']for x in data['items']}
 assert all(x['passed']for x in math['items'])and visual['passed']and browser['overflow']==0
+if any(x.get('solutionAsset')for x in data['items']):
+    assert browser.get('solutionSvgIntrinsicAspect')is True and visual.get('solutionSvgIntrinsicAspect')is True
 assert browser['externalWrites']==[]and browser['firstAttemptPreserved']
 assert hashlib.sha256((ROOT/f'bank/data/applied{round_no}-expanded.json').read_bytes()).hexdigest()==data['legacyBankSha256']
 index_file=ROOT/'bank/balanced-practice-index.js';index=index_file.read_text()

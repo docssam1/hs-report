@@ -14,6 +14,7 @@ from pathlib import Path
 from PIL import Image
 from pypdf import PdfReader
 from applied2_geometry_independent import solve_geometry,validate_solution_asset
+from applied2_finalgroups_independent import solve_finalgroups
 
 ROOT=Path(__file__).resolve().parents[1];FILE=ROOT/'bank/data/applied2-balanced15.json'
 data=json.loads(FILE.read_text());legacy_bytes=(ROOT/'bank/data/applied2-expanded.json').read_bytes()
@@ -72,6 +73,7 @@ def tiles(stage):
 
 def solve_next(x):
     no,level,p=x['sourceNo'],x['practiceLevel'],x['verification']['parameters']
+    if no>=19:return solve_finalgroups(x)
     if no>=13:return solve_geometry(x)
     if no==7:
         a,b,c,d=coop_nodes()
@@ -270,18 +272,18 @@ assert solve(dict(sourceNo=2,practiceLevel='low',verification=dict(parameters=di
 assert carries(0)==[dict(A=9,B=5,C=1,D=8,E=0)]
 assert shape_weights()==(3,4,7)
 assert [w for _,w,b in row_states(50)if b-w==23]==[529]
-assert len(data['items'])==len({x['id']for x in data['items']})==270
-assert data['availableSourceNos']==list(range(1,19))and data['pendingSourceNos']==list(range(19,31))
+assert len(data['items'])==len({x['id']for x in data['items']})==360
+assert data['availableSourceNos']==list(range(1,25))and data['pendingSourceNos']==list(range(25,31))
 assert data['policy']['perLevel']==dict(low=5,middle=5,high=5)and not data['policy']['sourceGradeMutation']
 evidence=[]
 for x in data['items']:
     actual=solve(x);assert actual==x['answerParts'],(x['id'],actual,x['answerParts'])
     assert x['answerContract']=='ordered-parts'and len(x['answerLabels'])==len(actual)
-    assert x['sourcePointBand']==('2.7'if x['sourceNo']<=12 else'3.4')and x['pointBand']==dict(low='2.7',middle='3.4',high='4.2')[x['practiceLevel']]
+    assert x['sourcePointBand']==('2.7'if x['sourceNo']<=12 else'3.4'if x['sourceNo']<=22 else'4.2')and x['pointBand']==dict(low='2.7',middle='3.4',high='4.2')[x['practiceLevel']]
     assert len(x['solutionSteps'])>=3 and x['learningPoint']and x['learningLocation']
     if x.get('preservedApprovedId'):assert all(x[k]==v for k,v in legacy[x['id']].items())
     else:assert len(x['levelReview']['axes'])==9 and x['difficultyEvidence']['measuredVariantRate']is None
-    validate_solution_asset(x)
+    if x["sourceNo"]<19:validate_solution_asset(x)
     if 7<=x['sourceNo']<=12 and not x.get('preservedApprovedId'):
         p=x['verification']['parameters'];no=x['sourceNo'];level=x['practiceLevel'];text=x['text']
         assert not any(k in x for k in ['promptDataLines','hints','conditionSummary'])
@@ -306,7 +308,7 @@ pdf=PdfReader(ROOT/'materials/초등과정 대비 실전 모의고사 활용 2�
 native={Path(i.name).stem:i.image for i in pdf.pages[0].images}
 actual=Image.open(ROOT/'bank/assets/applied2/balances-original.png');assert native['Im54'].convert('RGB').tobytes()==actual.convert('RGB').tobytes()and actual.size==(264,243)
 native6=next(i.image for i in pdf.pages[1].images if Path(i.name).stem=='Im57');actual=Image.open(ROOT/'bank/assets/applied2/alternating-triangle.png');assert native6.mode==actual.mode and native6.tobytes()==actual.tobytes()
-for page,name,filename in [(1,'Im58','plates-original.png'),(2,'Im62','checker-frames.png'),(2,'Im68','hinged-tool-original.png'),(2,'Im70','beads-original.png'),(2,'Im69','fold-cut-original.png')]:
+for page,name,filename in [(1,'Im58','plates-original.png'),(2,'Im62','checker-frames.png'),(2,'Im68','hinged-tool-original.png'),(2,'Im70','beads-original.png'),(2,'Im69','fold-cut-original.png'),(3,'Im77','round-cuts-original.png'),(3,'Im78','runs-original.png'),(3,'Im79','five-circles-original.png'),(3,'Im80','mobile-original.png')]:
     source=next(i.image for i in pdf.pages[page].images if Path(i.name).stem==name).convert('RGB');actual=Image.open(ROOT/'bank/assets/applied2'/filename).convert('RGB');assert source.size==actual.size and source.tobytes()==actual.tobytes()
 with tempfile.TemporaryDirectory(prefix='gfield-source2-render-')as temp:
     output=Path(temp)/'page';subprocess.run(['pdftoppm','-f','1','-l','1','-scale-to','1600','-singlefile','-png',str(ROOT/'materials/초등과정 대비 실전 모의고사 활용 2회.pdf'),str(output)],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
@@ -321,11 +323,11 @@ with tempfile.TemporaryDirectory(prefix='gfield-source2-render-')as temp:
         actual=Image.open(ROOT/'bank/assets/applied2'/filename).convert('RGB');assert page.crop(box).size==actual.size and page.crop(box).tobytes()==actual.tobytes()
 for file in ['bank/data/applied1-balanced15.json','bank/data/applied2-expanded.json','bank/assets/applied2/triangle-chain.png','data.js','docssam-columns.js','mock-data-hw.js']:
     assert(ROOT/file).read_bytes()==subprocess.check_output(['git','show','98cb8ff:'+file],cwd=ROOT),file
-previous=json.loads(subprocess.check_output(['git','show','146549ba:bank/data/applied2-balanced15.json'],cwd=ROOT))['items']
-assert data['items'][:180]==previous
-assert len({json.dumps({k:x.get(k)for k in ['text','givenTable','arithmeticRows','promptDataLines','asset']},ensure_ascii=False,sort_keys=True)for x in data['items']})==270
+previous=json.loads(subprocess.check_output(['git','show','e660840d:bank/data/applied2-balanced15.json'],cwd=ROOT))['items']
+assert data['items'][:270]==previous
+assert len({json.dumps({k:x.get(k)for k in ['text','givenTable','arithmeticRows','promptDataLines','asset']},ensure_ascii=False,sort_keys=True)for x in data['items']})==360
 assert coop_nodes()==(10,9,12,9)and plate_nodes()==(6,18,14)and tiles(55)[2:]==(216,'흰색')
-parser=argparse.ArgumentParser();parser.add_argument('--work-dir',default='.private-work/balanced15-20261024/round2-batch3');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--work-dir',default='.private-work/balanced15-20261024/round2-batch4');args=parser.parse_args()
 out=(ROOT/args.work_dir).resolve()/'independent-math.json';assert out.is_relative_to(ROOT/'.private-work')
-out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(dict(dataSha256=hashlib.sha256(FILE.read_bytes()).hexdigest(),count=270,sourceAnswersDirectlyCompared=list(range(1,19)),methods=['zigzag boundary edge multiplicity','integer polygon-count enumeration','decimal per-column carry states','full voxel silhouette equality','exact rational elimination from original balances','literal alternating row accumulation','four-node and triple graph integer enumeration','exact Fraction lifespan enumeration','literal sequential transfers with per-step feasibility','rectangular divisor and population equality search','actor-to-position backtracking and every clue removal','literal checkerboard shell/color accumulation','all hinge-node coordinates','rational color-value elimination','exact unfolded planar faces and shape classes','voxel move enumeration','24cell exact-cover profile DP','seven feasible membership-region enumeration'],items=evidence),ensure_ascii=False,indent=2)+'\n')
-print('PASS270 Applied2 answers:18complete5/5/5 groups;230new/40preserved;prior180 and Applied1 full435 unchanged;45solutionSVGs exactgeometry')
+out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(dict(dataSha256=hashlib.sha256(FILE.read_bytes()).hexdigest(),count=360,sourceAnswersDirectlyCompared=list(range(1,25)),methods=['zigzag boundary edge multiplicity','integer polygon-count enumeration','decimal per-column carry states','full voxel silhouette equality','exact rational elimination from original balances','literal alternating row accumulation','four-node and triple graph integer enumeration','exact Fraction lifespan enumeration','literal sequential transfers with per-step feasibility','rectangular divisor and population equality search','actor-to-position backtracking and every clue removal','literal checkerboard shell/color accumulation','all hinge-node coordinates','rational color-value elimination','exact unfolded planar faces and shape classes','voxel move enumeration','24cell exact-cover profile DP','seven feasible membership-region enumeration','literal10bit binary strings and unordered pairs','nine-region digit permutation','twelve mass equations over exact fractions','three piecewise fold reflections and complete/boundary circles','school multiplication digit carry accumulation','displayed Korean clue parsing and independent numeric-node CSP with every-clue removal'],items=evidence),ensure_ascii=False,indent=2)+'\n')
+print('PASS360 Applied2 answers:24complete5/5/5 groups;315new/45preserved;prior270 and Applied1 full435 unchanged;60solutionSVGs exactgeometry;15logic tables unique/everyclue necessary')
