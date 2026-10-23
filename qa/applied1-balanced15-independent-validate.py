@@ -109,6 +109,37 @@ def fraction_stream():
             group+=1;start_denominator+=2;numerator=1;denominator=start_denominator
 
 
+def boat_edges(shift=0,mirror=False,body_only=False):
+    # Endpoint inventory read from original17:12 body+2 mast+2 sail+1 side.
+    # Quarter-cell units distinguish the sail attachments and side-stick gap.
+    raw=[(4*i,0,4*(i+1),0)for i in range(4)]
+    raw += [(4*i,4,4*(i+1),4)for i in [0,1,3]]
+    raw += [(4*i,0,4*i,4)for i in range(5)]
+    if not body_only:raw += [(8,-8,8,-4),(8,-4,8,0),(8,-8,11,-5),(11,-5,8,-2),(17,2,21,2)]
+    def point(x,y):return ((16-x if mirror else x)+4*shift,y)
+    return {tuple(sorted([point(a,b),point(c,d)]))for a,b,c,d in raw}
+
+
+def signed_totals(nums):
+    states=collections.Counter({nums[0]:1})
+    for value in nums[1:]:
+        new=collections.Counter()
+        for total,count in states.items():
+            new[total+value]+=count;new[total-value]+=count
+        states=new
+    return states
+
+
+def shared_signed_totals(a,b):
+    states=collections.Counter({(a[0],b[0]):1})
+    for v,w in zip(a[1:],b[1:]):
+        new=collections.Counter()
+        for (x,y),count in states.items():
+            new[x+v,y+w]+=count;new[x-v,y-w]+=count
+        states=new
+    return states
+
+
 def answer(item):
     no, level, p = item['sourceNo'], item['practiceLevel'], item['verification']['parameters']
     if no == 1:
@@ -331,6 +362,44 @@ def answer(item):
                 matches.append(index)
         assert len(matches)==1
         return matches
+    if no == 16:
+        if level=='low':
+            minute=hour=Fraction(0)
+            for _ in range(p['start'],p['finish']):minute+=6;hour+=Fraction(1,2)
+            return [int(minute-hour)]
+        found=[]
+        for start in range(1,p['finish']):
+            if level=='middle':
+                elapsed=p['finish']-start
+                if 6*elapsed-Fraction(elapsed,2)==p['angle']:found.append(start)
+            else:
+                for first in range(1,180):
+                    second=p['finish']-start-p['rest']-first
+                    if second<=0:continue
+                    if second==p['timeMultiple']*first+p['extraMinutes'] and Fraction(11,2)*second-Fraction(11,2)*first==p['angleDifference']:
+                        found.append(start)
+        assert len(found)==1,(item['id'],found)
+        return [found[0]//60,found[0]%60]
+    if no == 17:
+        assert len(boat_edges())==17 and len(boat_edges(body_only=True))==12
+        if level=='low':return [len(boat_edges(body_only=True)&boat_edges(p['shift'],body_only=True))]
+        shifts=p['shifts']if level=='high'else[p['shift']]
+        costs=[17-len(boat_edges()&boat_edges(k,True))for k in shifts]
+        if level=='high':assert len(set(costs))==2
+        return [min(costs)]
+    if no == 18:
+        if level!='high':
+            assert item['promptDataLines'][0]==' □ '.join(map(str,p['nums']))
+            assert item['promptDataLines'][0].count('□')==(4 if level=='low'else 6)
+            states=signed_totals(p['nums'])
+            assert sum(states.values())==(16 if level=='low'else 64)
+            return [len(set(states)&set(p['choices']))]
+        for nums,target,line in zip([p['first'],p['second']],[p['firstTarget'],p['secondTarget']],item['promptDataLines']):
+            assert line==' □ '.join(map(str,nums))+f' ＝ {target}'
+        count=shared_signed_totals(p['first'],p['second'])[p['firstTarget'],p['secondTarget']]
+        assert 1<count<signed_totals(p['first'])[p['firstTarget']]
+        assert count<signed_totals(p['second'])[p['secondTarget']]
+        return [count]
     outcomes = set()
     states = set()
     for year in range(1900, 2400):
@@ -373,6 +442,10 @@ source_products=[a*b for a,b in card_pairs([5,7,3,6,9,8])]
 assert max(source_products)==842625 and min(source_products)==213072
 assert 13*450+250==6100 and 9*450+200==4250
 assert next(itertools.islice(fraction_stream(),110,None))==(7,24)
+assert 495-Fraction(330,Fraction(11,2))==435
+assert len(boat_edges())-len(boat_edges()&boat_edges(0,True))==4
+assert min(17-len(boat_edges()&boat_edges(k,True))for k in range(-8,9))==4
+assert sorted(set(signed_totals([17,15,13,11,9,7,5]))&{0,5,10,15,20,50,51,52,53,54,57,71,73,77,81})==[5,15,51,53,77]
 
 evidence = []
 for item in data['items']:
@@ -381,8 +454,8 @@ for item in data['items']:
     assert len(item['solutionSteps']) >= 3 and item['learningLocation'] and item['learningPoint']
     source_points={x['pointBand']for x in legacy.values()if x['sourceNo']==item['sourceNo']}
     if not source_points:
-        assert item['sourceNo']in [7,8]
-        source_points={'2.7'}
+        assert item['sourceNo']in [7,8,17]
+        source_points={'3.4'if item['sourceNo']==17 else'2.7'}
     assert source_points=={item['sourcePointBand']}
     assert item['pointBand'] == dict(low='2.7', middle='3.4', high='4.2')[item['practiceLevel']]
     if item.get('preservedApprovedId'):
@@ -393,9 +466,10 @@ for item in data['items']:
         assert item['difficultyEvidence']['measuredVariantRate'] is None
         assert item['practiceRole'] in ['기초 보완','단계형 확장']
     if item.get('asset'):
-        if item['sourceNo']==7:
+        if item['sourceNo']in [7,17]:
             from pypdf import PdfReader
-            image = next(x.image for x in PdfReader(ROOT/'materials/초등과정 대비 실전 모의고사 활용 1회.pdf').pages[1].images if x.name=='Im71.jp2')
+            page_index,image_stem=(1,'Im71')if item['sourceNo']==7 else(2,'Im80')
+            image = next(x.image for x in PdfReader(ROOT/'materials/초등과정 대비 실전 모의고사 활용 1회.pdf').pages[page_index].images if Path(x.name).stem==image_stem)
             from PIL import Image
             actual_image = Image.open(ROOT/'bank'/item['asset']['src'])
             assert image.mode==actual_image.mode and image.size==actual_image.size and image.tobytes()==actual_image.tobytes()
@@ -405,9 +479,9 @@ for item in data['items']:
     evidence.append({'id': item['id'], 'passed': True, 'answer': actual})
 for no in data['availableSourceNos']:
     assert collections.Counter(x['practiceLevel'] for x in data['items'] if x['sourceNo'] == no) == dict(low=5, middle=5, high=5)
-assert len(data['items']) == 225 and len({x['id'] for x in data['items']}) == 225
-assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 225
-previous = json.loads(subprocess.check_output(['git', 'show', '4e5376e:bank/data/applied1-balanced15.json'], cwd=ROOT))
+assert len(data['items']) == 270 and len({x['id'] for x in data['items']}) == 270
+assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 270
+previous = json.loads(subprocess.check_output(['git', 'show', 'f66fab5:bank/data/applied1-balanced15.json'], cwd=ROOT))
 for old in previous['items']:
     current = next(x for x in data['items'] if x['id'] == old['id'])
     assert all(current[k] == v for k, v in old.items())
@@ -415,7 +489,7 @@ for old in previous['items']:
 out = ROOT / '.private-work/balanced15-20261024/independent-math.json'
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps({'dataSha256': hashlib.sha256(FILE.read_bytes()).hexdigest(),
-                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,16)),
-                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions'],
+                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,19)),
+                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions', 'accumulated hand motion and all first/second study times', 'full17-stick endpoint graph intersections', 'one/two expression sign-sum dynamic programming'],
                            'items': evidence}, ensure_ascii=False, indent=2) + '\n')
-print('PASS225 answers in fifteen5/5/5 groups; source3.4 preserved in middle; disjoint factor masks, bag states, fraction stream; prior180 content/storage preserved')
+print('PASS270 answers in eighteen5/5/5 groups; original16/17/18 directly compared; native boat pixels unchanged; endpoint graphs and shared-sign DP; prior225 content/storage preserved')
