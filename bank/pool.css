@@ -24,3 +24,5 @@
 .solution-figure{margin:12px 0;text-align:center;break-inside:avoid}.solution-figure img{max-width:100%;object-fit:contain}.solution-figure figcaption{font:400 11px/1.6 "GFIELD Print Serif",serif;margin-top:5px}
 
 .response-table,.solution-table{border-collapse:collapse;width:100%;margin:12px 0;font:400 12px/1.5 "GFIELD Print Serif",serif}.response-table th,.response-table td,.solution-table th,.solution-table td{border:1px solid #888;padding:5px;text-align:center;font-weight:400}.response-table td{height:28px}.given-table[aria-label="보관함의 실제 단서"] td{text-align:left}
+
+.q-figure[data-round="3"][data-source="4"] img{max-height:210px}
