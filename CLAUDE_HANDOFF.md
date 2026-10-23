@@ -1991,3 +1991,11 @@ Set-Location 'C:\Users\user\OneDrive\그림\Desktop\hs-report'
 상세검수는 `qa/BALANCED15_BATCH2_20261024.md`, **이후 누적진행은 `qa/balanced15-progress.json`**을 먼저 읽는다. 후속 배치는 이 작은진행기록과 실제배포SHA를 갱신하여 이어가며, 3유형/6유형의 옛수량을 전체완료로 반복하지 않는다. 실제ZIP90문항/7항목/문제18쪽·풀이33쪽 전수축소판·확대검수, PC1440/375·필터·복수답·진단·기존회차연결/권한 유지·외부쓰기0.
 
 2차Drive ZIP `17EoAZJX1VXAal_Lvs-slADU16fSPgT1J`, 문제PDF `1frP26htMapqD_WJAj14JQLVMZ35Wl0b5`, 풀이PDF `1oMZH808wDehxfMqakdW8d0kPKgmOVoQk`, 검수 `1JASTo-Oz-ti0aaT2VWFe2la4J8VmDWvf`. 이후재읽기/메인/배포는후속영수증으로확인한다. 활용1~9의270유형중264유형및다른시리즈는미완료다. 다음작업은7~12번원문·답안대조이며 미확인그림은잠금유지한다.
+
+## 2026-10-24 활용2회1~6번 난도별15개 — 누적35유형525개
+
+활용1회29유형435개는 main `98cb8ff75c804b6f7dd6ce79de2f4c0d9fe54f3f`/Pages40023539737 성공과 실제19파일 일치를 확인했다. 이번에는 활용2회1~6번90개(신규75/기존15재사용)를 작성·독립검산·실제입력·진단·ZIP검수했다. 회차별 어댑터와 병합 릴리스로1회435개 및29개 색인 행을 보존한다. 원시험/성적/칼럼 불변이다.
+
+누적 진행은 `qa/balanced15-progress.json`, 이번 근거는 `qa/BALANCED15_APPLIED2_BATCH1_20261024.md`를 먼저 읽는다. 실제 ZIP 문제24쪽·상세풀이35쪽,90ID일치,60원본그림/15세로셈,2단/폰375/3회입력/최초보존 통과. 저울 상 문제만2단에한문항씩 배치해200px 원본그림과 계산 공간을 보존한다. ZIP Drive `1zZA3RuUvlr_V4K0KuiNvR9wAKVjjXqb9`,문제 `1xMVx2qBDhvkhG8OKNy1dSU2SexJZopaJ`,풀이 `149A3rNoiQvdelwcf-ZQDYxW0vMJm2Jw8` 모두 재다운로드 일치. 이번 main/사이트/검수기록/정리 최종영수증은 비공개 `round2-batch1/`에 후속 기록한다.
+
+활용 목표270유형4050자리 중235유형3525자리가 남았다. 다음은 활용2회7~12번 정확한 원문·교사답안 대조이며,1회28번은 알려진 판본충돌 잠금/원시험값 유지. 기존9개은행 초과분도 보존한다. 이 부분완료를 전체완료로 보고하지 않는다.

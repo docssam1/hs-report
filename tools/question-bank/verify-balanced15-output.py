@@ -18,15 +18,18 @@ from pypdf import PdfReader
 ROOT=Path(__file__).resolve().parents[2]
 parser=argparse.ArgumentParser()
 parser.add_argument('--work-dir',required=True)
+parser.add_argument('--bank',default='applied1-balanced15')
 parser.add_argument('--render',action='store_true')
 parser.add_argument('--final',action='store_true')
 args=parser.parse_args()
 work=(ROOT/args.work_dir).resolve()
 assert work.is_relative_to(ROOT/'.private-work')
+assert re.fullmatch(r'applied[1-9]-balanced15',args.bank)
+file=ROOT/('bank/data/'+args.bank+'.json')
 out=work/'output-qa'
-data=json.loads((ROOT/'bank/data/applied1-balanced15.json').read_text())
+data=json.loads(file.read_text())
 browser=json.loads((out/'browser-evidence.json').read_text())
-assert browser['dataSha256']==hashlib.sha256((ROOT/'bank/data/applied1-balanced15.json').read_bytes()).hexdigest()
+assert browser['dataSha256']==hashlib.sha256(file.read_bytes()).hexdigest()
 items=sorted(data['items'],key=lambda x:(x['sourceNo'],['low','middle','high'].index(x['practiceLevel']),x['variantNo']))
 ids=[x['id']for x in items]
 assert len(ids)==len(set(ids))==browser['count']

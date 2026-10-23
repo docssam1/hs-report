@@ -1,50 +1,11 @@
-"""Release only the exact independently checked, visually reviewed levelled file."""
-import hashlib
-import json
+"""Compatibility entrypoint; preserve index rows belonging to every other bank."""
 import argparse
+import subprocess
+import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-parser = argparse.ArgumentParser()
-parser.add_argument('--work-dir', default='.private-work/balanced15-20261024')
-work = (ROOT / parser.parse_args().work_dir).resolve()
-assert str(work).startswith(str(ROOT / '.private-work') + '/')
-file = ROOT / 'bank/data/applied1-balanced15.json'
-before = hashlib.sha256(file.read_bytes()).hexdigest()
-data = json.loads(file.read_text())
-count = len(data['items'])
-source_count = len(data['availableSourceNos'])
-assert count == source_count * 15
-assert all(sum(x['sourceNo'] == no and x['practiceLevel'] == level for x in data['items']) == 5
-           for no in data['availableSourceNos'] for level in ['low', 'middle', 'high'])
-math = json.loads((work / 'independent-math.json').read_text())
-browser = json.loads((work / 'output-qa/browser-evidence.json').read_text())
-visual = json.loads((work / 'visual-review.json').read_text())
-assert all(x['dataSha256'] == before for x in [math, browser, visual])
-assert all(x['count'] == count for x in [math, browser, visual])
-assert {x['id'] for x in math['items']} == {x['id'] for x in data['items']}
-assert all(x['passed'] for x in math['items']) and visual['passed'] and browser['overflow'] == 0
-assert browser['externalWrites'] == [] and browser['firstAttemptPreserved']
-assert hashlib.sha256((ROOT / 'bank/data/applied1-expanded.json').read_bytes()).hexdigest() == data['legacyBankSha256']
-for item in data['items']:
-    assert item['reviewStatus'] in ['verified', 'pending-output-review']
-    item['reviewStatus'] = 'verified'
-data['reviewSummary'] = dict(sourceTypes=source_count, perSource=15, perLevel=5, count=count,
-                             preservedLegacyCount=data['preservedLegacyCount'], newAuthoredCount=data['newAuthoredCount'],
-                             independentAnswers=True, actualZipReviewed=True,
-                             sourceGradeMutation=False, studentDifficultyMeasured=False)
-file.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
-rows = {'applied|1|' + str(n): {'bank': 'applied1-balanced15', 'sourceNo': n,
-                               'count': 15, 'perLevel': 5, 'version': data['version'],
-                               **{k: next(x for x in data['items'] if x['sourceNo']==n)[k]
-                                  for k in ['area','subarea','detailType','learningLocation','learningPoint']}}
-        for n in data['availableSourceNos']}
-index = "/* Reviewed levelled extensions; original point bands and existing banks are preserved. */\n"
-index += "(function(root,factory){'use strict';var api=factory();if(typeof module==='object'&&module.exports)module.exports=api;if(root)root.GFIELD_BALANCED_PRACTICE=api;})(typeof window!=='undefined'?window:globalThis,function(){'use strict';var rows="
-index += json.dumps(rows, ensure_ascii=False, separators=(',', ':'))
-index += ";function get(set,round,no){var k=[set==='hw'?'applied':set,Number(round),Number(no)].join('|'),x=rows[k];return x?JSON.parse(JSON.stringify(x)):null;}function url(set,round,nos){if(!Array.isArray(nos)||!nos.length||new Set(nos).size!==nos.length)return '';var a=nos.map(function(n){return get(set,round,n);});if(a.some(function(x){return !x;})||a.some(function(x){return x.bank!==a[0].bank;}))return '';return 'pool.html?bank='+encodeURIComponent(a[0].bank)+'&nos='+nos.join(',')+'&count=15';}return {get:get,url:url};});\n"
-(ROOT / 'bank/balanced-practice-index.js').write_text(index)
-(work / 'release-evidence.json').write_text(json.dumps({'preReleaseSha256': before,
-    'releasedSha256': hashlib.sha256(file.read_bytes()).hexdigest(), 'count': count,
-    'preservedLegacyCount': data['preservedLegacyCount'], 'newAuthoredCount': data['newAuthoredCount'], 'availableSourceNos': data['availableSourceNos']}, indent=2) + '\n')
-print(f'Released {count} levelled items in {source_count} complete 5/5/5 groups; original nine-item bank unchanged')
+parser=argparse.ArgumentParser()
+parser.add_argument('--work-dir',default='.private-work/balanced15-20261024')
+args=parser.parse_args()
+subprocess.run([sys.executable,str(Path(__file__).with_name('release-balanced-practice.py')),
+                '--bank','applied1-balanced15','--work-dir',args.work_dir],check=True)
