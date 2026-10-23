@@ -285,7 +285,7 @@
   .mock-note b{display:block;color:#1F3864;font-size:12.2px;margin-bottom:3px;}
   .mock-note em{display:block;margin-top:5px;font-style:normal;font-weight:800;color:#EA580C;}
 </style>
-<style>.applied-study{margin-top:9px;padding:10px 12px;border-left:3px solid #2f6b4a;background:#fdfbf5;font-size:13px;line-height:1.65}.applied-study b{font-weight:600}.applied-practice-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.applied-practice-action{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid #c9bda2;border-radius:2px;background:#e9f0e7;color:#2f6b4a;font-size:13px;font-weight:500;text-decoration:none}.applied-review-practice h3{font-weight:600}.applied-review-practice p{font-size:13px;line-height:1.65}</style>
+<style>.applied-study{margin-top:9px;padding:10px 12px;border-left:3px solid #2f6b4a;background:#fdfbf5;font-size:13px;line-height:1.65}.applied-study b{font-weight:600}.applied-practice-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.applied-practice-action{display:inline-flex;align-items:center;min-width:0;max-width:100%;overflow-wrap:anywhere;min-height:44px;padding:8px 12px;border:1px solid #c9bda2;border-radius:2px;background:#e9f0e7;color:#2f6b4a;font-size:13px;font-weight:500;text-decoration:none}.applied-review-practice h3{font-weight:600}.applied-review-practice p{font-size:13px;line-height:1.65}</style>
 </head>
 <body>
 
@@ -328,7 +328,7 @@
 <script src="mock-data.js?v=20261018-middle8-q4-answer"></script>
 <script src="mock-data-hw.js?v=20261012-hw1-q25"></script>
 <script src="bank/applied-learning-index.js?v=20261024-r5"></script>
-<script src="bank/balanced-practice-index.js?v=20261024-r9"></script>
+<script src="bank/balanced-practice-index.js?v=20261024-r10"></script>
 <script src="mock-data-original.js?v=20260928-signature-answer-keys-1"></script>
 <script src="bank/bank-registry.js"></script>
 <script src="bank/middle8-learning-map.js?v=20261019-approved"></script>
@@ -555,7 +555,7 @@ function appliedReviewPracticeHTML(r,wrongItems){
   const isBalanced=no=>window.GFIELD_BALANCED_PRACTICE&&window.GFIELD_BALANCED_PRACTICE.get('applied',r,no);
   const covered=wrong.filter(no=>info.items[String(no)]),pending=wrong.filter(no=>!info.items[String(no)]&&!isBalanced(no)),numbers=wrong.length?covered:Object.keys(info.items).map(Number);
   const actions=numbers.length?'<div class="applied-practice-actions"><a class="applied-practice-action applied-practice-default" href="'+esc(appliedPoolUrl(r,numbers,3))+'">'+(wrong.length?'오답 '+covered.length+'유형':'전체 '+numbers.length+'유형')+' · 유사문제 '+numbers.length*3+'개</a><a class="applied-practice-action applied-practice-expanded" href="'+esc(appliedPoolUrl(r,numbers,9))+'">유형별 9개 더 연습 · '+numbers.length*9+'개</a></div>':'';
-  const gradedNos=(wrong.length?wrong:Array.from({length:30},(_,i)=>i+1)).filter(isBalanced);const gradedUrl=gradedNos.length?window.GFIELD_BALANCED_PRACTICE.url('applied',r,gradedNos):'';const gradedAction=gradedUrl?'<div class="applied-practice-actions"><a class="applied-practice-action applied-practice-balanced" href="bank/'+esc(gradedUrl)+'">'+gradedNos.join('·')+'번 유형 · 하·중·상 5개씩 · '+gradedNos.length*15+'문제</a></div>':'';
+  const gradedNos=(wrong.length?wrong:Array.from({length:30},(_,i)=>i+1)).filter(isBalanced);const gradedUrl=gradedNos.length?window.GFIELD_BALANCED_PRACTICE.url('applied',r,gradedNos):'';const gradedAction=gradedUrl?'<div class="applied-practice-actions"><a class="applied-practice-action applied-practice-balanced" href="bank/'+esc(gradedUrl)+'">'+gradedNos.join('·<wbr>')+'번 유형 · 하·중·상 5개씩 · '+gradedNos.length*15+'문제</a></div>':'';
   return '<section class="card applied-review-practice"><h3>활용 '+Number(r)+'회 · 연결된 유사문제</h3><p>문제·상세 풀이·답안 입력·학습 포인트를 함께 엽니다. 원시험 점수는 바뀌지 않습니다.</p>'+actions+gradedAction+(pending.length?'<p class="hint">추가 연습 준비 중인 오답: '+pending.join(', ')+'번</p>':'')+'</section>';
 }
 function parentCanOpenRound(r){ return mode!=='parent'||parentRoundKeys().indexOf(String(Number(r)))>=0; }

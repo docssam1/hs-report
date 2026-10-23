@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied1-balanced15-r9",
+  "version": "20261024-applied1-balanced15-r10",
   "sourceSet": "applied",
   "sourceRound": 1,
   "policy": {
@@ -41,12 +41,12 @@
     24,
     25,
     26,
-    27
-  ],
-  "pendingSourceNos": [
-    28,
+    27,
     29,
     30
+  ],
+  "pendingSourceNos": [
+    28
   ],
   "legacyBankSha256": "772b62ff0a4832f465be5c94fe2b23e1b403eb9f45a39b7536cff3c0b08e46a9",
   "items": [
@@ -29604,17 +29604,2236 @@
         "sourceAnswerPage": 27,
         "studentDifficultyMeasured": false
       }
+    },
+    {
+      "id": "applied1-q29-v1",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 모든 수의 합",
+      "pointBand": "4.2",
+      "text": "아래 수 카드를 사용하여 세 자리 수를 만듭니다. 같은 수를 여러 번 사용해도 될 때, 만들 수 있는 모든 세 자리 수의 합을 구하시오.",
+      "answer": "15588",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        15588
+      ],
+      "acceptedAnswers": [
+        "15588"
+      ],
+      "solutionSteps": [
+        "백의 자리는 0을 제외한 세 수 중에서 고르고, 십의 자리와 일의 자리는 각각 네 수 중에서 고르므로 서로 다른 세 자리 수는 3×4×4＝48개입니다.",
+        "백의 자리의 각 수는 16번씩 나타나 그 합은 9×16×100＝14400입니다. 십의 자리의 각 수는 12번씩 나타나 그 합은 9×12×10＝1080입니다.",
+        "일의 자리의 각 수도 12번씩 나타나 그 합은 9×12＝108입니다. 모두 더하면 14400＋1080＋108＝15588입니다."
+      ],
+      "solution": "백의 자리는 0을 제외한 세 수 중에서 고르고, 십의 자리와 일의 자리는 각각 네 수 중에서 고르므로 서로 다른 세 자리 수는 3×4×4＝48개입니다. 백의 자리의 각 수는 16번씩 나타나 그 합은 9×16×100＝14400입니다. 십의 자리의 각 수는 12번씩 나타나 그 합은 9×12×10＝1080입니다. 일의 자리의 각 수도 12번씩 나타나 그 합은 9×12＝108입니다. 모두 더하면 14400＋1080＋108＝15588입니다.",
+      "learningPoint": "0의 백의 자리 제한과 각 자리의 반복 횟수 구분하기",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "verification": {
+        "primaryMethod": "place value frequency sum",
+        "parameters": {
+          "digits": [
+            0,
+            1,
+            3,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "cards": [
+        0,
+        1,
+        3,
+        5
+      ],
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q29-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q29-v2",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 모든 수의 합",
+      "pointBand": "4.2",
+      "text": "아래 수 카드를 사용하여 세 자리 수를 만듭니다. 같은 수를 여러 번 사용해도 될 때, 만들 수 있는 모든 세 자리 수의 합을 구하시오.",
+      "answer": "20784",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        20784
+      ],
+      "acceptedAnswers": [
+        "20784"
+      ],
+      "solutionSteps": [
+        "백의 자리는 0을 제외한 세 수 중에서 고르고, 십의 자리와 일의 자리는 각각 네 수 중에서 고르므로 서로 다른 세 자리 수는 3×4×4＝48개입니다.",
+        "백의 자리의 각 수는 16번씩 나타나 그 합은 12×16×100＝19200입니다. 십의 자리의 각 수는 12번씩 나타나 그 합은 12×12×10＝1440입니다.",
+        "일의 자리의 각 수도 12번씩 나타나 그 합은 12×12＝144입니다. 모두 더하면 19200＋1440＋144＝20784입니다."
+      ],
+      "solution": "백의 자리는 0을 제외한 세 수 중에서 고르고, 십의 자리와 일의 자리는 각각 네 수 중에서 고르므로 서로 다른 세 자리 수는 3×4×4＝48개입니다. 백의 자리의 각 수는 16번씩 나타나 그 합은 12×16×100＝19200입니다. 십의 자리의 각 수는 12번씩 나타나 그 합은 12×12×10＝1440입니다. 일의 자리의 각 수도 12번씩 나타나 그 합은 12×12＝144입니다. 모두 더하면 19200＋1440＋144＝20784입니다.",
+      "learningPoint": "0의 백의 자리 제한과 각 자리의 반복 횟수 구분하기",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "verification": {
+        "primaryMethod": "place value frequency sum",
+        "parameters": {
+          "digits": [
+            0,
+            1,
+            4,
+            7
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "cards": [
+        0,
+        1,
+        4,
+        7
+      ],
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q29-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q29-v3",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 모든 수의 합",
+      "pointBand": "4.2",
+      "text": "아래 수 카드를 사용하여 세 자리 수를 만듭니다. 같은 수를 여러 번 사용해도 될 때, 만들 수 있는 모든 세 자리 수의 합을 구하시오.",
+      "answer": "22516",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        22516
+      ],
+      "acceptedAnswers": [
+        "22516"
+      ],
+      "solutionSteps": [
+        "백의 자리는 0을 제외한 세 수 중에서 고르고, 십의 자리와 일의 자리는 각각 네 수 중에서 고르므로 서로 다른 세 자리 수는 3×4×4＝48개입니다.",
+        "백의 자리의 각 수는 16번씩 나타나 그 합은 13×16×100＝20800입니다. 십의 자리의 각 수는 12번씩 나타나 그 합은 13×12×10＝1560입니다.",
+        "일의 자리의 각 수도 12번씩 나타나 그 합은 13×12＝156입니다. 모두 더하면 20800＋1560＋156＝22516입니다."
+      ],
+      "solution": "백의 자리는 0을 제외한 세 수 중에서 고르고, 십의 자리와 일의 자리는 각각 네 수 중에서 고르므로 서로 다른 세 자리 수는 3×4×4＝48개입니다. 백의 자리의 각 수는 16번씩 나타나 그 합은 13×16×100＝20800입니다. 십의 자리의 각 수는 12번씩 나타나 그 합은 13×12×10＝1560입니다. 일의 자리의 각 수도 12번씩 나타나 그 합은 13×12＝156입니다. 모두 더하면 20800＋1560＋156＝22516입니다.",
+      "learningPoint": "0의 백의 자리 제한과 각 자리의 반복 횟수 구분하기",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "verification": {
+        "primaryMethod": "place value frequency sum",
+        "parameters": {
+          "digits": [
+            0,
+            2,
+            3,
+            8
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "cards": [
+        0,
+        2,
+        3,
+        8
+      ],
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q29-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q29-v4",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 모든 수의 합",
+      "pointBand": "4.2",
+      "text": "아래 수 카드를 사용하여 세 자리 수를 만듭니다. 같은 수를 여러 번 사용해도 될 때, 만들 수 있는 모든 세 자리 수의 합을 구하시오.",
+      "answer": "27712",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        27712
+      ],
+      "acceptedAnswers": [
+        "27712"
+      ],
+      "solutionSteps": [
+        "백의 자리는 0을 제외한 세 수 중에서 고르고, 십의 자리와 일의 자리는 각각 네 수 중에서 고르므로 서로 다른 세 자리 수는 3×4×4＝48개입니다.",
+        "백의 자리의 각 수는 16번씩 나타나 그 합은 16×16×100＝25600입니다. 십의 자리의 각 수는 12번씩 나타나 그 합은 16×12×10＝1920입니다.",
+        "일의 자리의 각 수도 12번씩 나타나 그 합은 16×12＝192입니다. 모두 더하면 25600＋1920＋192＝27712입니다."
+      ],
+      "solution": "백의 자리는 0을 제외한 세 수 중에서 고르고, 십의 자리와 일의 자리는 각각 네 수 중에서 고르므로 서로 다른 세 자리 수는 3×4×4＝48개입니다. 백의 자리의 각 수는 16번씩 나타나 그 합은 16×16×100＝25600입니다. 십의 자리의 각 수는 12번씩 나타나 그 합은 16×12×10＝1920입니다. 일의 자리의 각 수도 12번씩 나타나 그 합은 16×12＝192입니다. 모두 더하면 25600＋1920＋192＝27712입니다.",
+      "learningPoint": "0의 백의 자리 제한과 각 자리의 반복 횟수 구분하기",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "verification": {
+        "primaryMethod": "place value frequency sum",
+        "parameters": {
+          "digits": [
+            0,
+            2,
+            5,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "cards": [
+        0,
+        2,
+        5,
+        9
+      ],
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q29-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q29-v5",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 모든 수의 합",
+      "pointBand": "4.2",
+      "text": "아래 수 카드를 사용하여 세 자리 수를 만듭니다. 같은 수를 여러 번 사용해도 될 때, 만들 수 있는 모든 세 자리 수의 합을 구하시오.",
+      "answer": "22516",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        22516
+      ],
+      "acceptedAnswers": [
+        "22516"
+      ],
+      "solutionSteps": [
+        "백의 자리는 0을 제외한 세 수 중에서 고르고, 십의 자리와 일의 자리는 각각 네 수 중에서 고르므로 서로 다른 세 자리 수는 3×4×4＝48개입니다.",
+        "백의 자리의 각 수는 16번씩 나타나 그 합은 13×16×100＝20800입니다. 십의 자리의 각 수는 12번씩 나타나 그 합은 13×12×10＝1560입니다.",
+        "일의 자리의 각 수도 12번씩 나타나 그 합은 13×12＝156입니다. 모두 더하면 20800＋1560＋156＝22516입니다."
+      ],
+      "solution": "백의 자리는 0을 제외한 세 수 중에서 고르고, 십의 자리와 일의 자리는 각각 네 수 중에서 고르므로 서로 다른 세 자리 수는 3×4×4＝48개입니다. 백의 자리의 각 수는 16번씩 나타나 그 합은 13×16×100＝20800입니다. 십의 자리의 각 수는 12번씩 나타나 그 합은 13×12×10＝1560입니다. 일의 자리의 각 수도 12번씩 나타나 그 합은 13×12＝156입니다. 모두 더하면 20800＋1560＋156＝22516입니다.",
+      "learningPoint": "0의 백의 자리 제한과 각 자리의 반복 횟수 구분하기",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "verification": {
+        "primaryMethod": "place value frequency sum",
+        "parameters": {
+          "digits": [
+            0,
+            3,
+            4,
+            6
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "cards": [
+        0,
+        3,
+        4,
+        6
+      ],
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q29-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q30-v1",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "detailType": "경주와 휴식의 시간표 역산",
+      "pointBand": "4.2",
+      "text": "토끼와 거북이가 같은 지점에서 동시에 출발했습니다. 토끼는 46분 달린 뒤 1시간 36분 동안 잠을 자고, 깨어나 22분 더 달려 결승점에 도착했습니다. 거북이는 쉬지 않고 걸어 낮 12시 30분에 도착했으며, 이는 토끼보다 9분 먼저였습니다. 출발 시각을 구하고 오전 10시 37분에 토끼가 무엇을 하고 있었는지 쓰시오.",
+      "answer": "오전 9시 55분, 달리고 있음",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        9,
+        55,
+        "달리고 있음"
+      ],
+      "acceptedAnswers": [
+        "오전 9시 55분, 달리고 있음"
+      ],
+      "solutionSteps": [
+        "토끼의 전체 시간은 46＋96＋22＝164분입니다. 토끼의 도착 시각은 거북이보다 9분 뒤인 12시 39분입니다.",
+        "도착 시각에서 164분을 거슬러 올라가면 출발은 오전 9시 55분입니다.",
+        "토끼는 9시 55분부터 10시 41분까지 달리고, 10시 41분부터 12시 17분까지 잠을 잔 뒤, 12시 17분부터 12시 39분까지 다시 달립니다. 따라서 10시 37분에는 달리고 있습니다."
+      ],
+      "solution": "토끼의 전체 시간은 46＋96＋22＝164분입니다. 토끼의 도착 시각은 거북이보다 9분 뒤인 12시 39분입니다. 도착 시각에서 164분을 거슬러 올라가면 출발은 오전 9시 55분입니다. 토끼는 9시 55분부터 10시 41분까지 달리고, 10시 41분부터 12시 17분까지 잠을 잔 뒤, 12시 17분부터 12시 39분까지 다시 달립니다. 따라서 10시 37분에는 달리고 있습니다.",
+      "learningPoint": "먼저 도착한 사람과 쉬는 구간을 시간선에 정확히 놓기",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "verification": {
+        "primaryMethod": "backward duration and interval membership",
+        "parameters": {
+          "first": 46,
+          "sleep": 96,
+          "last": 22,
+          "lag": 9,
+          "turtleFinish": 750,
+          "query": 637
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q30-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q30-v2",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "detailType": "경주와 휴식의 시간표 역산",
+      "pointBand": "4.2",
+      "text": "토끼와 거북이가 같은 지점에서 동시에 출발했습니다. 토끼는 48분 달린 뒤 1시간 39분 동안 잠을 자고, 깨어나 23분 더 달려 결승점에 도착했습니다. 거북이는 쉬지 않고 걸어 낮 12시 33분에 도착했으며, 이는 토끼보다 10분 먼저였습니다. 출발 시각을 구하고 오전 11시 30분에 토끼가 무엇을 하고 있었는지 쓰시오.",
+      "answer": "오전 9시 53분, 잠을 자고 있음",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        9,
+        53,
+        "잠을 자고 있음"
+      ],
+      "acceptedAnswers": [
+        "오전 9시 53분, 잠을 자고 있음"
+      ],
+      "solutionSteps": [
+        "토끼의 전체 시간은 48＋99＋23＝170분입니다. 토끼의 도착 시각은 거북이보다 10분 뒤인 12시 43분입니다.",
+        "도착 시각에서 170분을 거슬러 올라가면 출발은 오전 9시 53분입니다.",
+        "토끼는 9시 53분부터 10시 41분까지 달리고, 10시 41분부터 12시 20분까지 잠을 잔 뒤, 12시 20분부터 12시 43분까지 다시 달립니다. 따라서 11시 30분에는 잠을 자고 있습니다."
+      ],
+      "solution": "토끼의 전체 시간은 48＋99＋23＝170분입니다. 토끼의 도착 시각은 거북이보다 10분 뒤인 12시 43분입니다. 도착 시각에서 170분을 거슬러 올라가면 출발은 오전 9시 53분입니다. 토끼는 9시 53분부터 10시 41분까지 달리고, 10시 41분부터 12시 20분까지 잠을 잔 뒤, 12시 20분부터 12시 43분까지 다시 달립니다. 따라서 11시 30분에는 잠을 자고 있습니다.",
+      "learningPoint": "먼저 도착한 사람과 쉬는 구간을 시간선에 정확히 놓기",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "verification": {
+        "primaryMethod": "backward duration and interval membership",
+        "parameters": {
+          "first": 48,
+          "sleep": 99,
+          "last": 23,
+          "lag": 10,
+          "turtleFinish": 753,
+          "query": 690
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q30-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q30-v3",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "detailType": "경주와 휴식의 시간표 역산",
+      "pointBand": "4.2",
+      "text": "토끼와 거북이가 같은 지점에서 동시에 출발했습니다. 토끼는 50분 달린 뒤 1시간 42분 동안 잠을 자고, 깨어나 24분 더 달려 결승점에 도착했습니다. 거북이는 쉬지 않고 걸어 낮 12시 36분에 도착했으며, 이는 토끼보다 11분 먼저였습니다. 출발 시각을 구하고 오전 12시 35분에 토끼가 무엇을 하고 있었는지 쓰시오.",
+      "answer": "오전 9시 51분, 달리고 있음",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        9,
+        51,
+        "달리고 있음"
+      ],
+      "acceptedAnswers": [
+        "오전 9시 51분, 달리고 있음"
+      ],
+      "solutionSteps": [
+        "토끼의 전체 시간은 50＋102＋24＝176분입니다. 토끼의 도착 시각은 거북이보다 11분 뒤인 12시 47분입니다.",
+        "도착 시각에서 176분을 거슬러 올라가면 출발은 오전 9시 51분입니다.",
+        "토끼는 9시 51분부터 10시 41분까지 달리고, 10시 41분부터 12시 23분까지 잠을 잔 뒤, 12시 23분부터 12시 47분까지 다시 달립니다. 따라서 12시 35분에는 달리고 있습니다."
+      ],
+      "solution": "토끼의 전체 시간은 50＋102＋24＝176분입니다. 토끼의 도착 시각은 거북이보다 11분 뒤인 12시 47분입니다. 도착 시각에서 176분을 거슬러 올라가면 출발은 오전 9시 51분입니다. 토끼는 9시 51분부터 10시 41분까지 달리고, 10시 41분부터 12시 23분까지 잠을 잔 뒤, 12시 23분부터 12시 47분까지 다시 달립니다. 따라서 12시 35분에는 달리고 있습니다.",
+      "learningPoint": "먼저 도착한 사람과 쉬는 구간을 시간선에 정확히 놓기",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "verification": {
+        "primaryMethod": "backward duration and interval membership",
+        "parameters": {
+          "first": 50,
+          "sleep": 102,
+          "last": 24,
+          "lag": 11,
+          "turtleFinish": 756,
+          "query": 755
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q30-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q30-v4",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "detailType": "경주와 휴식의 시간표 역산",
+      "pointBand": "4.2",
+      "text": "토끼와 거북이가 같은 지점에서 동시에 출발했습니다. 토끼는 52분 달린 뒤 1시간 45분 동안 잠을 자고, 깨어나 25분 더 달려 결승점에 도착했습니다. 거북이는 쉬지 않고 걸어 낮 12시 39분에 도착했으며, 이는 토끼보다 12분 먼저였습니다. 출발 시각을 구하고 오전 10시 37분에 토끼가 무엇을 하고 있었는지 쓰시오.",
+      "answer": "오전 9시 49분, 달리고 있음",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        9,
+        49,
+        "달리고 있음"
+      ],
+      "acceptedAnswers": [
+        "오전 9시 49분, 달리고 있음"
+      ],
+      "solutionSteps": [
+        "토끼의 전체 시간은 52＋105＋25＝182분입니다. 토끼의 도착 시각은 거북이보다 12분 뒤인 12시 51분입니다.",
+        "도착 시각에서 182분을 거슬러 올라가면 출발은 오전 9시 49분입니다.",
+        "토끼는 9시 49분부터 10시 41분까지 달리고, 10시 41분부터 12시 26분까지 잠을 잔 뒤, 12시 26분부터 12시 51분까지 다시 달립니다. 따라서 10시 37분에는 달리고 있습니다."
+      ],
+      "solution": "토끼의 전체 시간은 52＋105＋25＝182분입니다. 토끼의 도착 시각은 거북이보다 12분 뒤인 12시 51분입니다. 도착 시각에서 182분을 거슬러 올라가면 출발은 오전 9시 49분입니다. 토끼는 9시 49분부터 10시 41분까지 달리고, 10시 41분부터 12시 26분까지 잠을 잔 뒤, 12시 26분부터 12시 51분까지 다시 달립니다. 따라서 10시 37분에는 달리고 있습니다.",
+      "learningPoint": "먼저 도착한 사람과 쉬는 구간을 시간선에 정확히 놓기",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "verification": {
+        "primaryMethod": "backward duration and interval membership",
+        "parameters": {
+          "first": 52,
+          "sleep": 105,
+          "last": 25,
+          "lag": 12,
+          "turtleFinish": 759,
+          "query": 637
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q30-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q30-v5",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "detailType": "경주와 휴식의 시간표 역산",
+      "pointBand": "4.2",
+      "text": "토끼와 거북이가 같은 지점에서 동시에 출발했습니다. 토끼는 54분 달린 뒤 1시간 48분 동안 잠을 자고, 깨어나 26분 더 달려 결승점에 도착했습니다. 거북이는 쉬지 않고 걸어 낮 12시 42분에 도착했으며, 이는 토끼보다 13분 먼저였습니다. 출발 시각을 구하고 오전 11시 35분에 토끼가 무엇을 하고 있었는지 쓰시오.",
+      "answer": "오전 9시 47분, 잠을 자고 있음",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        9,
+        47,
+        "잠을 자고 있음"
+      ],
+      "acceptedAnswers": [
+        "오전 9시 47분, 잠을 자고 있음"
+      ],
+      "solutionSteps": [
+        "토끼의 전체 시간은 54＋108＋26＝188분입니다. 토끼의 도착 시각은 거북이보다 13분 뒤인 12시 55분입니다.",
+        "도착 시각에서 188분을 거슬러 올라가면 출발은 오전 9시 47분입니다.",
+        "토끼는 9시 47분부터 10시 41분까지 달리고, 10시 41분부터 12시 29분까지 잠을 잔 뒤, 12시 29분부터 12시 55분까지 다시 달립니다. 따라서 11시 35분에는 잠을 자고 있습니다."
+      ],
+      "solution": "토끼의 전체 시간은 54＋108＋26＝188분입니다. 토끼의 도착 시각은 거북이보다 13분 뒤인 12시 55분입니다. 도착 시각에서 188분을 거슬러 올라가면 출발은 오전 9시 47분입니다. 토끼는 9시 47분부터 10시 41분까지 달리고, 10시 41분부터 12시 29분까지 잠을 잔 뒤, 12시 29분부터 12시 55분까지 다시 달립니다. 따라서 11시 35분에는 잠을 자고 있습니다.",
+      "learningPoint": "먼저 도착한 사람과 쉬는 구간을 시간선에 정확히 놓기",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "verification": {
+        "primaryMethod": "backward duration and interval membership",
+        "parameters": {
+          "first": 54,
+          "sleep": 108,
+          "last": 26,
+          "lag": 13,
+          "turtleFinish": 762,
+          "query": 695
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q30-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 두 자리 수의 개수",
+      "id": "applied1-q29-low-v1",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "아래 수 카드를 사용하여 두 자리 수를 만듭니다. 같은 숫자를 여러 번 사용해도 될 때, 만들 수 있는 서로 다른 두 자리 수는 모두 몇 개입니까?",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "두 자리 수의 개수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "6"
+      ],
+      "solutionSteps": [
+        "두 자리 수의 십의 자리에는 0을 놓을 수 없습니다. 따라서 십의 자리는 1, 3의 2가지입니다.",
+        "일의 자리에는 0을 포함한 카드의 모든 숫자를 놓을 수 있으므로 3가지입니다. 같은 숫자를 반복해서 쓸 수 있으므로 십의 자리에서 고른 숫자도 다시 고를 수 있습니다.",
+        "십의 자리의 각 선택마다 일의 자리를 3가지로 고를 수 있습니다. 서로 다른 두 자리 수는 2×3＝6개입니다."
+      ],
+      "solution": "두 자리 수의 십의 자리에는 0을 놓을 수 없습니다. 따라서 십의 자리는 1, 3의 2가지입니다. 일의 자리에는 0을 포함한 카드의 모든 숫자를 놓을 수 있으므로 3가지입니다. 같은 숫자를 반복해서 쓸 수 있으므로 십의 자리에서 고른 숫자도 다시 고를 수 있습니다. 십의 자리의 각 선택마다 일의 자리를 3가지로 고를 수 있습니다. 서로 다른 두 자리 수는 2×3＝6개입니다.",
+      "learningPoint": "처음 자리의0 제한과 반복 허용을 구분해 자리 선택 수 곱하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "두 자리 수의 개수만 구해 자리 선택의 곱 확인",
+          "conditionTracking": "십의 자리0금지·일의 자리0허용·카드의중복사용허용·실제카드장수",
+          "caseSplitting": "자리별 합산을 제외하고 가능한 두 자리 수의 수만 계산",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "product of independent tens/units choice counts",
+        "parameters": {
+          "digits": [
+            0,
+            1,
+            3
+          ],
+          "places": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "cards": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 두 자리 수의 개수",
+      "id": "applied1-q29-low-v2",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "아래 수 카드를 사용하여 두 자리 수를 만듭니다. 같은 숫자를 여러 번 사용해도 될 때, 만들 수 있는 서로 다른 두 자리 수는 모두 몇 개입니까?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "두 자리 수의 개수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "12"
+      ],
+      "solutionSteps": [
+        "두 자리 수의 십의 자리에는 0을 놓을 수 없습니다. 따라서 십의 자리는 2, 4, 7의 3가지입니다.",
+        "일의 자리에는 0을 포함한 카드의 모든 숫자를 놓을 수 있으므로 4가지입니다. 같은 숫자를 반복해서 쓸 수 있으므로 십의 자리에서 고른 숫자도 다시 고를 수 있습니다.",
+        "십의 자리의 각 선택마다 일의 자리를 4가지로 고를 수 있습니다. 서로 다른 두 자리 수는 3×4＝12개입니다."
+      ],
+      "solution": "두 자리 수의 십의 자리에는 0을 놓을 수 없습니다. 따라서 십의 자리는 2, 4, 7의 3가지입니다. 일의 자리에는 0을 포함한 카드의 모든 숫자를 놓을 수 있으므로 4가지입니다. 같은 숫자를 반복해서 쓸 수 있으므로 십의 자리에서 고른 숫자도 다시 고를 수 있습니다. 십의 자리의 각 선택마다 일의 자리를 4가지로 고를 수 있습니다. 서로 다른 두 자리 수는 3×4＝12개입니다.",
+      "learningPoint": "처음 자리의0 제한과 반복 허용을 구분해 자리 선택 수 곱하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "두 자리 수의 개수만 구해 자리 선택의 곱 확인",
+          "conditionTracking": "십의 자리0금지·일의 자리0허용·카드의중복사용허용·실제카드장수",
+          "caseSplitting": "자리별 합산을 제외하고 가능한 두 자리 수의 수만 계산",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "product of independent tens/units choice counts",
+        "parameters": {
+          "digits": [
+            0,
+            2,
+            4,
+            7
+          ],
+          "places": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "cards": [
+        0,
+        2,
+        4,
+        7
+      ]
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 두 자리 수의 개수",
+      "id": "applied1-q29-low-v3",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "아래 수 카드를 사용하여 두 자리 수를 만듭니다. 같은 숫자를 여러 번 사용해도 될 때, 만들 수 있는 서로 다른 두 자리 수는 모두 몇 개입니까?",
+      "answer": "20",
+      "answerParts": [
+        20
+      ],
+      "answerLabels": [
+        "두 자리 수의 개수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "20"
+      ],
+      "solutionSteps": [
+        "두 자리 수의 십의 자리에는 0을 놓을 수 없습니다. 따라서 십의 자리는 1, 5, 6, 8의 4가지입니다.",
+        "일의 자리에는 0을 포함한 카드의 모든 숫자를 놓을 수 있으므로 5가지입니다. 같은 숫자를 반복해서 쓸 수 있으므로 십의 자리에서 고른 숫자도 다시 고를 수 있습니다.",
+        "십의 자리의 각 선택마다 일의 자리를 5가지로 고를 수 있습니다. 서로 다른 두 자리 수는 4×5＝20개입니다."
+      ],
+      "solution": "두 자리 수의 십의 자리에는 0을 놓을 수 없습니다. 따라서 십의 자리는 1, 5, 6, 8의 4가지입니다. 일의 자리에는 0을 포함한 카드의 모든 숫자를 놓을 수 있으므로 5가지입니다. 같은 숫자를 반복해서 쓸 수 있으므로 십의 자리에서 고른 숫자도 다시 고를 수 있습니다. 십의 자리의 각 선택마다 일의 자리를 5가지로 고를 수 있습니다. 서로 다른 두 자리 수는 4×5＝20개입니다.",
+      "learningPoint": "처음 자리의0 제한과 반복 허용을 구분해 자리 선택 수 곱하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "두 자리 수의 개수만 구해 자리 선택의 곱 확인",
+          "conditionTracking": "십의 자리0금지·일의 자리0허용·카드의중복사용허용·실제카드장수",
+          "caseSplitting": "자리별 합산을 제외하고 가능한 두 자리 수의 수만 계산",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "product of independent tens/units choice counts",
+        "parameters": {
+          "digits": [
+            0,
+            1,
+            5,
+            6,
+            8
+          ],
+          "places": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "cards": [
+        0,
+        1,
+        5,
+        6,
+        8
+      ]
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 두 자리 수의 개수",
+      "id": "applied1-q29-low-v4",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "아래 수 카드를 사용하여 두 자리 수를 만듭니다. 같은 숫자를 여러 번 사용해도 될 때, 만들 수 있는 서로 다른 두 자리 수는 모두 몇 개입니까?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "두 자리 수의 개수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "12"
+      ],
+      "solutionSteps": [
+        "두 자리 수의 십의 자리에는 0을 놓을 수 없습니다. 따라서 십의 자리는 3, 5, 9의 3가지입니다.",
+        "일의 자리에는 0을 포함한 카드의 모든 숫자를 놓을 수 있으므로 4가지입니다. 같은 숫자를 반복해서 쓸 수 있으므로 십의 자리에서 고른 숫자도 다시 고를 수 있습니다.",
+        "십의 자리의 각 선택마다 일의 자리를 4가지로 고를 수 있습니다. 서로 다른 두 자리 수는 3×4＝12개입니다."
+      ],
+      "solution": "두 자리 수의 십의 자리에는 0을 놓을 수 없습니다. 따라서 십의 자리는 3, 5, 9의 3가지입니다. 일의 자리에는 0을 포함한 카드의 모든 숫자를 놓을 수 있으므로 4가지입니다. 같은 숫자를 반복해서 쓸 수 있으므로 십의 자리에서 고른 숫자도 다시 고를 수 있습니다. 십의 자리의 각 선택마다 일의 자리를 4가지로 고를 수 있습니다. 서로 다른 두 자리 수는 3×4＝12개입니다.",
+      "learningPoint": "처음 자리의0 제한과 반복 허용을 구분해 자리 선택 수 곱하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "두 자리 수의 개수만 구해 자리 선택의 곱 확인",
+          "conditionTracking": "십의 자리0금지·일의 자리0허용·카드의중복사용허용·실제카드장수",
+          "caseSplitting": "자리별 합산을 제외하고 가능한 두 자리 수의 수만 계산",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "product of independent tens/units choice counts",
+        "parameters": {
+          "digits": [
+            0,
+            3,
+            5,
+            9
+          ],
+          "places": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "cards": [
+        0,
+        3,
+        5,
+        9
+      ]
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 두 자리 수의 개수",
+      "id": "applied1-q29-low-v5",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "아래 수 카드를 사용하여 두 자리 수를 만듭니다. 같은 숫자를 여러 번 사용해도 될 때, 만들 수 있는 서로 다른 두 자리 수는 모두 몇 개입니까?",
+      "answer": "30",
+      "answerParts": [
+        30
+      ],
+      "answerLabels": [
+        "두 자리 수의 개수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "30"
+      ],
+      "solutionSteps": [
+        "두 자리 수의 십의 자리에는 0을 놓을 수 없습니다. 따라서 십의 자리는 1, 2, 4, 6, 9의 5가지입니다.",
+        "일의 자리에는 0을 포함한 카드의 모든 숫자를 놓을 수 있으므로 6가지입니다. 같은 숫자를 반복해서 쓸 수 있으므로 십의 자리에서 고른 숫자도 다시 고를 수 있습니다.",
+        "십의 자리의 각 선택마다 일의 자리를 6가지로 고를 수 있습니다. 서로 다른 두 자리 수는 5×6＝30개입니다."
+      ],
+      "solution": "두 자리 수의 십의 자리에는 0을 놓을 수 없습니다. 따라서 십의 자리는 1, 2, 4, 6, 9의 5가지입니다. 일의 자리에는 0을 포함한 카드의 모든 숫자를 놓을 수 있으므로 6가지입니다. 같은 숫자를 반복해서 쓸 수 있으므로 십의 자리에서 고른 숫자도 다시 고를 수 있습니다. 십의 자리의 각 선택마다 일의 자리를 6가지로 고를 수 있습니다. 서로 다른 두 자리 수는 5×6＝30개입니다.",
+      "learningPoint": "처음 자리의0 제한과 반복 허용을 구분해 자리 선택 수 곱하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "두 자리 수의 개수만 구해 자리 선택의 곱 확인",
+          "conditionTracking": "십의 자리0금지·일의 자리0허용·카드의중복사용허용·실제카드장수",
+          "caseSplitting": "자리별 합산을 제외하고 가능한 두 자리 수의 수만 계산",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "product of independent tens/units choice counts",
+        "parameters": {
+          "digits": [
+            0,
+            1,
+            2,
+            4,
+            6,
+            9
+          ],
+          "places": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "cards": [
+        0,
+        1,
+        2,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 모든 두 자리 수의 합",
+      "id": "applied1-q29-middle-v1",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "아래 수 카드를 사용하여 두 자리 수를 만듭니다. 같은 숫자를 여러 번 사용해도 될 때, 만들 수 있는 모든 두 자리 수의 합을 구하시오.",
+      "answer": "387",
+      "answerParts": [
+        387
+      ],
+      "answerLabels": [
+        "모든 수의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "387"
+      ],
+      "solutionSteps": [
+        "십의 자리는 0을 제외한 3가지, 일의 자리는 0을 포함한 4가지이므로 모두 3×4＝12개의 수를 만듭니다.",
+        "십의 자리의 각 숫자는 일의 자리 선택 수인 4번씩 나타납니다. 카드 숫자의 합은 9이고0은 합에 영향을 주지 않으므로 십의 자리에서 생기는 합은 9×4×10＝360입니다.",
+        "일의 자리의 각 숫자는 십의 자리 선택 수인 3번씩 나타나므로 그 합은 9×3＝27입니다.",
+        "모든 두 자리 수의 합은 360＋27＝387입니다. 각 수를 십의 자리 값과 일의 자리 값으로 나누어 한 번씩 더했으므로 빠지거나 중복된 수가 없습니다."
+      ],
+      "solution": "십의 자리는 0을 제외한 3가지, 일의 자리는 0을 포함한 4가지이므로 모두 3×4＝12개의 수를 만듭니다. 십의 자리의 각 숫자는 일의 자리 선택 수인 4번씩 나타납니다. 카드 숫자의 합은 9이고0은 합에 영향을 주지 않으므로 십의 자리에서 생기는 합은 9×4×10＝360입니다. 일의 자리의 각 숫자는 십의 자리 선택 수인 3번씩 나타나므로 그 합은 9×3＝27입니다. 모든 두 자리 수의 합은 360＋27＝387입니다. 각 수를 십의 자리 값과 일의 자리 값으로 나누어 한 번씩 더했으므로 빠지거나 중복된 수가 없습니다.",
+      "learningPoint": "자리별 반복 횟수와 자리값을 구분하여 전체 합 구하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "두 자리 수에서 각 자리의 반복 횟수와 자리값을 합산",
+          "conditionTracking": "십의 자리0금지·일의 자리0허용·중복사용·자리별반복횟수의차이",
+          "caseSplitting": "원문 세 자리를 두 자리로 줄이고 모든 수의 합은 유지",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "frequency of each permitted digit in tens and units",
+        "parameters": {
+          "digits": [
+            0,
+            1,
+            3,
+            5
+          ],
+          "places": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "cards": [
+        0,
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 모든 두 자리 수의 합",
+      "id": "applied1-q29-middle-v2",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "아래 수 카드를 사용하여 두 자리 수를 만듭니다. 같은 숫자를 여러 번 사용해도 될 때, 만들 수 있는 모든 두 자리 수의 합을 구하시오.",
+      "answer": "516",
+      "answerParts": [
+        516
+      ],
+      "answerLabels": [
+        "모든 수의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "516"
+      ],
+      "solutionSteps": [
+        "십의 자리는 0을 제외한 3가지, 일의 자리는 0을 포함한 4가지이므로 모두 3×4＝12개의 수를 만듭니다.",
+        "십의 자리의 각 숫자는 일의 자리 선택 수인 4번씩 나타납니다. 카드 숫자의 합은 12이고0은 합에 영향을 주지 않으므로 십의 자리에서 생기는 합은 12×4×10＝480입니다.",
+        "일의 자리의 각 숫자는 십의 자리 선택 수인 3번씩 나타나므로 그 합은 12×3＝36입니다.",
+        "모든 두 자리 수의 합은 480＋36＝516입니다. 각 수를 십의 자리 값과 일의 자리 값으로 나누어 한 번씩 더했으므로 빠지거나 중복된 수가 없습니다."
+      ],
+      "solution": "십의 자리는 0을 제외한 3가지, 일의 자리는 0을 포함한 4가지이므로 모두 3×4＝12개의 수를 만듭니다. 십의 자리의 각 숫자는 일의 자리 선택 수인 4번씩 나타납니다. 카드 숫자의 합은 12이고0은 합에 영향을 주지 않으므로 십의 자리에서 생기는 합은 12×4×10＝480입니다. 일의 자리의 각 숫자는 십의 자리 선택 수인 3번씩 나타나므로 그 합은 12×3＝36입니다. 모든 두 자리 수의 합은 480＋36＝516입니다. 각 수를 십의 자리 값과 일의 자리 값으로 나누어 한 번씩 더했으므로 빠지거나 중복된 수가 없습니다.",
+      "learningPoint": "자리별 반복 횟수와 자리값을 구분하여 전체 합 구하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "두 자리 수에서 각 자리의 반복 횟수와 자리값을 합산",
+          "conditionTracking": "십의 자리0금지·일의 자리0허용·중복사용·자리별반복횟수의차이",
+          "caseSplitting": "원문 세 자리를 두 자리로 줄이고 모든 수의 합은 유지",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "frequency of each permitted digit in tens and units",
+        "parameters": {
+          "digits": [
+            0,
+            1,
+            4,
+            7
+          ],
+          "places": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "cards": [
+        0,
+        1,
+        4,
+        7
+      ]
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 모든 두 자리 수의 합",
+      "id": "applied1-q29-middle-v3",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "아래 수 카드를 사용하여 두 자리 수를 만듭니다. 같은 숫자를 여러 번 사용해도 될 때, 만들 수 있는 모든 두 자리 수의 합을 구하시오.",
+      "answer": "559",
+      "answerParts": [
+        559
+      ],
+      "answerLabels": [
+        "모든 수의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "559"
+      ],
+      "solutionSteps": [
+        "십의 자리는 0을 제외한 3가지, 일의 자리는 0을 포함한 4가지이므로 모두 3×4＝12개의 수를 만듭니다.",
+        "십의 자리의 각 숫자는 일의 자리 선택 수인 4번씩 나타납니다. 카드 숫자의 합은 13이고0은 합에 영향을 주지 않으므로 십의 자리에서 생기는 합은 13×4×10＝520입니다.",
+        "일의 자리의 각 숫자는 십의 자리 선택 수인 3번씩 나타나므로 그 합은 13×3＝39입니다.",
+        "모든 두 자리 수의 합은 520＋39＝559입니다. 각 수를 십의 자리 값과 일의 자리 값으로 나누어 한 번씩 더했으므로 빠지거나 중복된 수가 없습니다."
+      ],
+      "solution": "십의 자리는 0을 제외한 3가지, 일의 자리는 0을 포함한 4가지이므로 모두 3×4＝12개의 수를 만듭니다. 십의 자리의 각 숫자는 일의 자리 선택 수인 4번씩 나타납니다. 카드 숫자의 합은 13이고0은 합에 영향을 주지 않으므로 십의 자리에서 생기는 합은 13×4×10＝520입니다. 일의 자리의 각 숫자는 십의 자리 선택 수인 3번씩 나타나므로 그 합은 13×3＝39입니다. 모든 두 자리 수의 합은 520＋39＝559입니다. 각 수를 십의 자리 값과 일의 자리 값으로 나누어 한 번씩 더했으므로 빠지거나 중복된 수가 없습니다.",
+      "learningPoint": "자리별 반복 횟수와 자리값을 구분하여 전체 합 구하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "두 자리 수에서 각 자리의 반복 횟수와 자리값을 합산",
+          "conditionTracking": "십의 자리0금지·일의 자리0허용·중복사용·자리별반복횟수의차이",
+          "caseSplitting": "원문 세 자리를 두 자리로 줄이고 모든 수의 합은 유지",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "frequency of each permitted digit in tens and units",
+        "parameters": {
+          "digits": [
+            0,
+            2,
+            3,
+            8
+          ],
+          "places": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "cards": [
+        0,
+        2,
+        3,
+        8
+      ]
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 모든 두 자리 수의 합",
+      "id": "applied1-q29-middle-v4",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "아래 수 카드를 사용하여 두 자리 수를 만듭니다. 같은 숫자를 여러 번 사용해도 될 때, 만들 수 있는 모든 두 자리 수의 합을 구하시오.",
+      "answer": "688",
+      "answerParts": [
+        688
+      ],
+      "answerLabels": [
+        "모든 수의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "688"
+      ],
+      "solutionSteps": [
+        "십의 자리는 0을 제외한 3가지, 일의 자리는 0을 포함한 4가지이므로 모두 3×4＝12개의 수를 만듭니다.",
+        "십의 자리의 각 숫자는 일의 자리 선택 수인 4번씩 나타납니다. 카드 숫자의 합은 16이고0은 합에 영향을 주지 않으므로 십의 자리에서 생기는 합은 16×4×10＝640입니다.",
+        "일의 자리의 각 숫자는 십의 자리 선택 수인 3번씩 나타나므로 그 합은 16×3＝48입니다.",
+        "모든 두 자리 수의 합은 640＋48＝688입니다. 각 수를 십의 자리 값과 일의 자리 값으로 나누어 한 번씩 더했으므로 빠지거나 중복된 수가 없습니다."
+      ],
+      "solution": "십의 자리는 0을 제외한 3가지, 일의 자리는 0을 포함한 4가지이므로 모두 3×4＝12개의 수를 만듭니다. 십의 자리의 각 숫자는 일의 자리 선택 수인 4번씩 나타납니다. 카드 숫자의 합은 16이고0은 합에 영향을 주지 않으므로 십의 자리에서 생기는 합은 16×4×10＝640입니다. 일의 자리의 각 숫자는 십의 자리 선택 수인 3번씩 나타나므로 그 합은 16×3＝48입니다. 모든 두 자리 수의 합은 640＋48＝688입니다. 각 수를 십의 자리 값과 일의 자리 값으로 나누어 한 번씩 더했으므로 빠지거나 중복된 수가 없습니다.",
+      "learningPoint": "자리별 반복 횟수와 자리값을 구분하여 전체 합 구하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "두 자리 수에서 각 자리의 반복 횟수와 자리값을 합산",
+          "conditionTracking": "십의 자리0금지·일의 자리0허용·중복사용·자리별반복횟수의차이",
+          "caseSplitting": "원문 세 자리를 두 자리로 줄이고 모든 수의 합은 유지",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "frequency of each permitted digit in tens and units",
+        "parameters": {
+          "digits": [
+            0,
+            2,
+            5,
+            9
+          ],
+          "places": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "cards": [
+        0,
+        2,
+        5,
+        9
+      ]
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "자리별 합산",
+      "learningLocation": "활용 1회 · 원문 29번 · 자리별 합산",
+      "detailType": "중복 사용 수 카드로 만든 모든 두 자리 수의 합",
+      "id": "applied1-q29-middle-v5",
+      "genId": "applied1-q29",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 29,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "아래 수 카드를 사용하여 두 자리 수를 만듭니다. 같은 숫자를 여러 번 사용해도 될 때, 만들 수 있는 모든 두 자리 수의 합을 구하시오.",
+      "answer": "559",
+      "answerParts": [
+        559
+      ],
+      "answerLabels": [
+        "모든 수의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "559"
+      ],
+      "solutionSteps": [
+        "십의 자리는 0을 제외한 3가지, 일의 자리는 0을 포함한 4가지이므로 모두 3×4＝12개의 수를 만듭니다.",
+        "십의 자리의 각 숫자는 일의 자리 선택 수인 4번씩 나타납니다. 카드 숫자의 합은 13이고0은 합에 영향을 주지 않으므로 십의 자리에서 생기는 합은 13×4×10＝520입니다.",
+        "일의 자리의 각 숫자는 십의 자리 선택 수인 3번씩 나타나므로 그 합은 13×3＝39입니다.",
+        "모든 두 자리 수의 합은 520＋39＝559입니다. 각 수를 십의 자리 값과 일의 자리 값으로 나누어 한 번씩 더했으므로 빠지거나 중복된 수가 없습니다."
+      ],
+      "solution": "십의 자리는 0을 제외한 3가지, 일의 자리는 0을 포함한 4가지이므로 모두 3×4＝12개의 수를 만듭니다. 십의 자리의 각 숫자는 일의 자리 선택 수인 4번씩 나타납니다. 카드 숫자의 합은 13이고0은 합에 영향을 주지 않으므로 십의 자리에서 생기는 합은 13×4×10＝520입니다. 일의 자리의 각 숫자는 십의 자리 선택 수인 3번씩 나타나므로 그 합은 13×3＝39입니다. 모든 두 자리 수의 합은 520＋39＝559입니다. 각 수를 십의 자리 값과 일의 자리 값으로 나누어 한 번씩 더했으므로 빠지거나 중복된 수가 없습니다.",
+      "learningPoint": "자리별 반복 횟수와 자리값을 구분하여 전체 합 구하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "두 자리 수에서 각 자리의 반복 횟수와 자리값을 합산",
+          "conditionTracking": "십의 자리0금지·일의 자리0허용·중복사용·자리별반복횟수의차이",
+          "caseSplitting": "원문 세 자리를 두 자리로 줄이고 모든 수의 합은 유지",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "frequency of each permitted digit in tens and units",
+        "parameters": {
+          "digits": [
+            0,
+            3,
+            4,
+            6
+          ],
+          "places": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 29,
+        "studentDifficultyMeasured": false
+      },
+      "cards": [
+        0,
+        3,
+        4,
+        6
+      ]
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "detailType": "달림과 휴식의 경과 시간으로 도착 시각 찾기",
+      "id": "applied1-q30-low-v1",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "토끼는 오전 8시 20분에 출발하여 35분 동안 달렸습니다. 그 뒤 1시간 10분 동안 잠을 자고, 깨어나 20분 더 달려 결승점에 도착했습니다. 도착한 시각은 몇 시 몇 분입니까?",
+      "answer": "오전 10시 25분",
+      "answerParts": [
+        10,
+        25
+      ],
+      "answerLabels": [
+        "도착 시",
+        "도착 분"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "오전 10시 25분"
+      ],
+      "solutionSteps": [
+        "달린 시간과 잠을 잔 시간을 모두 합하면 35＋70＋20＝125분입니다. 1시간 10분은 70분으로 바꾸어 더합니다.",
+        "오전 8시 20분에서 2시간 5분이 지나면 오전 10시 25분입니다.",
+        "구간별로 확인하면 오전 8시 55분까지 달리고, 오전 10시 5분까지 잠을 잔 뒤, 오전 10시 25분에 결승점에 도착합니다. 따라서 답은 오전 10시 25분입니다."
+      ],
+      "solution": "달린 시간과 잠을 잔 시간을 모두 합하면 35＋70＋20＝125분입니다. 1시간 10분은 70분으로 바꾸어 더합니다. 오전 8시 20분에서 2시간 5분이 지나면 오전 10시 25분입니다. 구간별로 확인하면 오전 8시 55분까지 달리고, 오전 10시 5분까지 잠을 잔 뒤, 오전 10시 25분에 결승점에 도착합니다. 따라서 답은 오전 10시 25분입니다.",
+      "learningPoint": "알려진 출발 시각에서 달림·휴식·달림 시간을 순서대로 더하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "주어진 출발 시각에서 달림·잠·달림 순서로 도착 시각 계산",
+          "conditionTracking": "출발시각알려짐·시간/분환산·세구간을쉬지않고연속진행",
+          "caseSplitting": "다른 사람 도착 시각과 차이 및 중간 행동 판단 제외",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "forward clock arithmetic with known start",
+        "parameters": {
+          "start": 500,
+          "first": 35,
+          "sleep": 70,
+          "last": 20
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "detailType": "달림과 휴식의 경과 시간으로 도착 시각 찾기",
+      "id": "applied1-q30-low-v2",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "토끼는 오전 8시 35분에 출발하여 38분 동안 달렸습니다. 그 뒤 1시간 15분 동안 잠을 자고, 깨어나 22분 더 달려 결승점에 도착했습니다. 도착한 시각은 몇 시 몇 분입니까?",
+      "answer": "오전 10시 50분",
+      "answerParts": [
+        10,
+        50
+      ],
+      "answerLabels": [
+        "도착 시",
+        "도착 분"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "오전 10시 50분"
+      ],
+      "solutionSteps": [
+        "달린 시간과 잠을 잔 시간을 모두 합하면 38＋75＋22＝135분입니다. 1시간 15분은 75분으로 바꾸어 더합니다.",
+        "오전 8시 35분에서 2시간 15분이 지나면 오전 10시 50분입니다.",
+        "구간별로 확인하면 오전 9시 13분까지 달리고, 오전 10시 28분까지 잠을 잔 뒤, 오전 10시 50분에 결승점에 도착합니다. 따라서 답은 오전 10시 50분입니다."
+      ],
+      "solution": "달린 시간과 잠을 잔 시간을 모두 합하면 38＋75＋22＝135분입니다. 1시간 15분은 75분으로 바꾸어 더합니다. 오전 8시 35분에서 2시간 15분이 지나면 오전 10시 50분입니다. 구간별로 확인하면 오전 9시 13분까지 달리고, 오전 10시 28분까지 잠을 잔 뒤, 오전 10시 50분에 결승점에 도착합니다. 따라서 답은 오전 10시 50분입니다.",
+      "learningPoint": "알려진 출발 시각에서 달림·휴식·달림 시간을 순서대로 더하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "주어진 출발 시각에서 달림·잠·달림 순서로 도착 시각 계산",
+          "conditionTracking": "출발시각알려짐·시간/분환산·세구간을쉬지않고연속진행",
+          "caseSplitting": "다른 사람 도착 시각과 차이 및 중간 행동 판단 제외",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "forward clock arithmetic with known start",
+        "parameters": {
+          "start": 515,
+          "first": 38,
+          "sleep": 75,
+          "last": 22
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "detailType": "달림과 휴식의 경과 시간으로 도착 시각 찾기",
+      "id": "applied1-q30-low-v3",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "토끼는 오전 8시 50분에 출발하여 41분 동안 달렸습니다. 그 뒤 1시간 20분 동안 잠을 자고, 깨어나 24분 더 달려 결승점에 도착했습니다. 도착한 시각은 몇 시 몇 분입니까?",
+      "answer": "오전 11시 15분",
+      "answerParts": [
+        11,
+        15
+      ],
+      "answerLabels": [
+        "도착 시",
+        "도착 분"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "오전 11시 15분"
+      ],
+      "solutionSteps": [
+        "달린 시간과 잠을 잔 시간을 모두 합하면 41＋80＋24＝145분입니다. 1시간 20분은 80분으로 바꾸어 더합니다.",
+        "오전 8시 50분에서 2시간 25분이 지나면 오전 11시 15분입니다.",
+        "구간별로 확인하면 오전 9시 31분까지 달리고, 오전 10시 51분까지 잠을 잔 뒤, 오전 11시 15분에 결승점에 도착합니다. 따라서 답은 오전 11시 15분입니다."
+      ],
+      "solution": "달린 시간과 잠을 잔 시간을 모두 합하면 41＋80＋24＝145분입니다. 1시간 20분은 80분으로 바꾸어 더합니다. 오전 8시 50분에서 2시간 25분이 지나면 오전 11시 15분입니다. 구간별로 확인하면 오전 9시 31분까지 달리고, 오전 10시 51분까지 잠을 잔 뒤, 오전 11시 15분에 결승점에 도착합니다. 따라서 답은 오전 11시 15분입니다.",
+      "learningPoint": "알려진 출발 시각에서 달림·휴식·달림 시간을 순서대로 더하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "주어진 출발 시각에서 달림·잠·달림 순서로 도착 시각 계산",
+          "conditionTracking": "출발시각알려짐·시간/분환산·세구간을쉬지않고연속진행",
+          "caseSplitting": "다른 사람 도착 시각과 차이 및 중간 행동 판단 제외",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "forward clock arithmetic with known start",
+        "parameters": {
+          "start": 530,
+          "first": 41,
+          "sleep": 80,
+          "last": 24
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "detailType": "달림과 휴식의 경과 시간으로 도착 시각 찾기",
+      "id": "applied1-q30-low-v4",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "토끼는 오전 9시 5분에 출발하여 44분 동안 달렸습니다. 그 뒤 1시간 25분 동안 잠을 자고, 깨어나 26분 더 달려 결승점에 도착했습니다. 도착한 시각은 몇 시 몇 분입니까?",
+      "answer": "오전 11시 40분",
+      "answerParts": [
+        11,
+        40
+      ],
+      "answerLabels": [
+        "도착 시",
+        "도착 분"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "오전 11시 40분"
+      ],
+      "solutionSteps": [
+        "달린 시간과 잠을 잔 시간을 모두 합하면 44＋85＋26＝155분입니다. 1시간 25분은 85분으로 바꾸어 더합니다.",
+        "오전 9시 5분에서 2시간 35분이 지나면 오전 11시 40분입니다.",
+        "구간별로 확인하면 오전 9시 49분까지 달리고, 오전 11시 14분까지 잠을 잔 뒤, 오전 11시 40분에 결승점에 도착합니다. 따라서 답은 오전 11시 40분입니다."
+      ],
+      "solution": "달린 시간과 잠을 잔 시간을 모두 합하면 44＋85＋26＝155분입니다. 1시간 25분은 85분으로 바꾸어 더합니다. 오전 9시 5분에서 2시간 35분이 지나면 오전 11시 40분입니다. 구간별로 확인하면 오전 9시 49분까지 달리고, 오전 11시 14분까지 잠을 잔 뒤, 오전 11시 40분에 결승점에 도착합니다. 따라서 답은 오전 11시 40분입니다.",
+      "learningPoint": "알려진 출발 시각에서 달림·휴식·달림 시간을 순서대로 더하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "주어진 출발 시각에서 달림·잠·달림 순서로 도착 시각 계산",
+          "conditionTracking": "출발시각알려짐·시간/분환산·세구간을쉬지않고연속진행",
+          "caseSplitting": "다른 사람 도착 시각과 차이 및 중간 행동 판단 제외",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "forward clock arithmetic with known start",
+        "parameters": {
+          "start": 545,
+          "first": 44,
+          "sleep": 85,
+          "last": 26
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "detailType": "달림과 휴식의 경과 시간으로 도착 시각 찾기",
+      "id": "applied1-q30-low-v5",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "토끼는 오전 9시 10분에 출발하여 47분 동안 달렸습니다. 그 뒤 1시간 20분 동안 잠을 자고, 깨어나 28분 더 달려 결승점에 도착했습니다. 도착한 시각은 몇 시 몇 분입니까?",
+      "answer": "오전 11시 45분",
+      "answerParts": [
+        11,
+        45
+      ],
+      "answerLabels": [
+        "도착 시",
+        "도착 분"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "오전 11시 45분"
+      ],
+      "solutionSteps": [
+        "달린 시간과 잠을 잔 시간을 모두 합하면 47＋80＋28＝155분입니다. 1시간 20분은 80분으로 바꾸어 더합니다.",
+        "오전 9시 10분에서 2시간 35분이 지나면 오전 11시 45분입니다.",
+        "구간별로 확인하면 오전 9시 57분까지 달리고, 오전 11시 17분까지 잠을 잔 뒤, 오전 11시 45분에 결승점에 도착합니다. 따라서 답은 오전 11시 45분입니다."
+      ],
+      "solution": "달린 시간과 잠을 잔 시간을 모두 합하면 47＋80＋28＝155분입니다. 1시간 20분은 80분으로 바꾸어 더합니다. 오전 9시 10분에서 2시간 35분이 지나면 오전 11시 45분입니다. 구간별로 확인하면 오전 9시 57분까지 달리고, 오전 11시 17분까지 잠을 잔 뒤, 오전 11시 45분에 결승점에 도착합니다. 따라서 답은 오전 11시 45분입니다.",
+      "learningPoint": "알려진 출발 시각에서 달림·휴식·달림 시간을 순서대로 더하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "주어진 출발 시각에서 달림·잠·달림 순서로 도착 시각 계산",
+          "conditionTracking": "출발시각알려짐·시간/분환산·세구간을쉬지않고연속진행",
+          "caseSplitting": "다른 사람 도착 시각과 차이 및 중간 행동 판단 제외",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "forward clock arithmetic with known start",
+        "parameters": {
+          "start": 550,
+          "first": 47,
+          "sleep": 80,
+          "last": 28
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "detailType": "도착 시각과 경과 시간으로 출발 시각 찾기",
+      "id": "applied1-q30-middle-v1",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "토끼는 오전에 출발하여 42분 달리고, 1시간 16분 동안 잠을 잤습니다. 깨어나 24분 더 달려 오전 11시 35분에 결승점에 도착했습니다. 처음 출발한 시각은 몇 시 몇 분입니까?",
+      "answer": "오전 9시 13분",
+      "answerParts": [
+        9,
+        13
+      ],
+      "answerLabels": [
+        "출발 시",
+        "출발 분"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "오전 9시 13분"
+      ],
+      "solutionSteps": [
+        "출발에서 도착까지 걸린 전체 시간은 42＋76＋24＝142분, 즉 2시간 22분입니다.",
+        "도착 시각 오전 11시 35분에서 전체 경과 시간 2시간 22분을 거슬러 올라가면 출발 시각은 오전 9시 13분입니다.",
+        "이 시각에 출발하면 오전 9시 55분까지 달리고, 오전 11시 11분까지 잠을 잔 뒤 다시 24분 달려 오전 11시 35분에 도착하므로 주어진 조건과 맞습니다."
+      ],
+      "solution": "출발에서 도착까지 걸린 전체 시간은 42＋76＋24＝142분, 즉 2시간 22분입니다. 도착 시각 오전 11시 35분에서 전체 경과 시간 2시간 22분을 거슬러 올라가면 출발 시각은 오전 9시 13분입니다. 이 시각에 출발하면 오전 9시 55분까지 달리고, 오전 11시 11분까지 잠을 잔 뒤 다시 24분 달려 오전 11시 35분에 도착하므로 주어진 조건과 맞습니다.",
+      "learningPoint": "주어진 도착 시각에서 세 구간의 전체 경과 시간을 빼기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "주어진 토끼 도착 시각에서 세 구간을 거슬러 출발 시각 역산",
+          "conditionTracking": "도착시각알려짐·세구간전체시간·역순계산·오전출발",
+          "caseSplitting": "원문 다른 사람의 도착 시각 차와 특정 시각 행동을 제외하고 역산에 집중",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "backward clock arithmetic with known rabbit finish",
+        "parameters": {
+          "finish": 695,
+          "first": 42,
+          "sleep": 76,
+          "last": 24
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "detailType": "도착 시각과 경과 시간으로 출발 시각 찾기",
+      "id": "applied1-q30-middle-v2",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "토끼는 오전에 출발하여 44분 달리고, 1시간 23분 동안 잠을 잤습니다. 깨어나 26분 더 달려 오전 11시 50분에 결승점에 도착했습니다. 처음 출발한 시각은 몇 시 몇 분입니까?",
+      "answer": "오전 9시 17분",
+      "answerParts": [
+        9,
+        17
+      ],
+      "answerLabels": [
+        "출발 시",
+        "출발 분"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "오전 9시 17분"
+      ],
+      "solutionSteps": [
+        "출발에서 도착까지 걸린 전체 시간은 44＋83＋26＝153분, 즉 2시간 33분입니다.",
+        "도착 시각 오전 11시 50분에서 전체 경과 시간 2시간 33분을 거슬러 올라가면 출발 시각은 오전 9시 17분입니다.",
+        "이 시각에 출발하면 오전 10시 1분까지 달리고, 오전 11시 24분까지 잠을 잔 뒤 다시 26분 달려 오전 11시 50분에 도착하므로 주어진 조건과 맞습니다."
+      ],
+      "solution": "출발에서 도착까지 걸린 전체 시간은 44＋83＋26＝153분, 즉 2시간 33분입니다. 도착 시각 오전 11시 50분에서 전체 경과 시간 2시간 33분을 거슬러 올라가면 출발 시각은 오전 9시 17분입니다. 이 시각에 출발하면 오전 10시 1분까지 달리고, 오전 11시 24분까지 잠을 잔 뒤 다시 26분 달려 오전 11시 50분에 도착하므로 주어진 조건과 맞습니다.",
+      "learningPoint": "주어진 도착 시각에서 세 구간의 전체 경과 시간을 빼기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "주어진 토끼 도착 시각에서 세 구간을 거슬러 출발 시각 역산",
+          "conditionTracking": "도착시각알려짐·세구간전체시간·역순계산·오전출발",
+          "caseSplitting": "원문 다른 사람의 도착 시각 차와 특정 시각 행동을 제외하고 역산에 집중",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "backward clock arithmetic with known rabbit finish",
+        "parameters": {
+          "finish": 710,
+          "first": 44,
+          "sleep": 83,
+          "last": 26
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "detailType": "도착 시각과 경과 시간으로 출발 시각 찾기",
+      "id": "applied1-q30-middle-v3",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "토끼는 오전에 출발하여 46분 달리고, 1시간 31분 동안 잠을 잤습니다. 깨어나 28분 더 달려 낮 12시 10분에 결승점에 도착했습니다. 처음 출발한 시각은 몇 시 몇 분입니까?",
+      "answer": "오전 9시 25분",
+      "answerParts": [
+        9,
+        25
+      ],
+      "answerLabels": [
+        "출발 시",
+        "출발 분"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "오전 9시 25분"
+      ],
+      "solutionSteps": [
+        "출발에서 도착까지 걸린 전체 시간은 46＋91＋28＝165분, 즉 2시간 45분입니다.",
+        "도착 시각 낮 12시 10분에서 전체 경과 시간 2시간 45분을 거슬러 올라가면 출발 시각은 오전 9시 25분입니다.",
+        "이 시각에 출발하면 오전 10시 11분까지 달리고, 오전 11시 42분까지 잠을 잔 뒤 다시 28분 달려 낮 12시 10분에 도착하므로 주어진 조건과 맞습니다."
+      ],
+      "solution": "출발에서 도착까지 걸린 전체 시간은 46＋91＋28＝165분, 즉 2시간 45분입니다. 도착 시각 낮 12시 10분에서 전체 경과 시간 2시간 45분을 거슬러 올라가면 출발 시각은 오전 9시 25분입니다. 이 시각에 출발하면 오전 10시 11분까지 달리고, 오전 11시 42분까지 잠을 잔 뒤 다시 28분 달려 낮 12시 10분에 도착하므로 주어진 조건과 맞습니다.",
+      "learningPoint": "주어진 도착 시각에서 세 구간의 전체 경과 시간을 빼기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "주어진 토끼 도착 시각에서 세 구간을 거슬러 출발 시각 역산",
+          "conditionTracking": "도착시각알려짐·세구간전체시간·역순계산·오전출발",
+          "caseSplitting": "원문 다른 사람의 도착 시각 차와 특정 시각 행동을 제외하고 역산에 집중",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "backward clock arithmetic with known rabbit finish",
+        "parameters": {
+          "finish": 730,
+          "first": 46,
+          "sleep": 91,
+          "last": 28
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "detailType": "도착 시각과 경과 시간으로 출발 시각 찾기",
+      "id": "applied1-q30-middle-v4",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "토끼는 오전에 출발하여 48분 달리고, 1시간 38분 동안 잠을 잤습니다. 깨어나 30분 더 달려 낮 12시 25분에 결승점에 도착했습니다. 처음 출발한 시각은 몇 시 몇 분입니까?",
+      "answer": "오전 9시 29분",
+      "answerParts": [
+        9,
+        29
+      ],
+      "answerLabels": [
+        "출발 시",
+        "출발 분"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "오전 9시 29분"
+      ],
+      "solutionSteps": [
+        "출발에서 도착까지 걸린 전체 시간은 48＋98＋30＝176분, 즉 2시간 56분입니다.",
+        "도착 시각 낮 12시 25분에서 전체 경과 시간 2시간 56분을 거슬러 올라가면 출발 시각은 오전 9시 29분입니다.",
+        "이 시각에 출발하면 오전 10시 17분까지 달리고, 오전 11시 55분까지 잠을 잔 뒤 다시 30분 달려 낮 12시 25분에 도착하므로 주어진 조건과 맞습니다."
+      ],
+      "solution": "출발에서 도착까지 걸린 전체 시간은 48＋98＋30＝176분, 즉 2시간 56분입니다. 도착 시각 낮 12시 25분에서 전체 경과 시간 2시간 56분을 거슬러 올라가면 출발 시각은 오전 9시 29분입니다. 이 시각에 출발하면 오전 10시 17분까지 달리고, 오전 11시 55분까지 잠을 잔 뒤 다시 30분 달려 낮 12시 25분에 도착하므로 주어진 조건과 맞습니다.",
+      "learningPoint": "주어진 도착 시각에서 세 구간의 전체 경과 시간을 빼기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "주어진 토끼 도착 시각에서 세 구간을 거슬러 출발 시각 역산",
+          "conditionTracking": "도착시각알려짐·세구간전체시간·역순계산·오전출발",
+          "caseSplitting": "원문 다른 사람의 도착 시각 차와 특정 시각 행동을 제외하고 역산에 집중",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "backward clock arithmetic with known rabbit finish",
+        "parameters": {
+          "finish": 745,
+          "first": 48,
+          "sleep": 98,
+          "last": 30
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "시간의 흐름",
+      "learningLocation": "활용 1회 · 원문 30번 · 시간의 흐름",
+      "detailType": "도착 시각과 경과 시간으로 출발 시각 찾기",
+      "id": "applied1-q30-middle-v5",
+      "genId": "applied1-q30",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 30,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r10",
+      "text": "토끼는 오전에 출발하여 52분 달리고, 1시간 44분 동안 잠을 잤습니다. 깨어나 32분 더 달려 낮 12시 40분에 결승점에 도착했습니다. 처음 출발한 시각은 몇 시 몇 분입니까?",
+      "answer": "오전 9시 32분",
+      "answerParts": [
+        9,
+        32
+      ],
+      "answerLabels": [
+        "출발 시",
+        "출발 분"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "오전 9시 32분"
+      ],
+      "solutionSteps": [
+        "출발에서 도착까지 걸린 전체 시간은 52＋104＋32＝188분, 즉 3시간 8분입니다.",
+        "도착 시각 낮 12시 40분에서 전체 경과 시간 3시간 8분을 거슬러 올라가면 출발 시각은 오전 9시 32분입니다.",
+        "이 시각에 출발하면 오전 10시 24분까지 달리고, 낮 12시 8분까지 잠을 잔 뒤 다시 32분 달려 낮 12시 40분에 도착하므로 주어진 조건과 맞습니다."
+      ],
+      "solution": "출발에서 도착까지 걸린 전체 시간은 52＋104＋32＝188분, 즉 3시간 8분입니다. 도착 시각 낮 12시 40분에서 전체 경과 시간 3시간 8분을 거슬러 올라가면 출발 시각은 오전 9시 32분입니다. 이 시각에 출발하면 오전 10시 24분까지 달리고, 낮 12시 8분까지 잠을 잔 뒤 다시 32분 달려 낮 12시 40분에 도착하므로 주어진 조건과 맞습니다.",
+      "learningPoint": "주어진 도착 시각에서 세 구간의 전체 경과 시간을 빼기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리 선택/자리값·시각과 경과 시간 범위 유지",
+          "reasoning": "주어진 토끼 도착 시각에서 세 구간을 거슬러 출발 시각 역산",
+          "conditionTracking": "도착시각알려짐·세구간전체시간·역순계산·오전출발",
+          "caseSplitting": "원문 다른 사람의 도착 시각 차와 특정 시각 행동을 제외하고 역산에 집중",
+          "computation": "수 크기만 줄이지 않고 개수→자리별합 및 순방향→역산→시각차/구간판단으로 구분",
+          "representation": "29번은 실제 주어진 숫자 카드만 표시;30번은 학생이 시간선으로 옮길 관계를 지문으로만 제시",
+          "reading": "같은 숫자 반복 허용·두 자리/세 자리 구분·출발과 도착·달린 뒤 잠을 자고 다시 달림을 지문에서 확정",
+          "visualCues": "완성된 수 목록·자리별 횟수 표·시간선·중간시각·조건 요약을 문제에 붙이지 않음",
+          "shortcuts": "29하 카드장수3/4/5/4/6을실제로읽어야함;29중0의첫자리제외로두자리반복횟수다름;30구간중하나를빼거나앞뒤를바꾸면답불일치"
+        }
+      },
+      "verification": {
+        "primaryMethod": "backward clock arithmetic with known rabbit finish",
+        "parameters": {
+          "finish": 760,
+          "first": 52,
+          "sleep": 104,
+          "last": 32
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 30,
+        "studentDifficultyMeasured": false
+      }
     }
   ],
-  "preservedLegacyCount": 110,
-  "newAuthoredCount": 295,
+  "preservedLegacyCount": 120,
+  "newAuthoredCount": 315,
   "reviewSummary": {
-    "sourceTypes": 27,
+    "sourceTypes": 29,
     "perSource": 15,
     "perLevel": 5,
-    "count": 405,
-    "preservedLegacyCount": 110,
-    "newAuthoredCount": 295,
+    "count": 435,
+    "preservedLegacyCount": 120,
+    "newAuthoredCount": 315,
     "independentAnswers": true,
     "actualZipReviewed": true,
     "sourceGradeMutation": false,

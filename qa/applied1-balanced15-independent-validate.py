@@ -259,8 +259,45 @@ def solid_stair_edges(layers,bottom_only=False):
     return frozenset(edges)
 
 
+@functools.lru_cache(None)
+def permitted_integers(digits,places):
+    allowed=set(map(str,digits))
+    return tuple(n for n in range(10**(places-1),10**places)if set(str(n))<=allowed)
+
+
+@functools.lru_cache(None)
+def race_trace(first,sleep,last):
+    clock=datetime.datetime(2026,10,24)
+    entries=[]
+    for length,action in [(first,'달리고 있음'),(sleep,'잠을 자고 있음'),(last,'달리고 있음')]:
+        for _ in range(length):
+            entries.append((clock,action));clock+=datetime.timedelta(minutes=1)
+    return tuple(entries),clock
+
+
 def answer(item):
     no, level, p = item['sourceNo'], item['practiceLevel'], item['verification']['parameters']
+    if no == 29:
+        numbers=permitted_integers(tuple(p['digits']),2 if level in ['low','middle']else 3)
+        return[len(numbers)if level=='low'else sum(numbers)]
+    if no == 30:
+        trace,end=race_trace(p['first'],p['sleep'],p['last']);midnight=datetime.datetime(2026,10,24)
+        elapsed=end-midnight
+        if level=='low':
+            actual=midnight+datetime.timedelta(minutes=p['start'])
+            for _ in trace:actual+=datetime.timedelta(minutes=1)
+            return[actual.hour,actual.minute]
+        target=p['finish']if level=='middle'else p['turtleFinish']+p['lag']
+        possible=[]
+        for minute in range(target):
+            initial=midnight+datetime.timedelta(minutes=minute)
+            if initial+elapsed==midnight+datetime.timedelta(minutes=target):possible.append(initial)
+        assert len(possible)==1
+        initial=possible[0]
+        if level=='middle':return[initial.hour,initial.minute]
+        offset=int(((midnight+datetime.timedelta(minutes=p['query']))-initial).total_seconds()//60)
+        assert 0<=offset<len(trace)
+        return[initial.hour,initial.minute,trace[offset][1]]
     if no == 25:
         results=digital_rotation_results(3 if level in ['low','middle'] else 5)
         if level=='low':return[r for n,r in results if n==p['number']]
@@ -686,6 +723,8 @@ assert 43*23-108==881 and [t for t in range(1,100)if 32*t-111==881]==[31]
 assert [n for n,r in digital_rotation_results(5)if r-n==7920]==[60189,60289,60589,90186,90286,90586]
 assert border_number_grid(12)[10,8]+border_number_grid(12)[12,5]==233
 assert len(solid_stair_edges(10))==336
+assert len(permitted_integers((0,2,4,6),3))==48 and sum(permitted_integers((0,2,4,6),3))==20784
+assert answer(dict(sourceNo=30,practiceLevel='high',verification=dict(parameters=dict(first=50,sleep=110,last=25,lag=12,turtleFinish=765,query=640))))==[9,52,'달리고 있음']
 assert [[border_number_grid(6)[r,c]for c in range(1,7)]for r in range(1,7)]==[[1,2,5,10,17,26],[4,3,6,11,18,27],[9,8,7,12,19,28],[16,15,14,13,20,29],[25,24,23,22,21,30],[36,35,34,33,32,31]]
 
 evidence = []
@@ -722,9 +761,9 @@ for item in data['items']:
     evidence.append({'id': item['id'], 'passed': True, 'answer': actual})
 for no in data['availableSourceNos']:
     assert collections.Counter(x['practiceLevel'] for x in data['items'] if x['sourceNo'] == no) == dict(low=5, middle=5, high=5)
-assert len(data['items']) == 405 and len({x['id'] for x in data['items']}) == 405
-assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 405
-previous = json.loads(subprocess.check_output(['git', 'show', 'ea42e698:bank/data/applied1-balanced15.json'], cwd=ROOT))
+assert len(data['items']) == 435 and len({x['id'] for x in data['items']}) == 435
+assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 435
+previous = json.loads(subprocess.check_output(['git', 'show', '29fb1e77:bank/data/applied1-balanced15.json'], cwd=ROOT))
 for old in previous['items']:
     current = next(x for x in data['items'] if x['id'] == old['id'])
     assert all(current[k] == v for k, v in old.items())
@@ -732,7 +771,7 @@ for old in previous['items']:
 out = ROOT / '.private-work/balanced15-20261024/independent-math.json'
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps({'dataSha256': hashlib.sha256(FILE.read_bytes()).hexdigest(),
-                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,28)),
-                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions', 'accumulated hand motion and all first/second study times', 'full17-stick endpoint graph intersections', 'one/two expression sign-sum dynamic programming', 'BFS folded net plus24proper signed-permutation rotations and source line-direction checks', 'integer partition states and exclusive-group relations', 'all original cross-grid unit boundary edge rectangles', 'actual die-value sequences and ordered person product pairs', 'decimal column multiplication with explicit carry states', 'front/rear train position enumeration', '180degree stroke rotation plus complete integer scans', 'successive literal border insertion', 'all cube unit edges including hidden edges and translated old-stair difference'],
+                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,28))+[29,30],
+                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions', 'accumulated hand motion and all first/second study times', 'full17-stick endpoint graph intersections', 'one/two expression sign-sum dynamic programming', 'BFS folded net plus24proper signed-permutation rotations and source line-direction checks', 'integer partition states and exclusive-group relations', 'all original cross-grid unit boundary edge rectangles', 'actual die-value sequences and ordered person product pairs', 'decimal column multiplication with explicit carry states', 'front/rear train position enumeration', '180degree stroke rotation plus complete integer scans', 'successive literal border insertion', 'all cube unit edges including hidden edges and translated old-stair difference', 'complete permitted integer scans with repetition', 'actual datetime minute ticks, start enumeration, and action traces'],
                            'items': evidence}, ensure_ascii=False, indent=2) + '\n')
-print('PASS405 answers in27complete5/5/5 groups; actual rotated strokes/integer scans, literal grid borders, unique3Dcube edges;prior360unchanged')
+print('PASS435 answers in29complete5/5/5 groups; permitted integer scans and actual datetime action traces;prior405unchanged;original28stillblocked')
