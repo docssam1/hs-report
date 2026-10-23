@@ -1,0 +1,3796 @@
+{
+  "version": "20261024-applied5-expansion-r1",
+  "sourceSet": "applied",
+  "sourceRound": 5,
+  "policy": {
+    "targetVariantsPerSource": 9,
+    "runtimeGeneration": false,
+    "defaultDiagnosticVariants": 3,
+    "difficulty": "활용 배점대만 사용",
+    "sourceGradeMutation": false
+  },
+  "availableSourceNos": [
+    1,
+    2,
+    4,
+    7,
+    10,
+    13,
+    21,
+    30
+  ],
+  "pendingSourceNos": [
+    3,
+    5,
+    6,
+    8,
+    9,
+    11,
+    12,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "items": [
+    {
+      "id": "applied5-q01-v1",
+      "genId": "applied5-q01",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 1,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "세 자리 수의 몫과 나머지 합의 최댓값",
+      "pointBand": "2.7",
+      "text": "세 자리 자연수를 13로 나누었을 때 몫과 나머지의 합이 가장 크게 되는 경우를 생각합니다. 그 합의 최댓값을 구하시오.",
+      "answer": "87",
+      "answerParts": [
+        87
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "87"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나머지는 0부터 12까지이고, 몫은 999÷13에서 76까지 나올 수 있습니다.",
+        "몫이 76일 때 가능한 가장 큰 나머지는 11이므로 합은 76＋11＝87입니다. 몫을 하나 줄인 75에서는 나머지 12을 쓸 수 있어 합이 75＋12＝87입니다.",
+        "몫이 이보다 작으면 가장 큰 나머지 12을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 87입니다."
+      ],
+      "solution": "나머지는 0부터 12까지이고, 몫은 999÷13에서 76까지 나올 수 있습니다. 몫이 76일 때 가능한 가장 큰 나머지는 11이므로 합은 76＋11＝87입니다. 몫을 하나 줄인 75에서는 나머지 12을 쓸 수 있어 합이 75＋12＝87입니다. 몫이 이보다 작으면 가장 큰 나머지 12을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 87입니다.",
+      "learningPoint": "가장 큰 몫과 가장 큰 나머지를 동시에 쓸 수 있는지 확인하기",
+      "learningLocation": "활용 5회 · 원문 1번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "maximum over the two largest feasible quotients",
+        "parameters": {
+          "divisor": 13
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q01-v2",
+      "genId": "applied5-q01",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 1,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "세 자리 수의 몫과 나머지 합의 최댓값",
+      "pointBand": "2.7",
+      "text": "세 자리 자연수를 14로 나누었을 때 몫과 나머지의 합이 가장 크게 되는 경우를 생각합니다. 그 합의 최댓값을 구하시오.",
+      "answer": "83",
+      "answerParts": [
+        83
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "83"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나머지는 0부터 13까지이고, 몫은 999÷14에서 71까지 나올 수 있습니다.",
+        "몫이 71일 때 가능한 가장 큰 나머지는 5이므로 합은 71＋5＝76입니다. 몫을 하나 줄인 70에서는 나머지 13을 쓸 수 있어 합이 70＋13＝83입니다.",
+        "몫이 이보다 작으면 가장 큰 나머지 13을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 83입니다."
+      ],
+      "solution": "나머지는 0부터 13까지이고, 몫은 999÷14에서 71까지 나올 수 있습니다. 몫이 71일 때 가능한 가장 큰 나머지는 5이므로 합은 71＋5＝76입니다. 몫을 하나 줄인 70에서는 나머지 13을 쓸 수 있어 합이 70＋13＝83입니다. 몫이 이보다 작으면 가장 큰 나머지 13을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 83입니다.",
+      "learningPoint": "가장 큰 몫과 가장 큰 나머지를 동시에 쓸 수 있는지 확인하기",
+      "learningLocation": "활용 5회 · 원문 1번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "maximum over the two largest feasible quotients",
+        "parameters": {
+          "divisor": 14
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q01-v3",
+      "genId": "applied5-q01",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 1,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "세 자리 수의 몫과 나머지 합의 최댓값",
+      "pointBand": "2.7",
+      "text": "세 자리 자연수를 15로 나누었을 때 몫과 나머지의 합이 가장 크게 되는 경우를 생각합니다. 그 합의 최댓값을 구하시오.",
+      "answer": "79",
+      "answerParts": [
+        79
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "79"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나머지는 0부터 14까지이고, 몫은 999÷15에서 66까지 나올 수 있습니다.",
+        "몫이 66일 때 가능한 가장 큰 나머지는 9이므로 합은 66＋9＝75입니다. 몫을 하나 줄인 65에서는 나머지 14을 쓸 수 있어 합이 65＋14＝79입니다.",
+        "몫이 이보다 작으면 가장 큰 나머지 14을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 79입니다."
+      ],
+      "solution": "나머지는 0부터 14까지이고, 몫은 999÷15에서 66까지 나올 수 있습니다. 몫이 66일 때 가능한 가장 큰 나머지는 9이므로 합은 66＋9＝75입니다. 몫을 하나 줄인 65에서는 나머지 14을 쓸 수 있어 합이 65＋14＝79입니다. 몫이 이보다 작으면 가장 큰 나머지 14을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 79입니다.",
+      "learningPoint": "가장 큰 몫과 가장 큰 나머지를 동시에 쓸 수 있는지 확인하기",
+      "learningLocation": "활용 5회 · 원문 1번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "maximum over the two largest feasible quotients",
+        "parameters": {
+          "divisor": 15
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q01-v4",
+      "genId": "applied5-q01",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 1,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "세 자리 수의 몫과 나머지 합의 최댓값",
+      "pointBand": "2.7",
+      "text": "세 자리 자연수를 16로 나누었을 때 몫과 나머지의 합이 가장 크게 되는 경우를 생각합니다. 그 합의 최댓값을 구하시오.",
+      "answer": "76",
+      "answerParts": [
+        76
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "76"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나머지는 0부터 15까지이고, 몫은 999÷16에서 62까지 나올 수 있습니다.",
+        "몫이 62일 때 가능한 가장 큰 나머지는 7이므로 합은 62＋7＝69입니다. 몫을 하나 줄인 61에서는 나머지 15을 쓸 수 있어 합이 61＋15＝76입니다.",
+        "몫이 이보다 작으면 가장 큰 나머지 15을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 76입니다."
+      ],
+      "solution": "나머지는 0부터 15까지이고, 몫은 999÷16에서 62까지 나올 수 있습니다. 몫이 62일 때 가능한 가장 큰 나머지는 7이므로 합은 62＋7＝69입니다. 몫을 하나 줄인 61에서는 나머지 15을 쓸 수 있어 합이 61＋15＝76입니다. 몫이 이보다 작으면 가장 큰 나머지 15을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 76입니다.",
+      "learningPoint": "가장 큰 몫과 가장 큰 나머지를 동시에 쓸 수 있는지 확인하기",
+      "learningLocation": "활용 5회 · 원문 1번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "maximum over the two largest feasible quotients",
+        "parameters": {
+          "divisor": 16
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q01-v5",
+      "genId": "applied5-q01",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 1,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "세 자리 수의 몫과 나머지 합의 최댓값",
+      "pointBand": "2.7",
+      "text": "세 자리 자연수를 18로 나누었을 때 몫과 나머지의 합이 가장 크게 되는 경우를 생각합니다. 그 합의 최댓값을 구하시오.",
+      "answer": "71",
+      "answerParts": [
+        71
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "71"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나머지는 0부터 17까지이고, 몫은 999÷18에서 55까지 나올 수 있습니다.",
+        "몫이 55일 때 가능한 가장 큰 나머지는 9이므로 합은 55＋9＝64입니다. 몫을 하나 줄인 54에서는 나머지 17을 쓸 수 있어 합이 54＋17＝71입니다.",
+        "몫이 이보다 작으면 가장 큰 나머지 17을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 71입니다."
+      ],
+      "solution": "나머지는 0부터 17까지이고, 몫은 999÷18에서 55까지 나올 수 있습니다. 몫이 55일 때 가능한 가장 큰 나머지는 9이므로 합은 55＋9＝64입니다. 몫을 하나 줄인 54에서는 나머지 17을 쓸 수 있어 합이 54＋17＝71입니다. 몫이 이보다 작으면 가장 큰 나머지 17을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 71입니다.",
+      "learningPoint": "가장 큰 몫과 가장 큰 나머지를 동시에 쓸 수 있는지 확인하기",
+      "learningLocation": "활용 5회 · 원문 1번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "maximum over the two largest feasible quotients",
+        "parameters": {
+          "divisor": 18
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q01-v6",
+      "genId": "applied5-q01",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 1,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "세 자리 수의 몫과 나머지 합의 최댓값",
+      "pointBand": "2.7",
+      "text": "세 자리 자연수를 19로 나누었을 때 몫과 나머지의 합이 가장 크게 되는 경우를 생각합니다. 그 합의 최댓값을 구하시오.",
+      "answer": "69",
+      "answerParts": [
+        69
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "69"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나머지는 0부터 18까지이고, 몫은 999÷19에서 52까지 나올 수 있습니다.",
+        "몫이 52일 때 가능한 가장 큰 나머지는 11이므로 합은 52＋11＝63입니다. 몫을 하나 줄인 51에서는 나머지 18을 쓸 수 있어 합이 51＋18＝69입니다.",
+        "몫이 이보다 작으면 가장 큰 나머지 18을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 69입니다."
+      ],
+      "solution": "나머지는 0부터 18까지이고, 몫은 999÷19에서 52까지 나올 수 있습니다. 몫이 52일 때 가능한 가장 큰 나머지는 11이므로 합은 52＋11＝63입니다. 몫을 하나 줄인 51에서는 나머지 18을 쓸 수 있어 합이 51＋18＝69입니다. 몫이 이보다 작으면 가장 큰 나머지 18을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 69입니다.",
+      "learningPoint": "가장 큰 몫과 가장 큰 나머지를 동시에 쓸 수 있는지 확인하기",
+      "learningLocation": "활용 5회 · 원문 1번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "maximum over the two largest feasible quotients",
+        "parameters": {
+          "divisor": 19
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q01-v7",
+      "genId": "applied5-q01",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 1,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "세 자리 수의 몫과 나머지 합의 최댓값",
+      "pointBand": "2.7",
+      "text": "세 자리 자연수를 21로 나누었을 때 몫과 나머지의 합이 가장 크게 되는 경우를 생각합니다. 그 합의 최댓값을 구하시오.",
+      "answer": "66",
+      "answerParts": [
+        66
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "66"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나머지는 0부터 20까지이고, 몫은 999÷21에서 47까지 나올 수 있습니다.",
+        "몫이 47일 때 가능한 가장 큰 나머지는 12이므로 합은 47＋12＝59입니다. 몫을 하나 줄인 46에서는 나머지 20을 쓸 수 있어 합이 46＋20＝66입니다.",
+        "몫이 이보다 작으면 가장 큰 나머지 20을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 66입니다."
+      ],
+      "solution": "나머지는 0부터 20까지이고, 몫은 999÷21에서 47까지 나올 수 있습니다. 몫이 47일 때 가능한 가장 큰 나머지는 12이므로 합은 47＋12＝59입니다. 몫을 하나 줄인 46에서는 나머지 20을 쓸 수 있어 합이 46＋20＝66입니다. 몫이 이보다 작으면 가장 큰 나머지 20을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 66입니다.",
+      "learningPoint": "가장 큰 몫과 가장 큰 나머지를 동시에 쓸 수 있는지 확인하기",
+      "learningLocation": "활용 5회 · 원문 1번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "maximum over the two largest feasible quotients",
+        "parameters": {
+          "divisor": 21
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q01-v8",
+      "genId": "applied5-q01",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 1,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "세 자리 수의 몫과 나머지 합의 최댓값",
+      "pointBand": "2.7",
+      "text": "세 자리 자연수를 22로 나누었을 때 몫과 나머지의 합이 가장 크게 되는 경우를 생각합니다. 그 합의 최댓값을 구하시오.",
+      "answer": "65",
+      "answerParts": [
+        65
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "65"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나머지는 0부터 21까지이고, 몫은 999÷22에서 45까지 나올 수 있습니다.",
+        "몫이 45일 때 가능한 가장 큰 나머지는 9이므로 합은 45＋9＝54입니다. 몫을 하나 줄인 44에서는 나머지 21을 쓸 수 있어 합이 44＋21＝65입니다.",
+        "몫이 이보다 작으면 가장 큰 나머지 21을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 65입니다."
+      ],
+      "solution": "나머지는 0부터 21까지이고, 몫은 999÷22에서 45까지 나올 수 있습니다. 몫이 45일 때 가능한 가장 큰 나머지는 9이므로 합은 45＋9＝54입니다. 몫을 하나 줄인 44에서는 나머지 21을 쓸 수 있어 합이 44＋21＝65입니다. 몫이 이보다 작으면 가장 큰 나머지 21을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 65입니다.",
+      "learningPoint": "가장 큰 몫과 가장 큰 나머지를 동시에 쓸 수 있는지 확인하기",
+      "learningLocation": "활용 5회 · 원문 1번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "maximum over the two largest feasible quotients",
+        "parameters": {
+          "divisor": 22
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q01-v9",
+      "genId": "applied5-q01",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 1,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "세 자리 수의 몫과 나머지 합의 최댓값",
+      "pointBand": "2.7",
+      "text": "세 자리 자연수를 23로 나누었을 때 몫과 나머지의 합이 가장 크게 되는 경우를 생각합니다. 그 합의 최댓값을 구하시오.",
+      "answer": "64",
+      "answerParts": [
+        64
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "64"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "나머지는 0부터 22까지이고, 몫은 999÷23에서 43까지 나올 수 있습니다.",
+        "몫이 43일 때 가능한 가장 큰 나머지는 10이므로 합은 43＋10＝53입니다. 몫을 하나 줄인 42에서는 나머지 22을 쓸 수 있어 합이 42＋22＝64입니다.",
+        "몫이 이보다 작으면 가장 큰 나머지 22을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 64입니다."
+      ],
+      "solution": "나머지는 0부터 22까지이고, 몫은 999÷23에서 43까지 나올 수 있습니다. 몫이 43일 때 가능한 가장 큰 나머지는 10이므로 합은 43＋10＝53입니다. 몫을 하나 줄인 42에서는 나머지 22을 쓸 수 있어 합이 42＋22＝64입니다. 몫이 이보다 작으면 가장 큰 나머지 22을 써도 합이 더 작습니다. 따라서 두 값을 비교한 최댓값은 64입니다.",
+      "learningPoint": "가장 큰 몫과 가장 큰 나머지를 동시에 쓸 수 있는지 확인하기",
+      "learningLocation": "활용 5회 · 원문 1번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "maximum over the two largest feasible quotients",
+        "parameters": {
+          "divisor": 23
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q02-v1",
+      "genId": "applied5-q02",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 2,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "막대의 길이와 물의 깊이",
+      "pointBand": "2.7",
+      "text": "막대의 한쪽 끝을 물바닥에 대고 수직으로 세웠더니 수면 위로 6m가 나왔습니다. 이 막대를 정확히 반으로 자른 한 조각을 같은 물바닥에 수직으로 세웠더니 수면까지 3m가 모자랐습니다. 물의 깊이는 몇 m입니까?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 6m와 수면 아래 3m를 더한 9m입니다.",
+        "따라서 반 막대의 길이가 9m입니다. 여기에 수면까지 모자란 3m를 더하면 물의 깊이는 9＋3＝12m입니다.",
+        "막대 전체 길이 18m에서 깊이 12m를 빼면 6m가 남고, 반 막대 9m는 깊이보다 3m 짧으므로 맞습니다."
+      ],
+      "solution": "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 6m와 수면 아래 3m를 더한 9m입니다. 따라서 반 막대의 길이가 9m입니다. 여기에 수면까지 모자란 3m를 더하면 물의 깊이는 9＋3＝12m입니다. 막대 전체 길이 18m에서 깊이 12m를 빼면 6m가 남고, 반 막대 9m는 깊이보다 3m 짧으므로 맞습니다.",
+      "learningPoint": "수면을 기준으로 남은 길이와 모자란 길이의 차를 합으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 2번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "rod length halves and two offsets",
+        "parameters": {
+          "above": 6,
+          "below": 3
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q02-v2",
+      "genId": "applied5-q02",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 2,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "막대의 길이와 물의 깊이",
+      "pointBand": "2.7",
+      "text": "막대의 한쪽 끝을 물바닥에 대고 수직으로 세웠더니 수면 위로 7m가 나왔습니다. 이 막대를 정확히 반으로 자른 한 조각을 같은 물바닥에 수직으로 세웠더니 수면까지 4m가 모자랐습니다. 물의 깊이는 몇 m입니까?",
+      "answer": "15",
+      "answerParts": [
+        15
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "15"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 7m와 수면 아래 4m를 더한 11m입니다.",
+        "따라서 반 막대의 길이가 11m입니다. 여기에 수면까지 모자란 4m를 더하면 물의 깊이는 11＋4＝15m입니다.",
+        "막대 전체 길이 22m에서 깊이 15m를 빼면 7m가 남고, 반 막대 11m는 깊이보다 4m 짧으므로 맞습니다."
+      ],
+      "solution": "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 7m와 수면 아래 4m를 더한 11m입니다. 따라서 반 막대의 길이가 11m입니다. 여기에 수면까지 모자란 4m를 더하면 물의 깊이는 11＋4＝15m입니다. 막대 전체 길이 22m에서 깊이 15m를 빼면 7m가 남고, 반 막대 11m는 깊이보다 4m 짧으므로 맞습니다.",
+      "learningPoint": "수면을 기준으로 남은 길이와 모자란 길이의 차를 합으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 2번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "rod length halves and two offsets",
+        "parameters": {
+          "above": 7,
+          "below": 4
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q02-v3",
+      "genId": "applied5-q02",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 2,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "막대의 길이와 물의 깊이",
+      "pointBand": "2.7",
+      "text": "막대의 한쪽 끝을 물바닥에 대고 수직으로 세웠더니 수면 위로 9m가 나왔습니다. 이 막대를 정확히 반으로 자른 한 조각을 같은 물바닥에 수직으로 세웠더니 수면까지 3m가 모자랐습니다. 물의 깊이는 몇 m입니까?",
+      "answer": "15",
+      "answerParts": [
+        15
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "15"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 9m와 수면 아래 3m를 더한 12m입니다.",
+        "따라서 반 막대의 길이가 12m입니다. 여기에 수면까지 모자란 3m를 더하면 물의 깊이는 12＋3＝15m입니다.",
+        "막대 전체 길이 24m에서 깊이 15m를 빼면 9m가 남고, 반 막대 12m는 깊이보다 3m 짧으므로 맞습니다."
+      ],
+      "solution": "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 9m와 수면 아래 3m를 더한 12m입니다. 따라서 반 막대의 길이가 12m입니다. 여기에 수면까지 모자란 3m를 더하면 물의 깊이는 12＋3＝15m입니다. 막대 전체 길이 24m에서 깊이 15m를 빼면 9m가 남고, 반 막대 12m는 깊이보다 3m 짧으므로 맞습니다.",
+      "learningPoint": "수면을 기준으로 남은 길이와 모자란 길이의 차를 합으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 2번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "rod length halves and two offsets",
+        "parameters": {
+          "above": 9,
+          "below": 3
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q02-v4",
+      "genId": "applied5-q02",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 2,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "막대의 길이와 물의 깊이",
+      "pointBand": "2.7",
+      "text": "막대의 한쪽 끝을 물바닥에 대고 수직으로 세웠더니 수면 위로 10m가 나왔습니다. 이 막대를 정확히 반으로 자른 한 조각을 같은 물바닥에 수직으로 세웠더니 수면까지 5m가 모자랐습니다. 물의 깊이는 몇 m입니까?",
+      "answer": "20",
+      "answerParts": [
+        20
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "20"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 10m와 수면 아래 5m를 더한 15m입니다.",
+        "따라서 반 막대의 길이가 15m입니다. 여기에 수면까지 모자란 5m를 더하면 물의 깊이는 15＋5＝20m입니다.",
+        "막대 전체 길이 30m에서 깊이 20m를 빼면 10m가 남고, 반 막대 15m는 깊이보다 5m 짧으므로 맞습니다."
+      ],
+      "solution": "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 10m와 수면 아래 5m를 더한 15m입니다. 따라서 반 막대의 길이가 15m입니다. 여기에 수면까지 모자란 5m를 더하면 물의 깊이는 15＋5＝20m입니다. 막대 전체 길이 30m에서 깊이 20m를 빼면 10m가 남고, 반 막대 15m는 깊이보다 5m 짧으므로 맞습니다.",
+      "learningPoint": "수면을 기준으로 남은 길이와 모자란 길이의 차를 합으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 2번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "rod length halves and two offsets",
+        "parameters": {
+          "above": 10,
+          "below": 5
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q02-v5",
+      "genId": "applied5-q02",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 2,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "막대의 길이와 물의 깊이",
+      "pointBand": "2.7",
+      "text": "막대의 한쪽 끝을 물바닥에 대고 수직으로 세웠더니 수면 위로 11m가 나왔습니다. 이 막대를 정확히 반으로 자른 한 조각을 같은 물바닥에 수직으로 세웠더니 수면까지 4m가 모자랐습니다. 물의 깊이는 몇 m입니까?",
+      "answer": "19",
+      "answerParts": [
+        19
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "19"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 11m와 수면 아래 4m를 더한 15m입니다.",
+        "따라서 반 막대의 길이가 15m입니다. 여기에 수면까지 모자란 4m를 더하면 물의 깊이는 15＋4＝19m입니다.",
+        "막대 전체 길이 30m에서 깊이 19m를 빼면 11m가 남고, 반 막대 15m는 깊이보다 4m 짧으므로 맞습니다."
+      ],
+      "solution": "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 11m와 수면 아래 4m를 더한 15m입니다. 따라서 반 막대의 길이가 15m입니다. 여기에 수면까지 모자란 4m를 더하면 물의 깊이는 15＋4＝19m입니다. 막대 전체 길이 30m에서 깊이 19m를 빼면 11m가 남고, 반 막대 15m는 깊이보다 4m 짧으므로 맞습니다.",
+      "learningPoint": "수면을 기준으로 남은 길이와 모자란 길이의 차를 합으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 2번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "rod length halves and two offsets",
+        "parameters": {
+          "above": 11,
+          "below": 4
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q02-v6",
+      "genId": "applied5-q02",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 2,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "막대의 길이와 물의 깊이",
+      "pointBand": "2.7",
+      "text": "막대의 한쪽 끝을 물바닥에 대고 수직으로 세웠더니 수면 위로 12m가 나왔습니다. 이 막대를 정확히 반으로 자른 한 조각을 같은 물바닥에 수직으로 세웠더니 수면까지 6m가 모자랐습니다. 물의 깊이는 몇 m입니까?",
+      "answer": "24",
+      "answerParts": [
+        24
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "24"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 12m와 수면 아래 6m를 더한 18m입니다.",
+        "따라서 반 막대의 길이가 18m입니다. 여기에 수면까지 모자란 6m를 더하면 물의 깊이는 18＋6＝24m입니다.",
+        "막대 전체 길이 36m에서 깊이 24m를 빼면 12m가 남고, 반 막대 18m는 깊이보다 6m 짧으므로 맞습니다."
+      ],
+      "solution": "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 12m와 수면 아래 6m를 더한 18m입니다. 따라서 반 막대의 길이가 18m입니다. 여기에 수면까지 모자란 6m를 더하면 물의 깊이는 18＋6＝24m입니다. 막대 전체 길이 36m에서 깊이 24m를 빼면 12m가 남고, 반 막대 18m는 깊이보다 6m 짧으므로 맞습니다.",
+      "learningPoint": "수면을 기준으로 남은 길이와 모자란 길이의 차를 합으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 2번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "rod length halves and two offsets",
+        "parameters": {
+          "above": 12,
+          "below": 6
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q02-v7",
+      "genId": "applied5-q02",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 2,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "막대의 길이와 물의 깊이",
+      "pointBand": "2.7",
+      "text": "막대의 한쪽 끝을 물바닥에 대고 수직으로 세웠더니 수면 위로 13m가 나왔습니다. 이 막대를 정확히 반으로 자른 한 조각을 같은 물바닥에 수직으로 세웠더니 수면까지 5m가 모자랐습니다. 물의 깊이는 몇 m입니까?",
+      "answer": "23",
+      "answerParts": [
+        23
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "23"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 13m와 수면 아래 5m를 더한 18m입니다.",
+        "따라서 반 막대의 길이가 18m입니다. 여기에 수면까지 모자란 5m를 더하면 물의 깊이는 18＋5＝23m입니다.",
+        "막대 전체 길이 36m에서 깊이 23m를 빼면 13m가 남고, 반 막대 18m는 깊이보다 5m 짧으므로 맞습니다."
+      ],
+      "solution": "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 13m와 수면 아래 5m를 더한 18m입니다. 따라서 반 막대의 길이가 18m입니다. 여기에 수면까지 모자란 5m를 더하면 물의 깊이는 18＋5＝23m입니다. 막대 전체 길이 36m에서 깊이 23m를 빼면 13m가 남고, 반 막대 18m는 깊이보다 5m 짧으므로 맞습니다.",
+      "learningPoint": "수면을 기준으로 남은 길이와 모자란 길이의 차를 합으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 2번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "rod length halves and two offsets",
+        "parameters": {
+          "above": 13,
+          "below": 5
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q02-v8",
+      "genId": "applied5-q02",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 2,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "막대의 길이와 물의 깊이",
+      "pointBand": "2.7",
+      "text": "막대의 한쪽 끝을 물바닥에 대고 수직으로 세웠더니 수면 위로 14m가 나왔습니다. 이 막대를 정확히 반으로 자른 한 조각을 같은 물바닥에 수직으로 세웠더니 수면까지 7m가 모자랐습니다. 물의 깊이는 몇 m입니까?",
+      "answer": "28",
+      "answerParts": [
+        28
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "28"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 14m와 수면 아래 7m를 더한 21m입니다.",
+        "따라서 반 막대의 길이가 21m입니다. 여기에 수면까지 모자란 7m를 더하면 물의 깊이는 21＋7＝28m입니다.",
+        "막대 전체 길이 42m에서 깊이 28m를 빼면 14m가 남고, 반 막대 21m는 깊이보다 7m 짧으므로 맞습니다."
+      ],
+      "solution": "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 14m와 수면 아래 7m를 더한 21m입니다. 따라서 반 막대의 길이가 21m입니다. 여기에 수면까지 모자란 7m를 더하면 물의 깊이는 21＋7＝28m입니다. 막대 전체 길이 42m에서 깊이 28m를 빼면 14m가 남고, 반 막대 21m는 깊이보다 7m 짧으므로 맞습니다.",
+      "learningPoint": "수면을 기준으로 남은 길이와 모자란 길이의 차를 합으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 2번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "rod length halves and two offsets",
+        "parameters": {
+          "above": 14,
+          "below": 7
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q02-v9",
+      "genId": "applied5-q02",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 2,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "막대의 길이와 물의 깊이",
+      "pointBand": "2.7",
+      "text": "막대의 한쪽 끝을 물바닥에 대고 수직으로 세웠더니 수면 위로 15m가 나왔습니다. 이 막대를 정확히 반으로 자른 한 조각을 같은 물바닥에 수직으로 세웠더니 수면까지 6m가 모자랐습니다. 물의 깊이는 몇 m입니까?",
+      "answer": "27",
+      "answerParts": [
+        27
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "27"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 15m와 수면 아래 6m를 더한 21m입니다.",
+        "따라서 반 막대의 길이가 21m입니다. 여기에 수면까지 모자란 6m를 더하면 물의 깊이는 21＋6＝27m입니다.",
+        "막대 전체 길이 42m에서 깊이 27m를 빼면 15m가 남고, 반 막대 21m는 깊이보다 6m 짧으므로 맞습니다."
+      ],
+      "solution": "막대 전체 길이와 절반 길이의 차는 막대 길이의 절반입니다. 두 높이 차는 수면 위 15m와 수면 아래 6m를 더한 21m입니다. 따라서 반 막대의 길이가 21m입니다. 여기에 수면까지 모자란 6m를 더하면 물의 깊이는 21＋6＝27m입니다. 막대 전체 길이 42m에서 깊이 27m를 빼면 15m가 남고, 반 막대 21m는 깊이보다 6m 짧으므로 맞습니다.",
+      "learningPoint": "수면을 기준으로 남은 길이와 모자란 길이의 차를 합으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 2번 · 합과 차의 관계",
+      "verification": {
+        "primaryMethod": "rod length halves and two offsets",
+        "parameters": {
+          "above": 15,
+          "below": 6
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q04-v1",
+      "genId": "applied5-q04",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 4,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "약수와 곱",
+      "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "text": "큰형의 나이와 작은형의 나이를 곱하면 340, 작은형의 나이와 나의 나이를 곱하면 221입니다. 세 사람의 나이는 자연수이고 큰형, 작은형, 나의 순서로 나이가 많습니다. 나는 몇 살입니까?",
+      "answer": "13",
+      "answerParts": [
+        13
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "13"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은형의 나이는 두 곱 340와 221를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 17입니다.",
+        "각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 17살일 때만 큰형 20살·나 13살이 됩니다.",
+        "실제로 20×17＝340, 17×13＝221이므로 나의 나이는 13살입니다."
+      ],
+      "solution": "작은형의 나이는 두 곱 340와 221를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 17입니다. 각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 17살일 때만 큰형 20살·나 13살이 됩니다. 실제로 20×17＝340, 17×13＝221이므로 나의 나이는 13살입니다.",
+      "learningPoint": "두 곱에 공통으로 들어간 나이를 공약수 후보에서 찾기",
+      "learningLocation": "활용 5회 · 원문 4번 · 약수와 곱",
+      "verification": {
+        "primaryMethod": "common factors with strict age order",
+        "parameters": {
+          "elderProduct": 340,
+          "youngerProduct": 221
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q04-v2",
+      "genId": "applied5-q04",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 4,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "약수와 곱",
+      "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "text": "큰형의 나이와 작은형의 나이를 곱하면 336, 작은형의 나이와 나의 나이를 곱하면 176입니다. 세 사람의 나이는 자연수이고 큰형, 작은형, 나의 순서로 나이가 많습니다. 나는 몇 살입니까?",
+      "answer": "11",
+      "answerParts": [
+        11
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "11"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은형의 나이는 두 곱 336와 176를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 2, 4, 8, 16입니다.",
+        "각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 16살일 때만 큰형 21살·나 11살이 됩니다.",
+        "실제로 21×16＝336, 16×11＝176이므로 나의 나이는 11살입니다."
+      ],
+      "solution": "작은형의 나이는 두 곱 336와 176를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 2, 4, 8, 16입니다. 각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 16살일 때만 큰형 21살·나 11살이 됩니다. 실제로 21×16＝336, 16×11＝176이므로 나의 나이는 11살입니다.",
+      "learningPoint": "두 곱에 공통으로 들어간 나이를 공약수 후보에서 찾기",
+      "learningLocation": "활용 5회 · 원문 4번 · 약수와 곱",
+      "verification": {
+        "primaryMethod": "common factors with strict age order",
+        "parameters": {
+          "elderProduct": 336,
+          "youngerProduct": 176
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q04-v3",
+      "genId": "applied5-q04",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 4,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "약수와 곱",
+      "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "text": "큰형의 나이와 작은형의 나이를 곱하면 414, 작은형의 나이와 나의 나이를 곱하면 234입니다. 세 사람의 나이는 자연수이고 큰형, 작은형, 나의 순서로 나이가 많습니다. 나는 몇 살입니까?",
+      "answer": "13",
+      "answerParts": [
+        13
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "13"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은형의 나이는 두 곱 414와 234를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 2, 3, 6, 9, 18입니다.",
+        "각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 18살일 때만 큰형 23살·나 13살이 됩니다.",
+        "실제로 23×18＝414, 18×13＝234이므로 나의 나이는 13살입니다."
+      ],
+      "solution": "작은형의 나이는 두 곱 414와 234를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 2, 3, 6, 9, 18입니다. 각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 18살일 때만 큰형 23살·나 13살이 됩니다. 실제로 23×18＝414, 18×13＝234이므로 나의 나이는 13살입니다.",
+      "learningPoint": "두 곱에 공통으로 들어간 나이를 공약수 후보에서 찾기",
+      "learningLocation": "활용 5회 · 원문 4번 · 약수와 곱",
+      "verification": {
+        "primaryMethod": "common factors with strict age order",
+        "parameters": {
+          "elderProduct": 414,
+          "youngerProduct": 234
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q04-v4",
+      "genId": "applied5-q04",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 4,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "약수와 곱",
+      "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "text": "큰형의 나이와 작은형의 나이를 곱하면 475, 작은형의 나이와 나의 나이를 곱하면 228입니다. 세 사람의 나이는 자연수이고 큰형, 작은형, 나의 순서로 나이가 많습니다. 나는 몇 살입니까?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은형의 나이는 두 곱 475와 228를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 19입니다.",
+        "각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 19살일 때만 큰형 25살·나 12살이 됩니다.",
+        "실제로 25×19＝475, 19×12＝228이므로 나의 나이는 12살입니다."
+      ],
+      "solution": "작은형의 나이는 두 곱 475와 228를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 19입니다. 각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 19살일 때만 큰형 25살·나 12살이 됩니다. 실제로 25×19＝475, 19×12＝228이므로 나의 나이는 12살입니다.",
+      "learningPoint": "두 곱에 공통으로 들어간 나이를 공약수 후보에서 찾기",
+      "learningLocation": "활용 5회 · 원문 4번 · 약수와 곱",
+      "verification": {
+        "primaryMethod": "common factors with strict age order",
+        "parameters": {
+          "elderProduct": 475,
+          "youngerProduct": 228
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q04-v5",
+      "genId": "applied5-q04",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 4,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "약수와 곱",
+      "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "text": "큰형의 나이와 작은형의 나이를 곱하면 546, 작은형의 나이와 나의 나이를 곱하면 315입니다. 세 사람의 나이는 자연수이고 큰형, 작은형, 나의 순서로 나이가 많습니다. 나는 몇 살입니까?",
+      "answer": "15",
+      "answerParts": [
+        15
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "15"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은형의 나이는 두 곱 546와 315를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 3, 7, 21입니다.",
+        "각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 21살일 때만 큰형 26살·나 15살이 됩니다.",
+        "실제로 26×21＝546, 21×15＝315이므로 나의 나이는 15살입니다."
+      ],
+      "solution": "작은형의 나이는 두 곱 546와 315를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 3, 7, 21입니다. 각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 21살일 때만 큰형 26살·나 15살이 됩니다. 실제로 26×21＝546, 21×15＝315이므로 나의 나이는 15살입니다.",
+      "learningPoint": "두 곱에 공통으로 들어간 나이를 공약수 후보에서 찾기",
+      "learningLocation": "활용 5회 · 원문 4번 · 약수와 곱",
+      "verification": {
+        "primaryMethod": "common factors with strict age order",
+        "parameters": {
+          "elderProduct": 546,
+          "youngerProduct": 315
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q04-v6",
+      "genId": "applied5-q04",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 4,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "약수와 곱",
+      "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "text": "큰형의 나이와 작은형의 나이를 곱하면 540, 작은형의 나이와 나의 나이를 곱하면 260입니다. 세 사람의 나이는 자연수이고 큰형, 작은형, 나의 순서로 나이가 많습니다. 나는 몇 살입니까?",
+      "answer": "13",
+      "answerParts": [
+        13
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "13"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은형의 나이는 두 곱 540와 260를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 2, 4, 5, 10, 20입니다.",
+        "각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 20살일 때만 큰형 27살·나 13살이 됩니다.",
+        "실제로 27×20＝540, 20×13＝260이므로 나의 나이는 13살입니다."
+      ],
+      "solution": "작은형의 나이는 두 곱 540와 260를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 2, 4, 5, 10, 20입니다. 각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 20살일 때만 큰형 27살·나 13살이 됩니다. 실제로 27×20＝540, 20×13＝260이므로 나의 나이는 13살입니다.",
+      "learningPoint": "두 곱에 공통으로 들어간 나이를 공약수 후보에서 찾기",
+      "learningLocation": "활용 5회 · 원문 4번 · 약수와 곱",
+      "verification": {
+        "primaryMethod": "common factors with strict age order",
+        "parameters": {
+          "elderProduct": 540,
+          "youngerProduct": 260
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q04-v7",
+      "genId": "applied5-q04",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 4,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "약수와 곱",
+      "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "text": "큰형의 나이와 작은형의 나이를 곱하면 638, 작은형의 나이와 나의 나이를 곱하면 374입니다. 세 사람의 나이는 자연수이고 큰형, 작은형, 나의 순서로 나이가 많습니다. 나는 몇 살입니까?",
+      "answer": "17",
+      "answerParts": [
+        17
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "17"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은형의 나이는 두 곱 638와 374를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 2, 11, 22입니다.",
+        "각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 22살일 때만 큰형 29살·나 17살이 됩니다.",
+        "실제로 29×22＝638, 22×17＝374이므로 나의 나이는 17살입니다."
+      ],
+      "solution": "작은형의 나이는 두 곱 638와 374를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 2, 11, 22입니다. 각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 22살일 때만 큰형 29살·나 17살이 됩니다. 실제로 29×22＝638, 22×17＝374이므로 나의 나이는 17살입니다.",
+      "learningPoint": "두 곱에 공통으로 들어간 나이를 공약수 후보에서 찾기",
+      "learningLocation": "활용 5회 · 원문 4번 · 약수와 곱",
+      "verification": {
+        "primaryMethod": "common factors with strict age order",
+        "parameters": {
+          "elderProduct": 638,
+          "youngerProduct": 374
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q04-v8",
+      "genId": "applied5-q04",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 4,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "약수와 곱",
+      "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "text": "큰형의 나이와 작은형의 나이를 곱하면 713, 작은형의 나이와 나의 나이를 곱하면 414입니다. 세 사람의 나이는 자연수이고 큰형, 작은형, 나의 순서로 나이가 많습니다. 나는 몇 살입니까?",
+      "answer": "18",
+      "answerParts": [
+        18
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "18"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은형의 나이는 두 곱 713와 414를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 23입니다.",
+        "각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 23살일 때만 큰형 31살·나 18살이 됩니다.",
+        "실제로 31×23＝713, 23×18＝414이므로 나의 나이는 18살입니다."
+      ],
+      "solution": "작은형의 나이는 두 곱 713와 414를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 23입니다. 각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 23살일 때만 큰형 31살·나 18살이 됩니다. 실제로 31×23＝713, 23×18＝414이므로 나의 나이는 18살입니다.",
+      "learningPoint": "두 곱에 공통으로 들어간 나이를 공약수 후보에서 찾기",
+      "learningLocation": "활용 5회 · 원문 4번 · 약수와 곱",
+      "verification": {
+        "primaryMethod": "common factors with strict age order",
+        "parameters": {
+          "elderProduct": 713,
+          "youngerProduct": 414
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q04-v9",
+      "genId": "applied5-q04",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 4,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "약수와 곱",
+      "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "text": "큰형의 나이와 작은형의 나이를 곱하면 800, 작은형의 나이와 나의 나이를 곱하면 475입니다. 세 사람의 나이는 자연수이고 큰형, 작은형, 나의 순서로 나이가 많습니다. 나는 몇 살입니까?",
+      "answer": "19",
+      "answerParts": [
+        19
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "19"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "작은형의 나이는 두 곱 800와 475를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 5, 25입니다.",
+        "각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 25살일 때만 큰형 32살·나 19살이 됩니다.",
+        "실제로 32×25＝800, 25×19＝475이므로 나의 나이는 19살입니다."
+      ],
+      "solution": "작은형의 나이는 두 곱 800와 475를 모두 나누어떨어지게 하는 수여야 합니다. 공통 약수는 1, 5, 25입니다. 각 공통 약수로 두 곱을 나누어 큰형과 나의 나이를 구하고 큰형＞작은형＞나의 순서를 확인하면, 작은형이 25살일 때만 큰형 32살·나 19살이 됩니다. 실제로 32×25＝800, 25×19＝475이므로 나의 나이는 19살입니다.",
+      "learningPoint": "두 곱에 공통으로 들어간 나이를 공약수 후보에서 찾기",
+      "learningLocation": "활용 5회 · 원문 4번 · 약수와 곱",
+      "verification": {
+        "primaryMethod": "common factors with strict age order",
+        "parameters": {
+          "elderProduct": 800,
+          "youngerProduct": 475
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q07-v1",
+      "genId": "applied5-q07",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 7,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "집합과 겹침",
+      "detailType": "세 집합의 공통 부분 찾기",
+      "pointBand": "2.7",
+      "text": "학생 41명 중 나비를 좋아하는 학생은 15명, 벌은 16명, 무당벌레는 17명입니다. 나비와 벌을 모두 좋아하는 학생은 5명, 벌과 무당벌레를 모두 좋아하는 학생은 6명, 나비와 무당벌레를 모두 좋아하는 학생은 4명입니다. 세 곤충 중 어느 것도 좋아하지 않는 학생이 6명일 때 세 곤충을 모두 좋아하는 학생은 몇 명입니까?",
+      "answer": "2",
+      "answerParts": [
+        2
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "2"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "한 가지 이상 좋아하는 학생은 41−6＝35명입니다.",
+        "종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 15＋16＋17−5−6−4＝33명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다.",
+        "전체 한 가지 이상인 35명과의 차가 그 인원이므로 35−33＝2명입니다."
+      ],
+      "solution": "한 가지 이상 좋아하는 학생은 41−6＝35명입니다. 종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 15＋16＋17−5−6−4＝33명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다. 전체 한 가지 이상인 35명과의 차가 그 인원이므로 35−33＝2명입니다.",
+      "learningPoint": "세 번 겹치는 부분을 빼고 더한 횟수로 확인하기",
+      "learningLocation": "활용 5회 · 원문 7번 · 집합과 겹침",
+      "verification": {
+        "primaryMethod": "three-set inclusion exclusion from nonnegative region counts",
+        "parameters": {
+          "total": 41,
+          "A": 15,
+          "B": 16,
+          "C": 17,
+          "AB": 5,
+          "BC": 6,
+          "AC": 4,
+          "none": 6
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q07-v2",
+      "genId": "applied5-q07",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 7,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "집합과 겹침",
+      "detailType": "세 집합의 공통 부분 찾기",
+      "pointBand": "2.7",
+      "text": "학생 49명 중 나비를 좋아하는 학생은 19명, 벌은 20명, 무당벌레는 21명입니다. 나비와 벌을 모두 좋아하는 학생은 7명, 벌과 무당벌레를 모두 좋아하는 학생은 8명, 나비와 무당벌레를 모두 좋아하는 학생은 6명입니다. 세 곤충 중 어느 것도 좋아하지 않는 학생이 7명일 때 세 곤충을 모두 좋아하는 학생은 몇 명입니까?",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "3"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "한 가지 이상 좋아하는 학생은 49−7＝42명입니다.",
+        "종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 19＋20＋21−7−8−6＝39명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다.",
+        "전체 한 가지 이상인 42명과의 차가 그 인원이므로 42−39＝3명입니다."
+      ],
+      "solution": "한 가지 이상 좋아하는 학생은 49−7＝42명입니다. 종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 19＋20＋21−7−8−6＝39명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다. 전체 한 가지 이상인 42명과의 차가 그 인원이므로 42−39＝3명입니다.",
+      "learningPoint": "세 번 겹치는 부분을 빼고 더한 횟수로 확인하기",
+      "learningLocation": "활용 5회 · 원문 7번 · 집합과 겹침",
+      "verification": {
+        "primaryMethod": "three-set inclusion exclusion from nonnegative region counts",
+        "parameters": {
+          "total": 49,
+          "A": 19,
+          "B": 20,
+          "C": 21,
+          "AB": 7,
+          "BC": 8,
+          "AC": 6,
+          "none": 7
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q07-v3",
+      "genId": "applied5-q07",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 7,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "집합과 겹침",
+      "detailType": "세 집합의 공통 부분 찾기",
+      "pointBand": "2.7",
+      "text": "학생 53명 중 나비를 좋아하는 학생은 23명, 벌은 20명, 무당벌레는 23명입니다. 나비와 벌을 모두 좋아하는 학생은 9명, 벌과 무당벌레를 모두 좋아하는 학생은 8명, 나비와 무당벌레를 모두 좋아하는 학생은 8명입니다. 세 곤충 중 어느 것도 좋아하지 않는 학생이 8명일 때 세 곤충을 모두 좋아하는 학생은 몇 명입니까?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "4"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "한 가지 이상 좋아하는 학생은 53−8＝45명입니다.",
+        "종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 23＋20＋23−9−8−8＝41명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다.",
+        "전체 한 가지 이상인 45명과의 차가 그 인원이므로 45−41＝4명입니다."
+      ],
+      "solution": "한 가지 이상 좋아하는 학생은 53−8＝45명입니다. 종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 23＋20＋23−9−8−8＝41명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다. 전체 한 가지 이상인 45명과의 차가 그 인원이므로 45−41＝4명입니다.",
+      "learningPoint": "세 번 겹치는 부분을 빼고 더한 횟수로 확인하기",
+      "learningLocation": "활용 5회 · 원문 7번 · 집합과 겹침",
+      "verification": {
+        "primaryMethod": "three-set inclusion exclusion from nonnegative region counts",
+        "parameters": {
+          "total": 53,
+          "A": 23,
+          "B": 20,
+          "C": 23,
+          "AB": 9,
+          "BC": 8,
+          "AC": 8,
+          "none": 8
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q07-v4",
+      "genId": "applied5-q07",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 7,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "집합과 겹침",
+      "detailType": "세 집합의 공통 부분 찾기",
+      "pointBand": "2.7",
+      "text": "학생 55명 중 나비를 좋아하는 학생은 21명, 벌은 21명, 무당벌레는 27명입니다. 나비와 벌을 모두 좋아하는 학생은 8명, 벌과 무당벌레를 모두 좋아하는 학생은 10명, 나비와 무당벌레를 모두 좋아하는 학생은 10명입니다. 세 곤충 중 어느 것도 좋아하지 않는 학생이 9명일 때 세 곤충을 모두 좋아하는 학생은 몇 명입니까?",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "5"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "한 가지 이상 좋아하는 학생은 55−9＝46명입니다.",
+        "종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 21＋21＋27−8−10−10＝41명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다.",
+        "전체 한 가지 이상인 46명과의 차가 그 인원이므로 46−41＝5명입니다."
+      ],
+      "solution": "한 가지 이상 좋아하는 학생은 55−9＝46명입니다. 종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 21＋21＋27−8−10−10＝41명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다. 전체 한 가지 이상인 46명과의 차가 그 인원이므로 46−41＝5명입니다.",
+      "learningPoint": "세 번 겹치는 부분을 빼고 더한 횟수로 확인하기",
+      "learningLocation": "활용 5회 · 원문 7번 · 집합과 겹침",
+      "verification": {
+        "primaryMethod": "three-set inclusion exclusion from nonnegative region counts",
+        "parameters": {
+          "total": 55,
+          "A": 21,
+          "B": 21,
+          "C": 27,
+          "AB": 8,
+          "BC": 10,
+          "AC": 10,
+          "none": 9
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q07-v5",
+      "genId": "applied5-q07",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 7,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "집합과 겹침",
+      "detailType": "세 집합의 공통 부분 찾기",
+      "pointBand": "2.7",
+      "text": "학생 51명 중 나비를 좋아하는 학생은 21명, 벌은 21명, 무당벌레는 21명입니다. 나비와 벌을 모두 좋아하는 학생은 10명, 벌과 무당벌레를 모두 좋아하는 학생은 10명, 나비와 무당벌레를 모두 좋아하는 학생은 8명입니다. 세 곤충 중 어느 것도 좋아하지 않는 학생이 10명일 때 세 곤충을 모두 좋아하는 학생은 몇 명입니까?",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "한 가지 이상 좋아하는 학생은 51−10＝41명입니다.",
+        "종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 21＋21＋21−10−10−8＝35명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다.",
+        "전체 한 가지 이상인 41명과의 차가 그 인원이므로 41−35＝6명입니다."
+      ],
+      "solution": "한 가지 이상 좋아하는 학생은 51−10＝41명입니다. 종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 21＋21＋21−10−10−8＝35명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다. 전체 한 가지 이상인 41명과의 차가 그 인원이므로 41−35＝6명입니다.",
+      "learningPoint": "세 번 겹치는 부분을 빼고 더한 횟수로 확인하기",
+      "learningLocation": "활용 5회 · 원문 7번 · 집합과 겹침",
+      "verification": {
+        "primaryMethod": "three-set inclusion exclusion from nonnegative region counts",
+        "parameters": {
+          "total": 51,
+          "A": 21,
+          "B": 21,
+          "C": 21,
+          "AB": 10,
+          "BC": 10,
+          "AC": 8,
+          "none": 10
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q07-v6",
+      "genId": "applied5-q07",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 7,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "집합과 겹침",
+      "detailType": "세 집합의 공통 부분 찾기",
+      "pointBand": "2.7",
+      "text": "학생 54명 중 나비를 좋아하는 학생은 20명, 벌은 20명, 무당벌레는 20명입니다. 나비와 벌을 모두 좋아하는 학생은 7명, 벌과 무당벌레를 모두 좋아하는 학생은 7명, 나비와 무당벌레를 모두 좋아하는 학생은 5명입니다. 세 곤충 중 어느 것도 좋아하지 않는 학생이 11명일 때 세 곤충을 모두 좋아하는 학생은 몇 명입니까?",
+      "answer": "2",
+      "answerParts": [
+        2
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "2"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "한 가지 이상 좋아하는 학생은 54−11＝43명입니다.",
+        "종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 20＋20＋20−7−7−5＝41명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다.",
+        "전체 한 가지 이상인 43명과의 차가 그 인원이므로 43−41＝2명입니다."
+      ],
+      "solution": "한 가지 이상 좋아하는 학생은 54−11＝43명입니다. 종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 20＋20＋20−7−7−5＝41명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다. 전체 한 가지 이상인 43명과의 차가 그 인원이므로 43−41＝2명입니다.",
+      "learningPoint": "세 번 겹치는 부분을 빼고 더한 횟수로 확인하기",
+      "learningLocation": "활용 5회 · 원문 7번 · 집합과 겹침",
+      "verification": {
+        "primaryMethod": "three-set inclusion exclusion from nonnegative region counts",
+        "parameters": {
+          "total": 54,
+          "A": 20,
+          "B": 20,
+          "C": 20,
+          "AB": 7,
+          "BC": 7,
+          "AC": 5,
+          "none": 11
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q07-v7",
+      "genId": "applied5-q07",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 7,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "집합과 겹침",
+      "detailType": "세 집합의 공통 부분 찾기",
+      "pointBand": "2.7",
+      "text": "학생 52명 중 나비를 좋아하는 학생은 18명, 벌은 17명, 무당벌레는 22명입니다. 나비와 벌을 모두 좋아하는 학생은 6명, 벌과 무당벌레를 모두 좋아하는 학생은 7명, 나비와 무당벌레를 모두 좋아하는 학생은 7명입니다. 세 곤충 중 어느 것도 좋아하지 않는 학생이 12명일 때 세 곤충을 모두 좋아하는 학생은 몇 명입니까?",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "3"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "한 가지 이상 좋아하는 학생은 52−12＝40명입니다.",
+        "종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 18＋17＋22−6−7−7＝37명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다.",
+        "전체 한 가지 이상인 40명과의 차가 그 인원이므로 40−37＝3명입니다."
+      ],
+      "solution": "한 가지 이상 좋아하는 학생은 52−12＝40명입니다. 종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 18＋17＋22−6−7−7＝37명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다. 전체 한 가지 이상인 40명과의 차가 그 인원이므로 40−37＝3명입니다.",
+      "learningPoint": "세 번 겹치는 부분을 빼고 더한 횟수로 확인하기",
+      "learningLocation": "활용 5회 · 원문 7번 · 집합과 겹침",
+      "verification": {
+        "primaryMethod": "three-set inclusion exclusion from nonnegative region counts",
+        "parameters": {
+          "total": 52,
+          "A": 18,
+          "B": 17,
+          "C": 22,
+          "AB": 6,
+          "BC": 7,
+          "AC": 7,
+          "none": 12
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q07-v8",
+      "genId": "applied5-q07",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 7,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "집합과 겹침",
+      "detailType": "세 집합의 공통 부분 찾기",
+      "pointBand": "2.7",
+      "text": "학생 60명 중 나비를 좋아하는 학생은 22명, 벌은 21명, 무당벌레는 26명입니다. 나비와 벌을 모두 좋아하는 학생은 8명, 벌과 무당벌레를 모두 좋아하는 학생은 9명, 나비와 무당벌레를 모두 좋아하는 학생은 9명입니다. 세 곤충 중 어느 것도 좋아하지 않는 학생이 13명일 때 세 곤충을 모두 좋아하는 학생은 몇 명입니까?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "4"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "한 가지 이상 좋아하는 학생은 60−13＝47명입니다.",
+        "종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 22＋21＋26−8−9−9＝43명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다.",
+        "전체 한 가지 이상인 47명과의 차가 그 인원이므로 47−43＝4명입니다."
+      ],
+      "solution": "한 가지 이상 좋아하는 학생은 60−13＝47명입니다. 종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 22＋21＋26−8−9−9＝43명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다. 전체 한 가지 이상인 47명과의 차가 그 인원이므로 47−43＝4명입니다.",
+      "learningPoint": "세 번 겹치는 부분을 빼고 더한 횟수로 확인하기",
+      "learningLocation": "활용 5회 · 원문 7번 · 집합과 겹침",
+      "verification": {
+        "primaryMethod": "three-set inclusion exclusion from nonnegative region counts",
+        "parameters": {
+          "total": 60,
+          "A": 22,
+          "B": 21,
+          "C": 26,
+          "AB": 8,
+          "BC": 9,
+          "AC": 9,
+          "none": 13
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q07-v9",
+      "genId": "applied5-q07",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 7,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "집합과 겹침",
+      "detailType": "세 집합의 공통 부분 찾기",
+      "pointBand": "2.7",
+      "text": "학생 56명 중 나비를 좋아하는 학생은 22명, 벌은 21명, 무당벌레는 20명입니다. 나비와 벌을 모두 좋아하는 학생은 10명, 벌과 무당벌레를 모두 좋아하는 학생은 9명, 나비와 무당벌레를 모두 좋아하는 학생은 7명입니다. 세 곤충 중 어느 것도 좋아하지 않는 학생이 14명일 때 세 곤충을 모두 좋아하는 학생은 몇 명입니까?",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "5"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "한 가지 이상 좋아하는 학생은 56−14＝42명입니다.",
+        "종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 22＋21＋20−10−9−7＝37명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다.",
+        "전체 한 가지 이상인 42명과의 차가 그 인원이므로 42−37＝5명입니다."
+      ],
+      "solution": "한 가지 이상 좋아하는 학생은 56−14＝42명입니다. 종류별 수를 더하고 두 종류씩의 공통 인원을 빼면 22＋21＋20−10−9−7＝37명입니다. 세 종류 모두 좋아하는 학생은 세 번 더해지고 세 번 빠져 이 계산에 남지 않습니다. 전체 한 가지 이상인 42명과의 차가 그 인원이므로 42−37＝5명입니다.",
+      "learningPoint": "세 번 겹치는 부분을 빼고 더한 횟수로 확인하기",
+      "learningLocation": "활용 5회 · 원문 7번 · 집합과 겹침",
+      "verification": {
+        "primaryMethod": "three-set inclusion exclusion from nonnegative region counts",
+        "parameters": {
+          "total": 56,
+          "A": 22,
+          "B": 21,
+          "C": 20,
+          "AB": 10,
+          "BC": 9,
+          "AC": 7,
+          "none": 14
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 7,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q10-v1",
+      "genId": "applied5-q10",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 10,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "text": "2016년 5월 5일은 목요일입니다. 2023년 5월 5일은 무슨 요일입니까? 이 두 날짜 사이에 2월 29일이 있는 해는 2020년이며, 나머지 해는 365일입니다.",
+      "answer": "금요일",
+      "answerParts": [
+        "금요일"
+      ],
+      "answerLabels": [
+        "요일"
+      ],
+      "acceptedAnswers": [
+        "금요일"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다.",
+        "2016년5월5일부터 2023년5월5일까지는7년이고 그 사이2월29일은 1번입니다. 따라서 요일은 7＋1＝8일 뒤로 갑니다.",
+        "8을7로 나눈 나머지는 1입니다. 목요일에서 1일 뒤는 금요일입니다."
+      ],
+      "solution": "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다. 2016년5월5일부터 2023년5월5일까지는7년이고 그 사이2월29일은 1번입니다. 따라서 요일은 7＋1＝8일 뒤로 갑니다. 8을7로 나눈 나머지는 1입니다. 목요일에서 1일 뒤는 금요일입니다.",
+      "learningPoint": "시작 날짜 이후 실제로 포함되는 윤일만 더하기",
+      "learningLocation": "활용 5회 · 원문 10번 · 달력과 주기",
+      "verification": {
+        "primaryMethod": "actual Gregorian anchor and leap-day count",
+        "parameters": {
+          "startYear": 2016,
+          "endYear": 2023,
+          "startWeekday": 3,
+          "leapYears": [
+            2020
+          ]
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q10-v2",
+      "genId": "applied5-q10",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 10,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "text": "2017년 5월 5일은 금요일입니다. 2024년 5월 5일은 무슨 요일입니까? 이 두 날짜 사이에 2월 29일이 있는 해는 2020, 2024년이며, 나머지 해는 365일입니다.",
+      "answer": "일요일",
+      "answerParts": [
+        "일요일"
+      ],
+      "answerLabels": [
+        "요일"
+      ],
+      "acceptedAnswers": [
+        "일요일"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다.",
+        "2017년5월5일부터 2024년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다.",
+        "9을7로 나눈 나머지는 2입니다. 금요일에서 2일 뒤는 일요일입니다."
+      ],
+      "solution": "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다. 2017년5월5일부터 2024년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다. 9을7로 나눈 나머지는 2입니다. 금요일에서 2일 뒤는 일요일입니다.",
+      "learningPoint": "시작 날짜 이후 실제로 포함되는 윤일만 더하기",
+      "learningLocation": "활용 5회 · 원문 10번 · 달력과 주기",
+      "verification": {
+        "primaryMethod": "actual Gregorian anchor and leap-day count",
+        "parameters": {
+          "startYear": 2017,
+          "endYear": 2024,
+          "startWeekday": 4,
+          "leapYears": [
+            2020,
+            2024
+          ]
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q10-v3",
+      "genId": "applied5-q10",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 10,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "text": "2018년 5월 5일은 토요일입니다. 2025년 5월 5일은 무슨 요일입니까? 이 두 날짜 사이에 2월 29일이 있는 해는 2020, 2024년이며, 나머지 해는 365일입니다.",
+      "answer": "월요일",
+      "answerParts": [
+        "월요일"
+      ],
+      "answerLabels": [
+        "요일"
+      ],
+      "acceptedAnswers": [
+        "월요일"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다.",
+        "2018년5월5일부터 2025년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다.",
+        "9을7로 나눈 나머지는 2입니다. 토요일에서 2일 뒤는 월요일입니다."
+      ],
+      "solution": "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다. 2018년5월5일부터 2025년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다. 9을7로 나눈 나머지는 2입니다. 토요일에서 2일 뒤는 월요일입니다.",
+      "learningPoint": "시작 날짜 이후 실제로 포함되는 윤일만 더하기",
+      "learningLocation": "활용 5회 · 원문 10번 · 달력과 주기",
+      "verification": {
+        "primaryMethod": "actual Gregorian anchor and leap-day count",
+        "parameters": {
+          "startYear": 2018,
+          "endYear": 2025,
+          "startWeekday": 5,
+          "leapYears": [
+            2020,
+            2024
+          ]
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q10-v4",
+      "genId": "applied5-q10",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 10,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "text": "2020년 5월 5일은 화요일입니다. 2027년 5월 5일은 무슨 요일입니까? 이 두 날짜 사이에 2월 29일이 있는 해는 2024년이며, 나머지 해는 365일입니다.",
+      "answer": "수요일",
+      "answerParts": [
+        "수요일"
+      ],
+      "answerLabels": [
+        "요일"
+      ],
+      "acceptedAnswers": [
+        "수요일"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다.",
+        "2020년5월5일부터 2027년5월5일까지는7년이고 그 사이2월29일은 1번입니다. 따라서 요일은 7＋1＝8일 뒤로 갑니다.",
+        "8을7로 나눈 나머지는 1입니다. 화요일에서 1일 뒤는 수요일입니다."
+      ],
+      "solution": "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다. 2020년5월5일부터 2027년5월5일까지는7년이고 그 사이2월29일은 1번입니다. 따라서 요일은 7＋1＝8일 뒤로 갑니다. 8을7로 나눈 나머지는 1입니다. 화요일에서 1일 뒤는 수요일입니다.",
+      "learningPoint": "시작 날짜 이후 실제로 포함되는 윤일만 더하기",
+      "learningLocation": "활용 5회 · 원문 10번 · 달력과 주기",
+      "verification": {
+        "primaryMethod": "actual Gregorian anchor and leap-day count",
+        "parameters": {
+          "startYear": 2020,
+          "endYear": 2027,
+          "startWeekday": 1,
+          "leapYears": [
+            2024
+          ]
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q10-v5",
+      "genId": "applied5-q10",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 10,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "text": "2021년 5월 5일은 수요일입니다. 2028년 5월 5일은 무슨 요일입니까? 이 두 날짜 사이에 2월 29일이 있는 해는 2024, 2028년이며, 나머지 해는 365일입니다.",
+      "answer": "금요일",
+      "answerParts": [
+        "금요일"
+      ],
+      "answerLabels": [
+        "요일"
+      ],
+      "acceptedAnswers": [
+        "금요일"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다.",
+        "2021년5월5일부터 2028년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다.",
+        "9을7로 나눈 나머지는 2입니다. 수요일에서 2일 뒤는 금요일입니다."
+      ],
+      "solution": "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다. 2021년5월5일부터 2028년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다. 9을7로 나눈 나머지는 2입니다. 수요일에서 2일 뒤는 금요일입니다.",
+      "learningPoint": "시작 날짜 이후 실제로 포함되는 윤일만 더하기",
+      "learningLocation": "활용 5회 · 원문 10번 · 달력과 주기",
+      "verification": {
+        "primaryMethod": "actual Gregorian anchor and leap-day count",
+        "parameters": {
+          "startYear": 2021,
+          "endYear": 2028,
+          "startWeekday": 2,
+          "leapYears": [
+            2024,
+            2028
+          ]
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q10-v6",
+      "genId": "applied5-q10",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 10,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "text": "2022년 5월 5일은 목요일입니다. 2029년 5월 5일은 무슨 요일입니까? 이 두 날짜 사이에 2월 29일이 있는 해는 2024, 2028년이며, 나머지 해는 365일입니다.",
+      "answer": "토요일",
+      "answerParts": [
+        "토요일"
+      ],
+      "answerLabels": [
+        "요일"
+      ],
+      "acceptedAnswers": [
+        "토요일"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다.",
+        "2022년5월5일부터 2029년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다.",
+        "9을7로 나눈 나머지는 2입니다. 목요일에서 2일 뒤는 토요일입니다."
+      ],
+      "solution": "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다. 2022년5월5일부터 2029년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다. 9을7로 나눈 나머지는 2입니다. 목요일에서 2일 뒤는 토요일입니다.",
+      "learningPoint": "시작 날짜 이후 실제로 포함되는 윤일만 더하기",
+      "learningLocation": "활용 5회 · 원문 10번 · 달력과 주기",
+      "verification": {
+        "primaryMethod": "actual Gregorian anchor and leap-day count",
+        "parameters": {
+          "startYear": 2022,
+          "endYear": 2029,
+          "startWeekday": 3,
+          "leapYears": [
+            2024,
+            2028
+          ]
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q10-v7",
+      "genId": "applied5-q10",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 10,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "text": "2023년 5월 5일은 금요일입니다. 2030년 5월 5일은 무슨 요일입니까? 이 두 날짜 사이에 2월 29일이 있는 해는 2024, 2028년이며, 나머지 해는 365일입니다.",
+      "answer": "일요일",
+      "answerParts": [
+        "일요일"
+      ],
+      "answerLabels": [
+        "요일"
+      ],
+      "acceptedAnswers": [
+        "일요일"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다.",
+        "2023년5월5일부터 2030년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다.",
+        "9을7로 나눈 나머지는 2입니다. 금요일에서 2일 뒤는 일요일입니다."
+      ],
+      "solution": "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다. 2023년5월5일부터 2030년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다. 9을7로 나눈 나머지는 2입니다. 금요일에서 2일 뒤는 일요일입니다.",
+      "learningPoint": "시작 날짜 이후 실제로 포함되는 윤일만 더하기",
+      "learningLocation": "활용 5회 · 원문 10번 · 달력과 주기",
+      "verification": {
+        "primaryMethod": "actual Gregorian anchor and leap-day count",
+        "parameters": {
+          "startYear": 2023,
+          "endYear": 2030,
+          "startWeekday": 4,
+          "leapYears": [
+            2024,
+            2028
+          ]
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q10-v8",
+      "genId": "applied5-q10",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 10,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "text": "2024년 5월 5일은 일요일입니다. 2031년 5월 5일은 무슨 요일입니까? 이 두 날짜 사이에 2월 29일이 있는 해는 2028년이며, 나머지 해는 365일입니다.",
+      "answer": "월요일",
+      "answerParts": [
+        "월요일"
+      ],
+      "answerLabels": [
+        "요일"
+      ],
+      "acceptedAnswers": [
+        "월요일"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다.",
+        "2024년5월5일부터 2031년5월5일까지는7년이고 그 사이2월29일은 1번입니다. 따라서 요일은 7＋1＝8일 뒤로 갑니다.",
+        "8을7로 나눈 나머지는 1입니다. 일요일에서 1일 뒤는 월요일입니다."
+      ],
+      "solution": "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다. 2024년5월5일부터 2031년5월5일까지는7년이고 그 사이2월29일은 1번입니다. 따라서 요일은 7＋1＝8일 뒤로 갑니다. 8을7로 나눈 나머지는 1입니다. 일요일에서 1일 뒤는 월요일입니다.",
+      "learningPoint": "시작 날짜 이후 실제로 포함되는 윤일만 더하기",
+      "learningLocation": "활용 5회 · 원문 10번 · 달력과 주기",
+      "verification": {
+        "primaryMethod": "actual Gregorian anchor and leap-day count",
+        "parameters": {
+          "startYear": 2024,
+          "endYear": 2031,
+          "startWeekday": 6,
+          "leapYears": [
+            2028
+          ]
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q10-v9",
+      "genId": "applied5-q10",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 10,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "text": "2025년 5월 5일은 월요일입니다. 2032년 5월 5일은 무슨 요일입니까? 이 두 날짜 사이에 2월 29일이 있는 해는 2028, 2032년이며, 나머지 해는 365일입니다.",
+      "answer": "수요일",
+      "answerParts": [
+        "수요일"
+      ],
+      "answerLabels": [
+        "요일"
+      ],
+      "acceptedAnswers": [
+        "수요일"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다.",
+        "2025년5월5일부터 2032년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다.",
+        "9을7로 나눈 나머지는 2입니다. 월요일에서 2일 뒤는 수요일입니다."
+      ],
+      "solution": "평년의 같은 날짜까지는 365일, 즉 52주와1일이 지나 요일이 하루 뒤로 갑니다. 중간에2월29일이 한 번 들어가면 하루가 더 늦어집니다. 2025년5월5일부터 2032년5월5일까지는7년이고 그 사이2월29일은 2번입니다. 따라서 요일은 7＋2＝9일 뒤로 갑니다. 9을7로 나눈 나머지는 2입니다. 월요일에서 2일 뒤는 수요일입니다.",
+      "learningPoint": "시작 날짜 이후 실제로 포함되는 윤일만 더하기",
+      "learningLocation": "활용 5회 · 원문 10번 · 달력과 주기",
+      "verification": {
+        "primaryMethod": "actual Gregorian anchor and leap-day count",
+        "parameters": {
+          "startYear": 2025,
+          "endYear": 2032,
+          "startWeekday": 0,
+          "leapYears": [
+            2028,
+            2032
+          ]
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 10,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q13-v1",
+      "genId": "applied5-q13",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 13,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 자릿수",
+      "detailType": "25의 배수 중 자리 합 조건",
+      "pointBand": "3.4",
+      "text": "1000부터 10000까지의 자연수 중 25로 나누어떨어지고 각 자리 숫자의 합이 12인 수는 모두 몇 개입니까?",
+      "answer": "19",
+      "answerParts": [
+        19
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "19"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다.",
+        "끝 두 자리가00이면 앞 두 자리의 합은 12−0입니다. 가능한 앞 두 자리 수는 39, 48, 57, 66, 75, 84, 93으로 7개입니다.",
+        "끝 두 자리가25이면 앞 두 자리의 합은 12−7입니다. 가능한 앞 두 자리 수는 14, 23, 32, 41, 50으로 5개입니다.",
+        "끝 두 자리가50이면 앞 두 자리의 합은 12−5입니다. 가능한 앞 두 자리 수는 16, 25, 34, 43, 52, 61, 70으로 7개입니다.",
+        "끝 두 자리가75이면 앞 두 자리의 합은 12−12입니다. 가능한 앞 두 자리 수는 없음으로 0개입니다.",
+        "네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 7＋5＋7＋0＝19개입니다."
+      ],
+      "solution": "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다. 끝 두 자리가00이면 앞 두 자리의 합은 12−0입니다. 가능한 앞 두 자리 수는 39, 48, 57, 66, 75, 84, 93으로 7개입니다. 끝 두 자리가25이면 앞 두 자리의 합은 12−7입니다. 가능한 앞 두 자리 수는 14, 23, 32, 41, 50으로 5개입니다. 끝 두 자리가50이면 앞 두 자리의 합은 12−5입니다. 가능한 앞 두 자리 수는 16, 25, 34, 43, 52, 61, 70으로 7개입니다. 끝 두 자리가75이면 앞 두 자리의 합은 12−12입니다. 가능한 앞 두 자리 수는 없음으로 0개입니다. 네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 7＋5＋7＋0＝19개입니다.",
+      "learningPoint": "25의 배수의 끝 두 자리로 나누고 앞 두 자리의 합을 세기",
+      "learningLocation": "활용 5회 · 원문 13번 · 배수와 자릿수",
+      "verification": {
+        "primaryMethod": "four possible suffixes and two-digit sums",
+        "parameters": {
+          "digitSum": 12
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 13,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q13-v2",
+      "genId": "applied5-q13",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 13,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 자릿수",
+      "detailType": "25의 배수 중 자리 합 조건",
+      "pointBand": "3.4",
+      "text": "1000부터 10000까지의 자연수 중 25로 나누어떨어지고 각 자리 숫자의 합이 13인 수는 모두 몇 개입니까?",
+      "answer": "21",
+      "answerParts": [
+        21
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "21"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다.",
+        "끝 두 자리가00이면 앞 두 자리의 합은 13−0입니다. 가능한 앞 두 자리 수는 49, 58, 67, 76, 85, 94으로 6개입니다.",
+        "끝 두 자리가25이면 앞 두 자리의 합은 13−7입니다. 가능한 앞 두 자리 수는 15, 24, 33, 42, 51, 60으로 6개입니다.",
+        "끝 두 자리가50이면 앞 두 자리의 합은 13−5입니다. 가능한 앞 두 자리 수는 17, 26, 35, 44, 53, 62, 71, 80으로 8개입니다.",
+        "끝 두 자리가75이면 앞 두 자리의 합은 13−12입니다. 가능한 앞 두 자리 수는 10으로 1개입니다.",
+        "네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 6＋6＋8＋1＝21개입니다."
+      ],
+      "solution": "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다. 끝 두 자리가00이면 앞 두 자리의 합은 13−0입니다. 가능한 앞 두 자리 수는 49, 58, 67, 76, 85, 94으로 6개입니다. 끝 두 자리가25이면 앞 두 자리의 합은 13−7입니다. 가능한 앞 두 자리 수는 15, 24, 33, 42, 51, 60으로 6개입니다. 끝 두 자리가50이면 앞 두 자리의 합은 13−5입니다. 가능한 앞 두 자리 수는 17, 26, 35, 44, 53, 62, 71, 80으로 8개입니다. 끝 두 자리가75이면 앞 두 자리의 합은 13−12입니다. 가능한 앞 두 자리 수는 10으로 1개입니다. 네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 6＋6＋8＋1＝21개입니다.",
+      "learningPoint": "25의 배수의 끝 두 자리로 나누고 앞 두 자리의 합을 세기",
+      "learningLocation": "활용 5회 · 원문 13번 · 배수와 자릿수",
+      "verification": {
+        "primaryMethod": "four possible suffixes and two-digit sums",
+        "parameters": {
+          "digitSum": 13
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 13,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q13-v3",
+      "genId": "applied5-q13",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 13,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 자릿수",
+      "detailType": "25의 배수 중 자리 합 조건",
+      "pointBand": "3.4",
+      "text": "1000부터 10000까지의 자연수 중 25로 나누어떨어지고 각 자리 숫자의 합이 14인 수는 모두 몇 개입니까?",
+      "answer": "23",
+      "answerParts": [
+        23
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "23"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다.",
+        "끝 두 자리가00이면 앞 두 자리의 합은 14−0입니다. 가능한 앞 두 자리 수는 59, 68, 77, 86, 95으로 5개입니다.",
+        "끝 두 자리가25이면 앞 두 자리의 합은 14−7입니다. 가능한 앞 두 자리 수는 16, 25, 34, 43, 52, 61, 70으로 7개입니다.",
+        "끝 두 자리가50이면 앞 두 자리의 합은 14−5입니다. 가능한 앞 두 자리 수는 18, 27, 36, 45, 54, 63, 72, 81, 90으로 9개입니다.",
+        "끝 두 자리가75이면 앞 두 자리의 합은 14−12입니다. 가능한 앞 두 자리 수는 11, 20으로 2개입니다.",
+        "네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 5＋7＋9＋2＝23개입니다."
+      ],
+      "solution": "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다. 끝 두 자리가00이면 앞 두 자리의 합은 14−0입니다. 가능한 앞 두 자리 수는 59, 68, 77, 86, 95으로 5개입니다. 끝 두 자리가25이면 앞 두 자리의 합은 14−7입니다. 가능한 앞 두 자리 수는 16, 25, 34, 43, 52, 61, 70으로 7개입니다. 끝 두 자리가50이면 앞 두 자리의 합은 14−5입니다. 가능한 앞 두 자리 수는 18, 27, 36, 45, 54, 63, 72, 81, 90으로 9개입니다. 끝 두 자리가75이면 앞 두 자리의 합은 14−12입니다. 가능한 앞 두 자리 수는 11, 20으로 2개입니다. 네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 5＋7＋9＋2＝23개입니다.",
+      "learningPoint": "25의 배수의 끝 두 자리로 나누고 앞 두 자리의 합을 세기",
+      "learningLocation": "활용 5회 · 원문 13번 · 배수와 자릿수",
+      "verification": {
+        "primaryMethod": "four possible suffixes and two-digit sums",
+        "parameters": {
+          "digitSum": 14
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 13,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q13-v4",
+      "genId": "applied5-q13",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 13,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 자릿수",
+      "detailType": "25의 배수 중 자리 합 조건",
+      "pointBand": "3.4",
+      "text": "1000부터 10000까지의 자연수 중 25로 나누어떨어지고 각 자리 숫자의 합이 15인 수는 모두 몇 개입니까?",
+      "answer": "24",
+      "answerParts": [
+        24
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "24"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다.",
+        "끝 두 자리가00이면 앞 두 자리의 합은 15−0입니다. 가능한 앞 두 자리 수는 69, 78, 87, 96으로 4개입니다.",
+        "끝 두 자리가25이면 앞 두 자리의 합은 15−7입니다. 가능한 앞 두 자리 수는 17, 26, 35, 44, 53, 62, 71, 80으로 8개입니다.",
+        "끝 두 자리가50이면 앞 두 자리의 합은 15−5입니다. 가능한 앞 두 자리 수는 19, 28, 37, 46, 55, 64, 73, 82, 91으로 9개입니다.",
+        "끝 두 자리가75이면 앞 두 자리의 합은 15−12입니다. 가능한 앞 두 자리 수는 12, 21, 30으로 3개입니다.",
+        "네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 4＋8＋9＋3＝24개입니다."
+      ],
+      "solution": "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다. 끝 두 자리가00이면 앞 두 자리의 합은 15−0입니다. 가능한 앞 두 자리 수는 69, 78, 87, 96으로 4개입니다. 끝 두 자리가25이면 앞 두 자리의 합은 15−7입니다. 가능한 앞 두 자리 수는 17, 26, 35, 44, 53, 62, 71, 80으로 8개입니다. 끝 두 자리가50이면 앞 두 자리의 합은 15−5입니다. 가능한 앞 두 자리 수는 19, 28, 37, 46, 55, 64, 73, 82, 91으로 9개입니다. 끝 두 자리가75이면 앞 두 자리의 합은 15−12입니다. 가능한 앞 두 자리 수는 12, 21, 30으로 3개입니다. 네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 4＋8＋9＋3＝24개입니다.",
+      "learningPoint": "25의 배수의 끝 두 자리로 나누고 앞 두 자리의 합을 세기",
+      "learningLocation": "활용 5회 · 원문 13번 · 배수와 자릿수",
+      "verification": {
+        "primaryMethod": "four possible suffixes and two-digit sums",
+        "parameters": {
+          "digitSum": 15
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 13,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q13-v5",
+      "genId": "applied5-q13",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 13,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 자릿수",
+      "detailType": "25의 배수 중 자리 합 조건",
+      "pointBand": "3.4",
+      "text": "1000부터 10000까지의 자연수 중 25로 나누어떨어지고 각 자리 숫자의 합이 17인 수는 모두 몇 개입니까?",
+      "answer": "23",
+      "answerParts": [
+        23
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "23"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다.",
+        "끝 두 자리가00이면 앞 두 자리의 합은 17−0입니다. 가능한 앞 두 자리 수는 89, 98으로 2개입니다.",
+        "끝 두 자리가25이면 앞 두 자리의 합은 17−7입니다. 가능한 앞 두 자리 수는 19, 28, 37, 46, 55, 64, 73, 82, 91으로 9개입니다.",
+        "끝 두 자리가50이면 앞 두 자리의 합은 17−5입니다. 가능한 앞 두 자리 수는 39, 48, 57, 66, 75, 84, 93으로 7개입니다.",
+        "끝 두 자리가75이면 앞 두 자리의 합은 17−12입니다. 가능한 앞 두 자리 수는 14, 23, 32, 41, 50으로 5개입니다.",
+        "네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 2＋9＋7＋5＝23개입니다."
+      ],
+      "solution": "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다. 끝 두 자리가00이면 앞 두 자리의 합은 17−0입니다. 가능한 앞 두 자리 수는 89, 98으로 2개입니다. 끝 두 자리가25이면 앞 두 자리의 합은 17−7입니다. 가능한 앞 두 자리 수는 19, 28, 37, 46, 55, 64, 73, 82, 91으로 9개입니다. 끝 두 자리가50이면 앞 두 자리의 합은 17−5입니다. 가능한 앞 두 자리 수는 39, 48, 57, 66, 75, 84, 93으로 7개입니다. 끝 두 자리가75이면 앞 두 자리의 합은 17−12입니다. 가능한 앞 두 자리 수는 14, 23, 32, 41, 50으로 5개입니다. 네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 2＋9＋7＋5＝23개입니다.",
+      "learningPoint": "25의 배수의 끝 두 자리로 나누고 앞 두 자리의 합을 세기",
+      "learningLocation": "활용 5회 · 원문 13번 · 배수와 자릿수",
+      "verification": {
+        "primaryMethod": "four possible suffixes and two-digit sums",
+        "parameters": {
+          "digitSum": 17
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 13,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q13-v6",
+      "genId": "applied5-q13",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 13,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 자릿수",
+      "detailType": "25의 배수 중 자리 합 조건",
+      "pointBand": "3.4",
+      "text": "1000부터 10000까지의 자연수 중 25로 나누어떨어지고 각 자리 숫자의 합이 18인 수는 모두 몇 개입니까?",
+      "answer": "21",
+      "answerParts": [
+        21
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "21"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다.",
+        "끝 두 자리가00이면 앞 두 자리의 합은 18−0입니다. 가능한 앞 두 자리 수는 99으로 1개입니다.",
+        "끝 두 자리가25이면 앞 두 자리의 합은 18−7입니다. 가능한 앞 두 자리 수는 29, 38, 47, 56, 65, 74, 83, 92으로 8개입니다.",
+        "끝 두 자리가50이면 앞 두 자리의 합은 18−5입니다. 가능한 앞 두 자리 수는 49, 58, 67, 76, 85, 94으로 6개입니다.",
+        "끝 두 자리가75이면 앞 두 자리의 합은 18−12입니다. 가능한 앞 두 자리 수는 15, 24, 33, 42, 51, 60으로 6개입니다.",
+        "네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 1＋8＋6＋6＝21개입니다."
+      ],
+      "solution": "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다. 끝 두 자리가00이면 앞 두 자리의 합은 18−0입니다. 가능한 앞 두 자리 수는 99으로 1개입니다. 끝 두 자리가25이면 앞 두 자리의 합은 18−7입니다. 가능한 앞 두 자리 수는 29, 38, 47, 56, 65, 74, 83, 92으로 8개입니다. 끝 두 자리가50이면 앞 두 자리의 합은 18−5입니다. 가능한 앞 두 자리 수는 49, 58, 67, 76, 85, 94으로 6개입니다. 끝 두 자리가75이면 앞 두 자리의 합은 18−12입니다. 가능한 앞 두 자리 수는 15, 24, 33, 42, 51, 60으로 6개입니다. 네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 1＋8＋6＋6＝21개입니다.",
+      "learningPoint": "25의 배수의 끝 두 자리로 나누고 앞 두 자리의 합을 세기",
+      "learningLocation": "활용 5회 · 원문 13번 · 배수와 자릿수",
+      "verification": {
+        "primaryMethod": "four possible suffixes and two-digit sums",
+        "parameters": {
+          "digitSum": 18
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 13,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q13-v7",
+      "genId": "applied5-q13",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 13,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 자릿수",
+      "detailType": "25의 배수 중 자리 합 조건",
+      "pointBand": "3.4",
+      "text": "1000부터 10000까지의 자연수 중 25로 나누어떨어지고 각 자리 숫자의 합이 19인 수는 모두 몇 개입니까?",
+      "answer": "19",
+      "answerParts": [
+        19
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "19"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다.",
+        "끝 두 자리가00이면 앞 두 자리의 합은 19−0입니다. 가능한 앞 두 자리 수는 없음으로 0개입니다.",
+        "끝 두 자리가25이면 앞 두 자리의 합은 19−7입니다. 가능한 앞 두 자리 수는 39, 48, 57, 66, 75, 84, 93으로 7개입니다.",
+        "끝 두 자리가50이면 앞 두 자리의 합은 19−5입니다. 가능한 앞 두 자리 수는 59, 68, 77, 86, 95으로 5개입니다.",
+        "끝 두 자리가75이면 앞 두 자리의 합은 19−12입니다. 가능한 앞 두 자리 수는 16, 25, 34, 43, 52, 61, 70으로 7개입니다.",
+        "네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 0＋7＋5＋7＝19개입니다."
+      ],
+      "solution": "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다. 끝 두 자리가00이면 앞 두 자리의 합은 19−0입니다. 가능한 앞 두 자리 수는 없음으로 0개입니다. 끝 두 자리가25이면 앞 두 자리의 합은 19−7입니다. 가능한 앞 두 자리 수는 39, 48, 57, 66, 75, 84, 93으로 7개입니다. 끝 두 자리가50이면 앞 두 자리의 합은 19−5입니다. 가능한 앞 두 자리 수는 59, 68, 77, 86, 95으로 5개입니다. 끝 두 자리가75이면 앞 두 자리의 합은 19−12입니다. 가능한 앞 두 자리 수는 16, 25, 34, 43, 52, 61, 70으로 7개입니다. 네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 0＋7＋5＋7＝19개입니다.",
+      "learningPoint": "25의 배수의 끝 두 자리로 나누고 앞 두 자리의 합을 세기",
+      "learningLocation": "활용 5회 · 원문 13번 · 배수와 자릿수",
+      "verification": {
+        "primaryMethod": "four possible suffixes and two-digit sums",
+        "parameters": {
+          "digitSum": 19
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 13,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q13-v8",
+      "genId": "applied5-q13",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 13,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 자릿수",
+      "detailType": "25의 배수 중 자리 합 조건",
+      "pointBand": "3.4",
+      "text": "1000부터 10000까지의 자연수 중 25로 나누어떨어지고 각 자리 숫자의 합이 20인 수는 모두 몇 개입니까?",
+      "answer": "18",
+      "answerParts": [
+        18
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "18"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다.",
+        "끝 두 자리가00이면 앞 두 자리의 합은 20−0입니다. 가능한 앞 두 자리 수는 없음으로 0개입니다.",
+        "끝 두 자리가25이면 앞 두 자리의 합은 20−7입니다. 가능한 앞 두 자리 수는 49, 58, 67, 76, 85, 94으로 6개입니다.",
+        "끝 두 자리가50이면 앞 두 자리의 합은 20−5입니다. 가능한 앞 두 자리 수는 69, 78, 87, 96으로 4개입니다.",
+        "끝 두 자리가75이면 앞 두 자리의 합은 20−12입니다. 가능한 앞 두 자리 수는 17, 26, 35, 44, 53, 62, 71, 80으로 8개입니다.",
+        "네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 0＋6＋4＋8＝18개입니다."
+      ],
+      "solution": "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다. 끝 두 자리가00이면 앞 두 자리의 합은 20−0입니다. 가능한 앞 두 자리 수는 없음으로 0개입니다. 끝 두 자리가25이면 앞 두 자리의 합은 20−7입니다. 가능한 앞 두 자리 수는 49, 58, 67, 76, 85, 94으로 6개입니다. 끝 두 자리가50이면 앞 두 자리의 합은 20−5입니다. 가능한 앞 두 자리 수는 69, 78, 87, 96으로 4개입니다. 끝 두 자리가75이면 앞 두 자리의 합은 20−12입니다. 가능한 앞 두 자리 수는 17, 26, 35, 44, 53, 62, 71, 80으로 8개입니다. 네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 0＋6＋4＋8＝18개입니다.",
+      "learningPoint": "25의 배수의 끝 두 자리로 나누고 앞 두 자리의 합을 세기",
+      "learningLocation": "활용 5회 · 원문 13번 · 배수와 자릿수",
+      "verification": {
+        "primaryMethod": "four possible suffixes and two-digit sums",
+        "parameters": {
+          "digitSum": 20
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 13,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q13-v9",
+      "genId": "applied5-q13",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 13,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "배수와 자릿수",
+      "detailType": "25의 배수 중 자리 합 조건",
+      "pointBand": "3.4",
+      "text": "1000부터 10000까지의 자연수 중 25로 나누어떨어지고 각 자리 숫자의 합이 21인 수는 모두 몇 개입니까?",
+      "answer": "17",
+      "answerParts": [
+        17
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "17"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다.",
+        "끝 두 자리가00이면 앞 두 자리의 합은 21−0입니다. 가능한 앞 두 자리 수는 없음으로 0개입니다.",
+        "끝 두 자리가25이면 앞 두 자리의 합은 21−7입니다. 가능한 앞 두 자리 수는 59, 68, 77, 86, 95으로 5개입니다.",
+        "끝 두 자리가50이면 앞 두 자리의 합은 21−5입니다. 가능한 앞 두 자리 수는 79, 88, 97으로 3개입니다.",
+        "끝 두 자리가75이면 앞 두 자리의 합은 21−12입니다. 가능한 앞 두 자리 수는 18, 27, 36, 45, 54, 63, 72, 81, 90으로 9개입니다.",
+        "네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 0＋5＋3＋9＝17개입니다."
+      ],
+      "solution": "25의 배수는 끝 두 자리가00,25,50,75 중 하나입니다. 10000은 자리 합이1이므로 조건에 맞지 않고, 나머지는 네 자리 수입니다. 끝 두 자리가00이면 앞 두 자리의 합은 21−0입니다. 가능한 앞 두 자리 수는 없음으로 0개입니다. 끝 두 자리가25이면 앞 두 자리의 합은 21−7입니다. 가능한 앞 두 자리 수는 59, 68, 77, 86, 95으로 5개입니다. 끝 두 자리가50이면 앞 두 자리의 합은 21−5입니다. 가능한 앞 두 자리 수는 79, 88, 97으로 3개입니다. 끝 두 자리가75이면 앞 두 자리의 합은 21−12입니다. 가능한 앞 두 자리 수는 18, 27, 36, 45, 54, 63, 72, 81, 90으로 9개입니다. 네 경우의 끝자리는 서로 다르므로 겹치지 않습니다. 모두 더하면 0＋5＋3＋9＝17개입니다.",
+      "learningPoint": "25의 배수의 끝 두 자리로 나누고 앞 두 자리의 합을 세기",
+      "learningLocation": "활용 5회 · 원문 13번 · 배수와 자릿수",
+      "verification": {
+        "primaryMethod": "four possible suffixes and two-digit sums",
+        "parameters": {
+          "digitSum": 21
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 13,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q21-v1",
+      "genId": "applied5-q21",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 21,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "모임 수 차이로 전체 인원 찾기",
+      "pointBand": "3.4",
+      "text": "같은 학생 전원을 대상으로 모여라 놀이를 두 번 합니다. 매번 처음 인원으로 다시 시작하며 무리에 들지 못한 학생만 그 차례에서 탈락합니다. 4명씩 모이면 2명이 남고, 6명씩 모이면 앞의 경우보다 무리 수가 2개 적으며 4명이 남습니다. 처음 학생은 모두 몇 명입니까?",
+      "answer": "22",
+      "answerParts": [
+        22
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "22"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4명씩 모인 무리 수를 □라 하면 전체는 4×□＋2명입니다. 6명씩일 때 무리 수는 □−2이므로 전체는 6×(□−2)＋4명입니다.",
+        "두 식이 같으므로 2×□＝12＋2−4＝10입니다. 따라서 첫 무리 수는 5개입니다.",
+        "전체는 4×5＋2＝22명입니다. 다른 경우도 6×3＋4＝22명으로 같고 두 나머지는 무리 크기보다 작습니다."
+      ],
+      "solution": "4명씩 모인 무리 수를 □라 하면 전체는 4×□＋2명입니다. 6명씩일 때 무리 수는 □−2이므로 전체는 6×(□−2)＋4명입니다. 두 식이 같으므로 2×□＝12＋2−4＝10입니다. 따라서 첫 무리 수는 5개입니다. 전체는 4×5＋2＝22명입니다. 다른 경우도 6×3＋4＝22명으로 같고 두 나머지는 무리 크기보다 작습니다.",
+      "learningPoint": "같은 전체 인원을 두 나눗셈식으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 21번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "group-count difference and two remainders",
+        "parameters": {
+          "firstSize": 4,
+          "secondSize": 6,
+          "groupDifference": 2,
+          "firstRemainder": 2,
+          "secondRemainder": 4
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 21,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q21-v2",
+      "genId": "applied5-q21",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 21,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "모임 수 차이로 전체 인원 찾기",
+      "pointBand": "3.4",
+      "text": "같은 학생 전원을 대상으로 모여라 놀이를 두 번 합니다. 매번 처음 인원으로 다시 시작하며 무리에 들지 못한 학생만 그 차례에서 탈락합니다. 4명씩 모이면 2명이 남고, 7명씩 모이면 앞의 경우보다 무리 수가 2개 적으며 4명이 남습니다. 처음 학생은 모두 몇 명입니까?",
+      "answer": "18",
+      "answerParts": [
+        18
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "18"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4명씩 모인 무리 수를 □라 하면 전체는 4×□＋2명입니다. 7명씩일 때 무리 수는 □−2이므로 전체는 7×(□−2)＋4명입니다.",
+        "두 식이 같으므로 3×□＝14＋2−4＝12입니다. 따라서 첫 무리 수는 4개입니다.",
+        "전체는 4×4＋2＝18명입니다. 다른 경우도 7×2＋4＝18명으로 같고 두 나머지는 무리 크기보다 작습니다."
+      ],
+      "solution": "4명씩 모인 무리 수를 □라 하면 전체는 4×□＋2명입니다. 7명씩일 때 무리 수는 □−2이므로 전체는 7×(□−2)＋4명입니다. 두 식이 같으므로 3×□＝14＋2−4＝12입니다. 따라서 첫 무리 수는 4개입니다. 전체는 4×4＋2＝18명입니다. 다른 경우도 7×2＋4＝18명으로 같고 두 나머지는 무리 크기보다 작습니다.",
+      "learningPoint": "같은 전체 인원을 두 나눗셈식으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 21번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "group-count difference and two remainders",
+        "parameters": {
+          "firstSize": 4,
+          "secondSize": 7,
+          "groupDifference": 2,
+          "firstRemainder": 2,
+          "secondRemainder": 4
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 21,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q21-v3",
+      "genId": "applied5-q21",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 21,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "모임 수 차이로 전체 인원 찾기",
+      "pointBand": "3.4",
+      "text": "같은 학생 전원을 대상으로 모여라 놀이를 두 번 합니다. 매번 처음 인원으로 다시 시작하며 무리에 들지 못한 학생만 그 차례에서 탈락합니다. 5명씩 모이면 3명이 남고, 8명씩 모이면 앞의 경우보다 무리 수가 2개 적으며 1명이 남습니다. 처음 학생은 모두 몇 명입니까?",
+      "answer": "33",
+      "answerParts": [
+        33
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "33"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "5명씩 모인 무리 수를 □라 하면 전체는 5×□＋3명입니다. 8명씩일 때 무리 수는 □−2이므로 전체는 8×(□−2)＋1명입니다.",
+        "두 식이 같으므로 3×□＝16＋3−1＝18입니다. 따라서 첫 무리 수는 6개입니다.",
+        "전체는 5×6＋3＝33명입니다. 다른 경우도 8×4＋1＝33명으로 같고 두 나머지는 무리 크기보다 작습니다."
+      ],
+      "solution": "5명씩 모인 무리 수를 □라 하면 전체는 5×□＋3명입니다. 8명씩일 때 무리 수는 □−2이므로 전체는 8×(□−2)＋1명입니다. 두 식이 같으므로 3×□＝16＋3−1＝18입니다. 따라서 첫 무리 수는 6개입니다. 전체는 5×6＋3＝33명입니다. 다른 경우도 8×4＋1＝33명으로 같고 두 나머지는 무리 크기보다 작습니다.",
+      "learningPoint": "같은 전체 인원을 두 나눗셈식으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 21번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "group-count difference and two remainders",
+        "parameters": {
+          "firstSize": 5,
+          "secondSize": 8,
+          "groupDifference": 2,
+          "firstRemainder": 3,
+          "secondRemainder": 1
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 21,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q21-v4",
+      "genId": "applied5-q21",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 21,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "모임 수 차이로 전체 인원 찾기",
+      "pointBand": "3.4",
+      "text": "같은 학생 전원을 대상으로 모여라 놀이를 두 번 합니다. 매번 처음 인원으로 다시 시작하며 무리에 들지 못한 학생만 그 차례에서 탈락합니다. 5명씩 모이면 3명이 남고, 7명씩 모이면 앞의 경우보다 무리 수가 3개 적으며 2명이 남습니다. 처음 학생은 모두 몇 명입니까?",
+      "answer": "58",
+      "answerParts": [
+        58
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "58"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "5명씩 모인 무리 수를 □라 하면 전체는 5×□＋3명입니다. 7명씩일 때 무리 수는 □−3이므로 전체는 7×(□−3)＋2명입니다.",
+        "두 식이 같으므로 2×□＝21＋3−2＝22입니다. 따라서 첫 무리 수는 11개입니다.",
+        "전체는 5×11＋3＝58명입니다. 다른 경우도 7×8＋2＝58명으로 같고 두 나머지는 무리 크기보다 작습니다."
+      ],
+      "solution": "5명씩 모인 무리 수를 □라 하면 전체는 5×□＋3명입니다. 7명씩일 때 무리 수는 □−3이므로 전체는 7×(□−3)＋2명입니다. 두 식이 같으므로 2×□＝21＋3−2＝22입니다. 따라서 첫 무리 수는 11개입니다. 전체는 5×11＋3＝58명입니다. 다른 경우도 7×8＋2＝58명으로 같고 두 나머지는 무리 크기보다 작습니다.",
+      "learningPoint": "같은 전체 인원을 두 나눗셈식으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 21번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "group-count difference and two remainders",
+        "parameters": {
+          "firstSize": 5,
+          "secondSize": 7,
+          "groupDifference": 3,
+          "firstRemainder": 3,
+          "secondRemainder": 2
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 21,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q21-v5",
+      "genId": "applied5-q21",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 21,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "모임 수 차이로 전체 인원 찾기",
+      "pointBand": "3.4",
+      "text": "같은 학생 전원을 대상으로 모여라 놀이를 두 번 합니다. 매번 처음 인원으로 다시 시작하며 무리에 들지 못한 학생만 그 차례에서 탈락합니다. 6명씩 모이면 3명이 남고, 8명씩 모이면 앞의 경우보다 무리 수가 2개 적으며 5명이 남습니다. 처음 학생은 모두 몇 명입니까?",
+      "answer": "45",
+      "answerParts": [
+        45
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "45"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "6명씩 모인 무리 수를 □라 하면 전체는 6×□＋3명입니다. 8명씩일 때 무리 수는 □−2이므로 전체는 8×(□−2)＋5명입니다.",
+        "두 식이 같으므로 2×□＝16＋3−5＝14입니다. 따라서 첫 무리 수는 7개입니다.",
+        "전체는 6×7＋3＝45명입니다. 다른 경우도 8×5＋5＝45명으로 같고 두 나머지는 무리 크기보다 작습니다."
+      ],
+      "solution": "6명씩 모인 무리 수를 □라 하면 전체는 6×□＋3명입니다. 8명씩일 때 무리 수는 □−2이므로 전체는 8×(□−2)＋5명입니다. 두 식이 같으므로 2×□＝16＋3−5＝14입니다. 따라서 첫 무리 수는 7개입니다. 전체는 6×7＋3＝45명입니다. 다른 경우도 8×5＋5＝45명으로 같고 두 나머지는 무리 크기보다 작습니다.",
+      "learningPoint": "같은 전체 인원을 두 나눗셈식으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 21번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "group-count difference and two remainders",
+        "parameters": {
+          "firstSize": 6,
+          "secondSize": 8,
+          "groupDifference": 2,
+          "firstRemainder": 3,
+          "secondRemainder": 5
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 21,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q21-v6",
+      "genId": "applied5-q21",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 21,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "모임 수 차이로 전체 인원 찾기",
+      "pointBand": "3.4",
+      "text": "같은 학생 전원을 대상으로 모여라 놀이를 두 번 합니다. 매번 처음 인원으로 다시 시작하며 무리에 들지 못한 학생만 그 차례에서 탈락합니다. 6명씩 모이면 3명이 남고, 9명씩 모이면 앞의 경우보다 무리 수가 3개 적으며 6명이 남습니다. 처음 학생은 모두 몇 명입니까?",
+      "answer": "51",
+      "answerParts": [
+        51
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "51"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "6명씩 모인 무리 수를 □라 하면 전체는 6×□＋3명입니다. 9명씩일 때 무리 수는 □−3이므로 전체는 9×(□−3)＋6명입니다.",
+        "두 식이 같으므로 3×□＝27＋3−6＝24입니다. 따라서 첫 무리 수는 8개입니다.",
+        "전체는 6×8＋3＝51명입니다. 다른 경우도 9×5＋6＝51명으로 같고 두 나머지는 무리 크기보다 작습니다."
+      ],
+      "solution": "6명씩 모인 무리 수를 □라 하면 전체는 6×□＋3명입니다. 9명씩일 때 무리 수는 □−3이므로 전체는 9×(□−3)＋6명입니다. 두 식이 같으므로 3×□＝27＋3−6＝24입니다. 따라서 첫 무리 수는 8개입니다. 전체는 6×8＋3＝51명입니다. 다른 경우도 9×5＋6＝51명으로 같고 두 나머지는 무리 크기보다 작습니다.",
+      "learningPoint": "같은 전체 인원을 두 나눗셈식으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 21번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "group-count difference and two remainders",
+        "parameters": {
+          "firstSize": 6,
+          "secondSize": 9,
+          "groupDifference": 3,
+          "firstRemainder": 3,
+          "secondRemainder": 6
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 21,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q21-v7",
+      "genId": "applied5-q21",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 21,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "모임 수 차이로 전체 인원 찾기",
+      "pointBand": "3.4",
+      "text": "같은 학생 전원을 대상으로 모여라 놀이를 두 번 합니다. 매번 처음 인원으로 다시 시작하며 무리에 들지 못한 학생만 그 차례에서 탈락합니다. 7명씩 모이면 4명이 남고, 9명씩 모이면 앞의 경우보다 무리 수가 3개 적으며 1명이 남습니다. 처음 학생은 모두 몇 명입니까?",
+      "answer": "109",
+      "answerParts": [
+        109
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "109"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "7명씩 모인 무리 수를 □라 하면 전체는 7×□＋4명입니다. 9명씩일 때 무리 수는 □−3이므로 전체는 9×(□−3)＋1명입니다.",
+        "두 식이 같으므로 2×□＝27＋4−1＝30입니다. 따라서 첫 무리 수는 15개입니다.",
+        "전체는 7×15＋4＝109명입니다. 다른 경우도 9×12＋1＝109명으로 같고 두 나머지는 무리 크기보다 작습니다."
+      ],
+      "solution": "7명씩 모인 무리 수를 □라 하면 전체는 7×□＋4명입니다. 9명씩일 때 무리 수는 □−3이므로 전체는 9×(□−3)＋1명입니다. 두 식이 같으므로 2×□＝27＋4−1＝30입니다. 따라서 첫 무리 수는 15개입니다. 전체는 7×15＋4＝109명입니다. 다른 경우도 9×12＋1＝109명으로 같고 두 나머지는 무리 크기보다 작습니다.",
+      "learningPoint": "같은 전체 인원을 두 나눗셈식으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 21번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "group-count difference and two remainders",
+        "parameters": {
+          "firstSize": 7,
+          "secondSize": 9,
+          "groupDifference": 3,
+          "firstRemainder": 4,
+          "secondRemainder": 1
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 21,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q21-v8",
+      "genId": "applied5-q21",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 21,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "모임 수 차이로 전체 인원 찾기",
+      "pointBand": "3.4",
+      "text": "같은 학생 전원을 대상으로 모여라 놀이를 두 번 합니다. 매번 처음 인원으로 다시 시작하며 무리에 들지 못한 학생만 그 차례에서 탈락합니다. 7명씩 모이면 4명이 남고, 10명씩 모이면 앞의 경우보다 무리 수가 3개 적으며 1명이 남습니다. 처음 학생은 모두 몇 명입니까?",
+      "answer": "81",
+      "answerParts": [
+        81
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "81"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "7명씩 모인 무리 수를 □라 하면 전체는 7×□＋4명입니다. 10명씩일 때 무리 수는 □−3이므로 전체는 10×(□−3)＋1명입니다.",
+        "두 식이 같으므로 3×□＝30＋4−1＝33입니다. 따라서 첫 무리 수는 11개입니다.",
+        "전체는 7×11＋4＝81명입니다. 다른 경우도 10×8＋1＝81명으로 같고 두 나머지는 무리 크기보다 작습니다."
+      ],
+      "solution": "7명씩 모인 무리 수를 □라 하면 전체는 7×□＋4명입니다. 10명씩일 때 무리 수는 □−3이므로 전체는 10×(□−3)＋1명입니다. 두 식이 같으므로 3×□＝30＋4−1＝33입니다. 따라서 첫 무리 수는 11개입니다. 전체는 7×11＋4＝81명입니다. 다른 경우도 10×8＋1＝81명으로 같고 두 나머지는 무리 크기보다 작습니다.",
+      "learningPoint": "같은 전체 인원을 두 나눗셈식으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 21번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "group-count difference and two remainders",
+        "parameters": {
+          "firstSize": 7,
+          "secondSize": 10,
+          "groupDifference": 3,
+          "firstRemainder": 4,
+          "secondRemainder": 1
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 21,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q21-v9",
+      "genId": "applied5-q21",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 21,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "모임 수 차이로 전체 인원 찾기",
+      "pointBand": "3.4",
+      "text": "같은 학생 전원을 대상으로 모여라 놀이를 두 번 합니다. 매번 처음 인원으로 다시 시작하며 무리에 들지 못한 학생만 그 차례에서 탈락합니다. 8명씩 모이면 4명이 남고, 10명씩 모이면 앞의 경우보다 무리 수가 3개 적으며 6명이 남습니다. 처음 학생은 모두 몇 명입니까?",
+      "answer": "116",
+      "answerParts": [
+        116
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "116"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "8명씩 모인 무리 수를 □라 하면 전체는 8×□＋4명입니다. 10명씩일 때 무리 수는 □−3이므로 전체는 10×(□−3)＋6명입니다.",
+        "두 식이 같으므로 2×□＝30＋4−6＝28입니다. 따라서 첫 무리 수는 14개입니다.",
+        "전체는 8×14＋4＝116명입니다. 다른 경우도 10×11＋6＝116명으로 같고 두 나머지는 무리 크기보다 작습니다."
+      ],
+      "solution": "8명씩 모인 무리 수를 □라 하면 전체는 8×□＋4명입니다. 10명씩일 때 무리 수는 □−3이므로 전체는 10×(□−3)＋6명입니다. 두 식이 같으므로 2×□＝30＋4−6＝28입니다. 따라서 첫 무리 수는 14개입니다. 전체는 8×14＋4＝116명입니다. 다른 경우도 10×11＋6＝116명으로 같고 두 나머지는 무리 크기보다 작습니다.",
+      "learningPoint": "같은 전체 인원을 두 나눗셈식으로 나타내기",
+      "learningLocation": "활용 5회 · 원문 21번 · 몫과 나머지",
+      "verification": {
+        "primaryMethod": "group-count difference and two remainders",
+        "parameters": {
+          "firstSize": 8,
+          "secondSize": 10,
+          "groupDifference": 3,
+          "firstRemainder": 4,
+          "secondRemainder": 6
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 21,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q30-v1",
+      "genId": "applied5-q30",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 30,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수열과 약수",
+      "detailType": "일정하게 늘리는 줄의 처음 개수 최솟값",
+      "pointBand": "4.2",
+      "text": "첫째 줄에 바둑돌을 □개 놓고 둘째 줄에는 □＋2개, 셋째 줄에는 □＋4개로 한 줄마다 2개씩 늘립니다. 어떤 줄까지 놓은 바둑돌이 모두 90개일 때 □에 들어갈 수 있는 가장 작은 자연수를 구하시오.",
+      "answer": "2",
+      "answerParts": [
+        2
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "2"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다.",
+        "전체는 △×(□＋△−1)＝90이므로 줄 수△는 90의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,90), (2,44), (3,28), (5,14), (6,10), (9,2)입니다.",
+        "첫 수가 가장 작은 경우는 9줄일 때의 2개입니다. 이때 수열의 합은 9×(2＋8)＝90개이므로 맞습니다."
+      ],
+      "solution": "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다. 전체는 △×(□＋△−1)＝90이므로 줄 수△는 90의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,90), (2,44), (3,28), (5,14), (6,10), (9,2)입니다. 첫 수가 가장 작은 경우는 9줄일 때의 2개입니다. 이때 수열의 합은 9×(2＋8)＝90개이므로 맞습니다.",
+      "learningPoint": "등차수열의 전체를 두 자연수의 곱으로 바꿔 약수 후보 비교하기",
+      "learningLocation": "활용 5회 · 원문 30번 · 수열과 약수",
+      "verification": {
+        "primaryMethod": "divisor factorization of arithmetic progression sum",
+        "parameters": {
+          "total": 90,
+          "increment": 2
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 31,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q30-v2",
+      "genId": "applied5-q30",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 30,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수열과 약수",
+      "detailType": "일정하게 늘리는 줄의 처음 개수 최솟값",
+      "pointBand": "4.2",
+      "text": "첫째 줄에 바둑돌을 □개 놓고 둘째 줄에는 □＋2개, 셋째 줄에는 □＋4개로 한 줄마다 2개씩 늘립니다. 어떤 줄까지 놓은 바둑돌이 모두 100개일 때 □에 들어갈 수 있는 가장 작은 자연수를 구하시오.",
+      "answer": "1",
+      "answerParts": [
+        1
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다.",
+        "전체는 △×(□＋△−1)＝100이므로 줄 수△는 100의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,100), (2,49), (4,22), (5,16), (10,1)입니다.",
+        "첫 수가 가장 작은 경우는 10줄일 때의 1개입니다. 이때 수열의 합은 10×(1＋9)＝100개이므로 맞습니다."
+      ],
+      "solution": "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다. 전체는 △×(□＋△−1)＝100이므로 줄 수△는 100의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,100), (2,49), (4,22), (5,16), (10,1)입니다. 첫 수가 가장 작은 경우는 10줄일 때의 1개입니다. 이때 수열의 합은 10×(1＋9)＝100개이므로 맞습니다.",
+      "learningPoint": "등차수열의 전체를 두 자연수의 곱으로 바꿔 약수 후보 비교하기",
+      "learningLocation": "활용 5회 · 원문 30번 · 수열과 약수",
+      "verification": {
+        "primaryMethod": "divisor factorization of arithmetic progression sum",
+        "parameters": {
+          "total": 100,
+          "increment": 2
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 31,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q30-v3",
+      "genId": "applied5-q30",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 30,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수열과 약수",
+      "detailType": "일정하게 늘리는 줄의 처음 개수 최솟값",
+      "pointBand": "4.2",
+      "text": "첫째 줄에 바둑돌을 □개 놓고 둘째 줄에는 □＋2개, 셋째 줄에는 □＋4개로 한 줄마다 2개씩 늘립니다. 어떤 줄까지 놓은 바둑돌이 모두 120개일 때 □에 들어갈 수 있는 가장 작은 자연수를 구하시오.",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "3"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다.",
+        "전체는 △×(□＋△−1)＝120이므로 줄 수△는 120의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,120), (2,59), (3,38), (4,27), (5,20), (6,15), (8,8), (10,3)입니다.",
+        "첫 수가 가장 작은 경우는 10줄일 때의 3개입니다. 이때 수열의 합은 10×(3＋9)＝120개이므로 맞습니다."
+      ],
+      "solution": "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다. 전체는 △×(□＋△−1)＝120이므로 줄 수△는 120의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,120), (2,59), (3,38), (4,27), (5,20), (6,15), (8,8), (10,3)입니다. 첫 수가 가장 작은 경우는 10줄일 때의 3개입니다. 이때 수열의 합은 10×(3＋9)＝120개이므로 맞습니다.",
+      "learningPoint": "등차수열의 전체를 두 자연수의 곱으로 바꿔 약수 후보 비교하기",
+      "learningLocation": "활용 5회 · 원문 30번 · 수열과 약수",
+      "verification": {
+        "primaryMethod": "divisor factorization of arithmetic progression sum",
+        "parameters": {
+          "total": 120,
+          "increment": 2
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 31,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q30-v4",
+      "genId": "applied5-q30",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 30,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수열과 약수",
+      "detailType": "일정하게 늘리는 줄의 처음 개수 최솟값",
+      "pointBand": "4.2",
+      "text": "첫째 줄에 바둑돌을 □개 놓고 둘째 줄에는 □＋2개, 셋째 줄에는 □＋4개로 한 줄마다 2개씩 늘립니다. 어떤 줄까지 놓은 바둑돌이 모두 126개일 때 □에 들어갈 수 있는 가장 작은 자연수를 구하시오.",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다.",
+        "전체는 △×(□＋△−1)＝126이므로 줄 수△는 126의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,126), (2,62), (3,40), (6,16), (7,12), (9,6)입니다.",
+        "첫 수가 가장 작은 경우는 9줄일 때의 6개입니다. 이때 수열의 합은 9×(6＋8)＝126개이므로 맞습니다."
+      ],
+      "solution": "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다. 전체는 △×(□＋△−1)＝126이므로 줄 수△는 126의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,126), (2,62), (3,40), (6,16), (7,12), (9,6)입니다. 첫 수가 가장 작은 경우는 9줄일 때의 6개입니다. 이때 수열의 합은 9×(6＋8)＝126개이므로 맞습니다.",
+      "learningPoint": "등차수열의 전체를 두 자연수의 곱으로 바꿔 약수 후보 비교하기",
+      "learningLocation": "활용 5회 · 원문 30번 · 수열과 약수",
+      "verification": {
+        "primaryMethod": "divisor factorization of arithmetic progression sum",
+        "parameters": {
+          "total": 126,
+          "increment": 2
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 31,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q30-v5",
+      "genId": "applied5-q30",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 30,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수열과 약수",
+      "detailType": "일정하게 늘리는 줄의 처음 개수 최솟값",
+      "pointBand": "4.2",
+      "text": "첫째 줄에 바둑돌을 □개 놓고 둘째 줄에는 □＋2개, 셋째 줄에는 □＋4개로 한 줄마다 2개씩 늘립니다. 어떤 줄까지 놓은 바둑돌이 모두 132개일 때 □에 들어갈 수 있는 가장 작은 자연수를 구하시오.",
+      "answer": "2",
+      "answerParts": [
+        2
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "2"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다.",
+        "전체는 △×(□＋△−1)＝132이므로 줄 수△는 132의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,132), (2,65), (3,42), (4,30), (6,17), (11,2)입니다.",
+        "첫 수가 가장 작은 경우는 11줄일 때의 2개입니다. 이때 수열의 합은 11×(2＋10)＝132개이므로 맞습니다."
+      ],
+      "solution": "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다. 전체는 △×(□＋△−1)＝132이므로 줄 수△는 132의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,132), (2,65), (3,42), (4,30), (6,17), (11,2)입니다. 첫 수가 가장 작은 경우는 11줄일 때의 2개입니다. 이때 수열의 합은 11×(2＋10)＝132개이므로 맞습니다.",
+      "learningPoint": "등차수열의 전체를 두 자연수의 곱으로 바꿔 약수 후보 비교하기",
+      "learningLocation": "활용 5회 · 원문 30번 · 수열과 약수",
+      "verification": {
+        "primaryMethod": "divisor factorization of arithmetic progression sum",
+        "parameters": {
+          "total": 132,
+          "increment": 2
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 31,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q30-v6",
+      "genId": "applied5-q30",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 30,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수열과 약수",
+      "detailType": "일정하게 늘리는 줄의 처음 개수 최솟값",
+      "pointBand": "4.2",
+      "text": "첫째 줄에 바둑돌을 □개 놓고 둘째 줄에는 □＋2개, 셋째 줄에는 □＋4개로 한 줄마다 2개씩 늘립니다. 어떤 줄까지 놓은 바둑돌이 모두 140개일 때 □에 들어갈 수 있는 가장 작은 자연수를 구하시오.",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "5"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다.",
+        "전체는 △×(□＋△−1)＝140이므로 줄 수△는 140의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,140), (2,69), (4,32), (5,24), (7,14), (10,5)입니다.",
+        "첫 수가 가장 작은 경우는 10줄일 때의 5개입니다. 이때 수열의 합은 10×(5＋9)＝140개이므로 맞습니다."
+      ],
+      "solution": "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다. 전체는 △×(□＋△−1)＝140이므로 줄 수△는 140의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,140), (2,69), (4,32), (5,24), (7,14), (10,5)입니다. 첫 수가 가장 작은 경우는 10줄일 때의 5개입니다. 이때 수열의 합은 10×(5＋9)＝140개이므로 맞습니다.",
+      "learningPoint": "등차수열의 전체를 두 자연수의 곱으로 바꿔 약수 후보 비교하기",
+      "learningLocation": "활용 5회 · 원문 30번 · 수열과 약수",
+      "verification": {
+        "primaryMethod": "divisor factorization of arithmetic progression sum",
+        "parameters": {
+          "total": 140,
+          "increment": 2
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 31,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q30-v7",
+      "genId": "applied5-q30",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 30,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수열과 약수",
+      "detailType": "일정하게 늘리는 줄의 처음 개수 최솟값",
+      "pointBand": "4.2",
+      "text": "첫째 줄에 바둑돌을 □개 놓고 둘째 줄에는 □＋2개, 셋째 줄에는 □＋4개로 한 줄마다 2개씩 늘립니다. 어떤 줄까지 놓은 바둑돌이 모두 150개일 때 □에 들어갈 수 있는 가장 작은 자연수를 구하시오.",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다.",
+        "전체는 △×(□＋△−1)＝150이므로 줄 수△는 150의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,150), (2,74), (3,48), (5,26), (6,20), (10,6)입니다.",
+        "첫 수가 가장 작은 경우는 10줄일 때의 6개입니다. 이때 수열의 합은 10×(6＋9)＝150개이므로 맞습니다."
+      ],
+      "solution": "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다. 전체는 △×(□＋△−1)＝150이므로 줄 수△는 150의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,150), (2,74), (3,48), (5,26), (6,20), (10,6)입니다. 첫 수가 가장 작은 경우는 10줄일 때의 6개입니다. 이때 수열의 합은 10×(6＋9)＝150개이므로 맞습니다.",
+      "learningPoint": "등차수열의 전체를 두 자연수의 곱으로 바꿔 약수 후보 비교하기",
+      "learningLocation": "활용 5회 · 원문 30번 · 수열과 약수",
+      "verification": {
+        "primaryMethod": "divisor factorization of arithmetic progression sum",
+        "parameters": {
+          "total": 150,
+          "increment": 2
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 31,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q30-v8",
+      "genId": "applied5-q30",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 30,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수열과 약수",
+      "detailType": "일정하게 늘리는 줄의 처음 개수 최솟값",
+      "pointBand": "4.2",
+      "text": "첫째 줄에 바둑돌을 □개 놓고 둘째 줄에는 □＋2개, 셋째 줄에는 □＋4개로 한 줄마다 2개씩 늘립니다. 어떤 줄까지 놓은 바둑돌이 모두 156개일 때 □에 들어갈 수 있는 가장 작은 자연수를 구하시오.",
+      "answer": "2",
+      "answerParts": [
+        2
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "2"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다.",
+        "전체는 △×(□＋△−1)＝156이므로 줄 수△는 156의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,156), (2,77), (3,50), (4,36), (6,21), (12,2)입니다.",
+        "첫 수가 가장 작은 경우는 12줄일 때의 2개입니다. 이때 수열의 합은 12×(2＋11)＝156개이므로 맞습니다."
+      ],
+      "solution": "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다. 전체는 △×(□＋△−1)＝156이므로 줄 수△는 156의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,156), (2,77), (3,50), (4,36), (6,21), (12,2)입니다. 첫 수가 가장 작은 경우는 12줄일 때의 2개입니다. 이때 수열의 합은 12×(2＋11)＝156개이므로 맞습니다.",
+      "learningPoint": "등차수열의 전체를 두 자연수의 곱으로 바꿔 약수 후보 비교하기",
+      "learningLocation": "활용 5회 · 원문 30번 · 수열과 약수",
+      "verification": {
+        "primaryMethod": "divisor factorization of arithmetic progression sum",
+        "parameters": {
+          "total": 156,
+          "increment": 2
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 31,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied5-q30-v9",
+      "genId": "applied5-q30",
+      "sourceSet": "applied",
+      "sourceRound": 5,
+      "sourceNo": 30,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수열과 약수",
+      "detailType": "일정하게 늘리는 줄의 처음 개수 최솟값",
+      "pointBand": "4.2",
+      "text": "첫째 줄에 바둑돌을 □개 놓고 둘째 줄에는 □＋2개, 셋째 줄에는 □＋4개로 한 줄마다 2개씩 늘립니다. 어떤 줄까지 놓은 바둑돌이 모두 168개일 때 □에 들어갈 수 있는 가장 작은 자연수를 구하시오.",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "3"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다.",
+        "전체는 △×(□＋△−1)＝168이므로 줄 수△는 168의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,168), (2,83), (3,54), (4,39), (6,23), (7,18), (8,14), (12,3)입니다.",
+        "첫 수가 가장 작은 경우는 12줄일 때의 3개입니다. 이때 수열의 합은 12×(3＋11)＝168개이므로 맞습니다."
+      ],
+      "solution": "줄 수를 △라 하면 첫 수□가 각 줄마다 있어 △×□개이고, 늘어난 부분은 0＋2＋4＋…＋2×(△−1)＝△×(△−1)개입니다. 전체는 △×(□＋△−1)＝168이므로 줄 수△는 168의 약수입니다. □가 자연수가 되는 (줄 수, 첫 수)는 (1,168), (2,83), (3,54), (4,39), (6,23), (7,18), (8,14), (12,3)입니다. 첫 수가 가장 작은 경우는 12줄일 때의 3개입니다. 이때 수열의 합은 12×(3＋11)＝168개이므로 맞습니다.",
+      "learningPoint": "등차수열의 전체를 두 자연수의 곱으로 바꿔 약수 후보 비교하기",
+      "learningLocation": "활용 5회 · 원문 30번 · 수열과 약수",
+      "verification": {
+        "primaryMethod": "divisor factorization of arithmetic progression sum",
+        "parameters": {
+          "total": 168,
+          "increment": 2
+        },
+        "independentSuite": "qa/applied5-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 31,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    }
+  ],
+  "sourceEditionNotes": {
+    "10": "원문의2019년5월5일금요일은실제달력과다르다. 새문항은실제그레고리력연도·요일을두방법으로계산,원문답보존",
+    "18": "현행문제월6600원과교사PDF6000원판본차이로공개보류",
+    "21": "두나눗셈이같은전체인원이라는원래계산모형을새지문에명시",
+    "29": "0·1만쓰는처음8수에는11·101도포함된다. 10의거듭제곱만으로오독하여제작하지않으며이번공개대상아님"
+  },
+  "reviewSummary": {
+    "independentMathCount": 72,
+    "sourceTypes": 8,
+    "variantsPerType": 9,
+    "outputReviewed": true,
+    "sourceDrawingCount": 0,
+    "originalGradesChanged": false,
+    "studentDifficultyMeasured": false,
+    "preReleaseDataSha256": "3ff759fee3d84595a63b278264a7c9a653cbaba451b9c7a61cb0ea61d2d83aa4"
+  }
+}

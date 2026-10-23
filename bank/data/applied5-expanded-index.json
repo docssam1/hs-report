@@ -1,0 +1,112 @@
+{
+  "version": "20261024-applied5-expansion-r1",
+  "sourceSet": "applied",
+  "sourceRound": 5,
+  "itemCount": 72,
+  "pendingSourceNos": [
+    3,
+    5,
+    6,
+    8,
+    9,
+    11,
+    12,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "items": [
+    {
+      "sourceNo": 1,
+      "genId": "applied5-q01",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "세 자리 수의 몫과 나머지 합의 최댓값",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 2,
+      "genId": "applied5-q02",
+      "area": "수와 식",
+      "subarea": "합과 차의 관계",
+      "detailType": "막대의 길이와 물의 깊이",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 4,
+      "genId": "applied5-q04",
+      "area": "수와 식",
+      "subarea": "약수와 곱",
+      "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 7,
+      "genId": "applied5-q07",
+      "area": "수와 식",
+      "subarea": "집합과 겹침",
+      "detailType": "세 집합의 공통 부분 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 10,
+      "genId": "applied5-q10",
+      "area": "수와 식",
+      "subarea": "달력과 주기",
+      "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 13,
+      "genId": "applied5-q13",
+      "area": "수와 식",
+      "subarea": "배수와 자릿수",
+      "detailType": "25의 배수 중 자리 합 조건",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 21,
+      "genId": "applied5-q21",
+      "area": "수와 식",
+      "subarea": "몫과 나머지",
+      "detailType": "모임 수 차이로 전체 인원 찾기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 30,
+      "genId": "applied5-q30",
+      "area": "수와 식",
+      "subarea": "수열과 약수",
+      "detailType": "일정하게 늘리는 줄의 처음 개수 최솟값",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    }
+  ]
+}

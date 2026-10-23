@@ -1,6 +1,6 @@
 (function(root){
  'use strict';
- var initialQuery=new URLSearchParams(location.search),bankCode=initialQuery.get('bank')||'applied1',adapterIds={applied1:'gfield-applied1-expanded',applied2:'gfield-applied2-expanded',applied3:'gfield-applied3-expanded',applied4:'gfield-applied4-expanded'},adapter=root.QUESTION_BANK_ADAPTERS.get(adapterIds[bankCode]),seriesLabel='활용 1회',data,selected=[],identity=null,exportBusy=false;
+ var initialQuery=new URLSearchParams(location.search),bankCode=initialQuery.get('bank')||'applied1',adapterIds={applied1:'gfield-applied1-expanded',applied2:'gfield-applied2-expanded',applied3:'gfield-applied3-expanded',applied4:'gfield-applied4-expanded',applied5:'gfield-applied5-expanded'},adapter=root.QUESTION_BANK_ADAPTERS.get(adapterIds[bankCode]),seriesLabel='활용 1회',data,selected=[],identity=null,exportBusy=false;
  var $=function(id){return document.getElementById(id);};
  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
  function math(v){return root.BANK_CORE.reviewedMathText(v).replace(/<math\b[^>]*>\s*<mfrac>\s*<mn>(\d+)<\/mn>\s*<mn>(\d+)<\/mn>\s*<\/mfrac>\s*<\/math>/g,function(_,a,b){return '<span class="frac" role="math" aria-label="'+b+'분의 '+a+'"><span>'+a+'</span><span>'+b+'</span></span>';});}
