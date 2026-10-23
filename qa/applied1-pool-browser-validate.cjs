@@ -24,12 +24,12 @@ try{
  const columns=await page.locator('.questions-page').first().locator('.question').evaluateAll(nodes=>nodes.map(n=>({column:n.style.gridColumn,row:n.style.gridRow})));assert.deepEqual(columns,[{column:'1',row:'1'},{column:'1',row:'2'},{column:'2',row:'1'},{column:'2',row:'2'}]);
  assert.equal(await page.locator('.q-text').first().evaluate(n=>getComputedStyle(n).fontWeight),'400');
  assert.equal(await page.evaluate(()=>document.fonts.check('14px "GFIELD Print Serif"','문제와 풀이')),true);
- for(const no of [1,15,20,25,27]){await page.locator('.question[data-item-id="applied1-q'+String(no).padStart(2,'0')+'-v1"]').locator('xpath=ancestor::section[contains(@class,"page")]').screenshot({path:path.join(out,'questions-source-'+no+'.png')});}
+ for(const no of [1,5,12,15,20,25,27]){await page.locator('.question[data-item-id="applied1-q'+String(no).padStart(2,'0')+'-v1"]').locator('xpath=ancestor::section[contains(@class,"page")]').screenshot({path:path.join(out,'questions-source-'+no+'.png')});}
  await page.locator('.solution[data-answer-id="applied1-q13-v1"]').locator('xpath=ancestor::section[contains(@class,"page")]').screenshot({path:path.join(out,'solutions-source-13.png')});
  await page.selectOption('#printMode','questions');await page.pdf({path:path.join(out,'applied1-216-questions.pdf'),preferCSSPageSize:true,printBackground:true});
  await page.selectOption('#printMode','answers');await page.pdf({path:path.join(out,'applied1-216-solutions.pdf'),preferCSSPageSize:true,printBackground:true});
  await page.setViewportSize({width:375,height:812});await open('nos=2&count=3');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);await page.screenshot({path:path.join(out,'practice-375.png')});
- const item=preview.items.find(x=>x.id==='applied1-q02-v1'),key='gfield_practice_pool_v1:local-tester:'+item.id;
+ const item=preview.items.find(x=>x.id==='applied1-q02-v1'),key='gfield_practice_pool_v2:local-tester:'+encodeURIComponent(raw.version)+':'+item.id;
  await page.getByLabel('1번 숫자',{exact:true}).fill('0');await page.getByLabel('1번 횟수',{exact:true}).fill('0');await page.click('#grade');assert.match(await page.locator('#diagnosis').textContent(),/다시 공부하기/);
  await page.getByLabel('1번 숫자',{exact:true}).fill(String(item.answerParts[0]));await page.getByLabel('1번 횟수',{exact:true}).fill(String(item.answerParts[1]));await page.click('#grade');
  let history=await page.evaluate(k=>JSON.parse(localStorage.getItem(k)),key);assert.equal(history.length,2);assert.equal(history[0].correct,false);assert.equal(history[1].correct,true);assert.match(await page.locator('[data-diagnosis="'+item.id+'"]').textContent(),/최초 연습 오답/);

@@ -1902,3 +1902,17 @@ Set-Location 'C:\Users\user\OneDrive\그림\Desktop\hs-report'
 - 카탈로그 `qa/bank-learning-profile-validate.cjs`, `qa/bank-learning-profile-browser-validate.cjs` 통과: 활용 배점대 강제, 타 시리즈 기준 정답률, 4영역/세부검색, 활용24개9문제 링크, 기존파이널30개3문제 링크, 원자료 불변. `qa/bank-registry-validate.js`20개, `qa/bank-access-validate.js`, QR 복귀 검수도 통과했다. 예전 `bank-catalog-validate.js`와 옛 브라우저 검수의870/630문항·5단계 UI 기대값은 현행900/3단계와 달라 최신 검사로 대체하며 소급 전체 통과로 보고하지 않는다.
 - Drive 보관: 전체216문항 ZIP `1EhKE8oIRh2ejU5psCdnK25eFGdbB6lhX`(36,986,495bytes, SHA256 `c989f43d66973178ebf3590d64ff5d72c499de981b81a3230ee59e99482203d0`), 검색 가능 문제PDF `1FggyS9Ki6LVoyuDjZ-862EebMRb_VVOJ`, 상세풀이PDF `1iwWtBcQpfVu9_l99xpLWO0u0Mueoz1Ez`. 검수기록 묶음은 `1Q9meVTGIjVhEtYXd-sRkJvQisNV6qntb`. 전체 ZIP은 Drive에서 원시 바이트를 다시 읽어 크기와 SHA256 일치를 확인했다. 별도 원자료·검수 기록은 기존 Drive 결과 폴더에 보관한다. 원문·답안9회 ID는 로컬 `.private-work/hw-expansion-20261023/source-manifest.json`에 기록했으며, 답안 폴더의 파일명은 ‘활용’이 아니라 **초등 선발 모의고사 특강 N회 답안.pdf**다. HWP 변환 없음.
 - 이번 커밋은 위216개와 화면 연결의1차분이다. 활용2~9회 및 기존은행 추가6개는 아직 완료가 아니다. 활용2회 현행문제6쪽·답안8쪽을 확보했고 다음 제작 후보14유형은 비공개 작업 기록에 정리했다. 다음 차수도 원문 대조→독립검산→실제 답 입력→2단·ZIP 검수 순서로 진행한다. 배포 상태·커밋·후속 수량은 다음 체크포인트에서 갱신한다.
+
+## 2026-10-24 01시 활용 1·2회 342개 — 2차 체크포인트
+
+1차 main `fcfcebe8ebbd6a4a1ef3c7ed93c493aa6b78b3df`는 공개 파일 일치와 GitHub Pages 성공을 확인했다. 이 절은 이후 2차 구현·검수 범위다. 원격 커밋과 공개 대조는 후속 배포 영수증을 따른다. 기존 승인 은행 1,260개를 보존하며 새 활용1회216개+활용2회126개=342개다. 활용3~9회 및 기존 은행 추가6개는 미완료다.
+
+- 활용1회 r2는 원문과 같은 수치가 우연히 포함된 5번v7·12번v3만 새 조건으로 바꾸고 나머지214개를 보존했다. 독립 검산·전체 브라우저·실제 ZIP 재검사 통과. 버전 `20261024-applied1-expansion-r2`. 연습 저장 키에 데이터 버전을 포함하여 수정 전 문제의 연습 점수·응시 횟수가 섞이지 않게 했다. 기존 저장 키와 원시험 점수는 삭제·변경하지 않는다.
+- 활용2회 현행 문제6쪽·답안8쪽을 직접 대조했다. 공개 대상은 1·2·6·8·10·11·12·18·23·25·26·27·29·30번 각9개=126개이며 나머지16유형은 잠금이다. 17번은 지문15칸과 실제 그림24칸 불일치로 보류한다. 18번은 현행 문제의 ‘아무것도 없는18명’을 사용하며 답안의 구판8명과 혼용하지 않는다. 23번 반복수 표기는 새 문항에서 실제 자릿수와 일치시켰다. 원시험 답·성적 보존.
+- 활용2회 독립 검산126개, 원본 그림27개 표시, 순위표9개·세로 곱셈9개·숫자카드108개, 긴 정수 문자열·소문자 순위·색 답안, PC1440/폰375, 문제·풀이 잘림0, 실제 전체 ZIP126개 ID 일치를 확인했다. 검색 가능한 문제PDF33쪽·풀이PDF55쪽이다.
+- `mock.html` 원시험 오답 진단→학습 위치·학습 포인트→기본3개/추가9개를 연결했다. 실제 오답 중 검수된 유형만 전달하고 미준비 번호를 명시한다. 합성 온라인+자료실 권한 학생으로 활용1 오답2·7·12·28→2·12만, 활용2 오답1·11·17·29→1·11·29만 연결됨을 확인했다. 원시험 저장 바이트 보존·외부 쓰기0건. `mock-rx.js` 저장/API 호환 동작은 변경하지 않았다.
+- 카탈로그는 활용1 24유형·활용2 14유형의 9문제 링크와 4영역/세부유형을 표시한다. 기존 출처ID·정답률·배점·정답은 보존한다. 활용 난도는 배점2.7하/3.4중/4.2상만 적용한다. `qa/applied-diagnosis-links-browser-validate.cjs`와 최신 학습분류 브라우저 검사가 실제 연결을 확인한다.
+- Apple Vision OCR을 활용1 문제5쪽·28번 답안, 활용2 문제4쪽·답안5쪽에서 실제 실행했다. 보조 기록이며 직접 대조·독립 검산을 대신하지 않는다. 비공개 `apple-vision-audit/` 보관. HWP 변환 없음.
+- Drive 활용1 ZIP(동일 ID 갱신) `1EhKE8oIRh2ejU5psCdnK25eFGdbB6lhX`, 36,989,222bytes, SHA256 `5e7b4834568c65e7cde2a982e9aca2bad2a46cc52c1e6b4a8429a47c1589abd0`. 문제PDF `1FggyS9Ki6LVoyuDjZ-862EebMRb_VVOJ`46쪽·풀이PDF `1iwWtBcQpfVu9_l99xpLWO0u0Mueoz1Ez`72쪽. 이 값이 앞 절의 1차 ZIP 크기·해시를 대체한다.
+- Drive 활용2 ZIP `1ECdFxNi9gl_3W-USqyWCAdQzDrUJq-Z1`, 26,976,160bytes, SHA256 `f0bb676b9ac0b495690a6e3d36ca3abed1966d98287b201ccf5505b2ecf98ced`. 문제PDF `1O_prJ1EMgMZIkDOhp0SWvnbnFMWMxADk`·풀이PDF `1nrTvEOKzII4mCj7Re_HcNknXONzCUYTz`. 두 ZIP 모두 Drive 원시 파일을 다시 내려받아 크기·SHA256 일치를 확인했다.
+- 사용자 지정 02:00 KST까지 작업 후 새 제작·배포·병합을 중단하고 실제 완료 수량을 남긴다. 활용3회 문제7쪽·답안7쪽 확보, 원문 대조 이후 새 제작한다.

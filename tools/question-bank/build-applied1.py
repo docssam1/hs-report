@@ -98,7 +98,7 @@ for h in [1,2,3,4,5,6,8,9,10]:
     add(4,{'hour':h},f'{h}시와 {h+1}시 사이에 시침과 분침이 겹치는 시각은 {h}시 □분과 {h}시 (□＋1)분 사이에 있습니다. □에 들어갈 정수를 구하시오.',str(m),
         [f'{h}시 정각에는 시침이 분침보다 {30*h}° 앞서 있습니다.',f'1분 동안 분침은 6°, 시침은 0.5° 움직이므로 분침이 5.5°씩 따라잡습니다.',f'겹칠 때까지 걸리는 시간은 {30*h}÷5.5＝{frac(60*h,11)}분입니다. {m}분보다 크고 {m+1}분보다 작으므로 □는 {m}입니다.'],[m],focus='두 바늘의 속도 차로 따라잡는 시간을 구하기',model='relative angular velocity')
 
-for b,q in [(b,q) for q in range(24,40) for b in [36,37,38,39] if len([n for n in range(b*q,b*(q+1)) if n%10==6])==4][:9]:
+for b,q in [(36,24),(38,24),(39,24),(37,25),(38,25),(39,25),(36,27),(37,26),(39,26)]:
     nums=[n for n in range(b*q,b*(q+1)) if n%10==6]; assert len(nums)==4
     add(5,{'divisor':b,'quotient':q,'lastDigit':6},'나눗셈을 적은 종이의 일부가 찢어졌습니다. 아래에 보이는 식을 보고 나누어지는 수가 될 수 있는 수를 모두 구하시오.',', '.join(map(str,nums)),
         [f'몫이 {q}이고 나누는 수가 {b}이므로 나누어지는 수는 {b}×{q}＝{b*q} 이상, {b}×{q+1}＝{b*(q+1)} 미만입니다.',f'이 범위에서 일의 자리가 6인 수를 빠짐없이 고르면 '+', '.join(map(str,nums))+'입니다.',f'각 수를 {b}로 나누면 몫은 모두 {q}이고 나머지는 0 이상 {b} 미만입니다.'],nums,contract='unordered-set',given=[f'…6 ÷ {b} ＝ {q} …'],focus='나머지의 범위와 끝자리 조건을 함께 적용하기',model='quotient interval with final digit')
@@ -124,7 +124,7 @@ for total,w in [(17,9),(19,11),(20,12),(21,13),(22,14),(23,15),(24,16),(25,17),(
     add(11,{'draws':total,'end':end,'forward':7,'backward':3,'start':0},f'흰 공과 검은 공이 든 주머니에서 공을 한 개씩 꺼낸 뒤 다시 넣습니다. 말은 0번 칸에서 출발하여 흰 공이면 앞으로 7칸, 검은 공이면 뒤로 3칸 움직입니다. {total}번 꺼낸 뒤 말이 {end}번 칸에 있다면 흰 공과 검은 공은 각각 몇 번 나왔습니까?',f'흰 공 {w}번, 검은 공 {black}번',
         [f'모두 흰 공이었다면 {total}×7＝{total*7}번 칸에 있게 됩니다.',f'흰 공 한 번이 검은 공 한 번으로 바뀔 때마다 위치는 7＋3＝10칸 줄어듭니다.',f'검은 공은 ({total*7}−{end})÷10＝{black}번이고, 흰 공은 {total}−{black}＝{w}번입니다. 7×{w}−3×{black}＝{end}로 확인할 수 있습니다.'],[w,black],focus='모두 한 종류라고 가정한 값과 실제 값의 차 이용하기',model='all forward then replace with backward')
 
-for rate,start in [(4,510),(6,540),(8,570),(10,600),(4,630),(6,660),(8,540),(10,510),(12,570)]:
+for rate,start in [(4,510),(6,540),(8,600),(10,600),(4,630),(6,660),(8,540),(10,510),(12,570)]:
     observed=900; elapsed=observed-start; lag=rate*elapsed//60; assert rate*elapsed%60==0
     display=observed-lag
     add(12,{'rate':rate,'observed':observed,'display':display},f'실제 시간으로 1시간에 {rate}분씩 늦어지는 시계가 있습니다. 어느 날 오전에 이 시계를 정확하게 맞추었는데, 그날 오후 3시에 시계는 {clock(display%720)}을 가리켰습니다. 오전 몇 시 몇 분에 시계를 맞추었습니까?',f'오전 {clock(start)}',
@@ -245,7 +245,7 @@ for j in range(9):
 assert len(items)==216, len(items)
 assert all(sum(x['sourceNo']==no for x in items)==9 for no in TYPES)
 assert len({(x['text'],json.dumps(x.get('promptDataLines')),json.dumps(x.get('cards'))) for x in items})==len(items)
-data={'version':'20261024-applied1-expansion-r1','sourceSet':'applied','sourceRound':1,
+data={'version':'20261024-applied1-expansion-r2','sourceSet':'applied','sourceRound':1,
       'policy':{'targetVariantsPerSource':9,'runtimeGeneration':False,'defaultDiagnosticVariants':3,
                 'difficulty':'활용은 원문 배점대만 사용: 2.7 하 / 3.4 중 / 4.2 상','sourceGradeMutation':False},
       'availableSourceNos':sorted(TYPES),'pendingSourceNos':[7,8,17,19,21,28],

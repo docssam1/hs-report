@@ -62,8 +62,8 @@
     var map={};
     items.forEach(function(item){
       var tax=P.taxonomy(item);
-      var sourceReviewed=item.reviewStatus==='confirmed'&&item.typeFamilyId==='reviewed-source-override';
-      var groupKey=sourceReviewed?item.canonicalTypeId:item.objectiveTypeId;
+      var sourceReviewed=!!item.expandedPool||item.reviewStatus==='confirmed'&&item.typeFamilyId==='reviewed-source-override';
+      var groupKey=item.expandedPool?'expanded:'+item.expandedPool.bank+':'+item.sourceRef.no:sourceReviewed?item.canonicalTypeId:item.objectiveTypeId;
       var group=map[groupKey];
       if(!group){
         group=map[groupKey]={
@@ -74,7 +74,7 @@
           directGenerator:null,directGeneratorRef:null,fixedRefs:{},expandedRefs:{}
         };
       }
-      if(group.detailTypes.indexOf(item.detailType)<0)group.detailTypes.push(item.detailType);
+      if(group.detailTypes.indexOf(tax.detailType)<0)group.detailTypes.push(tax.detailType);
       if(item.detailTypeKey&&group.detailTypeKeys.indexOf(item.detailTypeKey)<0)group.detailTypeKeys.push(item.detailTypeKey);
       if(group.canonicalTypeIds.indexOf(item.canonicalTypeId)<0)group.canonicalTypeIds.push(item.canonicalTypeId);
       group.sourceCounts[item.sourceRef.set]=(group.sourceCounts[item.sourceRef.set]||0)+1;
@@ -153,9 +153,9 @@
       generator=fixedBanks.map(function(bank){
         return '<a class="badge practice" href="index.html?bank='+encodeURIComponent(bank)+'&gens='+encodeURIComponent(unique(group.fixedRefs[bank]).join(','))+'">문항별 유사문제 3개 공부하기</a>';
       }).join(' ');
-    }else if(group.practiceVerified){
+    }else if(!Object.keys(group.expandedRefs||{}).length&&group.practiceVerified){
       generator='<a class="badge practice" href="index.html?gen='+encodeURIComponent(group.generator.legacyId)+'">일반 연습문제 만들기</a>';
-    }else if(group.sourceLinkedReview&&group.generatorRef&&group.generatorRef.set){
+    }else if(!Object.keys(group.expandedRefs||{}).length&&group.sourceLinkedReview&&group.generatorRef&&group.generatorRef.set){
       /* 출처 시리즈(final/last/original)를 반드시 명시: 빠지면 시그니처로 오인되므로 링크를 만들지 않는다. */
       var sourceRef=group.generatorRef;
       var sourceDifficulty=group.bankDifficulty||R.bankDifficulty(null,sourceRef.points);
@@ -329,11 +329,13 @@
       });
     });
     window.__BANK_CATALOG_QA__={summary:unified.summary,groups:groups,unified:unified,difficultyPolicy:P.policy};
-    fetch('data/applied1-expanded-index.json?v=20261024-r1',{cache:'no-cache'}).then(function(response){if(!response.ok)throw Error('활용 확대 문항 색인을 불러오지 못했습니다.');return response.json();}).then(function(index){
-      if(index.sourceSet!=='applied'||index.sourceRound!==1||!Array.isArray(index.items)||index.items.length!==24||index.items.some(function(x){return x.variantCount!==9||x.reviewStatus!=='verified';}))throw Error('활용 확대 문항의 출처·검수 범위를 확인해 주세요.');
-      index.items.forEach(function(entry){var item=unified.items.find(function(x){return x.sourceRef.set==='applied'&&Number(x.sourceRef.round)===1&&Number(x.sourceRef.no)===entry.sourceNo;});if(!item)throw Error('활용 원문과 확대 문항의 연결이 없습니다.');item.expandedPool={bank:'applied1',sourceNo:entry.sourceNo,variantCount:9};item.searchEvidence=(item.searchEvidence||[]).concat([entry.detailType,entry.subarea]);});
-      window.__BANK_CATALOG_QA__.expandedIndexLoaded=true;groups=renderResults(unified,originalCatalog);
-    }).catch(function(error){window.__BANK_CATALOG_QA__.expandedIndexError=error.message;});
+    [1,2].forEach(function(round){
+      fetch('data/applied'+round+'-expanded-index.json?v=20261024-r2',{cache:'no-cache'}).then(function(response){if(!response.ok)throw Error('활용 확대 문항 색인을 불러오지 못했습니다.');return response.json();}).then(function(index){
+        if(index.sourceSet!=='applied'||index.sourceRound!==round||!Array.isArray(index.items)||index.itemCount!==index.items.length*9||index.items.some(function(x){return x.variantCount!==9||x.reviewStatus!=='verified';}))throw Error('활용 확대 문항의 출처·검수 범위를 확인해 주세요.');
+        index.items.forEach(function(entry){var item=unified.items.find(function(x){return x.sourceRef.set==='applied'&&Number(x.sourceRef.round)===round&&Number(x.sourceRef.no)===entry.sourceNo;});if(!item)throw Error('활용 원문과 확대 문항의 연결이 없습니다.');item.expandedPool={bank:'applied'+round,sourceNo:entry.sourceNo,variantCount:9};item.learningArea=entry.area;item.learningSubarea=entry.subarea;item.learningDetailType=entry.detailType;item.searchEvidence=(item.searchEvidence||[]).concat([entry.detailType,entry.subarea]);});
+        window.__BANK_CATALOG_QA__['expandedIndexLoadedRound'+round]=true;if(round===1)window.__BANK_CATALOG_QA__.expandedIndexLoaded=true;groups=renderResults(unified,originalCatalog);
+      }).catch(function(error){window.__BANK_CATALOG_QA__.expandedIndexError=error.message;});
+    });
     Promise.all([1,2,3].map(function(round){
       return fetch('data/final'+round+'-fixed90-index.json?v=1',{cache:'no-cache'}).then(function(response){
         if(!response.ok)throw new Error('파이널 '+round+'회 유사문제 검색 자료를 불러오지 못했습니다.');

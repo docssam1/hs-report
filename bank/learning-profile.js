@@ -18,7 +18,7 @@
    evidenceLabel:applied?points+'점대 기준':basis==='response-rate'?'기준 정답률 '+Math.round(rate*1000)/10+'%':points+'점대'+(local?' · 점수대 안 '+LEVELS[local].label:' · 난도 추정')};
  }
  function taxonomy(item){
-  item=item||{};var original=clean(item.area),sub=clean(item.subarea||item.sourceSubarea),detail=clean(item.detailType||item.displayType||item.type),text=sub+' '+detail,area,basis='source-area';
+  item=item||{};var original=clean(item.area),sub=clean(item.learningSubarea||item.subarea||item.sourceSubarea),detail=clean(item.learningDetailType||item.detailType||item.displayType||item.type),text=sub+' '+detail,area,basis='source-area';
   if(AREAS.indexOf(item.learningArea)>=0){area=item.learningArea;basis='explicit-learning-area';}
   else if(/논리추리|논리 추리|진실과 거짓|참과 거짓|거짓말|참·거짓|선후관계|진술의 참|정답 예상/.test(text)){area='지문 이해';basis='source-reasoning-type';}
   else if(original==='지문 이해')area='지문 이해';else if(original==='도형')area='도형';else if(original==='경우의 수')area='경우의 수';else if(original==='수·규칙찾기'||original==='식의 계산'||original==='수와 식')area='수와 식';else area='미분류';

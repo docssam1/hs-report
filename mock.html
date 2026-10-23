@@ -285,6 +285,7 @@
   .mock-note b{display:block;color:#1F3864;font-size:12.2px;margin-bottom:3px;}
   .mock-note em{display:block;margin-top:5px;font-style:normal;font-weight:800;color:#EA580C;}
 </style>
+<style>.applied-study{margin-top:9px;padding:10px 12px;border-left:3px solid #2f6b4a;background:#fdfbf5;font-size:13px;line-height:1.65}.applied-study b{font-weight:600}.applied-practice-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.applied-practice-action{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid #c9bda2;border-radius:2px;background:#e9f0e7;color:#2f6b4a;font-size:13px;font-weight:500;text-decoration:none}.applied-review-practice h3{font-weight:600}.applied-review-practice p{font-size:13px;line-height:1.65}</style>
 </head>
 <body>
 
@@ -326,6 +327,7 @@
 <script src="middle-access.js?v=20261006-withdrawn"></script>
 <script src="mock-data.js?v=20261018-middle8-q4-answer"></script>
 <script src="mock-data-hw.js?v=20261012-hw1-q25"></script>
+<script src="bank/applied-learning-index.js?v=20261024-r2"></script>
 <script src="mock-data-original.js?v=20260928-signature-answer-keys-1"></script>
 <script src="bank/bank-registry.js"></script>
 <script src="bank/middle8-learning-map.js?v=20261019-approved"></script>
@@ -536,6 +538,20 @@ function middleReviewPracticeHTML(r,wrongItems){
   }
   if(!actions&&!bankAction)return '';
   return '<div class="card middle-review-practice"><h3>복습 유사문제</h3><div class="hint">이번 회차와 연결된 복습 문제를 종이로 다시 풀고, 풀이 강의로 확인하세요.</div><div class="row-inline">'+actions+bankAction+'</div></div>';
+}
+/* Reviewed Applied pools: recommendations follow actual wrong source numbers. */
+function appliedPoolRound(r){ return SET==='hw'&&window.GFIELD_APPLIED_LEARNING_INDEX&&window.GFIELD_APPLIED_LEARNING_INDEX.rounds[String(Number(r))]||null; }
+function appliedPoolUrl(r,numbers,count){ const info=appliedPoolRound(r); if(!info)return ''; const q=new URLSearchParams({bank:info.bank,count:String(count||3)}); if(numbers.length)q.set('nos',numbers.join(','));return 'bank/pool.html?'+q.toString(); }
+function appliedStudyHTML(r,no){
+  const info=appliedPoolRound(r);if(!info)return '';const point=info.items[String(Number(no))];
+  if(!point)return '<div class="applied-study" onclick="event.stopPropagation()">이 유형의 추가 연습은 준비 중입니다. 원문 풀이 영상을 먼저 확인하세요.</div>';
+  return '<div class="applied-study" onclick="event.stopPropagation()"><b>권장 학습 위치</b> '+esc(point.learningLocation)+'<br><b>학습 포인트</b> '+esc(point.learningPoint)+'<div class="applied-practice-actions"><a class="applied-practice-action" href="'+esc(appliedPoolUrl(r,[Number(no)],3))+'">유사문제 3개 · 답안 입력</a><a class="applied-practice-action" href="'+esc(appliedPoolUrl(r,[Number(no)],9))+'">같은 유형 9개</a></div></div>';
+}
+function appliedReviewPracticeHTML(r,wrongItems){
+  const info=appliedPoolRound(r);if(!info)return '';const wrong=Array.from(new Set((wrongItems||[]).map(x=>Number(x.no))));
+  const covered=wrong.filter(no=>info.items[String(no)]),pending=wrong.filter(no=>!info.items[String(no)]),numbers=wrong.length?covered:Object.keys(info.items).map(Number);
+  const actions=numbers.length?'<div class="applied-practice-actions"><a class="applied-practice-action applied-practice-default" href="'+esc(appliedPoolUrl(r,numbers,3))+'">'+(wrong.length?'오답 '+covered.length+'유형':'전체 '+numbers.length+'유형')+' · 유사문제 '+numbers.length*3+'개</a><a class="applied-practice-action applied-practice-expanded" href="'+esc(appliedPoolUrl(r,numbers,9))+'">유형별 9개 더 연습 · '+numbers.length*9+'개</a></div>':'';
+  return '<section class="card applied-review-practice"><h3>활용 '+Number(r)+'회 · 연결된 유사문제</h3><p>문제·상세 풀이·답안 입력·학습 포인트를 함께 엽니다. 원시험 점수는 바뀌지 않습니다.</p>'+actions+(pending.length?'<p class="hint">추가 연습 준비 중인 오답: '+pending.join(', ')+'번</p>':'')+'</section>';
 }
 function parentCanOpenRound(r){ return mode!=='parent'||parentRoundKeys().indexOf(String(Number(r)))>=0; }
 function roundItems(r){ return (M.rounds[r]&&M.rounds[r].items)||[]; }
@@ -954,12 +970,14 @@ function renderReport(student,r,prevOx,sent){
         <div class="wt-c">${esc(typeComment(it))}</div>
         ${miniRxHTML(w.type,!w.reviewRequired)}
         ${middle8StudyHTML(r,w.no)}
+        ${appliedStudyHTML(r,w.no)}
       </div>`;
     });
   }
   h+='</div>';
 
   h+=middleReviewPracticeHTML(r,wl);
+  h+=appliedReviewPracticeHTML(r,wl);
 
   /* ── 처방 교재 ── */
   const rxHtml=prescriptionHTML(wl,5);

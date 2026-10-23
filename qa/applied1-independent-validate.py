@@ -191,7 +191,10 @@ def solve(no,p):
 
 rows=[]
 for item in data['items']:
-    answer=solve(item['sourceNo'],item['verification']['parameters'])
+    p=item['verification']['parameters'];no=item['sourceNo']
+    assert not (no==5 and p['divisor']==36 and p['quotient']==26),'original source question is not a new variant'
+    assert not (no==12 and p['rate']==8 and p['observed']==900 and p['display']==856),'original source question is not a new variant'
+    answer=solve(no,p)
     assert answer==item['answerParts'],(item['id'],answer,item['answerParts'])
     assert item['pointBand']==('2.7' if item['sourceNo']<=12 else '3.4' if item['sourceNo']<=22 else '4.2')
     assert len(item['solutionSteps'])>=3 and item['learningLocation'] and item['learningPoint']
