@@ -195,6 +195,24 @@ def cross_rectangles():
     return found
 
 
+@functools.lru_cache(None)
+def dice_sequences(rolls):
+    rows=[]
+    for sequence in itertools.product([3,4,5],repeat=rolls):
+        product=1
+        for value in sequence:product*=value
+        rows.append((sequence.count(3),sequence.count(4),sequence.count(5),product))
+    return rows
+
+
+def repeated_twos_digits(count,multiplier):
+    carry=0;digits=[]
+    for _ in range(count):
+        value=2*multiplier+carry;digits.append(value%10);carry=value//10
+    while carry:digits.append(carry%10);carry//=10
+    return digits
+
+
 def answer(item):
     no, level, p = item['sourceNo'], item['practiceLevel'], item['verification']['parameters']
     if no == 1:
@@ -497,6 +515,42 @@ def answer(item):
         found=sum(all(test(r-l,b-t)for test in tests)for l,r,t,b in rectangles)
         assert all(sum(all(test(r-l,b-t)for i,test in enumerate(tests)if i!=omitted)for l,r,t,b in rectangles)>found for omitted in range(3))
         return [found]
+    if no == 22:
+        if level=='low':
+            found={four for three,four,five,_ in dice_sequences(p['rolls'])if three==p['threes']and five==p['fives']}
+            assert len(found)==1
+            return [found.pop()]
+        if level=='middle':
+            found={four for _,four,_,product in dice_sequences(p['rolls'])if product==p['product']}
+            assert len(found)==1
+            return [found.pop()]
+        rows=set(dice_sequences(p['rollsEach']))
+        without_difference={(a[3],b[3],a[1],b[1])for a in rows for b in rows if a[3]>b[3]and a[3]*b[3]==p['product']}
+        found=[row for row in without_difference if row[0]-row[1]==p['productDifference']]
+        assert len(without_difference)>=3 and len(found)==1
+        return list(found[0][2:])
+    if no == 23:
+        digits=repeated_twos_digits(p['twos'],p['multiplier'])
+        if level=='low':assert len(set(digits))==1 and len(digits)==p['twos']
+        if level=='middle':assert len(digits)==p['twos']+1 and digits[-1]==1
+        return [sum(digits)]
+    if no == 24:
+        if level=='low':
+            times=[t for t in range(1,1000)if p['speed']*t-p['length']==p['tunnel']]
+            assert len(times)==1
+            return times
+        if level=='middle':
+            front_exit_position=p['speed']*p['frontExit']
+            lengths=[length for length in range(1,p['speed']*p['tailExit'])
+                     if p['speed']*p['tailExit']-length==front_exit_position]
+            assert len(lengths)==1
+            return lengths
+        tunnels=[length for length in range(1,p['firstSpeed']*p['firstTime'])
+                 if p['firstSpeed']*p['firstTime']-p['firstLength']==length]
+        assert len(tunnels)==1
+        times=[t for t in range(1,1000)if p['secondSpeed']*t-p['secondLength']==tunnels[0]]
+        assert len(times)==1
+        return times
     outcomes = set()
     states = set()
     for year in range(1900, 2400):
@@ -561,6 +615,9 @@ for number,labels in enumerate(option_patterns,1):
 assert possible_options==[2,4,5]
 assert (680-14)*5//6==555 and 124+451-555==20
 assert len(cross_rectangles())==540
+assert {four for _,four,_,product in dice_sequences(8)if product==34560}=={4}
+assert sum(repeated_twos_digits(2021,398))==8102
+assert 43*23-108==881 and [t for t in range(1,100)if 32*t-111==881]==[31]
 
 evidence = []
 for item in data['items']:
@@ -581,9 +638,9 @@ for item in data['items']:
         assert item['difficultyEvidence']['measuredVariantRate'] is None
         assert item['practiceRole'] in ['기초 보완','단계형 확장']
     if item.get('asset'):
-        if item['sourceNo']in [7,17,19,21]:
+        if item['sourceNo']in [7,17,19,21,22]:
             from pypdf import PdfReader
-            page_index,image_stem={7:(1,'Im71'),17:(2,'Im80'),19:(3,'Im196'),21:(3,'Im192')}[item['sourceNo']]
+            page_index,image_stem={7:(1,'Im71'),17:(2,'Im80'),19:(3,'Im196'),21:(3,'Im192'),22:(3,'Im198')}[item['sourceNo']]
             image = next(x.image for x in PdfReader(ROOT/'materials/초등과정 대비 실전 모의고사 활용 1회.pdf').pages[page_index].images if Path(x.name).stem==image_stem)
             if item['sourceNo']==19:image=image.crop((748,20,965,300))
             from PIL import Image
@@ -595,9 +652,9 @@ for item in data['items']:
     evidence.append({'id': item['id'], 'passed': True, 'answer': actual})
 for no in data['availableSourceNos']:
     assert collections.Counter(x['practiceLevel'] for x in data['items'] if x['sourceNo'] == no) == dict(low=5, middle=5, high=5)
-assert len(data['items']) == 315 and len({x['id'] for x in data['items']}) == 315
-assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 315
-previous = json.loads(subprocess.check_output(['git', 'show', 'd596999:bank/data/applied1-balanced15.json'], cwd=ROOT))
+assert len(data['items']) == 360 and len({x['id'] for x in data['items']}) == 360
+assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 360
+previous = json.loads(subprocess.check_output(['git', 'show', '59d40a8:bank/data/applied1-balanced15.json'], cwd=ROOT))
 for old in previous['items']:
     current = next(x for x in data['items'] if x['id'] == old['id'])
     assert all(current[k] == v for k, v in old.items())
@@ -605,7 +662,7 @@ for old in previous['items']:
 out = ROOT / '.private-work/balanced15-20261024/independent-math.json'
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps({'dataSha256': hashlib.sha256(FILE.read_bytes()).hexdigest(),
-                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,22)),
-                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions', 'accumulated hand motion and all first/second study times', 'full17-stick endpoint graph intersections', 'one/two expression sign-sum dynamic programming', 'BFS folded net plus24proper signed-permutation rotations and source line-direction checks', 'integer partition states and exclusive-group relations', 'all original cross-grid unit boundary edge rectangles'],
+                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,25)),
+                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions', 'accumulated hand motion and all first/second study times', 'full17-stick endpoint graph intersections', 'one/two expression sign-sum dynamic programming', 'BFS folded net plus24proper signed-permutation rotations and source line-direction checks', 'integer partition states and exclusive-group relations', 'all original cross-grid unit boundary edge rectangles', 'actual die-value sequences and ordered person product pairs', 'decimal column multiplication with explicit carry states', 'front/rear train position enumeration'],
                            'items': evidence}, ensure_ascii=False, indent=2) + '\n')
-print('PASS315 answers in21complete5/5/5 groups; source19BFS/proper rotations/line directions, source20integer partitions, source21unit boundary edges; prior270unchanged')
+print('PASS360 answers in24complete5/5/5 groups; die sequences, decimal carry states, moving front/rear positions;3.4/4.2source bands preserved;prior315unchanged')

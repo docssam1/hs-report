@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied1-balanced15-r7",
+  "version": "20261024-applied1-balanced15-r8",
   "sourceSet": "applied",
   "sourceRound": 1,
   "policy": {
@@ -35,12 +35,12 @@
     18,
     19,
     20,
-    21
-  ],
-  "pendingSourceNos": [
+    21,
     22,
     23,
-    24,
+    24
+  ],
+  "pendingSourceNos": [
     25,
     26,
     27,
@@ -23064,17 +23064,3117 @@
         "src": "assets/applied1/cross-grid-original.png",
         "description": "원본 십자 격자. 세로 띠5열7행, 가로 띠10열2행; 모든 원본 외곽선과 내부선을 보존."
       }
+    },
+    {
+      "id": "applied1-q22-v1",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "주사위 눈의 곱으로 특정 눈의 횟수 찾기",
+      "pointBand": "3.4",
+      "text": "한 정육면체 주사위의 여섯 면에는 3, 3, 4, 4, 5, 5가 하나씩 적혀 있습니다. 두 사람이 이 주사위를 각각 4번씩 던졌더니, 나온 여덟 수의 곱이 96000였습니다. 4가 나온 것은 모두 몇 번입니까?",
+      "answer": "4번",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        4
+      ],
+      "acceptedAnswers": [
+        "4번"
+      ],
+      "solutionSteps": [
+        "96000를 2, 3, 5로 나누어 소인수를 세면 2가 8개, 3이 1개, 5가 3개입니다.",
+        "3이나 5에서는 2가 나오지 않고, 4 하나는 2×2입니다. 따라서 4가 나온 횟수는 8÷2＝4번입니다.",
+        "3은 1번, 5는 3번이므로 전체 횟수도 1＋4＋3＝8번으로 조건과 같습니다."
+      ],
+      "solution": "96000를 2, 3, 5로 나누어 소인수를 세면 2가 8개, 3이 1개, 5가 3개입니다. 3이나 5에서는 2가 나오지 않고, 4 하나는 2×2입니다. 따라서 4가 나온 횟수는 8÷2＝4번입니다. 3은 1번, 5는 3번이므로 전체 횟수도 1＋4＋3＝8번으로 조건과 같습니다.",
+      "learningPoint": "눈의 곱에 들어 있는 소인수와 전체 시행 횟수 확인하기",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "verification": {
+        "primaryMethod": "factor exponents of 2",
+        "parameters": {
+          "rolls": 8,
+          "product": 96000
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      },
+      "practiceLevel": "middle",
+      "sourcePointBand": "3.4",
+      "preservedApprovedId": "applied1-q22-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q22-v2",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "주사위 눈의 곱으로 특정 눈의 횟수 찾기",
+      "pointBand": "3.4",
+      "text": "한 정육면체 주사위의 여섯 면에는 3, 3, 4, 4, 5, 5가 하나씩 적혀 있습니다. 두 사람이 이 주사위를 각각 4번씩 던졌더니, 나온 여덟 수의 곱이 72000였습니다. 4가 나온 것은 모두 몇 번입니까?",
+      "answer": "3번",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        3
+      ],
+      "acceptedAnswers": [
+        "3번"
+      ],
+      "solutionSteps": [
+        "72000를 2, 3, 5로 나누어 소인수를 세면 2가 6개, 3이 2개, 5가 3개입니다.",
+        "3이나 5에서는 2가 나오지 않고, 4 하나는 2×2입니다. 따라서 4가 나온 횟수는 6÷2＝3번입니다.",
+        "3은 2번, 5는 3번이므로 전체 횟수도 2＋3＋3＝8번으로 조건과 같습니다."
+      ],
+      "solution": "72000를 2, 3, 5로 나누어 소인수를 세면 2가 6개, 3이 2개, 5가 3개입니다. 3이나 5에서는 2가 나오지 않고, 4 하나는 2×2입니다. 따라서 4가 나온 횟수는 6÷2＝3번입니다. 3은 2번, 5는 3번이므로 전체 횟수도 2＋3＋3＝8번으로 조건과 같습니다.",
+      "learningPoint": "눈의 곱에 들어 있는 소인수와 전체 시행 횟수 확인하기",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "verification": {
+        "primaryMethod": "factor exponents of 2",
+        "parameters": {
+          "rolls": 8,
+          "product": 72000
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      },
+      "practiceLevel": "middle",
+      "sourcePointBand": "3.4",
+      "preservedApprovedId": "applied1-q22-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q22-v3",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "주사위 눈의 곱으로 특정 눈의 횟수 찾기",
+      "pointBand": "3.4",
+      "text": "한 정육면체 주사위의 여섯 면에는 3, 3, 4, 4, 5, 5가 하나씩 적혀 있습니다. 두 사람이 이 주사위를 각각 4번씩 던졌더니, 나온 여덟 수의 곱이 57600였습니다. 4가 나온 것은 모두 몇 번입니까?",
+      "answer": "4번",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        4
+      ],
+      "acceptedAnswers": [
+        "4번"
+      ],
+      "solutionSteps": [
+        "57600를 2, 3, 5로 나누어 소인수를 세면 2가 8개, 3이 2개, 5가 2개입니다.",
+        "3이나 5에서는 2가 나오지 않고, 4 하나는 2×2입니다. 따라서 4가 나온 횟수는 8÷2＝4번입니다.",
+        "3은 2번, 5는 2번이므로 전체 횟수도 2＋4＋2＝8번으로 조건과 같습니다."
+      ],
+      "solution": "57600를 2, 3, 5로 나누어 소인수를 세면 2가 8개, 3이 2개, 5가 2개입니다. 3이나 5에서는 2가 나오지 않고, 4 하나는 2×2입니다. 따라서 4가 나온 횟수는 8÷2＝4번입니다. 3은 2번, 5는 2번이므로 전체 횟수도 2＋4＋2＝8번으로 조건과 같습니다.",
+      "learningPoint": "눈의 곱에 들어 있는 소인수와 전체 시행 횟수 확인하기",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "verification": {
+        "primaryMethod": "factor exponents of 2",
+        "parameters": {
+          "rolls": 8,
+          "product": 57600
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      },
+      "practiceLevel": "middle",
+      "sourcePointBand": "3.4",
+      "preservedApprovedId": "applied1-q22-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q22-v4",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "주사위 눈의 곱으로 특정 눈의 횟수 찾기",
+      "pointBand": "3.4",
+      "text": "한 정육면체 주사위의 여섯 면에는 3, 3, 4, 4, 5, 5가 하나씩 적혀 있습니다. 두 사람이 이 주사위를 각각 4번씩 던졌더니, 나온 여덟 수의 곱이 46080였습니다. 4가 나온 것은 모두 몇 번입니까?",
+      "answer": "5번",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        5
+      ],
+      "acceptedAnswers": [
+        "5번"
+      ],
+      "solutionSteps": [
+        "46080를 2, 3, 5로 나누어 소인수를 세면 2가 10개, 3이 2개, 5가 1개입니다.",
+        "3이나 5에서는 2가 나오지 않고, 4 하나는 2×2입니다. 따라서 4가 나온 횟수는 10÷2＝5번입니다.",
+        "3은 2번, 5는 1번이므로 전체 횟수도 2＋5＋1＝8번으로 조건과 같습니다."
+      ],
+      "solution": "46080를 2, 3, 5로 나누어 소인수를 세면 2가 10개, 3이 2개, 5가 1개입니다. 3이나 5에서는 2가 나오지 않고, 4 하나는 2×2입니다. 따라서 4가 나온 횟수는 10÷2＝5번입니다. 3은 2번, 5는 1번이므로 전체 횟수도 2＋5＋1＝8번으로 조건과 같습니다.",
+      "learningPoint": "눈의 곱에 들어 있는 소인수와 전체 시행 횟수 확인하기",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "verification": {
+        "primaryMethod": "factor exponents of 2",
+        "parameters": {
+          "rolls": 8,
+          "product": 46080
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      },
+      "practiceLevel": "middle",
+      "sourcePointBand": "3.4",
+      "preservedApprovedId": "applied1-q22-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q22-v5",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "주사위 눈의 곱으로 특정 눈의 횟수 찾기",
+      "pointBand": "3.4",
+      "text": "한 정육면체 주사위의 여섯 면에는 3, 3, 4, 4, 5, 5가 하나씩 적혀 있습니다. 두 사람이 이 주사위를 각각 4번씩 던졌더니, 나온 여덟 수의 곱이 54000였습니다. 4가 나온 것은 모두 몇 번입니까?",
+      "answer": "2번",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        2
+      ],
+      "acceptedAnswers": [
+        "2번"
+      ],
+      "solutionSteps": [
+        "54000를 2, 3, 5로 나누어 소인수를 세면 2가 4개, 3이 3개, 5가 3개입니다.",
+        "3이나 5에서는 2가 나오지 않고, 4 하나는 2×2입니다. 따라서 4가 나온 횟수는 4÷2＝2번입니다.",
+        "3은 3번, 5는 3번이므로 전체 횟수도 3＋2＋3＝8번으로 조건과 같습니다."
+      ],
+      "solution": "54000를 2, 3, 5로 나누어 소인수를 세면 2가 4개, 3이 3개, 5가 3개입니다. 3이나 5에서는 2가 나오지 않고, 4 하나는 2×2입니다. 따라서 4가 나온 횟수는 4÷2＝2번입니다. 3은 3번, 5는 3번이므로 전체 횟수도 3＋2＋3＝8번으로 조건과 같습니다.",
+      "learningPoint": "눈의 곱에 들어 있는 소인수와 전체 시행 횟수 확인하기",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "verification": {
+        "primaryMethod": "factor exponents of 2",
+        "parameters": {
+          "rolls": 8,
+          "product": 54000
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      },
+      "practiceLevel": "middle",
+      "sourcePointBand": "3.4",
+      "preservedApprovedId": "applied1-q22-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q23-v1",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "반복 숫자의 곱의 자릿수 합",
+      "pointBand": "4.2",
+      "text": "2가 1001개 이어진 수 222…222에 398을 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "4022",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        4022
+      ],
+      "acceptedAnswers": [
+        "4022"
+      ],
+      "solutionSteps": [
+        "398＝400−2이므로 주어진 수에 400을 곱한 값에서 2를 곱한 값을 빼어 자리의 규칙을 찾습니다.",
+        "계산 결과는 앞에 88, 가운데에 4가 998개, 끝에 356이 이어진 수입니다. 예를 들어 22222×398＝8844356에서도 같은 앞뒤 모양을 확인할 수 있습니다.",
+        "따라서 모든 자리 숫자의 합은 8＋8＋4×998＋3＋5＋6＝4022입니다."
+      ],
+      "solution": "398＝400−2이므로 주어진 수에 400을 곱한 값에서 2를 곱한 값을 빼어 자리의 규칙을 찾습니다. 계산 결과는 앞에 88, 가운데에 4가 998개, 끝에 356이 이어진 수입니다. 예를 들어 22222×398＝8844356에서도 같은 앞뒤 모양을 확인할 수 있습니다. 따라서 모든 자리 숫자의 합은 8＋8＋4×998＋3＋5＋6＝4022입니다.",
+      "learningPoint": "반복되는 가운데 자리와 양 끝의 받아내림을 분리하기",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "verification": {
+        "primaryMethod": "integer multiplication and digit tally",
+        "parameters": {
+          "twos": 1001,
+          "multiplier": 398
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q23-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q23-v2",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "반복 숫자의 곱의 자릿수 합",
+      "pointBand": "4.2",
+      "text": "2가 1201개 이어진 수 222…222에 398을 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "4822",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        4822
+      ],
+      "acceptedAnswers": [
+        "4822"
+      ],
+      "solutionSteps": [
+        "398＝400−2이므로 주어진 수에 400을 곱한 값에서 2를 곱한 값을 빼어 자리의 규칙을 찾습니다.",
+        "계산 결과는 앞에 88, 가운데에 4가 1198개, 끝에 356이 이어진 수입니다. 예를 들어 22222×398＝8844356에서도 같은 앞뒤 모양을 확인할 수 있습니다.",
+        "따라서 모든 자리 숫자의 합은 8＋8＋4×1198＋3＋5＋6＝4822입니다."
+      ],
+      "solution": "398＝400−2이므로 주어진 수에 400을 곱한 값에서 2를 곱한 값을 빼어 자리의 규칙을 찾습니다. 계산 결과는 앞에 88, 가운데에 4가 1198개, 끝에 356이 이어진 수입니다. 예를 들어 22222×398＝8844356에서도 같은 앞뒤 모양을 확인할 수 있습니다. 따라서 모든 자리 숫자의 합은 8＋8＋4×1198＋3＋5＋6＝4822입니다.",
+      "learningPoint": "반복되는 가운데 자리와 양 끝의 받아내림을 분리하기",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "verification": {
+        "primaryMethod": "integer multiplication and digit tally",
+        "parameters": {
+          "twos": 1201,
+          "multiplier": 398
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q23-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q23-v3",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "반복 숫자의 곱의 자릿수 합",
+      "pointBand": "4.2",
+      "text": "2가 1401개 이어진 수 222…222에 398을 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "5622",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        5622
+      ],
+      "acceptedAnswers": [
+        "5622"
+      ],
+      "solutionSteps": [
+        "398＝400−2이므로 주어진 수에 400을 곱한 값에서 2를 곱한 값을 빼어 자리의 규칙을 찾습니다.",
+        "계산 결과는 앞에 88, 가운데에 4가 1398개, 끝에 356이 이어진 수입니다. 예를 들어 22222×398＝8844356에서도 같은 앞뒤 모양을 확인할 수 있습니다.",
+        "따라서 모든 자리 숫자의 합은 8＋8＋4×1398＋3＋5＋6＝5622입니다."
+      ],
+      "solution": "398＝400−2이므로 주어진 수에 400을 곱한 값에서 2를 곱한 값을 빼어 자리의 규칙을 찾습니다. 계산 결과는 앞에 88, 가운데에 4가 1398개, 끝에 356이 이어진 수입니다. 예를 들어 22222×398＝8844356에서도 같은 앞뒤 모양을 확인할 수 있습니다. 따라서 모든 자리 숫자의 합은 8＋8＋4×1398＋3＋5＋6＝5622입니다.",
+      "learningPoint": "반복되는 가운데 자리와 양 끝의 받아내림을 분리하기",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "verification": {
+        "primaryMethod": "integer multiplication and digit tally",
+        "parameters": {
+          "twos": 1401,
+          "multiplier": 398
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q23-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q23-v4",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "반복 숫자의 곱의 자릿수 합",
+      "pointBand": "4.2",
+      "text": "2가 1601개 이어진 수 222…222에 398을 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "6422",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        6422
+      ],
+      "acceptedAnswers": [
+        "6422"
+      ],
+      "solutionSteps": [
+        "398＝400−2이므로 주어진 수에 400을 곱한 값에서 2를 곱한 값을 빼어 자리의 규칙을 찾습니다.",
+        "계산 결과는 앞에 88, 가운데에 4가 1598개, 끝에 356이 이어진 수입니다. 예를 들어 22222×398＝8844356에서도 같은 앞뒤 모양을 확인할 수 있습니다.",
+        "따라서 모든 자리 숫자의 합은 8＋8＋4×1598＋3＋5＋6＝6422입니다."
+      ],
+      "solution": "398＝400−2이므로 주어진 수에 400을 곱한 값에서 2를 곱한 값을 빼어 자리의 규칙을 찾습니다. 계산 결과는 앞에 88, 가운데에 4가 1598개, 끝에 356이 이어진 수입니다. 예를 들어 22222×398＝8844356에서도 같은 앞뒤 모양을 확인할 수 있습니다. 따라서 모든 자리 숫자의 합은 8＋8＋4×1598＋3＋5＋6＝6422입니다.",
+      "learningPoint": "반복되는 가운데 자리와 양 끝의 받아내림을 분리하기",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "verification": {
+        "primaryMethod": "integer multiplication and digit tally",
+        "parameters": {
+          "twos": 1601,
+          "multiplier": 398
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q23-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q23-v5",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "반복 숫자의 곱의 자릿수 합",
+      "pointBand": "4.2",
+      "text": "2가 1801개 이어진 수 222…222에 398을 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "7222",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        7222
+      ],
+      "acceptedAnswers": [
+        "7222"
+      ],
+      "solutionSteps": [
+        "398＝400−2이므로 주어진 수에 400을 곱한 값에서 2를 곱한 값을 빼어 자리의 규칙을 찾습니다.",
+        "계산 결과는 앞에 88, 가운데에 4가 1798개, 끝에 356이 이어진 수입니다. 예를 들어 22222×398＝8844356에서도 같은 앞뒤 모양을 확인할 수 있습니다.",
+        "따라서 모든 자리 숫자의 합은 8＋8＋4×1798＋3＋5＋6＝7222입니다."
+      ],
+      "solution": "398＝400−2이므로 주어진 수에 400을 곱한 값에서 2를 곱한 값을 빼어 자리의 규칙을 찾습니다. 계산 결과는 앞에 88, 가운데에 4가 1798개, 끝에 356이 이어진 수입니다. 예를 들어 22222×398＝8844356에서도 같은 앞뒤 모양을 확인할 수 있습니다. 따라서 모든 자리 숫자의 합은 8＋8＋4×1798＋3＋5＋6＝7222입니다.",
+      "learningPoint": "반복되는 가운데 자리와 양 끝의 받아내림을 분리하기",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "verification": {
+        "primaryMethod": "integer multiplication and digit tally",
+        "parameters": {
+          "twos": 1801,
+          "multiplier": 398
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q23-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q24-v1",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "두 열차가 같은 터널을 통과하는 시간",
+      "pointBand": "4.2",
+      "text": "길이 104m인 열차가 초속 39m로 터널에 진입하여 완전히 빠져나올 때까지 23초가 걸렸습니다. 길이 106m인 다른 열차가 초속 29m로 같은 터널에 진입하여 완전히 빠져나올 때까지는 몇 초가 걸립니까?",
+      "answer": "31초",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        31
+      ],
+      "acceptedAnswers": [
+        "31초"
+      ],
+      "solutionSteps": [
+        "첫 열차의 맨 앞이 입구에 닿을 때부터 맨 뒤가 출구를 벗어날 때까지 이동한 거리는 터널 길이에 열차 길이를 더한 값입니다.",
+        "첫 열차의 이동 거리는 39×23＝897m이므로 터널 길이는 897−104＝793m입니다.",
+        "둘째 열차는 793＋106＝899m를 이동해야 합니다. 걸리는 시간은 899÷29＝31초입니다."
+      ],
+      "solution": "첫 열차의 맨 앞이 입구에 닿을 때부터 맨 뒤가 출구를 벗어날 때까지 이동한 거리는 터널 길이에 열차 길이를 더한 값입니다. 첫 열차의 이동 거리는 39×23＝897m이므로 터널 길이는 897−104＝793m입니다. 둘째 열차는 793＋106＝899m를 이동해야 합니다. 걸리는 시간은 899÷29＝31초입니다.",
+      "learningPoint": "완전히 통과할 때는 터널 길이와 열차 길이를 더하기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "verification": {
+        "primaryMethod": "first travelled distance minus length",
+        "parameters": {
+          "firstLength": 104,
+          "firstSpeed": 39,
+          "firstTime": 23,
+          "secondLength": 106,
+          "secondSpeed": 29
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q24-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q24-v2",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "두 열차가 같은 터널을 통과하는 시간",
+      "pointBand": "4.2",
+      "text": "길이 107m인 열차가 초속 40m로 터널에 진입하여 완전히 빠져나올 때까지 23초가 걸렸습니다. 길이 117m인 다른 열차가 초속 31m로 같은 터널에 진입하여 완전히 빠져나올 때까지는 몇 초가 걸립니까?",
+      "answer": "30초",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        30
+      ],
+      "acceptedAnswers": [
+        "30초"
+      ],
+      "solutionSteps": [
+        "첫 열차의 맨 앞이 입구에 닿을 때부터 맨 뒤가 출구를 벗어날 때까지 이동한 거리는 터널 길이에 열차 길이를 더한 값입니다.",
+        "첫 열차의 이동 거리는 40×23＝920m이므로 터널 길이는 920−107＝813m입니다.",
+        "둘째 열차는 813＋117＝930m를 이동해야 합니다. 걸리는 시간은 930÷31＝30초입니다."
+      ],
+      "solution": "첫 열차의 맨 앞이 입구에 닿을 때부터 맨 뒤가 출구를 벗어날 때까지 이동한 거리는 터널 길이에 열차 길이를 더한 값입니다. 첫 열차의 이동 거리는 40×23＝920m이므로 터널 길이는 920−107＝813m입니다. 둘째 열차는 813＋117＝930m를 이동해야 합니다. 걸리는 시간은 930÷31＝30초입니다.",
+      "learningPoint": "완전히 통과할 때는 터널 길이와 열차 길이를 더하기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "verification": {
+        "primaryMethod": "first travelled distance minus length",
+        "parameters": {
+          "firstLength": 107,
+          "firstSpeed": 40,
+          "firstTime": 23,
+          "secondLength": 117,
+          "secondSpeed": 31
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q24-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q24-v3",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "두 열차가 같은 터널을 통과하는 시간",
+      "pointBand": "4.2",
+      "text": "길이 110m인 열차가 초속 41m로 터널에 진입하여 완전히 빠져나올 때까지 23초가 걸렸습니다. 길이 95m인 다른 열차가 초속 32m로 같은 터널에 진입하여 완전히 빠져나올 때까지는 몇 초가 걸립니까?",
+      "answer": "29초",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        29
+      ],
+      "acceptedAnswers": [
+        "29초"
+      ],
+      "solutionSteps": [
+        "첫 열차의 맨 앞이 입구에 닿을 때부터 맨 뒤가 출구를 벗어날 때까지 이동한 거리는 터널 길이에 열차 길이를 더한 값입니다.",
+        "첫 열차의 이동 거리는 41×23＝943m이므로 터널 길이는 943−110＝833m입니다.",
+        "둘째 열차는 833＋95＝928m를 이동해야 합니다. 걸리는 시간은 928÷32＝29초입니다."
+      ],
+      "solution": "첫 열차의 맨 앞이 입구에 닿을 때부터 맨 뒤가 출구를 벗어날 때까지 이동한 거리는 터널 길이에 열차 길이를 더한 값입니다. 첫 열차의 이동 거리는 41×23＝943m이므로 터널 길이는 943−110＝833m입니다. 둘째 열차는 833＋95＝928m를 이동해야 합니다. 걸리는 시간은 928÷32＝29초입니다.",
+      "learningPoint": "완전히 통과할 때는 터널 길이와 열차 길이를 더하기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "verification": {
+        "primaryMethod": "first travelled distance minus length",
+        "parameters": {
+          "firstLength": 110,
+          "firstSpeed": 41,
+          "firstTime": 23,
+          "secondLength": 95,
+          "secondSpeed": 32
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q24-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q24-v4",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "두 열차가 같은 터널을 통과하는 시간",
+      "pointBand": "4.2",
+      "text": "길이 113m인 열차가 초속 42m로 터널에 진입하여 완전히 빠져나올 때까지 23초가 걸렸습니다. 길이 137m인 다른 열차가 초속 33m로 같은 터널에 진입하여 완전히 빠져나올 때까지는 몇 초가 걸립니까?",
+      "answer": "30초",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        30
+      ],
+      "acceptedAnswers": [
+        "30초"
+      ],
+      "solutionSteps": [
+        "첫 열차의 맨 앞이 입구에 닿을 때부터 맨 뒤가 출구를 벗어날 때까지 이동한 거리는 터널 길이에 열차 길이를 더한 값입니다.",
+        "첫 열차의 이동 거리는 42×23＝966m이므로 터널 길이는 966−113＝853m입니다.",
+        "둘째 열차는 853＋137＝990m를 이동해야 합니다. 걸리는 시간은 990÷33＝30초입니다."
+      ],
+      "solution": "첫 열차의 맨 앞이 입구에 닿을 때부터 맨 뒤가 출구를 벗어날 때까지 이동한 거리는 터널 길이에 열차 길이를 더한 값입니다. 첫 열차의 이동 거리는 42×23＝966m이므로 터널 길이는 966−113＝853m입니다. 둘째 열차는 853＋137＝990m를 이동해야 합니다. 걸리는 시간은 990÷33＝30초입니다.",
+      "learningPoint": "완전히 통과할 때는 터널 길이와 열차 길이를 더하기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "verification": {
+        "primaryMethod": "first travelled distance minus length",
+        "parameters": {
+          "firstLength": 113,
+          "firstSpeed": 42,
+          "firstTime": 23,
+          "secondLength": 137,
+          "secondSpeed": 33
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q24-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q24-v5",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "두 열차가 같은 터널을 통과하는 시간",
+      "pointBand": "4.2",
+      "text": "길이 116m인 열차가 초속 43m로 터널에 진입하여 완전히 빠져나올 때까지 23초가 걸렸습니다. 길이 113m인 다른 열차가 초속 29m로 같은 터널에 진입하여 완전히 빠져나올 때까지는 몇 초가 걸립니까?",
+      "answer": "34초",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        34
+      ],
+      "acceptedAnswers": [
+        "34초"
+      ],
+      "solutionSteps": [
+        "첫 열차의 맨 앞이 입구에 닿을 때부터 맨 뒤가 출구를 벗어날 때까지 이동한 거리는 터널 길이에 열차 길이를 더한 값입니다.",
+        "첫 열차의 이동 거리는 43×23＝989m이므로 터널 길이는 989−116＝873m입니다.",
+        "둘째 열차는 873＋113＝986m를 이동해야 합니다. 걸리는 시간은 986÷29＝34초입니다."
+      ],
+      "solution": "첫 열차의 맨 앞이 입구에 닿을 때부터 맨 뒤가 출구를 벗어날 때까지 이동한 거리는 터널 길이에 열차 길이를 더한 값입니다. 첫 열차의 이동 거리는 43×23＝989m이므로 터널 길이는 989−116＝873m입니다. 둘째 열차는 873＋113＝986m를 이동해야 합니다. 걸리는 시간은 986÷29＝34초입니다.",
+      "learningPoint": "완전히 통과할 때는 터널 길이와 열차 길이를 더하기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "verification": {
+        "primaryMethod": "first travelled distance minus length",
+        "parameters": {
+          "firstLength": 116,
+          "firstSpeed": 43,
+          "firstTime": 23,
+          "secondLength": 113,
+          "secondSpeed": 29
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q24-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "주사위 세 눈의 횟수 분할",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "id": "applied1-q22-low-v1",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "3.4",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "그림과 같이 3, 4, 5가 두 면씩 적힌 주사위를 6번 던졌습니다.3은 1번,5는 2번 나왔을 때,4는 몇 번 나왔습니까?",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "4가 나온 횟수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "3"
+      ],
+      "solutionSteps": [
+        "나올 수 있는 눈은3,4,5뿐이므로 세 눈의 횟수를 더하면 전체 6번입니다.",
+        "3과5가 나온 횟수의 합은 1＋2＝3번입니다.",
+        "따라서4는 6−3＝3번 나왔습니다. 1＋3＋2＝6번으로 전체와 맞습니다."
+      ],
+      "solution": "나올 수 있는 눈은3,4,5뿐이므로 세 눈의 횟수를 더하면 전체 6번입니다. 3과5가 나온 횟수의 합은 1＋2＝3번입니다. 따라서4는 6−3＝3번 나왔습니다. 1＋3＋2＝6번으로 전체와 맞습니다.",
+      "learningPoint": "주사위의 가능한 세 눈으로 전체 시행 횟수를 나누기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "전체 시행 수에서 알려진 두 눈의 횟수를 빼기",
+          "conditionTracking": "눈3/4/5 고정·전체횟수·3과5의횟수",
+          "caseSplitting": "곱에서 인수를 역산하는 단계는 제외한 기초",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "partition the total roll count",
+        "parameters": {
+          "rolls": 6,
+          "threes": 1,
+          "fives": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "주사위 세 눈의 횟수 분할",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "id": "applied1-q22-low-v2",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "3.4",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "그림과 같이 3, 4, 5가 두 면씩 적힌 주사위를 7번 던졌습니다.3은 2번,5는 1번 나왔을 때,4는 몇 번 나왔습니까?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "4가 나온 횟수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "4"
+      ],
+      "solutionSteps": [
+        "나올 수 있는 눈은3,4,5뿐이므로 세 눈의 횟수를 더하면 전체 7번입니다.",
+        "3과5가 나온 횟수의 합은 2＋1＝3번입니다.",
+        "따라서4는 7−3＝4번 나왔습니다. 2＋4＋1＝7번으로 전체와 맞습니다."
+      ],
+      "solution": "나올 수 있는 눈은3,4,5뿐이므로 세 눈의 횟수를 더하면 전체 7번입니다. 3과5가 나온 횟수의 합은 2＋1＝3번입니다. 따라서4는 7−3＝4번 나왔습니다. 2＋4＋1＝7번으로 전체와 맞습니다.",
+      "learningPoint": "주사위의 가능한 세 눈으로 전체 시행 횟수를 나누기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "전체 시행 수에서 알려진 두 눈의 횟수를 빼기",
+          "conditionTracking": "눈3/4/5 고정·전체횟수·3과5의횟수",
+          "caseSplitting": "곱에서 인수를 역산하는 단계는 제외한 기초",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "partition the total roll count",
+        "parameters": {
+          "rolls": 7,
+          "threes": 2,
+          "fives": 1
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "주사위 세 눈의 횟수 분할",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "id": "applied1-q22-low-v3",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "3.4",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "그림과 같이 3, 4, 5가 두 면씩 적힌 주사위를 8번 던졌습니다.3은 2번,5는 3번 나왔을 때,4는 몇 번 나왔습니까?",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "4가 나온 횟수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "3"
+      ],
+      "solutionSteps": [
+        "나올 수 있는 눈은3,4,5뿐이므로 세 눈의 횟수를 더하면 전체 8번입니다.",
+        "3과5가 나온 횟수의 합은 2＋3＝5번입니다.",
+        "따라서4는 8−5＝3번 나왔습니다. 2＋3＋3＝8번으로 전체와 맞습니다."
+      ],
+      "solution": "나올 수 있는 눈은3,4,5뿐이므로 세 눈의 횟수를 더하면 전체 8번입니다. 3과5가 나온 횟수의 합은 2＋3＝5번입니다. 따라서4는 8−5＝3번 나왔습니다. 2＋3＋3＝8번으로 전체와 맞습니다.",
+      "learningPoint": "주사위의 가능한 세 눈으로 전체 시행 횟수를 나누기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "전체 시행 수에서 알려진 두 눈의 횟수를 빼기",
+          "conditionTracking": "눈3/4/5 고정·전체횟수·3과5의횟수",
+          "caseSplitting": "곱에서 인수를 역산하는 단계는 제외한 기초",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "partition the total roll count",
+        "parameters": {
+          "rolls": 8,
+          "threes": 2,
+          "fives": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "주사위 세 눈의 횟수 분할",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "id": "applied1-q22-low-v4",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "3.4",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "그림과 같이 3, 4, 5가 두 면씩 적힌 주사위를 9번 던졌습니다.3은 3번,5는 2번 나왔을 때,4는 몇 번 나왔습니까?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "4가 나온 횟수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "4"
+      ],
+      "solutionSteps": [
+        "나올 수 있는 눈은3,4,5뿐이므로 세 눈의 횟수를 더하면 전체 9번입니다.",
+        "3과5가 나온 횟수의 합은 3＋2＝5번입니다.",
+        "따라서4는 9−5＝4번 나왔습니다. 3＋4＋2＝9번으로 전체와 맞습니다."
+      ],
+      "solution": "나올 수 있는 눈은3,4,5뿐이므로 세 눈의 횟수를 더하면 전체 9번입니다. 3과5가 나온 횟수의 합은 3＋2＝5번입니다. 따라서4는 9−5＝4번 나왔습니다. 3＋4＋2＝9번으로 전체와 맞습니다.",
+      "learningPoint": "주사위의 가능한 세 눈으로 전체 시행 횟수를 나누기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "전체 시행 수에서 알려진 두 눈의 횟수를 빼기",
+          "conditionTracking": "눈3/4/5 고정·전체횟수·3과5의횟수",
+          "caseSplitting": "곱에서 인수를 역산하는 단계는 제외한 기초",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "partition the total roll count",
+        "parameters": {
+          "rolls": 9,
+          "threes": 3,
+          "fives": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "주사위 세 눈의 횟수 분할",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "id": "applied1-q22-low-v5",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "3.4",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "그림과 같이 3, 4, 5가 두 면씩 적힌 주사위를 10번 던졌습니다.3은 3번,5는 4번 나왔을 때,4는 몇 번 나왔습니까?",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "4가 나온 횟수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "3"
+      ],
+      "solutionSteps": [
+        "나올 수 있는 눈은3,4,5뿐이므로 세 눈의 횟수를 더하면 전체 10번입니다.",
+        "3과5가 나온 횟수의 합은 3＋4＝7번입니다.",
+        "따라서4는 10−7＝3번 나왔습니다. 3＋3＋4＝10번으로 전체와 맞습니다."
+      ],
+      "solution": "나올 수 있는 눈은3,4,5뿐이므로 세 눈의 횟수를 더하면 전체 10번입니다. 3과5가 나온 횟수의 합은 3＋4＝7번입니다. 따라서4는 10−7＝3번 나왔습니다. 3＋3＋4＝10번으로 전체와 맞습니다.",
+      "learningPoint": "주사위의 가능한 세 눈으로 전체 시행 횟수를 나누기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "전체 시행 수에서 알려진 두 눈의 횟수를 빼기",
+          "conditionTracking": "눈3/4/5 고정·전체횟수·3과5의횟수",
+          "caseSplitting": "곱에서 인수를 역산하는 단계는 제외한 기초",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "partition the total roll count",
+        "parameters": {
+          "rolls": 10,
+          "threes": 3,
+          "fives": 4
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "두 사람의 주사위 곱과 차로 횟수 찾기",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "id": "applied1-q22-high-v1",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "3.4",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "그림과 같이 3, 4, 5가 두 면씩 적힌 주사위를 두 사람이 각각4번 던졌습니다. 나온 여덟 수의 곱은 90000이고, 첫 번째 사람의 네 수의 곱은 두 번째 사람의 곱보다 175 큽니다. 각 사람에게4가 나온 횟수를 차례로 구하시오.",
+      "answer": "2, 0",
+      "answerParts": [
+        2,
+        0
+      ],
+      "answerLabels": [
+        "첫 사람의 4 횟수",
+        "둘째 사람의 4 횟수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "2, 0"
+      ],
+      "solutionSteps": [
+        "전체 곱을3,4,5의 곱으로 나누면3은2개,4는2개,5는4개이고 모두8개입니다.4하나는2를 두 번 인수로 갖는 점을 이용합니다.",
+        "이 횟수를 두 사람에게 나누되 각각4개의 눈을 받아야 합니다. 첫 번째 곱이 더 큰 경우만 남기면 첫 곱625·둘째 곱144·차481 / 첫 곱500·둘째 곱180·차320 / 첫 곱400·둘째 곱225·차175 / 첫 곱375·둘째 곱240·차135.",
+        "차가175인 경우는 첫 곱400,둘째 곱225뿐입니다. 첫 사람은3이0번·4가2번·5가2번,둘째 사람은3이2번·4가0번·5가2번입니다.",
+        "따라서4는 차례로2번,0번입니다. 각 횟수의 합은4번이고 두 곱을 곱하면90000,빼면175이므로 모든 조건이 맞습니다."
+      ],
+      "solution": "전체 곱을3,4,5의 곱으로 나누면3은2개,4는2개,5는4개이고 모두8개입니다.4하나는2를 두 번 인수로 갖는 점을 이용합니다. 이 횟수를 두 사람에게 나누되 각각4개의 눈을 받아야 합니다. 첫 번째 곱이 더 큰 경우만 남기면 첫 곱625·둘째 곱144·차481 / 첫 곱500·둘째 곱180·차320 / 첫 곱400·둘째 곱225·차175 / 첫 곱375·둘째 곱240·차135. 차가175인 경우는 첫 곱400,둘째 곱225뿐입니다. 첫 사람은3이0번·4가2번·5가2번,둘째 사람은3이2번·4가0번·5가2번입니다. 따라서4는 차례로2번,0번입니다. 각 횟수의 합은4번이고 두 곱을 곱하면90000,빼면175이므로 모든 조건이 맞습니다.",
+      "learningPoint": "전체 곱의 인수 횟수를 두 사람에게 분할하고 곱의 차로 후보 선택",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "전체 곱을 두 사람의 곱으로 분할하고 곱의 차까지 결합",
+          "conditionTracking": "두 사람 각각4회·전체곱·첫 사람 곱이 큰 차·각 사람4횟수",
+          "caseSplitting": "전체 인수별 횟수를 분할한 실제 후보가3개 이상이고 차 조건으로 유일해 결정",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "four-roll factor-count triples and exact product-pair difference",
+        "parameters": {
+          "rollsEach": 4,
+          "product": 90000,
+          "productDifference": 175
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "두 사람의 주사위 곱과 차로 횟수 찾기",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "id": "applied1-q22-high-v2",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "3.4",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "그림과 같이 3, 4, 5가 두 면씩 적힌 주사위를 두 사람이 각각4번 던졌습니다. 나온 여덟 수의 곱은 72000이고, 첫 번째 사람의 네 수의 곱은 두 번째 사람의 곱보다 60 큽니다. 각 사람에게4가 나온 횟수를 차례로 구하시오.",
+      "answer": "1, 2",
+      "answerParts": [
+        1,
+        2
+      ],
+      "answerLabels": [
+        "첫 사람의 4 횟수",
+        "둘째 사람의 4 횟수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "1, 2"
+      ],
+      "solutionSteps": [
+        "전체 곱을3,4,5의 곱으로 나누면3은2개,4는3개,5는3개이고 모두8개입니다.4하나는2를 두 번 인수로 갖는 점을 이용합니다.",
+        "이 횟수를 두 사람에게 나누되 각각4개의 눈을 받아야 합니다. 첫 번째 곱이 더 큰 경우만 남기면 첫 곱500·둘째 곱144·차356 / 첫 곱400·둘째 곱180·차220 / 첫 곱320·둘째 곱225·차95 / 첫 곱375·둘째 곱192·차183 / 첫 곱300·둘째 곱240·차60.",
+        "차가60인 경우는 첫 곱300,둘째 곱240뿐입니다. 첫 사람은3이1번·4가1번·5가2번,둘째 사람은3이1번·4가2번·5가1번입니다.",
+        "따라서4는 차례로1번,2번입니다. 각 횟수의 합은4번이고 두 곱을 곱하면72000,빼면60이므로 모든 조건이 맞습니다."
+      ],
+      "solution": "전체 곱을3,4,5의 곱으로 나누면3은2개,4는3개,5는3개이고 모두8개입니다.4하나는2를 두 번 인수로 갖는 점을 이용합니다. 이 횟수를 두 사람에게 나누되 각각4개의 눈을 받아야 합니다. 첫 번째 곱이 더 큰 경우만 남기면 첫 곱500·둘째 곱144·차356 / 첫 곱400·둘째 곱180·차220 / 첫 곱320·둘째 곱225·차95 / 첫 곱375·둘째 곱192·차183 / 첫 곱300·둘째 곱240·차60. 차가60인 경우는 첫 곱300,둘째 곱240뿐입니다. 첫 사람은3이1번·4가1번·5가2번,둘째 사람은3이1번·4가2번·5가1번입니다. 따라서4는 차례로1번,2번입니다. 각 횟수의 합은4번이고 두 곱을 곱하면72000,빼면60이므로 모든 조건이 맞습니다.",
+      "learningPoint": "전체 곱의 인수 횟수를 두 사람에게 분할하고 곱의 차로 후보 선택",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "전체 곱을 두 사람의 곱으로 분할하고 곱의 차까지 결합",
+          "conditionTracking": "두 사람 각각4회·전체곱·첫 사람 곱이 큰 차·각 사람4횟수",
+          "caseSplitting": "전체 인수별 횟수를 분할한 실제 후보가3개 이상이고 차 조건으로 유일해 결정",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "four-roll factor-count triples and exact product-pair difference",
+        "parameters": {
+          "rollsEach": 4,
+          "product": 72000,
+          "productDifference": 60
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "두 사람의 주사위 곱과 차로 횟수 찾기",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "id": "applied1-q22-high-v3",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "3.4",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "그림과 같이 3, 4, 5가 두 면씩 적힌 주사위를 두 사람이 각각4번 던졌습니다. 나온 여덟 수의 곱은 57600이고, 첫 번째 사람의 네 수의 곱은 두 번째 사람의 곱보다 31 큽니다. 각 사람에게4가 나온 횟수를 차례로 구하시오.",
+      "answer": "4, 0",
+      "answerParts": [
+        4,
+        0
+      ],
+      "answerLabels": [
+        "첫 사람의 4 횟수",
+        "둘째 사람의 4 횟수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "4, 0"
+      ],
+      "solutionSteps": [
+        "전체 곱을3,4,5의 곱으로 나누면3은2개,4는4개,5는2개이고 모두8개입니다.4하나는2를 두 번 인수로 갖는 점을 이용합니다.",
+        "이 횟수를 두 사람에게 나누되 각각4개의 눈을 받아야 합니다. 첫 번째 곱이 더 큰 경우만 남기면 첫 곱400·둘째 곱144·차256 / 첫 곱320·둘째 곱180·차140 / 첫 곱256·둘째 곱225·차31 / 첫 곱300·둘째 곱192·차108.",
+        "차가31인 경우는 첫 곱256,둘째 곱225뿐입니다. 첫 사람은3이0번·4가4번·5가0번,둘째 사람은3이2번·4가0번·5가2번입니다.",
+        "따라서4는 차례로4번,0번입니다. 각 횟수의 합은4번이고 두 곱을 곱하면57600,빼면31이므로 모든 조건이 맞습니다."
+      ],
+      "solution": "전체 곱을3,4,5의 곱으로 나누면3은2개,4는4개,5는2개이고 모두8개입니다.4하나는2를 두 번 인수로 갖는 점을 이용합니다. 이 횟수를 두 사람에게 나누되 각각4개의 눈을 받아야 합니다. 첫 번째 곱이 더 큰 경우만 남기면 첫 곱400·둘째 곱144·차256 / 첫 곱320·둘째 곱180·차140 / 첫 곱256·둘째 곱225·차31 / 첫 곱300·둘째 곱192·차108. 차가31인 경우는 첫 곱256,둘째 곱225뿐입니다. 첫 사람은3이0번·4가4번·5가0번,둘째 사람은3이2번·4가0번·5가2번입니다. 따라서4는 차례로4번,0번입니다. 각 횟수의 합은4번이고 두 곱을 곱하면57600,빼면31이므로 모든 조건이 맞습니다.",
+      "learningPoint": "전체 곱의 인수 횟수를 두 사람에게 분할하고 곱의 차로 후보 선택",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "전체 곱을 두 사람의 곱으로 분할하고 곱의 차까지 결합",
+          "conditionTracking": "두 사람 각각4회·전체곱·첫 사람 곱이 큰 차·각 사람4횟수",
+          "caseSplitting": "전체 인수별 횟수를 분할한 실제 후보가3개 이상이고 차 조건으로 유일해 결정",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "four-roll factor-count triples and exact product-pair difference",
+        "parameters": {
+          "rollsEach": 4,
+          "product": 57600,
+          "productDifference": 31
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "두 사람의 주사위 곱과 차로 횟수 찾기",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "id": "applied1-q22-high-v4",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "3.4",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "그림과 같이 3, 4, 5가 두 면씩 적힌 주사위를 두 사람이 각각4번 던졌습니다. 나온 여덟 수의 곱은 76800이고, 첫 번째 사람의 네 수의 곱은 두 번째 사람의 곱보다 80 큽니다. 각 사람에게4가 나온 횟수를 차례로 구하시오.",
+      "answer": "3, 2",
+      "answerParts": [
+        3,
+        2
+      ],
+      "answerLabels": [
+        "첫 사람의 4 횟수",
+        "둘째 사람의 4 횟수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "3, 2"
+      ],
+      "solutionSteps": [
+        "전체 곱을3,4,5의 곱으로 나누면3은1개,4는5개,5는2개이고 모두8개입니다.4하나는2를 두 번 인수로 갖는 점을 이용합니다.",
+        "이 횟수를 두 사람에게 나누되 각각4개의 눈을 받아야 합니다. 첫 번째 곱이 더 큰 경우만 남기면 첫 곱400·둘째 곱192·차208 / 첫 곱320·둘째 곱240·차80 / 첫 곱300·둘째 곱256·차44.",
+        "차가80인 경우는 첫 곱320,둘째 곱240뿐입니다. 첫 사람은3이0번·4가3번·5가1번,둘째 사람은3이1번·4가2번·5가1번입니다.",
+        "따라서4는 차례로3번,2번입니다. 각 횟수의 합은4번이고 두 곱을 곱하면76800,빼면80이므로 모든 조건이 맞습니다."
+      ],
+      "solution": "전체 곱을3,4,5의 곱으로 나누면3은1개,4는5개,5는2개이고 모두8개입니다.4하나는2를 두 번 인수로 갖는 점을 이용합니다. 이 횟수를 두 사람에게 나누되 각각4개의 눈을 받아야 합니다. 첫 번째 곱이 더 큰 경우만 남기면 첫 곱400·둘째 곱192·차208 / 첫 곱320·둘째 곱240·차80 / 첫 곱300·둘째 곱256·차44. 차가80인 경우는 첫 곱320,둘째 곱240뿐입니다. 첫 사람은3이0번·4가3번·5가1번,둘째 사람은3이1번·4가2번·5가1번입니다. 따라서4는 차례로3번,2번입니다. 각 횟수의 합은4번이고 두 곱을 곱하면76800,빼면80이므로 모든 조건이 맞습니다.",
+      "learningPoint": "전체 곱의 인수 횟수를 두 사람에게 분할하고 곱의 차로 후보 선택",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "전체 곱을 두 사람의 곱으로 분할하고 곱의 차까지 결합",
+          "conditionTracking": "두 사람 각각4회·전체곱·첫 사람 곱이 큰 차·각 사람4횟수",
+          "caseSplitting": "전체 인수별 횟수를 분할한 실제 후보가3개 이상이고 차 조건으로 유일해 결정",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "four-roll factor-count triples and exact product-pair difference",
+        "parameters": {
+          "rollsEach": 4,
+          "product": 76800,
+          "productDifference": 80
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "곱과 소인수",
+      "detailType": "두 사람의 주사위 곱과 차로 횟수 찾기",
+      "learningLocation": "활용 1회 · 원문 22번 · 곱과 소인수",
+      "id": "applied1-q22-high-v5",
+      "genId": "applied1-q22",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 22,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "high",
+      "sourcePointBand": "3.4",
+      "pointBand": "4.2",
+      "practiceRole": "단계형 확장",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "그림과 같이 3, 4, 5가 두 면씩 적힌 주사위를 두 사람이 각각4번 던졌습니다. 나온 여덟 수의 곱은 54000이고, 첫 번째 사람의 네 수의 곱은 두 번째 사람의 곱보다 231 큽니다. 각 사람에게4가 나온 횟수를 차례로 구하시오.",
+      "answer": "0, 2",
+      "answerParts": [
+        0,
+        2
+      ],
+      "answerLabels": [
+        "첫 사람의 4 횟수",
+        "둘째 사람의 4 횟수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "0, 2"
+      ],
+      "solutionSteps": [
+        "전체 곱을3,4,5의 곱으로 나누면3은3개,4는2개,5는3개이고 모두8개입니다.4하나는2를 두 번 인수로 갖는 점을 이용합니다.",
+        "이 횟수를 두 사람에게 나누되 각각4개의 눈을 받아야 합니다. 첫 번째 곱이 더 큰 경우만 남기면 첫 곱500·둘째 곱108·차392 / 첫 곱400·둘째 곱135·차265 / 첫 곱375·둘째 곱144·차231 / 첫 곱300·둘째 곱180·차120 / 첫 곱240·둘째 곱225·차15.",
+        "차가231인 경우는 첫 곱375,둘째 곱144뿐입니다. 첫 사람은3이1번·4가0번·5가3번,둘째 사람은3이2번·4가2번·5가0번입니다.",
+        "따라서4는 차례로0번,2번입니다. 각 횟수의 합은4번이고 두 곱을 곱하면54000,빼면231이므로 모든 조건이 맞습니다."
+      ],
+      "solution": "전체 곱을3,4,5의 곱으로 나누면3은3개,4는2개,5는3개이고 모두8개입니다.4하나는2를 두 번 인수로 갖는 점을 이용합니다. 이 횟수를 두 사람에게 나누되 각각4개의 눈을 받아야 합니다. 첫 번째 곱이 더 큰 경우만 남기면 첫 곱500·둘째 곱108·차392 / 첫 곱400·둘째 곱135·차265 / 첫 곱375·둘째 곱144·차231 / 첫 곱300·둘째 곱180·차120 / 첫 곱240·둘째 곱225·차15. 차가231인 경우는 첫 곱375,둘째 곱144뿐입니다. 첫 사람은3이1번·4가0번·5가3번,둘째 사람은3이2번·4가2번·5가0번입니다. 따라서4는 차례로0번,2번입니다. 각 횟수의 합은4번이고 두 곱을 곱하면54000,빼면231이므로 모든 조건이 맞습니다.",
+      "learningPoint": "전체 곱의 인수 횟수를 두 사람에게 분할하고 곱의 차로 후보 선택",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "extension",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "전체 곱을 두 사람의 곱으로 분할하고 곱의 차까지 결합",
+          "conditionTracking": "두 사람 각각4회·전체곱·첫 사람 곱이 큰 차·각 사람4횟수",
+          "caseSplitting": "전체 인수별 횟수를 분할한 실제 후보가3개 이상이고 차 조건으로 유일해 결정",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "four-roll factor-count triples and exact product-pair difference",
+        "parameters": {
+          "rollsEach": 4,
+          "product": 54000,
+          "productDifference": 231
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "studentDifficultyMeasured": false
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/die.png",
+        "description": "주사위 눈의 곱으로 특정 눈의 횟수 찾기의 원문 그림"
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "받아올림 없는 반복수 곱의 자리 합",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "id": "applied1-q23-low-v1",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "2가 18개 이어진 수 222…222에 2를 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "72",
+      "answerParts": [
+        72
+      ],
+      "answerLabels": [
+        "자리 숫자의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "72"
+      ],
+      "solutionSteps": [
+        "각 자리의2에2를 곱하면4이고10보다 작으므로 받아올림이 없습니다.",
+        "따라서 계산 결과의 각 자리 숫자는 모두4이며, 자리 수는 원래와 같은18개입니다.",
+        "모든 자리 숫자의 합은 4×18＝72입니다. 원래 수의 맨 앞과 맨 끝에서도 같은 계산이 성립합니다."
+      ],
+      "solution": "각 자리의2에2를 곱하면4이고10보다 작으므로 받아올림이 없습니다. 따라서 계산 결과의 각 자리 숫자는 모두4이며, 자리 수는 원래와 같은18개입니다. 모든 자리 숫자의 합은 4×18＝72입니다. 원래 수의 맨 앞과 맨 끝에서도 같은 계산이 성립합니다.",
+      "learningPoint": "받아올림이 없는 반복 숫자의 곱에서 각 자리와 개수를 구분",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "받아올림 없는 반복 숫자 곱의 자리 규칙과 합",
+          "conditionTracking": "반복2의개수·한자리곱수2/3/4·모든자리합",
+          "caseSplitting": "다자리 곱과 양 끝의 자리 변화 판단을 없앤 기초",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "no-carry repeated digit multiplication",
+        "parameters": {
+          "twos": 18,
+          "multiplier": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "받아올림 없는 반복수 곱의 자리 합",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "id": "applied1-q23-low-v2",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "2가 23개 이어진 수 222…222에 3을 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "138",
+      "answerParts": [
+        138
+      ],
+      "answerLabels": [
+        "자리 숫자의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "138"
+      ],
+      "solutionSteps": [
+        "각 자리의2에3을 곱하면6이고10보다 작으므로 받아올림이 없습니다.",
+        "따라서 계산 결과의 각 자리 숫자는 모두6이며, 자리 수는 원래와 같은23개입니다.",
+        "모든 자리 숫자의 합은 6×23＝138입니다. 원래 수의 맨 앞과 맨 끝에서도 같은 계산이 성립합니다."
+      ],
+      "solution": "각 자리의2에3을 곱하면6이고10보다 작으므로 받아올림이 없습니다. 따라서 계산 결과의 각 자리 숫자는 모두6이며, 자리 수는 원래와 같은23개입니다. 모든 자리 숫자의 합은 6×23＝138입니다. 원래 수의 맨 앞과 맨 끝에서도 같은 계산이 성립합니다.",
+      "learningPoint": "받아올림이 없는 반복 숫자의 곱에서 각 자리와 개수를 구분",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "받아올림 없는 반복 숫자 곱의 자리 규칙과 합",
+          "conditionTracking": "반복2의개수·한자리곱수2/3/4·모든자리합",
+          "caseSplitting": "다자리 곱과 양 끝의 자리 변화 판단을 없앤 기초",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "no-carry repeated digit multiplication",
+        "parameters": {
+          "twos": 23,
+          "multiplier": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "받아올림 없는 반복수 곱의 자리 합",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "id": "applied1-q23-low-v3",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "2가 28개 이어진 수 222…222에 4를 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "224",
+      "answerParts": [
+        224
+      ],
+      "answerLabels": [
+        "자리 숫자의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "224"
+      ],
+      "solutionSteps": [
+        "각 자리의2에4를 곱하면8이고10보다 작으므로 받아올림이 없습니다.",
+        "따라서 계산 결과의 각 자리 숫자는 모두8이며, 자리 수는 원래와 같은28개입니다.",
+        "모든 자리 숫자의 합은 8×28＝224입니다. 원래 수의 맨 앞과 맨 끝에서도 같은 계산이 성립합니다."
+      ],
+      "solution": "각 자리의2에4를 곱하면8이고10보다 작으므로 받아올림이 없습니다. 따라서 계산 결과의 각 자리 숫자는 모두8이며, 자리 수는 원래와 같은28개입니다. 모든 자리 숫자의 합은 8×28＝224입니다. 원래 수의 맨 앞과 맨 끝에서도 같은 계산이 성립합니다.",
+      "learningPoint": "받아올림이 없는 반복 숫자의 곱에서 각 자리와 개수를 구분",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "받아올림 없는 반복 숫자 곱의 자리 규칙과 합",
+          "conditionTracking": "반복2의개수·한자리곱수2/3/4·모든자리합",
+          "caseSplitting": "다자리 곱과 양 끝의 자리 변화 판단을 없앤 기초",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "no-carry repeated digit multiplication",
+        "parameters": {
+          "twos": 28,
+          "multiplier": 4
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "받아올림 없는 반복수 곱의 자리 합",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "id": "applied1-q23-low-v4",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "2가 33개 이어진 수 222…222에 2를 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "132",
+      "answerParts": [
+        132
+      ],
+      "answerLabels": [
+        "자리 숫자의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "132"
+      ],
+      "solutionSteps": [
+        "각 자리의2에2를 곱하면4이고10보다 작으므로 받아올림이 없습니다.",
+        "따라서 계산 결과의 각 자리 숫자는 모두4이며, 자리 수는 원래와 같은33개입니다.",
+        "모든 자리 숫자의 합은 4×33＝132입니다. 원래 수의 맨 앞과 맨 끝에서도 같은 계산이 성립합니다."
+      ],
+      "solution": "각 자리의2에2를 곱하면4이고10보다 작으므로 받아올림이 없습니다. 따라서 계산 결과의 각 자리 숫자는 모두4이며, 자리 수는 원래와 같은33개입니다. 모든 자리 숫자의 합은 4×33＝132입니다. 원래 수의 맨 앞과 맨 끝에서도 같은 계산이 성립합니다.",
+      "learningPoint": "받아올림이 없는 반복 숫자의 곱에서 각 자리와 개수를 구분",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "받아올림 없는 반복 숫자 곱의 자리 규칙과 합",
+          "conditionTracking": "반복2의개수·한자리곱수2/3/4·모든자리합",
+          "caseSplitting": "다자리 곱과 양 끝의 자리 변화 판단을 없앤 기초",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "no-carry repeated digit multiplication",
+        "parameters": {
+          "twos": 33,
+          "multiplier": 2
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "받아올림 없는 반복수 곱의 자리 합",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "id": "applied1-q23-low-v5",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "2가 38개 이어진 수 222…222에 3을 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "228",
+      "answerParts": [
+        228
+      ],
+      "answerLabels": [
+        "자리 숫자의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "228"
+      ],
+      "solutionSteps": [
+        "각 자리의2에3을 곱하면6이고10보다 작으므로 받아올림이 없습니다.",
+        "따라서 계산 결과의 각 자리 숫자는 모두6이며, 자리 수는 원래와 같은38개입니다.",
+        "모든 자리 숫자의 합은 6×38＝228입니다. 원래 수의 맨 앞과 맨 끝에서도 같은 계산이 성립합니다."
+      ],
+      "solution": "각 자리의2에3을 곱하면6이고10보다 작으므로 받아올림이 없습니다. 따라서 계산 결과의 각 자리 숫자는 모두6이며, 자리 수는 원래와 같은38개입니다. 모든 자리 숫자의 합은 6×38＝228입니다. 원래 수의 맨 앞과 맨 끝에서도 같은 계산이 성립합니다.",
+      "learningPoint": "받아올림이 없는 반복 숫자의 곱에서 각 자리와 개수를 구분",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "받아올림 없는 반복 숫자 곱의 자리 규칙과 합",
+          "conditionTracking": "반복2의개수·한자리곱수2/3/4·모든자리합",
+          "caseSplitting": "다자리 곱과 양 끝의 자리 변화 판단을 없앤 기초",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "no-carry repeated digit multiplication",
+        "parameters": {
+          "twos": 38,
+          "multiplier": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "한 자리 곱의 받아올림과 자리 합",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "id": "applied1-q23-middle-v1",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "2가 45개 이어진 수 222…222에 5를 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "45",
+      "answerParts": [
+        45
+      ],
+      "answerLabels": [
+        "자리 숫자의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "45"
+      ],
+      "solutionSteps": [
+        "일의 자리에서2×5＝10이므로 일의 자리에0을 쓰고1을 올립니다.",
+        "그다음 자리부터2×5＋1＝11이므로1을 쓰고 다시1을 올립니다. 이 같은 계산이 나머지44자리에서 이어집니다.",
+        "마지막으로 맨 앞에 받아올린1이 남습니다. 따라서 맨 앞1,가운데1이44개,맨 끝0의 순서입니다.",
+        "자리 숫자의 합은1＋1×44＋0＝45입니다. 결과의 전체 자리 수도1＋44＋1＝46개로 맞습니다."
+      ],
+      "solution": "일의 자리에서2×5＝10이므로 일의 자리에0을 쓰고1을 올립니다. 그다음 자리부터2×5＋1＝11이므로1을 쓰고 다시1을 올립니다. 이 같은 계산이 나머지44자리에서 이어집니다. 마지막으로 맨 앞에 받아올린1이 남습니다. 따라서 맨 앞1,가운데1이44개,맨 끝0의 순서입니다. 자리 숫자의 합은1＋1×44＋0＝45입니다. 결과의 전체 자리 수도1＋44＋1＝46개로 맞습니다.",
+      "learningPoint": "최초 자리와 반복되는 받아올림 상태를 분리하여 자리 합 계산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "한 자리 곱에서 최초 자리와 반복되는 받아올림1을 구분",
+          "conditionTracking": "반복2의개수·곱수5~9·일의자리·가운데·맨앞",
+          "caseSplitting": "원문398의 여러 자리 경계 대신 한 가지 받아올림 상태만 추적",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "single-digit multiplier with persistent carry one",
+        "parameters": {
+          "twos": 45,
+          "multiplier": 5
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "한 자리 곱의 받아올림과 자리 합",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "id": "applied1-q23-middle-v2",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "2가 52개 이어진 수 222…222에 6을 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "156",
+      "answerParts": [
+        156
+      ],
+      "answerLabels": [
+        "자리 숫자의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "156"
+      ],
+      "solutionSteps": [
+        "일의 자리에서2×6＝12이므로 일의 자리에2를 쓰고1을 올립니다.",
+        "그다음 자리부터2×6＋1＝13이므로3을 쓰고 다시1을 올립니다. 이 같은 계산이 나머지51자리에서 이어집니다.",
+        "마지막으로 맨 앞에 받아올린1이 남습니다. 따라서 맨 앞1,가운데3이51개,맨 끝2의 순서입니다.",
+        "자리 숫자의 합은1＋3×51＋2＝156입니다. 결과의 전체 자리 수도1＋51＋1＝53개로 맞습니다."
+      ],
+      "solution": "일의 자리에서2×6＝12이므로 일의 자리에2를 쓰고1을 올립니다. 그다음 자리부터2×6＋1＝13이므로3을 쓰고 다시1을 올립니다. 이 같은 계산이 나머지51자리에서 이어집니다. 마지막으로 맨 앞에 받아올린1이 남습니다. 따라서 맨 앞1,가운데3이51개,맨 끝2의 순서입니다. 자리 숫자의 합은1＋3×51＋2＝156입니다. 결과의 전체 자리 수도1＋51＋1＝53개로 맞습니다.",
+      "learningPoint": "최초 자리와 반복되는 받아올림 상태를 분리하여 자리 합 계산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "한 자리 곱에서 최초 자리와 반복되는 받아올림1을 구분",
+          "conditionTracking": "반복2의개수·곱수5~9·일의자리·가운데·맨앞",
+          "caseSplitting": "원문398의 여러 자리 경계 대신 한 가지 받아올림 상태만 추적",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "single-digit multiplier with persistent carry one",
+        "parameters": {
+          "twos": 52,
+          "multiplier": 6
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "한 자리 곱의 받아올림과 자리 합",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "id": "applied1-q23-middle-v3",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "2가 63개 이어진 수 222…222에 7을 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "315",
+      "answerParts": [
+        315
+      ],
+      "answerLabels": [
+        "자리 숫자의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "315"
+      ],
+      "solutionSteps": [
+        "일의 자리에서2×7＝14이므로 일의 자리에4를 쓰고1을 올립니다.",
+        "그다음 자리부터2×7＋1＝15이므로5를 쓰고 다시1을 올립니다. 이 같은 계산이 나머지62자리에서 이어집니다.",
+        "마지막으로 맨 앞에 받아올린1이 남습니다. 따라서 맨 앞1,가운데5이62개,맨 끝4의 순서입니다.",
+        "자리 숫자의 합은1＋5×62＋4＝315입니다. 결과의 전체 자리 수도1＋62＋1＝64개로 맞습니다."
+      ],
+      "solution": "일의 자리에서2×7＝14이므로 일의 자리에4를 쓰고1을 올립니다. 그다음 자리부터2×7＋1＝15이므로5를 쓰고 다시1을 올립니다. 이 같은 계산이 나머지62자리에서 이어집니다. 마지막으로 맨 앞에 받아올린1이 남습니다. 따라서 맨 앞1,가운데5이62개,맨 끝4의 순서입니다. 자리 숫자의 합은1＋5×62＋4＝315입니다. 결과의 전체 자리 수도1＋62＋1＝64개로 맞습니다.",
+      "learningPoint": "최초 자리와 반복되는 받아올림 상태를 분리하여 자리 합 계산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "한 자리 곱에서 최초 자리와 반복되는 받아올림1을 구분",
+          "conditionTracking": "반복2의개수·곱수5~9·일의자리·가운데·맨앞",
+          "caseSplitting": "원문398의 여러 자리 경계 대신 한 가지 받아올림 상태만 추적",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "single-digit multiplier with persistent carry one",
+        "parameters": {
+          "twos": 63,
+          "multiplier": 7
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "한 자리 곱의 받아올림과 자리 합",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "id": "applied1-q23-middle-v4",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "2가 74개 이어진 수 222…222에 8을 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "518",
+      "answerParts": [
+        518
+      ],
+      "answerLabels": [
+        "자리 숫자의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "518"
+      ],
+      "solutionSteps": [
+        "일의 자리에서2×8＝16이므로 일의 자리에6을 쓰고1을 올립니다.",
+        "그다음 자리부터2×8＋1＝17이므로7을 쓰고 다시1을 올립니다. 이 같은 계산이 나머지73자리에서 이어집니다.",
+        "마지막으로 맨 앞에 받아올린1이 남습니다. 따라서 맨 앞1,가운데7이73개,맨 끝6의 순서입니다.",
+        "자리 숫자의 합은1＋7×73＋6＝518입니다. 결과의 전체 자리 수도1＋73＋1＝75개로 맞습니다."
+      ],
+      "solution": "일의 자리에서2×8＝16이므로 일의 자리에6을 쓰고1을 올립니다. 그다음 자리부터2×8＋1＝17이므로7을 쓰고 다시1을 올립니다. 이 같은 계산이 나머지73자리에서 이어집니다. 마지막으로 맨 앞에 받아올린1이 남습니다. 따라서 맨 앞1,가운데7이73개,맨 끝6의 순서입니다. 자리 숫자의 합은1＋7×73＋6＝518입니다. 결과의 전체 자리 수도1＋73＋1＝75개로 맞습니다.",
+      "learningPoint": "최초 자리와 반복되는 받아올림 상태를 분리하여 자리 합 계산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "한 자리 곱에서 최초 자리와 반복되는 받아올림1을 구분",
+          "conditionTracking": "반복2의개수·곱수5~9·일의자리·가운데·맨앞",
+          "caseSplitting": "원문398의 여러 자리 경계 대신 한 가지 받아올림 상태만 추적",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "single-digit multiplier with persistent carry one",
+        "parameters": {
+          "twos": 74,
+          "multiplier": 8
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "반복수의 계산",
+      "detailType": "한 자리 곱의 받아올림과 자리 합",
+      "learningLocation": "활용 1회 · 원문 23번 · 반복수의 계산",
+      "id": "applied1-q23-middle-v5",
+      "genId": "applied1-q23",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 23,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "2가 85개 이어진 수 222…222에 9를 곱하였습니다. 얻은 수의 모든 자리 숫자의 합을 구하시오.",
+      "answer": "765",
+      "answerParts": [
+        765
+      ],
+      "answerLabels": [
+        "자리 숫자의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "765"
+      ],
+      "solutionSteps": [
+        "일의 자리에서2×9＝18이므로 일의 자리에8을 쓰고1을 올립니다.",
+        "그다음 자리부터2×9＋1＝19이므로9를 쓰고 다시1을 올립니다. 이 같은 계산이 나머지84자리에서 이어집니다.",
+        "마지막으로 맨 앞에 받아올린1이 남습니다. 따라서 맨 앞1,가운데9이84개,맨 끝8의 순서입니다.",
+        "자리 숫자의 합은1＋9×84＋8＝765입니다. 결과의 전체 자리 수도1＋84＋1＝86개로 맞습니다."
+      ],
+      "solution": "일의 자리에서2×9＝18이므로 일의 자리에8을 쓰고1을 올립니다. 그다음 자리부터2×9＋1＝19이므로9를 쓰고 다시1을 올립니다. 이 같은 계산이 나머지84자리에서 이어집니다. 마지막으로 맨 앞에 받아올린1이 남습니다. 따라서 맨 앞1,가운데9이84개,맨 끝8의 순서입니다. 자리 숫자의 합은1＋9×84＋8＝765입니다. 결과의 전체 자리 수도1＋84＋1＝86개로 맞습니다.",
+      "learningPoint": "최초 자리와 반복되는 받아올림 상태를 분리하여 자리 합 계산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "한 자리 곱에서 최초 자리와 반복되는 받아올림1을 구분",
+          "conditionTracking": "반복2의개수·곱수5~9·일의자리·가운데·맨앞",
+          "caseSplitting": "원문398의 여러 자리 경계 대신 한 가지 받아올림 상태만 추적",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "single-digit multiplier with persistent carry one",
+        "parameters": {
+          "twos": 85,
+          "multiplier": 9
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 23,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "터널과 열차 길이로 완전 통과 시간 구하기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "id": "applied1-q24-low-v1",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "길이 90m인 열차가 초속 25m로 길이 360m인 터널을 통과합니다. 열차의 맨 앞이 입구에 닿은 순간부터 맨 뒤가 출구를 완전히 벗어날 때까지 몇 초가 걸립니까?",
+      "answer": "18",
+      "answerParts": [
+        18
+      ],
+      "answerLabels": [
+        "통과 시간(초)"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "18"
+      ],
+      "solutionSteps": [
+        "열차가 완전히 빠져나오려면 맨 앞이 터널 길이뿐 아니라 열차 한 대 길이만큼 더 가야 합니다.",
+        "이동 거리는 360＋90＝450m입니다.",
+        "걸리는 시간은 450÷25＝18초입니다. 이 시간 동안 이동한 거리도 25×18＝450m로 맞습니다."
+      ],
+      "solution": "열차가 완전히 빠져나오려면 맨 앞이 터널 길이뿐 아니라 열차 한 대 길이만큼 더 가야 합니다. 이동 거리는 360＋90＝450m입니다. 걸리는 시간은 450÷25＝18초입니다. 이 시간 동안 이동한 거리도 25×18＝450m로 맞습니다.",
+      "learningPoint": "완전 통과 거리에서 터널 길이와 열차 길이를 함께 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "터널과 열차 길이를 알고 완전 통과 시간 순방향 계산",
+          "conditionTracking": "터널길이·열차길이·일정속력·맨앞진입부터맨뒤이탈",
+          "caseSplitting": "첫 열차에서 터널 길이를 역산하는 원문 단계를 제외",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "known tunnel and train length to full crossing time",
+        "parameters": {
+          "tunnel": 360,
+          "length": 90,
+          "speed": 25
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "터널과 열차 길이로 완전 통과 시간 구하기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "id": "applied1-q24-low-v2",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "길이 120m인 열차가 초속 30m로 길이 420m인 터널을 통과합니다. 열차의 맨 앞이 입구에 닿은 순간부터 맨 뒤가 출구를 완전히 벗어날 때까지 몇 초가 걸립니까?",
+      "answer": "18",
+      "answerParts": [
+        18
+      ],
+      "answerLabels": [
+        "통과 시간(초)"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "18"
+      ],
+      "solutionSteps": [
+        "열차가 완전히 빠져나오려면 맨 앞이 터널 길이뿐 아니라 열차 한 대 길이만큼 더 가야 합니다.",
+        "이동 거리는 420＋120＝540m입니다.",
+        "걸리는 시간은 540÷30＝18초입니다. 이 시간 동안 이동한 거리도 30×18＝540m로 맞습니다."
+      ],
+      "solution": "열차가 완전히 빠져나오려면 맨 앞이 터널 길이뿐 아니라 열차 한 대 길이만큼 더 가야 합니다. 이동 거리는 420＋120＝540m입니다. 걸리는 시간은 540÷30＝18초입니다. 이 시간 동안 이동한 거리도 30×18＝540m로 맞습니다.",
+      "learningPoint": "완전 통과 거리에서 터널 길이와 열차 길이를 함께 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "터널과 열차 길이를 알고 완전 통과 시간 순방향 계산",
+          "conditionTracking": "터널길이·열차길이·일정속력·맨앞진입부터맨뒤이탈",
+          "caseSplitting": "첫 열차에서 터널 길이를 역산하는 원문 단계를 제외",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "known tunnel and train length to full crossing time",
+        "parameters": {
+          "tunnel": 420,
+          "length": 120,
+          "speed": 30
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "터널과 열차 길이로 완전 통과 시간 구하기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "id": "applied1-q24-low-v3",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "길이 150m인 열차가 초속 30m로 길이 510m인 터널을 통과합니다. 열차의 맨 앞이 입구에 닿은 순간부터 맨 뒤가 출구를 완전히 벗어날 때까지 몇 초가 걸립니까?",
+      "answer": "22",
+      "answerParts": [
+        22
+      ],
+      "answerLabels": [
+        "통과 시간(초)"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "22"
+      ],
+      "solutionSteps": [
+        "열차가 완전히 빠져나오려면 맨 앞이 터널 길이뿐 아니라 열차 한 대 길이만큼 더 가야 합니다.",
+        "이동 거리는 510＋150＝660m입니다.",
+        "걸리는 시간은 660÷30＝22초입니다. 이 시간 동안 이동한 거리도 30×22＝660m로 맞습니다."
+      ],
+      "solution": "열차가 완전히 빠져나오려면 맨 앞이 터널 길이뿐 아니라 열차 한 대 길이만큼 더 가야 합니다. 이동 거리는 510＋150＝660m입니다. 걸리는 시간은 660÷30＝22초입니다. 이 시간 동안 이동한 거리도 30×22＝660m로 맞습니다.",
+      "learningPoint": "완전 통과 거리에서 터널 길이와 열차 길이를 함께 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "터널과 열차 길이를 알고 완전 통과 시간 순방향 계산",
+          "conditionTracking": "터널길이·열차길이·일정속력·맨앞진입부터맨뒤이탈",
+          "caseSplitting": "첫 열차에서 터널 길이를 역산하는 원문 단계를 제외",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "known tunnel and train length to full crossing time",
+        "parameters": {
+          "tunnel": 510,
+          "length": 150,
+          "speed": 30
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "터널과 열차 길이로 완전 통과 시간 구하기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "id": "applied1-q24-low-v4",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "길이 160m인 열차가 초속 32m로 길이 544m인 터널을 통과합니다. 열차의 맨 앞이 입구에 닿은 순간부터 맨 뒤가 출구를 완전히 벗어날 때까지 몇 초가 걸립니까?",
+      "answer": "22",
+      "answerParts": [
+        22
+      ],
+      "answerLabels": [
+        "통과 시간(초)"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "22"
+      ],
+      "solutionSteps": [
+        "열차가 완전히 빠져나오려면 맨 앞이 터널 길이뿐 아니라 열차 한 대 길이만큼 더 가야 합니다.",
+        "이동 거리는 544＋160＝704m입니다.",
+        "걸리는 시간은 704÷32＝22초입니다. 이 시간 동안 이동한 거리도 32×22＝704m로 맞습니다."
+      ],
+      "solution": "열차가 완전히 빠져나오려면 맨 앞이 터널 길이뿐 아니라 열차 한 대 길이만큼 더 가야 합니다. 이동 거리는 544＋160＝704m입니다. 걸리는 시간은 704÷32＝22초입니다. 이 시간 동안 이동한 거리도 32×22＝704m로 맞습니다.",
+      "learningPoint": "완전 통과 거리에서 터널 길이와 열차 길이를 함께 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "터널과 열차 길이를 알고 완전 통과 시간 순방향 계산",
+          "conditionTracking": "터널길이·열차길이·일정속력·맨앞진입부터맨뒤이탈",
+          "caseSplitting": "첫 열차에서 터널 길이를 역산하는 원문 단계를 제외",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "known tunnel and train length to full crossing time",
+        "parameters": {
+          "tunnel": 544,
+          "length": 160,
+          "speed": 32
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "터널과 열차 길이로 완전 통과 시간 구하기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "id": "applied1-q24-low-v5",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "길이 210m인 열차가 초속 35m로 길이 630m인 터널을 통과합니다. 열차의 맨 앞이 입구에 닿은 순간부터 맨 뒤가 출구를 완전히 벗어날 때까지 몇 초가 걸립니까?",
+      "answer": "24",
+      "answerParts": [
+        24
+      ],
+      "answerLabels": [
+        "통과 시간(초)"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "24"
+      ],
+      "solutionSteps": [
+        "열차가 완전히 빠져나오려면 맨 앞이 터널 길이뿐 아니라 열차 한 대 길이만큼 더 가야 합니다.",
+        "이동 거리는 630＋210＝840m입니다.",
+        "걸리는 시간은 840÷35＝24초입니다. 이 시간 동안 이동한 거리도 35×24＝840m로 맞습니다."
+      ],
+      "solution": "열차가 완전히 빠져나오려면 맨 앞이 터널 길이뿐 아니라 열차 한 대 길이만큼 더 가야 합니다. 이동 거리는 630＋210＝840m입니다. 걸리는 시간은 840÷35＝24초입니다. 이 시간 동안 이동한 거리도 35×24＝840m로 맞습니다.",
+      "learningPoint": "완전 통과 거리에서 터널 길이와 열차 길이를 함께 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "터널과 열차 길이를 알고 완전 통과 시간 순방향 계산",
+          "conditionTracking": "터널길이·열차길이·일정속력·맨앞진입부터맨뒤이탈",
+          "caseSplitting": "첫 열차에서 터널 길이를 역산하는 원문 단계를 제외",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "known tunnel and train length to full crossing time",
+        "parameters": {
+          "tunnel": 630,
+          "length": 210,
+          "speed": 35
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "앞뒤 출구 시각으로 열차 길이 찾기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "id": "applied1-q24-middle-v1",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "열차가 초속 24m의 일정한 빠르기로 터널을 통과합니다. 맨 앞이 입구에 닿은 순간부터 재어, 맨 앞은 18초 뒤 출구에 닿고 맨 뒤는 22초 뒤 출구를 완전히 벗어났습니다. 이 열차의 길이는 몇 m입니까?",
+      "answer": "96",
+      "answerParts": [
+        96
+      ],
+      "answerLabels": [
+        "열차 길이(m)"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "96"
+      ],
+      "solutionSteps": [
+        "맨 앞이 출구에 닿은 뒤 맨 뒤가 출구를 벗어날 때까지는 22−18＝4초입니다.",
+        "이 동안 열차는 자기 길이만큼 더 움직였습니다. 따라서 열차 길이는 24×4＝96m입니다.",
+        "터널 길이는 24×18＝432m입니다. 완전 통과 거리는 432＋96＝528m이며, 24×22와 같으므로 두 시각 조건을 모두 만족합니다."
+      ],
+      "solution": "맨 앞이 출구에 닿은 뒤 맨 뒤가 출구를 벗어날 때까지는 22−18＝4초입니다. 이 동안 열차는 자기 길이만큼 더 움직였습니다. 따라서 열차 길이는 24×4＝96m입니다. 터널 길이는 24×18＝432m입니다. 완전 통과 거리는 432＋96＝528m이며, 24×22와 같으므로 두 시각 조건을 모두 만족합니다.",
+      "learningPoint": "같은 시작 순간에서 잰 두 끝부분의 출구 시각 차로 열차 길이 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "앞부분 출구와 뒷부분 출구의 두 시각 차로 열차 길이 역산",
+          "conditionTracking": "같은 시작 순간·두 끝부분 출구 시각·일정속력·열차길이",
+          "caseSplitting": "터널 전체 시간과 열차 한 대 길이를 이동한 시간을 구분;두 열차 연결은 제외",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "difference between front and tail exit events at constant speed",
+        "parameters": {
+          "speed": 24,
+          "frontExit": 18,
+          "tailExit": 22
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "앞뒤 출구 시각으로 열차 길이 찾기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "id": "applied1-q24-middle-v2",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "열차가 초속 27m의 일정한 빠르기로 터널을 통과합니다. 맨 앞이 입구에 닿은 순간부터 재어, 맨 앞은 20초 뒤 출구에 닿고 맨 뒤는 25초 뒤 출구를 완전히 벗어났습니다. 이 열차의 길이는 몇 m입니까?",
+      "answer": "135",
+      "answerParts": [
+        135
+      ],
+      "answerLabels": [
+        "열차 길이(m)"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "135"
+      ],
+      "solutionSteps": [
+        "맨 앞이 출구에 닿은 뒤 맨 뒤가 출구를 벗어날 때까지는 25−20＝5초입니다.",
+        "이 동안 열차는 자기 길이만큼 더 움직였습니다. 따라서 열차 길이는 27×5＝135m입니다.",
+        "터널 길이는 27×20＝540m입니다. 완전 통과 거리는 540＋135＝675m이며, 27×25와 같으므로 두 시각 조건을 모두 만족합니다."
+      ],
+      "solution": "맨 앞이 출구에 닿은 뒤 맨 뒤가 출구를 벗어날 때까지는 25−20＝5초입니다. 이 동안 열차는 자기 길이만큼 더 움직였습니다. 따라서 열차 길이는 27×5＝135m입니다. 터널 길이는 27×20＝540m입니다. 완전 통과 거리는 540＋135＝675m이며, 27×25와 같으므로 두 시각 조건을 모두 만족합니다.",
+      "learningPoint": "같은 시작 순간에서 잰 두 끝부분의 출구 시각 차로 열차 길이 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "앞부분 출구와 뒷부분 출구의 두 시각 차로 열차 길이 역산",
+          "conditionTracking": "같은 시작 순간·두 끝부분 출구 시각·일정속력·열차길이",
+          "caseSplitting": "터널 전체 시간과 열차 한 대 길이를 이동한 시간을 구분;두 열차 연결은 제외",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "difference between front and tail exit events at constant speed",
+        "parameters": {
+          "speed": 27,
+          "frontExit": 20,
+          "tailExit": 25
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "앞뒤 출구 시각으로 열차 길이 찾기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "id": "applied1-q24-middle-v3",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "열차가 초속 30m의 일정한 빠르기로 터널을 통과합니다. 맨 앞이 입구에 닿은 순간부터 재어, 맨 앞은 22초 뒤 출구에 닿고 맨 뒤는 28초 뒤 출구를 완전히 벗어났습니다. 이 열차의 길이는 몇 m입니까?",
+      "answer": "180",
+      "answerParts": [
+        180
+      ],
+      "answerLabels": [
+        "열차 길이(m)"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "180"
+      ],
+      "solutionSteps": [
+        "맨 앞이 출구에 닿은 뒤 맨 뒤가 출구를 벗어날 때까지는 28−22＝6초입니다.",
+        "이 동안 열차는 자기 길이만큼 더 움직였습니다. 따라서 열차 길이는 30×6＝180m입니다.",
+        "터널 길이는 30×22＝660m입니다. 완전 통과 거리는 660＋180＝840m이며, 30×28과 같으므로 두 시각 조건을 모두 만족합니다."
+      ],
+      "solution": "맨 앞이 출구에 닿은 뒤 맨 뒤가 출구를 벗어날 때까지는 28−22＝6초입니다. 이 동안 열차는 자기 길이만큼 더 움직였습니다. 따라서 열차 길이는 30×6＝180m입니다. 터널 길이는 30×22＝660m입니다. 완전 통과 거리는 660＋180＝840m이며, 30×28과 같으므로 두 시각 조건을 모두 만족합니다.",
+      "learningPoint": "같은 시작 순간에서 잰 두 끝부분의 출구 시각 차로 열차 길이 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "앞부분 출구와 뒷부분 출구의 두 시각 차로 열차 길이 역산",
+          "conditionTracking": "같은 시작 순간·두 끝부분 출구 시각·일정속력·열차길이",
+          "caseSplitting": "터널 전체 시간과 열차 한 대 길이를 이동한 시간을 구분;두 열차 연결은 제외",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "difference between front and tail exit events at constant speed",
+        "parameters": {
+          "speed": 30,
+          "frontExit": 22,
+          "tailExit": 28
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "앞뒤 출구 시각으로 열차 길이 찾기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "id": "applied1-q24-middle-v4",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "열차가 초속 32m의 일정한 빠르기로 터널을 통과합니다. 맨 앞이 입구에 닿은 순간부터 재어, 맨 앞은 24초 뒤 출구에 닿고 맨 뒤는 31초 뒤 출구를 완전히 벗어났습니다. 이 열차의 길이는 몇 m입니까?",
+      "answer": "224",
+      "answerParts": [
+        224
+      ],
+      "answerLabels": [
+        "열차 길이(m)"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "224"
+      ],
+      "solutionSteps": [
+        "맨 앞이 출구에 닿은 뒤 맨 뒤가 출구를 벗어날 때까지는 31−24＝7초입니다.",
+        "이 동안 열차는 자기 길이만큼 더 움직였습니다. 따라서 열차 길이는 32×7＝224m입니다.",
+        "터널 길이는 32×24＝768m입니다. 완전 통과 거리는 768＋224＝992m이며, 32×31과 같으므로 두 시각 조건을 모두 만족합니다."
+      ],
+      "solution": "맨 앞이 출구에 닿은 뒤 맨 뒤가 출구를 벗어날 때까지는 31−24＝7초입니다. 이 동안 열차는 자기 길이만큼 더 움직였습니다. 따라서 열차 길이는 32×7＝224m입니다. 터널 길이는 32×24＝768m입니다. 완전 통과 거리는 768＋224＝992m이며, 32×31과 같으므로 두 시각 조건을 모두 만족합니다.",
+      "learningPoint": "같은 시작 순간에서 잰 두 끝부분의 출구 시각 차로 열차 길이 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "앞부분 출구와 뒷부분 출구의 두 시각 차로 열차 길이 역산",
+          "conditionTracking": "같은 시작 순간·두 끝부분 출구 시각·일정속력·열차길이",
+          "caseSplitting": "터널 전체 시간과 열차 한 대 길이를 이동한 시간을 구분;두 열차 연결은 제외",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "difference between front and tail exit events at constant speed",
+        "parameters": {
+          "speed": 32,
+          "frontExit": 24,
+          "tailExit": 31
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "거리와 시간",
+      "detailType": "앞뒤 출구 시각으로 열차 길이 찾기",
+      "learningLocation": "활용 1회 · 원문 24번 · 거리와 시간",
+      "id": "applied1-q24-middle-v5",
+      "genId": "applied1-q24",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 24,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r8",
+      "text": "열차가 초속 35m의 일정한 빠르기로 터널을 통과합니다. 맨 앞이 입구에 닿은 순간부터 재어, 맨 앞은 26초 뒤 출구에 닿고 맨 뒤는 34초 뒤 출구를 완전히 벗어났습니다. 이 열차의 길이는 몇 m입니까?",
+      "answer": "280",
+      "answerParts": [
+        280
+      ],
+      "answerLabels": [
+        "열차 길이(m)"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "280"
+      ],
+      "solutionSteps": [
+        "맨 앞이 출구에 닿은 뒤 맨 뒤가 출구를 벗어날 때까지는 34−26＝8초입니다.",
+        "이 동안 열차는 자기 길이만큼 더 움직였습니다. 따라서 열차 길이는 35×8＝280m입니다.",
+        "터널 길이는 35×26＝910m입니다. 완전 통과 거리는 910＋280＝1190m이며, 35×34와 같으므로 두 시각 조건을 모두 만족합니다."
+      ],
+      "solution": "맨 앞이 출구에 닿은 뒤 맨 뒤가 출구를 벗어날 때까지는 34−26＝8초입니다. 이 동안 열차는 자기 길이만큼 더 움직였습니다. 따라서 열차 길이는 35×8＝280m입니다. 터널 길이는 35×26＝910m입니다. 완전 통과 거리는 910＋280＝1190m이며, 35×34와 같으므로 두 시각 조건을 모두 만족합니다.",
+      "learningPoint": "같은 시작 순간에서 잰 두 끝부분의 출구 시각 차로 열차 길이 역산",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 주사위 눈3/4/5·십진 곱셈·거리와 시간 관계를 유지",
+          "reasoning": "앞부분 출구와 뒷부분 출구의 두 시각 차로 열차 길이 역산",
+          "conditionTracking": "같은 시작 순간·두 끝부분 출구 시각·일정속력·열차길이",
+          "caseSplitting": "터널 전체 시간과 열차 한 대 길이를 이동한 시간을 구분;두 열차 연결은 제외",
+          "computation": "수치 크기만 바꾸지 않고 인수 분할·받아올림 상태·시점 역산의 차이로 설계",
+          "representation": "22번 실제 원본3/4/5주사위 그림 보존;23번 결과의 반복 모양은 문제에서 완성해 보여주지 않음",
+          "reading": "각각4회·곱의 차·2의 실제 개수·두 시각의 공통 시작을 지문 안에서 확정",
+          "visualCues": "문제 아래 조건 요약/풀이 힌트/완성된 자리 규칙을 붙이지 않음",
+          "shortcuts": "22상 곱의 차를 빼면 복수 후보가 남음;23하/중은 받아올림 유무가 실제로 다름;24중 두 끝부분을 혼동하면 답이 달라짐"
+        }
+      },
+      "verification": {
+        "primaryMethod": "difference between front and tail exit events at constant speed",
+        "parameters": {
+          "speed": 35,
+          "frontExit": 26,
+          "tailExit": 34
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 24,
+        "studentDifficultyMeasured": false
+      }
     }
   ],
-  "preservedLegacyCount": 80,
-  "newAuthoredCount": 235,
+  "preservedLegacyCount": 95,
+  "newAuthoredCount": 265,
   "reviewSummary": {
-    "sourceTypes": 21,
+    "sourceTypes": 24,
     "perSource": 15,
     "perLevel": 5,
-    "count": 315,
-    "preservedLegacyCount": 80,
-    "newAuthoredCount": 235,
+    "count": 360,
+    "preservedLegacyCount": 95,
+    "newAuthoredCount": 265,
     "independentAnswers": true,
     "actualZipReviewed": true,
     "sourceGradeMutation": false,
