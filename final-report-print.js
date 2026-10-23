@@ -422,6 +422,9 @@
       '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="3"] #report-summary{break-before:page!important;page-break-before:always!important}'+
       '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="3"] #report-plan{break-inside:auto!important;page-break-inside:auto!important}'+
       '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="3"]>.report-analysis-section{break-before:page!important;page-break-before:always!important;break-inside:auto!important;page-break-inside:auto!important}'+
+      '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="4"] #report-summary{break-before:page!important;page-break-before:always!important}'+
+      '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="4"] #report-plan{break-inside:auto!important;page-break-inside:auto!important}'+
+      '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="4"]>.report-analysis-section{break-before:page!important;page-break-before:always!important;break-inside:auto!important;page-break-inside:auto!important}'+
       '#gfield-report-print-prelude.gfield-summary-print .report-materials-section,#gfield-report-print-prelude.gfield-summary-print .report-curriculum-section{break-before:auto!important;page-break-before:auto!important}'+
       '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="1"] #report-items,#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="1"] .report-wrong-summary tbody{break-inside:auto!important;page-break-inside:auto!important}'+
       '#gfield-report-print-prelude.gfield-summary-print[data-set="last"][data-report-round="1"] .report-wrong-summary tr{break-inside:avoid!important;page-break-inside:avoid!important}'+
@@ -478,6 +481,10 @@
     var pages=frameState.doc.querySelector('.pagedjs_pages');
     var actual=pages&&pages.querySelectorAll(':scope > .pagedjs_page').length||0;
     if(!Number.isInteger(flow.total)||flow.total<1||actual!==flow.total) fail('pagination-count','인쇄 쪽 수를 확인하지 못했습니다.');
+    if(frameState.stage.getAttribute('data-set')==='last'&&frameState.stage.getAttribute('data-report-round')==='4')list(pages.querySelectorAll('.report-compact-print-header,.parent-summary-column,.final-score-trend')).forEach(function(node){
+      var box=node.getBoundingClientRect(),page=node.closest('.pagedjs_page'),bounds=page&&page.getBoundingClientRect();
+      if(bounds&&box.width>0&&box.height>0&&(box.left<bounds.left-2||box.right>bounds.right+2||box.top<bounds.top-2||box.bottom>bounds.bottom+2))fail('prelude-layout','성적 요약이나 추이 표가 인쇄 쪽을 벗어났습니다.');
+    });
     var printed=printedPreludeText(frameState);
     visible.forEach(function(value){
       var needle=compact(value);

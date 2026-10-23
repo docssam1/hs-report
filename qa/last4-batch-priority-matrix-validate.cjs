@@ -43,6 +43,17 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
     await context.addInitScript(() => {
       window.__GFIELD_BANK_ACCESS_FORCE__ = true;
       localStorage.setItem('gfield_hs_admin_session_v1', JSON.stringify({ access_token: 'qa-admin', refresh_token: 'qa-refresh', expires_at: Math.floor(Date.now() / 1000) + 3600 }));
+      let renderer;
+      Object.defineProperty(window, 'html2canvas', { configurable:true, get:()=>renderer, set:fn=>{
+        renderer=function(element,options){
+          if(element.classList.contains('pagedjs_page')){
+            const box=element.getBoundingClientRect();
+            const geometry=[...element.querySelectorAll('.report-compact-print-header,.final-score-trend,#report-summary,.parent-summary-column')].map(node=>{const r=node.getBoundingClientRect();return {tag:node.className,id:node.id,x:r.x-box.x,y:r.y-box.y,w:r.width,h:r.height,style:node.getAttribute('style')};});
+            const capture=window.top.__GFIELD_BATCH_QA_CAPTURE__;if(capture)(capture.geometry||(capture.geometry=[])).push({width:box.width,height:box.height,geometry});
+          }
+          return fn.call(this,element,options);
+        };
+      }});
     });
     await context.route(/^https?:\/\//, async route => {
       const request = route.request(), url = new URL(request.url());
@@ -51,7 +62,8 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
         if (url.pathname === '/functions/v1/hs-final-population') return route.fulfill({ status: 503, contentType: 'application/json', body: '{}' });
         if (url.pathname === '/functions/v1/hs-approval-admin' && request.postDataJSON()?.action === 'list') return route.fulfill({ json: { accounts: [], parentSessions: [] } });
         if (request.method() !== 'GET') { evidence.writes.push(request.method() + ' ' + url.pathname); return route.abort(); }
-        const body = url.pathname === '/auth/v1/user' ? { id: 'qa-admin', app_metadata: { role: 'admin' } } : url.pathname === '/rest/v1/hs_accounts' ? [{ role: 'admin', active: true, student: null }] : url.pathname === '/rest/v1/mock_results' ? [record] : [];
+        const records = process.env.GFIELD_LAST4_QA_HISTORY === '1' ? [record, ...[1,2,3].map(round => ({ ...record, round: 'last' + round }))] : [record];
+        const body = url.pathname === '/auth/v1/user' ? { id: 'qa-admin', app_metadata: { role: 'admin' } } : url.pathname === '/rest/v1/hs_accounts' ? [{ role: 'admin', active: true, student: null }] : url.pathname === '/rest/v1/mock_results' ? records : [];
         return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(body) });
       }
       if (url.origin === new URL(base).origin) return route.continue();
@@ -78,10 +90,14 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
         const signature = new TextDecoder().decode(await blob.slice(0, 5).arrayBuffer());
         const practice = window.__GFIELD_BATCH_QA_CAPTURE__.practice;
         const pdfBase64 = savePdf ? await new Promise(resolve => { const reader = new FileReader(); reader.onload = () => resolve(reader.result.split(',')[1]); reader.readAsDataURL(blob); }) : null;
-        return { signature, bytes: blob.size, practice, pdfBase64 };
+        return { signature, bytes: blob.size, practice, pdfBase64, geometry:window.__GFIELD_BATCH_QA_CAPTURE__.geometry };
       }, wrong.length === 3);
       assert.equal(result.signature, '%PDF-');
       assert.ok(result.bytes > 40000);
+      assert.equal(result.geometry.flatMap(p=>p.geometry).filter(n=>n.tag.includes('parent-summary-column')).length,2);
+      for(const pageGeometry of result.geometry)for(const node of pageGeometry.geometry){
+        assert.ok(node.x>=-2&&node.y>=-2&&node.x+node.w<=pageGeometry.width+2&&node.y+node.h<=pageGeometry.height+2,'summary content is visible within its PDF page: '+JSON.stringify(node));
+      }
       const expectedCount = Math.min(3, wrong.length) * 3;
       assert.equal(result.practice.questions, expectedCount);
       assert.equal(result.practice.answers, expectedCount);
@@ -91,6 +107,7 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
       assert.deepEqual(result.practice.questionIds, expectedIds);
       assert.deepEqual(result.practice.answerIds, expectedIds);
       if (result.pdfBase64) fs.writeFileSync(path.join(out, 'last4-three-priority.pdf'), Buffer.from(result.pdfBase64, 'base64'));
+      fs.writeFileSync(path.join(out, 'prelude-geometry.json'), JSON.stringify(result.geometry,null,2));
       await page.locator('#final-batch-select-all').click();
       await page.evaluate(() => {
         document.querySelectorAll('#final-batch-rounds input[data-exam-set]').forEach(input => {
