@@ -213,8 +213,73 @@ def repeated_twos_digits(count,multiplier):
     return digits
 
 
+def canonical_edge(a,b):return tuple(sorted([a,b]))
+
+
+@functools.lru_cache(None)
+def digital_rotation_results(places):
+    # Strokes read from source25: centered1;2/5 unchanged;6/9 swap.
+    a=((0,0),(2,0));b=((2,0),(2,2));c=((2,2),(2,4));d=((0,4),(2,4))
+    e=((0,2),(0,4));f=((0,0),(0,2));g=((0,2),(2,2));one=((1,0),(1,4))
+    glyphs={0:[a,b,c,d,e,f],1:[one],2:[a,b,g,e,d],5:[a,f,g,c,d],6:[a,f,g,e,c,d],8:[a,b,c,d,e,f,g],9:[a,b,c,d,f,g]}
+    glyphs={k:frozenset(canonical_edge(*line)for line in lines)for k,lines in glyphs.items()}
+    decode={lines:k for k,lines in glyphs.items()};turn={}
+    for digit,lines in glyphs.items():
+        rotated=frozenset(canonical_edge(*[(2-x,4-y)for x,y in line])for line in lines)
+        turn[digit]=decode[rotated]
+    results=[]
+    # Scan integers rather than the production builder's card permutations.
+    for number in range(10**(places-1),10**places):
+        values=list(map(int,str(number)))
+        if number%10==0 or len(set(values))!=places or not set(values)<=turn.keys():continue
+        result=0
+        for value in values[::-1]:result=result*10+turn[value]
+        results.append((number,result))
+    return results
+
+
+@functools.lru_cache(None)
+def border_number_grid(size):
+    grid={};value=0
+    for side in range(1,size+1):
+        for row in range(1,side+1):value+=1;grid[row,side]=value
+        for col in range(side-1,0,-1):value+=1;grid[side,col]=value
+    assert value==size*size
+    return grid
+
+
+@functools.lru_cache(None)
+def solid_stair_edges(layers,bottom_only=False):
+    edges=set()
+    for x in range(layers):
+        for z in range(1 if bottom_only else x+1):
+            vertices=[(x+i,j,z+k)for i in [0,1]for j in [0,1]for k in [0,1]]
+            for u,v in itertools.combinations(vertices,2):
+                if sum(abs(a-b)for a,b in zip(u,v))==1:edges.add(canonical_edge(u,v))
+    return frozenset(edges)
+
+
 def answer(item):
     no, level, p = item['sourceNo'], item['practiceLevel'], item['verification']['parameters']
+    if no == 25:
+        results=digital_rotation_results(3 if level in ['low','middle'] else 5)
+        if level=='low':return[r for n,r in results if n==p['number']]
+        return[n for n,r in results if r-n==p['difference']]
+    if no == 26:
+        grid=border_number_grid(100)
+        if level=='low':return[grid[tuple(p['first'])]+grid[tuple(p['second'])]]
+        if level=='middle':return[grid[p['row'],p['col']]]
+        assert p['sum']<10000 and p['targetCol']<=100
+        found=[row for row in range(1,101)if grid[p['r'],p['c']]+grid[row,p['targetCol']]==p['sum']]
+        assert len(found)==1
+        return found
+    if no == 27:
+        if level=='low':return[len(solid_stair_edges(p['layers'],True))]
+        if level=='middle':
+            old=frozenset(canonical_edge(*[(x+1,y,z+1)for x,y,z in line])for line in solid_stair_edges(p['oldLayers']))
+            new=solid_stair_edges(p['newLayers']);assert old<=new
+            return[len(new-old)]
+        return[len(solid_stair_edges(p['layers']))]
     if no == 1:
         if level == 'low':
             return [names[walk(p['N'])[p['N']]]]
@@ -618,6 +683,10 @@ assert len(cross_rectangles())==540
 assert {four for _,four,_,product in dice_sequences(8)if product==34560}=={4}
 assert sum(repeated_twos_digits(2021,398))==8102
 assert 43*23-108==881 and [t for t in range(1,100)if 32*t-111==881]==[31]
+assert [n for n,r in digital_rotation_results(5)if r-n==7920]==[60189,60289,60589,90186,90286,90586]
+assert border_number_grid(12)[10,8]+border_number_grid(12)[12,5]==233
+assert len(solid_stair_edges(10))==336
+assert [[border_number_grid(6)[r,c]for c in range(1,7)]for r in range(1,7)]==[[1,2,5,10,17,26],[4,3,6,11,18,27],[9,8,7,12,19,28],[16,15,14,13,20,29],[25,24,23,22,21,30],[36,35,34,33,32,31]]
 
 evidence = []
 for item in data['items']:
@@ -638,11 +707,12 @@ for item in data['items']:
         assert item['difficultyEvidence']['measuredVariantRate'] is None
         assert item['practiceRole'] in ['기초 보완','단계형 확장']
     if item.get('asset'):
-        if item['sourceNo']in [7,17,19,21,22]:
+        if item['sourceNo']in [7,17,19,21,22,25,26,27]:
             from pypdf import PdfReader
-            page_index,image_stem={7:(1,'Im71'),17:(2,'Im80'),19:(3,'Im196'),21:(3,'Im192'),22:(3,'Im198')}[item['sourceNo']]
+            page_index,image_stem={7:(1,'Im71'),17:(2,'Im80'),19:(3,'Im196'),21:(3,'Im192'),22:(3,'Im198'),25:(4,'Im203'),26:(4,'Im204'),27:(4,'Im205')}[item['sourceNo']]
             image = next(x.image for x in PdfReader(ROOT/'materials/초등과정 대비 실전 모의고사 활용 1회.pdf').pages[page_index].images if Path(x.name).stem==image_stem)
             if item['sourceNo']==19:image=image.crop((748,20,965,300))
+            if item['sourceNo']==27:image=image.crop((968,10,1126,272))
             from PIL import Image
             actual_image = Image.open(ROOT/'bank'/item['asset']['src'])
             assert image.mode==actual_image.mode and image.size==actual_image.size and image.tobytes()==actual_image.tobytes()
@@ -652,9 +722,9 @@ for item in data['items']:
     evidence.append({'id': item['id'], 'passed': True, 'answer': actual})
 for no in data['availableSourceNos']:
     assert collections.Counter(x['practiceLevel'] for x in data['items'] if x['sourceNo'] == no) == dict(low=5, middle=5, high=5)
-assert len(data['items']) == 360 and len({x['id'] for x in data['items']}) == 360
-assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 360
-previous = json.loads(subprocess.check_output(['git', 'show', '59d40a8:bank/data/applied1-balanced15.json'], cwd=ROOT))
+assert len(data['items']) == 405 and len({x['id'] for x in data['items']}) == 405
+assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','cards','givenTable','arithmeticRows','asset']},sort_keys=True)for x in data['items']}) == 405
+previous = json.loads(subprocess.check_output(['git', 'show', 'ea42e698:bank/data/applied1-balanced15.json'], cwd=ROOT))
 for old in previous['items']:
     current = next(x for x in data['items'] if x['id'] == old['id'])
     assert all(current[k] == v for k, v in old.items())
@@ -662,7 +732,7 @@ for old in previous['items']:
 out = ROOT / '.private-work/balanced15-20261024/independent-math.json'
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps({'dataSha256': hashlib.sha256(FILE.read_bytes()).hexdigest(),
-                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,25)),
-                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions', 'accumulated hand motion and all first/second study times', 'full17-stick endpoint graph intersections', 'one/two expression sign-sum dynamic programming', 'BFS folded net plus24proper signed-permutation rotations and source line-direction checks', 'integer partition states and exclusive-group relations', 'all original cross-grid unit boundary edge rectangles', 'actual die-value sequences and ordered person product pairs', 'decimal column multiplication with explicit carry states', 'front/rear train position enumeration'],
+                           'count': len(evidence), 'sourceAnswersDirectlyCompared': list(range(1,28)),
+                           'methods': ['step-by-step finger movement', 'digit DP with remainder state', 'actual Gregorian years 1900..2399', 'exact angle sampling', 'dividend/divisor enumeration', 'unique grid edges', 'four boundary rectangle enumeration', 'actual multiplication digit matching', 'union of internal cut coordinate sets', 'integer ages and exact elapsed-year enumeration', 'stepwise movement state sets', 'all morning start minutes with exact drift', 'actual three-digit number masks and disjoint factor pairs', 'all possible first bag integer weights', 'literal fraction stream state transitions', 'accumulated hand motion and all first/second study times', 'full17-stick endpoint graph intersections', 'one/two expression sign-sum dynamic programming', 'BFS folded net plus24proper signed-permutation rotations and source line-direction checks', 'integer partition states and exclusive-group relations', 'all original cross-grid unit boundary edge rectangles', 'actual die-value sequences and ordered person product pairs', 'decimal column multiplication with explicit carry states', 'front/rear train position enumeration', '180degree stroke rotation plus complete integer scans', 'successive literal border insertion', 'all cube unit edges including hidden edges and translated old-stair difference'],
                            'items': evidence}, ensure_ascii=False, indent=2) + '\n')
-print('PASS360 answers in24complete5/5/5 groups; die sequences, decimal carry states, moving front/rear positions;3.4/4.2source bands preserved;prior315unchanged')
+print('PASS405 answers in27complete5/5/5 groups; actual rotated strokes/integer scans, literal grid borders, unique3Dcube edges;prior360unchanged')

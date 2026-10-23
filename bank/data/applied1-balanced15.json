@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied1-balanced15-r8",
+  "version": "20261024-applied1-balanced15-r9",
   "sourceSet": "applied",
   "sourceRound": 1,
   "policy": {
@@ -38,12 +38,12 @@
     21,
     22,
     23,
-    24
-  ],
-  "pendingSourceNos": [
+    24,
     25,
     26,
-    27,
+    27
+  ],
+  "pendingSourceNos": [
     28,
     29,
     30
@@ -26164,17 +26164,3457 @@
         "sourceAnswerPage": 24,
         "studentDifficultyMeasured": false
       }
+    },
+    {
+      "id": "applied1-q25-v1",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "detailType": "반 바퀴 회전한 수와의 차",
+      "pointBand": "4.2",
+      "text": "그림의 숫자 카드 7장 중 서로 다른 5장을 골라 다섯 자리 수를 만들었습니다. 이 수를 반 바퀴 돌려 읽어도 다섯 자리 수가 되며, 돌려 읽은 수는 처음 수보다 6930만큼 큽니다. 처음에 만든 수를 모두 구하시오.",
+      "answer": "61089, 61289, 61589, 91086, 91286, 91586",
+      "answerContract": "unordered-set",
+      "answerParts": [
+        61089,
+        61289,
+        61589,
+        91086,
+        91286,
+        91586
+      ],
+      "acceptedAnswers": [
+        "61089, 61289, 61589, 91086, 91286, 91586"
+      ],
+      "solutionSteps": [
+        "카드를 반 바퀴 돌리면 자리 순서가 거꾸로 되고 6과 9는 서로 바뀝니다. 0, 1, 2, 5, 8은 그대로 읽힙니다. 양쪽 모두 다섯 자리여야 하므로 처음과 끝에는 0을 놓을 수 없습니다.",
+        "각 자리에 놓을 수 있는 서로 다른 카드들을 확인하며 두 수의 차가 6930인 경우를 찾습니다.",
+        "61089은 돌리면 68019이고, 68019−61089＝6930입니다.",
+        "61289은 돌리면 68219이고, 68219−61289＝6930입니다.",
+        "61589은 돌리면 68519이고, 68519−61589＝6930입니다.",
+        "91086은 돌리면 98016이고, 98016−91086＝6930입니다.",
+        "91286은 돌리면 98216이고, 98216−91286＝6930입니다.",
+        "91586은 돌리면 98516이고, 98516−91586＝6930입니다.",
+        "가능한 첫 수부터 끝 수까지 서로 다른 카드 조건으로 확인하면 위 여섯 수가 전부입니다."
+      ],
+      "solution": "카드를 반 바퀴 돌리면 자리 순서가 거꾸로 되고 6과 9는 서로 바뀝니다. 0, 1, 2, 5, 8은 그대로 읽힙니다. 양쪽 모두 다섯 자리여야 하므로 처음과 끝에는 0을 놓을 수 없습니다. 각 자리에 놓을 수 있는 서로 다른 카드들을 확인하며 두 수의 차가 6930인 경우를 찾습니다. 61089은 돌리면 68019이고, 68019−61089＝6930입니다. 61289은 돌리면 68219이고, 68219−61289＝6930입니다. 61589은 돌리면 68519이고, 68519−61589＝6930입니다. 91086은 돌리면 98016이고, 98016−91086＝6930입니다. 91286은 돌리면 98216이고, 98216−91286＝6930입니다. 91586은 돌리면 98516이고, 98516−91586＝6930입니다. 가능한 첫 수부터 끝 수까지 서로 다른 카드 조건으로 확인하면 위 여섯 수가 전부입니다.",
+      "learningPoint": "자리의 역순과 6·9의 변화를 동시에 적용하기",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "verification": {
+        "primaryMethod": "all ordered 5-card selections",
+        "parameters": {
+          "difference": 6930,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q25-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q25-v2",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "detailType": "반 바퀴 회전한 수와의 차",
+      "pointBand": "4.2",
+      "text": "그림의 숫자 카드 7장 중 서로 다른 5장을 골라 다섯 자리 수를 만들었습니다. 이 수를 반 바퀴 돌려 읽어도 다섯 자리 수가 되며, 돌려 읽은 수는 처음 수보다 5940만큼 큽니다. 처음에 만든 수를 모두 구하시오.",
+      "answer": "62089, 62189, 62589, 92086, 92186, 92586",
+      "answerContract": "unordered-set",
+      "answerParts": [
+        62089,
+        62189,
+        62589,
+        92086,
+        92186,
+        92586
+      ],
+      "acceptedAnswers": [
+        "62089, 62189, 62589, 92086, 92186, 92586"
+      ],
+      "solutionSteps": [
+        "카드를 반 바퀴 돌리면 자리 순서가 거꾸로 되고 6과 9는 서로 바뀝니다. 0, 1, 2, 5, 8은 그대로 읽힙니다. 양쪽 모두 다섯 자리여야 하므로 처음과 끝에는 0을 놓을 수 없습니다.",
+        "각 자리에 놓을 수 있는 서로 다른 카드들을 확인하며 두 수의 차가 5940인 경우를 찾습니다.",
+        "62089은 돌리면 68029이고, 68029−62089＝5940입니다.",
+        "62189은 돌리면 68129이고, 68129−62189＝5940입니다.",
+        "62589은 돌리면 68529이고, 68529−62589＝5940입니다.",
+        "92086은 돌리면 98026이고, 98026−92086＝5940입니다.",
+        "92186은 돌리면 98126이고, 98126−92186＝5940입니다.",
+        "92586은 돌리면 98526이고, 98526−92586＝5940입니다.",
+        "가능한 첫 수부터 끝 수까지 서로 다른 카드 조건으로 확인하면 위 여섯 수가 전부입니다."
+      ],
+      "solution": "카드를 반 바퀴 돌리면 자리 순서가 거꾸로 되고 6과 9는 서로 바뀝니다. 0, 1, 2, 5, 8은 그대로 읽힙니다. 양쪽 모두 다섯 자리여야 하므로 처음과 끝에는 0을 놓을 수 없습니다. 각 자리에 놓을 수 있는 서로 다른 카드들을 확인하며 두 수의 차가 5940인 경우를 찾습니다. 62089은 돌리면 68029이고, 68029−62089＝5940입니다. 62189은 돌리면 68129이고, 68129−62189＝5940입니다. 62589은 돌리면 68529이고, 68529−62589＝5940입니다. 92086은 돌리면 98026이고, 98026−92086＝5940입니다. 92186은 돌리면 98126이고, 98126−92186＝5940입니다. 92586은 돌리면 98526이고, 98526−92586＝5940입니다. 가능한 첫 수부터 끝 수까지 서로 다른 카드 조건으로 확인하면 위 여섯 수가 전부입니다.",
+      "learningPoint": "자리의 역순과 6·9의 변화를 동시에 적용하기",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "verification": {
+        "primaryMethod": "all ordered 5-card selections",
+        "parameters": {
+          "difference": 5940,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q25-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q25-v3",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "detailType": "반 바퀴 회전한 수와의 차",
+      "pointBand": "4.2",
+      "text": "그림의 숫자 카드 7장 중 서로 다른 5장을 골라 다섯 자리 수를 만들었습니다. 이 수를 반 바퀴 돌려 읽어도 다섯 자리 수가 되며, 돌려 읽은 수는 처음 수보다 9999만큼 큽니다. 처음에 만든 수를 모두 구하시오.",
+      "answer": "16092, 16592, 16892, 19062, 19562, 19862",
+      "answerContract": "unordered-set",
+      "answerParts": [
+        16092,
+        16592,
+        16892,
+        19062,
+        19562,
+        19862
+      ],
+      "acceptedAnswers": [
+        "16092, 16592, 16892, 19062, 19562, 19862"
+      ],
+      "solutionSteps": [
+        "카드를 반 바퀴 돌리면 자리 순서가 거꾸로 되고 6과 9는 서로 바뀝니다. 0, 1, 2, 5, 8은 그대로 읽힙니다. 양쪽 모두 다섯 자리여야 하므로 처음과 끝에는 0을 놓을 수 없습니다.",
+        "각 자리에 놓을 수 있는 서로 다른 카드들을 확인하며 두 수의 차가 9999인 경우를 찾습니다.",
+        "16092은 돌리면 26091이고, 26091−16092＝9999입니다.",
+        "16592은 돌리면 26591이고, 26591−16592＝9999입니다.",
+        "16892은 돌리면 26891이고, 26891−16892＝9999입니다.",
+        "19062은 돌리면 29061이고, 29061−19062＝9999입니다.",
+        "19562은 돌리면 29561이고, 29561−19562＝9999입니다.",
+        "19862은 돌리면 29861이고, 29861−19862＝9999입니다.",
+        "가능한 첫 수부터 끝 수까지 서로 다른 카드 조건으로 확인하면 위 여섯 수가 전부입니다."
+      ],
+      "solution": "카드를 반 바퀴 돌리면 자리 순서가 거꾸로 되고 6과 9는 서로 바뀝니다. 0, 1, 2, 5, 8은 그대로 읽힙니다. 양쪽 모두 다섯 자리여야 하므로 처음과 끝에는 0을 놓을 수 없습니다. 각 자리에 놓을 수 있는 서로 다른 카드들을 확인하며 두 수의 차가 9999인 경우를 찾습니다. 16092은 돌리면 26091이고, 26091−16092＝9999입니다. 16592은 돌리면 26591이고, 26591−16592＝9999입니다. 16892은 돌리면 26891이고, 26891−16892＝9999입니다. 19062은 돌리면 29061이고, 29061−19062＝9999입니다. 19562은 돌리면 29561이고, 29561−19562＝9999입니다. 19862은 돌리면 29861이고, 29861−19862＝9999입니다. 가능한 첫 수부터 끝 수까지 서로 다른 카드 조건으로 확인하면 위 여섯 수가 전부입니다.",
+      "learningPoint": "자리의 역순과 6·9의 변화를 동시에 적용하기",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "verification": {
+        "primaryMethod": "all ordered 5-card selections",
+        "parameters": {
+          "difference": 9999,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q25-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q25-v4",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "detailType": "반 바퀴 회전한 수와의 차",
+      "pointBand": "4.2",
+      "text": "그림의 숫자 카드 7장 중 서로 다른 5장을 골라 다섯 자리 수를 만들었습니다. 이 수를 반 바퀴 돌려 읽어도 다섯 자리 수가 되며, 돌려 읽은 수는 처음 수보다 4950만큼 큽니다. 처음에 만든 수를 모두 구하시오.",
+      "answer": "60159, 60259, 60859, 90156, 90256, 90856",
+      "answerContract": "unordered-set",
+      "answerParts": [
+        60159,
+        60259,
+        60859,
+        90156,
+        90256,
+        90856
+      ],
+      "acceptedAnswers": [
+        "60159, 60259, 60859, 90156, 90256, 90856"
+      ],
+      "solutionSteps": [
+        "카드를 반 바퀴 돌리면 자리 순서가 거꾸로 되고 6과 9는 서로 바뀝니다. 0, 1, 2, 5, 8은 그대로 읽힙니다. 양쪽 모두 다섯 자리여야 하므로 처음과 끝에는 0을 놓을 수 없습니다.",
+        "각 자리에 놓을 수 있는 서로 다른 카드들을 확인하며 두 수의 차가 4950인 경우를 찾습니다.",
+        "60159은 돌리면 65109이고, 65109−60159＝4950입니다.",
+        "60259은 돌리면 65209이고, 65209−60259＝4950입니다.",
+        "60859은 돌리면 65809이고, 65809−60859＝4950입니다.",
+        "90156은 돌리면 95106이고, 95106−90156＝4950입니다.",
+        "90256은 돌리면 95206이고, 95206−90256＝4950입니다.",
+        "90856은 돌리면 95806이고, 95806−90856＝4950입니다.",
+        "가능한 첫 수부터 끝 수까지 서로 다른 카드 조건으로 확인하면 위 여섯 수가 전부입니다."
+      ],
+      "solution": "카드를 반 바퀴 돌리면 자리 순서가 거꾸로 되고 6과 9는 서로 바뀝니다. 0, 1, 2, 5, 8은 그대로 읽힙니다. 양쪽 모두 다섯 자리여야 하므로 처음과 끝에는 0을 놓을 수 없습니다. 각 자리에 놓을 수 있는 서로 다른 카드들을 확인하며 두 수의 차가 4950인 경우를 찾습니다. 60159은 돌리면 65109이고, 65109−60159＝4950입니다. 60259은 돌리면 65209이고, 65209−60259＝4950입니다. 60859은 돌리면 65809이고, 65809−60859＝4950입니다. 90156은 돌리면 95106이고, 95106−90156＝4950입니다. 90256은 돌리면 95206이고, 95206−90256＝4950입니다. 90856은 돌리면 95806이고, 95806−90856＝4950입니다. 가능한 첫 수부터 끝 수까지 서로 다른 카드 조건으로 확인하면 위 여섯 수가 전부입니다.",
+      "learningPoint": "자리의 역순과 6·9의 변화를 동시에 적용하기",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "verification": {
+        "primaryMethod": "all ordered 5-card selections",
+        "parameters": {
+          "difference": 4950,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q25-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q25-v5",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "detailType": "반 바퀴 회전한 수와의 차",
+      "pointBand": "4.2",
+      "text": "그림의 숫자 카드 7장 중 서로 다른 5장을 골라 다섯 자리 수를 만들었습니다. 이 수를 반 바퀴 돌려 읽어도 다섯 자리 수가 되며, 돌려 읽은 수는 처음 수보다 3960만큼 큽니다. 처음에 만든 수를 모두 구하시오.",
+      "answer": "61059, 61259, 61859, 91056, 91256, 91856",
+      "answerContract": "unordered-set",
+      "answerParts": [
+        61059,
+        61259,
+        61859,
+        91056,
+        91256,
+        91856
+      ],
+      "acceptedAnswers": [
+        "61059, 61259, 61859, 91056, 91256, 91856"
+      ],
+      "solutionSteps": [
+        "카드를 반 바퀴 돌리면 자리 순서가 거꾸로 되고 6과 9는 서로 바뀝니다. 0, 1, 2, 5, 8은 그대로 읽힙니다. 양쪽 모두 다섯 자리여야 하므로 처음과 끝에는 0을 놓을 수 없습니다.",
+        "각 자리에 놓을 수 있는 서로 다른 카드들을 확인하며 두 수의 차가 3960인 경우를 찾습니다.",
+        "61059은 돌리면 65019이고, 65019−61059＝3960입니다.",
+        "61259은 돌리면 65219이고, 65219−61259＝3960입니다.",
+        "61859은 돌리면 65819이고, 65819−61859＝3960입니다.",
+        "91056은 돌리면 95016이고, 95016−91056＝3960입니다.",
+        "91256은 돌리면 95216이고, 95216−91256＝3960입니다.",
+        "91856은 돌리면 95816이고, 95816−91856＝3960입니다.",
+        "가능한 첫 수부터 끝 수까지 서로 다른 카드 조건으로 확인하면 위 여섯 수가 전부입니다."
+      ],
+      "solution": "카드를 반 바퀴 돌리면 자리 순서가 거꾸로 되고 6과 9는 서로 바뀝니다. 0, 1, 2, 5, 8은 그대로 읽힙니다. 양쪽 모두 다섯 자리여야 하므로 처음과 끝에는 0을 놓을 수 없습니다. 각 자리에 놓을 수 있는 서로 다른 카드들을 확인하며 두 수의 차가 3960인 경우를 찾습니다. 61059은 돌리면 65019이고, 65019−61059＝3960입니다. 61259은 돌리면 65219이고, 65219−61259＝3960입니다. 61859은 돌리면 65819이고, 65819−61859＝3960입니다. 91056은 돌리면 95016이고, 95016−91056＝3960입니다. 91256은 돌리면 95216이고, 95216−91256＝3960입니다. 91856은 돌리면 95816이고, 95816−91856＝3960입니다. 가능한 첫 수부터 끝 수까지 서로 다른 카드 조건으로 확인하면 위 여섯 수가 전부입니다.",
+      "learningPoint": "자리의 역순과 6·9의 변화를 동시에 적용하기",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "verification": {
+        "primaryMethod": "all ordered 5-card selections",
+        "parameters": {
+          "difference": 3960,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q25-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q26-v1",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "detailType": "정사각형 테두리 수 배열의 행 찾기",
+      "pointBand": "4.2",
+      "text": "그림과 같이 일정한 규칙에 따라 수를 배열하였습니다. [9, 7]는 9행 7열의 수를 뜻합니다. [9, 7]＋[n, 5]＝192일 때 n을 구하시오.",
+      "answer": "11",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        11
+      ],
+      "acceptedAnswers": [
+        "11"
+      ],
+      "solutionSteps": [
+        "각 행의 첫 수는 1, 4, 9, 16, …의 제곱수이고, 대각선 칸까지 오른쪽으로 한 칸 갈 때마다 1씩 작아집니다.",
+        "[9, 7]＝9×9−(7−1)＝75이므로 [n, 5]＝192−75＝117입니다.",
+        "1~4행의 5열 수는 17, 18, 19, 20이므로 해당하지 않습니다. n이 5 이상이면 [n, 5]＝n×n−4입니다. 따라서 n×n＝121이고 n＝11입니다."
+      ],
+      "solution": "각 행의 첫 수는 1, 4, 9, 16, …의 제곱수이고, 대각선 칸까지 오른쪽으로 한 칸 갈 때마다 1씩 작아집니다. [9, 7]＝9×9−(7−1)＝75이므로 [n, 5]＝192−75＝117입니다. 1~4행의 5열 수는 17, 18, 19, 20이므로 해당하지 않습니다. n이 5 이상이면 [n, 5]＝n×n−4입니다. 따라서 n×n＝121이고 n＝11입니다.",
+      "learningPoint": "대각선 전후의 규칙을 구분하고 행 번호를 역산하기",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "verification": {
+        "primaryMethod": "row-square branch of grid rule",
+        "parameters": {
+          "r": 9,
+          "c": 7,
+          "targetCol": 5,
+          "sum": 192
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q26-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q26-v2",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "detailType": "정사각형 테두리 수 배열의 행 찾기",
+      "pointBand": "4.2",
+      "text": "그림과 같이 일정한 규칙에 따라 수를 배열하였습니다. [10, 6]는 10행 6열의 수를 뜻합니다. [10, 6]＋[n, 5]＝260일 때 n을 구하시오.",
+      "answer": "13",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        13
+      ],
+      "acceptedAnswers": [
+        "13"
+      ],
+      "solutionSteps": [
+        "각 행의 첫 수는 1, 4, 9, 16, …의 제곱수이고, 대각선 칸까지 오른쪽으로 한 칸 갈 때마다 1씩 작아집니다.",
+        "[10, 6]＝10×10−(6−1)＝95이므로 [n, 5]＝260−95＝165입니다.",
+        "1~4행의 5열 수는 17, 18, 19, 20이므로 해당하지 않습니다. n이 5 이상이면 [n, 5]＝n×n−4입니다. 따라서 n×n＝169이고 n＝13입니다."
+      ],
+      "solution": "각 행의 첫 수는 1, 4, 9, 16, …의 제곱수이고, 대각선 칸까지 오른쪽으로 한 칸 갈 때마다 1씩 작아집니다. [10, 6]＝10×10−(6−1)＝95이므로 [n, 5]＝260−95＝165입니다. 1~4행의 5열 수는 17, 18, 19, 20이므로 해당하지 않습니다. n이 5 이상이면 [n, 5]＝n×n−4입니다. 따라서 n×n＝169이고 n＝13입니다.",
+      "learningPoint": "대각선 전후의 규칙을 구분하고 행 번호를 역산하기",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "verification": {
+        "primaryMethod": "row-square branch of grid rule",
+        "parameters": {
+          "r": 10,
+          "c": 6,
+          "targetCol": 5,
+          "sum": 260
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q26-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q26-v3",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "detailType": "정사각형 테두리 수 배열의 행 찾기",
+      "pointBand": "4.2",
+      "text": "그림과 같이 일정한 규칙에 따라 수를 배열하였습니다. [11, 8]는 11행 8열의 수를 뜻합니다. [11, 8]＋[n, 5]＝306일 때 n을 구하시오.",
+      "answer": "14",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        14
+      ],
+      "acceptedAnswers": [
+        "14"
+      ],
+      "solutionSteps": [
+        "각 행의 첫 수는 1, 4, 9, 16, …의 제곱수이고, 대각선 칸까지 오른쪽으로 한 칸 갈 때마다 1씩 작아집니다.",
+        "[11, 8]＝11×11−(8−1)＝114이므로 [n, 5]＝306−114＝192입니다.",
+        "1~4행의 5열 수는 17, 18, 19, 20이므로 해당하지 않습니다. n이 5 이상이면 [n, 5]＝n×n−4입니다. 따라서 n×n＝196이고 n＝14입니다."
+      ],
+      "solution": "각 행의 첫 수는 1, 4, 9, 16, …의 제곱수이고, 대각선 칸까지 오른쪽으로 한 칸 갈 때마다 1씩 작아집니다. [11, 8]＝11×11−(8−1)＝114이므로 [n, 5]＝306−114＝192입니다. 1~4행의 5열 수는 17, 18, 19, 20이므로 해당하지 않습니다. n이 5 이상이면 [n, 5]＝n×n−4입니다. 따라서 n×n＝196이고 n＝14입니다.",
+      "learningPoint": "대각선 전후의 규칙을 구분하고 행 번호를 역산하기",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "verification": {
+        "primaryMethod": "row-square branch of grid rule",
+        "parameters": {
+          "r": 11,
+          "c": 8,
+          "targetCol": 5,
+          "sum": 306
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q26-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q26-v4",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "detailType": "정사각형 테두리 수 배열의 행 찾기",
+      "pointBand": "4.2",
+      "text": "그림과 같이 일정한 규칙에 따라 수를 배열하였습니다. [12, 9]는 12행 9열의 수를 뜻합니다. [12, 9]＋[n, 5]＝357일 때 n을 구하시오.",
+      "answer": "15",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        15
+      ],
+      "acceptedAnswers": [
+        "15"
+      ],
+      "solutionSteps": [
+        "각 행의 첫 수는 1, 4, 9, 16, …의 제곱수이고, 대각선 칸까지 오른쪽으로 한 칸 갈 때마다 1씩 작아집니다.",
+        "[12, 9]＝12×12−(9−1)＝136이므로 [n, 5]＝357−136＝221입니다.",
+        "1~4행의 5열 수는 17, 18, 19, 20이므로 해당하지 않습니다. n이 5 이상이면 [n, 5]＝n×n−4입니다. 따라서 n×n＝225이고 n＝15입니다."
+      ],
+      "solution": "각 행의 첫 수는 1, 4, 9, 16, …의 제곱수이고, 대각선 칸까지 오른쪽으로 한 칸 갈 때마다 1씩 작아집니다. [12, 9]＝12×12−(9−1)＝136이므로 [n, 5]＝357−136＝221입니다. 1~4행의 5열 수는 17, 18, 19, 20이므로 해당하지 않습니다. n이 5 이상이면 [n, 5]＝n×n−4입니다. 따라서 n×n＝225이고 n＝15입니다.",
+      "learningPoint": "대각선 전후의 규칙을 구분하고 행 번호를 역산하기",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "verification": {
+        "primaryMethod": "row-square branch of grid rule",
+        "parameters": {
+          "r": 12,
+          "c": 9,
+          "targetCol": 5,
+          "sum": 357
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q26-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q26-v5",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "detailType": "정사각형 테두리 수 배열의 행 찾기",
+      "pointBand": "4.2",
+      "text": "그림과 같이 일정한 규칙에 따라 수를 배열하였습니다. [13, 10]는 13행 10열의 수를 뜻합니다. [13, 10]＋[n, 5]＝412일 때 n을 구하시오.",
+      "answer": "16",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        16
+      ],
+      "acceptedAnswers": [
+        "16"
+      ],
+      "solutionSteps": [
+        "각 행의 첫 수는 1, 4, 9, 16, …의 제곱수이고, 대각선 칸까지 오른쪽으로 한 칸 갈 때마다 1씩 작아집니다.",
+        "[13, 10]＝13×13−(10−1)＝160이므로 [n, 5]＝412−160＝252입니다.",
+        "1~4행의 5열 수는 17, 18, 19, 20이므로 해당하지 않습니다. n이 5 이상이면 [n, 5]＝n×n−4입니다. 따라서 n×n＝256이고 n＝16입니다."
+      ],
+      "solution": "각 행의 첫 수는 1, 4, 9, 16, …의 제곱수이고, 대각선 칸까지 오른쪽으로 한 칸 갈 때마다 1씩 작아집니다. [13, 10]＝13×13−(10−1)＝160이므로 [n, 5]＝412−160＝252입니다. 1~4행의 5열 수는 17, 18, 19, 20이므로 해당하지 않습니다. n이 5 이상이면 [n, 5]＝n×n−4입니다. 따라서 n×n＝256이고 n＝16입니다.",
+      "learningPoint": "대각선 전후의 규칙을 구분하고 행 번호를 역산하기",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "verification": {
+        "primaryMethod": "row-square branch of grid rule",
+        "parameters": {
+          "r": 13,
+          "c": 10,
+          "targetCol": 5,
+          "sum": 412
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q26-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q27-v1",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "detailType": "계단형 상자 입체의 성냥개비 수",
+      "pointBand": "4.2",
+      "text": "그림처럼 모양과 크기가 같은 정육면체 상자들을 한 줄 두께의 계단 모양으로 성냥개비를 이용해 만듭니다. 9층까지 나타내는 데 필요한 성냥개비는 모두 몇 개입니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "280개",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        280
+      ],
+      "acceptedAnswers": [
+        "280개"
+      ],
+      "solutionSteps": [
+        "앞면에서 가로선과 세로선을 세면 각각 9×(9＋3)÷2개이므로 앞면 전체는 108개입니다. 뒷면도 같아 앞뒤를 합하면 216개입니다.",
+        "깊이 방향 성냥개비는 앞면의 각 꼭짓점에서 하나씩 이어집니다. 앞면 꼭짓점은 맨 아래 10개와 그 위 10, 9, …, 2개를 합해 64개입니다.",
+        "같은 모서리를 한 번씩만 센 전체 개수는 216＋64＝280개입니다."
+      ],
+      "solution": "앞면에서 가로선과 세로선을 세면 각각 9×(9＋3)÷2개이므로 앞면 전체는 108개입니다. 뒷면도 같아 앞뒤를 합하면 216개입니다. 깊이 방향 성냥개비는 앞면의 각 꼭짓점에서 하나씩 이어집니다. 앞면 꼭짓점은 맨 아래 10개와 그 위 10, 9, …, 2개를 합해 64개입니다. 같은 모서리를 한 번씩만 센 전체 개수는 216＋64＝280개입니다.",
+      "learningPoint": "공유 모서리와 보이지 않는 깊이 방향 모서리까지 구분하기",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "verification": {
+        "primaryMethod": "front back planar edges plus vertex connectors",
+        "parameters": {
+          "layers": 9
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q27-v1",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q27-v2",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "detailType": "계단형 상자 입체의 성냥개비 수",
+      "pointBand": "4.2",
+      "text": "그림처럼 모양과 크기가 같은 정육면체 상자들을 한 줄 두께의 계단 모양으로 성냥개비를 이용해 만듭니다. 11층까지 나타내는 데 필요한 성냥개비는 모두 몇 개입니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "397개",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        397
+      ],
+      "acceptedAnswers": [
+        "397개"
+      ],
+      "solutionSteps": [
+        "앞면에서 가로선과 세로선을 세면 각각 11×(11＋3)÷2개이므로 앞면 전체는 154개입니다. 뒷면도 같아 앞뒤를 합하면 308개입니다.",
+        "깊이 방향 성냥개비는 앞면의 각 꼭짓점에서 하나씩 이어집니다. 앞면 꼭짓점은 맨 아래 12개와 그 위 12, 11, …, 2개를 합해 89개입니다.",
+        "같은 모서리를 한 번씩만 센 전체 개수는 308＋89＝397개입니다."
+      ],
+      "solution": "앞면에서 가로선과 세로선을 세면 각각 11×(11＋3)÷2개이므로 앞면 전체는 154개입니다. 뒷면도 같아 앞뒤를 합하면 308개입니다. 깊이 방향 성냥개비는 앞면의 각 꼭짓점에서 하나씩 이어집니다. 앞면 꼭짓점은 맨 아래 12개와 그 위 12, 11, …, 2개를 합해 89개입니다. 같은 모서리를 한 번씩만 센 전체 개수는 308＋89＝397개입니다.",
+      "learningPoint": "공유 모서리와 보이지 않는 깊이 방향 모서리까지 구분하기",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "verification": {
+        "primaryMethod": "front back planar edges plus vertex connectors",
+        "parameters": {
+          "layers": 11
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q27-v2",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q27-v3",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "detailType": "계단형 상자 입체의 성냥개비 수",
+      "pointBand": "4.2",
+      "text": "그림처럼 모양과 크기가 같은 정육면체 상자들을 한 줄 두께의 계단 모양으로 성냥개비를 이용해 만듭니다. 12층까지 나타내는 데 필요한 성냥개비는 모두 몇 개입니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "463개",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        463
+      ],
+      "acceptedAnswers": [
+        "463개"
+      ],
+      "solutionSteps": [
+        "앞면에서 가로선과 세로선을 세면 각각 12×(12＋3)÷2개이므로 앞면 전체는 180개입니다. 뒷면도 같아 앞뒤를 합하면 360개입니다.",
+        "깊이 방향 성냥개비는 앞면의 각 꼭짓점에서 하나씩 이어집니다. 앞면 꼭짓점은 맨 아래 13개와 그 위 13, 12, …, 2개를 합해 103개입니다.",
+        "같은 모서리를 한 번씩만 센 전체 개수는 360＋103＝463개입니다."
+      ],
+      "solution": "앞면에서 가로선과 세로선을 세면 각각 12×(12＋3)÷2개이므로 앞면 전체는 180개입니다. 뒷면도 같아 앞뒤를 합하면 360개입니다. 깊이 방향 성냥개비는 앞면의 각 꼭짓점에서 하나씩 이어집니다. 앞면 꼭짓점은 맨 아래 13개와 그 위 13, 12, …, 2개를 합해 103개입니다. 같은 모서리를 한 번씩만 센 전체 개수는 360＋103＝463개입니다.",
+      "learningPoint": "공유 모서리와 보이지 않는 깊이 방향 모서리까지 구분하기",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "verification": {
+        "primaryMethod": "front back planar edges plus vertex connectors",
+        "parameters": {
+          "layers": 12
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q27-v3",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q27-v4",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "detailType": "계단형 상자 입체의 성냥개비 수",
+      "pointBand": "4.2",
+      "text": "그림처럼 모양과 크기가 같은 정육면체 상자들을 한 줄 두께의 계단 모양으로 성냥개비를 이용해 만듭니다. 13층까지 나타내는 데 필요한 성냥개비는 모두 몇 개입니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "534개",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        534
+      ],
+      "acceptedAnswers": [
+        "534개"
+      ],
+      "solutionSteps": [
+        "앞면에서 가로선과 세로선을 세면 각각 13×(13＋3)÷2개이므로 앞면 전체는 208개입니다. 뒷면도 같아 앞뒤를 합하면 416개입니다.",
+        "깊이 방향 성냥개비는 앞면의 각 꼭짓점에서 하나씩 이어집니다. 앞면 꼭짓점은 맨 아래 14개와 그 위 14, 13, …, 2개를 합해 118개입니다.",
+        "같은 모서리를 한 번씩만 센 전체 개수는 416＋118＝534개입니다."
+      ],
+      "solution": "앞면에서 가로선과 세로선을 세면 각각 13×(13＋3)÷2개이므로 앞면 전체는 208개입니다. 뒷면도 같아 앞뒤를 합하면 416개입니다. 깊이 방향 성냥개비는 앞면의 각 꼭짓점에서 하나씩 이어집니다. 앞면 꼭짓점은 맨 아래 14개와 그 위 14, 13, …, 2개를 합해 118개입니다. 같은 모서리를 한 번씩만 센 전체 개수는 416＋118＝534개입니다.",
+      "learningPoint": "공유 모서리와 보이지 않는 깊이 방향 모서리까지 구분하기",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "verification": {
+        "primaryMethod": "front back planar edges plus vertex connectors",
+        "parameters": {
+          "layers": 13
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q27-v4",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "id": "applied1-q27-v5",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "detailType": "계단형 상자 입체의 성냥개비 수",
+      "pointBand": "4.2",
+      "text": "그림처럼 모양과 크기가 같은 정육면체 상자들을 한 줄 두께의 계단 모양으로 성냥개비를 이용해 만듭니다. 14층까지 나타내는 데 필요한 성냥개비는 모두 몇 개입니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "610개",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        610
+      ],
+      "acceptedAnswers": [
+        "610개"
+      ],
+      "solutionSteps": [
+        "앞면에서 가로선과 세로선을 세면 각각 14×(14＋3)÷2개이므로 앞면 전체는 238개입니다. 뒷면도 같아 앞뒤를 합하면 476개입니다.",
+        "깊이 방향 성냥개비는 앞면의 각 꼭짓점에서 하나씩 이어집니다. 앞면 꼭짓점은 맨 아래 15개와 그 위 15, 14, …, 2개를 합해 134개입니다.",
+        "같은 모서리를 한 번씩만 센 전체 개수는 476＋134＝610개입니다."
+      ],
+      "solution": "앞면에서 가로선과 세로선을 세면 각각 14×(14＋3)÷2개이므로 앞면 전체는 238개입니다. 뒷면도 같아 앞뒤를 합하면 476개입니다. 깊이 방향 성냥개비는 앞면의 각 꼭짓점에서 하나씩 이어집니다. 앞면 꼭짓점은 맨 아래 15개와 그 위 15, 14, …, 2개를 합해 134개입니다. 같은 모서리를 한 번씩만 센 전체 개수는 476＋134＝610개입니다.",
+      "learningPoint": "공유 모서리와 보이지 않는 깊이 방향 모서리까지 구분하기",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "verification": {
+        "primaryMethod": "front back planar edges plus vertex connectors",
+        "parameters": {
+          "layers": 14
+        },
+        "independentSuite": "qa/applied1-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "practiceLevel": "high",
+      "sourcePointBand": "4.2",
+      "preservedApprovedId": "applied1-q27-v5",
+      "practiceRole": "원문 수준 연습",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "levelReview": {
+        "basis": "source-point-band",
+        "relation": "source-benchmark",
+        "measured": false,
+        "preservedItem": true
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "detailType": "정해진 디지털 수의 반 바퀴 회전",
+      "id": "applied1-q25-low-v1",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 숫자 카드 중 서로 다른3장으로 만든 세 자리 수 126을 통째로 반 바퀴 돌려 읽었습니다. 돌려 읽은 수를 구하시오.",
+      "answer": "921",
+      "answerParts": [
+        921
+      ],
+      "answerLabels": [
+        "돌려 읽은 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "921"
+      ],
+      "solutionSteps": [
+        "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다.",
+        "처음 수의 일의 자리6은 돌린 수의 백의 자리9가 됩니다. 십의 자리2는2,백의 자리1은 일의 자리1로 읽힙니다.",
+        "따라서 돌려 읽은 수는921입니다. 다시 반 바퀴 돌리면 처음 수126으로 돌아갑니다."
+      ],
+      "solution": "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음 수의 일의 자리6은 돌린 수의 백의 자리9가 됩니다. 십의 자리2는2,백의 자리1은 일의 자리1로 읽힙니다. 따라서 돌려 읽은 수는921입니다. 다시 반 바퀴 돌리면 처음 수126으로 돌아갑니다.",
+      "learningPoint": "카드의 순서 역전과6/9의 교환을 함께 적용하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "이미 정해진 세 자리 수를 반 바퀴 돌려 읽기",
+          "conditionTracking": "전체 순서의 역전·6/9 교환·2/5 자기자신·세 장 중복 없음",
+          "caseSplitting": "차를 역산하거나 모든 처음 수를 찾는 단계 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "reverse fixed digit tuple and rotate each original card",
+        "parameters": {
+          "number": 126,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "detailType": "정해진 디지털 수의 반 바퀴 회전",
+      "id": "applied1-q25-low-v2",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 숫자 카드 중 서로 다른3장으로 만든 세 자리 수 258을 통째로 반 바퀴 돌려 읽었습니다. 돌려 읽은 수를 구하시오.",
+      "answer": "852",
+      "answerParts": [
+        852
+      ],
+      "answerLabels": [
+        "돌려 읽은 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "852"
+      ],
+      "solutionSteps": [
+        "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다.",
+        "처음 수의 일의 자리8은 돌린 수의 백의 자리8이 됩니다. 십의 자리5는5,백의 자리2는 일의 자리2로 읽힙니다.",
+        "따라서 돌려 읽은 수는852입니다. 다시 반 바퀴 돌리면 처음 수258로 돌아갑니다."
+      ],
+      "solution": "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음 수의 일의 자리8은 돌린 수의 백의 자리8이 됩니다. 십의 자리5는5,백의 자리2는 일의 자리2로 읽힙니다. 따라서 돌려 읽은 수는852입니다. 다시 반 바퀴 돌리면 처음 수258로 돌아갑니다.",
+      "learningPoint": "카드의 순서 역전과6/9의 교환을 함께 적용하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "이미 정해진 세 자리 수를 반 바퀴 돌려 읽기",
+          "conditionTracking": "전체 순서의 역전·6/9 교환·2/5 자기자신·세 장 중복 없음",
+          "caseSplitting": "차를 역산하거나 모든 처음 수를 찾는 단계 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "reverse fixed digit tuple and rotate each original card",
+        "parameters": {
+          "number": 258,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "detailType": "정해진 디지털 수의 반 바퀴 회전",
+      "id": "applied1-q25-low-v3",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 숫자 카드 중 서로 다른3장으로 만든 세 자리 수 581을 통째로 반 바퀴 돌려 읽었습니다. 돌려 읽은 수를 구하시오.",
+      "answer": "185",
+      "answerParts": [
+        185
+      ],
+      "answerLabels": [
+        "돌려 읽은 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "185"
+      ],
+      "solutionSteps": [
+        "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다.",
+        "처음 수의 일의 자리1은 돌린 수의 백의 자리1이 됩니다. 십의 자리8은8,백의 자리5는 일의 자리5로 읽힙니다.",
+        "따라서 돌려 읽은 수는185입니다. 다시 반 바퀴 돌리면 처음 수581로 돌아갑니다."
+      ],
+      "solution": "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음 수의 일의 자리1은 돌린 수의 백의 자리1이 됩니다. 십의 자리8은8,백의 자리5는 일의 자리5로 읽힙니다. 따라서 돌려 읽은 수는185입니다. 다시 반 바퀴 돌리면 처음 수581로 돌아갑니다.",
+      "learningPoint": "카드의 순서 역전과6/9의 교환을 함께 적용하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "이미 정해진 세 자리 수를 반 바퀴 돌려 읽기",
+          "conditionTracking": "전체 순서의 역전·6/9 교환·2/5 자기자신·세 장 중복 없음",
+          "caseSplitting": "차를 역산하거나 모든 처음 수를 찾는 단계 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "reverse fixed digit tuple and rotate each original card",
+        "parameters": {
+          "number": 581,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "detailType": "정해진 디지털 수의 반 바퀴 회전",
+      "id": "applied1-q25-low-v4",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 숫자 카드 중 서로 다른3장으로 만든 세 자리 수 612를 통째로 반 바퀴 돌려 읽었습니다. 돌려 읽은 수를 구하시오.",
+      "answer": "219",
+      "answerParts": [
+        219
+      ],
+      "answerLabels": [
+        "돌려 읽은 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "219"
+      ],
+      "solutionSteps": [
+        "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다.",
+        "처음 수의 일의 자리2는 돌린 수의 백의 자리2가 됩니다. 십의 자리1은1,백의 자리6은 일의 자리9로 읽힙니다.",
+        "따라서 돌려 읽은 수는219입니다. 다시 반 바퀴 돌리면 처음 수612로 돌아갑니다."
+      ],
+      "solution": "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음 수의 일의 자리2는 돌린 수의 백의 자리2가 됩니다. 십의 자리1은1,백의 자리6은 일의 자리9로 읽힙니다. 따라서 돌려 읽은 수는219입니다. 다시 반 바퀴 돌리면 처음 수612로 돌아갑니다.",
+      "learningPoint": "카드의 순서 역전과6/9의 교환을 함께 적용하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "이미 정해진 세 자리 수를 반 바퀴 돌려 읽기",
+          "conditionTracking": "전체 순서의 역전·6/9 교환·2/5 자기자신·세 장 중복 없음",
+          "caseSplitting": "차를 역산하거나 모든 처음 수를 찾는 단계 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "reverse fixed digit tuple and rotate each original card",
+        "parameters": {
+          "number": 612,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "detailType": "정해진 디지털 수의 반 바퀴 회전",
+      "id": "applied1-q25-low-v5",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 숫자 카드 중 서로 다른3장으로 만든 세 자리 수 951을 통째로 반 바퀴 돌려 읽었습니다. 돌려 읽은 수를 구하시오.",
+      "answer": "156",
+      "answerParts": [
+        156
+      ],
+      "answerLabels": [
+        "돌려 읽은 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "156"
+      ],
+      "solutionSteps": [
+        "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다.",
+        "처음 수의 일의 자리1은 돌린 수의 백의 자리1이 됩니다. 십의 자리5는5,백의 자리9는 일의 자리6으로 읽힙니다.",
+        "따라서 돌려 읽은 수는156입니다. 다시 반 바퀴 돌리면 처음 수951로 돌아갑니다."
+      ],
+      "solution": "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음 수의 일의 자리1은 돌린 수의 백의 자리1이 됩니다. 십의 자리5는5,백의 자리9는 일의 자리6으로 읽힙니다. 따라서 돌려 읽은 수는156입니다. 다시 반 바퀴 돌리면 처음 수951로 돌아갑니다.",
+      "learningPoint": "카드의 순서 역전과6/9의 교환을 함께 적용하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "이미 정해진 세 자리 수를 반 바퀴 돌려 읽기",
+          "conditionTracking": "전체 순서의 역전·6/9 교환·2/5 자기자신·세 장 중복 없음",
+          "caseSplitting": "차를 역산하거나 모든 처음 수를 찾는 단계 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "reverse fixed digit tuple and rotate each original card",
+        "parameters": {
+          "number": 951,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "detailType": "반 바퀴 회전 차로 세 자리 수 모두 찾기",
+      "id": "applied1-q25-middle-v1",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 숫자 카드7장 중 서로 다른3장을 골라 세 자리 수를 만들었습니다. 이 수를 통째로 반 바퀴 돌려 읽어도 세 자리 수가 되며, 돌려 읽은 수는 처음 수보다 99만큼 큽니다. 처음에 만든 수를 모두 구하시오.",
+      "answer": "102, 152, 182",
+      "answerParts": [
+        102,
+        152,
+        182
+      ],
+      "answerLabels": [
+        "처음 수 모두"
+      ],
+      "answerContract": "unordered-set",
+      "acceptedAnswers": [
+        "102, 152, 182"
+      ],
+      "solutionSteps": [
+        "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음과 돌린 뒤 모두 세 자리이므로 양끝에는0을 놓을 수 없습니다.",
+        "양끝 카드를 서로 다른 두 장으로 정하면, 가운데 카드가0·1·2·5·8일 때 십의 자리 값은 그대로입니다. 가운데가6이면9로 바뀌어30만큼 커지고,9이면6으로 바뀌어30만큼 작아집니다.",
+        "양끝에 놓는 두 장의 순서쌍30가지를 위 변화와 함께 확인합니다. 차가99인 경우의 양끝과 남은 가운데 카드는 백의 자리1·일의 자리2:가운데 0,5,8뿐입니다.",
+        "102를 돌리면201이고,201−102＝99입니다.",
+        "152를 돌리면251이고,251−152＝99입니다.",
+        "182를 돌리면281이고,281−182＝99입니다.",
+        "따라서 처음 수는 102, 152, 182의3개입니다. 양끝의 순서쌍과 남은 가운데 카드를 모두 확인했으므로 다른 답은 없습니다."
+      ],
+      "solution": "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음과 돌린 뒤 모두 세 자리이므로 양끝에는0을 놓을 수 없습니다. 양끝 카드를 서로 다른 두 장으로 정하면, 가운데 카드가0·1·2·5·8일 때 십의 자리 값은 그대로입니다. 가운데가6이면9로 바뀌어30만큼 커지고,9이면6으로 바뀌어30만큼 작아집니다. 양끝에 놓는 두 장의 순서쌍30가지를 위 변화와 함께 확인합니다. 차가99인 경우의 양끝과 남은 가운데 카드는 백의 자리1·일의 자리2:가운데 0,5,8뿐입니다. 102를 돌리면201이고,201−102＝99입니다. 152를 돌리면251이고,251−152＝99입니다. 182를 돌리면281이고,281−182＝99입니다. 따라서 처음 수는 102, 152, 182의3개입니다. 양끝의 순서쌍과 남은 가운데 카드를 모두 확인했으므로 다른 답은 없습니다.",
+      "learningPoint": "회전 뒤 양끝과 가운데의 변화를 나누어 세 자리 수의 모든 경우 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "차에서 세 자리 처음 수를 빠짐없이 역추론",
+          "conditionTracking": "양끝0금지·세 장 중복 없음·백/일 자리 교환·가운데6/9 변화",
+          "caseSplitting": "일곱 카드에서 양끝 두 장과 남은 가운데 카드를 분기;원문 다섯 자리보다 미지 자리를 줄임",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "all ordered three-card selections with no leading/trailing zero",
+        "parameters": {
+          "difference": 99,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ],
+          "places": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "detailType": "반 바퀴 회전 차로 세 자리 수 모두 찾기",
+      "id": "applied1-q25-middle-v2",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 숫자 카드7장 중 서로 다른3장을 골라 세 자리 수를 만들었습니다. 이 수를 통째로 반 바퀴 돌려 읽어도 세 자리 수가 되며, 돌려 읽은 수는 처음 수보다 201만큼 큽니다. 처음에 만든 수를 모두 구하시오.",
+      "answer": "608, 618, 628, 658",
+      "answerParts": [
+        608,
+        618,
+        628,
+        658
+      ],
+      "answerLabels": [
+        "처음 수 모두"
+      ],
+      "answerContract": "unordered-set",
+      "acceptedAnswers": [
+        "608, 618, 628, 658"
+      ],
+      "solutionSteps": [
+        "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음과 돌린 뒤 모두 세 자리이므로 양끝에는0을 놓을 수 없습니다.",
+        "양끝 카드를 서로 다른 두 장으로 정하면, 가운데 카드가0·1·2·5·8일 때 십의 자리 값은 그대로입니다. 가운데가6이면9로 바뀌어30만큼 커지고,9이면6으로 바뀌어30만큼 작아집니다.",
+        "양끝에 놓는 두 장의 순서쌍30가지를 위 변화와 함께 확인합니다. 차가201인 경우의 양끝과 남은 가운데 카드는 백의 자리6·일의 자리8:가운데 0,1,2,5뿐입니다.",
+        "608을 돌리면809이고,809−608＝201입니다.",
+        "618을 돌리면819이고,819−618＝201입니다.",
+        "628을 돌리면829이고,829−628＝201입니다.",
+        "658을 돌리면859이고,859−658＝201입니다.",
+        "따라서 처음 수는 608, 618, 628, 658의4개입니다. 양끝의 순서쌍과 남은 가운데 카드를 모두 확인했으므로 다른 답은 없습니다."
+      ],
+      "solution": "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음과 돌린 뒤 모두 세 자리이므로 양끝에는0을 놓을 수 없습니다. 양끝 카드를 서로 다른 두 장으로 정하면, 가운데 카드가0·1·2·5·8일 때 십의 자리 값은 그대로입니다. 가운데가6이면9로 바뀌어30만큼 커지고,9이면6으로 바뀌어30만큼 작아집니다. 양끝에 놓는 두 장의 순서쌍30가지를 위 변화와 함께 확인합니다. 차가201인 경우의 양끝과 남은 가운데 카드는 백의 자리6·일의 자리8:가운데 0,1,2,5뿐입니다. 608을 돌리면809이고,809−608＝201입니다. 618을 돌리면819이고,819−618＝201입니다. 628을 돌리면829이고,829−628＝201입니다. 658을 돌리면859이고,859−658＝201입니다. 따라서 처음 수는 608, 618, 628, 658의4개입니다. 양끝의 순서쌍과 남은 가운데 카드를 모두 확인했으므로 다른 답은 없습니다.",
+      "learningPoint": "회전 뒤 양끝과 가운데의 변화를 나누어 세 자리 수의 모든 경우 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "차에서 세 자리 처음 수를 빠짐없이 역추론",
+          "conditionTracking": "양끝0금지·세 장 중복 없음·백/일 자리 교환·가운데6/9 변화",
+          "caseSplitting": "일곱 카드에서 양끝 두 장과 남은 가운데 카드를 분기;원문 다섯 자리보다 미지 자리를 줄임",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "all ordered three-card selections with no leading/trailing zero",
+        "parameters": {
+          "difference": 201,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ],
+          "places": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "detailType": "반 바퀴 회전 차로 세 자리 수 모두 찾기",
+      "id": "applied1-q25-middle-v3",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 숫자 카드7장 중 서로 다른3장을 골라 세 자리 수를 만들었습니다. 이 수를 통째로 반 바퀴 돌려 읽어도 세 자리 수가 되며, 돌려 읽은 수는 처음 수보다 267만큼 큽니다. 처음에 만든 수를 모두 구하시오.",
+      "answer": "295, 598",
+      "answerParts": [
+        295,
+        598
+      ],
+      "answerLabels": [
+        "처음 수 모두"
+      ],
+      "answerContract": "unordered-set",
+      "acceptedAnswers": [
+        "295, 598"
+      ],
+      "solutionSteps": [
+        "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음과 돌린 뒤 모두 세 자리이므로 양끝에는0을 놓을 수 없습니다.",
+        "양끝 카드를 서로 다른 두 장으로 정하면, 가운데 카드가0·1·2·5·8일 때 십의 자리 값은 그대로입니다. 가운데가6이면9로 바뀌어30만큼 커지고,9이면6으로 바뀌어30만큼 작아집니다.",
+        "양끝에 놓는 두 장의 순서쌍30가지를 위 변화와 함께 확인합니다. 차가267인 경우의 양끝과 남은 가운데 카드는 백의 자리2·일의 자리5:가운데 9 / 백의 자리5·일의 자리8:가운데 9뿐입니다.",
+        "295를 돌리면562이고,562−295＝267입니다.",
+        "598을 돌리면865이고,865−598＝267입니다.",
+        "따라서 처음 수는 295, 598의2개입니다. 양끝의 순서쌍과 남은 가운데 카드를 모두 확인했으므로 다른 답은 없습니다."
+      ],
+      "solution": "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음과 돌린 뒤 모두 세 자리이므로 양끝에는0을 놓을 수 없습니다. 양끝 카드를 서로 다른 두 장으로 정하면, 가운데 카드가0·1·2·5·8일 때 십의 자리 값은 그대로입니다. 가운데가6이면9로 바뀌어30만큼 커지고,9이면6으로 바뀌어30만큼 작아집니다. 양끝에 놓는 두 장의 순서쌍30가지를 위 변화와 함께 확인합니다. 차가267인 경우의 양끝과 남은 가운데 카드는 백의 자리2·일의 자리5:가운데 9 / 백의 자리5·일의 자리8:가운데 9뿐입니다. 295를 돌리면562이고,562−295＝267입니다. 598을 돌리면865이고,865−598＝267입니다. 따라서 처음 수는 295, 598의2개입니다. 양끝의 순서쌍과 남은 가운데 카드를 모두 확인했으므로 다른 답은 없습니다.",
+      "learningPoint": "회전 뒤 양끝과 가운데의 변화를 나누어 세 자리 수의 모든 경우 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "차에서 세 자리 처음 수를 빠짐없이 역추론",
+          "conditionTracking": "양끝0금지·세 장 중복 없음·백/일 자리 교환·가운데6/9 변화",
+          "caseSplitting": "일곱 카드에서 양끝 두 장과 남은 가운데 카드를 분기;원문 다섯 자리보다 미지 자리를 줄임",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "all ordered three-card selections with no leading/trailing zero",
+        "parameters": {
+          "difference": 267,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ],
+          "places": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "detailType": "반 바퀴 회전 차로 세 자리 수 모두 찾기",
+      "id": "applied1-q25-middle-v4",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 숫자 카드7장 중 서로 다른3장을 골라 세 자리 수를 만들었습니다. 이 수를 통째로 반 바퀴 돌려 읽어도 세 자리 수가 되며, 돌려 읽은 수는 처음 수보다 327만큼 큽니다. 처음에 만든 수를 모두 구하시오.",
+      "answer": "265, 568",
+      "answerParts": [
+        265,
+        568
+      ],
+      "answerLabels": [
+        "처음 수 모두"
+      ],
+      "answerContract": "unordered-set",
+      "acceptedAnswers": [
+        "265, 568"
+      ],
+      "solutionSteps": [
+        "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음과 돌린 뒤 모두 세 자리이므로 양끝에는0을 놓을 수 없습니다.",
+        "양끝 카드를 서로 다른 두 장으로 정하면, 가운데 카드가0·1·2·5·8일 때 십의 자리 값은 그대로입니다. 가운데가6이면9로 바뀌어30만큼 커지고,9이면6으로 바뀌어30만큼 작아집니다.",
+        "양끝에 놓는 두 장의 순서쌍30가지를 위 변화와 함께 확인합니다. 차가327인 경우의 양끝과 남은 가운데 카드는 백의 자리2·일의 자리5:가운데 6 / 백의 자리5·일의 자리8:가운데 6뿐입니다.",
+        "265를 돌리면592이고,592−265＝327입니다.",
+        "568을 돌리면895이고,895−568＝327입니다.",
+        "따라서 처음 수는 265, 568의2개입니다. 양끝의 순서쌍과 남은 가운데 카드를 모두 확인했으므로 다른 답은 없습니다."
+      ],
+      "solution": "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음과 돌린 뒤 모두 세 자리이므로 양끝에는0을 놓을 수 없습니다. 양끝 카드를 서로 다른 두 장으로 정하면, 가운데 카드가0·1·2·5·8일 때 십의 자리 값은 그대로입니다. 가운데가6이면9로 바뀌어30만큼 커지고,9이면6으로 바뀌어30만큼 작아집니다. 양끝에 놓는 두 장의 순서쌍30가지를 위 변화와 함께 확인합니다. 차가327인 경우의 양끝과 남은 가운데 카드는 백의 자리2·일의 자리5:가운데 6 / 백의 자리5·일의 자리8:가운데 6뿐입니다. 265를 돌리면592이고,592−265＝327입니다. 568을 돌리면895이고,895−568＝327입니다. 따라서 처음 수는 265, 568의2개입니다. 양끝의 순서쌍과 남은 가운데 카드를 모두 확인했으므로 다른 답은 없습니다.",
+      "learningPoint": "회전 뒤 양끝과 가운데의 변화를 나누어 세 자리 수의 모든 경우 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "차에서 세 자리 처음 수를 빠짐없이 역추론",
+          "conditionTracking": "양끝0금지·세 장 중복 없음·백/일 자리 교환·가운데6/9 변화",
+          "caseSplitting": "일곱 카드에서 양끝 두 장과 남은 가운데 카드를 분기;원문 다섯 자리보다 미지 자리를 줄임",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "all ordered three-card selections with no leading/trailing zero",
+        "parameters": {
+          "difference": 327,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ],
+          "places": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 회전",
+      "learningLocation": "활용 1회 · 원문 25번 · 숫자 카드의 회전",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/digital-cards.png",
+        "description": "반 바퀴 회전한 수와의 차의 원문 그림"
+      },
+      "detailType": "반 바퀴 회전 차로 세 자리 수 모두 찾기",
+      "id": "applied1-q25-middle-v5",
+      "genId": "applied1-q25",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 25,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 숫자 카드7장 중 서로 다른3장을 골라 세 자리 수를 만들었습니다. 이 수를 통째로 반 바퀴 돌려 읽어도 세 자리 수가 되며, 돌려 읽은 수는 처음 수보다 696만큼 큽니다. 처음에 만든 수를 모두 구하시오.",
+      "answer": "206, 216, 256, 286",
+      "answerParts": [
+        206,
+        216,
+        256,
+        286
+      ],
+      "answerLabels": [
+        "처음 수 모두"
+      ],
+      "answerContract": "unordered-set",
+      "acceptedAnswers": [
+        "206, 216, 256, 286"
+      ],
+      "solutionSteps": [
+        "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음과 돌린 뒤 모두 세 자리이므로 양끝에는0을 놓을 수 없습니다.",
+        "양끝 카드를 서로 다른 두 장으로 정하면, 가운데 카드가0·1·2·5·8일 때 십의 자리 값은 그대로입니다. 가운데가6이면9로 바뀌어30만큼 커지고,9이면6으로 바뀌어30만큼 작아집니다.",
+        "양끝에 놓는 두 장의 순서쌍30가지를 위 변화와 함께 확인합니다. 차가696인 경우의 양끝과 남은 가운데 카드는 백의 자리2·일의 자리6:가운데 0,1,5,8뿐입니다.",
+        "206을 돌리면902이고,902−206＝696입니다.",
+        "216을 돌리면912이고,912−216＝696입니다.",
+        "256을 돌리면952이고,952−256＝696입니다.",
+        "286을 돌리면982이고,982−286＝696입니다.",
+        "따라서 처음 수는 206, 216, 256, 286의4개입니다. 양끝의 순서쌍과 남은 가운데 카드를 모두 확인했으므로 다른 답은 없습니다."
+      ],
+      "solution": "수 전체를 반 바퀴 돌리면 카드의 자리 순서가 거꾸로 됩니다. 카드의0,1,2,5,8은 그대로이고6과9는 서로 바뀝니다. 처음과 돌린 뒤 모두 세 자리이므로 양끝에는0을 놓을 수 없습니다. 양끝 카드를 서로 다른 두 장으로 정하면, 가운데 카드가0·1·2·5·8일 때 십의 자리 값은 그대로입니다. 가운데가6이면9로 바뀌어30만큼 커지고,9이면6으로 바뀌어30만큼 작아집니다. 양끝에 놓는 두 장의 순서쌍30가지를 위 변화와 함께 확인합니다. 차가696인 경우의 양끝과 남은 가운데 카드는 백의 자리2·일의 자리6:가운데 0,1,5,8뿐입니다. 206을 돌리면902이고,902−206＝696입니다. 216을 돌리면912이고,912−216＝696입니다. 256을 돌리면952이고,952−256＝696입니다. 286을 돌리면982이고,982−286＝696입니다. 따라서 처음 수는 206, 216, 256, 286의4개입니다. 양끝의 순서쌍과 남은 가운데 카드를 모두 확인했으므로 다른 답은 없습니다.",
+      "learningPoint": "회전 뒤 양끝과 가운데의 변화를 나누어 세 자리 수의 모든 경우 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "차에서 세 자리 처음 수를 빠짐없이 역추론",
+          "conditionTracking": "양끝0금지·세 장 중복 없음·백/일 자리 교환·가운데6/9 변화",
+          "caseSplitting": "일곱 카드에서 양끝 두 장과 남은 가운데 카드를 분기;원문 다섯 자리보다 미지 자리를 줄임",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "all ordered three-card selections with no leading/trailing zero",
+        "parameters": {
+          "difference": 696,
+          "digits": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            8,
+            9
+          ],
+          "places": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "detailType": "표의 행과 열을 읽고 두 수 더하기",
+      "id": "applied1-q26-low-v1",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 표에서 [행, 열]은 그 위치의 수를 뜻합니다. [2, 5]＋[6, 3]의 값을 구하시오.",
+      "answer": "52",
+      "answerParts": [
+        52
+      ],
+      "answerLabels": [
+        "두 수의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "52"
+      ],
+      "solutionSteps": [
+        "2행5열의 수는 원본 표에서18로 읽힙니다.",
+        "6행3열의 수는34입니다.",
+        "구하는 합은18＋34＝52입니다. 행은 위에서 아래로,열은 왼쪽에서 오른쪽으로 확인하여 두 위치를 구별합니다."
+      ],
+      "solution": "2행5열의 수는 원본 표에서18로 읽힙니다. 6행3열의 수는34입니다. 구하는 합은18＋34＝52입니다. 행은 위에서 아래로,열은 왼쪽에서 오른쪽으로 확인하여 두 위치를 구별합니다.",
+      "learningPoint": "표의 행/열 순서에 맞게 주어진 칸을 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "원본 표에서 지정된 두 칸을 읽고 합하기",
+          "conditionTracking": "행/열 순서·서로 다른 두 칸·그림에 실제 표시된1~6행열",
+          "caseSplitting": "표 밖으로 규칙을 확장하거나 행을 역산하지 않는 기초",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "literal lookup of two cells in the unchanged six-by-six source grid",
+        "parameters": {
+          "first": [
+            2,
+            5
+          ],
+          "second": [
+            6,
+            3
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "detailType": "표의 행과 열을 읽고 두 수 더하기",
+      "id": "applied1-q26-low-v2",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 표에서 [행, 열]은 그 위치의 수를 뜻합니다. [3, 4]＋[5, 2]의 값을 구하시오.",
+      "answer": "36",
+      "answerParts": [
+        36
+      ],
+      "answerLabels": [
+        "두 수의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "36"
+      ],
+      "solutionSteps": [
+        "3행4열의 수는 원본 표에서12로 읽힙니다.",
+        "5행2열의 수는24입니다.",
+        "구하는 합은12＋24＝36입니다. 행은 위에서 아래로,열은 왼쪽에서 오른쪽으로 확인하여 두 위치를 구별합니다."
+      ],
+      "solution": "3행4열의 수는 원본 표에서12로 읽힙니다. 5행2열의 수는24입니다. 구하는 합은12＋24＝36입니다. 행은 위에서 아래로,열은 왼쪽에서 오른쪽으로 확인하여 두 위치를 구별합니다.",
+      "learningPoint": "표의 행/열 순서에 맞게 주어진 칸을 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "원본 표에서 지정된 두 칸을 읽고 합하기",
+          "conditionTracking": "행/열 순서·서로 다른 두 칸·그림에 실제 표시된1~6행열",
+          "caseSplitting": "표 밖으로 규칙을 확장하거나 행을 역산하지 않는 기초",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "literal lookup of two cells in the unchanged six-by-six source grid",
+        "parameters": {
+          "first": [
+            3,
+            4
+          ],
+          "second": [
+            5,
+            2
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "detailType": "표의 행과 열을 읽고 두 수 더하기",
+      "id": "applied1-q26-low-v3",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 표에서 [행, 열]은 그 위치의 수를 뜻합니다. [1, 6]＋[4, 3]의 값을 구하시오.",
+      "answer": "40",
+      "answerParts": [
+        40
+      ],
+      "answerLabels": [
+        "두 수의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "40"
+      ],
+      "solutionSteps": [
+        "1행6열의 수는 원본 표에서26으로 읽힙니다.",
+        "4행3열의 수는14입니다.",
+        "구하는 합은26＋14＝40입니다. 행은 위에서 아래로,열은 왼쪽에서 오른쪽으로 확인하여 두 위치를 구별합니다."
+      ],
+      "solution": "1행6열의 수는 원본 표에서26으로 읽힙니다. 4행3열의 수는14입니다. 구하는 합은26＋14＝40입니다. 행은 위에서 아래로,열은 왼쪽에서 오른쪽으로 확인하여 두 위치를 구별합니다.",
+      "learningPoint": "표의 행/열 순서에 맞게 주어진 칸을 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "원본 표에서 지정된 두 칸을 읽고 합하기",
+          "conditionTracking": "행/열 순서·서로 다른 두 칸·그림에 실제 표시된1~6행열",
+          "caseSplitting": "표 밖으로 규칙을 확장하거나 행을 역산하지 않는 기초",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "literal lookup of two cells in the unchanged six-by-six source grid",
+        "parameters": {
+          "first": [
+            1,
+            6
+          ],
+          "second": [
+            4,
+            3
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "detailType": "표의 행과 열을 읽고 두 수 더하기",
+      "id": "applied1-q26-low-v4",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 표에서 [행, 열]은 그 위치의 수를 뜻합니다. [2, 6]＋[6, 5]의 값을 구하시오.",
+      "answer": "59",
+      "answerParts": [
+        59
+      ],
+      "answerLabels": [
+        "두 수의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "59"
+      ],
+      "solutionSteps": [
+        "2행6열의 수는 원본 표에서27로 읽힙니다.",
+        "6행5열의 수는32입니다.",
+        "구하는 합은27＋32＝59입니다. 행은 위에서 아래로,열은 왼쪽에서 오른쪽으로 확인하여 두 위치를 구별합니다."
+      ],
+      "solution": "2행6열의 수는 원본 표에서27로 읽힙니다. 6행5열의 수는32입니다. 구하는 합은27＋32＝59입니다. 행은 위에서 아래로,열은 왼쪽에서 오른쪽으로 확인하여 두 위치를 구별합니다.",
+      "learningPoint": "표의 행/열 순서에 맞게 주어진 칸을 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "원본 표에서 지정된 두 칸을 읽고 합하기",
+          "conditionTracking": "행/열 순서·서로 다른 두 칸·그림에 실제 표시된1~6행열",
+          "caseSplitting": "표 밖으로 규칙을 확장하거나 행을 역산하지 않는 기초",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "literal lookup of two cells in the unchanged six-by-six source grid",
+        "parameters": {
+          "first": [
+            2,
+            6
+          ],
+          "second": [
+            6,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "detailType": "표의 행과 열을 읽고 두 수 더하기",
+      "id": "applied1-q26-low-v5",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림의 표에서 [행, 열]은 그 위치의 수를 뜻합니다. [3, 5]＋[5, 4]의 값을 구하시오.",
+      "answer": "41",
+      "answerParts": [
+        41
+      ],
+      "answerLabels": [
+        "두 수의 합"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "41"
+      ],
+      "solutionSteps": [
+        "3행5열의 수는 원본 표에서19로 읽힙니다.",
+        "5행4열의 수는22입니다.",
+        "구하는 합은19＋22＝41입니다. 행은 위에서 아래로,열은 왼쪽에서 오른쪽으로 확인하여 두 위치를 구별합니다."
+      ],
+      "solution": "3행5열의 수는 원본 표에서19로 읽힙니다. 5행4열의 수는22입니다. 구하는 합은19＋22＝41입니다. 행은 위에서 아래로,열은 왼쪽에서 오른쪽으로 확인하여 두 위치를 구별합니다.",
+      "learningPoint": "표의 행/열 순서에 맞게 주어진 칸을 찾기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "원본 표에서 지정된 두 칸을 읽고 합하기",
+          "conditionTracking": "행/열 순서·서로 다른 두 칸·그림에 실제 표시된1~6행열",
+          "caseSplitting": "표 밖으로 규칙을 확장하거나 행을 역산하지 않는 기초",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "literal lookup of two cells in the unchanged six-by-six source grid",
+        "parameters": {
+          "first": [
+            3,
+            5
+          ],
+          "second": [
+            5,
+            4
+          ]
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "detailType": "정사각형 테두리 수 배열의 한 칸 구하기",
+      "id": "applied1-q26-middle-v1",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 규칙으로 수를 계속 배열합니다. [행, 열]이 그 위치의 수를 뜻할 때 [8, 3]의 수를 구하시오.",
+      "answer": "62",
+      "answerParts": [
+        62
+      ],
+      "answerLabels": [
+        "그 위치의 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "62"
+      ],
+      "solutionSteps": [
+        "각 행의 첫 수는1,4,9,16,…으로 행 번호를 두 번 곱한 수입니다. 그 행의 대각선 칸까지는 오른쪽으로 한 칸 갈 때마다1씩 작아집니다.",
+        "8행1열은8×8＝64입니다. 이 칸은 대각선의 왼쪽이거나 대각선에 있으므로 이 규칙을 그대로 쓸 수 있습니다.",
+        "1열에서3열까지2칸 이동하므로 [8, 3]＝64−2＝62입니다."
+      ],
+      "solution": "각 행의 첫 수는1,4,9,16,…으로 행 번호를 두 번 곱한 수입니다. 그 행의 대각선 칸까지는 오른쪽으로 한 칸 갈 때마다1씩 작아집니다. 8행1열은8×8＝64입니다. 이 칸은 대각선의 왼쪽이거나 대각선에 있으므로 이 규칙을 그대로 쓸 수 있습니다. 1열에서3열까지2칸 이동하므로 [8, 3]＝64−2＝62입니다.",
+      "learningPoint": "대각선 양쪽에서 행/열 테두리의 증가 방향을 구분하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "대각선 아래/위의 테두리 규칙을 구분해 표 밖 한 칸 계산",
+          "conditionTracking": "행/열·대각선 경계·테두리 증가 방향",
+          "caseSplitting": "순방향 한 칸만 계산하며 원문의 합에서 미지 행 찾기 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "row/column square border rule for one forward cell",
+        "parameters": {
+          "row": 8,
+          "col": 3
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "detailType": "정사각형 테두리 수 배열의 한 칸 구하기",
+      "id": "applied1-q26-middle-v2",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 규칙으로 수를 계속 배열합니다. [행, 열]이 그 위치의 수를 뜻할 때 [4, 9]의 수를 구하시오.",
+      "answer": "68",
+      "answerParts": [
+        68
+      ],
+      "answerLabels": [
+        "그 위치의 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "68"
+      ],
+      "solutionSteps": [
+        "표에서 대각선 위쪽에 있는 각 열의 맨 위 수는1,2,5,10,17,26,…입니다. 그 열 번호보다1작은 수를 두 번 곱하고1을 더한 값이며, 아래로 대각선까지는 한 칸마다1씩 커집니다.",
+        "1행9열은8×8＋1＝65입니다. 4행은 대각선보다 위이므로 아래로1씩 커지는 구간입니다.",
+        "1행에서4행까지3칸 내려오므로 [4, 9]＝65＋3＝68입니다."
+      ],
+      "solution": "표에서 대각선 위쪽에 있는 각 열의 맨 위 수는1,2,5,10,17,26,…입니다. 그 열 번호보다1작은 수를 두 번 곱하고1을 더한 값이며, 아래로 대각선까지는 한 칸마다1씩 커집니다. 1행9열은8×8＋1＝65입니다. 4행은 대각선보다 위이므로 아래로1씩 커지는 구간입니다. 1행에서4행까지3칸 내려오므로 [4, 9]＝65＋3＝68입니다.",
+      "learningPoint": "대각선 양쪽에서 행/열 테두리의 증가 방향을 구분하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "대각선 아래/위의 테두리 규칙을 구분해 표 밖 한 칸 계산",
+          "conditionTracking": "행/열·대각선 경계·테두리 증가 방향",
+          "caseSplitting": "순방향 한 칸만 계산하며 원문의 합에서 미지 행 찾기 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "row/column square border rule for one forward cell",
+        "parameters": {
+          "row": 4,
+          "col": 9
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "detailType": "정사각형 테두리 수 배열의 한 칸 구하기",
+      "id": "applied1-q26-middle-v3",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 규칙으로 수를 계속 배열합니다. [행, 열]이 그 위치의 수를 뜻할 때 [7, 7]의 수를 구하시오.",
+      "answer": "43",
+      "answerParts": [
+        43
+      ],
+      "answerLabels": [
+        "그 위치의 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "43"
+      ],
+      "solutionSteps": [
+        "각 행의 첫 수는1,4,9,16,…으로 행 번호를 두 번 곱한 수입니다. 그 행의 대각선 칸까지는 오른쪽으로 한 칸 갈 때마다1씩 작아집니다.",
+        "7행1열은7×7＝49입니다. 이 칸은 대각선의 왼쪽이거나 대각선에 있으므로 이 규칙을 그대로 쓸 수 있습니다.",
+        "1열에서7열까지6칸 이동하므로 [7, 7]＝49−6＝43입니다."
+      ],
+      "solution": "각 행의 첫 수는1,4,9,16,…으로 행 번호를 두 번 곱한 수입니다. 그 행의 대각선 칸까지는 오른쪽으로 한 칸 갈 때마다1씩 작아집니다. 7행1열은7×7＝49입니다. 이 칸은 대각선의 왼쪽이거나 대각선에 있으므로 이 규칙을 그대로 쓸 수 있습니다. 1열에서7열까지6칸 이동하므로 [7, 7]＝49−6＝43입니다.",
+      "learningPoint": "대각선 양쪽에서 행/열 테두리의 증가 방향을 구분하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "대각선 아래/위의 테두리 규칙을 구분해 표 밖 한 칸 계산",
+          "conditionTracking": "행/열·대각선 경계·테두리 증가 방향",
+          "caseSplitting": "순방향 한 칸만 계산하며 원문의 합에서 미지 행 찾기 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "row/column square border rule for one forward cell",
+        "parameters": {
+          "row": 7,
+          "col": 7
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "detailType": "정사각형 테두리 수 배열의 한 칸 구하기",
+      "id": "applied1-q26-middle-v4",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 규칙으로 수를 계속 배열합니다. [행, 열]이 그 위치의 수를 뜻할 때 [5, 10]의 수를 구하시오.",
+      "answer": "86",
+      "answerParts": [
+        86
+      ],
+      "answerLabels": [
+        "그 위치의 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "86"
+      ],
+      "solutionSteps": [
+        "표에서 대각선 위쪽에 있는 각 열의 맨 위 수는1,2,5,10,17,26,…입니다. 그 열 번호보다1작은 수를 두 번 곱하고1을 더한 값이며, 아래로 대각선까지는 한 칸마다1씩 커집니다.",
+        "1행10열은9×9＋1＝82입니다. 5행은 대각선보다 위이므로 아래로1씩 커지는 구간입니다.",
+        "1행에서5행까지4칸 내려오므로 [5, 10]＝82＋4＝86입니다."
+      ],
+      "solution": "표에서 대각선 위쪽에 있는 각 열의 맨 위 수는1,2,5,10,17,26,…입니다. 그 열 번호보다1작은 수를 두 번 곱하고1을 더한 값이며, 아래로 대각선까지는 한 칸마다1씩 커집니다. 1행10열은9×9＋1＝82입니다. 5행은 대각선보다 위이므로 아래로1씩 커지는 구간입니다. 1행에서5행까지4칸 내려오므로 [5, 10]＝82＋4＝86입니다.",
+      "learningPoint": "대각선 양쪽에서 행/열 테두리의 증가 방향을 구분하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "대각선 아래/위의 테두리 규칙을 구분해 표 밖 한 칸 계산",
+          "conditionTracking": "행/열·대각선 경계·테두리 증가 방향",
+          "caseSplitting": "순방향 한 칸만 계산하며 원문의 합에서 미지 행 찾기 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "row/column square border rule for one forward cell",
+        "parameters": {
+          "row": 5,
+          "col": 10
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "수와 식",
+      "subarea": "표와 수의 규칙",
+      "learningLocation": "활용 1회 · 원문 26번 · 표와 수의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/number-grid.png",
+        "description": "정사각형 테두리 수 배열의 행 찾기의 원문 그림"
+      },
+      "detailType": "정사각형 테두리 수 배열의 한 칸 구하기",
+      "id": "applied1-q26-middle-v5",
+      "genId": "applied1-q26",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 26,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 규칙으로 수를 계속 배열합니다. [행, 열]이 그 위치의 수를 뜻할 때 [11, 6]의 수를 구하시오.",
+      "answer": "116",
+      "answerParts": [
+        116
+      ],
+      "answerLabels": [
+        "그 위치의 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "116"
+      ],
+      "solutionSteps": [
+        "각 행의 첫 수는1,4,9,16,…으로 행 번호를 두 번 곱한 수입니다. 그 행의 대각선 칸까지는 오른쪽으로 한 칸 갈 때마다1씩 작아집니다.",
+        "11행1열은11×11＝121입니다. 이 칸은 대각선의 왼쪽이거나 대각선에 있으므로 이 규칙을 그대로 쓸 수 있습니다.",
+        "1열에서6열까지5칸 이동하므로 [11, 6]＝121−5＝116입니다."
+      ],
+      "solution": "각 행의 첫 수는1,4,9,16,…으로 행 번호를 두 번 곱한 수입니다. 그 행의 대각선 칸까지는 오른쪽으로 한 칸 갈 때마다1씩 작아집니다. 11행1열은11×11＝121입니다. 이 칸은 대각선의 왼쪽이거나 대각선에 있으므로 이 규칙을 그대로 쓸 수 있습니다. 1열에서6열까지5칸 이동하므로 [11, 6]＝121−5＝116입니다.",
+      "learningPoint": "대각선 양쪽에서 행/열 테두리의 증가 방향을 구분하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "대각선 아래/위의 테두리 규칙을 구분해 표 밖 한 칸 계산",
+          "conditionTracking": "행/열·대각선 경계·테두리 증가 방향",
+          "caseSplitting": "순방향 한 칸만 계산하며 원문의 합에서 미지 행 찾기 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "row/column square border rule for one forward cell",
+        "parameters": {
+          "row": 11,
+          "col": 6
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 26,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "detailType": "계단 입체 맨 아래 한 줄의 성냥개비 수",
+      "id": "applied1-q27-low-v1",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 한 줄 두께의 계단 모양 입체를 4층까지 만듭니다. 맨 아래층의 정육면체들에 속하는 성냥개비만 세면 모두 몇 개입니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "36",
+      "answerParts": [
+        36
+      ],
+      "answerLabels": [
+        "맨 아래층 성냥개비 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "36"
+      ],
+      "solutionSteps": [
+        "4층 계단의 맨 아래층에는 정육면체4개가 한 줄로 붙어 있습니다. 이 한 줄에 속하는 모서리만 셉니다.",
+        "첫 정육면체에는 성냥개비12개가 필요합니다. 그다음 정육면체마다 앞의 정육면체와 맞닿은 면의4개를 함께 쓰므로 새로8개씩 필요합니다.",
+        "따라서 맨 아래층에 속하는 성냥개비는12＋8×3＝36개입니다. 위층의 다른 모서리는 포함하지 않습니다."
+      ],
+      "solution": "4층 계단의 맨 아래층에는 정육면체4개가 한 줄로 붙어 있습니다. 이 한 줄에 속하는 모서리만 셉니다. 첫 정육면체에는 성냥개비12개가 필요합니다. 그다음 정육면체마다 앞의 정육면체와 맞닿은 면의4개를 함께 쓰므로 새로8개씩 필요합니다. 따라서 맨 아래층에 속하는 성냥개비는12＋8×3＝36개입니다. 위층의 다른 모서리는 포함하지 않습니다.",
+      "learningPoint": "한 줄로 붙인 정육면체의 공유 면과 숨은 모서리를 한 번씩 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "계단 입체의 맨 아래 한 줄에 속하는 모서리만 세기",
+          "conditionTracking": "한 줄 두께·붙어 있는 동일 정육면체·숨은 변·공유 변 한 번",
+          "caseSplitting": "윗층과의 겹침 및 전체 층 누적합을 제외한 기초",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "twelve first edges plus eight for each face-adjacent cube",
+        "parameters": {
+          "layers": 4,
+          "bottomCubes": 4
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "detailType": "계단 입체 맨 아래 한 줄의 성냥개비 수",
+      "id": "applied1-q27-low-v2",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 한 줄 두께의 계단 모양 입체를 5층까지 만듭니다. 맨 아래층의 정육면체들에 속하는 성냥개비만 세면 모두 몇 개입니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "44",
+      "answerParts": [
+        44
+      ],
+      "answerLabels": [
+        "맨 아래층 성냥개비 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "44"
+      ],
+      "solutionSteps": [
+        "5층 계단의 맨 아래층에는 정육면체5개가 한 줄로 붙어 있습니다. 이 한 줄에 속하는 모서리만 셉니다.",
+        "첫 정육면체에는 성냥개비12개가 필요합니다. 그다음 정육면체마다 앞의 정육면체와 맞닿은 면의4개를 함께 쓰므로 새로8개씩 필요합니다.",
+        "따라서 맨 아래층에 속하는 성냥개비는12＋8×4＝44개입니다. 위층의 다른 모서리는 포함하지 않습니다."
+      ],
+      "solution": "5층 계단의 맨 아래층에는 정육면체5개가 한 줄로 붙어 있습니다. 이 한 줄에 속하는 모서리만 셉니다. 첫 정육면체에는 성냥개비12개가 필요합니다. 그다음 정육면체마다 앞의 정육면체와 맞닿은 면의4개를 함께 쓰므로 새로8개씩 필요합니다. 따라서 맨 아래층에 속하는 성냥개비는12＋8×4＝44개입니다. 위층의 다른 모서리는 포함하지 않습니다.",
+      "learningPoint": "한 줄로 붙인 정육면체의 공유 면과 숨은 모서리를 한 번씩 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "계단 입체의 맨 아래 한 줄에 속하는 모서리만 세기",
+          "conditionTracking": "한 줄 두께·붙어 있는 동일 정육면체·숨은 변·공유 변 한 번",
+          "caseSplitting": "윗층과의 겹침 및 전체 층 누적합을 제외한 기초",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "twelve first edges plus eight for each face-adjacent cube",
+        "parameters": {
+          "layers": 5,
+          "bottomCubes": 5
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "detailType": "계단 입체 맨 아래 한 줄의 성냥개비 수",
+      "id": "applied1-q27-low-v3",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 한 줄 두께의 계단 모양 입체를 6층까지 만듭니다. 맨 아래층의 정육면체들에 속하는 성냥개비만 세면 모두 몇 개입니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "52",
+      "answerParts": [
+        52
+      ],
+      "answerLabels": [
+        "맨 아래층 성냥개비 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "52"
+      ],
+      "solutionSteps": [
+        "6층 계단의 맨 아래층에는 정육면체6개가 한 줄로 붙어 있습니다. 이 한 줄에 속하는 모서리만 셉니다.",
+        "첫 정육면체에는 성냥개비12개가 필요합니다. 그다음 정육면체마다 앞의 정육면체와 맞닿은 면의4개를 함께 쓰므로 새로8개씩 필요합니다.",
+        "따라서 맨 아래층에 속하는 성냥개비는12＋8×5＝52개입니다. 위층의 다른 모서리는 포함하지 않습니다."
+      ],
+      "solution": "6층 계단의 맨 아래층에는 정육면체6개가 한 줄로 붙어 있습니다. 이 한 줄에 속하는 모서리만 셉니다. 첫 정육면체에는 성냥개비12개가 필요합니다. 그다음 정육면체마다 앞의 정육면체와 맞닿은 면의4개를 함께 쓰므로 새로8개씩 필요합니다. 따라서 맨 아래층에 속하는 성냥개비는12＋8×5＝52개입니다. 위층의 다른 모서리는 포함하지 않습니다.",
+      "learningPoint": "한 줄로 붙인 정육면체의 공유 면과 숨은 모서리를 한 번씩 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "계단 입체의 맨 아래 한 줄에 속하는 모서리만 세기",
+          "conditionTracking": "한 줄 두께·붙어 있는 동일 정육면체·숨은 변·공유 변 한 번",
+          "caseSplitting": "윗층과의 겹침 및 전체 층 누적합을 제외한 기초",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "twelve first edges plus eight for each face-adjacent cube",
+        "parameters": {
+          "layers": 6,
+          "bottomCubes": 6
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "detailType": "계단 입체 맨 아래 한 줄의 성냥개비 수",
+      "id": "applied1-q27-low-v4",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 한 줄 두께의 계단 모양 입체를 7층까지 만듭니다. 맨 아래층의 정육면체들에 속하는 성냥개비만 세면 모두 몇 개입니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "60",
+      "answerParts": [
+        60
+      ],
+      "answerLabels": [
+        "맨 아래층 성냥개비 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "60"
+      ],
+      "solutionSteps": [
+        "7층 계단의 맨 아래층에는 정육면체7개가 한 줄로 붙어 있습니다. 이 한 줄에 속하는 모서리만 셉니다.",
+        "첫 정육면체에는 성냥개비12개가 필요합니다. 그다음 정육면체마다 앞의 정육면체와 맞닿은 면의4개를 함께 쓰므로 새로8개씩 필요합니다.",
+        "따라서 맨 아래층에 속하는 성냥개비는12＋8×6＝60개입니다. 위층의 다른 모서리는 포함하지 않습니다."
+      ],
+      "solution": "7층 계단의 맨 아래층에는 정육면체7개가 한 줄로 붙어 있습니다. 이 한 줄에 속하는 모서리만 셉니다. 첫 정육면체에는 성냥개비12개가 필요합니다. 그다음 정육면체마다 앞의 정육면체와 맞닿은 면의4개를 함께 쓰므로 새로8개씩 필요합니다. 따라서 맨 아래층에 속하는 성냥개비는12＋8×6＝60개입니다. 위층의 다른 모서리는 포함하지 않습니다.",
+      "learningPoint": "한 줄로 붙인 정육면체의 공유 면과 숨은 모서리를 한 번씩 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "계단 입체의 맨 아래 한 줄에 속하는 모서리만 세기",
+          "conditionTracking": "한 줄 두께·붙어 있는 동일 정육면체·숨은 변·공유 변 한 번",
+          "caseSplitting": "윗층과의 겹침 및 전체 층 누적합을 제외한 기초",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "twelve first edges plus eight for each face-adjacent cube",
+        "parameters": {
+          "layers": 7,
+          "bottomCubes": 7
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "detailType": "계단 입체 맨 아래 한 줄의 성냥개비 수",
+      "id": "applied1-q27-low-v5",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "low",
+      "sourcePointBand": "4.2",
+      "pointBand": "2.7",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 한 줄 두께의 계단 모양 입체를 8층까지 만듭니다. 맨 아래층의 정육면체들에 속하는 성냥개비만 세면 모두 몇 개입니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "68",
+      "answerParts": [
+        68
+      ],
+      "answerLabels": [
+        "맨 아래층 성냥개비 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "68"
+      ],
+      "solutionSteps": [
+        "8층 계단의 맨 아래층에는 정육면체8개가 한 줄로 붙어 있습니다. 이 한 줄에 속하는 모서리만 셉니다.",
+        "첫 정육면체에는 성냥개비12개가 필요합니다. 그다음 정육면체마다 앞의 정육면체와 맞닿은 면의4개를 함께 쓰므로 새로8개씩 필요합니다.",
+        "따라서 맨 아래층에 속하는 성냥개비는12＋8×7＝68개입니다. 위층의 다른 모서리는 포함하지 않습니다."
+      ],
+      "solution": "8층 계단의 맨 아래층에는 정육면체8개가 한 줄로 붙어 있습니다. 이 한 줄에 속하는 모서리만 셉니다. 첫 정육면체에는 성냥개비12개가 필요합니다. 그다음 정육면체마다 앞의 정육면체와 맞닿은 면의4개를 함께 쓰므로 새로8개씩 필요합니다. 따라서 맨 아래층에 속하는 성냥개비는12＋8×7＝68개입니다. 위층의 다른 모서리는 포함하지 않습니다.",
+      "learningPoint": "한 줄로 붙인 정육면체의 공유 면과 숨은 모서리를 한 번씩 세기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "계단 입체의 맨 아래 한 줄에 속하는 모서리만 세기",
+          "conditionTracking": "한 줄 두께·붙어 있는 동일 정육면체·숨은 변·공유 변 한 번",
+          "caseSplitting": "윗층과의 겹침 및 전체 층 누적합을 제외한 기초",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "twelve first edges plus eight for each face-adjacent cube",
+        "parameters": {
+          "layers": 8,
+          "bottomCubes": 8
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "detailType": "계단 입체에 아래층을 보탤 때 성냥개비 증가량",
+      "id": "applied1-q27-middle-v1",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 한 줄 두께의 계단 모양 입체를 3층까지 만들었습니다. 이미 놓인 성냥개비는 그대로 두고 맨 아래에 정육면체 한 줄을 보태 4층 계단으로 완성하려고 합니다. 성냥개비를 몇 개 더 놓아야 합니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "26",
+      "answerParts": [
+        26
+      ],
+      "answerLabels": [
+        "추가할 성냥개비 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "26"
+      ],
+      "solutionSteps": [
+        "새 맨 아래층에는 정육면체4개가 들어갑니다. 이 한 줄만 따로 만들면12＋8×3＝36개가 필요합니다.",
+        "이전 계단의 맨 아래3개 정육면체와 새 줄이 맞닿습니다. 그 부분의 앞면·뒷면 가로 성냥개비는 각각3개,깊이 방향은4개이므로 이미 있는 성냥개비는3＋3＋4＝10개입니다.",
+        "따라서 더 놓을 성냥개비는36−10＝26개입니다. 겹치는 성냥개비는 새로 놓지 않고,새 아래층의 나머지 모든 모서리는 한 번씩 놓았습니다."
+      ],
+      "solution": "새 맨 아래층에는 정육면체4개가 들어갑니다. 이 한 줄만 따로 만들면12＋8×3＝36개가 필요합니다. 이전 계단의 맨 아래3개 정육면체와 새 줄이 맞닿습니다. 그 부분의 앞면·뒷면 가로 성냥개비는 각각3개,깊이 방향은4개이므로 이미 있는 성냥개비는3＋3＋4＝10개입니다. 따라서 더 놓을 성냥개비는36−10＝26개입니다. 겹치는 성냥개비는 새로 놓지 않고,새 아래층의 나머지 모든 모서리는 한 번씩 놓았습니다.",
+      "learningPoint": "기존 계단과 새 아래층이 공유하는 앞뒤/깊이 방향 모서리 제외하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "기존 계단 아래에 한 줄을 더 보탤 때 새 모서리만 세기",
+          "conditionTracking": "기존 성냥 유지·아래층 한 줄·맞닿은 앞뒤 선과 깊이 방향 선·숨은 변",
+          "caseSplitting": "추가한 한 줄과 이전 입체의 공유 부분만 빼며 원문의 전체 층 누적 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "new bottom-row edges minus the full shared boundary with the old stair",
+        "parameters": {
+          "oldLayers": 3,
+          "newLayers": 4
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "detailType": "계단 입체에 아래층을 보탤 때 성냥개비 증가량",
+      "id": "applied1-q27-middle-v2",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 한 줄 두께의 계단 모양 입체를 4층까지 만들었습니다. 이미 놓인 성냥개비는 그대로 두고 맨 아래에 정육면체 한 줄을 보태 5층 계단으로 완성하려고 합니다. 성냥개비를 몇 개 더 놓아야 합니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "31",
+      "answerParts": [
+        31
+      ],
+      "answerLabels": [
+        "추가할 성냥개비 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "31"
+      ],
+      "solutionSteps": [
+        "새 맨 아래층에는 정육면체5개가 들어갑니다. 이 한 줄만 따로 만들면12＋8×4＝44개가 필요합니다.",
+        "이전 계단의 맨 아래4개 정육면체와 새 줄이 맞닿습니다. 그 부분의 앞면·뒷면 가로 성냥개비는 각각4개,깊이 방향은5개이므로 이미 있는 성냥개비는4＋4＋5＝13개입니다.",
+        "따라서 더 놓을 성냥개비는44−13＝31개입니다. 겹치는 성냥개비는 새로 놓지 않고,새 아래층의 나머지 모든 모서리는 한 번씩 놓았습니다."
+      ],
+      "solution": "새 맨 아래층에는 정육면체5개가 들어갑니다. 이 한 줄만 따로 만들면12＋8×4＝44개가 필요합니다. 이전 계단의 맨 아래4개 정육면체와 새 줄이 맞닿습니다. 그 부분의 앞면·뒷면 가로 성냥개비는 각각4개,깊이 방향은5개이므로 이미 있는 성냥개비는4＋4＋5＝13개입니다. 따라서 더 놓을 성냥개비는44−13＝31개입니다. 겹치는 성냥개비는 새로 놓지 않고,새 아래층의 나머지 모든 모서리는 한 번씩 놓았습니다.",
+      "learningPoint": "기존 계단과 새 아래층이 공유하는 앞뒤/깊이 방향 모서리 제외하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "기존 계단 아래에 한 줄을 더 보탤 때 새 모서리만 세기",
+          "conditionTracking": "기존 성냥 유지·아래층 한 줄·맞닿은 앞뒤 선과 깊이 방향 선·숨은 변",
+          "caseSplitting": "추가한 한 줄과 이전 입체의 공유 부분만 빼며 원문의 전체 층 누적 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "new bottom-row edges minus the full shared boundary with the old stair",
+        "parameters": {
+          "oldLayers": 4,
+          "newLayers": 5
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "detailType": "계단 입체에 아래층을 보탤 때 성냥개비 증가량",
+      "id": "applied1-q27-middle-v3",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 한 줄 두께의 계단 모양 입체를 5층까지 만들었습니다. 이미 놓인 성냥개비는 그대로 두고 맨 아래에 정육면체 한 줄을 보태 6층 계단으로 완성하려고 합니다. 성냥개비를 몇 개 더 놓아야 합니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "36",
+      "answerParts": [
+        36
+      ],
+      "answerLabels": [
+        "추가할 성냥개비 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "36"
+      ],
+      "solutionSteps": [
+        "새 맨 아래층에는 정육면체6개가 들어갑니다. 이 한 줄만 따로 만들면12＋8×5＝52개가 필요합니다.",
+        "이전 계단의 맨 아래5개 정육면체와 새 줄이 맞닿습니다. 그 부분의 앞면·뒷면 가로 성냥개비는 각각5개,깊이 방향은6개이므로 이미 있는 성냥개비는5＋5＋6＝16개입니다.",
+        "따라서 더 놓을 성냥개비는52−16＝36개입니다. 겹치는 성냥개비는 새로 놓지 않고,새 아래층의 나머지 모든 모서리는 한 번씩 놓았습니다."
+      ],
+      "solution": "새 맨 아래층에는 정육면체6개가 들어갑니다. 이 한 줄만 따로 만들면12＋8×5＝52개가 필요합니다. 이전 계단의 맨 아래5개 정육면체와 새 줄이 맞닿습니다. 그 부분의 앞면·뒷면 가로 성냥개비는 각각5개,깊이 방향은6개이므로 이미 있는 성냥개비는5＋5＋6＝16개입니다. 따라서 더 놓을 성냥개비는52−16＝36개입니다. 겹치는 성냥개비는 새로 놓지 않고,새 아래층의 나머지 모든 모서리는 한 번씩 놓았습니다.",
+      "learningPoint": "기존 계단과 새 아래층이 공유하는 앞뒤/깊이 방향 모서리 제외하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "기존 계단 아래에 한 줄을 더 보탤 때 새 모서리만 세기",
+          "conditionTracking": "기존 성냥 유지·아래층 한 줄·맞닿은 앞뒤 선과 깊이 방향 선·숨은 변",
+          "caseSplitting": "추가한 한 줄과 이전 입체의 공유 부분만 빼며 원문의 전체 층 누적 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "new bottom-row edges minus the full shared boundary with the old stair",
+        "parameters": {
+          "oldLayers": 5,
+          "newLayers": 6
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "detailType": "계단 입체에 아래층을 보탤 때 성냥개비 증가량",
+      "id": "applied1-q27-middle-v4",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 한 줄 두께의 계단 모양 입체를 6층까지 만들었습니다. 이미 놓인 성냥개비는 그대로 두고 맨 아래에 정육면체 한 줄을 보태 7층 계단으로 완성하려고 합니다. 성냥개비를 몇 개 더 놓아야 합니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "41",
+      "answerParts": [
+        41
+      ],
+      "answerLabels": [
+        "추가할 성냥개비 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "41"
+      ],
+      "solutionSteps": [
+        "새 맨 아래층에는 정육면체7개가 들어갑니다. 이 한 줄만 따로 만들면12＋8×6＝60개가 필요합니다.",
+        "이전 계단의 맨 아래6개 정육면체와 새 줄이 맞닿습니다. 그 부분의 앞면·뒷면 가로 성냥개비는 각각6개,깊이 방향은7개이므로 이미 있는 성냥개비는6＋6＋7＝19개입니다.",
+        "따라서 더 놓을 성냥개비는60−19＝41개입니다. 겹치는 성냥개비는 새로 놓지 않고,새 아래층의 나머지 모든 모서리는 한 번씩 놓았습니다."
+      ],
+      "solution": "새 맨 아래층에는 정육면체7개가 들어갑니다. 이 한 줄만 따로 만들면12＋8×6＝60개가 필요합니다. 이전 계단의 맨 아래6개 정육면체와 새 줄이 맞닿습니다. 그 부분의 앞면·뒷면 가로 성냥개비는 각각6개,깊이 방향은7개이므로 이미 있는 성냥개비는6＋6＋7＝19개입니다. 따라서 더 놓을 성냥개비는60−19＝41개입니다. 겹치는 성냥개비는 새로 놓지 않고,새 아래층의 나머지 모든 모서리는 한 번씩 놓았습니다.",
+      "learningPoint": "기존 계단과 새 아래층이 공유하는 앞뒤/깊이 방향 모서리 제외하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "기존 계단 아래에 한 줄을 더 보탤 때 새 모서리만 세기",
+          "conditionTracking": "기존 성냥 유지·아래층 한 줄·맞닿은 앞뒤 선과 깊이 방향 선·숨은 변",
+          "caseSplitting": "추가한 한 줄과 이전 입체의 공유 부분만 빼며 원문의 전체 층 누적 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "new bottom-row edges minus the full shared boundary with the old stair",
+        "parameters": {
+          "oldLayers": 6,
+          "newLayers": 7
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "area": "도형",
+      "subarea": "입체 도형의 규칙",
+      "learningLocation": "활용 1회 · 원문 27번 · 입체 도형의 규칙",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied1/solid-stair.png",
+        "description": "계단형 상자 입체의 성냥개비 수의 원문 그림"
+      },
+      "detailType": "계단 입체에 아래층을 보탤 때 성냥개비 증가량",
+      "id": "applied1-q27-middle-v5",
+      "genId": "applied1-q27",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 27,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceLevel": "middle",
+      "sourcePointBand": "4.2",
+      "pointBand": "3.4",
+      "practiceRole": "기초 보완",
+      "practiceStorageVersion": "20261024-applied1-balanced15-r9",
+      "text": "그림과 같은 한 줄 두께의 계단 모양 입체를 7층까지 만들었습니다. 이미 놓인 성냥개비는 그대로 두고 맨 아래에 정육면체 한 줄을 보태 8층 계단으로 완성하려고 합니다. 성냥개비를 몇 개 더 놓아야 합니까? 보이지 않는 부분에도 성냥개비가 놓여 있습니다.",
+      "answer": "46",
+      "answerParts": [
+        46
+      ],
+      "answerLabels": [
+        "추가할 성냥개비 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "46"
+      ],
+      "solutionSteps": [
+        "새 맨 아래층에는 정육면체8개가 들어갑니다. 이 한 줄만 따로 만들면12＋8×7＝68개가 필요합니다.",
+        "이전 계단의 맨 아래7개 정육면체와 새 줄이 맞닿습니다. 그 부분의 앞면·뒷면 가로 성냥개비는 각각7개,깊이 방향은8개이므로 이미 있는 성냥개비는7＋7＋8＝22개입니다.",
+        "따라서 더 놓을 성냥개비는68−22＝46개입니다. 겹치는 성냥개비는 새로 놓지 않고,새 아래층의 나머지 모든 모서리는 한 번씩 놓았습니다."
+      ],
+      "solution": "새 맨 아래층에는 정육면체8개가 들어갑니다. 이 한 줄만 따로 만들면12＋8×7＝68개가 필요합니다. 이전 계단의 맨 아래7개 정육면체와 새 줄이 맞닿습니다. 그 부분의 앞면·뒷면 가로 성냥개비는 각각7개,깊이 방향은8개이므로 이미 있는 성냥개비는7＋7＋8＝22개입니다. 따라서 더 놓을 성냥개비는68−22＝46개입니다. 겹치는 성냥개비는 새로 놓지 않고,새 아래층의 나머지 모든 모서리는 한 번씩 놓았습니다.",
+      "learningPoint": "기존 계단과 새 아래층이 공유하는 앞뒤/깊이 방향 모서리 제외하기",
+      "difficultyEvidence": {
+        "basis": "designed-practice-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": false,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "explicit-levelled-extension",
+        "relation": "foundation",
+        "measured": false,
+        "axes": {
+          "prerequisite": "원문의 자리값/회전·수 배열 규칙·정육면체 공유 모서리 범위 유지",
+          "reasoning": "기존 계단 아래에 한 줄을 더 보탤 때 새 모서리만 세기",
+          "conditionTracking": "기존 성냥 유지·아래층 한 줄·맞닿은 앞뒤 선과 깊이 방향 선·숨은 변",
+          "caseSplitting": "추가한 한 줄과 이전 입체의 공유 부분만 빼며 원문의 전체 층 누적 제외",
+          "computation": "수 크기만 바꾸지 않고 미지 자리 수·직접 읽기/규칙/역산·부분/증가/전체를 구분",
+          "representation": "정확한 원문의 디지털 카드·6행6열 표·한 줄 두께 계단 입체 그림 보존",
+          "reading": "전체 수 회전·표의 행과 열·맨 아래층만/기존 계단에 새 아래층을 보탬을 지문에서 확정",
+          "visualCues": "그림에 새 선/수/보조표/완성된 회전 결과/모서리 개수/풀이 힌트 없음",
+          "shortcuts": "25중 중앙6/9의 변화와 중복카드 제한을 실제 확인;26중 대각선 양쪽/경계 모두 사용;27중 단순 한 줄 개수와 공유 변의 차이가 답에 영향"
+        }
+      },
+      "verification": {
+        "primaryMethod": "new bottom-row edges minus the full shared boundary with the old stair",
+        "parameters": {
+          "oldLayers": 7,
+          "newLayers": 8
+        },
+        "independentSuite": "qa/applied1-balanced15-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 27,
+        "studentDifficultyMeasured": false
+      }
     }
   ],
-  "preservedLegacyCount": 95,
-  "newAuthoredCount": 265,
+  "preservedLegacyCount": 110,
+  "newAuthoredCount": 295,
   "reviewSummary": {
-    "sourceTypes": 24,
+    "sourceTypes": 27,
     "perSource": 15,
     "perLevel": 5,
-    "count": 360,
-    "preservedLegacyCount": 95,
-    "newAuthoredCount": 265,
+    "count": 405,
+    "preservedLegacyCount": 110,
+    "newAuthoredCount": 295,
     "independentAnswers": true,
     "actualZipReviewed": true,
     "sourceGradeMutation": false,
