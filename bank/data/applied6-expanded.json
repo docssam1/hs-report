@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r7",
+  "version": "20261024-applied6-expansion-r8",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -16,13 +16,13 @@
     7,
     8,
     9,
-    10
+    10,
+    11
   ],
   "pendingSourceNos": [
     1,
     4,
     6,
-    11,
     12,
     13,
     14,
@@ -3928,11 +3928,659 @@
         "sourceReasoningPreserved": true,
         "measuredVariantRate": null
       }
+    },
+    {
+      "id": "applied6-q11-v1",
+      "genId": "applied6-q11",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 11,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "서로 다른 카드의 합과 최솟값",
+      "detailType": "고정된 합에서 나머지 카드 수를 최대로 골라 최솟값 구하기",
+      "pointBand": "2.7",
+      "text": "1부터 10까지의 수가 각각 적힌 카드 10장이 있습니다. 이 중 5장을 꺼내 적힌 수를 더한 뒤 5로 나누었더니 나누어떨어졌고 몫은 7였습니다. 꺼낸 카드에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "1",
+      "answerParts": [
+        1
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "몫이 7이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 7×5=35입니다.",
+        "가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 10까지에서 서로 다른 가장 큰 네 수는 7, 8, 9, 10입니다.",
+        "이 네 수의 합은 34이므로 다섯 수 중 가장 작은 수는 35−34=1이어야 합니다. 실제로 1, 7, 8, 9, 10의 합은 35이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 1입니다."
+      ],
+      "solution": "몫이 7이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 7×5=35입니다. 가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 10까지에서 서로 다른 가장 큰 네 수는 7, 8, 9, 10입니다. 이 네 수의 합은 34이므로 다섯 수 중 가장 작은 수는 35−34=1이어야 합니다. 실제로 1, 7, 8, 9, 10의 합은 35이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 1입니다.",
+      "learningPoint": "전체 합을 먼저 구하고, 나머지 서로 다른 수들을 가장 크게 선택해 한 수의 최솟값을 구하기",
+      "learningLocation": "활용 6회 · 원문 11번 · 서로 다른 카드의 합과 최솟값",
+      "verification": {
+        "primaryMethod": "upper bound on the sum of the four cards larger than the minimum",
+        "independentMethod": "exhaustive enumeration of all five-card subsets",
+        "parameters": {
+          "cardRange": [
+            1,
+            10
+          ],
+          "cardsDrawn": 5,
+          "quotient": 7,
+          "requiredSum": 35,
+          "fourLargestOtherCards": [
+            7,
+            8,
+            9,
+            10
+          ],
+          "fourLargestSum": 34,
+          "minimumCard": 1,
+          "witnessCards": [
+            1,
+            7,
+            8,
+            9,
+            10
+          ],
+          "feasibleSubsetCount": 7
+        },
+        "independentSuite": "qa/applied6-q11-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q11-v2",
+      "genId": "applied6-q11",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 11,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "서로 다른 카드의 합과 최솟값",
+      "detailType": "고정된 합에서 나머지 카드 수를 최대로 골라 최솟값 구하기",
+      "pointBand": "2.7",
+      "text": "1부터 11까지의 수가 각각 적힌 카드 11장이 있습니다. 이 중 5장을 꺼내 적힌 수를 더한 뒤 5로 나누었더니 나누어떨어졌고 몫은 8였습니다. 꺼낸 카드에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "2",
+      "answerParts": [
+        2
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "2"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "몫이 8이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 8×5=40입니다.",
+        "가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 11까지에서 서로 다른 가장 큰 네 수는 8, 9, 10, 11입니다.",
+        "이 네 수의 합은 38이므로 다섯 수 중 가장 작은 수는 40−38=2이어야 합니다. 실제로 2, 8, 9, 10, 11의 합은 40이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 2입니다."
+      ],
+      "solution": "몫이 8이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 8×5=40입니다. 가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 11까지에서 서로 다른 가장 큰 네 수는 8, 9, 10, 11입니다. 이 네 수의 합은 38이므로 다섯 수 중 가장 작은 수는 40−38=2이어야 합니다. 실제로 2, 8, 9, 10, 11의 합은 40이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 2입니다.",
+      "learningPoint": "전체 합을 먼저 구하고, 나머지 서로 다른 수들을 가장 크게 선택해 한 수의 최솟값을 구하기",
+      "learningLocation": "활용 6회 · 원문 11번 · 서로 다른 카드의 합과 최솟값",
+      "verification": {
+        "primaryMethod": "upper bound on the sum of the four cards larger than the minimum",
+        "independentMethod": "exhaustive enumeration of all five-card subsets",
+        "parameters": {
+          "cardRange": [
+            1,
+            11
+          ],
+          "cardsDrawn": 5,
+          "quotient": 8,
+          "requiredSum": 40,
+          "fourLargestOtherCards": [
+            8,
+            9,
+            10,
+            11
+          ],
+          "fourLargestSum": 38,
+          "minimumCard": 2,
+          "witnessCards": [
+            2,
+            8,
+            9,
+            10,
+            11
+          ],
+          "feasibleSubsetCount": 7
+        },
+        "independentSuite": "qa/applied6-q11-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q11-v3",
+      "genId": "applied6-q11",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 11,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "서로 다른 카드의 합과 최솟값",
+      "detailType": "고정된 합에서 나머지 카드 수를 최대로 골라 최솟값 구하기",
+      "pointBand": "2.7",
+      "text": "1부터 12까지의 수가 각각 적힌 카드 12장이 있습니다. 이 중 5장을 꺼내 적힌 수를 더한 뒤 5로 나누었더니 나누어떨어졌고 몫은 9였습니다. 꺼낸 카드에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "3"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "몫이 9이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 9×5=45입니다.",
+        "가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 12까지에서 서로 다른 가장 큰 네 수는 9, 10, 11, 12입니다.",
+        "이 네 수의 합은 42이므로 다섯 수 중 가장 작은 수는 45−42=3이어야 합니다. 실제로 3, 9, 10, 11, 12의 합은 45이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 3입니다."
+      ],
+      "solution": "몫이 9이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 9×5=45입니다. 가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 12까지에서 서로 다른 가장 큰 네 수는 9, 10, 11, 12입니다. 이 네 수의 합은 42이므로 다섯 수 중 가장 작은 수는 45−42=3이어야 합니다. 실제로 3, 9, 10, 11, 12의 합은 45이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 3입니다.",
+      "learningPoint": "전체 합을 먼저 구하고, 나머지 서로 다른 수들을 가장 크게 선택해 한 수의 최솟값을 구하기",
+      "learningLocation": "활용 6회 · 원문 11번 · 서로 다른 카드의 합과 최솟값",
+      "verification": {
+        "primaryMethod": "upper bound on the sum of the four cards larger than the minimum",
+        "independentMethod": "exhaustive enumeration of all five-card subsets",
+        "parameters": {
+          "cardRange": [
+            1,
+            12
+          ],
+          "cardsDrawn": 5,
+          "quotient": 9,
+          "requiredSum": 45,
+          "fourLargestOtherCards": [
+            9,
+            10,
+            11,
+            12
+          ],
+          "fourLargestSum": 42,
+          "minimumCard": 3,
+          "witnessCards": [
+            3,
+            9,
+            10,
+            11,
+            12
+          ],
+          "feasibleSubsetCount": 7
+        },
+        "independentSuite": "qa/applied6-q11-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q11-v4",
+      "genId": "applied6-q11",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 11,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "서로 다른 카드의 합과 최솟값",
+      "detailType": "고정된 합에서 나머지 카드 수를 최대로 골라 최솟값 구하기",
+      "pointBand": "2.7",
+      "text": "1부터 13까지의 수가 각각 적힌 카드 13장이 있습니다. 이 중 5장을 꺼내 적힌 수를 더한 뒤 5로 나누었더니 나누어떨어졌고 몫은 10였습니다. 꺼낸 카드에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "4"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "몫이 10이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 10×5=50입니다.",
+        "가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 13까지에서 서로 다른 가장 큰 네 수는 10, 11, 12, 13입니다.",
+        "이 네 수의 합은 46이므로 다섯 수 중 가장 작은 수는 50−46=4이어야 합니다. 실제로 4, 10, 11, 12, 13의 합은 50이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 4입니다."
+      ],
+      "solution": "몫이 10이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 10×5=50입니다. 가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 13까지에서 서로 다른 가장 큰 네 수는 10, 11, 12, 13입니다. 이 네 수의 합은 46이므로 다섯 수 중 가장 작은 수는 50−46=4이어야 합니다. 실제로 4, 10, 11, 12, 13의 합은 50이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 4입니다.",
+      "learningPoint": "전체 합을 먼저 구하고, 나머지 서로 다른 수들을 가장 크게 선택해 한 수의 최솟값을 구하기",
+      "learningLocation": "활용 6회 · 원문 11번 · 서로 다른 카드의 합과 최솟값",
+      "verification": {
+        "primaryMethod": "upper bound on the sum of the four cards larger than the minimum",
+        "independentMethod": "exhaustive enumeration of all five-card subsets",
+        "parameters": {
+          "cardRange": [
+            1,
+            13
+          ],
+          "cardsDrawn": 5,
+          "quotient": 10,
+          "requiredSum": 50,
+          "fourLargestOtherCards": [
+            10,
+            11,
+            12,
+            13
+          ],
+          "fourLargestSum": 46,
+          "minimumCard": 4,
+          "witnessCards": [
+            4,
+            10,
+            11,
+            12,
+            13
+          ],
+          "feasibleSubsetCount": 7
+        },
+        "independentSuite": "qa/applied6-q11-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q11-v5",
+      "genId": "applied6-q11",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 11,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "서로 다른 카드의 합과 최솟값",
+      "detailType": "고정된 합에서 나머지 카드 수를 최대로 골라 최솟값 구하기",
+      "pointBand": "2.7",
+      "text": "1부터 14까지의 수가 각각 적힌 카드 14장이 있습니다. 이 중 5장을 꺼내 적힌 수를 더한 뒤 5로 나누었더니 나누어떨어졌고 몫은 11였습니다. 꺼낸 카드에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "5"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "몫이 11이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 11×5=55입니다.",
+        "가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 14까지에서 서로 다른 가장 큰 네 수는 11, 12, 13, 14입니다.",
+        "이 네 수의 합은 50이므로 다섯 수 중 가장 작은 수는 55−50=5이어야 합니다. 실제로 5, 11, 12, 13, 14의 합은 55이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 5입니다."
+      ],
+      "solution": "몫이 11이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 11×5=55입니다. 가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 14까지에서 서로 다른 가장 큰 네 수는 11, 12, 13, 14입니다. 이 네 수의 합은 50이므로 다섯 수 중 가장 작은 수는 55−50=5이어야 합니다. 실제로 5, 11, 12, 13, 14의 합은 55이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 5입니다.",
+      "learningPoint": "전체 합을 먼저 구하고, 나머지 서로 다른 수들을 가장 크게 선택해 한 수의 최솟값을 구하기",
+      "learningLocation": "활용 6회 · 원문 11번 · 서로 다른 카드의 합과 최솟값",
+      "verification": {
+        "primaryMethod": "upper bound on the sum of the four cards larger than the minimum",
+        "independentMethod": "exhaustive enumeration of all five-card subsets",
+        "parameters": {
+          "cardRange": [
+            1,
+            14
+          ],
+          "cardsDrawn": 5,
+          "quotient": 11,
+          "requiredSum": 55,
+          "fourLargestOtherCards": [
+            11,
+            12,
+            13,
+            14
+          ],
+          "fourLargestSum": 50,
+          "minimumCard": 5,
+          "witnessCards": [
+            5,
+            11,
+            12,
+            13,
+            14
+          ],
+          "feasibleSubsetCount": 7
+        },
+        "independentSuite": "qa/applied6-q11-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q11-v6",
+      "genId": "applied6-q11",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 11,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "서로 다른 카드의 합과 최솟값",
+      "detailType": "고정된 합에서 나머지 카드 수를 최대로 골라 최솟값 구하기",
+      "pointBand": "2.7",
+      "text": "1부터 15까지의 수가 각각 적힌 카드 15장이 있습니다. 이 중 5장을 꺼내 적힌 수를 더한 뒤 5로 나누었더니 나누어떨어졌고 몫은 11였습니다. 꺼낸 카드에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "1",
+      "answerParts": [
+        1
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "몫이 11이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 11×5=55입니다.",
+        "가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 15까지에서 서로 다른 가장 큰 네 수는 12, 13, 14, 15입니다.",
+        "이 네 수의 합은 54이므로 다섯 수 중 가장 작은 수는 55−54=1이어야 합니다. 실제로 1, 12, 13, 14, 15의 합은 55이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 1입니다."
+      ],
+      "solution": "몫이 11이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 11×5=55입니다. 가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 15까지에서 서로 다른 가장 큰 네 수는 12, 13, 14, 15입니다. 이 네 수의 합은 54이므로 다섯 수 중 가장 작은 수는 55−54=1이어야 합니다. 실제로 1, 12, 13, 14, 15의 합은 55이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 1입니다.",
+      "learningPoint": "전체 합을 먼저 구하고, 나머지 서로 다른 수들을 가장 크게 선택해 한 수의 최솟값을 구하기",
+      "learningLocation": "활용 6회 · 원문 11번 · 서로 다른 카드의 합과 최솟값",
+      "verification": {
+        "primaryMethod": "upper bound on the sum of the four cards larger than the minimum",
+        "independentMethod": "exhaustive enumeration of all five-card subsets",
+        "parameters": {
+          "cardRange": [
+            1,
+            15
+          ],
+          "cardsDrawn": 5,
+          "quotient": 11,
+          "requiredSum": 55,
+          "fourLargestOtherCards": [
+            12,
+            13,
+            14,
+            15
+          ],
+          "fourLargestSum": 54,
+          "minimumCard": 1,
+          "witnessCards": [
+            1,
+            12,
+            13,
+            14,
+            15
+          ],
+          "feasibleSubsetCount": 30
+        },
+        "independentSuite": "qa/applied6-q11-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q11-v7",
+      "genId": "applied6-q11",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 11,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "서로 다른 카드의 합과 최솟값",
+      "detailType": "고정된 합에서 나머지 카드 수를 최대로 골라 최솟값 구하기",
+      "pointBand": "2.7",
+      "text": "1부터 16까지의 수가 각각 적힌 카드 16장이 있습니다. 이 중 5장을 꺼내 적힌 수를 더한 뒤 5로 나누었더니 나누어떨어졌고 몫은 12였습니다. 꺼낸 카드에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "2",
+      "answerParts": [
+        2
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "2"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "몫이 12이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 12×5=60입니다.",
+        "가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 16까지에서 서로 다른 가장 큰 네 수는 13, 14, 15, 16입니다.",
+        "이 네 수의 합은 58이므로 다섯 수 중 가장 작은 수는 60−58=2이어야 합니다. 실제로 2, 13, 14, 15, 16의 합은 60이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 2입니다."
+      ],
+      "solution": "몫이 12이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 12×5=60입니다. 가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 16까지에서 서로 다른 가장 큰 네 수는 13, 14, 15, 16입니다. 이 네 수의 합은 58이므로 다섯 수 중 가장 작은 수는 60−58=2이어야 합니다. 실제로 2, 13, 14, 15, 16의 합은 60이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 2입니다.",
+      "learningPoint": "전체 합을 먼저 구하고, 나머지 서로 다른 수들을 가장 크게 선택해 한 수의 최솟값을 구하기",
+      "learningLocation": "활용 6회 · 원문 11번 · 서로 다른 카드의 합과 최솟값",
+      "verification": {
+        "primaryMethod": "upper bound on the sum of the four cards larger than the minimum",
+        "independentMethod": "exhaustive enumeration of all five-card subsets",
+        "parameters": {
+          "cardRange": [
+            1,
+            16
+          ],
+          "cardsDrawn": 5,
+          "quotient": 12,
+          "requiredSum": 60,
+          "fourLargestOtherCards": [
+            13,
+            14,
+            15,
+            16
+          ],
+          "fourLargestSum": 58,
+          "minimumCard": 2,
+          "witnessCards": [
+            2,
+            13,
+            14,
+            15,
+            16
+          ],
+          "feasibleSubsetCount": 30
+        },
+        "independentSuite": "qa/applied6-q11-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q11-v8",
+      "genId": "applied6-q11",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 11,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "서로 다른 카드의 합과 최솟값",
+      "detailType": "고정된 합에서 나머지 카드 수를 최대로 골라 최솟값 구하기",
+      "pointBand": "2.7",
+      "text": "1부터 17까지의 수가 각각 적힌 카드 17장이 있습니다. 이 중 5장을 꺼내 적힌 수를 더한 뒤 5로 나누었더니 나누어떨어졌고 몫은 13였습니다. 꺼낸 카드에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "3"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "몫이 13이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 13×5=65입니다.",
+        "가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 17까지에서 서로 다른 가장 큰 네 수는 14, 15, 16, 17입니다.",
+        "이 네 수의 합은 62이므로 다섯 수 중 가장 작은 수는 65−62=3이어야 합니다. 실제로 3, 14, 15, 16, 17의 합은 65이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 3입니다."
+      ],
+      "solution": "몫이 13이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 13×5=65입니다. 가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 17까지에서 서로 다른 가장 큰 네 수는 14, 15, 16, 17입니다. 이 네 수의 합은 62이므로 다섯 수 중 가장 작은 수는 65−62=3이어야 합니다. 실제로 3, 14, 15, 16, 17의 합은 65이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 3입니다.",
+      "learningPoint": "전체 합을 먼저 구하고, 나머지 서로 다른 수들을 가장 크게 선택해 한 수의 최솟값을 구하기",
+      "learningLocation": "활용 6회 · 원문 11번 · 서로 다른 카드의 합과 최솟값",
+      "verification": {
+        "primaryMethod": "upper bound on the sum of the four cards larger than the minimum",
+        "independentMethod": "exhaustive enumeration of all five-card subsets",
+        "parameters": {
+          "cardRange": [
+            1,
+            17
+          ],
+          "cardsDrawn": 5,
+          "quotient": 13,
+          "requiredSum": 65,
+          "fourLargestOtherCards": [
+            14,
+            15,
+            16,
+            17
+          ],
+          "fourLargestSum": 62,
+          "minimumCard": 3,
+          "witnessCards": [
+            3,
+            14,
+            15,
+            16,
+            17
+          ],
+          "feasibleSubsetCount": 30
+        },
+        "independentSuite": "qa/applied6-q11-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q11-v9",
+      "genId": "applied6-q11",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 11,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "서로 다른 카드의 합과 최솟값",
+      "detailType": "고정된 합에서 나머지 카드 수를 최대로 골라 최솟값 구하기",
+      "pointBand": "2.7",
+      "text": "1부터 18까지의 수가 각각 적힌 카드 18장이 있습니다. 이 중 5장을 꺼내 적힌 수를 더한 뒤 5로 나누었더니 나누어떨어졌고 몫은 14였습니다. 꺼낸 카드에 적힌 수 중 가장 작은 수는 얼마입니까?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "4"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "몫이 14이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 14×5=70입니다.",
+        "가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 18까지에서 서로 다른 가장 큰 네 수는 15, 16, 17, 18입니다.",
+        "이 네 수의 합은 66이므로 다섯 수 중 가장 작은 수는 70−66=4이어야 합니다. 실제로 4, 15, 16, 17, 18의 합은 70이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 4입니다."
+      ],
+      "solution": "몫이 14이고 나누어떨어졌으므로 꺼낸 다섯 카드의 합은 14×5=70입니다. 가장 작은 수를 작게 하려면 나머지 네 수를 가능한 한 크게 골라야 합니다. 1부터 18까지에서 서로 다른 가장 큰 네 수는 15, 16, 17, 18입니다. 이 네 수의 합은 66이므로 다섯 수 중 가장 작은 수는 70−66=4이어야 합니다. 실제로 4, 15, 16, 17, 18의 합은 70이며 서로 다른 카드에 있으므로 조건을 만족합니다. 따라서 가장 작은 수는 4입니다.",
+      "learningPoint": "전체 합을 먼저 구하고, 나머지 서로 다른 수들을 가장 크게 선택해 한 수의 최솟값을 구하기",
+      "learningLocation": "활용 6회 · 원문 11번 · 서로 다른 카드의 합과 최솟값",
+      "verification": {
+        "primaryMethod": "upper bound on the sum of the four cards larger than the minimum",
+        "independentMethod": "exhaustive enumeration of all five-card subsets",
+        "parameters": {
+          "cardRange": [
+            1,
+            18
+          ],
+          "cardsDrawn": 5,
+          "quotient": 14,
+          "requiredSum": 70,
+          "fourLargestOtherCards": [
+            15,
+            16,
+            17,
+            18
+          ],
+          "fourLargestSum": 66,
+          "minimumCard": 4,
+          "witnessCards": [
+            4,
+            15,
+            16,
+            17,
+            18
+          ],
+          "feasibleSubsetCount": 30
+        },
+        "independentSuite": "qa/applied6-q11-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 63,
-    "sourceTypes": 7,
+    "independentMathCount": 72,
+    "sourceTypes": 8,
     "variantsPerType": 9,
     "outputReviewed": true,
     "sourceDrawingCount": 2,
