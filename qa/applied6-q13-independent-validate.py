@@ -18,14 +18,14 @@ OLD_DATA = json.loads(subprocess.check_output(
 ))
 data = json.loads(DATA_PATH.read_text())
 index = json.loads(INDEX_PATH.read_text())
-assert data["version"] == "20261024-applied6-expansion-r12"
-assert data["availableSourceNos"] == [2, 3, 5, 7, 8, 9, 10, 11, 12, 13, 14, 16]
-assert len(data["items"]) == 108 and len([x for x in data["items"] if x["sourceNo"] == 13]) == 9
+assert data["version"] == "20261024-applied6-expansion-r15"
+assert data["availableSourceNos"] == [2, 3, 5, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19]
+assert len(data["items"]) == 135 and len([x for x in data["items"] if x["sourceNo"] == 13]) == 9
 assert index["version"] == data["version"] and index["itemCount"] == len(data["items"])
 assert index["pendingSourceNos"] == data["pendingSourceNos"]
 assert {x["sourceNo"] for x in index["items"]} == set(data["availableSourceNos"])
-assert [x for x in data["items"] if x["sourceNo"] not in (13, 14, 16)] == OLD_DATA["items"]
-assert sum(1 for n in data["availableSourceNos"] if len([x for x in data["items"] if x["sourceNo"] == n]) == 9) == 12
+assert [x for x in data["items"] if x["sourceNo"] not in (13, 14, 16, 17, 18, 19)] == OLD_DATA["items"]
+assert sum(1 for n in data["availableSourceNos"] if len([x for x in data["items"] if x["sourceNo"] == n]) == 9) == 15
 
 def rectangles(width, depth):
     return (width * (width + 1) // 2) * (depth * (depth + 1) // 2)

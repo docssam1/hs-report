@@ -9,10 +9,10 @@ ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/source-answer-6.pdf'
 OUT=ROOT/'.private-work/hw-expansion-20261023/hw6/q14-independent-math.json'
 d=json.loads(DATA.read_text());idx=json.loads(INDEX.read_text())
 old=json.loads(subprocess.check_output(['git','show','8d9dae219c5dece4d05f02197b90d2b70f6cf7ca:bank/data/applied6-expanded.json'],cwd=ROOT,text=True))
-assert d['version']=='20261024-applied6-expansion-r12'
-assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13,14,16] and len(d['items'])==108
-assert [x for x in d['items'] if x['sourceNo'] not in (14,16)]==old['items']
-assert idx['version']==d['version'] and idx['itemCount']==108 and idx['pendingSourceNos']==d['pendingSourceNos']
+assert d['version']=='20261024-applied6-expansion-r15'
+assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13,14,16,17,18,19] and len(d['items'])==135
+assert [x for x in d['items'] if x['sourceNo'] not in (14,16,17,18,19)]==old['items']
+assert idx['version']==d['version'] and idx['itemCount']==135 and idx['pendingSourceNos']==d['pendingSourceNos']
 assert hashlib.sha256(SOURCE.read_bytes()).hexdigest()=='54a5bf1489a9d537f9cc34e6db29609bc6384f8a18b666a40eb11561f912ea4c'
 assert hashlib.sha256(ANSWER.read_bytes()).hexdigest()=='b1ff5ad327fd669a56508bc1256be8743e809122f1e80b3af5f0731874939975'
 assert 14 not in d['pendingSourceNos']

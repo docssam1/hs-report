@@ -10,11 +10,11 @@ SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf'
 ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/source-answer-6.pdf'
 OUT=ROOT/'.private-work/hw-expansion-20261023/hw6/q16-independent-math.json'
 d=json.loads(DATA.read_text());idx=json.loads(INDEX.read_text());base=json.loads(BASE.read_text())
-assert d['version']=='20261024-applied6-expansion-r12' and len(d['items'])==108
-assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13,14,16]
-assert d['pendingSourceNos']==[n for n in base['pendingSourceNos'] if n!=16] and 15 in d['pendingSourceNos']
-assert idx['version']==d['version'] and idx['itemCount']==108 and idx['pendingSourceNos']==d['pendingSourceNos']
-assert [x for x in d['items'] if x['sourceNo']!=16]==base['items']
+assert d['version']=='20261024-applied6-expansion-r15' and len(d['items'])==135
+assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13,14,16,17,18,19]
+assert d['pendingSourceNos']==[n for n in base['pendingSourceNos'] if n not in (16,17,18,19)] and 15 in d['pendingSourceNos']
+assert idx['version']==d['version'] and idx['itemCount']==135 and idx['pendingSourceNos']==d['pendingSourceNos']
+assert [x for x in d['items'] if x['sourceNo'] not in (16,17,18,19)]==base['items'] and len([x for x in d['items'] if x['sourceNo']==17])==9
 assert hashlib.sha256(SOURCE.read_bytes()).hexdigest()=='54a5bf1489a9d537f9cc34e6db29609bc6384f8a18b666a40eb11561f912ea4c'
 assert hashlib.sha256(ANSWER.read_bytes()).hexdigest()=='b1ff5ad327fd669a56508bc1256be8743e809122f1e80b3af5f0731874939975'
 nums=sorted((1000*a+100*b+10*c+z for a,b,c,z in itertools.permutations(range(10),4) if a),reverse=True)

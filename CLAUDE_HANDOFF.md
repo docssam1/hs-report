@@ -2406,3 +2406,29 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - Q15는 보류: 원문 p3의 7,760,130 차이 표기와 답안 p3의 `881,201−105,188=776,013`, 답 105,188이 서로 맞지 않는다. `q15-source-discrepancy.json`을 확인하고 교사 판정 전 제작하지 않는다.
 - 공용 `bank/pool.js` PDF 첫 캡처 warmup 수정 뒤 2·3·5·7~14·16 모두 독립수학·브라우저·ZIP 회귀 검사가 통과했다. Q13·14·16 ZIP 실제 PDF도 전 페이지 렌더 확인. SHA·쪽수·근거는 `.private-work/hw-expansion-20261023/hw6/20261024-deadline-status.md` 및 각 `qNN-output-qa/`에 있다.
 - GitHub `main`과 로컬 `main`은 커밋 `1135dac34ce2d9a281b72c283657b4904cf5ecf8`에 정렬됐다. Drive 통합 데이터 ID `1Xledby2qpOxBzc4qe97d-Fi4soNMLG4D`를 r12로 갱신했고, Q13 ZIP 및 브라우저·ZIP·PDF·수학 검수 기록도 기존 ID에서 최신본으로 교체했다. Q14 신규 ZIP `1r5b2-yojzZYopkMB7t4IN-1XQFWSeKuf`, 원문대조 `14JvPsKhVRdwfz9-9o5Silc7UG51QKU4B`, 독립검산 `1FV_hidPtiSAiPWRHVDXT2AmbwIXkE9f8`, 브라우저 `1zpWIoSMmQxjAXgDF0yELEAP1zh6neKrs`, ZIP `1Z1lCuNtZNMnWjRJgCCS0UvdY8jyd4v8G`, PDF 시각 `1WBQ1PAYaKeEpCFHuUeq3blpUWyTFvSxd`; Q16 신규 ZIP `1DnXwUBFaGFJ-0E436rpHv1vxBS3BOU-e`, 원문대조 `19vmkTgjh_30Ewi7HvEoRubsjSqbxMzcR`, 독립검산 `1PVnYY1MuSe4XOzPujVc2PaG5heBr-jpw`, 브라우저 `1_mIVBMQPIF3xpzWULSX_EWtyvmmwtcdW`, ZIP `1UD8nh--oDwVVFOliPKAieEgkZGcjcScl`, PDF 시각 `1mWKlsHcNECHBYHjEiNfJJiwOMbHp4gte`. Q15 보류 근거는 `1lndCQlwThfuOIUbl5qNnvYoLmudDdnlW`. Drive 메타데이터의 파일 크기가 로컬 파일 크기와 일치함을 확인했다. 실제 사이트는 배포하지 않았다. 사용자 미추적 `bank/drafts/`, `materials/.DS_Store` 보존. 다음 유형은 활용6회 원문 17번이며 문제·답안 PDF에서 원문 유형을 직접 확인한 뒤 그 유형만 확장한다.
+
+
+## 2026-10-24 최신 마감 기록 — 활용6회 기존 유형 확장 r15
+
+- 사용자 지시: 원문에 이미 출제된 유형만 확장한다. 새로운 유형을 만들지 않는다. 원문당 유사문제 9개.
+- 최종 로컬 데이터 `bank/data/applied6-expanded.json`: `20261024-applied6-expansion-r15`, SHA-256 `a0142340bd35f248d96a83a808c87943e8bdcfbcd9b855c03405bfd56ff13cde`. 활용6회 기존 원문 2·3·5·7~14·16~19의 15유형, 135문항. 전체 적용 은행은 936문항, 104유형×9.
+- Q17: 원문·교사 답안 PDF p3 직접 대조, 답 8 독립 확인. ZIP 7항목, 문제 2쪽·상세풀이 5쪽, 모든 렌더 페이지 확인. ZIP SHA-256 `9ef95d4b4d29867920e0e7fd9686d067206033bb3d6c9f32d3fd6422473cd3d1`.
+- Q18: 원문·답안 PDF p3 직접 대조, 동전 종류별 최대 5개 조건과 세 조합 확인. 변형별 216개 후보 전수계산. ZIP 문제 2쪽·풀이 3쪽, 전체 시각 검수. ZIP SHA-256 `37468469cc8bd67f6d93347147a943033f69e89e7b07843c262d2a126e48902a`.
+- Q19: 원문·답안 PDF p4 직접 대조. 곱 `11111111108888888889`, 0을 포함한 짝수 자릿수 10개 확인. 길이별 곱셈으로 변형 검산. ZIP 문제 2쪽·풀이 3쪽, 전체 시각 검수. ZIP SHA-256 `3ee36c7955b1c10375400d0ae6f8e99ab068ff4a7c42667f5e6b0919d807c1f5`.
+- Q17~19 모두 답안·상세풀이 포함, 브라우저 답안 입력/진단/3회 제한/기존 첫 응답 보존/2단 배치/375px/실제 ZIP 검수 통과. PDF 시각검수 JSON은 각 `qNN-output-qa/qNN-pdf-visual-review.json`에 있다.
+- 원문 유형 범위: `availableSourceNos`는 `2, 3, 5, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19`. 보류/미착수 `1, 4, 6, 15, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30`. Q15는 문제 PDF의 7,760,130과 답안 PDF의 776,013 계산 및 답 105,188이 불일치해 계속 잠금; 판본/교사 판정 전 변형 공개 금지.
+- 정해진 한국시간 마감(2026-10-24 02:00)은 지났다. 이후 새 문제 생성은 중단했다. 실제 사이트 배포·병합은 하지 않았다. 다음에 재개하면 기존 원문 20번부터 PDF 문제·답안 직접 대조 후 기존 유형만 확장한다.
+- 이 기록 시점 GitHub/Drive 동기화 상태는 별도 확인이 필요하다. 미추적 `bank/drafts/`, `materials/.DS_Store`는 사용자 자료로 보존한다.
+
+
+### Drive 동기화 완료 — r15
+
+- 통합 은행 기존 Drive ID `1Xledby2qpOxBzc4qe97d-Fi4soNMLG4D`를 r15로 갱신했다. 적용6회 색인 r15는 `1HCdAbbnp5j3J93FeQHAQtxNWmXioifUb`, 마감 기록은 `1PIYLvw1LBOF9r69mH6tUf3Hs8D52sqAx`에 보관했다.
+- 활용6회 Q17/Q18/Q19 각 문제 PDF, 상세풀이 PDF, 9문항 ZIP, QA 증빙 ZIP을 Drive `황소 활용 모의고사` 폴더에 보관했다. ZIP ID와 SHA는 로컬 `drive-sync-r15-receipt.json`에 기록했다.
+- Drive 메타데이터 용량은 은행 JSON 455,514B, 색인 5,357B, Q17 ZIP 4,604,691B, Q18 ZIP 4,369,457B, Q19 ZIP 4,241,353B이며 로컬과 일치한다. 문제/풀이 PDF 및 증빙 ZIP도 로컬과 같은 크기로 업로드됐다.
+- 인수인계 파일도 기존 Drive ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`에서 갱신한다. GitHub 동기화는 이 기록 작성 뒤 수행한다.
+
+### GitHub 업로드 미완료 상태
+
+- 로컬 `main`에는 활용6회 r15 데이터·색인·어댑터·검증기와 이 인수인계 변경을 포함한 커밋이 있다. `git push origin main`은 `fatal: could not read Username for 'https://github.com': Device not configured`로 거절됐다. 따라서 GitHub 원격 `main`에는 아직 반영되지 않았으며, 인증된 GitHub 연결로 파일/커밋을 푸시할 수 있게 된 뒤 이어야 한다. 사이트 배포는 하지 않았다.
+- 사용자 미추적 파일 `bank/drafts/`, `materials/.DS_Store`는 그대로 두었다.

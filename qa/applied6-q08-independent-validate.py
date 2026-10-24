@@ -8,8 +8,8 @@ SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf'
 ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/answer.pdf'
 ASSET=ROOT/'bank/assets/applied6/q08-tiles-original.png'
 d=json.loads(DATA.read_text())
-assert d['version']=='20261024-applied6-expansion-r12'
-assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13,14,16] and len(d['items'])==108
+assert d['version']=='20261024-applied6-expansion-r15'
+assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13,14,16,17,18,19] and len(d['items'])==135
 items=[x for x in d['items'] if x['sourceNo']==8]
 assert len(items)==9 and [x['variantNo'] for x in items]==list(range(1,10))
 rounds=[5,12,27,38,49,56,72,85,96]

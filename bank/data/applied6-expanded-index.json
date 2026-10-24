@@ -1,16 +1,13 @@
 {
-  "version": "20261024-applied6-expansion-r12",
+  "version": "20261024-applied6-expansion-r15",
   "sourceSet": "applied",
   "sourceRound": 6,
-  "itemCount": 108,
+  "itemCount": 135,
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
-    17,
-    18,
-    19,
     20,
     21,
     22,
@@ -140,6 +137,36 @@
       "area": "경우의 수",
       "subarea": "서로 다른 숫자 카드의 큰 수 순위",
       "detailType": "각 자리의 숫자가 다른 네 자리 수를 큰 수부터 나열할 때 순서 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 17,
+      "genId": "applied6-q17",
+      "area": "경우의 수",
+      "subarea": "연속한 자연수와 짝수의 합",
+      "detailType": "연속한 다섯 자연수에서 짝수의 합이 주어진 범위에 드는 경우의 수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 18,
+      "genId": "applied6-q18",
+      "area": "경우의 수",
+      "subarea": "가지고 있는 동전으로 금액 만들기",
+      "detailType": "종류별 개수가 정해진 동전으로 목표 금액 만드는 방법의 수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 19,
+      "genId": "applied6-q19",
+      "area": "수와 식",
+      "subarea": "반복 숫자 수의 곱과 자리 숫자",
+      "detailType": "같은 반복 숫자를 쓴 두 수의 곱에서 짝수인 자리 숫자 세기",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9
