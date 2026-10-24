@@ -2238,6 +2238,6 @@ Q21·Q30 변형은 독립적인 새 조건을 문제 안에 명시하며 원본 
 
 ## 2026-10-24 사용자 동의 후 커밋 및 Drive 보관 상태
 
-사용자는 문제은행 제작 목적의 난도 조정을 허용했다. 위 450개 검수본은 로컬 `main` 커밋 `72194fac1b559c50ad15f339700fbb9dd807254a`로 기록했다. 직접 Git push는 HTTPS 인증 구성이 없어 실패했다. 연결된 GitHub ref 갱신도 새 커밋 객체가 원격에 없어 거부되었으므로, GitHub `main` 반영 및 사이트 배포는 완료로 취급하지 않는다. 다음 재개 때 인증된 Git push가 가능한 상태에서 `origin/main`과 fast-forward 가능 여부를 먼저 확인한다.
+사용자는 문제은행 제작 목적의 난도 조정을 허용했다. 450개 산출물의 원래 로컬 커밋은 `da60048733fb28a639e350c0329b9d4f666f7df1`이다. 해당 커밋의 전체 72개 파일 트리를 GitHub에 재구성해 원격 커밋 `9f9ea7a61e2beff9605d37e4007f7c14a6915e8c`으로 fast-forward 반영했고, 그 커밋 트리 SHA `6e6dc103ecde879d7068020136365b4e21407d99`는 로컬 트리와 일치한다. 로컬 `main`은 원격 커밋으로 정렬했다. 사이트 배포는 하지 않았다.
 
 Drive 폴더 `황소 활용 모의고사`에 다음 파일을 올리고 목록에서 이름·크기·파일 ID를 확인했다: 최종 ZIP(85,007,833B, ID `1JBbhktaolP5TMX0_GkHPm7WqAbB08Pon`), 은행 데이터(2,078,009B, ID `1AgCW9PtZ4HAuYt6LL5XXhjn73hA77w55`), 브라우저 검수(JSON, ID `1VFJEAMBX-pSO6PhcSvr_Hd5fjzGG2Q36`), Q26 독립 검산(JSON, ID `1X19qrflsPC7NcKQ10RkusOWUVZMetdn8`), 인수인계 문서(571,110B, ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`). Drive 항목은 `미반영` 초안 보관이며 사이트 배포의 증거가 아니다. 로컬 ZIP SHA-256은 `9e8f6bf52d4f4522541d2238a132851ae3828365dfdf4d56e64a587d786b6544`, 은행 데이터 SHA-256은 `97503d6471d6dea4c154c64d079e2d8c79f6c02c95d022a083ff464efdefb9e2`다.
