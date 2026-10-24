@@ -1,5 +1,5 @@
 """Validate raw fractions, physical spreads, exact line intersections, mesh faces and work rates."""
-import collections,datetime,functools,hashlib,itertools,json,re,subprocess,tempfile
+import collections,datetime,functools,hashlib,itertools,json,math,re,subprocess,tempfile
 from fractions import Fraction as F
 from pathlib import Path
 from PIL import Image
@@ -9,8 +9,8 @@ ROOT=Path(__file__).resolve().parents[1];FILE=ROOT/'bank/data/applied3-balanced1
 data=json.loads(FILE.read_text());legacy_bytes=(ROOT/'bank/data/applied3-expanded.json').read_bytes()
 legacy={x['id']:x for x in json.loads(legacy_bytes)['items']}
 assert hashlib.sha256(legacy_bytes).hexdigest()==data['legacyBankSha256']
-assert data['availableSourceNos']==list(range(1,25))and data['pendingSourceNos']==list(range(25,31))
-assert len(data['items'])==len({x['id']for x in data['items']})==360
+assert data['availableSourceNos']==list(range(1,31))and data['pendingSourceNos']==[]
+assert len(data['items'])==len({x['id']for x in data['items']})==450
 
 raw_fractions=[(a,k+2-a)for k in range(1,100)for a in range(1,k+1)]
 assert raw_fractions[:6]==[(1,2),(1,3),(2,2),(1,4),(2,3),(3,2)]
@@ -92,6 +92,82 @@ def linear_solve(matrix,rhs):
 @functools.lru_cache(None)
 def triangle_enumeration():
     return [t for t in itertools.permutations(range(1,10))if sum(t[i]for i in [0,1,2,3])==sum(t[i]for i in [3,4,5,6])==sum(t[i]for i in [6,7,8,0])==23]
+
+@functools.lru_cache(None)
+def native_cuboids():
+    boxes=[]
+    for x0,x1 in itertools.combinations(range(6),2):
+        for y0,y1 in itertools.combinations(range(4),2):
+            for z0,z1 in itertools.combinations(range(5),2):
+                cells={(a,b,c)for a in range(x0,x1)for b in range(y0,y1)for c in range(z0,z1)}
+                boxes.append(dict(lo=(x0,y0,z0),hi=(x1,y1,z1),shape=(x1-x0,y1-y0,z1-z0),cells=cells))
+    assert len(boxes)==900;return boxes
+
+def original29_regions():
+    from collections import deque
+    im=Image.open(ROOT/'bank/assets/applied3/circles-tangent-original.png').convert('RGB');w,h=im.size
+    white={(x,y)for y in range(h)for x in range(w)if min(im.getpixel((x,y)))>245};result=[]
+    while white:
+        start=white.pop();queue=deque([start]);points=[start]
+        while queue:
+            x,y=queue.popleft()
+            for p in [(x-1,y),(x+1,y),(x,y-1),(x,y+1)]:
+                if p in white:white.remove(p);points.append(p);queue.append(p)
+        if len(points)<=50 or any(x in [0,w-1]or y in[0,h-1]for x,y in points):continue
+        cx,cy=[sum(p[i]for p in points)/len(points)for i in [0,1]]
+        #Interior centroids classify the five actual connected raster regions.
+        membership=int((cx-81)**2+(cy-124)**2<63**2)+int((cx-175.5)**2+(cy-133.5)**2<79**2)
+        result.append(dict(area=len(points),centroid=[cx,cy],memberships=membership))
+    assert len(result)==5;return result
+
+native_regions29=original29_regions();circle_graph_evidence={}
+@functools.lru_cache(None)
+def tangent_regions(n,strict=False):
+    #Rational centers lie on a circle of radius1/4; inner radii are3/4
+    #(internally tangent) or2/3(strict). Any two meet twice. Three centers
+    #are noncollinear and their radical center is the origin, whose distance
+    #1/4 differs from either radius, so no triple circle intersection exists.
+    radius=F(2,3)if strict else F(3,4);centers=[]
+    for t in range(1,n+1):
+        p=(F(1-t*t,4*(1+t*t)),F(2*t,4*(1+t*t)));assert sum(c*c for c in p)==F(1,16);centers.append(p)
+    assert F(1,4)+radius<1 if strict else F(1,4)+radius==1
+    vertices={};events=[[]for _ in centers];outer=[]
+    if not strict:
+        for i,c in enumerate(centers):
+            name=f't{i}';vertices[name]=tuple(float(4*v)for v in c);events[i].append(name);outer.append(name)
+    for i,a in enumerate(centers):
+        for j in range(i):
+            b=centers[j];dx,dy=float(b[0]-a[0]),float(b[1]-a[1]);distance=math.hypot(dx,dy)
+            assert 0<distance<float(2*radius)
+            height=math.sqrt(float(radius)**2-distance**2/4)
+            midpoint=[float(a[k]+b[k])/2 for k in [0,1]]
+            for sign in [-1,1]:
+                point=(midpoint[0]-sign*height*dy/distance,midpoint[1]+sign*height*dx/distance);name=f'p{i}-{j}-{sign}'
+                assert point[0]**2+point[1]**2<1+1e-10
+                for k,c in enumerate(centers):
+                    delta=abs(math.hypot(point[0]-float(c[0]),point[1]-float(c[1]))-float(radius))
+                    if k in [i,j]:assert delta<1e-10
+                    else:assert delta>1e-12,'unexpected triple crossing'
+                vertices[name]=point;events[i].append(name);events[j].append(name)
+    edges=[]
+    for i,names in enumerate(events):
+        if not names:name=f'i{i}';vertices[name]=(float(centers[i][0]+radius),float(centers[i][1]));names=[name]
+        names=sorted(names,key=lambda key:math.atan2(vertices[key][1]-float(centers[i][1]),vertices[key][0]-float(centers[i][0])))
+        edges.extend((names[j],names[(j+1)%len(names)])for j in range(len(names)))
+    if not outer:vertices['outer']=(1.,0.);outer=['outer']
+    outer=sorted(outer,key=lambda key:math.atan2(vertices[key][1],vertices[key][0]));edges.extend((outer[j],outer[(j+1)%len(outer)])for j in range(len(outer)))
+    parent={v:v for v in vertices}
+    def find(v):
+        while parent[v]!=v:parent[v]=parent[parent[v]];v=parent[v]
+        return v
+    for a,b in edges:parent[find(a)]=find(b)
+    components=len({find(v)for v in vertices});regions=len(edges)-len(vertices)+components
+    if strict:
+        assert components==2 and len(vertices)==n*(n-1)+1+(n==1)
+    else:assert components==1 and len(vertices)==n*n and len(edges)==2*n*n
+    circle_graph_evidence[f'{n}-{strict}']=dict(circles=n,boundaryContacts=0 if strict else n,vertices=len(vertices),edges=len(edges),components=components,interiorRegions=regions)
+    return regions
+
 
 def solve(x):
     no,level,p=x['sourceNo'],x['practiceLevel'],x['verification']['parameters'];text=x['text']
@@ -416,6 +492,96 @@ def solve(x):
             if sum(changed)!=p['afterUnknownSum']:continue
             changed_grid=dict(fixed);changed_grid.update(zip(unknown,changed));assert len({sum(changed_grid[c]for c in row)for row in groups})==1;answers.append(changed)
         assert len(answers)==1;return answers[0]
+    if no==25:
+        valid=[]
+        for number in range(1000,10000):
+            digits=list(map(int,str(number)));counts=collections.Counter(digits)
+            if level=='low':ok=counts==collections.Counter(p['cards'])
+            elif level=='middle':ok=counts[0]==1 and sum(digits)==p['digitSum'] and max(counts.values())<=3
+            else:ok=0 in digits and sum(digits)==p['digitSum'] and max(counts.values())<=3
+            if ok:valid.append(number)
+        if level=='low':assert x['cards']==p['cards']
+        if level=='middle':
+            buckets=collections.Counter(tuple(sorted(int(c)for c in str(v)if c!='0'))for v in valid)
+            expected=[[', '.join(map(str,t)),str(buckets[t])]for t in sorted(buckets)]
+            assert x['solutionTable']['rows']==expected
+        return[len(valid)]
+    if no==26:
+        if level=='low':
+            s=str(p['number']);return[p['number']+int(s[:-1])+int(s[:-2])]
+        candidates=[]
+        for number in range(100 if level=='middle'else 1000,1000 if level=='middle'else 10000):
+            s=str(number);total=number+int(s[:-1])+(int(s[:-2])if level=='high'else 0)
+            if total==p['sum']:candidates.append(number)
+        assert len(candidates)==1;return candidates
+    if no==27:
+        boxes=native_cuboids();mode=p.get('mode')
+        if level=='low':return[sum(b['shape']==tuple(p['shape'])for b in boxes)]
+        if level=='middle':
+            if mode=='height1':return[sum(b['shape'][2]==1 for b in boxes)]
+            if mode=='depthFull':return[sum(b['lo'][1]==0 and b['hi'][1]==3 for b in boxes)]
+            if mode=='widthFull':return[sum(b['lo'][0]==0 and b['hi'][0]==5 for b in boxes)]
+            if mode=='heightFull':return[sum(b['lo'][2]==0 and b['hi'][2]==4 for b in boxes)]
+            if mode=='cubes':return[sum(len(set(b['shape']))==1 for b in boxes)]
+        if mode=='nonCube':return[sum(len(set(b['shape']))!=1 for b in boxes)]
+        if mode=='evenVolume':return[sum(len(b['cells'])%2==0 for b in boxes)]
+        if mode=='touchAnyThree':return[sum(any(v==0 for v in b['lo'])for b in boxes)]
+        if mode=='oneCorner':return[sum(((0,0,0)in b['cells'])!=((4,2,3)in b['cells'])for b in boxes)]
+        if mode=='volumeSum':return[sum(len(b['cells'])for b in boxes)]
+        raise AssertionError(mode)
+    if no==28:
+        if level=='low':s=p['sequence'];assert x['promptDataLines']==[s]
+        elif level=='middle':s=''.join(str(n)for n in range(p['start'],p['end']+1));assert x['promptDataLines']==[f"123456789101112…{p['end']-1}{p['end']}"]
+        else:s=''.join(str(n)for n in range(p['from'],p['to']+1))
+        keep=len(s)-p['delete']
+        @functools.lru_cache(None)
+        def dp(index,left,first):
+            if left==0:return ''
+            if len(s)-index<left:return None
+            choices=[]
+            skip=dp(index+1,left,first)if index+1<=len(s)else None
+            if skip is not None:choices.append(skip)
+            if not(first and s[index]=='0'):
+                tail=dp(index+1,left-1,False)
+                if tail is not None:choices.append(s[index]+tail)
+            return min(choices)if choices else None
+        answer=dp(0,keep,True);assert answer and len(answer)==keep and answer[0]!='0'
+        changed=answer[:-1]+str((int(answer[-1])+1)%10);assert changed!=answer
+        return[answer]
+    if no==29:
+        if level=='low':
+            assert len(native_regions29)==5
+            memberships=collections.Counter(c['memberships']for c in native_regions29)
+            assert memberships=={0:2,1:2,2:1}
+            mode=p['mode'];return[dict(total=5,union=sum(c['memberships']>=1 for c in native_regions29),outside=memberships[0],exactlyOne=memberships[1],intersection=memberships[2])[mode]]
+        if level=='middle':return[tangent_regions(p['smallCircles'])]
+        candidates=[]
+        for n in range(1,21):
+            current=tangent_regions(n);mode=p['mode']
+            if mode=='maxThenRemove'and current==p['maxRegions']and n>p['remove']:candidates.append([n,tangent_regions(n-p['remove'])])
+            if mode=='addTwo'and tangent_regions(n+2)-current==p['increase']:candidates.append([n,current,tangent_regions(n+2)])
+            if mode=='removeTwo'and n>2 and current-tangent_regions(n-2)==p['decrease']:candidates.append([n,current,tangent_regions(n-2)])
+            if mode=='doubleSum'and current+tangent_regions(2*n)==p['sumMaxima']:candidates.append([n,current,tangent_regions(2*n)])
+            if mode=='strictGap'and current-tangent_regions(n,strict=True)==p['difference']:candidates.append([n,current,tangent_regions(n,strict=True)])
+        #The exact square and strictly increasing differences bound every positive
+        #solution above20 away from the displayed observations; no numeric cutoff is assumed.
+        assert len(candidates)==1;return candidates[0]
+    if no==30:
+        midnight=datetime.datetime(2026,1,1)
+        if level=='low':
+            home=midnight+datetime.timedelta(minutes=p['friendArrival']+p['stay']+p['travel']);return[home.hour,home.minute]
+        if level=='middle':
+            candidates=[]
+            for t in range(p['homeDisplay']-p['setting']+1):
+                if(midnight+datetime.timedelta(minutes=p['setting']+2*t+p['stay'])).hour*60+(midnight+datetime.timedelta(minutes=p['setting']+2*t+p['stay'])).minute==p['homeDisplay']:candidates.append(t)
+            assert len(candidates)==1;return candidates
+        candidates=[]
+        for one_way in range(24*60):
+            true_departure=midnight+datetime.timedelta(minutes=p['friendArrival']-one_way)
+            true_return=midnight+datetime.timedelta(minutes=p['friendArrival']+p['stay']+one_way)
+            displayed_return=midnight+datetime.timedelta(minutes=p['setting'])+(true_return-true_departure)
+            if displayed_return==midnight+datetime.timedelta(minutes=p['homeDisplay']):candidates.append([true_return.hour,true_return.minute])
+        assert len(candidates)==1;return candidates[0]
     raise AssertionError(no)
 
 evidence=[]
@@ -424,12 +590,12 @@ for x in data['items']:
     assert x['sourcePointBand']==('2.7'if x['sourceNo']<=12 else'3.4'if x['sourceNo']<=22 else'4.2')and x['pointBand']==dict(low='2.7',middle='3.4',high='4.2')[x['practiceLevel']]
     assert x['answerContract']in ['ordered-parts','unordered-set']and (len(x['answerLabels'])==len(actual)or x['answerContract']=='unordered-set'and len(x['answerLabels'])==1)and len(x['solutionSteps'])>=3
     assert x['solution']==' '.join(x['solutionSteps'])
-    assert x['verification']['sourceExamPage']==(1 if x['sourceNo']<=4 else 2 if x['sourceNo']<=10 else 3 if x['sourceNo']<=14 else 4 if x['sourceNo']<=19 else 5)
+    assert x['verification']['sourceExamPage']==(1 if x['sourceNo']<=4 else 2 if x['sourceNo']<=10 else 3 if x['sourceNo']<=14 else 4 if x['sourceNo']<=19 else 5 if x['sourceNo']<=24 else 6 if x['sourceNo']<=29 else 7)
     if x.get('preservedApprovedId'):assert all(x[k]==v for k,v in legacy[x['id']].items())
     else:assert len(x['levelReview']['axes'])==9 and not x['difficultyEvidence']['sourceReasoningPreserved']and x['difficultyEvidence']['measuredVariantRate']is None
     assert not any(k in x for k in ['hints','conditionSummary'])
     evidence.append(dict(id=x['id'],passed=True,answer=actual))
-for no in range(1,25):assert collections.Counter(x['practiceLevel']for x in data['items']if x['sourceNo']==no)==dict(low=5,middle=5,high=5)
+for no in range(1,31):assert collections.Counter(x['practiceLevel']for x in data['items']if x['sourceNo']==no)==dict(low=5,middle=5,high=5)
 pdf=PdfReader(ROOT/'materials/초등과정 대비 실전 모의고사 활용 3회.pdf')
 for name,file in [('Im51','staircase-original.png')]:
     native=next(i.image for i in pdf.pages[0].images if Path(i.name).stem==name).convert('RGB');actual=Image.open(ROOT/'bank/assets/applied3'/file).convert('RGB');assert native.size==actual.size and native.tobytes()==actual.tobytes()
@@ -438,12 +604,12 @@ with tempfile.TemporaryDirectory(prefix='gfield-applied3-source-render-')as temp
     source=Image.open(output.with_suffix('.png')).convert('RGB').crop((709,451,924,614));actual=Image.open(ROOT/'bank/assets/applied3/pizza-original.png').convert('RGB');assert source.size==actual.size and source.tobytes()==actual.tobytes()
 for file in ['data.js','docssam-columns.js','mock-data-hw.js','bank/data/applied1-balanced15.json','bank/data/applied2-balanced15.json','bank/data/applied3-expanded.json','bank/assets/applied3/pizza.png']:
     assert(ROOT/file).read_bytes()==subprocess.check_output(['git','show','7ae2f7f1:'+file],cwd=ROOT),file
-assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','asset','givenTable']},ensure_ascii=False,sort_keys=True)for x in data['items']})==360
-work=ROOT/'.private-work/balanced15-20261024/round3-batch4';work.mkdir(exist_ok=True)
-(work/'independent-math.json').write_text(json.dumps(dict(dataSha256=hashlib.sha256(FILE.read_bytes()).hexdigest(),count=360,methods=['literal unreduced fraction sequence','even left-page finite search','rational line intersections all inside disk/no triple points','shared-face mesh boundary and paint memory','integer perimeter coordinate sets','exact rational Gaussian work-rate equations','rigid 3D rotations of six labelled normal vectors','datetime dates across all June1Saturday years2000-2039','closed-loop rational point positions and bounded integer search','direct modular enumeration with each third-condition removal','literal consecutive row lists','two actual coordinate folds and original-cell preimages','five observed circle-position equations','actual printed-clue CSP with answer uniqueness and high ablations','modular distinct digit dynamic programming','horizontal checkerboard slices','physical three-fold point reflections','forward transfer matrix Gaussian inverse','all9!triangle placements and dihedral orbit sets','direct arbitrary-length integer borrowing','exact numerator/divisor enumeration and grouped arithmetic tables','datetime two-window rate enumeration','two-speed Gaussian equations and quarter-hour simulation','native13cell row sums by coordinates'],items=evidence),ensure_ascii=False,indent=2)+'\n')
+assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','asset','givenTable','cards']},ensure_ascii=False,sort_keys=True)for x in data['items']})==450
+work=ROOT/'.private-work/balanced15-20261024/round3-batch5';work.mkdir(exist_ok=True)
+(work/'independent-math.json').write_text(json.dumps(dict(dataSha256=hashlib.sha256(FILE.read_bytes()).hexdigest(),count=450,methods=['literal unreduced fraction sequence','even left-page finite search','rational line intersections all inside disk/no triple points','shared-face mesh boundary and paint memory','integer perimeter coordinate sets','exact rational Gaussian work-rate equations','rigid 3D rotations of six labelled normal vectors','datetime dates across all June1Saturday years2000-2039','closed-loop rational point positions and bounded integer search','direct modular enumeration with each third-condition removal','literal consecutive row lists','two actual coordinate folds and original-cell preimages','five observed circle-position equations','actual printed-clue CSP with answer uniqueness and high ablations','modular distinct digit dynamic programming','horizontal checkerboard slices','physical three-fold point reflections','forward transfer matrix Gaussian inverse','all9!triangle placements and dihedral orbit sets','direct arbitrary-length integer borrowing','exact numerator/divisor enumeration and grouped arithmetic tables','datetime two-window rate enumeration','two-speed Gaussian equations and quarter-hour simulation','native13cell row sums by coordinates','literal four-digit numeral enumeration','string truncation inverse search','900actual3Dvoxel boxes','full subsequence dynamic programming','rational tangent-circle intersection graph/Euler and native five-region raster','datetime forward and wrong-clock inverse'],items=evidence),ensure_ascii=False,indent=2)+'\n')
 # Verify prior released90 item objects/storage versions byte for byte at canonical field level.
-prior=json.loads(subprocess.check_output(['git','show','79631fd7:bank/data/applied3-balanced15.json'],cwd=ROOT))
-assert data['items'][:270]==prior['items']
+prior=json.loads(subprocess.check_output(['git','show','f5ea54a6:bank/data/applied3-balanced15.json'],cwd=ROOT))
+assert data['items'][:360]==prior['items']
 with tempfile.TemporaryDirectory(prefix='gfield-applied3-fold-render-')as temp:
     output=Path(temp)/'page';subprocess.run(['pdftoppm','-f','3','-l','3','-scale-to','2000','-singlefile','-png',str(ROOT/'materials/초등과정 대비 실전 모의고사 활용 3회.pdf'),str(output)],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     expected=Image.open(output.with_suffix('.png')).convert('RGB').crop((82,1164,662,1318));actual=Image.open(ROOT/'bank/assets/applied3/fold-original.png').convert('RGB');assert expected.size==actual.size and expected.tobytes()==actual.tobytes()
@@ -455,4 +621,9 @@ for page_no,name,file in [(3,'Im71','triangle-original.png'),(4,'Im77','equal-li
 with tempfile.TemporaryDirectory(prefix='gfield-applied3-teacher-cards-')as temp:
     output=Path(temp)/'page';subprocess.run(['pdftoppm','-f','5','-l','5','-scale-to','1600','-singlefile','-png',str(ROOT/'.private-work/balanced15-20261024/source/applied3-answer.pdf'),str(output)],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     original=Image.open(output.with_suffix('.png')).convert('RGB').crop((148,617,335,669));actual=Image.open(ROOT/'bank/assets/applied3/division-cards-teacher-original.png').convert('RGB');assert original.size==actual.size and original.tobytes()==actual.tobytes()
-print('PASS360 Applied3:24complete5/5/5groups;295new+65approved;prior270 unchanged;all9!triangle placements/symmetry orbits/direct big-integer borrow/numerator division enumeration/datetime payment windows/travel equations/actual13cell coordinate rows;teacher empty-card crop exact;original grades/assets preserved')
+print('PASS450 Applied3:30complete5/5/5groups;365new+85approved;prior360 unchanged;all9!triangle placements/symmetry orbits/direct big-integer borrow/numerator division enumeration/datetime payment windows/travel equations/actual13cell coordinate rows;teacher empty-card crop exact;original grades/assets preserved')
+
+for stem,name in [("Im83","circles-tangent-original.png"),("Im84","cuboids-grid-original.png")]:
+    native=next(i.image for i in pdf.pages[5].images if Path(i.name).stem==stem).convert("RGB");actual=Image.open(ROOT/"bank/assets/applied3"/name).convert("RGB");assert native.size==actual.size and native.tobytes()==actual.tobytes()
+(work/"source29-boundary-proof.json").write_text(json.dumps(dict(nativeRasterRegions=native_regions29,actualCoordinateGraphs=circle_graph_evidence,construction="rational Pythagorean centers radius1/4; inner radii3/4 tangent or2/3 strict; no triple crossing by radical center argument",upperBound="each added inner circle has at most2(k-1) pair crossings plus1 distinct boundary tangency; all crossings/tangencies attained",originalGradeMutation=False),indent=2)+"\n")
+print("PASS native27/29assets exact; boundary graph including n7=50; raster5regions; legacy29lock unchanged")
