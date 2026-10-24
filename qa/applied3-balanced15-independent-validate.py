@@ -9,8 +9,8 @@ ROOT=Path(__file__).resolve().parents[1];FILE=ROOT/'bank/data/applied3-balanced1
 data=json.loads(FILE.read_text());legacy_bytes=(ROOT/'bank/data/applied3-expanded.json').read_bytes()
 legacy={x['id']:x for x in json.loads(legacy_bytes)['items']}
 assert hashlib.sha256(legacy_bytes).hexdigest()==data['legacyBankSha256']
-assert data['availableSourceNos']==list(range(1,13))and data['pendingSourceNos']==list(range(13,31))
-assert len(data['items'])==len({x['id']for x in data['items']})==180
+assert data['availableSourceNos']==list(range(1,19))and data['pendingSourceNos']==list(range(19,31))
+assert len(data['items'])==len({x['id']for x in data['items']})==270
 
 raw_fractions=[(a,k+2-a)for k in range(1,100)for a in range(1,k+1)]
 assert raw_fractions[:6]==[(1,2),(1,3),(2,2),(1,4),(2,3),(3,2)]
@@ -76,6 +76,18 @@ def work_rates(rows):
     rates=[row[-1]for row in matrix];assert min(rates)>0
     assert all(sum(t*r for t,r in zip(row,rates))==1 for row in rows)
     return rates
+
+def linear_solve(matrix,rhs):
+    n=len(matrix[0]);rows=[[F(a)for a in r]+[F(b)]for r,b in zip(matrix,rhs)];pivot_row=0
+    for col in range(n):
+        pivot=next(i for i in range(pivot_row,len(rows))if rows[i][col]);rows[pivot_row],rows[pivot]=rows[pivot],rows[pivot_row]
+        z=rows[pivot_row][col];rows[pivot_row]=[a/z for a in rows[pivot_row]]
+        for i in range(len(rows)):
+            if i!=pivot_row:
+                z=rows[i][col];rows[i]=[a-z*b for a,b in zip(rows[i],rows[pivot_row])]
+        pivot_row+=1
+    assert all(any(r[:n])or r[-1]==0 for r in rows)
+    solution=[rows[i][-1]for i in range(n)];assert all(sum(F(a)*x for a,x in zip(r,solution))==b for r,b in zip(matrix,rhs));return solution
 
 def solve(x):
     no,level,p=x['sourceNo'],x['practiceLevel'],x['verification']['parameters'];text=x['text']
@@ -213,20 +225,113 @@ def solve(x):
                 for b in range(1,101):
                     if sum(a if c[2]==1 else b for c in remain)==p['firstScore']and sum(a if c[2]==1 else b for c in after)==p['secondScore']:found.append([a,b])
         assert len(found)==1;return found[0]
+    if no==13:
+        # Solve only positions actually fixed by the six printed examples; never assign the top.
+        matrix=[[1,0,0,0,0],[0,1,0,0,0],[1,1,0,0,0],[1,0,1,0,0],[0,1,0,1,0],[0,1,0,0,1]];rhs=[1,2,3,5,10,11]
+        weights=linear_solve(matrix,rhs);assert weights==[1,2,4,8,9]
+        pos=dict(zip(['오른쪽 위','오른쪽 아래','맨 아래','왼쪽 아래','왼쪽 위'],weights));target=sum(weights[2:])
+        if level=='low':return[int(pos[p['position']])]
+        if level=='middle':
+            if p['operation']=='allSum':return[int(sum(rhs)+target)]
+            return[int(target+(-1 if p['operation']=='erase'else 1)*pos[p['position']])]
+        found=[[a,b]for a in range(1,p['totalValue']//21+1)for b in range(1,p['totalValue']//10+1)if 21*a+10*b==p['totalValue']and a-b==p['seventhMinusFifth']];assert len(found)==1;return found[0]
+    if no==14:
+        fruits=['사과','배','귤','딸기'];choices=list(itertools.combinations(range(4),2));clues=[]
+        for row in x['givenTable']['rows']:
+            t=row[0]
+            if m:=re.fullmatch(r'(사과|배|귤|딸기)[을를] 좋아한다고 말한 사람은(\d+)명입니다\.',t):clues.append(['count',fruits.index(m[1]),int(m[2])])
+            elif m:=re.fullmatch(r'([A-E])는 (사과|배|귤|딸기)[을를] 좋아합니다\.',t):clues.append(['has',ord(m[1])-65,fruits.index(m[2])])
+            elif m:=re.fullmatch(r'([A-E])가 좋아하는 과일: (.+)',t):clues.append(['pair',ord(m[1])-65,sum(1<<fruits.index(v)for v in m[2].split(', '))])
+            elif m:=re.fullmatch(r'([A-E])와 ([A-E])가 공통으로 좋아하는 과일은(\d+)가지입니다\.',t):clues.append(['shared',ord(m[1])-65,ord(m[2])-65,int(m[3])])
+            else:raise AssertionError('Unparsed actual clue:'+t)
+        assert clues==p['clues'];worlds=list(itertools.product(choices,repeat=p['people']))
+        def obey(w,c):
+            if c[0]=='count':return sum(c[1]in pref for pref in w)==c[2]
+            if c[0]=='has':return c[2]in w[c[1]]
+            if c[0]=='pair':return set(w[c[1]])=={i for i in range(4)if c[2]>>i&1}
+            return len(set(w[c[1]])&set(w[c[2]]))==c[3]
+        valid=[w for w in worlds if all(obey(w,c)for c in clues)];answers={w[1]for w in valid};assert len(answers)==1
+        if level=='high':
+            for i in range(len(clues)):
+                alternatives={w[1]for w in worlds if all(obey(w,c)for j,c in enumerate(clues)if i!=j)};assert len(alternatives)>1,'High clue must affect asked answer'
+        expected=[['·'.join(fruits[i]for i in ch),str(sum(w[1]==ch for w in valid))]for ch in choices];assert x['solutionTable']['rows']==expected
+        return[fruits[i]for i in next(iter(answers))]
+    if no==15:
+        # Construct the lexicographically largest legal digit string by modular digit DP.
+        mod=p.get('divisor',1)
+        @functools.lru_cache(None)
+        def fill(mask,left,total,residue):
+            if left==0:return ''if total==0 and residue==0 else None
+            available=[d for d in range(10)if not(mask>>d&1)]
+            if len(available)<left or sum(available[:left])>total or sum(available[-left:])<total:return None
+            for d in reversed(available):
+                if mask==0 and d==0:continue
+                tail=fill(mask|1<<d,left-1,total-d,(residue*10+d)%mod)
+                if tail is not None:return str(d)+tail
+            return None
+        for length in ([p['digits']]if'digits'in p else range(10,0,-1)):
+            value=fill(0,length,p['digitSum'],0)
+            if value is not None:return[int(value)]
+        raise AssertionError('No digit string')
+    if no==16:
+        # Independent horizontal slices, not the author's column-height dictionary.
+        triangle={(a,b)for b in range(4)for a in range(b+1)};strict={(a,b)for a,b in triangle if a<b}
+        slices=[triangle,triangle-{(0,0),(3,3)},strict,strict-{(1,2)}]
+        solid16={(a,b,z)for z,layer in enumerate(slices)for a,b in layer};assert len(solid16)==29
+        def colours(cubes):return[sum((a+b+z)%2 for a,b,z in cubes),sum((a+b+z)%2==0 for a,b,z in cubes)]
+        assert colours(solid16)==[14,15]
+        if level=='low':return[dict(all=len(solid16),difference=colours(solid16)[1]-colours(solid16)[0],top=len(slices[-1]),base=len(slices[0]),tall=len(slices[-1]))[p['mode']]]
+        if level=='middle':
+            removed={c for c in solid16 if c[2]>=4-p['layers']and (p['mode']=='top'or c[:2]in slices[-1])}
+            expected=[[str(z+1)]+list(map(str,colours({c for c in solid16 if c[2]==z})))for z in range(4)];assert x['solutionTable']['rows']==expected
+            return colours(solid16-removed)
+        filled={(a,b,z)for a in range(p['width'])for b in range(p['depth'])for z in range(p['height'])};assert solid16<=filled
+        return colours(filled-solid16)
+    if no==17:
+        if level=='high':
+            solution=linear_solve([[1,1,1],[2,4,8],[-1,0,1]],[p['totalPunches'],p['unfoldedHoles'],p['lastMinusFirst']]);assert all(v.denominator==1 and v>0 for v in solution);holes=[int(v)for v in solution]
+        else:holes=p['holes']
+        # Explicit original-square preimages of valid interior punch points.
+        all_points=set()
+        for stage,count in enumerate(holes,1):
+            for j in range(count):
+                point=(F(70+j,100),F(10+j,1000))if stage==1 else (F(80+j,100),F(25+j,100))if stage==2 else (F(80+j,100),F(60+j,100))
+                pts={point}
+                if stage==3:pts|={(a,1-b)for a,b in pts.copy()}
+                if stage>=2:pts|={(1-b,1-a)for a,b in pts.copy()}
+                pts|={(b,a)for a,b in pts.copy()}
+                assert len(pts)==2**stage and all(0<a<1 and 0<b<1 for a,b in pts)
+                assert not(all_points&pts),'Hole placements must be attainable without overlap';all_points|=pts
+        if level=='high':assert len(all_points)==p['unfoldedHoles'];return holes
+        return[len(all_points)]
+    if no==18:
+        if level=='low':
+            initial=linear_solve([[1,-1],[0,2]],[p['finalA'],p['finalB']]);assert all(v>0 and v.denominator==1 for v in initial);return[int(initial[0])]
+        # Compose the forward transfer matrix on basis vectors, solve M*initial=final.
+        def forward(vec):
+            vec=list(vec);rows=[vec[:]]
+            for (donor,receiver),k in zip([(0,1),(1,2),(2,0)],p['multipliers']):
+                amount=k*vec[receiver];vec[donor]-=amount;vec[receiver]+=amount;rows.append(vec[:])
+            return vec,rows
+        columns=[forward([int(i==j)for i in range(3)])[0]for j in range(3)];matrix=[[columns[j][i]for j in range(3)]for i in range(3)]
+        initial=linear_solve(matrix,p['final']);assert all(v>0 and v.denominator==1 for v in initial);initial=list(map(int,initial));actual,rows=forward(initial)
+        assert actual==p['final']and all(min(row)>=0 for row in rows)and len({sum(row)for row in rows})==1
+        assert x['solutionTable']['rows']==[[label]+list(map(str,row))for label,row in zip(['처음','첫 이동 후','둘째 이동 후','마지막'],rows)]
+        return initial
     raise AssertionError(no)
 
 evidence=[]
 for x in data['items']:
     actual=solve(x);assert actual==x['answerParts'],(x['id'],actual,x['answerParts'])
-    assert x['sourcePointBand']=='2.7'and x['pointBand']==dict(low='2.7',middle='3.4',high='4.2')[x['practiceLevel']]
+    assert x['sourcePointBand']==('2.7'if x['sourceNo']<=12 else'3.4')and x['pointBand']==dict(low='2.7',middle='3.4',high='4.2')[x['practiceLevel']]
     assert x['answerContract']in ['ordered-parts','unordered-set']and (len(x['answerLabels'])==len(actual)or x['answerContract']=='unordered-set'and len(x['answerLabels'])==1)and len(x['solutionSteps'])>=3
     assert x['solution']==' '.join(x['solutionSteps'])
-    assert x['verification']['sourceExamPage']==(1 if x['sourceNo']<=4 else 2 if x['sourceNo']<=10 else 3)
+    assert x['verification']['sourceExamPage']==(1 if x['sourceNo']<=4 else 2 if x['sourceNo']<=10 else 3 if x['sourceNo']<=14 else 4)
     if x.get('preservedApprovedId'):assert all(x[k]==v for k,v in legacy[x['id']].items())
     else:assert len(x['levelReview']['axes'])==9 and not x['difficultyEvidence']['sourceReasoningPreserved']and x['difficultyEvidence']['measuredVariantRate']is None
     assert not any(k in x for k in ['hints','conditionSummary'])
     evidence.append(dict(id=x['id'],passed=True,answer=actual))
-for no in range(1,13):assert collections.Counter(x['practiceLevel']for x in data['items']if x['sourceNo']==no)==dict(low=5,middle=5,high=5)
+for no in range(1,19):assert collections.Counter(x['practiceLevel']for x in data['items']if x['sourceNo']==no)==dict(low=5,middle=5,high=5)
 pdf=PdfReader(ROOT/'materials/초등과정 대비 실전 모의고사 활용 3회.pdf')
 for name,file in [('Im51','staircase-original.png')]:
     native=next(i.image for i in pdf.pages[0].images if Path(i.name).stem==name).convert('RGB');actual=Image.open(ROOT/'bank/assets/applied3'/file).convert('RGB');assert native.size==actual.size and native.tobytes()==actual.tobytes()
@@ -235,14 +340,16 @@ with tempfile.TemporaryDirectory(prefix='gfield-applied3-source-render-')as temp
     source=Image.open(output.with_suffix('.png')).convert('RGB').crop((709,451,924,614));actual=Image.open(ROOT/'bank/assets/applied3/pizza-original.png').convert('RGB');assert source.size==actual.size and source.tobytes()==actual.tobytes()
 for file in ['data.js','docssam-columns.js','mock-data-hw.js','bank/data/applied1-balanced15.json','bank/data/applied2-balanced15.json','bank/data/applied3-expanded.json','bank/assets/applied3/pizza.png']:
     assert(ROOT/file).read_bytes()==subprocess.check_output(['git','show','7ae2f7f1:'+file],cwd=ROOT),file
-assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','asset','givenTable']},ensure_ascii=False,sort_keys=True)for x in data['items']})==180
-work=ROOT/'.private-work/balanced15-20261024/round3-batch2';work.mkdir(exist_ok=True)
-(work/'independent-math.json').write_text(json.dumps(dict(dataSha256=hashlib.sha256(FILE.read_bytes()).hexdigest(),count=180,methods=['literal unreduced fraction sequence','even left-page finite search','rational line intersections all inside disk/no triple points','shared-face mesh boundary and paint memory','integer perimeter coordinate sets','exact rational Gaussian work-rate equations','rigid 3D rotations of six labelled normal vectors','datetime dates across all June1Saturday years2000-2039','closed-loop rational point positions and bounded integer search','direct modular enumeration with each third-condition removal','literal consecutive row lists','two actual coordinate folds and original-cell preimages'],items=evidence),ensure_ascii=False,indent=2)+'\n')
+assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','asset','givenTable']},ensure_ascii=False,sort_keys=True)for x in data['items']})==270
+work=ROOT/'.private-work/balanced15-20261024/round3-batch3';work.mkdir(exist_ok=True)
+(work/'independent-math.json').write_text(json.dumps(dict(dataSha256=hashlib.sha256(FILE.read_bytes()).hexdigest(),count=270,methods=['literal unreduced fraction sequence','even left-page finite search','rational line intersections all inside disk/no triple points','shared-face mesh boundary and paint memory','integer perimeter coordinate sets','exact rational Gaussian work-rate equations','rigid 3D rotations of six labelled normal vectors','datetime dates across all June1Saturday years2000-2039','closed-loop rational point positions and bounded integer search','direct modular enumeration with each third-condition removal','literal consecutive row lists','two actual coordinate folds and original-cell preimages','five observed circle-position equations','actual printed-clue CSP with answer uniqueness and high ablations','modular distinct digit dynamic programming','horizontal checkerboard slices','physical three-fold point reflections','forward transfer matrix Gaussian inverse'],items=evidence),ensure_ascii=False,indent=2)+'\n')
 # Verify prior released90 item objects/storage versions byte for byte at canonical field level.
-prior=json.loads(subprocess.check_output(['git','show','9b78f99a:bank/data/applied3-balanced15.json'],cwd=ROOT))
-assert data['items'][:90]==prior['items']
+prior=json.loads(subprocess.check_output(['git','show','e2c16e27:bank/data/applied3-balanced15.json'],cwd=ROOT))
+assert data['items'][:180]==prior['items']
 with tempfile.TemporaryDirectory(prefix='gfield-applied3-fold-render-')as temp:
     output=Path(temp)/'page';subprocess.run(['pdftoppm','-f','3','-l','3','-scale-to','2000','-singlefile','-png',str(ROOT/'materials/초등과정 대비 실전 모의고사 활용 3회.pdf'),str(output)],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     expected=Image.open(output.with_suffix('.png')).convert('RGB').crop((82,1164,662,1318));actual=Image.open(ROOT/'bank/assets/applied3/fold-original.png').convert('RGB');assert expected.size==actual.size and expected.tobytes()==actual.tobytes()
 native=next(i.image for i in pdf.pages[1].images if Path(i.name).stem=='Im53').convert('RGB').crop((81,13,332,199));actual=Image.open(ROOT/'bank/assets/applied3/dice-path-original.png').convert('RGB');assert native.size==actual.size and native.tobytes()==actual.tobytes()
-print('PASS180 Applied3 independent answers:12complete5/5/5groups;140new+40approved;prior90 unchanged;vector dice rotations/datetime/closed-loop positions/literal residues/row enumeration/actual fold preimages;source assets exact;original grades preserved')
+for page_no,name,file in [(2,'Im58','circle-values-original.png'),(3,'Im68','checker-stair-original.png')]:
+    native=next(i.image for i in pdf.pages[page_no].images if Path(i.name).stem==name).convert('RGB');actual=Image.open(ROOT/'bank/assets/applied3'/file).convert('RGB');assert native.size==actual.size and native.tobytes()==actual.tobytes()
+print('PASS270 Applied3:18complete5/5/5groups;220new+50approved;prior180 unchanged;observed-position equations/actual-clue preference CSP with high ablations/modular digit DP/horizontal voxel slices/physical fold reflections/forward transfer matrix inversion;original grades/assets preserved')

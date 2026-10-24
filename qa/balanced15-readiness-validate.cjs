@@ -15,19 +15,19 @@ assert.equal(quota({low: 4, middle: 5, high: 6}).missingTotal, 1);
 const result = audit();
 assert.equal(result.sourceCount, 900);
 assert.equal(result.bankCount, 22);
-assert.equal(result.storedVerified, 2770);
+assert.equal(result.storedVerified, 2850);
 assert.equal(result.appliedProjection.sourceCount, 270);
-assert.equal(result.appliedProjection.storedVerified, 1510);
+assert.equal(result.appliedProjection.storedVerified, 1590);
 assert.equal(result.appliedProjection.targetCount, 4050);
-assert.equal(result.perSourceProjection.unitsWithVariants, 520);
-assert.equal(result.perSourceProjection.readyByBenchmarkCounts, 71);
-assert.equal(result.appliedProjection.missingByBenchmarkCounts, 2840);
+assert.equal(result.perSourceProjection.unitsWithVariants, 524);
+assert.equal(result.perSourceProjection.readyByBenchmarkCounts, 77);
+assert.equal(result.appliedProjection.missingByBenchmarkCounts, 2760);
 assert.equal(result.scopeConfirmed, true);
 assert.equal(result.scope, 'per-source-question');
-assert.deepEqual(result.perSource.filter(x=>x.benchmarkQuota.ready).map(x=>x.sourceKey).sort(), ['applied|1|1','applied|1|2','applied|1|3','applied|1|4','applied|1|5','applied|1|6','applied|1|7','applied|1|8','applied|1|9','applied|1|10','applied|1|11','applied|1|12','applied|1|13','applied|1|14','applied|1|15','applied|1|16','applied|1|17','applied|1|18','applied|1|19','applied|1|20','applied|1|21','applied|1|22','applied|1|23','applied|1|24','applied|1|25','applied|1|26','applied|1|27','applied|1|29','applied|1|30','applied|2|1','applied|2|2','applied|2|3','applied|2|4','applied|2|5','applied|2|6','applied|2|7','applied|2|8','applied|2|9','applied|2|10','applied|2|11','applied|2|12','applied|2|13','applied|2|14','applied|2|15','applied|2|16','applied|2|17','applied|2|18','applied|2|19','applied|2|20','applied|2|21','applied|2|22','applied|2|23','applied|2|24','applied|2|25','applied|2|26','applied|2|27','applied|2|28','applied|2|29','applied|2|30','applied|3|1','applied|3|2','applied|3|3','applied|3|4','applied|3|5','applied|3|6','applied|3|7','applied|3|8','applied|3|9','applied|3|10','applied|3|11','applied|3|12'].sort());
+assert.deepEqual(result.perSource.filter(x=>x.benchmarkQuota.ready).map(x=>x.sourceKey).sort(), ['applied|1|1','applied|1|2','applied|1|3','applied|1|4','applied|1|5','applied|1|6','applied|1|7','applied|1|8','applied|1|9','applied|1|10','applied|1|11','applied|1|12','applied|1|13','applied|1|14','applied|1|15','applied|1|16','applied|1|17','applied|1|18','applied|1|19','applied|1|20','applied|1|21','applied|1|22','applied|1|23','applied|1|24','applied|1|25','applied|1|26','applied|1|27','applied|1|29','applied|1|30','applied|2|1','applied|2|2','applied|2|3','applied|2|4','applied|2|5','applied|2|6','applied|2|7','applied|2|8','applied|2|9','applied|2|10','applied|2|11','applied|2|12','applied|2|13','applied|2|14','applied|2|15','applied|2|16','applied|2|17','applied|2|18','applied|2|19','applied|2|20','applied|2|21','applied|2|22','applied|2|23','applied|2|24','applied|2|25','applied|2|26','applied|2|27','applied|2|28','applied|2|29','applied|2|30','applied|3|1','applied|3|2','applied|3|3','applied|3|4','applied|3|5','applied|3|6','applied|3|7','applied|3|8','applied|3|9','applied|3|10','applied|3|11','applied|3|12','applied|3|13','applied|3|14','applied|3|15','applied|3|16','applied|3|17','applied|3|18'].sort());
 for (const file of result.files) {
   const bytes = fs.readFileSync(path.join(__dirname, '../bank/data', file.file));
   assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), file.sha256);
 }
 assert.equal(result.perSource.reduce((n, x) => n + x.storedVerified, 0), result.storedVerified);
-console.log('PASS balanced15 audit: 900 sources, 22 banks, 2770 distinct variants; preserved references counted once; exactly seventyone 5/5/5 groups; excess cannot fill another level; source benchmark and authored estimates remain separate from measured rates');
+console.log('PASS balanced15 audit: 900 sources, 22 banks, 2850 distinct variants; preserved references counted once; exactly seventyseven 5/5/5 groups; excess cannot fill another level; source benchmark and authored estimates remain separate from measured rates');
