@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r2",
+  "version": "20261024-applied6-expansion-r3",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -11,12 +11,12 @@
   },
   "availableSourceNos": [
     2,
-    3
+    3,
+    5
   ],
   "pendingSourceNos": [
     1,
     4,
-    5,
     6,
     7,
     8,
@@ -1114,11 +1114,542 @@
         "sourceReasoningPreserved": true,
         "measuredVariantRate": null
       }
+    },
+    {
+      "id": "applied6-q05-v1",
+      "genId": "applied6-q05",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 5,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "비와 비율 · 일정한 빠르기",
+      "detailType": "맞물린 톱니바퀴의 회전수 비와 일정 시간 동안의 차이",
+      "pointBand": "2.7",
+      "text": "A, B, C 톱니바퀴가 서로 맞물려 일정한 빠르기로 돕니다. A가 1바퀴 돌 때 B는 3바퀴 돌고, B가 2바퀴 도는 동안 C는 6바퀴 돕니다. A가 1분에 4바퀴 돌 때, 1시간 15분 동안 C는 B보다 몇 바퀴 더 많이 도나요?",
+      "answer": "1800",
+      "answerParts": [
+        1800
+      ],
+      "answerLabels": [
+        "회전수 차"
+      ],
+      "acceptedAnswers": [
+        "1800"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A가 1분에 4바퀴 돌고 A가 한 바퀴 돌 때 B는 3바퀴 도므로 B는 1분에 4×3=12바퀴 돕니다.",
+        "B가 2바퀴 도는 동안 C는 6바퀴 도므로 C는 B보다 3배 빠릅니다. 따라서 C는 1분에 12×3=36바퀴 돕니다.",
+        "1분 동안 C가 B보다 36−12=24바퀴 더 돕니다. 75분 동안에는 24×75=1800바퀴 더 돕습니다."
+      ],
+      "solution": "A가 1분에 4바퀴 돌고 A가 한 바퀴 돌 때 B는 3바퀴 도므로 B는 1분에 4×3=12바퀴 돕니다. B가 2바퀴 도는 동안 C는 6바퀴 도므로 C는 B보다 3배 빠릅니다. 따라서 C는 1분에 12×3=36바퀴 돕니다. 1분 동안 C가 B보다 36−12=24바퀴 더 돕니다. 75분 동안에는 24×75=1800바퀴 더 돕습니다.",
+      "learningPoint": "톱니바퀴마다 일정한 회전수 비를 연결해 분당 회전수를 구한 뒤, 단위를 분으로 맞춰 일정 시간 동안의 회전수 차 구하기",
+      "learningLocation": "활용 6회 · 원문 5번 · 맞물린 톱니바퀴의 회전수 비와 시간",
+      "verification": {
+        "primaryMethod": "per-minute gear rates and rate difference",
+        "independentMethod": "total rotations over the whole interval, then subtract",
+        "parameters": {
+          "speedAperMinute": 4,
+          "bRotationsPerARotation": 3,
+          "cRotationsPerBGroup": 6,
+          "bRotationGroup": 2,
+          "cPerBMultiplier": 3,
+          "elapsedMinutes": 75,
+          "speedBperMinute": 12,
+          "speedCperMinute": 36,
+          "differencePerMinute": 24,
+          "answer": 1800
+        },
+        "independentSuite": "qa/applied6-q05-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q05-v2",
+      "genId": "applied6-q05",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 5,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "비와 비율 · 일정한 빠르기",
+      "detailType": "맞물린 톱니바퀴의 회전수 비와 일정 시간 동안의 차이",
+      "pointBand": "2.7",
+      "text": "서로 맞물린 세 톱니바퀴 A, B, C가 일정하게 회전합니다. A가 한 바퀴 도는 동안 B는 4바퀴를 돌며, B가 3바퀴 돌 때 C는 12바퀴를 돕니다. A가 1분 동안 5바퀴 돌면, 1시간 30분 동안 C가 B보다 더 많이 도는 바퀴 수는 얼마입니까?",
+      "answer": "5400",
+      "answerParts": [
+        5400
+      ],
+      "answerLabels": [
+        "회전수 차"
+      ],
+      "acceptedAnswers": [
+        "5400"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A가 1분에 5바퀴 돌고 A가 한 바퀴 돌 때 B는 4바퀴 도므로 B는 1분에 5×4=20바퀴 돕니다.",
+        "B가 3바퀴 도는 동안 C는 12바퀴 도므로 C는 B보다 4배 빠릅니다. 따라서 C는 1분에 20×4=80바퀴 돕니다.",
+        "1분 동안 C가 B보다 80−20=60바퀴 더 돕니다. 90분 동안에는 60×90=5400바퀴 더 돕습니다."
+      ],
+      "solution": "A가 1분에 5바퀴 돌고 A가 한 바퀴 돌 때 B는 4바퀴 도므로 B는 1분에 5×4=20바퀴 돕니다. B가 3바퀴 도는 동안 C는 12바퀴 도므로 C는 B보다 4배 빠릅니다. 따라서 C는 1분에 20×4=80바퀴 돕니다. 1분 동안 C가 B보다 80−20=60바퀴 더 돕니다. 90분 동안에는 60×90=5400바퀴 더 돕습니다.",
+      "learningPoint": "톱니바퀴마다 일정한 회전수 비를 연결해 분당 회전수를 구한 뒤, 단위를 분으로 맞춰 일정 시간 동안의 회전수 차 구하기",
+      "learningLocation": "활용 6회 · 원문 5번 · 맞물린 톱니바퀴의 회전수 비와 시간",
+      "verification": {
+        "primaryMethod": "per-minute gear rates and rate difference",
+        "independentMethod": "total rotations over the whole interval, then subtract",
+        "parameters": {
+          "speedAperMinute": 5,
+          "bRotationsPerARotation": 4,
+          "cRotationsPerBGroup": 12,
+          "bRotationGroup": 3,
+          "cPerBMultiplier": 4,
+          "elapsedMinutes": 90,
+          "speedBperMinute": 20,
+          "speedCperMinute": 80,
+          "differencePerMinute": 60,
+          "answer": 5400
+        },
+        "independentSuite": "qa/applied6-q05-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q05-v3",
+      "genId": "applied6-q05",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 5,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "비와 비율 · 일정한 빠르기",
+      "detailType": "맞물린 톱니바퀴의 회전수 비와 일정 시간 동안의 차이",
+      "pointBand": "2.7",
+      "text": "A, B, C 세 톱니바퀴는 일정한 빠르기로 서로 맞물려 돕니다. A가 1바퀴 돌면 B는 5바퀴, B가 4바퀴 돌면 C는 12바퀴 돕니다. A의 회전수가 1분에 6바퀴일 때, 2시간 동안 C와 B의 회전수 차를 구하시오.",
+      "answer": "7200",
+      "answerParts": [
+        7200
+      ],
+      "answerLabels": [
+        "회전수 차"
+      ],
+      "acceptedAnswers": [
+        "7200"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A가 1분에 6바퀴 돌고 A가 한 바퀴 돌 때 B는 5바퀴 도므로 B는 1분에 6×5=30바퀴 돕니다.",
+        "B가 4바퀴 도는 동안 C는 12바퀴 도므로 C는 B보다 3배 빠릅니다. 따라서 C는 1분에 30×3=90바퀴 돕니다.",
+        "1분 동안 C가 B보다 90−30=60바퀴 더 돕니다. 120분 동안에는 60×120=7200바퀴 더 돕습니다."
+      ],
+      "solution": "A가 1분에 6바퀴 돌고 A가 한 바퀴 돌 때 B는 5바퀴 도므로 B는 1분에 6×5=30바퀴 돕니다. B가 4바퀴 도는 동안 C는 12바퀴 도므로 C는 B보다 3배 빠릅니다. 따라서 C는 1분에 30×3=90바퀴 돕니다. 1분 동안 C가 B보다 90−30=60바퀴 더 돕니다. 120분 동안에는 60×120=7200바퀴 더 돕습니다.",
+      "learningPoint": "톱니바퀴마다 일정한 회전수 비를 연결해 분당 회전수를 구한 뒤, 단위를 분으로 맞춰 일정 시간 동안의 회전수 차 구하기",
+      "learningLocation": "활용 6회 · 원문 5번 · 맞물린 톱니바퀴의 회전수 비와 시간",
+      "verification": {
+        "primaryMethod": "per-minute gear rates and rate difference",
+        "independentMethod": "total rotations over the whole interval, then subtract",
+        "parameters": {
+          "speedAperMinute": 6,
+          "bRotationsPerARotation": 5,
+          "cRotationsPerBGroup": 12,
+          "bRotationGroup": 4,
+          "cPerBMultiplier": 3,
+          "elapsedMinutes": 120,
+          "speedBperMinute": 30,
+          "speedCperMinute": 90,
+          "differencePerMinute": 60,
+          "answer": 7200
+        },
+        "independentSuite": "qa/applied6-q05-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q05-v4",
+      "genId": "applied6-q05",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 5,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "비와 비율 · 일정한 빠르기",
+      "detailType": "맞물린 톱니바퀴의 회전수 비와 일정 시간 동안의 차이",
+      "pointBand": "2.7",
+      "text": "A, B, C 톱니바퀴가 서로 맞물려 일정한 빠르기로 돕니다. A가 1바퀴 돌 때 B는 2바퀴 돌고, B가 3바퀴 도는 동안 C는 12바퀴 돕니다. A가 1분에 7바퀴 돌 때, 1시간 20분 동안 C는 B보다 몇 바퀴 더 많이 도나요?",
+      "answer": "3360",
+      "answerParts": [
+        3360
+      ],
+      "answerLabels": [
+        "회전수 차"
+      ],
+      "acceptedAnswers": [
+        "3360"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A가 1분에 7바퀴 돌고 A가 한 바퀴 돌 때 B는 2바퀴 도므로 B는 1분에 7×2=14바퀴 돕니다.",
+        "B가 3바퀴 도는 동안 C는 12바퀴 도므로 C는 B보다 4배 빠릅니다. 따라서 C는 1분에 14×4=56바퀴 돕니다.",
+        "1분 동안 C가 B보다 56−14=42바퀴 더 돕니다. 80분 동안에는 42×80=3360바퀴 더 돕습니다."
+      ],
+      "solution": "A가 1분에 7바퀴 돌고 A가 한 바퀴 돌 때 B는 2바퀴 도므로 B는 1분에 7×2=14바퀴 돕니다. B가 3바퀴 도는 동안 C는 12바퀴 도므로 C는 B보다 4배 빠릅니다. 따라서 C는 1분에 14×4=56바퀴 돕니다. 1분 동안 C가 B보다 56−14=42바퀴 더 돕니다. 80분 동안에는 42×80=3360바퀴 더 돕습니다.",
+      "learningPoint": "톱니바퀴마다 일정한 회전수 비를 연결해 분당 회전수를 구한 뒤, 단위를 분으로 맞춰 일정 시간 동안의 회전수 차 구하기",
+      "learningLocation": "활용 6회 · 원문 5번 · 맞물린 톱니바퀴의 회전수 비와 시간",
+      "verification": {
+        "primaryMethod": "per-minute gear rates and rate difference",
+        "independentMethod": "total rotations over the whole interval, then subtract",
+        "parameters": {
+          "speedAperMinute": 7,
+          "bRotationsPerARotation": 2,
+          "cRotationsPerBGroup": 12,
+          "bRotationGroup": 3,
+          "cPerBMultiplier": 4,
+          "elapsedMinutes": 80,
+          "speedBperMinute": 14,
+          "speedCperMinute": 56,
+          "differencePerMinute": 42,
+          "answer": 3360
+        },
+        "independentSuite": "qa/applied6-q05-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q05-v5",
+      "genId": "applied6-q05",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 5,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "비와 비율 · 일정한 빠르기",
+      "detailType": "맞물린 톱니바퀴의 회전수 비와 일정 시간 동안의 차이",
+      "pointBand": "2.7",
+      "text": "서로 맞물린 세 톱니바퀴 A, B, C가 일정하게 회전합니다. A가 한 바퀴 도는 동안 B는 6바퀴를 돌며, B가 5바퀴 돌 때 C는 20바퀴를 돕니다. A가 1분 동안 3바퀴 돌면, 2시간 15분 동안 C가 B보다 더 많이 도는 바퀴 수는 얼마입니까?",
+      "answer": "7290",
+      "answerParts": [
+        7290
+      ],
+      "answerLabels": [
+        "회전수 차"
+      ],
+      "acceptedAnswers": [
+        "7290"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A가 1분에 3바퀴 돌고 A가 한 바퀴 돌 때 B는 6바퀴 도므로 B는 1분에 3×6=18바퀴 돕니다.",
+        "B가 5바퀴 도는 동안 C는 20바퀴 도므로 C는 B보다 4배 빠릅니다. 따라서 C는 1분에 18×4=72바퀴 돕니다.",
+        "1분 동안 C가 B보다 72−18=54바퀴 더 돕니다. 135분 동안에는 54×135=7290바퀴 더 돕습니다."
+      ],
+      "solution": "A가 1분에 3바퀴 돌고 A가 한 바퀴 돌 때 B는 6바퀴 도므로 B는 1분에 3×6=18바퀴 돕니다. B가 5바퀴 도는 동안 C는 20바퀴 도므로 C는 B보다 4배 빠릅니다. 따라서 C는 1분에 18×4=72바퀴 돕니다. 1분 동안 C가 B보다 72−18=54바퀴 더 돕니다. 135분 동안에는 54×135=7290바퀴 더 돕습니다.",
+      "learningPoint": "톱니바퀴마다 일정한 회전수 비를 연결해 분당 회전수를 구한 뒤, 단위를 분으로 맞춰 일정 시간 동안의 회전수 차 구하기",
+      "learningLocation": "활용 6회 · 원문 5번 · 맞물린 톱니바퀴의 회전수 비와 시간",
+      "verification": {
+        "primaryMethod": "per-minute gear rates and rate difference",
+        "independentMethod": "total rotations over the whole interval, then subtract",
+        "parameters": {
+          "speedAperMinute": 3,
+          "bRotationsPerARotation": 6,
+          "cRotationsPerBGroup": 20,
+          "bRotationGroup": 5,
+          "cPerBMultiplier": 4,
+          "elapsedMinutes": 135,
+          "speedBperMinute": 18,
+          "speedCperMinute": 72,
+          "differencePerMinute": 54,
+          "answer": 7290
+        },
+        "independentSuite": "qa/applied6-q05-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q05-v6",
+      "genId": "applied6-q05",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 5,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "비와 비율 · 일정한 빠르기",
+      "detailType": "맞물린 톱니바퀴의 회전수 비와 일정 시간 동안의 차이",
+      "pointBand": "2.7",
+      "text": "A, B, C 세 톱니바퀴는 일정한 빠르기로 서로 맞물려 돕니다. A가 1바퀴 돌면 B는 4바퀴, B가 4바퀴 돌면 C는 8바퀴 돕니다. A의 회전수가 1분에 8바퀴일 때, 1시간 35분 동안 C와 B의 회전수 차를 구하시오.",
+      "answer": "3040",
+      "answerParts": [
+        3040
+      ],
+      "answerLabels": [
+        "회전수 차"
+      ],
+      "acceptedAnswers": [
+        "3040"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A가 1분에 8바퀴 돌고 A가 한 바퀴 돌 때 B는 4바퀴 도므로 B는 1분에 8×4=32바퀴 돕니다.",
+        "B가 4바퀴 도는 동안 C는 8바퀴 도므로 C는 B보다 2배 빠릅니다. 따라서 C는 1분에 32×2=64바퀴 돕니다.",
+        "1분 동안 C가 B보다 64−32=32바퀴 더 돕니다. 95분 동안에는 32×95=3040바퀴 더 돕습니다."
+      ],
+      "solution": "A가 1분에 8바퀴 돌고 A가 한 바퀴 돌 때 B는 4바퀴 도므로 B는 1분에 8×4=32바퀴 돕니다. B가 4바퀴 도는 동안 C는 8바퀴 도므로 C는 B보다 2배 빠릅니다. 따라서 C는 1분에 32×2=64바퀴 돕니다. 1분 동안 C가 B보다 64−32=32바퀴 더 돕니다. 95분 동안에는 32×95=3040바퀴 더 돕습니다.",
+      "learningPoint": "톱니바퀴마다 일정한 회전수 비를 연결해 분당 회전수를 구한 뒤, 단위를 분으로 맞춰 일정 시간 동안의 회전수 차 구하기",
+      "learningLocation": "활용 6회 · 원문 5번 · 맞물린 톱니바퀴의 회전수 비와 시간",
+      "verification": {
+        "primaryMethod": "per-minute gear rates and rate difference",
+        "independentMethod": "total rotations over the whole interval, then subtract",
+        "parameters": {
+          "speedAperMinute": 8,
+          "bRotationsPerARotation": 4,
+          "cRotationsPerBGroup": 8,
+          "bRotationGroup": 4,
+          "cPerBMultiplier": 2,
+          "elapsedMinutes": 95,
+          "speedBperMinute": 32,
+          "speedCperMinute": 64,
+          "differencePerMinute": 32,
+          "answer": 3040
+        },
+        "independentSuite": "qa/applied6-q05-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q05-v7",
+      "genId": "applied6-q05",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 5,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "비와 비율 · 일정한 빠르기",
+      "detailType": "맞물린 톱니바퀴의 회전수 비와 일정 시간 동안의 차이",
+      "pointBand": "2.7",
+      "text": "A, B, C 톱니바퀴가 서로 맞물려 일정한 빠르기로 돕니다. A가 1바퀴 돌 때 B는 3바퀴 돌고, B가 5바퀴 도는 동안 C는 15바퀴 돕니다. A가 1분에 7바퀴 돌 때, 1시간 50분 동안 C는 B보다 몇 바퀴 더 많이 도나요?",
+      "answer": "4620",
+      "answerParts": [
+        4620
+      ],
+      "answerLabels": [
+        "회전수 차"
+      ],
+      "acceptedAnswers": [
+        "4620"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A가 1분에 7바퀴 돌고 A가 한 바퀴 돌 때 B는 3바퀴 도므로 B는 1분에 7×3=21바퀴 돕니다.",
+        "B가 5바퀴 도는 동안 C는 15바퀴 도므로 C는 B보다 3배 빠릅니다. 따라서 C는 1분에 21×3=63바퀴 돕니다.",
+        "1분 동안 C가 B보다 63−21=42바퀴 더 돕니다. 110분 동안에는 42×110=4620바퀴 더 돕습니다."
+      ],
+      "solution": "A가 1분에 7바퀴 돌고 A가 한 바퀴 돌 때 B는 3바퀴 도므로 B는 1분에 7×3=21바퀴 돕니다. B가 5바퀴 도는 동안 C는 15바퀴 도므로 C는 B보다 3배 빠릅니다. 따라서 C는 1분에 21×3=63바퀴 돕니다. 1분 동안 C가 B보다 63−21=42바퀴 더 돕니다. 110분 동안에는 42×110=4620바퀴 더 돕습니다.",
+      "learningPoint": "톱니바퀴마다 일정한 회전수 비를 연결해 분당 회전수를 구한 뒤, 단위를 분으로 맞춰 일정 시간 동안의 회전수 차 구하기",
+      "learningLocation": "활용 6회 · 원문 5번 · 맞물린 톱니바퀴의 회전수 비와 시간",
+      "verification": {
+        "primaryMethod": "per-minute gear rates and rate difference",
+        "independentMethod": "total rotations over the whole interval, then subtract",
+        "parameters": {
+          "speedAperMinute": 7,
+          "bRotationsPerARotation": 3,
+          "cRotationsPerBGroup": 15,
+          "bRotationGroup": 5,
+          "cPerBMultiplier": 3,
+          "elapsedMinutes": 110,
+          "speedBperMinute": 21,
+          "speedCperMinute": 63,
+          "differencePerMinute": 42,
+          "answer": 4620
+        },
+        "independentSuite": "qa/applied6-q05-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q05-v8",
+      "genId": "applied6-q05",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 5,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "비와 비율 · 일정한 빠르기",
+      "detailType": "맞물린 톱니바퀴의 회전수 비와 일정 시간 동안의 차이",
+      "pointBand": "2.7",
+      "text": "서로 맞물린 세 톱니바퀴 A, B, C가 일정하게 회전합니다. A가 한 바퀴 도는 동안 B는 5바퀴를 돌며, B가 6바퀴 돌 때 C는 18바퀴를 돕니다. A가 1분 동안 2바퀴 돌면, 3시간 동안 C가 B보다 더 많이 도는 바퀴 수는 얼마입니까?",
+      "answer": "3600",
+      "answerParts": [
+        3600
+      ],
+      "answerLabels": [
+        "회전수 차"
+      ],
+      "acceptedAnswers": [
+        "3600"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A가 1분에 2바퀴 돌고 A가 한 바퀴 돌 때 B는 5바퀴 도므로 B는 1분에 2×5=10바퀴 돕니다.",
+        "B가 6바퀴 도는 동안 C는 18바퀴 도므로 C는 B보다 3배 빠릅니다. 따라서 C는 1분에 10×3=30바퀴 돕니다.",
+        "1분 동안 C가 B보다 30−10=20바퀴 더 돕니다. 180분 동안에는 20×180=3600바퀴 더 돕습니다."
+      ],
+      "solution": "A가 1분에 2바퀴 돌고 A가 한 바퀴 돌 때 B는 5바퀴 도므로 B는 1분에 2×5=10바퀴 돕니다. B가 6바퀴 도는 동안 C는 18바퀴 도므로 C는 B보다 3배 빠릅니다. 따라서 C는 1분에 10×3=30바퀴 돕니다. 1분 동안 C가 B보다 30−10=20바퀴 더 돕니다. 180분 동안에는 20×180=3600바퀴 더 돕습니다.",
+      "learningPoint": "톱니바퀴마다 일정한 회전수 비를 연결해 분당 회전수를 구한 뒤, 단위를 분으로 맞춰 일정 시간 동안의 회전수 차 구하기",
+      "learningLocation": "활용 6회 · 원문 5번 · 맞물린 톱니바퀴의 회전수 비와 시간",
+      "verification": {
+        "primaryMethod": "per-minute gear rates and rate difference",
+        "independentMethod": "total rotations over the whole interval, then subtract",
+        "parameters": {
+          "speedAperMinute": 2,
+          "bRotationsPerARotation": 5,
+          "cRotationsPerBGroup": 18,
+          "bRotationGroup": 6,
+          "cPerBMultiplier": 3,
+          "elapsedMinutes": 180,
+          "speedBperMinute": 10,
+          "speedCperMinute": 30,
+          "differencePerMinute": 20,
+          "answer": 3600
+        },
+        "independentSuite": "qa/applied6-q05-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q05-v9",
+      "genId": "applied6-q05",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 5,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "비와 비율 · 일정한 빠르기",
+      "detailType": "맞물린 톱니바퀴의 회전수 비와 일정 시간 동안의 차이",
+      "pointBand": "2.7",
+      "text": "A, B, C 세 톱니바퀴는 일정한 빠르기로 서로 맞물려 돕니다. A가 1바퀴 돌면 B는 2바퀴, B가 7바퀴 돌면 C는 28바퀴 돕니다. A의 회전수가 1분에 10바퀴일 때, 1시간 10분 동안 C와 B의 회전수 차를 구하시오.",
+      "answer": "4200",
+      "answerParts": [
+        4200
+      ],
+      "answerLabels": [
+        "회전수 차"
+      ],
+      "acceptedAnswers": [
+        "4200"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A가 1분에 10바퀴 돌고 A가 한 바퀴 돌 때 B는 2바퀴 도므로 B는 1분에 10×2=20바퀴 돕니다.",
+        "B가 7바퀴 도는 동안 C는 28바퀴 도므로 C는 B보다 4배 빠릅니다. 따라서 C는 1분에 20×4=80바퀴 돕니다.",
+        "1분 동안 C가 B보다 80−20=60바퀴 더 돕니다. 70분 동안에는 60×70=4200바퀴 더 돕습니다."
+      ],
+      "solution": "A가 1분에 10바퀴 돌고 A가 한 바퀴 돌 때 B는 2바퀴 도므로 B는 1분에 10×2=20바퀴 돕니다. B가 7바퀴 도는 동안 C는 28바퀴 도므로 C는 B보다 4배 빠릅니다. 따라서 C는 1분에 20×4=80바퀴 돕니다. 1분 동안 C가 B보다 80−20=60바퀴 더 돕니다. 70분 동안에는 60×70=4200바퀴 더 돕습니다.",
+      "learningPoint": "톱니바퀴마다 일정한 회전수 비를 연결해 분당 회전수를 구한 뒤, 단위를 분으로 맞춰 일정 시간 동안의 회전수 차 구하기",
+      "learningLocation": "활용 6회 · 원문 5번 · 맞물린 톱니바퀴의 회전수 비와 시간",
+      "verification": {
+        "primaryMethod": "per-minute gear rates and rate difference",
+        "independentMethod": "total rotations over the whole interval, then subtract",
+        "parameters": {
+          "speedAperMinute": 10,
+          "bRotationsPerARotation": 2,
+          "cRotationsPerBGroup": 28,
+          "bRotationGroup": 7,
+          "cPerBMultiplier": 4,
+          "elapsedMinutes": 70,
+          "speedBperMinute": 20,
+          "speedCperMinute": 80,
+          "differencePerMinute": 60,
+          "answer": 4200
+        },
+        "independentSuite": "qa/applied6-q05-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 18,
-    "sourceTypes": 2,
+    "independentMathCount": 27,
+    "sourceTypes": 3,
     "variantsPerType": 9,
     "outputReviewed": true,
     "sourceDrawingCount": 0,
