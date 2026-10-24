@@ -1,14 +1,13 @@
 {
-  "version": "20261024-applied4-expansion-r4",
+  "version": "20261024-applied4-expansion-r1",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 162,
+  "itemCount": 171,
   "pendingSourceNos": [
     1,
     2,
     3,
     4,
-    14,
     21,
     22,
     24,
@@ -104,6 +103,16 @@
       "area": "수와 식",
       "subarea": "과부족과 합",
       "detailType": "두 사람의 부족액과 사고 남은 돈",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 14,
+      "genId": "applied4-q14",
+      "area": "수와 식",
+      "subarea": "곱셈 표와 카드 추론",
+      "detailType": "곱셈 결과표에서 카드 수 복원",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9

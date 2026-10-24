@@ -10,7 +10,7 @@
 
 .sequence-term{display:inline-block;white-space:nowrap}
 
-.cards{flex-wrap:wrap}.question-grid.two{grid-template-rows:minmax(0,1fr)}.given-table{border-collapse:collapse;width:100%;margin:12px 0;font:400 13px/1.5 'GFIELD Print Serif',serif}.given-table th,.given-table td{border:1px solid #888;padding:5px;text-align:center;font-weight:400}.vertical-calc{width:168px;margin:12px auto;font:400 20px/1.4 'GFIELD Print Serif',serif}.arith-row{display:grid;grid-template-columns:repeat(7,24px);text-align:center}.arith-line{border-top:1px solid #191511;margin:4px 0}.answer-row .long-answer{width:min(100%,700px);font-family:monospace;font-size:13px}
+.cards{flex-wrap:wrap}.question-grid.two{grid-template-rows:minmax(0,1fr)}.question-grid.three{grid-template-rows:repeat(2,minmax(0,1fr))}.given-table{border-collapse:collapse;width:100%;margin:12px 0;font:400 13px/1.5 'GFIELD Print Serif',serif}.given-table th,.given-table td{border:1px solid #888;padding:5px;text-align:center;font-weight:400}.vertical-calc{width:168px;margin:12px auto;font:400 20px/1.4 'GFIELD Print Serif',serif}.arith-row{display:grid;grid-template-columns:repeat(7,24px);text-align:center}.arith-line{border-top:1px solid #191511;margin:4px 0}.answer-row .long-answer{width:min(100%,700px);font-family:monospace;font-size:13px}
 
 .quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.quick-grid>div{min-width:0;overflow-wrap:anywhere;word-break:break-all}.sr-only{min-width:0}
 

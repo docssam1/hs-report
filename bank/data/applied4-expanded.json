@@ -19,6 +19,7 @@
     11,
     12,
     13,
+    14,
     15,
     16,
     17,
@@ -34,7 +35,6 @@
     2,
     3,
     4,
-    14,
     21,
     22,
     24,
@@ -11693,6 +11693,1764 @@
           "measurement": "학생 실측 난도 아님"
         }
       }
+    },
+    {
+      "id": "applied4-q14-v1",
+      "genId": "applied4-q14",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 14,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q14-r1",
+      "area": "수와 식",
+      "subarea": "곱셈 표와 카드 추론",
+      "detailType": "곱셈 결과표에서 카드 수 복원",
+      "learningLocation": "활용 4회 · 원문 14번 · 곱셈 결과표에서 카드 수 복원",
+      "learningPoint": "게임판에 있는 곱셈 결과에서 네 카드 수와 빠진 결과를 추론하기",
+      "pointBand": "3.4",
+      "sourcePointBand": "3.4",
+      "text": "서로 다른 자연수가 하나씩 적힌 숫자카드 네 장이 있습니다. 두 장을 골라 수를 곱할 때(같은 카드를 두 번 골라도 됩니다) 나오는 서로 다른 곱 9가지는 게임판 아홉 칸에 한 번씩 적혀 있습니다. 게임판에서 꽃이 표시된 칸의 수를 포함해 네 카드의 수를 작은 수부터 쓰시오.",
+      "answer": "2, 3, 4, 6, 4",
+      "answerParts": [
+        2,
+        3,
+        4,
+        6,
+        4
+      ],
+      "answerLabels": [
+        "첫째 카드",
+        "둘째 카드",
+        "셋째 카드",
+        "넷째 카드",
+        "꽃이 있는 칸"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "2, 3, 4, 6, 4"
+      ],
+      "solutionSteps": [
+        "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다.",
+        "게임판에 보이는 여덟 수는 6, 8, 9, 12, 16, 18, 24, 36입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다.",
+        "조건을 만족하는 네 수는 2, 3, 4, 6뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 4, 6, 8, 9, 12, 16, 18, 24, 36이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다.",
+        "게임판에 빠진 꽃 칸은 4입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 2, 3, 4, 6, 4입니다."
+      ],
+      "solution": "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다. 게임판에 보이는 여덟 수는 6, 8, 9, 12, 16, 18, 24, 36입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다. 조건을 만족하는 네 수는 2, 3, 4, 6뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 4, 6, 8, 9, 12, 16, 18, 24, 36이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다. 게임판에 빠진 꽃 칸은 4입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 2, 3, 4, 6, 4입니다.",
+      "asset": {
+        "src": "assets/applied4/q14-cards-v1.svg",
+        "description": "세 줄 세 칸 곱셈 결과판, 꽃 표시 칸과 여덟 결과"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자연수의 곱셈과 약수",
+          "reasoning": "네 카드의 자기곱과 서로 다른 카드의 곱을 표와 대조",
+          "conditionTracking": "같은 카드를 두 번 선택할 수 있고 서로 다른 곱은 아홉 칸에 한 번씩 등장",
+          "caseSplitting": "보이는 곱의 약수에서 카드 후보를 만들고 네 수 조합을 확인",
+          "computation": "카드 두 장의 곱을 모두 계산하고 중복 결과를 확인",
+          "representation": "3×3 게임판의 수를 곱셈 결과 집합으로 해석",
+          "reading": "조건과 물음을 지문에 직접 제시",
+          "visualCues": "문제 그림은 여덟 결과와 꽃 칸만 표시",
+          "shortcuts": "카드 수·보이는 곱·꽃 칸 중 하나가 바뀌면 답이 바뀜",
+          "load": "원문과 같은 역추론 및 유일성 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "divisor-pool exhaustive search over all 4-element sets of positive integers",
+        "parameters": {
+          "cards": [
+            2,
+            3,
+            4,
+            6
+          ],
+          "pairSelections": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              6,
+              6
+            ]
+          ],
+          "pairProducts": [
+            4,
+            6,
+            8,
+            12,
+            9,
+            12,
+            18,
+            16,
+            24,
+            36
+          ],
+          "distinctProducts": [
+            4,
+            6,
+            8,
+            9,
+            12,
+            16,
+            18,
+            24,
+            36
+          ],
+          "visibleProducts": [
+            6,
+            8,
+            9,
+            12,
+            16,
+            18,
+            24,
+            36
+          ],
+          "blank": 4,
+          "factorCandidatePool": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            8,
+            9,
+            12,
+            16,
+            18,
+            24,
+            36
+          ],
+          "candidateCount": 1,
+          "candidateCards": [
+            [
+              2,
+              3,
+              4,
+              6
+            ]
+          ],
+          "searchCompleteness": "Each distinct card has products with three other cards; at most one product value is hidden, so every card divides at least one visible board value.",
+          "sourceExamPage": 3,
+          "sourceAnswerPage": 14,
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of teacher handwriting"
+        },
+        "independentSuite": "qa/applied4-q14-independent-validate.py",
+        "sourceAnswerMatch": true,
+        "sourceAnswerBasis": "matches the teacher's directly visible handwritten answer on source answer PDF page 14",
+        "studentDifficultyMeasured": false,
+        "assetSha256": "d5538701e9b863cc9797a70add0674ee249d059580fa69179ebc69ca4ce9bc0c",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 14
+      }
+    },
+    {
+      "id": "applied4-q14-v2",
+      "genId": "applied4-q14",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 14,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q14-r1",
+      "area": "수와 식",
+      "subarea": "곱셈 표와 카드 추론",
+      "detailType": "곱셈 결과표에서 카드 수 복원",
+      "learningLocation": "활용 4회 · 원문 14번 · 곱셈 결과표에서 카드 수 복원",
+      "learningPoint": "게임판에 있는 곱셈 결과에서 네 카드 수와 빠진 결과를 추론하기",
+      "pointBand": "3.4",
+      "sourcePointBand": "3.4",
+      "text": "서로 다른 자연수가 하나씩 적힌 숫자카드 네 장이 있습니다. 두 장을 골라 수를 곱할 때(같은 카드를 두 번 골라도 됩니다) 나오는 서로 다른 곱 9가지는 게임판 아홉 칸에 한 번씩 적혀 있습니다. 게임판에서 꽃이 표시된 칸의 수를 포함해 네 카드의 수를 작은 수부터 쓰시오.",
+      "answer": "2, 3, 4, 8, 4",
+      "answerParts": [
+        2,
+        3,
+        4,
+        8,
+        4
+      ],
+      "answerLabels": [
+        "첫째 카드",
+        "둘째 카드",
+        "셋째 카드",
+        "넷째 카드",
+        "꽃이 있는 칸"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "2, 3, 4, 8, 4"
+      ],
+      "solutionSteps": [
+        "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다.",
+        "게임판에 보이는 여덟 수는 6, 8, 9, 12, 16, 24, 32, 64입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다.",
+        "조건을 만족하는 네 수는 2, 3, 4, 8뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 4, 6, 8, 9, 12, 16, 24, 32, 64이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다.",
+        "게임판에 빠진 꽃 칸은 4입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 2, 3, 4, 8, 4입니다."
+      ],
+      "solution": "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다. 게임판에 보이는 여덟 수는 6, 8, 9, 12, 16, 24, 32, 64입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다. 조건을 만족하는 네 수는 2, 3, 4, 8뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 4, 6, 8, 9, 12, 16, 24, 32, 64이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다. 게임판에 빠진 꽃 칸은 4입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 2, 3, 4, 8, 4입니다.",
+      "asset": {
+        "src": "assets/applied4/q14-cards-v2.svg",
+        "description": "세 줄 세 칸 곱셈 결과판, 꽃 표시 칸과 여덟 결과"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자연수의 곱셈과 약수",
+          "reasoning": "네 카드의 자기곱과 서로 다른 카드의 곱을 표와 대조",
+          "conditionTracking": "같은 카드를 두 번 선택할 수 있고 서로 다른 곱은 아홉 칸에 한 번씩 등장",
+          "caseSplitting": "보이는 곱의 약수에서 카드 후보를 만들고 네 수 조합을 확인",
+          "computation": "카드 두 장의 곱을 모두 계산하고 중복 결과를 확인",
+          "representation": "3×3 게임판의 수를 곱셈 결과 집합으로 해석",
+          "reading": "조건과 물음을 지문에 직접 제시",
+          "visualCues": "문제 그림은 여덟 결과와 꽃 칸만 표시",
+          "shortcuts": "카드 수·보이는 곱·꽃 칸 중 하나가 바뀌면 답이 바뀜",
+          "load": "원문과 같은 역추론 및 유일성 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "divisor-pool exhaustive search over all 4-element sets of positive integers",
+        "parameters": {
+          "cards": [
+            2,
+            3,
+            4,
+            8
+          ],
+          "pairSelections": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              2,
+              8
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              3,
+              8
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              8
+            ],
+            [
+              8,
+              8
+            ]
+          ],
+          "pairProducts": [
+            4,
+            6,
+            8,
+            16,
+            9,
+            12,
+            24,
+            16,
+            32,
+            64
+          ],
+          "distinctProducts": [
+            4,
+            6,
+            8,
+            9,
+            12,
+            16,
+            24,
+            32,
+            64
+          ],
+          "visibleProducts": [
+            6,
+            8,
+            9,
+            12,
+            16,
+            24,
+            32,
+            64
+          ],
+          "blank": 4,
+          "factorCandidatePool": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            8,
+            9,
+            12,
+            16,
+            24,
+            32,
+            64
+          ],
+          "candidateCount": 1,
+          "candidateCards": [
+            [
+              2,
+              3,
+              4,
+              8
+            ]
+          ],
+          "searchCompleteness": "Each distinct card has products with three other cards; at most one product value is hidden, so every card divides at least one visible board value.",
+          "sourceExamPage": 3,
+          "sourceAnswerPage": 14,
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of teacher handwriting"
+        },
+        "independentSuite": "qa/applied4-q14-independent-validate.py",
+        "sourceAnswerMatch": true,
+        "sourceAnswerBasis": "matches the teacher's directly visible handwritten answer on source answer PDF page 14",
+        "studentDifficultyMeasured": false,
+        "assetSha256": "31ab4fa468275ecfa8ce5438c35f8118271d00f922d0d36b9cb770717ff7bf77",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 14
+      }
+    },
+    {
+      "id": "applied4-q14-v3",
+      "genId": "applied4-q14",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 14,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q14-r1",
+      "area": "수와 식",
+      "subarea": "곱셈 표와 카드 추론",
+      "detailType": "곱셈 결과표에서 카드 수 복원",
+      "learningLocation": "활용 4회 · 원문 14번 · 곱셈 결과표에서 카드 수 복원",
+      "learningPoint": "게임판에 있는 곱셈 결과에서 네 카드 수와 빠진 결과를 추론하기",
+      "pointBand": "3.4",
+      "sourcePointBand": "3.4",
+      "text": "서로 다른 자연수가 하나씩 적힌 숫자카드 네 장이 있습니다. 두 장을 골라 수를 곱할 때(같은 카드를 두 번 골라도 됩니다) 나오는 서로 다른 곱 9가지는 게임판 아홉 칸에 한 번씩 적혀 있습니다. 게임판에서 꽃이 표시된 칸의 수를 포함해 네 카드의 수를 작은 수부터 쓰시오.",
+      "answer": "2, 3, 6, 9, 4",
+      "answerParts": [
+        2,
+        3,
+        6,
+        9,
+        4
+      ],
+      "answerLabels": [
+        "첫째 카드",
+        "둘째 카드",
+        "셋째 카드",
+        "넷째 카드",
+        "꽃이 있는 칸"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "2, 3, 6, 9, 4"
+      ],
+      "solutionSteps": [
+        "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다.",
+        "게임판에 보이는 여덟 수는 6, 9, 12, 18, 27, 36, 54, 81입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다.",
+        "조건을 만족하는 네 수는 2, 3, 6, 9뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 4, 6, 9, 12, 18, 27, 36, 54, 81이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다.",
+        "게임판에 빠진 꽃 칸은 4입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 2, 3, 6, 9, 4입니다."
+      ],
+      "solution": "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다. 게임판에 보이는 여덟 수는 6, 9, 12, 18, 27, 36, 54, 81입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다. 조건을 만족하는 네 수는 2, 3, 6, 9뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 4, 6, 9, 12, 18, 27, 36, 54, 81이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다. 게임판에 빠진 꽃 칸은 4입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 2, 3, 6, 9, 4입니다.",
+      "asset": {
+        "src": "assets/applied4/q14-cards-v3.svg",
+        "description": "세 줄 세 칸 곱셈 결과판, 꽃 표시 칸과 여덟 결과"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자연수의 곱셈과 약수",
+          "reasoning": "네 카드의 자기곱과 서로 다른 카드의 곱을 표와 대조",
+          "conditionTracking": "같은 카드를 두 번 선택할 수 있고 서로 다른 곱은 아홉 칸에 한 번씩 등장",
+          "caseSplitting": "보이는 곱의 약수에서 카드 후보를 만들고 네 수 조합을 확인",
+          "computation": "카드 두 장의 곱을 모두 계산하고 중복 결과를 확인",
+          "representation": "3×3 게임판의 수를 곱셈 결과 집합으로 해석",
+          "reading": "조건과 물음을 지문에 직접 제시",
+          "visualCues": "문제 그림은 여덟 결과와 꽃 칸만 표시",
+          "shortcuts": "카드 수·보이는 곱·꽃 칸 중 하나가 바뀌면 답이 바뀜",
+          "load": "원문과 같은 역추론 및 유일성 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "divisor-pool exhaustive search over all 4-element sets of positive integers",
+        "parameters": {
+          "cards": [
+            2,
+            3,
+            6,
+            9
+          ],
+          "pairSelections": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              2,
+              9
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              3,
+              9
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              9
+            ],
+            [
+              9,
+              9
+            ]
+          ],
+          "pairProducts": [
+            4,
+            6,
+            12,
+            18,
+            9,
+            18,
+            27,
+            36,
+            54,
+            81
+          ],
+          "distinctProducts": [
+            4,
+            6,
+            9,
+            12,
+            18,
+            27,
+            36,
+            54,
+            81
+          ],
+          "visibleProducts": [
+            6,
+            9,
+            12,
+            18,
+            27,
+            36,
+            54,
+            81
+          ],
+          "blank": 4,
+          "factorCandidatePool": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            9,
+            12,
+            18,
+            27,
+            36,
+            54,
+            81
+          ],
+          "candidateCount": 1,
+          "candidateCards": [
+            [
+              2,
+              3,
+              6,
+              9
+            ]
+          ],
+          "searchCompleteness": "Each distinct card has products with three other cards; at most one product value is hidden, so every card divides at least one visible board value.",
+          "sourceExamPage": 3,
+          "sourceAnswerPage": 14,
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of teacher handwriting"
+        },
+        "independentSuite": "qa/applied4-q14-independent-validate.py",
+        "sourceAnswerMatch": true,
+        "sourceAnswerBasis": "matches the teacher's directly visible handwritten answer on source answer PDF page 14",
+        "studentDifficultyMeasured": false,
+        "assetSha256": "2c6945168697587880bf462ec3ec5e1d8aca81c008d2e74867de9306b1509aa4",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 14
+      }
+    },
+    {
+      "id": "applied4-q14-v4",
+      "genId": "applied4-q14",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 14,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q14-r1",
+      "area": "수와 식",
+      "subarea": "곱셈 표와 카드 추론",
+      "detailType": "곱셈 결과표에서 카드 수 복원",
+      "learningLocation": "활용 4회 · 원문 14번 · 곱셈 결과표에서 카드 수 복원",
+      "learningPoint": "게임판에 있는 곱셈 결과에서 네 카드 수와 빠진 결과를 추론하기",
+      "pointBand": "3.4",
+      "sourcePointBand": "3.4",
+      "text": "서로 다른 자연수가 하나씩 적힌 숫자카드 네 장이 있습니다. 두 장을 골라 수를 곱할 때(같은 카드를 두 번 골라도 됩니다) 나오는 서로 다른 곱 9가지는 게임판 아홉 칸에 한 번씩 적혀 있습니다. 게임판에서 꽃이 표시된 칸의 수를 포함해 네 카드의 수를 작은 수부터 쓰시오.",
+      "answer": "2, 4, 5, 10, 4",
+      "answerParts": [
+        2,
+        4,
+        5,
+        10,
+        4
+      ],
+      "answerLabels": [
+        "첫째 카드",
+        "둘째 카드",
+        "셋째 카드",
+        "넷째 카드",
+        "꽃이 있는 칸"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "2, 4, 5, 10, 4"
+      ],
+      "solutionSteps": [
+        "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다.",
+        "게임판에 보이는 여덟 수는 8, 10, 16, 20, 25, 40, 50, 100입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다.",
+        "조건을 만족하는 네 수는 2, 4, 5, 10뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 4, 8, 10, 16, 20, 25, 40, 50, 100이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다.",
+        "게임판에 빠진 꽃 칸은 4입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 2, 4, 5, 10, 4입니다."
+      ],
+      "solution": "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다. 게임판에 보이는 여덟 수는 8, 10, 16, 20, 25, 40, 50, 100입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다. 조건을 만족하는 네 수는 2, 4, 5, 10뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 4, 8, 10, 16, 20, 25, 40, 50, 100이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다. 게임판에 빠진 꽃 칸은 4입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 2, 4, 5, 10, 4입니다.",
+      "asset": {
+        "src": "assets/applied4/q14-cards-v4.svg",
+        "description": "세 줄 세 칸 곱셈 결과판, 꽃 표시 칸과 여덟 결과"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자연수의 곱셈과 약수",
+          "reasoning": "네 카드의 자기곱과 서로 다른 카드의 곱을 표와 대조",
+          "conditionTracking": "같은 카드를 두 번 선택할 수 있고 서로 다른 곱은 아홉 칸에 한 번씩 등장",
+          "caseSplitting": "보이는 곱의 약수에서 카드 후보를 만들고 네 수 조합을 확인",
+          "computation": "카드 두 장의 곱을 모두 계산하고 중복 결과를 확인",
+          "representation": "3×3 게임판의 수를 곱셈 결과 집합으로 해석",
+          "reading": "조건과 물음을 지문에 직접 제시",
+          "visualCues": "문제 그림은 여덟 결과와 꽃 칸만 표시",
+          "shortcuts": "카드 수·보이는 곱·꽃 칸 중 하나가 바뀌면 답이 바뀜",
+          "load": "원문과 같은 역추론 및 유일성 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "divisor-pool exhaustive search over all 4-element sets of positive integers",
+        "parameters": {
+          "cards": [
+            2,
+            4,
+            5,
+            10
+          ],
+          "pairSelections": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              10
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              4,
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              10,
+              10
+            ]
+          ],
+          "pairProducts": [
+            4,
+            8,
+            10,
+            20,
+            16,
+            20,
+            40,
+            25,
+            50,
+            100
+          ],
+          "distinctProducts": [
+            4,
+            8,
+            10,
+            16,
+            20,
+            25,
+            40,
+            50,
+            100
+          ],
+          "visibleProducts": [
+            8,
+            10,
+            16,
+            20,
+            25,
+            40,
+            50,
+            100
+          ],
+          "blank": 4,
+          "factorCandidatePool": [
+            1,
+            2,
+            4,
+            5,
+            8,
+            10,
+            16,
+            20,
+            25,
+            40,
+            50,
+            100
+          ],
+          "candidateCount": 1,
+          "candidateCards": [
+            [
+              2,
+              4,
+              5,
+              10
+            ]
+          ],
+          "searchCompleteness": "Each distinct card has products with three other cards; at most one product value is hidden, so every card divides at least one visible board value.",
+          "sourceExamPage": 3,
+          "sourceAnswerPage": 14,
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of teacher handwriting"
+        },
+        "independentSuite": "qa/applied4-q14-independent-validate.py",
+        "sourceAnswerMatch": true,
+        "sourceAnswerBasis": "matches the teacher's directly visible handwritten answer on source answer PDF page 14",
+        "studentDifficultyMeasured": false,
+        "assetSha256": "1deddbc99be0a6e5ebd21639c9d6fb0ba31b17de17818a1f026a98fefa115747",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 14
+      }
+    },
+    {
+      "id": "applied4-q14-v5",
+      "genId": "applied4-q14",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 14,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q14-r1",
+      "area": "수와 식",
+      "subarea": "곱셈 표와 카드 추론",
+      "detailType": "곱셈 결과표에서 카드 수 복원",
+      "learningLocation": "활용 4회 · 원문 14번 · 곱셈 결과표에서 카드 수 복원",
+      "learningPoint": "게임판에 있는 곱셈 결과에서 네 카드 수와 빠진 결과를 추론하기",
+      "pointBand": "3.4",
+      "sourcePointBand": "3.4",
+      "text": "서로 다른 자연수가 하나씩 적힌 숫자카드 네 장이 있습니다. 두 장을 골라 수를 곱할 때(같은 카드를 두 번 골라도 됩니다) 나오는 서로 다른 곱 9가지는 게임판 아홉 칸에 한 번씩 적혀 있습니다. 게임판에서 꽃이 표시된 칸의 수를 포함해 네 카드의 수를 작은 수부터 쓰시오.",
+      "answer": "3, 4, 6, 8, 9",
+      "answerParts": [
+        3,
+        4,
+        6,
+        8,
+        9
+      ],
+      "answerLabels": [
+        "첫째 카드",
+        "둘째 카드",
+        "셋째 카드",
+        "넷째 카드",
+        "꽃이 있는 칸"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "3, 4, 6, 8, 9"
+      ],
+      "solutionSteps": [
+        "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다.",
+        "게임판에 보이는 여덟 수는 12, 16, 18, 24, 32, 36, 48, 64입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다.",
+        "조건을 만족하는 네 수는 3, 4, 6, 8뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 9, 12, 16, 18, 24, 32, 36, 48, 64이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다.",
+        "게임판에 빠진 꽃 칸은 9입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 3, 4, 6, 8, 9입니다."
+      ],
+      "solution": "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다. 게임판에 보이는 여덟 수는 12, 16, 18, 24, 32, 36, 48, 64입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다. 조건을 만족하는 네 수는 3, 4, 6, 8뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 9, 12, 16, 18, 24, 32, 36, 48, 64이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다. 게임판에 빠진 꽃 칸은 9입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 3, 4, 6, 8, 9입니다.",
+      "asset": {
+        "src": "assets/applied4/q14-cards-v5.svg",
+        "description": "세 줄 세 칸 곱셈 결과판, 꽃 표시 칸과 여덟 결과"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자연수의 곱셈과 약수",
+          "reasoning": "네 카드의 자기곱과 서로 다른 카드의 곱을 표와 대조",
+          "conditionTracking": "같은 카드를 두 번 선택할 수 있고 서로 다른 곱은 아홉 칸에 한 번씩 등장",
+          "caseSplitting": "보이는 곱의 약수에서 카드 후보를 만들고 네 수 조합을 확인",
+          "computation": "카드 두 장의 곱을 모두 계산하고 중복 결과를 확인",
+          "representation": "3×3 게임판의 수를 곱셈 결과 집합으로 해석",
+          "reading": "조건과 물음을 지문에 직접 제시",
+          "visualCues": "문제 그림은 여덟 결과와 꽃 칸만 표시",
+          "shortcuts": "카드 수·보이는 곱·꽃 칸 중 하나가 바뀌면 답이 바뀜",
+          "load": "원문과 같은 역추론 및 유일성 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "divisor-pool exhaustive search over all 4-element sets of positive integers",
+        "parameters": {
+          "cards": [
+            3,
+            4,
+            6,
+            8
+          ],
+          "pairSelections": [
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              3,
+              8
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              4,
+              8
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              8
+            ],
+            [
+              8,
+              8
+            ]
+          ],
+          "pairProducts": [
+            9,
+            12,
+            18,
+            24,
+            16,
+            24,
+            32,
+            36,
+            48,
+            64
+          ],
+          "distinctProducts": [
+            9,
+            12,
+            16,
+            18,
+            24,
+            32,
+            36,
+            48,
+            64
+          ],
+          "visibleProducts": [
+            12,
+            16,
+            18,
+            24,
+            32,
+            36,
+            48,
+            64
+          ],
+          "blank": 9,
+          "factorCandidatePool": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            8,
+            9,
+            12,
+            16,
+            18,
+            24,
+            32,
+            36,
+            48,
+            64
+          ],
+          "candidateCount": 1,
+          "candidateCards": [
+            [
+              3,
+              4,
+              6,
+              8
+            ]
+          ],
+          "searchCompleteness": "Each distinct card has products with three other cards; at most one product value is hidden, so every card divides at least one visible board value.",
+          "sourceExamPage": 3,
+          "sourceAnswerPage": 14,
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of teacher handwriting"
+        },
+        "independentSuite": "qa/applied4-q14-independent-validate.py",
+        "sourceAnswerMatch": true,
+        "sourceAnswerBasis": "matches the teacher's directly visible handwritten answer on source answer PDF page 14",
+        "studentDifficultyMeasured": false,
+        "assetSha256": "cb832f5fc853733eb514aa52aa504dbca7f6ee4f8d6fbd542ee56d7c998551bf",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 14
+      }
+    },
+    {
+      "id": "applied4-q14-v6",
+      "genId": "applied4-q14",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 14,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q14-r1",
+      "area": "수와 식",
+      "subarea": "곱셈 표와 카드 추론",
+      "detailType": "곱셈 결과표에서 카드 수 복원",
+      "learningLocation": "활용 4회 · 원문 14번 · 곱셈 결과표에서 카드 수 복원",
+      "learningPoint": "게임판에 있는 곱셈 결과에서 네 카드 수와 빠진 결과를 추론하기",
+      "pointBand": "3.4",
+      "sourcePointBand": "3.4",
+      "text": "서로 다른 자연수가 하나씩 적힌 숫자카드 네 장이 있습니다. 두 장을 골라 수를 곱할 때(같은 카드를 두 번 골라도 됩니다) 나오는 서로 다른 곱 9가지는 게임판 아홉 칸에 한 번씩 적혀 있습니다. 게임판에서 꽃이 표시된 칸의 수를 포함해 네 카드의 수를 작은 수부터 쓰시오.",
+      "answer": "3, 5, 6, 10, 9",
+      "answerParts": [
+        3,
+        5,
+        6,
+        10,
+        9
+      ],
+      "answerLabels": [
+        "첫째 카드",
+        "둘째 카드",
+        "셋째 카드",
+        "넷째 카드",
+        "꽃이 있는 칸"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "3, 5, 6, 10, 9"
+      ],
+      "solutionSteps": [
+        "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다.",
+        "게임판에 보이는 여덟 수는 15, 18, 25, 30, 36, 50, 60, 100입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다.",
+        "조건을 만족하는 네 수는 3, 5, 6, 10뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 9, 15, 18, 25, 30, 36, 50, 60, 100이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다.",
+        "게임판에 빠진 꽃 칸은 9입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 3, 5, 6, 10, 9입니다."
+      ],
+      "solution": "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다. 게임판에 보이는 여덟 수는 15, 18, 25, 30, 36, 50, 60, 100입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다. 조건을 만족하는 네 수는 3, 5, 6, 10뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 9, 15, 18, 25, 30, 36, 50, 60, 100이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다. 게임판에 빠진 꽃 칸은 9입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 3, 5, 6, 10, 9입니다.",
+      "asset": {
+        "src": "assets/applied4/q14-cards-v6.svg",
+        "description": "세 줄 세 칸 곱셈 결과판, 꽃 표시 칸과 여덟 결과"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자연수의 곱셈과 약수",
+          "reasoning": "네 카드의 자기곱과 서로 다른 카드의 곱을 표와 대조",
+          "conditionTracking": "같은 카드를 두 번 선택할 수 있고 서로 다른 곱은 아홉 칸에 한 번씩 등장",
+          "caseSplitting": "보이는 곱의 약수에서 카드 후보를 만들고 네 수 조합을 확인",
+          "computation": "카드 두 장의 곱을 모두 계산하고 중복 결과를 확인",
+          "representation": "3×3 게임판의 수를 곱셈 결과 집합으로 해석",
+          "reading": "조건과 물음을 지문에 직접 제시",
+          "visualCues": "문제 그림은 여덟 결과와 꽃 칸만 표시",
+          "shortcuts": "카드 수·보이는 곱·꽃 칸 중 하나가 바뀌면 답이 바뀜",
+          "load": "원문과 같은 역추론 및 유일성 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "divisor-pool exhaustive search over all 4-element sets of positive integers",
+        "parameters": {
+          "cards": [
+            3,
+            5,
+            6,
+            10
+          ],
+          "pairSelections": [
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              3,
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              10,
+              10
+            ]
+          ],
+          "pairProducts": [
+            9,
+            15,
+            18,
+            30,
+            25,
+            30,
+            50,
+            36,
+            60,
+            100
+          ],
+          "distinctProducts": [
+            9,
+            15,
+            18,
+            25,
+            30,
+            36,
+            50,
+            60,
+            100
+          ],
+          "visibleProducts": [
+            15,
+            18,
+            25,
+            30,
+            36,
+            50,
+            60,
+            100
+          ],
+          "blank": 9,
+          "factorCandidatePool": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            9,
+            10,
+            12,
+            15,
+            18,
+            20,
+            25,
+            30,
+            36,
+            50,
+            60,
+            100
+          ],
+          "candidateCount": 1,
+          "candidateCards": [
+            [
+              3,
+              5,
+              6,
+              10
+            ]
+          ],
+          "searchCompleteness": "Each distinct card has products with three other cards; at most one product value is hidden, so every card divides at least one visible board value.",
+          "sourceExamPage": 3,
+          "sourceAnswerPage": 14,
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of teacher handwriting"
+        },
+        "independentSuite": "qa/applied4-q14-independent-validate.py",
+        "sourceAnswerMatch": true,
+        "sourceAnswerBasis": "matches the teacher's directly visible handwritten answer on source answer PDF page 14",
+        "studentDifficultyMeasured": false,
+        "assetSha256": "6a5db591babd7e22688095bca335f67d3d48ba8782790c23a47362c4a5d3677c",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 14
+      }
+    },
+    {
+      "id": "applied4-q14-v7",
+      "genId": "applied4-q14",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 14,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q14-r1",
+      "area": "수와 식",
+      "subarea": "곱셈 표와 카드 추론",
+      "detailType": "곱셈 결과표에서 카드 수 복원",
+      "learningLocation": "활용 4회 · 원문 14번 · 곱셈 결과표에서 카드 수 복원",
+      "learningPoint": "게임판에 있는 곱셈 결과에서 네 카드 수와 빠진 결과를 추론하기",
+      "pointBand": "3.4",
+      "sourcePointBand": "3.4",
+      "text": "서로 다른 자연수가 하나씩 적힌 숫자카드 네 장이 있습니다. 두 장을 골라 수를 곱할 때(같은 카드를 두 번 골라도 됩니다) 나오는 서로 다른 곱 9가지는 게임판 아홉 칸에 한 번씩 적혀 있습니다. 게임판에서 꽃이 표시된 칸의 수를 포함해 네 카드의 수를 작은 수부터 쓰시오.",
+      "answer": "3, 5, 9, 15, 9",
+      "answerParts": [
+        3,
+        5,
+        9,
+        15,
+        9
+      ],
+      "answerLabels": [
+        "첫째 카드",
+        "둘째 카드",
+        "셋째 카드",
+        "넷째 카드",
+        "꽃이 있는 칸"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "3, 5, 9, 15, 9"
+      ],
+      "solutionSteps": [
+        "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다.",
+        "게임판에 보이는 여덟 수는 15, 25, 27, 45, 75, 81, 135, 225입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다.",
+        "조건을 만족하는 네 수는 3, 5, 9, 15뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 9, 15, 25, 27, 45, 75, 81, 135, 225이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다.",
+        "게임판에 빠진 꽃 칸은 9입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 3, 5, 9, 15, 9입니다."
+      ],
+      "solution": "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다. 게임판에 보이는 여덟 수는 15, 25, 27, 45, 75, 81, 135, 225입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다. 조건을 만족하는 네 수는 3, 5, 9, 15뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 9, 15, 25, 27, 45, 75, 81, 135, 225이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다. 게임판에 빠진 꽃 칸은 9입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 3, 5, 9, 15, 9입니다.",
+      "asset": {
+        "src": "assets/applied4/q14-cards-v7.svg",
+        "description": "세 줄 세 칸 곱셈 결과판, 꽃 표시 칸과 여덟 결과"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자연수의 곱셈과 약수",
+          "reasoning": "네 카드의 자기곱과 서로 다른 카드의 곱을 표와 대조",
+          "conditionTracking": "같은 카드를 두 번 선택할 수 있고 서로 다른 곱은 아홉 칸에 한 번씩 등장",
+          "caseSplitting": "보이는 곱의 약수에서 카드 후보를 만들고 네 수 조합을 확인",
+          "computation": "카드 두 장의 곱을 모두 계산하고 중복 결과를 확인",
+          "representation": "3×3 게임판의 수를 곱셈 결과 집합으로 해석",
+          "reading": "조건과 물음을 지문에 직접 제시",
+          "visualCues": "문제 그림은 여덟 결과와 꽃 칸만 표시",
+          "shortcuts": "카드 수·보이는 곱·꽃 칸 중 하나가 바뀌면 답이 바뀜",
+          "load": "원문과 같은 역추론 및 유일성 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "divisor-pool exhaustive search over all 4-element sets of positive integers",
+        "parameters": {
+          "cards": [
+            3,
+            5,
+            9,
+            15
+          ],
+          "pairSelections": [
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              3,
+              9
+            ],
+            [
+              3,
+              15
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              9
+            ],
+            [
+              5,
+              15
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              15
+            ],
+            [
+              15,
+              15
+            ]
+          ],
+          "pairProducts": [
+            9,
+            15,
+            27,
+            45,
+            25,
+            45,
+            75,
+            81,
+            135,
+            225
+          ],
+          "distinctProducts": [
+            9,
+            15,
+            25,
+            27,
+            45,
+            75,
+            81,
+            135,
+            225
+          ],
+          "visibleProducts": [
+            15,
+            25,
+            27,
+            45,
+            75,
+            81,
+            135,
+            225
+          ],
+          "blank": 9,
+          "factorCandidatePool": [
+            1,
+            3,
+            5,
+            9,
+            15,
+            25,
+            27,
+            45,
+            75,
+            81,
+            135,
+            225
+          ],
+          "candidateCount": 1,
+          "candidateCards": [
+            [
+              3,
+              5,
+              9,
+              15
+            ]
+          ],
+          "searchCompleteness": "Each distinct card has products with three other cards; at most one product value is hidden, so every card divides at least one visible board value.",
+          "sourceExamPage": 3,
+          "sourceAnswerPage": 14,
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of teacher handwriting"
+        },
+        "independentSuite": "qa/applied4-q14-independent-validate.py",
+        "sourceAnswerMatch": true,
+        "sourceAnswerBasis": "matches the teacher's directly visible handwritten answer on source answer PDF page 14",
+        "studentDifficultyMeasured": false,
+        "assetSha256": "db56815366cb43d6517c622768f8d1557203bab53e274970ca6975af63ef413b",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 14
+      }
+    },
+    {
+      "id": "applied4-q14-v8",
+      "genId": "applied4-q14",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 14,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q14-r1",
+      "area": "수와 식",
+      "subarea": "곱셈 표와 카드 추론",
+      "detailType": "곱셈 결과표에서 카드 수 복원",
+      "learningLocation": "활용 4회 · 원문 14번 · 곱셈 결과표에서 카드 수 복원",
+      "learningPoint": "게임판에 있는 곱셈 결과에서 네 카드 수와 빠진 결과를 추론하기",
+      "pointBand": "3.4",
+      "sourcePointBand": "3.4",
+      "text": "서로 다른 자연수가 하나씩 적힌 숫자카드 네 장이 있습니다. 두 장을 골라 수를 곱할 때(같은 카드를 두 번 골라도 됩니다) 나오는 서로 다른 곱 9가지는 게임판 아홉 칸에 한 번씩 적혀 있습니다. 게임판에서 꽃이 표시된 칸의 수를 포함해 네 카드의 수를 작은 수부터 쓰시오.",
+      "answer": "4, 5, 6, 9, 16",
+      "answerParts": [
+        4,
+        5,
+        6,
+        9,
+        16
+      ],
+      "answerLabels": [
+        "첫째 카드",
+        "둘째 카드",
+        "셋째 카드",
+        "넷째 카드",
+        "꽃이 있는 칸"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "4, 5, 6, 9, 16"
+      ],
+      "solutionSteps": [
+        "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다.",
+        "게임판에 보이는 여덟 수는 20, 24, 25, 30, 36, 45, 54, 81입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다.",
+        "조건을 만족하는 네 수는 4, 5, 6, 9뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 16, 20, 24, 25, 30, 36, 45, 54, 81이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다.",
+        "게임판에 빠진 꽃 칸은 16입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 4, 5, 6, 9, 16입니다."
+      ],
+      "solution": "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다. 게임판에 보이는 여덟 수는 20, 24, 25, 30, 36, 45, 54, 81입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다. 조건을 만족하는 네 수는 4, 5, 6, 9뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 16, 20, 24, 25, 30, 36, 45, 54, 81이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다. 게임판에 빠진 꽃 칸은 16입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 4, 5, 6, 9, 16입니다.",
+      "asset": {
+        "src": "assets/applied4/q14-cards-v8.svg",
+        "description": "세 줄 세 칸 곱셈 결과판, 꽃 표시 칸과 여덟 결과"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자연수의 곱셈과 약수",
+          "reasoning": "네 카드의 자기곱과 서로 다른 카드의 곱을 표와 대조",
+          "conditionTracking": "같은 카드를 두 번 선택할 수 있고 서로 다른 곱은 아홉 칸에 한 번씩 등장",
+          "caseSplitting": "보이는 곱의 약수에서 카드 후보를 만들고 네 수 조합을 확인",
+          "computation": "카드 두 장의 곱을 모두 계산하고 중복 결과를 확인",
+          "representation": "3×3 게임판의 수를 곱셈 결과 집합으로 해석",
+          "reading": "조건과 물음을 지문에 직접 제시",
+          "visualCues": "문제 그림은 여덟 결과와 꽃 칸만 표시",
+          "shortcuts": "카드 수·보이는 곱·꽃 칸 중 하나가 바뀌면 답이 바뀜",
+          "load": "원문과 같은 역추론 및 유일성 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "divisor-pool exhaustive search over all 4-element sets of positive integers",
+        "parameters": {
+          "cards": [
+            4,
+            5,
+            6,
+            9
+          ],
+          "pairSelections": [
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              4,
+              9
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              5,
+              9
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              9
+            ],
+            [
+              9,
+              9
+            ]
+          ],
+          "pairProducts": [
+            16,
+            20,
+            24,
+            36,
+            25,
+            30,
+            45,
+            36,
+            54,
+            81
+          ],
+          "distinctProducts": [
+            16,
+            20,
+            24,
+            25,
+            30,
+            36,
+            45,
+            54,
+            81
+          ],
+          "visibleProducts": [
+            20,
+            24,
+            25,
+            30,
+            36,
+            45,
+            54,
+            81
+          ],
+          "blank": 16,
+          "factorCandidatePool": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            8,
+            9,
+            10,
+            12,
+            15,
+            18,
+            20,
+            24,
+            25,
+            27,
+            30,
+            36,
+            45,
+            54,
+            81
+          ],
+          "candidateCount": 1,
+          "candidateCards": [
+            [
+              4,
+              5,
+              6,
+              9
+            ]
+          ],
+          "searchCompleteness": "Each distinct card has products with three other cards; at most one product value is hidden, so every card divides at least one visible board value.",
+          "sourceExamPage": 3,
+          "sourceAnswerPage": 14,
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of teacher handwriting"
+        },
+        "independentSuite": "qa/applied4-q14-independent-validate.py",
+        "sourceAnswerMatch": true,
+        "sourceAnswerBasis": "matches the teacher's directly visible handwritten answer on source answer PDF page 14",
+        "studentDifficultyMeasured": false,
+        "assetSha256": "71029bf350da19c4bf3272673db0c90912c177ae60d451cd71cc6c80589821d1",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 14
+      }
+    },
+    {
+      "id": "applied4-q14-v9",
+      "genId": "applied4-q14",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 14,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q14-r1",
+      "area": "수와 식",
+      "subarea": "곱셈 표와 카드 추론",
+      "detailType": "곱셈 결과표에서 카드 수 복원",
+      "learningLocation": "활용 4회 · 원문 14번 · 곱셈 결과표에서 카드 수 복원",
+      "learningPoint": "게임판에 있는 곱셈 결과에서 네 카드 수와 빠진 결과를 추론하기",
+      "pointBand": "3.4",
+      "sourcePointBand": "3.4",
+      "text": "서로 다른 자연수가 하나씩 적힌 숫자카드 네 장이 있습니다. 두 장을 골라 수를 곱할 때(같은 카드를 두 번 골라도 됩니다) 나오는 서로 다른 곱 9가지는 게임판 아홉 칸에 한 번씩 적혀 있습니다. 게임판에서 꽃이 표시된 칸의 수를 포함해 네 카드의 수를 작은 수부터 쓰시오.",
+      "answer": "4, 5, 8, 10, 16",
+      "answerParts": [
+        4,
+        5,
+        8,
+        10,
+        16
+      ],
+      "answerLabels": [
+        "첫째 카드",
+        "둘째 카드",
+        "셋째 카드",
+        "넷째 카드",
+        "꽃이 있는 칸"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "4, 5, 8, 10, 16"
+      ],
+      "solutionSteps": [
+        "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다.",
+        "게임판에 보이는 여덟 수는 20, 25, 32, 40, 50, 64, 80, 100입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다.",
+        "조건을 만족하는 네 수는 4, 5, 8, 10뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 16, 20, 25, 32, 40, 50, 64, 80, 100이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다.",
+        "게임판에 빠진 꽃 칸은 16입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 4, 5, 8, 10, 16입니다."
+      ],
+      "solution": "같은 카드를 다시 고를 수 있으므로 네 카드에서 만들 수 있는 곱은 10가지이고, 게임판에는 서로 다른 곱 9가지가 한 번씩 적혀 있습니다. 따라서 곱셈 결과에서 중복되는 값도 확인해야 합니다. 게임판에 보이는 여덟 수는 20, 25, 32, 40, 50, 64, 80, 100입니다. 카드 한 장의 수는 다른 카드들과 곱한 값의 약수이므로, 보이는 수들의 약수에서 카드 후보를 모아 네 수 조합을 확인합니다. 조건을 만족하는 네 수는 4, 5, 8, 10뿐입니다. 이 수들을 두 개씩 골라 같은 수를 다시 곱하면 서로 다른 결과는 16, 20, 25, 32, 40, 50, 64, 80, 100이고, 1가지 카드 선택에서 겹치는 결과가 생깁니다. 게임판에 빠진 꽃 칸은 16입니다. 작은 수부터 적은 네 카드와 꽃 칸의 수는 4, 5, 8, 10, 16입니다.",
+      "asset": {
+        "src": "assets/applied4/q14-cards-v9.svg",
+        "description": "세 줄 세 칸 곱셈 결과판, 꽃 표시 칸과 여덟 결과"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자연수의 곱셈과 약수",
+          "reasoning": "네 카드의 자기곱과 서로 다른 카드의 곱을 표와 대조",
+          "conditionTracking": "같은 카드를 두 번 선택할 수 있고 서로 다른 곱은 아홉 칸에 한 번씩 등장",
+          "caseSplitting": "보이는 곱의 약수에서 카드 후보를 만들고 네 수 조합을 확인",
+          "computation": "카드 두 장의 곱을 모두 계산하고 중복 결과를 확인",
+          "representation": "3×3 게임판의 수를 곱셈 결과 집합으로 해석",
+          "reading": "조건과 물음을 지문에 직접 제시",
+          "visualCues": "문제 그림은 여덟 결과와 꽃 칸만 표시",
+          "shortcuts": "카드 수·보이는 곱·꽃 칸 중 하나가 바뀌면 답이 바뀜",
+          "load": "원문과 같은 역추론 및 유일성 확인"
+        }
+      },
+      "verification": {
+        "primaryMethod": "divisor-pool exhaustive search over all 4-element sets of positive integers",
+        "parameters": {
+          "cards": [
+            4,
+            5,
+            8,
+            10
+          ],
+          "pairSelections": [
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              4,
+              8
+            ],
+            [
+              4,
+              10
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              8,
+              10
+            ],
+            [
+              10,
+              10
+            ]
+          ],
+          "pairProducts": [
+            16,
+            20,
+            32,
+            40,
+            25,
+            40,
+            50,
+            64,
+            80,
+            100
+          ],
+          "distinctProducts": [
+            16,
+            20,
+            25,
+            32,
+            40,
+            50,
+            64,
+            80,
+            100
+          ],
+          "visibleProducts": [
+            20,
+            25,
+            32,
+            40,
+            50,
+            64,
+            80,
+            100
+          ],
+          "blank": 16,
+          "factorCandidatePool": [
+            1,
+            2,
+            4,
+            5,
+            8,
+            10,
+            16,
+            20,
+            25,
+            32,
+            40,
+            50,
+            64,
+            80,
+            100
+          ],
+          "candidateCount": 1,
+          "candidateCards": [
+            [
+              4,
+              5,
+              8,
+              10
+            ]
+          ],
+          "searchCompleteness": "Each distinct card has products with three other cards; at most one product value is hidden, so every card divides at least one visible board value.",
+          "sourceExamPage": 3,
+          "sourceAnswerPage": 14,
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of teacher handwriting"
+        },
+        "independentSuite": "qa/applied4-q14-independent-validate.py",
+        "sourceAnswerMatch": true,
+        "sourceAnswerBasis": "matches the teacher's directly visible handwritten answer on source answer PDF page 14",
+        "studentDifficultyMeasured": false,
+        "assetSha256": "b6f5b5af7eee16fdb8f00defad6770b65a6d83a710584cf6ee7a6c4fc281b796",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 14
+      }
     }
   ],
   "sourceEditionNotes": {
@@ -11701,17 +13459,21 @@
     "30": "분열시점과부모개체유지조건의해석확인필요로보류"
   },
   "reviewSummary": {
-    "independentMathCount": 162,
-    "sourceTypes": 18,
+    "independentMathCount": 171,
+    "sourceTypes": 19,
     "variantsPerType": 9,
     "outputReviewed": true,
     "prior153Exact": true,
     "new9ActualZipReviewed": true,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "preReleaseDataSha256": "095b2c8856fb35777f34a3b23dbd813a3e353e3e21ea90c17d0d1ff0f4c2915d"
+    "preReleaseDataSha256": "94b54abe08010bd33fbae50a76e5c26708b70910038c39a863f7f3a912bbcf8b",
+    "q14SourceDirectComparison": true,
+    "q14IndependentMathCount": 9,
+    "q14ActualZipReviewed": true,
+    "old162Exact": true
   },
-  "revision": "20261024-applied4-expansion-r4",
+  "revision": "20261024-applied4-expansion-r5-q14",
   "additionReviewSummary": {
     "sourceNos": [
       16
@@ -11720,6 +13482,12 @@
     "old153Exact": true,
     "all1578PriorAttemptKeysPreserved": true,
     "allFiveCardPermutationsUnique": true,
-    "sourceGrade": "3.4-middle"
+    "sourceGrade": "3.4-middle",
+    "q14SourceNos": [
+      14
+    ],
+    "q14Count": 9,
+    "q14PointBand": "3.4",
+    "q14Old162Exact": true
   }
 }
