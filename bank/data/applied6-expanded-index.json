@@ -1,14 +1,13 @@
 {
-  "version": "20261024-applied6-expansion-r19",
+  "version": "20261024-applied6-expansion-r20",
   "sourceSet": "applied",
   "sourceRound": 6,
-  "itemCount": 171,
+  "itemCount": 180,
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
-    24,
     25,
     26,
     27,
@@ -203,6 +202,16 @@
       "area": "경우의 수",
       "subarea": "방향 화살표 도로망의 경로 수",
       "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 24,
+      "genId": "applied6-q24",
+      "area": "경우의 수",
+      "subarea": "성냥개비 수와 거울 숫자 카드 배열",
+      "detailType": "성냥개비 수 합 조건과 거울 반사 자릿수에 맞는 카드 배열 세기",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9
