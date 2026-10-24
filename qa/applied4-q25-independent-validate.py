@@ -29,8 +29,9 @@ def main():
     assert data["items"][:len(prior["items"])] == prior["items"]
     assert len(prior["items"]) == 189
     assert len(items) == 9 and [x["variantNo"] for x in items] == list(range(1, 10))
-    assert data["availableSourceNos"] == sorted(prior["availableSourceNos"] + [25])
-    assert 25 not in data["pendingSourceNos"]
+    assert data["availableSourceNos"] == sorted(prior["availableSourceNos"] + [25, 26])
+    assert 25 not in data["pendingSourceNos"] and 26 not in data["pendingSourceNos"]
+    assert len([x for x in data["items"] if x["sourceNo"] == 26]) == 9
     source_sha = hashlib.sha256(SOURCE.read_bytes()).hexdigest()
     answer_sha = hashlib.sha256(ANSWER.read_bytes()).hexdigest()
     assert source_sha == "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59"

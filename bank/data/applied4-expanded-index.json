@@ -2,7 +2,7 @@
   "version": "20261024-applied4-expansion-r1",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 198,
+  "itemCount": 207,
   "pendingSourceNos": [
     1,
     2,
@@ -10,7 +10,6 @@
     4,
     21,
     24,
-    26,
     30
   ],
   "items": [
@@ -200,6 +199,16 @@
       "area": "수와 식",
       "subarea": "속력과 거리의 비",
       "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 26,
+      "genId": "applied4-q26",
+      "area": "도형",
+      "subarea": "격자와 경로",
+      "detailType": "장애물 도로 격자의 최단 왕복 거리",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9
