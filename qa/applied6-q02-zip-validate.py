@@ -12,7 +12,7 @@ with zipfile.ZipFile(Z) as z:
     assert names=={'문제.pdf','답안과상세풀이.pdf','문제.html','답안과상세풀이.html','빠른정답.csv','문항목록.json','검수기록.json'}
     listing=json.loads(z.read('문항목록.json'))
     review=json.loads(z.read('검수기록.json'))
-    ids=[x['id'] for x in DATA['items']]
+    ids=[x['id'] for x in DATA['items'] if x['sourceNo']==2]
     listed=[x['id'] for x in listing['items']]
     assert listing['count']==9 and listed==ids
     assert review['selectedIds']==ids and review['count']==9

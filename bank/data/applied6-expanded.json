@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r1",
+  "version": "20261024-applied6-expansion-r2",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -10,11 +10,11 @@
     "sourceGradeMutation": false
   },
   "availableSourceNos": [
-    2
+    2,
+    3
   ],
   "pendingSourceNos": [
     1,
-    3,
     4,
     5,
     6,
@@ -610,11 +610,515 @@
         "sourceReasoningPreserved": true,
         "measuredVariantRate": null
       }
+    },
+    {
+      "id": "applied6-q03-v1",
+      "genId": "applied6-q03",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 3,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "전체 수와 같은 몫·비교 조건",
+      "detailType": "같은 양을 가진 두 사람과 더 많이 가진 사람의 최소 몫",
+      "pointBand": "2.7",
+      "text": "구슬 23개를 세 사람 A, B, C가 나누어 가졌습니다. A와 B가 같은 수를 가지고 C가 A보다 많이 가졌다면, C가 가질 수 있는 구슬의 최소 개수는 몇 개인가요?",
+      "answer": "9",
+      "answerParts": [
+        9
+      ],
+      "answerLabels": [
+        "세 번째 사람이 가진 개수"
+      ],
+      "acceptedAnswers": [
+        "9"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=23이고 y>x입니다.",
+        "y=23−2x이므로 y>x를 만족하는 가장 큰 x는 7입니다. 실제로 3x<23이어야 합니다.",
+        "x가 커질수록 y=23−2x는 작아지므로 이 x에서 C의 몫이 최소입니다.",
+        "x=7을 대입하면 y=23−2×7=9입니다. 7+7+9=23이고 9>7이므로 조건을 만족합니다. 따라서 최소는 9개입니다."
+      ],
+      "solution": "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=23이고 y>x입니다. y=23−2x이므로 y>x를 만족하는 가장 큰 x는 7입니다. 실제로 3x<23이어야 합니다. x가 커질수록 y=23−2x는 작아지므로 이 x에서 C의 몫이 최소입니다. x=7을 대입하면 y=23−2×7=9입니다. 7+7+9=23이고 9>7이므로 조건을 만족합니다. 따라서 최소는 9개입니다.",
+      "learningPoint": "전체량 식을 세우고, 두 몫이 같다는 조건과 엄격한 크기 비교로 가능한 같은 몫의 최댓값을 찾아 나머지의 최솟값 구하기",
+      "learningLocation": "활용 6회 · 원문 3번 · 같은 양과 비교 조건이 있는 나눔의 최솟값",
+      "verification": {
+        "primaryMethod": "strict-inequality bound; maximize the equal share",
+        "independentMethod": "exhaustive enumeration of every positive integer split",
+        "parameters": {
+          "totalObjects": 23,
+          "maximumEqualShare": 7,
+          "minimumThirdShare": 9,
+          "equation": "2x+y=totalObjects",
+          "strictCondition": "y>x",
+          "unit": "개"
+        },
+        "independentSuite": "qa/applied6-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q03-v2",
+      "genId": "applied6-q03",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 3,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "전체 수와 같은 몫·비교 조건",
+      "detailType": "같은 양을 가진 두 사람과 더 많이 가진 사람의 최소 몫",
+      "pointBand": "2.7",
+      "text": "스티커 25장를 세 사람이 나누어 갖습니다. 첫째와 둘째가 똑같이 갖고 셋째가 첫째보다 많이 갖도록 할 때, 셋째가 갖는 스티커는 적어도 몇 장인가요?",
+      "answer": "9",
+      "answerParts": [
+        9
+      ],
+      "answerLabels": [
+        "세 번째 사람이 가진 개수"
+      ],
+      "acceptedAnswers": [
+        "9"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=25이고 y>x입니다.",
+        "y=25−2x이므로 y>x를 만족하는 가장 큰 x는 8입니다. 실제로 3x<25이어야 합니다.",
+        "x가 커질수록 y=25−2x는 작아지므로 이 x에서 C의 몫이 최소입니다.",
+        "x=8을 대입하면 y=25−2×8=9입니다. 8+8+9=25이고 9>8이므로 조건을 만족합니다. 따라서 최소는 9장입니다."
+      ],
+      "solution": "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=25이고 y>x입니다. y=25−2x이므로 y>x를 만족하는 가장 큰 x는 8입니다. 실제로 3x<25이어야 합니다. x가 커질수록 y=25−2x는 작아지므로 이 x에서 C의 몫이 최소입니다. x=8을 대입하면 y=25−2×8=9입니다. 8+8+9=25이고 9>8이므로 조건을 만족합니다. 따라서 최소는 9장입니다.",
+      "learningPoint": "전체량 식을 세우고, 두 몫이 같다는 조건과 엄격한 크기 비교로 가능한 같은 몫의 최댓값을 찾아 나머지의 최솟값 구하기",
+      "learningLocation": "활용 6회 · 원문 3번 · 같은 양과 비교 조건이 있는 나눔의 최솟값",
+      "verification": {
+        "primaryMethod": "strict-inequality bound; maximize the equal share",
+        "independentMethod": "exhaustive enumeration of every positive integer split",
+        "parameters": {
+          "totalObjects": 25,
+          "maximumEqualShare": 8,
+          "minimumThirdShare": 9,
+          "equation": "2x+y=totalObjects",
+          "strictCondition": "y>x",
+          "unit": "장"
+        },
+        "independentSuite": "qa/applied6-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q03-v3",
+      "genId": "applied6-q03",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 3,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "전체 수와 같은 몫·비교 조건",
+      "detailType": "같은 양을 가진 두 사람과 더 많이 가진 사람의 최소 몫",
+      "pointBand": "2.7",
+      "text": "A, B, C가 사탕 28개를 모두 나누어 가집니다. A와 B의 몫은 같고 C의 몫은 A의 몫보다 많습니다. C의 몫을 가장 작게 하면 사탕는 몇 개인가요?",
+      "answer": "10",
+      "answerParts": [
+        10
+      ],
+      "answerLabels": [
+        "세 번째 사람이 가진 개수"
+      ],
+      "acceptedAnswers": [
+        "10"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=28이고 y>x입니다.",
+        "y=28−2x이므로 y>x를 만족하는 가장 큰 x는 9입니다. 실제로 3x<28이어야 합니다.",
+        "x가 커질수록 y=28−2x는 작아지므로 이 x에서 C의 몫이 최소입니다.",
+        "x=9을 대입하면 y=28−2×9=10입니다. 9+9+10=28이고 10>9이므로 조건을 만족합니다. 따라서 최소는 10개입니다."
+      ],
+      "solution": "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=28이고 y>x입니다. y=28−2x이므로 y>x를 만족하는 가장 큰 x는 9입니다. 실제로 3x<28이어야 합니다. x가 커질수록 y=28−2x는 작아지므로 이 x에서 C의 몫이 최소입니다. x=9을 대입하면 y=28−2×9=10입니다. 9+9+10=28이고 10>9이므로 조건을 만족합니다. 따라서 최소는 10개입니다.",
+      "learningPoint": "전체량 식을 세우고, 두 몫이 같다는 조건과 엄격한 크기 비교로 가능한 같은 몫의 최댓값을 찾아 나머지의 최솟값 구하기",
+      "learningLocation": "활용 6회 · 원문 3번 · 같은 양과 비교 조건이 있는 나눔의 최솟값",
+      "verification": {
+        "primaryMethod": "strict-inequality bound; maximize the equal share",
+        "independentMethod": "exhaustive enumeration of every positive integer split",
+        "parameters": {
+          "totalObjects": 28,
+          "maximumEqualShare": 9,
+          "minimumThirdShare": 10,
+          "equation": "2x+y=totalObjects",
+          "strictCondition": "y>x",
+          "unit": "개"
+        },
+        "independentSuite": "qa/applied6-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q03-v4",
+      "genId": "applied6-q03",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 3,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "전체 수와 같은 몫·비교 조건",
+      "detailType": "같은 양을 가진 두 사람과 더 많이 가진 사람의 최소 몫",
+      "pointBand": "2.7",
+      "text": "딱지 31장를 세 사람 A, B, C가 나누어 가졌습니다. A와 B가 같은 수를 가지고 C가 A보다 많이 가졌다면, C가 가질 수 있는 딱지의 최소 개수는 몇 장인가요?",
+      "answer": "11",
+      "answerParts": [
+        11
+      ],
+      "answerLabels": [
+        "세 번째 사람이 가진 개수"
+      ],
+      "acceptedAnswers": [
+        "11"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=31이고 y>x입니다.",
+        "y=31−2x이므로 y>x를 만족하는 가장 큰 x는 10입니다. 실제로 3x<31이어야 합니다.",
+        "x가 커질수록 y=31−2x는 작아지므로 이 x에서 C의 몫이 최소입니다.",
+        "x=10을 대입하면 y=31−2×10=11입니다. 10+10+11=31이고 11>10이므로 조건을 만족합니다. 따라서 최소는 11장입니다."
+      ],
+      "solution": "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=31이고 y>x입니다. y=31−2x이므로 y>x를 만족하는 가장 큰 x는 10입니다. 실제로 3x<31이어야 합니다. x가 커질수록 y=31−2x는 작아지므로 이 x에서 C의 몫이 최소입니다. x=10을 대입하면 y=31−2×10=11입니다. 10+10+11=31이고 11>10이므로 조건을 만족합니다. 따라서 최소는 11장입니다.",
+      "learningPoint": "전체량 식을 세우고, 두 몫이 같다는 조건과 엄격한 크기 비교로 가능한 같은 몫의 최댓값을 찾아 나머지의 최솟값 구하기",
+      "learningLocation": "활용 6회 · 원문 3번 · 같은 양과 비교 조건이 있는 나눔의 최솟값",
+      "verification": {
+        "primaryMethod": "strict-inequality bound; maximize the equal share",
+        "independentMethod": "exhaustive enumeration of every positive integer split",
+        "parameters": {
+          "totalObjects": 31,
+          "maximumEqualShare": 10,
+          "minimumThirdShare": 11,
+          "equation": "2x+y=totalObjects",
+          "strictCondition": "y>x",
+          "unit": "장"
+        },
+        "independentSuite": "qa/applied6-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q03-v5",
+      "genId": "applied6-q03",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 3,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "전체 수와 같은 몫·비교 조건",
+      "detailType": "같은 양을 가진 두 사람과 더 많이 가진 사람의 최소 몫",
+      "pointBand": "2.7",
+      "text": "종이별 32개를 세 사람이 나누어 갖습니다. 첫째와 둘째가 똑같이 갖고 셋째가 첫째보다 많이 갖도록 할 때, 셋째가 갖는 종이별는 적어도 몇 개인가요?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "세 번째 사람이 가진 개수"
+      ],
+      "acceptedAnswers": [
+        "12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=32이고 y>x입니다.",
+        "y=32−2x이므로 y>x를 만족하는 가장 큰 x는 10입니다. 실제로 3x<32이어야 합니다.",
+        "x가 커질수록 y=32−2x는 작아지므로 이 x에서 C의 몫이 최소입니다.",
+        "x=10을 대입하면 y=32−2×10=12입니다. 10+10+12=32이고 12>10이므로 조건을 만족합니다. 따라서 최소는 12개입니다."
+      ],
+      "solution": "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=32이고 y>x입니다. y=32−2x이므로 y>x를 만족하는 가장 큰 x는 10입니다. 실제로 3x<32이어야 합니다. x가 커질수록 y=32−2x는 작아지므로 이 x에서 C의 몫이 최소입니다. x=10을 대입하면 y=32−2×10=12입니다. 10+10+12=32이고 12>10이므로 조건을 만족합니다. 따라서 최소는 12개입니다.",
+      "learningPoint": "전체량 식을 세우고, 두 몫이 같다는 조건과 엄격한 크기 비교로 가능한 같은 몫의 최댓값을 찾아 나머지의 최솟값 구하기",
+      "learningLocation": "활용 6회 · 원문 3번 · 같은 양과 비교 조건이 있는 나눔의 최솟값",
+      "verification": {
+        "primaryMethod": "strict-inequality bound; maximize the equal share",
+        "independentMethod": "exhaustive enumeration of every positive integer split",
+        "parameters": {
+          "totalObjects": 32,
+          "maximumEqualShare": 10,
+          "minimumThirdShare": 12,
+          "equation": "2x+y=totalObjects",
+          "strictCondition": "y>x",
+          "unit": "개"
+        },
+        "independentSuite": "qa/applied6-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q03-v6",
+      "genId": "applied6-q03",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 3,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "전체 수와 같은 몫·비교 조건",
+      "detailType": "같은 양을 가진 두 사람과 더 많이 가진 사람의 최소 몫",
+      "pointBand": "2.7",
+      "text": "A, B, C가 바둑돌 35개를 모두 나누어 가집니다. A와 B의 몫은 같고 C의 몫은 A의 몫보다 많습니다. C의 몫을 가장 작게 하면 바둑돌는 몇 개인가요?",
+      "answer": "13",
+      "answerParts": [
+        13
+      ],
+      "answerLabels": [
+        "세 번째 사람이 가진 개수"
+      ],
+      "acceptedAnswers": [
+        "13"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=35이고 y>x입니다.",
+        "y=35−2x이므로 y>x를 만족하는 가장 큰 x는 11입니다. 실제로 3x<35이어야 합니다.",
+        "x가 커질수록 y=35−2x는 작아지므로 이 x에서 C의 몫이 최소입니다.",
+        "x=11을 대입하면 y=35−2×11=13입니다. 11+11+13=35이고 13>11이므로 조건을 만족합니다. 따라서 최소는 13개입니다."
+      ],
+      "solution": "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=35이고 y>x입니다. y=35−2x이므로 y>x를 만족하는 가장 큰 x는 11입니다. 실제로 3x<35이어야 합니다. x가 커질수록 y=35−2x는 작아지므로 이 x에서 C의 몫이 최소입니다. x=11을 대입하면 y=35−2×11=13입니다. 11+11+13=35이고 13>11이므로 조건을 만족합니다. 따라서 최소는 13개입니다.",
+      "learningPoint": "전체량 식을 세우고, 두 몫이 같다는 조건과 엄격한 크기 비교로 가능한 같은 몫의 최댓값을 찾아 나머지의 최솟값 구하기",
+      "learningLocation": "활용 6회 · 원문 3번 · 같은 양과 비교 조건이 있는 나눔의 최솟값",
+      "verification": {
+        "primaryMethod": "strict-inequality bound; maximize the equal share",
+        "independentMethod": "exhaustive enumeration of every positive integer split",
+        "parameters": {
+          "totalObjects": 35,
+          "maximumEqualShare": 11,
+          "minimumThirdShare": 13,
+          "equation": "2x+y=totalObjects",
+          "strictCondition": "y>x",
+          "unit": "개"
+        },
+        "independentSuite": "qa/applied6-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q03-v7",
+      "genId": "applied6-q03",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 3,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "전체 수와 같은 몫·비교 조건",
+      "detailType": "같은 양을 가진 두 사람과 더 많이 가진 사람의 최소 몫",
+      "pointBand": "2.7",
+      "text": "카드 38장를 세 사람 A, B, C가 나누어 가졌습니다. A와 B가 같은 수를 가지고 C가 A보다 많이 가졌다면, C가 가질 수 있는 카드의 최소 개수는 몇 장인가요?",
+      "answer": "14",
+      "answerParts": [
+        14
+      ],
+      "answerLabels": [
+        "세 번째 사람이 가진 개수"
+      ],
+      "acceptedAnswers": [
+        "14"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=38이고 y>x입니다.",
+        "y=38−2x이므로 y>x를 만족하는 가장 큰 x는 12입니다. 실제로 3x<38이어야 합니다.",
+        "x가 커질수록 y=38−2x는 작아지므로 이 x에서 C의 몫이 최소입니다.",
+        "x=12을 대입하면 y=38−2×12=14입니다. 12+12+14=38이고 14>12이므로 조건을 만족합니다. 따라서 최소는 14장입니다."
+      ],
+      "solution": "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=38이고 y>x입니다. y=38−2x이므로 y>x를 만족하는 가장 큰 x는 12입니다. 실제로 3x<38이어야 합니다. x가 커질수록 y=38−2x는 작아지므로 이 x에서 C의 몫이 최소입니다. x=12을 대입하면 y=38−2×12=14입니다. 12+12+14=38이고 14>12이므로 조건을 만족합니다. 따라서 최소는 14장입니다.",
+      "learningPoint": "전체량 식을 세우고, 두 몫이 같다는 조건과 엄격한 크기 비교로 가능한 같은 몫의 최댓값을 찾아 나머지의 최솟값 구하기",
+      "learningLocation": "활용 6회 · 원문 3번 · 같은 양과 비교 조건이 있는 나눔의 최솟값",
+      "verification": {
+        "primaryMethod": "strict-inequality bound; maximize the equal share",
+        "independentMethod": "exhaustive enumeration of every positive integer split",
+        "parameters": {
+          "totalObjects": 38,
+          "maximumEqualShare": 12,
+          "minimumThirdShare": 14,
+          "equation": "2x+y=totalObjects",
+          "strictCondition": "y>x",
+          "unit": "장"
+        },
+        "independentSuite": "qa/applied6-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q03-v8",
+      "genId": "applied6-q03",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 3,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "전체 수와 같은 몫·비교 조건",
+      "detailType": "같은 양을 가진 두 사람과 더 많이 가진 사람의 최소 몫",
+      "pointBand": "2.7",
+      "text": "색종이 41장를 세 사람이 나누어 갖습니다. 첫째와 둘째가 똑같이 갖고 셋째가 첫째보다 많이 갖도록 할 때, 셋째가 갖는 색종이는 적어도 몇 장인가요?",
+      "answer": "15",
+      "answerParts": [
+        15
+      ],
+      "answerLabels": [
+        "세 번째 사람이 가진 개수"
+      ],
+      "acceptedAnswers": [
+        "15"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=41이고 y>x입니다.",
+        "y=41−2x이므로 y>x를 만족하는 가장 큰 x는 13입니다. 실제로 3x<41이어야 합니다.",
+        "x가 커질수록 y=41−2x는 작아지므로 이 x에서 C의 몫이 최소입니다.",
+        "x=13을 대입하면 y=41−2×13=15입니다. 13+13+15=41이고 15>13이므로 조건을 만족합니다. 따라서 최소는 15장입니다."
+      ],
+      "solution": "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=41이고 y>x입니다. y=41−2x이므로 y>x를 만족하는 가장 큰 x는 13입니다. 실제로 3x<41이어야 합니다. x가 커질수록 y=41−2x는 작아지므로 이 x에서 C의 몫이 최소입니다. x=13을 대입하면 y=41−2×13=15입니다. 13+13+15=41이고 15>13이므로 조건을 만족합니다. 따라서 최소는 15장입니다.",
+      "learningPoint": "전체량 식을 세우고, 두 몫이 같다는 조건과 엄격한 크기 비교로 가능한 같은 몫의 최댓값을 찾아 나머지의 최솟값 구하기",
+      "learningLocation": "활용 6회 · 원문 3번 · 같은 양과 비교 조건이 있는 나눔의 최솟값",
+      "verification": {
+        "primaryMethod": "strict-inequality bound; maximize the equal share",
+        "independentMethod": "exhaustive enumeration of every positive integer split",
+        "parameters": {
+          "totalObjects": 41,
+          "maximumEqualShare": 13,
+          "minimumThirdShare": 15,
+          "equation": "2x+y=totalObjects",
+          "strictCondition": "y>x",
+          "unit": "장"
+        },
+        "independentSuite": "qa/applied6-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q03-v9",
+      "genId": "applied6-q03",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 3,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "전체 수와 같은 몫·비교 조건",
+      "detailType": "같은 양을 가진 두 사람과 더 많이 가진 사람의 최소 몫",
+      "pointBand": "2.7",
+      "text": "A, B, C가 공깃돌 44개를 모두 나누어 가집니다. A와 B의 몫은 같고 C의 몫은 A의 몫보다 많습니다. C의 몫을 가장 작게 하면 공깃돌는 몇 개인가요?",
+      "answer": "16",
+      "answerParts": [
+        16
+      ],
+      "answerLabels": [
+        "세 번째 사람이 가진 개수"
+      ],
+      "acceptedAnswers": [
+        "16"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=44이고 y>x입니다.",
+        "y=44−2x이므로 y>x를 만족하는 가장 큰 x는 14입니다. 실제로 3x<44이어야 합니다.",
+        "x가 커질수록 y=44−2x는 작아지므로 이 x에서 C의 몫이 최소입니다.",
+        "x=14을 대입하면 y=44−2×14=16입니다. 14+14+16=44이고 16>14이므로 조건을 만족합니다. 따라서 최소는 16개입니다."
+      ],
+      "solution": "A와 B가 각각 x개, C가 y개를 가진다고 하면 2x+y=44이고 y>x입니다. y=44−2x이므로 y>x를 만족하는 가장 큰 x는 14입니다. 실제로 3x<44이어야 합니다. x가 커질수록 y=44−2x는 작아지므로 이 x에서 C의 몫이 최소입니다. x=14을 대입하면 y=44−2×14=16입니다. 14+14+16=44이고 16>14이므로 조건을 만족합니다. 따라서 최소는 16개입니다.",
+      "learningPoint": "전체량 식을 세우고, 두 몫이 같다는 조건과 엄격한 크기 비교로 가능한 같은 몫의 최댓값을 찾아 나머지의 최솟값 구하기",
+      "learningLocation": "활용 6회 · 원문 3번 · 같은 양과 비교 조건이 있는 나눔의 최솟값",
+      "verification": {
+        "primaryMethod": "strict-inequality bound; maximize the equal share",
+        "independentMethod": "exhaustive enumeration of every positive integer split",
+        "parameters": {
+          "totalObjects": 44,
+          "maximumEqualShare": 14,
+          "minimumThirdShare": 16,
+          "equation": "2x+y=totalObjects",
+          "strictCondition": "y>x",
+          "unit": "개"
+        },
+        "independentSuite": "qa/applied6-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 9,
-    "sourceTypes": 1,
+    "independentMathCount": 18,
+    "sourceTypes": 2,
     "variantsPerType": 9,
     "outputReviewed": true,
     "sourceDrawingCount": 0,
