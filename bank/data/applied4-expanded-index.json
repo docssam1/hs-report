@@ -1,17 +1,15 @@
 {
-  "version": "20261024-applied4-expansion-r2",
+  "version": "20261024-applied4-expansion-r3",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 135,
+  "itemCount": 153,
   "pendingSourceNos": [
     1,
     2,
     3,
     4,
     14,
-    15,
     16,
-    18,
     21,
     22,
     24,
@@ -112,11 +110,31 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 15,
+      "genId": "applied4-q15",
+      "area": "수와 식",
+      "subarea": "규칙과 수 배열",
+      "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 17,
       "genId": "applied4-q17",
       "area": "수와 식",
       "subarea": "자릿수의 주기",
       "detailType": "연속 자연수 전체의 숫자 합",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 18,
+      "genId": "applied4-q18",
+      "area": "수와 식",
+      "subarea": "주기와 위치",
+      "detailType": "색칠 경로의 주기와 칸 위치",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9

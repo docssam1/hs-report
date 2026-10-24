@@ -19,7 +19,9 @@
     11,
     12,
     13,
+    15,
     17,
+    18,
     19,
     20,
     23,
@@ -32,9 +34,7 @@
     3,
     4,
     14,
-    15,
     16,
-    18,
     21,
     22,
     24,
@@ -9233,6 +9233,1338 @@
         "src": "assets/applied4/eight-circle-points-original.png",
         "description": "원본의 원 위 여덟 점"
       }
+    },
+    {
+      "id": "applied4-q15-v1",
+      "genId": "applied4-q15",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 15,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "규칙과 수 배열",
+      "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "text": "그림의 규칙에 따라 수를 계속 적습니다. 1을 첫 번째 묶음으로 보고, 같은 정사각형 둘레의 수를 한 묶음으로 묶어 안쪽부터 번호를 매깁니다. 위치를 (묶음 번호, 묶음 안에서 수가 적히는 차례)로 나타낼 때, 72의 위치를 구하시오. 예를 들어10의 위치는 (3,5)입니다.",
+      "answer": "7, 11",
+      "answerParts": [
+        7,
+        11
+      ],
+      "answerLabels": [
+        "묶음 번호",
+        "묶음 안 차례"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "7, 11"
+      ],
+      "solutionSteps": [
+        "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다.",
+        "6번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋5)＝61개입니다.",
+        "그 다음 묶음은24개이므로 마지막 수가85입니다. 72은 이 묶음에 있습니다.",
+        "묶음 안의 차례는72−61＝11이므로 위치는(7,11)입니다."
+      ],
+      "solution": "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다. 6번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋5)＝61개입니다. 그 다음 묶음은24개이므로 마지막 수가85입니다. 72은 이 묶음에 있습니다. 묶음 안의 차례는72−61＝11이므로 위치는(7,11)입니다.",
+      "learningPoint": "새 묶음의 항 수와 그 앞까지 적힌 수의 개수를 구별하기",
+      "learningLocation": "활용 4회 · 원문 15번 · 정사각형 묶음의 순서쌍",
+      "asset": {
+        "src": "assets/applied4/square-spiral-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "closed-form square-layer count",
+        "parameters": {
+          "target": 72,
+          "layer": 6,
+          "before": 61
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 15,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q15-v2",
+      "genId": "applied4-q15",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 15,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "규칙과 수 배열",
+      "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "text": "그림의 규칙에 따라 수를 계속 적습니다. 1을 첫 번째 묶음으로 보고, 같은 정사각형 둘레의 수를 한 묶음으로 묶어 안쪽부터 번호를 매깁니다. 위치를 (묶음 번호, 묶음 안에서 수가 적히는 차례)로 나타낼 때, 80의 위치를 구하시오. 예를 들어10의 위치는 (3,5)입니다.",
+      "answer": "7, 19",
+      "answerParts": [
+        7,
+        19
+      ],
+      "answerLabels": [
+        "묶음 번호",
+        "묶음 안 차례"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "7, 19"
+      ],
+      "solutionSteps": [
+        "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다.",
+        "6번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋5)＝61개입니다.",
+        "그 다음 묶음은24개이므로 마지막 수가85입니다. 80은 이 묶음에 있습니다.",
+        "묶음 안의 차례는80−61＝19이므로 위치는(7,19)입니다."
+      ],
+      "solution": "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다. 6번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋5)＝61개입니다. 그 다음 묶음은24개이므로 마지막 수가85입니다. 80은 이 묶음에 있습니다. 묶음 안의 차례는80−61＝19이므로 위치는(7,19)입니다.",
+      "learningPoint": "새 묶음의 항 수와 그 앞까지 적힌 수의 개수를 구별하기",
+      "learningLocation": "활용 4회 · 원문 15번 · 정사각형 묶음의 순서쌍",
+      "asset": {
+        "src": "assets/applied4/square-spiral-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "closed-form square-layer count",
+        "parameters": {
+          "target": 80,
+          "layer": 6,
+          "before": 61
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 15,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q15-v3",
+      "genId": "applied4-q15",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 15,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "규칙과 수 배열",
+      "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "text": "그림의 규칙에 따라 수를 계속 적습니다. 1을 첫 번째 묶음으로 보고, 같은 정사각형 둘레의 수를 한 묶음으로 묶어 안쪽부터 번호를 매깁니다. 위치를 (묶음 번호, 묶음 안에서 수가 적히는 차례)로 나타낼 때, 88의 위치를 구하시오. 예를 들어10의 위치는 (3,5)입니다.",
+      "answer": "8, 3",
+      "answerParts": [
+        8,
+        3
+      ],
+      "answerLabels": [
+        "묶음 번호",
+        "묶음 안 차례"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "8, 3"
+      ],
+      "solutionSteps": [
+        "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다.",
+        "7번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋6)＝85개입니다.",
+        "그 다음 묶음은28개이므로 마지막 수가113입니다. 88은 이 묶음에 있습니다.",
+        "묶음 안의 차례는88−85＝3이므로 위치는(8,3)입니다."
+      ],
+      "solution": "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다. 7번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋6)＝85개입니다. 그 다음 묶음은28개이므로 마지막 수가113입니다. 88은 이 묶음에 있습니다. 묶음 안의 차례는88−85＝3이므로 위치는(8,3)입니다.",
+      "learningPoint": "새 묶음의 항 수와 그 앞까지 적힌 수의 개수를 구별하기",
+      "learningLocation": "활용 4회 · 원문 15번 · 정사각형 묶음의 순서쌍",
+      "asset": {
+        "src": "assets/applied4/square-spiral-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "closed-form square-layer count",
+        "parameters": {
+          "target": 88,
+          "layer": 7,
+          "before": 85
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 15,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q15-v4",
+      "genId": "applied4-q15",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 15,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "규칙과 수 배열",
+      "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "text": "그림의 규칙에 따라 수를 계속 적습니다. 1을 첫 번째 묶음으로 보고, 같은 정사각형 둘레의 수를 한 묶음으로 묶어 안쪽부터 번호를 매깁니다. 위치를 (묶음 번호, 묶음 안에서 수가 적히는 차례)로 나타낼 때, 96의 위치를 구하시오. 예를 들어10의 위치는 (3,5)입니다.",
+      "answer": "8, 11",
+      "answerParts": [
+        8,
+        11
+      ],
+      "answerLabels": [
+        "묶음 번호",
+        "묶음 안 차례"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "8, 11"
+      ],
+      "solutionSteps": [
+        "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다.",
+        "7번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋6)＝85개입니다.",
+        "그 다음 묶음은28개이므로 마지막 수가113입니다. 96은 이 묶음에 있습니다.",
+        "묶음 안의 차례는96−85＝11이므로 위치는(8,11)입니다."
+      ],
+      "solution": "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다. 7번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋6)＝85개입니다. 그 다음 묶음은28개이므로 마지막 수가113입니다. 96은 이 묶음에 있습니다. 묶음 안의 차례는96−85＝11이므로 위치는(8,11)입니다.",
+      "learningPoint": "새 묶음의 항 수와 그 앞까지 적힌 수의 개수를 구별하기",
+      "learningLocation": "활용 4회 · 원문 15번 · 정사각형 묶음의 순서쌍",
+      "asset": {
+        "src": "assets/applied4/square-spiral-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "closed-form square-layer count",
+        "parameters": {
+          "target": 96,
+          "layer": 7,
+          "before": 85
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 15,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q15-v5",
+      "genId": "applied4-q15",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 15,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "규칙과 수 배열",
+      "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "text": "그림의 규칙에 따라 수를 계속 적습니다. 1을 첫 번째 묶음으로 보고, 같은 정사각형 둘레의 수를 한 묶음으로 묶어 안쪽부터 번호를 매깁니다. 위치를 (묶음 번호, 묶음 안에서 수가 적히는 차례)로 나타낼 때, 112의 위치를 구하시오. 예를 들어10의 위치는 (3,5)입니다.",
+      "answer": "8, 27",
+      "answerParts": [
+        8,
+        27
+      ],
+      "answerLabels": [
+        "묶음 번호",
+        "묶음 안 차례"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "8, 27"
+      ],
+      "solutionSteps": [
+        "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다.",
+        "7번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋6)＝85개입니다.",
+        "그 다음 묶음은28개이므로 마지막 수가113입니다. 112은 이 묶음에 있습니다.",
+        "묶음 안의 차례는112−85＝27이므로 위치는(8,27)입니다."
+      ],
+      "solution": "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다. 7번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋6)＝85개입니다. 그 다음 묶음은28개이므로 마지막 수가113입니다. 112은 이 묶음에 있습니다. 묶음 안의 차례는112−85＝27이므로 위치는(8,27)입니다.",
+      "learningPoint": "새 묶음의 항 수와 그 앞까지 적힌 수의 개수를 구별하기",
+      "learningLocation": "활용 4회 · 원문 15번 · 정사각형 묶음의 순서쌍",
+      "asset": {
+        "src": "assets/applied4/square-spiral-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "closed-form square-layer count",
+        "parameters": {
+          "target": 112,
+          "layer": 7,
+          "before": 85
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 15,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q15-v6",
+      "genId": "applied4-q15",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 15,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "규칙과 수 배열",
+      "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "text": "그림의 규칙에 따라 수를 계속 적습니다. 1을 첫 번째 묶음으로 보고, 같은 정사각형 둘레의 수를 한 묶음으로 묶어 안쪽부터 번호를 매깁니다. 위치를 (묶음 번호, 묶음 안에서 수가 적히는 차례)로 나타낼 때, 128의 위치를 구하시오. 예를 들어10의 위치는 (3,5)입니다.",
+      "answer": "9, 15",
+      "answerParts": [
+        9,
+        15
+      ],
+      "answerLabels": [
+        "묶음 번호",
+        "묶음 안 차례"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "9, 15"
+      ],
+      "solutionSteps": [
+        "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다.",
+        "8번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋7)＝113개입니다.",
+        "그 다음 묶음은32개이므로 마지막 수가145입니다. 128은 이 묶음에 있습니다.",
+        "묶음 안의 차례는128−113＝15이므로 위치는(9,15)입니다."
+      ],
+      "solution": "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다. 8번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋7)＝113개입니다. 그 다음 묶음은32개이므로 마지막 수가145입니다. 128은 이 묶음에 있습니다. 묶음 안의 차례는128−113＝15이므로 위치는(9,15)입니다.",
+      "learningPoint": "새 묶음의 항 수와 그 앞까지 적힌 수의 개수를 구별하기",
+      "learningLocation": "활용 4회 · 원문 15번 · 정사각형 묶음의 순서쌍",
+      "asset": {
+        "src": "assets/applied4/square-spiral-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "closed-form square-layer count",
+        "parameters": {
+          "target": 128,
+          "layer": 8,
+          "before": 113
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 15,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q15-v7",
+      "genId": "applied4-q15",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 15,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "규칙과 수 배열",
+      "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "text": "그림의 규칙에 따라 수를 계속 적습니다. 1을 첫 번째 묶음으로 보고, 같은 정사각형 둘레의 수를 한 묶음으로 묶어 안쪽부터 번호를 매깁니다. 위치를 (묶음 번호, 묶음 안에서 수가 적히는 차례)로 나타낼 때, 144의 위치를 구하시오. 예를 들어10의 위치는 (3,5)입니다.",
+      "answer": "9, 31",
+      "answerParts": [
+        9,
+        31
+      ],
+      "answerLabels": [
+        "묶음 번호",
+        "묶음 안 차례"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "9, 31"
+      ],
+      "solutionSteps": [
+        "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다.",
+        "8번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋7)＝113개입니다.",
+        "그 다음 묶음은32개이므로 마지막 수가145입니다. 144은 이 묶음에 있습니다.",
+        "묶음 안의 차례는144−113＝31이므로 위치는(9,31)입니다."
+      ],
+      "solution": "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다. 8번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋7)＝113개입니다. 그 다음 묶음은32개이므로 마지막 수가145입니다. 144은 이 묶음에 있습니다. 묶음 안의 차례는144−113＝31이므로 위치는(9,31)입니다.",
+      "learningPoint": "새 묶음의 항 수와 그 앞까지 적힌 수의 개수를 구별하기",
+      "learningLocation": "활용 4회 · 원문 15번 · 정사각형 묶음의 순서쌍",
+      "asset": {
+        "src": "assets/applied4/square-spiral-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "closed-form square-layer count",
+        "parameters": {
+          "target": 144,
+          "layer": 8,
+          "before": 113
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 15,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q15-v8",
+      "genId": "applied4-q15",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 15,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "규칙과 수 배열",
+      "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "text": "그림의 규칙에 따라 수를 계속 적습니다. 1을 첫 번째 묶음으로 보고, 같은 정사각형 둘레의 수를 한 묶음으로 묶어 안쪽부터 번호를 매깁니다. 위치를 (묶음 번호, 묶음 안에서 수가 적히는 차례)로 나타낼 때, 160의 위치를 구하시오. 예를 들어10의 위치는 (3,5)입니다.",
+      "answer": "10, 15",
+      "answerParts": [
+        10,
+        15
+      ],
+      "answerLabels": [
+        "묶음 번호",
+        "묶음 안 차례"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "10, 15"
+      ],
+      "solutionSteps": [
+        "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다.",
+        "9번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋8)＝145개입니다.",
+        "그 다음 묶음은36개이므로 마지막 수가181입니다. 160은 이 묶음에 있습니다.",
+        "묶음 안의 차례는160−145＝15이므로 위치는(10,15)입니다."
+      ],
+      "solution": "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다. 9번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋8)＝145개입니다. 그 다음 묶음은36개이므로 마지막 수가181입니다. 160은 이 묶음에 있습니다. 묶음 안의 차례는160−145＝15이므로 위치는(10,15)입니다.",
+      "learningPoint": "새 묶음의 항 수와 그 앞까지 적힌 수의 개수를 구별하기",
+      "learningLocation": "활용 4회 · 원문 15번 · 정사각형 묶음의 순서쌍",
+      "asset": {
+        "src": "assets/applied4/square-spiral-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "closed-form square-layer count",
+        "parameters": {
+          "target": 160,
+          "layer": 9,
+          "before": 145
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 15,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q15-v9",
+      "genId": "applied4-q15",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 15,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "규칙과 수 배열",
+      "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "text": "그림의 규칙에 따라 수를 계속 적습니다. 1을 첫 번째 묶음으로 보고, 같은 정사각형 둘레의 수를 한 묶음으로 묶어 안쪽부터 번호를 매깁니다. 위치를 (묶음 번호, 묶음 안에서 수가 적히는 차례)로 나타낼 때, 180의 위치를 구하시오. 예를 들어10의 위치는 (3,5)입니다.",
+      "answer": "10, 35",
+      "answerParts": [
+        10,
+        35
+      ],
+      "answerLabels": [
+        "묶음 번호",
+        "묶음 안 차례"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "10, 35"
+      ],
+      "solutionSteps": [
+        "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다.",
+        "9번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋8)＝145개입니다.",
+        "그 다음 묶음은36개이므로 마지막 수가181입니다. 180은 이 묶음에 있습니다.",
+        "묶음 안의 차례는180−145＝35이므로 위치는(10,35)입니다."
+      ],
+      "solution": "1을 첫 묶음으로 두면 다음 정사각형 둘레의 수는 차례로4개,8개,12개로 늘어납니다. 9번째 묶음까지 적힌 수는1＋4×(1＋2＋…＋8)＝145개입니다. 그 다음 묶음은36개이므로 마지막 수가181입니다. 180은 이 묶음에 있습니다. 묶음 안의 차례는180−145＝35이므로 위치는(10,35)입니다.",
+      "learningPoint": "새 묶음의 항 수와 그 앞까지 적힌 수의 개수를 구별하기",
+      "learningLocation": "활용 4회 · 원문 15번 · 정사각형 묶음의 순서쌍",
+      "asset": {
+        "src": "assets/applied4/square-spiral-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "closed-form square-layer count",
+        "parameters": {
+          "target": 180,
+          "layer": 9,
+          "before": 145
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 15,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q18-v1",
+      "genId": "applied4-q18",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 18,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "주기와 위치",
+      "detailType": "색칠 경로의 주기와 칸 위치",
+      "pointBand": "3.4",
+      "text": "그림의 화살표를 따라 작은 정사각형을 한 칸씩 색칠합니다. 두 번째로 색칠하는 칸의 위치를 (가,2)로 나타낼 때, 같은 방법으로 117번째로 색칠하는 칸의 위치를 나타내시오.",
+      "answer": "다, 67",
+      "answerParts": [
+        "다",
+        67
+      ],
+      "answerLabels": [
+        "행 이름",
+        "열 번호"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "다, 67"
+      ],
+      "solutionSteps": [
+        "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다.",
+        "117−1＝14×8＋4이므로, 앞의8묶음 다음에 나오는5번째 칸입니다.",
+        "첫 묶음의5번째 칸은(다,3)입니다. 행 이름은 그대로이고 열 번호에8×8을 더합니다.",
+        "3＋8×8＝67이므로 답은(다,67)입니다."
+      ],
+      "solution": "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다. 117−1＝14×8＋4이므로, 앞의8묶음 다음에 나오는5번째 칸입니다. 첫 묶음의5번째 칸은(다,3)입니다. 행 이름은 그대로이고 열 번호에8×8을 더합니다. 3＋8×8＝67이므로 답은(다,67)입니다.",
+      "learningPoint": "같은 모양이 되돌아오는 색칠 차례와 가로 이동을 함께 구하기",
+      "learningLocation": "활용 4회 · 원문 18번 · 색칠 경로의 주기와 칸 위치",
+      "asset": {
+        "src": "assets/applied4/wave-cells-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "cycle-position arithmetic",
+        "parameters": {
+          "target": 117,
+          "completedCycles": 8,
+          "cycleIndex": 5
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 18,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q18-v2",
+      "genId": "applied4-q18",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 18,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "주기와 위치",
+      "detailType": "색칠 경로의 주기와 칸 위치",
+      "pointBand": "3.4",
+      "text": "그림의 화살표를 따라 작은 정사각형을 한 칸씩 색칠합니다. 두 번째로 색칠하는 칸의 위치를 (가,2)로 나타낼 때, 같은 방법으로 128번째로 색칠하는 칸의 위치를 나타내시오.",
+      "answer": "가, 74",
+      "answerParts": [
+        "가",
+        74
+      ],
+      "answerLabels": [
+        "행 이름",
+        "열 번호"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "가, 74"
+      ],
+      "solutionSteps": [
+        "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다.",
+        "128−1＝14×9＋1이므로, 앞의9묶음 다음에 나오는2번째 칸입니다.",
+        "첫 묶음의2번째 칸은(가,2)입니다. 행 이름은 그대로이고 열 번호에8×9을 더합니다.",
+        "2＋8×9＝74이므로 답은(가,74)입니다."
+      ],
+      "solution": "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다. 128−1＝14×9＋1이므로, 앞의9묶음 다음에 나오는2번째 칸입니다. 첫 묶음의2번째 칸은(가,2)입니다. 행 이름은 그대로이고 열 번호에8×9을 더합니다. 2＋8×9＝74이므로 답은(가,74)입니다.",
+      "learningPoint": "같은 모양이 되돌아오는 색칠 차례와 가로 이동을 함께 구하기",
+      "learningLocation": "활용 4회 · 원문 18번 · 색칠 경로의 주기와 칸 위치",
+      "asset": {
+        "src": "assets/applied4/wave-cells-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "cycle-position arithmetic",
+        "parameters": {
+          "target": 128,
+          "completedCycles": 9,
+          "cycleIndex": 2
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 18,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q18-v3",
+      "genId": "applied4-q18",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 18,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "주기와 위치",
+      "detailType": "색칠 경로의 주기와 칸 위치",
+      "pointBand": "3.4",
+      "text": "그림의 화살표를 따라 작은 정사각형을 한 칸씩 색칠합니다. 두 번째로 색칠하는 칸의 위치를 (가,2)로 나타낼 때, 같은 방법으로 145번째로 색칠하는 칸의 위치를 나타내시오.",
+      "answer": "다, 83",
+      "answerParts": [
+        "다",
+        83
+      ],
+      "answerLabels": [
+        "행 이름",
+        "열 번호"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "다, 83"
+      ],
+      "solutionSteps": [
+        "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다.",
+        "145−1＝14×10＋4이므로, 앞의10묶음 다음에 나오는5번째 칸입니다.",
+        "첫 묶음의5번째 칸은(다,3)입니다. 행 이름은 그대로이고 열 번호에8×10을 더합니다.",
+        "3＋8×10＝83이므로 답은(다,83)입니다."
+      ],
+      "solution": "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다. 145−1＝14×10＋4이므로, 앞의10묶음 다음에 나오는5번째 칸입니다. 첫 묶음의5번째 칸은(다,3)입니다. 행 이름은 그대로이고 열 번호에8×10을 더합니다. 3＋8×10＝83이므로 답은(다,83)입니다.",
+      "learningPoint": "같은 모양이 되돌아오는 색칠 차례와 가로 이동을 함께 구하기",
+      "learningLocation": "활용 4회 · 원문 18번 · 색칠 경로의 주기와 칸 위치",
+      "asset": {
+        "src": "assets/applied4/wave-cells-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "cycle-position arithmetic",
+        "parameters": {
+          "target": 145,
+          "completedCycles": 10,
+          "cycleIndex": 5
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 18,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q18-v4",
+      "genId": "applied4-q18",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 18,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "주기와 위치",
+      "detailType": "색칠 경로의 주기와 칸 위치",
+      "pointBand": "3.4",
+      "text": "그림의 화살표를 따라 작은 정사각형을 한 칸씩 색칠합니다. 두 번째로 색칠하는 칸의 위치를 (가,2)로 나타낼 때, 같은 방법으로 161번째로 색칠하는 칸의 위치를 나타내시오.",
+      "answer": "라, 92",
+      "answerParts": [
+        "라",
+        92
+      ],
+      "answerLabels": [
+        "행 이름",
+        "열 번호"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "라, 92"
+      ],
+      "solutionSteps": [
+        "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다.",
+        "161−1＝14×11＋6이므로, 앞의11묶음 다음에 나오는7번째 칸입니다.",
+        "첫 묶음의7번째 칸은(라,4)입니다. 행 이름은 그대로이고 열 번호에8×11을 더합니다.",
+        "4＋8×11＝92이므로 답은(라,92)입니다."
+      ],
+      "solution": "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다. 161−1＝14×11＋6이므로, 앞의11묶음 다음에 나오는7번째 칸입니다. 첫 묶음의7번째 칸은(라,4)입니다. 행 이름은 그대로이고 열 번호에8×11을 더합니다. 4＋8×11＝92이므로 답은(라,92)입니다.",
+      "learningPoint": "같은 모양이 되돌아오는 색칠 차례와 가로 이동을 함께 구하기",
+      "learningLocation": "활용 4회 · 원문 18번 · 색칠 경로의 주기와 칸 위치",
+      "asset": {
+        "src": "assets/applied4/wave-cells-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "cycle-position arithmetic",
+        "parameters": {
+          "target": 161,
+          "completedCycles": 11,
+          "cycleIndex": 7
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 18,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q18-v5",
+      "genId": "applied4-q18",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 18,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "주기와 위치",
+      "detailType": "색칠 경로의 주기와 칸 위치",
+      "pointBand": "3.4",
+      "text": "그림의 화살표를 따라 작은 정사각형을 한 칸씩 색칠합니다. 두 번째로 색칠하는 칸의 위치를 (가,2)로 나타낼 때, 같은 방법으로 181번째로 색칠하는 칸의 위치를 나타내시오.",
+      "answer": "나, 104",
+      "answerParts": [
+        "나",
+        104
+      ],
+      "answerLabels": [
+        "행 이름",
+        "열 번호"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "나, 104"
+      ],
+      "solutionSteps": [
+        "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다.",
+        "181−1＝14×12＋12이므로, 앞의12묶음 다음에 나오는13번째 칸입니다.",
+        "첫 묶음의13번째 칸은(나,8)입니다. 행 이름은 그대로이고 열 번호에8×12을 더합니다.",
+        "8＋8×12＝104이므로 답은(나,104)입니다."
+      ],
+      "solution": "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다. 181−1＝14×12＋12이므로, 앞의12묶음 다음에 나오는13번째 칸입니다. 첫 묶음의13번째 칸은(나,8)입니다. 행 이름은 그대로이고 열 번호에8×12을 더합니다. 8＋8×12＝104이므로 답은(나,104)입니다.",
+      "learningPoint": "같은 모양이 되돌아오는 색칠 차례와 가로 이동을 함께 구하기",
+      "learningLocation": "활용 4회 · 원문 18번 · 색칠 경로의 주기와 칸 위치",
+      "asset": {
+        "src": "assets/applied4/wave-cells-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "cycle-position arithmetic",
+        "parameters": {
+          "target": 181,
+          "completedCycles": 12,
+          "cycleIndex": 13
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 18,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q18-v6",
+      "genId": "applied4-q18",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 18,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "주기와 위치",
+      "detailType": "색칠 경로의 주기와 칸 위치",
+      "pointBand": "3.4",
+      "text": "그림의 화살표를 따라 작은 정사각형을 한 칸씩 색칠합니다. 두 번째로 색칠하는 칸의 위치를 (가,2)로 나타낼 때, 같은 방법으로 196번째로 색칠하는 칸의 위치를 나타내시오.",
+      "answer": "가, 112",
+      "answerParts": [
+        "가",
+        112
+      ],
+      "answerLabels": [
+        "행 이름",
+        "열 번호"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "가, 112"
+      ],
+      "solutionSteps": [
+        "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다.",
+        "196−1＝14×13＋13이므로, 앞의13묶음 다음에 나오는14번째 칸입니다.",
+        "첫 묶음의14번째 칸은(가,8)입니다. 행 이름은 그대로이고 열 번호에8×13을 더합니다.",
+        "8＋8×13＝112이므로 답은(가,112)입니다."
+      ],
+      "solution": "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다. 196−1＝14×13＋13이므로, 앞의13묶음 다음에 나오는14번째 칸입니다. 첫 묶음의14번째 칸은(가,8)입니다. 행 이름은 그대로이고 열 번호에8×13을 더합니다. 8＋8×13＝112이므로 답은(가,112)입니다.",
+      "learningPoint": "같은 모양이 되돌아오는 색칠 차례와 가로 이동을 함께 구하기",
+      "learningLocation": "활용 4회 · 원문 18번 · 색칠 경로의 주기와 칸 위치",
+      "asset": {
+        "src": "assets/applied4/wave-cells-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "cycle-position arithmetic",
+        "parameters": {
+          "target": 196,
+          "completedCycles": 13,
+          "cycleIndex": 14
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 18,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q18-v7",
+      "genId": "applied4-q18",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 18,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "주기와 위치",
+      "detailType": "색칠 경로의 주기와 칸 위치",
+      "pointBand": "3.4",
+      "text": "그림의 화살표를 따라 작은 정사각형을 한 칸씩 색칠합니다. 두 번째로 색칠하는 칸의 위치를 (가,2)로 나타낼 때, 같은 방법으로 204번째로 색칠하는 칸의 위치를 나타내시오.",
+      "answer": "라, 117",
+      "answerParts": [
+        "라",
+        117
+      ],
+      "answerLabels": [
+        "행 이름",
+        "열 번호"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "라, 117"
+      ],
+      "solutionSteps": [
+        "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다.",
+        "204−1＝14×14＋7이므로, 앞의14묶음 다음에 나오는8번째 칸입니다.",
+        "첫 묶음의8번째 칸은(라,5)입니다. 행 이름은 그대로이고 열 번호에8×14을 더합니다.",
+        "5＋8×14＝117이므로 답은(라,117)입니다."
+      ],
+      "solution": "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다. 204−1＝14×14＋7이므로, 앞의14묶음 다음에 나오는8번째 칸입니다. 첫 묶음의8번째 칸은(라,5)입니다. 행 이름은 그대로이고 열 번호에8×14을 더합니다. 5＋8×14＝117이므로 답은(라,117)입니다.",
+      "learningPoint": "같은 모양이 되돌아오는 색칠 차례와 가로 이동을 함께 구하기",
+      "learningLocation": "활용 4회 · 원문 18번 · 색칠 경로의 주기와 칸 위치",
+      "asset": {
+        "src": "assets/applied4/wave-cells-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "cycle-position arithmetic",
+        "parameters": {
+          "target": 204,
+          "completedCycles": 14,
+          "cycleIndex": 8
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 18,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q18-v8",
+      "genId": "applied4-q18",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 18,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "주기와 위치",
+      "detailType": "색칠 경로의 주기와 칸 위치",
+      "pointBand": "3.4",
+      "text": "그림의 화살표를 따라 작은 정사각형을 한 칸씩 색칠합니다. 두 번째로 색칠하는 칸의 위치를 (가,2)로 나타낼 때, 같은 방법으로 221번째로 색칠하는 칸의 위치를 나타내시오.",
+      "answer": "다, 127",
+      "answerParts": [
+        "다",
+        127
+      ],
+      "answerLabels": [
+        "행 이름",
+        "열 번호"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "다, 127"
+      ],
+      "solutionSteps": [
+        "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다.",
+        "221−1＝14×15＋10이므로, 앞의15묶음 다음에 나오는11번째 칸입니다.",
+        "첫 묶음의11번째 칸은(다,7)입니다. 행 이름은 그대로이고 열 번호에8×15을 더합니다.",
+        "7＋8×15＝127이므로 답은(다,127)입니다."
+      ],
+      "solution": "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다. 221−1＝14×15＋10이므로, 앞의15묶음 다음에 나오는11번째 칸입니다. 첫 묶음의11번째 칸은(다,7)입니다. 행 이름은 그대로이고 열 번호에8×15을 더합니다. 7＋8×15＝127이므로 답은(다,127)입니다.",
+      "learningPoint": "같은 모양이 되돌아오는 색칠 차례와 가로 이동을 함께 구하기",
+      "learningLocation": "활용 4회 · 원문 18번 · 색칠 경로의 주기와 칸 위치",
+      "asset": {
+        "src": "assets/applied4/wave-cells-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "cycle-position arithmetic",
+        "parameters": {
+          "target": 221,
+          "completedCycles": 15,
+          "cycleIndex": 11
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 18,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q18-v9",
+      "genId": "applied4-q18",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 18,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r3",
+      "area": "수와 식",
+      "subarea": "주기와 위치",
+      "detailType": "색칠 경로의 주기와 칸 위치",
+      "pointBand": "3.4",
+      "text": "그림의 화살표를 따라 작은 정사각형을 한 칸씩 색칠합니다. 두 번째로 색칠하는 칸의 위치를 (가,2)로 나타낼 때, 같은 방법으로 242번째로 색칠하는 칸의 위치를 나타내시오.",
+      "answer": "나, 139",
+      "answerParts": [
+        "나",
+        139
+      ],
+      "answerLabels": [
+        "행 이름",
+        "열 번호"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "나, 139"
+      ],
+      "solutionSteps": [
+        "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다.",
+        "242−1＝14×17＋3이므로, 앞의17묶음 다음에 나오는4번째 칸입니다.",
+        "첫 묶음의4번째 칸은(나,3)입니다. 행 이름은 그대로이고 열 번호에8×17을 더합니다.",
+        "3＋8×17＝139이므로 답은(나,139)입니다."
+      ],
+      "solution": "첫 칸부터 화살표를 따라 세면14칸을 색칠한 뒤 같은 모양의 다음 부분으로 이어집니다. 같은 차례의 칸은 가로로8칸씩 오른쪽에 있습니다. 242−1＝14×17＋3이므로, 앞의17묶음 다음에 나오는4번째 칸입니다. 첫 묶음의4번째 칸은(나,3)입니다. 행 이름은 그대로이고 열 번호에8×17을 더합니다. 3＋8×17＝139이므로 답은(나,139)입니다.",
+      "learningPoint": "같은 모양이 되돌아오는 색칠 차례와 가로 이동을 함께 구하기",
+      "learningLocation": "활용 4회 · 원문 18번 · 색칠 경로의 주기와 칸 위치",
+      "asset": {
+        "src": "assets/applied4/wave-cells-original.png",
+        "description": "현행 원문 PDF의 실제 배치·잘림 영역 그대로"
+      },
+      "verification": {
+        "primaryMethod": "cycle-position arithmetic",
+        "parameters": {
+          "target": 242,
+          "completedCycles": 17,
+          "cycleIndex": 4
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 18,
+        "independentSuite": "qa/applied4-nine-sequences-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 묶음별 항 수 또는 색칠 경로의 반복을 발견",
+          "conditions": "같은 시작값과 진행 방향 유지",
+          "steps": "기준 개수와 묶음 안 차례를 함께 계산",
+          "representation": "실제 원본 그림 보존",
+          "answer": "원본과 같은 두 성분 순서쌍",
+          "domain": "원본 자연수 범위와 같은 학습 범위",
+          "search": "묶음 또는 반복 단위 분류",
+          "load": "원본과 비슷한 세 자리 목표",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
     }
   ],
   "sourceEditionNotes": {
@@ -9241,27 +10573,32 @@
     "30": "분열시점과부모개체유지조건의해석확인필요로보류"
   },
   "reviewSummary": {
-    "independentMathCount": 135,
-    "sourceTypes": 15,
+    "independentMathCount": 153,
+    "sourceTypes": 17,
     "variantsPerType": 9,
     "outputReviewed": true,
-    "sourceDrawingCount": 5,
-    "nativeDetailCrops": 1,
-    "new27ActualZipReviewed": true,
+    "prior135Exact": true,
+    "new18ActualZipReviewed": true,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "preReleaseDataSha256": "e102410e77c9a38f1a115c180d4142ce570404deafa9946700d980dc700a4dc1"
+    "preReleaseDataSha256": "63a117c1cd2f7acb76bf15204889a3e3710692b25324cd2ca9ab95efc71ec3c1"
   },
-  "revision": "20261024-applied4-expansion-r2",
+  "revision": "20261024-applied4-expansion-r3",
   "additionReviewSummary": {
     "sourceNos": [
-      9,
-      11,
-      12
+      15,
+      18
     ],
-    "count": 27,
-    "acceptedAnswersPerGrid": 4,
-    "old108Exact": true,
-    "all1533PriorAttemptKeysPreserved": true
+    "count": 18,
+    "old135Exact": true,
+    "all1560PriorAttemptKeysPreserved": true,
+    "source15Original100": [
+      8,
+      15
+    ],
+    "source18Original152": [
+      "나",
+      87
+    ]
   }
 }
