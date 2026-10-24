@@ -26,6 +26,7 @@
     18,
     19,
     20,
+    22,
     23,
     27,
     28,
@@ -37,7 +38,6 @@
     3,
     4,
     21,
-    22,
     24,
     25,
     26,
@@ -14747,16 +14747,1232 @@
         "sourceAnswerMatch": true,
         "studentDifficultyMeasured": false
       }
+    },
+    {
+      "id": "applied4-q22-v1",
+      "genId": "applied4-q22",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 22,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 단위 모서리",
+      "detailType": "13개 쌓기나무의 고유 모서리 수 세기",
+      "pointBand": "3.4",
+      "text": "정육면체 한 개의 모서리를 성냥개비 한 개로 나타냅니다. 오른쪽 모양처럼 쌓기나무를 붙여 만들 때, 서로 맞닿아 함께 쓰는 모서리는 한 개로 셉니다. 쌓기나무가 모두 13개라면 필요한 성냥개비는 몇 개입니까?",
+      "answer": "108",
+      "answerParts": [
+        108
+      ],
+      "answerLabels": [
+        "성냥개비 수"
+      ],
+      "acceptedAnswers": [
+        "108"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다.",
+        "그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 48개, 32개, 28개입니다.",
+        "48＋32＋28＝108이므로 성냥개비는 모두 108개 필요합니다."
+      ],
+      "solution": "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다. 그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 48개, 32개, 28개입니다. 48＋32＋28＝108이므로 성냥개비는 모두 108개 필요합니다.",
+      "learningPoint": "붙어 있는 정육면체들의 모서리를 방향별로 나누어 중복 없이 세기",
+      "learningLocation": "활용 4회 · 원문 22번 · 입체도형의 단위 모서리",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q22-expanded-v1.svg",
+        "description": "정육면체 13개를 붙인 새 입체 배치"
+      },
+      "verification": {
+        "primaryMethod": "unique cube-edge endpoint-pair union",
+        "independentMethod": "three-direction unit-edge anchor enumeration",
+        "parameters": {
+          "cubeCount": 13,
+          "cubeCoordinates": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              0
+            ],
+            [
+              5,
+              1,
+              0
+            ],
+            [
+              6,
+              1,
+              0
+            ],
+            [
+              7,
+              1,
+              0
+            ],
+            [
+              7,
+              2,
+              0
+            ],
+            [
+              8,
+              2,
+              0
+            ],
+            [
+              9,
+              2,
+              0
+            ],
+            [
+              10,
+              2,
+              0
+            ]
+          ],
+          "uniqueEdgesByDirection": [
+            48,
+            32,
+            28
+          ],
+          "uniqueEdgeTotal": 108
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswerReadMethod": "direct visual reading of teacher handwriting on answer PDF p22",
+        "sourceAnswer": 102,
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false,
+        "assetSha256": "5aa64a970fff94b710743d896b570bee576311d017c1ba7065bae7b336dff425"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "low",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 3.4-point band retained"
+    },
+    {
+      "id": "applied4-q22-v2",
+      "genId": "applied4-q22",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 22,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 단위 모서리",
+      "detailType": "13개 쌓기나무의 고유 모서리 수 세기",
+      "pointBand": "3.4",
+      "text": "정육면체 한 개의 모서리를 성냥개비 한 개로 나타냅니다. 오른쪽 모양처럼 쌓기나무를 붙여 만들 때, 서로 맞닿아 함께 쓰는 모서리는 한 개로 셉니다. 쌓기나무가 모두 13개라면 필요한 성냥개비는 몇 개입니까?",
+      "answer": "93",
+      "answerParts": [
+        93
+      ],
+      "answerLabels": [
+        "성냥개비 수"
+      ],
+      "acceptedAnswers": [
+        "93"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다.",
+        "그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 40개, 30개, 23개입니다.",
+        "40＋30＋23＝93이므로 성냥개비는 모두 93개 필요합니다."
+      ],
+      "solution": "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다. 그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 40개, 30개, 23개입니다. 40＋30＋23＝93이므로 성냥개비는 모두 93개 필요합니다.",
+      "learningPoint": "붙어 있는 정육면체들의 모서리를 방향별로 나누어 중복 없이 세기",
+      "learningLocation": "활용 4회 · 원문 22번 · 입체도형의 단위 모서리",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q22-expanded-v2.svg",
+        "description": "정육면체 13개를 붙인 새 입체 배치"
+      },
+      "verification": {
+        "primaryMethod": "unique cube-edge endpoint-pair union",
+        "independentMethod": "three-direction unit-edge anchor enumeration",
+        "parameters": {
+          "cubeCount": 13,
+          "cubeCoordinates": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              0
+            ],
+            [
+              5,
+              0,
+              0
+            ],
+            [
+              5,
+              1,
+              0
+            ],
+            [
+              6,
+              0,
+              0
+            ]
+          ],
+          "uniqueEdgesByDirection": [
+            40,
+            30,
+            23
+          ],
+          "uniqueEdgeTotal": 93
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswerReadMethod": "direct visual reading of teacher handwriting on answer PDF p22",
+        "sourceAnswer": 102,
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false,
+        "assetSha256": "b7e84df743c6b664296c03838a01c30b7a3611985e0703d4ca2b7b8dacdba7c2"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "low",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 3.4-point band retained"
+    },
+    {
+      "id": "applied4-q22-v3",
+      "genId": "applied4-q22",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 22,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 단위 모서리",
+      "detailType": "13개 쌓기나무의 고유 모서리 수 세기",
+      "pointBand": "3.4",
+      "text": "정육면체 한 개의 모서리를 성냥개비 한 개로 나타냅니다. 오른쪽 모양처럼 쌓기나무를 붙여 만들 때, 서로 맞닿아 함께 쓰는 모서리는 한 개로 셉니다. 쌓기나무가 모두 13개라면 필요한 성냥개비는 몇 개입니까?",
+      "answer": "90",
+      "answerParts": [
+        90
+      ],
+      "answerLabels": [
+        "성냥개비 수"
+      ],
+      "acceptedAnswers": [
+        "90"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다.",
+        "그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 36개, 32개, 22개입니다.",
+        "36＋32＋22＝90이므로 성냥개비는 모두 90개 필요합니다."
+      ],
+      "solution": "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다. 그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 36개, 32개, 22개입니다. 36＋32＋22＝90이므로 성냥개비는 모두 90개 필요합니다.",
+      "learningPoint": "붙어 있는 정육면체들의 모서리를 방향별로 나누어 중복 없이 세기",
+      "learningLocation": "활용 4회 · 원문 22번 · 입체도형의 단위 모서리",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q22-expanded-v3.svg",
+        "description": "정육면체 13개를 붙인 새 입체 배치"
+      },
+      "verification": {
+        "primaryMethod": "unique cube-edge endpoint-pair union",
+        "independentMethod": "three-direction unit-edge anchor enumeration",
+        "parameters": {
+          "cubeCount": 13,
+          "cubeCoordinates": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              2,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              0
+            ],
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              0
+            ],
+            [
+              3,
+              2,
+              0
+            ],
+            [
+              4,
+              2,
+              0
+            ]
+          ],
+          "uniqueEdgesByDirection": [
+            36,
+            32,
+            22
+          ],
+          "uniqueEdgeTotal": 90
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswerReadMethod": "direct visual reading of teacher handwriting on answer PDF p22",
+        "sourceAnswer": 102,
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false,
+        "assetSha256": "6776a1a6bcdfc0e8bcf1254e370f9926628cdc8f6d6370d67a8495fae3adc29a"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "low",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 3.4-point band retained"
+    },
+    {
+      "id": "applied4-q22-v4",
+      "genId": "applied4-q22",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 22,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 단위 모서리",
+      "detailType": "13개 쌓기나무의 고유 모서리 수 세기",
+      "pointBand": "3.4",
+      "text": "정육면체 한 개의 모서리를 성냥개비 한 개로 나타냅니다. 오른쪽 모양처럼 쌓기나무를 붙여 만들 때, 서로 맞닿아 함께 쓰는 모서리는 한 개로 셉니다. 쌓기나무가 모두 13개라면 필요한 성냥개비는 몇 개입니까?",
+      "answer": "108",
+      "answerParts": [
+        108
+      ],
+      "answerLabels": [
+        "성냥개비 수"
+      ],
+      "acceptedAnswers": [
+        "108"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다.",
+        "그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 40개, 40개, 28개입니다.",
+        "40＋40＋28＝108이므로 성냥개비는 모두 108개 필요합니다."
+      ],
+      "solution": "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다. 그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 40개, 40개, 28개입니다. 40＋40＋28＝108이므로 성냥개비는 모두 108개 필요합니다.",
+      "learningPoint": "붙어 있는 정육면체들의 모서리를 방향별로 나누어 중복 없이 세기",
+      "learningLocation": "활용 4회 · 원문 22번 · 입체도형의 단위 모서리",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q22-expanded-v4.svg",
+        "description": "정육면체 13개를 붙인 새 입체 배치"
+      },
+      "verification": {
+        "primaryMethod": "unique cube-edge endpoint-pair union",
+        "independentMethod": "three-direction unit-edge anchor enumeration",
+        "parameters": {
+          "cubeCount": 13,
+          "cubeCoordinates": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              0
+            ],
+            [
+              3,
+              2,
+              0
+            ],
+            [
+              3,
+              3,
+              0
+            ],
+            [
+              3,
+              4,
+              0
+            ],
+            [
+              3,
+              5,
+              0
+            ],
+            [
+              3,
+              6,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              5,
+              0,
+              0
+            ],
+            [
+              6,
+              0,
+              0
+            ]
+          ],
+          "uniqueEdgesByDirection": [
+            40,
+            40,
+            28
+          ],
+          "uniqueEdgeTotal": 108
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswerReadMethod": "direct visual reading of teacher handwriting on answer PDF p22",
+        "sourceAnswer": 102,
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false,
+        "assetSha256": "480709c215658e35c65b783a574e84df9432631fc8b2fa5160c5aa68a28ab28f"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "middle",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 3.4-point band retained"
+    },
+    {
+      "id": "applied4-q22-v5",
+      "genId": "applied4-q22",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 22,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 단위 모서리",
+      "detailType": "13개 쌓기나무의 고유 모서리 수 세기",
+      "pointBand": "3.4",
+      "text": "정육면체 한 개의 모서리를 성냥개비 한 개로 나타냅니다. 오른쪽 모양처럼 쌓기나무를 붙여 만들 때, 서로 맞닿아 함께 쓰는 모서리는 한 개로 셉니다. 쌓기나무가 모두 13개라면 필요한 성냥개비는 몇 개입니까?",
+      "answer": "108",
+      "answerParts": [
+        108
+      ],
+      "answerLabels": [
+        "성냥개비 수"
+      ],
+      "acceptedAnswers": [
+        "108"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다.",
+        "그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 42개, 38개, 28개입니다.",
+        "42＋38＋28＝108이므로 성냥개비는 모두 108개 필요합니다."
+      ],
+      "solution": "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다. 그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 42개, 38개, 28개입니다. 42＋38＋28＝108이므로 성냥개비는 모두 108개 필요합니다.",
+      "learningPoint": "붙어 있는 정육면체들의 모서리를 방향별로 나누어 중복 없이 세기",
+      "learningLocation": "활용 4회 · 원문 22번 · 입체도형의 단위 모서리",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q22-expanded-v5.svg",
+        "description": "정육면체 13개를 붙인 새 입체 배치"
+      },
+      "verification": {
+        "primaryMethod": "unique cube-edge endpoint-pair union",
+        "independentMethod": "three-direction unit-edge anchor enumeration",
+        "parameters": {
+          "cubeCount": 13,
+          "cubeCoordinates": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              3,
+              0
+            ],
+            [
+              0,
+              4,
+              0
+            ],
+            [
+              0,
+              5,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              5,
+              0,
+              0
+            ],
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              7,
+              0,
+              0
+            ]
+          ],
+          "uniqueEdgesByDirection": [
+            42,
+            38,
+            28
+          ],
+          "uniqueEdgeTotal": 108
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswerReadMethod": "direct visual reading of teacher handwriting on answer PDF p22",
+        "sourceAnswer": 102,
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false,
+        "assetSha256": "3c091c903bab935598dbf1191229eb88acd04fed85fe38523558d5d189d455a3"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "middle",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 3.4-point band retained"
+    },
+    {
+      "id": "applied4-q22-v6",
+      "genId": "applied4-q22",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 22,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 단위 모서리",
+      "detailType": "13개 쌓기나무의 고유 모서리 수 세기",
+      "pointBand": "3.4",
+      "text": "정육면체 한 개의 모서리를 성냥개비 한 개로 나타냅니다. 오른쪽 모양처럼 쌓기나무를 붙여 만들 때, 서로 맞닿아 함께 쓰는 모서리는 한 개로 셉니다. 쌓기나무가 모두 13개라면 필요한 성냥개비는 몇 개입니까?",
+      "answer": "93",
+      "answerParts": [
+        93
+      ],
+      "answerLabels": [
+        "성냥개비 수"
+      ],
+      "acceptedAnswers": [
+        "93"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다.",
+        "그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 38개, 32개, 23개입니다.",
+        "38＋32＋23＝93이므로 성냥개비는 모두 93개 필요합니다."
+      ],
+      "solution": "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다. 그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 38개, 32개, 23개입니다. 38＋32＋23＝93이므로 성냥개비는 모두 93개 필요합니다.",
+      "learningPoint": "붙어 있는 정육면체들의 모서리를 방향별로 나누어 중복 없이 세기",
+      "learningLocation": "활용 4회 · 원문 22번 · 입체도형의 단위 모서리",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q22-expanded-v6.svg",
+        "description": "정육면체 13개를 붙인 새 입체 배치"
+      },
+      "verification": {
+        "primaryMethod": "unique cube-edge endpoint-pair union",
+        "independentMethod": "three-direction unit-edge anchor enumeration",
+        "parameters": {
+          "cubeCount": 13,
+          "cubeCoordinates": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              0
+            ],
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              0
+            ],
+            [
+              3,
+              2,
+              0
+            ],
+            [
+              4,
+              1,
+              0
+            ],
+            [
+              4,
+              2,
+              0
+            ],
+            [
+              5,
+              1,
+              0
+            ],
+            [
+              5,
+              2,
+              0
+            ]
+          ],
+          "uniqueEdgesByDirection": [
+            38,
+            32,
+            23
+          ],
+          "uniqueEdgeTotal": 93
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswerReadMethod": "direct visual reading of teacher handwriting on answer PDF p22",
+        "sourceAnswer": 102,
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false,
+        "assetSha256": "555256ff4bf9681f4609bbdf441f19360a00be76bea4e8bbddf5635d109c0a3c"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "middle",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 3.4-point band retained"
+    },
+    {
+      "id": "applied4-q22-v7",
+      "genId": "applied4-q22",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 22,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 단위 모서리",
+      "detailType": "13개 쌓기나무의 고유 모서리 수 세기",
+      "pointBand": "3.4",
+      "text": "정육면체 한 개의 모서리를 성냥개비 한 개로 나타냅니다. 오른쪽 모양처럼 쌓기나무를 붙여 만들 때, 서로 맞닿아 함께 쓰는 모서리는 한 개로 셉니다. 쌓기나무가 모두 13개라면 필요한 성냥개비는 몇 개입니까?",
+      "answer": "104",
+      "answerParts": [
+        104
+      ],
+      "answerLabels": [
+        "성냥개비 수"
+      ],
+      "acceptedAnswers": [
+        "104"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다.",
+        "그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 38개, 40개, 26개입니다.",
+        "38＋40＋26＝104이므로 성냥개비는 모두 104개 필요합니다."
+      ],
+      "solution": "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다. 그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 38개, 40개, 26개입니다. 38＋40＋26＝104이므로 성냥개비는 모두 104개 필요합니다.",
+      "learningPoint": "붙어 있는 정육면체들의 모서리를 방향별로 나누어 중복 없이 세기",
+      "learningLocation": "활용 4회 · 원문 22번 · 입체도형의 단위 모서리",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q22-expanded-v7.svg",
+        "description": "정육면체 13개를 붙인 새 입체 배치"
+      },
+      "verification": {
+        "primaryMethod": "unique cube-edge endpoint-pair union",
+        "independentMethod": "three-direction unit-edge anchor enumeration",
+        "parameters": {
+          "cubeCount": 13,
+          "cubeCoordinates": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              3,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              3,
+              0
+            ],
+            [
+              1,
+              4,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              2,
+              3,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              0
+            ],
+            [
+              3,
+              2,
+              0
+            ],
+            [
+              3,
+              3,
+              0
+            ]
+          ],
+          "uniqueEdgesByDirection": [
+            38,
+            40,
+            26
+          ],
+          "uniqueEdgeTotal": 104
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswerReadMethod": "direct visual reading of teacher handwriting on answer PDF p22",
+        "sourceAnswer": 102,
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false,
+        "assetSha256": "df3cf4f3ed35a260d539c9ea3d44cc2fa2ccb14563a858243e7233200106dbe4"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "high",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 3.4-point band retained"
+    },
+    {
+      "id": "applied4-q22-v8",
+      "genId": "applied4-q22",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 22,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 단위 모서리",
+      "detailType": "13개 쌓기나무의 고유 모서리 수 세기",
+      "pointBand": "3.4",
+      "text": "정육면체 한 개의 모서리를 성냥개비 한 개로 나타냅니다. 오른쪽 모양처럼 쌓기나무를 붙여 만들 때, 서로 맞닿아 함께 쓰는 모서리는 한 개로 셉니다. 쌓기나무가 모두 13개라면 필요한 성냥개비는 몇 개입니까?",
+      "answer": "93",
+      "answerParts": [
+        93
+      ],
+      "answerLabels": [
+        "성냥개비 수"
+      ],
+      "acceptedAnswers": [
+        "93"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다.",
+        "그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 38개, 32개, 23개입니다.",
+        "38＋32＋23＝93이므로 성냥개비는 모두 93개 필요합니다."
+      ],
+      "solution": "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다. 그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 38개, 32개, 23개입니다. 38＋32＋23＝93이므로 성냥개비는 모두 93개 필요합니다.",
+      "learningPoint": "붙어 있는 정육면체들의 모서리를 방향별로 나누어 중복 없이 세기",
+      "learningLocation": "활용 4회 · 원문 22번 · 입체도형의 단위 모서리",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q22-expanded-v8.svg",
+        "description": "정육면체 13개를 붙인 새 입체 배치"
+      },
+      "verification": {
+        "primaryMethod": "unique cube-edge endpoint-pair union",
+        "independentMethod": "three-direction unit-edge anchor enumeration",
+        "parameters": {
+          "cubeCount": 13,
+          "cubeCoordinates": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              0
+            ],
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              0
+            ],
+            [
+              3,
+              2,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              0
+            ],
+            [
+              4,
+              2,
+              0
+            ],
+            [
+              5,
+              1,
+              0
+            ]
+          ],
+          "uniqueEdgesByDirection": [
+            38,
+            32,
+            23
+          ],
+          "uniqueEdgeTotal": 93
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswerReadMethod": "direct visual reading of teacher handwriting on answer PDF p22",
+        "sourceAnswer": 102,
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false,
+        "assetSha256": "92a4d3c45513e383dac09f4046c840137c7619182697536dbccbac7773b5300b"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "high",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 3.4-point band retained"
+    },
+    {
+      "id": "applied4-q22-v9",
+      "genId": "applied4-q22",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 22,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 단위 모서리",
+      "detailType": "13개 쌓기나무의 고유 모서리 수 세기",
+      "pointBand": "3.4",
+      "text": "정육면체 한 개의 모서리를 성냥개비 한 개로 나타냅니다. 오른쪽 모양처럼 쌓기나무를 붙여 만들 때, 서로 맞닿아 함께 쓰는 모서리는 한 개로 셉니다. 쌓기나무가 모두 13개라면 필요한 성냥개비는 몇 개입니까?",
+      "answer": "99",
+      "answerParts": [
+        99
+      ],
+      "answerLabels": [
+        "성냥개비 수"
+      ],
+      "acceptedAnswers": [
+        "99"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다.",
+        "그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 42개, 32개, 25개입니다.",
+        "42＋32＋25＝99이므로 성냥개비는 모두 99개 필요합니다."
+      ],
+      "solution": "정육면체 한 개에는 모서리가 12개 있습니다. 쌓기나무가 붙어 있으면 같은 위치의 단위 모서리는 한 번만 셉니다. 그림에서 서로 다른 모서리를 가로·깊이·세로 방향으로 나누어 세면 각각 42개, 32개, 25개입니다. 42＋32＋25＝99이므로 성냥개비는 모두 99개 필요합니다.",
+      "learningPoint": "붙어 있는 정육면체들의 모서리를 방향별로 나누어 중복 없이 세기",
+      "learningLocation": "활용 4회 · 원문 22번 · 입체도형의 단위 모서리",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q22-expanded-v9.svg",
+        "description": "정육면체 13개를 붙인 새 입체 배치"
+      },
+      "verification": {
+        "primaryMethod": "unique cube-edge endpoint-pair union",
+        "independentMethod": "three-direction unit-edge anchor enumeration",
+        "parameters": {
+          "cubeCount": 13,
+          "cubeCoordinates": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              3,
+              1,
+              0
+            ],
+            [
+              3,
+              2,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              4,
+              1,
+              0
+            ],
+            [
+              4,
+              2,
+              0
+            ],
+            [
+              5,
+              0,
+              0
+            ],
+            [
+              5,
+              2,
+              0
+            ],
+            [
+              6,
+              0,
+              0
+            ]
+          ],
+          "uniqueEdgesByDirection": [
+            42,
+            32,
+            25
+          ],
+          "uniqueEdgeTotal": 99
+        },
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 22,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswerReadMethod": "direct visual reading of teacher handwriting on answer PDF p22",
+        "sourceAnswer": 102,
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false,
+        "assetSha256": "650dbe50e0eeb3a2b27eb68593d7fa74c6b994b9ddce1ef1b31cfd49a5b86a8c"
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "high",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 3.4-point band retained"
     }
   ],
   "sourceEditionNotes": {
     "4": "현행문제는시간당25분,교사답안문구는하루25분. 서로다른판본으로보류,원답보존",
     "28": "숫자를한자리씩합산하며월이름도포함. 현행저장답1752를유지하고교사손글씨와혼동하지않음",
-    "30": "분열시점과부모개체유지조건의해석확인필요로보류"
+    "30": "분열시점과부모개체유지조건의해석확인필요로보류",
+    "22": "원문 현행 PDF p4와 답안 p22 직접 대조. 원문 답안 필기는 102개. 유사문제 9개는 각각 13개 정육면체의 새 배치를 그림으로 제시하고 고유 단위 모서리를 센다. 배열이 바뀌므로 새 답은 원문 답과 일치한다고 주장하지 않는다."
   },
   "reviewSummary": {
-    "independentMathCount": 171,
-    "sourceTypes": 20,
+    "independentMathCount": 180,
+    "sourceTypes": 21,
     "variantsPerType": 9,
     "outputReviewed": true,
     "prior153Exact": true,
@@ -14772,9 +15988,15 @@
     "q27IndependentMathCount": 9,
     "q27ActualZipReviewed": true,
     "q27SourceAnswer": 10,
-    "old171Exact": true
+    "old171Exact": true,
+    "q22DirectSourceComparison": true,
+    "q22IndependentMathCount": 9,
+    "q22SourceAnswer": 102,
+    "q22PracticeStageAdjusted": true,
+    "q22ActualZipReviewed": true,
+    "old180Exact": true
   },
-  "revision": "20261024-applied4-expansion-r8-q27",
+  "revision": "20261024-applied4-expansion-r9-q22",
   "additionReviewSummary": {
     "sourceNos": [
       16
@@ -14795,6 +16017,17 @@
     ],
     "q27Count": 9,
     "q27PointBand": "4.2",
-    "q27Old171Exact": true
+    "q27Old171Exact": true,
+    "q22SourceNos": [
+      22
+    ],
+    "q22Count": 9,
+    "q22PointBand": "3.4",
+    "q22Old180Exact": true,
+    "q22StageLevels": {
+      "low": 3,
+      "middle": 3,
+      "high": 3
+    }
   }
 }

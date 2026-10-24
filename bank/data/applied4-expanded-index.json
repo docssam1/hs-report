@@ -2,14 +2,13 @@
   "version": "20261024-applied4-expansion-r1",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 180,
+  "itemCount": 189,
   "pendingSourceNos": [
     1,
     2,
     3,
     4,
     21,
-    22,
     24,
     25,
     26,
@@ -172,6 +171,16 @@
       "area": "경우의 수",
       "subarea": "자릿수와 순서",
       "detailType": "숫자가 감소하는 네 자리 수의 순위",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 22,
+      "genId": "applied4-q22",
+      "area": "도형",
+      "subarea": "입체도형의 단위 모서리",
+      "detailType": "13개 쌓기나무의 고유 모서리 수 세기",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9
