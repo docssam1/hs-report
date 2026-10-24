@@ -2,7 +2,7 @@
   "version": "20261024-applied4-expansion-r1",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 171,
+  "itemCount": 180,
   "pendingSourceNos": [
     1,
     2,
@@ -13,7 +13,6 @@
     24,
     25,
     26,
-    27,
     30
   ],
   "items": [
@@ -183,6 +182,16 @@
       "area": "수와 식",
       "subarea": "배수와 숫자 세기",
       "detailType": "배수 목록의 특정 숫자 등장 횟수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 27,
+      "genId": "applied4-q27",
+      "area": "수와 식",
+      "subarea": "자릿수와 나눗셈",
+      "detailType": "자릿수 합 조건에서 4의 배수 세기",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9

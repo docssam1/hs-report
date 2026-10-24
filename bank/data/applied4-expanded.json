@@ -27,6 +27,7 @@
     19,
     20,
     23,
+    27,
     28,
     29
   ],
@@ -40,7 +41,6 @@
     24,
     25,
     26,
-    27,
     30
   ],
   "items": [
@@ -13451,6 +13451,1302 @@
         "sourceExamPage": 3,
         "sourceAnswerPage": 14
       }
+    },
+    {
+      "id": "applied4-q27-v1",
+      "genId": "applied4-q27",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 27,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q27-r1",
+      "area": "수와 식",
+      "subarea": "자릿수와 나눗셈",
+      "detailType": "자릿수 합 조건에서 4의 배수 세기",
+      "pointBand": "4.2",
+      "sourcePointBand": "4.2",
+      "text": "다섯 자리 자연수에서 각 자리 숫자의 합이 33입니다. 이 중 4로 나누어떨어지는 수는 모두 몇 개입니까?",
+      "answer": "370",
+      "answerParts": [
+        370
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "370"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다.",
+        "끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 33−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다.",
+        "같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=6: 2×1 + t=7: 2×3 + t=8: 3×6 + t=9: 2×10 + t=10: 2×15 + t=11: 2×21 + t=12: 2×28 + t=13: 1×36 + t=14: 1×45 + t=15: 1×54 + t=16: 1×61＝370입니다. 따라서 조건에 맞는 수는 모두 370개입니다."
+      ],
+      "solution": "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다. 끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 33−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다. 같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=6: 2×1 + t=7: 2×3 + t=8: 3×6 + t=9: 2×10 + t=10: 2×15 + t=11: 2×21 + t=12: 2×28 + t=13: 1×36 + t=14: 1×45 + t=15: 1×54 + t=16: 1×61＝370입니다. 따라서 조건에 맞는 수는 모두 370개입니다.",
+      "learningPoint": "끝 두 자리의 배수 조건과 앞 세 자리의 자릿수 합을 나누어 세기",
+      "learningLocation": "활용 4회 · 원문 27번 · 자릿수 합 조건에서 4의 배수 세기",
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-4.2",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자릿값, 각 자리 숫자의 합, 4의 배수",
+          "reasoning": "끝 두 자리 배수 조건과 앞 세 자리 합 조건을 분리",
+          "conditionTracking": "다섯 자리 자연수이며 각 자리 숫자의 합이 제시값",
+          "caseSplitting": "00부터 96까지 4의 배수인 끝 두 자리별로 경우를 합산",
+          "computation": "각 끝 두 자리에서 가능한 앞 세 자리 수를 세고 합산",
+          "representation": "두 자리 배수 조건과 세 자리 자릿수 합으로 표현",
+          "reading": "합계 조건과 나눗셈 조건을 동시에 적용",
+          "shortcuts": "끝 두 자리 또는 자릿수 합 조건 하나만으로는 충분하지 않음",
+          "load": "원문과 같은 경우 나누기 및 자리별 합 계산"
+        }
+      },
+      "verification": {
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 27,
+        "primaryMethod": "group multiples-of-four suffixes by digit sum and count leading three-digit prefixes",
+        "parameters": {
+          "digitSum": 33,
+          "validSuffixes": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80,
+            84,
+            88,
+            92,
+            96
+          ],
+          "suffixDigitSumContributions": [
+            [
+              6,
+              2,
+              1,
+              2
+            ],
+            [
+              7,
+              2,
+              3,
+              6
+            ],
+            [
+              8,
+              3,
+              6,
+              18
+            ],
+            [
+              9,
+              2,
+              10,
+              20
+            ],
+            [
+              10,
+              2,
+              15,
+              30
+            ],
+            [
+              11,
+              2,
+              21,
+              42
+            ],
+            [
+              12,
+              2,
+              28,
+              56
+            ],
+            [
+              13,
+              1,
+              36,
+              36
+            ],
+            [
+              14,
+              1,
+              45,
+              45
+            ],
+            [
+              15,
+              1,
+              54,
+              54
+            ],
+            [
+              16,
+              1,
+              61,
+              61
+            ]
+          ],
+          "answer": 370,
+          "independentBruteForce": 370,
+          "prefixCountDefinition": "count a=1..9,b=0..9,c=0..9 with a+b+c=remaining digit sum",
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of handwritten answer on answer PDF p27"
+        },
+        "independentSuite": "qa/applied4-q27-independent-validate.py",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "id": "applied4-q27-v2",
+      "genId": "applied4-q27",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 27,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q27-r1",
+      "area": "수와 식",
+      "subarea": "자릿수와 나눗셈",
+      "detailType": "자릿수 합 조건에서 4의 배수 세기",
+      "pointBand": "4.2",
+      "sourcePointBand": "4.2",
+      "text": "다섯 자리 자연수에서 각 자리 숫자의 합이 34입니다. 이 중 4로 나누어떨어지는 수는 모두 몇 개입니까?",
+      "answer": "278",
+      "answerParts": [
+        278
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "278"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다.",
+        "끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 34−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다.",
+        "같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=7: 2×1 + t=8: 3×3 + t=9: 2×6 + t=10: 2×10 + t=11: 2×15 + t=12: 2×21 + t=13: 1×28 + t=14: 1×36 + t=15: 1×45 + t=16: 1×54＝278입니다. 따라서 조건에 맞는 수는 모두 278개입니다."
+      ],
+      "solution": "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다. 끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 34−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다. 같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=7: 2×1 + t=8: 3×3 + t=9: 2×6 + t=10: 2×10 + t=11: 2×15 + t=12: 2×21 + t=13: 1×28 + t=14: 1×36 + t=15: 1×45 + t=16: 1×54＝278입니다. 따라서 조건에 맞는 수는 모두 278개입니다.",
+      "learningPoint": "끝 두 자리의 배수 조건과 앞 세 자리의 자릿수 합을 나누어 세기",
+      "learningLocation": "활용 4회 · 원문 27번 · 자릿수 합 조건에서 4의 배수 세기",
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-4.2",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자릿값, 각 자리 숫자의 합, 4의 배수",
+          "reasoning": "끝 두 자리 배수 조건과 앞 세 자리 합 조건을 분리",
+          "conditionTracking": "다섯 자리 자연수이며 각 자리 숫자의 합이 제시값",
+          "caseSplitting": "00부터 96까지 4의 배수인 끝 두 자리별로 경우를 합산",
+          "computation": "각 끝 두 자리에서 가능한 앞 세 자리 수를 세고 합산",
+          "representation": "두 자리 배수 조건과 세 자리 자릿수 합으로 표현",
+          "reading": "합계 조건과 나눗셈 조건을 동시에 적용",
+          "shortcuts": "끝 두 자리 또는 자릿수 합 조건 하나만으로는 충분하지 않음",
+          "load": "원문과 같은 경우 나누기 및 자리별 합 계산"
+        }
+      },
+      "verification": {
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 27,
+        "primaryMethod": "group multiples-of-four suffixes by digit sum and count leading three-digit prefixes",
+        "parameters": {
+          "digitSum": 34,
+          "validSuffixes": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80,
+            84,
+            88,
+            92,
+            96
+          ],
+          "suffixDigitSumContributions": [
+            [
+              7,
+              2,
+              1,
+              2
+            ],
+            [
+              8,
+              3,
+              3,
+              9
+            ],
+            [
+              9,
+              2,
+              6,
+              12
+            ],
+            [
+              10,
+              2,
+              10,
+              20
+            ],
+            [
+              11,
+              2,
+              15,
+              30
+            ],
+            [
+              12,
+              2,
+              21,
+              42
+            ],
+            [
+              13,
+              1,
+              28,
+              28
+            ],
+            [
+              14,
+              1,
+              36,
+              36
+            ],
+            [
+              15,
+              1,
+              45,
+              45
+            ],
+            [
+              16,
+              1,
+              54,
+              54
+            ]
+          ],
+          "answer": 278,
+          "independentBruteForce": 278,
+          "prefixCountDefinition": "count a=1..9,b=0..9,c=0..9 with a+b+c=remaining digit sum",
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of handwritten answer on answer PDF p27"
+        },
+        "independentSuite": "qa/applied4-q27-independent-validate.py",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "id": "applied4-q27-v3",
+      "genId": "applied4-q27",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 27,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q27-r1",
+      "area": "수와 식",
+      "subarea": "자릿수와 나눗셈",
+      "detailType": "자릿수 합 조건에서 4의 배수 세기",
+      "pointBand": "4.2",
+      "sourcePointBand": "4.2",
+      "text": "다섯 자리 자연수에서 각 자리 숫자의 합이 35입니다. 이 중 4로 나누어떨어지는 수는 모두 몇 개입니까?",
+      "answer": "201",
+      "answerParts": [
+        201
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "201"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다.",
+        "끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 35−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다.",
+        "같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=8: 3×1 + t=9: 2×3 + t=10: 2×6 + t=11: 2×10 + t=12: 2×15 + t=13: 1×21 + t=14: 1×28 + t=15: 1×36 + t=16: 1×45＝201입니다. 따라서 조건에 맞는 수는 모두 201개입니다."
+      ],
+      "solution": "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다. 끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 35−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다. 같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=8: 3×1 + t=9: 2×3 + t=10: 2×6 + t=11: 2×10 + t=12: 2×15 + t=13: 1×21 + t=14: 1×28 + t=15: 1×36 + t=16: 1×45＝201입니다. 따라서 조건에 맞는 수는 모두 201개입니다.",
+      "learningPoint": "끝 두 자리의 배수 조건과 앞 세 자리의 자릿수 합을 나누어 세기",
+      "learningLocation": "활용 4회 · 원문 27번 · 자릿수 합 조건에서 4의 배수 세기",
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-4.2",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자릿값, 각 자리 숫자의 합, 4의 배수",
+          "reasoning": "끝 두 자리 배수 조건과 앞 세 자리 합 조건을 분리",
+          "conditionTracking": "다섯 자리 자연수이며 각 자리 숫자의 합이 제시값",
+          "caseSplitting": "00부터 96까지 4의 배수인 끝 두 자리별로 경우를 합산",
+          "computation": "각 끝 두 자리에서 가능한 앞 세 자리 수를 세고 합산",
+          "representation": "두 자리 배수 조건과 세 자리 자릿수 합으로 표현",
+          "reading": "합계 조건과 나눗셈 조건을 동시에 적용",
+          "shortcuts": "끝 두 자리 또는 자릿수 합 조건 하나만으로는 충분하지 않음",
+          "load": "원문과 같은 경우 나누기 및 자리별 합 계산"
+        }
+      },
+      "verification": {
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 27,
+        "primaryMethod": "group multiples-of-four suffixes by digit sum and count leading three-digit prefixes",
+        "parameters": {
+          "digitSum": 35,
+          "validSuffixes": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80,
+            84,
+            88,
+            92,
+            96
+          ],
+          "suffixDigitSumContributions": [
+            [
+              8,
+              3,
+              1,
+              3
+            ],
+            [
+              9,
+              2,
+              3,
+              6
+            ],
+            [
+              10,
+              2,
+              6,
+              12
+            ],
+            [
+              11,
+              2,
+              10,
+              20
+            ],
+            [
+              12,
+              2,
+              15,
+              30
+            ],
+            [
+              13,
+              1,
+              21,
+              21
+            ],
+            [
+              14,
+              1,
+              28,
+              28
+            ],
+            [
+              15,
+              1,
+              36,
+              36
+            ],
+            [
+              16,
+              1,
+              45,
+              45
+            ]
+          ],
+          "answer": 201,
+          "independentBruteForce": 201,
+          "prefixCountDefinition": "count a=1..9,b=0..9,c=0..9 with a+b+c=remaining digit sum",
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of handwritten answer on answer PDF p27"
+        },
+        "independentSuite": "qa/applied4-q27-independent-validate.py",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "id": "applied4-q27-v4",
+      "genId": "applied4-q27",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 27,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q27-r1",
+      "area": "수와 식",
+      "subarea": "자릿수와 나눗셈",
+      "detailType": "자릿수 합 조건에서 4의 배수 세기",
+      "pointBand": "4.2",
+      "sourcePointBand": "4.2",
+      "text": "다섯 자리 자연수에서 각 자리 숫자의 합이 36입니다. 이 중 4로 나누어떨어지는 수는 모두 몇 개입니까?",
+      "answer": "140",
+      "answerParts": [
+        140
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "140"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다.",
+        "끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 36−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다.",
+        "같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=9: 2×1 + t=10: 2×3 + t=11: 2×6 + t=12: 2×10 + t=13: 1×15 + t=14: 1×21 + t=15: 1×28 + t=16: 1×36＝140입니다. 따라서 조건에 맞는 수는 모두 140개입니다."
+      ],
+      "solution": "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다. 끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 36−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다. 같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=9: 2×1 + t=10: 2×3 + t=11: 2×6 + t=12: 2×10 + t=13: 1×15 + t=14: 1×21 + t=15: 1×28 + t=16: 1×36＝140입니다. 따라서 조건에 맞는 수는 모두 140개입니다.",
+      "learningPoint": "끝 두 자리의 배수 조건과 앞 세 자리의 자릿수 합을 나누어 세기",
+      "learningLocation": "활용 4회 · 원문 27번 · 자릿수 합 조건에서 4의 배수 세기",
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-4.2",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자릿값, 각 자리 숫자의 합, 4의 배수",
+          "reasoning": "끝 두 자리 배수 조건과 앞 세 자리 합 조건을 분리",
+          "conditionTracking": "다섯 자리 자연수이며 각 자리 숫자의 합이 제시값",
+          "caseSplitting": "00부터 96까지 4의 배수인 끝 두 자리별로 경우를 합산",
+          "computation": "각 끝 두 자리에서 가능한 앞 세 자리 수를 세고 합산",
+          "representation": "두 자리 배수 조건과 세 자리 자릿수 합으로 표현",
+          "reading": "합계 조건과 나눗셈 조건을 동시에 적용",
+          "shortcuts": "끝 두 자리 또는 자릿수 합 조건 하나만으로는 충분하지 않음",
+          "load": "원문과 같은 경우 나누기 및 자리별 합 계산"
+        }
+      },
+      "verification": {
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 27,
+        "primaryMethod": "group multiples-of-four suffixes by digit sum and count leading three-digit prefixes",
+        "parameters": {
+          "digitSum": 36,
+          "validSuffixes": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80,
+            84,
+            88,
+            92,
+            96
+          ],
+          "suffixDigitSumContributions": [
+            [
+              9,
+              2,
+              1,
+              2
+            ],
+            [
+              10,
+              2,
+              3,
+              6
+            ],
+            [
+              11,
+              2,
+              6,
+              12
+            ],
+            [
+              12,
+              2,
+              10,
+              20
+            ],
+            [
+              13,
+              1,
+              15,
+              15
+            ],
+            [
+              14,
+              1,
+              21,
+              21
+            ],
+            [
+              15,
+              1,
+              28,
+              28
+            ],
+            [
+              16,
+              1,
+              36,
+              36
+            ]
+          ],
+          "answer": 140,
+          "independentBruteForce": 140,
+          "prefixCountDefinition": "count a=1..9,b=0..9,c=0..9 with a+b+c=remaining digit sum",
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of handwritten answer on answer PDF p27"
+        },
+        "independentSuite": "qa/applied4-q27-independent-validate.py",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "id": "applied4-q27-v5",
+      "genId": "applied4-q27",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 27,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q27-r1",
+      "area": "수와 식",
+      "subarea": "자릿수와 나눗셈",
+      "detailType": "자릿수 합 조건에서 4의 배수 세기",
+      "pointBand": "4.2",
+      "sourcePointBand": "4.2",
+      "text": "다섯 자리 자연수에서 각 자리 숫자의 합이 37입니다. 이 중 4로 나누어떨어지는 수는 모두 몇 개입니까?",
+      "answer": "94",
+      "answerParts": [
+        94
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "94"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다.",
+        "끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 37−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다.",
+        "같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=10: 2×1 + t=11: 2×3 + t=12: 2×6 + t=13: 1×10 + t=14: 1×15 + t=15: 1×21 + t=16: 1×28＝94입니다. 따라서 조건에 맞는 수는 모두 94개입니다."
+      ],
+      "solution": "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다. 끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 37−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다. 같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=10: 2×1 + t=11: 2×3 + t=12: 2×6 + t=13: 1×10 + t=14: 1×15 + t=15: 1×21 + t=16: 1×28＝94입니다. 따라서 조건에 맞는 수는 모두 94개입니다.",
+      "learningPoint": "끝 두 자리의 배수 조건과 앞 세 자리의 자릿수 합을 나누어 세기",
+      "learningLocation": "활용 4회 · 원문 27번 · 자릿수 합 조건에서 4의 배수 세기",
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-4.2",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자릿값, 각 자리 숫자의 합, 4의 배수",
+          "reasoning": "끝 두 자리 배수 조건과 앞 세 자리 합 조건을 분리",
+          "conditionTracking": "다섯 자리 자연수이며 각 자리 숫자의 합이 제시값",
+          "caseSplitting": "00부터 96까지 4의 배수인 끝 두 자리별로 경우를 합산",
+          "computation": "각 끝 두 자리에서 가능한 앞 세 자리 수를 세고 합산",
+          "representation": "두 자리 배수 조건과 세 자리 자릿수 합으로 표현",
+          "reading": "합계 조건과 나눗셈 조건을 동시에 적용",
+          "shortcuts": "끝 두 자리 또는 자릿수 합 조건 하나만으로는 충분하지 않음",
+          "load": "원문과 같은 경우 나누기 및 자리별 합 계산"
+        }
+      },
+      "verification": {
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 27,
+        "primaryMethod": "group multiples-of-four suffixes by digit sum and count leading three-digit prefixes",
+        "parameters": {
+          "digitSum": 37,
+          "validSuffixes": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80,
+            84,
+            88,
+            92,
+            96
+          ],
+          "suffixDigitSumContributions": [
+            [
+              10,
+              2,
+              1,
+              2
+            ],
+            [
+              11,
+              2,
+              3,
+              6
+            ],
+            [
+              12,
+              2,
+              6,
+              12
+            ],
+            [
+              13,
+              1,
+              10,
+              10
+            ],
+            [
+              14,
+              1,
+              15,
+              15
+            ],
+            [
+              15,
+              1,
+              21,
+              21
+            ],
+            [
+              16,
+              1,
+              28,
+              28
+            ]
+          ],
+          "answer": 94,
+          "independentBruteForce": 94,
+          "prefixCountDefinition": "count a=1..9,b=0..9,c=0..9 with a+b+c=remaining digit sum",
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of handwritten answer on answer PDF p27"
+        },
+        "independentSuite": "qa/applied4-q27-independent-validate.py",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "id": "applied4-q27-v6",
+      "genId": "applied4-q27",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 27,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q27-r1",
+      "area": "수와 식",
+      "subarea": "자릿수와 나눗셈",
+      "detailType": "자릿수 합 조건에서 4의 배수 세기",
+      "pointBand": "4.2",
+      "sourcePointBand": "4.2",
+      "text": "다섯 자리 자연수에서 각 자리 숫자의 합이 38입니다. 이 중 4로 나누어떨어지는 수는 모두 몇 개입니까?",
+      "answer": "60",
+      "answerParts": [
+        60
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "60"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다.",
+        "끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 38−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다.",
+        "같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=11: 2×1 + t=12: 2×3 + t=13: 1×6 + t=14: 1×10 + t=15: 1×15 + t=16: 1×21＝60입니다. 따라서 조건에 맞는 수는 모두 60개입니다."
+      ],
+      "solution": "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다. 끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 38−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다. 같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=11: 2×1 + t=12: 2×3 + t=13: 1×6 + t=14: 1×10 + t=15: 1×15 + t=16: 1×21＝60입니다. 따라서 조건에 맞는 수는 모두 60개입니다.",
+      "learningPoint": "끝 두 자리의 배수 조건과 앞 세 자리의 자릿수 합을 나누어 세기",
+      "learningLocation": "활용 4회 · 원문 27번 · 자릿수 합 조건에서 4의 배수 세기",
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-4.2",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자릿값, 각 자리 숫자의 합, 4의 배수",
+          "reasoning": "끝 두 자리 배수 조건과 앞 세 자리 합 조건을 분리",
+          "conditionTracking": "다섯 자리 자연수이며 각 자리 숫자의 합이 제시값",
+          "caseSplitting": "00부터 96까지 4의 배수인 끝 두 자리별로 경우를 합산",
+          "computation": "각 끝 두 자리에서 가능한 앞 세 자리 수를 세고 합산",
+          "representation": "두 자리 배수 조건과 세 자리 자릿수 합으로 표현",
+          "reading": "합계 조건과 나눗셈 조건을 동시에 적용",
+          "shortcuts": "끝 두 자리 또는 자릿수 합 조건 하나만으로는 충분하지 않음",
+          "load": "원문과 같은 경우 나누기 및 자리별 합 계산"
+        }
+      },
+      "verification": {
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 27,
+        "primaryMethod": "group multiples-of-four suffixes by digit sum and count leading three-digit prefixes",
+        "parameters": {
+          "digitSum": 38,
+          "validSuffixes": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80,
+            84,
+            88,
+            92,
+            96
+          ],
+          "suffixDigitSumContributions": [
+            [
+              11,
+              2,
+              1,
+              2
+            ],
+            [
+              12,
+              2,
+              3,
+              6
+            ],
+            [
+              13,
+              1,
+              6,
+              6
+            ],
+            [
+              14,
+              1,
+              10,
+              10
+            ],
+            [
+              15,
+              1,
+              15,
+              15
+            ],
+            [
+              16,
+              1,
+              21,
+              21
+            ]
+          ],
+          "answer": 60,
+          "independentBruteForce": 60,
+          "prefixCountDefinition": "count a=1..9,b=0..9,c=0..9 with a+b+c=remaining digit sum",
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of handwritten answer on answer PDF p27"
+        },
+        "independentSuite": "qa/applied4-q27-independent-validate.py",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "id": "applied4-q27-v7",
+      "genId": "applied4-q27",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 27,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q27-r1",
+      "area": "수와 식",
+      "subarea": "자릿수와 나눗셈",
+      "detailType": "자릿수 합 조건에서 4의 배수 세기",
+      "pointBand": "4.2",
+      "sourcePointBand": "4.2",
+      "text": "다섯 자리 자연수에서 각 자리 숫자의 합이 39입니다. 이 중 4로 나누어떨어지는 수는 모두 몇 개입니까?",
+      "answer": "36",
+      "answerParts": [
+        36
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "36"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다.",
+        "끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 39−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다.",
+        "같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=12: 2×1 + t=13: 1×3 + t=14: 1×6 + t=15: 1×10 + t=16: 1×15＝36입니다. 따라서 조건에 맞는 수는 모두 36개입니다."
+      ],
+      "solution": "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다. 끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 39−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다. 같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=12: 2×1 + t=13: 1×3 + t=14: 1×6 + t=15: 1×10 + t=16: 1×15＝36입니다. 따라서 조건에 맞는 수는 모두 36개입니다.",
+      "learningPoint": "끝 두 자리의 배수 조건과 앞 세 자리의 자릿수 합을 나누어 세기",
+      "learningLocation": "활용 4회 · 원문 27번 · 자릿수 합 조건에서 4의 배수 세기",
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-4.2",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자릿값, 각 자리 숫자의 합, 4의 배수",
+          "reasoning": "끝 두 자리 배수 조건과 앞 세 자리 합 조건을 분리",
+          "conditionTracking": "다섯 자리 자연수이며 각 자리 숫자의 합이 제시값",
+          "caseSplitting": "00부터 96까지 4의 배수인 끝 두 자리별로 경우를 합산",
+          "computation": "각 끝 두 자리에서 가능한 앞 세 자리 수를 세고 합산",
+          "representation": "두 자리 배수 조건과 세 자리 자릿수 합으로 표현",
+          "reading": "합계 조건과 나눗셈 조건을 동시에 적용",
+          "shortcuts": "끝 두 자리 또는 자릿수 합 조건 하나만으로는 충분하지 않음",
+          "load": "원문과 같은 경우 나누기 및 자리별 합 계산"
+        }
+      },
+      "verification": {
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 27,
+        "primaryMethod": "group multiples-of-four suffixes by digit sum and count leading three-digit prefixes",
+        "parameters": {
+          "digitSum": 39,
+          "validSuffixes": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80,
+            84,
+            88,
+            92,
+            96
+          ],
+          "suffixDigitSumContributions": [
+            [
+              12,
+              2,
+              1,
+              2
+            ],
+            [
+              13,
+              1,
+              3,
+              3
+            ],
+            [
+              14,
+              1,
+              6,
+              6
+            ],
+            [
+              15,
+              1,
+              10,
+              10
+            ],
+            [
+              16,
+              1,
+              15,
+              15
+            ]
+          ],
+          "answer": 36,
+          "independentBruteForce": 36,
+          "prefixCountDefinition": "count a=1..9,b=0..9,c=0..9 with a+b+c=remaining digit sum",
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of handwritten answer on answer PDF p27"
+        },
+        "independentSuite": "qa/applied4-q27-independent-validate.py",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "id": "applied4-q27-v8",
+      "genId": "applied4-q27",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 27,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q27-r1",
+      "area": "수와 식",
+      "subarea": "자릿수와 나눗셈",
+      "detailType": "자릿수 합 조건에서 4의 배수 세기",
+      "pointBand": "4.2",
+      "sourcePointBand": "4.2",
+      "text": "다섯 자리 자연수에서 각 자리 숫자의 합이 40입니다. 이 중 4로 나누어떨어지는 수는 모두 몇 개입니까?",
+      "answer": "20",
+      "answerParts": [
+        20
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "20"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다.",
+        "끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 40−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다.",
+        "같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=13: 1×1 + t=14: 1×3 + t=15: 1×6 + t=16: 1×10＝20입니다. 따라서 조건에 맞는 수는 모두 20개입니다."
+      ],
+      "solution": "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다. 끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 40−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다. 같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=13: 1×1 + t=14: 1×3 + t=15: 1×6 + t=16: 1×10＝20입니다. 따라서 조건에 맞는 수는 모두 20개입니다.",
+      "learningPoint": "끝 두 자리의 배수 조건과 앞 세 자리의 자릿수 합을 나누어 세기",
+      "learningLocation": "활용 4회 · 원문 27번 · 자릿수 합 조건에서 4의 배수 세기",
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-4.2",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자릿값, 각 자리 숫자의 합, 4의 배수",
+          "reasoning": "끝 두 자리 배수 조건과 앞 세 자리 합 조건을 분리",
+          "conditionTracking": "다섯 자리 자연수이며 각 자리 숫자의 합이 제시값",
+          "caseSplitting": "00부터 96까지 4의 배수인 끝 두 자리별로 경우를 합산",
+          "computation": "각 끝 두 자리에서 가능한 앞 세 자리 수를 세고 합산",
+          "representation": "두 자리 배수 조건과 세 자리 자릿수 합으로 표현",
+          "reading": "합계 조건과 나눗셈 조건을 동시에 적용",
+          "shortcuts": "끝 두 자리 또는 자릿수 합 조건 하나만으로는 충분하지 않음",
+          "load": "원문과 같은 경우 나누기 및 자리별 합 계산"
+        }
+      },
+      "verification": {
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 27,
+        "primaryMethod": "group multiples-of-four suffixes by digit sum and count leading three-digit prefixes",
+        "parameters": {
+          "digitSum": 40,
+          "validSuffixes": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80,
+            84,
+            88,
+            92,
+            96
+          ],
+          "suffixDigitSumContributions": [
+            [
+              13,
+              1,
+              1,
+              1
+            ],
+            [
+              14,
+              1,
+              3,
+              3
+            ],
+            [
+              15,
+              1,
+              6,
+              6
+            ],
+            [
+              16,
+              1,
+              10,
+              10
+            ]
+          ],
+          "answer": 20,
+          "independentBruteForce": 20,
+          "prefixCountDefinition": "count a=1..9,b=0..9,c=0..9 with a+b+c=remaining digit sum",
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of handwritten answer on answer PDF p27"
+        },
+        "independentSuite": "qa/applied4-q27-independent-validate.py",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      }
+    },
+    {
+      "id": "applied4-q27-v9",
+      "genId": "applied4-q27",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 27,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-q27-r1",
+      "area": "수와 식",
+      "subarea": "자릿수와 나눗셈",
+      "detailType": "자릿수 합 조건에서 4의 배수 세기",
+      "pointBand": "4.2",
+      "sourcePointBand": "4.2",
+      "text": "다섯 자리 자연수에서 각 자리 숫자의 합이 41입니다. 이 중 4로 나누어떨어지는 수는 모두 몇 개입니까?",
+      "answer": "10",
+      "answerParts": [
+        10
+      ],
+      "answerLabels": [
+        "답"
+      ],
+      "acceptedAnswers": [
+        "10"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다.",
+        "끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 41−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다.",
+        "같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=14: 1×1 + t=15: 1×3 + t=16: 1×6＝10입니다. 따라서 조건에 맞는 수는 모두 10개입니다."
+      ],
+      "solution": "4로 나누어떨어지는지는 끝 두 자리 수로 결정됩니다. 가능한 끝 두 자리는 00, 04, 08, …, 96입니다. 끝 두 자리의 숫자 합을 t라고 하면 앞 세 자리의 숫자 합은 41−t입니다. 앞 세 자리 수의 백의 자리는 1~9, 십의 자리와 일의 자리는 0~9이므로, 각 끝 두 자리마다 이 합을 만드는 앞 세 자리 수를 셉니다. 같은 t인 끝 두 자리의 개수와 앞 세 자리 경우의 수를 곱해 더하면 t=14: 1×1 + t=15: 1×3 + t=16: 1×6＝10입니다. 따라서 조건에 맞는 수는 모두 10개입니다.",
+      "learningPoint": "끝 두 자리의 배수 조건과 앞 세 자리의 자릿수 합을 나누어 세기",
+      "learningLocation": "활용 4회 · 원문 27번 · 자릿수 합 조건에서 4의 배수 세기",
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-4.2",
+        "measured": false,
+        "axes": {
+          "prerequisite": "자릿값, 각 자리 숫자의 합, 4의 배수",
+          "reasoning": "끝 두 자리 배수 조건과 앞 세 자리 합 조건을 분리",
+          "conditionTracking": "다섯 자리 자연수이며 각 자리 숫자의 합이 제시값",
+          "caseSplitting": "00부터 96까지 4의 배수인 끝 두 자리별로 경우를 합산",
+          "computation": "각 끝 두 자리에서 가능한 앞 세 자리 수를 세고 합산",
+          "representation": "두 자리 배수 조건과 세 자리 자릿수 합으로 표현",
+          "reading": "합계 조건과 나눗셈 조건을 동시에 적용",
+          "shortcuts": "끝 두 자리 또는 자릿수 합 조건 하나만으로는 충분하지 않음",
+          "load": "원문과 같은 경우 나누기 및 자리별 합 계산"
+        }
+      },
+      "verification": {
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 27,
+        "primaryMethod": "group multiples-of-four suffixes by digit sum and count leading three-digit prefixes",
+        "parameters": {
+          "digitSum": 41,
+          "validSuffixes": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80,
+            84,
+            88,
+            92,
+            96
+          ],
+          "suffixDigitSumContributions": [
+            [
+              14,
+              1,
+              1,
+              1
+            ],
+            [
+              15,
+              1,
+              3,
+              3
+            ],
+            [
+              16,
+              1,
+              6,
+              6
+            ]
+          ],
+          "answer": 10,
+          "independentBruteForce": 10,
+          "prefixCountDefinition": "count a=1..9,b=0..9,c=0..9 with a+b+c=remaining digit sum",
+          "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+          "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+          "sourceAnswerReadMethod": "direct visual reading of handwritten answer on answer PDF p27"
+        },
+        "independentSuite": "qa/applied4-q27-independent-validate.py",
+        "sourceAnswerMatch": true,
+        "studentDifficultyMeasured": false
+      }
     }
   ],
   "sourceEditionNotes": {
@@ -13460,20 +14756,25 @@
   },
   "reviewSummary": {
     "independentMathCount": 171,
-    "sourceTypes": 19,
+    "sourceTypes": 20,
     "variantsPerType": 9,
     "outputReviewed": true,
     "prior153Exact": true,
     "new9ActualZipReviewed": true,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "preReleaseDataSha256": "94b54abe08010bd33fbae50a76e5c26708b70910038c39a863f7f3a912bbcf8b",
+    "preReleaseDataSha256": "65b52a34dcc2c07d84849194ed7fce3a2c7255f13ff5599dea544ded93754a5c",
     "q14SourceDirectComparison": true,
     "q14IndependentMathCount": 9,
     "q14ActualZipReviewed": true,
-    "old162Exact": true
+    "old162Exact": true,
+    "q27SourceDirectComparison": true,
+    "q27IndependentMathCount": 9,
+    "q27ActualZipReviewed": true,
+    "q27SourceAnswer": 10,
+    "old171Exact": true
   },
-  "revision": "20261024-applied4-expansion-r5-q14",
+  "revision": "20261024-applied4-expansion-r8-q27",
   "additionReviewSummary": {
     "sourceNos": [
       16
@@ -13488,6 +14789,12 @@
     ],
     "q14Count": 9,
     "q14PointBand": "3.4",
-    "q14Old162Exact": true
+    "q14Old162Exact": true,
+    "q27SourceNos": [
+      27
+    ],
+    "q27Count": 9,
+    "q27PointBand": "4.2",
+    "q27Old171Exact": true
   }
 }
