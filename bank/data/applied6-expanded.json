@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r20",
+  "version": "20261024-applied6-expansion-r21",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -29,14 +29,14 @@
     21,
     22,
     23,
-    24
+    24,
+    25
   ],
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
-    25,
     26,
     27,
     28,
@@ -12628,17 +12628,566 @@
         "estimated": false,
         "rationale": "원문 PDF에서 23~30번이 4.2점 문제라고 명시되어 있다."
       }
+    },
+    {
+      "id": "applied6-q25-v1",
+      "genId": "applied6-q25",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 25,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "서로를 포함하는 세 부분의 길이 관계",
+      "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
+      "pointBand": "4.2",
+      "text": "머리가 10cm인 물고기가 있습니다. 꼬리의 길이는 몸 길이의 절반에 머리 길이를 더한 것과 같고, 몸 길이는 머리와 꼬리 길이의 합과 같습니다. 머리, 몸, 꼬리 길이를 모두 합한 물고기의 전체 길이는 몇 cm인가요?",
+      "answer": "80",
+      "answerParts": [
+        80
+      ],
+      "answerLabels": [
+        "물고기의 전체 길이(cm)"
+      ],
+      "acceptedAnswers": [
+        "80"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "머리는 10cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (10+T)cm입니다.",
+        "꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(10+T)÷2+10입니다.",
+        "양변에 2를 곱하면 2T=10+T+20이므로 T=30cm입니다.",
+        "몸은 10+30=40cm이고 전체 길이는 10+40+30=80cm입니다."
+      ],
+      "solution": "머리는 10cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (10+T)cm입니다. 꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(10+T)÷2+10입니다. 양변에 2를 곱하면 2T=10+T+20이므로 T=30cm입니다. 몸은 10+30=40cm이고 전체 길이는 10+40+30=80cm입니다.",
+      "learningPoint": "각 부분의 길이 관계를 하나의 식으로 연결해 미지의 길이를 구하고 전체를 합하기",
+      "learningLocation": "활용 6회 · 원문 25번 · 머리·몸·꼬리의 길이 관계",
+      "verification": {
+        "primaryMethod": "Substitute body=head+tail into tail=body/2+head and solve the resulting linear equation.",
+        "independentMethod": "Enumerate nonnegative integer tail lengths satisfying both source relations; verify there is exactly one solution and independently sum all three parts.",
+        "parameters": {
+          "headCm": 10,
+          "tailCm": 30,
+          "bodyCm": 40,
+          "equation": "T=(H+T)/2+H",
+          "relationUniqueSolution": true,
+          "totalLengthCm": 80
+        },
+        "independentSuite": "qa/applied6-q25-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q25-v2",
+      "genId": "applied6-q25",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 25,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "서로를 포함하는 세 부분의 길이 관계",
+      "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
+      "pointBand": "4.2",
+      "text": "머리가 12cm인 물고기가 있습니다. 꼬리의 길이는 몸 길이의 절반에 머리 길이를 더한 것과 같고, 몸 길이는 머리와 꼬리 길이의 합과 같습니다. 머리, 몸, 꼬리 길이를 모두 합한 물고기의 전체 길이는 몇 cm인가요?",
+      "answer": "96",
+      "answerParts": [
+        96
+      ],
+      "answerLabels": [
+        "물고기의 전체 길이(cm)"
+      ],
+      "acceptedAnswers": [
+        "96"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "머리는 12cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (12+T)cm입니다.",
+        "꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(12+T)÷2+12입니다.",
+        "양변에 2를 곱하면 2T=12+T+24이므로 T=36cm입니다.",
+        "몸은 12+36=48cm이고 전체 길이는 12+48+36=96cm입니다."
+      ],
+      "solution": "머리는 12cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (12+T)cm입니다. 꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(12+T)÷2+12입니다. 양변에 2를 곱하면 2T=12+T+24이므로 T=36cm입니다. 몸은 12+36=48cm이고 전체 길이는 12+48+36=96cm입니다.",
+      "learningPoint": "각 부분의 길이 관계를 하나의 식으로 연결해 미지의 길이를 구하고 전체를 합하기",
+      "learningLocation": "활용 6회 · 원문 25번 · 머리·몸·꼬리의 길이 관계",
+      "verification": {
+        "primaryMethod": "Substitute body=head+tail into tail=body/2+head and solve the resulting linear equation.",
+        "independentMethod": "Enumerate nonnegative integer tail lengths satisfying both source relations; verify there is exactly one solution and independently sum all three parts.",
+        "parameters": {
+          "headCm": 12,
+          "tailCm": 36,
+          "bodyCm": 48,
+          "equation": "T=(H+T)/2+H",
+          "relationUniqueSolution": true,
+          "totalLengthCm": 96
+        },
+        "independentSuite": "qa/applied6-q25-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q25-v3",
+      "genId": "applied6-q25",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 25,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "서로를 포함하는 세 부분의 길이 관계",
+      "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
+      "pointBand": "4.2",
+      "text": "머리가 14cm인 물고기가 있습니다. 꼬리의 길이는 몸 길이의 절반에 머리 길이를 더한 것과 같고, 몸 길이는 머리와 꼬리 길이의 합과 같습니다. 머리, 몸, 꼬리 길이를 모두 합한 물고기의 전체 길이는 몇 cm인가요?",
+      "answer": "112",
+      "answerParts": [
+        112
+      ],
+      "answerLabels": [
+        "물고기의 전체 길이(cm)"
+      ],
+      "acceptedAnswers": [
+        "112"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "머리는 14cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (14+T)cm입니다.",
+        "꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(14+T)÷2+14입니다.",
+        "양변에 2를 곱하면 2T=14+T+28이므로 T=42cm입니다.",
+        "몸은 14+42=56cm이고 전체 길이는 14+56+42=112cm입니다."
+      ],
+      "solution": "머리는 14cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (14+T)cm입니다. 꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(14+T)÷2+14입니다. 양변에 2를 곱하면 2T=14+T+28이므로 T=42cm입니다. 몸은 14+42=56cm이고 전체 길이는 14+56+42=112cm입니다.",
+      "learningPoint": "각 부분의 길이 관계를 하나의 식으로 연결해 미지의 길이를 구하고 전체를 합하기",
+      "learningLocation": "활용 6회 · 원문 25번 · 머리·몸·꼬리의 길이 관계",
+      "verification": {
+        "primaryMethod": "Substitute body=head+tail into tail=body/2+head and solve the resulting linear equation.",
+        "independentMethod": "Enumerate nonnegative integer tail lengths satisfying both source relations; verify there is exactly one solution and independently sum all three parts.",
+        "parameters": {
+          "headCm": 14,
+          "tailCm": 42,
+          "bodyCm": 56,
+          "equation": "T=(H+T)/2+H",
+          "relationUniqueSolution": true,
+          "totalLengthCm": 112
+        },
+        "independentSuite": "qa/applied6-q25-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q25-v4",
+      "genId": "applied6-q25",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 25,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "서로를 포함하는 세 부분의 길이 관계",
+      "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
+      "pointBand": "4.2",
+      "text": "머리가 16cm인 물고기가 있습니다. 꼬리의 길이는 몸 길이의 절반에 머리 길이를 더한 것과 같고, 몸 길이는 머리와 꼬리 길이의 합과 같습니다. 머리, 몸, 꼬리 길이를 모두 합한 물고기의 전체 길이는 몇 cm인가요?",
+      "answer": "128",
+      "answerParts": [
+        128
+      ],
+      "answerLabels": [
+        "물고기의 전체 길이(cm)"
+      ],
+      "acceptedAnswers": [
+        "128"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "머리는 16cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (16+T)cm입니다.",
+        "꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(16+T)÷2+16입니다.",
+        "양변에 2를 곱하면 2T=16+T+32이므로 T=48cm입니다.",
+        "몸은 16+48=64cm이고 전체 길이는 16+64+48=128cm입니다."
+      ],
+      "solution": "머리는 16cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (16+T)cm입니다. 꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(16+T)÷2+16입니다. 양변에 2를 곱하면 2T=16+T+32이므로 T=48cm입니다. 몸은 16+48=64cm이고 전체 길이는 16+64+48=128cm입니다.",
+      "learningPoint": "각 부분의 길이 관계를 하나의 식으로 연결해 미지의 길이를 구하고 전체를 합하기",
+      "learningLocation": "활용 6회 · 원문 25번 · 머리·몸·꼬리의 길이 관계",
+      "verification": {
+        "primaryMethod": "Substitute body=head+tail into tail=body/2+head and solve the resulting linear equation.",
+        "independentMethod": "Enumerate nonnegative integer tail lengths satisfying both source relations; verify there is exactly one solution and independently sum all three parts.",
+        "parameters": {
+          "headCm": 16,
+          "tailCm": 48,
+          "bodyCm": 64,
+          "equation": "T=(H+T)/2+H",
+          "relationUniqueSolution": true,
+          "totalLengthCm": 128
+        },
+        "independentSuite": "qa/applied6-q25-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q25-v5",
+      "genId": "applied6-q25",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 25,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "서로를 포함하는 세 부분의 길이 관계",
+      "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
+      "pointBand": "4.2",
+      "text": "머리가 18cm인 물고기가 있습니다. 꼬리의 길이는 몸 길이의 절반에 머리 길이를 더한 것과 같고, 몸 길이는 머리와 꼬리 길이의 합과 같습니다. 머리, 몸, 꼬리 길이를 모두 합한 물고기의 전체 길이는 몇 cm인가요?",
+      "answer": "144",
+      "answerParts": [
+        144
+      ],
+      "answerLabels": [
+        "물고기의 전체 길이(cm)"
+      ],
+      "acceptedAnswers": [
+        "144"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "머리는 18cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (18+T)cm입니다.",
+        "꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(18+T)÷2+18입니다.",
+        "양변에 2를 곱하면 2T=18+T+36이므로 T=54cm입니다.",
+        "몸은 18+54=72cm이고 전체 길이는 18+72+54=144cm입니다."
+      ],
+      "solution": "머리는 18cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (18+T)cm입니다. 꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(18+T)÷2+18입니다. 양변에 2를 곱하면 2T=18+T+36이므로 T=54cm입니다. 몸은 18+54=72cm이고 전체 길이는 18+72+54=144cm입니다.",
+      "learningPoint": "각 부분의 길이 관계를 하나의 식으로 연결해 미지의 길이를 구하고 전체를 합하기",
+      "learningLocation": "활용 6회 · 원문 25번 · 머리·몸·꼬리의 길이 관계",
+      "verification": {
+        "primaryMethod": "Substitute body=head+tail into tail=body/2+head and solve the resulting linear equation.",
+        "independentMethod": "Enumerate nonnegative integer tail lengths satisfying both source relations; verify there is exactly one solution and independently sum all three parts.",
+        "parameters": {
+          "headCm": 18,
+          "tailCm": 54,
+          "bodyCm": 72,
+          "equation": "T=(H+T)/2+H",
+          "relationUniqueSolution": true,
+          "totalLengthCm": 144
+        },
+        "independentSuite": "qa/applied6-q25-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q25-v6",
+      "genId": "applied6-q25",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 25,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "서로를 포함하는 세 부분의 길이 관계",
+      "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
+      "pointBand": "4.2",
+      "text": "머리가 20cm인 물고기가 있습니다. 꼬리의 길이는 몸 길이의 절반에 머리 길이를 더한 것과 같고, 몸 길이는 머리와 꼬리 길이의 합과 같습니다. 머리, 몸, 꼬리 길이를 모두 합한 물고기의 전체 길이는 몇 cm인가요?",
+      "answer": "160",
+      "answerParts": [
+        160
+      ],
+      "answerLabels": [
+        "물고기의 전체 길이(cm)"
+      ],
+      "acceptedAnswers": [
+        "160"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "머리는 20cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (20+T)cm입니다.",
+        "꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(20+T)÷2+20입니다.",
+        "양변에 2를 곱하면 2T=20+T+40이므로 T=60cm입니다.",
+        "몸은 20+60=80cm이고 전체 길이는 20+80+60=160cm입니다."
+      ],
+      "solution": "머리는 20cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (20+T)cm입니다. 꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(20+T)÷2+20입니다. 양변에 2를 곱하면 2T=20+T+40이므로 T=60cm입니다. 몸은 20+60=80cm이고 전체 길이는 20+80+60=160cm입니다.",
+      "learningPoint": "각 부분의 길이 관계를 하나의 식으로 연결해 미지의 길이를 구하고 전체를 합하기",
+      "learningLocation": "활용 6회 · 원문 25번 · 머리·몸·꼬리의 길이 관계",
+      "verification": {
+        "primaryMethod": "Substitute body=head+tail into tail=body/2+head and solve the resulting linear equation.",
+        "independentMethod": "Enumerate nonnegative integer tail lengths satisfying both source relations; verify there is exactly one solution and independently sum all three parts.",
+        "parameters": {
+          "headCm": 20,
+          "tailCm": 60,
+          "bodyCm": 80,
+          "equation": "T=(H+T)/2+H",
+          "relationUniqueSolution": true,
+          "totalLengthCm": 160
+        },
+        "independentSuite": "qa/applied6-q25-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q25-v7",
+      "genId": "applied6-q25",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 25,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "서로를 포함하는 세 부분의 길이 관계",
+      "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
+      "pointBand": "4.2",
+      "text": "머리가 22cm인 물고기가 있습니다. 꼬리의 길이는 몸 길이의 절반에 머리 길이를 더한 것과 같고, 몸 길이는 머리와 꼬리 길이의 합과 같습니다. 머리, 몸, 꼬리 길이를 모두 합한 물고기의 전체 길이는 몇 cm인가요?",
+      "answer": "176",
+      "answerParts": [
+        176
+      ],
+      "answerLabels": [
+        "물고기의 전체 길이(cm)"
+      ],
+      "acceptedAnswers": [
+        "176"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "머리는 22cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (22+T)cm입니다.",
+        "꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(22+T)÷2+22입니다.",
+        "양변에 2를 곱하면 2T=22+T+44이므로 T=66cm입니다.",
+        "몸은 22+66=88cm이고 전체 길이는 22+88+66=176cm입니다."
+      ],
+      "solution": "머리는 22cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (22+T)cm입니다. 꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(22+T)÷2+22입니다. 양변에 2를 곱하면 2T=22+T+44이므로 T=66cm입니다. 몸은 22+66=88cm이고 전체 길이는 22+88+66=176cm입니다.",
+      "learningPoint": "각 부분의 길이 관계를 하나의 식으로 연결해 미지의 길이를 구하고 전체를 합하기",
+      "learningLocation": "활용 6회 · 원문 25번 · 머리·몸·꼬리의 길이 관계",
+      "verification": {
+        "primaryMethod": "Substitute body=head+tail into tail=body/2+head and solve the resulting linear equation.",
+        "independentMethod": "Enumerate nonnegative integer tail lengths satisfying both source relations; verify there is exactly one solution and independently sum all three parts.",
+        "parameters": {
+          "headCm": 22,
+          "tailCm": 66,
+          "bodyCm": 88,
+          "equation": "T=(H+T)/2+H",
+          "relationUniqueSolution": true,
+          "totalLengthCm": 176
+        },
+        "independentSuite": "qa/applied6-q25-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q25-v8",
+      "genId": "applied6-q25",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 25,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "서로를 포함하는 세 부분의 길이 관계",
+      "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
+      "pointBand": "4.2",
+      "text": "머리가 24cm인 물고기가 있습니다. 꼬리의 길이는 몸 길이의 절반에 머리 길이를 더한 것과 같고, 몸 길이는 머리와 꼬리 길이의 합과 같습니다. 머리, 몸, 꼬리 길이를 모두 합한 물고기의 전체 길이는 몇 cm인가요?",
+      "answer": "192",
+      "answerParts": [
+        192
+      ],
+      "answerLabels": [
+        "물고기의 전체 길이(cm)"
+      ],
+      "acceptedAnswers": [
+        "192"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "머리는 24cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (24+T)cm입니다.",
+        "꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(24+T)÷2+24입니다.",
+        "양변에 2를 곱하면 2T=24+T+48이므로 T=72cm입니다.",
+        "몸은 24+72=96cm이고 전체 길이는 24+96+72=192cm입니다."
+      ],
+      "solution": "머리는 24cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (24+T)cm입니다. 꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(24+T)÷2+24입니다. 양변에 2를 곱하면 2T=24+T+48이므로 T=72cm입니다. 몸은 24+72=96cm이고 전체 길이는 24+96+72=192cm입니다.",
+      "learningPoint": "각 부분의 길이 관계를 하나의 식으로 연결해 미지의 길이를 구하고 전체를 합하기",
+      "learningLocation": "활용 6회 · 원문 25번 · 머리·몸·꼬리의 길이 관계",
+      "verification": {
+        "primaryMethod": "Substitute body=head+tail into tail=body/2+head and solve the resulting linear equation.",
+        "independentMethod": "Enumerate nonnegative integer tail lengths satisfying both source relations; verify there is exactly one solution and independently sum all three parts.",
+        "parameters": {
+          "headCm": 24,
+          "tailCm": 72,
+          "bodyCm": 96,
+          "equation": "T=(H+T)/2+H",
+          "relationUniqueSolution": true,
+          "totalLengthCm": 192
+        },
+        "independentSuite": "qa/applied6-q25-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q25-v9",
+      "genId": "applied6-q25",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 25,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "서로를 포함하는 세 부분의 길이 관계",
+      "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
+      "pointBand": "4.2",
+      "text": "머리가 26cm인 물고기가 있습니다. 꼬리의 길이는 몸 길이의 절반에 머리 길이를 더한 것과 같고, 몸 길이는 머리와 꼬리 길이의 합과 같습니다. 머리, 몸, 꼬리 길이를 모두 합한 물고기의 전체 길이는 몇 cm인가요?",
+      "answer": "208",
+      "answerParts": [
+        208
+      ],
+      "answerLabels": [
+        "물고기의 전체 길이(cm)"
+      ],
+      "acceptedAnswers": [
+        "208"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "머리는 26cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (26+T)cm입니다.",
+        "꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(26+T)÷2+26입니다.",
+        "양변에 2를 곱하면 2T=26+T+52이므로 T=78cm입니다.",
+        "몸은 26+78=104cm이고 전체 길이는 26+104+78=208cm입니다."
+      ],
+      "solution": "머리는 26cm이고, 꼬리 길이를 T cm라 하면 몸 길이는 (26+T)cm입니다. 꼬리는 몸 길이의 절반에 머리 길이를 더한 길이이므로 T=(26+T)÷2+26입니다. 양변에 2를 곱하면 2T=26+T+52이므로 T=78cm입니다. 몸은 26+78=104cm이고 전체 길이는 26+104+78=208cm입니다.",
+      "learningPoint": "각 부분의 길이 관계를 하나의 식으로 연결해 미지의 길이를 구하고 전체를 합하기",
+      "learningLocation": "활용 6회 · 원문 25번 · 머리·몸·꼬리의 길이 관계",
+      "verification": {
+        "primaryMethod": "Substitute body=head+tail into tail=body/2+head and solve the resulting linear equation.",
+        "independentMethod": "Enumerate nonnegative integer tail lengths satisfying both source relations; verify there is exactly one solution and independently sum all three parts.",
+        "parameters": {
+          "headCm": 26,
+          "tailCm": 78,
+          "bodyCm": 104,
+          "equation": "T=(H+T)/2+H",
+          "relationUniqueSolution": true,
+          "totalLengthCm": 208
+        },
+        "independentSuite": "qa/applied6-q25-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 180,
-    "sourceTypes": 20,
+    "independentMathCount": 189,
+    "sourceTypes": 21,
     "variantsPerType": 9,
     "outputReviewed": true,
     "sourceDrawingCount": 5,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "verifiedQuestionCount": 180,
-    "verifiedSourceCount": 20
+    "verifiedQuestionCount": 189,
+    "verifiedSourceCount": 21
   }
 }

@@ -1,14 +1,13 @@
 {
-  "version": "20261024-applied6-expansion-r20",
+  "version": "20261024-applied6-expansion-r21",
   "sourceSet": "applied",
   "sourceRound": 6,
-  "itemCount": 180,
+  "itemCount": 189,
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
-    25,
     26,
     27,
     28,
@@ -212,6 +211,16 @@
       "area": "경우의 수",
       "subarea": "성냥개비 수와 거울 숫자 카드 배열",
       "detailType": "성냥개비 수 합 조건과 거울 반사 자릿수에 맞는 카드 배열 세기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 25,
+      "genId": "applied6-q25",
+      "area": "수와 식",
+      "subarea": "서로를 포함하는 세 부분의 길이 관계",
+      "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9

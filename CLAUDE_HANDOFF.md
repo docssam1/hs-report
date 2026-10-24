@@ -1,3 +1,9 @@
+## 2026-10-24 활용 6회 기존 유형 확장 Q25 (r21, 최신)
+
+- 활용 6회 원문 25번의 머리·몸·꼬리 길이 연쇄 관계식 유형만 9개 확장했다. 문제 PDF·답안 PDF 5쪽을 직접 확인해 교사 최종 답 80cm와 대조했다. 도형이 없는 원문이므로 그림을 추가하지 않았다. 머리 10~26cm 중 짝수 9개 조건으로 변형했고, 각 관계식의 유일해·전체 길이를 독립 전수검산했다.
+- 브라우저 입력·진단·연습 3회·원점수 보존·2단 순서·375px QA 통과. 실제 ZIP에 문제 PDF 2쪽·풀이 PDF 3쪽·목록 등 7개 구성품이 있고, ZIP에서 꺼낸 모든 페이지를 시각 확인했다. 활용 전체 검증은 990문항=110유형×9로 통과했다. 은행 버전 `20261024-applied6-expansion-r21`, 어댑터 캐시 키 `20261024-r22`.
+- Drive 문제 ZIP [1clOB_gtRX5k-kMVBoXzTA6vq7fc1sWy6](https://drive.google.com/file/d/1clOB_gtRX5k-kMVBoXzTA6vq7fc1sWy6/view), 검수 ZIP [1dtFCtdsWsdI-DrzSix1gEP16OviFfpDA](https://drive.google.com/file/d/1dtFCtdsWsdI-DrzSix1gEP16OviFfpDA/view), 데이터 [19H9wk_mZlX5-K-8dV0nDSXrOsTZKQ8_F](https://drive.google.com/file/d/19H9wk_mZlX5-K-8dV0nDSXrOsTZKQ8_F/view), 인덱스 [1AKY0RMajVE6xwsGu0coHFlinwFGqOP6B](https://drive.google.com/file/d/1AKY0RMajVE6xwsGu0coHFlinwFGqOP6B/view). Drive 메타데이터상 ID·크기 확인. 원격 재다운로드 체크섬은 미확인. 로컬 main에 커밋했다. GitHub 원격 푸시·배포는 하지 않았다. Q26~30은 해당 원문/답안 직접 대조 후 계속한다.
+
 # 황소 초등 원본형 모의고사 작업 인수인계서
 
 ## 2026-10-20 로드맵 최종 1~4회·중급 7~8회 연결 보수
