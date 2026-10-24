@@ -8,8 +8,8 @@ SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf'
 ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/answer.pdf'
 ASSET=ROOT/'bank/assets/applied6/q08-tiles-original.png'
 d=json.loads(DATA.read_text())
-assert d['version']=='20261024-applied6-expansion-r9'
-assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12] and len(d['items'])==81
+assert d['version']=='20261024-applied6-expansion-r10'
+assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13] and len(d['items'])==90
 items=[x for x in d['items'] if x['sourceNo']==8]
 assert len(items)==9 and [x['variantNo'] for x in items]==list(range(1,10))
 rounds=[5,12,27,38,49,56,72,85,96]
@@ -34,7 +34,4 @@ for q,n in zip(items,rounds):
     assert q['asset']['kind']=='raster' and q['asset']['width']==890 and q['asset']['height']==350
     assert q['asset']['src']=='assets/applied6/q08-tiles-original.png'
     assert n not in seen;seen.add(n)
-    evidence.append({'id':q['id'],'round':n,'color':color,'sideCounts':by_side,'countBySides':count,'countByLayerRecurrence':layer_count,'twoMethodsAgree':True,'passed':True})
-out=ROOT/'.private-work/hw-expansion-20261023/hw6/q08-independent-math.json'
-out.write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'questionPage':2,'answerPage':2,'targetRound':source_round,'teacherAnswer':[source_color,source_count],'independentAnswer':[source_color,source_count],'sourceDrawingSha256':asset_hash,'originalDrawingCompared':True},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':evidence,'passed':True},ensure_ascii=False,indent=2)+'\n')
-print('PASS Applied6 Q8: source 63rd round is white/248; nine variants independently agree by side count and layer recurrence')
+    evidence.append({'id':q['id'],'round':n,'color':color,'sideCounts':by_side,'countBySides':count,'countByLayerRecurrence':layer_c

@@ -7,7 +7,7 @@ DATA=ROOT/'bank/data/applied6-expanded.json'
 SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf'
 ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/answer.pdf'
 d=json.loads(DATA.read_text())
-assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12] and len(d['items'])==81
+assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13] and len(d['items'])==90
 items=[q for q in d['items'] if q['sourceNo']==3]
 assert len(items)==9 and [q['variantNo'] for q in items]==list(range(1,10))
 # Source PDF p.1: 30 candies; first two share equally; third has strictly more.
@@ -34,8 +34,4 @@ for q in items:
     assert n!=source_total
     signature=(n,q['text'])
     assert signature not in seen; seen.add(signature)
-    evidence.append({'id':q['id'],'total':n,'maxEqualShare':x,'minimumThirdShare':y,'feasibleSplits':len(feasible),'uniqueMinimum':minimizers[0],'passed':True})
-assert len({q['id'] for q in items})==9
-out=ROOT/'.private-work/hw-expansion-20261023/hw6/q03-independent-math.json'
-out.write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'questionPage':1,'answerPage':1,'sourceTotal':source_total,'teacherAnswer':source_min,'feasibleSplits':len(source_feasible)},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':evidence,'passed':True},ensure_ascii=False,indent=2)+'\n')
-print('PASS Applied6 Q3: source teacher answer 12 independently confirmed; 9 variants have unique minimum by strict bound and exhaustive positive-integer enumeration')
+    evidence.append({'id':q['id'],'total':n,'maxEqualShare':x,'minimumThirdShare':y,'feasibleSplits':len(feasible),'uniqueMinimum':mi

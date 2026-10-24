@@ -8,8 +8,8 @@ SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf'
 ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/answer.pdf'
 ASSET=ROOT/'bank/assets/applied6/q09-cubes-original.png'
 d=json.loads(DATA.read_text())
-assert d['version']=='20261024-applied6-expansion-r9'
-assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12] and len(d['items'])==81
+assert d['version']=='20261024-applied6-expansion-r10'
+assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13] and len(d['items'])==90
 items=[x for x in d['items'] if x['sourceNo']==9]
 assert len(items)==9 and [x['variantNo'] for x in items]==list(range(1,10))
 matchsticks=[20,28,44,52,68,76,92,116,140]
@@ -29,6 +29,4 @@ for q,m in zip(items,matchsticks):
     assert q['verification']['sourceExamPage']==2 and q['verification']['sourceAnswerPage']==2
     assert n not in seen;seen.add(n)
     evidence.append({'id':q['id'],'matchsticks':m,'cubeCountByLinearEquation':n,'cubeCountBySharedFaceEnumeration':count_edges,'twoMethodsAgree':True,'passed':True})
-out=ROOT/'.private-work/hw-expansion-20261023/hw6/q09-independent-math.json'
-out.write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'questionPage':2,'answerPage':2,'matchsticks':source_sticks,'teacherAnswer':source_cubes,'independentAnswer':source_cubes,'sourceDrawingSha256':asset_hash,'originalDrawingCompared':True},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':evidence,'passed':True},ensure_ascii=False,indent=2)+'\n')
-print('PASS Applied6 Q9: source answer 12 confirmed; nine variants agree by linear equation and shared-face enumeration')
+out=ROOT/'.private-work/hw-ex

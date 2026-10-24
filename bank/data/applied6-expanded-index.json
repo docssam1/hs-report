@@ -1,0 +1,103 @@
+{
+  "version": "20261024-applied6-expansion-r10",
+  "sourceSet": "applied",
+  "sourceRound": 6,
+  "itemCount": 90,
+  "pendingSourceNos": [
+    1,
+    4,
+    6,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "items": [
+    {
+      "sourceNo": 2,
+      "genId": "applied6-q02",
+      "area": "수와 식",
+      "subarea": "두 종류의 수와 전체 개수",
+      "detailType": "성냥으로 만든 두 다각형의 개수와 성냥 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 3,
+      "genId": "applied6-q03",
+      "area": "수와 식",
+      "subarea": "전체 수와 같은 몫·비교 조건",
+      "detailType": "같은 양을 가진 두 사람과 더 많이 가진 사람의 최소 몫",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 5,
+      "genId": "applied6-q05",
+      "area": "수와 식",
+      "subarea": "비와 비율 · 일정한 빠르기",
+      "detailType": "맞물린 톱니바퀴의 회전수 비와 일정 시간 동안의 차이",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 7,
+      "genId": "applied6-q07",
+      "area": "수와 식",
+      "subarea": "자릿수와 계산기 버튼 누름 횟수",
+      "detailType": "1부터 N까지 더할 때 숫자 버튼과 + 버튼의 횟수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 8,
+      "genId": "applied6-q08",
+      "area": "도형",
+      "subarea": "색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "detailType": "그림 규칙에서 n번째 회차에 붙이는 타일의 색과 개수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 9,
+      "genId": "applied6-q09",
+      "area": "도형",
+      "subarea": "한 줄로 이어 붙인 정육면체의 모서리",
+      "detailType": "공유하는 면의 모서리를 세어 성냥개비 수로 정육면체 개수 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 10,
+      "genId": "applied6-q10",
+      "area": "수와 식",
+      "subarea": "누적된 무게의 차",
+      "detailType": "겹쳐 놓은 저울의 누적 표시로 한 저울의 무게 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 11,
+      "genId": "applied6-q11",
+      "area": "경우의 수",
+      
