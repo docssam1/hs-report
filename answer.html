@@ -32,6 +32,9 @@ function allowed(name){
   if(SET==='final'&&RD>=5){const a=((D.archiveProductAccess||{})['mock-final-'+RD])||[];return a.includes('*')||a.includes(name)}
   if(SET==='final')return((((D.archiveAccess||{})['파이널 모의고사'])||[]).includes(name));
   if(SET!=='hw')return true;
+  const appliedBook=(D.books||[]).find(b=>b&&b.folder==='활용 모의고사'&&new RegExp('활용\\s*모의고사\\s*'+RD+'\\s*회').test(String(b.title||'')));
+  if(appliedBook&&appliedBook.accessKey){const a=((D.archiveProductAccess||{})[appliedBook.accessKey])||[];return a.includes('*')||a.includes(name)}
+  if(appliedBook){const a=((D.archiveAccess||{})['활용 모의고사'])||[];if(a.includes('*')||a.includes(name))return true}
   const online=((D.studentTypes||{})[name])==='online';
   if(online&&((((D.archiveAccess||{})['활용 모의고사'])||[]).includes(name)))return true;
   if(online)return false;

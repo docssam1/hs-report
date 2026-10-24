@@ -3,6 +3,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 require('./email-login-test-stub'); // QA 전용: 학부모 이메일 인증 단계를 인증된 브라우저로 취급
 const { chromium } = require(process.env.GFIELD_QA_PLAYWRIGHT || 'playwright');
 
@@ -10,6 +11,10 @@ const ROOT = path.resolve(__dirname, '..');
 const BASE_URL = process.env.GFIELD_QA_BASE_URL || 'http://127.0.0.1:8765';
 const BROWSER_EXECUTABLE = process.env.GFIELD_QA_BROWSER_EXECUTABLE || '';
 const SOURCE = fs.readFileSync(path.join(ROOT, 'data.js'), 'utf8');
+const dataContext = { window: {} };
+vm.createContext(dataContext);
+vm.runInContext(SOURCE, dataContext, { filename: 'data.js' });
+const appliedBooks = dataContext.window.GFIELD_DATA.books.filter(book => book && book.folder === '활용 모의고사');
 
 async function verifyCase(browser, student, basicAllowed, coreAllowed, final5Allowed, signature1Allowed) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
@@ -75,18 +80,67 @@ async function verifyCase(browser, student, basicAllowed, coreAllowed, final5All
   await context.close();
 }
 
+async function verifyAppliedAnswerAccess(browser) {
+  const approved = '활용답안승인검수';
+  const denied = '활용답안미승인검수';
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await context.newPage();
+  page.setDefaultTimeout(8000);
+  await page.route('https://**/*', route => route.abort());
+  await page.route('**/hs-student-guard.js*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/javascript',
+    body: 'window.GFIELD_STUDENT_GUARD={ready:Promise.resolve()};',
+  }));
+  await page.route('**/data.js*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/javascript; charset=utf-8',
+    body: SOURCE + `\n;(function(){var D=window.GFIELD_DATA;` +
+      `D.students.push(${JSON.stringify(approved)},${JSON.stringify(denied)});` +
+      `D.studentTypes[${JSON.stringify(approved)}]='resident';D.studentTypes[${JSON.stringify(denied)}]='resident';` +
+      `D.archiveAccess['활용 모의고사']=[${JSON.stringify(approved)}];})();`,
+  }));
+
+  assert.equal(appliedBooks.length, 9, '자료실 활용 모의고사 1~9회가 등록되어 있음');
+  await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded' });
+  for (let round = 1; round <= 9; round += 1) {
+    const book = appliedBooks.find(item => item.title === `활용 모의고사 ${round}회`);
+    assert.ok(book, `활용 모의고사 ${round}회 자료실 항목`);
+    const answerLink = (book.links || []).find(link => link.label === '답안·교재 연결표');
+    assert.match(answerLink?.url || '', new RegExp(`answer\\.html\\?set=hw&round=${round}$`), `${round}회 답안 연결 URL`);
+
+    const localAnswerUrl = new URL(answerLink.url);
+    localAnswerUrl.host = new URL(BASE_URL).host;
+    localAnswerUrl.protocol = new URL(BASE_URL).protocol;
+    await page.evaluate(name => localStorage.setItem('gfield_student', name), approved);
+    await page.goto(localAnswerUrl.href, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => document.querySelector('#content')?.classList.contains('hidden') === false);
+    assert.equal(await page.locator('#gate').isHidden(), true, `자료실에서 승인된 재원생은 ${round}회 연결표 자동 열람`);
+    assert.match(await page.locator('#ttl').textContent(), new RegExp(`활용 모의고사 ${round}회`));
+
+    await page.evaluate(name => localStorage.setItem('gfield_student', name), denied);
+    await page.goto(localAnswerUrl.href, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => document.querySelector('#gate')?.classList.contains('hidden') === false);
+    assert.equal(await page.locator('#gate').isVisible(), true, `자료실 미승인 학생은 ${round}회 연결표 접근 차단`);
+  }
+  await context.close();
+}
+
 (async () => {
   const browser = await chromium.launch({
     headless: true,
     ...(BROWSER_EXECUTABLE ? { executablePath: BROWSER_EXECUTABLE } : {}),
   });
   try {
-    await verifyCase(browser, 'BASIC전용검수', true, false, false, false);
-    await verifyCase(browser, 'CORE전용검수', false, true, false, false);
-    await verifyCase(browser, '최종5회전용검수', false, false, true, false);
-    await verifyCase(browser, '시그니처1회전용검수', false, false, false, true);
-    await verifyCase(browser, '미승인검수', false, false, false, false);
-    console.log('PASS browser library gate keeps textbook and mock-exam approvals independent');
+    if (process.env.GFIELD_QA_APPLIED5_ONLY !== '1') {
+      await verifyCase(browser, 'BASIC전용검수', true, false, false, false);
+      await verifyCase(browser, 'CORE전용검수', false, true, false, false);
+      await verifyCase(browser, '최종5회전용검수', false, false, true, false);
+      await verifyCase(browser, '시그니처1회전용검수', false, false, false, true);
+      await verifyCase(browser, '미승인검수', false, false, false, false);
+    }
+    await verifyAppliedAnswerAccess(browser);
+    console.log('PASS browser library gate keeps textbook and mock-exam approvals independent; applied rounds 1–9 answer gates follow library access');
   } finally {
     await browser.close();
   }
