@@ -9,8 +9,8 @@ SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf'
 ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/answer.pdf'
 d=json.loads(DATA.read_text())
 assert d['sourceSet']=='applied' and d['sourceRound']==6
-assert d['availableSourceNos']==[2,3,5] and d['pendingSourceNos']==[n for n in range(1,31) if n not in [2,3,5]]
-assert len(d['items'])==27
+assert d['availableSourceNos']==[2,3,5,7] and d['pendingSourceNos']==[n for n in range(1,31) if n not in [2,3,5,7]]
+assert len(d['items'])==36
 source_t,source_p=26,9
 assert source_t+source_p==35 and 3*source_t+5*source_p==123
 source_solutions=[(t,p) for t in range(1,36) for p in range(1,36) if t+p==35 and 3*t+5*p==123]

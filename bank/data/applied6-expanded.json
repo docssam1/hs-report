@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r3",
+  "version": "20261024-applied6-expansion-r4",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -12,13 +12,13 @@
   "availableSourceNos": [
     2,
     3,
-    5
+    5,
+    7
   ],
   "pendingSourceNos": [
     1,
     4,
     6,
-    7,
     8,
     9,
     10,
@@ -1645,17 +1645,545 @@
         "sourceReasoningPreserved": true,
         "measuredVariantRate": null
       }
+    },
+    {
+      "id": "applied6-q07-v1",
+      "genId": "applied6-q07",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 7,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "자릿수와 계산기 버튼 누름 횟수",
+      "detailType": "1부터 N까지 더할 때 숫자 버튼과 + 버튼의 횟수",
+      "pointBand": "2.7",
+      "text": "계산기를 사용하여 1부터 24까지의 수를 차례로 모두 더합니다. 숫자 버튼과 + 버튼을 합하여 모두 몇 번 눌러야 하나요? 마지막에 = 버튼은 누르지 않습니다.",
+      "answer": "62",
+      "answerParts": [
+        62
+      ],
+      "answerLabels": [
+        "버튼을 누르는 횟수"
+      ],
+      "acceptedAnswers": [
+        "62"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "1부터 9까지는 한 자리 수이므로 숫자 버튼을 9번 누릅니다.",
+        "10부터 24까지는 두 자리 수가 15개이므로 숫자 버튼은 2×15=30번입니다.",
+        "+ 버튼은 첫 수 뒤부터 마지막 수 앞까지 누르므로 23번입니다.",
+        "따라서 숫자 버튼은 9+30=39번이고, 전체 버튼은 39+23=62번입니다."
+      ],
+      "solution": "1부터 9까지는 한 자리 수이므로 숫자 버튼을 9번 누릅니다. 10부터 24까지는 두 자리 수가 15개이므로 숫자 버튼은 2×15=30번입니다. + 버튼은 첫 수 뒤부터 마지막 수 앞까지 누르므로 23번입니다. 따라서 숫자 버튼은 9+30=39번이고, 전체 버튼은 39+23=62번입니다.",
+      "learningPoint": "자연수의 구간별 자릿수를 세어 숫자 버튼 횟수를 구하고, 더하기 기호의 개수와 합하기",
+      "learningLocation": "활용 6회 · 원문 7번 · 자릿수와 계산기 버튼 누름 횟수",
+      "verification": {
+        "primaryMethod": "decimal digit counts by place-value intervals plus N−1 plus keys",
+        "independentMethod": "directly enumerate every integer 1…N and sum its written digit length",
+        "parameters": {
+          "lastNumber": 24,
+          "oneDigitNumerals": 9,
+          "twoDigitNumerals": 15,
+          "threeDigitNumerals": 0,
+          "digitButtonCount": 39,
+          "plusButtonCount": 23,
+          "equalsButtonCount": 0,
+          "totalButtonPresses": 62
+        },
+        "independentSuite": "qa/applied6-q07-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q07-v2",
+      "genId": "applied6-q07",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 7,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "자릿수와 계산기 버튼 누름 횟수",
+      "detailType": "1부터 N까지 더할 때 숫자 버튼과 + 버튼의 횟수",
+      "pointBand": "2.7",
+      "text": "1부터 75까지 차례대로 더하는 계산을 하려고 합니다. 마지막에 = 버튼은 누르지 않을 때, 숫자와 + 버튼을 누르는 횟수는 모두 몇 번입니까?",
+      "answer": "215",
+      "answerParts": [
+        215
+      ],
+      "answerLabels": [
+        "버튼을 누르는 횟수"
+      ],
+      "acceptedAnswers": [
+        "215"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "1부터 9까지는 한 자리 수이므로 숫자 버튼을 9번 누릅니다.",
+        "10부터 75까지는 두 자리 수가 66개이므로 숫자 버튼은 2×66=132번입니다.",
+        "+ 버튼은 첫 수 뒤부터 마지막 수 앞까지 누르므로 74번입니다.",
+        "따라서 숫자 버튼은 9+132=141번이고, 전체 버튼은 141+74=215번입니다."
+      ],
+      "solution": "1부터 9까지는 한 자리 수이므로 숫자 버튼을 9번 누릅니다. 10부터 75까지는 두 자리 수가 66개이므로 숫자 버튼은 2×66=132번입니다. + 버튼은 첫 수 뒤부터 마지막 수 앞까지 누르므로 74번입니다. 따라서 숫자 버튼은 9+132=141번이고, 전체 버튼은 141+74=215번입니다.",
+      "learningPoint": "자연수의 구간별 자릿수를 세어 숫자 버튼 횟수를 구하고, 더하기 기호의 개수와 합하기",
+      "learningLocation": "활용 6회 · 원문 7번 · 자릿수와 계산기 버튼 누름 횟수",
+      "verification": {
+        "primaryMethod": "decimal digit counts by place-value intervals plus N−1 plus keys",
+        "independentMethod": "directly enumerate every integer 1…N and sum its written digit length",
+        "parameters": {
+          "lastNumber": 75,
+          "oneDigitNumerals": 9,
+          "twoDigitNumerals": 66,
+          "threeDigitNumerals": 0,
+          "digitButtonCount": 141,
+          "plusButtonCount": 74,
+          "equalsButtonCount": 0,
+          "totalButtonPresses": 215
+        },
+        "independentSuite": "qa/applied6-q07-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q07-v3",
+      "genId": "applied6-q07",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 7,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "자릿수와 계산기 버튼 누름 횟수",
+      "detailType": "1부터 N까지 더할 때 숫자 버튼과 + 버튼의 횟수",
+      "pointBand": "2.7",
+      "text": "계산기로 1+2+…+99을 계산합니다. = 버튼을 누르기 전까지 숫자 버튼과 + 버튼을 누르는 횟수를 모두 구하시오.",
+      "answer": "287",
+      "answerParts": [
+        287
+      ],
+      "answerLabels": [
+        "버튼을 누르는 횟수"
+      ],
+      "acceptedAnswers": [
+        "287"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "1부터 9까지는 한 자리 수이므로 숫자 버튼을 9번 누릅니다.",
+        "10부터 99까지는 두 자리 수가 90개이므로 숫자 버튼은 2×90=180번입니다.",
+        "+ 버튼은 첫 수 뒤부터 마지막 수 앞까지 누르므로 98번입니다.",
+        "따라서 숫자 버튼은 9+180=189번이고, 전체 버튼은 189+98=287번입니다."
+      ],
+      "solution": "1부터 9까지는 한 자리 수이므로 숫자 버튼을 9번 누릅니다. 10부터 99까지는 두 자리 수가 90개이므로 숫자 버튼은 2×90=180번입니다. + 버튼은 첫 수 뒤부터 마지막 수 앞까지 누르므로 98번입니다. 따라서 숫자 버튼은 9+180=189번이고, 전체 버튼은 189+98=287번입니다.",
+      "learningPoint": "자연수의 구간별 자릿수를 세어 숫자 버튼 횟수를 구하고, 더하기 기호의 개수와 합하기",
+      "learningLocation": "활용 6회 · 원문 7번 · 자릿수와 계산기 버튼 누름 횟수",
+      "verification": {
+        "primaryMethod": "decimal digit counts by place-value intervals plus N−1 plus keys",
+        "independentMethod": "directly enumerate every integer 1…N and sum its written digit length",
+        "parameters": {
+          "lastNumber": 99,
+          "oneDigitNumerals": 9,
+          "twoDigitNumerals": 90,
+          "threeDigitNumerals": 0,
+          "digitButtonCount": 189,
+          "plusButtonCount": 98,
+          "equalsButtonCount": 0,
+          "totalButtonPresses": 287
+        },
+        "independentSuite": "qa/applied6-q07-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q07-v4",
+      "genId": "applied6-q07",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 7,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "자릿수와 계산기 버튼 누름 횟수",
+      "detailType": "1부터 N까지 더할 때 숫자 버튼과 + 버튼의 횟수",
+      "pointBand": "2.7",
+      "text": "계산기를 사용하여 1부터 134까지의 수를 차례로 모두 더합니다. 숫자 버튼과 + 버튼을 합하여 모두 몇 번 눌러야 하나요? 마지막에 = 버튼은 누르지 않습니다.",
+      "answer": "427",
+      "answerParts": [
+        427
+      ],
+      "answerLabels": [
+        "버튼을 누르는 횟수"
+      ],
+      "acceptedAnswers": [
+        "427"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다.",
+        "10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다.",
+        "100부터 134까지 세 자리 수는 35개이므로 숫자 버튼은 3×35=105번입니다.",
+        "숫자 버튼은 모두 9+180+105=294번이고, + 버튼은 133번입니다.",
+        "따라서 버튼을 누르는 횟수는 294+133=427번입니다."
+      ],
+      "solution": "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다. 10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다. 100부터 134까지 세 자리 수는 35개이므로 숫자 버튼은 3×35=105번입니다. 숫자 버튼은 모두 9+180+105=294번이고, + 버튼은 133번입니다. 따라서 버튼을 누르는 횟수는 294+133=427번입니다.",
+      "learningPoint": "자연수의 구간별 자릿수를 세어 숫자 버튼 횟수를 구하고, 더하기 기호의 개수와 합하기",
+      "learningLocation": "활용 6회 · 원문 7번 · 자릿수와 계산기 버튼 누름 횟수",
+      "verification": {
+        "primaryMethod": "decimal digit counts by place-value intervals plus N−1 plus keys",
+        "independentMethod": "directly enumerate every integer 1…N and sum its written digit length",
+        "parameters": {
+          "lastNumber": 134,
+          "oneDigitNumerals": 9,
+          "twoDigitNumerals": 90,
+          "threeDigitNumerals": 35,
+          "digitButtonCount": 294,
+          "plusButtonCount": 133,
+          "equalsButtonCount": 0,
+          "totalButtonPresses": 427
+        },
+        "independentSuite": "qa/applied6-q07-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q07-v5",
+      "genId": "applied6-q07",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 7,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "자릿수와 계산기 버튼 누름 횟수",
+      "detailType": "1부터 N까지 더할 때 숫자 버튼과 + 버튼의 횟수",
+      "pointBand": "2.7",
+      "text": "1부터 205까지 차례대로 더하는 계산을 하려고 합니다. 마지막에 = 버튼은 누르지 않을 때, 숫자와 + 버튼을 누르는 횟수는 모두 몇 번입니까?",
+      "answer": "711",
+      "answerParts": [
+        711
+      ],
+      "answerLabels": [
+        "버튼을 누르는 횟수"
+      ],
+      "acceptedAnswers": [
+        "711"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다.",
+        "10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다.",
+        "100부터 205까지 세 자리 수는 106개이므로 숫자 버튼은 3×106=318번입니다.",
+        "숫자 버튼은 모두 9+180+318=507번이고, + 버튼은 204번입니다.",
+        "따라서 버튼을 누르는 횟수는 507+204=711번입니다."
+      ],
+      "solution": "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다. 10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다. 100부터 205까지 세 자리 수는 106개이므로 숫자 버튼은 3×106=318번입니다. 숫자 버튼은 모두 9+180+318=507번이고, + 버튼은 204번입니다. 따라서 버튼을 누르는 횟수는 507+204=711번입니다.",
+      "learningPoint": "자연수의 구간별 자릿수를 세어 숫자 버튼 횟수를 구하고, 더하기 기호의 개수와 합하기",
+      "learningLocation": "활용 6회 · 원문 7번 · 자릿수와 계산기 버튼 누름 횟수",
+      "verification": {
+        "primaryMethod": "decimal digit counts by place-value intervals plus N−1 plus keys",
+        "independentMethod": "directly enumerate every integer 1…N and sum its written digit length",
+        "parameters": {
+          "lastNumber": 205,
+          "oneDigitNumerals": 9,
+          "twoDigitNumerals": 90,
+          "threeDigitNumerals": 106,
+          "digitButtonCount": 507,
+          "plusButtonCount": 204,
+          "equalsButtonCount": 0,
+          "totalButtonPresses": 711
+        },
+        "independentSuite": "qa/applied6-q07-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q07-v6",
+      "genId": "applied6-q07",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 7,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "자릿수와 계산기 버튼 누름 횟수",
+      "detailType": "1부터 N까지 더할 때 숫자 버튼과 + 버튼의 횟수",
+      "pointBand": "2.7",
+      "text": "계산기로 1+2+…+387을 계산합니다. = 버튼을 누르기 전까지 숫자 버튼과 + 버튼을 누르는 횟수를 모두 구하시오.",
+      "answer": "1439",
+      "answerParts": [
+        1439
+      ],
+      "answerLabels": [
+        "버튼을 누르는 횟수"
+      ],
+      "acceptedAnswers": [
+        "1439"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다.",
+        "10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다.",
+        "100부터 387까지 세 자리 수는 288개이므로 숫자 버튼은 3×288=864번입니다.",
+        "숫자 버튼은 모두 9+180+864=1053번이고, + 버튼은 386번입니다.",
+        "따라서 버튼을 누르는 횟수는 1053+386=1439번입니다."
+      ],
+      "solution": "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다. 10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다. 100부터 387까지 세 자리 수는 288개이므로 숫자 버튼은 3×288=864번입니다. 숫자 버튼은 모두 9+180+864=1053번이고, + 버튼은 386번입니다. 따라서 버튼을 누르는 횟수는 1053+386=1439번입니다.",
+      "learningPoint": "자연수의 구간별 자릿수를 세어 숫자 버튼 횟수를 구하고, 더하기 기호의 개수와 합하기",
+      "learningLocation": "활용 6회 · 원문 7번 · 자릿수와 계산기 버튼 누름 횟수",
+      "verification": {
+        "primaryMethod": "decimal digit counts by place-value intervals plus N−1 plus keys",
+        "independentMethod": "directly enumerate every integer 1…N and sum its written digit length",
+        "parameters": {
+          "lastNumber": 387,
+          "oneDigitNumerals": 9,
+          "twoDigitNumerals": 90,
+          "threeDigitNumerals": 288,
+          "digitButtonCount": 1053,
+          "plusButtonCount": 386,
+          "equalsButtonCount": 0,
+          "totalButtonPresses": 1439
+        },
+        "independentSuite": "qa/applied6-q07-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q07-v7",
+      "genId": "applied6-q07",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 7,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "자릿수와 계산기 버튼 누름 횟수",
+      "detailType": "1부터 N까지 더할 때 숫자 버튼과 + 버튼의 횟수",
+      "pointBand": "2.7",
+      "text": "계산기를 사용하여 1부터 564까지의 수를 차례로 모두 더합니다. 숫자 버튼과 + 버튼을 합하여 모두 몇 번 눌러야 하나요? 마지막에 = 버튼은 누르지 않습니다.",
+      "answer": "2147",
+      "answerParts": [
+        2147
+      ],
+      "answerLabels": [
+        "버튼을 누르는 횟수"
+      ],
+      "acceptedAnswers": [
+        "2147"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다.",
+        "10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다.",
+        "100부터 564까지 세 자리 수는 465개이므로 숫자 버튼은 3×465=1395번입니다.",
+        "숫자 버튼은 모두 9+180+1395=1584번이고, + 버튼은 563번입니다.",
+        "따라서 버튼을 누르는 횟수는 1584+563=2147번입니다."
+      ],
+      "solution": "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다. 10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다. 100부터 564까지 세 자리 수는 465개이므로 숫자 버튼은 3×465=1395번입니다. 숫자 버튼은 모두 9+180+1395=1584번이고, + 버튼은 563번입니다. 따라서 버튼을 누르는 횟수는 1584+563=2147번입니다.",
+      "learningPoint": "자연수의 구간별 자릿수를 세어 숫자 버튼 횟수를 구하고, 더하기 기호의 개수와 합하기",
+      "learningLocation": "활용 6회 · 원문 7번 · 자릿수와 계산기 버튼 누름 횟수",
+      "verification": {
+        "primaryMethod": "decimal digit counts by place-value intervals plus N−1 plus keys",
+        "independentMethod": "directly enumerate every integer 1…N and sum its written digit length",
+        "parameters": {
+          "lastNumber": 564,
+          "oneDigitNumerals": 9,
+          "twoDigitNumerals": 90,
+          "threeDigitNumerals": 465,
+          "digitButtonCount": 1584,
+          "plusButtonCount": 563,
+          "equalsButtonCount": 0,
+          "totalButtonPresses": 2147
+        },
+        "independentSuite": "qa/applied6-q07-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q07-v8",
+      "genId": "applied6-q07",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 7,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "자릿수와 계산기 버튼 누름 횟수",
+      "detailType": "1부터 N까지 더할 때 숫자 버튼과 + 버튼의 횟수",
+      "pointBand": "2.7",
+      "text": "1부터 781까지 차례대로 더하는 계산을 하려고 합니다. 마지막에 = 버튼은 누르지 않을 때, 숫자와 + 버튼을 누르는 횟수는 모두 몇 번입니까?",
+      "answer": "3015",
+      "answerParts": [
+        3015
+      ],
+      "answerLabels": [
+        "버튼을 누르는 횟수"
+      ],
+      "acceptedAnswers": [
+        "3015"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다.",
+        "10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다.",
+        "100부터 781까지 세 자리 수는 682개이므로 숫자 버튼은 3×682=2046번입니다.",
+        "숫자 버튼은 모두 9+180+2046=2235번이고, + 버튼은 780번입니다.",
+        "따라서 버튼을 누르는 횟수는 2235+780=3015번입니다."
+      ],
+      "solution": "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다. 10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다. 100부터 781까지 세 자리 수는 682개이므로 숫자 버튼은 3×682=2046번입니다. 숫자 버튼은 모두 9+180+2046=2235번이고, + 버튼은 780번입니다. 따라서 버튼을 누르는 횟수는 2235+780=3015번입니다.",
+      "learningPoint": "자연수의 구간별 자릿수를 세어 숫자 버튼 횟수를 구하고, 더하기 기호의 개수와 합하기",
+      "learningLocation": "활용 6회 · 원문 7번 · 자릿수와 계산기 버튼 누름 횟수",
+      "verification": {
+        "primaryMethod": "decimal digit counts by place-value intervals plus N−1 plus keys",
+        "independentMethod": "directly enumerate every integer 1…N and sum its written digit length",
+        "parameters": {
+          "lastNumber": 781,
+          "oneDigitNumerals": 9,
+          "twoDigitNumerals": 90,
+          "threeDigitNumerals": 682,
+          "digitButtonCount": 2235,
+          "plusButtonCount": 780,
+          "equalsButtonCount": 0,
+          "totalButtonPresses": 3015
+        },
+        "independentSuite": "qa/applied6-q07-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q07-v9",
+      "genId": "applied6-q07",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 7,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "자릿수와 계산기 버튼 누름 횟수",
+      "detailType": "1부터 N까지 더할 때 숫자 버튼과 + 버튼의 횟수",
+      "pointBand": "2.7",
+      "text": "계산기로 1+2+…+928을 계산합니다. = 버튼을 누르기 전까지 숫자 버튼과 + 버튼을 누르는 횟수를 모두 구하시오.",
+      "answer": "3603",
+      "answerParts": [
+        3603
+      ],
+      "answerLabels": [
+        "버튼을 누르는 횟수"
+      ],
+      "acceptedAnswers": [
+        "3603"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다.",
+        "10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다.",
+        "100부터 928까지 세 자리 수는 829개이므로 숫자 버튼은 3×829=2487번입니다.",
+        "숫자 버튼은 모두 9+180+2487=2676번이고, + 버튼은 927번입니다.",
+        "따라서 버튼을 누르는 횟수는 2676+927=3603번입니다."
+      ],
+      "solution": "1부터 9까지 한 자리 수의 숫자 버튼은 9번입니다. 10부터 99까지 두 자리 수는 90개이므로 숫자 버튼은 90×2=180번입니다. 100부터 928까지 세 자리 수는 829개이므로 숫자 버튼은 3×829=2487번입니다. 숫자 버튼은 모두 9+180+2487=2676번이고, + 버튼은 927번입니다. 따라서 버튼을 누르는 횟수는 2676+927=3603번입니다.",
+      "learningPoint": "자연수의 구간별 자릿수를 세어 숫자 버튼 횟수를 구하고, 더하기 기호의 개수와 합하기",
+      "learningLocation": "활용 6회 · 원문 7번 · 자릿수와 계산기 버튼 누름 횟수",
+      "verification": {
+        "primaryMethod": "decimal digit counts by place-value intervals plus N−1 plus keys",
+        "independentMethod": "directly enumerate every integer 1…N and sum its written digit length",
+        "parameters": {
+          "lastNumber": 928,
+          "oneDigitNumerals": 9,
+          "twoDigitNumerals": 90,
+          "threeDigitNumerals": 829,
+          "digitButtonCount": 2676,
+          "plusButtonCount": 927,
+          "equalsButtonCount": 0,
+          "totalButtonPresses": 3603
+        },
+        "independentSuite": "qa/applied6-q07-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 27,
-    "sourceTypes": 3,
+    "independentMathCount": 36,
+    "sourceTypes": 4,
     "variantsPerType": 9,
     "outputReviewed": true,
     "sourceDrawingCount": 0,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "sourceQuestionPage": 1,
-    "sourceAnswerPage": 1
+    "sourceQuestionPage": 2,
+    "sourceAnswerPage": 2
   }
 }
