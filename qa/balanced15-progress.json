@@ -111,8 +111,8 @@
   "studentDifficultyMeasured": false,
   "priorMainVerified": "3a7e84ba34c9572640ac840f4209591b1ce0d9ff",
   "priorDeploymentVerified": 40054656735,
-  "currentDeployment": "source16 local QA passed;main/site/Drive publication pending",
-  "driveZip": null,
+  "currentDeployment": "main eb620aea6a1a423f86b41f720876c54b820aa23b;Pages 40056099942 success;9 core public files byte-identical;Drive raw readbacks exact",
+  "driveZip": "https://drive.google.com/file/d/1ugxyM-wNL3SrKDK8ZogNCdbL56Vbwmn0/view",
   "questionPdfPages": 3,
   "solutionPdfPages": 3,
   "practiceHistory": "Prior153 Applied4 objects + prior 1578 practice-history keys byte-preserved; new9 use separate 20261024-applied4-new9-r4 storage;3 attempts/first result retained;original exam score unchanged",
@@ -140,6 +140,11 @@
     "legacyRoundVerified": 162,
     "legacyRoundTypes": 18,
     "zipSha256": "040e386224f1a07ced2a8523325027d377f1d0e6f233b3f6e7174ce640f57c6b",
-    "zipBytes": 4592514
+    "zipBytes": 4592514,
+    "driveZipId": "1ugxyM-wNL3SrKDK8ZogNCdbL56Vbwmn0",
+    "driveReviewId": "1ohHIAqS4J_lPTzoO_gg280O6zAFHjy8o",
+    "driveQuestionPdfId": "1JjAB6vhanyVO06tiw1p6WE0Hbf8I3iZu",
+    "driveSolutionPdfId": "1IwiVjURDhkVROLfFoswsGmzy1SWV4pR6",
+    "publicDeploymentRun": 40056099942
   }
 }
