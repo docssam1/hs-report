@@ -8,8 +8,8 @@ SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf'
 ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/answer.pdf'
 ASSET=ROOT/'bank/assets/applied6/q09-cubes-original.png'
 d=json.loads(DATA.read_text())
-assert d['version']=='20261024-applied6-expansion-r6'
-assert d['availableSourceNos']==[2,3,5,7,8,9] and len(d['items'])==54
+assert d['version']=='20261024-applied6-expansion-r7'
+assert d['availableSourceNos']==[2,3,5,7,8,9,10] and len(d['items'])==63
 items=[x for x in d['items'] if x['sourceNo']==9]
 assert len(items)==9 and [x['variantNo'] for x in items]==list(range(1,10))
 matchsticks=[20,28,44,52,68,76,92,116,140]

@@ -5,7 +5,7 @@ from fractions import Fraction
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DATA=ROOT/'bank/data/applied6-expanded.json';SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf';ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/answer.pdf'
-d=json.loads(DATA.read_text());assert d['availableSourceNos']==[2,3,5,7,8,9] and len(d['items'])==54
+d=json.loads(DATA.read_text());assert d['availableSourceNos']==[2,3,5,7,8,9,10] and len(d['items'])==63
 items=[q for q in d['items'] if q['sourceNo']==5];assert len(items)==9 and [q['variantNo'] for q in items]==list(range(1,10))
 # Source p.1 and answer p.1: A=8 rotations/min; B/A=6; C/B=15/5; duration=150 min.
 source={'a':8,'b':6,'c':15,'group':5,'minutes':150}

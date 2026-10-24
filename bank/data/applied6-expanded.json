@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r6",
+  "version": "20261024-applied6-expansion-r7",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -15,13 +15,13 @@
     5,
     7,
     8,
-    9
+    9,
+    10
   ],
   "pendingSourceNos": [
     1,
     4,
     6,
-    10,
     11,
     12,
     13,
@@ -3379,11 +3379,560 @@
         "sourceReasoningPreserved": true,
         "measuredVariantRate": null
       }
+    },
+    {
+      "id": "applied6-q10-v1",
+      "genId": "applied6-q10",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 10,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "누적된 무게의 차",
+      "detailType": "겹쳐 놓은 저울의 누적 표시로 한 저울의 무게 구하기",
+      "pointBand": "2.7",
+      "text": "저울 다섯 대를 위에서부터 차례로 쌓았습니다. 위에서부터 두 번째, 세 번째, 네 번째, 다섯 번째 저울은 각각 그 위에 놓인 저울들의 전체 무게를 100g, 200g, 500g, 800g로 나타냅니다. 위에서부터 네 번째 저울 하나의 무게는 몇 g입니까?",
+      "answer": "300g",
+      "answerParts": [
+        300
+      ],
+      "answerLabels": [
+        "저울 한 대의 무게(g)"
+      ],
+      "acceptedAnswers": [
+        "300g",
+        "300"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 500g입니다.",
+        "위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 800g로 나타냅니다. 따라서 네 번째 저울의 무게는 800g−500g입니다.",
+        "800−500=300이므로 위에서 네 번째 저울의 무게는 300g입니다."
+      ],
+      "solution": "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 500g입니다. 위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 800g로 나타냅니다. 따라서 네 번째 저울의 무게는 800g−500g입니다. 800−500=300이므로 위에서 네 번째 저울의 무게는 300g입니다.",
+      "learningPoint": "차례로 쌓은 물체의 누적 무게에서 앞뒤 표시값의 차를 이용해 한 물체의 무게 구하기",
+      "learningLocation": "활용 6회 · 원문 10번 · 누적된 무게의 차",
+      "verification": {
+        "primaryMethod": "difference between cumulative readings at adjacent scales",
+        "independentMethod": "successive cumulative sum reconstruction, then subtract the cumulative weight above the target scale",
+        "parameters": {
+          "cumulativeReadingsGrams": [
+            100,
+            200,
+            500,
+            800
+          ],
+          "targetScalePositionFromTop": 4,
+          "weightAboveTargetScaleGrams": 500,
+          "weightThroughTargetScaleGrams": 800,
+          "targetScaleWeightGrams": 300
+        },
+        "independentSuite": "qa/applied6-q10-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "sourceDrawingCompared": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q10-v2",
+      "genId": "applied6-q10",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 10,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "누적된 무게의 차",
+      "detailType": "겹쳐 놓은 저울의 누적 표시로 한 저울의 무게 구하기",
+      "pointBand": "2.7",
+      "text": "저울 다섯 대를 위에서부터 차례로 쌓았습니다. 위에서부터 두 번째, 세 번째, 네 번째, 다섯 번째 저울은 각각 그 위에 놓인 저울들의 전체 무게를 150g, 350g, 700g, 1,000g로 나타냅니다. 위에서부터 네 번째 저울 하나의 무게는 몇 g입니까?",
+      "answer": "300g",
+      "answerParts": [
+        300
+      ],
+      "answerLabels": [
+        "저울 한 대의 무게(g)"
+      ],
+      "acceptedAnswers": [
+        "300g",
+        "300"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 700g입니다.",
+        "위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 1,000g로 나타냅니다. 따라서 네 번째 저울의 무게는 1,000g−700g입니다.",
+        "1000−700=300이므로 위에서 네 번째 저울의 무게는 300g입니다."
+      ],
+      "solution": "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 700g입니다. 위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 1,000g로 나타냅니다. 따라서 네 번째 저울의 무게는 1,000g−700g입니다. 1000−700=300이므로 위에서 네 번째 저울의 무게는 300g입니다.",
+      "learningPoint": "차례로 쌓은 물체의 누적 무게에서 앞뒤 표시값의 차를 이용해 한 물체의 무게 구하기",
+      "learningLocation": "활용 6회 · 원문 10번 · 누적된 무게의 차",
+      "verification": {
+        "primaryMethod": "difference between cumulative readings at adjacent scales",
+        "independentMethod": "successive cumulative sum reconstruction, then subtract the cumulative weight above the target scale",
+        "parameters": {
+          "cumulativeReadingsGrams": [
+            150,
+            350,
+            700,
+            1000
+          ],
+          "targetScalePositionFromTop": 4,
+          "weightAboveTargetScaleGrams": 700,
+          "weightThroughTargetScaleGrams": 1000,
+          "targetScaleWeightGrams": 300
+        },
+        "independentSuite": "qa/applied6-q10-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "sourceDrawingCompared": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q10-v3",
+      "genId": "applied6-q10",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 10,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "누적된 무게의 차",
+      "detailType": "겹쳐 놓은 저울의 누적 표시로 한 저울의 무게 구하기",
+      "pointBand": "2.7",
+      "text": "저울 다섯 대를 위에서부터 차례로 쌓았습니다. 위에서부터 두 번째, 세 번째, 네 번째, 다섯 번째 저울은 각각 그 위에 놓인 저울들의 전체 무게를 200g, 400g, 850g, 1,250g로 나타냅니다. 위에서부터 네 번째 저울 하나의 무게는 몇 g입니까?",
+      "answer": "400g",
+      "answerParts": [
+        400
+      ],
+      "answerLabels": [
+        "저울 한 대의 무게(g)"
+      ],
+      "acceptedAnswers": [
+        "400g",
+        "400"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 850g입니다.",
+        "위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 1,250g로 나타냅니다. 따라서 네 번째 저울의 무게는 1,250g−850g입니다.",
+        "1250−850=400이므로 위에서 네 번째 저울의 무게는 400g입니다."
+      ],
+      "solution": "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 850g입니다. 위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 1,250g로 나타냅니다. 따라서 네 번째 저울의 무게는 1,250g−850g입니다. 1250−850=400이므로 위에서 네 번째 저울의 무게는 400g입니다.",
+      "learningPoint": "차례로 쌓은 물체의 누적 무게에서 앞뒤 표시값의 차를 이용해 한 물체의 무게 구하기",
+      "learningLocation": "활용 6회 · 원문 10번 · 누적된 무게의 차",
+      "verification": {
+        "primaryMethod": "difference between cumulative readings at adjacent scales",
+        "independentMethod": "successive cumulative sum reconstruction, then subtract the cumulative weight above the target scale",
+        "parameters": {
+          "cumulativeReadingsGrams": [
+            200,
+            400,
+            850,
+            1250
+          ],
+          "targetScalePositionFromTop": 4,
+          "weightAboveTargetScaleGrams": 850,
+          "weightThroughTargetScaleGrams": 1250,
+          "targetScaleWeightGrams": 400
+        },
+        "independentSuite": "qa/applied6-q10-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "sourceDrawingCompared": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q10-v4",
+      "genId": "applied6-q10",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 10,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "누적된 무게의 차",
+      "detailType": "겹쳐 놓은 저울의 누적 표시로 한 저울의 무게 구하기",
+      "pointBand": "2.7",
+      "text": "저울 다섯 대를 위에서부터 차례로 쌓았습니다. 위에서부터 두 번째, 세 번째, 네 번째, 다섯 번째 저울은 각각 그 위에 놓인 저울들의 전체 무게를 250g, 650g, 1,100g, 1,600g로 나타냅니다. 위에서부터 네 번째 저울 하나의 무게는 몇 g입니까?",
+      "answer": "500g",
+      "answerParts": [
+        500
+      ],
+      "answerLabels": [
+        "저울 한 대의 무게(g)"
+      ],
+      "acceptedAnswers": [
+        "500g",
+        "500"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 1,100g입니다.",
+        "위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 1,600g로 나타냅니다. 따라서 네 번째 저울의 무게는 1,600g−1,100g입니다.",
+        "1600−1100=500이므로 위에서 네 번째 저울의 무게는 500g입니다."
+      ],
+      "solution": "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 1,100g입니다. 위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 1,600g로 나타냅니다. 따라서 네 번째 저울의 무게는 1,600g−1,100g입니다. 1600−1100=500이므로 위에서 네 번째 저울의 무게는 500g입니다.",
+      "learningPoint": "차례로 쌓은 물체의 누적 무게에서 앞뒤 표시값의 차를 이용해 한 물체의 무게 구하기",
+      "learningLocation": "활용 6회 · 원문 10번 · 누적된 무게의 차",
+      "verification": {
+        "primaryMethod": "difference between cumulative readings at adjacent scales",
+        "independentMethod": "successive cumulative sum reconstruction, then subtract the cumulative weight above the target scale",
+        "parameters": {
+          "cumulativeReadingsGrams": [
+            250,
+            650,
+            1100,
+            1600
+          ],
+          "targetScalePositionFromTop": 4,
+          "weightAboveTargetScaleGrams": 1100,
+          "weightThroughTargetScaleGrams": 1600,
+          "targetScaleWeightGrams": 500
+        },
+        "independentSuite": "qa/applied6-q10-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "sourceDrawingCompared": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q10-v5",
+      "genId": "applied6-q10",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 10,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "누적된 무게의 차",
+      "detailType": "겹쳐 놓은 저울의 누적 표시로 한 저울의 무게 구하기",
+      "pointBand": "2.7",
+      "text": "저울 다섯 대를 위에서부터 차례로 쌓았습니다. 위에서부터 두 번째, 세 번째, 네 번째, 다섯 번째 저울은 각각 그 위에 놓인 저울들의 전체 무게를 300g, 750g, 1,300g, 1,900g로 나타냅니다. 위에서부터 네 번째 저울 하나의 무게는 몇 g입니까?",
+      "answer": "600g",
+      "answerParts": [
+        600
+      ],
+      "answerLabels": [
+        "저울 한 대의 무게(g)"
+      ],
+      "acceptedAnswers": [
+        "600g",
+        "600"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 1,300g입니다.",
+        "위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 1,900g로 나타냅니다. 따라서 네 번째 저울의 무게는 1,900g−1,300g입니다.",
+        "1900−1300=600이므로 위에서 네 번째 저울의 무게는 600g입니다."
+      ],
+      "solution": "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 1,300g입니다. 위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 1,900g로 나타냅니다. 따라서 네 번째 저울의 무게는 1,900g−1,300g입니다. 1900−1300=600이므로 위에서 네 번째 저울의 무게는 600g입니다.",
+      "learningPoint": "차례로 쌓은 물체의 누적 무게에서 앞뒤 표시값의 차를 이용해 한 물체의 무게 구하기",
+      "learningLocation": "활용 6회 · 원문 10번 · 누적된 무게의 차",
+      "verification": {
+        "primaryMethod": "difference between cumulative readings at adjacent scales",
+        "independentMethod": "successive cumulative sum reconstruction, then subtract the cumulative weight above the target scale",
+        "parameters": {
+          "cumulativeReadingsGrams": [
+            300,
+            750,
+            1300,
+            1900
+          ],
+          "targetScalePositionFromTop": 4,
+          "weightAboveTargetScaleGrams": 1300,
+          "weightThroughTargetScaleGrams": 1900,
+          "targetScaleWeightGrams": 600
+        },
+        "independentSuite": "qa/applied6-q10-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "sourceDrawingCompared": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q10-v6",
+      "genId": "applied6-q10",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 10,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "누적된 무게의 차",
+      "detailType": "겹쳐 놓은 저울의 누적 표시로 한 저울의 무게 구하기",
+      "pointBand": "2.7",
+      "text": "저울 다섯 대를 위에서부터 차례로 쌓았습니다. 위에서부터 두 번째, 세 번째, 네 번째, 다섯 번째 저울은 각각 그 위에 놓인 저울들의 전체 무게를 400g, 900g, 1,500g, 2,200g로 나타냅니다. 위에서부터 네 번째 저울 하나의 무게는 몇 g입니까?",
+      "answer": "700g",
+      "answerParts": [
+        700
+      ],
+      "answerLabels": [
+        "저울 한 대의 무게(g)"
+      ],
+      "acceptedAnswers": [
+        "700g",
+        "700"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 1,500g입니다.",
+        "위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 2,200g로 나타냅니다. 따라서 네 번째 저울의 무게는 2,200g−1,500g입니다.",
+        "2200−1500=700이므로 위에서 네 번째 저울의 무게는 700g입니다."
+      ],
+      "solution": "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 1,500g입니다. 위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 2,200g로 나타냅니다. 따라서 네 번째 저울의 무게는 2,200g−1,500g입니다. 2200−1500=700이므로 위에서 네 번째 저울의 무게는 700g입니다.",
+      "learningPoint": "차례로 쌓은 물체의 누적 무게에서 앞뒤 표시값의 차를 이용해 한 물체의 무게 구하기",
+      "learningLocation": "활용 6회 · 원문 10번 · 누적된 무게의 차",
+      "verification": {
+        "primaryMethod": "difference between cumulative readings at adjacent scales",
+        "independentMethod": "successive cumulative sum reconstruction, then subtract the cumulative weight above the target scale",
+        "parameters": {
+          "cumulativeReadingsGrams": [
+            400,
+            900,
+            1500,
+            2200
+          ],
+          "targetScalePositionFromTop": 4,
+          "weightAboveTargetScaleGrams": 1500,
+          "weightThroughTargetScaleGrams": 2200,
+          "targetScaleWeightGrams": 700
+        },
+        "independentSuite": "qa/applied6-q10-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "sourceDrawingCompared": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q10-v7",
+      "genId": "applied6-q10",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 10,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "누적된 무게의 차",
+      "detailType": "겹쳐 놓은 저울의 누적 표시로 한 저울의 무게 구하기",
+      "pointBand": "2.7",
+      "text": "저울 다섯 대를 위에서부터 차례로 쌓았습니다. 위에서부터 두 번째, 세 번째, 네 번째, 다섯 번째 저울은 각각 그 위에 놓인 저울들의 전체 무게를 500g, 1,100g, 1,900g, 2,800g로 나타냅니다. 위에서부터 네 번째 저울 하나의 무게는 몇 g입니까?",
+      "answer": "900g",
+      "answerParts": [
+        900
+      ],
+      "answerLabels": [
+        "저울 한 대의 무게(g)"
+      ],
+      "acceptedAnswers": [
+        "900g",
+        "900"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 1,900g입니다.",
+        "위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 2,800g로 나타냅니다. 따라서 네 번째 저울의 무게는 2,800g−1,900g입니다.",
+        "2800−1900=900이므로 위에서 네 번째 저울의 무게는 900g입니다."
+      ],
+      "solution": "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 1,900g입니다. 위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 2,800g로 나타냅니다. 따라서 네 번째 저울의 무게는 2,800g−1,900g입니다. 2800−1900=900이므로 위에서 네 번째 저울의 무게는 900g입니다.",
+      "learningPoint": "차례로 쌓은 물체의 누적 무게에서 앞뒤 표시값의 차를 이용해 한 물체의 무게 구하기",
+      "learningLocation": "활용 6회 · 원문 10번 · 누적된 무게의 차",
+      "verification": {
+        "primaryMethod": "difference between cumulative readings at adjacent scales",
+        "independentMethod": "successive cumulative sum reconstruction, then subtract the cumulative weight above the target scale",
+        "parameters": {
+          "cumulativeReadingsGrams": [
+            500,
+            1100,
+            1900,
+            2800
+          ],
+          "targetScalePositionFromTop": 4,
+          "weightAboveTargetScaleGrams": 1900,
+          "weightThroughTargetScaleGrams": 2800,
+          "targetScaleWeightGrams": 900
+        },
+        "independentSuite": "qa/applied6-q10-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "sourceDrawingCompared": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q10-v8",
+      "genId": "applied6-q10",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 10,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "누적된 무게의 차",
+      "detailType": "겹쳐 놓은 저울의 누적 표시로 한 저울의 무게 구하기",
+      "pointBand": "2.7",
+      "text": "저울 다섯 대를 위에서부터 차례로 쌓았습니다. 위에서부터 두 번째, 세 번째, 네 번째, 다섯 번째 저울은 각각 그 위에 놓인 저울들의 전체 무게를 600g, 1,300g, 2,100g, 3,200g로 나타냅니다. 위에서부터 네 번째 저울 하나의 무게는 몇 g입니까?",
+      "answer": "1,100g",
+      "answerParts": [
+        1100
+      ],
+      "answerLabels": [
+        "저울 한 대의 무게(g)"
+      ],
+      "acceptedAnswers": [
+        "1,100g",
+        "1100"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 2,100g입니다.",
+        "위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 3,200g로 나타냅니다. 따라서 네 번째 저울의 무게는 3,200g−2,100g입니다.",
+        "3200−2100=1100이므로 위에서 네 번째 저울의 무게는 1,100g입니다."
+      ],
+      "solution": "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 2,100g입니다. 위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 3,200g로 나타냅니다. 따라서 네 번째 저울의 무게는 3,200g−2,100g입니다. 3200−2100=1100이므로 위에서 네 번째 저울의 무게는 1,100g입니다.",
+      "learningPoint": "차례로 쌓은 물체의 누적 무게에서 앞뒤 표시값의 차를 이용해 한 물체의 무게 구하기",
+      "learningLocation": "활용 6회 · 원문 10번 · 누적된 무게의 차",
+      "verification": {
+        "primaryMethod": "difference between cumulative readings at adjacent scales",
+        "independentMethod": "successive cumulative sum reconstruction, then subtract the cumulative weight above the target scale",
+        "parameters": {
+          "cumulativeReadingsGrams": [
+            600,
+            1300,
+            2100,
+            3200
+          ],
+          "targetScalePositionFromTop": 4,
+          "weightAboveTargetScaleGrams": 2100,
+          "weightThroughTargetScaleGrams": 3200,
+          "targetScaleWeightGrams": 1100
+        },
+        "independentSuite": "qa/applied6-q10-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "sourceDrawingCompared": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q10-v9",
+      "genId": "applied6-q10",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 10,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "누적된 무게의 차",
+      "detailType": "겹쳐 놓은 저울의 누적 표시로 한 저울의 무게 구하기",
+      "pointBand": "2.7",
+      "text": "저울 다섯 대를 위에서부터 차례로 쌓았습니다. 위에서부터 두 번째, 세 번째, 네 번째, 다섯 번째 저울은 각각 그 위에 놓인 저울들의 전체 무게를 750g, 1,500g, 2,500g, 3,800g로 나타냅니다. 위에서부터 네 번째 저울 하나의 무게는 몇 g입니까?",
+      "answer": "1,300g",
+      "answerParts": [
+        1300
+      ],
+      "answerLabels": [
+        "저울 한 대의 무게(g)"
+      ],
+      "acceptedAnswers": [
+        "1,300g",
+        "1300"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 2,500g입니다.",
+        "위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 3,800g로 나타냅니다. 따라서 네 번째 저울의 무게는 3,800g−2,500g입니다.",
+        "3800−2500=1300이므로 위에서 네 번째 저울의 무게는 1,300g입니다."
+      ],
+      "solution": "위에서 네 번째 저울 아래에 놓인 세 저울의 무게는 모두 2,500g입니다. 위에서 다섯 번째 저울은 위에 놓인 네 저울의 무게를 모두 3,800g로 나타냅니다. 따라서 네 번째 저울의 무게는 3,800g−2,500g입니다. 3800−2500=1300이므로 위에서 네 번째 저울의 무게는 1,300g입니다.",
+      "learningPoint": "차례로 쌓은 물체의 누적 무게에서 앞뒤 표시값의 차를 이용해 한 물체의 무게 구하기",
+      "learningLocation": "활용 6회 · 원문 10번 · 누적된 무게의 차",
+      "verification": {
+        "primaryMethod": "difference between cumulative readings at adjacent scales",
+        "independentMethod": "successive cumulative sum reconstruction, then subtract the cumulative weight above the target scale",
+        "parameters": {
+          "cumulativeReadingsGrams": [
+            750,
+            1500,
+            2500,
+            3800
+          ],
+          "targetScalePositionFromTop": 4,
+          "weightAboveTargetScaleGrams": 2500,
+          "weightThroughTargetScaleGrams": 3800,
+          "targetScaleWeightGrams": 1300
+        },
+        "independentSuite": "qa/applied6-q10-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "sourceDrawingCompared": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 54,
-    "sourceTypes": 6,
+    "independentMathCount": 63,
+    "sourceTypes": 7,
     "variantsPerType": 9,
     "outputReviewed": true,
     "sourceDrawingCount": 2,
