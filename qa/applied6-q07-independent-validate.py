@@ -7,8 +7,8 @@ DATA=ROOT/'bank/data/applied6-expanded.json'
 SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf'
 ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/answer.pdf'
 d=json.loads(DATA.read_text())
-assert d['version']=='20261024-applied6-expansion-r4'
-assert d['availableSourceNos']==[2,3,5,7] and len(d['items'])==36
+assert d['version']=='20261024-applied6-expansion-r5'
+assert d['availableSourceNos']==[2,3,5,7,8] and len(d['items'])==45
 items=[x for x in d['items'] if x['sourceNo']==7]
 assert len(items)==9 and [x['variantNo'] for x in items]==list(range(1,10))
 def digit_count(n): return sum(len(str(k)) for k in range(1,n+1))

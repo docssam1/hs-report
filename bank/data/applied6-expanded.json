@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r4",
+  "version": "20261024-applied6-expansion-r5",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -13,13 +13,13 @@
     2,
     3,
     5,
-    7
+    7,
+    8
   ],
   "pendingSourceNos": [
     1,
     4,
     6,
-    8,
     9,
     10,
     11,
@@ -2173,14 +2173,644 @@
         "sourceReasoningPreserved": true,
         "measuredVariantRate": null
       }
+    },
+    {
+      "id": "applied6-q08-v1",
+      "genId": "applied6-q08",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 8,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "detailType": "그림 규칙에서 n번째 회차에 붙이는 타일의 색과 개수",
+      "pointBand": "2.7",
+      "text": "그림과 같이 벽에 타일을 붙여 나갑니다. 1회에는 흰 타일, 2회에는 검은 타일, 3회에는 흰 타일, 4회에는 검은 타일을 붙이며 같은 방식으로 번갈아 갑니다. 5회에 붙이는 타일의 색과 개수를 구하시오.",
+      "answer": "흰색, 16",
+      "answerParts": [
+        "흰색",
+        16
+      ],
+      "answerLabels": [
+        "타일 색",
+        "타일 수"
+      ],
+      "acceptedAnswers": [
+        "흰색, 16",
+        "흰색 16"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q08-tiles-original.png",
+        "mimeType": "image/png",
+        "width": 890,
+        "height": 350,
+        "description": "활용 6회 원문 8번의 타일 배열 그림"
+      },
+      "solutionSteps": [
+        "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다.",
+        "새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다.",
+        "5회는 홀수이므로 흰색 타일을 붙입니다.",
+        "타일 수는 4×(5−1)=4×4=16개입니다. 따라서 흰색 타일 16개입니다."
+      ],
+      "solution": "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다. 새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다. 5회는 홀수이므로 흰색 타일을 붙입니다. 타일 수는 4×(5−1)=4×4=16개입니다. 따라서 흰색 타일 16개입니다.",
+      "learningPoint": "회차가 바뀔 때 새로 더해지는 테두리 타일의 수 규칙과 홀짝에 따른 색 변화를 찾아 일반화하기",
+      "learningLocation": "활용 6회 · 원문 8번 · 색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "verification": {
+        "primaryMethod": "n-th outer layer: four equal sides with n−1 new tiles per side",
+        "independentMethod": "enumerate the four side contributions for each round and track alternating color",
+        "parameters": {
+          "targetRound": 5,
+          "color": "흰색",
+          "newTilesPerSide": 4,
+          "tileCount": 16,
+          "roundColorCycle": [
+            "흰색",
+            "검은색"
+          ],
+          "sourceDrawingSha256": "efc8c598b0e991e833e05ef85dd860ba6f0460a98052009d229b7658e9b74000"
+        },
+        "independentSuite": "qa/applied6-q08-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q08-v2",
+      "genId": "applied6-q08",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 8,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "detailType": "그림 규칙에서 n번째 회차에 붙이는 타일의 색과 개수",
+      "pointBand": "2.7",
+      "text": "그림과 같이 벽에 타일을 붙여 나갑니다. 1회에는 흰 타일, 2회에는 검은 타일, 3회에는 흰 타일, 4회에는 검은 타일을 붙이며 같은 방식으로 번갈아 갑니다. 12회에 붙이는 타일의 색과 개수를 구하시오.",
+      "answer": "검은색, 44",
+      "answerParts": [
+        "검은색",
+        44
+      ],
+      "answerLabels": [
+        "타일 색",
+        "타일 수"
+      ],
+      "acceptedAnswers": [
+        "검은색, 44",
+        "검은색 44"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q08-tiles-original.png",
+        "mimeType": "image/png",
+        "width": 890,
+        "height": 350,
+        "description": "활용 6회 원문 8번의 타일 배열 그림"
+      },
+      "solutionSteps": [
+        "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다.",
+        "새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다.",
+        "12회는 짝수이므로 검은색 타일을 붙입니다.",
+        "타일 수는 4×(12−1)=4×11=44개입니다. 따라서 검은색 타일 44개입니다."
+      ],
+      "solution": "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다. 새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다. 12회는 짝수이므로 검은색 타일을 붙입니다. 타일 수는 4×(12−1)=4×11=44개입니다. 따라서 검은색 타일 44개입니다.",
+      "learningPoint": "회차가 바뀔 때 새로 더해지는 테두리 타일의 수 규칙과 홀짝에 따른 색 변화를 찾아 일반화하기",
+      "learningLocation": "활용 6회 · 원문 8번 · 색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "verification": {
+        "primaryMethod": "n-th outer layer: four equal sides with n−1 new tiles per side",
+        "independentMethod": "enumerate the four side contributions for each round and track alternating color",
+        "parameters": {
+          "targetRound": 12,
+          "color": "검은색",
+          "newTilesPerSide": 11,
+          "tileCount": 44,
+          "roundColorCycle": [
+            "흰색",
+            "검은색"
+          ],
+          "sourceDrawingSha256": "efc8c598b0e991e833e05ef85dd860ba6f0460a98052009d229b7658e9b74000"
+        },
+        "independentSuite": "qa/applied6-q08-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q08-v3",
+      "genId": "applied6-q08",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 8,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "detailType": "그림 규칙에서 n번째 회차에 붙이는 타일의 색과 개수",
+      "pointBand": "2.7",
+      "text": "그림과 같이 벽에 타일을 붙여 나갑니다. 1회에는 흰 타일, 2회에는 검은 타일, 3회에는 흰 타일, 4회에는 검은 타일을 붙이며 같은 방식으로 번갈아 갑니다. 27회에 붙이는 타일의 색과 개수를 구하시오.",
+      "answer": "흰색, 104",
+      "answerParts": [
+        "흰색",
+        104
+      ],
+      "answerLabels": [
+        "타일 색",
+        "타일 수"
+      ],
+      "acceptedAnswers": [
+        "흰색, 104",
+        "흰색 104"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q08-tiles-original.png",
+        "mimeType": "image/png",
+        "width": 890,
+        "height": 350,
+        "description": "활용 6회 원문 8번의 타일 배열 그림"
+      },
+      "solutionSteps": [
+        "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다.",
+        "새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다.",
+        "27회는 홀수이므로 흰색 타일을 붙입니다.",
+        "타일 수는 4×(27−1)=4×26=104개입니다. 따라서 흰색 타일 104개입니다."
+      ],
+      "solution": "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다. 새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다. 27회는 홀수이므로 흰색 타일을 붙입니다. 타일 수는 4×(27−1)=4×26=104개입니다. 따라서 흰색 타일 104개입니다.",
+      "learningPoint": "회차가 바뀔 때 새로 더해지는 테두리 타일의 수 규칙과 홀짝에 따른 색 변화를 찾아 일반화하기",
+      "learningLocation": "활용 6회 · 원문 8번 · 색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "verification": {
+        "primaryMethod": "n-th outer layer: four equal sides with n−1 new tiles per side",
+        "independentMethod": "enumerate the four side contributions for each round and track alternating color",
+        "parameters": {
+          "targetRound": 27,
+          "color": "흰색",
+          "newTilesPerSide": 26,
+          "tileCount": 104,
+          "roundColorCycle": [
+            "흰색",
+            "검은색"
+          ],
+          "sourceDrawingSha256": "efc8c598b0e991e833e05ef85dd860ba6f0460a98052009d229b7658e9b74000"
+        },
+        "independentSuite": "qa/applied6-q08-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q08-v4",
+      "genId": "applied6-q08",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 8,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "detailType": "그림 규칙에서 n번째 회차에 붙이는 타일의 색과 개수",
+      "pointBand": "2.7",
+      "text": "그림과 같이 벽에 타일을 붙여 나갑니다. 1회에는 흰 타일, 2회에는 검은 타일, 3회에는 흰 타일, 4회에는 검은 타일을 붙이며 같은 방식으로 번갈아 갑니다. 38회에 붙이는 타일의 색과 개수를 구하시오.",
+      "answer": "검은색, 148",
+      "answerParts": [
+        "검은색",
+        148
+      ],
+      "answerLabels": [
+        "타일 색",
+        "타일 수"
+      ],
+      "acceptedAnswers": [
+        "검은색, 148",
+        "검은색 148"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q08-tiles-original.png",
+        "mimeType": "image/png",
+        "width": 890,
+        "height": 350,
+        "description": "활용 6회 원문 8번의 타일 배열 그림"
+      },
+      "solutionSteps": [
+        "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다.",
+        "새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다.",
+        "38회는 짝수이므로 검은색 타일을 붙입니다.",
+        "타일 수는 4×(38−1)=4×37=148개입니다. 따라서 검은색 타일 148개입니다."
+      ],
+      "solution": "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다. 새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다. 38회는 짝수이므로 검은색 타일을 붙입니다. 타일 수는 4×(38−1)=4×37=148개입니다. 따라서 검은색 타일 148개입니다.",
+      "learningPoint": "회차가 바뀔 때 새로 더해지는 테두리 타일의 수 규칙과 홀짝에 따른 색 변화를 찾아 일반화하기",
+      "learningLocation": "활용 6회 · 원문 8번 · 색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "verification": {
+        "primaryMethod": "n-th outer layer: four equal sides with n−1 new tiles per side",
+        "independentMethod": "enumerate the four side contributions for each round and track alternating color",
+        "parameters": {
+          "targetRound": 38,
+          "color": "검은색",
+          "newTilesPerSide": 37,
+          "tileCount": 148,
+          "roundColorCycle": [
+            "흰색",
+            "검은색"
+          ],
+          "sourceDrawingSha256": "efc8c598b0e991e833e05ef85dd860ba6f0460a98052009d229b7658e9b74000"
+        },
+        "independentSuite": "qa/applied6-q08-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q08-v5",
+      "genId": "applied6-q08",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 8,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "detailType": "그림 규칙에서 n번째 회차에 붙이는 타일의 색과 개수",
+      "pointBand": "2.7",
+      "text": "그림과 같이 벽에 타일을 붙여 나갑니다. 1회에는 흰 타일, 2회에는 검은 타일, 3회에는 흰 타일, 4회에는 검은 타일을 붙이며 같은 방식으로 번갈아 갑니다. 49회에 붙이는 타일의 색과 개수를 구하시오.",
+      "answer": "흰색, 192",
+      "answerParts": [
+        "흰색",
+        192
+      ],
+      "answerLabels": [
+        "타일 색",
+        "타일 수"
+      ],
+      "acceptedAnswers": [
+        "흰색, 192",
+        "흰색 192"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q08-tiles-original.png",
+        "mimeType": "image/png",
+        "width": 890,
+        "height": 350,
+        "description": "활용 6회 원문 8번의 타일 배열 그림"
+      },
+      "solutionSteps": [
+        "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다.",
+        "새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다.",
+        "49회는 홀수이므로 흰색 타일을 붙입니다.",
+        "타일 수는 4×(49−1)=4×48=192개입니다. 따라서 흰색 타일 192개입니다."
+      ],
+      "solution": "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다. 새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다. 49회는 홀수이므로 흰색 타일을 붙입니다. 타일 수는 4×(49−1)=4×48=192개입니다. 따라서 흰색 타일 192개입니다.",
+      "learningPoint": "회차가 바뀔 때 새로 더해지는 테두리 타일의 수 규칙과 홀짝에 따른 색 변화를 찾아 일반화하기",
+      "learningLocation": "활용 6회 · 원문 8번 · 색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "verification": {
+        "primaryMethod": "n-th outer layer: four equal sides with n−1 new tiles per side",
+        "independentMethod": "enumerate the four side contributions for each round and track alternating color",
+        "parameters": {
+          "targetRound": 49,
+          "color": "흰색",
+          "newTilesPerSide": 48,
+          "tileCount": 192,
+          "roundColorCycle": [
+            "흰색",
+            "검은색"
+          ],
+          "sourceDrawingSha256": "efc8c598b0e991e833e05ef85dd860ba6f0460a98052009d229b7658e9b74000"
+        },
+        "independentSuite": "qa/applied6-q08-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q08-v6",
+      "genId": "applied6-q08",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 8,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "detailType": "그림 규칙에서 n번째 회차에 붙이는 타일의 색과 개수",
+      "pointBand": "2.7",
+      "text": "그림과 같이 벽에 타일을 붙여 나갑니다. 1회에는 흰 타일, 2회에는 검은 타일, 3회에는 흰 타일, 4회에는 검은 타일을 붙이며 같은 방식으로 번갈아 갑니다. 56회에 붙이는 타일의 색과 개수를 구하시오.",
+      "answer": "검은색, 220",
+      "answerParts": [
+        "검은색",
+        220
+      ],
+      "answerLabels": [
+        "타일 색",
+        "타일 수"
+      ],
+      "acceptedAnswers": [
+        "검은색, 220",
+        "검은색 220"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q08-tiles-original.png",
+        "mimeType": "image/png",
+        "width": 890,
+        "height": 350,
+        "description": "활용 6회 원문 8번의 타일 배열 그림"
+      },
+      "solutionSteps": [
+        "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다.",
+        "새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다.",
+        "56회는 짝수이므로 검은색 타일을 붙입니다.",
+        "타일 수는 4×(56−1)=4×55=220개입니다. 따라서 검은색 타일 220개입니다."
+      ],
+      "solution": "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다. 새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다. 56회는 짝수이므로 검은색 타일을 붙입니다. 타일 수는 4×(56−1)=4×55=220개입니다. 따라서 검은색 타일 220개입니다.",
+      "learningPoint": "회차가 바뀔 때 새로 더해지는 테두리 타일의 수 규칙과 홀짝에 따른 색 변화를 찾아 일반화하기",
+      "learningLocation": "활용 6회 · 원문 8번 · 색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "verification": {
+        "primaryMethod": "n-th outer layer: four equal sides with n−1 new tiles per side",
+        "independentMethod": "enumerate the four side contributions for each round and track alternating color",
+        "parameters": {
+          "targetRound": 56,
+          "color": "검은색",
+          "newTilesPerSide": 55,
+          "tileCount": 220,
+          "roundColorCycle": [
+            "흰색",
+            "검은색"
+          ],
+          "sourceDrawingSha256": "efc8c598b0e991e833e05ef85dd860ba6f0460a98052009d229b7658e9b74000"
+        },
+        "independentSuite": "qa/applied6-q08-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q08-v7",
+      "genId": "applied6-q08",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 8,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "detailType": "그림 규칙에서 n번째 회차에 붙이는 타일의 색과 개수",
+      "pointBand": "2.7",
+      "text": "그림과 같이 벽에 타일을 붙여 나갑니다. 1회에는 흰 타일, 2회에는 검은 타일, 3회에는 흰 타일, 4회에는 검은 타일을 붙이며 같은 방식으로 번갈아 갑니다. 72회에 붙이는 타일의 색과 개수를 구하시오.",
+      "answer": "검은색, 284",
+      "answerParts": [
+        "검은색",
+        284
+      ],
+      "answerLabels": [
+        "타일 색",
+        "타일 수"
+      ],
+      "acceptedAnswers": [
+        "검은색, 284",
+        "검은색 284"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q08-tiles-original.png",
+        "mimeType": "image/png",
+        "width": 890,
+        "height": 350,
+        "description": "활용 6회 원문 8번의 타일 배열 그림"
+      },
+      "solutionSteps": [
+        "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다.",
+        "새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다.",
+        "72회는 짝수이므로 검은색 타일을 붙입니다.",
+        "타일 수는 4×(72−1)=4×71=284개입니다. 따라서 검은색 타일 284개입니다."
+      ],
+      "solution": "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다. 새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다. 72회는 짝수이므로 검은색 타일을 붙입니다. 타일 수는 4×(72−1)=4×71=284개입니다. 따라서 검은색 타일 284개입니다.",
+      "learningPoint": "회차가 바뀔 때 새로 더해지는 테두리 타일의 수 규칙과 홀짝에 따른 색 변화를 찾아 일반화하기",
+      "learningLocation": "활용 6회 · 원문 8번 · 색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "verification": {
+        "primaryMethod": "n-th outer layer: four equal sides with n−1 new tiles per side",
+        "independentMethod": "enumerate the four side contributions for each round and track alternating color",
+        "parameters": {
+          "targetRound": 72,
+          "color": "검은색",
+          "newTilesPerSide": 71,
+          "tileCount": 284,
+          "roundColorCycle": [
+            "흰색",
+            "검은색"
+          ],
+          "sourceDrawingSha256": "efc8c598b0e991e833e05ef85dd860ba6f0460a98052009d229b7658e9b74000"
+        },
+        "independentSuite": "qa/applied6-q08-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q08-v8",
+      "genId": "applied6-q08",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 8,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "detailType": "그림 규칙에서 n번째 회차에 붙이는 타일의 색과 개수",
+      "pointBand": "2.7",
+      "text": "그림과 같이 벽에 타일을 붙여 나갑니다. 1회에는 흰 타일, 2회에는 검은 타일, 3회에는 흰 타일, 4회에는 검은 타일을 붙이며 같은 방식으로 번갈아 갑니다. 85회에 붙이는 타일의 색과 개수를 구하시오.",
+      "answer": "흰색, 336",
+      "answerParts": [
+        "흰색",
+        336
+      ],
+      "answerLabels": [
+        "타일 색",
+        "타일 수"
+      ],
+      "acceptedAnswers": [
+        "흰색, 336",
+        "흰색 336"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q08-tiles-original.png",
+        "mimeType": "image/png",
+        "width": 890,
+        "height": 350,
+        "description": "활용 6회 원문 8번의 타일 배열 그림"
+      },
+      "solutionSteps": [
+        "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다.",
+        "새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다.",
+        "85회는 홀수이므로 흰색 타일을 붙입니다.",
+        "타일 수는 4×(85−1)=4×84=336개입니다. 따라서 흰색 타일 336개입니다."
+      ],
+      "solution": "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다. 새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다. 85회는 홀수이므로 흰색 타일을 붙입니다. 타일 수는 4×(85−1)=4×84=336개입니다. 따라서 흰색 타일 336개입니다.",
+      "learningPoint": "회차가 바뀔 때 새로 더해지는 테두리 타일의 수 규칙과 홀짝에 따른 색 변화를 찾아 일반화하기",
+      "learningLocation": "활용 6회 · 원문 8번 · 색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "verification": {
+        "primaryMethod": "n-th outer layer: four equal sides with n−1 new tiles per side",
+        "independentMethod": "enumerate the four side contributions for each round and track alternating color",
+        "parameters": {
+          "targetRound": 85,
+          "color": "흰색",
+          "newTilesPerSide": 84,
+          "tileCount": 336,
+          "roundColorCycle": [
+            "흰색",
+            "검은색"
+          ],
+          "sourceDrawingSha256": "efc8c598b0e991e833e05ef85dd860ba6f0460a98052009d229b7658e9b74000"
+        },
+        "independentSuite": "qa/applied6-q08-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q08-v9",
+      "genId": "applied6-q08",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 8,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "detailType": "그림 규칙에서 n번째 회차에 붙이는 타일의 색과 개수",
+      "pointBand": "2.7",
+      "text": "그림과 같이 벽에 타일을 붙여 나갑니다. 1회에는 흰 타일, 2회에는 검은 타일, 3회에는 흰 타일, 4회에는 검은 타일을 붙이며 같은 방식으로 번갈아 갑니다. 96회에 붙이는 타일의 색과 개수를 구하시오.",
+      "answer": "검은색, 380",
+      "answerParts": [
+        "검은색",
+        380
+      ],
+      "answerLabels": [
+        "타일 색",
+        "타일 수"
+      ],
+      "acceptedAnswers": [
+        "검은색, 380",
+        "검은색 380"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q08-tiles-original.png",
+        "mimeType": "image/png",
+        "width": 890,
+        "height": 350,
+        "description": "활용 6회 원문 8번의 타일 배열 그림"
+      },
+      "solutionSteps": [
+        "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다.",
+        "새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다.",
+        "96회는 짝수이므로 검은색 타일을 붙입니다.",
+        "타일 수는 4×(96−1)=4×95=380개입니다. 따라서 검은색 타일 380개입니다."
+      ],
+      "solution": "그림에서 2회에는 새 검은 타일 4개, 3회에는 새 흰 타일 8개, 4회에는 새 검은 타일 12개를 붙입니다. 새로 붙이는 타일은 네 방향에 같은 수씩 놓이고, 회차가 1 늘 때마다 각 방향에서 한 개씩 늘어납니다. 따라서 n회에 붙이는 타일은 4×(n−1)개입니다. 96회는 짝수이므로 검은색 타일을 붙입니다. 타일 수는 4×(96−1)=4×95=380개입니다. 따라서 검은색 타일 380개입니다.",
+      "learningPoint": "회차가 바뀔 때 새로 더해지는 테두리 타일의 수 규칙과 홀짝에 따른 색 변화를 찾아 일반화하기",
+      "learningLocation": "활용 6회 · 원문 8번 · 색을 번갈아 붙이는 정사각형 테두리 규칙",
+      "verification": {
+        "primaryMethod": "n-th outer layer: four equal sides with n−1 new tiles per side",
+        "independentMethod": "enumerate the four side contributions for each round and track alternating color",
+        "parameters": {
+          "targetRound": 96,
+          "color": "검은색",
+          "newTilesPerSide": 95,
+          "tileCount": 380,
+          "roundColorCycle": [
+            "흰색",
+            "검은색"
+          ],
+          "sourceDrawingSha256": "efc8c598b0e991e833e05ef85dd860ba6f0460a98052009d229b7658e9b74000"
+        },
+        "independentSuite": "qa/applied6-q08-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 36,
-    "sourceTypes": 4,
+    "independentMathCount": 45,
+    "sourceTypes": 5,
     "variantsPerType": 9,
     "outputReviewed": true,
-    "sourceDrawingCount": 0,
+    "sourceDrawingCount": 1,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
     "sourceQuestionPage": 2,
