@@ -168,7 +168,7 @@
       generator='<a class="badge practice" href="index.html?'+params+'">이 유형 유사문제 검토하기</a>';
     }
     Object.keys(group.expandedRefs||{}).forEach(function(bank){generator+=' <a class="badge practice" href="pool.html?bank='+encodeURIComponent(bank)+'&amp;nos='+encodeURIComponent(unique(group.expandedRefs[bank]).join(','))+'&amp;count=9">문항별 유사문제 9개 공부하기</a>';});
-    Object.keys(group.balancedRefs||{}).forEach(function(bank){generator+=' <a class="badge practice" href="pool.html?bank='+encodeURIComponent(bank)+'&amp;nos='+encodeURIComponent(unique(group.balancedRefs[bank]).join(','))+'&amp;count=15">하·중·상 5개씩 · 15문제</a>';});
+    Object.keys(group.balancedRefs||{}).forEach(function(bank){generator+=' <a class="badge practice" href="pool.html?bank='+encodeURIComponent(bank)+'&amp;nos='+encodeURIComponent(unique(group.balancedRefs[bank]).join(','))+'&amp;count=9">하·중·상 3개씩 · 9문제</a>';});
     var originalType=group.sourceReviewed&&group.studentDisplayName!==group.displayType
       ?'<div class="raw-single">기존 유형명 · '+esc(group.displayType)+'</div>':'';
     return '<article class="type-card" data-type-id="'+esc(group.id)+'">'+

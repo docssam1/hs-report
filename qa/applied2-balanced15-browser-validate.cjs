@@ -93,7 +93,7 @@ const server=http.createServer((req,res)=>{
    const item=preview.items.find(x=>x.sourceNo===no&&x.practiceLevel==='high'),diag=p.locator('[data-diagnosis="'+item.id+'"]');
    assert.match(await diag.textContent(),/학습 포인트/);const href=await diag.locator('a').first().getAttribute('href');assert.match(decodeURIComponent(href),new RegExp('활용 2회.pdf#page='+item.verification.sourceExamPage));
    assert.equal(await p.locator(await diag.locator('a').nth(1).getAttribute('href')).count(),1);
-   assert.match(await diag.locator('a').last().getAttribute('href'),new RegExp('bank=applied2-balanced15.*nos='+no+'.*count=15'));
+   assert.match(await diag.locator('a').last().getAttribute('href'),new RegExp('bank=applied2-balanced15.*nos='+no+'.*count=9'));
   }
   const key='gfield_practice_pool_v2:local-tester:'+encodeURIComponent(target.practiceStorageVersion)+':'+target.id;
   let history=await p.evaluate(k=>JSON.parse(localStorage.getItem(k)),key);assert.equal(history.length,2);assert.equal(history[0].correct,false);assert.equal(history[1].correct,true);

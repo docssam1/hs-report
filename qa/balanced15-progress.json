@@ -1,9 +1,9 @@
 {
-  "goal": "원문마다 하·중·상 각각 5개씩 총 15개",
+  "goal": "원문당 총9개",
   "state": "partial",
   "priority": "활용 1~9회 우선, 이후 다른 기존 모의고사",
   "appliedTargetSources": 270,
-  "appliedTargetWorksheetItems": 4050,
+  "appliedTargetWorksheetItems": 2430,
   "completedBalancedSources": [
     "applied|1|1",
     "applied|1|2",
@@ -103,8 +103,6 @@
   ],
   "completedBalancedSourceCount": 95,
   "completedBalancedWorksheetItems": 1425,
-  "remainingAppliedSources": 175,
-  "remainingAppliedWorksheetItems": 2625,
   "newDistinctAuthoredItems": 1140,
   "reusedApprovedItemsInBalancedView": 285,
   "previousApprovedStoredItemsPreserved": 1935,
@@ -118,6 +116,17 @@
   "questionPdfPages": 29,
   "solutionPdfPages": 29,
   "practiceHistory": "All prior1335 balanced and108 Applied4 expanded attemptkeys retained;52 protected files unchanged;3attempts/first preserved;source grades unchanged",
-  "next": "Applied4 source7-12:read exact current exam/teacher PDF first;175types2625slots and other series incomplete",
-  "outputFidelity": "Native cipher/strip/mesh/operators retained; strip only empty white margin cropped;5approved operator crops preserved;60figures/150fractionterms/25essentialexpressionblocks;58actualZIP pages all reviewed/8zooms;final PDF image/placement streams equal"
+  "next": "활용4회7~12번부터 총9개 기준 부족분만 제작. 기존 승인9개가 완성된 원문은 재제작하지 않음. 이전15개 누적/잔량은 과거 계획 지표이고 현행 목표 아님.",
+  "outputFidelity": "Native cipher/strip/mesh/operators retained; strip only empty white margin cropped;5approved operator crops preserved;60figures/150fractionterms/25essentialexpressionblocks;58actualZIP pages all reviewed/8zooms;final PDF image/placement streams equal",
+  "currentVariantsPerSource": 9,
+  "scopeRevision": "Latest user choice:9 total per original;stop filling15;preserve all approved data/history",
+  "historicalBalancedCountsOnly": true,
+  "nineStoredCountProjection": {
+    "targetPerSource": 9,
+    "targetCount": 2430,
+    "readyByStoredCountOnly": 113,
+    "missingByStoredCountOnly": 1413,
+    "notFullFidelityOrConnectionApproval": true,
+    "legacyBalanced15CountsHistorical": true
+  }
 }
