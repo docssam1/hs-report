@@ -2,7 +2,7 @@
   "version": "20261024-applied4-expansion-r1",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 189,
+  "itemCount": 198,
   "pendingSourceNos": [
     1,
     2,
@@ -10,7 +10,6 @@
     4,
     21,
     24,
-    25,
     26,
     30
   ],
@@ -191,6 +190,16 @@
       "area": "수와 식",
       "subarea": "배수와 숫자 세기",
       "detailType": "배수 목록의 특정 숫자 등장 횟수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 25,
+      "genId": "applied4-q25",
+      "area": "수와 식",
+      "subarea": "속력과 거리의 비",
+      "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9

@@ -37,8 +37,9 @@ def main():
     assert len(rows) == 9
     old = [x for x in data["items"] if x["sourceNo"] != 27]
     q22 = [x for x in old if x["sourceNo"] == 22]
-    assert old[:len(prior["items"])] == prior["items"] and len(q22) == 9
-    assert old[len(prior["items"]):] == q22 and len(old) == 180
+    q25 = [x for x in old if x["sourceNo"] == 25]
+    assert old[:len(prior["items"])] == prior["items"] and len(q22) == len(q25) == 9
+    assert old[len(prior["items"]):] == q22 + q25 and len(old) == 189
     sums = list(range(33, 42))
     assert [x["verification"]["parameters"]["digitSum"] for x in rows] == sums
     assert [x["answer"] for x in rows] == [str(brute(s)) for s in sums]
@@ -51,7 +52,7 @@ def main():
     released = all(x["reviewStatus"] == "verified" for x in rows)
     if released:
         assert any(x["sourceNo"] == 27 and x["variantCount"] == 9 for x in index["items"])
-        assert 27 not in index["pendingSourceNos"] and index["itemCount"] == 189
+        assert 27 not in index["pendingSourceNos"] and index["itemCount"] == 198
     else:
         assert not any(x["sourceNo"] == 27 for x in index["items"])
         assert 27 in index["pendingSourceNos"] and index["itemCount"] == 171
@@ -64,7 +65,7 @@ def main():
              "sourcePdfSha256": hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
              "answerPdfSha256": hashlib.sha256(ANSWER.read_bytes()).hexdigest()}
     (WORK / "q27-independent-math.json").write_text(json.dumps(proof, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("PASS Q27: 9 unique digit sums, 2 independent exact counts, source answer 10, prior records unchanged; Q22 appended")
+    print("PASS Q27: 9 unique digit sums, 2 independent exact counts, source answer 10, prior records unchanged; Q22/Q25 appended")
 
 
 if __name__ == "__main__":

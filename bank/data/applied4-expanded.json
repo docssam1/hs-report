@@ -28,6 +28,7 @@
     20,
     22,
     23,
+    25,
     27,
     28,
     29
@@ -39,7 +40,6 @@
     4,
     21,
     24,
-    25,
     26,
     30
   ],
@@ -15962,17 +15962,612 @@
       },
       "practiceStage": "high",
       "practiceStageBasis": "question-bank-stage-adjustment; original 3.4-point band retained"
+    },
+    {
+      "id": "applied4-q25-v1",
+      "genId": "applied4-q25",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 25,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "속력과 거리의 비",
+      "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
+      "pointBand": "4.2",
+      "text": "결승점은 출발점에서 812m 떨어져 있습니다. 토끼와 거북이는 같은 때 출발했고, 토끼의 일정한 속력은 거북이의 10배입니다. 토끼는 출발점과 결승점의 중간 지점에서 잠들었습니다. 토끼가 깨어났을 때 거북이는 결승점에서 40m 떨어져 있었고, 토끼는 처음과 같은 속력으로 다시 달렸습니다. 먼저 도착하는 동물과 그때 다른 동물에게 남아 있는 거리를 구하시오.",
+      "answer": "거북이, 6m",
+      "answerParts": [
+        "거북이",
+        6
+      ],
+      "answerLabels": [
+        "먼저 도착한 동물",
+        "남은 거리"
+      ],
+      "acceptedAnswers": [
+        "거북이, 6m"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "결승점까지의 거리는 812m이므로 토끼가 잠든 곳에서 결승점까지는 812÷2＝406m입니다.",
+        "토끼가 다시 달릴 때 남은 거리는 406m이고, 거북이의 남은 거리는 40m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 40m 시간 동안 달리는 거리는 40×10＝400m입니다.",
+        "거북이가 결승점에 도착할 때 토끼에게 남은 거리는 406−400＝6m입니다. 따라서 거북이가 먼저 도착하고 토끼는 6m 남아 있습니다."
+      ],
+      "solution": "결승점까지의 거리는 812m이므로 토끼가 잠든 곳에서 결승점까지는 812÷2＝406m입니다. 토끼가 다시 달릴 때 남은 거리는 406m이고, 거북이의 남은 거리는 40m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 40m 시간 동안 달리는 거리는 40×10＝400m입니다. 거북이가 결승점에 도착할 때 토끼에게 남은 거리는 406−400＝6m입니다. 따라서 거북이가 먼저 도착하고 토끼는 6m 남아 있습니다.",
+      "learningPoint": "속력의 배수와 두 동물의 남은 거리를 같은 시간 동안 비교하기",
+      "learningLocation": "활용 4회 · 원문 25번 · 속력과 남은 거리의 비",
+      "verification": {
+        "primaryMethod": "exact time comparison using turtle-speed units",
+        "independentMethod": "distance covered during turtle remaining-time interval",
+        "parameters": {
+          "raceDistance": 812,
+          "rabbitSleepPosition": 406,
+          "turtleRemainingAtWake": 40,
+          "speedRatio": 10,
+          "rabbitRemainingAtWake": 406,
+          "answerRemaining": 6
+        },
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswer": {
+          "winner": "거북이",
+          "rabbitRemainingMeters": 8
+        },
+        "sourceAnswerReadMethod": "direct visual reading of handwritten teacher answer on answer PDF p25",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "low",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 4.2-point band retained"
+    },
+    {
+      "id": "applied4-q25-v2",
+      "genId": "applied4-q25",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 25,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "속력과 거리의 비",
+      "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
+      "pointBand": "4.2",
+      "text": "결승점은 출발점에서 972m 떨어져 있습니다. 토끼와 거북이는 같은 때 출발했고, 토끼의 일정한 속력은 거북이의 10배입니다. 토끼는 출발점과 결승점의 중간 지점에서 잠들었습니다. 토끼가 깨어났을 때 거북이는 결승점에서 48m 떨어져 있었고, 토끼는 처음과 같은 속력으로 다시 달렸습니다. 먼저 도착하는 동물과 그때 다른 동물에게 남아 있는 거리를 구하시오.",
+      "answer": "거북이, 6m",
+      "answerParts": [
+        "거북이",
+        6
+      ],
+      "answerLabels": [
+        "먼저 도착한 동물",
+        "남은 거리"
+      ],
+      "acceptedAnswers": [
+        "거북이, 6m"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "결승점까지의 거리는 972m이므로 토끼가 잠든 곳에서 결승점까지는 972÷2＝486m입니다.",
+        "토끼가 다시 달릴 때 남은 거리는 486m이고, 거북이의 남은 거리는 48m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 48m 시간 동안 달리는 거리는 48×10＝480m입니다.",
+        "거북이가 결승점에 도착할 때 토끼에게 남은 거리는 486−480＝6m입니다. 따라서 거북이가 먼저 도착하고 토끼는 6m 남아 있습니다."
+      ],
+      "solution": "결승점까지의 거리는 972m이므로 토끼가 잠든 곳에서 결승점까지는 972÷2＝486m입니다. 토끼가 다시 달릴 때 남은 거리는 486m이고, 거북이의 남은 거리는 48m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 48m 시간 동안 달리는 거리는 48×10＝480m입니다. 거북이가 결승점에 도착할 때 토끼에게 남은 거리는 486−480＝6m입니다. 따라서 거북이가 먼저 도착하고 토끼는 6m 남아 있습니다.",
+      "learningPoint": "속력의 배수와 두 동물의 남은 거리를 같은 시간 동안 비교하기",
+      "learningLocation": "활용 4회 · 원문 25번 · 속력과 남은 거리의 비",
+      "verification": {
+        "primaryMethod": "exact time comparison using turtle-speed units",
+        "independentMethod": "distance covered during turtle remaining-time interval",
+        "parameters": {
+          "raceDistance": 972,
+          "rabbitSleepPosition": 486,
+          "turtleRemainingAtWake": 48,
+          "speedRatio": 10,
+          "rabbitRemainingAtWake": 486,
+          "answerRemaining": 6
+        },
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswer": {
+          "winner": "거북이",
+          "rabbitRemainingMeters": 8
+        },
+        "sourceAnswerReadMethod": "direct visual reading of handwritten teacher answer on answer PDF p25",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "low",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 4.2-point band retained"
+    },
+    {
+      "id": "applied4-q25-v3",
+      "genId": "applied4-q25",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 25,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "속력과 거리의 비",
+      "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
+      "pointBand": "4.2",
+      "text": "결승점은 출발점에서 1114m 떨어져 있습니다. 토끼와 거북이는 같은 때 출발했고, 토끼의 일정한 속력은 거북이의 10배입니다. 토끼는 출발점과 결승점의 중간 지점에서 잠들었습니다. 토끼가 깨어났을 때 거북이는 결승점에서 55m 떨어져 있었고, 토끼는 처음과 같은 속력으로 다시 달렸습니다. 먼저 도착하는 동물과 그때 다른 동물에게 남아 있는 거리를 구하시오.",
+      "answer": "거북이, 7m",
+      "answerParts": [
+        "거북이",
+        7
+      ],
+      "answerLabels": [
+        "먼저 도착한 동물",
+        "남은 거리"
+      ],
+      "acceptedAnswers": [
+        "거북이, 7m"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "결승점까지의 거리는 1114m이므로 토끼가 잠든 곳에서 결승점까지는 1114÷2＝557m입니다.",
+        "토끼가 다시 달릴 때 남은 거리는 557m이고, 거북이의 남은 거리는 55m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 55m 시간 동안 달리는 거리는 55×10＝550m입니다.",
+        "거북이가 결승점에 도착할 때 토끼에게 남은 거리는 557−550＝7m입니다. 따라서 거북이가 먼저 도착하고 토끼는 7m 남아 있습니다."
+      ],
+      "solution": "결승점까지의 거리는 1114m이므로 토끼가 잠든 곳에서 결승점까지는 1114÷2＝557m입니다. 토끼가 다시 달릴 때 남은 거리는 557m이고, 거북이의 남은 거리는 55m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 55m 시간 동안 달리는 거리는 55×10＝550m입니다. 거북이가 결승점에 도착할 때 토끼에게 남은 거리는 557−550＝7m입니다. 따라서 거북이가 먼저 도착하고 토끼는 7m 남아 있습니다.",
+      "learningPoint": "속력의 배수와 두 동물의 남은 거리를 같은 시간 동안 비교하기",
+      "learningLocation": "활용 4회 · 원문 25번 · 속력과 남은 거리의 비",
+      "verification": {
+        "primaryMethod": "exact time comparison using turtle-speed units",
+        "independentMethod": "distance covered during turtle remaining-time interval",
+        "parameters": {
+          "raceDistance": 1114,
+          "rabbitSleepPosition": 557,
+          "turtleRemainingAtWake": 55,
+          "speedRatio": 10,
+          "rabbitRemainingAtWake": 557,
+          "answerRemaining": 7
+        },
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswer": {
+          "winner": "거북이",
+          "rabbitRemainingMeters": 8
+        },
+        "sourceAnswerReadMethod": "direct visual reading of handwritten teacher answer on answer PDF p25",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "low",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 4.2-point band retained"
+    },
+    {
+      "id": "applied4-q25-v4",
+      "genId": "applied4-q25",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 25,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "속력과 거리의 비",
+      "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
+      "pointBand": "4.2",
+      "text": "결승점은 출발점에서 1296m 떨어져 있습니다. 토끼와 거북이는 같은 때 출발했고, 토끼의 일정한 속력은 거북이의 10배입니다. 토끼는 출발점과 결승점의 중간 지점에서 잠들었습니다. 토끼가 깨어났을 때 거북이는 결승점에서 64m 떨어져 있었고, 토끼는 처음과 같은 속력으로 다시 달렸습니다. 먼저 도착하는 동물과 그때 다른 동물에게 남아 있는 거리를 구하시오.",
+      "answer": "거북이, 8m",
+      "answerParts": [
+        "거북이",
+        8
+      ],
+      "answerLabels": [
+        "먼저 도착한 동물",
+        "남은 거리"
+      ],
+      "acceptedAnswers": [
+        "거북이, 8m"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "결승점까지의 거리는 1296m이므로 토끼가 잠든 곳에서 결승점까지는 1296÷2＝648m입니다.",
+        "토끼가 다시 달릴 때 남은 거리는 648m이고, 거북이의 남은 거리는 64m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 64m 시간 동안 달리는 거리는 64×10＝640m입니다.",
+        "거북이가 결승점에 도착할 때 토끼에게 남은 거리는 648−640＝8m입니다. 따라서 거북이가 먼저 도착하고 토끼는 8m 남아 있습니다."
+      ],
+      "solution": "결승점까지의 거리는 1296m이므로 토끼가 잠든 곳에서 결승점까지는 1296÷2＝648m입니다. 토끼가 다시 달릴 때 남은 거리는 648m이고, 거북이의 남은 거리는 64m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 64m 시간 동안 달리는 거리는 64×10＝640m입니다. 거북이가 결승점에 도착할 때 토끼에게 남은 거리는 648−640＝8m입니다. 따라서 거북이가 먼저 도착하고 토끼는 8m 남아 있습니다.",
+      "learningPoint": "속력의 배수와 두 동물의 남은 거리를 같은 시간 동안 비교하기",
+      "learningLocation": "활용 4회 · 원문 25번 · 속력과 남은 거리의 비",
+      "verification": {
+        "primaryMethod": "exact time comparison using turtle-speed units",
+        "independentMethod": "distance covered during turtle remaining-time interval",
+        "parameters": {
+          "raceDistance": 1296,
+          "rabbitSleepPosition": 648,
+          "turtleRemainingAtWake": 64,
+          "speedRatio": 10,
+          "rabbitRemainingAtWake": 648,
+          "answerRemaining": 8
+        },
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswer": {
+          "winner": "거북이",
+          "rabbitRemainingMeters": 8
+        },
+        "sourceAnswerReadMethod": "direct visual reading of handwritten teacher answer on answer PDF p25",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "middle",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 4.2-point band retained"
+    },
+    {
+      "id": "applied4-q25-v5",
+      "genId": "applied4-q25",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 25,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "속력과 거리의 비",
+      "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
+      "pointBand": "4.2",
+      "text": "결승점은 출발점에서 1458m 떨어져 있습니다. 토끼와 거북이는 같은 때 출발했고, 토끼의 일정한 속력은 거북이의 10배입니다. 토끼는 출발점과 결승점의 중간 지점에서 잠들었습니다. 토끼가 깨어났을 때 거북이는 결승점에서 72m 떨어져 있었고, 토끼는 처음과 같은 속력으로 다시 달렸습니다. 먼저 도착하는 동물과 그때 다른 동물에게 남아 있는 거리를 구하시오.",
+      "answer": "거북이, 9m",
+      "answerParts": [
+        "거북이",
+        9
+      ],
+      "answerLabels": [
+        "먼저 도착한 동물",
+        "남은 거리"
+      ],
+      "acceptedAnswers": [
+        "거북이, 9m"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "결승점까지의 거리는 1458m이므로 토끼가 잠든 곳에서 결승점까지는 1458÷2＝729m입니다.",
+        "토끼가 다시 달릴 때 남은 거리는 729m이고, 거북이의 남은 거리는 72m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 72m 시간 동안 달리는 거리는 72×10＝720m입니다.",
+        "거북이가 결승점에 도착할 때 토끼에게 남은 거리는 729−720＝9m입니다. 따라서 거북이가 먼저 도착하고 토끼는 9m 남아 있습니다."
+      ],
+      "solution": "결승점까지의 거리는 1458m이므로 토끼가 잠든 곳에서 결승점까지는 1458÷2＝729m입니다. 토끼가 다시 달릴 때 남은 거리는 729m이고, 거북이의 남은 거리는 72m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 72m 시간 동안 달리는 거리는 72×10＝720m입니다. 거북이가 결승점에 도착할 때 토끼에게 남은 거리는 729−720＝9m입니다. 따라서 거북이가 먼저 도착하고 토끼는 9m 남아 있습니다.",
+      "learningPoint": "속력의 배수와 두 동물의 남은 거리를 같은 시간 동안 비교하기",
+      "learningLocation": "활용 4회 · 원문 25번 · 속력과 남은 거리의 비",
+      "verification": {
+        "primaryMethod": "exact time comparison using turtle-speed units",
+        "independentMethod": "distance covered during turtle remaining-time interval",
+        "parameters": {
+          "raceDistance": 1458,
+          "rabbitSleepPosition": 729,
+          "turtleRemainingAtWake": 72,
+          "speedRatio": 10,
+          "rabbitRemainingAtWake": 729,
+          "answerRemaining": 9
+        },
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswer": {
+          "winner": "거북이",
+          "rabbitRemainingMeters": 8
+        },
+        "sourceAnswerReadMethod": "direct visual reading of handwritten teacher answer on answer PDF p25",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "middle",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 4.2-point band retained"
+    },
+    {
+      "id": "applied4-q25-v6",
+      "genId": "applied4-q25",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 25,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "속력과 거리의 비",
+      "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
+      "pointBand": "4.2",
+      "text": "결승점은 출발점에서 1680m 떨어져 있습니다. 토끼와 거북이는 같은 때 출발했고, 토끼의 일정한 속력은 거북이의 10배입니다. 토끼는 출발점과 결승점의 중간 지점에서 잠들었습니다. 토끼가 깨어났을 때 거북이는 결승점에서 83m 떨어져 있었고, 토끼는 처음과 같은 속력으로 다시 달렸습니다. 먼저 도착하는 동물과 그때 다른 동물에게 남아 있는 거리를 구하시오.",
+      "answer": "거북이, 10m",
+      "answerParts": [
+        "거북이",
+        10
+      ],
+      "answerLabels": [
+        "먼저 도착한 동물",
+        "남은 거리"
+      ],
+      "acceptedAnswers": [
+        "거북이, 10m"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "결승점까지의 거리는 1680m이므로 토끼가 잠든 곳에서 결승점까지는 1680÷2＝840m입니다.",
+        "토끼가 다시 달릴 때 남은 거리는 840m이고, 거북이의 남은 거리는 83m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 83m 시간 동안 달리는 거리는 83×10＝830m입니다.",
+        "거북이가 결승점에 도착할 때 토끼에게 남은 거리는 840−830＝10m입니다. 따라서 거북이가 먼저 도착하고 토끼는 10m 남아 있습니다."
+      ],
+      "solution": "결승점까지의 거리는 1680m이므로 토끼가 잠든 곳에서 결승점까지는 1680÷2＝840m입니다. 토끼가 다시 달릴 때 남은 거리는 840m이고, 거북이의 남은 거리는 83m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 83m 시간 동안 달리는 거리는 83×10＝830m입니다. 거북이가 결승점에 도착할 때 토끼에게 남은 거리는 840−830＝10m입니다. 따라서 거북이가 먼저 도착하고 토끼는 10m 남아 있습니다.",
+      "learningPoint": "속력의 배수와 두 동물의 남은 거리를 같은 시간 동안 비교하기",
+      "learningLocation": "활용 4회 · 원문 25번 · 속력과 남은 거리의 비",
+      "verification": {
+        "primaryMethod": "exact time comparison using turtle-speed units",
+        "independentMethod": "distance covered during turtle remaining-time interval",
+        "parameters": {
+          "raceDistance": 1680,
+          "rabbitSleepPosition": 840,
+          "turtleRemainingAtWake": 83,
+          "speedRatio": 10,
+          "rabbitRemainingAtWake": 840,
+          "answerRemaining": 10
+        },
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswer": {
+          "winner": "거북이",
+          "rabbitRemainingMeters": 8
+        },
+        "sourceAnswerReadMethod": "direct visual reading of handwritten teacher answer on answer PDF p25",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "middle",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 4.2-point band retained"
+    },
+    {
+      "id": "applied4-q25-v7",
+      "genId": "applied4-q25",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 25,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "속력과 거리의 비",
+      "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
+      "pointBand": "4.2",
+      "text": "결승점은 출발점에서 1924m 떨어져 있습니다. 토끼와 거북이는 같은 때 출발했고, 토끼의 일정한 속력은 거북이의 10배입니다. 토끼는 출발점과 결승점의 중간 지점에서 잠들었습니다. 토끼가 깨어났을 때 거북이는 결승점에서 95m 떨어져 있었고, 토끼는 처음과 같은 속력으로 다시 달렸습니다. 먼저 도착하는 동물과 그때 다른 동물에게 남아 있는 거리를 구하시오.",
+      "answer": "거북이, 12m",
+      "answerParts": [
+        "거북이",
+        12
+      ],
+      "answerLabels": [
+        "먼저 도착한 동물",
+        "남은 거리"
+      ],
+      "acceptedAnswers": [
+        "거북이, 12m"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "결승점까지의 거리는 1924m이므로 토끼가 잠든 곳에서 결승점까지는 1924÷2＝962m입니다.",
+        "토끼가 다시 달릴 때 남은 거리는 962m이고, 거북이의 남은 거리는 95m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 95m 시간 동안 달리는 거리는 95×10＝950m입니다.",
+        "거북이가 결승점에 도착할 때 토끼에게 남은 거리는 962−950＝12m입니다. 따라서 거북이가 먼저 도착하고 토끼는 12m 남아 있습니다."
+      ],
+      "solution": "결승점까지의 거리는 1924m이므로 토끼가 잠든 곳에서 결승점까지는 1924÷2＝962m입니다. 토끼가 다시 달릴 때 남은 거리는 962m이고, 거북이의 남은 거리는 95m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 95m 시간 동안 달리는 거리는 95×10＝950m입니다. 거북이가 결승점에 도착할 때 토끼에게 남은 거리는 962−950＝12m입니다. 따라서 거북이가 먼저 도착하고 토끼는 12m 남아 있습니다.",
+      "learningPoint": "속력의 배수와 두 동물의 남은 거리를 같은 시간 동안 비교하기",
+      "learningLocation": "활용 4회 · 원문 25번 · 속력과 남은 거리의 비",
+      "verification": {
+        "primaryMethod": "exact time comparison using turtle-speed units",
+        "independentMethod": "distance covered during turtle remaining-time interval",
+        "parameters": {
+          "raceDistance": 1924,
+          "rabbitSleepPosition": 962,
+          "turtleRemainingAtWake": 95,
+          "speedRatio": 10,
+          "rabbitRemainingAtWake": 962,
+          "answerRemaining": 12
+        },
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswer": {
+          "winner": "거북이",
+          "rabbitRemainingMeters": 8
+        },
+        "sourceAnswerReadMethod": "direct visual reading of handwritten teacher answer on answer PDF p25",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "high",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 4.2-point band retained"
+    },
+    {
+      "id": "applied4-q25-v8",
+      "genId": "applied4-q25",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 25,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "속력과 거리의 비",
+      "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
+      "pointBand": "4.2",
+      "text": "결승점은 출발점에서 2106m 떨어져 있습니다. 토끼와 거북이는 같은 때 출발했고, 토끼의 일정한 속력은 거북이의 10배입니다. 토끼는 출발점과 결승점의 중간 지점에서 잠들었습니다. 토끼가 깨어났을 때 거북이는 결승점에서 104m 떨어져 있었고, 토끼는 처음과 같은 속력으로 다시 달렸습니다. 먼저 도착하는 동물과 그때 다른 동물에게 남아 있는 거리를 구하시오.",
+      "answer": "거북이, 13m",
+      "answerParts": [
+        "거북이",
+        13
+      ],
+      "answerLabels": [
+        "먼저 도착한 동물",
+        "남은 거리"
+      ],
+      "acceptedAnswers": [
+        "거북이, 13m"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "결승점까지의 거리는 2106m이므로 토끼가 잠든 곳에서 결승점까지는 2106÷2＝1053m입니다.",
+        "토끼가 다시 달릴 때 남은 거리는 1053m이고, 거북이의 남은 거리는 104m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 104m 시간 동안 달리는 거리는 104×10＝1040m입니다.",
+        "거북이가 결승점에 도착할 때 토끼에게 남은 거리는 1053−1040＝13m입니다. 따라서 거북이가 먼저 도착하고 토끼는 13m 남아 있습니다."
+      ],
+      "solution": "결승점까지의 거리는 2106m이므로 토끼가 잠든 곳에서 결승점까지는 2106÷2＝1053m입니다. 토끼가 다시 달릴 때 남은 거리는 1053m이고, 거북이의 남은 거리는 104m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 104m 시간 동안 달리는 거리는 104×10＝1040m입니다. 거북이가 결승점에 도착할 때 토끼에게 남은 거리는 1053−1040＝13m입니다. 따라서 거북이가 먼저 도착하고 토끼는 13m 남아 있습니다.",
+      "learningPoint": "속력의 배수와 두 동물의 남은 거리를 같은 시간 동안 비교하기",
+      "learningLocation": "활용 4회 · 원문 25번 · 속력과 남은 거리의 비",
+      "verification": {
+        "primaryMethod": "exact time comparison using turtle-speed units",
+        "independentMethod": "distance covered during turtle remaining-time interval",
+        "parameters": {
+          "raceDistance": 2106,
+          "rabbitSleepPosition": 1053,
+          "turtleRemainingAtWake": 104,
+          "speedRatio": 10,
+          "rabbitRemainingAtWake": 1053,
+          "answerRemaining": 13
+        },
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswer": {
+          "winner": "거북이",
+          "rabbitRemainingMeters": 8
+        },
+        "sourceAnswerReadMethod": "direct visual reading of handwritten teacher answer on answer PDF p25",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "high",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 4.2-point band retained"
+    },
+    {
+      "id": "applied4-q25-v9",
+      "genId": "applied4-q25",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 25,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "속력과 거리의 비",
+      "detailType": "속력 차와 남은 거리로 결승 도착 순서 판단",
+      "pointBand": "4.2",
+      "text": "결승점은 출발점에서 2292m 떨어져 있습니다. 토끼와 거북이는 같은 때 출발했고, 토끼의 일정한 속력은 거북이의 10배입니다. 토끼는 출발점과 결승점의 중간 지점에서 잠들었습니다. 토끼가 깨어났을 때 거북이는 결승점에서 113m 떨어져 있었고, 토끼는 처음과 같은 속력으로 다시 달렸습니다. 먼저 도착하는 동물과 그때 다른 동물에게 남아 있는 거리를 구하시오.",
+      "answer": "거북이, 16m",
+      "answerParts": [
+        "거북이",
+        16
+      ],
+      "answerLabels": [
+        "먼저 도착한 동물",
+        "남은 거리"
+      ],
+      "acceptedAnswers": [
+        "거북이, 16m"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "결승점까지의 거리는 2292m이므로 토끼가 잠든 곳에서 결승점까지는 2292÷2＝1146m입니다.",
+        "토끼가 다시 달릴 때 남은 거리는 1146m이고, 거북이의 남은 거리는 113m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 113m 시간 동안 달리는 거리는 113×10＝1130m입니다.",
+        "거북이가 결승점에 도착할 때 토끼에게 남은 거리는 1146−1130＝16m입니다. 따라서 거북이가 먼저 도착하고 토끼는 16m 남아 있습니다."
+      ],
+      "solution": "결승점까지의 거리는 2292m이므로 토끼가 잠든 곳에서 결승점까지는 2292÷2＝1146m입니다. 토끼가 다시 달릴 때 남은 거리는 1146m이고, 거북이의 남은 거리는 113m입니다. 토끼의 속력은 거북이의 10배이므로 토끼가 거북이의 113m 시간 동안 달리는 거리는 113×10＝1130m입니다. 거북이가 결승점에 도착할 때 토끼에게 남은 거리는 1146−1130＝16m입니다. 따라서 거북이가 먼저 도착하고 토끼는 16m 남아 있습니다.",
+      "learningPoint": "속력의 배수와 두 동물의 남은 거리를 같은 시간 동안 비교하기",
+      "learningLocation": "활용 4회 · 원문 25번 · 속력과 남은 거리의 비",
+      "verification": {
+        "primaryMethod": "exact time comparison using turtle-speed units",
+        "independentMethod": "distance covered during turtle remaining-time interval",
+        "parameters": {
+          "raceDistance": 2292,
+          "rabbitSleepPosition": 1146,
+          "turtleRemainingAtWake": 113,
+          "speedRatio": 10,
+          "rabbitRemainingAtWake": 1146,
+          "answerRemaining": 16
+        },
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 25,
+        "sourceExamPdfSha256": "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59",
+        "sourceAnswerPdfSha256": "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8",
+        "sourceAnswer": {
+          "winner": "거북이",
+          "rabbitRemainingMeters": 8
+        },
+        "sourceAnswerReadMethod": "direct visual reading of handwritten teacher answer on answer PDF p25",
+        "sourceAnswerMatch": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "practiceStage": "high",
+      "practiceStageBasis": "question-bank-stage-adjustment; original 4.2-point band retained"
     }
   ],
   "sourceEditionNotes": {
     "4": "현행문제는시간당25분,교사답안문구는하루25분. 서로다른판본으로보류,원답보존",
     "28": "숫자를한자리씩합산하며월이름도포함. 현행저장답1752를유지하고교사손글씨와혼동하지않음",
     "30": "분열시점과부모개체유지조건의해석확인필요로보류",
-    "22": "원문 현행 PDF p4와 답안 p22 직접 대조. 원문 답안 필기는 102개. 유사문제 9개는 각각 13개 정육면체의 새 배치를 그림으로 제시하고 고유 단위 모서리를 센다. 배열이 바뀌므로 새 답은 원문 답과 일치한다고 주장하지 않는다."
+    "22": "원문 현행 PDF p4와 답안 p22 직접 대조. 원문 답안 필기는 102개. 유사문제 9개는 각각 13개 정육면체의 새 배치를 그림으로 제시하고 고유 단위 모서리를 센다. 배열이 바뀌므로 새 답은 원문 답과 일치한다고 주장하지 않는다.",
+    "25": "원문 PDF p5·답안 PDF p25 직접 대조. 교사 필기 답은 거북이 먼저, 토끼 8m 남음이며 속력 10배와 남은 거리로 검산해 일치함."
   },
   "reviewSummary": {
-    "independentMathCount": 180,
-    "sourceTypes": 21,
+    "independentMathCount": 189,
+    "sourceTypes": 22,
     "variantsPerType": 9,
     "outputReviewed": true,
     "prior153Exact": true,
@@ -15994,9 +16589,15 @@
     "q22SourceAnswer": 102,
     "q22PracticeStageAdjusted": true,
     "q22ActualZipReviewed": true,
-    "old180Exact": true
+    "old180Exact": true,
+    "q25DirectSourceComparison": true,
+    "q25IndependentMathCount": 9,
+    "q25SourceAnswer": "거북이 먼저, 토끼 8m 남음",
+    "q25PracticeStageAdjusted": true,
+    "q25ActualZipReviewed": true,
+    "old189Exact": true
   },
-  "revision": "20261024-applied4-expansion-r9-q22",
+  "revision": "20261024-applied4-expansion-r10-q25",
   "additionReviewSummary": {
     "sourceNos": [
       16
@@ -16025,6 +16626,17 @@
     "q22PointBand": "3.4",
     "q22Old180Exact": true,
     "q22StageLevels": {
+      "low": 3,
+      "middle": 3,
+      "high": 3
+    },
+    "q25SourceNos": [
+      25
+    ],
+    "q25Count": 9,
+    "q25PointBand": "4.2",
+    "q25Old189Exact": true,
+    "q25StageLevels": {
       "low": 3,
       "middle": 3,
       "high": 3

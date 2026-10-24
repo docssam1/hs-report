@@ -44,13 +44,14 @@ def main():
     data = json.loads(DATA.read_text())
     old = json.loads((WORK / "prior-expanded.json").read_text())
     assert data["items"][:162] == old["items"]
-    assert len(data["items"]) == 189
+    assert len(data["items"]) == 198
     q27 = [x for x in data["items"] if x["sourceNo"] == 27]
     assert len(q27) == 9 and all(x["reviewStatus"] == "verified" for x in q27)
     q22 = [x for x in data["items"] if x["sourceNo"] == 22]
-    assert len(q22) == 9 and all(x["reviewStatus"] == "verified" for x in q22)
-    assert data["availableSourceNos"] == sorted(old["availableSourceNos"] + [14, 22, 27])
-    assert all(n not in data["pendingSourceNos"] for n in (14, 22, 27))
+    q25 = [x for x in data["items"] if x["sourceNo"] == 25]
+    assert len(q22) == len(q25) == 9 and all(x["reviewStatus"] == "verified" for x in q22 + q25)
+    assert data["availableSourceNos"] == sorted(old["availableSourceNos"] + [14, 22, 25, 27])
+    assert all(n not in data["pendingSourceNos"] for n in (14, 22, 25, 27))
     assert hashlib.sha256(SOURCE.read_bytes()).hexdigest() == "f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59"
     assert hashlib.sha256(ANSWER.read_bytes()).hexdigest() == "67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8"
 
