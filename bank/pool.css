@@ -32,3 +32,6 @@
 
 .q-figure[data-round="3"][data-source="27"] img{max-height:200px}
 .q-figure[data-round="3"][data-source="29"] img{max-height:180px}
+
+.q-figure[data-round="4"][data-source="1"] img{max-height:180px}
+.q-figure[data-round="4"][data-source="3"] img{max-height:190px}
