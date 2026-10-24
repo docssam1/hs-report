@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r17",
+  "version": "20261024-applied6-expansion-r18",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -26,14 +26,14 @@
     18,
     19,
     20,
-    21
+    21,
+    22
   ],
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
-    22,
     23,
     24,
     25,
@@ -10566,17 +10566,584 @@
         "estimated": true,
         "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 21번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
       }
+    },
+    {
+      "id": "applied6-q22-v1",
+      "genId": "applied6-q22",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 22,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "정사각형 배열과 곱셈의 배수 관계",
+      "detailType": "정사각형 배열을 더 많은 세로줄로 바꿀 때 학생 수 결정하기",
+      "pointBand": "3.4",
+      "text": "관호네 반 학생들이 가로, 세로로 같은 수만큼 빈자리 없이 줄을 지어 앉아 있습니다. 선생님께서 세로로 더 길게 앉으라고 하셨더니 세로줄이 3줄 더 생겼습니다. 관호네 반 학생은 모두 몇 명일까요? 단, 아이들의 수는 100명이 넘지 않습니다.",
+      "answer": "36",
+      "answerParts": [
+        36
+      ],
+      "answerLabels": [
+        "학생 수(명)"
+      ],
+      "acceptedAnswers": [
+        "36"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다.",
+        "세로줄이 3줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+3줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+3은 n²의 약수입니다.",
+        "n²=(n+3)(n−3)+3²이므로 n+3은 3²의 약수이기도 합니다. r+1≤n+3≤r+10 범위에서 3²의 약수는 9뿐이므로 n=9−3=6입니다.",
+        "처음 학생 수는 n²=6×6=36명입니다. 실제로 세로줄 9줄에 한 줄당 4명씩 앉으면 9×4=36명이므로 조건을 모두 만족합니다."
+      ],
+      "solution": "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다. 세로줄이 3줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+3줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+3은 n²의 약수입니다. n²=(n+3)(n−3)+3²이므로 n+3은 3²의 약수이기도 합니다. r+1≤n+3≤r+10 범위에서 3²의 약수는 9뿐이므로 n=9−3=6입니다. 처음 학생 수는 n²=6×6=36명입니다. 실제로 세로줄 9줄에 한 줄당 4명씩 앉으면 9×4=36명이므로 조건을 모두 만족합니다.",
+      "learningPoint": "정사각형의 같은 학생 수를 유지한 채 행 수가 늘어날 때 곱셈의 약수 관계로 가능한 배열을 찾는다.",
+      "learningLocation": "활용 6회 · 원문 22번 · 정사각형 배열과 세로줄 변화",
+      "verification": {
+        "primaryMethod": "Let the original square have n rows and n students per row; require n+r to divide n².",
+        "independentMethod": "Enumerate n=1..10 directly and independently enumerate divisors of r² in the interval [r+1,r+10]. Confirm the revised rectangle has integer students per row.",
+        "parameters": {
+          "additionalVerticalRows": 3,
+          "squareSide": 6,
+          "studentCount": 36,
+          "rowsAfter": 9,
+          "studentsPerRowAfter": 4,
+          "divisorsInRange": [
+            9
+          ]
+        },
+        "independentSuite": "qa/applied6-q22-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 22번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q22-v2",
+      "genId": "applied6-q22",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 22,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "정사각형 배열과 곱셈의 배수 관계",
+      "detailType": "정사각형 배열을 더 많은 세로줄로 바꿀 때 학생 수 결정하기",
+      "pointBand": "3.4",
+      "text": "관호네 반 학생들이 가로, 세로로 같은 수만큼 빈자리 없이 줄을 지어 앉아 있습니다. 선생님께서 세로로 더 길게 앉으라고 하셨더니 세로줄이 4줄 더 생겼습니다. 관호네 반 학생은 모두 몇 명일까요? 단, 아이들의 수는 100명이 넘지 않습니다.",
+      "answer": "16",
+      "answerParts": [
+        16
+      ],
+      "answerLabels": [
+        "학생 수(명)"
+      ],
+      "acceptedAnswers": [
+        "16"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다.",
+        "세로줄이 4줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+4줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+4은 n²의 약수입니다.",
+        "n²=(n+4)(n−4)+4²이므로 n+4은 4²의 약수이기도 합니다. r+1≤n+4≤r+10 범위에서 4²의 약수는 8뿐이므로 n=8−4=4입니다.",
+        "처음 학생 수는 n²=4×4=16명입니다. 실제로 세로줄 8줄에 한 줄당 2명씩 앉으면 8×2=16명이므로 조건을 모두 만족합니다."
+      ],
+      "solution": "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다. 세로줄이 4줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+4줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+4은 n²의 약수입니다. n²=(n+4)(n−4)+4²이므로 n+4은 4²의 약수이기도 합니다. r+1≤n+4≤r+10 범위에서 4²의 약수는 8뿐이므로 n=8−4=4입니다. 처음 학생 수는 n²=4×4=16명입니다. 실제로 세로줄 8줄에 한 줄당 2명씩 앉으면 8×2=16명이므로 조건을 모두 만족합니다.",
+      "learningPoint": "정사각형의 같은 학생 수를 유지한 채 행 수가 늘어날 때 곱셈의 약수 관계로 가능한 배열을 찾는다.",
+      "learningLocation": "활용 6회 · 원문 22번 · 정사각형 배열과 세로줄 변화",
+      "verification": {
+        "primaryMethod": "Let the original square have n rows and n students per row; require n+r to divide n².",
+        "independentMethod": "Enumerate n=1..10 directly and independently enumerate divisors of r² in the interval [r+1,r+10]. Confirm the revised rectangle has integer students per row.",
+        "parameters": {
+          "additionalVerticalRows": 4,
+          "squareSide": 4,
+          "studentCount": 16,
+          "rowsAfter": 8,
+          "studentsPerRowAfter": 2,
+          "divisorsInRange": [
+            8
+          ]
+        },
+        "independentSuite": "qa/applied6-q22-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 22번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q22-v3",
+      "genId": "applied6-q22",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 22,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "정사각형 배열과 곱셈의 배수 관계",
+      "detailType": "정사각형 배열을 더 많은 세로줄로 바꿀 때 학생 수 결정하기",
+      "pointBand": "3.4",
+      "text": "관호네 반 학생들이 가로, 세로로 같은 수만큼 빈자리 없이 줄을 지어 앉아 있습니다. 선생님께서 세로로 더 길게 앉으라고 하셨더니 세로줄이 8줄 더 생겼습니다. 관호네 반 학생은 모두 몇 명일까요? 단, 아이들의 수는 100명이 넘지 않습니다.",
+      "answer": "64",
+      "answerParts": [
+        64
+      ],
+      "answerLabels": [
+        "학생 수(명)"
+      ],
+      "acceptedAnswers": [
+        "64"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다.",
+        "세로줄이 8줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+8줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+8은 n²의 약수입니다.",
+        "n²=(n+8)(n−8)+8²이므로 n+8은 8²의 약수이기도 합니다. r+1≤n+8≤r+10 범위에서 8²의 약수는 16뿐이므로 n=16−8=8입니다.",
+        "처음 학생 수는 n²=8×8=64명입니다. 실제로 세로줄 16줄에 한 줄당 4명씩 앉으면 16×4=64명이므로 조건을 모두 만족합니다."
+      ],
+      "solution": "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다. 세로줄이 8줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+8줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+8은 n²의 약수입니다. n²=(n+8)(n−8)+8²이므로 n+8은 8²의 약수이기도 합니다. r+1≤n+8≤r+10 범위에서 8²의 약수는 16뿐이므로 n=16−8=8입니다. 처음 학생 수는 n²=8×8=64명입니다. 실제로 세로줄 16줄에 한 줄당 4명씩 앉으면 16×4=64명이므로 조건을 모두 만족합니다.",
+      "learningPoint": "정사각형의 같은 학생 수를 유지한 채 행 수가 늘어날 때 곱셈의 약수 관계로 가능한 배열을 찾는다.",
+      "learningLocation": "활용 6회 · 원문 22번 · 정사각형 배열과 세로줄 변화",
+      "verification": {
+        "primaryMethod": "Let the original square have n rows and n students per row; require n+r to divide n².",
+        "independentMethod": "Enumerate n=1..10 directly and independently enumerate divisors of r² in the interval [r+1,r+10]. Confirm the revised rectangle has integer students per row.",
+        "parameters": {
+          "additionalVerticalRows": 8,
+          "squareSide": 8,
+          "studentCount": 64,
+          "rowsAfter": 16,
+          "studentsPerRowAfter": 4,
+          "divisorsInRange": [
+            16
+          ]
+        },
+        "independentSuite": "qa/applied6-q22-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 22번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q22-v4",
+      "genId": "applied6-q22",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 22,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "정사각형 배열과 곱셈의 배수 관계",
+      "detailType": "정사각형 배열을 더 많은 세로줄로 바꿀 때 학생 수 결정하기",
+      "pointBand": "3.4",
+      "text": "관호네 반 학생들이 가로, 세로로 같은 수만큼 빈자리 없이 줄을 지어 앉아 있습니다. 선생님께서 세로로 더 길게 앉으라고 하셨더니 세로줄이 10줄 더 생겼습니다. 관호네 반 학생은 모두 몇 명일까요? 단, 아이들의 수는 100명이 넘지 않습니다.",
+      "answer": "100",
+      "answerParts": [
+        100
+      ],
+      "answerLabels": [
+        "학생 수(명)"
+      ],
+      "acceptedAnswers": [
+        "100"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다.",
+        "세로줄이 10줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+10줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+10은 n²의 약수입니다.",
+        "n²=(n+10)(n−10)+10²이므로 n+10은 10²의 약수이기도 합니다. r+1≤n+10≤r+10 범위에서 10²의 약수는 20뿐이므로 n=20−10=10입니다.",
+        "처음 학생 수는 n²=10×10=100명입니다. 실제로 세로줄 20줄에 한 줄당 5명씩 앉으면 20×5=100명이므로 조건을 모두 만족합니다."
+      ],
+      "solution": "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다. 세로줄이 10줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+10줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+10은 n²의 약수입니다. n²=(n+10)(n−10)+10²이므로 n+10은 10²의 약수이기도 합니다. r+1≤n+10≤r+10 범위에서 10²의 약수는 20뿐이므로 n=20−10=10입니다. 처음 학생 수는 n²=10×10=100명입니다. 실제로 세로줄 20줄에 한 줄당 5명씩 앉으면 20×5=100명이므로 조건을 모두 만족합니다.",
+      "learningPoint": "정사각형의 같은 학생 수를 유지한 채 행 수가 늘어날 때 곱셈의 약수 관계로 가능한 배열을 찾는다.",
+      "learningLocation": "활용 6회 · 원문 22번 · 정사각형 배열과 세로줄 변화",
+      "verification": {
+        "primaryMethod": "Let the original square have n rows and n students per row; require n+r to divide n².",
+        "independentMethod": "Enumerate n=1..10 directly and independently enumerate divisors of r² in the interval [r+1,r+10]. Confirm the revised rectangle has integer students per row.",
+        "parameters": {
+          "additionalVerticalRows": 10,
+          "squareSide": 10,
+          "studentCount": 100,
+          "rowsAfter": 20,
+          "studentsPerRowAfter": 5,
+          "divisorsInRange": [
+            20
+          ]
+        },
+        "independentSuite": "qa/applied6-q22-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 22번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q22-v5",
+      "genId": "applied6-q22",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 22,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "정사각형 배열과 곱셈의 배수 관계",
+      "detailType": "정사각형 배열을 더 많은 세로줄로 바꿀 때 학생 수 결정하기",
+      "pointBand": "3.4",
+      "text": "관호네 반 학생들이 가로, 세로로 같은 수만큼 빈자리 없이 줄을 지어 앉아 있습니다. 선생님께서 세로로 더 길게 앉으라고 하셨더니 세로줄이 15줄 더 생겼습니다. 관호네 반 학생은 모두 몇 명일까요? 단, 아이들의 수는 100명이 넘지 않습니다.",
+      "answer": "100",
+      "answerParts": [
+        100
+      ],
+      "answerLabels": [
+        "학생 수(명)"
+      ],
+      "acceptedAnswers": [
+        "100"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다.",
+        "세로줄이 15줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+15줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+15은 n²의 약수입니다.",
+        "n²=(n+15)(n−15)+15²이므로 n+15은 15²의 약수이기도 합니다. r+1≤n+15≤r+10 범위에서 15²의 약수는 25뿐이므로 n=25−15=10입니다.",
+        "처음 학생 수는 n²=10×10=100명입니다. 실제로 세로줄 25줄에 한 줄당 4명씩 앉으면 25×4=100명이므로 조건을 모두 만족합니다."
+      ],
+      "solution": "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다. 세로줄이 15줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+15줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+15은 n²의 약수입니다. n²=(n+15)(n−15)+15²이므로 n+15은 15²의 약수이기도 합니다. r+1≤n+15≤r+10 범위에서 15²의 약수는 25뿐이므로 n=25−15=10입니다. 처음 학생 수는 n²=10×10=100명입니다. 실제로 세로줄 25줄에 한 줄당 4명씩 앉으면 25×4=100명이므로 조건을 모두 만족합니다.",
+      "learningPoint": "정사각형의 같은 학생 수를 유지한 채 행 수가 늘어날 때 곱셈의 약수 관계로 가능한 배열을 찾는다.",
+      "learningLocation": "활용 6회 · 원문 22번 · 정사각형 배열과 세로줄 변화",
+      "verification": {
+        "primaryMethod": "Let the original square have n rows and n students per row; require n+r to divide n².",
+        "independentMethod": "Enumerate n=1..10 directly and independently enumerate divisors of r² in the interval [r+1,r+10]. Confirm the revised rectangle has integer students per row.",
+        "parameters": {
+          "additionalVerticalRows": 15,
+          "squareSide": 10,
+          "studentCount": 100,
+          "rowsAfter": 25,
+          "studentsPerRowAfter": 4,
+          "divisorsInRange": [
+            25
+          ]
+        },
+        "independentSuite": "qa/applied6-q22-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 22번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q22-v6",
+      "genId": "applied6-q22",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 22,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "정사각형 배열과 곱셈의 배수 관계",
+      "detailType": "정사각형 배열을 더 많은 세로줄로 바꿀 때 학생 수 결정하기",
+      "pointBand": "3.4",
+      "text": "관호네 반 학생들이 가로, 세로로 같은 수만큼 빈자리 없이 줄을 지어 앉아 있습니다. 선생님께서 세로로 더 길게 앉으라고 하셨더니 세로줄이 18줄 더 생겼습니다. 관호네 반 학생은 모두 몇 명일까요? 단, 아이들의 수는 100명이 넘지 않습니다.",
+      "answer": "81",
+      "answerParts": [
+        81
+      ],
+      "answerLabels": [
+        "학생 수(명)"
+      ],
+      "acceptedAnswers": [
+        "81"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다.",
+        "세로줄이 18줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+18줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+18은 n²의 약수입니다.",
+        "n²=(n+18)(n−18)+18²이므로 n+18은 18²의 약수이기도 합니다. r+1≤n+18≤r+10 범위에서 18²의 약수는 27뿐이므로 n=27−18=9입니다.",
+        "처음 학생 수는 n²=9×9=81명입니다. 실제로 세로줄 27줄에 한 줄당 3명씩 앉으면 27×3=81명이므로 조건을 모두 만족합니다."
+      ],
+      "solution": "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다. 세로줄이 18줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+18줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+18은 n²의 약수입니다. n²=(n+18)(n−18)+18²이므로 n+18은 18²의 약수이기도 합니다. r+1≤n+18≤r+10 범위에서 18²의 약수는 27뿐이므로 n=27−18=9입니다. 처음 학생 수는 n²=9×9=81명입니다. 실제로 세로줄 27줄에 한 줄당 3명씩 앉으면 27×3=81명이므로 조건을 모두 만족합니다.",
+      "learningPoint": "정사각형의 같은 학생 수를 유지한 채 행 수가 늘어날 때 곱셈의 약수 관계로 가능한 배열을 찾는다.",
+      "learningLocation": "활용 6회 · 원문 22번 · 정사각형 배열과 세로줄 변화",
+      "verification": {
+        "primaryMethod": "Let the original square have n rows and n students per row; require n+r to divide n².",
+        "independentMethod": "Enumerate n=1..10 directly and independently enumerate divisors of r² in the interval [r+1,r+10]. Confirm the revised rectangle has integer students per row.",
+        "parameters": {
+          "additionalVerticalRows": 18,
+          "squareSide": 9,
+          "studentCount": 81,
+          "rowsAfter": 27,
+          "studentsPerRowAfter": 3,
+          "divisorsInRange": [
+            27
+          ]
+        },
+        "independentSuite": "qa/applied6-q22-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 22번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q22-v7",
+      "genId": "applied6-q22",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 22,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "정사각형 배열과 곱셈의 배수 관계",
+      "detailType": "정사각형 배열을 더 많은 세로줄로 바꿀 때 학생 수 결정하기",
+      "pointBand": "3.4",
+      "text": "관호네 반 학생들이 가로, 세로로 같은 수만큼 빈자리 없이 줄을 지어 앉아 있습니다. 선생님께서 세로로 더 길게 앉으라고 하셨더니 세로줄이 20줄 더 생겼습니다. 관호네 반 학생은 모두 몇 명일까요? 단, 아이들의 수는 100명이 넘지 않습니다.",
+      "answer": "25",
+      "answerParts": [
+        25
+      ],
+      "answerLabels": [
+        "학생 수(명)"
+      ],
+      "acceptedAnswers": [
+        "25"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다.",
+        "세로줄이 20줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+20줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+20은 n²의 약수입니다.",
+        "n²=(n+20)(n−20)+20²이므로 n+20은 20²의 약수이기도 합니다. r+1≤n+20≤r+10 범위에서 20²의 약수는 25뿐이므로 n=25−20=5입니다.",
+        "처음 학생 수는 n²=5×5=25명입니다. 실제로 세로줄 25줄에 한 줄당 1명씩 앉으면 25×1=25명이므로 조건을 모두 만족합니다."
+      ],
+      "solution": "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다. 세로줄이 20줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+20줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+20은 n²의 약수입니다. n²=(n+20)(n−20)+20²이므로 n+20은 20²의 약수이기도 합니다. r+1≤n+20≤r+10 범위에서 20²의 약수는 25뿐이므로 n=25−20=5입니다. 처음 학생 수는 n²=5×5=25명입니다. 실제로 세로줄 25줄에 한 줄당 1명씩 앉으면 25×1=25명이므로 조건을 모두 만족합니다.",
+      "learningPoint": "정사각형의 같은 학생 수를 유지한 채 행 수가 늘어날 때 곱셈의 약수 관계로 가능한 배열을 찾는다.",
+      "learningLocation": "활용 6회 · 원문 22번 · 정사각형 배열과 세로줄 변화",
+      "verification": {
+        "primaryMethod": "Let the original square have n rows and n students per row; require n+r to divide n².",
+        "independentMethod": "Enumerate n=1..10 directly and independently enumerate divisors of r² in the interval [r+1,r+10]. Confirm the revised rectangle has integer students per row.",
+        "parameters": {
+          "additionalVerticalRows": 20,
+          "squareSide": 5,
+          "studentCount": 25,
+          "rowsAfter": 25,
+          "studentsPerRowAfter": 1,
+          "divisorsInRange": [
+            25
+          ]
+        },
+        "independentSuite": "qa/applied6-q22-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 22번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q22-v8",
+      "genId": "applied6-q22",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 22,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "정사각형 배열과 곱셈의 배수 관계",
+      "detailType": "정사각형 배열을 더 많은 세로줄로 바꿀 때 학생 수 결정하기",
+      "pointBand": "3.4",
+      "text": "관호네 반 학생들이 가로, 세로로 같은 수만큼 빈자리 없이 줄을 지어 앉아 있습니다. 선생님께서 세로로 더 길게 앉으라고 하셨더니 세로줄이 24줄 더 생겼습니다. 관호네 반 학생은 모두 몇 명일까요? 단, 아이들의 수는 100명이 넘지 않습니다.",
+      "answer": "64",
+      "answerParts": [
+        64
+      ],
+      "answerLabels": [
+        "학생 수(명)"
+      ],
+      "acceptedAnswers": [
+        "64"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다.",
+        "세로줄이 24줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+24줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+24은 n²의 약수입니다.",
+        "n²=(n+24)(n−24)+24²이므로 n+24은 24²의 약수이기도 합니다. r+1≤n+24≤r+10 범위에서 24²의 약수는 32뿐이므로 n=32−24=8입니다.",
+        "처음 학생 수는 n²=8×8=64명입니다. 실제로 세로줄 32줄에 한 줄당 2명씩 앉으면 32×2=64명이므로 조건을 모두 만족합니다."
+      ],
+      "solution": "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다. 세로줄이 24줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+24줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+24은 n²의 약수입니다. n²=(n+24)(n−24)+24²이므로 n+24은 24²의 약수이기도 합니다. r+1≤n+24≤r+10 범위에서 24²의 약수는 32뿐이므로 n=32−24=8입니다. 처음 학생 수는 n²=8×8=64명입니다. 실제로 세로줄 32줄에 한 줄당 2명씩 앉으면 32×2=64명이므로 조건을 모두 만족합니다.",
+      "learningPoint": "정사각형의 같은 학생 수를 유지한 채 행 수가 늘어날 때 곱셈의 약수 관계로 가능한 배열을 찾는다.",
+      "learningLocation": "활용 6회 · 원문 22번 · 정사각형 배열과 세로줄 변화",
+      "verification": {
+        "primaryMethod": "Let the original square have n rows and n students per row; require n+r to divide n².",
+        "independentMethod": "Enumerate n=1..10 directly and independently enumerate divisors of r² in the interval [r+1,r+10]. Confirm the revised rectangle has integer students per row.",
+        "parameters": {
+          "additionalVerticalRows": 24,
+          "squareSide": 8,
+          "studentCount": 64,
+          "rowsAfter": 32,
+          "studentsPerRowAfter": 2,
+          "divisorsInRange": [
+            32
+          ]
+        },
+        "independentSuite": "qa/applied6-q22-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 22번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q22-v9",
+      "genId": "applied6-q22",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 22,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "정사각형 배열과 곱셈의 배수 관계",
+      "detailType": "정사각형 배열을 더 많은 세로줄로 바꿀 때 학생 수 결정하기",
+      "pointBand": "3.4",
+      "text": "관호네 반 학생들이 가로, 세로로 같은 수만큼 빈자리 없이 줄을 지어 앉아 있습니다. 선생님께서 세로로 더 길게 앉으라고 하셨더니 세로줄이 30줄 더 생겼습니다. 관호네 반 학생은 모두 몇 명일까요? 단, 아이들의 수는 100명이 넘지 않습니다.",
+      "answer": "36",
+      "answerParts": [
+        36
+      ],
+      "answerLabels": [
+        "학생 수(명)"
+      ],
+      "acceptedAnswers": [
+        "36"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다.",
+        "세로줄이 30줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+30줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+30은 n²의 약수입니다.",
+        "n²=(n+30)(n−30)+30²이므로 n+30은 30²의 약수이기도 합니다. r+1≤n+30≤r+10 범위에서 30²의 약수는 36뿐이므로 n=36−30=6입니다.",
+        "처음 학생 수는 n²=6×6=36명입니다. 실제로 세로줄 36줄에 한 줄당 1명씩 앉으면 36×1=36명이므로 조건을 모두 만족합니다."
+      ],
+      "solution": "처음에는 가로와 세로에 같은 수의 학생이 있으므로 n×n 정사각형 배열입니다. 학생 수가 100명 이하이므로 1≤n≤10입니다. 세로줄이 30줄 늘어난 뒤에도 빈자리 없이 같은 학생 수로 앉으려면 n+30줄로 전체 n²명을 나눌 수 있어야 합니다. 따라서 n+30은 n²의 약수입니다. n²=(n+30)(n−30)+30²이므로 n+30은 30²의 약수이기도 합니다. r+1≤n+30≤r+10 범위에서 30²의 약수는 36뿐이므로 n=36−30=6입니다. 처음 학생 수는 n²=6×6=36명입니다. 실제로 세로줄 36줄에 한 줄당 1명씩 앉으면 36×1=36명이므로 조건을 모두 만족합니다.",
+      "learningPoint": "정사각형의 같은 학생 수를 유지한 채 행 수가 늘어날 때 곱셈의 약수 관계로 가능한 배열을 찾는다.",
+      "learningLocation": "활용 6회 · 원문 22번 · 정사각형 배열과 세로줄 변화",
+      "verification": {
+        "primaryMethod": "Let the original square have n rows and n students per row; require n+r to divide n².",
+        "independentMethod": "Enumerate n=1..10 directly and independently enumerate divisors of r² in the interval [r+1,r+10]. Confirm the revised rectangle has integer students per row.",
+        "parameters": {
+          "additionalVerticalRows": 30,
+          "squareSide": 6,
+          "studentCount": 36,
+          "rowsAfter": 36,
+          "studentsPerRowAfter": 1,
+          "divisorsInRange": [
+            36
+          ]
+        },
+        "independentSuite": "qa/applied6-q22-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 22번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 153,
-    "sourceTypes": 17,
+    "independentMathCount": 162,
+    "sourceTypes": 18,
     "variantsPerType": 9,
     "outputReviewed": true,
     "sourceDrawingCount": 3,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "verifiedQuestionCount": 153,
-    "verifiedSourceCount": 17
+    "verifiedQuestionCount": 162,
+    "verifiedSourceCount": 18
   }
 }
