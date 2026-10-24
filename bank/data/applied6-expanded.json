@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r21",
+  "version": "20261024-applied6-expansion-r22",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -30,14 +30,14 @@
     22,
     23,
     24,
-    25
+    25,
+    26
   ],
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
-    26,
     27,
     28,
     29,
@@ -13177,17 +13177,602 @@
         "estimated": false,
         "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
       }
+    },
+    {
+      "id": "applied6-q26-v1",
+      "genId": "applied6-q26",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 26,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "제한된 숫자와 배수 조건",
+      "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "text": "0과 1로만 이루어진 0이 아닌 자연수 중에서 15로 나누어지는 가장 작은 수는 무엇인가요?",
+      "answer": "1110",
+      "answerParts": [
+        1110
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "1110"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "15의 배수는 각 자리 숫자의 합이 3의 배수이고 끝자리가 0 또는 5여야 합니다. 허용된 숫자 1는 끝자리에 올 수 없으므로 끝자리는 0입니다.",
+        "자릿수 합이 3의 배수이려면 1의 개수가 3의 배수여야 합니다. 한 개나 두 개로는 조건을 만족하지 못하므로 최소 세 개가 필요합니다.",
+        "가장 작은 수가 되려면 세 개의 1를 가장 앞자리부터 놓고 끝에 0을 둡니다. 따라서 1110입니다.",
+        "1110÷15=74이므로 가장 작은 수는 1110입니다."
+      ],
+      "solution": "15의 배수는 각 자리 숫자의 합이 3의 배수이고 끝자리가 0 또는 5여야 합니다. 허용된 숫자 1는 끝자리에 올 수 없으므로 끝자리는 0입니다. 자릿수 합이 3의 배수이려면 1의 개수가 3의 배수여야 합니다. 한 개나 두 개로는 조건을 만족하지 못하므로 최소 세 개가 필요합니다. 가장 작은 수가 되려면 세 개의 1를 가장 앞자리부터 놓고 끝에 0을 둡니다. 따라서 1110입니다. 1110÷15=74이므로 가장 작은 수는 1110입니다.",
+      "learningPoint": "나누어떨어지는 수의 자리 조건과 각 자리 숫자의 합을 함께 사용해 가장 작은 수 만들기",
+      "learningLocation": "활용 6회 · 원문 26번 · 제한된 숫자와 배수 조건",
+      "verification": {
+        "primaryMethod": "Apply divisibility rules for 3 and 5 and minimize the digit string under the allowed-digit restriction.",
+        "independentMethod": "Exhaustively scan positive integers in ascending order and accept only strings using 0 and the selected nonzero digit that are divisible by 15.",
+        "parameters": {
+          "allowedDigits": [
+            0,
+            1
+          ],
+          "divisor": 15,
+          "minimum": 1110,
+          "quotient": 74,
+          "terminalDigit": "0",
+          "digitSum": 3,
+          "exhaustiveSearchLimit": 1110
+        },
+        "independentSuite": "qa/applied6-q26-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q26-v2",
+      "genId": "applied6-q26",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 26,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "제한된 숫자와 배수 조건",
+      "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "text": "0과 2로만 이루어진 0이 아닌 자연수 중에서 15로 나누어지는 가장 작은 수는 무엇인가요?",
+      "answer": "2220",
+      "answerParts": [
+        2220
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "2220"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "15의 배수는 각 자리 숫자의 합이 3의 배수이고 끝자리가 0 또는 5여야 합니다. 허용된 숫자 2는 끝자리에 올 수 없으므로 끝자리는 0입니다.",
+        "자릿수 합이 3의 배수이려면 2의 개수가 3의 배수여야 합니다. 한 개나 두 개로는 조건을 만족하지 못하므로 최소 세 개가 필요합니다.",
+        "가장 작은 수가 되려면 세 개의 2를 가장 앞자리부터 놓고 끝에 0을 둡니다. 따라서 2220입니다.",
+        "2220÷15=148이므로 가장 작은 수는 2220입니다."
+      ],
+      "solution": "15의 배수는 각 자리 숫자의 합이 3의 배수이고 끝자리가 0 또는 5여야 합니다. 허용된 숫자 2는 끝자리에 올 수 없으므로 끝자리는 0입니다. 자릿수 합이 3의 배수이려면 2의 개수가 3의 배수여야 합니다. 한 개나 두 개로는 조건을 만족하지 못하므로 최소 세 개가 필요합니다. 가장 작은 수가 되려면 세 개의 2를 가장 앞자리부터 놓고 끝에 0을 둡니다. 따라서 2220입니다. 2220÷15=148이므로 가장 작은 수는 2220입니다.",
+      "learningPoint": "나누어떨어지는 수의 자리 조건과 각 자리 숫자의 합을 함께 사용해 가장 작은 수 만들기",
+      "learningLocation": "활용 6회 · 원문 26번 · 제한된 숫자와 배수 조건",
+      "verification": {
+        "primaryMethod": "Apply divisibility rules for 3 and 5 and minimize the digit string under the allowed-digit restriction.",
+        "independentMethod": "Exhaustively scan positive integers in ascending order and accept only strings using 0 and the selected nonzero digit that are divisible by 15.",
+        "parameters": {
+          "allowedDigits": [
+            0,
+            2
+          ],
+          "divisor": 15,
+          "minimum": 2220,
+          "quotient": 148,
+          "terminalDigit": "0",
+          "digitSum": 6,
+          "exhaustiveSearchLimit": 2220
+        },
+        "independentSuite": "qa/applied6-q26-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q26-v3",
+      "genId": "applied6-q26",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 26,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "제한된 숫자와 배수 조건",
+      "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "text": "0과 3로만 이루어진 0이 아닌 자연수 중에서 15로 나누어지는 가장 작은 수는 무엇인가요?",
+      "answer": "30",
+      "answerParts": [
+        30
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "30"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "15의 배수는 각 자리 숫자의 합이 3의 배수이고, 끝자리가 0 또는 5여야 합니다.",
+        "허용된 비영 숫자 3는 이미 3의 배수이므로 한 번만 써도 자릿수 합이 3의 배수입니다.",
+        "15의 배수가 되려면 끝자리가 0 또는 5여야 하지만 허용된 숫자는 0과 3뿐입니다. 따라서 가장 짧은 수는 30입니다.",
+        "30÷15=2이므로 가장 작은 수는 30입니다."
+      ],
+      "solution": "15의 배수는 각 자리 숫자의 합이 3의 배수이고, 끝자리가 0 또는 5여야 합니다. 허용된 비영 숫자 3는 이미 3의 배수이므로 한 번만 써도 자릿수 합이 3의 배수입니다. 15의 배수가 되려면 끝자리가 0 또는 5여야 하지만 허용된 숫자는 0과 3뿐입니다. 따라서 가장 짧은 수는 30입니다. 30÷15=2이므로 가장 작은 수는 30입니다.",
+      "learningPoint": "나누어떨어지는 수의 자리 조건과 각 자리 숫자의 합을 함께 사용해 가장 작은 수 만들기",
+      "learningLocation": "활용 6회 · 원문 26번 · 제한된 숫자와 배수 조건",
+      "verification": {
+        "primaryMethod": "Apply divisibility rules for 3 and 5 and minimize the digit string under the allowed-digit restriction.",
+        "independentMethod": "Exhaustively scan positive integers in ascending order and accept only strings using 0 and the selected nonzero digit that are divisible by 15.",
+        "parameters": {
+          "allowedDigits": [
+            0,
+            3
+          ],
+          "divisor": 15,
+          "minimum": 30,
+          "quotient": 2,
+          "terminalDigit": "0",
+          "digitSum": 3,
+          "exhaustiveSearchLimit": 30
+        },
+        "independentSuite": "qa/applied6-q26-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q26-v4",
+      "genId": "applied6-q26",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 26,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "제한된 숫자와 배수 조건",
+      "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "text": "0과 4로만 이루어진 0이 아닌 자연수 중에서 15로 나누어지는 가장 작은 수는 무엇인가요?",
+      "answer": "4440",
+      "answerParts": [
+        4440
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "4440"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "15의 배수는 각 자리 숫자의 합이 3의 배수이고 끝자리가 0 또는 5여야 합니다. 허용된 숫자 4는 끝자리에 올 수 없으므로 끝자리는 0입니다.",
+        "자릿수 합이 3의 배수이려면 4의 개수가 3의 배수여야 합니다. 한 개나 두 개로는 조건을 만족하지 못하므로 최소 세 개가 필요합니다.",
+        "가장 작은 수가 되려면 세 개의 4를 가장 앞자리부터 놓고 끝에 0을 둡니다. 따라서 4440입니다.",
+        "4440÷15=296이므로 가장 작은 수는 4440입니다."
+      ],
+      "solution": "15의 배수는 각 자리 숫자의 합이 3의 배수이고 끝자리가 0 또는 5여야 합니다. 허용된 숫자 4는 끝자리에 올 수 없으므로 끝자리는 0입니다. 자릿수 합이 3의 배수이려면 4의 개수가 3의 배수여야 합니다. 한 개나 두 개로는 조건을 만족하지 못하므로 최소 세 개가 필요합니다. 가장 작은 수가 되려면 세 개의 4를 가장 앞자리부터 놓고 끝에 0을 둡니다. 따라서 4440입니다. 4440÷15=296이므로 가장 작은 수는 4440입니다.",
+      "learningPoint": "나누어떨어지는 수의 자리 조건과 각 자리 숫자의 합을 함께 사용해 가장 작은 수 만들기",
+      "learningLocation": "활용 6회 · 원문 26번 · 제한된 숫자와 배수 조건",
+      "verification": {
+        "primaryMethod": "Apply divisibility rules for 3 and 5 and minimize the digit string under the allowed-digit restriction.",
+        "independentMethod": "Exhaustively scan positive integers in ascending order and accept only strings using 0 and the selected nonzero digit that are divisible by 15.",
+        "parameters": {
+          "allowedDigits": [
+            0,
+            4
+          ],
+          "divisor": 15,
+          "minimum": 4440,
+          "quotient": 296,
+          "terminalDigit": "0",
+          "digitSum": 12,
+          "exhaustiveSearchLimit": 4440
+        },
+        "independentSuite": "qa/applied6-q26-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q26-v5",
+      "genId": "applied6-q26",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 26,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "제한된 숫자와 배수 조건",
+      "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "text": "0과 5로만 이루어진 0이 아닌 자연수 중에서 15로 나누어지는 가장 작은 수는 무엇인가요?",
+      "answer": "555",
+      "answerParts": [
+        555
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "555"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "15의 배수는 각 자리 숫자의 합이 3의 배수이고, 끝자리가 0 또는 5여야 합니다.",
+        "허용된 숫자는 0과 5이므로 5의 개수가 3의 배수여야 합니다. 두 자리로는 만들 수 없고, 세 자리에서 555가 조건을 만족합니다.",
+        "555÷15=37이므로 555는 15의 배수입니다.",
+        "두 자리보다 세 자리가 작은 양의 수가 될 수 없고, 두 자리 수는 자릿수 합 조건을 만족하지 못하므로 가장 작은 수는 555입니다."
+      ],
+      "solution": "15의 배수는 각 자리 숫자의 합이 3의 배수이고, 끝자리가 0 또는 5여야 합니다. 허용된 숫자는 0과 5이므로 5의 개수가 3의 배수여야 합니다. 두 자리로는 만들 수 없고, 세 자리에서 555가 조건을 만족합니다. 555÷15=37이므로 555는 15의 배수입니다. 두 자리보다 세 자리가 작은 양의 수가 될 수 없고, 두 자리 수는 자릿수 합 조건을 만족하지 못하므로 가장 작은 수는 555입니다.",
+      "learningPoint": "나누어떨어지는 수의 자리 조건과 각 자리 숫자의 합을 함께 사용해 가장 작은 수 만들기",
+      "learningLocation": "활용 6회 · 원문 26번 · 제한된 숫자와 배수 조건",
+      "verification": {
+        "primaryMethod": "Apply divisibility rules for 3 and 5 and minimize the digit string under the allowed-digit restriction.",
+        "independentMethod": "Exhaustively scan positive integers in ascending order and accept only strings using 0 and the selected nonzero digit that are divisible by 15.",
+        "parameters": {
+          "allowedDigits": [
+            0,
+            5
+          ],
+          "divisor": 15,
+          "minimum": 555,
+          "quotient": 37,
+          "terminalDigit": "5",
+          "digitSum": 15,
+          "exhaustiveSearchLimit": 555
+        },
+        "independentSuite": "qa/applied6-q26-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q26-v6",
+      "genId": "applied6-q26",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 26,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "제한된 숫자와 배수 조건",
+      "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "text": "0과 6로만 이루어진 0이 아닌 자연수 중에서 15로 나누어지는 가장 작은 수는 무엇인가요?",
+      "answer": "60",
+      "answerParts": [
+        60
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "60"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "15의 배수는 각 자리 숫자의 합이 3의 배수이고, 끝자리가 0 또는 5여야 합니다.",
+        "허용된 비영 숫자 6는 이미 3의 배수이므로 한 번만 써도 자릿수 합이 3의 배수입니다.",
+        "15의 배수가 되려면 끝자리가 0 또는 5여야 하지만 허용된 숫자는 0과 6뿐입니다. 따라서 가장 짧은 수는 60입니다.",
+        "60÷15=4이므로 가장 작은 수는 60입니다."
+      ],
+      "solution": "15의 배수는 각 자리 숫자의 합이 3의 배수이고, 끝자리가 0 또는 5여야 합니다. 허용된 비영 숫자 6는 이미 3의 배수이므로 한 번만 써도 자릿수 합이 3의 배수입니다. 15의 배수가 되려면 끝자리가 0 또는 5여야 하지만 허용된 숫자는 0과 6뿐입니다. 따라서 가장 짧은 수는 60입니다. 60÷15=4이므로 가장 작은 수는 60입니다.",
+      "learningPoint": "나누어떨어지는 수의 자리 조건과 각 자리 숫자의 합을 함께 사용해 가장 작은 수 만들기",
+      "learningLocation": "활용 6회 · 원문 26번 · 제한된 숫자와 배수 조건",
+      "verification": {
+        "primaryMethod": "Apply divisibility rules for 3 and 5 and minimize the digit string under the allowed-digit restriction.",
+        "independentMethod": "Exhaustively scan positive integers in ascending order and accept only strings using 0 and the selected nonzero digit that are divisible by 15.",
+        "parameters": {
+          "allowedDigits": [
+            0,
+            6
+          ],
+          "divisor": 15,
+          "minimum": 60,
+          "quotient": 4,
+          "terminalDigit": "0",
+          "digitSum": 6,
+          "exhaustiveSearchLimit": 60
+        },
+        "independentSuite": "qa/applied6-q26-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q26-v7",
+      "genId": "applied6-q26",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 26,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "제한된 숫자와 배수 조건",
+      "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "text": "0과 7로만 이루어진 0이 아닌 자연수 중에서 15로 나누어지는 가장 작은 수는 무엇인가요?",
+      "answer": "7770",
+      "answerParts": [
+        7770
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "7770"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "15의 배수는 각 자리 숫자의 합이 3의 배수이고 끝자리가 0 또는 5여야 합니다. 허용된 숫자 7는 끝자리에 올 수 없으므로 끝자리는 0입니다.",
+        "자릿수 합이 3의 배수이려면 7의 개수가 3의 배수여야 합니다. 한 개나 두 개로는 조건을 만족하지 못하므로 최소 세 개가 필요합니다.",
+        "가장 작은 수가 되려면 세 개의 7를 가장 앞자리부터 놓고 끝에 0을 둡니다. 따라서 7770입니다.",
+        "7770÷15=518이므로 가장 작은 수는 7770입니다."
+      ],
+      "solution": "15의 배수는 각 자리 숫자의 합이 3의 배수이고 끝자리가 0 또는 5여야 합니다. 허용된 숫자 7는 끝자리에 올 수 없으므로 끝자리는 0입니다. 자릿수 합이 3의 배수이려면 7의 개수가 3의 배수여야 합니다. 한 개나 두 개로는 조건을 만족하지 못하므로 최소 세 개가 필요합니다. 가장 작은 수가 되려면 세 개의 7를 가장 앞자리부터 놓고 끝에 0을 둡니다. 따라서 7770입니다. 7770÷15=518이므로 가장 작은 수는 7770입니다.",
+      "learningPoint": "나누어떨어지는 수의 자리 조건과 각 자리 숫자의 합을 함께 사용해 가장 작은 수 만들기",
+      "learningLocation": "활용 6회 · 원문 26번 · 제한된 숫자와 배수 조건",
+      "verification": {
+        "primaryMethod": "Apply divisibility rules for 3 and 5 and minimize the digit string under the allowed-digit restriction.",
+        "independentMethod": "Exhaustively scan positive integers in ascending order and accept only strings using 0 and the selected nonzero digit that are divisible by 15.",
+        "parameters": {
+          "allowedDigits": [
+            0,
+            7
+          ],
+          "divisor": 15,
+          "minimum": 7770,
+          "quotient": 518,
+          "terminalDigit": "0",
+          "digitSum": 21,
+          "exhaustiveSearchLimit": 7770
+        },
+        "independentSuite": "qa/applied6-q26-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q26-v8",
+      "genId": "applied6-q26",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 26,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "제한된 숫자와 배수 조건",
+      "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "text": "0과 8로만 이루어진 0이 아닌 자연수 중에서 15로 나누어지는 가장 작은 수는 무엇인가요?",
+      "answer": "8880",
+      "answerParts": [
+        8880
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "8880"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "15의 배수는 각 자리 숫자의 합이 3의 배수이고 끝자리가 0 또는 5여야 합니다. 허용된 숫자 8는 끝자리에 올 수 없으므로 끝자리는 0입니다.",
+        "자릿수 합이 3의 배수이려면 8의 개수가 3의 배수여야 합니다. 한 개나 두 개로는 조건을 만족하지 못하므로 최소 세 개가 필요합니다.",
+        "가장 작은 수가 되려면 세 개의 8를 가장 앞자리부터 놓고 끝에 0을 둡니다. 따라서 8880입니다.",
+        "8880÷15=592이므로 가장 작은 수는 8880입니다."
+      ],
+      "solution": "15의 배수는 각 자리 숫자의 합이 3의 배수이고 끝자리가 0 또는 5여야 합니다. 허용된 숫자 8는 끝자리에 올 수 없으므로 끝자리는 0입니다. 자릿수 합이 3의 배수이려면 8의 개수가 3의 배수여야 합니다. 한 개나 두 개로는 조건을 만족하지 못하므로 최소 세 개가 필요합니다. 가장 작은 수가 되려면 세 개의 8를 가장 앞자리부터 놓고 끝에 0을 둡니다. 따라서 8880입니다. 8880÷15=592이므로 가장 작은 수는 8880입니다.",
+      "learningPoint": "나누어떨어지는 수의 자리 조건과 각 자리 숫자의 합을 함께 사용해 가장 작은 수 만들기",
+      "learningLocation": "활용 6회 · 원문 26번 · 제한된 숫자와 배수 조건",
+      "verification": {
+        "primaryMethod": "Apply divisibility rules for 3 and 5 and minimize the digit string under the allowed-digit restriction.",
+        "independentMethod": "Exhaustively scan positive integers in ascending order and accept only strings using 0 and the selected nonzero digit that are divisible by 15.",
+        "parameters": {
+          "allowedDigits": [
+            0,
+            8
+          ],
+          "divisor": 15,
+          "minimum": 8880,
+          "quotient": 592,
+          "terminalDigit": "0",
+          "digitSum": 24,
+          "exhaustiveSearchLimit": 8880
+        },
+        "independentSuite": "qa/applied6-q26-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
+    },
+    {
+      "id": "applied6-q26-v9",
+      "genId": "applied6-q26",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 26,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "제한된 숫자와 배수 조건",
+      "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "text": "0과 9로만 이루어진 0이 아닌 자연수 중에서 15로 나누어지는 가장 작은 수는 무엇인가요?",
+      "answer": "90",
+      "answerParts": [
+        90
+      ],
+      "answerLabels": [
+        "가장 작은 수"
+      ],
+      "acceptedAnswers": [
+        "90"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "15의 배수는 각 자리 숫자의 합이 3의 배수이고, 끝자리가 0 또는 5여야 합니다.",
+        "허용된 비영 숫자 9는 이미 3의 배수이므로 한 번만 써도 자릿수 합이 3의 배수입니다.",
+        "15의 배수가 되려면 끝자리가 0 또는 5여야 하지만 허용된 숫자는 0과 9뿐입니다. 따라서 가장 짧은 수는 90입니다.",
+        "90÷15=6이므로 가장 작은 수는 90입니다."
+      ],
+      "solution": "15의 배수는 각 자리 숫자의 합이 3의 배수이고, 끝자리가 0 또는 5여야 합니다. 허용된 비영 숫자 9는 이미 3의 배수이므로 한 번만 써도 자릿수 합이 3의 배수입니다. 15의 배수가 되려면 끝자리가 0 또는 5여야 하지만 허용된 숫자는 0과 9뿐입니다. 따라서 가장 짧은 수는 90입니다. 90÷15=6이므로 가장 작은 수는 90입니다.",
+      "learningPoint": "나누어떨어지는 수의 자리 조건과 각 자리 숫자의 합을 함께 사용해 가장 작은 수 만들기",
+      "learningLocation": "활용 6회 · 원문 26번 · 제한된 숫자와 배수 조건",
+      "verification": {
+        "primaryMethod": "Apply divisibility rules for 3 and 5 and minimize the digit string under the allowed-digit restriction.",
+        "independentMethod": "Exhaustively scan positive integers in ascending order and accept only strings using 0 and the selected nonzero digit that are divisible by 15.",
+        "parameters": {
+          "allowedDigits": [
+            0,
+            9
+          ],
+          "divisor": 15,
+          "minimum": 90,
+          "quotient": 6,
+          "terminalDigit": "0",
+          "digitSum": 9,
+          "exhaustiveSearchLimit": 90
+        },
+        "independentSuite": "qa/applied6-q26-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 189,
-    "sourceTypes": 21,
+    "independentMathCount": 198,
+    "sourceTypes": 22,
     "variantsPerType": 9,
     "outputReviewed": true,
     "sourceDrawingCount": 5,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "verifiedQuestionCount": 189,
-    "verifiedSourceCount": 21
+    "verifiedQuestionCount": 198,
+    "verifiedSourceCount": 22
   }
 }

@@ -1,3 +1,9 @@
+## 2026-10-24 활용 6회 기존 유형 확장 Q26 (r22, 최신)
+
+- 원문 26번의 제한 숫자·배수 조건 유형만 9개 확장했다. PDF 문제/답안 5쪽을 직접 대조했고 교사 답 1110을 확인했다. 허용 숫자 `{0,d}`(d=1~9)로 조건을 유지했으며, 양의 정수를 오름차순으로 전수 탐색해 최소값을 검산했다.
+- 활용6 데이터 198문항·22개 원문 유형, 전체 Applied 999문항=111유형×9. 브라우저 답 입력·진단·연습 3회·원점수 보존·2단 순서·375px 검사가 통과했다. 최신 ZIP은 문제 2쪽·풀이 3쪽, 7개 구성품이며 현재 ZIP을 압축 해제해 시각 검사했다. 은행 `20261024-applied6-expansion-r22`, 캐시 `20261024-r23`.
+- Drive [문제 ZIP](https://drive.google.com/file/d/1VzQPbBd-lpmrKdvy4LI6l1yP-zCw05-S/view), [검수 ZIP](https://drive.google.com/file/d/1LXcD-vKMHOAB9EDcbS3K1Tc6Dz6SkTzn/view), [은행 JSON](https://drive.google.com/file/d/1TnvrRAFagaXu1MxQy8eZCevmqLG4dgwu/view), [인덱스](https://drive.google.com/file/d/1f8ZD6nVo5BSpwR1rv-vACg3FMR3-evfZ/view), [진행 기록](https://drive.google.com/file/d/1Y8p5OlP0JZnsRIdNxgmex1DOS9RAou2A/view). 파일 ID·크기·폴더 확인. Drive receipt [1OzvhDN9EGkWOuRbxLIhLaVUkik_oVZD9](https://drive.google.com/file/d/1OzvhDN9EGkWOuRbxLIhLaVUkik_oVZD9/view)에 최종 바이트 해시와 검수 상태를 기록했다. Git `main`에 Q25 커밋 `0e75d20fb8015f6f61900b88d4136bb95d10065a`; 로컬 main에 Q26을 커밋했다. GitHub push·배포는 아직 하지 않았다. Q27~30은 원문/답안 직접 확인 후 기존 유형만 확장한다.
+
 ## 2026-10-24 활용 6회 기존 유형 확장 Q25 (r21, 최신)
 
 - 활용 6회 원문 25번의 머리·몸·꼬리 길이 연쇄 관계식 유형만 9개 확장했다. 문제 PDF·답안 PDF 5쪽을 직접 확인해 교사 최종 답 80cm와 대조했다. 도형이 없는 원문이므로 그림을 추가하지 않았다. 머리 10~26cm 중 짝수 9개 조건으로 변형했고, 각 관계식의 유일해·전체 길이를 독립 전수검산했다.

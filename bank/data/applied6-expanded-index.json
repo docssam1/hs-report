@@ -1,14 +1,13 @@
 {
-  "version": "20261024-applied6-expansion-r21",
+  "version": "20261024-applied6-expansion-r22",
   "sourceSet": "applied",
   "sourceRound": 6,
-  "itemCount": 189,
+  "itemCount": 198,
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
-    26,
     27,
     28,
     29,
@@ -221,6 +220,16 @@
       "area": "수와 식",
       "subarea": "서로를 포함하는 세 부분의 길이 관계",
       "detailType": "머리·몸·꼬리의 연쇄 관계식으로 전체 길이 구하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 26,
+      "genId": "applied6-q26",
+      "area": "수와 식",
+      "subarea": "제한된 숫자와 배수 조건",
+      "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9
