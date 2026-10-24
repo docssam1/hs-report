@@ -1,15 +1,14 @@
 {
-  "version": "20261024-applied4-expansion-r3",
+  "version": "20261024-applied4-expansion-r4",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 153,
+  "itemCount": 162,
   "pendingSourceNos": [
     1,
     2,
     3,
     4,
     14,
-    16,
     21,
     22,
     24,
@@ -115,6 +114,16 @@
       "area": "수와 식",
       "subarea": "규칙과 수 배열",
       "detailType": "정사각형 묶음의 순서쌍",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 16,
+      "genId": "applied4-q16",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 배치",
+      "detailType": "겹친 사각형의 수 합과 카드 배치",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9

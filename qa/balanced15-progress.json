@@ -106,39 +106,40 @@
   "newDistinctAuthoredItems": 1140,
   "reusedApprovedItemsInBalancedView": 285,
   "previousApprovedStoredItemsPreserved": 1935,
-  "totalDistinctStoredItems": 3120,
+  "totalDistinctStoredItems": 3129,
   "sourceGradeMutation": false,
   "studentDifficultyMeasured": false,
-  "priorMainVerified": "d5c6025e3909693c52768c678f5aa238f2784a81",
+  "priorMainVerified": "3a7e84ba34c9572640ac840f4209591b1ce0d9ff",
   "priorDeploymentVerified": 40054656735,
-  "currentDeployment": "local QA complete;exact final main/site receipts follow this commit",
-  "driveZip": "https://drive.google.com/file/d/1n-DtUJbs1rhShaEXlxNcdmkdrKmAftk3/view",
-  "questionPdfPages": 5,
-  "solutionPdfPages": 6,
-  "practiceHistory": "Prior135 Applied4 objects/version exact;all1560 prior legacy/balanced keys preserved;new18 separate explicit r3 storage;3attempts/first result retained",
-  "next": "활용4회14·16번 고정그림 조건을 보존하는 변형 설계부터.16번 인쇄합22/17/11은 유지하고 새로운5개 카드 집합의 유일해를 먼저 열거한다.17번 기존9개 보존.그 외 부족한 유형만 원문당9개 제작.",
-  "outputFidelity": "Source15 original100=(8,15);source18 original152=(나,87);29 visible wave cells directly compared;actual placed/clipped original PDF crops;153preview/72images;new18ZIP11pages and3zooms reviewed;18embedded image bytes exact",
+  "currentDeployment": "source16 local QA passed;main/site/Drive publication pending",
+  "driveZip": null,
+  "questionPdfPages": 3,
+  "solutionPdfPages": 3,
+  "practiceHistory": "Prior153 Applied4 objects + prior 1578 practice-history keys byte-preserved; new9 use separate 20261024-applied4-new9-r4 storage;3 attempts/first result retained;original exam score unchanged",
+  "next": "활용4회14번 현행 원문/답안의 고정 그림을 직접 대조하고, 도형 구조·답 계약을 보존할 수 있을 때만 9개 제작.17번 기존 승인9개 보존.전체 활용·문제은행은 미완료.",
+  "outputFidelity": "Source16 exact source PDF page 3 and teacher PDF page16; exact placed original figure bytes reused; nine unique 5-card sets ×120 permutations and independent pair-sum method;actual ZIP 3 question +3 solution pages rendered and visually inspected;18 source types /162 total; prior153 exact",
   "currentVariantsPerSource": 9,
   "scopeRevision": "Latest user choice:9 total per original;stop filling15;preserve all approved data/history",
   "historicalBalancedCountsOnly": true,
   "nineStoredCountProjection": {
     "targetPerSource": 9,
     "targetCount": 2430,
-    "readyByStoredCountOnly": 118,
-    "missingByStoredCountOnly": 1368,
+    "readyByStoredCountOnly": 119,
+    "missingByStoredCountOnly": 1359,
     "notFullFidelityOrConnectionApproval": true,
     "legacyBalanced15CountsHistorical": true
   },
-  "newNineModeAuthoredItems": 45,
+  "newNineModeAuthoredItems": 54,
   "lastNineAddition": {
     "round": 4,
     "sourceNos": [
-      15,
-      18
+      16
     ],
     "perSource": 9,
-    "newCount": 18,
-    "legacyRoundVerified": 153,
-    "legacyRoundTypes": 17
+    "newCount": 9,
+    "legacyRoundVerified": 162,
+    "legacyRoundTypes": 18,
+    "zipSha256": "040e386224f1a07ced2a8523325027d377f1d0e6f233b3f6e7174ce640f57c6b",
+    "zipBytes": 4592514
   }
 }

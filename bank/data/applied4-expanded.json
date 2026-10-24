@@ -20,6 +20,7 @@
     12,
     13,
     15,
+    16,
     17,
     18,
     19,
@@ -34,7 +35,6 @@
     3,
     4,
     14,
-    16,
     21,
     22,
     24,
@@ -10565,6 +10565,1134 @@
           "measurement": "학생 실측 난도 아님"
         }
       }
+    },
+    {
+      "id": "applied4-q16-v1",
+      "genId": "applied4-q16",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 16,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r4",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 배치",
+      "detailType": "겹친 사각형의 수 합과 카드 배치",
+      "pointBand": "3.4",
+      "text": "카드 4·5·7·10·12의 수를 다섯 사각형에 하나씩 적습니다. 겹친 부분에 적힌 수는 그 부분을 덮는 사각형에 적힌 수의 합입니다. 그림의 조건을 만족할 때 ㄱ+ㄴ+ㄷ은 얼마입니까?",
+      "answer": "48",
+      "answerParts": [
+        48
+      ],
+      "answerLabels": [
+        "ㄱ+ㄴ+ㄷ"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "48"
+      ],
+      "solutionSteps": [
+        "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 5와12 또는 7와10입니다.",
+        "겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 4와7입니다.",
+        "서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽5, 작은 사각형12, 위10, 오른쪽7, 아래4으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다.",
+        "ㄱ은5+10, ㄴ은10+7, ㄷ은5+7+4입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(5+10+7)+4＝48입니다."
+      ],
+      "solution": "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 5와12 또는 7와10입니다. 겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 4와7입니다. 서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽5, 작은 사각형12, 위10, 오른쪽7, 아래4으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다. ㄱ은5+10, ㄴ은10+7, ㄷ은5+7+4입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(5+10+7)+4＝48입니다.",
+      "learningPoint": "겹친 부분별 합을 식으로 바꾸어 카드 배치의 유일해를 찾기",
+      "learningLocation": "활용 4회 · 원문 16번 · 겹친 사각형의 수 합과 카드 배치",
+      "asset": {
+        "src": "assets/applied4/four-rectangle-overlap-original.png",
+        "description": "원문16번의 다섯 사각형·ㄱㄴㄷ·22·17·11 그대로"
+      },
+      "verification": {
+        "primaryMethod": "all 5! card permutations plus independent region-pair enumeration",
+        "parameters": {
+          "cards": [
+            4,
+            5,
+            7,
+            10,
+            12
+          ],
+          "uniquePlacement": {
+            "left": 5,
+            "small": 12,
+            "top": 10,
+            "right": 7,
+            "bottom": 4
+          },
+          "pairs17": [
+            [
+              5,
+              12
+            ],
+            [
+              7,
+              10
+            ]
+          ],
+          "pairs11": [
+            [
+              4,
+              7
+            ]
+          ],
+          "regions": {
+            "22": [
+              "left",
+              "top",
+              "right"
+            ],
+            "17": [
+              "left",
+              "small"
+            ],
+            "11": [
+              "right",
+              "bottom"
+            ],
+            "ㄱ": [
+              "left",
+              "top"
+            ],
+            "ㄴ": [
+              "top",
+              "right"
+            ],
+            "ㄷ": [
+              "left",
+              "right",
+              "bottom"
+            ]
+          }
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 16,
+        "sourceFigureSha256": "04882dff9ace868a959f99a95cc0fe97634f78f116ec9ef89e74013858964a2b",
+        "independentSuite": "qa/applied4-nine-overlaps-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본 카드배치와 겹친 영역의 합 조건 유지",
+          "conditions": "원본의22·17·11과 각 새 다섯 카드 집합",
+          "steps": "겹친 부분에서 식을 세워 배치와 최종합 계산",
+          "representation": "원본 PDF 도형·위치·라벨·숫자 그대로",
+          "answer": "ㄱ+ㄴ+ㄷ 한 값",
+          "domain": "다섯 개의 서로 다른 자연수 카드",
+          "search": "5! 전수배치 및 영역쌍 독립열거",
+          "load": "원본과 같은 다섯 사각형·세 합 조건",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q16-v2",
+      "genId": "applied4-q16",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 16,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r4",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 배치",
+      "detailType": "겹친 사각형의 수 합과 카드 배치",
+      "pointBand": "3.4",
+      "text": "카드 3·5·8·9·12의 수를 다섯 사각형에 하나씩 적습니다. 겹친 부분에 적힌 수는 그 부분을 덮는 사각형에 적힌 수의 합입니다. 그림의 조건을 만족할 때 ㄱ+ㄴ+ㄷ은 얼마입니까?",
+      "answer": "47",
+      "answerParts": [
+        47
+      ],
+      "answerLabels": [
+        "ㄱ+ㄴ+ㄷ"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "47"
+      ],
+      "solutionSteps": [
+        "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 5와12 또는 8와9입니다.",
+        "겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 3와8입니다.",
+        "서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽5, 작은 사각형12, 위9, 오른쪽8, 아래3으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다.",
+        "ㄱ은5+9, ㄴ은9+8, ㄷ은5+8+3입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(5+9+8)+3＝47입니다."
+      ],
+      "solution": "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 5와12 또는 8와9입니다. 겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 3와8입니다. 서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽5, 작은 사각형12, 위9, 오른쪽8, 아래3으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다. ㄱ은5+9, ㄴ은9+8, ㄷ은5+8+3입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(5+9+8)+3＝47입니다.",
+      "learningPoint": "겹친 부분별 합을 식으로 바꾸어 카드 배치의 유일해를 찾기",
+      "learningLocation": "활용 4회 · 원문 16번 · 겹친 사각형의 수 합과 카드 배치",
+      "asset": {
+        "src": "assets/applied4/four-rectangle-overlap-original.png",
+        "description": "원문16번의 다섯 사각형·ㄱㄴㄷ·22·17·11 그대로"
+      },
+      "verification": {
+        "primaryMethod": "all 5! card permutations plus independent region-pair enumeration",
+        "parameters": {
+          "cards": [
+            3,
+            5,
+            8,
+            9,
+            12
+          ],
+          "uniquePlacement": {
+            "left": 5,
+            "small": 12,
+            "top": 9,
+            "right": 8,
+            "bottom": 3
+          },
+          "pairs17": [
+            [
+              5,
+              12
+            ],
+            [
+              8,
+              9
+            ]
+          ],
+          "pairs11": [
+            [
+              3,
+              8
+            ]
+          ],
+          "regions": {
+            "22": [
+              "left",
+              "top",
+              "right"
+            ],
+            "17": [
+              "left",
+              "small"
+            ],
+            "11": [
+              "right",
+              "bottom"
+            ],
+            "ㄱ": [
+              "left",
+              "top"
+            ],
+            "ㄴ": [
+              "top",
+              "right"
+            ],
+            "ㄷ": [
+              "left",
+              "right",
+              "bottom"
+            ]
+          }
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 16,
+        "sourceFigureSha256": "04882dff9ace868a959f99a95cc0fe97634f78f116ec9ef89e74013858964a2b",
+        "independentSuite": "qa/applied4-nine-overlaps-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본 카드배치와 겹친 영역의 합 조건 유지",
+          "conditions": "원본의22·17·11과 각 새 다섯 카드 집합",
+          "steps": "겹친 부분에서 식을 세워 배치와 최종합 계산",
+          "representation": "원본 PDF 도형·위치·라벨·숫자 그대로",
+          "answer": "ㄱ+ㄴ+ㄷ 한 값",
+          "domain": "다섯 개의 서로 다른 자연수 카드",
+          "search": "5! 전수배치 및 영역쌍 독립열거",
+          "load": "원본과 같은 다섯 사각형·세 합 조건",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q16-v3",
+      "genId": "applied4-q16",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 16,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r4",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 배치",
+      "detailType": "겹친 사각형의 수 합과 카드 배치",
+      "pointBand": "3.4",
+      "text": "카드 1·5·7·10·12의 수를 다섯 사각형에 하나씩 적습니다. 겹친 부분에 적힌 수는 그 부분을 덮는 사각형에 적힌 수의 합입니다. 그림의 조건을 만족할 때 ㄱ+ㄴ+ㄷ은 얼마입니까?",
+      "answer": "45",
+      "answerParts": [
+        45
+      ],
+      "answerLabels": [
+        "ㄱ+ㄴ+ㄷ"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "45"
+      ],
+      "solutionSteps": [
+        "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 5와12 또는 7와10입니다.",
+        "겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 1와10입니다.",
+        "서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽5, 작은 사각형12, 위7, 오른쪽10, 아래1으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다.",
+        "ㄱ은5+7, ㄴ은7+10, ㄷ은5+10+1입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(5+7+10)+1＝45입니다."
+      ],
+      "solution": "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 5와12 또는 7와10입니다. 겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 1와10입니다. 서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽5, 작은 사각형12, 위7, 오른쪽10, 아래1으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다. ㄱ은5+7, ㄴ은7+10, ㄷ은5+10+1입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(5+7+10)+1＝45입니다.",
+      "learningPoint": "겹친 부분별 합을 식으로 바꾸어 카드 배치의 유일해를 찾기",
+      "learningLocation": "활용 4회 · 원문 16번 · 겹친 사각형의 수 합과 카드 배치",
+      "asset": {
+        "src": "assets/applied4/four-rectangle-overlap-original.png",
+        "description": "원문16번의 다섯 사각형·ㄱㄴㄷ·22·17·11 그대로"
+      },
+      "verification": {
+        "primaryMethod": "all 5! card permutations plus independent region-pair enumeration",
+        "parameters": {
+          "cards": [
+            1,
+            5,
+            7,
+            10,
+            12
+          ],
+          "uniquePlacement": {
+            "left": 5,
+            "small": 12,
+            "top": 7,
+            "right": 10,
+            "bottom": 1
+          },
+          "pairs17": [
+            [
+              5,
+              12
+            ],
+            [
+              7,
+              10
+            ]
+          ],
+          "pairs11": [
+            [
+              1,
+              10
+            ]
+          ],
+          "regions": {
+            "22": [
+              "left",
+              "top",
+              "right"
+            ],
+            "17": [
+              "left",
+              "small"
+            ],
+            "11": [
+              "right",
+              "bottom"
+            ],
+            "ㄱ": [
+              "left",
+              "top"
+            ],
+            "ㄴ": [
+              "top",
+              "right"
+            ],
+            "ㄷ": [
+              "left",
+              "right",
+              "bottom"
+            ]
+          }
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 16,
+        "sourceFigureSha256": "04882dff9ace868a959f99a95cc0fe97634f78f116ec9ef89e74013858964a2b",
+        "independentSuite": "qa/applied4-nine-overlaps-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본 카드배치와 겹친 영역의 합 조건 유지",
+          "conditions": "원본의22·17·11과 각 새 다섯 카드 집합",
+          "steps": "겹친 부분에서 식을 세워 배치와 최종합 계산",
+          "representation": "원본 PDF 도형·위치·라벨·숫자 그대로",
+          "answer": "ㄱ+ㄴ+ㄷ 한 값",
+          "domain": "다섯 개의 서로 다른 자연수 카드",
+          "search": "5! 전수배치 및 영역쌍 독립열거",
+          "load": "원본과 같은 다섯 사각형·세 합 조건",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q16-v4",
+      "genId": "applied4-q16",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 16,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r4",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 배치",
+      "detailType": "겹친 사각형의 수 합과 카드 배치",
+      "pointBand": "3.4",
+      "text": "카드 4·6·7·11·12의 수를 다섯 사각형에 하나씩 적습니다. 겹친 부분에 적힌 수는 그 부분을 덮는 사각형에 적힌 수의 합입니다. 그림의 조건을 만족할 때 ㄱ+ㄴ+ㄷ은 얼마입니까?",
+      "answer": "51",
+      "answerParts": [
+        51
+      ],
+      "answerLabels": [
+        "ㄱ+ㄴ+ㄷ"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "51"
+      ],
+      "solutionSteps": [
+        "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 6와11입니다.",
+        "겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 4와7입니다.",
+        "서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽6, 작은 사각형11, 위12, 오른쪽4, 아래7으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다.",
+        "ㄱ은6+12, ㄴ은12+4, ㄷ은6+4+7입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(6+12+4)+7＝51입니다."
+      ],
+      "solution": "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 6와11입니다. 겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 4와7입니다. 서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽6, 작은 사각형11, 위12, 오른쪽4, 아래7으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다. ㄱ은6+12, ㄴ은12+4, ㄷ은6+4+7입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(6+12+4)+7＝51입니다.",
+      "learningPoint": "겹친 부분별 합을 식으로 바꾸어 카드 배치의 유일해를 찾기",
+      "learningLocation": "활용 4회 · 원문 16번 · 겹친 사각형의 수 합과 카드 배치",
+      "asset": {
+        "src": "assets/applied4/four-rectangle-overlap-original.png",
+        "description": "원문16번의 다섯 사각형·ㄱㄴㄷ·22·17·11 그대로"
+      },
+      "verification": {
+        "primaryMethod": "all 5! card permutations plus independent region-pair enumeration",
+        "parameters": {
+          "cards": [
+            4,
+            6,
+            7,
+            11,
+            12
+          ],
+          "uniquePlacement": {
+            "left": 6,
+            "small": 11,
+            "top": 12,
+            "right": 4,
+            "bottom": 7
+          },
+          "pairs17": [
+            [
+              6,
+              11
+            ]
+          ],
+          "pairs11": [
+            [
+              4,
+              7
+            ]
+          ],
+          "regions": {
+            "22": [
+              "left",
+              "top",
+              "right"
+            ],
+            "17": [
+              "left",
+              "small"
+            ],
+            "11": [
+              "right",
+              "bottom"
+            ],
+            "ㄱ": [
+              "left",
+              "top"
+            ],
+            "ㄴ": [
+              "top",
+              "right"
+            ],
+            "ㄷ": [
+              "left",
+              "right",
+              "bottom"
+            ]
+          }
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 16,
+        "sourceFigureSha256": "04882dff9ace868a959f99a95cc0fe97634f78f116ec9ef89e74013858964a2b",
+        "independentSuite": "qa/applied4-nine-overlaps-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본 카드배치와 겹친 영역의 합 조건 유지",
+          "conditions": "원본의22·17·11과 각 새 다섯 카드 집합",
+          "steps": "겹친 부분에서 식을 세워 배치와 최종합 계산",
+          "representation": "원본 PDF 도형·위치·라벨·숫자 그대로",
+          "answer": "ㄱ+ㄴ+ㄷ 한 값",
+          "domain": "다섯 개의 서로 다른 자연수 카드",
+          "search": "5! 전수배치 및 영역쌍 독립열거",
+          "load": "원본과 같은 다섯 사각형·세 합 조건",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q16-v5",
+      "genId": "applied4-q16",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 16,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r4",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 배치",
+      "detailType": "겹친 사각형의 수 합과 카드 배치",
+      "pointBand": "3.4",
+      "text": "카드 2·6·7·9·11의 수를 다섯 사각형에 하나씩 적습니다. 겹친 부분에 적힌 수는 그 부분을 덮는 사각형에 적힌 수의 합입니다. 그림의 조건을 만족할 때 ㄱ+ㄴ+ㄷ은 얼마입니까?",
+      "answer": "46",
+      "answerParts": [
+        46
+      ],
+      "answerLabels": [
+        "ㄱ+ㄴ+ㄷ"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "46"
+      ],
+      "solutionSteps": [
+        "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 6와11입니다.",
+        "겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 2와9입니다.",
+        "서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽6, 작은 사각형11, 위7, 오른쪽9, 아래2으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다.",
+        "ㄱ은6+7, ㄴ은7+9, ㄷ은6+9+2입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(6+7+9)+2＝46입니다."
+      ],
+      "solution": "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 6와11입니다. 겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 2와9입니다. 서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽6, 작은 사각형11, 위7, 오른쪽9, 아래2으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다. ㄱ은6+7, ㄴ은7+9, ㄷ은6+9+2입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(6+7+9)+2＝46입니다.",
+      "learningPoint": "겹친 부분별 합을 식으로 바꾸어 카드 배치의 유일해를 찾기",
+      "learningLocation": "활용 4회 · 원문 16번 · 겹친 사각형의 수 합과 카드 배치",
+      "asset": {
+        "src": "assets/applied4/four-rectangle-overlap-original.png",
+        "description": "원문16번의 다섯 사각형·ㄱㄴㄷ·22·17·11 그대로"
+      },
+      "verification": {
+        "primaryMethod": "all 5! card permutations plus independent region-pair enumeration",
+        "parameters": {
+          "cards": [
+            2,
+            6,
+            7,
+            9,
+            11
+          ],
+          "uniquePlacement": {
+            "left": 6,
+            "small": 11,
+            "top": 7,
+            "right": 9,
+            "bottom": 2
+          },
+          "pairs17": [
+            [
+              6,
+              11
+            ]
+          ],
+          "pairs11": [
+            [
+              2,
+              9
+            ]
+          ],
+          "regions": {
+            "22": [
+              "left",
+              "top",
+              "right"
+            ],
+            "17": [
+              "left",
+              "small"
+            ],
+            "11": [
+              "right",
+              "bottom"
+            ],
+            "ㄱ": [
+              "left",
+              "top"
+            ],
+            "ㄴ": [
+              "top",
+              "right"
+            ],
+            "ㄷ": [
+              "left",
+              "right",
+              "bottom"
+            ]
+          }
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 16,
+        "sourceFigureSha256": "04882dff9ace868a959f99a95cc0fe97634f78f116ec9ef89e74013858964a2b",
+        "independentSuite": "qa/applied4-nine-overlaps-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본 카드배치와 겹친 영역의 합 조건 유지",
+          "conditions": "원본의22·17·11과 각 새 다섯 카드 집합",
+          "steps": "겹친 부분에서 식을 세워 배치와 최종합 계산",
+          "representation": "원본 PDF 도형·위치·라벨·숫자 그대로",
+          "answer": "ㄱ+ㄴ+ㄷ 한 값",
+          "domain": "다섯 개의 서로 다른 자연수 카드",
+          "search": "5! 전수배치 및 영역쌍 독립열거",
+          "load": "원본과 같은 다섯 사각형·세 합 조건",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q16-v6",
+      "genId": "applied4-q16",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 16,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r4",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 배치",
+      "detailType": "겹친 사각형의 수 합과 카드 배치",
+      "pointBand": "3.4",
+      "text": "카드 3·7·8·10·12의 수를 다섯 사각형에 하나씩 적습니다. 겹친 부분에 적힌 수는 그 부분을 덮는 사각형에 적힌 수의 합입니다. 그림의 조건을 만족할 때 ㄱ+ㄴ+ㄷ은 얼마입니까?",
+      "answer": "52",
+      "answerParts": [
+        52
+      ],
+      "answerLabels": [
+        "ㄱ+ㄴ+ㄷ"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "52"
+      ],
+      "solutionSteps": [
+        "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 7와10입니다.",
+        "겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 3와8입니다.",
+        "서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽7, 작은 사각형10, 위12, 오른쪽3, 아래8으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다.",
+        "ㄱ은7+12, ㄴ은12+3, ㄷ은7+3+8입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(7+12+3)+8＝52입니다."
+      ],
+      "solution": "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 7와10입니다. 겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 3와8입니다. 서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽7, 작은 사각형10, 위12, 오른쪽3, 아래8으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다. ㄱ은7+12, ㄴ은12+3, ㄷ은7+3+8입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(7+12+3)+8＝52입니다.",
+      "learningPoint": "겹친 부분별 합을 식으로 바꾸어 카드 배치의 유일해를 찾기",
+      "learningLocation": "활용 4회 · 원문 16번 · 겹친 사각형의 수 합과 카드 배치",
+      "asset": {
+        "src": "assets/applied4/four-rectangle-overlap-original.png",
+        "description": "원문16번의 다섯 사각형·ㄱㄴㄷ·22·17·11 그대로"
+      },
+      "verification": {
+        "primaryMethod": "all 5! card permutations plus independent region-pair enumeration",
+        "parameters": {
+          "cards": [
+            3,
+            7,
+            8,
+            10,
+            12
+          ],
+          "uniquePlacement": {
+            "left": 7,
+            "small": 10,
+            "top": 12,
+            "right": 3,
+            "bottom": 8
+          },
+          "pairs17": [
+            [
+              7,
+              10
+            ]
+          ],
+          "pairs11": [
+            [
+              3,
+              8
+            ]
+          ],
+          "regions": {
+            "22": [
+              "left",
+              "top",
+              "right"
+            ],
+            "17": [
+              "left",
+              "small"
+            ],
+            "11": [
+              "right",
+              "bottom"
+            ],
+            "ㄱ": [
+              "left",
+              "top"
+            ],
+            "ㄴ": [
+              "top",
+              "right"
+            ],
+            "ㄷ": [
+              "left",
+              "right",
+              "bottom"
+            ]
+          }
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 16,
+        "sourceFigureSha256": "04882dff9ace868a959f99a95cc0fe97634f78f116ec9ef89e74013858964a2b",
+        "independentSuite": "qa/applied4-nine-overlaps-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본 카드배치와 겹친 영역의 합 조건 유지",
+          "conditions": "원본의22·17·11과 각 새 다섯 카드 집합",
+          "steps": "겹친 부분에서 식을 세워 배치와 최종합 계산",
+          "representation": "원본 PDF 도형·위치·라벨·숫자 그대로",
+          "answer": "ㄱ+ㄴ+ㄷ 한 값",
+          "domain": "다섯 개의 서로 다른 자연수 카드",
+          "search": "5! 전수배치 및 영역쌍 독립열거",
+          "load": "원본과 같은 다섯 사각형·세 합 조건",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q16-v7",
+      "genId": "applied4-q16",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 16,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r4",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 배치",
+      "detailType": "겹친 사각형의 수 합과 카드 배치",
+      "pointBand": "3.4",
+      "text": "카드 1·4·8·9·10의 수를 다섯 사각형에 하나씩 적습니다. 겹친 부분에 적힌 수는 그 부분을 덮는 사각형에 적힌 수의 합입니다. 그림의 조건을 만족할 때 ㄱ+ㄴ+ㄷ은 얼마입니까?",
+      "answer": "45",
+      "answerParts": [
+        45
+      ],
+      "answerLabels": [
+        "ㄱ+ㄴ+ㄷ"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "45"
+      ],
+      "solutionSteps": [
+        "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 8와9입니다.",
+        "겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 1와10입니다.",
+        "서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽8, 작은 사각형9, 위4, 오른쪽10, 아래1으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다.",
+        "ㄱ은8+4, ㄴ은4+10, ㄷ은8+10+1입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(8+4+10)+1＝45입니다."
+      ],
+      "solution": "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 8와9입니다. 겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 1와10입니다. 서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽8, 작은 사각형9, 위4, 오른쪽10, 아래1으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다. ㄱ은8+4, ㄴ은4+10, ㄷ은8+10+1입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(8+4+10)+1＝45입니다.",
+      "learningPoint": "겹친 부분별 합을 식으로 바꾸어 카드 배치의 유일해를 찾기",
+      "learningLocation": "활용 4회 · 원문 16번 · 겹친 사각형의 수 합과 카드 배치",
+      "asset": {
+        "src": "assets/applied4/four-rectangle-overlap-original.png",
+        "description": "원문16번의 다섯 사각형·ㄱㄴㄷ·22·17·11 그대로"
+      },
+      "verification": {
+        "primaryMethod": "all 5! card permutations plus independent region-pair enumeration",
+        "parameters": {
+          "cards": [
+            1,
+            4,
+            8,
+            9,
+            10
+          ],
+          "uniquePlacement": {
+            "left": 8,
+            "small": 9,
+            "top": 4,
+            "right": 10,
+            "bottom": 1
+          },
+          "pairs17": [
+            [
+              8,
+              9
+            ]
+          ],
+          "pairs11": [
+            [
+              1,
+              10
+            ]
+          ],
+          "regions": {
+            "22": [
+              "left",
+              "top",
+              "right"
+            ],
+            "17": [
+              "left",
+              "small"
+            ],
+            "11": [
+              "right",
+              "bottom"
+            ],
+            "ㄱ": [
+              "left",
+              "top"
+            ],
+            "ㄴ": [
+              "top",
+              "right"
+            ],
+            "ㄷ": [
+              "left",
+              "right",
+              "bottom"
+            ]
+          }
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 16,
+        "sourceFigureSha256": "04882dff9ace868a959f99a95cc0fe97634f78f116ec9ef89e74013858964a2b",
+        "independentSuite": "qa/applied4-nine-overlaps-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본 카드배치와 겹친 영역의 합 조건 유지",
+          "conditions": "원본의22·17·11과 각 새 다섯 카드 집합",
+          "steps": "겹친 부분에서 식을 세워 배치와 최종합 계산",
+          "representation": "원본 PDF 도형·위치·라벨·숫자 그대로",
+          "answer": "ㄱ+ㄴ+ㄷ 한 값",
+          "domain": "다섯 개의 서로 다른 자연수 카드",
+          "search": "5! 전수배치 및 영역쌍 독립열거",
+          "load": "원본과 같은 다섯 사각형·세 합 조건",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q16-v8",
+      "genId": "applied4-q16",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 16,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r4",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 배치",
+      "detailType": "겹친 사각형의 수 합과 카드 배치",
+      "pointBand": "3.4",
+      "text": "카드 2·3·5·8·12의 수를 다섯 사각형에 하나씩 적습니다. 겹친 부분에 적힌 수는 그 부분을 덮는 사각형에 적힌 수의 합입니다. 그림의 조건을 만족할 때 ㄱ+ㄴ+ㄷ은 얼마입니까?",
+      "answer": "47",
+      "answerParts": [
+        47
+      ],
+      "answerLabels": [
+        "ㄱ+ㄴ+ㄷ"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "47"
+      ],
+      "solutionSteps": [
+        "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 5와12입니다.",
+        "겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 3와8입니다.",
+        "서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽12, 작은 사각형5, 위2, 오른쪽8, 아래3으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다.",
+        "ㄱ은12+2, ㄴ은2+8, ㄷ은12+8+3입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(12+2+8)+3＝47입니다."
+      ],
+      "solution": "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 5와12입니다. 겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 3와8입니다. 서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽12, 작은 사각형5, 위2, 오른쪽8, 아래3으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다. ㄱ은12+2, ㄴ은2+8, ㄷ은12+8+3입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(12+2+8)+3＝47입니다.",
+      "learningPoint": "겹친 부분별 합을 식으로 바꾸어 카드 배치의 유일해를 찾기",
+      "learningLocation": "활용 4회 · 원문 16번 · 겹친 사각형의 수 합과 카드 배치",
+      "asset": {
+        "src": "assets/applied4/four-rectangle-overlap-original.png",
+        "description": "원문16번의 다섯 사각형·ㄱㄴㄷ·22·17·11 그대로"
+      },
+      "verification": {
+        "primaryMethod": "all 5! card permutations plus independent region-pair enumeration",
+        "parameters": {
+          "cards": [
+            2,
+            3,
+            5,
+            8,
+            12
+          ],
+          "uniquePlacement": {
+            "left": 12,
+            "small": 5,
+            "top": 2,
+            "right": 8,
+            "bottom": 3
+          },
+          "pairs17": [
+            [
+              5,
+              12
+            ]
+          ],
+          "pairs11": [
+            [
+              3,
+              8
+            ]
+          ],
+          "regions": {
+            "22": [
+              "left",
+              "top",
+              "right"
+            ],
+            "17": [
+              "left",
+              "small"
+            ],
+            "11": [
+              "right",
+              "bottom"
+            ],
+            "ㄱ": [
+              "left",
+              "top"
+            ],
+            "ㄴ": [
+              "top",
+              "right"
+            ],
+            "ㄷ": [
+              "left",
+              "right",
+              "bottom"
+            ]
+          }
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 16,
+        "sourceFigureSha256": "04882dff9ace868a959f99a95cc0fe97634f78f116ec9ef89e74013858964a2b",
+        "independentSuite": "qa/applied4-nine-overlaps-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본 카드배치와 겹친 영역의 합 조건 유지",
+          "conditions": "원본의22·17·11과 각 새 다섯 카드 집합",
+          "steps": "겹친 부분에서 식을 세워 배치와 최종합 계산",
+          "representation": "원본 PDF 도형·위치·라벨·숫자 그대로",
+          "answer": "ㄱ+ㄴ+ㄷ 한 값",
+          "domain": "다섯 개의 서로 다른 자연수 카드",
+          "search": "5! 전수배치 및 영역쌍 독립열거",
+          "load": "원본과 같은 다섯 사각형·세 합 조건",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
+    },
+    {
+      "id": "applied4-q16-v9",
+      "genId": "applied4-q16",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 16,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r4",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 배치",
+      "detailType": "겹친 사각형의 수 합과 카드 배치",
+      "pointBand": "3.4",
+      "text": "카드 1·2·5·9·12의 수를 다섯 사각형에 하나씩 적습니다. 겹친 부분에 적힌 수는 그 부분을 덮는 사각형에 적힌 수의 합입니다. 그림의 조건을 만족할 때 ㄱ+ㄴ+ㄷ은 얼마입니까?",
+      "answer": "46",
+      "answerParts": [
+        46
+      ],
+      "answerLabels": [
+        "ㄱ+ㄴ+ㄷ"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "46"
+      ],
+      "solutionSteps": [
+        "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 5와12입니다.",
+        "겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 2와9입니다.",
+        "서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽12, 작은 사각형5, 위1, 오른쪽9, 아래2으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다.",
+        "ㄱ은12+1, ㄴ은1+9, ㄷ은12+9+2입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(12+1+9)+2＝46입니다."
+      ],
+      "solution": "겹친 부분17에는 왼쪽과 작은 사각형의 수가 더해져 있습니다. 카드 중 합이17인 쌍은 5와12입니다. 겹친 부분11은 오른쪽과 아래 사각형의 합입니다. 카드 중 합이11인 쌍은 2와9입니다. 서로 다른 카드를 한 번씩 쓰고 22가 적힌 겹침도 맞추면 왼쪽12, 작은 사각형5, 위1, 오른쪽9, 아래2으로 놓입니다. 다섯 자리 전체를 순열로 확인해 이 배치만 남습니다. ㄱ은12+1, ㄴ은1+9, ㄷ은12+9+2입니다. 따라서 ㄱ+ㄴ+ㄷ＝2×(12+1+9)+2＝46입니다.",
+      "learningPoint": "겹친 부분별 합을 식으로 바꾸어 카드 배치의 유일해를 찾기",
+      "learningLocation": "활용 4회 · 원문 16번 · 겹친 사각형의 수 합과 카드 배치",
+      "asset": {
+        "src": "assets/applied4/four-rectangle-overlap-original.png",
+        "description": "원문16번의 다섯 사각형·ㄱㄴㄷ·22·17·11 그대로"
+      },
+      "verification": {
+        "primaryMethod": "all 5! card permutations plus independent region-pair enumeration",
+        "parameters": {
+          "cards": [
+            1,
+            2,
+            5,
+            9,
+            12
+          ],
+          "uniquePlacement": {
+            "left": 12,
+            "small": 5,
+            "top": 1,
+            "right": 9,
+            "bottom": 2
+          },
+          "pairs17": [
+            [
+              5,
+              12
+            ]
+          ],
+          "pairs11": [
+            [
+              2,
+              9
+            ]
+          ],
+          "regions": {
+            "22": [
+              "left",
+              "top",
+              "right"
+            ],
+            "17": [
+              "left",
+              "small"
+            ],
+            "11": [
+              "right",
+              "bottom"
+            ],
+            "ㄱ": [
+              "left",
+              "top"
+            ],
+            "ㄴ": [
+              "top",
+              "right"
+            ],
+            "ㄷ": [
+              "left",
+              "right",
+              "bottom"
+            ]
+          }
+        },
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 16,
+        "sourceFigureSha256": "04882dff9ace868a959f99a95cc0fe97634f78f116ec9ef89e74013858964a2b",
+        "independentSuite": "qa/applied4-nine-overlaps-independent-validate.py",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-3.4",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본 카드배치와 겹친 영역의 합 조건 유지",
+          "conditions": "원본의22·17·11과 각 새 다섯 카드 집합",
+          "steps": "겹친 부분에서 식을 세워 배치와 최종합 계산",
+          "representation": "원본 PDF 도형·위치·라벨·숫자 그대로",
+          "answer": "ㄱ+ㄴ+ㄷ 한 값",
+          "domain": "다섯 개의 서로 다른 자연수 카드",
+          "search": "5! 전수배치 및 영역쌍 독립열거",
+          "load": "원본과 같은 다섯 사각형·세 합 조건",
+          "measurement": "학생 실측 난도 아님"
+        }
+      }
     }
   ],
   "sourceEditionNotes": {
@@ -10573,32 +11701,25 @@
     "30": "분열시점과부모개체유지조건의해석확인필요로보류"
   },
   "reviewSummary": {
-    "independentMathCount": 153,
-    "sourceTypes": 17,
+    "independentMathCount": 162,
+    "sourceTypes": 18,
     "variantsPerType": 9,
     "outputReviewed": true,
-    "prior135Exact": true,
-    "new18ActualZipReviewed": true,
+    "prior153Exact": true,
+    "new9ActualZipReviewed": true,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "preReleaseDataSha256": "63a117c1cd2f7acb76bf15204889a3e3710692b25324cd2ca9ab95efc71ec3c1"
+    "preReleaseDataSha256": "095b2c8856fb35777f34a3b23dbd813a3e353e3e21ea90c17d0d1ff0f4c2915d"
   },
-  "revision": "20261024-applied4-expansion-r3",
+  "revision": "20261024-applied4-expansion-r4",
   "additionReviewSummary": {
     "sourceNos": [
-      15,
-      18
+      16
     ],
-    "count": 18,
-    "old135Exact": true,
-    "all1560PriorAttemptKeysPreserved": true,
-    "source15Original100": [
-      8,
-      15
-    ],
-    "source18Original152": [
-      "나",
-      87
-    ]
+    "count": 9,
+    "old153Exact": true,
+    "all1578PriorAttemptKeysPreserved": true,
+    "allFiveCardPermutationsUnique": true,
+    "sourceGrade": "3.4-middle"
   }
 }
