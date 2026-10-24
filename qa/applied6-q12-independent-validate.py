@@ -30,4 +30,6 @@ for q in items:
  assert q['area']=='경우의 수' and q['verification']['sourceExamPage']==2 and q['verification']['sourceAnswerPage']==2
  assert q['verification']['sourceDrawingCompared'] and q['verification']['variantUsesSourceDrawing'] is False and 'asset' not in q
  assert q['pointBand']=='2.7' and q['difficultyEvidence']['label']=='하'
- proof.append({'id':q['id'],'lineLength':L,'runs':runs,'gapDistributionCount':gap_method,'en
+ proof.append({'id':q['id'],'lineLength':L,'runs':runs,'gapDistributionCount':gap_method,'enumeratedCount':enumeration,'methodsAgree':True,'passed':True})
+(ROOT/'.private-work/hw-expansion-20261023/hw6/q12-independent-math.json').write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'page':2,'lineLength':10,'runs':[2,3,1],'teacherAnswer':10,'gapDistributionAnswer':math.comb(5,3),'enumeratedAnswer':source},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':proof,'passed':True},ensure_ascii=False,indent=2)+'\n')
+print('PASS Applied6 Q12: source answer 10; nine variants verified by gap distributions and exhaustive pattern enumeration')

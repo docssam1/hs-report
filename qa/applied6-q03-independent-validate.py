@@ -34,4 +34,8 @@ for q in items:
     assert n!=source_total
     signature=(n,q['text'])
     assert signature not in seen; seen.add(signature)
-    evidence.append({'id':q['id'],'total':n,'maxEqualShare':x,'minimumThirdShare':y,'feasibleSplits':len(feasible),'uniqueMinimum':mi
+    evidence.append({'id':q['id'],'total':n,'maxEqualShare':x,'minimumThirdShare':y,'feasibleSplits':len(feasible),'uniqueMinimum':minimizers[0],'passed':True})
+assert len({q['id'] for q in items})==9
+out=ROOT/'.private-work/hw-expansion-20261023/hw6/q03-independent-math.json'
+out.write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'questionPage':1,'answerPage':1,'sourceTotal':source_total,'teacherAnswer':source_min,'feasibleSplits':len(source_feasible)},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':evidence,'passed':True},ensure_ascii=False,indent=2)+'\n')
+print('PASS Applied6 Q3: source teacher answer 12 independently confirmed; 9 variants have unique minimum by strict bound and exhaustive positive-integer enumeration')

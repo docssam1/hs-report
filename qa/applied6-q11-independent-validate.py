@@ -23,4 +23,6 @@ for q in items:
  exact=min(min(c) for c in allsets);assert exact==m and q['answerParts']==[m] and q['answer']==str(m)
  assert q['acceptedAnswers']==[str(m)] and q['pointBand']=='2.7' and q['difficultyEvidence']['label']=='하'
  assert q['area']=='경우의 수' and q['verification']['sourceExamPage']==2 and q['verification']['sourceAnswerPage']==2
- proof.append({'id':q['id'],'sum':target,'upperBoundMinimum':bound_min,'enumeratedMinimum':exact,'feasibleFiveCardSets':len(allsets),'witness':list(witness),'me
+ proof.append({'id':q['id'],'sum':target,'upperBoundMinimum':bound_min,'enumeratedMinimum':exact,'feasibleFiveCardSets':len(allsets),'witness':list(witness),'methodsAgree':True,'passed':True})
+(ROOT/'.private-work/hw-expansion-20261023/hw6/q11-independent-math.json').write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'page':2,'quotient':88,'cardCount':5,'sum':source_total,'teacherAnswer':50,'independentUpperBoundAnswer':source_min,'witness':[50,96,97,98,99]},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':proof,'passed':True},ensure_ascii=False,indent=2)+'\n')
+print('PASS Applied6 Q11: original answer 50; nine variants independently verified by maximal-sum bound and exhaustive five-card subsets')

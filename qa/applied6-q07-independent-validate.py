@@ -35,4 +35,7 @@ for q in items:
     assert n!=source_n and q['area']=='수와 식' and not q.get('asset')
     assert len(q['solutionSteps'])>=3 and q['solution'].endswith(f'{direct}번입니다.')
     assert n not in seen;seen.add(n)
-    evidence.append({'id':q['id'],'lastNumber':n,'enumeratedDigitCount':dsum,'intervalDigitCount':interval,'plusCount':plus,'answe
+    evidence.append({'id':q['id'],'lastNumber':n,'enumeratedDigitCount':dsum,'intervalDigitCount':interval,'plusCount':plus,'answer':direct,'twoMethodsAgree':True,'passed':True})
+out=ROOT/'.private-work/hw-expansion-20261023/hw6/q07-independent-math.json'
+out.write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'questionPage':2,'answerPage':2,'lastNumber':source_n,'digitButtonCount':660,'plusButtonCount':255,'equalsButtonCount':0,'teacherAnswer':915,'independentAnswer':source_answer},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':evidence,'passed':True},ensure_ascii=False,indent=2)+'\n')
+print('PASS Applied6 Q7: source answer 915; nine variants verified by enumeration and interval counts')

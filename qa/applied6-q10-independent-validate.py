@@ -26,4 +26,8 @@ for q in items:
     assert q['pointBand']=='2.7' and q['difficultyEvidence']['label']=='하' and q['difficultyEvidence']['measuredVariantRate'] is None
     assert q['area']=='수와 식' and q['verification']['sourceExamPage']==2 and q['verification']['sourceAnswerPage']==2
     assert q['verification']['sourceDrawingCompared'] is True and 'asset' not in q
-    proof.append({'id':q['id'],'cumulativeReadingsGrams':r,'reconstructedIndividualMassesGrams':masses,'targetWeightByDifference':target,'targetWeightByCumulativeReconstruction':masses[3],'methodsAgree':True,'
+    proof.append({'id':q['id'],'cumulativeReadingsGrams':r,'reconstructedIndividualMassesGrams':masses,'targetWeightByDifference':target,'targetWeightByCumulativeReconstruction':masses[3],'methodsAgree':True,'passed':True})
+assert source_answer==700
+out=ROOT/'.private-work/hw-expansion-20261023/hw6/q10-independent-math.json'
+out.write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'questionPage':2,'answerPage':2,'cumulativeReadingsGrams':source_readings,'teacherAnswerGrams':700,'independentAnswerGrams':source_answer,'sourceDrawingDirectlyCompared':True},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':proof,'passed':True},ensure_ascii=False,indent=2)+'\n')
+print('PASS Applied6 Q10: source 700g and nine variants verified by successive differences and reconstructed scale masses')

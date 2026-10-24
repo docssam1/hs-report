@@ -34,4 +34,7 @@ for q,n in zip(items,rounds):
     assert q['asset']['kind']=='raster' and q['asset']['width']==890 and q['asset']['height']==350
     assert q['asset']['src']=='assets/applied6/q08-tiles-original.png'
     assert n not in seen;seen.add(n)
-    evidence.append({'id':q['id'],'round':n,'color':color,'sideCounts':by_side,'countBySides':count,'countByLayerRecurrence':layer_c
+    evidence.append({'id':q['id'],'round':n,'color':color,'sideCounts':by_side,'countBySides':count,'countByLayerRecurrence':layer_count,'twoMethodsAgree':True,'passed':True})
+out=ROOT/'.private-work/hw-expansion-20261023/hw6/q08-independent-math.json'
+out.write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'questionPage':2,'answerPage':2,'targetRound':source_round,'teacherAnswer':[source_color,source_count],'independentAnswer':[source_color,source_count],'sourceDrawingSha256':asset_hash,'originalDrawingCompared':True},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':evidence,'passed':True},ensure_ascii=False,indent=2)+'\n')
+print('PASS Applied6 Q8: source 63rd round is white/248; nine variants independently agree by side count and layer recurrence')

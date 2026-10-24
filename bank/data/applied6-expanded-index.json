@@ -100,4 +100,31 @@
       "sourceNo": 11,
       "genId": "applied6-q11",
       "area": "경우의 수",
-      
+      "subarea": "서로 다른 카드의 합과 최솟값",
+      "detailType": "고정된 합에서 나머지 카드 수를 최대로 골라 최솟값 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 12,
+      "genId": "applied6-q12",
+      "area": "경우의 수",
+      "subarea": "연속한 표시 묶음과 빈칸 배치",
+      "detailType": "정해진 크기의 연속 묶음 사이 빈칸을 분배해 배열 수 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 13,
+      "genId": "applied6-q13",
+      "area": "도형",
+      "subarea": "쌓기나무와 공간도형",
+      "detailType": "계단형 쌓기에서 직육면체의 위치와 높이 세기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    }
+  ]
+}

@@ -29,4 +29,6 @@ for q,m in zip(items,matchsticks):
     assert q['verification']['sourceExamPage']==2 and q['verification']['sourceAnswerPage']==2
     assert n not in seen;seen.add(n)
     evidence.append({'id':q['id'],'matchsticks':m,'cubeCountByLinearEquation':n,'cubeCountBySharedFaceEnumeration':count_edges,'twoMethodsAgree':True,'passed':True})
-out=ROOT/'.private-work/hw-ex
+out=ROOT/'.private-work/hw-expansion-20261023/hw6/q09-independent-math.json'
+out.write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'questionPage':2,'answerPage':2,'matchsticks':source_sticks,'teacherAnswer':source_cubes,'independentAnswer':source_cubes,'sourceDrawingSha256':asset_hash,'originalDrawingCompared':True},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':evidence,'passed':True},ensure_ascii=False,indent=2)+'\n')
+print('PASS Applied6 Q9: source answer 12 confirmed; nine variants agree by linear equation and shared-face enumeration')

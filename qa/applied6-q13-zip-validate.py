@@ -27,4 +27,9 @@ with zipfile.ZipFile(Z) as z:
     csv=z.read('빠른정답.csv').decode('utf-8');assert all(i in csv for i in ids)
     qpdf=z.read('문제.pdf');apdf=z.read('답안과상세풀이.pdf')
     qp=len(PdfReader(io.BytesIO(qpdf)).pages);ap=len(PdfReader(io.BytesIO(apdf)).pages)
-    assert qp>=2 
+    assert qp>=2 and ap>=2
+    reviewdir=WORK/'zip-review';reviewdir.mkdir(exist_ok=True)
+    (reviewdir/'문제.pdf').write_bytes(qpdf);(reviewdir/'답안과상세풀이.pdf').write_bytes(apdf)
+result={'zipSha256':hashlib.sha256(Z.read_bytes()).hexdigest(),'zipBytes':Z.stat().st_size,'entries':7,'itemIds':ids,'questionPdfPages':qp,'solutionPdfPages':ap,'questionAndDetailedSolutionPresent':True,'allTextAndSolutionsIncluded':True,'passed':True}
+(WORK/'zip-validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+print(f'PASS Q13 ZIP: 7 entries, 9 aligned items, full question+solution HTML/PDF, {qp}/{ap} pages')

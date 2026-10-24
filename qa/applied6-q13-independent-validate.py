@@ -82,4 +82,40 @@ for item in items:
     assert item["difficultyEvidence"]["label"] == "중"
     assert item["difficultyEvidence"]["estimated"] is True
     indexed = next(x for x in index["items"] if x["sourceNo"] == 13)
-    assert item["pointBand"] == indexed["pointBand"] and item["detailType"] == indexed["deta
+    assert item["pointBand"] == indexed["pointBand"] and item["detailType"] == indexed["detailType"]
+    assert item["verification"]["sourceExamPage"] == 3
+    assert item["verification"]["sourceAnswerPage"] == 3
+    assert item["verification"]["sourceDrawingCompared"] is True
+    assert item["verification"]["variantUsesSourceDrawing"] is False
+    assert len(item["solutionSteps"]) >= 3
+    assert item["learningLocation"] and item["learningPoint"]
+    answers.append(formula)
+    proof.append({
+        "id": item["id"],
+        "layersBottomToTop": layers,
+        "rectanglesPerLayer": layer_counts,
+        "heightWeightedTerms": weighted,
+        "answerByFormula": formula,
+        "answerByOccupiedCellEnumeration": exhaustive,
+        "methodsAgree": formula == exhaustive,
+    })
+assert len(set(answers)) == 9
+
+result = {
+    "source": {
+        "questionPdfSha256": source_sha,
+        "answerPdfSha256": answer_sha,
+        "questionPage": 3,
+        "answerPage": 3,
+        "layersBottomToTop": source_layers,
+        "cubeCount": 35,
+        "teacherHandwrittenAnswer": 300,
+        "enumeratedFilledCuboids": source_answer,
+        "sourceDrawingDirectlyCompared": True,
+    },
+    "dataSha256": hashlib.sha256(DATA_PATH.read_bytes()).hexdigest(),
+    "items": proof,
+    "passed": True,
+}
+EVIDENCE.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
+print("PASS Applied6 Q13: source 35-cube stack has 300 cuboids; nine variants agree by formula and occupied-cell enumeration")

@@ -28,4 +28,7 @@ for x in [x for x in d['items'] if x['sourceNo']==2]:
     assert x['verification']['sourceExamPage']==1 and x['verification']['sourceAnswerPage']==1
     evidence.append({'id':x['id'],'answer':x['answerParts'],'uniqueSolution':enum[0],'passed':True})
 assert len({x['id'] for x in d['items'] if x['sourceNo']==2})==9
-out=ROOT/'.private-work/hw-ex
+out=ROOT/'.private-work/hw-expansion-20261023/hw6/q02-independent-math.json'
+out.parent.mkdir(parents=True,exist_ok=True)
+out.write_text(json.dumps({'source':{'questionPdfSha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),'answerPdfSha256':hashlib.sha256(ANSWER.read_bytes()).hexdigest(),'questionPage':1,'answerPage':1,'teacherMark':[26,9],'independentSourceSolutions':source_solutions},'dataSha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),'items':evidence,'passed':True},ensure_ascii=False,indent=2)+'\n')
+print('PASS Applied6 Q2: source answer 26/9 independently unique; 9 variants independently unique; 2.7-point low band; 3+ solution steps')
