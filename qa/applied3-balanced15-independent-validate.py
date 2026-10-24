@@ -9,8 +9,8 @@ ROOT=Path(__file__).resolve().parents[1];FILE=ROOT/'bank/data/applied3-balanced1
 data=json.loads(FILE.read_text());legacy_bytes=(ROOT/'bank/data/applied3-expanded.json').read_bytes()
 legacy={x['id']:x for x in json.loads(legacy_bytes)['items']}
 assert hashlib.sha256(legacy_bytes).hexdigest()==data['legacyBankSha256']
-assert data['availableSourceNos']==list(range(1,19))and data['pendingSourceNos']==list(range(19,31))
-assert len(data['items'])==len({x['id']for x in data['items']})==270
+assert data['availableSourceNos']==list(range(1,25))and data['pendingSourceNos']==list(range(25,31))
+assert len(data['items'])==len({x['id']for x in data['items']})==360
 
 raw_fractions=[(a,k+2-a)for k in range(1,100)for a in range(1,k+1)]
 assert raw_fractions[:6]==[(1,2),(1,3),(2,2),(1,4),(2,3),(3,2)]
@@ -88,6 +88,10 @@ def linear_solve(matrix,rhs):
         pivot_row+=1
     assert all(any(r[:n])or r[-1]==0 for r in rows)
     solution=[rows[i][-1]for i in range(n)];assert all(sum(F(a)*x for a,x in zip(r,solution))==b for r,b in zip(matrix,rhs));return solution
+
+@functools.lru_cache(None)
+def triangle_enumeration():
+    return [t for t in itertools.permutations(range(1,10))if sum(t[i]for i in [0,1,2,3])==sum(t[i]for i in [3,4,5,6])==sum(t[i]for i in [6,7,8,0])==23]
 
 def solve(x):
     no,level,p=x['sourceNo'],x['practiceLevel'],x['verification']['parameters'];text=x['text']
@@ -318,20 +322,114 @@ def solve(x):
         assert actual==p['final']and all(min(row)>=0 for row in rows)and len({sum(row)for row in rows})==1
         assert x['solutionTable']['rows']==[[label]+list(map(str,row))for label,row in zip(['처음','첫 이동 후','둘째 이동 후','마지막'],rows)]
         return initial
+    if no==19:
+        candidates=triangle_enumeration()
+        if level=='low':
+            def value(t):
+                vertex=t[0]+t[3]+t[6];inside=sum(t)-vertex
+                return dict(allSum=sum(t),vertexSum=vertex,innerSum=inside,difference=vertex-inside,minVertex=min(t[0],t[3],t[6]))[p['mode']]
+            answers={value(t)for t in candidates};assert len(answers)==1;return[list(answers)[0]]
+        if level=='middle':
+            candidates=[t for t in candidates if t[p['givenVertex']]==p['givenValue']];edge={0:[4,5],3:[7,8],6:[1,2]}[p['givenVertex']];answers={sum(t[i]for i in edge)for t in candidates};assert len(answers)==1;return[list(answers)[0]]
+        mode=p['mode']
+        if mode=='top7':candidates=[t for t in candidates if t[0]==7]
+        if mode=='top7left8':candidates=[t for t in candidates if t[0]==7 and t[3]==8]
+        if mode=='top7near1':candidates=[t for t in candidates if t[0]==7 and t[1]==1]
+        if mode=='dihedral':
+            orbits=set()
+            for t in candidates:
+                mirror=(t[0],)+tuple(reversed(t[1:]));orbit={v[k:]+v[:k]for v in [t,mirror]for k in [0,3,6]};assert len(orbit)==6;orbits.add(min(orbit))
+            return[len(orbits)]
+        return[len(candidates)]
+    if no==20:
+        if level=='low':
+            expected=[str(int('3'*p['digits']))+' × '+str(10**p['digits'])];assert x['promptDataLines']==expected;return[sum(map(int,str(int('3'*p['digits'])*10**p['digits'])))]
+        if level=='middle':
+            n=p['digits'];a,b,c,d=int('9'*n),int('2'*n),int('3'*n),int('3'*(n-1)+'4');assert x['promptDataLines']==[str(a)+' × '+str(b),'＋ '+str(c)+' × '+str(d)];return[sum(map(int,str(a*b+c*d)))]
+        k,target=p['subtractPower'],p['digitSum'];assert x['promptDataLines']==[f'N × (3 × N ＋ 1) − {10**k}'];found=[]
+        # Direct integer arithmetic, including all shorter lengths and borrow cases.
+        for n in range(2,max(k+2,target+2)+1):
+            value=int('3'*n);result=value*(3*value+1)-10**k
+            if result>0 and sum(map(int,str(result)))==target:found.append([n,len(str(result))])
+        assert len(found)==1;assert found[0][0]>k
+        # Beyond this finite bound the unchanged3-prefix alone has sum>target.
+        return found[0]
+    if no==21:
+        valid=[]
+        for numerator in range(10,100):
+            for divisor in range(1,10):
+                quotient,remainder=divmod(numerator,divisor)
+                digits=str(numerator)+str(divisor)+str(quotient)
+                if remainder or not 1<=quotient<=9 or '0'in digits or len(set(digits))!=4:continue
+                if level=='low'and divisor!=p['divisor']:continue
+                if level=='middle'and str(p['excludedDigit'])in digits:continue
+                if level=='high':
+                    mode=p['mode']
+                    if mode=='less'and not divisor<quotient:continue
+                    if mode=='odd'and numerator%2==0:continue
+                    if mode=='multiple3'and numerator%3:continue
+                    if mode=='sum18'and sum(map(int,digits))!=18:continue
+                    if mode=='largeLess'and not(numerator>=30 and divisor<quotient):continue
+                valid.append([numerator,divisor,quotient])
+        if level=='middle':
+            expected=[[str(c),', '.join(f'{a}÷{b}＝{d}'for a,b,d in valid if b==c)or'없음']for c in range(2,10)];assert x['solutionTable']['rows']==expected
+        if level=='high':
+            expected=[[str(c),', '.join(f'{a}÷{b}＝{d}'for a,b,d in valid if b==c),str(sum(a for a,b,d in valid if b==c))]for c in range(2,10)if any(b==c for a,b,d in valid)];assert x['solutionTable']['rows']==expected;return[len(valid),sum(a for a,b,c in valid)]
+        return[len(valid)]
+    if no==22:
+        def count(start,days):
+            date=datetime.date(2023,1,1)+datetime.timedelta(days=start);assert datetime.date(2023,1,1).weekday()==6
+            result=0
+            for i in range(days):
+                wd=(date+datetime.timedelta(days=i)).weekday();result+=2 if wd<5 else 1 if wd==5 else 0
+            return result
+        weekdays=['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
+        if level=='low':return[100*count(p['start'],p['days'])]
+        if level=='middle':
+            candidates=[[weekdays[s]]for s in range(7)if count(s,p['days'])*100==p['total']];assert len(candidates)==1;return candidates[0]
+        found=[];rows=[]
+        for s in range(7):
+            c1,c2=count(s,p['days1']),count(s,p['days2']);unit=F(p['total1'],c1);equal=unit*c2==p['total2']
+            rows.append([weekdays[s],str(c1),str(c2),'일치'if equal else'불일치'])
+            if equal and unit>0 and unit.denominator==1:found.append([weekdays[s],int(unit*2),int(unit)])
+        assert len(found)==1 and x['solutionTable']['rows']==rows;return found[0]
+    if no==23:
+        if level=='low':
+            walk=p['walk'];bike=walk*p['ratio'];dist=F(0)
+            for quarter in range(4*p['hours']):
+                t=F(2*quarter+1,8);active=not(F(1,2)<=t<F(1,2)+p['stop']);dist+=F(walk,4)+(F(bike,4)if active else 0)
+            assert dist.denominator==1;return[int(dist)]
+        stop=p.get('stop',0);solution=linear_solve([[p['hours']-stop,p['hours']],[1,-p['ratio']]],[p['distance'],0]);assert all(v>0 and v.denominator==1 for v in solution);return list(map(int,solution))
+    if no==24:
+        fixed={(2,0):5,(2,1):3,(1,2):9,(3,2):1,(0,3):8,(2,3):2,(4,3):11,(2,4):10,(4,4):12};unknown=[(0,2),(2,2),(4,2),(0,4)]
+        groups=[[(0,y)for y in range(2,5)],[(2,y)for y in range(5)],[(4,y)for y in range(2,5)],[(a,2)for a in range(5)]]
+        remaining=set(range(1,14))-set(fixed.values());found=[]
+        for numbers in itertools.permutations(remaining):
+            grid=dict(fixed);grid.update(zip(unknown,numbers));sums=[sum(grid[c]for c in row)for row in groups]
+            if len(set(sums))==1:found.append((grid,list(numbers),sums[0]))
+        assert len(found)==1;grid,numbers,common=found[0];values=dict(zip('ABCD',numbers));values['sum']=common
+        if level=='low':assert values[p['known']]=={'A':6,'B':7,'C':4,'D':13,'sum':27}[p['known']];return[values[p['target']]]
+        if level=='middle':return[values[k]for k in p['targets']]
+        answers=[]
+        for t in range(1,p['afterUnknownSum']+1):
+            changed=[numbers[0]-t,numbers[1]+t,numbers[2]+t,numbers[3]+2*t]
+            if sum(changed)!=p['afterUnknownSum']:continue
+            changed_grid=dict(fixed);changed_grid.update(zip(unknown,changed));assert len({sum(changed_grid[c]for c in row)for row in groups})==1;answers.append(changed)
+        assert len(answers)==1;return answers[0]
     raise AssertionError(no)
 
 evidence=[]
 for x in data['items']:
     actual=solve(x);assert actual==x['answerParts'],(x['id'],actual,x['answerParts'])
-    assert x['sourcePointBand']==('2.7'if x['sourceNo']<=12 else'3.4')and x['pointBand']==dict(low='2.7',middle='3.4',high='4.2')[x['practiceLevel']]
+    assert x['sourcePointBand']==('2.7'if x['sourceNo']<=12 else'3.4'if x['sourceNo']<=22 else'4.2')and x['pointBand']==dict(low='2.7',middle='3.4',high='4.2')[x['practiceLevel']]
     assert x['answerContract']in ['ordered-parts','unordered-set']and (len(x['answerLabels'])==len(actual)or x['answerContract']=='unordered-set'and len(x['answerLabels'])==1)and len(x['solutionSteps'])>=3
     assert x['solution']==' '.join(x['solutionSteps'])
-    assert x['verification']['sourceExamPage']==(1 if x['sourceNo']<=4 else 2 if x['sourceNo']<=10 else 3 if x['sourceNo']<=14 else 4)
+    assert x['verification']['sourceExamPage']==(1 if x['sourceNo']<=4 else 2 if x['sourceNo']<=10 else 3 if x['sourceNo']<=14 else 4 if x['sourceNo']<=19 else 5)
     if x.get('preservedApprovedId'):assert all(x[k]==v for k,v in legacy[x['id']].items())
     else:assert len(x['levelReview']['axes'])==9 and not x['difficultyEvidence']['sourceReasoningPreserved']and x['difficultyEvidence']['measuredVariantRate']is None
     assert not any(k in x for k in ['hints','conditionSummary'])
     evidence.append(dict(id=x['id'],passed=True,answer=actual))
-for no in range(1,19):assert collections.Counter(x['practiceLevel']for x in data['items']if x['sourceNo']==no)==dict(low=5,middle=5,high=5)
+for no in range(1,25):assert collections.Counter(x['practiceLevel']for x in data['items']if x['sourceNo']==no)==dict(low=5,middle=5,high=5)
 pdf=PdfReader(ROOT/'materials/초등과정 대비 실전 모의고사 활용 3회.pdf')
 for name,file in [('Im51','staircase-original.png')]:
     native=next(i.image for i in pdf.pages[0].images if Path(i.name).stem==name).convert('RGB');actual=Image.open(ROOT/'bank/assets/applied3'/file).convert('RGB');assert native.size==actual.size and native.tobytes()==actual.tobytes()
@@ -340,16 +438,21 @@ with tempfile.TemporaryDirectory(prefix='gfield-applied3-source-render-')as temp
     source=Image.open(output.with_suffix('.png')).convert('RGB').crop((709,451,924,614));actual=Image.open(ROOT/'bank/assets/applied3/pizza-original.png').convert('RGB');assert source.size==actual.size and source.tobytes()==actual.tobytes()
 for file in ['data.js','docssam-columns.js','mock-data-hw.js','bank/data/applied1-balanced15.json','bank/data/applied2-balanced15.json','bank/data/applied3-expanded.json','bank/assets/applied3/pizza.png']:
     assert(ROOT/file).read_bytes()==subprocess.check_output(['git','show','7ae2f7f1:'+file],cwd=ROOT),file
-assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','asset','givenTable']},ensure_ascii=False,sort_keys=True)for x in data['items']})==270
-work=ROOT/'.private-work/balanced15-20261024/round3-batch3';work.mkdir(exist_ok=True)
-(work/'independent-math.json').write_text(json.dumps(dict(dataSha256=hashlib.sha256(FILE.read_bytes()).hexdigest(),count=270,methods=['literal unreduced fraction sequence','even left-page finite search','rational line intersections all inside disk/no triple points','shared-face mesh boundary and paint memory','integer perimeter coordinate sets','exact rational Gaussian work-rate equations','rigid 3D rotations of six labelled normal vectors','datetime dates across all June1Saturday years2000-2039','closed-loop rational point positions and bounded integer search','direct modular enumeration with each third-condition removal','literal consecutive row lists','two actual coordinate folds and original-cell preimages','five observed circle-position equations','actual printed-clue CSP with answer uniqueness and high ablations','modular distinct digit dynamic programming','horizontal checkerboard slices','physical three-fold point reflections','forward transfer matrix Gaussian inverse'],items=evidence),ensure_ascii=False,indent=2)+'\n')
+assert len({json.dumps({k:x.get(k)for k in ['text','promptDataLines','asset','givenTable']},ensure_ascii=False,sort_keys=True)for x in data['items']})==360
+work=ROOT/'.private-work/balanced15-20261024/round3-batch4';work.mkdir(exist_ok=True)
+(work/'independent-math.json').write_text(json.dumps(dict(dataSha256=hashlib.sha256(FILE.read_bytes()).hexdigest(),count=360,methods=['literal unreduced fraction sequence','even left-page finite search','rational line intersections all inside disk/no triple points','shared-face mesh boundary and paint memory','integer perimeter coordinate sets','exact rational Gaussian work-rate equations','rigid 3D rotations of six labelled normal vectors','datetime dates across all June1Saturday years2000-2039','closed-loop rational point positions and bounded integer search','direct modular enumeration with each third-condition removal','literal consecutive row lists','two actual coordinate folds and original-cell preimages','five observed circle-position equations','actual printed-clue CSP with answer uniqueness and high ablations','modular distinct digit dynamic programming','horizontal checkerboard slices','physical three-fold point reflections','forward transfer matrix Gaussian inverse','all9!triangle placements and dihedral orbit sets','direct arbitrary-length integer borrowing','exact numerator/divisor enumeration and grouped arithmetic tables','datetime two-window rate enumeration','two-speed Gaussian equations and quarter-hour simulation','native13cell row sums by coordinates'],items=evidence),ensure_ascii=False,indent=2)+'\n')
 # Verify prior released90 item objects/storage versions byte for byte at canonical field level.
-prior=json.loads(subprocess.check_output(['git','show','e2c16e27:bank/data/applied3-balanced15.json'],cwd=ROOT))
-assert data['items'][:180]==prior['items']
+prior=json.loads(subprocess.check_output(['git','show','79631fd7:bank/data/applied3-balanced15.json'],cwd=ROOT))
+assert data['items'][:270]==prior['items']
 with tempfile.TemporaryDirectory(prefix='gfield-applied3-fold-render-')as temp:
     output=Path(temp)/'page';subprocess.run(['pdftoppm','-f','3','-l','3','-scale-to','2000','-singlefile','-png',str(ROOT/'materials/초등과정 대비 실전 모의고사 활용 3회.pdf'),str(output)],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     expected=Image.open(output.with_suffix('.png')).convert('RGB').crop((82,1164,662,1318));actual=Image.open(ROOT/'bank/assets/applied3/fold-original.png').convert('RGB');assert expected.size==actual.size and expected.tobytes()==actual.tobytes()
 native=next(i.image for i in pdf.pages[1].images if Path(i.name).stem=='Im53').convert('RGB').crop((81,13,332,199));actual=Image.open(ROOT/'bank/assets/applied3/dice-path-original.png').convert('RGB');assert native.size==actual.size and native.tobytes()==actual.tobytes()
 for page_no,name,file in [(2,'Im58','circle-values-original.png'),(3,'Im68','checker-stair-original.png')]:
     native=next(i.image for i in pdf.pages[page_no].images if Path(i.name).stem==name).convert('RGB');actual=Image.open(ROOT/'bank/assets/applied3'/file).convert('RGB');assert native.size==actual.size and native.tobytes()==actual.tobytes()
-print('PASS270 Applied3:18complete5/5/5groups;220new+50approved;prior180 unchanged;observed-position equations/actual-clue preference CSP with high ablations/modular digit DP/horizontal voxel slices/physical fold reflections/forward transfer matrix inversion;original grades/assets preserved')
+for page_no,name,file in [(3,'Im71','triangle-original.png'),(4,'Im77','equal-lines-original.png')]:
+    native=next(i.image for i in pdf.pages[page_no].images if Path(i.name).stem==name).convert('RGB');actual=Image.open(ROOT/'bank/assets/applied3'/file).convert('RGB');assert native.size==actual.size and native.tobytes()==actual.tobytes()
+with tempfile.TemporaryDirectory(prefix='gfield-applied3-teacher-cards-')as temp:
+    output=Path(temp)/'page';subprocess.run(['pdftoppm','-f','5','-l','5','-scale-to','1600','-singlefile','-png',str(ROOT/'.private-work/balanced15-20261024/source/applied3-answer.pdf'),str(output)],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+    original=Image.open(output.with_suffix('.png')).convert('RGB').crop((148,617,335,669));actual=Image.open(ROOT/'bank/assets/applied3/division-cards-teacher-original.png').convert('RGB');assert original.size==actual.size and original.tobytes()==actual.tobytes()
+print('PASS360 Applied3:24complete5/5/5groups;295new+65approved;prior270 unchanged;all9!triangle placements/symmetry orbits/direct big-integer borrow/numerator division enumeration/datetime payment windows/travel equations/actual13cell coordinate rows;teacher empty-card crop exact;original grades/assets preserved')
