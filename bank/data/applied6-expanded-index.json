@@ -1,14 +1,13 @@
 {
-  "version": "20261024-applied6-expansion-r18",
+  "version": "20261024-applied6-expansion-r19",
   "sourceSet": "applied",
   "sourceRound": 6,
-  "itemCount": 162,
+  "itemCount": 171,
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
-    23,
     24,
     25,
     26,
@@ -195,6 +194,16 @@
       "subarea": "정사각형 배열과 곱셈의 배수 관계",
       "detailType": "정사각형 배열을 더 많은 세로줄로 바꿀 때 학생 수 결정하기",
       "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 23,
+      "genId": "applied6-q23",
+      "area": "경우의 수",
+      "subarea": "방향 화살표 도로망의 경로 수",
+      "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9
     }

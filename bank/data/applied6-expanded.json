@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r18",
+  "version": "20261024-applied6-expansion-r19",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -27,14 +27,14 @@
     19,
     20,
     21,
-    22
+    22,
+    23
   ],
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
-    23,
     24,
     25,
     26,
@@ -11133,17 +11133,614 @@
         "estimated": true,
         "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 22번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
       }
+    },
+    {
+      "id": "applied6-q23-v1",
+      "genId": "applied6-q23",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 23,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "방향 화살표 도로망의 경로 수",
+      "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
+      "text": "A도시에서 B도시까지 움직인다고 할 때 가는 방법은 모두 몇 가지 있을까요?",
+      "answer": "17",
+      "answerParts": [
+        17
+      ],
+      "answerLabels": [
+        "경로 수"
+      ],
+      "acceptedAnswers": [
+        "17"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q23-original-diagram.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 390,
+        "description": "활용 6회 원문 23번의 방향 화살표 도로망 그림(원본 그림 그대로)"
+      },
+      "solutionSteps": [
+        "가운데 교차점을 지나는 길은 A에서 교차점까지 5가지이고, 교차점에서 B까지 3가지입니다.",
+        "가운데 교차점을 지나는 길은 5×3=15가지입니다.",
+        "가운데를 지나지 않는 길은 왼쪽 바깥쪽 길 1가지와 오른쪽 바깥쪽 길 1가지입니다.",
+        "따라서 전체는 15+1+1=17가지입니다."
+      ],
+      "solution": "가운데 교차점을 지나는 길은 A에서 교차점까지 5가지이고, 교차점에서 B까지 3가지입니다. 가운데 교차점을 지나는 길은 5×3=15가지입니다. 가운데를 지나지 않는 길은 왼쪽 바깥쪽 길 1가지와 오른쪽 바깥쪽 길 1가지입니다. 따라서 전체는 15+1+1=17가지입니다.",
+      "learningPoint": "방향 화살표를 따라 가능한 경로를 나누어 세고, 이어지는 구간은 곱하고 겹치지 않는 경로 묶음은 더한다.",
+      "learningLocation": "활용 6회 · 원문 23번 · 방향 도로망의 경로 수",
+      "verification": {
+        "primaryMethod": "Enumerate directed paths on the unchanged source graph and decompose into disjoint path groups.",
+        "independentMethod": "Depth-first enumerate all simple directed paths in an explicit graph, then compare every requested start/end pair count.",
+        "parameters": {
+          "startNode": "A",
+          "endNode": "B",
+          "expectedPaths": 17,
+          "graphAssetSha256": "50bf80b338ba39c8f26be6088cf79f009b91d0b80f07dff529d7ee1bf8d3996d"
+        },
+        "independentSuite": "qa/applied6-q23-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 23~30번이 4.2점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q23-v2",
+      "genId": "applied6-q23",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 23,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "방향 화살표 도로망의 경로 수",
+      "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
+      "text": "A도시에서 그림 한가운데에서 길이 만나는 곳까지 이동하는 방법은 모두 몇 가지일까요?",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "경로 수"
+      ],
+      "acceptedAnswers": [
+        "5"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q23-original-diagram.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 390,
+        "description": "활용 6회 원문 23번의 방향 화살표 도로망 그림(원본 그림 그대로)"
+      },
+      "solutionSteps": [
+        "A에서 가운데 교차점으로 바로 가는 길은 1가지입니다.",
+        "왼쪽 위 모퉁이를 거쳐 교차점으로 가는 길은 직접 가는 1가지와 왼쪽 변 가운데를 거치는 1가지입니다.",
+        "오른쪽 위 모퉁이를 거치는 길도 직접 가는 1가지와 오른쪽 변 가운데를 거치는 1가지입니다.",
+        "모두 1+2+2=5가지입니다."
+      ],
+      "solution": "A에서 가운데 교차점으로 바로 가는 길은 1가지입니다. 왼쪽 위 모퉁이를 거쳐 교차점으로 가는 길은 직접 가는 1가지와 왼쪽 변 가운데를 거치는 1가지입니다. 오른쪽 위 모퉁이를 거치는 길도 직접 가는 1가지와 오른쪽 변 가운데를 거치는 1가지입니다. 모두 1+2+2=5가지입니다.",
+      "learningPoint": "방향 화살표를 따라 가능한 경로를 나누어 세고, 이어지는 구간은 곱하고 겹치지 않는 경로 묶음은 더한다.",
+      "learningLocation": "활용 6회 · 원문 23번 · 방향 도로망의 경로 수",
+      "verification": {
+        "primaryMethod": "Enumerate directed paths on the unchanged source graph and decompose into disjoint path groups.",
+        "independentMethod": "Depth-first enumerate all simple directed paths in an explicit graph, then compare every requested start/end pair count.",
+        "parameters": {
+          "startNode": "A",
+          "endNode": "C",
+          "expectedPaths": 5,
+          "graphAssetSha256": "50bf80b338ba39c8f26be6088cf79f009b91d0b80f07dff529d7ee1bf8d3996d"
+        },
+        "independentSuite": "qa/applied6-q23-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 23~30번이 4.2점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q23-v3",
+      "genId": "applied6-q23",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 23,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "방향 화살표 도로망의 경로 수",
+      "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
+      "text": "A도시에서 그림의 왼쪽 위 모퉁이까지 이동하는 방법은 모두 몇 가지일까요?",
+      "answer": "1",
+      "answerParts": [
+        1
+      ],
+      "answerLabels": [
+        "경로 수"
+      ],
+      "acceptedAnswers": [
+        "1"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q23-original-diagram.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 390,
+        "description": "활용 6회 원문 23번의 방향 화살표 도로망 그림(원본 그림 그대로)"
+      },
+      "solutionSteps": [
+        "A에서 왼쪽 위 모퉁이로 향하는 화살표를 따라가면 한 경로뿐입니다.",
+        "A에서 오른쪽이나 가운데로 내려가는 화살표에서는 왼쪽 위 모퉁이로 되돌아올 수 없습니다.",
+        "따라서 방법은 1가지입니다."
+      ],
+      "solution": "A에서 왼쪽 위 모퉁이로 향하는 화살표를 따라가면 한 경로뿐입니다. A에서 오른쪽이나 가운데로 내려가는 화살표에서는 왼쪽 위 모퉁이로 되돌아올 수 없습니다. 따라서 방법은 1가지입니다.",
+      "learningPoint": "방향 화살표를 따라 가능한 경로를 나누어 세고, 이어지는 구간은 곱하고 겹치지 않는 경로 묶음은 더한다.",
+      "learningLocation": "활용 6회 · 원문 23번 · 방향 도로망의 경로 수",
+      "verification": {
+        "primaryMethod": "Enumerate directed paths on the unchanged source graph and decompose into disjoint path groups.",
+        "independentMethod": "Depth-first enumerate all simple directed paths in an explicit graph, then compare every requested start/end pair count.",
+        "parameters": {
+          "startNode": "A",
+          "endNode": "TL",
+          "expectedPaths": 1,
+          "graphAssetSha256": "50bf80b338ba39c8f26be6088cf79f009b91d0b80f07dff529d7ee1bf8d3996d"
+        },
+        "independentSuite": "qa/applied6-q23-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 23~30번이 4.2점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q23-v4",
+      "genId": "applied6-q23",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 23,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "방향 화살표 도로망의 경로 수",
+      "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
+      "text": "A도시에서 그림의 오른쪽 위 모퉁이까지 이동하는 방법은 모두 몇 가지일까요?",
+      "answer": "1",
+      "answerParts": [
+        1
+      ],
+      "answerLabels": [
+        "경로 수"
+      ],
+      "acceptedAnswers": [
+        "1"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q23-original-diagram.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 390,
+        "description": "활용 6회 원문 23번의 방향 화살표 도로망 그림(원본 그림 그대로)"
+      },
+      "solutionSteps": [
+        "A에서 오른쪽 위 모퉁이로 향하는 화살표를 따라가면 한 경로뿐입니다.",
+        "A에서 왼쪽이나 가운데로 내려가는 화살표에서는 오른쪽 위 모퉁이로 되돌아올 수 없습니다.",
+        "따라서 방법은 1가지입니다."
+      ],
+      "solution": "A에서 오른쪽 위 모퉁이로 향하는 화살표를 따라가면 한 경로뿐입니다. A에서 왼쪽이나 가운데로 내려가는 화살표에서는 오른쪽 위 모퉁이로 되돌아올 수 없습니다. 따라서 방법은 1가지입니다.",
+      "learningPoint": "방향 화살표를 따라 가능한 경로를 나누어 세고, 이어지는 구간은 곱하고 겹치지 않는 경로 묶음은 더한다.",
+      "learningLocation": "활용 6회 · 원문 23번 · 방향 도로망의 경로 수",
+      "verification": {
+        "primaryMethod": "Enumerate directed paths on the unchanged source graph and decompose into disjoint path groups.",
+        "independentMethod": "Depth-first enumerate all simple directed paths in an explicit graph, then compare every requested start/end pair count.",
+        "parameters": {
+          "startNode": "A",
+          "endNode": "TR",
+          "expectedPaths": 1,
+          "graphAssetSha256": "50bf80b338ba39c8f26be6088cf79f009b91d0b80f07dff529d7ee1bf8d3996d"
+        },
+        "independentSuite": "qa/applied6-q23-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 23~30번이 4.2점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q23-v5",
+      "genId": "applied6-q23",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 23,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "방향 화살표 도로망의 경로 수",
+      "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
+      "text": "A도시에서 그림 왼쪽 변의 가운데 지점까지 이동하는 방법은 모두 몇 가지일까요?",
+      "answer": "1",
+      "answerParts": [
+        1
+      ],
+      "answerLabels": [
+        "경로 수"
+      ],
+      "acceptedAnswers": [
+        "1"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q23-original-diagram.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 390,
+        "description": "활용 6회 원문 23번의 방향 화살표 도로망 그림(원본 그림 그대로)"
+      },
+      "solutionSteps": [
+        "A에서 왼쪽 위 모퉁이를 거쳐 왼쪽 변 가운데로 가는 화살표 경로는 한 가지뿐입니다.",
+        "가운데 교차점에서 왼쪽 변으로 거슬러 올라오는 화살표는 없습니다.",
+        "따라서 방법은 1가지입니다."
+      ],
+      "solution": "A에서 왼쪽 위 모퉁이를 거쳐 왼쪽 변 가운데로 가는 화살표 경로는 한 가지뿐입니다. 가운데 교차점에서 왼쪽 변으로 거슬러 올라오는 화살표는 없습니다. 따라서 방법은 1가지입니다.",
+      "learningPoint": "방향 화살표를 따라 가능한 경로를 나누어 세고, 이어지는 구간은 곱하고 겹치지 않는 경로 묶음은 더한다.",
+      "learningLocation": "활용 6회 · 원문 23번 · 방향 도로망의 경로 수",
+      "verification": {
+        "primaryMethod": "Enumerate directed paths on the unchanged source graph and decompose into disjoint path groups.",
+        "independentMethod": "Depth-first enumerate all simple directed paths in an explicit graph, then compare every requested start/end pair count.",
+        "parameters": {
+          "startNode": "A",
+          "endNode": "L",
+          "expectedPaths": 1,
+          "graphAssetSha256": "50bf80b338ba39c8f26be6088cf79f009b91d0b80f07dff529d7ee1bf8d3996d"
+        },
+        "independentSuite": "qa/applied6-q23-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 23~30번이 4.2점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q23-v6",
+      "genId": "applied6-q23",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 23,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "방향 화살표 도로망의 경로 수",
+      "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
+      "text": "A도시에서 그림 오른쪽 변의 가운데 지점까지 이동하는 방법은 모두 몇 가지일까요?",
+      "answer": "1",
+      "answerParts": [
+        1
+      ],
+      "answerLabels": [
+        "경로 수"
+      ],
+      "acceptedAnswers": [
+        "1"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q23-original-diagram.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 390,
+        "description": "활용 6회 원문 23번의 방향 화살표 도로망 그림(원본 그림 그대로)"
+      },
+      "solutionSteps": [
+        "A에서 오른쪽 위 모퉁이를 거쳐 오른쪽 변 가운데로 가는 화살표 경로는 한 가지뿐입니다.",
+        "가운데 교차점에서 오른쪽 변으로 거슬러 올라오는 화살표는 없습니다.",
+        "따라서 방법은 1가지입니다."
+      ],
+      "solution": "A에서 오른쪽 위 모퉁이를 거쳐 오른쪽 변 가운데로 가는 화살표 경로는 한 가지뿐입니다. 가운데 교차점에서 오른쪽 변으로 거슬러 올라오는 화살표는 없습니다. 따라서 방법은 1가지입니다.",
+      "learningPoint": "방향 화살표를 따라 가능한 경로를 나누어 세고, 이어지는 구간은 곱하고 겹치지 않는 경로 묶음은 더한다.",
+      "learningLocation": "활용 6회 · 원문 23번 · 방향 도로망의 경로 수",
+      "verification": {
+        "primaryMethod": "Enumerate directed paths on the unchanged source graph and decompose into disjoint path groups.",
+        "independentMethod": "Depth-first enumerate all simple directed paths in an explicit graph, then compare every requested start/end pair count.",
+        "parameters": {
+          "startNode": "A",
+          "endNode": "R",
+          "expectedPaths": 1,
+          "graphAssetSha256": "50bf80b338ba39c8f26be6088cf79f009b91d0b80f07dff529d7ee1bf8d3996d"
+        },
+        "independentSuite": "qa/applied6-q23-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 23~30번이 4.2점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q23-v7",
+      "genId": "applied6-q23",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 23,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "방향 화살표 도로망의 경로 수",
+      "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
+      "text": "A도시에서 그림의 왼쪽 아래 모퉁이까지 이동하는 방법은 모두 몇 가지일까요?",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "경로 수"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q23-original-diagram.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 390,
+        "description": "활용 6회 원문 23번의 방향 화살표 도로망 그림(원본 그림 그대로)"
+      },
+      "solutionSteps": [
+        "가운데 교차점을 거쳐 왼쪽 아래 모퉁이로 가는 경로는 A에서 교차점까지 5가지입니다.",
+        "왼쪽 변 가운데를 따라 왼쪽 아래 모퉁이로 가는 경로가 1가지 더 있습니다.",
+        "따라서 5+1=6가지입니다."
+      ],
+      "solution": "가운데 교차점을 거쳐 왼쪽 아래 모퉁이로 가는 경로는 A에서 교차점까지 5가지입니다. 왼쪽 변 가운데를 따라 왼쪽 아래 모퉁이로 가는 경로가 1가지 더 있습니다. 따라서 5+1=6가지입니다.",
+      "learningPoint": "방향 화살표를 따라 가능한 경로를 나누어 세고, 이어지는 구간은 곱하고 겹치지 않는 경로 묶음은 더한다.",
+      "learningLocation": "활용 6회 · 원문 23번 · 방향 도로망의 경로 수",
+      "verification": {
+        "primaryMethod": "Enumerate directed paths on the unchanged source graph and decompose into disjoint path groups.",
+        "independentMethod": "Depth-first enumerate all simple directed paths in an explicit graph, then compare every requested start/end pair count.",
+        "parameters": {
+          "startNode": "A",
+          "endNode": "BL",
+          "expectedPaths": 6,
+          "graphAssetSha256": "50bf80b338ba39c8f26be6088cf79f009b91d0b80f07dff529d7ee1bf8d3996d"
+        },
+        "independentSuite": "qa/applied6-q23-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 23~30번이 4.2점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q23-v8",
+      "genId": "applied6-q23",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 23,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "방향 화살표 도로망의 경로 수",
+      "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
+      "text": "A도시에서 그림의 오른쪽 아래 모퉁이까지 이동하는 방법은 모두 몇 가지일까요?",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "경로 수"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q23-original-diagram.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 390,
+        "description": "활용 6회 원문 23번의 방향 화살표 도로망 그림(원본 그림 그대로)"
+      },
+      "solutionSteps": [
+        "가운데 교차점을 거쳐 오른쪽 아래 모퉁이로 가는 경로는 A에서 교차점까지 5가지입니다.",
+        "오른쪽 변 가운데를 따라 오른쪽 아래 모퉁이로 가는 경로가 1가지 더 있습니다.",
+        "따라서 5+1=6가지입니다."
+      ],
+      "solution": "가운데 교차점을 거쳐 오른쪽 아래 모퉁이로 가는 경로는 A에서 교차점까지 5가지입니다. 오른쪽 변 가운데를 따라 오른쪽 아래 모퉁이로 가는 경로가 1가지 더 있습니다. 따라서 5+1=6가지입니다.",
+      "learningPoint": "방향 화살표를 따라 가능한 경로를 나누어 세고, 이어지는 구간은 곱하고 겹치지 않는 경로 묶음은 더한다.",
+      "learningLocation": "활용 6회 · 원문 23번 · 방향 도로망의 경로 수",
+      "verification": {
+        "primaryMethod": "Enumerate directed paths on the unchanged source graph and decompose into disjoint path groups.",
+        "independentMethod": "Depth-first enumerate all simple directed paths in an explicit graph, then compare every requested start/end pair count.",
+        "parameters": {
+          "startNode": "A",
+          "endNode": "BR",
+          "expectedPaths": 6,
+          "graphAssetSha256": "50bf80b338ba39c8f26be6088cf79f009b91d0b80f07dff529d7ee1bf8d3996d"
+        },
+        "independentSuite": "qa/applied6-q23-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 23~30번이 4.2점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q23-v9",
+      "genId": "applied6-q23",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 23,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "방향 화살표 도로망의 경로 수",
+      "detailType": "방향이 정해진 도로망에서 두 지점 사이의 경로 수 세기",
+      "pointBand": "4.2",
+      "text": "그림의 왼쪽 위 모퉁이에서 B도시까지 이동하는 방법은 모두 몇 가지일까요?",
+      "answer": "7",
+      "answerParts": [
+        7
+      ],
+      "answerLabels": [
+        "경로 수"
+      ],
+      "acceptedAnswers": [
+        "7"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q23-original-diagram.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 390,
+        "description": "활용 6회 원문 23번의 방향 화살표 도로망 그림(원본 그림 그대로)"
+      },
+      "solutionSteps": [
+        "왼쪽 위 모퉁이에서 B까지 가는 길은 가운데 교차점을 거치는 길과 왼쪽 바깥쪽을 지나는 길로 나눕니다.",
+        "가운데로 바로 가는 경로와 왼쪽 변 가운데를 거쳐 가는 경로가 각각 있고, 교차점에서 B로 가는 길은 3가지이므로 가운데 경유는 2×3=6가지입니다.",
+        "왼쪽 변 가운데에서 왼쪽 아래 모퉁이로 내려가 B로 가는 바깥 경로는 1가지입니다.",
+        "따라서 6+1=7가지입니다."
+      ],
+      "solution": "왼쪽 위 모퉁이에서 B까지 가는 길은 가운데 교차점을 거치는 길과 왼쪽 바깥쪽을 지나는 길로 나눕니다. 가운데로 바로 가는 경로와 왼쪽 변 가운데를 거쳐 가는 경로가 각각 있고, 교차점에서 B로 가는 길은 3가지이므로 가운데 경유는 2×3=6가지입니다. 왼쪽 변 가운데에서 왼쪽 아래 모퉁이로 내려가 B로 가는 바깥 경로는 1가지입니다. 따라서 6+1=7가지입니다.",
+      "learningPoint": "방향 화살표를 따라 가능한 경로를 나누어 세고, 이어지는 구간은 곱하고 겹치지 않는 경로 묶음은 더한다.",
+      "learningLocation": "활용 6회 · 원문 23번 · 방향 도로망의 경로 수",
+      "verification": {
+        "primaryMethod": "Enumerate directed paths on the unchanged source graph and decompose into disjoint path groups.",
+        "independentMethod": "Depth-first enumerate all simple directed paths in an explicit graph, then compare every requested start/end pair count.",
+        "parameters": {
+          "startNode": "TL",
+          "endNode": "B",
+          "expectedPaths": 7,
+          "graphAssetSha256": "50bf80b338ba39c8f26be6088cf79f009b91d0b80f07dff529d7ee1bf8d3996d"
+        },
+        "independentSuite": "qa/applied6-q23-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 23~30번이 4.2점 문제라고 명시되어 있다."
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 162,
-    "sourceTypes": 18,
+    "independentMathCount": 171,
+    "sourceTypes": 19,
     "variantsPerType": 9,
     "outputReviewed": true,
-    "sourceDrawingCount": 3,
+    "sourceDrawingCount": 4,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "verifiedQuestionCount": 162,
-    "verifiedSourceCount": 18
+    "verifiedQuestionCount": 171,
+    "verifiedSourceCount": 19
   }
 }
