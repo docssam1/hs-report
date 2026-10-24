@@ -1,15 +1,13 @@
 {
-  "version": "20261024-applied6-expansion-r10",
+  "version": "20261024-applied6-expansion-r12",
   "sourceSet": "applied",
   "sourceRound": 6,
-  "itemCount": 90,
+  "itemCount": 108,
   "pendingSourceNos": [
     1,
     4,
     6,
-    14,
     15,
-    16,
     17,
     18,
     19,
@@ -122,6 +120,26 @@
       "area": "도형",
       "subarea": "쌓기나무와 공간도형",
       "detailType": "계단형 쌓기에서 직육면체의 위치와 높이 세기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 14,
+      "genId": "applied6-q14",
+      "area": "도형",
+      "subarea": "각도와 회전 · 시계 바늘의 움직임",
+      "detailType": "시침과 분침의 상대 회전각으로 경과 시간과 시각 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 16,
+      "genId": "applied6-q16",
+      "area": "경우의 수",
+      "subarea": "서로 다른 숫자 카드의 큰 수 순위",
+      "detailType": "각 자리의 숫자가 다른 네 자리 수를 큰 수부터 나열할 때 순서 구하기",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9

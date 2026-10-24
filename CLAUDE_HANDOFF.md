@@ -2396,3 +2396,13 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - 통합 데이터 `20261024-applied6-expansion-r10`은 활용6회 원문 10유형·90문항이며 SHA-256 `e94fd38c69b00e64a821d39342a13ebdd39e98a851643e847773ae47510d145d`다. Q13 실제 ZIP은 7개 항목, 문제 PDF 2쪽, 상세풀이 PDF 5쪽, 9개 문항 ID 일치다. ZIP SHA-256 `62aff2f783ced3b62b6ca05f055426e7b4adf1ce22a0910a8351a18098f071e9`다. 전체 문제·풀이 페이지 렌더를 눈으로 확인했고, 답 입력·진단·3회 제한·첫 응답 보존·좌단 위→아래 후 우단 순서·375px·실제 ZIP 브라우저 검수도 통과했다.
 - 전체 적용 은행 6회차의 독립 수학·브라우저·ZIP 검사와 재고 인덱스 검사는 통과했다: 6개 회차 891문항, 99유형×9. Drive 통합 JSON ID `1Xledby2qpOxBzc4qe97d-Fi4soNMLG4D`는 위 r10 데이터와 바이트 일치한다. Q13 ZIP `1Z8hr0uge6Zs-TDQLPQLXk1bC8klxK3mh`, 원문·답안 `15-TDZUfMuEG-ri8s3FmWtR2O8py1HBM_`, 독립검산 `1KDm38Jdg37-NDT1MOossDgBvhMQlD6vH`, 브라우저 `1DFety7VYUQndzvZm84meecKyyeHtiDc5`, ZIP검수 `16UuurX1H1nwGGWpYXlWEpoUgAFNMx-Pt`, PDF시각검수 `1GYKc-2CnH3aERsD4TWvi5G0z6XPSpvjy`를 같은 Drive 폴더에 추가했고 ZIP·원문대조·수학검산 및 통합 JSON을 원시 재다운로드해 바이트 동일성을 확인했다.
 - Q13 코드·데이터·색인·QA 25개 파일의 완전한 내용은 GitHub `main` 커밋 `8d9dae219c5dece4d05f02197b90d2b70f6cf7ca`에 반영했다. Q13 독립검산기의 비교 기준을 Q12 시점으로 고정한 수정은 `1cafce6bec77ceaa877b4f6bab2773bee971f568`에 반영했다. 두 커밋의 파일을 커밋 SHA 고정 원시 URL로 읽어 로컬 바이트와 대조했다. 실제 사이트 배포는 하지 않았다. 다음에는 활용6회 기존 원문 14번을 PDF에서 직접 확인한다. Drive에 있는 `Q14_*` 증빙은 적용4회 Q14이므로 활용6회와 혼동하거나 재사용하지 않는다.
+
+
+## 2026-10-24 활용6회 문제은행 확장 최신 상태 — Mac
+
+- 현재 범위는 사용자의 최신 지시대로 **시험에 이미 나온 유형의 확장만**이다. 새 유형을 만들지 않는다. 원문당 9개를 유지한다.
+- 로컬 `/Users/docssam/Developer/GFIELD/hs-report`, `main`; 현재 작업 데이터 `20261024-applied6-expansion-r12`. 활용6회 원문 2·3·5·7~14·16, 12유형·108문항. 전체 적용 은행은 909문항·101유형×9.
+- Q16은 p3 원문·답안의 8432/761번째를 대조하고, 각 변형은 자리별 블록 계산과 4,536개 후보 전수정렬로 검산했다. 브라우저·2단·375px·입력/진단·3회 제한·ZIP 7개 항목·문제 2쪽/풀이 5쪽 렌더 검수 완료.
+- Q15는 보류: 원문 p3의 7,760,130 차이 표기와 답안 p3의 `881,201−105,188=776,013`, 답 105,188이 서로 맞지 않는다. `q15-source-discrepancy.json`을 확인하고 교사 판정 전 제작하지 않는다.
+- 공용 `bank/pool.js` PDF 첫 캡처 warmup 수정 뒤 2·3·5·7~14·16 모두 독립수학·브라우저·ZIP 회귀 검사가 통과했다. Q13·14·16 ZIP 실제 PDF도 전 페이지 렌더 확인. SHA·쪽수·근거는 `.private-work/hw-expansion-20261023/hw6/20261024-deadline-status.md` 및 각 `qNN-output-qa/`에 있다.
+- 코드·데이터·검수기는 로컬 main 커밋 `08a75fa061a411efae57ab88d0130262bdd76aef`에 담겼다. GitHub push와 Drive 갱신은 진행 중이다. 사이트는 배포하지 않았다. 사용자 미추적 `bank/drafts/`, `materials/.DS_Store` 보존. 다음 유형은 활용6회 원문 17번이며, 먼저 문제/답안 PDF 원문을 직접 읽는다.

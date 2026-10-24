@@ -7,7 +7,7 @@ DATA=ROOT/'bank/data/applied6-expanded.json'
 SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf'
 ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/answer.pdf'
 d=json.loads(DATA.read_text())
-assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13] and len(d['items'])==90
+assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13,14,16] and len(d['items'])==108
 items=[q for q in d['items'] if q['sourceNo']==3]
 assert len(items)==9 and [q['variantNo'] for q in items]==list(range(1,10))
 # Source PDF p.1: 30 candies; first two share equally; third has strictly more.

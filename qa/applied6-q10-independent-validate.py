@@ -4,8 +4,8 @@ import hashlib,json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DATA=ROOT/'bank/data/applied6-expanded.json'; SOURCE=ROOT/'materials/초등과정 대비 실전 모의고사 활용 6회.pdf'; ANSWER=ROOT/'.private-work/hw-expansion-20261023/hw6/answer.pdf'
-d=json.loads(DATA.read_text());assert d['version']=='20261024-applied6-expansion-r10'
-assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13] and len(d['items'])==90
+d=json.loads(DATA.read_text());assert d['version']=='20261024-applied6-expansion-r12'
+assert d['availableSourceNos']==[2,3,5,7,8,9,10,11,12,13,14,16] and len(d['items'])==108
 items=[x for x in d['items'] if x['sourceNo']==10];assert len(items)==9
 assert [x['variantNo'] for x in items]==list(range(1,10))
 # Original page 2: scale readings are cumulative; adjacent totals determine one scale's mass.
