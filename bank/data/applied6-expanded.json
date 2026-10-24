@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r5",
+  "version": "20261024-applied6-expansion-r6",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -14,13 +14,13 @@
     3,
     5,
     7,
-    8
+    8,
+    9
   ],
   "pendingSourceNos": [
     1,
     4,
     6,
-    9,
     10,
     11,
     12,
@@ -2803,14 +2803,590 @@
         "sourceReasoningPreserved": true,
         "measuredVariantRate": null
       }
+    },
+    {
+      "id": "applied6-q09-v1",
+      "genId": "applied6-q09",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 9,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "한 줄로 이어 붙인 정육면체의 모서리",
+      "detailType": "공유하는 면의 모서리를 세어 성냥개비 수로 정육면체 개수 구하기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 성냥개비로 정육면체를 한 줄로 이어 만들려고 합니다. 성냥개비가 모두 20개일 때 만들 수 있는 정육면체의 개수를 구하시오.",
+      "answer": "2",
+      "answerParts": [
+        2
+      ],
+      "answerLabels": [
+        "정육면체 개수"
+      ],
+      "acceptedAnswers": [
+        "2"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q09-cubes-original.png",
+        "mimeType": "image/png",
+        "width": 650,
+        "height": 310,
+        "description": "활용 6회 원문 9번의 성냥개비 정육면체 배열 그림"
+      },
+      "solutionSteps": [
+        "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다.",
+        "정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다.",
+        "정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다.",
+        "8n+4=20에서 8n=16이므로 n=2입니다. 따라서 정육면체 2개를 만들 수 있습니다."
+      ],
+      "solution": "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다. 정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다. 정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다. 8n+4=20에서 8n=16이므로 n=2입니다. 따라서 정육면체 2개를 만들 수 있습니다.",
+      "learningPoint": "이어 붙인 두 입체가 공유하는 모서리를 중복 계산하지 않고 전체 개수를 식으로 나타내기",
+      "learningLocation": "활용 6회 · 원문 9번 · 한 줄로 이어 붙인 정육면체의 모서리",
+      "verification": {
+        "primaryMethod": "first cube 12 edges plus 8 new edges per added cube",
+        "independentMethod": "count 4 shared edges removed from 12 edges for each successive cube",
+        "parameters": {
+          "matchsticks": 20,
+          "firstCubeEdges": 12,
+          "sharedFaceEdges": 4,
+          "newEdgesPerAddedCube": 8,
+          "cubeCount": 2,
+          "sourceDrawingSha256": "28de4d2c97f9bc6992c21532c2d92720f062adb10d8e4af2f371cc091330deb4"
+        },
+        "independentSuite": "qa/applied6-q09-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q09-v2",
+      "genId": "applied6-q09",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 9,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "한 줄로 이어 붙인 정육면체의 모서리",
+      "detailType": "공유하는 면의 모서리를 세어 성냥개비 수로 정육면체 개수 구하기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 성냥개비로 정육면체를 한 줄로 이어 만들려고 합니다. 성냥개비가 모두 28개일 때 만들 수 있는 정육면체의 개수를 구하시오.",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "정육면체 개수"
+      ],
+      "acceptedAnswers": [
+        "3"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q09-cubes-original.png",
+        "mimeType": "image/png",
+        "width": 650,
+        "height": 310,
+        "description": "활용 6회 원문 9번의 성냥개비 정육면체 배열 그림"
+      },
+      "solutionSteps": [
+        "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다.",
+        "정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다.",
+        "정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다.",
+        "8n+4=28에서 8n=24이므로 n=3입니다. 따라서 정육면체 3개를 만들 수 있습니다."
+      ],
+      "solution": "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다. 정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다. 정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다. 8n+4=28에서 8n=24이므로 n=3입니다. 따라서 정육면체 3개를 만들 수 있습니다.",
+      "learningPoint": "이어 붙인 두 입체가 공유하는 모서리를 중복 계산하지 않고 전체 개수를 식으로 나타내기",
+      "learningLocation": "활용 6회 · 원문 9번 · 한 줄로 이어 붙인 정육면체의 모서리",
+      "verification": {
+        "primaryMethod": "first cube 12 edges plus 8 new edges per added cube",
+        "independentMethod": "count 4 shared edges removed from 12 edges for each successive cube",
+        "parameters": {
+          "matchsticks": 28,
+          "firstCubeEdges": 12,
+          "sharedFaceEdges": 4,
+          "newEdgesPerAddedCube": 8,
+          "cubeCount": 3,
+          "sourceDrawingSha256": "28de4d2c97f9bc6992c21532c2d92720f062adb10d8e4af2f371cc091330deb4"
+        },
+        "independentSuite": "qa/applied6-q09-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q09-v3",
+      "genId": "applied6-q09",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 9,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "한 줄로 이어 붙인 정육면체의 모서리",
+      "detailType": "공유하는 면의 모서리를 세어 성냥개비 수로 정육면체 개수 구하기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 성냥개비로 정육면체를 한 줄로 이어 만들려고 합니다. 성냥개비가 모두 44개일 때 만들 수 있는 정육면체의 개수를 구하시오.",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "정육면체 개수"
+      ],
+      "acceptedAnswers": [
+        "5"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q09-cubes-original.png",
+        "mimeType": "image/png",
+        "width": 650,
+        "height": 310,
+        "description": "활용 6회 원문 9번의 성냥개비 정육면체 배열 그림"
+      },
+      "solutionSteps": [
+        "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다.",
+        "정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다.",
+        "정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다.",
+        "8n+4=44에서 8n=40이므로 n=5입니다. 따라서 정육면체 5개를 만들 수 있습니다."
+      ],
+      "solution": "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다. 정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다. 정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다. 8n+4=44에서 8n=40이므로 n=5입니다. 따라서 정육면체 5개를 만들 수 있습니다.",
+      "learningPoint": "이어 붙인 두 입체가 공유하는 모서리를 중복 계산하지 않고 전체 개수를 식으로 나타내기",
+      "learningLocation": "활용 6회 · 원문 9번 · 한 줄로 이어 붙인 정육면체의 모서리",
+      "verification": {
+        "primaryMethod": "first cube 12 edges plus 8 new edges per added cube",
+        "independentMethod": "count 4 shared edges removed from 12 edges for each successive cube",
+        "parameters": {
+          "matchsticks": 44,
+          "firstCubeEdges": 12,
+          "sharedFaceEdges": 4,
+          "newEdgesPerAddedCube": 8,
+          "cubeCount": 5,
+          "sourceDrawingSha256": "28de4d2c97f9bc6992c21532c2d92720f062adb10d8e4af2f371cc091330deb4"
+        },
+        "independentSuite": "qa/applied6-q09-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q09-v4",
+      "genId": "applied6-q09",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 9,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "한 줄로 이어 붙인 정육면체의 모서리",
+      "detailType": "공유하는 면의 모서리를 세어 성냥개비 수로 정육면체 개수 구하기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 성냥개비로 정육면체를 한 줄로 이어 만들려고 합니다. 성냥개비가 모두 52개일 때 만들 수 있는 정육면체의 개수를 구하시오.",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "정육면체 개수"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q09-cubes-original.png",
+        "mimeType": "image/png",
+        "width": 650,
+        "height": 310,
+        "description": "활용 6회 원문 9번의 성냥개비 정육면체 배열 그림"
+      },
+      "solutionSteps": [
+        "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다.",
+        "정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다.",
+        "정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다.",
+        "8n+4=52에서 8n=48이므로 n=6입니다. 따라서 정육면체 6개를 만들 수 있습니다."
+      ],
+      "solution": "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다. 정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다. 정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다. 8n+4=52에서 8n=48이므로 n=6입니다. 따라서 정육면체 6개를 만들 수 있습니다.",
+      "learningPoint": "이어 붙인 두 입체가 공유하는 모서리를 중복 계산하지 않고 전체 개수를 식으로 나타내기",
+      "learningLocation": "활용 6회 · 원문 9번 · 한 줄로 이어 붙인 정육면체의 모서리",
+      "verification": {
+        "primaryMethod": "first cube 12 edges plus 8 new edges per added cube",
+        "independentMethod": "count 4 shared edges removed from 12 edges for each successive cube",
+        "parameters": {
+          "matchsticks": 52,
+          "firstCubeEdges": 12,
+          "sharedFaceEdges": 4,
+          "newEdgesPerAddedCube": 8,
+          "cubeCount": 6,
+          "sourceDrawingSha256": "28de4d2c97f9bc6992c21532c2d92720f062adb10d8e4af2f371cc091330deb4"
+        },
+        "independentSuite": "qa/applied6-q09-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q09-v5",
+      "genId": "applied6-q09",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 9,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "한 줄로 이어 붙인 정육면체의 모서리",
+      "detailType": "공유하는 면의 모서리를 세어 성냥개비 수로 정육면체 개수 구하기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 성냥개비로 정육면체를 한 줄로 이어 만들려고 합니다. 성냥개비가 모두 68개일 때 만들 수 있는 정육면체의 개수를 구하시오.",
+      "answer": "8",
+      "answerParts": [
+        8
+      ],
+      "answerLabels": [
+        "정육면체 개수"
+      ],
+      "acceptedAnswers": [
+        "8"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q09-cubes-original.png",
+        "mimeType": "image/png",
+        "width": 650,
+        "height": 310,
+        "description": "활용 6회 원문 9번의 성냥개비 정육면체 배열 그림"
+      },
+      "solutionSteps": [
+        "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다.",
+        "정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다.",
+        "정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다.",
+        "8n+4=68에서 8n=64이므로 n=8입니다. 따라서 정육면체 8개를 만들 수 있습니다."
+      ],
+      "solution": "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다. 정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다. 정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다. 8n+4=68에서 8n=64이므로 n=8입니다. 따라서 정육면체 8개를 만들 수 있습니다.",
+      "learningPoint": "이어 붙인 두 입체가 공유하는 모서리를 중복 계산하지 않고 전체 개수를 식으로 나타내기",
+      "learningLocation": "활용 6회 · 원문 9번 · 한 줄로 이어 붙인 정육면체의 모서리",
+      "verification": {
+        "primaryMethod": "first cube 12 edges plus 8 new edges per added cube",
+        "independentMethod": "count 4 shared edges removed from 12 edges for each successive cube",
+        "parameters": {
+          "matchsticks": 68,
+          "firstCubeEdges": 12,
+          "sharedFaceEdges": 4,
+          "newEdgesPerAddedCube": 8,
+          "cubeCount": 8,
+          "sourceDrawingSha256": "28de4d2c97f9bc6992c21532c2d92720f062adb10d8e4af2f371cc091330deb4"
+        },
+        "independentSuite": "qa/applied6-q09-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q09-v6",
+      "genId": "applied6-q09",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 9,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "한 줄로 이어 붙인 정육면체의 모서리",
+      "detailType": "공유하는 면의 모서리를 세어 성냥개비 수로 정육면체 개수 구하기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 성냥개비로 정육면체를 한 줄로 이어 만들려고 합니다. 성냥개비가 모두 76개일 때 만들 수 있는 정육면체의 개수를 구하시오.",
+      "answer": "9",
+      "answerParts": [
+        9
+      ],
+      "answerLabels": [
+        "정육면체 개수"
+      ],
+      "acceptedAnswers": [
+        "9"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q09-cubes-original.png",
+        "mimeType": "image/png",
+        "width": 650,
+        "height": 310,
+        "description": "활용 6회 원문 9번의 성냥개비 정육면체 배열 그림"
+      },
+      "solutionSteps": [
+        "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다.",
+        "정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다.",
+        "정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다.",
+        "8n+4=76에서 8n=72이므로 n=9입니다. 따라서 정육면체 9개를 만들 수 있습니다."
+      ],
+      "solution": "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다. 정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다. 정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다. 8n+4=76에서 8n=72이므로 n=9입니다. 따라서 정육면체 9개를 만들 수 있습니다.",
+      "learningPoint": "이어 붙인 두 입체가 공유하는 모서리를 중복 계산하지 않고 전체 개수를 식으로 나타내기",
+      "learningLocation": "활용 6회 · 원문 9번 · 한 줄로 이어 붙인 정육면체의 모서리",
+      "verification": {
+        "primaryMethod": "first cube 12 edges plus 8 new edges per added cube",
+        "independentMethod": "count 4 shared edges removed from 12 edges for each successive cube",
+        "parameters": {
+          "matchsticks": 76,
+          "firstCubeEdges": 12,
+          "sharedFaceEdges": 4,
+          "newEdgesPerAddedCube": 8,
+          "cubeCount": 9,
+          "sourceDrawingSha256": "28de4d2c97f9bc6992c21532c2d92720f062adb10d8e4af2f371cc091330deb4"
+        },
+        "independentSuite": "qa/applied6-q09-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q09-v7",
+      "genId": "applied6-q09",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 9,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "한 줄로 이어 붙인 정육면체의 모서리",
+      "detailType": "공유하는 면의 모서리를 세어 성냥개비 수로 정육면체 개수 구하기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 성냥개비로 정육면체를 한 줄로 이어 만들려고 합니다. 성냥개비가 모두 92개일 때 만들 수 있는 정육면체의 개수를 구하시오.",
+      "answer": "11",
+      "answerParts": [
+        11
+      ],
+      "answerLabels": [
+        "정육면체 개수"
+      ],
+      "acceptedAnswers": [
+        "11"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q09-cubes-original.png",
+        "mimeType": "image/png",
+        "width": 650,
+        "height": 310,
+        "description": "활용 6회 원문 9번의 성냥개비 정육면체 배열 그림"
+      },
+      "solutionSteps": [
+        "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다.",
+        "정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다.",
+        "정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다.",
+        "8n+4=92에서 8n=88이므로 n=11입니다. 따라서 정육면체 11개를 만들 수 있습니다."
+      ],
+      "solution": "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다. 정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다. 정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다. 8n+4=92에서 8n=88이므로 n=11입니다. 따라서 정육면체 11개를 만들 수 있습니다.",
+      "learningPoint": "이어 붙인 두 입체가 공유하는 모서리를 중복 계산하지 않고 전체 개수를 식으로 나타내기",
+      "learningLocation": "활용 6회 · 원문 9번 · 한 줄로 이어 붙인 정육면체의 모서리",
+      "verification": {
+        "primaryMethod": "first cube 12 edges plus 8 new edges per added cube",
+        "independentMethod": "count 4 shared edges removed from 12 edges for each successive cube",
+        "parameters": {
+          "matchsticks": 92,
+          "firstCubeEdges": 12,
+          "sharedFaceEdges": 4,
+          "newEdgesPerAddedCube": 8,
+          "cubeCount": 11,
+          "sourceDrawingSha256": "28de4d2c97f9bc6992c21532c2d92720f062adb10d8e4af2f371cc091330deb4"
+        },
+        "independentSuite": "qa/applied6-q09-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q09-v8",
+      "genId": "applied6-q09",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 9,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "한 줄로 이어 붙인 정육면체의 모서리",
+      "detailType": "공유하는 면의 모서리를 세어 성냥개비 수로 정육면체 개수 구하기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 성냥개비로 정육면체를 한 줄로 이어 만들려고 합니다. 성냥개비가 모두 116개일 때 만들 수 있는 정육면체의 개수를 구하시오.",
+      "answer": "14",
+      "answerParts": [
+        14
+      ],
+      "answerLabels": [
+        "정육면체 개수"
+      ],
+      "acceptedAnswers": [
+        "14"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q09-cubes-original.png",
+        "mimeType": "image/png",
+        "width": 650,
+        "height": 310,
+        "description": "활용 6회 원문 9번의 성냥개비 정육면체 배열 그림"
+      },
+      "solutionSteps": [
+        "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다.",
+        "정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다.",
+        "정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다.",
+        "8n+4=116에서 8n=112이므로 n=14입니다. 따라서 정육면체 14개를 만들 수 있습니다."
+      ],
+      "solution": "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다. 정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다. 정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다. 8n+4=116에서 8n=112이므로 n=14입니다. 따라서 정육면체 14개를 만들 수 있습니다.",
+      "learningPoint": "이어 붙인 두 입체가 공유하는 모서리를 중복 계산하지 않고 전체 개수를 식으로 나타내기",
+      "learningLocation": "활용 6회 · 원문 9번 · 한 줄로 이어 붙인 정육면체의 모서리",
+      "verification": {
+        "primaryMethod": "first cube 12 edges plus 8 new edges per added cube",
+        "independentMethod": "count 4 shared edges removed from 12 edges for each successive cube",
+        "parameters": {
+          "matchsticks": 116,
+          "firstCubeEdges": 12,
+          "sharedFaceEdges": 4,
+          "newEdgesPerAddedCube": 8,
+          "cubeCount": 14,
+          "sourceDrawingSha256": "28de4d2c97f9bc6992c21532c2d92720f062adb10d8e4af2f371cc091330deb4"
+        },
+        "independentSuite": "qa/applied6-q09-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q09-v9",
+      "genId": "applied6-q09",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 9,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "한 줄로 이어 붙인 정육면체의 모서리",
+      "detailType": "공유하는 면의 모서리를 세어 성냥개비 수로 정육면체 개수 구하기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 성냥개비로 정육면체를 한 줄로 이어 만들려고 합니다. 성냥개비가 모두 140개일 때 만들 수 있는 정육면체의 개수를 구하시오.",
+      "answer": "17",
+      "answerParts": [
+        17
+      ],
+      "answerLabels": [
+        "정육면체 개수"
+      ],
+      "acceptedAnswers": [
+        "17"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q09-cubes-original.png",
+        "mimeType": "image/png",
+        "width": 650,
+        "height": 310,
+        "description": "활용 6회 원문 9번의 성냥개비 정육면체 배열 그림"
+      },
+      "solutionSteps": [
+        "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다.",
+        "정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다.",
+        "정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다.",
+        "8n+4=140에서 8n=136이므로 n=17입니다. 따라서 정육면체 17개를 만들 수 있습니다."
+      ],
+      "solution": "정육면체 한 개를 만드는 데에는 성냥개비 12개가 필요합니다. 정육면체를 한 줄로 이어 붙이면 새 정육면체는 앞 정육면체와 한 면을 공유합니다. 공유하는 면의 네 모서리는 새 성냥개비가 아니므로 한 개를 더 붙일 때마다 12−4=8개가 더 필요합니다. 정육면체를 n개 만들 때 성냥개비 수는 12+8×(n−1)=8n+4개입니다. 8n+4=140에서 8n=136이므로 n=17입니다. 따라서 정육면체 17개를 만들 수 있습니다.",
+      "learningPoint": "이어 붙인 두 입체가 공유하는 모서리를 중복 계산하지 않고 전체 개수를 식으로 나타내기",
+      "learningLocation": "활용 6회 · 원문 9번 · 한 줄로 이어 붙인 정육면체의 모서리",
+      "verification": {
+        "primaryMethod": "first cube 12 edges plus 8 new edges per added cube",
+        "independentMethod": "count 4 shared edges removed from 12 edges for each successive cube",
+        "parameters": {
+          "matchsticks": 140,
+          "firstCubeEdges": 12,
+          "sharedFaceEdges": 4,
+          "newEdgesPerAddedCube": 8,
+          "cubeCount": 17,
+          "sourceDrawingSha256": "28de4d2c97f9bc6992c21532c2d92720f062adb10d8e4af2f371cc091330deb4"
+        },
+        "independentSuite": "qa/applied6-q09-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 45,
-    "sourceTypes": 5,
+    "independentMathCount": 54,
+    "sourceTypes": 6,
     "variantsPerType": 9,
     "outputReviewed": true,
-    "sourceDrawingCount": 1,
+    "sourceDrawingCount": 2,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
     "sourceQuestionPage": 2,
