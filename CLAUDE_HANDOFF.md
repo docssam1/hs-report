@@ -2333,3 +2333,14 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - GitHub `main` 코드·데이터·검증기 커밋은 `103331f9032ac141b8d900a9f35cc33be3d7c370`; 바로 전 Q3 코드 커밋 `6b8c10e32a2e079f503f27a554ee12499eec4e94`와 Q3 인수인계 `50c2781ee6273ce028fa903f8858598e33ad0361`도 `main`에 있다. 로컬과 원격 `main`은 동기화됐으며 사용자 미추적 `bank/drafts/`, `materials/.DS_Store`는 보존한다. 사이트 배포는 하지 않았다.
 - Drive `황소 활용 모의고사`의 은행 JSON ID `1Xledby2qpOxBzc4qe97d-Fi4soNMLG4D` 및 Q2/Q3 ZIP·검수 기존 ID를 최신 데이터로 갱신했다. Q5 ZIP ID `14n4LoeVG-dAe-a0thrj_E3GaPJ2v-99c`, 원문 대조 `1ZYd8B3pYnGgXh2DQbxHYc73aDZrG5RJY`, 독립 검산 `1c3Dkt7PRaNXvf7Vf_m2gehSQxmRC7C1L`, 브라우저 `1Dmi8WlmsHlszVuBB18tHBJwNZlgdbXQg`, ZIP 검수 `1FIdlWCcpnAzMag8g9qYXtmfbTMn3HzyR`, PDF 시각 검수 `1Fh7bCmTRoL_KOQC99Cr0Iyy8wmGrIz6O`를 같은 폴더에 저장했다. 은행 JSON과 세 ZIP 및 관련 검수 JSON의 원시 재다운로드 바이트/체크섬을 모두 로컬과 대조했다.
 - 세부 자료는 `.private-work/hw-expansion-20261023/hw6/q05-source-answer-review.json`, `q05-independent-math.json`, `q05-pdf-visual-review.json`, `q05-output-qa/`다. 다음 우선 후보는 활용6회 7번이다. 시작 전에 원문과 답안 PDF에서 계산기 숫자키/더하기 키 조건 및 답 기준을 다시 직접 확인한다.
+
+## 2026-10-24 활용6회 원문 7번 9개 추가 — 통합 상태 갱신
+
+- 사용자가 문제은행을 위한 변형은 학습 단계에 맞게 조정해도 된다고 확인했다. 출제 원문의 핵심 사고를 보존하면서 단계와 수 범위를 조절한다.
+- 원문 문제 PDF 2쪽과 답안 PDF 2쪽을 직접 대조했다. 계산기에서 1부터 256까지 입력해 더하고 마지막 `=`은 누르지 않는 조건이다. 숫자 키 입력은 660회, `+` 입력은 255회, 정답은 915회다. `qa/applied6-q07-independent-validate.py`는 구간별 자릿수 계산과 1부터 N까지 직접 열거를 독립 대조한다.
+- 변형 9개는 마지막 수 24, 75, 99, 134, 205, 387, 564, 781, 928이며 정답은 62, 215, 287, 427, 711, 1439, 2147, 3015, 3603회다. 모두 2.7점대(하)로 표시하며 변형 정답률은 측정되지 않았다.
+- 통합 데이터는 활용6회 원문 2·3·5·7번, 유형 4개와 문항 36개다. `version=20261024-applied6-expansion-r4`, 크기 103,729바이트, SHA-256 `1405223ff4ad29481c4d8955f0a834490a618c533248fb39cb0a32cd1b4ad83a`다. 기존 검수 2·3·5번 문항을 보존했다.
+- 네 유형 모두 변형별 독립 검산, 브라우저 답 입력·채점·진단 링크·3회 제한·최초 시도 보존, 2단 순서, 모바일 375px, 실제 ZIP과 전 페이지 렌더 검수를 통과했다. ZIP마다 7개 구성 파일이 있으며 문제 PDF 2쪽 및 답안·상세풀이 PDF 3쪽을 포함한다. 실제 사이트에는 배포하지 않았다.
+- 최신 ZIP SHA-256: Q2 `b46259a2ff51e8160d49b6c979498187776468ab18a0b02a08ca50af16763da2`, Q3 `f461bad25e0ef06e7382b8099a441653af8fbdeaf6f851dc0fedd840c35cecf8`, Q5 `ef8a058cd46b227e536ae2e649007ff0eea48b3c277ed83fb1ca86ead647efa8`, Q7 `cda4b001c8cdecc96d5cf9df12b18512d93023f8b62479410ec18b6bcc8fd403`.
+- Google Drive 폴더 `황소 활용 모의고사`에 통합 데이터 및 Q2/Q3/Q5 ZIP·검산·브라우저·ZIP·시각 검수 파일을 기존 파일 ID로 갱신했다. 원시 재다운로드 22개 파일이 로컬과 바이트 단위로 일치한다. Q7 ZIP ID `1dA2WyEcyT363MN-edKnkipdpdAyYW9Ly`; 원문대조 `1pUzpUfTkpiSlAKCP6Wv_UA1F5TziW9YX`; 독립검산 `1-i8D34r-64mzJji6DzXNTX-4uKBIqtl6`; 브라우저 `1HsN0jr3gT50q27sLdgqCDror_YCBwAVK`; ZIP 검수 `1XF-vZ8xydvPjcJv17MckJTst_pU2D9ex`; PDF 시각검수 `1qQ1xRpIcKI8tNHRWradnY17dwDWMjib3`.
+- 추적 대상의 다음 미완료 후보는 활용6회 원문 8번이다. 원문·답안 PDF에서 문구와 그림을 다시 확인하고, 도형·시각 요소가 있으면 변형을 잠그지 않은 상태에서 원본 그림의 조건을 직접 대조한다. 질문은행 확대 목표는 원문당 9개이며 활용1~9회를 우선한다.
