@@ -1,0 +1,626 @@
+{
+  "version": "20261024-applied6-expansion-r1",
+  "sourceSet": "applied",
+  "sourceRound": 6,
+  "policy": {
+    "targetVariantsPerSource": 9,
+    "runtimeGeneration": false,
+    "defaultDiagnosticVariants": 3,
+    "difficulty": "활용 배점대만 사용",
+    "sourceGradeMutation": false
+  },
+  "availableSourceNos": [
+    2
+  ],
+  "pendingSourceNos": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "items": [
+    {
+      "id": "applied6-q02-v1",
+      "genId": "applied6-q02",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 2,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 종류의 수와 전체 개수",
+      "detailType": "성냥으로 만든 두 다각형의 개수와 성냥 수",
+      "pointBand": "2.7",
+      "text": "성냥으로 삼각형과 사각형을 만들었습니다. 만든 삼각형과 사각형을 합하면 30개이고, 사용한 성냥은 모두 102개입니다. 삼각형과 사각형은 각각 몇 개씩 만들었는지 구하시오.",
+      "answer": "18, 12",
+      "answerParts": [
+        18,
+        12
+      ],
+      "answerLabels": [
+        "삼각형 개수",
+        "사각형 개수"
+      ],
+      "acceptedAnswers": [
+        "18, 12",
+        "18 12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "삼각형의 수를 x개, 사각형의 수를 y개라고 하면 x＋y＝30입니다.",
+        "삼각형은 성냥 3개, 사각형은 성냥 4개를 사용하므로 3x＋4y＝102입니다.",
+        "첫 식에 3을 곱한 식을 둘째 식에서 빼면 y＝12이므로 y＝12입니다.",
+        "x＝30－12＝18이고, 두 수는 모두 자연수입니다. 따라서 삼각형 18개, 사각형 12개입니다."
+      ],
+      "solution": "삼각형의 수를 x개, 사각형의 수를 y개라고 하면 x＋y＝30입니다. 삼각형은 성냥 3개, 사각형은 성냥 4개를 사용하므로 3x＋4y＝102입니다. 첫 식에 3을 곱한 식을 둘째 식에서 빼면 y＝12이므로 y＝12입니다. x＝30－12＝18이고, 두 수는 모두 자연수입니다. 따라서 삼각형 18개, 사각형 12개입니다.",
+      "learningPoint": "전체 도형 수와 전체 성냥 수를 식으로 나타내고 두 식의 차를 이용하기",
+      "learningLocation": "활용 6회 · 원문 2번 · 두 종류의 수와 전체 개수",
+      "verification": {
+        "primaryMethod": "elimination using total object count",
+        "independentMethod": "exhaustive enumeration of all positive integer pairs",
+        "parameters": {
+          "sideCounts": [
+            3,
+            4
+          ],
+          "objectCounts": [
+            18,
+            12
+          ],
+          "totalObjects": 30,
+          "totalSticks": 102
+        },
+        "independentSuite": "qa/applied6-q02-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q02-v2",
+      "genId": "applied6-q02",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 2,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 종류의 수와 전체 개수",
+      "detailType": "성냥으로 만든 두 다각형의 개수와 성냥 수",
+      "pointBand": "2.7",
+      "text": "성냥으로 삼각형과 사각형을 만들었습니다. 만든 삼각형과 사각형을 합하면 35개이고, 사용한 성냥은 모두 119개입니다. 삼각형과 사각형은 각각 몇 개씩 만들었는지 구하시오.",
+      "answer": "21, 14",
+      "answerParts": [
+        21,
+        14
+      ],
+      "answerLabels": [
+        "삼각형 개수",
+        "사각형 개수"
+      ],
+      "acceptedAnswers": [
+        "21, 14",
+        "21 14"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "삼각형의 수를 x개, 사각형의 수를 y개라고 하면 x＋y＝35입니다.",
+        "삼각형은 성냥 3개, 사각형은 성냥 4개를 사용하므로 3x＋4y＝119입니다.",
+        "첫 식에 3을 곱한 식을 둘째 식에서 빼면 y＝14이므로 y＝14입니다.",
+        "x＝35－14＝21이고, 두 수는 모두 자연수입니다. 따라서 삼각형 21개, 사각형 14개입니다."
+      ],
+      "solution": "삼각형의 수를 x개, 사각형의 수를 y개라고 하면 x＋y＝35입니다. 삼각형은 성냥 3개, 사각형은 성냥 4개를 사용하므로 3x＋4y＝119입니다. 첫 식에 3을 곱한 식을 둘째 식에서 빼면 y＝14이므로 y＝14입니다. x＝35－14＝21이고, 두 수는 모두 자연수입니다. 따라서 삼각형 21개, 사각형 14개입니다.",
+      "learningPoint": "전체 도형 수와 전체 성냥 수를 식으로 나타내고 두 식의 차를 이용하기",
+      "learningLocation": "활용 6회 · 원문 2번 · 두 종류의 수와 전체 개수",
+      "verification": {
+        "primaryMethod": "elimination using total object count",
+        "independentMethod": "exhaustive enumeration of all positive integer pairs",
+        "parameters": {
+          "sideCounts": [
+            3,
+            4
+          ],
+          "objectCounts": [
+            21,
+            14
+          ],
+          "totalObjects": 35,
+          "totalSticks": 119
+        },
+        "independentSuite": "qa/applied6-q02-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q02-v3",
+      "genId": "applied6-q02",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 2,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 종류의 수와 전체 개수",
+      "detailType": "성냥으로 만든 두 다각형의 개수와 성냥 수",
+      "pointBand": "2.7",
+      "text": "성냥으로 삼각형과 사각형을 만들었습니다. 만든 삼각형과 사각형을 합하면 40개이고, 사용한 성냥은 모두 136개입니다. 삼각형과 사각형은 각각 몇 개씩 만들었는지 구하시오.",
+      "answer": "24, 16",
+      "answerParts": [
+        24,
+        16
+      ],
+      "answerLabels": [
+        "삼각형 개수",
+        "사각형 개수"
+      ],
+      "acceptedAnswers": [
+        "24, 16",
+        "24 16"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "삼각형의 수를 x개, 사각형의 수를 y개라고 하면 x＋y＝40입니다.",
+        "삼각형은 성냥 3개, 사각형은 성냥 4개를 사용하므로 3x＋4y＝136입니다.",
+        "첫 식에 3을 곱한 식을 둘째 식에서 빼면 y＝16이므로 y＝16입니다.",
+        "x＝40－16＝24이고, 두 수는 모두 자연수입니다. 따라서 삼각형 24개, 사각형 16개입니다."
+      ],
+      "solution": "삼각형의 수를 x개, 사각형의 수를 y개라고 하면 x＋y＝40입니다. 삼각형은 성냥 3개, 사각형은 성냥 4개를 사용하므로 3x＋4y＝136입니다. 첫 식에 3을 곱한 식을 둘째 식에서 빼면 y＝16이므로 y＝16입니다. x＝40－16＝24이고, 두 수는 모두 자연수입니다. 따라서 삼각형 24개, 사각형 16개입니다.",
+      "learningPoint": "전체 도형 수와 전체 성냥 수를 식으로 나타내고 두 식의 차를 이용하기",
+      "learningLocation": "활용 6회 · 원문 2번 · 두 종류의 수와 전체 개수",
+      "verification": {
+        "primaryMethod": "elimination using total object count",
+        "independentMethod": "exhaustive enumeration of all positive integer pairs",
+        "parameters": {
+          "sideCounts": [
+            3,
+            4
+          ],
+          "objectCounts": [
+            24,
+            16
+          ],
+          "totalObjects": 40,
+          "totalSticks": 136
+        },
+        "independentSuite": "qa/applied6-q02-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q02-v4",
+      "genId": "applied6-q02",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 2,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 종류의 수와 전체 개수",
+      "detailType": "성냥으로 만든 두 다각형의 개수와 성냥 수",
+      "pointBand": "2.7",
+      "text": "성냥으로 삼각형과 오각형을 만들었습니다. 만든 삼각형과 오각형을 합하면 35개이고, 사용한 성냥은 모두 135개입니다. 삼각형과 오각형은 각각 몇 개씩 만들었는지 구하시오.",
+      "answer": "20, 15",
+      "answerParts": [
+        20,
+        15
+      ],
+      "answerLabels": [
+        "삼각형 개수",
+        "오각형 개수"
+      ],
+      "acceptedAnswers": [
+        "20, 15",
+        "20 15"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "삼각형의 수를 x개, 오각형의 수를 y개라고 하면 x＋y＝35입니다.",
+        "삼각형은 성냥 3개, 오각형은 성냥 5개를 사용하므로 3x＋5y＝135입니다.",
+        "첫 식에 3을 곱한 식을 둘째 식에서 빼면 2y＝30이므로 y＝15입니다.",
+        "x＝35－15＝20이고, 두 수는 모두 자연수입니다. 따라서 삼각형 20개, 오각형 15개입니다."
+      ],
+      "solution": "삼각형의 수를 x개, 오각형의 수를 y개라고 하면 x＋y＝35입니다. 삼각형은 성냥 3개, 오각형은 성냥 5개를 사용하므로 3x＋5y＝135입니다. 첫 식에 3을 곱한 식을 둘째 식에서 빼면 2y＝30이므로 y＝15입니다. x＝35－15＝20이고, 두 수는 모두 자연수입니다. 따라서 삼각형 20개, 오각형 15개입니다.",
+      "learningPoint": "전체 도형 수와 전체 성냥 수를 식으로 나타내고 두 식의 차를 이용하기",
+      "learningLocation": "활용 6회 · 원문 2번 · 두 종류의 수와 전체 개수",
+      "verification": {
+        "primaryMethod": "elimination using total object count",
+        "independentMethod": "exhaustive enumeration of all positive integer pairs",
+        "parameters": {
+          "sideCounts": [
+            3,
+            5
+          ],
+          "objectCounts": [
+            20,
+            15
+          ],
+          "totalObjects": 35,
+          "totalSticks": 135
+        },
+        "independentSuite": "qa/applied6-q02-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q02-v5",
+      "genId": "applied6-q02",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 2,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 종류의 수와 전체 개수",
+      "detailType": "성냥으로 만든 두 다각형의 개수와 성냥 수",
+      "pointBand": "2.7",
+      "text": "성냥으로 삼각형과 오각형을 만들었습니다. 만든 삼각형과 오각형을 합하면 40개이고, 사용한 성냥은 모두 152개입니다. 삼각형과 오각형은 각각 몇 개씩 만들었는지 구하시오.",
+      "answer": "24, 16",
+      "answerParts": [
+        24,
+        16
+      ],
+      "answerLabels": [
+        "삼각형 개수",
+        "오각형 개수"
+      ],
+      "acceptedAnswers": [
+        "24, 16",
+        "24 16"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "삼각형의 수를 x개, 오각형의 수를 y개라고 하면 x＋y＝40입니다.",
+        "삼각형은 성냥 3개, 오각형은 성냥 5개를 사용하므로 3x＋5y＝152입니다.",
+        "첫 식에 3을 곱한 식을 둘째 식에서 빼면 2y＝32이므로 y＝16입니다.",
+        "x＝40－16＝24이고, 두 수는 모두 자연수입니다. 따라서 삼각형 24개, 오각형 16개입니다."
+      ],
+      "solution": "삼각형의 수를 x개, 오각형의 수를 y개라고 하면 x＋y＝40입니다. 삼각형은 성냥 3개, 오각형은 성냥 5개를 사용하므로 3x＋5y＝152입니다. 첫 식에 3을 곱한 식을 둘째 식에서 빼면 2y＝32이므로 y＝16입니다. x＝40－16＝24이고, 두 수는 모두 자연수입니다. 따라서 삼각형 24개, 오각형 16개입니다.",
+      "learningPoint": "전체 도형 수와 전체 성냥 수를 식으로 나타내고 두 식의 차를 이용하기",
+      "learningLocation": "활용 6회 · 원문 2번 · 두 종류의 수와 전체 개수",
+      "verification": {
+        "primaryMethod": "elimination using total object count",
+        "independentMethod": "exhaustive enumeration of all positive integer pairs",
+        "parameters": {
+          "sideCounts": [
+            3,
+            5
+          ],
+          "objectCounts": [
+            24,
+            16
+          ],
+          "totalObjects": 40,
+          "totalSticks": 152
+        },
+        "independentSuite": "qa/applied6-q02-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q02-v6",
+      "genId": "applied6-q02",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 2,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 종류의 수와 전체 개수",
+      "detailType": "성냥으로 만든 두 다각형의 개수와 성냥 수",
+      "pointBand": "2.7",
+      "text": "성냥으로 삼각형과 오각형을 만들었습니다. 만든 삼각형과 오각형을 합하면 30개이고, 사용한 성냥은 모두 114개입니다. 삼각형과 오각형은 각각 몇 개씩 만들었는지 구하시오.",
+      "answer": "18, 12",
+      "answerParts": [
+        18,
+        12
+      ],
+      "answerLabels": [
+        "삼각형 개수",
+        "오각형 개수"
+      ],
+      "acceptedAnswers": [
+        "18, 12",
+        "18 12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "삼각형의 수를 x개, 오각형의 수를 y개라고 하면 x＋y＝30입니다.",
+        "삼각형은 성냥 3개, 오각형은 성냥 5개를 사용하므로 3x＋5y＝114입니다.",
+        "첫 식에 3을 곱한 식을 둘째 식에서 빼면 2y＝24이므로 y＝12입니다.",
+        "x＝30－12＝18이고, 두 수는 모두 자연수입니다. 따라서 삼각형 18개, 오각형 12개입니다."
+      ],
+      "solution": "삼각형의 수를 x개, 오각형의 수를 y개라고 하면 x＋y＝30입니다. 삼각형은 성냥 3개, 오각형은 성냥 5개를 사용하므로 3x＋5y＝114입니다. 첫 식에 3을 곱한 식을 둘째 식에서 빼면 2y＝24이므로 y＝12입니다. x＝30－12＝18이고, 두 수는 모두 자연수입니다. 따라서 삼각형 18개, 오각형 12개입니다.",
+      "learningPoint": "전체 도형 수와 전체 성냥 수를 식으로 나타내고 두 식의 차를 이용하기",
+      "learningLocation": "활용 6회 · 원문 2번 · 두 종류의 수와 전체 개수",
+      "verification": {
+        "primaryMethod": "elimination using total object count",
+        "independentMethod": "exhaustive enumeration of all positive integer pairs",
+        "parameters": {
+          "sideCounts": [
+            3,
+            5
+          ],
+          "objectCounts": [
+            18,
+            12
+          ],
+          "totalObjects": 30,
+          "totalSticks": 114
+        },
+        "independentSuite": "qa/applied6-q02-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q02-v7",
+      "genId": "applied6-q02",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 2,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 종류의 수와 전체 개수",
+      "detailType": "성냥으로 만든 두 다각형의 개수와 성냥 수",
+      "pointBand": "2.7",
+      "text": "성냥으로 사각형과 육각형을 만들었습니다. 만든 사각형과 육각형을 합하면 30개이고, 사용한 성냥은 모두 144개입니다. 사각형과 육각형은 각각 몇 개씩 만들었는지 구하시오.",
+      "answer": "18, 12",
+      "answerParts": [
+        18,
+        12
+      ],
+      "answerLabels": [
+        "사각형 개수",
+        "육각형 개수"
+      ],
+      "acceptedAnswers": [
+        "18, 12",
+        "18 12"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "사각형의 수를 x개, 육각형의 수를 y개라고 하면 x＋y＝30입니다.",
+        "사각형은 성냥 4개, 육각형은 성냥 6개를 사용하므로 4x＋6y＝144입니다.",
+        "첫 식에 4을 곱한 식을 둘째 식에서 빼면 2y＝24이므로 y＝12입니다.",
+        "x＝30－12＝18이고, 두 수는 모두 자연수입니다. 따라서 사각형 18개, 육각형 12개입니다."
+      ],
+      "solution": "사각형의 수를 x개, 육각형의 수를 y개라고 하면 x＋y＝30입니다. 사각형은 성냥 4개, 육각형은 성냥 6개를 사용하므로 4x＋6y＝144입니다. 첫 식에 4을 곱한 식을 둘째 식에서 빼면 2y＝24이므로 y＝12입니다. x＝30－12＝18이고, 두 수는 모두 자연수입니다. 따라서 사각형 18개, 육각형 12개입니다.",
+      "learningPoint": "전체 도형 수와 전체 성냥 수를 식으로 나타내고 두 식의 차를 이용하기",
+      "learningLocation": "활용 6회 · 원문 2번 · 두 종류의 수와 전체 개수",
+      "verification": {
+        "primaryMethod": "elimination using total object count",
+        "independentMethod": "exhaustive enumeration of all positive integer pairs",
+        "parameters": {
+          "sideCounts": [
+            4,
+            6
+          ],
+          "objectCounts": [
+            18,
+            12
+          ],
+          "totalObjects": 30,
+          "totalSticks": 144
+        },
+        "independentSuite": "qa/applied6-q02-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q02-v8",
+      "genId": "applied6-q02",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 2,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 종류의 수와 전체 개수",
+      "detailType": "성냥으로 만든 두 다각형의 개수와 성냥 수",
+      "pointBand": "2.7",
+      "text": "성냥으로 사각형과 육각형을 만들었습니다. 만든 사각형과 육각형을 합하면 35개이고, 사용한 성냥은 모두 168개입니다. 사각형과 육각형은 각각 몇 개씩 만들었는지 구하시오.",
+      "answer": "21, 14",
+      "answerParts": [
+        21,
+        14
+      ],
+      "answerLabels": [
+        "사각형 개수",
+        "육각형 개수"
+      ],
+      "acceptedAnswers": [
+        "21, 14",
+        "21 14"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "사각형의 수를 x개, 육각형의 수를 y개라고 하면 x＋y＝35입니다.",
+        "사각형은 성냥 4개, 육각형은 성냥 6개를 사용하므로 4x＋6y＝168입니다.",
+        "첫 식에 4을 곱한 식을 둘째 식에서 빼면 2y＝28이므로 y＝14입니다.",
+        "x＝35－14＝21이고, 두 수는 모두 자연수입니다. 따라서 사각형 21개, 육각형 14개입니다."
+      ],
+      "solution": "사각형의 수를 x개, 육각형의 수를 y개라고 하면 x＋y＝35입니다. 사각형은 성냥 4개, 육각형은 성냥 6개를 사용하므로 4x＋6y＝168입니다. 첫 식에 4을 곱한 식을 둘째 식에서 빼면 2y＝28이므로 y＝14입니다. x＝35－14＝21이고, 두 수는 모두 자연수입니다. 따라서 사각형 21개, 육각형 14개입니다.",
+      "learningPoint": "전체 도형 수와 전체 성냥 수를 식으로 나타내고 두 식의 차를 이용하기",
+      "learningLocation": "활용 6회 · 원문 2번 · 두 종류의 수와 전체 개수",
+      "verification": {
+        "primaryMethod": "elimination using total object count",
+        "independentMethod": "exhaustive enumeration of all positive integer pairs",
+        "parameters": {
+          "sideCounts": [
+            4,
+            6
+          ],
+          "objectCounts": [
+            21,
+            14
+          ],
+          "totalObjects": 35,
+          "totalSticks": 168
+        },
+        "independentSuite": "qa/applied6-q02-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q02-v9",
+      "genId": "applied6-q02",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 2,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 종류의 수와 전체 개수",
+      "detailType": "성냥으로 만든 두 다각형의 개수와 성냥 수",
+      "pointBand": "2.7",
+      "text": "성냥으로 사각형과 육각형을 만들었습니다. 만든 사각형과 육각형을 합하면 40개이고, 사용한 성냥은 모두 192개입니다. 사각형과 육각형은 각각 몇 개씩 만들었는지 구하시오.",
+      "answer": "24, 16",
+      "answerParts": [
+        24,
+        16
+      ],
+      "answerLabels": [
+        "사각형 개수",
+        "육각형 개수"
+      ],
+      "acceptedAnswers": [
+        "24, 16",
+        "24 16"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "사각형의 수를 x개, 육각형의 수를 y개라고 하면 x＋y＝40입니다.",
+        "사각형은 성냥 4개, 육각형은 성냥 6개를 사용하므로 4x＋6y＝192입니다.",
+        "첫 식에 4을 곱한 식을 둘째 식에서 빼면 2y＝32이므로 y＝16입니다.",
+        "x＝40－16＝24이고, 두 수는 모두 자연수입니다. 따라서 사각형 24개, 육각형 16개입니다."
+      ],
+      "solution": "사각형의 수를 x개, 육각형의 수를 y개라고 하면 x＋y＝40입니다. 사각형은 성냥 4개, 육각형은 성냥 6개를 사용하므로 4x＋6y＝192입니다. 첫 식에 4을 곱한 식을 둘째 식에서 빼면 2y＝32이므로 y＝16입니다. x＝40－16＝24이고, 두 수는 모두 자연수입니다. 따라서 사각형 24개, 육각형 16개입니다.",
+      "learningPoint": "전체 도형 수와 전체 성냥 수를 식으로 나타내고 두 식의 차를 이용하기",
+      "learningLocation": "활용 6회 · 원문 2번 · 두 종류의 수와 전체 개수",
+      "verification": {
+        "primaryMethod": "elimination using total object count",
+        "independentMethod": "exhaustive enumeration of all positive integer pairs",
+        "parameters": {
+          "sideCounts": [
+            4,
+            6
+          ],
+          "objectCounts": [
+            24,
+            16
+          ],
+          "totalObjects": 40,
+          "totalSticks": 192
+        },
+        "independentSuite": "qa/applied6-q02-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    }
+  ],
+  "reviewSummary": {
+    "independentMathCount": 9,
+    "sourceTypes": 1,
+    "variantsPerType": 9,
+    "outputReviewed": true,
+    "sourceDrawingCount": 0,
+    "originalGradesChanged": false,
+    "studentDifficultyMeasured": false,
+    "sourceQuestionPage": 1,
+    "sourceAnswerPage": 1
+  }
+}

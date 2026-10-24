@@ -2305,3 +2305,11 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - Drive 기존 은행 파일 `1u2Od5-g9ne_GthLZ5wC517pa_uomkRMo`를 1,064,893바이트로 갱신했다. 전체 ZIP은 `1IA2jxuNujUeXVJNQuL-t6aatS3cfhsz-`로 저장했다. 원문·답안 대조 `1i1bOXXfDYDcQRy7HWrlcIlVABqz6BRbz`, Q21/Q24/Q30 수학 검산 `1Vlic4ZH6G65Q5GfyyWAYTJLKbdO_6_hQ` / `1koVb5Rs2ZJs3PhCuV-5cO70BIhREP4gg` / `14Ctp0ZPwt592stMPLpAKjL6FTkRyBk9g`, ZIP 검수 `1TVH_o8HWgs4B23VqIBScIr22bcH-n9zM`, 브라우저 증거 `1BUFK0EfzRGpAeL1Uk5Cr2W1yp_iD9NZw`, PDF 시각 검수 `1zPQNzSz7Dn2nLHd8ie4M5at48XJTEwQ3`를 같은 `황소 활용 모의고사` 폴더에 보관했다. Drive에서 파일 ID·용량·원시 읽기 참조를 확인했다.
 - 코드·은행·검증기 반영은 GitHub `main` 커밋 `743c47f549c6098e2c032a52b916a7b4170f63d4`(트리 `63b5a170119ad8554d86c40c72db970d5690cb96`)이다. 사이트 배포는 별도로 실행하지 않았다. 사용자 미추적 `bank/drafts/`, `materials/.DS_Store`는 변경하거나 stage하지 않았다.
 - 작업 코드·검산·검수 근거는 `.private-work/nine-expansion-20261024/round10-q21/`, `round10-q24/`, `round10-q30/`에 있다. 다음은 활용1~9의 미완료 유형 중 원문·답안·그림 확인이 가능한 항목을 우선하고, 완료·승인된 유형은 재제작하지 않는다.
+
+## 2026-10-24 활용6회 원문 2번 9개 추가 검수
+
+- 활용5회 완료 유형은 다시 제작하지 않았다. 활용6회 문제 PDF p1과 Drive 답안 `초등 선발 모의고사 특강 6회 답안.pdf` p1을 직접 렌더해 대조했다. 원문은 삼각형·오각형 합 35개, 성냥 123개이며 답안 손글씨 26개·9개는 양의 정수 전수 탐색의 유일해와 일치한다. 원문 배점은 1~12번의 2.7점(하)이다.
+- 원문당 총9개로, 삼각형·사각형/삼각형·오각형/사각형·육각형의 개수와 성냥 수를 바꾼 9개 변형을 추가했다. 각 변형은 소거식과 양의 정수쌍 전수 탐색으로 독립 검산했고, 세 단계 이상 풀이와 권장 학습 위치·학습 포인트를 포함한다. 원문 점수·성적 데이터는 수정하지 않았다.
+- 신규 `bank/data/applied6-expanded.json`과 `applied6` 어댑터를 만들고 문제은행 목록/라우트에 연결했다. 브라우저 검수에서 문제·풀이 9개씩, 좌단 위→아래 후 우단 위→아래 배치, 답 입력·진단·학습 링크, 3회 시도 제한·첫 결과 보존, 375px 넘침 없음, 외부 쓰기 0건을 확인했다. 실제 ZIP은 7개 항목이며 문제 PDF 2쪽·상세풀이 PDF 3쪽, manifest·HTML·CSV의 문항 ID 9개가 일치한다. ZIP에서 문제·풀이 전 쪽을 렌더하여 잘림 없이 읽히는지 확인했다.
+- 독립 수학 검사 `qa/applied6-q02-independent-validate.py`, 브라우저 검사 `qa/applied6-q02-browser-validate.cjs`, ZIP 검사 `qa/applied6-q02-zip-validate.py`가 통과했다. 세부 원문·답안 대조와 렌더 근거는 `.private-work/hw-expansion-20261023/hw6/q02-source-answer-review.json`, `q02-independent-math.json`, `q02-pdf-visual-review.json`, `q02-output-qa/`에 있다.
+- 현재 로컬 추가분은 활용6회 1유형 9개이며 나머지 원문 29유형은 미완료다. 이 변경은 검수된 활용6회 문제은행 항목으로 GitHub main과 기존 Drive 폴더에 보관한다. 사이트 배포는 별도 요청이 없어 하지 않는다.
