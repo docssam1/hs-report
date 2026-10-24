@@ -13,7 +13,8 @@ QUESTION_PDF = ROOT / "materials/초등과정 대비 실전 모의고사 활용 
 ANSWER_PDF = ROOT / ".private-work/hw-expansion-20261023/hw6/source-answer-6.pdf"
 EVIDENCE = ROOT / ".private-work/hw-expansion-20261023/hw6/q13-independent-math.json"
 OLD_DATA = json.loads(subprocess.check_output(
-    ["git", "show", "HEAD:bank/data/applied6-expanded.json"], cwd=ROOT, text=True
+    ["git", "show", "f8c2dc4c6be8a23ead566a22b4e525a51e89f9af:bank/data/applied6-expanded.json"],
+    cwd=ROOT, text=True
 ))
 data = json.loads(DATA_PATH.read_text())
 index = json.loads(INDEX_PATH.read_text())
