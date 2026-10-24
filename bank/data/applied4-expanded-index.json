@@ -2,15 +2,12 @@
   "version": "20261024-applied4-expansion-r1",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 207,
+  "itemCount": 234,
   "pendingSourceNos": [
     1,
     2,
     3,
-    4,
-    21,
-    24,
-    30
+    4
   ],
   "items": [
     {
@@ -174,6 +171,16 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 21,
+      "genId": "applied4-q21",
+      "area": "도형",
+      "subarea": "입체도형의 겉면",
+      "detailType": "관통 구멍이 있는 주사위 직육면체의 눈의 합 최적화",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 22,
       "genId": "applied4-q22",
       "area": "도형",
@@ -189,6 +196,16 @@
       "area": "수와 식",
       "subarea": "배수와 숫자 세기",
       "detailType": "배수 목록의 특정 숫자 등장 횟수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 24,
+      "genId": "applied4-q24",
+      "area": "도형",
+      "subarea": "원과 직사각형",
+      "detailType": "원 위 12점으로 만드는 직사각형",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -239,6 +256,16 @@
       "area": "경우의 수",
       "subarea": "배치와 최댓값",
       "detailType": "홀수인 두 세 자리 수의 최대 곱",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 30,
+      "genId": "applied4-q30",
+      "area": "수와 식",
+      "subarea": "규칙과 대응",
+      "detailType": "분열 간격이 번갈아 달라지는 미생물 수",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9
