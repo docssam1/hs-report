@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r15",
+  "version": "20261024-applied6-expansion-r17",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -24,15 +24,15 @@
     16,
     17,
     18,
-    19
+    19,
+    20,
+    21
   ],
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
-    20,
-    21,
     22,
     23,
     24,
@@ -9405,17 +9405,1178 @@
         "estimated": true,
         "rationale": "원문 PDF의 13~22번 구간 3.4점대로 분류했다. 문항별 개별 배점은 보이지 않는다."
       }
+    },
+    {
+      "id": "applied6-q20-v1",
+      "genId": "applied6-q20",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 20,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 수의 연산 규칙 찾기",
+      "detailType": "예시에서 두 수의 합을 일정한 수로 나누는 연산 규칙 찾기",
+      "pointBand": "3.4",
+      "text": "규칙을 찾아 70♠35를 구하세요.",
+      "answer": "15",
+      "answerParts": [
+        15
+      ],
+      "answerLabels": [
+        "연산 결과"
+      ],
+      "acceptedAnswers": [
+        "15"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q20-examples-original.png",
+        "mimeType": "image/png",
+        "width": 560,
+        "height": 115,
+        "description": "활용 6회 원문 20번의 연산 예시 그림(원본 그대로)"
+      },
+      "solutionSteps": [
+        "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 70+35=105입니다.",
+        "105÷7=15이므로 70♠35=15입니다.",
+        "따라서 답은 15입니다."
+      ],
+      "solution": "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 70+35=105입니다. 105÷7=15이므로 70♠35=15입니다. 따라서 답은 15입니다.",
+      "learningPoint": "여러 연산 예시에서 두 수와 결과 사이의 공통 계산 규칙을 찾아 새 수에 적용한다.",
+      "learningLocation": "활용 6회 · 원문 20번 · 예시로 연산 규칙 찾기",
+      "verification": {
+        "primaryMethod": "Infer addition followed by division by 7 from all six source examples, then apply to the target pair.",
+        "independentMethod": "Check each source example and each target using integer addition and division; also enumerate all targets to ensure one integer result per input.",
+        "parameters": {
+          "left": 70,
+          "right": 35,
+          "sum": 105,
+          "divisor": 7,
+          "quotient": 15,
+          "sourceExampleImage": "assets/applied6/q20-examples-original.png"
+        },
+        "independentSuite": "qa/applied6-q20-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "23~30번은 문제 PDF에서 4.2점으로 표시되고, 원문 20번은 이 앞 구간이다. 원문 13~19의 점수대 확인과 같은 구간 규칙으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q20-v2",
+      "genId": "applied6-q20",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 20,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 수의 연산 규칙 찾기",
+      "detailType": "예시에서 두 수의 합을 일정한 수로 나누는 연산 규칙 찾기",
+      "pointBand": "3.4",
+      "text": "규칙을 찾아 70♠42를 구하세요.",
+      "answer": "16",
+      "answerParts": [
+        16
+      ],
+      "answerLabels": [
+        "연산 결과"
+      ],
+      "acceptedAnswers": [
+        "16"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q20-examples-original.png",
+        "mimeType": "image/png",
+        "width": 560,
+        "height": 115,
+        "description": "활용 6회 원문 20번의 연산 예시 그림(원본 그대로)"
+      },
+      "solutionSteps": [
+        "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 70+42=112입니다.",
+        "112÷7=16이므로 70♠42=16입니다.",
+        "따라서 답은 16입니다."
+      ],
+      "solution": "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 70+42=112입니다. 112÷7=16이므로 70♠42=16입니다. 따라서 답은 16입니다.",
+      "learningPoint": "여러 연산 예시에서 두 수와 결과 사이의 공통 계산 규칙을 찾아 새 수에 적용한다.",
+      "learningLocation": "활용 6회 · 원문 20번 · 예시로 연산 규칙 찾기",
+      "verification": {
+        "primaryMethod": "Infer addition followed by division by 7 from all six source examples, then apply to the target pair.",
+        "independentMethod": "Check each source example and each target using integer addition and division; also enumerate all targets to ensure one integer result per input.",
+        "parameters": {
+          "left": 70,
+          "right": 42,
+          "sum": 112,
+          "divisor": 7,
+          "quotient": 16,
+          "sourceExampleImage": "assets/applied6/q20-examples-original.png"
+        },
+        "independentSuite": "qa/applied6-q20-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "23~30번은 문제 PDF에서 4.2점으로 표시되고, 원문 20번은 이 앞 구간이다. 원문 13~19의 점수대 확인과 같은 구간 규칙으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q20-v3",
+      "genId": "applied6-q20",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 20,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 수의 연산 규칙 찾기",
+      "detailType": "예시에서 두 수의 합을 일정한 수로 나누는 연산 규칙 찾기",
+      "pointBand": "3.4",
+      "text": "규칙을 찾아 84♠49를 구하세요.",
+      "answer": "19",
+      "answerParts": [
+        19
+      ],
+      "answerLabels": [
+        "연산 결과"
+      ],
+      "acceptedAnswers": [
+        "19"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q20-examples-original.png",
+        "mimeType": "image/png",
+        "width": 560,
+        "height": 115,
+        "description": "활용 6회 원문 20번의 연산 예시 그림(원본 그대로)"
+      },
+      "solutionSteps": [
+        "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 84+49=133입니다.",
+        "133÷7=19이므로 84♠49=19입니다.",
+        "따라서 답은 19입니다."
+      ],
+      "solution": "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 84+49=133입니다. 133÷7=19이므로 84♠49=19입니다. 따라서 답은 19입니다.",
+      "learningPoint": "여러 연산 예시에서 두 수와 결과 사이의 공통 계산 규칙을 찾아 새 수에 적용한다.",
+      "learningLocation": "활용 6회 · 원문 20번 · 예시로 연산 규칙 찾기",
+      "verification": {
+        "primaryMethod": "Infer addition followed by division by 7 from all six source examples, then apply to the target pair.",
+        "independentMethod": "Check each source example and each target using integer addition and division; also enumerate all targets to ensure one integer result per input.",
+        "parameters": {
+          "left": 84,
+          "right": 49,
+          "sum": 133,
+          "divisor": 7,
+          "quotient": 19,
+          "sourceExampleImage": "assets/applied6/q20-examples-original.png"
+        },
+        "independentSuite": "qa/applied6-q20-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "23~30번은 문제 PDF에서 4.2점으로 표시되고, 원문 20번은 이 앞 구간이다. 원문 13~19의 점수대 확인과 같은 구간 규칙으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q20-v4",
+      "genId": "applied6-q20",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 20,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 수의 연산 규칙 찾기",
+      "detailType": "예시에서 두 수의 합을 일정한 수로 나누는 연산 규칙 찾기",
+      "pointBand": "3.4",
+      "text": "규칙을 찾아 91♠49를 구하세요.",
+      "answer": "20",
+      "answerParts": [
+        20
+      ],
+      "answerLabels": [
+        "연산 결과"
+      ],
+      "acceptedAnswers": [
+        "20"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q20-examples-original.png",
+        "mimeType": "image/png",
+        "width": 560,
+        "height": 115,
+        "description": "활용 6회 원문 20번의 연산 예시 그림(원본 그대로)"
+      },
+      "solutionSteps": [
+        "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 91+49=140입니다.",
+        "140÷7=20이므로 91♠49=20입니다.",
+        "따라서 답은 20입니다."
+      ],
+      "solution": "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 91+49=140입니다. 140÷7=20이므로 91♠49=20입니다. 따라서 답은 20입니다.",
+      "learningPoint": "여러 연산 예시에서 두 수와 결과 사이의 공통 계산 규칙을 찾아 새 수에 적용한다.",
+      "learningLocation": "활용 6회 · 원문 20번 · 예시로 연산 규칙 찾기",
+      "verification": {
+        "primaryMethod": "Infer addition followed by division by 7 from all six source examples, then apply to the target pair.",
+        "independentMethod": "Check each source example and each target using integer addition and division; also enumerate all targets to ensure one integer result per input.",
+        "parameters": {
+          "left": 91,
+          "right": 49,
+          "sum": 140,
+          "divisor": 7,
+          "quotient": 20,
+          "sourceExampleImage": "assets/applied6/q20-examples-original.png"
+        },
+        "independentSuite": "qa/applied6-q20-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "23~30번은 문제 PDF에서 4.2점으로 표시되고, 원문 20번은 이 앞 구간이다. 원문 13~19의 점수대 확인과 같은 구간 규칙으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q20-v5",
+      "genId": "applied6-q20",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 20,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 수의 연산 규칙 찾기",
+      "detailType": "예시에서 두 수의 합을 일정한 수로 나누는 연산 규칙 찾기",
+      "pointBand": "3.4",
+      "text": "규칙을 찾아 98♠49를 구하세요.",
+      "answer": "21",
+      "answerParts": [
+        21
+      ],
+      "answerLabels": [
+        "연산 결과"
+      ],
+      "acceptedAnswers": [
+        "21"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q20-examples-original.png",
+        "mimeType": "image/png",
+        "width": 560,
+        "height": 115,
+        "description": "활용 6회 원문 20번의 연산 예시 그림(원본 그대로)"
+      },
+      "solutionSteps": [
+        "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 98+49=147입니다.",
+        "147÷7=21이므로 98♠49=21입니다.",
+        "따라서 답은 21입니다."
+      ],
+      "solution": "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 98+49=147입니다. 147÷7=21이므로 98♠49=21입니다. 따라서 답은 21입니다.",
+      "learningPoint": "여러 연산 예시에서 두 수와 결과 사이의 공통 계산 규칙을 찾아 새 수에 적용한다.",
+      "learningLocation": "활용 6회 · 원문 20번 · 예시로 연산 규칙 찾기",
+      "verification": {
+        "primaryMethod": "Infer addition followed by division by 7 from all six source examples, then apply to the target pair.",
+        "independentMethod": "Check each source example and each target using integer addition and division; also enumerate all targets to ensure one integer result per input.",
+        "parameters": {
+          "left": 98,
+          "right": 49,
+          "sum": 147,
+          "divisor": 7,
+          "quotient": 21,
+          "sourceExampleImage": "assets/applied6/q20-examples-original.png"
+        },
+        "independentSuite": "qa/applied6-q20-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "23~30번은 문제 PDF에서 4.2점으로 표시되고, 원문 20번은 이 앞 구간이다. 원문 13~19의 점수대 확인과 같은 구간 규칙으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q20-v6",
+      "genId": "applied6-q20",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 20,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 수의 연산 규칙 찾기",
+      "detailType": "예시에서 두 수의 합을 일정한 수로 나누는 연산 규칙 찾기",
+      "pointBand": "3.4",
+      "text": "규칙을 찾아 84♠70를 구하세요.",
+      "answer": "22",
+      "answerParts": [
+        22
+      ],
+      "answerLabels": [
+        "연산 결과"
+      ],
+      "acceptedAnswers": [
+        "22"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q20-examples-original.png",
+        "mimeType": "image/png",
+        "width": 560,
+        "height": 115,
+        "description": "활용 6회 원문 20번의 연산 예시 그림(원본 그대로)"
+      },
+      "solutionSteps": [
+        "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 84+70=154입니다.",
+        "154÷7=22이므로 84♠70=22입니다.",
+        "따라서 답은 22입니다."
+      ],
+      "solution": "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 84+70=154입니다. 154÷7=22이므로 84♠70=22입니다. 따라서 답은 22입니다.",
+      "learningPoint": "여러 연산 예시에서 두 수와 결과 사이의 공통 계산 규칙을 찾아 새 수에 적용한다.",
+      "learningLocation": "활용 6회 · 원문 20번 · 예시로 연산 규칙 찾기",
+      "verification": {
+        "primaryMethod": "Infer addition followed by division by 7 from all six source examples, then apply to the target pair.",
+        "independentMethod": "Check each source example and each target using integer addition and division; also enumerate all targets to ensure one integer result per input.",
+        "parameters": {
+          "left": 84,
+          "right": 70,
+          "sum": 154,
+          "divisor": 7,
+          "quotient": 22,
+          "sourceExampleImage": "assets/applied6/q20-examples-original.png"
+        },
+        "independentSuite": "qa/applied6-q20-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "23~30번은 문제 PDF에서 4.2점으로 표시되고, 원문 20번은 이 앞 구간이다. 원문 13~19의 점수대 확인과 같은 구간 규칙으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q20-v7",
+      "genId": "applied6-q20",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 20,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 수의 연산 규칙 찾기",
+      "detailType": "예시에서 두 수의 합을 일정한 수로 나누는 연산 규칙 찾기",
+      "pointBand": "3.4",
+      "text": "규칙을 찾아 91♠70를 구하세요.",
+      "answer": "23",
+      "answerParts": [
+        23
+      ],
+      "answerLabels": [
+        "연산 결과"
+      ],
+      "acceptedAnswers": [
+        "23"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q20-examples-original.png",
+        "mimeType": "image/png",
+        "width": 560,
+        "height": 115,
+        "description": "활용 6회 원문 20번의 연산 예시 그림(원본 그대로)"
+      },
+      "solutionSteps": [
+        "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 91+70=161입니다.",
+        "161÷7=23이므로 91♠70=23입니다.",
+        "따라서 답은 23입니다."
+      ],
+      "solution": "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 91+70=161입니다. 161÷7=23이므로 91♠70=23입니다. 따라서 답은 23입니다.",
+      "learningPoint": "여러 연산 예시에서 두 수와 결과 사이의 공통 계산 규칙을 찾아 새 수에 적용한다.",
+      "learningLocation": "활용 6회 · 원문 20번 · 예시로 연산 규칙 찾기",
+      "verification": {
+        "primaryMethod": "Infer addition followed by division by 7 from all six source examples, then apply to the target pair.",
+        "independentMethod": "Check each source example and each target using integer addition and division; also enumerate all targets to ensure one integer result per input.",
+        "parameters": {
+          "left": 91,
+          "right": 70,
+          "sum": 161,
+          "divisor": 7,
+          "quotient": 23,
+          "sourceExampleImage": "assets/applied6/q20-examples-original.png"
+        },
+        "independentSuite": "qa/applied6-q20-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "23~30번은 문제 PDF에서 4.2점으로 표시되고, 원문 20번은 이 앞 구간이다. 원문 13~19의 점수대 확인과 같은 구간 규칙으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q20-v8",
+      "genId": "applied6-q20",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 20,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 수의 연산 규칙 찾기",
+      "detailType": "예시에서 두 수의 합을 일정한 수로 나누는 연산 규칙 찾기",
+      "pointBand": "3.4",
+      "text": "규칙을 찾아 98♠70를 구하세요.",
+      "answer": "24",
+      "answerParts": [
+        24
+      ],
+      "answerLabels": [
+        "연산 결과"
+      ],
+      "acceptedAnswers": [
+        "24"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q20-examples-original.png",
+        "mimeType": "image/png",
+        "width": 560,
+        "height": 115,
+        "description": "활용 6회 원문 20번의 연산 예시 그림(원본 그대로)"
+      },
+      "solutionSteps": [
+        "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 98+70=168입니다.",
+        "168÷7=24이므로 98♠70=24입니다.",
+        "따라서 답은 24입니다."
+      ],
+      "solution": "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 98+70=168입니다. 168÷7=24이므로 98♠70=24입니다. 따라서 답은 24입니다.",
+      "learningPoint": "여러 연산 예시에서 두 수와 결과 사이의 공통 계산 규칙을 찾아 새 수에 적용한다.",
+      "learningLocation": "활용 6회 · 원문 20번 · 예시로 연산 규칙 찾기",
+      "verification": {
+        "primaryMethod": "Infer addition followed by division by 7 from all six source examples, then apply to the target pair.",
+        "independentMethod": "Check each source example and each target using integer addition and division; also enumerate all targets to ensure one integer result per input.",
+        "parameters": {
+          "left": 98,
+          "right": 70,
+          "sum": 168,
+          "divisor": 7,
+          "quotient": 24,
+          "sourceExampleImage": "assets/applied6/q20-examples-original.png"
+        },
+        "independentSuite": "qa/applied6-q20-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "23~30번은 문제 PDF에서 4.2점으로 표시되고, 원문 20번은 이 앞 구간이다. 원문 13~19의 점수대 확인과 같은 구간 규칙으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q20-v9",
+      "genId": "applied6-q20",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 20,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "두 수의 연산 규칙 찾기",
+      "detailType": "예시에서 두 수의 합을 일정한 수로 나누는 연산 규칙 찾기",
+      "pointBand": "3.4",
+      "text": "규칙을 찾아 84♠91를 구하세요.",
+      "answer": "25",
+      "answerParts": [
+        25
+      ],
+      "answerLabels": [
+        "연산 결과"
+      ],
+      "acceptedAnswers": [
+        "25"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q20-examples-original.png",
+        "mimeType": "image/png",
+        "width": 560,
+        "height": 115,
+        "description": "활용 6회 원문 20번의 연산 예시 그림(원본 그대로)"
+      },
+      "solutionSteps": [
+        "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 84+91=175입니다.",
+        "175÷7=25이므로 84♠91=25입니다.",
+        "따라서 답은 25입니다."
+      ],
+      "solution": "원문에 제시된 예시에서는 두 수의 합을 7로 나누어 연산 결과를 얻습니다. 84+91=175입니다. 175÷7=25이므로 84♠91=25입니다. 따라서 답은 25입니다.",
+      "learningPoint": "여러 연산 예시에서 두 수와 결과 사이의 공통 계산 규칙을 찾아 새 수에 적용한다.",
+      "learningLocation": "활용 6회 · 원문 20번 · 예시로 연산 규칙 찾기",
+      "verification": {
+        "primaryMethod": "Infer addition followed by division by 7 from all six source examples, then apply to the target pair.",
+        "independentMethod": "Check each source example and each target using integer addition and division; also enumerate all targets to ensure one integer result per input.",
+        "parameters": {
+          "left": 84,
+          "right": 91,
+          "sum": 175,
+          "divisor": 7,
+          "quotient": 25,
+          "sourceExampleImage": "assets/applied6/q20-examples-original.png"
+        },
+        "independentSuite": "qa/applied6-q20-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "23~30번은 문제 PDF에서 4.2점으로 표시되고, 원문 20번은 이 앞 구간이다. 원문 13~19의 점수대 확인과 같은 구간 규칙으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q21-v1",
+      "genId": "applied6-q21",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 21,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "두 사람의 나이 관계와 시점 이동",
+      "detailType": "과거의 나이 비와 미래의 나이 배수 관계로 현재 나이 차 구하기",
+      "pointBand": "3.4",
+      "text": "관호가 주연이에게 “내가 너의 지금 나이만큼일 때, 너의 나이는 나의 현재 나이의 절반이었어.”라고 말하자 주연이는 관호에게 “내가 너의 지금 나이가 되었을 때 너의 나이는 나의 현재 나이의 3배보다 12살이 적어.”라고 말했습니다. 관호와 주연이의 나이차는 얼마일까요?",
+      "answer": "3",
+      "answerParts": [
+        3
+      ],
+      "answerLabels": [
+        "나이 차(살)"
+      ],
+      "acceptedAnswers": [
+        "3"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다.",
+        "주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다.",
+        "주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−12입니다.",
+        "5d=9d−12에서 4d=12, d=3입니다. 따라서 관호와 주연이의 나이 차는 3살입니다."
+      ],
+      "solution": "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다. 주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다. 주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−12입니다. 5d=9d−12에서 4d=12, d=3입니다. 따라서 관호와 주연이의 나이 차는 3살입니다.",
+      "learningPoint": "나이 차를 기준 단위로 두고 과거와 미래의 나이를 현재 나이와 연결한다.",
+      "learningLocation": "활용 6회 · 원문 21번 · 두 사람의 나이 관계와 시점 이동",
+      "verification": {
+        "primaryMethod": "Derive the current ages as 4d and 3d from the past half-age condition; apply the future relation and solve 5d=9d−c.",
+        "independentMethod": "Substitute d=c/4 back into both time conditions and verify ages are positive integers with correct chronology.",
+        "parameters": {
+          "offsetYears": 12,
+          "ageDifference": 3,
+          "guanhoCurrentAge": 12,
+          "juyeonCurrentAge": 9,
+          "guanhoAtFuture": 15,
+          "equation": "5d=9d-12"
+        },
+        "independentSuite": "qa/applied6-q21-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 21번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q21-v2",
+      "genId": "applied6-q21",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 21,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "두 사람의 나이 관계와 시점 이동",
+      "detailType": "과거의 나이 비와 미래의 나이 배수 관계로 현재 나이 차 구하기",
+      "pointBand": "3.4",
+      "text": "관호가 주연이에게 “내가 너의 지금 나이만큼일 때, 너의 나이는 나의 현재 나이의 절반이었어.”라고 말하자 주연이는 관호에게 “내가 너의 지금 나이가 되었을 때 너의 나이는 나의 현재 나이의 3배보다 16살이 적어.”라고 말했습니다. 관호와 주연이의 나이차는 얼마일까요?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "나이 차(살)"
+      ],
+      "acceptedAnswers": [
+        "4"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다.",
+        "주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다.",
+        "주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−16입니다.",
+        "5d=9d−16에서 4d=16, d=4입니다. 따라서 관호와 주연이의 나이 차는 4살입니다."
+      ],
+      "solution": "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다. 주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다. 주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−16입니다. 5d=9d−16에서 4d=16, d=4입니다. 따라서 관호와 주연이의 나이 차는 4살입니다.",
+      "learningPoint": "나이 차를 기준 단위로 두고 과거와 미래의 나이를 현재 나이와 연결한다.",
+      "learningLocation": "활용 6회 · 원문 21번 · 두 사람의 나이 관계와 시점 이동",
+      "verification": {
+        "primaryMethod": "Derive the current ages as 4d and 3d from the past half-age condition; apply the future relation and solve 5d=9d−c.",
+        "independentMethod": "Substitute d=c/4 back into both time conditions and verify ages are positive integers with correct chronology.",
+        "parameters": {
+          "offsetYears": 16,
+          "ageDifference": 4,
+          "guanhoCurrentAge": 16,
+          "juyeonCurrentAge": 12,
+          "guanhoAtFuture": 20,
+          "equation": "5d=9d-16"
+        },
+        "independentSuite": "qa/applied6-q21-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 21번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q21-v3",
+      "genId": "applied6-q21",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 21,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "두 사람의 나이 관계와 시점 이동",
+      "detailType": "과거의 나이 비와 미래의 나이 배수 관계로 현재 나이 차 구하기",
+      "pointBand": "3.4",
+      "text": "관호가 주연이에게 “내가 너의 지금 나이만큼일 때, 너의 나이는 나의 현재 나이의 절반이었어.”라고 말하자 주연이는 관호에게 “내가 너의 지금 나이가 되었을 때 너의 나이는 나의 현재 나이의 3배보다 20살이 적어.”라고 말했습니다. 관호와 주연이의 나이차는 얼마일까요?",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "나이 차(살)"
+      ],
+      "acceptedAnswers": [
+        "5"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다.",
+        "주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다.",
+        "주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−20입니다.",
+        "5d=9d−20에서 4d=20, d=5입니다. 따라서 관호와 주연이의 나이 차는 5살입니다."
+      ],
+      "solution": "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다. 주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다. 주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−20입니다. 5d=9d−20에서 4d=20, d=5입니다. 따라서 관호와 주연이의 나이 차는 5살입니다.",
+      "learningPoint": "나이 차를 기준 단위로 두고 과거와 미래의 나이를 현재 나이와 연결한다.",
+      "learningLocation": "활용 6회 · 원문 21번 · 두 사람의 나이 관계와 시점 이동",
+      "verification": {
+        "primaryMethod": "Derive the current ages as 4d and 3d from the past half-age condition; apply the future relation and solve 5d=9d−c.",
+        "independentMethod": "Substitute d=c/4 back into both time conditions and verify ages are positive integers with correct chronology.",
+        "parameters": {
+          "offsetYears": 20,
+          "ageDifference": 5,
+          "guanhoCurrentAge": 20,
+          "juyeonCurrentAge": 15,
+          "guanhoAtFuture": 25,
+          "equation": "5d=9d-20"
+        },
+        "independentSuite": "qa/applied6-q21-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 21번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q21-v4",
+      "genId": "applied6-q21",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 21,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "두 사람의 나이 관계와 시점 이동",
+      "detailType": "과거의 나이 비와 미래의 나이 배수 관계로 현재 나이 차 구하기",
+      "pointBand": "3.4",
+      "text": "관호가 주연이에게 “내가 너의 지금 나이만큼일 때, 너의 나이는 나의 현재 나이의 절반이었어.”라고 말하자 주연이는 관호에게 “내가 너의 지금 나이가 되었을 때 너의 나이는 나의 현재 나이의 3배보다 24살이 적어.”라고 말했습니다. 관호와 주연이의 나이차는 얼마일까요?",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "나이 차(살)"
+      ],
+      "acceptedAnswers": [
+        "6"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다.",
+        "주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다.",
+        "주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−24입니다.",
+        "5d=9d−24에서 4d=24, d=6입니다. 따라서 관호와 주연이의 나이 차는 6살입니다."
+      ],
+      "solution": "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다. 주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다. 주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−24입니다. 5d=9d−24에서 4d=24, d=6입니다. 따라서 관호와 주연이의 나이 차는 6살입니다.",
+      "learningPoint": "나이 차를 기준 단위로 두고 과거와 미래의 나이를 현재 나이와 연결한다.",
+      "learningLocation": "활용 6회 · 원문 21번 · 두 사람의 나이 관계와 시점 이동",
+      "verification": {
+        "primaryMethod": "Derive the current ages as 4d and 3d from the past half-age condition; apply the future relation and solve 5d=9d−c.",
+        "independentMethod": "Substitute d=c/4 back into both time conditions and verify ages are positive integers with correct chronology.",
+        "parameters": {
+          "offsetYears": 24,
+          "ageDifference": 6,
+          "guanhoCurrentAge": 24,
+          "juyeonCurrentAge": 18,
+          "guanhoAtFuture": 30,
+          "equation": "5d=9d-24"
+        },
+        "independentSuite": "qa/applied6-q21-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 21번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q21-v5",
+      "genId": "applied6-q21",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 21,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "두 사람의 나이 관계와 시점 이동",
+      "detailType": "과거의 나이 비와 미래의 나이 배수 관계로 현재 나이 차 구하기",
+      "pointBand": "3.4",
+      "text": "관호가 주연이에게 “내가 너의 지금 나이만큼일 때, 너의 나이는 나의 현재 나이의 절반이었어.”라고 말하자 주연이는 관호에게 “내가 너의 지금 나이가 되었을 때 너의 나이는 나의 현재 나이의 3배보다 28살이 적어.”라고 말했습니다. 관호와 주연이의 나이차는 얼마일까요?",
+      "answer": "7",
+      "answerParts": [
+        7
+      ],
+      "answerLabels": [
+        "나이 차(살)"
+      ],
+      "acceptedAnswers": [
+        "7"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다.",
+        "주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다.",
+        "주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−28입니다.",
+        "5d=9d−28에서 4d=28, d=7입니다. 따라서 관호와 주연이의 나이 차는 7살입니다."
+      ],
+      "solution": "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다. 주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다. 주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−28입니다. 5d=9d−28에서 4d=28, d=7입니다. 따라서 관호와 주연이의 나이 차는 7살입니다.",
+      "learningPoint": "나이 차를 기준 단위로 두고 과거와 미래의 나이를 현재 나이와 연결한다.",
+      "learningLocation": "활용 6회 · 원문 21번 · 두 사람의 나이 관계와 시점 이동",
+      "verification": {
+        "primaryMethod": "Derive the current ages as 4d and 3d from the past half-age condition; apply the future relation and solve 5d=9d−c.",
+        "independentMethod": "Substitute d=c/4 back into both time conditions and verify ages are positive integers with correct chronology.",
+        "parameters": {
+          "offsetYears": 28,
+          "ageDifference": 7,
+          "guanhoCurrentAge": 28,
+          "juyeonCurrentAge": 21,
+          "guanhoAtFuture": 35,
+          "equation": "5d=9d-28"
+        },
+        "independentSuite": "qa/applied6-q21-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 21번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q21-v6",
+      "genId": "applied6-q21",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 21,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "두 사람의 나이 관계와 시점 이동",
+      "detailType": "과거의 나이 비와 미래의 나이 배수 관계로 현재 나이 차 구하기",
+      "pointBand": "3.4",
+      "text": "관호가 주연이에게 “내가 너의 지금 나이만큼일 때, 너의 나이는 나의 현재 나이의 절반이었어.”라고 말하자 주연이는 관호에게 “내가 너의 지금 나이가 되었을 때 너의 나이는 나의 현재 나이의 3배보다 32살이 적어.”라고 말했습니다. 관호와 주연이의 나이차는 얼마일까요?",
+      "answer": "8",
+      "answerParts": [
+        8
+      ],
+      "answerLabels": [
+        "나이 차(살)"
+      ],
+      "acceptedAnswers": [
+        "8"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다.",
+        "주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다.",
+        "주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−32입니다.",
+        "5d=9d−32에서 4d=32, d=8입니다. 따라서 관호와 주연이의 나이 차는 8살입니다."
+      ],
+      "solution": "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다. 주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다. 주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−32입니다. 5d=9d−32에서 4d=32, d=8입니다. 따라서 관호와 주연이의 나이 차는 8살입니다.",
+      "learningPoint": "나이 차를 기준 단위로 두고 과거와 미래의 나이를 현재 나이와 연결한다.",
+      "learningLocation": "활용 6회 · 원문 21번 · 두 사람의 나이 관계와 시점 이동",
+      "verification": {
+        "primaryMethod": "Derive the current ages as 4d and 3d from the past half-age condition; apply the future relation and solve 5d=9d−c.",
+        "independentMethod": "Substitute d=c/4 back into both time conditions and verify ages are positive integers with correct chronology.",
+        "parameters": {
+          "offsetYears": 32,
+          "ageDifference": 8,
+          "guanhoCurrentAge": 32,
+          "juyeonCurrentAge": 24,
+          "guanhoAtFuture": 40,
+          "equation": "5d=9d-32"
+        },
+        "independentSuite": "qa/applied6-q21-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 21번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q21-v7",
+      "genId": "applied6-q21",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 21,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "두 사람의 나이 관계와 시점 이동",
+      "detailType": "과거의 나이 비와 미래의 나이 배수 관계로 현재 나이 차 구하기",
+      "pointBand": "3.4",
+      "text": "관호가 주연이에게 “내가 너의 지금 나이만큼일 때, 너의 나이는 나의 현재 나이의 절반이었어.”라고 말하자 주연이는 관호에게 “내가 너의 지금 나이가 되었을 때 너의 나이는 나의 현재 나이의 3배보다 36살이 적어.”라고 말했습니다. 관호와 주연이의 나이차는 얼마일까요?",
+      "answer": "9",
+      "answerParts": [
+        9
+      ],
+      "answerLabels": [
+        "나이 차(살)"
+      ],
+      "acceptedAnswers": [
+        "9"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다.",
+        "주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다.",
+        "주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−36입니다.",
+        "5d=9d−36에서 4d=36, d=9입니다. 따라서 관호와 주연이의 나이 차는 9살입니다."
+      ],
+      "solution": "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다. 주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다. 주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−36입니다. 5d=9d−36에서 4d=36, d=9입니다. 따라서 관호와 주연이의 나이 차는 9살입니다.",
+      "learningPoint": "나이 차를 기준 단위로 두고 과거와 미래의 나이를 현재 나이와 연결한다.",
+      "learningLocation": "활용 6회 · 원문 21번 · 두 사람의 나이 관계와 시점 이동",
+      "verification": {
+        "primaryMethod": "Derive the current ages as 4d and 3d from the past half-age condition; apply the future relation and solve 5d=9d−c.",
+        "independentMethod": "Substitute d=c/4 back into both time conditions and verify ages are positive integers with correct chronology.",
+        "parameters": {
+          "offsetYears": 36,
+          "ageDifference": 9,
+          "guanhoCurrentAge": 36,
+          "juyeonCurrentAge": 27,
+          "guanhoAtFuture": 45,
+          "equation": "5d=9d-36"
+        },
+        "independentSuite": "qa/applied6-q21-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 21번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q21-v8",
+      "genId": "applied6-q21",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 21,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "두 사람의 나이 관계와 시점 이동",
+      "detailType": "과거의 나이 비와 미래의 나이 배수 관계로 현재 나이 차 구하기",
+      "pointBand": "3.4",
+      "text": "관호가 주연이에게 “내가 너의 지금 나이만큼일 때, 너의 나이는 나의 현재 나이의 절반이었어.”라고 말하자 주연이는 관호에게 “내가 너의 지금 나이가 되었을 때 너의 나이는 나의 현재 나이의 3배보다 40살이 적어.”라고 말했습니다. 관호와 주연이의 나이차는 얼마일까요?",
+      "answer": "10",
+      "answerParts": [
+        10
+      ],
+      "answerLabels": [
+        "나이 차(살)"
+      ],
+      "acceptedAnswers": [
+        "10"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다.",
+        "주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다.",
+        "주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−40입니다.",
+        "5d=9d−40에서 4d=40, d=10입니다. 따라서 관호와 주연이의 나이 차는 10살입니다."
+      ],
+      "solution": "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다. 주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다. 주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−40입니다. 5d=9d−40에서 4d=40, d=10입니다. 따라서 관호와 주연이의 나이 차는 10살입니다.",
+      "learningPoint": "나이 차를 기준 단위로 두고 과거와 미래의 나이를 현재 나이와 연결한다.",
+      "learningLocation": "활용 6회 · 원문 21번 · 두 사람의 나이 관계와 시점 이동",
+      "verification": {
+        "primaryMethod": "Derive the current ages as 4d and 3d from the past half-age condition; apply the future relation and solve 5d=9d−c.",
+        "independentMethod": "Substitute d=c/4 back into both time conditions and verify ages are positive integers with correct chronology.",
+        "parameters": {
+          "offsetYears": 40,
+          "ageDifference": 10,
+          "guanhoCurrentAge": 40,
+          "juyeonCurrentAge": 30,
+          "guanhoAtFuture": 50,
+          "equation": "5d=9d-40"
+        },
+        "independentSuite": "qa/applied6-q21-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 21번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
+    },
+    {
+      "id": "applied6-q21-v9",
+      "genId": "applied6-q21",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 21,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "두 사람의 나이 관계와 시점 이동",
+      "detailType": "과거의 나이 비와 미래의 나이 배수 관계로 현재 나이 차 구하기",
+      "pointBand": "3.4",
+      "text": "관호가 주연이에게 “내가 너의 지금 나이만큼일 때, 너의 나이는 나의 현재 나이의 절반이었어.”라고 말하자 주연이는 관호에게 “내가 너의 지금 나이가 되었을 때 너의 나이는 나의 현재 나이의 3배보다 44살이 적어.”라고 말했습니다. 관호와 주연이의 나이차는 얼마일까요?",
+      "answer": "11",
+      "answerParts": [
+        11
+      ],
+      "answerLabels": [
+        "나이 차(살)"
+      ],
+      "acceptedAnswers": [
+        "11"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다.",
+        "주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다.",
+        "주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−44입니다.",
+        "5d=9d−44에서 4d=44, d=11입니다. 따라서 관호와 주연이의 나이 차는 11살입니다."
+      ],
+      "solution": "관호의 현재 나이와 주연이의 현재 나이의 차를 d살이라고 둡니다. 첫 번째 상황은 관호가 주연이의 현재 나이였던 때이므로 d년 전입니다. 주연이의 현재 나이를 y살로 두면 d년 전 주연이는 y−d살이고, 관호의 현재 나이는 y+d살입니다. (y−d)=(y+d)÷2를 풀면 2y−2d=y+d, y=3d이므로 주연이의 현재 나이는 3d살, 관호의 현재 나이는 4d살입니다. 주연이가 관호의 현재 나이가 될 때까지 d년이 지나므로, 그때 관호의 나이는 5d살입니다. 주연이의 현재 나이는 3d살이므로 두 번째 말의 조건은 5d=3×(3d)−44입니다. 5d=9d−44에서 4d=44, d=11입니다. 따라서 관호와 주연이의 나이 차는 11살입니다.",
+      "learningPoint": "나이 차를 기준 단위로 두고 과거와 미래의 나이를 현재 나이와 연결한다.",
+      "learningLocation": "활용 6회 · 원문 21번 · 두 사람의 나이 관계와 시점 이동",
+      "verification": {
+        "primaryMethod": "Derive the current ages as 4d and 3d from the past half-age condition; apply the future relation and solve 5d=9d−c.",
+        "independentMethod": "Substitute d=c/4 back into both time conditions and verify ages are positive integers with correct chronology.",
+        "parameters": {
+          "offsetYears": 44,
+          "ageDifference": 11,
+          "guanhoCurrentAge": 44,
+          "juyeonCurrentAge": 33,
+          "guanhoAtFuture": 55,
+          "equation": "5d=9d-44"
+        },
+        "independentSuite": "qa/applied6-q21-independent-validate.py",
+        "sourceExamPage": 4,
+        "sourceAnswerPage": 4,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문 PDF에서 23~30번은 4.2점대로 표시되며 원문 21번은 앞선 13~22번 구간이다. 구간별 배점 기준으로 3.4점대를 적용했다."
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 135,
-    "sourceTypes": 15,
+    "independentMathCount": 153,
+    "sourceTypes": 17,
     "variantsPerType": 9,
     "outputReviewed": true,
-    "sourceDrawingCount": 2,
+    "sourceDrawingCount": 3,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "verifiedQuestionCount": 135,
-    "verifiedSourceCount": 15
+    "verifiedQuestionCount": 153,
+    "verifiedSourceCount": 17
   }
 }
