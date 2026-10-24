@@ -1,3 +1,40 @@
+# 2026-10-24 활용 6회 기존 유형 확장 r27 (최신)
+
+- 사용자 최신 범위: 이미 원문에 있는 유형만 확장한다. 원문당 9개, 활용 난도는 배점대만 사용한다. 새 원문 유형을 만들지 않는다.
+- r27 은행은 기존 유형 28개·252문항이다. Q4와 Q6 기존 유형을 각각 9개 확장했다. 신규 유형 0, 기존 정답·원점수 변경 0. Q27·28은 판정 불일치로 잠금.
+- Q4 원문·답안 PDF 1쪽과 3방향 투영을 대조해 원답 11을 확인했다. 가능한 높이 배치 8개를 전수 조사하고 변형 9개도 각각 가능한 쌓기 높이를 전수 검색했다. ZIP 문제 3쪽·상세풀이 5쪽 전체 렌더 확인.
+- Q6 원문·답안 PDF 1쪽을 대조해 원답 33 및 바닥면 순서를 재확인했다. 24개 실제 주사위 회전을 열거해 변형 9개의 시작 방향과 경로 합을 검증했다. ZIP 문제·풀이 각 3쪽 전체 렌더 확인.
+- Q15·Q29·Q30 수학·브라우저·ZIP 검수를 r27 기준으로 재실행했다. Q15 원문 인쇄 차 불일치는 잠금 유지. 전체 브라우저는 답 입력/진단·3회/최초 결과 보존·2단 순서·375px·외부 쓰기 0을 통과.
+- Drive 작업 폴더 `1XB2t5QvxFll2LlZLwP_R4S9io6vTg8Zk`: 데이터 `1j0AwcrTADa96hBQwL43a_XliOdoRpy5W`, 인덱스 `1GodIEWfM1UbukhNcae_wg2yrDUlEimwp`, Q4 ZIP `1a5tfkZ4cz6B71c-9wBV5Sn6e6JG8WTOx`, Q6 ZIP `1Wu3B51WzymfOt9UE_wVafL5PdIHMpZrz`, Q15 ZIP `1RjqC2v57xRd1koTFW2Q2hrSinMHd44AQ`, Q29 ZIP `1ledi6_lbwOP6zgUIYhgrXtYVYTH2TtUX`, Q30 ZIP `1pR7orNiNL8bdrC5q8h9Kv9gnwxx4qrZX`, QA bundle `1zFFuWqTQ3LkiXy7LTR5NQyH7c1KPjZXd`.
+- 로컬 데이터 SHA-256 `a62a1b11e8e067a73921c86f7814186b4f0ca9a185d704ba3b680d68fd99b3b9`, 인덱스 `7c049293e6eab0d126cbf6410c9de4bc74bf6383b76ad95bf78d9ba9d0ca1ee2`. 데이터·인덱스·Q4/Q6/Q15/Q29/Q30 ZIP·QA 묶음·진행기록 11개를 Drive에서 재다운로드해 로컬과 크기·SHA-256이 모두 일치함을 확인했다. 검증 영수증 ID `1U_KOCko1z6qVj4m3fOslGbOiuI6UNhDI`.
+- 원문 유형 확장·수학·브라우저·ZIP 검수와 Drive 보관은 위 r27 기록에 포함했다. GitHub 원격 커밋 및 Pages 결과는 작업 완료 시 별도 실행 기록에 남긴다. 보호 미추적 `bank/drafts/`, `materials/.DS_Store` 보존.
+
+# 2026-10-24 활용 6회 기존 유형 확장 r25 (이력)
+
+- 기존 원문 유형만 원문당 9개로 확장한다. 활용 난도는 배점 구간으로 분류한다. r25 은행은 26개 원문 유형·234문항이다.
+- Q15 신규 9개: 6자리 디지털 거울수 유형이다. 원문 문제/답안 PDF 3쪽을 직접 대조했다. 인쇄된 차 7,760,130은 6자리 거울수의 전수 최대 차 787,113보다 커서 원문 자체는 보류로 유지한다. 변형은 차 값을 명시하고 유효 후보 10,000개 전수 검사로 각 답의 유일성을 확인했다. Q15 2쪽 문제·5쪽 상세풀이 ZIP, 브라우저 입력·진단·3회 제한·2단·375px 검수 통과.
+- Q29·30을 r25 은행 기준으로 브라우저/ZIP 재검수했다. 전체 26×9=234 구성이 유지되고, Q29 70경로와 Q30 9×900 나눗셈 값을 독립 전수 계산했다.
+- Q1, Q15, Q29, Q30까지 완료. 원문 4·6은 그림 검수가 남고 27·28은 답안 판정 불일치로 잠금. 상세 Q15 기록 `.private-work/hw-expansion-20261023/hw6/20261024-q15-completion.md`.
+- 최신 데이터 SHA-256 `d45913e5ba6a251851c99d5a1b551a846f0478cf025a22aca8298f1e4c2917ee`; 인덱스 SHA-256 `86dfe990e15f0f7c2be92a2358e764a9091f11a3eeabf104f44553d88bf9cae0`. Q15 검수 스크립트 3개는 `qa/applied6-q15-*`에 있다.
+- r25 변경은 로컬 `main` 미커밋, GitHub 푸시·사이트 배포 전. Drive ID/검증은 다음 기록에서 갱신한다. `bank/drafts/`, `materials/.DS_Store` 보호.
+
+# 2026-10-24 활용 6회 기존 유형 확장 r24 (최신)
+
+- 사용자가 확인한 범위에 따라 기존 원문 유형만 늘린다. 은행 `20261024-applied6-expansion-r24`는 25개 원문 유형·225문항(각 9개)이다. 새 유형은 추가하지 않았다.
+- 새 완료: 원문 1번 쌓기나무 겉면 수 유형. PDF 원문/답안 1쪽을 직접 확인하고 원문 그림을 그대로 사용했다. 35큐브의 아래5×5·중간3×3·위1 구조를 독립 계산해 면 수별 분포 1,9,4,16,4,1 및 원답 20을 확인했다. 9개 변형의 브라우저·ZIP·8쪽 렌더 QA 통과.
+- Q29·30도 r24 데이터 기준 수학/브라우저/ZIP 검증을 다시 통과했다. Q29 그림 픽셀 및 복수 답 채점 보존. 은행 전체 적용 기존 유형은 25×9=225.
+- 남은 보류 원문 4·6·15·27·28. Q27·28 원문 답안 불일치 판정 전까지 공개하지 않는다. 상세 현재 기록 `.private-work/hw-expansion-20261023/hw6/20261024-applied6-r24-status.md`.
+- Drive 업로드 완료: r24 데이터 `1j0AwcrTADa96hBQwL43a_XliOdoRpy5W`, 인덱스 `1GodIEWfM1UbukhNcae_wg2yrDUlEimwp`, Q1 ZIP `1YKJah61ynTutWaqD47rCl4cqN1UVwoT-`, Q1 원문 대조 `1X4eqcfKK9ivzWGVnynNAPJFq-LoO0Gia`, Q1 계산 `1M5rAzmzbmEMamFFQXQQ2C2z0KLDp4lW5`. Q29 ZIP `1ledi6_lbwOP6zgUIYhgrXtYVYTH2TtUX`, Q30 ZIP `1pR7orNiNL8bdrC5q8h9Kv9gnwxx4qrZX`를 r24로 업데이트했다. 메타데이터의 크기·MIME·폴더 확인, 원격 재다운로드 체크섬은 미검증.
+- 2026-10-24 02:00 KST 진행 종료 상태와 재개 순서는 `.private-work/hw-expansion-20261023/hw6/20261024-cutoff-status.md` 및 [Drive 보관본](https://drive.google.com/file/d/18gGcHrgeQCmP82xxcJnLKIPy6MVYQEnB/view) 참조. Drive 파일 ID·크기·부모를 확인했다.
+- 로컬 변경은 커밋 전, GitHub push 및 사이트 배포 전. 보호 미추적 `bank/drafts/`, `materials/.DS_Store` 보존.
+
+# 2026-10-24 활용 6회 원문 1 기존 유형 확장 (r24, 최신)
+
+- 원문 문제/답안 PDF 1쪽을 직접 확인했다. 쌓기나무의 노출면 수 세기 원문 유형만 확장했고 원문 그림을 250dpi 원문 PDF에서 잘라 9개 변형에 그대로 사용했다. 원문 답 20개를 독립 계산으로 확인했다.
+- 35개 큐브는 5×5+3×3+1 구조다. 바닥면을 포함해 각 큐브의 여섯 방향 이웃을 전수 계산한 분포는 노출면 수 0~5개 순으로 `1,9,4,16,4,1`개다. 변형은 정확히 0~5면, 1~2면, 3~4면, 4면 이상 조건으로 구성했다.
+- 활용6 은행 r24는 기존 원문 25개 유형·225문항(각 9개)이다. Q1 독립 계산, 브라우저 답 입력/진단/3회 제한/2단/375px, 실제 ZIP과 PDF 렌더 8쪽 검수가 통과했다. Q27·28은 답안 판정 불일치로 계속 잠금 상태다. 상세 근거 `.private-work/hw-expansion-20261023/hw6/20261024-q01-completion.md` 및 검수 JSON에 있다.
+- 로컬 데이터 SHA-256 `da1b5af2d81ab5a7c956358f0267eb5724a5c053dfdca1cec79f03fef800eae4`. Drive 갱신·커밋 전이며 GitHub 푸시와 사이트 배포는 하지 않았다. 보호 미추적 `bank/drafts/`, `materials/.DS_Store`는 유지한다.
+
 # 2026-10-24 활용 6회 원문 29·30 기존 유형 확장 (r23, 최신)
 
 - 사용자가 재확인한 범위대로 원문에 실제로 있는 유형만 확장했다. 원문/답안 PDF 5쪽과 6쪽을 직접 대조했다. 원문 29는 격자 경로 점수·숫자열, 원문 30은 세 자리 나눗셈의 몫·나머지 합 범위 유형이다. 새 유형은 만들지 않았다.

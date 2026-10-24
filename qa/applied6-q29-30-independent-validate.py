@@ -5,12 +5,12 @@ from collections import defaultdict
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 data=json.loads((ROOT/'bank/data/applied6-expanded.json').read_text())
-BASE=json.loads((ROOT/'.private-work/hw-expansion-20261023/hw6/applied6-expanded-r22.json').read_text())
-assert data['version']=='20261024-applied6-expansion-r23'
-assert [x for x in data['items'] if x['sourceNo'] not in (29,30)]==BASE['items']
+BASE=json.loads((ROOT/'.private-work/hw-expansion-20261023/hw6/applied6-expanded-r23.json').read_text())
+assert data['version']=='20261024-applied6-expansion-r27'
+assert [x for x in data['items'] if x['sourceNo'] in (2,3,5,7,8,9,10,11,12,13,14,16,17,18,19,20,21,22,23,24,25,26,29,30)]==BASE['items']
 assert data['reviewSummary']['outputReviewed'] is True
 assert data['sourceRound']==6 and data['sourceSet']=='applied'
-assert len(data['items'])==216 and len(data['availableSourceNos'])==24
+assert len(data['items'])==252 and len(data['availableSourceNos'])==28
 assert data['availableSourceNos'][-2:]==[29,30]
 assert 29 not in data['pendingSourceNos'] and 30 not in data['pendingSourceNos']
 assert 27 in data['pendingSourceNos'] and 28 in data['pendingSourceNos']
@@ -64,4 +64,4 @@ out=ROOT/'.private-work/hw-expansion-20261023/hw6/q29-30-independent-math.json'
 out.write_text(json.dumps({'dataSha256':hashlib.sha256((ROOT/'bank/data/applied6-expanded.json').read_bytes()).hexdigest(),'q29':{'sourceType':'existing weighted-grid path score','enumeratedPaths':70,'variants':q29_proof},'q30':{'sourceType':'existing quotient-plus-remainder extrema','dividendRange':[100,999],'variants':q30_proof},'sourceTypesAdded':[29,30],'newTypesAdded':0,'passed':True},ensure_ascii=False,indent=2)+'\n')
 print('PASS Q29: 70 paths exhaustively scored; 9 target totals, including all accepted number-sequence alternatives.')
 print('PASS Q30: 9 divisors × 900 three-digit dividends exhaustively checked; extrema witnesses and differences match.')
-print('PASS bank: 24 existing source types × 9 = 216; Q27/Q28 remain pending.')
+print('PASS bank: 28 existing source types × 9 = 252; Q27/Q28 remain pending.')

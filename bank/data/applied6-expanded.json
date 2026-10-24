@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r23",
+  "version": "20261024-applied6-expansion-r27",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -10,9 +10,12 @@
     "sourceGradeMutation": false
   },
   "availableSourceNos": [
+    1,
     2,
     3,
+    4,
     5,
+    6,
     7,
     8,
     9,
@@ -21,6 +24,7 @@
     12,
     13,
     14,
+    15,
     16,
     17,
     18,
@@ -36,14 +40,832 @@
     30
   ],
   "pendingSourceNos": [
-    1,
-    4,
-    6,
-    15,
     27,
     28
   ],
   "items": [
+    {
+      "id": "applied6-q01-v1",
+      "genId": "applied6-q01",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 1,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 겉면 수",
+      "detailType": "겉으로 드러난 면의 수로 쌓기나무 개수 세기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 쌓기나무 35개를 쌓았습니다. 바닥면을 포함해 겉으로 드러난 모든 면을 색칠했을 때, 색칠된 면이 0개인 쌓기나무는 모두 몇 개인가요?",
+      "answer": "1",
+      "answerParts": [
+        1
+      ],
+      "answerLabels": [
+        "쌓기나무의 개수"
+      ],
+      "acceptedAnswers": [
+        "1"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q01-original-stack.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 293,
+        "description": "활용 6회 원문 1번의 35개 쌓기나무 그림(원문 그대로)"
+      },
+      "solutionSteps": [
+        "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다.",
+        "바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다.",
+        "따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다.",
+        "색칠된 면이 0개인 쌓기나무의 수는 1=1개입니다."
+      ],
+      "solution": "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다. 바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다. 따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다. 색칠된 면이 0개인 쌓기나무의 수는 1=1개입니다.",
+      "learningPoint": "쌓기나무가 놓인 층과 이웃한 면을 살펴 겉으로 드러난 면의 수별로 분류하기",
+      "learningLocation": "활용 6회 · 원문 1번 · 쌓기나무의 겉면 수",
+      "verification": {
+        "primaryMethod": "원문 모양을 5×5, 3×3, 1개 층으로 읽고 각 큐브의 외부 노출면을 분류",
+        "independentMethod": "층별 격자 좌표에 35개 큐브를 놓고 여섯 방향 이웃 유무를 전수 계산",
+        "parameters": {
+          "layers": [
+            {
+              "size": "5×5",
+              "cubeCount": 25
+            },
+            {
+              "size": "3×3",
+              "cubeCount": 9
+            },
+            {
+              "size": "1×1",
+              "cubeCount": 1
+            }
+          ],
+          "totalCubes": 35,
+          "includeBottomFaces": true,
+          "exposedFaceCountsByCubeCount": {
+            "0": 1,
+            "1": 9,
+            "2": 4,
+            "3": 16,
+            "4": 4,
+            "5": 1
+          },
+          "requestedFaceCounts": [
+            0
+          ],
+          "answer": 1
+        },
+        "independentSuite": "qa/applied6-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 1~12번의 2.7점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q01-v2",
+      "genId": "applied6-q01",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 1,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 겉면 수",
+      "detailType": "겉으로 드러난 면의 수로 쌓기나무 개수 세기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 쌓기나무 35개를 쌓았습니다. 바닥면을 포함해 겉으로 드러난 모든 면을 색칠했을 때, 색칠된 면이 1개인 쌓기나무는 모두 몇 개인가요?",
+      "answer": "9",
+      "answerParts": [
+        9
+      ],
+      "answerLabels": [
+        "쌓기나무의 개수"
+      ],
+      "acceptedAnswers": [
+        "9"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q01-original-stack.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 293,
+        "description": "활용 6회 원문 1번의 35개 쌓기나무 그림(원문 그대로)"
+      },
+      "solutionSteps": [
+        "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다.",
+        "바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다.",
+        "따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다.",
+        "색칠된 면이 1개인 쌓기나무의 수는 9=9개입니다."
+      ],
+      "solution": "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다. 바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다. 따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다. 색칠된 면이 1개인 쌓기나무의 수는 9=9개입니다.",
+      "learningPoint": "쌓기나무가 놓인 층과 이웃한 면을 살펴 겉으로 드러난 면의 수별로 분류하기",
+      "learningLocation": "활용 6회 · 원문 1번 · 쌓기나무의 겉면 수",
+      "verification": {
+        "primaryMethod": "원문 모양을 5×5, 3×3, 1개 층으로 읽고 각 큐브의 외부 노출면을 분류",
+        "independentMethod": "층별 격자 좌표에 35개 큐브를 놓고 여섯 방향 이웃 유무를 전수 계산",
+        "parameters": {
+          "layers": [
+            {
+              "size": "5×5",
+              "cubeCount": 25
+            },
+            {
+              "size": "3×3",
+              "cubeCount": 9
+            },
+            {
+              "size": "1×1",
+              "cubeCount": 1
+            }
+          ],
+          "totalCubes": 35,
+          "includeBottomFaces": true,
+          "exposedFaceCountsByCubeCount": {
+            "0": 1,
+            "1": 9,
+            "2": 4,
+            "3": 16,
+            "4": 4,
+            "5": 1
+          },
+          "requestedFaceCounts": [
+            1
+          ],
+          "answer": 9
+        },
+        "independentSuite": "qa/applied6-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 1~12번의 2.7점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q01-v3",
+      "genId": "applied6-q01",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 1,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 겉면 수",
+      "detailType": "겉으로 드러난 면의 수로 쌓기나무 개수 세기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 쌓기나무 35개를 쌓았습니다. 바닥면을 포함해 겉으로 드러난 모든 면을 색칠했을 때, 색칠된 면이 2개인 쌓기나무는 모두 몇 개인가요?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "쌓기나무의 개수"
+      ],
+      "acceptedAnswers": [
+        "4"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q01-original-stack.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 293,
+        "description": "활용 6회 원문 1번의 35개 쌓기나무 그림(원문 그대로)"
+      },
+      "solutionSteps": [
+        "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다.",
+        "바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다.",
+        "따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다.",
+        "색칠된 면이 2개인 쌓기나무의 수는 4=4개입니다."
+      ],
+      "solution": "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다. 바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다. 따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다. 색칠된 면이 2개인 쌓기나무의 수는 4=4개입니다.",
+      "learningPoint": "쌓기나무가 놓인 층과 이웃한 면을 살펴 겉으로 드러난 면의 수별로 분류하기",
+      "learningLocation": "활용 6회 · 원문 1번 · 쌓기나무의 겉면 수",
+      "verification": {
+        "primaryMethod": "원문 모양을 5×5, 3×3, 1개 층으로 읽고 각 큐브의 외부 노출면을 분류",
+        "independentMethod": "층별 격자 좌표에 35개 큐브를 놓고 여섯 방향 이웃 유무를 전수 계산",
+        "parameters": {
+          "layers": [
+            {
+              "size": "5×5",
+              "cubeCount": 25
+            },
+            {
+              "size": "3×3",
+              "cubeCount": 9
+            },
+            {
+              "size": "1×1",
+              "cubeCount": 1
+            }
+          ],
+          "totalCubes": 35,
+          "includeBottomFaces": true,
+          "exposedFaceCountsByCubeCount": {
+            "0": 1,
+            "1": 9,
+            "2": 4,
+            "3": 16,
+            "4": 4,
+            "5": 1
+          },
+          "requestedFaceCounts": [
+            2
+          ],
+          "answer": 4
+        },
+        "independentSuite": "qa/applied6-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 1~12번의 2.7점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q01-v4",
+      "genId": "applied6-q01",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 1,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 겉면 수",
+      "detailType": "겉으로 드러난 면의 수로 쌓기나무 개수 세기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 쌓기나무 35개를 쌓았습니다. 바닥면을 포함해 겉으로 드러난 모든 면을 색칠했을 때, 색칠된 면이 3개인 쌓기나무는 모두 몇 개인가요?",
+      "answer": "16",
+      "answerParts": [
+        16
+      ],
+      "answerLabels": [
+        "쌓기나무의 개수"
+      ],
+      "acceptedAnswers": [
+        "16"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q01-original-stack.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 293,
+        "description": "활용 6회 원문 1번의 35개 쌓기나무 그림(원문 그대로)"
+      },
+      "solutionSteps": [
+        "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다.",
+        "바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다.",
+        "따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다.",
+        "색칠된 면이 3개인 쌓기나무의 수는 16=16개입니다."
+      ],
+      "solution": "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다. 바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다. 따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다. 색칠된 면이 3개인 쌓기나무의 수는 16=16개입니다.",
+      "learningPoint": "쌓기나무가 놓인 층과 이웃한 면을 살펴 겉으로 드러난 면의 수별로 분류하기",
+      "learningLocation": "활용 6회 · 원문 1번 · 쌓기나무의 겉면 수",
+      "verification": {
+        "primaryMethod": "원문 모양을 5×5, 3×3, 1개 층으로 읽고 각 큐브의 외부 노출면을 분류",
+        "independentMethod": "층별 격자 좌표에 35개 큐브를 놓고 여섯 방향 이웃 유무를 전수 계산",
+        "parameters": {
+          "layers": [
+            {
+              "size": "5×5",
+              "cubeCount": 25
+            },
+            {
+              "size": "3×3",
+              "cubeCount": 9
+            },
+            {
+              "size": "1×1",
+              "cubeCount": 1
+            }
+          ],
+          "totalCubes": 35,
+          "includeBottomFaces": true,
+          "exposedFaceCountsByCubeCount": {
+            "0": 1,
+            "1": 9,
+            "2": 4,
+            "3": 16,
+            "4": 4,
+            "5": 1
+          },
+          "requestedFaceCounts": [
+            3
+          ],
+          "answer": 16
+        },
+        "independentSuite": "qa/applied6-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 1~12번의 2.7점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q01-v5",
+      "genId": "applied6-q01",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 1,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 겉면 수",
+      "detailType": "겉으로 드러난 면의 수로 쌓기나무 개수 세기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 쌓기나무 35개를 쌓았습니다. 바닥면을 포함해 겉으로 드러난 모든 면을 색칠했을 때, 색칠된 면이 4개인 쌓기나무는 모두 몇 개인가요?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "쌓기나무의 개수"
+      ],
+      "acceptedAnswers": [
+        "4"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q01-original-stack.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 293,
+        "description": "활용 6회 원문 1번의 35개 쌓기나무 그림(원문 그대로)"
+      },
+      "solutionSteps": [
+        "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다.",
+        "바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다.",
+        "따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다.",
+        "색칠된 면이 4개인 쌓기나무의 수는 4=4개입니다."
+      ],
+      "solution": "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다. 바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다. 따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다. 색칠된 면이 4개인 쌓기나무의 수는 4=4개입니다.",
+      "learningPoint": "쌓기나무가 놓인 층과 이웃한 면을 살펴 겉으로 드러난 면의 수별로 분류하기",
+      "learningLocation": "활용 6회 · 원문 1번 · 쌓기나무의 겉면 수",
+      "verification": {
+        "primaryMethod": "원문 모양을 5×5, 3×3, 1개 층으로 읽고 각 큐브의 외부 노출면을 분류",
+        "independentMethod": "층별 격자 좌표에 35개 큐브를 놓고 여섯 방향 이웃 유무를 전수 계산",
+        "parameters": {
+          "layers": [
+            {
+              "size": "5×5",
+              "cubeCount": 25
+            },
+            {
+              "size": "3×3",
+              "cubeCount": 9
+            },
+            {
+              "size": "1×1",
+              "cubeCount": 1
+            }
+          ],
+          "totalCubes": 35,
+          "includeBottomFaces": true,
+          "exposedFaceCountsByCubeCount": {
+            "0": 1,
+            "1": 9,
+            "2": 4,
+            "3": 16,
+            "4": 4,
+            "5": 1
+          },
+          "requestedFaceCounts": [
+            4
+          ],
+          "answer": 4
+        },
+        "independentSuite": "qa/applied6-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 1~12번의 2.7점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q01-v6",
+      "genId": "applied6-q01",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 1,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 겉면 수",
+      "detailType": "겉으로 드러난 면의 수로 쌓기나무 개수 세기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 쌓기나무 35개를 쌓았습니다. 바닥면을 포함해 겉으로 드러난 모든 면을 색칠했을 때, 색칠된 면이 5개인 쌓기나무는 모두 몇 개인가요?",
+      "answer": "1",
+      "answerParts": [
+        1
+      ],
+      "answerLabels": [
+        "쌓기나무의 개수"
+      ],
+      "acceptedAnswers": [
+        "1"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q01-original-stack.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 293,
+        "description": "활용 6회 원문 1번의 35개 쌓기나무 그림(원문 그대로)"
+      },
+      "solutionSteps": [
+        "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다.",
+        "바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다.",
+        "따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다.",
+        "색칠된 면이 5개인 쌓기나무의 수는 1=1개입니다."
+      ],
+      "solution": "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다. 바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다. 따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다. 색칠된 면이 5개인 쌓기나무의 수는 1=1개입니다.",
+      "learningPoint": "쌓기나무가 놓인 층과 이웃한 면을 살펴 겉으로 드러난 면의 수별로 분류하기",
+      "learningLocation": "활용 6회 · 원문 1번 · 쌓기나무의 겉면 수",
+      "verification": {
+        "primaryMethod": "원문 모양을 5×5, 3×3, 1개 층으로 읽고 각 큐브의 외부 노출면을 분류",
+        "independentMethod": "층별 격자 좌표에 35개 큐브를 놓고 여섯 방향 이웃 유무를 전수 계산",
+        "parameters": {
+          "layers": [
+            {
+              "size": "5×5",
+              "cubeCount": 25
+            },
+            {
+              "size": "3×3",
+              "cubeCount": 9
+            },
+            {
+              "size": "1×1",
+              "cubeCount": 1
+            }
+          ],
+          "totalCubes": 35,
+          "includeBottomFaces": true,
+          "exposedFaceCountsByCubeCount": {
+            "0": 1,
+            "1": 9,
+            "2": 4,
+            "3": 16,
+            "4": 4,
+            "5": 1
+          },
+          "requestedFaceCounts": [
+            5
+          ],
+          "answer": 1
+        },
+        "independentSuite": "qa/applied6-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 1~12번의 2.7점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q01-v7",
+      "genId": "applied6-q01",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 1,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 겉면 수",
+      "detailType": "겉으로 드러난 면의 수로 쌓기나무 개수 세기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 쌓기나무 35개를 쌓았습니다. 바닥면을 포함해 겉으로 드러난 모든 면을 색칠했을 때, 색칠된 면이 1개 또는 2개인 쌓기나무는 모두 몇 개인가요?",
+      "answer": "13",
+      "answerParts": [
+        13
+      ],
+      "answerLabels": [
+        "쌓기나무의 개수"
+      ],
+      "acceptedAnswers": [
+        "13"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q01-original-stack.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 293,
+        "description": "활용 6회 원문 1번의 35개 쌓기나무 그림(원문 그대로)"
+      },
+      "solutionSteps": [
+        "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다.",
+        "바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다.",
+        "따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다.",
+        "색칠된 면이 1개 또는 2개인 쌓기나무의 수는 9 + 4=13개입니다."
+      ],
+      "solution": "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다. 바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다. 따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다. 색칠된 면이 1개 또는 2개인 쌓기나무의 수는 9 + 4=13개입니다.",
+      "learningPoint": "쌓기나무가 놓인 층과 이웃한 면을 살펴 겉으로 드러난 면의 수별로 분류하기",
+      "learningLocation": "활용 6회 · 원문 1번 · 쌓기나무의 겉면 수",
+      "verification": {
+        "primaryMethod": "원문 모양을 5×5, 3×3, 1개 층으로 읽고 각 큐브의 외부 노출면을 분류",
+        "independentMethod": "층별 격자 좌표에 35개 큐브를 놓고 여섯 방향 이웃 유무를 전수 계산",
+        "parameters": {
+          "layers": [
+            {
+              "size": "5×5",
+              "cubeCount": 25
+            },
+            {
+              "size": "3×3",
+              "cubeCount": 9
+            },
+            {
+              "size": "1×1",
+              "cubeCount": 1
+            }
+          ],
+          "totalCubes": 35,
+          "includeBottomFaces": true,
+          "exposedFaceCountsByCubeCount": {
+            "0": 1,
+            "1": 9,
+            "2": 4,
+            "3": 16,
+            "4": 4,
+            "5": 1
+          },
+          "requestedFaceCounts": [
+            1,
+            2
+          ],
+          "answer": 13
+        },
+        "independentSuite": "qa/applied6-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 1~12번의 2.7점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q01-v8",
+      "genId": "applied6-q01",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 1,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 겉면 수",
+      "detailType": "겉으로 드러난 면의 수로 쌓기나무 개수 세기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 쌓기나무 35개를 쌓았습니다. 바닥면을 포함해 겉으로 드러난 모든 면을 색칠했을 때, 색칠된 면이 3개 또는 4개인 쌓기나무는 모두 몇 개인가요?",
+      "answer": "20",
+      "answerParts": [
+        20
+      ],
+      "answerLabels": [
+        "쌓기나무의 개수"
+      ],
+      "acceptedAnswers": [
+        "20"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q01-original-stack.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 293,
+        "description": "활용 6회 원문 1번의 35개 쌓기나무 그림(원문 그대로)"
+      },
+      "solutionSteps": [
+        "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다.",
+        "바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다.",
+        "따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다.",
+        "색칠된 면이 3개 또는 4개인 쌓기나무의 수는 16 + 4=20개입니다."
+      ],
+      "solution": "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다. 바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다. 따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다. 색칠된 면이 3개 또는 4개인 쌓기나무의 수는 16 + 4=20개입니다.",
+      "learningPoint": "쌓기나무가 놓인 층과 이웃한 면을 살펴 겉으로 드러난 면의 수별로 분류하기",
+      "learningLocation": "활용 6회 · 원문 1번 · 쌓기나무의 겉면 수",
+      "verification": {
+        "primaryMethod": "원문 모양을 5×5, 3×3, 1개 층으로 읽고 각 큐브의 외부 노출면을 분류",
+        "independentMethod": "층별 격자 좌표에 35개 큐브를 놓고 여섯 방향 이웃 유무를 전수 계산",
+        "parameters": {
+          "layers": [
+            {
+              "size": "5×5",
+              "cubeCount": 25
+            },
+            {
+              "size": "3×3",
+              "cubeCount": 9
+            },
+            {
+              "size": "1×1",
+              "cubeCount": 1
+            }
+          ],
+          "totalCubes": 35,
+          "includeBottomFaces": true,
+          "exposedFaceCountsByCubeCount": {
+            "0": 1,
+            "1": 9,
+            "2": 4,
+            "3": 16,
+            "4": 4,
+            "5": 1
+          },
+          "requestedFaceCounts": [
+            3,
+            4
+          ],
+          "answer": 20
+        },
+        "independentSuite": "qa/applied6-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 1~12번의 2.7점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q01-v9",
+      "genId": "applied6-q01",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 1,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 겉면 수",
+      "detailType": "겉으로 드러난 면의 수로 쌓기나무 개수 세기",
+      "pointBand": "2.7",
+      "text": "그림과 같이 쌓기나무 35개를 쌓았습니다. 바닥면을 포함해 겉으로 드러난 모든 면을 색칠했을 때, 색칠된 면이 4개 이상인 쌓기나무는 모두 몇 개인가요?",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "쌓기나무의 개수"
+      ],
+      "acceptedAnswers": [
+        "5"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q01-original-stack.png",
+        "mimeType": "image/png",
+        "width": 445,
+        "height": 293,
+        "description": "활용 6회 원문 1번의 35개 쌓기나무 그림(원문 그대로)"
+      },
+      "solutionSteps": [
+        "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다.",
+        "바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다.",
+        "따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다.",
+        "색칠된 면이 4개 이상인 쌓기나무의 수는 4 + 1=5개입니다."
+      ],
+      "solution": "그림의 쌓기는 아래층 5×5=25개, 가운데층 3×3=9개, 맨 위 1개로 모두 35개입니다. 그림은 원문 그대로입니다. 바닥면도 칠하므로 아래층에서는 노출면이 1개인 쌓기나무 9개, 3개인 것 12개, 4개인 것 4개가 나옵니다. 가운데층에서는 0개인 것 1개, 2개인 것 4개, 3개인 것 4개가 나옵니다. 맨 위 쌓기나무는 5개 면이 드러납니다. 따라서 전체 면 수별 개수는 0개인 것은 1개, 1개인 것은 9개, 2개인 것은 4개, 3개인 것은 16개, 4개인 것은 4개, 5개인 것은 1개입니다. 색칠된 면이 4개 이상인 쌓기나무의 수는 4 + 1=5개입니다.",
+      "learningPoint": "쌓기나무가 놓인 층과 이웃한 면을 살펴 겉으로 드러난 면의 수별로 분류하기",
+      "learningLocation": "활용 6회 · 원문 1번 · 쌓기나무의 겉면 수",
+      "verification": {
+        "primaryMethod": "원문 모양을 5×5, 3×3, 1개 층으로 읽고 각 큐브의 외부 노출면을 분류",
+        "independentMethod": "층별 격자 좌표에 35개 큐브를 놓고 여섯 방향 이웃 유무를 전수 계산",
+        "parameters": {
+          "layers": [
+            {
+              "size": "5×5",
+              "cubeCount": 25
+            },
+            {
+              "size": "3×3",
+              "cubeCount": 9
+            },
+            {
+              "size": "1×1",
+              "cubeCount": 1
+            }
+          ],
+          "totalCubes": 35,
+          "includeBottomFaces": true,
+          "exposedFaceCountsByCubeCount": {
+            "0": 1,
+            "1": 9,
+            "2": 4,
+            "3": 16,
+            "4": 4,
+            "5": 1
+          },
+          "requestedFaceCounts": [
+            4,
+            5
+          ],
+          "answer": 5
+        },
+        "independentSuite": "qa/applied6-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 1~12번의 2.7점 배점대에 따른 난도 분류."
+      }
+    },
     {
       "id": "applied6-q02-v1",
       "genId": "applied6-q02",
@@ -1116,6 +1938,1005 @@
       }
     },
     {
+      "id": "applied6-q04-v1",
+      "genId": "applied6-q04",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 4,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 투영과 최소 개수",
+      "detailType": "위·앞·오른쪽 옆 투영을 만족하는 쌓기나무 최소 개수",
+      "pointBand": "2.7",
+      "text": "쌓기나무로 쌓은 도형을 위와 앞, 오른쪽 옆에서 본 그림이 다음과 같습니다. 이 그림이 되도록 쌓기나무를 쌓는 방법 중 최소 개수는 몇 개입니까?",
+      "answer": "13",
+      "answerParts": [
+        13
+      ],
+      "answerLabels": [
+        "최소 쌓기나무 개수"
+      ],
+      "acceptedAnswers": [
+        "13"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q04-v1.svg",
+        "alt": "쌓기나무를 위, 앞, 옆에서 본 그림"
+      },
+      "solutionSteps": [
+        "위에서 본 그림의 칸은 7칸이므로, 쌓기나무를 한 개씩 놓는 데 7개가 필요합니다.",
+        "앞에서 본 가장 높은 칸의 열별 높이는 [1, 3, 3]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 3, 2]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다.",
+        "가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 · 1 2 / 1 3 3 / · 1 2입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다.",
+        "이 배치의 쌓기나무 수는 각 줄의 합 13개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 13개입니다."
+      ],
+      "solution": "위에서 본 그림의 칸은 7칸이므로, 쌓기나무를 한 개씩 놓는 데 7개가 필요합니다. 앞에서 본 가장 높은 칸의 열별 높이는 [1, 3, 3]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 3, 2]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다. 가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 · 1 2 / 1 3 3 / · 1 2입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다. 이 배치의 쌓기나무 수는 각 줄의 합 13개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 13개입니다.",
+      "learningPoint": "위에서 본 칸마다 최소 한 개씩 놓고, 앞·옆 실루엣의 최대 높이를 함께 만족시키는 높이 배치를 찾아 쌓기나무 수를 최소화하기",
+      "learningLocation": "활용 6회 · 원문 4번 · 쌓기나무 세 방향 투영과 최소 개수",
+      "verification": {
+        "primaryMethod": "enumerate every integer height assignment on occupied top-view cells and retain only matrices matching front and right-side projections",
+        "independentMethod": "projection maxima and exact integer search over all permitted stack heights",
+        "parameters": {
+          "topFootprint": [
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "frontColumnHeights": [
+            1,
+            3,
+            3
+          ],
+          "rightSidePrintedHeights": [
+            2,
+            3,
+            2
+          ],
+          "rightSideFrontToBackHeights": [
+            2,
+            3,
+            2
+          ],
+          "minimumHeightMatrix": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              1,
+              3,
+              3
+            ],
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          "minimumArrangementsFound": 4,
+          "occupiedTopCells": 7,
+          "answer": 13
+        },
+        "independentSuite": "qa/applied6-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원문 Q4 문제 PDF 1쪽의 위·앞·오른쪽 옆 실루엣을 직접 대조했다. 위 칸은 7개, 앞 열 높이는 2·2·3, 오른쪽 옆 그림의 인쇄 방향 높이는 3·1·2다. 옆 투영을 위쪽 깊이 순으로 맞추면 앞뒤별 높이는 2·1·3이며, 가능한 최소 높이 배치 합은 11개다. 원문 답안 1쪽의 교사 판정 11개와 일치한다. 원본 그림은 보존하고 변형은 별도 투영도만 사용한다."
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q04-v2",
+      "genId": "applied6-q04",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 4,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 투영과 최소 개수",
+      "detailType": "위·앞·오른쪽 옆 투영을 만족하는 쌓기나무 최소 개수",
+      "pointBand": "2.7",
+      "text": "쌓기나무로 쌓은 도형을 위와 앞, 오른쪽 옆에서 본 그림이 다음과 같습니다. 이 그림이 되도록 쌓기나무를 쌓는 방법 중 최소 개수는 몇 개입니까?",
+      "answer": "13",
+      "answerParts": [
+        13
+      ],
+      "answerLabels": [
+        "최소 쌓기나무 개수"
+      ],
+      "acceptedAnswers": [
+        "13"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q04-v2.svg",
+        "alt": "쌓기나무를 위, 앞, 옆에서 본 그림"
+      },
+      "solutionSteps": [
+        "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다.",
+        "앞에서 본 가장 높은 칸의 열별 높이는 [3, 1, 3]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 3, 1]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다.",
+        "가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 1 1 2 / 3 1 3 / · 1 1입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다.",
+        "이 배치의 쌓기나무 수는 각 줄의 합 13개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 13개입니다."
+      ],
+      "solution": "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다. 앞에서 본 가장 높은 칸의 열별 높이는 [3, 1, 3]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 3, 1]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다. 가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 1 1 2 / 3 1 3 / · 1 1입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다. 이 배치의 쌓기나무 수는 각 줄의 합 13개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 13개입니다.",
+      "learningPoint": "위에서 본 칸마다 최소 한 개씩 놓고, 앞·옆 실루엣의 최대 높이를 함께 만족시키는 높이 배치를 찾아 쌓기나무 수를 최소화하기",
+      "learningLocation": "활용 6회 · 원문 4번 · 쌓기나무 세 방향 투영과 최소 개수",
+      "verification": {
+        "primaryMethod": "enumerate every integer height assignment on occupied top-view cells and retain only matrices matching front and right-side projections",
+        "independentMethod": "projection maxima and exact integer search over all permitted stack heights",
+        "parameters": {
+          "topFootprint": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "frontColumnHeights": [
+            3,
+            1,
+            3
+          ],
+          "rightSidePrintedHeights": [
+            1,
+            3,
+            2
+          ],
+          "rightSideFrontToBackHeights": [
+            2,
+            3,
+            1
+          ],
+          "minimumHeightMatrix": [
+            [
+              1,
+              1,
+              2
+            ],
+            [
+              3,
+              1,
+              3
+            ],
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "minimumArrangementsFound": 2,
+          "occupiedTopCells": 8,
+          "answer": 13
+        },
+        "independentSuite": "qa/applied6-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원문 Q4 문제 PDF 1쪽의 위·앞·오른쪽 옆 실루엣을 직접 대조했다. 위 칸은 7개, 앞 열 높이는 2·2·3, 오른쪽 옆 그림의 인쇄 방향 높이는 3·1·2다. 옆 투영을 위쪽 깊이 순으로 맞추면 앞뒤별 높이는 2·1·3이며, 가능한 최소 높이 배치 합은 11개다. 원문 답안 1쪽의 교사 판정 11개와 일치한다. 원본 그림은 보존하고 변형은 별도 투영도만 사용한다."
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q04-v3",
+      "genId": "applied6-q04",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 4,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 투영과 최소 개수",
+      "detailType": "위·앞·오른쪽 옆 투영을 만족하는 쌓기나무 최소 개수",
+      "pointBand": "2.7",
+      "text": "쌓기나무로 쌓은 도형을 위와 앞, 오른쪽 옆에서 본 그림이 다음과 같습니다. 이 그림이 되도록 쌓기나무를 쌓는 방법 중 최소 개수는 몇 개입니까?",
+      "answer": "14",
+      "answerParts": [
+        14
+      ],
+      "answerLabels": [
+        "최소 쌓기나무 개수"
+      ],
+      "acceptedAnswers": [
+        "14"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q04-v3.svg",
+        "alt": "쌓기나무를 위, 앞, 옆에서 본 그림"
+      },
+      "solutionSteps": [
+        "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다.",
+        "앞에서 본 가장 높은 칸의 열별 높이는 [3, 3, 3]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [3, 3, 1]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다.",
+        "가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 · 1 3 / 3 3 1 / 1 1 1입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다.",
+        "이 배치의 쌓기나무 수는 각 줄의 합 14개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 14개입니다."
+      ],
+      "solution": "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다. 앞에서 본 가장 높은 칸의 열별 높이는 [3, 3, 3]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [3, 3, 1]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다. 가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 · 1 3 / 3 3 1 / 1 1 1입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다. 이 배치의 쌓기나무 수는 각 줄의 합 14개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 14개입니다.",
+      "learningPoint": "위에서 본 칸마다 최소 한 개씩 놓고, 앞·옆 실루엣의 최대 높이를 함께 만족시키는 높이 배치를 찾아 쌓기나무 수를 최소화하기",
+      "learningLocation": "활용 6회 · 원문 4번 · 쌓기나무 세 방향 투영과 최소 개수",
+      "verification": {
+        "primaryMethod": "enumerate every integer height assignment on occupied top-view cells and retain only matrices matching front and right-side projections",
+        "independentMethod": "projection maxima and exact integer search over all permitted stack heights",
+        "parameters": {
+          "topFootprint": [
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "frontColumnHeights": [
+            3,
+            3,
+            3
+          ],
+          "rightSidePrintedHeights": [
+            1,
+            3,
+            3
+          ],
+          "rightSideFrontToBackHeights": [
+            3,
+            3,
+            1
+          ],
+          "minimumHeightMatrix": [
+            [
+              0,
+              1,
+              3
+            ],
+            [
+              3,
+              3,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "minimumArrangementsFound": 3,
+          "occupiedTopCells": 8,
+          "answer": 14
+        },
+        "independentSuite": "qa/applied6-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원문 Q4 문제 PDF 1쪽의 위·앞·오른쪽 옆 실루엣을 직접 대조했다. 위 칸은 7개, 앞 열 높이는 2·2·3, 오른쪽 옆 그림의 인쇄 방향 높이는 3·1·2다. 옆 투영을 위쪽 깊이 순으로 맞추면 앞뒤별 높이는 2·1·3이며, 가능한 최소 높이 배치 합은 11개다. 원문 답안 1쪽의 교사 판정 11개와 일치한다. 원본 그림은 보존하고 변형은 별도 투영도만 사용한다."
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q04-v4",
+      "genId": "applied6-q04",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 4,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 투영과 최소 개수",
+      "detailType": "위·앞·오른쪽 옆 투영을 만족하는 쌓기나무 최소 개수",
+      "pointBand": "2.7",
+      "text": "쌓기나무로 쌓은 도형을 위와 앞, 오른쪽 옆에서 본 그림이 다음과 같습니다. 이 그림이 되도록 쌓기나무를 쌓는 방법 중 최소 개수는 몇 개입니까?",
+      "answer": "13",
+      "answerParts": [
+        13
+      ],
+      "answerLabels": [
+        "최소 쌓기나무 개수"
+      ],
+      "acceptedAnswers": [
+        "13"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q04-v4.svg",
+        "alt": "쌓기나무를 위, 앞, 옆에서 본 그림"
+      },
+      "solutionSteps": [
+        "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다.",
+        "앞에서 본 가장 높은 칸의 열별 높이는 [3, 2, 3]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 3, 3]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다.",
+        "가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 1 2 1 / 1 1 3 / 3 1 ·입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다.",
+        "이 배치의 쌓기나무 수는 각 줄의 합 13개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 13개입니다."
+      ],
+      "solution": "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다. 앞에서 본 가장 높은 칸의 열별 높이는 [3, 2, 3]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 3, 3]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다. 가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 1 2 1 / 1 1 3 / 3 1 ·입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다. 이 배치의 쌓기나무 수는 각 줄의 합 13개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 13개입니다.",
+      "learningPoint": "위에서 본 칸마다 최소 한 개씩 놓고, 앞·옆 실루엣의 최대 높이를 함께 만족시키는 높이 배치를 찾아 쌓기나무 수를 최소화하기",
+      "learningLocation": "활용 6회 · 원문 4번 · 쌓기나무 세 방향 투영과 최소 개수",
+      "verification": {
+        "primaryMethod": "enumerate every integer height assignment on occupied top-view cells and retain only matrices matching front and right-side projections",
+        "independentMethod": "projection maxima and exact integer search over all permitted stack heights",
+        "parameters": {
+          "topFootprint": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "frontColumnHeights": [
+            3,
+            2,
+            3
+          ],
+          "rightSidePrintedHeights": [
+            3,
+            3,
+            2
+          ],
+          "rightSideFrontToBackHeights": [
+            2,
+            3,
+            3
+          ],
+          "minimumHeightMatrix": [
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              1,
+              1,
+              3
+            ],
+            [
+              3,
+              1,
+              0
+            ]
+          ],
+          "minimumArrangementsFound": 1,
+          "occupiedTopCells": 8,
+          "answer": 13
+        },
+        "independentSuite": "qa/applied6-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원문 Q4 문제 PDF 1쪽의 위·앞·오른쪽 옆 실루엣을 직접 대조했다. 위 칸은 7개, 앞 열 높이는 2·2·3, 오른쪽 옆 그림의 인쇄 방향 높이는 3·1·2다. 옆 투영을 위쪽 깊이 순으로 맞추면 앞뒤별 높이는 2·1·3이며, 가능한 최소 높이 배치 합은 11개다. 원문 답안 1쪽의 교사 판정 11개와 일치한다. 원본 그림은 보존하고 변형은 별도 투영도만 사용한다."
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q04-v5",
+      "genId": "applied6-q04",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 4,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 투영과 최소 개수",
+      "detailType": "위·앞·오른쪽 옆 투영을 만족하는 쌓기나무 최소 개수",
+      "pointBand": "2.7",
+      "text": "쌓기나무로 쌓은 도형을 위와 앞, 오른쪽 옆에서 본 그림이 다음과 같습니다. 이 그림이 되도록 쌓기나무를 쌓는 방법 중 최소 개수는 몇 개입니까?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "최소 쌓기나무 개수"
+      ],
+      "acceptedAnswers": [
+        "12"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q04-v5.svg",
+        "alt": "쌓기나무를 위, 앞, 옆에서 본 그림"
+      },
+      "solutionSteps": [
+        "위에서 본 그림의 칸은 7칸이므로, 쌓기나무를 한 개씩 놓는 데 7개가 필요합니다.",
+        "앞에서 본 가장 높은 칸의 열별 높이는 [3, 3, 2]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [1, 3, 3]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다.",
+        "가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 1 1 · / 1 3 2 / 3 1 ·입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다.",
+        "이 배치의 쌓기나무 수는 각 줄의 합 12개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 12개입니다."
+      ],
+      "solution": "위에서 본 그림의 칸은 7칸이므로, 쌓기나무를 한 개씩 놓는 데 7개가 필요합니다. 앞에서 본 가장 높은 칸의 열별 높이는 [3, 3, 2]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [1, 3, 3]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다. 가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 1 1 · / 1 3 2 / 3 1 ·입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다. 이 배치의 쌓기나무 수는 각 줄의 합 12개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 12개입니다.",
+      "learningPoint": "위에서 본 칸마다 최소 한 개씩 놓고, 앞·옆 실루엣의 최대 높이를 함께 만족시키는 높이 배치를 찾아 쌓기나무 수를 최소화하기",
+      "learningLocation": "활용 6회 · 원문 4번 · 쌓기나무 세 방향 투영과 최소 개수",
+      "verification": {
+        "primaryMethod": "enumerate every integer height assignment on occupied top-view cells and retain only matrices matching front and right-side projections",
+        "independentMethod": "projection maxima and exact integer search over all permitted stack heights",
+        "parameters": {
+          "topFootprint": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "frontColumnHeights": [
+            3,
+            3,
+            2
+          ],
+          "rightSidePrintedHeights": [
+            3,
+            3,
+            1
+          ],
+          "rightSideFrontToBackHeights": [
+            1,
+            3,
+            3
+          ],
+          "minimumHeightMatrix": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              3,
+              2
+            ],
+            [
+              3,
+              1,
+              0
+            ]
+          ],
+          "minimumArrangementsFound": 2,
+          "occupiedTopCells": 7,
+          "answer": 12
+        },
+        "independentSuite": "qa/applied6-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원문 Q4 문제 PDF 1쪽의 위·앞·오른쪽 옆 실루엣을 직접 대조했다. 위 칸은 7개, 앞 열 높이는 2·2·3, 오른쪽 옆 그림의 인쇄 방향 높이는 3·1·2다. 옆 투영을 위쪽 깊이 순으로 맞추면 앞뒤별 높이는 2·1·3이며, 가능한 최소 높이 배치 합은 11개다. 원문 답안 1쪽의 교사 판정 11개와 일치한다. 원본 그림은 보존하고 변형은 별도 투영도만 사용한다."
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q04-v6",
+      "genId": "applied6-q04",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 4,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 투영과 최소 개수",
+      "detailType": "위·앞·오른쪽 옆 투영을 만족하는 쌓기나무 최소 개수",
+      "pointBand": "2.7",
+      "text": "쌓기나무로 쌓은 도형을 위와 앞, 오른쪽 옆에서 본 그림이 다음과 같습니다. 이 그림이 되도록 쌓기나무를 쌓는 방법 중 최소 개수는 몇 개입니까?",
+      "answer": "11",
+      "answerParts": [
+        11
+      ],
+      "answerLabels": [
+        "최소 쌓기나무 개수"
+      ],
+      "acceptedAnswers": [
+        "11"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q04-v6.svg",
+        "alt": "쌓기나무를 위, 앞, 옆에서 본 그림"
+      },
+      "solutionSteps": [
+        "위에서 본 그림의 칸은 6칸이므로, 쌓기나무를 한 개씩 놓는 데 6개가 필요합니다.",
+        "앞에서 본 가장 높은 칸의 열별 높이는 [3, 3, 2]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [3, 1, 2]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다.",
+        "가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 3 3 · / · · 1 / 1 1 2입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다.",
+        "이 배치의 쌓기나무 수는 각 줄의 합 11개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 11개입니다."
+      ],
+      "solution": "위에서 본 그림의 칸은 6칸이므로, 쌓기나무를 한 개씩 놓는 데 6개가 필요합니다. 앞에서 본 가장 높은 칸의 열별 높이는 [3, 3, 2]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [3, 1, 2]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다. 가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 3 3 · / · · 1 / 1 1 2입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다. 이 배치의 쌓기나무 수는 각 줄의 합 11개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 11개입니다.",
+      "learningPoint": "위에서 본 칸마다 최소 한 개씩 놓고, 앞·옆 실루엣의 최대 높이를 함께 만족시키는 높이 배치를 찾아 쌓기나무 수를 최소화하기",
+      "learningLocation": "활용 6회 · 원문 4번 · 쌓기나무 세 방향 투영과 최소 개수",
+      "verification": {
+        "primaryMethod": "enumerate every integer height assignment on occupied top-view cells and retain only matrices matching front and right-side projections",
+        "independentMethod": "projection maxima and exact integer search over all permitted stack heights",
+        "parameters": {
+          "topFootprint": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "frontColumnHeights": [
+            3,
+            3,
+            2
+          ],
+          "rightSidePrintedHeights": [
+            2,
+            1,
+            3
+          ],
+          "rightSideFrontToBackHeights": [
+            3,
+            1,
+            2
+          ],
+          "minimumHeightMatrix": [
+            [
+              3,
+              3,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          "minimumArrangementsFound": 1,
+          "occupiedTopCells": 6,
+          "answer": 11
+        },
+        "independentSuite": "qa/applied6-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원문 Q4 문제 PDF 1쪽의 위·앞·오른쪽 옆 실루엣을 직접 대조했다. 위 칸은 7개, 앞 열 높이는 2·2·3, 오른쪽 옆 그림의 인쇄 방향 높이는 3·1·2다. 옆 투영을 위쪽 깊이 순으로 맞추면 앞뒤별 높이는 2·1·3이며, 가능한 최소 높이 배치 합은 11개다. 원문 답안 1쪽의 교사 판정 11개와 일치한다. 원본 그림은 보존하고 변형은 별도 투영도만 사용한다."
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q04-v7",
+      "genId": "applied6-q04",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 4,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 투영과 최소 개수",
+      "detailType": "위·앞·오른쪽 옆 투영을 만족하는 쌓기나무 최소 개수",
+      "pointBand": "2.7",
+      "text": "쌓기나무로 쌓은 도형을 위와 앞, 오른쪽 옆에서 본 그림이 다음과 같습니다. 이 그림이 되도록 쌓기나무를 쌓는 방법 중 최소 개수는 몇 개입니까?",
+      "answer": "11",
+      "answerParts": [
+        11
+      ],
+      "answerLabels": [
+        "최소 쌓기나무 개수"
+      ],
+      "acceptedAnswers": [
+        "11"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q04-v7.svg",
+        "alt": "쌓기나무를 위, 앞, 옆에서 본 그림"
+      },
+      "solutionSteps": [
+        "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다.",
+        "앞에서 본 가장 높은 칸의 열별 높이는 [2, 2, 1]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 2, 2]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다.",
+        "가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 1 2 1 / 1 2 1 / 2 1 ·입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다.",
+        "이 배치의 쌓기나무 수는 각 줄의 합 11개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 11개입니다."
+      ],
+      "solution": "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다. 앞에서 본 가장 높은 칸의 열별 높이는 [2, 2, 1]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 2, 2]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다. 가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 1 2 1 / 1 2 1 / 2 1 ·입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다. 이 배치의 쌓기나무 수는 각 줄의 합 11개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 11개입니다.",
+      "learningPoint": "위에서 본 칸마다 최소 한 개씩 놓고, 앞·옆 실루엣의 최대 높이를 함께 만족시키는 높이 배치를 찾아 쌓기나무 수를 최소화하기",
+      "learningLocation": "활용 6회 · 원문 4번 · 쌓기나무 세 방향 투영과 최소 개수",
+      "verification": {
+        "primaryMethod": "enumerate every integer height assignment on occupied top-view cells and retain only matrices matching front and right-side projections",
+        "independentMethod": "projection maxima and exact integer search over all permitted stack heights",
+        "parameters": {
+          "topFootprint": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "frontColumnHeights": [
+            2,
+            2,
+            1
+          ],
+          "rightSidePrintedHeights": [
+            2,
+            2,
+            2
+          ],
+          "rightSideFrontToBackHeights": [
+            2,
+            2,
+            2
+          ],
+          "minimumHeightMatrix": [
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              2,
+              1,
+              0
+            ]
+          ],
+          "minimumArrangementsFound": 6,
+          "occupiedTopCells": 8,
+          "answer": 11
+        },
+        "independentSuite": "qa/applied6-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원문 Q4 문제 PDF 1쪽의 위·앞·오른쪽 옆 실루엣을 직접 대조했다. 위 칸은 7개, 앞 열 높이는 2·2·3, 오른쪽 옆 그림의 인쇄 방향 높이는 3·1·2다. 옆 투영을 위쪽 깊이 순으로 맞추면 앞뒤별 높이는 2·1·3이며, 가능한 최소 높이 배치 합은 11개다. 원문 답안 1쪽의 교사 판정 11개와 일치한다. 원본 그림은 보존하고 변형은 별도 투영도만 사용한다."
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q04-v8",
+      "genId": "applied6-q04",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 4,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 투영과 최소 개수",
+      "detailType": "위·앞·오른쪽 옆 투영을 만족하는 쌓기나무 최소 개수",
+      "pointBand": "2.7",
+      "text": "쌓기나무로 쌓은 도형을 위와 앞, 오른쪽 옆에서 본 그림이 다음과 같습니다. 이 그림이 되도록 쌓기나무를 쌓는 방법 중 최소 개수는 몇 개입니까?",
+      "answer": "12",
+      "answerParts": [
+        12
+      ],
+      "answerLabels": [
+        "최소 쌓기나무 개수"
+      ],
+      "acceptedAnswers": [
+        "12"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q04-v8.svg",
+        "alt": "쌓기나무를 위, 앞, 옆에서 본 그림"
+      },
+      "solutionSteps": [
+        "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다.",
+        "앞에서 본 가장 높은 칸의 열별 높이는 [2, 2, 3]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 2, 3]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다.",
+        "가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 1 2 1 / 2 1 1 / 1 · 3입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다.",
+        "이 배치의 쌓기나무 수는 각 줄의 합 12개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 12개입니다."
+      ],
+      "solution": "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다. 앞에서 본 가장 높은 칸의 열별 높이는 [2, 2, 3]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 2, 3]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다. 가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 1 2 1 / 2 1 1 / 1 · 3입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다. 이 배치의 쌓기나무 수는 각 줄의 합 12개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 12개입니다.",
+      "learningPoint": "위에서 본 칸마다 최소 한 개씩 놓고, 앞·옆 실루엣의 최대 높이를 함께 만족시키는 높이 배치를 찾아 쌓기나무 수를 최소화하기",
+      "learningLocation": "활용 6회 · 원문 4번 · 쌓기나무 세 방향 투영과 최소 개수",
+      "verification": {
+        "primaryMethod": "enumerate every integer height assignment on occupied top-view cells and retain only matrices matching front and right-side projections",
+        "independentMethod": "projection maxima and exact integer search over all permitted stack heights",
+        "parameters": {
+          "topFootprint": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              0,
+              1
+            ]
+          ],
+          "frontColumnHeights": [
+            2,
+            2,
+            3
+          ],
+          "rightSidePrintedHeights": [
+            3,
+            2,
+            2
+          ],
+          "rightSideFrontToBackHeights": [
+            2,
+            2,
+            3
+          ],
+          "minimumHeightMatrix": [
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              2,
+              1,
+              1
+            ],
+            [
+              1,
+              0,
+              3
+            ]
+          ],
+          "minimumArrangementsFound": 2,
+          "occupiedTopCells": 8,
+          "answer": 12
+        },
+        "independentSuite": "qa/applied6-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원문 Q4 문제 PDF 1쪽의 위·앞·오른쪽 옆 실루엣을 직접 대조했다. 위 칸은 7개, 앞 열 높이는 2·2·3, 오른쪽 옆 그림의 인쇄 방향 높이는 3·1·2다. 옆 투영을 위쪽 깊이 순으로 맞추면 앞뒤별 높이는 2·1·3이며, 가능한 최소 높이 배치 합은 11개다. 원문 답안 1쪽의 교사 판정 11개와 일치한다. 원본 그림은 보존하고 변형은 별도 투영도만 사용한다."
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q04-v9",
+      "genId": "applied6-q04",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 4,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "쌓기나무의 투영과 최소 개수",
+      "detailType": "위·앞·오른쪽 옆 투영을 만족하는 쌓기나무 최소 개수",
+      "pointBand": "2.7",
+      "text": "쌓기나무로 쌓은 도형을 위와 앞, 오른쪽 옆에서 본 그림이 다음과 같습니다. 이 그림이 되도록 쌓기나무를 쌓는 방법 중 최소 개수는 몇 개입니까?",
+      "answer": "14",
+      "answerParts": [
+        14
+      ],
+      "answerLabels": [
+        "최소 쌓기나무 개수"
+      ],
+      "acceptedAnswers": [
+        "14"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q04-v9.svg",
+        "alt": "쌓기나무를 위, 앞, 옆에서 본 그림"
+      },
+      "solutionSteps": [
+        "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다.",
+        "앞에서 본 가장 높은 칸의 열별 높이는 [2, 3, 2]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 3, 3]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다.",
+        "가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 · 1 2 / 1 3 1 / 2 3 1입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다.",
+        "이 배치의 쌓기나무 수는 각 줄의 합 14개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 14개입니다."
+      ],
+      "solution": "위에서 본 그림의 칸은 8칸이므로, 쌓기나무를 한 개씩 놓는 데 8개가 필요합니다. 앞에서 본 가장 높은 칸의 열별 높이는 [2, 3, 2]이고, 오른쪽 옆에서 본 앞뒤별 높이는 [2, 3, 3]입니다. 각 열과 앞뒤 줄의 최대 높이를 모두 맞춰야 합니다. 가능한 각 칸의 높이를 대조하면 최소가 되는 높이 배치는 위쪽부터 · 1 2 / 1 3 1 / 2 3 1입니다. 이 배치는 앞·옆 실루엣을 모두 만족합니다. 이 배치의 쌓기나무 수는 각 줄의 합 14개입니다. 모든 가능한 높이 배치를 전수 비교해도 이보다 적은 배치는 없으므로 최소는 14개입니다.",
+      "learningPoint": "위에서 본 칸마다 최소 한 개씩 놓고, 앞·옆 실루엣의 최대 높이를 함께 만족시키는 높이 배치를 찾아 쌓기나무 수를 최소화하기",
+      "learningLocation": "활용 6회 · 원문 4번 · 쌓기나무 세 방향 투영과 최소 개수",
+      "verification": {
+        "primaryMethod": "enumerate every integer height assignment on occupied top-view cells and retain only matrices matching front and right-side projections",
+        "independentMethod": "projection maxima and exact integer search over all permitted stack heights",
+        "parameters": {
+          "topFootprint": [
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "frontColumnHeights": [
+            2,
+            3,
+            2
+          ],
+          "rightSidePrintedHeights": [
+            3,
+            3,
+            2
+          ],
+          "rightSideFrontToBackHeights": [
+            2,
+            3,
+            3
+          ],
+          "minimumHeightMatrix": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              1,
+              3,
+              1
+            ],
+            [
+              2,
+              3,
+              1
+            ]
+          ],
+          "minimumArrangementsFound": 2,
+          "occupiedTopCells": 8,
+          "answer": 14
+        },
+        "independentSuite": "qa/applied6-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원문 Q4 문제 PDF 1쪽의 위·앞·오른쪽 옆 실루엣을 직접 대조했다. 위 칸은 7개, 앞 열 높이는 2·2·3, 오른쪽 옆 그림의 인쇄 방향 높이는 3·1·2다. 옆 투영을 위쪽 깊이 순으로 맞추면 앞뒤별 높이는 2·1·3이며, 가능한 최소 높이 배치 합은 11개다. 원문 답안 1쪽의 교사 판정 11개와 일치한다. 원본 그림은 보존하고 변형은 별도 투영도만 사용한다."
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
       "id": "applied6-q05-v1",
       "genId": "applied6-q05",
       "sourceSet": "applied",
@@ -1644,6 +3465,825 @@
         "label": "하",
         "sourceReasoningPreserved": true,
         "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied6-q06-v1",
+      "genId": "applied6-q06",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 6,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 회전과 이동",
+      "detailType": "화살표를 따라 구르는 주사위의 바닥면 눈의 합",
+      "pointBand": "2.7",
+      "text": "마주 보는 눈의 합이 7인 주사위를 그림의 화살표를 따라 굴립니다. 이때 시작 칸을 포함한 9개의 각 칸의 바닥에 닿는 면에 있는 눈의 합을 구하시오.",
+      "answer": "25",
+      "answerParts": [
+        25
+      ],
+      "answerLabels": [
+        "바닥면 눈의 합"
+      ],
+      "acceptedAnswers": [
+        "25"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q06-v1.svg",
+        "alt": "9개 칸을 지나는 주사위의 굴림 경로"
+      },
+      "solutionSteps": [
+        "그림의 주사위에서 위 5, 앞 4, 오른쪽 1를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 2, 3, 6입니다.",
+        "주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다.",
+        "시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 2, 1, 5, 4, 2, 3, 5, 1, 2입니다.",
+        "이 눈을 모두 더하면 2+1+5+4+2+3+5+1+2=25입니다."
+      ],
+      "solution": "그림의 주사위에서 위 5, 앞 4, 오른쪽 1를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 2, 3, 6입니다. 주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다. 시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 2, 1, 5, 4, 2, 3, 5, 1, 2입니다. 이 눈을 모두 더하면 2+1+5+4+2+3+5+1+2=25입니다.",
+      "learningPoint": "주사위의 마주 보는 면을 대응시키고 이동 방향마다 바닥면을 갱신해 시작 칸부터 눈의 합 구하기",
+      "learningLocation": "활용 6회 · 원문 6번 · 격자 경로에서 구르는 주사위의 바닥면",
+      "verification": {
+        "primaryMethod": "rotate the six-face orientation one move at a time and sum each visited bottom face",
+        "independentMethod": "recompute all face transitions from the opposite-pair constraints and enumerate the nine visited cells",
+        "parameters": {
+          "startOrientation": {
+            "top": 5,
+            "bottom": 2,
+            "front": 4,
+            "back": 3,
+            "right": 1,
+            "left": 6
+          },
+          "moves": [
+            "R",
+            "R",
+            "D",
+            "D",
+            "D",
+            "D",
+            "L",
+            "L"
+          ],
+          "visitedCellCount": 9,
+          "bottomFaceSequence": [
+            2,
+            1,
+            5,
+            4,
+            2,
+            3,
+            5,
+            1,
+            2
+          ],
+          "answer": 25
+        },
+        "independentSuite": "qa/applied6-q06-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원본 Q6 그림은 3×5 칸의 경로와 시작 주사위(위 1, 앞 2, 오른쪽 3)다. 답안 풀이의 바닥 눈 6,3,1,2,6,5,1,3,6을 독립 회전 계산으로 확인해 합 33을 재확인했다. 새 변형은 원본 그림을 수정하지 않고 같은 9칸 굴림 유형의 별도 그림을 사용한다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q06-v2",
+      "genId": "applied6-q06",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 6,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 회전과 이동",
+      "detailType": "화살표를 따라 구르는 주사위의 바닥면 눈의 합",
+      "pointBand": "2.7",
+      "text": "마주 보는 눈의 합이 7인 주사위를 그림의 화살표를 따라 굴립니다. 이때 시작 칸을 포함한 9개의 각 칸의 바닥에 닿는 면에 있는 눈의 합을 구하시오.",
+      "answer": "26",
+      "answerParts": [
+        26
+      ],
+      "answerLabels": [
+        "바닥면 눈의 합"
+      ],
+      "acceptedAnswers": [
+        "26"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q06-v2.svg",
+        "alt": "9개 칸을 지나는 주사위의 굴림 경로"
+      },
+      "solutionSteps": [
+        "그림의 주사위에서 위 4, 앞 2, 오른쪽 1를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 3, 5, 6입니다.",
+        "주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다.",
+        "시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 3, 1, 4, 2, 3, 5, 4, 1, 3입니다.",
+        "이 눈을 모두 더하면 3+1+4+2+3+5+4+1+3=26입니다."
+      ],
+      "solution": "그림의 주사위에서 위 4, 앞 2, 오른쪽 1를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 3, 5, 6입니다. 주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다. 시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 3, 1, 4, 2, 3, 5, 4, 1, 3입니다. 이 눈을 모두 더하면 3+1+4+2+3+5+4+1+3=26입니다.",
+      "learningPoint": "주사위의 마주 보는 면을 대응시키고 이동 방향마다 바닥면을 갱신해 시작 칸부터 눈의 합 구하기",
+      "learningLocation": "활용 6회 · 원문 6번 · 격자 경로에서 구르는 주사위의 바닥면",
+      "verification": {
+        "primaryMethod": "rotate the six-face orientation one move at a time and sum each visited bottom face",
+        "independentMethod": "recompute all face transitions from the opposite-pair constraints and enumerate the nine visited cells",
+        "parameters": {
+          "startOrientation": {
+            "top": 4,
+            "bottom": 3,
+            "front": 2,
+            "back": 5,
+            "right": 1,
+            "left": 6
+          },
+          "moves": [
+            "R",
+            "R",
+            "D",
+            "D",
+            "D",
+            "D",
+            "L",
+            "L"
+          ],
+          "visitedCellCount": 9,
+          "bottomFaceSequence": [
+            3,
+            1,
+            4,
+            2,
+            3,
+            5,
+            4,
+            1,
+            3
+          ],
+          "answer": 26
+        },
+        "independentSuite": "qa/applied6-q06-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원본 Q6 그림은 3×5 칸의 경로와 시작 주사위(위 1, 앞 2, 오른쪽 3)다. 답안 풀이의 바닥 눈 6,3,1,2,6,5,1,3,6을 독립 회전 계산으로 확인해 합 33을 재확인했다. 새 변형은 원본 그림을 수정하지 않고 같은 9칸 굴림 유형의 별도 그림을 사용한다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q06-v3",
+      "genId": "applied6-q06",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 6,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 회전과 이동",
+      "detailType": "화살표를 따라 구르는 주사위의 바닥면 눈의 합",
+      "pointBand": "2.7",
+      "text": "마주 보는 눈의 합이 7인 주사위를 그림의 화살표를 따라 굴립니다. 이때 시작 칸을 포함한 9개의 각 칸의 바닥에 닿는 면에 있는 눈의 합을 구하시오.",
+      "answer": "27",
+      "answerParts": [
+        27
+      ],
+      "answerLabels": [
+        "바닥면 눈의 합"
+      ],
+      "acceptedAnswers": [
+        "27"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q06-v3.svg",
+        "alt": "9개 칸을 지나는 주사위의 굴림 경로"
+      },
+      "solutionSteps": [
+        "그림의 주사위에서 위 3, 앞 5, 오른쪽 1를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 4, 2, 6입니다.",
+        "주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다.",
+        "시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 4, 1, 3, 5, 4, 2, 3, 1, 4입니다.",
+        "이 눈을 모두 더하면 4+1+3+5+4+2+3+1+4=27입니다."
+      ],
+      "solution": "그림의 주사위에서 위 3, 앞 5, 오른쪽 1를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 4, 2, 6입니다. 주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다. 시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 4, 1, 3, 5, 4, 2, 3, 1, 4입니다. 이 눈을 모두 더하면 4+1+3+5+4+2+3+1+4=27입니다.",
+      "learningPoint": "주사위의 마주 보는 면을 대응시키고 이동 방향마다 바닥면을 갱신해 시작 칸부터 눈의 합 구하기",
+      "learningLocation": "활용 6회 · 원문 6번 · 격자 경로에서 구르는 주사위의 바닥면",
+      "verification": {
+        "primaryMethod": "rotate the six-face orientation one move at a time and sum each visited bottom face",
+        "independentMethod": "recompute all face transitions from the opposite-pair constraints and enumerate the nine visited cells",
+        "parameters": {
+          "startOrientation": {
+            "top": 3,
+            "bottom": 4,
+            "front": 5,
+            "back": 2,
+            "right": 1,
+            "left": 6
+          },
+          "moves": [
+            "R",
+            "R",
+            "D",
+            "D",
+            "D",
+            "D",
+            "L",
+            "L"
+          ],
+          "visitedCellCount": 9,
+          "bottomFaceSequence": [
+            4,
+            1,
+            3,
+            5,
+            4,
+            2,
+            3,
+            1,
+            4
+          ],
+          "answer": 27
+        },
+        "independentSuite": "qa/applied6-q06-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원본 Q6 그림은 3×5 칸의 경로와 시작 주사위(위 1, 앞 2, 오른쪽 3)다. 답안 풀이의 바닥 눈 6,3,1,2,6,5,1,3,6을 독립 회전 계산으로 확인해 합 33을 재확인했다. 새 변형은 원본 그림을 수정하지 않고 같은 9칸 굴림 유형의 별도 그림을 사용한다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q06-v4",
+      "genId": "applied6-q06",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 6,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 회전과 이동",
+      "detailType": "화살표를 따라 구르는 주사위의 바닥면 눈의 합",
+      "pointBand": "2.7",
+      "text": "마주 보는 눈의 합이 7인 주사위를 그림의 화살표를 따라 굴립니다. 이때 시작 칸을 포함한 9개의 각 칸의 바닥에 닿는 면에 있는 눈의 합을 구하시오.",
+      "answer": "28",
+      "answerParts": [
+        28
+      ],
+      "answerLabels": [
+        "바닥면 눈의 합"
+      ],
+      "acceptedAnswers": [
+        "28"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q06-v4.svg",
+        "alt": "9개 칸을 지나는 주사위의 굴림 경로"
+      },
+      "solutionSteps": [
+        "그림의 주사위에서 위 2, 앞 3, 오른쪽 1를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 5, 4, 6입니다.",
+        "주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다.",
+        "시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 5, 1, 2, 3, 5, 4, 2, 1, 5입니다.",
+        "이 눈을 모두 더하면 5+1+2+3+5+4+2+1+5=28입니다."
+      ],
+      "solution": "그림의 주사위에서 위 2, 앞 3, 오른쪽 1를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 5, 4, 6입니다. 주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다. 시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 5, 1, 2, 3, 5, 4, 2, 1, 5입니다. 이 눈을 모두 더하면 5+1+2+3+5+4+2+1+5=28입니다.",
+      "learningPoint": "주사위의 마주 보는 면을 대응시키고 이동 방향마다 바닥면을 갱신해 시작 칸부터 눈의 합 구하기",
+      "learningLocation": "활용 6회 · 원문 6번 · 격자 경로에서 구르는 주사위의 바닥면",
+      "verification": {
+        "primaryMethod": "rotate the six-face orientation one move at a time and sum each visited bottom face",
+        "independentMethod": "recompute all face transitions from the opposite-pair constraints and enumerate the nine visited cells",
+        "parameters": {
+          "startOrientation": {
+            "top": 2,
+            "bottom": 5,
+            "front": 3,
+            "back": 4,
+            "right": 1,
+            "left": 6
+          },
+          "moves": [
+            "R",
+            "R",
+            "D",
+            "D",
+            "D",
+            "D",
+            "L",
+            "L"
+          ],
+          "visitedCellCount": 9,
+          "bottomFaceSequence": [
+            5,
+            1,
+            2,
+            3,
+            5,
+            4,
+            2,
+            1,
+            5
+          ],
+          "answer": 28
+        },
+        "independentSuite": "qa/applied6-q06-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원본 Q6 그림은 3×5 칸의 경로와 시작 주사위(위 1, 앞 2, 오른쪽 3)다. 답안 풀이의 바닥 눈 6,3,1,2,6,5,1,3,6을 독립 회전 계산으로 확인해 합 33을 재확인했다. 새 변형은 원본 그림을 수정하지 않고 같은 9칸 굴림 유형의 별도 그림을 사용한다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q06-v5",
+      "genId": "applied6-q06",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 6,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 회전과 이동",
+      "detailType": "화살표를 따라 구르는 주사위의 바닥면 눈의 합",
+      "pointBand": "2.7",
+      "text": "마주 보는 눈의 합이 7인 주사위를 그림의 화살표를 따라 굴립니다. 이때 시작 칸을 포함한 9개의 각 칸의 바닥에 닿는 면에 있는 눈의 합을 구하시오.",
+      "answer": "29",
+      "answerParts": [
+        29
+      ],
+      "answerLabels": [
+        "바닥면 눈의 합"
+      ],
+      "acceptedAnswers": [
+        "29"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q06-v5.svg",
+        "alt": "9개 칸을 지나는 주사위의 굴림 경로"
+      },
+      "solutionSteps": [
+        "그림의 주사위에서 위 3, 앞 1, 오른쪽 2를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 4, 6, 5입니다.",
+        "주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다.",
+        "시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 4, 2, 3, 1, 4, 6, 3, 2, 4입니다.",
+        "이 눈을 모두 더하면 4+2+3+1+4+6+3+2+4=29입니다."
+      ],
+      "solution": "그림의 주사위에서 위 3, 앞 1, 오른쪽 2를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 4, 6, 5입니다. 주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다. 시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 4, 2, 3, 1, 4, 6, 3, 2, 4입니다. 이 눈을 모두 더하면 4+2+3+1+4+6+3+2+4=29입니다.",
+      "learningPoint": "주사위의 마주 보는 면을 대응시키고 이동 방향마다 바닥면을 갱신해 시작 칸부터 눈의 합 구하기",
+      "learningLocation": "활용 6회 · 원문 6번 · 격자 경로에서 구르는 주사위의 바닥면",
+      "verification": {
+        "primaryMethod": "rotate the six-face orientation one move at a time and sum each visited bottom face",
+        "independentMethod": "recompute all face transitions from the opposite-pair constraints and enumerate the nine visited cells",
+        "parameters": {
+          "startOrientation": {
+            "top": 3,
+            "bottom": 4,
+            "front": 1,
+            "back": 6,
+            "right": 2,
+            "left": 5
+          },
+          "moves": [
+            "R",
+            "R",
+            "D",
+            "D",
+            "D",
+            "D",
+            "L",
+            "L"
+          ],
+          "visitedCellCount": 9,
+          "bottomFaceSequence": [
+            4,
+            2,
+            3,
+            1,
+            4,
+            6,
+            3,
+            2,
+            4
+          ],
+          "answer": 29
+        },
+        "independentSuite": "qa/applied6-q06-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원본 Q6 그림은 3×5 칸의 경로와 시작 주사위(위 1, 앞 2, 오른쪽 3)다. 답안 풀이의 바닥 눈 6,3,1,2,6,5,1,3,6을 독립 회전 계산으로 확인해 합 33을 재확인했다. 새 변형은 원본 그림을 수정하지 않고 같은 9칸 굴림 유형의 별도 그림을 사용한다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q06-v6",
+      "genId": "applied6-q06",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 6,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 회전과 이동",
+      "detailType": "화살표를 따라 구르는 주사위의 바닥면 눈의 합",
+      "pointBand": "2.7",
+      "text": "마주 보는 눈의 합이 7인 주사위를 그림의 화살표를 따라 굴립니다. 이때 시작 칸을 포함한 9개의 각 칸의 바닥에 닿는 면에 있는 눈의 합을 구하시오.",
+      "answer": "30",
+      "answerParts": [
+        30
+      ],
+      "answerLabels": [
+        "바닥면 눈의 합"
+      ],
+      "acceptedAnswers": [
+        "30"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q06-v6.svg",
+        "alt": "9개 칸을 지나는 주사위의 굴림 경로"
+      },
+      "solutionSteps": [
+        "그림의 주사위에서 위 6, 앞 2, 오른쪽 4를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 1, 5, 3입니다.",
+        "주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다.",
+        "시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 1, 4, 6, 2, 1, 5, 6, 4, 1입니다.",
+        "이 눈을 모두 더하면 1+4+6+2+1+5+6+4+1=30입니다."
+      ],
+      "solution": "그림의 주사위에서 위 6, 앞 2, 오른쪽 4를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 1, 5, 3입니다. 주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다. 시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 1, 4, 6, 2, 1, 5, 6, 4, 1입니다. 이 눈을 모두 더하면 1+4+6+2+1+5+6+4+1=30입니다.",
+      "learningPoint": "주사위의 마주 보는 면을 대응시키고 이동 방향마다 바닥면을 갱신해 시작 칸부터 눈의 합 구하기",
+      "learningLocation": "활용 6회 · 원문 6번 · 격자 경로에서 구르는 주사위의 바닥면",
+      "verification": {
+        "primaryMethod": "rotate the six-face orientation one move at a time and sum each visited bottom face",
+        "independentMethod": "recompute all face transitions from the opposite-pair constraints and enumerate the nine visited cells",
+        "parameters": {
+          "startOrientation": {
+            "top": 6,
+            "bottom": 1,
+            "front": 2,
+            "back": 5,
+            "right": 4,
+            "left": 3
+          },
+          "moves": [
+            "R",
+            "R",
+            "D",
+            "D",
+            "D",
+            "D",
+            "L",
+            "L"
+          ],
+          "visitedCellCount": 9,
+          "bottomFaceSequence": [
+            1,
+            4,
+            6,
+            2,
+            1,
+            5,
+            6,
+            4,
+            1
+          ],
+          "answer": 30
+        },
+        "independentSuite": "qa/applied6-q06-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원본 Q6 그림은 3×5 칸의 경로와 시작 주사위(위 1, 앞 2, 오른쪽 3)다. 답안 풀이의 바닥 눈 6,3,1,2,6,5,1,3,6을 독립 회전 계산으로 확인해 합 33을 재확인했다. 새 변형은 원본 그림을 수정하지 않고 같은 9칸 굴림 유형의 별도 그림을 사용한다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q06-v7",
+      "genId": "applied6-q06",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 6,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 회전과 이동",
+      "detailType": "화살표를 따라 구르는 주사위의 바닥면 눈의 합",
+      "pointBand": "2.7",
+      "text": "마주 보는 눈의 합이 7인 주사위를 그림의 화살표를 따라 굴립니다. 이때 시작 칸을 포함한 9개의 각 칸의 바닥에 닿는 면에 있는 눈의 합을 구하시오.",
+      "answer": "31",
+      "answerParts": [
+        31
+      ],
+      "answerLabels": [
+        "바닥면 눈의 합"
+      ],
+      "acceptedAnswers": [
+        "31"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q06-v7.svg",
+        "alt": "9개 칸을 지나는 주사위의 굴림 경로"
+      },
+      "solutionSteps": [
+        "그림의 주사위에서 위 1, 앞 4, 오른쪽 2를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 6, 3, 5입니다.",
+        "주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다.",
+        "시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 6, 2, 1, 4, 6, 3, 1, 2, 6입니다.",
+        "이 눈을 모두 더하면 6+2+1+4+6+3+1+2+6=31입니다."
+      ],
+      "solution": "그림의 주사위에서 위 1, 앞 4, 오른쪽 2를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 6, 3, 5입니다. 주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다. 시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 6, 2, 1, 4, 6, 3, 1, 2, 6입니다. 이 눈을 모두 더하면 6+2+1+4+6+3+1+2+6=31입니다.",
+      "learningPoint": "주사위의 마주 보는 면을 대응시키고 이동 방향마다 바닥면을 갱신해 시작 칸부터 눈의 합 구하기",
+      "learningLocation": "활용 6회 · 원문 6번 · 격자 경로에서 구르는 주사위의 바닥면",
+      "verification": {
+        "primaryMethod": "rotate the six-face orientation one move at a time and sum each visited bottom face",
+        "independentMethod": "recompute all face transitions from the opposite-pair constraints and enumerate the nine visited cells",
+        "parameters": {
+          "startOrientation": {
+            "top": 1,
+            "bottom": 6,
+            "front": 4,
+            "back": 3,
+            "right": 2,
+            "left": 5
+          },
+          "moves": [
+            "R",
+            "R",
+            "D",
+            "D",
+            "D",
+            "D",
+            "L",
+            "L"
+          ],
+          "visitedCellCount": 9,
+          "bottomFaceSequence": [
+            6,
+            2,
+            1,
+            4,
+            6,
+            3,
+            1,
+            2,
+            6
+          ],
+          "answer": 31
+        },
+        "independentSuite": "qa/applied6-q06-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원본 Q6 그림은 3×5 칸의 경로와 시작 주사위(위 1, 앞 2, 오른쪽 3)다. 답안 풀이의 바닥 눈 6,3,1,2,6,5,1,3,6을 독립 회전 계산으로 확인해 합 33을 재확인했다. 새 변형은 원본 그림을 수정하지 않고 같은 9칸 굴림 유형의 별도 그림을 사용한다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q06-v8",
+      "genId": "applied6-q06",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 6,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 회전과 이동",
+      "detailType": "화살표를 따라 구르는 주사위의 바닥면 눈의 합",
+      "pointBand": "2.7",
+      "text": "마주 보는 눈의 합이 7인 주사위를 그림의 화살표를 따라 굴립니다. 이때 시작 칸을 포함한 9개의 각 칸의 바닥에 닿는 면에 있는 눈의 합을 구하시오.",
+      "answer": "32",
+      "answerParts": [
+        32
+      ],
+      "answerLabels": [
+        "바닥면 눈의 합"
+      ],
+      "acceptedAnswers": [
+        "32"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q06-v8.svg",
+        "alt": "9개 칸을 지나는 주사위의 굴림 경로"
+      },
+      "solutionSteps": [
+        "그림의 주사위에서 위 2, 앞 6, 오른쪽 3를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 5, 1, 4입니다.",
+        "주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다.",
+        "시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 5, 3, 2, 6, 5, 1, 2, 3, 5입니다.",
+        "이 눈을 모두 더하면 5+3+2+6+5+1+2+3+5=32입니다."
+      ],
+      "solution": "그림의 주사위에서 위 2, 앞 6, 오른쪽 3를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 5, 1, 4입니다. 주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다. 시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 5, 3, 2, 6, 5, 1, 2, 3, 5입니다. 이 눈을 모두 더하면 5+3+2+6+5+1+2+3+5=32입니다.",
+      "learningPoint": "주사위의 마주 보는 면을 대응시키고 이동 방향마다 바닥면을 갱신해 시작 칸부터 눈의 합 구하기",
+      "learningLocation": "활용 6회 · 원문 6번 · 격자 경로에서 구르는 주사위의 바닥면",
+      "verification": {
+        "primaryMethod": "rotate the six-face orientation one move at a time and sum each visited bottom face",
+        "independentMethod": "recompute all face transitions from the opposite-pair constraints and enumerate the nine visited cells",
+        "parameters": {
+          "startOrientation": {
+            "top": 2,
+            "bottom": 5,
+            "front": 6,
+            "back": 1,
+            "right": 3,
+            "left": 4
+          },
+          "moves": [
+            "R",
+            "R",
+            "D",
+            "D",
+            "D",
+            "D",
+            "L",
+            "L"
+          ],
+          "visitedCellCount": 9,
+          "bottomFaceSequence": [
+            5,
+            3,
+            2,
+            6,
+            5,
+            1,
+            2,
+            3,
+            5
+          ],
+          "answer": 32
+        },
+        "independentSuite": "qa/applied6-q06-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원본 Q6 그림은 3×5 칸의 경로와 시작 주사위(위 1, 앞 2, 오른쪽 3)다. 답안 풀이의 바닥 눈 6,3,1,2,6,5,1,3,6을 독립 회전 계산으로 확인해 합 33을 재확인했다. 새 변형은 원본 그림을 수정하지 않고 같은 9칸 굴림 유형의 별도 그림을 사용한다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
+      }
+    },
+    {
+      "id": "applied6-q06-v9",
+      "genId": "applied6-q06",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 6,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "입체도형의 회전과 이동",
+      "detailType": "화살표를 따라 구르는 주사위의 바닥면 눈의 합",
+      "pointBand": "2.7",
+      "text": "마주 보는 눈의 합이 7인 주사위를 그림의 화살표를 따라 굴립니다. 이때 시작 칸을 포함한 9개의 각 칸의 바닥에 닿는 면에 있는 눈의 합을 구하시오.",
+      "answer": "34",
+      "answerParts": [
+        34
+      ],
+      "answerLabels": [
+        "바닥면 눈의 합"
+      ],
+      "acceptedAnswers": [
+        "34"
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "src": "assets/applied6/q06-v9.svg",
+        "alt": "9개 칸을 지나는 주사위의 굴림 경로"
+      },
+      "solutionSteps": [
+        "그림의 주사위에서 위 2, 앞 1, 오른쪽 4를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 5, 6, 3입니다.",
+        "주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다.",
+        "시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 5, 4, 2, 1, 5, 6, 2, 4, 5입니다.",
+        "이 눈을 모두 더하면 5+4+2+1+5+6+2+4+5=34입니다."
+      ],
+      "solution": "그림의 주사위에서 위 2, 앞 1, 오른쪽 4를 확인합니다. 마주 보는 면의 눈의 합이 7이므로 아래·뒤·왼쪽은 각각 5, 6, 3입니다. 주사위를 오른쪽으로 굴릴 때마다 오른쪽 면이 새 바닥면이 되고, 아래쪽으로 굴릴 때마다 앞면이 새 바닥면이 됩니다. 왼쪽으로 굴릴 때는 왼쪽 면이 새 바닥면이 됩니다. 시작 칸부터 화살표를 따라가며 바닥면의 눈을 적으면 5, 4, 2, 1, 5, 6, 2, 4, 5입니다. 이 눈을 모두 더하면 5+4+2+1+5+6+2+4+5=34입니다.",
+      "learningPoint": "주사위의 마주 보는 면을 대응시키고 이동 방향마다 바닥면을 갱신해 시작 칸부터 눈의 합 구하기",
+      "learningLocation": "활용 6회 · 원문 6번 · 격자 경로에서 구르는 주사위의 바닥면",
+      "verification": {
+        "primaryMethod": "rotate the six-face orientation one move at a time and sum each visited bottom face",
+        "independentMethod": "recompute all face transitions from the opposite-pair constraints and enumerate the nine visited cells",
+        "parameters": {
+          "startOrientation": {
+            "top": 2,
+            "bottom": 5,
+            "front": 1,
+            "back": 6,
+            "right": 4,
+            "left": 3
+          },
+          "moves": [
+            "R",
+            "R",
+            "D",
+            "D",
+            "D",
+            "D",
+            "L",
+            "L"
+          ],
+          "visitedCellCount": 9,
+          "bottomFaceSequence": [
+            5,
+            4,
+            2,
+            1,
+            5,
+            6,
+            2,
+            4,
+            5
+          ],
+          "answer": 34
+        },
+        "independentSuite": "qa/applied6-q06-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": false,
+        "variantUsesNewSameTypeDrawing": true,
+        "sourceNote": "원본 Q6 그림은 3×5 칸의 경로와 시작 주사위(위 1, 앞 2, 오른쪽 3)다. 답안 풀이의 바닥 눈 6,3,1,2,6,5,1,3,6을 독립 회전 계산으로 확인해 합 33을 재확인했다. 새 변형은 원본 그림을 수정하지 않고 같은 9칸 굴림 유형의 별도 그림을 사용한다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "원문 PDF에 Q1~12는 2.7점 문제라고 명시되어 있다."
       }
     },
     {
@@ -6549,6 +9189,672 @@
         "measuredVariantRate": null,
         "estimated": true,
         "rationale": "원문 PDF에 개별 배점이 인쇄되어 있지 않아 중간 구간(13~22번)의 3.4점대로 추정했다."
+      }
+    },
+    {
+      "id": "applied6-q15-v1",
+      "genId": "applied6-q15",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 15,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 자릿값과 거울 대칭",
+      "detailType": "거울에 비친 디지털 숫자와 원래 수의 차로 여섯 자리 수 찾기",
+      "pointBand": "3.4",
+      "text": "디지털 숫자로 여섯 자리 수가 적힌 카드가 있습니다. 이 카드를 왼쪽에서 거울에 비추어 보았더니 거울에 비친 수가 원래 적힌 수보다 775,113 더 컸습니다. 원래 적힌 수를 구하시오.",
+      "answer": "105088",
+      "answerParts": [
+        105088
+      ],
+      "answerLabels": [
+        "원래 적힌 여섯 자리 수"
+      ],
+      "acceptedAnswers": [
+        "105088"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다.",
+        "이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다.",
+        "원래 수를 105088로 놓으면 거울에 비친 수는 880201입니다. 실제로 880201−105088=775,113입니다.",
+        "가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 105088 하나뿐입니다. 따라서 원래 적힌 수는 105088입니다."
+      ],
+      "solution": "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다. 이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다. 원래 수를 105088로 놓으면 거울에 비친 수는 880201입니다. 실제로 880201−105088=775,113입니다. 가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 105088 하나뿐입니다. 따라서 원래 적힌 수는 105088입니다.",
+      "learningPoint": "디지털 숫자를 거울에 비추었을 때의 자리 순서와 숫자 모양을 바꾸어 차의 조건에 맞는 수를 찾기",
+      "learningLocation": "활용 6회 · 원문 15번 · 디지털 숫자의 거울상과 수의 차",
+      "verification": {
+        "primaryMethod": "reverse the digit string and map 2↔5; compute reflected minus original",
+        "independentMethod": "exhaustively enumerate all valid six-digit strings and group by reflected-minus-original difference",
+        "parameters": {
+          "difference": 775113,
+          "original": 105088,
+          "reflected": 880201,
+          "digitMirrorMap": {
+            "0": "0",
+            "1": "1",
+            "2": "5",
+            "5": "2",
+            "8": "8"
+          },
+          "validDigits": [
+            "0",
+            "1",
+            "2",
+            "5",
+            "8"
+          ],
+          "testedCandidateCount": 10000,
+          "uniqueSolutionCount": 1
+        },
+        "independentSuite": "qa/applied6-q15-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 3,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "sourceNote": "원문 인쇄 차 7,760,130은 답안 필기 881,201−105,188=776,013과 일치하지 않는다. 원문 자체의 조건·정답은 수정하지 않고 검수 대기로 유지한다. 유사문제는 각 차를 명시하고 별도 전수 검산했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-estimate-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문은 Q13~22 배점 구간에 있고 문항별 점수는 인쇄되어 있지 않아 3.4점대로 추정했다."
+      }
+    },
+    {
+      "id": "applied6-q15-v2",
+      "genId": "applied6-q15",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 15,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 자릿값과 거울 대칭",
+      "detailType": "거울에 비친 디지털 숫자와 원래 수의 차로 여섯 자리 수 찾기",
+      "pointBand": "3.4",
+      "text": "디지털 숫자로 여섯 자리 수가 적힌 카드가 있습니다. 이 카드를 왼쪽에서 거울에 비추어 보았더니 거울에 비친 수가 원래 적힌 수보다 775,623 더 컸습니다. 원래 적힌 수를 구하시오.",
+      "answer": "112888",
+      "answerParts": [
+        112888
+      ],
+      "answerLabels": [
+        "원래 적힌 여섯 자리 수"
+      ],
+      "acceptedAnswers": [
+        "112888"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다.",
+        "이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다.",
+        "원래 수를 112888로 놓으면 거울에 비친 수는 888511입니다. 실제로 888511−112888=775,623입니다.",
+        "가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 112888 하나뿐입니다. 따라서 원래 적힌 수는 112888입니다."
+      ],
+      "solution": "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다. 이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다. 원래 수를 112888로 놓으면 거울에 비친 수는 888511입니다. 실제로 888511−112888=775,623입니다. 가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 112888 하나뿐입니다. 따라서 원래 적힌 수는 112888입니다.",
+      "learningPoint": "디지털 숫자를 거울에 비추었을 때의 자리 순서와 숫자 모양을 바꾸어 차의 조건에 맞는 수를 찾기",
+      "learningLocation": "활용 6회 · 원문 15번 · 디지털 숫자의 거울상과 수의 차",
+      "verification": {
+        "primaryMethod": "reverse the digit string and map 2↔5; compute reflected minus original",
+        "independentMethod": "exhaustively enumerate all valid six-digit strings and group by reflected-minus-original difference",
+        "parameters": {
+          "difference": 775623,
+          "original": 112888,
+          "reflected": 888511,
+          "digitMirrorMap": {
+            "0": "0",
+            "1": "1",
+            "2": "5",
+            "5": "2",
+            "8": "8"
+          },
+          "validDigits": [
+            "0",
+            "1",
+            "2",
+            "5",
+            "8"
+          ],
+          "testedCandidateCount": 10000,
+          "uniqueSolutionCount": 1
+        },
+        "independentSuite": "qa/applied6-q15-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 3,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "sourceNote": "원문 인쇄 차 7,760,130은 답안 필기 881,201−105,188=776,013과 일치하지 않는다. 원문 자체의 조건·정답은 수정하지 않고 검수 대기로 유지한다. 유사문제는 각 차를 명시하고 별도 전수 검산했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-estimate-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문은 Q13~22 배점 구간에 있고 문항별 점수는 인쇄되어 있지 않아 3.4점대로 추정했다."
+      }
+    },
+    {
+      "id": "applied6-q15-v3",
+      "genId": "applied6-q15",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 15,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 자릿값과 거울 대칭",
+      "detailType": "거울에 비친 디지털 숫자와 원래 수의 차로 여섯 자리 수 찾기",
+      "pointBand": "3.4",
+      "text": "디지털 숫자로 여섯 자리 수가 적힌 카드가 있습니다. 이 카드를 왼쪽에서 거울에 비추어 보았더니 거울에 비친 수가 원래 적힌 수보다 776,223 더 컸습니다. 원래 적힌 수를 구하시오.",
+      "answer": "111888",
+      "answerParts": [
+        111888
+      ],
+      "answerLabels": [
+        "원래 적힌 여섯 자리 수"
+      ],
+      "acceptedAnswers": [
+        "111888"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다.",
+        "이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다.",
+        "원래 수를 111888로 놓으면 거울에 비친 수는 888111입니다. 실제로 888111−111888=776,223입니다.",
+        "가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 111888 하나뿐입니다. 따라서 원래 적힌 수는 111888입니다."
+      ],
+      "solution": "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다. 이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다. 원래 수를 111888로 놓으면 거울에 비친 수는 888111입니다. 실제로 888111−111888=776,223입니다. 가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 111888 하나뿐입니다. 따라서 원래 적힌 수는 111888입니다.",
+      "learningPoint": "디지털 숫자를 거울에 비추었을 때의 자리 순서와 숫자 모양을 바꾸어 차의 조건에 맞는 수를 찾기",
+      "learningLocation": "활용 6회 · 원문 15번 · 디지털 숫자의 거울상과 수의 차",
+      "verification": {
+        "primaryMethod": "reverse the digit string and map 2↔5; compute reflected minus original",
+        "independentMethod": "exhaustively enumerate all valid six-digit strings and group by reflected-minus-original difference",
+        "parameters": {
+          "difference": 776223,
+          "original": 111888,
+          "reflected": 888111,
+          "digitMirrorMap": {
+            "0": "0",
+            "1": "1",
+            "2": "5",
+            "5": "2",
+            "8": "8"
+          },
+          "validDigits": [
+            "0",
+            "1",
+            "2",
+            "5",
+            "8"
+          ],
+          "testedCandidateCount": 10000,
+          "uniqueSolutionCount": 1
+        },
+        "independentSuite": "qa/applied6-q15-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 3,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "sourceNote": "원문 인쇄 차 7,760,130은 답안 필기 881,201−105,188=776,013과 일치하지 않는다. 원문 자체의 조건·정답은 수정하지 않고 검수 대기로 유지한다. 유사문제는 각 차를 명시하고 별도 전수 검산했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-estimate-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문은 Q13~22 배점 구간에 있고 문항별 점수는 인쇄되어 있지 않아 3.4점대로 추정했다."
+      }
+    },
+    {
+      "id": "applied6-q15-v4",
+      "genId": "applied6-q15",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 15,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 자릿값과 거울 대칭",
+      "detailType": "거울에 비친 디지털 숫자와 원래 수의 차로 여섯 자리 수 찾기",
+      "pointBand": "3.4",
+      "text": "디지털 숫자로 여섯 자리 수가 적힌 카드가 있습니다. 이 카드를 왼쪽에서 거울에 비추어 보았더니 거울에 비친 수가 원래 적힌 수보다 776,613 더 컸습니다. 원래 적힌 수를 구하시오.",
+      "answer": "105588",
+      "answerParts": [
+        105588
+      ],
+      "answerLabels": [
+        "원래 적힌 여섯 자리 수"
+      ],
+      "acceptedAnswers": [
+        "105588"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다.",
+        "이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다.",
+        "원래 수를 105588로 놓으면 거울에 비친 수는 882201입니다. 실제로 882201−105588=776,613입니다.",
+        "가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 105588 하나뿐입니다. 따라서 원래 적힌 수는 105588입니다."
+      ],
+      "solution": "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다. 이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다. 원래 수를 105588로 놓으면 거울에 비친 수는 882201입니다. 실제로 882201−105588=776,613입니다. 가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 105588 하나뿐입니다. 따라서 원래 적힌 수는 105588입니다.",
+      "learningPoint": "디지털 숫자를 거울에 비추었을 때의 자리 순서와 숫자 모양을 바꾸어 차의 조건에 맞는 수를 찾기",
+      "learningLocation": "활용 6회 · 원문 15번 · 디지털 숫자의 거울상과 수의 차",
+      "verification": {
+        "primaryMethod": "reverse the digit string and map 2↔5; compute reflected minus original",
+        "independentMethod": "exhaustively enumerate all valid six-digit strings and group by reflected-minus-original difference",
+        "parameters": {
+          "difference": 776613,
+          "original": 105588,
+          "reflected": 882201,
+          "digitMirrorMap": {
+            "0": "0",
+            "1": "1",
+            "2": "5",
+            "5": "2",
+            "8": "8"
+          },
+          "validDigits": [
+            "0",
+            "1",
+            "2",
+            "5",
+            "8"
+          ],
+          "testedCandidateCount": 10000,
+          "uniqueSolutionCount": 1
+        },
+        "independentSuite": "qa/applied6-q15-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 3,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "sourceNote": "원문 인쇄 차 7,760,130은 답안 필기 881,201−105,188=776,013과 일치하지 않는다. 원문 자체의 조건·정답은 수정하지 않고 검수 대기로 유지한다. 유사문제는 각 차를 명시하고 별도 전수 검산했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-estimate-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문은 Q13~22 배점 구간에 있고 문항별 점수는 인쇄되어 있지 않아 3.4점대로 추정했다."
+      }
+    },
+    {
+      "id": "applied6-q15-v5",
+      "genId": "applied6-q15",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 15,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 자릿값과 거울 대칭",
+      "detailType": "거울에 비친 디지털 숫자와 원래 수의 차로 여섯 자리 수 찾기",
+      "pointBand": "3.4",
+      "text": "디지털 숫자로 여섯 자리 수가 적힌 카드가 있습니다. 이 카드를 왼쪽에서 거울에 비추어 보았더니 거울에 비친 수가 원래 적힌 수보다 777,123 더 컸습니다. 원래 적힌 수를 구하시오.",
+      "answer": "110888",
+      "answerParts": [
+        110888
+      ],
+      "answerLabels": [
+        "원래 적힌 여섯 자리 수"
+      ],
+      "acceptedAnswers": [
+        "110888"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다.",
+        "이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다.",
+        "원래 수를 110888로 놓으면 거울에 비친 수는 888011입니다. 실제로 888011−110888=777,123입니다.",
+        "가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 110888 하나뿐입니다. 따라서 원래 적힌 수는 110888입니다."
+      ],
+      "solution": "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다. 이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다. 원래 수를 110888로 놓으면 거울에 비친 수는 888011입니다. 실제로 888011−110888=777,123입니다. 가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 110888 하나뿐입니다. 따라서 원래 적힌 수는 110888입니다.",
+      "learningPoint": "디지털 숫자를 거울에 비추었을 때의 자리 순서와 숫자 모양을 바꾸어 차의 조건에 맞는 수를 찾기",
+      "learningLocation": "활용 6회 · 원문 15번 · 디지털 숫자의 거울상과 수의 차",
+      "verification": {
+        "primaryMethod": "reverse the digit string and map 2↔5; compute reflected minus original",
+        "independentMethod": "exhaustively enumerate all valid six-digit strings and group by reflected-minus-original difference",
+        "parameters": {
+          "difference": 777123,
+          "original": 110888,
+          "reflected": 888011,
+          "digitMirrorMap": {
+            "0": "0",
+            "1": "1",
+            "2": "5",
+            "5": "2",
+            "8": "8"
+          },
+          "validDigits": [
+            "0",
+            "1",
+            "2",
+            "5",
+            "8"
+          ],
+          "testedCandidateCount": 10000,
+          "uniqueSolutionCount": 1
+        },
+        "independentSuite": "qa/applied6-q15-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 3,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "sourceNote": "원문 인쇄 차 7,760,130은 답안 필기 881,201−105,188=776,013과 일치하지 않는다. 원문 자체의 조건·정답은 수정하지 않고 검수 대기로 유지한다. 유사문제는 각 차를 명시하고 별도 전수 검산했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-estimate-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문은 Q13~22 배점 구간에 있고 문항별 점수는 인쇄되어 있지 않아 3.4점대로 추정했다."
+      }
+    },
+    {
+      "id": "applied6-q15-v6",
+      "genId": "applied6-q15",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 15,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 자릿값과 거울 대칭",
+      "detailType": "거울에 비친 디지털 숫자와 원래 수의 차로 여섯 자리 수 찾기",
+      "pointBand": "3.4",
+      "text": "디지털 숫자로 여섯 자리 수가 적힌 카드가 있습니다. 이 카드를 왼쪽에서 거울에 비추어 보았더니 거울에 비친 수가 원래 적힌 수보다 774,723 더 컸습니다. 원래 적힌 수를 구하시오.",
+      "answer": "110288",
+      "answerParts": [
+        110288
+      ],
+      "answerLabels": [
+        "원래 적힌 여섯 자리 수"
+      ],
+      "acceptedAnswers": [
+        "110288"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다.",
+        "이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다.",
+        "원래 수를 110288로 놓으면 거울에 비친 수는 885011입니다. 실제로 885011−110288=774,723입니다.",
+        "가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 110288 하나뿐입니다. 따라서 원래 적힌 수는 110288입니다."
+      ],
+      "solution": "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다. 이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다. 원래 수를 110288로 놓으면 거울에 비친 수는 885011입니다. 실제로 885011−110288=774,723입니다. 가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 110288 하나뿐입니다. 따라서 원래 적힌 수는 110288입니다.",
+      "learningPoint": "디지털 숫자를 거울에 비추었을 때의 자리 순서와 숫자 모양을 바꾸어 차의 조건에 맞는 수를 찾기",
+      "learningLocation": "활용 6회 · 원문 15번 · 디지털 숫자의 거울상과 수의 차",
+      "verification": {
+        "primaryMethod": "reverse the digit string and map 2↔5; compute reflected minus original",
+        "independentMethod": "exhaustively enumerate all valid six-digit strings and group by reflected-minus-original difference",
+        "parameters": {
+          "difference": 774723,
+          "original": 110288,
+          "reflected": 885011,
+          "digitMirrorMap": {
+            "0": "0",
+            "1": "1",
+            "2": "5",
+            "5": "2",
+            "8": "8"
+          },
+          "validDigits": [
+            "0",
+            "1",
+            "2",
+            "5",
+            "8"
+          ],
+          "testedCandidateCount": 10000,
+          "uniqueSolutionCount": 1
+        },
+        "independentSuite": "qa/applied6-q15-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 3,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "sourceNote": "원문 인쇄 차 7,760,130은 답안 필기 881,201−105,188=776,013과 일치하지 않는다. 원문 자체의 조건·정답은 수정하지 않고 검수 대기로 유지한다. 유사문제는 각 차를 명시하고 별도 전수 검산했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-estimate-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문은 Q13~22 배점 구간에 있고 문항별 점수는 인쇄되어 있지 않아 3.4점대로 추정했다."
+      }
+    },
+    {
+      "id": "applied6-q15-v7",
+      "genId": "applied6-q15",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 15,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 자릿값과 거울 대칭",
+      "detailType": "거울에 비친 디지털 숫자와 원래 수의 차로 여섯 자리 수 찾기",
+      "pointBand": "3.4",
+      "text": "디지털 숫자로 여섯 자리 수가 적힌 카드가 있습니다. 이 카드를 왼쪽에서 거울에 비추어 보았더니 거울에 비친 수가 원래 적힌 수보다 777,513 더 컸습니다. 원래 적힌 수를 구하시오.",
+      "answer": "108288",
+      "answerParts": [
+        108288
+      ],
+      "answerLabels": [
+        "원래 적힌 여섯 자리 수"
+      ],
+      "acceptedAnswers": [
+        "108288"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다.",
+        "이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다.",
+        "원래 수를 108288로 놓으면 거울에 비친 수는 885801입니다. 실제로 885801−108288=777,513입니다.",
+        "가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 108288 하나뿐입니다. 따라서 원래 적힌 수는 108288입니다."
+      ],
+      "solution": "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다. 이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다. 원래 수를 108288로 놓으면 거울에 비친 수는 885801입니다. 실제로 885801−108288=777,513입니다. 가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 108288 하나뿐입니다. 따라서 원래 적힌 수는 108288입니다.",
+      "learningPoint": "디지털 숫자를 거울에 비추었을 때의 자리 순서와 숫자 모양을 바꾸어 차의 조건에 맞는 수를 찾기",
+      "learningLocation": "활용 6회 · 원문 15번 · 디지털 숫자의 거울상과 수의 차",
+      "verification": {
+        "primaryMethod": "reverse the digit string and map 2↔5; compute reflected minus original",
+        "independentMethod": "exhaustively enumerate all valid six-digit strings and group by reflected-minus-original difference",
+        "parameters": {
+          "difference": 777513,
+          "original": 108288,
+          "reflected": 885801,
+          "digitMirrorMap": {
+            "0": "0",
+            "1": "1",
+            "2": "5",
+            "5": "2",
+            "8": "8"
+          },
+          "validDigits": [
+            "0",
+            "1",
+            "2",
+            "5",
+            "8"
+          ],
+          "testedCandidateCount": 10000,
+          "uniqueSolutionCount": 1
+        },
+        "independentSuite": "qa/applied6-q15-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 3,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "sourceNote": "원문 인쇄 차 7,760,130은 답안 필기 881,201−105,188=776,013과 일치하지 않는다. 원문 자체의 조건·정답은 수정하지 않고 검수 대기로 유지한다. 유사문제는 각 차를 명시하고 별도 전수 검산했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-estimate-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문은 Q13~22 배점 구간에 있고 문항별 점수는 인쇄되어 있지 않아 3.4점대로 추정했다."
+      }
+    },
+    {
+      "id": "applied6-q15-v8",
+      "genId": "applied6-q15",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 15,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 자릿값과 거울 대칭",
+      "detailType": "거울에 비친 디지털 숫자와 원래 수의 차로 여섯 자리 수 찾기",
+      "pointBand": "3.4",
+      "text": "디지털 숫자로 여섯 자리 수가 적힌 카드가 있습니다. 이 카드를 왼쪽에서 거울에 비추어 보았더니 거울에 비친 수가 원래 적힌 수보다 774,213 더 컸습니다. 원래 적힌 수를 구하시오.",
+      "answer": "108588",
+      "answerParts": [
+        108588
+      ],
+      "answerLabels": [
+        "원래 적힌 여섯 자리 수"
+      ],
+      "acceptedAnswers": [
+        "108588"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다.",
+        "이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다.",
+        "원래 수를 108588로 놓으면 거울에 비친 수는 882801입니다. 실제로 882801−108588=774,213입니다.",
+        "가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 108588 하나뿐입니다. 따라서 원래 적힌 수는 108588입니다."
+      ],
+      "solution": "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다. 이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다. 원래 수를 108588로 놓으면 거울에 비친 수는 882801입니다. 실제로 882801−108588=774,213입니다. 가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 108588 하나뿐입니다. 따라서 원래 적힌 수는 108588입니다.",
+      "learningPoint": "디지털 숫자를 거울에 비추었을 때의 자리 순서와 숫자 모양을 바꾸어 차의 조건에 맞는 수를 찾기",
+      "learningLocation": "활용 6회 · 원문 15번 · 디지털 숫자의 거울상과 수의 차",
+      "verification": {
+        "primaryMethod": "reverse the digit string and map 2↔5; compute reflected minus original",
+        "independentMethod": "exhaustively enumerate all valid six-digit strings and group by reflected-minus-original difference",
+        "parameters": {
+          "difference": 774213,
+          "original": 108588,
+          "reflected": 882801,
+          "digitMirrorMap": {
+            "0": "0",
+            "1": "1",
+            "2": "5",
+            "5": "2",
+            "8": "8"
+          },
+          "validDigits": [
+            "0",
+            "1",
+            "2",
+            "5",
+            "8"
+          ],
+          "testedCandidateCount": 10000,
+          "uniqueSolutionCount": 1
+        },
+        "independentSuite": "qa/applied6-q15-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 3,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "sourceNote": "원문 인쇄 차 7,760,130은 답안 필기 881,201−105,188=776,013과 일치하지 않는다. 원문 자체의 조건·정답은 수정하지 않고 검수 대기로 유지한다. 유사문제는 각 차를 명시하고 별도 전수 검산했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-estimate-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문은 Q13~22 배점 구간에 있고 문항별 점수는 인쇄되어 있지 않아 3.4점대로 추정했다."
+      }
+    },
+    {
+      "id": "applied6-q15-v9",
+      "genId": "applied6-q15",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 15,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 자릿값과 거울 대칭",
+      "detailType": "거울에 비친 디지털 숫자와 원래 수의 차로 여섯 자리 수 찾기",
+      "pointBand": "3.4",
+      "text": "디지털 숫자로 여섯 자리 수가 적힌 카드가 있습니다. 이 카드를 왼쪽에서 거울에 비추어 보았더니 거울에 비친 수가 원래 적힌 수보다 773,823 더 컸습니다. 원래 적힌 수를 구하시오.",
+      "answer": "111288",
+      "answerParts": [
+        111288
+      ],
+      "answerLabels": [
+        "원래 적힌 여섯 자리 수"
+      ],
+      "acceptedAnswers": [
+        "111288"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다.",
+        "이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다.",
+        "원래 수를 111288로 놓으면 거울에 비친 수는 885111입니다. 실제로 885111−111288=773,823입니다.",
+        "가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 111288 하나뿐입니다. 따라서 원래 적힌 수는 111288입니다."
+      ],
+      "solution": "거울에 비추면 숫자의 순서가 거꾸로 되고, 숫자 2와 5는 서로 바뀝니다. 숫자 0, 1, 2, 5, 8만 거울에서도 숫자로 읽힐 수 있습니다. 이 조건을 만족하는 여섯 자리 수를 자리별로 살펴 거울에 비친 수에서 원래 수를 뺍니다. 차가 조건의 수와 같은 경우를 찾습니다. 원래 수를 111288로 놓으면 거울에 비친 수는 885111입니다. 실제로 885111−111288=773,823입니다. 가능한 숫자 조합을 모두 확인했을 때 이 차이를 만드는 여섯 자리 수는 111288 하나뿐입니다. 따라서 원래 적힌 수는 111288입니다.",
+      "learningPoint": "디지털 숫자를 거울에 비추었을 때의 자리 순서와 숫자 모양을 바꾸어 차의 조건에 맞는 수를 찾기",
+      "learningLocation": "활용 6회 · 원문 15번 · 디지털 숫자의 거울상과 수의 차",
+      "verification": {
+        "primaryMethod": "reverse the digit string and map 2↔5; compute reflected minus original",
+        "independentMethod": "exhaustively enumerate all valid six-digit strings and group by reflected-minus-original difference",
+        "parameters": {
+          "difference": 773823,
+          "original": 111288,
+          "reflected": 885111,
+          "digitMirrorMap": {
+            "0": "0",
+            "1": "1",
+            "2": "5",
+            "5": "2",
+            "8": "8"
+          },
+          "validDigits": [
+            "0",
+            "1",
+            "2",
+            "5",
+            "8"
+          ],
+          "testedCandidateCount": 10000,
+          "uniqueSolutionCount": 1
+        },
+        "independentSuite": "qa/applied6-q15-independent-validate.py",
+        "sourceExamPage": 3,
+        "sourceAnswerPage": 3,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "sourceNote": "원문 인쇄 차 7,760,130은 답안 필기 881,201−105,188=776,013과 일치하지 않는다. 원문 자체의 조건·정답은 수정하지 않고 검수 대기로 유지한다. 유사문제는 각 차를 명시하고 별도 전수 검산했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band-estimate-by-question-position",
+        "label": "중",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": true,
+        "rationale": "원문은 Q13~22 배점 구간에 있고 문항별 점수는 인쇄되어 있지 않아 3.4점대로 추정했다."
       }
     },
     {
@@ -15640,14 +18946,14 @@
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 216,
-    "sourceTypes": 24,
+    "independentMathCount": 252,
+    "sourceTypes": 28,
     "variantsPerType": 9,
     "outputReviewed": true,
-    "sourceDrawingCount": 6,
+    "sourceDrawingCount": 9,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "verifiedQuestionCount": 216,
-    "verifiedSourceCount": 24
+    "verifiedQuestionCount": 252,
+    "verifiedSourceCount": 28
   }
 }
