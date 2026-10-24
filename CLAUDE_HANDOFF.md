@@ -2405,4 +2405,4 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - Q16은 p3 원문·답안의 8432/761번째를 대조하고, 각 변형은 자리별 블록 계산과 4,536개 후보 전수정렬로 검산했다. 브라우저·2단·375px·입력/진단·3회 제한·ZIP 7개 항목·문제 2쪽/풀이 5쪽 렌더 검수 완료.
 - Q15는 보류: 원문 p3의 7,760,130 차이 표기와 답안 p3의 `881,201−105,188=776,013`, 답 105,188이 서로 맞지 않는다. `q15-source-discrepancy.json`을 확인하고 교사 판정 전 제작하지 않는다.
 - 공용 `bank/pool.js` PDF 첫 캡처 warmup 수정 뒤 2·3·5·7~14·16 모두 독립수학·브라우저·ZIP 회귀 검사가 통과했다. Q13·14·16 ZIP 실제 PDF도 전 페이지 렌더 확인. SHA·쪽수·근거는 `.private-work/hw-expansion-20261023/hw6/20261024-deadline-status.md` 및 각 `qNN-output-qa/`에 있다.
-- 코드·데이터·검수기는 로컬 main 커밋 `08a75fa061a411efae57ab88d0130262bdd76aef`에 담겼다. GitHub push와 Drive 갱신은 진행 중이다. 사이트는 배포하지 않았다. 사용자 미추적 `bank/drafts/`, `materials/.DS_Store` 보존. 다음 유형은 활용6회 원문 17번이며, 먼저 문제/답안 PDF 원문을 직접 읽는다.
+- GitHub `main`과 로컬 `main`은 커밋 `793a00ae6ed3fffcece0f64b21cc8adc69dc8ae3`에 정렬됐다. Drive 갱신은 진행 중이다. 사이트는 배포하지 않았다. 사용자 미추적 `bank/drafts/`, `materials/.DS_Store` 보존. 다음 유형은 활용6회 원문 17번이며, 먼저 문제/답안 PDF 원문을 직접 읽는다.
