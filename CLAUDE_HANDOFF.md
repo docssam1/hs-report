@@ -2143,3 +2143,101 @@ Drive ZIP `1n-DtUJbs1rhShaEXlxNcdmkdrKmAftk3` 9274991B/SHA8ed77be670c4313960972e
 원문 문제PDF3쪽/답안PDF16쪽 직접 대조. 원본 실제 배치 그림을 그대로 재사용하고22·17·11 영역합 고정. 9개 카드집합×120순열 전수 + 독립 쌍합검산으로 유일해·답 확인. 문제3쪽/상세풀이3쪽 ZIP 4,592,514B SHA`040e386224f1a07ced2a8523325027d377f1d0e6f233b3f6e7174ce640f57c6b`. 앞153개/원시험·성적/1578기존 연습 기록 보존. 3회 연습 제한·최초 응답·진단 연결·모바일·실제 두단 인쇄·ZIP 전체6쪽 통과. 저장소 소스어댑터/레지스트리 통과.
 
 학습색인 81유형729변형 유지, 활용4 확장은행162문항·18유형으로 연결; adapter/catalog/diagnosis cache r4/r8. 브라우저 공개상태 QA 모두 통과. main `eb620aea6a1a423f86b41f720876c54b820aa23b` 반영, Pages run `40056099942` 성공. 운영 사이트 핵심9파일 원시바이트 동일. Drive ZIP `1ugxyM-wNL3SrKDK8ZogNCdbL56Vbwmn0`, 검수ZIP `1ohHIAqS4J_lPTzoO_gg280O6zAFHjy8o`, 문제PDF `1JjAB6vhanyVO06tiw1p6WE0Hbf8I3iZu`, 상세풀이PDF `1IwiVjURDhkVROLfFoswsGmzy1SWV4pR6` 모두 파일 크기·SHA256 재다운로드 일치. 최종 세부 영수증은 비공개 `.private-work/nine-expansion-20261024/round4-missing-16/FINAL_DELIVERY_RECEIPT.json`. **다음: 활용4회14번 원문/답안 PDF 직접 대조.** 17번 기존 승인9개를 보존하고 재제작하지 않는다. 목표 누계는 크기만으로 승인 완료를 뜻하지 않으며 활용 전체·문제은행 전체 미완료.
+
+## 2026-10-24 활용4회7~12번 기존 9개와 전체 ZIP 재확인
+
+사용자 최신 기준은 원문당 총9개이며 활용은 원문 배점대만으로 분류한다. `bank/data/applied4-expanded.json`에 7~12번 각각 9개(총54개)가 이미 있고 전부 `verified`, 배점대 `2.7`·난도 `하`다. 추가 문항 제작이나 15개 단계형 전환은 하지 않는다. 15개로 늘리려던 미승인 탐색 초안은 `.private-work/balanced15-20261024/round4-batch2/abandoned-15-draft/`에 보존했으며 저장소 데이터·화면 연결·배포에는 반영하지 않았다.
+
+기존 전체 162문항 브라우저 검수와 ZIP 재생성을 `GFIELD_POOL_QA_FULL_ZIP=1 node qa/applied4-pool-browser-validate.cjs`로 완료했다. 전체 162문항·풀이가 화면에 표시되고 1440/375 화면, 2단 순서, 답 입력·진단, 3회 제한·최초 응답 보존, 잘림 없음, 외부 쓰기 0건을 확인했다. ZIP은 7개 구성 파일, 문제 PDF 34쪽·상세 풀이 PDF 63쪽이며 문항목록 JSON·문제/풀이 HTML·빠른정답 CSV의 ID 162개가 현행 은행과 일치한다. ZIP SHA-256 `87c1a96f69af4cbc39c6bc690ea38f0738b6f9cd5e2a3cf4f588d62fc5766f0d`, 크기 35,222,484B. 작업 증거는 `.private-work/nine-expansion-20261024/round4-missing-9-11-12/legacy-browser-output/`에 있다. 독립 수학 검수 `qa/applied4-independent-validate.py`도 기존 108개 대상 통과.
+
+이번 재확인은 로컬 검수 후 기존 프로젝트 Drive 폴더 `1XB2t5QvxFll2LlZLwP_R4S9io6vTg8Zk`에 전체162 ZIP(`18wDYc1lSwz32ICNokus3oj-wIzRapReH`, 메타데이터 읽기 재확인)과 영수증(`1Dyy9tBw9YdBmNDOOqpTijYZJ4YEBB1oX`, 3,991B 읽기 확인)을 보관했다. GitHub 커밋·푸시와 Pages 재배포는 하지 않았다. 이 7~12번은 기존 9개 승인본으로 완료 처리한다. 다음 작업은 활용4회 14번 원문/답안 PDF 대조다. 17번 기존 9개는 재제작하지 않는다.
+
+## 2026-10-24 난도별 15개 목표 — 기한 경과 시점 인수인계
+
+사용자 지정 기한은 한국시간 2026-10-24 02:00이며, 확인 시각은 같은 날 12:57 KST로 기한이 경과했다. 이후 새 문항 생성·배포·병합은 시작하지 않는다. 현재 로컬 `main` 작업본의 `bank/data/applied4-balanced15.json`에는 원문 1~12 각각 하5·중5·상5, 총180문항이 있으며 180개 모두 `reviewStatus: verified`다. 승인 은행에서 재사용한 40개는 원본 `applied4-expanded.json`의 기존 모든 필드와 일치한다(불일치 0). 현재 파일 SHA-256은 `9372cfcafa19339c636309c74aca630029ca72e88224cdf827835294faf226c8`이다. 이 자료는 미커밋 로컬 초안이며 공개·배포하지 않았다.
+
+최신 `audit-balanced15.cjs` 결과는 전체 투영 source 900, applied source 270·목표 4,050개, 감사 인덱스의 verified 1,929개 및 benchmark별 잔여 2,445개다. 이 값은 저장소 감사 인덱스의 현황이며 이 180개 초안 전체의 승인 검수나 배포를 증명하지 않는다. 현재 해시 기준 답안 대조를 다시 묶은 `.private-work/balanced15-20261024/round4-batch2/q11-review/current-data-math-rebind.json`은 Q1~6의 별도 90개 및 Q7~12의 별도 90개 독립 검산 결과와 현행 180개 ID/답안을 모두 일치시켰고, Q11 상 5개는 실제 2-4-2 인접 그래프 전수순열에서 각각 유일해를 확인했다. 현행 해시 기준 읽기 전용 브라우저 렌더 `.private-work/balanced15-20261024/round4-batch2/q11-review/current-data-screen-render.json`도 문항/풀이 180개, 그림 135개 전부 로드, 답안 행 180개, PC1440/폰375 수평 넘침 없음, 외부 쓰기 0건을 확인했다. 승인본 40개의 원본 필드는 차이 0이며 `git diff --check`도 통과했다.
+
+기존 ZIP(`.private-work/balanced15-20261024/round4-batch2/q11-review/output-qa/balanced180.zip`, SHA-256 `99316ea8ec991956a3908cac4421f0f395037505c3fd73e8b0fe079a6acb4ea8`)은 문항 ID와 정답은 현행과 같지만, 문항목록의 현행 레코드와 완전히 일치하지 않는다(verification 30개, practiceStorageVersion 15개, levelReview 15개, asset 5개 차이). 두 PDF의 49/57쪽 이미지·배치 스트림은 별도 보존 검수 PDF와 같지만 Q10 저난도 5개에서 ZIP의 원본 그림 자산이 현행 승인본 자산과 다르다(239×259 대 292×298). 따라서 이전 시각 검수는 현행 선택 자산 검수로 대체할 수 없고, 이 ZIP을 최종본으로 간주하지 않는다. 마감 연장 후 현재 현행 자료를 그대로 내보내 독립 ZIP 데이터/그림 바이트 검증, 브라우저, PDF 전수 시각 확인을 수행한다.
+
+남은 범위는 applied 4,050개 quota 전체 검수/연결 및 다른 시리즈다. 현재 audit의 회차별 30 source quota readiness는 활용1 29/30(28번 제외), 2회30/30, 3회30/30, 4회12/30(1~12번), 5~9회 각0/30이다. 추가 승인본이 quota보다 많으면 초과분은 보존하면서 quota 선택을 충족하는 방식으로 산정한다. 목표 전체는 미완료다. 기한 이후에는 새 문항 생성을 계속하지 않는다. 재개 시 현행 요청과 저장소 인수인계의 “원문당 9개” 완료 기준 사이의 충돌도 먼저 정리한다. 현재 작업은 `main` 미커밋 상태이며 GitHub push·Pages 배포·Drive 업로드를 하지 않았다.
+
+
+## 2026-10-24 활용4회 난도별15개 Q13~18 — 270문항 로컬 검수본
+
+사용자는 문제은행 제작을 위한 작업이므로 기존 내용 기준으로 난도 단계를 낮춰도 괜찮다고 확인했다. 이 확인으로 15개 난도별 작업을 이어갔으나, 기존의 원문당9개 운영 결정과 충돌하므로 이 결과는 내부 검토용 초안으로 유지한다. 학생 자료실/메인 연결·커밋·푸시·배포는 하지 않았다.
+
+`bank/data/applied4-balanced15.json`은 원문1~18 각각 하5·중5·상5, 총270문항이다. Q13~18에서 90문항을 추가해 누계 270이 되었고, Q1~12의 기존 180 레코드는 이전 검수본의 레코드 필드와 정확히 일치한다. 활용 난도 분류는 배점대만 사용한다(2.7=하, 3.4=중, 4.2=상). 2.7점으로 기존에 중으로 태깅됐던 40개 draft 레코드는 저로 정정했다. 기존 승인본에서 가져온 항목은 원본 필드를 보존했다. 현행 자료 SHA-256 `2bfdfa37c7824af3e3e361e8292bff73f8cdbacc251781b20be2aecd217a1ef9`.
+
+Q13~18 수학 검산은 `.private-work/balanced15-20261024/round4-batch3/independent-math.json` 및 `independent-13-18.py`에 있다. 90개 중 기존 승인 재사용 25개는 원본과 전 필드 일치, 새 항목 65개는 독립 검산했다. Q13 shortage/leftover 식, Q14 카드 곱 exhaustive uniqueness, Q15 spiral grouping, Q16 5! 배열, Q17 자리별 숫자합, Q18 원본 경로/이동 횟수를 검산했다. Q14 렌더는 빈 머리글 행을 제외해 실제 3×3 칸으로 표시한다. 이전 180개 재결속 증거는 `previous180-record-rebind.json`.
+
+실제 ZIP `.private-work/balanced15-20261024/round4-batch3/output-qa/balanced270.zip`은 7개 항목이며 문제 PDF 70쪽, 상세 풀이 PDF 86쪽이다. 문제·풀이·CSV ID는 현재 270개와 일치하고, 최종 전수 이미지/배치 비교를 통과했다. SHA-256 `c04ab83949a822b6267a27fae80ff9843345d48beae6e79bc1966dc999e1a648`, 크기 55,719,819B. 브라우저 QA: 18원문×5/5/5, 그림180/표15, PC1440·375, 270 답 입력/진단, 세 번 시도/최초 응답 보존, 기존 기록 보존, 실제 ZIP, 외부 쓰기0건 모두 통과. `git diff --check` 통과.
+
+마감은 한국시간 2026-10-24 02:00이었다. 이 상태 기록 시각에는 이미 경과했으므로 추가 문항 생성·배포·병합은 진행하지 않는다. 다음 재개 작업은 Q19~24의 현행 원문·답안 PDF와 그림을 직접 대조한 뒤, 작업 범위/원문당9개 대 난도별15개 기준을 다시 확인하는 것이다. Q19~24 제작은 시작하지 않았다.
+
+Drive 보관: 비공개 프로젝트 폴더 `13Vra3QeDFFZlP1It8idTxioQETPE6vGB`에 270 ZIP ID `1-BfVuzwLLtz8eOyXvqofHyqqucoVi_kk`를 올렸다. fetch에서 파일명·폴더·MIME 및 55,719,819B 크기를 확인했다(원시 재다운로드 바이트 해시 검증은 하지 않음). 독립 검산 `1qBqV-G01o9opmTxkgE1m9uXY2v5cYHBV`, 재결속 `1_-4XxS61GLUpsAUzonzNmMGBIfD1PJhe`, ZIP 검증 `1fgBs2-zJCKSHeSGENGyHckE-n8ZjXTJi`, 브라우저 QA `1X_yUwTwYZ_-H1whXg6B0Z-FBwazupX3p`, 영수증 `17qT5z5jtWYXPELgRvp7jV5Kfn08zWw9G`, 인수인계 `1Qaixf_piuos0-kvxWLfRKJfdMCf_7YC9`에 각각 보관.
+
+
+## 2026-10-24 활용4회 난도별15개 진행 — 390개 초안, 4유형 보류
+
+사용자는 문제은행 제작이 목적이므로 기존 내용을 활용한 난도별 확장을 계속해도 된다고 재확인했다. 현재 4회 문항은행은 로컬 초안이며 commit/push/Pages 배포/Drive 업로드를 하지 않았다. 4회 전체와 활성 전체 목표 완료로 표시하지 않는다.
+
+`bank/data/applied4-balanced15.json` 현재 SHA-256: `1634661ed47f5168b03af2ec3592fcc9da56473ebc2c8b5c7be8ccbed1404a39`. 총390문항, 26개 원문(각 하5·중5·상5). 포함 원문 번호 1~20, 23~25, 27~29. 기존 최초 330개에서 출처·답·풀이·학습 정보가 요청 밖 변경되지 않았음을 private verifier로 비교했다(Q24만 잘못 연결된 터널형 15개를 별도 초안으로 보존하고 실제 시계 문항 15개로 대체). 대체 전 터널형 레코드는 `.private-work/balanced15-20261024/round5-batch4/superseded-q24-tunnel-items.json`에 보존했다. 새 시계 문항 SVG 15개는 `bank/assets/applied4/q24-clock-*.svg`다.
+
+원자료는 현재 `materials/초등과정 대비 실전 모의고사 활용 4회.pdf` 6쪽/SHA `f7bbaf0a1f5de40434882b8c0da70cc5b8fb20188f03c5c77458b6a5cac05c59`와 답안 PDF `.private-work/balanced15-20261024/source/applied4-answer.pdf` 30쪽/SHA `67f66e5fa57df1d463261e184f1dced30e3ffbcf0a802a1ec2d9b8066d122fe8`. 이전 `answer-next19..24` 캡처의 문항번호 연결이 잘못되었음을 답안 PDF 페이지19~24 직접 렌더로 교정했다. 현재 원문 답은 19번 19,200원, 20번 9,621, 21번 최대424/최소332, 22번 102개, 23번 20회, 24번 직사각형15개/최댓값-최솟값16, 25번 거북 먼저/토끼 8m 남음. 원문 그림/지문은 PDF 페이지4~6에서 직접 확인했다. 상세 대조는 `source-answer-mismatch-audit.json` 및 `q24-clock-source-rebind.json`에 기록했다.
+
+독립 계산은 `verify-applied4-19-20-23-24.py`와 `verify-applied4-25-27-28-29.py`가 통과했다. 각 새 문제에는 3단계 이상 풀이, 독립 계산 파라미터, 학습 위치·포인트가 있다. Q25 원문 수치로 928/10=92.8, 거북 잔여92이므로 거북 먼저/토끼8m 잔여를 확인했다. Q27은 5자리 전수검사와 prefix+끝 두 자리 4의 배수 열거를 교차검산, Q28은 윤년을 포함한 월별 일수와 날짜 합을 직접 비교, Q29는 여섯 카드 순열 전수 비교와 홀수 일의 자리 제한 계산을 대조했다. Q24는 지름인 마주 보는 점 쌍 6개 중 2개를 골라 15개, 숫자합 차 16×배율로 독립 계산했다.
+
+브라우저 QA `NODE_PATH=/Users/docssam/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules ... node qa/applied4-balanced15-browser-validate.cjs` 통과: 26유형×5/5/5=390, 기존 기록·원시험 점수 불변, PC1440/폰375, 문제/풀이 390개 답 입력 및 진단 링크, 이미지195개 로드·비율, 3회 입력, 실제 ZIP 생성, 외부 쓰기0건. `git diff --check`도 통과했다. 새 실제 ZIP `.private-work/balanced15-20261024/round5-batch4/output-qa/balanced390.zip` 크기 74,619,016B/SHA-256 `f7b8ae6dc42f72752d7d27ec15a17693d56d5affa7f66f271484f98c01ed7749`; 정확히 7항목(문제 PDF, 답안·상세풀이 PDF, HTML2개, 빠른 정답 CSV, 문항목록, 검수기록), 목록·정답·풀이 390 ID 일치. 문제PDF93쪽/풀이PDF127쪽. ZIP 자체 테스트, q24 SVG 인쇄 확인, 문제PDF p78/풀이PDF p109 렌더 확인. 이 ZIP은 미완성 초안이라 배포·Drive 업로드 대상이 아니다.
+
+아직 생성하지 않은/검수 잠긴 원문은 21,22,26,30번이다. 21번 답안 PDF에는 최대424·최소332가 있으나 터널 그림의 정확한 주사위 점유/방향 최적화 독립검산이 남았다. 22번 교사표시는 102개이나 13개 쌓기나무의 고유 성냥개비 선분 좌표 전사가 남았다. 26번 장애물 격자에서 금지 칸 경계·A~D 최단왕복을 원본 그림 좌표로 전사한다. 30번 답안 필기에는 `11×2=22`로 보이는 메모가 있으나 분열 시간 규칙 해석이 원문과 일치하는지 확인하기 전까지 잠근다. 다음 작업은 이 네 문항의 그림/답안 원본을 직접 전사하고 수학을 독립 검산한 뒤에만 각 15개를 생성한다.
+
+## 2026-10-24 활용4회 난도별15개 진행 — 405개 로컬 검수 초안, 원문 대응 보류
+
+사용자는 문제은행 제작을 위한 기존 내용의 활용·난도 조정에 동의했다. 이에 따라 기존 15개 기준으로 진행했으나, 과거의 원문당9개 지시와 다르므로 **15개/원문 산출물은 내부 초안**으로 유지한다. 현재 branch `main`, 변경사항 미커밋. GitHub push, 배포, Drive 업로드는 하지 않았다.
+
+`bank/data/applied4-balanced15.json` SHA-256 `e75f3434405f6b8d4369a66bc4f7e14fc17f338eb400ae8d2ce847399e7105a9`: 총405문항, 27유형 각 하·중·상 5개. 풀이·학습 위치·학습 포인트·검증 기록을 포함한다. Q24 원문을 재대조해 잘못 연결된 터널 유형 15개를 active 데이터에서 빼고 실제 시계판 직사각형 유형 15개로 교체했다. superseded 문항은 `.private-work/balanced15-20261024/round5-batch4/superseded-q24-tunnel-items.json`에만 보존한다. Q26은 격자 경로 새 변형 15개를 독립 작성·검산했다. **Q26 변형 자체의 최단경로 검산은 통과했으나 원문 답과의 1:1 수학 대응은 확인되지 않았다.**
+
+검수 근거는 `.private-work/balanced15-20261024/round5-batch4/`에 있다. 브라우저 QA는 405 ID·답 입력/진단·3회 제한·최초 응답/기존 기록 보존·PC1440/폰375·실제 ZIP·외부쓰기0건을 통과했다. 별도 원문 수학 검산기는 Q19·20·23·24, Q25·27·28·29를 통과했고, 두 verifier가 405 ID/27그룹/하중상 각5/데이터 SHA를 대조했다. 실제 ZIP `output-qa/balanced405.zip`은 76,962,369B, SHA-256 `3c16ac30bca7cef708ffb2763410e390224ab15eac80ec575ae659832d8707e6`; 7개 항목의 문제·풀이·CSV·manifest ID와 이미지 바이트가 현행 데이터에 일치한다. 문제 PDF 97쪽, 상세풀이 PDF 132쪽. 전체 PDF contact sheet를 열어 2단 배치·그림·풀이·잘림을 육안 확인했다. `git diff --check` 통과.
+
+원문 21·22·30은 답안 메모만으로 독립적인 구조·정답 검산이 끝나지 않아 잠금. 26은 신작 변형 내부 검증과 원문 대응을 구분해 보류한다. 27유형의 수량·출력 QA 통과가 원문 30유형의 수학 검수 완료를 뜻하지 않는다. “원문당9개”와 “난도별15개” 운영 목표가 충돌한 상태도 유지한다.
+
+마감은 한국시간 2026-10-24 02:00으로 기록되어 있으며 경과했다. 이 상태 기록 뒤에는 새 문항 생성·배포·병합을 시작하지 않는다. 재개 시 먼저 최신 목표를 원문당9개 또는 난도별15개 중 하나로 정리하고, Q21·22·26·30의 원문/답안 직접 검산 후 외부 반영 여부를 결정한다.
+
+## 2026-10-24 사용자 재개 지시 — 난도별15개 유지, Q22 추가 검수
+
+사용자는 기존 문제를 활용해 문제은행을 만드는 목적이므로 난도 단계를 조정해도 괜찮다고 재확인했다. 최신 작업 지시는 이 허용을 반영해 난도별15개를 이어가는 것이다. 02:00 제한은 사용자가 재개한 작업에 적용하지 않는다.
+
+Q22 하·중·상 5개씩을 추가했다. 각 SVG는 좌표로 정의한 서로 연결된 13개 정육면체 모양이며, 답은 정육면체별 12모서리를 단순 합산하지 않고 겹치는 단위 모서리를 한 번만 세었다. 끝점 모서리 집합과 방향별 격자 모서리 계산이 15개 모두 일치했다. 원문 PDF p4 및 답안 p22를 다시 열어 그림·조건·교사 필기 102개를 대조했다. 새 도형은 원본 배열을 그대로 베낀 것이 아니라 같은 사고 유형을 검수한 새 배치다.
+
+현행 데이터 `bank/data/applied4-balanced15.json`: 420문항, 28개 원문 유형 각 하·중·상 5개, SHA-256 `687d78a45d8fb4a79aa565c6977e15cdd7e2d30e69a576b13cb239fb128f0ebd`. 현재 원문 유형 보류는 21·30번이다. Q26 변형 계산은 독립 통과했으나 원문과의 1:1 수학 대응을 확인하지 못했다.
+
+실제 420문항 ZIP `.private-work/balanced15-20261024/round5-batch4/output-qa/balanced420.zip`: 7개 항목, 문항·풀이·CSV·manifest ID 일치, 문제 PDF 101쪽, 풀이 PDF 137쪽, ZIP 내부 이미지 바이트 일치. ZIP SHA-256 `8a95ecaff39382e58e5473607572fc16e8307095d55c2e7b35b3059d650dec26`. 브라우저에서 전체420개 문제/답 입력·진단 연결, 3회 시도, 기존 기록 보존, 2단 화면 및 실제 ZIP 검사를 통과했다. 문제 PDF p76의 Q22 새 그림과 풀이 PDF p204의 정답·단계 풀이 렌더를 직접 확인했다. Contact sheet에서 2단 배치와 그림 잘림은 보이지 않았다. `git diff --check` 통과.
+
+아직 30유형 목표는 완성되지 않았다. Q21 원문은 관통 구멍이 난 주사위 직육면체에서 모든 바깥면과 바닥면의 눈 합 최대·최소를 구한다. 교사 답 424/332는 있으나 구멍 좌표·각 주사위 방향을 복원해 독립 검산하기 전까지 잠근다. Q30 답안 필기 `11×2=22`와 시간별 분열 문구 사이의 대응이 불명확하므로, 생성 전 시간 규칙을 원문 그림/풀이에 맞춰 재구성하고 답을 독립 검산한다. 다음은 이 두 원문을 해석하는 일이며, 조건이 확정되지 않으면 해당 문항을 보류한 채 다른 검수 가능한 작업부터 한다. 아직 commit, push, 배포, Drive 업로드는 하지 않았다.
+
+## 2026-10-24 활용4회 난도별15개 확장 — 450개 로컬 검수본 완성
+
+사용자는 문제은행 제작이 목적이면 기존 자료의 난이도 단계를 조정해도 괜찮다고 확정했다. 이를 반영해 Q21·Q30도 원문 조건을 그대로 복제한 척하지 않고, 새 변형 문제에 규칙을 명시해 문항 유형에 맞는 독립 계산·풀이로 구성했다. 30개 원문 유형 각각 하·중·상 5개, 총450개이며 현 데이터의 `practiceLevel` 분포도 각 150개다. `bank/data/applied4-balanced15.json` SHA-256 `29d0eabfcbe16c48754f6b492fe3012016b16973fcec34d0681abb1a9a845674`.
+
+검수는 `NODE_PATH=/Users/docssam/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules /Users/docssam/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node qa/applied4-balanced15-browser-validate.cjs` 통과. 최신 SHA와 일치하는 브라우저 증거에서 전체450 입력·진단 연결, 3회 시도 제한/첫 응답 보존, 기존 시도기록 불변, PC1440·폰375, 그림240개, 실제 ZIP 생성 및 외부 쓰기0건을 확인했다. 독립 Q21 계산기도 터널 배치15개×주사위 방향24개에서 최대·최소 합계를 통과했다. 출력 검사 `tools/question-bank/verify-balanced15-output.py --work-dir .private-work/balanced15-20261024/round5-batch4 --bank applied4-balanced15 --render` 통과: ZIP 7항목, 문제 PDF107쪽·답안/풀이 PDF146쪽, 문제/풀이/CSV/문항목록 ID 대응. ZIP `balanced450.zip` 85,017,523B, SHA-256 `00af96f8c34be9616f69a9551b05800161c284bc978e71fa691664de3c47794a`. 렌더 연락표 및 Q21 그림/풀이 확대 페이지를 육안 확인했다. SVG의 intrinsic 크기 누락으로 ZIP PDF에서 일부 그림이 잘리던 문제를 수정하고 최신 출력에 재검증했다. `git diff --check` 통과.
+
+Q21·Q30 변형은 독립적인 새 조건을 문제 안에 명시하며 원본 정답과 동일하다고 주장하지 않는다. Q26은 자체 계산 검증은 통과했지만 원문 세부 조건과의 1:1 대응 근거가 부족하다. 데이터의 기존 source edition notes와 `reviewStatus`를 확인하고 원문 완전 재현 여부를 과장하지 말 것. 이번 산출물은 로컬 미커밋 검수본이며 main 반영, commit, GitHub push, 사이트 배포, Google Drive 업로드는 진행하지 않았다. 기존 9개 뱅크와 이전 390/405/420 ZIP은 보존했다.
+
+## 2026-10-24 재개 — 활용4회 26번 원문 구조 대응 보정
+
+이전 450개 초안의 26번 변형은 격자 칸 중심을 꼭짓점으로 처리하고 색칠 칸을 막았지만, 원문 PDF p5는 도로 교차점이 꼭짓점이고 회색 장애물이 덮은 도로 구간이 통행 불가다. 이 유형 차이를 확인해 기존 15개와 SVG를 `.private-work/balanced15-20261024/round5-batch5/q26-source-audit/superseded-cell-center-q26/`에 보존한 뒤 새 교차점-도로구간 15개로 교체했다. 원문 그림을 직접 확인했고, 답안 PDF p26도 직접 열었다. 답안 페이지에는 화상수업 펜 주석이 겹쳐 공식 최단거리 정답을 확정할 수 없으므로 `sourceAnswerMatch:false`로 두고 새 조건별 최단거리를 자체 계산했다.
+
+신규 지도는 원문처럼 A·D가 격자 교차점이고, 문제에서 회색 장애물이 덮은 전체 도로 구간은 통행할 수 없다고 명시한다. 각 문항의 최단 경로 구간 수는 BFS와 독립 간선거리 반복갱신으로 재계산하고, 답은 왕복 2회로 확인한다. 경로 증인과 차단 간선별 증거 `.private-work/balanced15-20261024/round5-batch5/q26-source-audit/`에 기록. 학생용 풀이에서 내부 알고리즘 이름을 제거하고 교차점까지의 구간 수 비교·예시 최단 경로·왕복 곱셈으로 설명한다.
+
+최신 `bank/data/applied4-balanced15.json` SHA-256 `97503d6471d6dea4c154c64d079e2d8c79f6c02c95d022a083ff464efdefb9e2`. 450개/30유형/하·중·상 각5개 유지. 브라우저 검수에서 전체 답 입력·진단·기록 보존·화면 크기·실제 ZIP 생성이 통과하고 증거 JSON의 데이터 SHA가 일치한다. ZIP 검증기에서 7개 파일·문항/풀이/CSV ID·PDF 107/146쪽 확인. Q19/20/23/24, Q22, Q25/27/28/29, Q21, Q26 독립 검산기 전부 현행 450개 데이터 기준 통과. `git diff --check` 통과.
+
+최신 ZIP `.private-work/balanced15-20261024/round5-batch4/output-qa/balanced450.zip`: 85,007,833B, SHA-256 `9e8f6bf52d4f4522541d2238a132851ae3828365dfdf4d56e64a587d786b6544`. ZIP 안 문제 PDF p93–96과 풀이 PDF p124–128을 실제 렌더로 확인: 26번 15개 그림 모두 인쇄에서 선명하고 잘림 없음, 풀이 답과 거리 계산도 맞음. 검수용 PDF 렌더와 원문 확대 이미지는 `.private-work/balanced15-20261024/round5-batch5/q26-source-audit/`에 있다.
+
+브라우저 ZIP 다운로드 대기 제한을 10분에서 30분으로 조정했다. 느린 렌더가 유효한 450개 출력을 만들기 전에 종료되는 문제를 막기 위함이다. 현 상태는 branch `main`의 로컬 미커밋 작업본이다. 사이트 배포나 Drive 업로드는 하지 않았다.
+
+## 2026-10-24 사용자 동의 후 커밋 및 Drive 보관 상태
+
+사용자는 문제은행 제작 목적의 난도 조정을 허용했다. 위 450개 검수본은 로컬 `main` 커밋 `72194fac1b559c50ad15f339700fbb9dd807254a`로 기록했다. 직접 Git push는 HTTPS 인증 구성이 없어 실패했다. 연결된 GitHub ref 갱신도 새 커밋 객체가 원격에 없어 거부되었으므로, GitHub `main` 반영 및 사이트 배포는 완료로 취급하지 않는다. 다음 재개 때 인증된 Git push가 가능한 상태에서 `origin/main`과 fast-forward 가능 여부를 먼저 확인한다.
+
+Drive 폴더 `황소 활용 모의고사`에 다음 파일을 올리고 목록에서 이름·크기·파일 ID를 확인했다: 최종 ZIP(85,007,833B, ID `1JBbhktaolP5TMX0_GkHPm7WqAbB08Pon`), 은행 데이터(2,078,009B, ID `1AgCW9PtZ4HAuYt6LL5XXhjn73hA77w55`), 브라우저 검수(JSON, ID `1VFJEAMBX-pSO6PhcSvr_Hd5fjzGG2Q36`), Q26 독립 검산(JSON, ID `1X19qrflsPC7NcKQ10RkusOWUVZMetdn8`), 인수인계 문서(571,110B, ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`). Drive 항목은 `미반영` 초안 보관이며 사이트 배포의 증거가 아니다. 로컬 ZIP SHA-256은 `9e8f6bf52d4f4522541d2238a132851ae3828365dfdf4d56e64a587d786b6544`, 은행 데이터 SHA-256은 `97503d6471d6dea4c154c64d079e2d8c79f6c02c95d022a083ff464efdefb9e2`다.

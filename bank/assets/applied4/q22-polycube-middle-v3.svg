@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="304" height="150" viewBox="0 0 304 150" role="img" aria-label="13개 쌓기나무의 입체 배치">
+<g stroke="#252525" stroke-width="1.8" stroke-linejoin="round">
+<polygon fill="#fff" points="20.0,130.0 64.0,130.0 64.0,86.0 20.0,86.0"/>
+<polygon fill="#fff" points="20.0,86.0 64.0,86.0 64.0,42.0 20.0,42.0"/>
+<polygon fill="#fff" points="64.0,130.0 108.0,130.0 108.0,86.0 64.0,86.0"/>
+<polygon fill="#fff" points="64.0,86.0 108.0,86.0 108.0,42.0 64.0,42.0"/>
+<polygon fill="#fff" points="108.0,130.0 152.0,130.0 152.0,86.0 108.0,86.0"/>
+<polygon fill="#fff" points="20.0,42.0 64.0,42.0 86.0,20.0 42.0,20.0"/>
+<polygon fill="#fff" points="42.0,64.0 86.0,64.0 108.0,42.0 64.0,42.0"/>
+<polygon fill="#fff" points="108.0,86.0 152.0,86.0 152.0,42.0 108.0,42.0"/>
+<polygon fill="#fff" points="152.0,130.0 196.0,130.0 196.0,86.0 152.0,86.0"/>
+<polygon fill="#fff" points="64.0,42.0 108.0,42.0 130.0,20.0 86.0,20.0"/>
+<polygon fill="#fff" points="86.0,64.0 130.0,64.0 152.0,42.0 108.0,42.0"/>
+<polygon fill="#f7f7f7" points="152.0,86.0 174.0,64.0 174.0,20.0 152.0,42.0"/>
+<polygon fill="#fff" points="196.0,130.0 240.0,130.0 240.0,86.0 196.0,86.0"/>
+<polygon fill="#fff" points="108.0,42.0 152.0,42.0 174.0,20.0 130.0,20.0"/>
+<polygon fill="#fff" points="130.0,64.0 174.0,64.0 196.0,42.0 152.0,42.0"/>
+<polygon fill="#fff" points="152.0,86.0 196.0,86.0 218.0,64.0 174.0,64.0"/>
+<polygon fill="#f7f7f7" points="240.0,130.0 262.0,108.0 262.0,64.0 240.0,86.0"/>
+<polygon fill="#fff" points="174.0,64.0 218.0,64.0 240.0,42.0 196.0,42.0"/>
+<polygon fill="#fff" points="196.0,86.0 240.0,86.0 262.0,64.0 218.0,64.0"/>
+<polygon fill="#f7f7f7" points="262.0,108.0 284.0,86.0 284.0,42.0 262.0,64.0"/>
+<polygon fill="#fff" points="218.0,64.0 262.0,64.0 284.0,42.0 240.0,42.0"/>
+</g></svg>

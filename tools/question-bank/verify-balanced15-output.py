@@ -76,7 +76,9 @@ with zipfile.ZipFile(zip_path)as z:
         pdf=PdfReader(path)
         assert len(pdf.pages)==browser[page_key]
         if args.final:
-            previous=PdfReader(out/f'zip-{kind}.pdf')
+            reviewed_path=out/f'reviewed-zip-{kind}.pdf'
+            assert reviewed_path.is_file(),f'Missing separately preserved visually reviewed PDF: {reviewed_path.name}'
+            previous=PdfReader(reviewed_path)
             assert len(previous.pages)==len(pdf.pages)
             for before,after in zip(previous.pages,pdf.pages):
                 assert image_signature(before)==image_signature(after),'Released PDF rendering changed after visual review'
