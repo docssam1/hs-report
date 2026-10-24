@@ -14,7 +14,10 @@
     6,
     7,
     8,
+    9,
     10,
+    11,
+    12,
     13,
     17,
     19,
@@ -28,9 +31,6 @@
     2,
     3,
     4,
-    9,
-    11,
-    12,
     14,
     15,
     16,
@@ -5753,6 +5753,3486 @@
         6,
         7
       ]
+    },
+    {
+      "id": "applied4-q09-v1",
+      "genId": "applied4-q09",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 9,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단과 펼친 조각",
+      "pointBand": "2.7",
+      "text": "정사각형 색종이를 그림처럼 두 번 접었습니다. 세로 점선 세 개만 따라 자르고 가로 점선은 자르지 않습니다. 색종이를 모두 펼치면 몇 조각입니까?",
+      "answer": "8",
+      "answerParts": [
+        8
+      ],
+      "answerLabels": [
+        "조각 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "8"
+      ],
+      "solutionSteps": [
+        "가운데 절단선을 펼치면 종이를 가로·세로로 가르는 십자 절단이 되어4부분입니다.",
+        "양 끝 절단선을 펼치면 네 모서리에서 각각 한 조각씩 더 나뉩니다.",
+        "가로 점선은 자르지 않았으므로4＋4＝8조각입니다."
+      ],
+      "solution": "가운데 절단선을 펼치면 종이를 가로·세로로 가르는 십자 절단이 되어4부분입니다. 양 끝 절단선을 펼치면 네 모서리에서 각각 한 조각씩 더 나뉩니다. 가로 점선은 자르지 않았으므로4＋4＝8조각입니다.",
+      "learningPoint": "접힌 종이의 절단선을 펼쳤을 때 이어지는 자리를 구별하기",
+      "learningLocation": "활용 4회 · 원문 9번 · 두 번 접은 종이의 절단과 펼친 조각",
+      "verification": {
+        "primaryMethod": "exact reflected cut-segment planar graph",
+        "parameters": {
+          "cuts": "LCR",
+          "authorGraph": {
+            "vertices": 21,
+            "edges": 28,
+            "components": 1
+          }
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/folding-cuts-original.png",
+        "description": "원본의 두 접기와 세로 세 점선·가로 한 점선",
+        "detail": {
+          "src": "assets/applied4/folding-cuts-detail-original.png",
+          "description": "같은 원본 그림의 마지막 절단선 확대",
+          "width": 141,
+          "height": 82
+        }
+      }
+    },
+    {
+      "id": "applied4-q09-v2",
+      "genId": "applied4-q09",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 9,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단과 펼친 조각",
+      "pointBand": "2.7",
+      "text": "정사각형 색종이를 그림처럼 두 번 접었습니다. 가로 점선만 따라 자르고 세로 점선은 자르지 않습니다. 색종이를 모두 펼치면 몇 조각입니까?",
+      "answer": "2",
+      "answerParts": [
+        2
+      ],
+      "answerLabels": [
+        "조각 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "2"
+      ],
+      "solutionSteps": [
+        "가로 점선은 마지막 삼각형의 꼭짓점 쪽과 긴 변 쪽을 나눕니다.",
+        "두 접기를 풀면 이 절단선 네 개가 종이 가운데의 닫힌 사각형을 이룹니다.",
+        "가운데 조각 하나와 바깥 조각 하나로2조각입니다."
+      ],
+      "solution": "가로 점선은 마지막 삼각형의 꼭짓점 쪽과 긴 변 쪽을 나눕니다. 두 접기를 풀면 이 절단선 네 개가 종이 가운데의 닫힌 사각형을 이룹니다. 가운데 조각 하나와 바깥 조각 하나로2조각입니다.",
+      "learningPoint": "접힌 종이의 절단선을 펼쳤을 때 이어지는 자리를 구별하기",
+      "learningLocation": "활용 4회 · 원문 9번 · 두 번 접은 종이의 절단과 펼친 조각",
+      "verification": {
+        "primaryMethod": "exact reflected cut-segment planar graph",
+        "parameters": {
+          "cuts": "H",
+          "authorGraph": {
+            "vertices": 8,
+            "edges": 8,
+            "components": 2
+          }
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/folding-cuts-original.png",
+        "description": "원본의 두 접기와 세로 세 점선·가로 한 점선",
+        "detail": {
+          "src": "assets/applied4/folding-cuts-detail-original.png",
+          "description": "같은 원본 그림의 마지막 절단선 확대",
+          "width": 141,
+          "height": 82
+        }
+      }
+    },
+    {
+      "id": "applied4-q09-v3",
+      "genId": "applied4-q09",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 9,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단과 펼친 조각",
+      "pointBand": "2.7",
+      "text": "정사각형 색종이를 그림처럼 두 번 접었습니다. 가운데 세로 점선만 따라 자릅니다. 색종이를 모두 펼치면 몇 조각입니까?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "조각 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "4"
+      ],
+      "solutionSteps": [
+        "마지막 삼각형의 가운데 세로 점선을 펼친 자리를 거꾸로 따라갑니다.",
+        "첫 번째 접기까지 펴면 절단선이 두 방향으로 이어지고,모두 펴면 십자 모양입니다.",
+        "접힌 자국 자체는 절단선이 아니며 십자로 갈라진4조각입니다."
+      ],
+      "solution": "마지막 삼각형의 가운데 세로 점선을 펼친 자리를 거꾸로 따라갑니다. 첫 번째 접기까지 펴면 절단선이 두 방향으로 이어지고,모두 펴면 십자 모양입니다. 접힌 자국 자체는 절단선이 아니며 십자로 갈라진4조각입니다.",
+      "learningPoint": "접힌 종이의 절단선을 펼쳤을 때 이어지는 자리를 구별하기",
+      "learningLocation": "활용 4회 · 원문 9번 · 두 번 접은 종이의 절단과 펼친 조각",
+      "verification": {
+        "primaryMethod": "exact reflected cut-segment planar graph",
+        "parameters": {
+          "cuts": "C",
+          "authorGraph": {
+            "vertices": 9,
+            "edges": 12,
+            "components": 1
+          }
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/folding-cuts-original.png",
+        "description": "원본의 두 접기와 세로 세 점선·가로 한 점선",
+        "detail": {
+          "src": "assets/applied4/folding-cuts-detail-original.png",
+          "description": "같은 원본 그림의 마지막 절단선 확대",
+          "width": 141,
+          "height": 82
+        }
+      }
+    },
+    {
+      "id": "applied4-q09-v4",
+      "genId": "applied4-q09",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 9,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단과 펼친 조각",
+      "pointBand": "2.7",
+      "text": "정사각형 색종이를 그림처럼 두 번 접었습니다. 양 끝의 세로 점선 두 개만 따라 자릅니다. 색종이를 모두 펼치면 몇 조각입니까?",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "조각 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "5"
+      ],
+      "solutionSteps": [
+        "왼쪽 세로 절단선을 펼치면 서로 마주 보는 두 모서리가 잘려 나옵니다.",
+        "오른쪽 세로 절단선은 나머지 두 모서리를 자릅니다.",
+        "모서리4조각과 이어진 가운데1조각으로5조각입니다."
+      ],
+      "solution": "왼쪽 세로 절단선을 펼치면 서로 마주 보는 두 모서리가 잘려 나옵니다. 오른쪽 세로 절단선은 나머지 두 모서리를 자릅니다. 모서리4조각과 이어진 가운데1조각으로5조각입니다.",
+      "learningPoint": "접힌 종이의 절단선을 펼쳤을 때 이어지는 자리를 구별하기",
+      "learningLocation": "활용 4회 · 원문 9번 · 두 번 접은 종이의 절단과 펼친 조각",
+      "verification": {
+        "primaryMethod": "exact reflected cut-segment planar graph",
+        "parameters": {
+          "cuts": "LR",
+          "authorGraph": {
+            "vertices": 16,
+            "edges": 20,
+            "components": 1
+          }
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/folding-cuts-original.png",
+        "description": "원본의 두 접기와 세로 세 점선·가로 한 점선",
+        "detail": {
+          "src": "assets/applied4/folding-cuts-detail-original.png",
+          "description": "같은 원본 그림의 마지막 절단선 확대",
+          "width": 141,
+          "height": 82
+        }
+      }
+    },
+    {
+      "id": "applied4-q09-v5",
+      "genId": "applied4-q09",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 9,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단과 펼친 조각",
+      "pointBand": "2.7",
+      "text": "정사각형 색종이를 그림처럼 두 번 접었습니다. 가운데 세로 점선과 가로 점선만 따라 자릅니다. 색종이를 모두 펼치면 몇 조각입니까?",
+      "answer": "8",
+      "answerParts": [
+        8
+      ],
+      "answerLabels": [
+        "조각 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "8"
+      ],
+      "solutionSteps": [
+        "가운데 세로 절단선을 펼친 십자 절단으로4부분이 됩니다.",
+        "가로 절단선을 펼치면 가운데의 닫힌 사각형 경계가 생깁니다.",
+        "십자로 나뉜 각 부분이 다시 둘로 나뉘므로4×2＝8조각입니다."
+      ],
+      "solution": "가운데 세로 절단선을 펼친 십자 절단으로4부분이 됩니다. 가로 절단선을 펼치면 가운데의 닫힌 사각형 경계가 생깁니다. 십자로 나뉜 각 부분이 다시 둘로 나뉘므로4×2＝8조각입니다.",
+      "learningPoint": "접힌 종이의 절단선을 펼쳤을 때 이어지는 자리를 구별하기",
+      "learningLocation": "활용 4회 · 원문 9번 · 두 번 접은 종이의 절단과 펼친 조각",
+      "verification": {
+        "primaryMethod": "exact reflected cut-segment planar graph",
+        "parameters": {
+          "cuts": "CH",
+          "authorGraph": {
+            "vertices": 17,
+            "edges": 24,
+            "components": 1
+          }
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/folding-cuts-original.png",
+        "description": "원본의 두 접기와 세로 세 점선·가로 한 점선",
+        "detail": {
+          "src": "assets/applied4/folding-cuts-detail-original.png",
+          "description": "같은 원본 그림의 마지막 절단선 확대",
+          "width": 141,
+          "height": 82
+        }
+      }
+    },
+    {
+      "id": "applied4-q09-v6",
+      "genId": "applied4-q09",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 9,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단과 펼친 조각",
+      "pointBand": "2.7",
+      "text": "정사각형 색종이를 그림처럼 두 번 접었습니다. 맨 왼쪽 세로 점선과 가로 점선만 따라 자릅니다. 색종이를 모두 펼치면 몇 조각입니까?",
+      "answer": "4",
+      "answerParts": [
+        4
+      ],
+      "answerLabels": [
+        "조각 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "4"
+      ],
+      "solutionSteps": [
+        "왼쪽 세로 절단선으로 서로 마주 보는 두 모서리가 떨어집니다.",
+        "가로 절단선은 가운데의 닫힌 사각형 조각 하나를 따로 만듭니다.",
+        "모서리2개·가운데1개·그 밖에 이어진1개로4조각입니다."
+      ],
+      "solution": "왼쪽 세로 절단선으로 서로 마주 보는 두 모서리가 떨어집니다. 가로 절단선은 가운데의 닫힌 사각형 조각 하나를 따로 만듭니다. 모서리2개·가운데1개·그 밖에 이어진1개로4조각입니다.",
+      "learningPoint": "접힌 종이의 절단선을 펼쳤을 때 이어지는 자리를 구별하기",
+      "learningLocation": "활용 4회 · 원문 9번 · 두 번 접은 종이의 절단과 펼친 조각",
+      "verification": {
+        "primaryMethod": "exact reflected cut-segment planar graph",
+        "parameters": {
+          "cuts": "LH",
+          "authorGraph": {
+            "vertices": 14,
+            "edges": 16,
+            "components": 2
+          }
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/folding-cuts-original.png",
+        "description": "원본의 두 접기와 세로 세 점선·가로 한 점선",
+        "detail": {
+          "src": "assets/applied4/folding-cuts-detail-original.png",
+          "description": "같은 원본 그림의 마지막 절단선 확대",
+          "width": 141,
+          "height": 82
+        }
+      }
+    },
+    {
+      "id": "applied4-q09-v7",
+      "genId": "applied4-q09",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 9,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단과 펼친 조각",
+      "pointBand": "2.7",
+      "text": "정사각형 색종이를 그림처럼 두 번 접었습니다. 양 끝의 세로 점선 두 개와 가로 점선만 따라 자릅니다. 색종이를 모두 펼치면 몇 조각입니까?",
+      "answer": "6",
+      "answerParts": [
+        6
+      ],
+      "answerLabels": [
+        "조각 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "6"
+      ],
+      "solutionSteps": [
+        "양 끝 세로 절단선으로 네 모서리가 떨어집니다.",
+        "가로 절단선으로 가운데의 닫힌 사각형 조각 하나가 떨어집니다.",
+        "모서리4개·가운데1개·그 사이에 이어진1개로6조각입니다."
+      ],
+      "solution": "양 끝 세로 절단선으로 네 모서리가 떨어집니다. 가로 절단선으로 가운데의 닫힌 사각형 조각 하나가 떨어집니다. 모서리4개·가운데1개·그 사이에 이어진1개로6조각입니다.",
+      "learningPoint": "접힌 종이의 절단선을 펼쳤을 때 이어지는 자리를 구별하기",
+      "learningLocation": "활용 4회 · 원문 9번 · 두 번 접은 종이의 절단과 펼친 조각",
+      "verification": {
+        "primaryMethod": "exact reflected cut-segment planar graph",
+        "parameters": {
+          "cuts": "LRH",
+          "authorGraph": {
+            "vertices": 20,
+            "edges": 24,
+            "components": 2
+          }
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/folding-cuts-original.png",
+        "description": "원본의 두 접기와 세로 세 점선·가로 한 점선",
+        "detail": {
+          "src": "assets/applied4/folding-cuts-detail-original.png",
+          "description": "같은 원본 그림의 마지막 절단선 확대",
+          "width": 141,
+          "height": 82
+        }
+      }
+    },
+    {
+      "id": "applied4-q09-v8",
+      "genId": "applied4-q09",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 9,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단과 펼친 조각",
+      "pointBand": "2.7",
+      "text": "정사각형 색종이를 그림처럼 두 번 접었습니다. 맨 왼쪽과 가운데 세로 점선,가로 점선만 따라 자릅니다. 색종이를 모두 펼치면 몇 조각입니까?",
+      "answer": "10",
+      "answerParts": [
+        10
+      ],
+      "answerLabels": [
+        "조각 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "10"
+      ],
+      "solutionSteps": [
+        "가운데 세로 절단선과 가로 절단선을 펼친 결과는8조각입니다.",
+        "왼쪽 세로 절단선으로 서로 마주 보는 두 모서리가 각각 하나씩 더 나뉩니다.",
+        "따라서8＋2＝10조각입니다."
+      ],
+      "solution": "가운데 세로 절단선과 가로 절단선을 펼친 결과는8조각입니다. 왼쪽 세로 절단선으로 서로 마주 보는 두 모서리가 각각 하나씩 더 나뉩니다. 따라서8＋2＝10조각입니다.",
+      "learningPoint": "접힌 종이의 절단선을 펼쳤을 때 이어지는 자리를 구별하기",
+      "learningLocation": "활용 4회 · 원문 9번 · 두 번 접은 종이의 절단과 펼친 조각",
+      "verification": {
+        "primaryMethod": "exact reflected cut-segment planar graph",
+        "parameters": {
+          "cuts": "LCH",
+          "authorGraph": {
+            "vertices": 23,
+            "edges": 32,
+            "components": 1
+          }
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/folding-cuts-original.png",
+        "description": "원본의 두 접기와 세로 세 점선·가로 한 점선",
+        "detail": {
+          "src": "assets/applied4/folding-cuts-detail-original.png",
+          "description": "같은 원본 그림의 마지막 절단선 확대",
+          "width": 141,
+          "height": 82
+        }
+      }
+    },
+    {
+      "id": "applied4-q09-v9",
+      "genId": "applied4-q09",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 9,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단과 펼친 조각",
+      "pointBand": "2.7",
+      "text": "정사각형 색종이를 그림처럼 두 번 접었습니다. 맨 오른쪽과 가운데 세로 점선,가로 점선만 따라 자릅니다. 색종이를 모두 펼치면 몇 조각입니까?",
+      "answer": "10",
+      "answerParts": [
+        10
+      ],
+      "answerLabels": [
+        "조각 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "10"
+      ],
+      "solutionSteps": [
+        "가운데 세로 절단선과 가로 절단선을 펼친 결과는8조각입니다.",
+        "오른쪽 세로 절단선으로 서로 마주 보는 두 모서리가 각각 하나씩 더 나뉩니다.",
+        "따라서8＋2＝10조각입니다."
+      ],
+      "solution": "가운데 세로 절단선과 가로 절단선을 펼친 결과는8조각입니다. 오른쪽 세로 절단선으로 서로 마주 보는 두 모서리가 각각 하나씩 더 나뉩니다. 따라서8＋2＝10조각입니다.",
+      "learningPoint": "접힌 종이의 절단선을 펼쳤을 때 이어지는 자리를 구별하기",
+      "learningLocation": "활용 4회 · 원문 9번 · 두 번 접은 종이의 절단과 펼친 조각",
+      "verification": {
+        "primaryMethod": "exact reflected cut-segment planar graph",
+        "parameters": {
+          "cuts": "RCH",
+          "authorGraph": {
+            "vertices": 23,
+            "edges": 32,
+            "components": 1
+          }
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 9,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/folding-cuts-original.png",
+        "description": "원본의 두 접기와 세로 세 점선·가로 한 점선",
+        "detail": {
+          "src": "assets/applied4/folding-cuts-detail-original.png",
+          "description": "같은 원본 그림의 마지막 절단선 확대",
+          "width": 141,
+          "height": 82
+        }
+      }
+    },
+    {
+      "id": "applied4-q11-v1",
+      "genId": "applied4-q11",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 11,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "배열과 이웃 조건",
+      "detailType": "연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "pointBand": "2.7",
+      "text": "다음 수8개를 그림의 빈칸에 각각 한 번씩 넣으시오. 가로·세로·대각선으로 이웃한 칸에는 차가1인 두 수가 들어갈 수 없습니다. ",
+      "answer": "4, 6, 8, 2, 9, 3, 5, 7 (가능한 한 예)",
+      "answerParts": [
+        4,
+        6,
+        8,
+        2,
+        9,
+        3,
+        5,
+        7
+      ],
+      "answerLabels": [
+        "윗줄 왼쪽",
+        "윗줄 오른쪽",
+        "가운뎃줄 첫째",
+        "가운뎃줄 둘째",
+        "가운뎃줄 셋째",
+        "가운뎃줄 넷째",
+        "아랫줄 왼쪽",
+        "아랫줄 오른쪽"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "4, 6, 8, 2, 9, 3, 5, 7",
+        "5, 7, 8, 2, 9, 3, 4, 6",
+        "6, 4, 3, 9, 2, 8, 7, 5",
+        "7, 5, 3, 9, 2, 8, 6, 4"
+      ],
+      "solutionSteps": [
+        "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다.",
+        "이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[4, 6],가운뎃줄[8, 2, 9, 3],아랫줄[5, 7]입니다.",
+        "목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다.",
+        "숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다."
+      ],
+      "solution": "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다. 이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[4, 6],가운뎃줄[8, 2, 9, 3],아랫줄[5, 7]입니다. 목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다. 숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다.",
+      "learningPoint": "이웃이 많은 칸에 놓을 수 있는 수를 먼저 제한하고 전체 배치를 확인하기",
+      "learningLocation": "활용 4회 · 원문 11번 · 연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "verification": {
+        "primaryMethod": "complete permutations with source-grid constraints",
+        "parameters": {
+          "cards": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "givens": {},
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/nonconsecutive-grid-original.png",
+        "description": "원본의 윗줄2칸·가운뎃줄4칸·아랫줄2칸"
+      },
+      "promptDataLines": [
+        "2 · 3 · 4 · 5 · 6 · 7 · 8 · 9"
+      ],
+      "acceptedAnswerParts": [
+        [
+          4,
+          6,
+          8,
+          2,
+          9,
+          3,
+          5,
+          7
+        ],
+        [
+          5,
+          7,
+          8,
+          2,
+          9,
+          3,
+          4,
+          6
+        ],
+        [
+          6,
+          4,
+          3,
+          9,
+          2,
+          8,
+          7,
+          5
+        ],
+        [
+          7,
+          5,
+          3,
+          9,
+          2,
+          8,
+          6,
+          4
+        ]
+      ],
+      "solutionTable": {
+        "headers": [
+          "두 수",
+          "첫 수의 칸",
+          "다음 수의 칸",
+          "가로 차",
+          "세로 차"
+        ],
+        "rows": [
+          [
+            "2·3",
+            "가운뎃줄 둘째",
+            "가운뎃줄 넷째",
+            2,
+            0
+          ],
+          [
+            "3·4",
+            "가운뎃줄 넷째",
+            "윗줄 왼쪽",
+            2,
+            1
+          ],
+          [
+            "4·5",
+            "윗줄 왼쪽",
+            "아랫줄 왼쪽",
+            0,
+            2
+          ],
+          [
+            "5·6",
+            "아랫줄 왼쪽",
+            "윗줄 오른쪽",
+            1,
+            2
+          ],
+          [
+            "6·7",
+            "윗줄 오른쪽",
+            "아랫줄 오른쪽",
+            0,
+            2
+          ],
+          [
+            "7·8",
+            "아랫줄 오른쪽",
+            "가운뎃줄 첫째",
+            2,
+            1
+          ],
+          [
+            "8·9",
+            "가운뎃줄 첫째",
+            "가운뎃줄 셋째",
+            2,
+            0
+          ]
+        ]
+      },
+      "answerLayout": "eight-cell-placement"
+    },
+    {
+      "id": "applied4-q11-v2",
+      "genId": "applied4-q11",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 11,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "배열과 이웃 조건",
+      "detailType": "연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "pointBand": "2.7",
+      "text": "다음 수8개를 그림의 빈칸에 각각 한 번씩 넣으시오. 가로·세로·대각선으로 이웃한 칸에는 차가1인 두 수가 들어갈 수 없습니다. ",
+      "answer": "5, 7, 9, 3, 10, 4, 6, 8 (가능한 한 예)",
+      "answerParts": [
+        5,
+        7,
+        9,
+        3,
+        10,
+        4,
+        6,
+        8
+      ],
+      "answerLabels": [
+        "윗줄 왼쪽",
+        "윗줄 오른쪽",
+        "가운뎃줄 첫째",
+        "가운뎃줄 둘째",
+        "가운뎃줄 셋째",
+        "가운뎃줄 넷째",
+        "아랫줄 왼쪽",
+        "아랫줄 오른쪽"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "5, 7, 9, 3, 10, 4, 6, 8",
+        "6, 8, 9, 3, 10, 4, 5, 7",
+        "7, 5, 4, 10, 3, 9, 8, 6",
+        "8, 6, 4, 10, 3, 9, 7, 5"
+      ],
+      "solutionSteps": [
+        "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다.",
+        "이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[5, 7],가운뎃줄[9, 3, 10, 4],아랫줄[6, 8]입니다.",
+        "목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다.",
+        "숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다."
+      ],
+      "solution": "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다. 이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[5, 7],가운뎃줄[9, 3, 10, 4],아랫줄[6, 8]입니다. 목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다. 숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다.",
+      "learningPoint": "이웃이 많은 칸에 놓을 수 있는 수를 먼저 제한하고 전체 배치를 확인하기",
+      "learningLocation": "활용 4회 · 원문 11번 · 연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "verification": {
+        "primaryMethod": "complete permutations with source-grid constraints",
+        "parameters": {
+          "cards": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "givens": {},
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/nonconsecutive-grid-original.png",
+        "description": "원본의 윗줄2칸·가운뎃줄4칸·아랫줄2칸"
+      },
+      "promptDataLines": [
+        "3 · 4 · 5 · 6 · 7 · 8 · 9 · 10"
+      ],
+      "acceptedAnswerParts": [
+        [
+          5,
+          7,
+          9,
+          3,
+          10,
+          4,
+          6,
+          8
+        ],
+        [
+          6,
+          8,
+          9,
+          3,
+          10,
+          4,
+          5,
+          7
+        ],
+        [
+          7,
+          5,
+          4,
+          10,
+          3,
+          9,
+          8,
+          6
+        ],
+        [
+          8,
+          6,
+          4,
+          10,
+          3,
+          9,
+          7,
+          5
+        ]
+      ],
+      "solutionTable": {
+        "headers": [
+          "두 수",
+          "첫 수의 칸",
+          "다음 수의 칸",
+          "가로 차",
+          "세로 차"
+        ],
+        "rows": [
+          [
+            "3·4",
+            "가운뎃줄 둘째",
+            "가운뎃줄 넷째",
+            2,
+            0
+          ],
+          [
+            "4·5",
+            "가운뎃줄 넷째",
+            "윗줄 왼쪽",
+            2,
+            1
+          ],
+          [
+            "5·6",
+            "윗줄 왼쪽",
+            "아랫줄 왼쪽",
+            0,
+            2
+          ],
+          [
+            "6·7",
+            "아랫줄 왼쪽",
+            "윗줄 오른쪽",
+            1,
+            2
+          ],
+          [
+            "7·8",
+            "윗줄 오른쪽",
+            "아랫줄 오른쪽",
+            0,
+            2
+          ],
+          [
+            "8·9",
+            "아랫줄 오른쪽",
+            "가운뎃줄 첫째",
+            2,
+            1
+          ],
+          [
+            "9·10",
+            "가운뎃줄 첫째",
+            "가운뎃줄 셋째",
+            2,
+            0
+          ]
+        ]
+      },
+      "answerLayout": "eight-cell-placement"
+    },
+    {
+      "id": "applied4-q11-v3",
+      "genId": "applied4-q11",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 11,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "배열과 이웃 조건",
+      "detailType": "연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "pointBand": "2.7",
+      "text": "다음 수8개를 그림의 빈칸에 각각 한 번씩 넣으시오. 가로·세로·대각선으로 이웃한 칸에는 차가1인 두 수가 들어갈 수 없습니다. 윗줄 왼쪽 칸의 수는3입니다.",
+      "answer": "3, 5, 7, 9, 1, 8, 4, 6 (가능한 한 예)",
+      "answerParts": [
+        3,
+        5,
+        7,
+        9,
+        1,
+        8,
+        4,
+        6
+      ],
+      "answerLabels": [
+        "윗줄 왼쪽",
+        "윗줄 오른쪽",
+        "가운뎃줄 첫째",
+        "가운뎃줄 둘째",
+        "가운뎃줄 셋째",
+        "가운뎃줄 넷째",
+        "아랫줄 왼쪽",
+        "아랫줄 오른쪽"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "3, 5, 7, 9, 1, 8, 4, 6",
+        "3, 5, 8, 1, 9, 7, 6, 4",
+        "3, 6, 5, 9, 1, 8, 7, 4",
+        "3, 6, 8, 1, 9, 4, 5, 7"
+      ],
+      "solutionSteps": [
+        "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다.",
+        "이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[3, 5],가운뎃줄[7, 9, 1, 8],아랫줄[4, 6]입니다.",
+        "목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다.",
+        "숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다."
+      ],
+      "solution": "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다. 이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[3, 5],가운뎃줄[7, 9, 1, 8],아랫줄[4, 6]입니다. 목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다. 숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다.",
+      "learningPoint": "이웃이 많은 칸에 놓을 수 있는 수를 먼저 제한하고 전체 배치를 확인하기",
+      "learningLocation": "활용 4회 · 원문 11번 · 연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "verification": {
+        "primaryMethod": "complete permutations with source-grid constraints",
+        "parameters": {
+          "cards": [
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "givens": {
+            "0": 3
+          },
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/nonconsecutive-grid-original.png",
+        "description": "원본의 윗줄2칸·가운뎃줄4칸·아랫줄2칸"
+      },
+      "promptDataLines": [
+        "1 · 3 · 4 · 5 · 6 · 7 · 8 · 9"
+      ],
+      "acceptedAnswerParts": [
+        [
+          3,
+          5,
+          7,
+          9,
+          1,
+          8,
+          4,
+          6
+        ],
+        [
+          3,
+          5,
+          8,
+          1,
+          9,
+          7,
+          6,
+          4
+        ],
+        [
+          3,
+          6,
+          5,
+          9,
+          1,
+          8,
+          7,
+          4
+        ],
+        [
+          3,
+          6,
+          8,
+          1,
+          9,
+          4,
+          5,
+          7
+        ]
+      ],
+      "solutionTable": {
+        "headers": [
+          "두 수",
+          "첫 수의 칸",
+          "다음 수의 칸",
+          "가로 차",
+          "세로 차"
+        ],
+        "rows": [
+          [
+            "3·4",
+            "윗줄 왼쪽",
+            "아랫줄 왼쪽",
+            0,
+            2
+          ],
+          [
+            "4·5",
+            "아랫줄 왼쪽",
+            "윗줄 오른쪽",
+            1,
+            2
+          ],
+          [
+            "5·6",
+            "윗줄 오른쪽",
+            "아랫줄 오른쪽",
+            0,
+            2
+          ],
+          [
+            "6·7",
+            "아랫줄 오른쪽",
+            "가운뎃줄 첫째",
+            2,
+            1
+          ],
+          [
+            "7·8",
+            "가운뎃줄 첫째",
+            "가운뎃줄 넷째",
+            3,
+            0
+          ],
+          [
+            "8·9",
+            "가운뎃줄 넷째",
+            "가운뎃줄 둘째",
+            2,
+            0
+          ]
+        ]
+      },
+      "answerLayout": "eight-cell-placement"
+    },
+    {
+      "id": "applied4-q11-v4",
+      "genId": "applied4-q11",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 11,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "배열과 이웃 조건",
+      "detailType": "연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "pointBand": "2.7",
+      "text": "다음 수8개를 그림의 빈칸에 각각 한 번씩 넣으시오. 가로·세로·대각선으로 이웃한 칸에는 차가1인 두 수가 들어갈 수 없습니다. 윗줄 오른쪽 칸의 수는9입니다.",
+      "answer": "7, 9, 1, 4, 2, 5, 6, 8 (가능한 한 예)",
+      "answerParts": [
+        7,
+        9,
+        1,
+        4,
+        2,
+        5,
+        6,
+        8
+      ],
+      "answerLabels": [
+        "윗줄 왼쪽",
+        "윗줄 오른쪽",
+        "가운뎃줄 첫째",
+        "가운뎃줄 둘째",
+        "가운뎃줄 셋째",
+        "가운뎃줄 넷째",
+        "아랫줄 왼쪽",
+        "아랫줄 오른쪽"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "7, 9, 1, 4, 2, 5, 6, 8",
+        "7, 9, 2, 4, 1, 5, 6, 8",
+        "7, 9, 5, 1, 4, 2, 8, 6",
+        "7, 9, 5, 2, 4, 1, 8, 6"
+      ],
+      "solutionSteps": [
+        "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다.",
+        "이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[7, 9],가운뎃줄[1, 4, 2, 5],아랫줄[6, 8]입니다.",
+        "목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다.",
+        "숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다."
+      ],
+      "solution": "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다. 이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[7, 9],가운뎃줄[1, 4, 2, 5],아랫줄[6, 8]입니다. 목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다. 숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다.",
+      "learningPoint": "이웃이 많은 칸에 놓을 수 있는 수를 먼저 제한하고 전체 배치를 확인하기",
+      "learningLocation": "활용 4회 · 원문 11번 · 연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "verification": {
+        "primaryMethod": "complete permutations with source-grid constraints",
+        "parameters": {
+          "cards": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "givens": {
+            "1": 9
+          },
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/nonconsecutive-grid-original.png",
+        "description": "원본의 윗줄2칸·가운뎃줄4칸·아랫줄2칸"
+      },
+      "promptDataLines": [
+        "1 · 2 · 4 · 5 · 6 · 7 · 8 · 9"
+      ],
+      "acceptedAnswerParts": [
+        [
+          7,
+          9,
+          1,
+          4,
+          2,
+          5,
+          6,
+          8
+        ],
+        [
+          7,
+          9,
+          2,
+          4,
+          1,
+          5,
+          6,
+          8
+        ],
+        [
+          7,
+          9,
+          5,
+          1,
+          4,
+          2,
+          8,
+          6
+        ],
+        [
+          7,
+          9,
+          5,
+          2,
+          4,
+          1,
+          8,
+          6
+        ]
+      ],
+      "solutionTable": {
+        "headers": [
+          "두 수",
+          "첫 수의 칸",
+          "다음 수의 칸",
+          "가로 차",
+          "세로 차"
+        ],
+        "rows": [
+          [
+            "1·2",
+            "가운뎃줄 첫째",
+            "가운뎃줄 셋째",
+            2,
+            0
+          ],
+          [
+            "4·5",
+            "가운뎃줄 둘째",
+            "가운뎃줄 넷째",
+            2,
+            0
+          ],
+          [
+            "5·6",
+            "가운뎃줄 넷째",
+            "아랫줄 왼쪽",
+            2,
+            1
+          ],
+          [
+            "6·7",
+            "아랫줄 왼쪽",
+            "윗줄 왼쪽",
+            0,
+            2
+          ],
+          [
+            "7·8",
+            "윗줄 왼쪽",
+            "아랫줄 오른쪽",
+            1,
+            2
+          ],
+          [
+            "8·9",
+            "아랫줄 오른쪽",
+            "윗줄 오른쪽",
+            0,
+            2
+          ]
+        ]
+      },
+      "answerLayout": "eight-cell-placement"
+    },
+    {
+      "id": "applied4-q11-v5",
+      "genId": "applied4-q11",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 11,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "배열과 이웃 조건",
+      "detailType": "연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "pointBand": "2.7",
+      "text": "다음 수8개를 그림의 빈칸에 각각 한 번씩 넣으시오. 가로·세로·대각선으로 이웃한 칸에는 차가1인 두 수가 들어갈 수 없습니다. 가운뎃줄 첫째 칸의 수는6입니다.",
+      "answer": "1, 8, 6, 3, 5, 2, 9, 7 (가능한 한 예)",
+      "answerParts": [
+        1,
+        8,
+        6,
+        3,
+        5,
+        2,
+        9,
+        7
+      ],
+      "answerLabels": [
+        "윗줄 왼쪽",
+        "윗줄 오른쪽",
+        "가운뎃줄 첫째",
+        "가운뎃줄 둘째",
+        "가운뎃줄 셋째",
+        "가운뎃줄 넷째",
+        "아랫줄 왼쪽",
+        "아랫줄 오른쪽"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "1, 8, 6, 3, 5, 2, 9, 7",
+        "3, 8, 6, 1, 5, 2, 9, 7",
+        "9, 7, 6, 1, 5, 2, 3, 8",
+        "9, 7, 6, 3, 5, 2, 1, 8"
+      ],
+      "solutionSteps": [
+        "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다.",
+        "이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[1, 8],가운뎃줄[6, 3, 5, 2],아랫줄[9, 7]입니다.",
+        "목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다.",
+        "숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다."
+      ],
+      "solution": "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다. 이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[1, 8],가운뎃줄[6, 3, 5, 2],아랫줄[9, 7]입니다. 목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다. 숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다.",
+      "learningPoint": "이웃이 많은 칸에 놓을 수 있는 수를 먼저 제한하고 전체 배치를 확인하기",
+      "learningLocation": "활용 4회 · 원문 11번 · 연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "verification": {
+        "primaryMethod": "complete permutations with source-grid constraints",
+        "parameters": {
+          "cards": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "givens": {
+            "2": 6
+          },
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/nonconsecutive-grid-original.png",
+        "description": "원본의 윗줄2칸·가운뎃줄4칸·아랫줄2칸"
+      },
+      "promptDataLines": [
+        "1 · 2 · 3 · 5 · 6 · 7 · 8 · 9"
+      ],
+      "acceptedAnswerParts": [
+        [
+          1,
+          8,
+          6,
+          3,
+          5,
+          2,
+          9,
+          7
+        ],
+        [
+          3,
+          8,
+          6,
+          1,
+          5,
+          2,
+          9,
+          7
+        ],
+        [
+          9,
+          7,
+          6,
+          1,
+          5,
+          2,
+          3,
+          8
+        ],
+        [
+          9,
+          7,
+          6,
+          3,
+          5,
+          2,
+          1,
+          8
+        ]
+      ],
+      "solutionTable": {
+        "headers": [
+          "두 수",
+          "첫 수의 칸",
+          "다음 수의 칸",
+          "가로 차",
+          "세로 차"
+        ],
+        "rows": [
+          [
+            "1·2",
+            "윗줄 왼쪽",
+            "가운뎃줄 넷째",
+            2,
+            1
+          ],
+          [
+            "2·3",
+            "가운뎃줄 넷째",
+            "가운뎃줄 둘째",
+            2,
+            0
+          ],
+          [
+            "5·6",
+            "가운뎃줄 셋째",
+            "가운뎃줄 첫째",
+            2,
+            0
+          ],
+          [
+            "6·7",
+            "가운뎃줄 첫째",
+            "아랫줄 오른쪽",
+            2,
+            1
+          ],
+          [
+            "7·8",
+            "아랫줄 오른쪽",
+            "윗줄 오른쪽",
+            0,
+            2
+          ],
+          [
+            "8·9",
+            "윗줄 오른쪽",
+            "아랫줄 왼쪽",
+            1,
+            2
+          ]
+        ]
+      },
+      "answerLayout": "eight-cell-placement"
+    },
+    {
+      "id": "applied4-q11-v6",
+      "genId": "applied4-q11",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 11,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "배열과 이웃 조건",
+      "detailType": "연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "pointBand": "2.7",
+      "text": "다음 수8개를 그림의 빈칸에 각각 한 번씩 넣으시오. 가로·세로·대각선으로 이웃한 칸에는 차가1인 두 수가 들어갈 수 없습니다. 윗줄 왼쪽 칸의 수는1입니다. 윗줄 오른쪽 칸의 수는3입니다.",
+      "answer": "1, 3, 7, 9, 6, 8, 2, 4 (가능한 한 예)",
+      "answerParts": [
+        1,
+        3,
+        7,
+        9,
+        6,
+        8,
+        2,
+        4
+      ],
+      "answerLabels": [
+        "윗줄 왼쪽",
+        "윗줄 오른쪽",
+        "가운뎃줄 첫째",
+        "가운뎃줄 둘째",
+        "가운뎃줄 셋째",
+        "가운뎃줄 넷째",
+        "아랫줄 왼쪽",
+        "아랫줄 오른쪽"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "1, 3, 7, 9, 6, 8, 2, 4",
+        "1, 3, 7, 9, 6, 8, 4, 2",
+        "1, 3, 8, 6, 9, 7, 2, 4",
+        "1, 3, 8, 6, 9, 7, 4, 2"
+      ],
+      "solutionSteps": [
+        "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다.",
+        "이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[1, 3],가운뎃줄[7, 9, 6, 8],아랫줄[2, 4]입니다.",
+        "목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다.",
+        "숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다."
+      ],
+      "solution": "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다. 이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[1, 3],가운뎃줄[7, 9, 6, 8],아랫줄[2, 4]입니다. 목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다. 숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다.",
+      "learningPoint": "이웃이 많은 칸에 놓을 수 있는 수를 먼저 제한하고 전체 배치를 확인하기",
+      "learningLocation": "활용 4회 · 원문 11번 · 연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "verification": {
+        "primaryMethod": "complete permutations with source-grid constraints",
+        "parameters": {
+          "cards": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            7,
+            8,
+            9
+          ],
+          "givens": {
+            "0": 1,
+            "1": 3
+          },
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/nonconsecutive-grid-original.png",
+        "description": "원본의 윗줄2칸·가운뎃줄4칸·아랫줄2칸"
+      },
+      "promptDataLines": [
+        "1 · 2 · 3 · 4 · 6 · 7 · 8 · 9"
+      ],
+      "acceptedAnswerParts": [
+        [
+          1,
+          3,
+          7,
+          9,
+          6,
+          8,
+          2,
+          4
+        ],
+        [
+          1,
+          3,
+          7,
+          9,
+          6,
+          8,
+          4,
+          2
+        ],
+        [
+          1,
+          3,
+          8,
+          6,
+          9,
+          7,
+          2,
+          4
+        ],
+        [
+          1,
+          3,
+          8,
+          6,
+          9,
+          7,
+          4,
+          2
+        ]
+      ],
+      "solutionTable": {
+        "headers": [
+          "두 수",
+          "첫 수의 칸",
+          "다음 수의 칸",
+          "가로 차",
+          "세로 차"
+        ],
+        "rows": [
+          [
+            "1·2",
+            "윗줄 왼쪽",
+            "아랫줄 왼쪽",
+            0,
+            2
+          ],
+          [
+            "2·3",
+            "아랫줄 왼쪽",
+            "윗줄 오른쪽",
+            1,
+            2
+          ],
+          [
+            "3·4",
+            "윗줄 오른쪽",
+            "아랫줄 오른쪽",
+            0,
+            2
+          ],
+          [
+            "6·7",
+            "가운뎃줄 셋째",
+            "가운뎃줄 첫째",
+            2,
+            0
+          ],
+          [
+            "7·8",
+            "가운뎃줄 첫째",
+            "가운뎃줄 넷째",
+            3,
+            0
+          ],
+          [
+            "8·9",
+            "가운뎃줄 넷째",
+            "가운뎃줄 둘째",
+            2,
+            0
+          ]
+        ]
+      },
+      "answerLayout": "eight-cell-placement"
+    },
+    {
+      "id": "applied4-q11-v7",
+      "genId": "applied4-q11",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 11,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "배열과 이웃 조건",
+      "detailType": "연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "pointBand": "2.7",
+      "text": "다음 수8개를 그림의 빈칸에 각각 한 번씩 넣으시오. 가로·세로·대각선으로 이웃한 칸에는 차가1인 두 수가 들어갈 수 없습니다. 가운뎃줄 둘째 칸의 수는5입니다.",
+      "answer": "2, 7, 8, 5, 9, 4, 3, 1 (가능한 한 예)",
+      "answerParts": [
+        2,
+        7,
+        8,
+        5,
+        9,
+        4,
+        3,
+        1
+      ],
+      "answerLabels": [
+        "윗줄 왼쪽",
+        "윗줄 오른쪽",
+        "가운뎃줄 첫째",
+        "가운뎃줄 둘째",
+        "가운뎃줄 셋째",
+        "가운뎃줄 넷째",
+        "아랫줄 왼쪽",
+        "아랫줄 오른쪽"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "2, 7, 8, 5, 9, 4, 3, 1",
+        "2, 9, 8, 5, 7, 4, 3, 1",
+        "3, 1, 8, 5, 7, 4, 2, 9",
+        "3, 1, 8, 5, 9, 4, 2, 7"
+      ],
+      "solutionSteps": [
+        "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다.",
+        "이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[2, 7],가운뎃줄[8, 5, 9, 4],아랫줄[3, 1]입니다.",
+        "목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다.",
+        "숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다."
+      ],
+      "solution": "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다. 이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[2, 7],가운뎃줄[8, 5, 9, 4],아랫줄[3, 1]입니다. 목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다. 숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다.",
+      "learningPoint": "이웃이 많은 칸에 놓을 수 있는 수를 먼저 제한하고 전체 배치를 확인하기",
+      "learningLocation": "활용 4회 · 원문 11번 · 연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "verification": {
+        "primaryMethod": "complete permutations with source-grid constraints",
+        "parameters": {
+          "cards": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            7,
+            8,
+            9
+          ],
+          "givens": {
+            "3": 5
+          },
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/nonconsecutive-grid-original.png",
+        "description": "원본의 윗줄2칸·가운뎃줄4칸·아랫줄2칸"
+      },
+      "promptDataLines": [
+        "1 · 2 · 3 · 4 · 5 · 7 · 8 · 9"
+      ],
+      "acceptedAnswerParts": [
+        [
+          2,
+          7,
+          8,
+          5,
+          9,
+          4,
+          3,
+          1
+        ],
+        [
+          2,
+          9,
+          8,
+          5,
+          7,
+          4,
+          3,
+          1
+        ],
+        [
+          3,
+          1,
+          8,
+          5,
+          7,
+          4,
+          2,
+          9
+        ],
+        [
+          3,
+          1,
+          8,
+          5,
+          9,
+          4,
+          2,
+          7
+        ]
+      ],
+      "solutionTable": {
+        "headers": [
+          "두 수",
+          "첫 수의 칸",
+          "다음 수의 칸",
+          "가로 차",
+          "세로 차"
+        ],
+        "rows": [
+          [
+            "1·2",
+            "아랫줄 오른쪽",
+            "윗줄 왼쪽",
+            1,
+            2
+          ],
+          [
+            "2·3",
+            "윗줄 왼쪽",
+            "아랫줄 왼쪽",
+            0,
+            2
+          ],
+          [
+            "3·4",
+            "아랫줄 왼쪽",
+            "가운뎃줄 넷째",
+            2,
+            1
+          ],
+          [
+            "4·5",
+            "가운뎃줄 넷째",
+            "가운뎃줄 둘째",
+            2,
+            0
+          ],
+          [
+            "7·8",
+            "윗줄 오른쪽",
+            "가운뎃줄 첫째",
+            2,
+            1
+          ],
+          [
+            "8·9",
+            "가운뎃줄 첫째",
+            "가운뎃줄 셋째",
+            2,
+            0
+          ]
+        ]
+      },
+      "answerLayout": "eight-cell-placement"
+    },
+    {
+      "id": "applied4-q11-v8",
+      "genId": "applied4-q11",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 11,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "배열과 이웃 조건",
+      "detailType": "연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "pointBand": "2.7",
+      "text": "다음 수8개를 그림의 빈칸에 각각 한 번씩 넣으시오. 가로·세로·대각선으로 이웃한 칸에는 차가1인 두 수가 들어갈 수 없습니다. 아랫줄 왼쪽 칸의 수는2입니다.",
+      "answer": "1, 3, 5, 8, 6, 9, 2, 4 (가능한 한 예)",
+      "answerParts": [
+        1,
+        3,
+        5,
+        8,
+        6,
+        9,
+        2,
+        4
+      ],
+      "answerLabels": [
+        "윗줄 왼쪽",
+        "윗줄 오른쪽",
+        "가운뎃줄 첫째",
+        "가운뎃줄 둘째",
+        "가운뎃줄 셋째",
+        "가운뎃줄 넷째",
+        "아랫줄 왼쪽",
+        "아랫줄 오른쪽"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "1, 3, 5, 8, 6, 9, 2, 4",
+        "1, 3, 5, 9, 6, 8, 2, 4",
+        "3, 1, 5, 8, 6, 9, 2, 4",
+        "3, 1, 5, 9, 6, 8, 2, 4"
+      ],
+      "solutionSteps": [
+        "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다.",
+        "이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[1, 3],가운뎃줄[5, 8, 6, 9],아랫줄[2, 4]입니다.",
+        "목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다.",
+        "숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다."
+      ],
+      "solution": "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다. 이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[1, 3],가운뎃줄[5, 8, 6, 9],아랫줄[2, 4]입니다. 목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다. 숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다.",
+      "learningPoint": "이웃이 많은 칸에 놓을 수 있는 수를 먼저 제한하고 전체 배치를 확인하기",
+      "learningLocation": "활용 4회 · 원문 11번 · 연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "verification": {
+        "primaryMethod": "complete permutations with source-grid constraints",
+        "parameters": {
+          "cards": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            8,
+            9
+          ],
+          "givens": {
+            "6": 2
+          },
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/nonconsecutive-grid-original.png",
+        "description": "원본의 윗줄2칸·가운뎃줄4칸·아랫줄2칸"
+      },
+      "promptDataLines": [
+        "1 · 2 · 3 · 4 · 5 · 6 · 8 · 9"
+      ],
+      "acceptedAnswerParts": [
+        [
+          1,
+          3,
+          5,
+          8,
+          6,
+          9,
+          2,
+          4
+        ],
+        [
+          1,
+          3,
+          5,
+          9,
+          6,
+          8,
+          2,
+          4
+        ],
+        [
+          3,
+          1,
+          5,
+          8,
+          6,
+          9,
+          2,
+          4
+        ],
+        [
+          3,
+          1,
+          5,
+          9,
+          6,
+          8,
+          2,
+          4
+        ]
+      ],
+      "solutionTable": {
+        "headers": [
+          "두 수",
+          "첫 수의 칸",
+          "다음 수의 칸",
+          "가로 차",
+          "세로 차"
+        ],
+        "rows": [
+          [
+            "1·2",
+            "윗줄 왼쪽",
+            "아랫줄 왼쪽",
+            0,
+            2
+          ],
+          [
+            "2·3",
+            "아랫줄 왼쪽",
+            "윗줄 오른쪽",
+            1,
+            2
+          ],
+          [
+            "3·4",
+            "윗줄 오른쪽",
+            "아랫줄 오른쪽",
+            0,
+            2
+          ],
+          [
+            "4·5",
+            "아랫줄 오른쪽",
+            "가운뎃줄 첫째",
+            2,
+            1
+          ],
+          [
+            "5·6",
+            "가운뎃줄 첫째",
+            "가운뎃줄 셋째",
+            2,
+            0
+          ],
+          [
+            "8·9",
+            "가운뎃줄 둘째",
+            "가운뎃줄 넷째",
+            2,
+            0
+          ]
+        ]
+      },
+      "answerLayout": "eight-cell-placement"
+    },
+    {
+      "id": "applied4-q11-v9",
+      "genId": "applied4-q11",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 11,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "배열과 이웃 조건",
+      "detailType": "연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "pointBand": "2.7",
+      "text": "다음 수8개를 그림의 빈칸에 각각 한 번씩 넣으시오. 가로·세로·대각선으로 이웃한 칸에는 차가1인 두 수가 들어갈 수 없습니다. 아랫줄 오른쪽 칸의 수는7입니다.",
+      "answer": "3, 5, 6, 1, 9, 2, 4, 7 (가능한 한 예)",
+      "answerParts": [
+        3,
+        5,
+        6,
+        1,
+        9,
+        2,
+        4,
+        7
+      ],
+      "answerLabels": [
+        "윗줄 왼쪽",
+        "윗줄 오른쪽",
+        "가운뎃줄 첫째",
+        "가운뎃줄 둘째",
+        "가운뎃줄 셋째",
+        "가운뎃줄 넷째",
+        "아랫줄 왼쪽",
+        "아랫줄 오른쪽"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "3, 5, 6, 1, 9, 2, 4, 7",
+        "4, 6, 2, 9, 1, 3, 5, 7",
+        "6, 3, 2, 9, 1, 5, 4, 7",
+        "6, 4, 3, 1, 9, 2, 5, 7"
+      ],
+      "solutionSteps": [
+        "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다.",
+        "이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[3, 5],가운뎃줄[6, 1, 9, 2],아랫줄[4, 7]입니다.",
+        "목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다.",
+        "숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다."
+      ],
+      "solution": "가운뎃줄 안쪽 두 칸은 각각 다른 칸 중 한 칸과만 이웃하지 않습니다. 따라서 앞뒤 연속한 수가 모두 목록에 있는 수를 그 칸에 넣으면 두 수를 동시에 피할 수 없습니다. 이 조건으로 안쪽 두 칸의 후보를 제한한 뒤 주어진 칸 조건을 맞추어 놓습니다. 가능한 한 예는 윗줄[3, 5],가운뎃줄[6, 1, 9, 2],아랫줄[4, 7]입니다. 목록에 함께 있는 연속한 두 수의 위치를 다음 표처럼 확인합니다. 각 쌍은 가로 또는 세로로 두 칸 이상 떨어져 있어 이웃하지 않습니다. 숫자8개를 각각 한 번씩 쓰고 고정한 칸도 만족합니다. 이 예와 다르더라도 모든 조건에 맞는 배치는 정답입니다.",
+      "learningPoint": "이웃이 많은 칸에 놓을 수 있는 수를 먼저 제한하고 전체 배치를 확인하기",
+      "learningLocation": "활용 4회 · 원문 11번 · 연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "verification": {
+        "primaryMethod": "complete permutations with source-grid constraints",
+        "parameters": {
+          "cards": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            9
+          ],
+          "givens": {
+            "7": 7
+          },
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 11,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/nonconsecutive-grid-original.png",
+        "description": "원본의 윗줄2칸·가운뎃줄4칸·아랫줄2칸"
+      },
+      "promptDataLines": [
+        "1 · 2 · 3 · 4 · 5 · 6 · 7 · 9"
+      ],
+      "acceptedAnswerParts": [
+        [
+          3,
+          5,
+          6,
+          1,
+          9,
+          2,
+          4,
+          7
+        ],
+        [
+          4,
+          6,
+          2,
+          9,
+          1,
+          3,
+          5,
+          7
+        ],
+        [
+          6,
+          3,
+          2,
+          9,
+          1,
+          5,
+          4,
+          7
+        ],
+        [
+          6,
+          4,
+          3,
+          1,
+          9,
+          2,
+          5,
+          7
+        ]
+      ],
+      "solutionTable": {
+        "headers": [
+          "두 수",
+          "첫 수의 칸",
+          "다음 수의 칸",
+          "가로 차",
+          "세로 차"
+        ],
+        "rows": [
+          [
+            "1·2",
+            "가운뎃줄 둘째",
+            "가운뎃줄 넷째",
+            2,
+            0
+          ],
+          [
+            "2·3",
+            "가운뎃줄 넷째",
+            "윗줄 왼쪽",
+            2,
+            1
+          ],
+          [
+            "3·4",
+            "윗줄 왼쪽",
+            "아랫줄 왼쪽",
+            0,
+            2
+          ],
+          [
+            "4·5",
+            "아랫줄 왼쪽",
+            "윗줄 오른쪽",
+            1,
+            2
+          ],
+          [
+            "5·6",
+            "윗줄 오른쪽",
+            "가운뎃줄 첫째",
+            2,
+            1
+          ],
+          [
+            "6·7",
+            "가운뎃줄 첫째",
+            "아랫줄 오른쪽",
+            2,
+            1
+          ]
+        ]
+      },
+      "answerLayout": "eight-cell-placement"
+    },
+    {
+      "id": "applied4-q12-v1",
+      "genId": "applied4-q12",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 12,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "점의 선택과 도형",
+      "detailType": "원 위 여덟 점에서 조건에 맞는 사각형",
+      "pointBand": "2.7",
+      "text": "그림의 원 위8개 점 중4개를 꼭짓점으로 하여 사각형을 만듭니다. 원 위의 점 중 맨 위의 점은 쓰지 않습니다. 만들 수 있는 서로 다른 사각형은 몇 개입니까?",
+      "answer": "35",
+      "answerParts": [
+        35
+      ],
+      "answerLabels": [
+        "사각형 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "35"
+      ],
+      "solutionSteps": [
+        "반드시 쓸 점0개와 쓰지 않을 점1개를 구별합니다. 나머지7개 점에서4개를 고릅니다.",
+        "서로 다른7점에서4점을 순서 없이 고르는 방법은7×6×5×4÷(4×3×2×1)＝35가지입니다.",
+        "원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다."
+      ],
+      "solution": "반드시 쓸 점0개와 쓰지 않을 점1개를 구별합니다. 나머지7개 점에서4개를 고릅니다. 서로 다른7점에서4점을 순서 없이 고르는 방법은7×6×5×4÷(4×3×2×1)＝35가지입니다. 원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다.",
+      "learningPoint": "꼭 넣을 점과 쓰지 않을 점을 구분하고 같은 네 점을 중복해서 세지 않기",
+      "learningLocation": "활용 4회 · 원문 12번 · 원 위 여덟 점에서 조건에 맞는 사각형",
+      "verification": {
+        "primaryMethod": "required/excluded vertex combinations",
+        "parameters": {
+          "required": [],
+          "excluded": [
+            0
+          ],
+          "mode": null
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/eight-circle-points-original.png",
+        "description": "원본의 원 위 여덟 점"
+      }
+    },
+    {
+      "id": "applied4-q12-v2",
+      "genId": "applied4-q12",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 12,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "점의 선택과 도형",
+      "detailType": "원 위 여덟 점에서 조건에 맞는 사각형",
+      "pointBand": "2.7",
+      "text": "그림의 원 위8개 점 중4개를 꼭짓점으로 하여 사각형을 만듭니다. 맨 위의 점을 반드시 꼭짓점으로 씁니다. 만들 수 있는 서로 다른 사각형은 몇 개입니까?",
+      "answer": "35",
+      "answerParts": [
+        35
+      ],
+      "answerLabels": [
+        "사각형 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "35"
+      ],
+      "solutionSteps": [
+        "반드시 쓸 점1개와 쓰지 않을 점0개를 구별합니다. 나머지7개 점에서3개를 고릅니다.",
+        "서로 다른7점에서3점을 순서 없이 고르는 방법은7×6×5÷(3×2×1)＝35가지입니다.",
+        "원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다."
+      ],
+      "solution": "반드시 쓸 점1개와 쓰지 않을 점0개를 구별합니다. 나머지7개 점에서3개를 고릅니다. 서로 다른7점에서3점을 순서 없이 고르는 방법은7×6×5÷(3×2×1)＝35가지입니다. 원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다.",
+      "learningPoint": "꼭 넣을 점과 쓰지 않을 점을 구분하고 같은 네 점을 중복해서 세지 않기",
+      "learningLocation": "활용 4회 · 원문 12번 · 원 위 여덟 점에서 조건에 맞는 사각형",
+      "verification": {
+        "primaryMethod": "required/excluded vertex combinations",
+        "parameters": {
+          "required": [
+            0
+          ],
+          "excluded": [],
+          "mode": null
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/eight-circle-points-original.png",
+        "description": "원본의 원 위 여덟 점"
+      }
+    },
+    {
+      "id": "applied4-q12-v3",
+      "genId": "applied4-q12",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 12,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "점의 선택과 도형",
+      "detailType": "원 위 여덟 점에서 조건에 맞는 사각형",
+      "pointBand": "2.7",
+      "text": "그림의 원 위8개 점 중4개를 꼭짓점으로 하여 사각형을 만듭니다. 맨 위와 맨 아래의 두 점을 모두 꼭짓점으로 씁니다. 만들 수 있는 서로 다른 사각형은 몇 개입니까?",
+      "answer": "15",
+      "answerParts": [
+        15
+      ],
+      "answerLabels": [
+        "사각형 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "15"
+      ],
+      "solutionSteps": [
+        "반드시 쓸 점2개와 쓰지 않을 점0개를 구별합니다. 나머지6개 점에서2개를 고릅니다.",
+        "서로 다른6점에서2점을 순서 없이 고르는 방법은6×5÷2＝15가지입니다.",
+        "원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다."
+      ],
+      "solution": "반드시 쓸 점2개와 쓰지 않을 점0개를 구별합니다. 나머지6개 점에서2개를 고릅니다. 서로 다른6점에서2점을 순서 없이 고르는 방법은6×5÷2＝15가지입니다. 원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다.",
+      "learningPoint": "꼭 넣을 점과 쓰지 않을 점을 구분하고 같은 네 점을 중복해서 세지 않기",
+      "learningLocation": "활용 4회 · 원문 12번 · 원 위 여덟 점에서 조건에 맞는 사각형",
+      "verification": {
+        "primaryMethod": "required/excluded vertex combinations",
+        "parameters": {
+          "required": [
+            0,
+            4
+          ],
+          "excluded": [],
+          "mode": null
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/eight-circle-points-original.png",
+        "description": "원본의 원 위 여덟 점"
+      }
+    },
+    {
+      "id": "applied4-q12-v4",
+      "genId": "applied4-q12",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 12,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "점의 선택과 도형",
+      "detailType": "원 위 여덟 점에서 조건에 맞는 사각형",
+      "pointBand": "2.7",
+      "text": "그림의 원 위8개 점 중4개를 꼭짓점으로 하여 사각형을 만듭니다. 맨 위와 맨 아래의 두 점은 쓰지 않습니다. 만들 수 있는 서로 다른 사각형은 몇 개입니까?",
+      "answer": "15",
+      "answerParts": [
+        15
+      ],
+      "answerLabels": [
+        "사각형 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "15"
+      ],
+      "solutionSteps": [
+        "반드시 쓸 점0개와 쓰지 않을 점2개를 구별합니다. 나머지6개 점에서4개를 고릅니다.",
+        "서로 다른6점에서4점을 순서 없이 고르는 방법은6×5×4×3÷(4×3×2×1)＝15가지입니다.",
+        "원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다."
+      ],
+      "solution": "반드시 쓸 점0개와 쓰지 않을 점2개를 구별합니다. 나머지6개 점에서4개를 고릅니다. 서로 다른6점에서4점을 순서 없이 고르는 방법은6×5×4×3÷(4×3×2×1)＝15가지입니다. 원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다.",
+      "learningPoint": "꼭 넣을 점과 쓰지 않을 점을 구분하고 같은 네 점을 중복해서 세지 않기",
+      "learningLocation": "활용 4회 · 원문 12번 · 원 위 여덟 점에서 조건에 맞는 사각형",
+      "verification": {
+        "primaryMethod": "required/excluded vertex combinations",
+        "parameters": {
+          "required": [],
+          "excluded": [
+            0,
+            4
+          ],
+          "mode": null
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/eight-circle-points-original.png",
+        "description": "원본의 원 위 여덟 점"
+      }
+    },
+    {
+      "id": "applied4-q12-v5",
+      "genId": "applied4-q12",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 12,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "점의 선택과 도형",
+      "detailType": "원 위 여덟 점에서 조건에 맞는 사각형",
+      "pointBand": "2.7",
+      "text": "그림의 원 위8개 점 중4개를 꼭짓점으로 하여 사각형을 만듭니다. 맨 위·맨 아래·맨 왼쪽의 세 점을 모두 꼭짓점으로 씁니다. 만들 수 있는 서로 다른 사각형은 몇 개입니까?",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "사각형 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "5"
+      ],
+      "solutionSteps": [
+        "반드시 쓸 점3개와 쓰지 않을 점0개를 구별합니다. 나머지5개 점에서1개를 고릅니다.",
+        "서로 다른5점에서1점을 순서 없이 고르는 방법은5가지입니다.",
+        "원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다."
+      ],
+      "solution": "반드시 쓸 점3개와 쓰지 않을 점0개를 구별합니다. 나머지5개 점에서1개를 고릅니다. 서로 다른5점에서1점을 순서 없이 고르는 방법은5가지입니다. 원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다.",
+      "learningPoint": "꼭 넣을 점과 쓰지 않을 점을 구분하고 같은 네 점을 중복해서 세지 않기",
+      "learningLocation": "활용 4회 · 원문 12번 · 원 위 여덟 점에서 조건에 맞는 사각형",
+      "verification": {
+        "primaryMethod": "required/excluded vertex combinations",
+        "parameters": {
+          "required": [
+            0,
+            4,
+            6
+          ],
+          "excluded": [],
+          "mode": null
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/eight-circle-points-original.png",
+        "description": "원본의 원 위 여덟 점"
+      }
+    },
+    {
+      "id": "applied4-q12-v6",
+      "genId": "applied4-q12",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 12,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "점의 선택과 도형",
+      "detailType": "원 위 여덟 점에서 조건에 맞는 사각형",
+      "pointBand": "2.7",
+      "text": "그림의 원 위8개 점 중4개를 꼭짓점으로 하여 사각형을 만듭니다. 맨 위·맨 아래·맨 왼쪽의 세 점은 쓰지 않습니다. 만들 수 있는 서로 다른 사각형은 몇 개입니까?",
+      "answer": "5",
+      "answerParts": [
+        5
+      ],
+      "answerLabels": [
+        "사각형 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "5"
+      ],
+      "solutionSteps": [
+        "반드시 쓸 점0개와 쓰지 않을 점3개를 구별합니다. 나머지5개 점에서4개를 고릅니다.",
+        "서로 다른5점에서4점을 순서 없이 고르는 방법은5가지입니다.",
+        "원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다."
+      ],
+      "solution": "반드시 쓸 점0개와 쓰지 않을 점3개를 구별합니다. 나머지5개 점에서4개를 고릅니다. 서로 다른5점에서4점을 순서 없이 고르는 방법은5가지입니다. 원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다.",
+      "learningPoint": "꼭 넣을 점과 쓰지 않을 점을 구분하고 같은 네 점을 중복해서 세지 않기",
+      "learningLocation": "활용 4회 · 원문 12번 · 원 위 여덟 점에서 조건에 맞는 사각형",
+      "verification": {
+        "primaryMethod": "required/excluded vertex combinations",
+        "parameters": {
+          "required": [],
+          "excluded": [
+            0,
+            4,
+            6
+          ],
+          "mode": null
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/eight-circle-points-original.png",
+        "description": "원본의 원 위 여덟 점"
+      }
+    },
+    {
+      "id": "applied4-q12-v7",
+      "genId": "applied4-q12",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 12,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "점의 선택과 도형",
+      "detailType": "원 위 여덟 점에서 조건에 맞는 사각형",
+      "pointBand": "2.7",
+      "text": "그림의 원 위8개 점 중4개를 꼭짓점으로 하여 사각형을 만듭니다. 맨 위와 맨 아래의 두 점 중 정확히 하나를 꼭짓점으로 씁니다. 만들 수 있는 서로 다른 사각형은 몇 개입니까?",
+      "answer": "40",
+      "answerParts": [
+        40
+      ],
+      "answerLabels": [
+        "사각형 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "40"
+      ],
+      "solutionSteps": [
+        "맨 위의 점을 쓰고 맨 아래의 점을 안 쓰는 경우와 그 반대 경우로 나눕니다.",
+        "각 경우 나머지6점에서3점을 고르므로6×5×4÷(3×2×1)＝20가지입니다.",
+        "두 경우가 겹치지 않으므로20×2＝40개입니다."
+      ],
+      "solution": "맨 위의 점을 쓰고 맨 아래의 점을 안 쓰는 경우와 그 반대 경우로 나눕니다. 각 경우 나머지6점에서3점을 고르므로6×5×4÷(3×2×1)＝20가지입니다. 두 경우가 겹치지 않으므로20×2＝40개입니다.",
+      "learningPoint": "꼭 넣을 점과 쓰지 않을 점을 구분하고 같은 네 점을 중복해서 세지 않기",
+      "learningLocation": "활용 4회 · 원문 12번 · 원 위 여덟 점에서 조건에 맞는 사각형",
+      "verification": {
+        "primaryMethod": "required/excluded vertex combinations",
+        "parameters": {
+          "required": [],
+          "excluded": [],
+          "mode": "exactlyOne"
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/eight-circle-points-original.png",
+        "description": "원본의 원 위 여덟 점"
+      }
+    },
+    {
+      "id": "applied4-q12-v8",
+      "genId": "applied4-q12",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 12,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "점의 선택과 도형",
+      "detailType": "원 위 여덟 점에서 조건에 맞는 사각형",
+      "pointBand": "2.7",
+      "text": "그림의 원 위8개 점 중4개를 꼭짓점으로 하여 사각형을 만듭니다. 맨 위와 맨 아래의 두 점을 동시에 꼭짓점으로 쓸 수 없습니다. 만들 수 있는 서로 다른 사각형은 몇 개입니까?",
+      "answer": "55",
+      "answerParts": [
+        55
+      ],
+      "answerLabels": [
+        "사각형 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "55"
+      ],
+      "solutionSteps": [
+        "제한 없이8점에서4점을 고르면8×7×6×5÷(4×3×2×1)＝70개입니다.",
+        "맨 위와 맨 아래를 모두 고른 경우는 나머지6점 중2점을 고르는6×5÷2＝15개입니다.",
+        "금지한 경우15개만 빼면70−15＝55개입니다."
+      ],
+      "solution": "제한 없이8점에서4점을 고르면8×7×6×5÷(4×3×2×1)＝70개입니다. 맨 위와 맨 아래를 모두 고른 경우는 나머지6점 중2점을 고르는6×5÷2＝15개입니다. 금지한 경우15개만 빼면70−15＝55개입니다.",
+      "learningPoint": "꼭 넣을 점과 쓰지 않을 점을 구분하고 같은 네 점을 중복해서 세지 않기",
+      "learningLocation": "활용 4회 · 원문 12번 · 원 위 여덟 점에서 조건에 맞는 사각형",
+      "verification": {
+        "primaryMethod": "required/excluded vertex combinations",
+        "parameters": {
+          "required": [],
+          "excluded": [],
+          "mode": "notBoth"
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/eight-circle-points-original.png",
+        "description": "원본의 원 위 여덟 점"
+      }
+    },
+    {
+      "id": "applied4-q12-v9",
+      "genId": "applied4-q12",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 12,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "practiceStorageVersion": "20261024-applied4-new9-r2",
+      "area": "경우의 수",
+      "subarea": "점의 선택과 도형",
+      "detailType": "원 위 여덟 점에서 조건에 맞는 사각형",
+      "pointBand": "2.7",
+      "text": "그림의 원 위8개 점 중4개를 꼭짓점으로 하여 사각형을 만듭니다. 맨 위의 점은 반드시 쓰고 맨 아래의 점은 쓰지 않습니다. 만들 수 있는 서로 다른 사각형은 몇 개입니까?",
+      "answer": "20",
+      "answerParts": [
+        20
+      ],
+      "answerLabels": [
+        "사각형 수"
+      ],
+      "answerContract": "ordered-parts",
+      "acceptedAnswers": [
+        "20"
+      ],
+      "solutionSteps": [
+        "반드시 쓸 점1개와 쓰지 않을 점1개를 구별합니다. 나머지6개 점에서3개를 고릅니다.",
+        "서로 다른6점에서3점을 순서 없이 고르는 방법은6×5×4÷(3×2×1)＝20가지입니다.",
+        "원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다."
+      ],
+      "solution": "반드시 쓸 점1개와 쓰지 않을 점1개를 구별합니다. 나머지6개 점에서3개를 고릅니다. 서로 다른6점에서3점을 순서 없이 고르는 방법은6×5×4÷(3×2×1)＝20가지입니다. 원 위의 서로 다른 네 점은 사각형 하나를 정합니다. 같은 네 점을 잇는 순서만 바꾼 것은 다시 세지 않습니다.",
+      "learningPoint": "꼭 넣을 점과 쓰지 않을 점을 구분하고 같은 네 점을 중복해서 세지 않기",
+      "learningLocation": "활용 4회 · 원문 12번 · 원 위 여덟 점에서 조건에 맞는 사각형",
+      "verification": {
+        "primaryMethod": "required/excluded vertex combinations",
+        "parameters": {
+          "required": [
+            0
+          ],
+          "excluded": [
+            4
+          ],
+          "mode": null
+        },
+        "independentSuite": "qa/applied4-nine-additions-independent-validate.py",
+        "sourceExamPage": 2,
+        "sourceAnswerPage": 12,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "levelReview": {
+        "basis": "source-point-band-2.7",
+        "measured": false,
+        "axes": {
+          "sourceThought": "원본의 접기/이웃배열/네점선택 유지",
+          "conditions": "선택 절단선/숫자 목록·고정칸/필수·제외점은 문제 지문에서 명시",
+          "steps": "추가 계산 힌트 없이 조건 결합",
+          "representation": "정확한 원본 그림 보존",
+          "answer": "숫자 또는 모든 유효 여덟칸 배열 허용",
+          "domain": "원본 영역과 학습 범위 유지",
+          "search": "원본과 같은 유한한 분류·탐색",
+          "load": "8칸·8점·두 접기는 원형 고정",
+          "measurement": "학생 실측 난도 아님"
+        }
+      },
+      "asset": {
+        "src": "assets/applied4/eight-circle-points-original.png",
+        "description": "원본의 원 위 여덟 점"
+      }
     }
   ],
   "sourceEditionNotes": {
@@ -5761,13 +9241,27 @@
     "30": "분열시점과부모개체유지조건의해석확인필요로보류"
   },
   "reviewSummary": {
-    "independentMathCount": 108,
-    "sourceTypes": 12,
+    "independentMathCount": 135,
+    "sourceTypes": 15,
     "variantsPerType": 9,
     "outputReviewed": true,
-    "sourceDrawingCount": 2,
+    "sourceDrawingCount": 5,
+    "nativeDetailCrops": 1,
+    "new27ActualZipReviewed": true,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "preReleaseDataSha256": "ea0cd2f6cf4c466fef9ee8fa3b76e3444685dd37d28c88ea5092a76ed72f09fb"
+    "preReleaseDataSha256": "e102410e77c9a38f1a115c180d4142ce570404deafa9946700d980dc700a4dc1"
+  },
+  "revision": "20261024-applied4-expansion-r2",
+  "additionReviewSummary": {
+    "sourceNos": [
+      9,
+      11,
+      12
+    ],
+    "count": 27,
+    "acceptedAnswersPerGrid": 4,
+    "old108Exact": true,
+    "all1533PriorAttemptKeysPreserved": true
   }
 }

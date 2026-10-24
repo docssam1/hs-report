@@ -1,16 +1,13 @@
 {
-  "version": "20261024-applied4-expansion-r1",
+  "version": "20261024-applied4-expansion-r2",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 108,
+  "itemCount": 135,
   "pendingSourceNos": [
     1,
     2,
     3,
     4,
-    9,
-    11,
-    12,
     14,
     15,
     16,
@@ -65,11 +62,41 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 9,
+      "genId": "applied4-q09",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단과 펼친 조각",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 10,
       "genId": "applied4-q10",
       "area": "수와 식",
       "subarea": "삼각 배열의 색",
       "detailType": "번갈아 쌓은 두 색의 개수 차",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 11,
+      "genId": "applied4-q11",
+      "area": "경우의 수",
+      "subarea": "배열과 이웃 조건",
+      "detailType": "연속한 수가 이웃하지 않는 여덟 칸 배열",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 12,
+      "genId": "applied4-q12",
+      "area": "경우의 수",
+      "subarea": "점의 선택과 도형",
+      "detailType": "원 위 여덟 점에서 조건에 맞는 사각형",
       "pointBand": "2.7",
       "reviewStatus": "verified",
       "variantCount": 9

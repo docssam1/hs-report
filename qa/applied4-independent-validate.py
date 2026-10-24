@@ -97,13 +97,15 @@ def solve(no,p):
 originals={5:{'index':78},6:{'outer':20,'dividend':81,'divisor':3,'subtract':15},7:{'transfer':3,'eatA':5,'eatB':1},8:{'remaining':30,'halvings':4},10:{'difference':8},13:{'shortA':1700,'shortB':1800,'leftover':100},17:{'upper':9999},19:{'people':6,'separateGroup':2,'extraPerPerson':1600},20:{'rank':62},23:{'limit':300,'multiple':3,'digit':4},28:{'firstMonth':3,'lastMonth':12},29:{'cards':list(range(1,7))}}
 evidence=[]
 for x in data['items']:
- no=x['sourceNo'];p=x['verification']['parameters'];assert p!=originals[no]
+ no=x['sourceNo']
+ if no not in originals:continue  # New9/11/12 are independently checked by the additions suite.
+ p=x['verification']['parameters'];assert p!=originals[no]
  ans=solve(no,p);assert ans==x['answerParts'],(x['id'],ans,x['answerParts'])
  assert len(x['solutionSteps'])>=3
  assert x['pointBand']==('2.7' if no<=12 else '3.4' if no<=22 else '4.2')
  evidence.append({'id':x['id'],'passed':True,'answer':ans})
 assert len(evidence)==108
-for no in data['availableSourceNos']:
+for no in originals:
  group=[x for x in data['items'] if x['sourceNo']==no];assert len(group)==len({json.dumps(x['verification']['parameters'],sort_keys=True) for x in group})==9
-out=ROOT/'.private-work/hw-expansion-20261023/hw4/independent-math.json';out.write_text(json.dumps({'dataSha256':hashlib.sha256(file.read_bytes()).hexdigest(),'count':108,'suite':Path(__file__).name,'items':evidence},ensure_ascii=False,indent=2)+'\n')
+out=ROOT/'.private-work/nine-expansion-20261024/round4-missing-9-11-12/legacy-independent-math.json';out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps({'dataSha256':hashlib.sha256(file.read_bytes()).hexdigest(),'count':108,'suite':Path(__file__).name,'items':evidence},ensure_ascii=False,indent=2)+'\n')
 print('PASS 108 Applied4: numeric enumeration, separate digit DPs, prefix unranking, chronological calendar dates, independently enumerated odd products; original duplicates excluded')
