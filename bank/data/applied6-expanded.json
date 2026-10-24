@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied6-expansion-r22",
+  "version": "20261024-applied6-expansion-r23",
   "sourceSet": "applied",
   "sourceRound": 6,
   "policy": {
@@ -31,7 +31,9 @@
     23,
     24,
     25,
-    26
+    26,
+    29,
+    30
   ],
   "pendingSourceNos": [
     1,
@@ -39,9 +41,7 @@
     6,
     15,
     27,
-    28,
-    29,
-    30
+    28
   ],
   "items": [
     {
@@ -13762,17 +13762,1892 @@
         "estimated": false,
         "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류이다."
       }
+    },
+    {
+      "id": "applied6-q29-v1",
+      "genId": "applied6-q29",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 29,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "격자 경로의 점수와 경로 판별",
+      "detailType": "점수 조건에 맞는 격자 경로의 숫자 찾기",
+      "pointBand": "4.2",
+      "text": "그림의 왼쪽 위 원에서 오른쪽 아래 원까지 오른쪽이나 아래쪽으로만 이동합니다. 숫자가 적힌 원을 지나면 그 수만큼 점수를 얻고, 숫자가 없는 원을 지나면 32점을 뺍니다. 출발 원과 도착 원에 적힌 숫자는 답에서 제외하고, 총점이 180점인 경로에서 지나간 숫자를 순서대로 모두 적으세요.",
+      "answer": "54, 48, 66",
+      "answerParts": [
+        54,
+        48,
+        66
+      ],
+      "answerLabels": [
+        "지나간 숫자 1",
+        "지나간 숫자 2",
+        "지나간 숫자 3"
+      ],
+      "acceptedAnswers": [
+        "54, 48, 66"
+      ],
+      "acceptedAnswerParts": [
+        [
+          54,
+          48,
+          66
+        ]
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q29-original-grid.png",
+        "mimeType": "image/png",
+        "width": 348,
+        "height": 355,
+        "description": "활용 6회 원문 29번 격자 경로 그림(원본 숫자·원·선 그대로)"
+      },
+      "solutionSteps": [
+        "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다.",
+        "출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다.",
+        "총점이 180점이므로 중간 숫자 세 개의 합은 180−12=168입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 48, 66입니다.",
+        "따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 48, 66입니다."
+      ],
+      "solution": "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다. 출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다. 총점이 180점이므로 중간 숫자 세 개의 합은 180−12=168입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 48, 66입니다. 따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 48, 66입니다.",
+      "learningPoint": "오른쪽·아래 이동 횟수와 빈 원 개수를 고정한 뒤 점수 합으로 경로의 숫자를 판별하기",
+      "learningLocation": "활용 6회 · 원문 29번 · 격자 경로 점수와 숫자열",
+      "verification": {
+        "primaryMethod": "경로별 숫자 합과 빈 원 감점으로 목표 점수 계산",
+        "independentMethod": "5×5 격자에서 오른쪽 4회·아래 4회인 모든 경로 70개를 전수 열거하고 점수별 숫자열을 비교",
+        "parameters": {
+          "grid": [
+            [
+              70,
+              null,
+              55,
+              null,
+              62
+            ],
+            [
+              null,
+              54,
+              null,
+              57,
+              null
+            ],
+            [
+              62,
+              null,
+              48,
+              null,
+              66
+            ],
+            [
+              null,
+              46,
+              null,
+              67,
+              null
+            ],
+            [
+              43,
+              null,
+              70,
+              null,
+              70
+            ]
+          ],
+          "blankPenalty": 32,
+          "moves": {
+            "right": 4,
+            "down": 4
+          },
+          "scoreTarget": 180,
+          "internalNumberSum": 168,
+          "validNumberSequences": [
+            [
+              54,
+              48,
+              66
+            ]
+          ],
+          "geometricPathsForTarget": 4,
+          "allMonotonePaths": 70
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q29-v2",
+      "genId": "applied6-q29",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 29,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "격자 경로의 점수와 경로 판별",
+      "detailType": "점수 조건에 맞는 격자 경로의 숫자 찾기",
+      "pointBand": "4.2",
+      "text": "그림의 왼쪽 위 원에서 오른쪽 아래 원까지 오른쪽이나 아래쪽으로만 이동합니다. 숫자가 적힌 원을 지나면 그 수만큼 점수를 얻고, 숫자가 없는 원을 지나면 32점을 뺍니다. 출발 원과 도착 원에 적힌 숫자는 답에서 제외하고, 총점이 181점인 경로에서 지나간 숫자를 순서대로 모두 적으세요.",
+      "answer": "54, 48, 67 또는 55, 48, 66",
+      "answerParts": [
+        54,
+        48,
+        67
+      ],
+      "answerLabels": [
+        "지나간 숫자 1",
+        "지나간 숫자 2",
+        "지나간 숫자 3"
+      ],
+      "acceptedAnswers": [
+        "54, 48, 67",
+        "55, 48, 66"
+      ],
+      "acceptedAnswerParts": [
+        [
+          54,
+          48,
+          67
+        ],
+        [
+          55,
+          48,
+          66
+        ]
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q29-original-grid.png",
+        "mimeType": "image/png",
+        "width": 348,
+        "height": 355,
+        "description": "활용 6회 원문 29번 격자 경로 그림(원본 숫자·원·선 그대로)"
+      },
+      "solutionSteps": [
+        "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다.",
+        "출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다.",
+        "총점이 181점이므로 중간 숫자 세 개의 합은 181−12=169입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 48, 67; 55, 48, 66입니다.",
+        "따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 48, 67 또는 55, 48, 66입니다."
+      ],
+      "solution": "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다. 출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다. 총점이 181점이므로 중간 숫자 세 개의 합은 181−12=169입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 48, 67; 55, 48, 66입니다. 따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 48, 67 또는 55, 48, 66입니다.",
+      "learningPoint": "오른쪽·아래 이동 횟수와 빈 원 개수를 고정한 뒤 점수 합으로 경로의 숫자를 판별하기",
+      "learningLocation": "활용 6회 · 원문 29번 · 격자 경로 점수와 숫자열",
+      "verification": {
+        "primaryMethod": "경로별 숫자 합과 빈 원 감점으로 목표 점수 계산",
+        "independentMethod": "5×5 격자에서 오른쪽 4회·아래 4회인 모든 경로 70개를 전수 열거하고 점수별 숫자열을 비교",
+        "parameters": {
+          "grid": [
+            [
+              70,
+              null,
+              55,
+              null,
+              62
+            ],
+            [
+              null,
+              54,
+              null,
+              57,
+              null
+            ],
+            [
+              62,
+              null,
+              48,
+              null,
+              66
+            ],
+            [
+              null,
+              46,
+              null,
+              67,
+              null
+            ],
+            [
+              43,
+              null,
+              70,
+              null,
+              70
+            ]
+          ],
+          "blankPenalty": 32,
+          "moves": {
+            "right": 4,
+            "down": 4
+          },
+          "scoreTarget": 181,
+          "internalNumberSum": 169,
+          "validNumberSequences": [
+            [
+              54,
+              48,
+              67
+            ],
+            [
+              55,
+              48,
+              66
+            ]
+          ],
+          "geometricPathsForTarget": 17,
+          "allMonotonePaths": 70
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q29-v3",
+      "genId": "applied6-q29",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 29,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "격자 경로의 점수와 경로 판별",
+      "detailType": "점수 조건에 맞는 격자 경로의 숫자 찾기",
+      "pointBand": "4.2",
+      "text": "그림의 왼쪽 위 원에서 오른쪽 아래 원까지 오른쪽이나 아래쪽으로만 이동합니다. 숫자가 적힌 원을 지나면 그 수만큼 점수를 얻고, 숫자가 없는 원을 지나면 32점을 뺍니다. 출발 원과 도착 원에 적힌 숫자는 답에서 제외하고, 총점이 182점인 경로에서 지나간 숫자를 순서대로 모두 적으세요.",
+      "answer": "54, 46, 70 또는 55, 48, 67",
+      "answerParts": [
+        54,
+        46,
+        70
+      ],
+      "answerLabels": [
+        "지나간 숫자 1",
+        "지나간 숫자 2",
+        "지나간 숫자 3"
+      ],
+      "acceptedAnswers": [
+        "54, 46, 70",
+        "55, 48, 67"
+      ],
+      "acceptedAnswerParts": [
+        [
+          54,
+          46,
+          70
+        ],
+        [
+          55,
+          48,
+          67
+        ]
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q29-original-grid.png",
+        "mimeType": "image/png",
+        "width": 348,
+        "height": 355,
+        "description": "활용 6회 원문 29번 격자 경로 그림(원본 숫자·원·선 그대로)"
+      },
+      "solutionSteps": [
+        "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다.",
+        "출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다.",
+        "총점이 182점이므로 중간 숫자 세 개의 합은 182−12=170입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 46, 70; 55, 48, 67입니다.",
+        "따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 46, 70 또는 55, 48, 67입니다."
+      ],
+      "solution": "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다. 출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다. 총점이 182점이므로 중간 숫자 세 개의 합은 182−12=170입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 46, 70; 55, 48, 67입니다. 따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 46, 70 또는 55, 48, 67입니다.",
+      "learningPoint": "오른쪽·아래 이동 횟수와 빈 원 개수를 고정한 뒤 점수 합으로 경로의 숫자를 판별하기",
+      "learningLocation": "활용 6회 · 원문 29번 · 격자 경로 점수와 숫자열",
+      "verification": {
+        "primaryMethod": "경로별 숫자 합과 빈 원 감점으로 목표 점수 계산",
+        "independentMethod": "5×5 격자에서 오른쪽 4회·아래 4회인 모든 경로 70개를 전수 열거하고 점수별 숫자열을 비교",
+        "parameters": {
+          "grid": [
+            [
+              70,
+              null,
+              55,
+              null,
+              62
+            ],
+            [
+              null,
+              54,
+              null,
+              57,
+              null
+            ],
+            [
+              62,
+              null,
+              48,
+              null,
+              66
+            ],
+            [
+              null,
+              46,
+              null,
+              67,
+              null
+            ],
+            [
+              43,
+              null,
+              70,
+              null,
+              70
+            ]
+          ],
+          "blankPenalty": 32,
+          "moves": {
+            "right": 4,
+            "down": 4
+          },
+          "scoreTarget": 182,
+          "internalNumberSum": 170,
+          "validNumberSequences": [
+            [
+              54,
+              46,
+              70
+            ],
+            [
+              55,
+              48,
+              67
+            ]
+          ],
+          "geometricPathsForTarget": 8,
+          "allMonotonePaths": 70
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q29-v4",
+      "genId": "applied6-q29",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 29,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "격자 경로의 점수와 경로 판별",
+      "detailType": "점수 조건에 맞는 격자 경로의 숫자 찾기",
+      "pointBand": "4.2",
+      "text": "그림의 왼쪽 위 원에서 오른쪽 아래 원까지 오른쪽이나 아래쪽으로만 이동합니다. 숫자가 적힌 원을 지나면 그 수만큼 점수를 얻고, 숫자가 없는 원을 지나면 32점을 뺍니다. 출발 원과 도착 원에 적힌 숫자는 답에서 제외하고, 총점이 184점인 경로에서 지나간 숫자를 순서대로 모두 적으세요.",
+      "answer": "54, 48, 70",
+      "answerParts": [
+        54,
+        48,
+        70
+      ],
+      "answerLabels": [
+        "지나간 숫자 1",
+        "지나간 숫자 2",
+        "지나간 숫자 3"
+      ],
+      "acceptedAnswers": [
+        "54, 48, 70"
+      ],
+      "acceptedAnswerParts": [
+        [
+          54,
+          48,
+          70
+        ]
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q29-original-grid.png",
+        "mimeType": "image/png",
+        "width": 348,
+        "height": 355,
+        "description": "활용 6회 원문 29번 격자 경로 그림(원본 숫자·원·선 그대로)"
+      },
+      "solutionSteps": [
+        "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다.",
+        "출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다.",
+        "총점이 184점이므로 중간 숫자 세 개의 합은 184−12=172입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 48, 70입니다.",
+        "따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 48, 70입니다."
+      ],
+      "solution": "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다. 출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다. 총점이 184점이므로 중간 숫자 세 개의 합은 184−12=172입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 48, 70입니다. 따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 48, 70입니다.",
+      "learningPoint": "오른쪽·아래 이동 횟수와 빈 원 개수를 고정한 뒤 점수 합으로 경로의 숫자를 판별하기",
+      "learningLocation": "활용 6회 · 원문 29번 · 격자 경로 점수와 숫자열",
+      "verification": {
+        "primaryMethod": "경로별 숫자 합과 빈 원 감점으로 목표 점수 계산",
+        "independentMethod": "5×5 격자에서 오른쪽 4회·아래 4회인 모든 경로 70개를 전수 열거하고 점수별 숫자열을 비교",
+        "parameters": {
+          "grid": [
+            [
+              70,
+              null,
+              55,
+              null,
+              62
+            ],
+            [
+              null,
+              54,
+              null,
+              57,
+              null
+            ],
+            [
+              62,
+              null,
+              48,
+              null,
+              66
+            ],
+            [
+              null,
+              46,
+              null,
+              67,
+              null
+            ],
+            [
+              43,
+              null,
+              70,
+              null,
+              70
+            ]
+          ],
+          "blankPenalty": 32,
+          "moves": {
+            "right": 4,
+            "down": 4
+          },
+          "scoreTarget": 184,
+          "internalNumberSum": 172,
+          "validNumberSequences": [
+            [
+              54,
+              48,
+              70
+            ]
+          ],
+          "geometricPathsForTarget": 4,
+          "allMonotonePaths": 70
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q29-v5",
+      "genId": "applied6-q29",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 29,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "격자 경로의 점수와 경로 판별",
+      "detailType": "점수 조건에 맞는 격자 경로의 숫자 찾기",
+      "pointBand": "4.2",
+      "text": "그림의 왼쪽 위 원에서 오른쪽 아래 원까지 오른쪽이나 아래쪽으로만 이동합니다. 숫자가 적힌 원을 지나면 그 수만큼 점수를 얻고, 숫자가 없는 원을 지나면 32점을 뺍니다. 출발 원과 도착 원에 적힌 숫자는 답에서 제외하고, 총점이 185점인 경로에서 지나간 숫자를 순서대로 모두 적으세요.",
+      "answer": "55, 48, 70",
+      "answerParts": [
+        55,
+        48,
+        70
+      ],
+      "answerLabels": [
+        "지나간 숫자 1",
+        "지나간 숫자 2",
+        "지나간 숫자 3"
+      ],
+      "acceptedAnswers": [
+        "55, 48, 70"
+      ],
+      "acceptedAnswerParts": [
+        [
+          55,
+          48,
+          70
+        ]
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q29-original-grid.png",
+        "mimeType": "image/png",
+        "width": 348,
+        "height": 355,
+        "description": "활용 6회 원문 29번 격자 경로 그림(원본 숫자·원·선 그대로)"
+      },
+      "solutionSteps": [
+        "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다.",
+        "출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다.",
+        "총점이 185점이므로 중간 숫자 세 개의 합은 185−12=173입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 55, 48, 70입니다.",
+        "따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 55, 48, 70입니다."
+      ],
+      "solution": "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다. 출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다. 총점이 185점이므로 중간 숫자 세 개의 합은 185−12=173입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 55, 48, 70입니다. 따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 55, 48, 70입니다.",
+      "learningPoint": "오른쪽·아래 이동 횟수와 빈 원 개수를 고정한 뒤 점수 합으로 경로의 숫자를 판별하기",
+      "learningLocation": "활용 6회 · 원문 29번 · 격자 경로 점수와 숫자열",
+      "verification": {
+        "primaryMethod": "경로별 숫자 합과 빈 원 감점으로 목표 점수 계산",
+        "independentMethod": "5×5 격자에서 오른쪽 4회·아래 4회인 모든 경로 70개를 전수 열거하고 점수별 숫자열을 비교",
+        "parameters": {
+          "grid": [
+            [
+              70,
+              null,
+              55,
+              null,
+              62
+            ],
+            [
+              null,
+              54,
+              null,
+              57,
+              null
+            ],
+            [
+              62,
+              null,
+              48,
+              null,
+              66
+            ],
+            [
+              null,
+              46,
+              null,
+              67,
+              null
+            ],
+            [
+              43,
+              null,
+              70,
+              null,
+              70
+            ]
+          ],
+          "blankPenalty": 32,
+          "moves": {
+            "right": 4,
+            "down": 4
+          },
+          "scoreTarget": 185,
+          "internalNumberSum": 173,
+          "validNumberSequences": [
+            [
+              55,
+              48,
+              70
+            ]
+          ],
+          "geometricPathsForTarget": 1,
+          "allMonotonePaths": 70
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q29-v6",
+      "genId": "applied6-q29",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 29,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "격자 경로의 점수와 경로 판별",
+      "detailType": "점수 조건에 맞는 격자 경로의 숫자 찾기",
+      "pointBand": "4.2",
+      "text": "그림의 왼쪽 위 원에서 오른쪽 아래 원까지 오른쪽이나 아래쪽으로만 이동합니다. 숫자가 적힌 원을 지나면 그 수만큼 점수를 얻고, 숫자가 없는 원을 지나면 32점을 뺍니다. 출발 원과 도착 원에 적힌 숫자는 답에서 제외하고, 총점이 187점인 경로에서 지나간 숫자를 순서대로 모두 적으세요.",
+      "answer": "62, 43, 70 또는 62, 46, 67",
+      "answerParts": [
+        62,
+        43,
+        70
+      ],
+      "answerLabels": [
+        "지나간 숫자 1",
+        "지나간 숫자 2",
+        "지나간 숫자 3"
+      ],
+      "acceptedAnswers": [
+        "62, 43, 70",
+        "62, 46, 67"
+      ],
+      "acceptedAnswerParts": [
+        [
+          62,
+          43,
+          70
+        ],
+        [
+          62,
+          46,
+          67
+        ]
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q29-original-grid.png",
+        "mimeType": "image/png",
+        "width": 348,
+        "height": 355,
+        "description": "활용 6회 원문 29번 격자 경로 그림(원본 숫자·원·선 그대로)"
+      },
+      "solutionSteps": [
+        "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다.",
+        "출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다.",
+        "총점이 187점이므로 중간 숫자 세 개의 합은 187−12=175입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 62, 43, 70; 62, 46, 67입니다.",
+        "따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 62, 43, 70 또는 62, 46, 67입니다."
+      ],
+      "solution": "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다. 출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다. 총점이 187점이므로 중간 숫자 세 개의 합은 187−12=175입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 62, 43, 70; 62, 46, 67입니다. 따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 62, 43, 70 또는 62, 46, 67입니다.",
+      "learningPoint": "오른쪽·아래 이동 횟수와 빈 원 개수를 고정한 뒤 점수 합으로 경로의 숫자를 판별하기",
+      "learningLocation": "활용 6회 · 원문 29번 · 격자 경로 점수와 숫자열",
+      "verification": {
+        "primaryMethod": "경로별 숫자 합과 빈 원 감점으로 목표 점수 계산",
+        "independentMethod": "5×5 격자에서 오른쪽 4회·아래 4회인 모든 경로 70개를 전수 열거하고 점수별 숫자열을 비교",
+        "parameters": {
+          "grid": [
+            [
+              70,
+              null,
+              55,
+              null,
+              62
+            ],
+            [
+              null,
+              54,
+              null,
+              57,
+              null
+            ],
+            [
+              62,
+              null,
+              48,
+              null,
+              66
+            ],
+            [
+              null,
+              46,
+              null,
+              67,
+              null
+            ],
+            [
+              43,
+              null,
+              70,
+              null,
+              70
+            ]
+          ],
+          "blankPenalty": 32,
+          "moves": {
+            "right": 4,
+            "down": 4
+          },
+          "scoreTarget": 187,
+          "internalNumberSum": 175,
+          "validNumberSequences": [
+            [
+              62,
+              43,
+              70
+            ],
+            [
+              62,
+              46,
+              67
+            ]
+          ],
+          "geometricPathsForTarget": 5,
+          "allMonotonePaths": 70
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q29-v7",
+      "genId": "applied6-q29",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 29,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "격자 경로의 점수와 경로 판별",
+      "detailType": "점수 조건에 맞는 격자 경로의 숫자 찾기",
+      "pointBand": "4.2",
+      "text": "그림의 왼쪽 위 원에서 오른쪽 아래 원까지 오른쪽이나 아래쪽으로만 이동합니다. 숫자가 적힌 원을 지나면 그 수만큼 점수를 얻고, 숫자가 없는 원을 지나면 32점을 뺍니다. 출발 원과 도착 원에 적힌 숫자는 답에서 제외하고, 총점이 188점인 경로에서 지나간 숫자를 순서대로 모두 적으세요.",
+      "answer": "62, 48, 66",
+      "answerParts": [
+        62,
+        48,
+        66
+      ],
+      "answerLabels": [
+        "지나간 숫자 1",
+        "지나간 숫자 2",
+        "지나간 숫자 3"
+      ],
+      "acceptedAnswers": [
+        "62, 48, 66"
+      ],
+      "acceptedAnswerParts": [
+        [
+          62,
+          48,
+          66
+        ]
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q29-original-grid.png",
+        "mimeType": "image/png",
+        "width": 348,
+        "height": 355,
+        "description": "활용 6회 원문 29번 격자 경로 그림(원본 숫자·원·선 그대로)"
+      },
+      "solutionSteps": [
+        "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다.",
+        "출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다.",
+        "총점이 188점이므로 중간 숫자 세 개의 합은 188−12=176입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 62, 48, 66입니다.",
+        "따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 62, 48, 66입니다."
+      ],
+      "solution": "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다. 출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다. 총점이 188점이므로 중간 숫자 세 개의 합은 188−12=176입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 62, 48, 66입니다. 따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 62, 48, 66입니다.",
+      "learningPoint": "오른쪽·아래 이동 횟수와 빈 원 개수를 고정한 뒤 점수 합으로 경로의 숫자를 판별하기",
+      "learningLocation": "활용 6회 · 원문 29번 · 격자 경로 점수와 숫자열",
+      "verification": {
+        "primaryMethod": "경로별 숫자 합과 빈 원 감점으로 목표 점수 계산",
+        "independentMethod": "5×5 격자에서 오른쪽 4회·아래 4회인 모든 경로 70개를 전수 열거하고 점수별 숫자열을 비교",
+        "parameters": {
+          "grid": [
+            [
+              70,
+              null,
+              55,
+              null,
+              62
+            ],
+            [
+              null,
+              54,
+              null,
+              57,
+              null
+            ],
+            [
+              62,
+              null,
+              48,
+              null,
+              66
+            ],
+            [
+              null,
+              46,
+              null,
+              67,
+              null
+            ],
+            [
+              43,
+              null,
+              70,
+              null,
+              70
+            ]
+          ],
+          "blankPenalty": 32,
+          "moves": {
+            "right": 4,
+            "down": 4
+          },
+          "scoreTarget": 188,
+          "internalNumberSum": 176,
+          "validNumberSequences": [
+            [
+              62,
+              48,
+              66
+            ]
+          ],
+          "geometricPathsForTarget": 1,
+          "allMonotonePaths": 70
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q29-v8",
+      "genId": "applied6-q29",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 29,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "격자 경로의 점수와 경로 판별",
+      "detailType": "점수 조건에 맞는 격자 경로의 숫자 찾기",
+      "pointBand": "4.2",
+      "text": "그림의 왼쪽 위 원에서 오른쪽 아래 원까지 오른쪽이나 아래쪽으로만 이동합니다. 숫자가 적힌 원을 지나면 그 수만큼 점수를 얻고, 숫자가 없는 원을 지나면 32점을 뺍니다. 출발 원과 도착 원에 적힌 숫자는 답에서 제외하고, 총점이 189점인 경로에서 지나간 숫자를 순서대로 모두 적으세요.",
+      "answer": "54, 57, 66 또는 62, 48, 67",
+      "answerParts": [
+        54,
+        57,
+        66
+      ],
+      "answerLabels": [
+        "지나간 숫자 1",
+        "지나간 숫자 2",
+        "지나간 숫자 3"
+      ],
+      "acceptedAnswers": [
+        "54, 57, 66",
+        "62, 48, 67"
+      ],
+      "acceptedAnswerParts": [
+        [
+          54,
+          57,
+          66
+        ],
+        [
+          62,
+          48,
+          67
+        ]
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q29-original-grid.png",
+        "mimeType": "image/png",
+        "width": 348,
+        "height": 355,
+        "description": "활용 6회 원문 29번 격자 경로 그림(원본 숫자·원·선 그대로)"
+      },
+      "solutionSteps": [
+        "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다.",
+        "출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다.",
+        "총점이 189점이므로 중간 숫자 세 개의 합은 189−12=177입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 57, 66; 62, 48, 67입니다.",
+        "따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 57, 66 또는 62, 48, 67입니다."
+      ],
+      "solution": "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다. 출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다. 총점이 189점이므로 중간 숫자 세 개의 합은 189−12=177입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 57, 66; 62, 48, 67입니다. 따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 57, 66 또는 62, 48, 67입니다.",
+      "learningPoint": "오른쪽·아래 이동 횟수와 빈 원 개수를 고정한 뒤 점수 합으로 경로의 숫자를 판별하기",
+      "learningLocation": "활용 6회 · 원문 29번 · 격자 경로 점수와 숫자열",
+      "verification": {
+        "primaryMethod": "경로별 숫자 합과 빈 원 감점으로 목표 점수 계산",
+        "independentMethod": "5×5 격자에서 오른쪽 4회·아래 4회인 모든 경로 70개를 전수 열거하고 점수별 숫자열을 비교",
+        "parameters": {
+          "grid": [
+            [
+              70,
+              null,
+              55,
+              null,
+              62
+            ],
+            [
+              null,
+              54,
+              null,
+              57,
+              null
+            ],
+            [
+              62,
+              null,
+              48,
+              null,
+              66
+            ],
+            [
+              null,
+              46,
+              null,
+              67,
+              null
+            ],
+            [
+              43,
+              null,
+              70,
+              null,
+              70
+            ]
+          ],
+          "blankPenalty": 32,
+          "moves": {
+            "right": 4,
+            "down": 4
+          },
+          "scoreTarget": 189,
+          "internalNumberSum": 177,
+          "validNumberSequences": [
+            [
+              54,
+              57,
+              66
+            ],
+            [
+              62,
+              48,
+              67
+            ]
+          ],
+          "geometricPathsForTarget": 8,
+          "allMonotonePaths": 70
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q29-v9",
+      "genId": "applied6-q29",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 29,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "경우의 수",
+      "subarea": "격자 경로의 점수와 경로 판별",
+      "detailType": "점수 조건에 맞는 격자 경로의 숫자 찾기",
+      "pointBand": "4.2",
+      "text": "그림의 왼쪽 위 원에서 오른쪽 아래 원까지 오른쪽이나 아래쪽으로만 이동합니다. 숫자가 적힌 원을 지나면 그 수만큼 점수를 얻고, 숫자가 없는 원을 지나면 32점을 뺍니다. 출발 원과 도착 원에 적힌 숫자는 답에서 제외하고, 총점이 190점인 경로에서 지나간 숫자를 순서대로 모두 적으세요.",
+      "answer": "54, 57, 67 또는 55, 57, 66 또는 62, 46, 70",
+      "answerParts": [
+        54,
+        57,
+        67
+      ],
+      "answerLabels": [
+        "지나간 숫자 1",
+        "지나간 숫자 2",
+        "지나간 숫자 3"
+      ],
+      "acceptedAnswers": [
+        "54, 57, 67",
+        "55, 57, 66",
+        "62, 46, 70"
+      ],
+      "acceptedAnswerParts": [
+        [
+          54,
+          57,
+          67
+        ],
+        [
+          55,
+          57,
+          66
+        ],
+        [
+          62,
+          46,
+          70
+        ]
+      ],
+      "answerContract": "ordered-parts",
+      "asset": {
+        "kind": "raster",
+        "src": "assets/applied6/q29-original-grid.png",
+        "mimeType": "image/png",
+        "width": 348,
+        "height": 355,
+        "description": "활용 6회 원문 29번 격자 경로 그림(원본 숫자·원·선 그대로)"
+      },
+      "solutionSteps": [
+        "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다.",
+        "출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다.",
+        "총점이 190점이므로 중간 숫자 세 개의 합은 190−12=178입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 57, 67; 55, 57, 66; 62, 46, 70입니다.",
+        "따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 57, 67 또는 55, 57, 66 또는 62, 46, 70입니다."
+      ],
+      "solution": "오른쪽으로 네 번, 아래로 네 번 이동하므로 출발점과 도착점을 포함해 원 9개를 지납니다. 격자의 빈 원은 어느 경로에서나 4개입니다. 출발점과 도착점의 점수는 각각 70점이고, 빈 원 네 곳에서는 32점씩 뺍니다. 따라서 총점은 70+70−32×4+(중간 숫자 세 개의 합), 즉 12+(중간 숫자 세 개의 합)입니다. 총점이 190점이므로 중간 숫자 세 개의 합은 190−12=178입니다. 원문 격자의 모든 오른쪽·아래 경로 70가지를 확인하면 가능한 숫자열은 54, 57, 67; 55, 57, 66; 62, 46, 70입니다. 따라서 출발·도착 숫자를 제외하고 차례로 적을 숫자는 54, 57, 67 또는 55, 57, 66 또는 62, 46, 70입니다.",
+      "learningPoint": "오른쪽·아래 이동 횟수와 빈 원 개수를 고정한 뒤 점수 합으로 경로의 숫자를 판별하기",
+      "learningLocation": "활용 6회 · 원문 29번 · 격자 경로 점수와 숫자열",
+      "verification": {
+        "primaryMethod": "경로별 숫자 합과 빈 원 감점으로 목표 점수 계산",
+        "independentMethod": "5×5 격자에서 오른쪽 4회·아래 4회인 모든 경로 70개를 전수 열거하고 점수별 숫자열을 비교",
+        "parameters": {
+          "grid": [
+            [
+              70,
+              null,
+              55,
+              null,
+              62
+            ],
+            [
+              null,
+              54,
+              null,
+              57,
+              null
+            ],
+            [
+              62,
+              null,
+              48,
+              null,
+              66
+            ],
+            [
+              null,
+              46,
+              null,
+              67,
+              null
+            ],
+            [
+              43,
+              null,
+              70,
+              null,
+              70
+            ]
+          ],
+          "blankPenalty": 32,
+          "moves": {
+            "right": 4,
+            "down": 4
+          },
+          "scoreTarget": 190,
+          "internalNumberSum": 178,
+          "validNumberSequences": [
+            [
+              54,
+              57,
+              67
+            ],
+            [
+              55,
+              57,
+              66
+            ],
+            [
+              62,
+              46,
+              70
+            ]
+          ],
+          "geometricPathsForTarget": 12,
+          "allMonotonePaths": 70
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 5,
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantUsesSourceDrawing": true,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q30-v1",
+      "genId": "applied6-q30",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 30,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "몫과 나머지의 합의 최댓값과 최솟값의 차",
+      "pointBand": "4.2",
+      "text": "세 자리 자연수를 14로 나눌 때 나올 수 있는 몫과 나머지의 합 중 최댓값과 최솟값의 차를 구하세요.",
+      "answer": "75",
+      "answerParts": [
+        75
+      ],
+      "answerLabels": [
+        "최댓값과 최솟값의 차"
+      ],
+      "acceptedAnswers": [
+        "75"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 14로 나눈 각 수에서 비교합니다.",
+        "최솟값은 112÷14=8 나머지 0일 때이고, 몫과 나머지의 합은 8입니다.",
+        "최댓값은 993÷14=70 나머지 13일 때이고, 몫과 나머지의 합은 83입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다.",
+        "두 값의 차는 83−8=75입니다."
+      ],
+      "solution": "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 14로 나눈 각 수에서 비교합니다. 최솟값은 112÷14=8 나머지 0일 때이고, 몫과 나머지의 합은 8입니다. 최댓값은 993÷14=70 나머지 13일 때이고, 몫과 나머지의 합은 83입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다. 두 값의 차는 83−8=75입니다.",
+      "learningPoint": "나눗셈의 몫·나머지 범위와 세 자리 수의 범위를 함께 살펴 최댓값과 최솟값 찾기",
+      "learningLocation": "활용 6회 · 원문 30번 · 몫과 나머지 합의 범위",
+      "verification": {
+        "primaryMethod": "100부터 999까지의 몫과 나머지 합을 범위별로 비교",
+        "independentMethod": "각 세 자리 자연수를 직접 나누어 몫+나머지를 모두 계산하고 최댓값·최솟값을 전수 확인",
+        "parameters": {
+          "divisor": 14,
+          "dividendRange": [
+            100,
+            999
+          ],
+          "minimum": {
+            "number": 112,
+            "quotient": 8,
+            "remainder": 0,
+            "sum": 8
+          },
+          "maximum": {
+            "number": 993,
+            "quotient": 70,
+            "remainder": 13,
+            "sum": 83
+          },
+          "difference": 75,
+          "enumeratedDividendCount": 900
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 6,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q30-v2",
+      "genId": "applied6-q30",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 30,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "몫과 나머지의 합의 최댓값과 최솟값의 차",
+      "pointBand": "4.2",
+      "text": "세 자리 자연수를 15로 나눌 때 나올 수 있는 몫과 나머지의 합 중 최댓값과 최솟값의 차를 구하세요.",
+      "answer": "72",
+      "answerParts": [
+        72
+      ],
+      "answerLabels": [
+        "최댓값과 최솟값의 차"
+      ],
+      "acceptedAnswers": [
+        "72"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 15로 나눈 각 수에서 비교합니다.",
+        "최솟값은 105÷15=7 나머지 0일 때이고, 몫과 나머지의 합은 7입니다.",
+        "최댓값은 989÷15=65 나머지 14일 때이고, 몫과 나머지의 합은 79입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다.",
+        "두 값의 차는 79−7=72입니다."
+      ],
+      "solution": "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 15로 나눈 각 수에서 비교합니다. 최솟값은 105÷15=7 나머지 0일 때이고, 몫과 나머지의 합은 7입니다. 최댓값은 989÷15=65 나머지 14일 때이고, 몫과 나머지의 합은 79입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다. 두 값의 차는 79−7=72입니다.",
+      "learningPoint": "나눗셈의 몫·나머지 범위와 세 자리 수의 범위를 함께 살펴 최댓값과 최솟값 찾기",
+      "learningLocation": "활용 6회 · 원문 30번 · 몫과 나머지 합의 범위",
+      "verification": {
+        "primaryMethod": "100부터 999까지의 몫과 나머지 합을 범위별로 비교",
+        "independentMethod": "각 세 자리 자연수를 직접 나누어 몫+나머지를 모두 계산하고 최댓값·최솟값을 전수 확인",
+        "parameters": {
+          "divisor": 15,
+          "dividendRange": [
+            100,
+            999
+          ],
+          "minimum": {
+            "number": 105,
+            "quotient": 7,
+            "remainder": 0,
+            "sum": 7
+          },
+          "maximum": {
+            "number": 989,
+            "quotient": 65,
+            "remainder": 14,
+            "sum": 79
+          },
+          "difference": 72,
+          "enumeratedDividendCount": 900
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 6,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q30-v3",
+      "genId": "applied6-q30",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 30,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "몫과 나머지의 합의 최댓값과 최솟값의 차",
+      "pointBand": "4.2",
+      "text": "세 자리 자연수를 16로 나눌 때 나올 수 있는 몫과 나머지의 합 중 최댓값과 최솟값의 차를 구하세요.",
+      "answer": "69",
+      "answerParts": [
+        69
+      ],
+      "answerLabels": [
+        "최댓값과 최솟값의 차"
+      ],
+      "acceptedAnswers": [
+        "69"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 16로 나눈 각 수에서 비교합니다.",
+        "최솟값은 112÷16=7 나머지 0일 때이고, 몫과 나머지의 합은 7입니다.",
+        "최댓값은 991÷16=61 나머지 15일 때이고, 몫과 나머지의 합은 76입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다.",
+        "두 값의 차는 76−7=69입니다."
+      ],
+      "solution": "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 16로 나눈 각 수에서 비교합니다. 최솟값은 112÷16=7 나머지 0일 때이고, 몫과 나머지의 합은 7입니다. 최댓값은 991÷16=61 나머지 15일 때이고, 몫과 나머지의 합은 76입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다. 두 값의 차는 76−7=69입니다.",
+      "learningPoint": "나눗셈의 몫·나머지 범위와 세 자리 수의 범위를 함께 살펴 최댓값과 최솟값 찾기",
+      "learningLocation": "활용 6회 · 원문 30번 · 몫과 나머지 합의 범위",
+      "verification": {
+        "primaryMethod": "100부터 999까지의 몫과 나머지 합을 범위별로 비교",
+        "independentMethod": "각 세 자리 자연수를 직접 나누어 몫+나머지를 모두 계산하고 최댓값·최솟값을 전수 확인",
+        "parameters": {
+          "divisor": 16,
+          "dividendRange": [
+            100,
+            999
+          ],
+          "minimum": {
+            "number": 112,
+            "quotient": 7,
+            "remainder": 0,
+            "sum": 7
+          },
+          "maximum": {
+            "number": 991,
+            "quotient": 61,
+            "remainder": 15,
+            "sum": 76
+          },
+          "difference": 69,
+          "enumeratedDividendCount": 900
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 6,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q30-v4",
+      "genId": "applied6-q30",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 30,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "몫과 나머지의 합의 최댓값과 최솟값의 차",
+      "pointBand": "4.2",
+      "text": "세 자리 자연수를 17로 나눌 때 나올 수 있는 몫과 나머지의 합 중 최댓값과 최솟값의 차를 구하세요.",
+      "answer": "67",
+      "answerParts": [
+        67
+      ],
+      "answerLabels": [
+        "최댓값과 최솟값의 차"
+      ],
+      "acceptedAnswers": [
+        "67"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 17로 나눈 각 수에서 비교합니다.",
+        "최솟값은 102÷17=6 나머지 0일 때이고, 몫과 나머지의 합은 6입니다.",
+        "최댓값은 985÷17=57 나머지 16일 때이고, 몫과 나머지의 합은 73입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다.",
+        "두 값의 차는 73−6=67입니다."
+      ],
+      "solution": "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 17로 나눈 각 수에서 비교합니다. 최솟값은 102÷17=6 나머지 0일 때이고, 몫과 나머지의 합은 6입니다. 최댓값은 985÷17=57 나머지 16일 때이고, 몫과 나머지의 합은 73입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다. 두 값의 차는 73−6=67입니다.",
+      "learningPoint": "나눗셈의 몫·나머지 범위와 세 자리 수의 범위를 함께 살펴 최댓값과 최솟값 찾기",
+      "learningLocation": "활용 6회 · 원문 30번 · 몫과 나머지 합의 범위",
+      "verification": {
+        "primaryMethod": "100부터 999까지의 몫과 나머지 합을 범위별로 비교",
+        "independentMethod": "각 세 자리 자연수를 직접 나누어 몫+나머지를 모두 계산하고 최댓값·최솟값을 전수 확인",
+        "parameters": {
+          "divisor": 17,
+          "dividendRange": [
+            100,
+            999
+          ],
+          "minimum": {
+            "number": 102,
+            "quotient": 6,
+            "remainder": 0,
+            "sum": 6
+          },
+          "maximum": {
+            "number": 985,
+            "quotient": 57,
+            "remainder": 16,
+            "sum": 73
+          },
+          "difference": 67,
+          "enumeratedDividendCount": 900
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 6,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q30-v5",
+      "genId": "applied6-q30",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 30,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "몫과 나머지의 합의 최댓값과 최솟값의 차",
+      "pointBand": "4.2",
+      "text": "세 자리 자연수를 18로 나눌 때 나올 수 있는 몫과 나머지의 합 중 최댓값과 최솟값의 차를 구하세요.",
+      "answer": "65",
+      "answerParts": [
+        65
+      ],
+      "answerLabels": [
+        "최댓값과 최솟값의 차"
+      ],
+      "acceptedAnswers": [
+        "65"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 18로 나눈 각 수에서 비교합니다.",
+        "최솟값은 108÷18=6 나머지 0일 때이고, 몫과 나머지의 합은 6입니다.",
+        "최댓값은 989÷18=54 나머지 17일 때이고, 몫과 나머지의 합은 71입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다.",
+        "두 값의 차는 71−6=65입니다."
+      ],
+      "solution": "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 18로 나눈 각 수에서 비교합니다. 최솟값은 108÷18=6 나머지 0일 때이고, 몫과 나머지의 합은 6입니다. 최댓값은 989÷18=54 나머지 17일 때이고, 몫과 나머지의 합은 71입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다. 두 값의 차는 71−6=65입니다.",
+      "learningPoint": "나눗셈의 몫·나머지 범위와 세 자리 수의 범위를 함께 살펴 최댓값과 최솟값 찾기",
+      "learningLocation": "활용 6회 · 원문 30번 · 몫과 나머지 합의 범위",
+      "verification": {
+        "primaryMethod": "100부터 999까지의 몫과 나머지 합을 범위별로 비교",
+        "independentMethod": "각 세 자리 자연수를 직접 나누어 몫+나머지를 모두 계산하고 최댓값·최솟값을 전수 확인",
+        "parameters": {
+          "divisor": 18,
+          "dividendRange": [
+            100,
+            999
+          ],
+          "minimum": {
+            "number": 108,
+            "quotient": 6,
+            "remainder": 0,
+            "sum": 6
+          },
+          "maximum": {
+            "number": 989,
+            "quotient": 54,
+            "remainder": 17,
+            "sum": 71
+          },
+          "difference": 65,
+          "enumeratedDividendCount": 900
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 6,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q30-v6",
+      "genId": "applied6-q30",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 30,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "몫과 나머지의 합의 최댓값과 최솟값의 차",
+      "pointBand": "4.2",
+      "text": "세 자리 자연수를 19로 나눌 때 나올 수 있는 몫과 나머지의 합 중 최댓값과 최솟값의 차를 구하세요.",
+      "answer": "63",
+      "answerParts": [
+        63
+      ],
+      "answerLabels": [
+        "최댓값과 최솟값의 차"
+      ],
+      "acceptedAnswers": [
+        "63"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 19로 나눈 각 수에서 비교합니다.",
+        "최솟값은 114÷19=6 나머지 0일 때이고, 몫과 나머지의 합은 6입니다.",
+        "최댓값은 987÷19=51 나머지 18일 때이고, 몫과 나머지의 합은 69입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다.",
+        "두 값의 차는 69−6=63입니다."
+      ],
+      "solution": "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 19로 나눈 각 수에서 비교합니다. 최솟값은 114÷19=6 나머지 0일 때이고, 몫과 나머지의 합은 6입니다. 최댓값은 987÷19=51 나머지 18일 때이고, 몫과 나머지의 합은 69입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다. 두 값의 차는 69−6=63입니다.",
+      "learningPoint": "나눗셈의 몫·나머지 범위와 세 자리 수의 범위를 함께 살펴 최댓값과 최솟값 찾기",
+      "learningLocation": "활용 6회 · 원문 30번 · 몫과 나머지 합의 범위",
+      "verification": {
+        "primaryMethod": "100부터 999까지의 몫과 나머지 합을 범위별로 비교",
+        "independentMethod": "각 세 자리 자연수를 직접 나누어 몫+나머지를 모두 계산하고 최댓값·최솟값을 전수 확인",
+        "parameters": {
+          "divisor": 19,
+          "dividendRange": [
+            100,
+            999
+          ],
+          "minimum": {
+            "number": 114,
+            "quotient": 6,
+            "remainder": 0,
+            "sum": 6
+          },
+          "maximum": {
+            "number": 987,
+            "quotient": 51,
+            "remainder": 18,
+            "sum": 69
+          },
+          "difference": 63,
+          "enumeratedDividendCount": 900
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 6,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q30-v7",
+      "genId": "applied6-q30",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 30,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "몫과 나머지의 합의 최댓값과 최솟값의 차",
+      "pointBand": "4.2",
+      "text": "세 자리 자연수를 20로 나눌 때 나올 수 있는 몫과 나머지의 합 중 최댓값과 최솟값의 차를 구하세요.",
+      "answer": "63",
+      "answerParts": [
+        63
+      ],
+      "answerLabels": [
+        "최댓값과 최솟값의 차"
+      ],
+      "acceptedAnswers": [
+        "63"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 20로 나눈 각 수에서 비교합니다.",
+        "최솟값은 100÷20=5 나머지 0일 때이고, 몫과 나머지의 합은 5입니다.",
+        "최댓값은 999÷20=49 나머지 19일 때이고, 몫과 나머지의 합은 68입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다.",
+        "두 값의 차는 68−5=63입니다."
+      ],
+      "solution": "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 20로 나눈 각 수에서 비교합니다. 최솟값은 100÷20=5 나머지 0일 때이고, 몫과 나머지의 합은 5입니다. 최댓값은 999÷20=49 나머지 19일 때이고, 몫과 나머지의 합은 68입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다. 두 값의 차는 68−5=63입니다.",
+      "learningPoint": "나눗셈의 몫·나머지 범위와 세 자리 수의 범위를 함께 살펴 최댓값과 최솟값 찾기",
+      "learningLocation": "활용 6회 · 원문 30번 · 몫과 나머지 합의 범위",
+      "verification": {
+        "primaryMethod": "100부터 999까지의 몫과 나머지 합을 범위별로 비교",
+        "independentMethod": "각 세 자리 자연수를 직접 나누어 몫+나머지를 모두 계산하고 최댓값·최솟값을 전수 확인",
+        "parameters": {
+          "divisor": 20,
+          "dividendRange": [
+            100,
+            999
+          ],
+          "minimum": {
+            "number": 100,
+            "quotient": 5,
+            "remainder": 0,
+            "sum": 5
+          },
+          "maximum": {
+            "number": 999,
+            "quotient": 49,
+            "remainder": 19,
+            "sum": 68
+          },
+          "difference": 63,
+          "enumeratedDividendCount": 900
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 6,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q30-v8",
+      "genId": "applied6-q30",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 30,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "몫과 나머지의 합의 최댓값과 최솟값의 차",
+      "pointBand": "4.2",
+      "text": "세 자리 자연수를 21로 나눌 때 나올 수 있는 몫과 나머지의 합 중 최댓값과 최솟값의 차를 구하세요.",
+      "answer": "61",
+      "answerParts": [
+        61
+      ],
+      "answerLabels": [
+        "최댓값과 최솟값의 차"
+      ],
+      "acceptedAnswers": [
+        "61"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 21로 나눈 각 수에서 비교합니다.",
+        "최솟값은 105÷21=5 나머지 0일 때이고, 몫과 나머지의 합은 5입니다.",
+        "최댓값은 986÷21=46 나머지 20일 때이고, 몫과 나머지의 합은 66입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다.",
+        "두 값의 차는 66−5=61입니다."
+      ],
+      "solution": "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 21로 나눈 각 수에서 비교합니다. 최솟값은 105÷21=5 나머지 0일 때이고, 몫과 나머지의 합은 5입니다. 최댓값은 986÷21=46 나머지 20일 때이고, 몫과 나머지의 합은 66입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다. 두 값의 차는 66−5=61입니다.",
+      "learningPoint": "나눗셈의 몫·나머지 범위와 세 자리 수의 범위를 함께 살펴 최댓값과 최솟값 찾기",
+      "learningLocation": "활용 6회 · 원문 30번 · 몫과 나머지 합의 범위",
+      "verification": {
+        "primaryMethod": "100부터 999까지의 몫과 나머지 합을 범위별로 비교",
+        "independentMethod": "각 세 자리 자연수를 직접 나누어 몫+나머지를 모두 계산하고 최댓값·최솟값을 전수 확인",
+        "parameters": {
+          "divisor": 21,
+          "dividendRange": [
+            100,
+            999
+          ],
+          "minimum": {
+            "number": 105,
+            "quotient": 5,
+            "remainder": 0,
+            "sum": 5
+          },
+          "maximum": {
+            "number": 986,
+            "quotient": 46,
+            "remainder": 20,
+            "sum": 66
+          },
+          "difference": 61,
+          "enumeratedDividendCount": 900
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 6,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
+    },
+    {
+      "id": "applied6-q30-v9",
+      "genId": "applied6-q30",
+      "sourceSet": "applied",
+      "sourceRound": 6,
+      "sourceNo": 30,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "몫과 나머지의 합의 최댓값과 최솟값의 차",
+      "pointBand": "4.2",
+      "text": "세 자리 자연수를 22로 나눌 때 나올 수 있는 몫과 나머지의 합 중 최댓값과 최솟값의 차를 구하세요.",
+      "answer": "60",
+      "answerParts": [
+        60
+      ],
+      "answerLabels": [
+        "최댓값과 최솟값의 차"
+      ],
+      "acceptedAnswers": [
+        "60"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 22로 나눈 각 수에서 비교합니다.",
+        "최솟값은 110÷22=5 나머지 0일 때이고, 몫과 나머지의 합은 5입니다.",
+        "최댓값은 989÷22=44 나머지 21일 때이고, 몫과 나머지의 합은 65입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다.",
+        "두 값의 차는 65−5=60입니다."
+      ],
+      "solution": "세 자리 수는 100부터 999까지입니다. 나눗셈의 몫과 나머지의 합을 22로 나눈 각 수에서 비교합니다. 최솟값은 110÷22=5 나머지 0일 때이고, 몫과 나머지의 합은 5입니다. 최댓값은 989÷22=44 나머지 21일 때이고, 몫과 나머지의 합은 65입니다. 100부터 999까지 전부 확인하면 이보다 작은 합이나 큰 합은 없습니다. 두 값의 차는 65−5=60입니다.",
+      "learningPoint": "나눗셈의 몫·나머지 범위와 세 자리 수의 범위를 함께 살펴 최댓값과 최솟값 찾기",
+      "learningLocation": "활용 6회 · 원문 30번 · 몫과 나머지 합의 범위",
+      "verification": {
+        "primaryMethod": "100부터 999까지의 몫과 나머지 합을 범위별로 비교",
+        "independentMethod": "각 세 자리 자연수를 직접 나누어 몫+나머지를 모두 계산하고 최댓값·최솟값을 전수 확인",
+        "parameters": {
+          "divisor": 22,
+          "dividendRange": [
+            100,
+            999
+          ],
+          "minimum": {
+            "number": 110,
+            "quotient": 5,
+            "remainder": 0,
+            "sum": 5
+          },
+          "maximum": {
+            "number": 989,
+            "quotient": 44,
+            "remainder": 21,
+            "sum": 65
+          },
+          "difference": 60,
+          "enumeratedDividendCount": 900
+        },
+        "independentSuite": "qa/applied6-q29-30-independent-validate.py",
+        "sourceExamPage": 6,
+        "sourceAnswerPage": 6,
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "variantUsesSourceDrawing": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 6회 원문 23~30번의 4.2점 배점대에 따른 난도 분류."
+      }
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 198,
-    "sourceTypes": 22,
+    "independentMathCount": 216,
+    "sourceTypes": 24,
     "variantsPerType": 9,
     "outputReviewed": true,
-    "sourceDrawingCount": 5,
+    "sourceDrawingCount": 6,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "verifiedQuestionCount": 198,
-    "verifiedSourceCount": 22
+    "verifiedQuestionCount": 216,
+    "verifiedSourceCount": 24
   }
 }

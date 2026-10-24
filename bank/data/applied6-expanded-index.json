@@ -1,17 +1,15 @@
 {
-  "version": "20261024-applied6-expansion-r22",
+  "version": "20261024-applied6-expansion-r23",
   "sourceSet": "applied",
   "sourceRound": 6,
-  "itemCount": 198,
+  "itemCount": 216,
   "pendingSourceNos": [
     1,
     4,
     6,
     15,
     27,
-    28,
-    29,
-    30
+    28
   ],
   "items": [
     {
@@ -230,6 +228,26 @@
       "area": "수와 식",
       "subarea": "제한된 숫자와 배수 조건",
       "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 29,
+      "genId": "applied6-q29",
+      "area": "경우의 수",
+      "subarea": "격자 경로의 점수와 경로 판별",
+      "detailType": "점수 조건에 맞는 격자 경로의 숫자 찾기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 30,
+      "genId": "applied6-q30",
+      "area": "수와 식",
+      "subarea": "나눗셈의 몫과 나머지",
+      "detailType": "몫과 나머지의 합의 최댓값과 최솟값의 차",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9
