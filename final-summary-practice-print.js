@@ -189,6 +189,21 @@
   }
   async function ensureRenderer(bank,input,job){
     if(typeof bank.win.html2canvas==='function')return;
+    // The administrator and report frames may already have loaded a
+    // same-origin renderer. Reuse it when the bank iframe cannot fetch its
+    // own script, which otherwise prevents the reviewed questions from being
+    // attached to the diagnosis PDF.
+    var sourceWindows=[];
+    try{sourceWindows.push(global,global.parent,global.top);}catch(error){sourceWindows.push(global);}
+    for(var i=0;i<sourceWindows.length;i++){
+      try{
+        var source=sourceWindows[i];
+        if(source&&source!==bank.win&&typeof source.html2canvas==='function'){
+          bank.win.html2canvas=source.html2canvas;
+          if(typeof bank.win.html2canvas==='function')return;
+        }
+      }catch(error){}
+    }
     var script=bank.doc.createElement('script');
     script.src=new URL('vendor/html2canvas/1.4.1/html2canvas.min.js',input.doc.baseURI).href;
     var loaded=new Promise(function(resolve,reject){

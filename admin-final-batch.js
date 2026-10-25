@@ -118,6 +118,12 @@
   function ensureLocalRenderer(doc){
     var win=doc&&doc.defaultView;
     if(win&&typeof win.html2canvas==='function')return Promise.resolve(win.html2canvas);
+    // admin.html has already loaded the same-origin local renderer before a
+    // batch starts. Reuse it when a print iframe cannot fetch its own copy.
+    if(win&&typeof global.html2canvas==='function'){
+      try{win.html2canvas=global.html2canvas;}catch(error){}
+      if(typeof win.html2canvas==='function')return Promise.resolve(win.html2canvas);
+    }
     return new Promise(function(resolve,reject){
       var script=doc.createElement('script');
       script.src=new URL('vendor/html2canvas/1.4.1/html2canvas.min.js',global.location.href).href;

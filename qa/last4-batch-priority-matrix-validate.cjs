@@ -14,6 +14,7 @@ const root = path.resolve(__dirname, '..');
 const out = process.env.GFIELD_LAST4_MATRIX_OUTPUT || path.join(root, '.private-work', 'last4-priority-matrix-20261019');
 const student = '최종4매트릭스합성검수학생';
 const all30 = process.env.GFIELD_LAST4_ALL30_ZIP === '1';
+const blockChildRenderer = process.env.GFIELD_LAST4_BLOCK_CHILD_RENDERER === '1';
 const cases = process.env.GFIELD_LAST4_MATRIX_CASES ? JSON.parse(process.env.GFIELD_LAST4_MATRIX_CASES) : all30 ? Array.from({ length: 30 }, (_, index) => [index + 1]) : [[], [12], [3, 26], [7, 23, 28], [1, 2, 3, 4, 5, 6]];
 const data = fs.readFileSync(path.join(root, 'data.js'), 'utf8') +
   '\n;(()=>{const d=window.GFIELD_DATA,n=' + JSON.stringify(student) +
@@ -35,7 +36,8 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
   fs.mkdirSync(out, { recursive: true });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const base = process.env.GFIELD_LAST4_MATRIX_BASE_URL || 'http://127.0.0.1:' + server.address().port;
-  const evidence = { base, mode: process.env.GFIELD_LAST4_MATRIX_BASE_URL ? 'public-static-synthetic-records' : 'local-static-synthetic-records', caseMode: all30 ? 'all-30-single-wrong-sources' : 'priority-count-matrix', cases: [], writes: [], browserErrors: [] };
+  const evidence = { base, mode: process.env.GFIELD_LAST4_MATRIX_BASE_URL ? 'public-static-synthetic-records' : 'local-static-synthetic-records', caseMode: all30 ? 'all-30-single-wrong-sources' : 'priority-count-matrix', childRendererBlocked: blockChildRenderer, cases: [], writes: [], browserErrors: [] };
+  let blockedRendererRequests = 0;
   let record = rowFor([]);
   const browser = await chromium.launch({ headless: true });
   try {
@@ -46,6 +48,8 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
       let renderer;
       Object.defineProperty(window, 'html2canvas', { configurable:true, get:()=>renderer, set:fn=>{
         renderer=function(element,options){
+          const capture=window.top.__GFIELD_BATCH_QA_CAPTURE__,owner=element&&element.ownerDocument&&element.ownerDocument.defaultView;
+          if(capture&&owner&&owner.location.pathname==='/bank/index.html'&&owner!==window)capture.bankRendererReused=true;
           if(element.classList.contains('pagedjs_page')){
             const box=element.getBoundingClientRect();
             const geometry=[...element.querySelectorAll('.report-compact-print-header,.final-score-trend,#report-summary,.parent-summary-column')].map(node=>{const r=node.getBoundingClientRect();return {tag:node.className,id:node.id,x:r.x-box.x,y:r.y-box.y,w:r.width,h:r.height,style:node.getAttribute('style')};});
@@ -57,7 +61,12 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
     });
     await context.route(/^https?:\/\//, async route => {
       const request = route.request(), url = new URL(request.url());
+      if (blockChildRenderer && request.method() === 'GET' && url.pathname === '/vendor/html2canvas/1.4.1/html2canvas.min.js' && !url.searchParams.has('qa-admin-renderer')) { blockedRendererRequests++; return route.abort('failed'); }
       if (url.pathname === '/data.js' && url.origin === new URL(base).origin) return route.fulfill({ contentType: 'application/javascript', body: data });
+      if (blockChildRenderer && url.origin === new URL(base).origin && url.pathname === '/admin.html') {
+        const html = fs.readFileSync(path.join(root, 'admin.html'), 'utf8').replace('vendor/html2canvas/1.4.1/html2canvas.min.js', 'vendor/html2canvas/1.4.1/html2canvas.min.js?qa-admin-renderer');
+        return route.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: html });
+      }
       if (url.hostname === 'fgahqumaldheqettmvqg.supabase.co') {
         if (url.pathname === '/functions/v1/hs-final-population') return route.fulfill({ status: 503, contentType: 'application/json', body: '{}' });
         if (url.pathname === '/functions/v1/hs-approval-admin' && request.postDataJSON()?.action === 'list') return route.fulfill({ json: { accounts: [], parentSessions: [] } });
@@ -90,13 +99,19 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
         const signature = new TextDecoder().decode(await blob.slice(0, 5).arrayBuffer());
         const practice = window.__GFIELD_BATCH_QA_CAPTURE__.practice;
         const pdfBase64 = savePdf ? await new Promise(resolve => { const reader = new FileReader(); reader.onload = () => resolve(reader.result.split(',')[1]); reader.readAsDataURL(blob); }) : null;
-        return { signature, bytes: blob.size, practice, pdfBase64, geometry:window.__GFIELD_BATCH_QA_CAPTURE__.geometry };
+        return { signature, bytes: blob.size, practice, pdfBase64, geometry:window.__GFIELD_BATCH_QA_CAPTURE__.geometry, bankRendererReused:window.__GFIELD_BATCH_QA_CAPTURE__.bankRendererReused===true };
       }, wrong.length === 3);
       assert.equal(result.signature, '%PDF-');
       assert.ok(result.bytes > 40000);
-      assert.equal(result.geometry.flatMap(p=>p.geometry).filter(n=>n.tag.includes('parent-summary-column')).length,2);
-      for(const pageGeometry of result.geometry)for(const node of pageGeometry.geometry){
+      if(blockChildRenderer&&wrong.length)assert.equal(result.bankRendererReused,true,'the administrator renderer is reused for the bank iframe when its own renderer cannot load');
+      const diagnosticColumns=result.geometry.flatMap(page=>page.geometry).filter(node=>node.tag.includes('parent-summary-column'));
+      assert.ok(diagnosticColumns.length>=2&&diagnosticColumns.length%2===0,'diagnostic summary columns are captured in pairs');
+      for(const pageGeometry of result.geometry){
+        const columns=pageGeometry.geometry.filter(n=>n.tag.includes('parent-summary-column'));
+        assert.ok(columns.length===0||columns.length===2,'each captured diagnostic page has either no summary columns or a complete pair');
+        for(const node of pageGeometry.geometry){
         assert.ok(node.x>=-2&&node.y>=-2&&node.x+node.w<=pageGeometry.width+2&&node.y+node.h<=pageGeometry.height+2,'summary content is visible within its PDF page: '+JSON.stringify(node));
+        }
       }
       const expectedCount = Math.min(3, wrong.length) * 3;
       assert.equal(result.practice.questions, expectedCount);
@@ -149,6 +164,8 @@ const rowFor = wrong => { const ox = oxFor(wrong); return { student, round: 'las
     }
     assert.deepEqual(evidence.writes, []);
     assert.deepEqual(evidence.browserErrors, []);
+    evidence.blockedRendererRequests = blockedRendererRequests;
+    if (blockChildRenderer) assert.equal(blockedRendererRequests,0,'the administrator renderer fallback avoids a second renderer download');
     fs.writeFileSync(path.join(out, 'last4-priority-matrix.json'), JSON.stringify(evidence, null, 2) + '\n');
     console.log('PASS Last4 priority matrix; external writes 0; browser errors 0');
     await context.close();
