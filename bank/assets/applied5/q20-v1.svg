@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="560" viewBox="0 0 500 560" role="img" aria-label="네 자리 비밀번호 순서도: 자리 수의 합 10, 둘째 자리 1, 셋째 자리 2">
+<defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#28251f"/></marker></defs>
+<g fill="none" stroke="#28251f" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+ <rect x="76" y="18" width="220" height="50" rx="12" fill="#fff" stroke="#397653" stroke-width="2.8"/>
+ <line x1="186" y1="68" x2="186" y2="117" marker-end="url(#arrow)"/>
+ <polygon points="56,120 316,120 344,165 316,210 56,210 28,165" fill="#fff" stroke="#b4512e" stroke-width="2.8"/>
+ <line x1="186" y1="210" x2="186" y2="258" marker-end="url(#arrow)"/>
+ <polygon points="56,262 316,262 344,312 316,362 56,362 28,312" fill="#fff" stroke="#b4512e" stroke-width="2.8"/>
+ <line x1="186" y1="362" x2="186" y2="416" marker-end="url(#arrow)"/>
+ <rect x="25" y="420" width="322" height="58" rx="10" fill="#fff" stroke="#397653" stroke-width="2.8"/>
+ <path d="M344 165 H385 V49 H296" marker-end="url(#arrow)"/>
+ <path d="M344 312 H435 V31 H296" marker-end="url(#arrow)"/>
+</g>
+<g fill="#191511" text-anchor="middle" font-family="serif">
+ <text x="186" y="49" font-size="22">네 자리 수 입력</text>
+ <text x="186" y="158" font-size="21">각 자리 수의 합이</text><text x="186" y="188" font-size="21">10인가요?</text>
+ <text x="186" y="302" font-size="19">둘째 자리 수는 1이고</text><text x="186" y="333" font-size="19">셋째 자리 수는 2인가요?</text>
+ <text x="186" y="456" font-size="18">비밀번호는 (　　　　) 입니다.</text>
+ <text x="200" y="99" font-size="17">네</text><text x="200" y="246" font-size="17">네</text><text x="200" y="405" font-size="17">네</text>
+ <text x="382" y="145" font-size="15">아니요</text><text x="432" y="288" font-size="15">아니요</text>
+</g></svg>

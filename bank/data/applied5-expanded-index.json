@@ -1,32 +1,9 @@
 {
-  "version": "20261024-applied5-expansion-r1",
+  "version": "20261025-applied5-expansion-q03-q05-q06-q08-q09-q11-q12-q14-q15-q16-q17-q18-q19-q20-q22-q23-q24-q25-q26-q27-q28-q29-r23",
   "sourceSet": "applied",
   "sourceRound": 5,
-  "itemCount": 72,
-  "pendingSourceNos": [
-    3,
-    5,
-    6,
-    8,
-    9,
-    11,
-    12,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    22,
-    23,
-    24,
-    25,
-    26,
-    27,
-    28,
-    29
-  ],
+  "itemCount": 270,
+  "pendingSourceNos": [],
   "items": [
     {
       "sourceNo": 1,
@@ -49,11 +26,41 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 3,
+      "genId": "applied5-q03",
+      "area": "경우의 수",
+      "subarea": "숫자카드의 배열",
+      "detailType": "배수 조건에 맞는 세 자리 수의 개수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 4,
       "genId": "applied5-q04",
       "area": "수와 식",
       "subarea": "약수와 곱",
       "detailType": "두 나이 곱의 공통 인수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 5,
+      "genId": "applied5-q05",
+      "area": "지문이해",
+      "subarea": "조건 추론",
+      "detailType": "서로 다른 선택의 배정과 배제 단서",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 6,
+      "genId": "applied5-q06",
+      "area": "수와 식",
+      "subarea": "문자와 세로 덧셈",
+      "detailType": "서로 다른 문자의 반복 덧셈",
       "pointBand": "2.7",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -69,11 +76,51 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 8,
+      "genId": "applied5-q08",
+      "area": "경우의 수",
+      "subarea": "도형의 배열",
+      "detailType": "연속한 원 무리의 위치 정하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 9,
+      "genId": "applied5-q09",
+      "area": "수와 식",
+      "subarea": "규칙과 대응",
+      "detailType": "색깔별 값의 합으로 수 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 10,
       "genId": "applied5-q10",
       "area": "수와 식",
       "subarea": "달력과 주기",
       "detailType": "윤년을 포함한 같은 날짜의 요일",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 11,
+      "genId": "applied5-q11",
+      "area": "수와 식",
+      "subarea": "거리의 합과 차",
+      "detailType": "연속한 장소 사이 거리로 구간 거리 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 12,
+      "genId": "applied5-q12",
+      "area": "도형",
+      "subarea": "종이 접기와 겹친 수",
+      "detailType": "방향이 정해진 반복 접기에서 맨 위 수 추적",
       "pointBand": "2.7",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -89,12 +136,162 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 14,
+      "genId": "applied5-q14",
+      "area": "도형",
+      "subarea": "격자에서 사각형 세기",
+      "detailType": "격자와 대각선으로 이루어진 사각형의 완전 계수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 15,
+      "genId": "applied5-q15",
+      "area": "도형",
+      "subarea": "입체도형과 블록",
+      "detailType": "세 방향의 검은 줄이 이어진 블록 수 세기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 16,
+      "genId": "applied5-q16",
+      "area": "경우의 수",
+      "subarea": "격자 경로와 일방통행",
+      "detailType": "호수 주위에서 가장 짧은 길의 수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 17,
+      "genId": "applied5-q17",
+      "area": "수와 식",
+      "subarea": "마방진과 수의 관계",
+      "detailType": "1부터 16까지의 4×4 마방진에서 특정 칸의 수 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 18,
+      "genId": "applied5-q18",
+      "area": "수와 식",
+      "subarea": "양과 지출의 관계",
+      "detailType": "정해진 기간의 계획 지출과 실제 지출로 처음 가진 돈 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 19,
+      "genId": "applied5-q19",
+      "area": "수와 식",
+      "subarea": "수의 규칙",
+      "detailType": "각 자리의 합을 한 자리로 만들어 더하는 수 변환 규칙",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 20,
+      "genId": "applied5-q20",
+      "area": "경우의 수",
+      "subarea": "자리 숫자 조건",
+      "detailType": "숫자 합과 가운데 자리 조건으로 네 자리 수 찾기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 21,
       "genId": "applied5-q21",
       "area": "수와 식",
       "subarea": "몫과 나머지",
       "detailType": "모임 수 차이로 전체 인원 찾기",
       "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 22,
+      "genId": "applied5-q22",
+      "area": "수와 식",
+      "subarea": "자릿값과 덧셈",
+      "detailType": "숫자 위치를 바꾸어 세 수의 합 맞추기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 23,
+      "genId": "applied5-q23",
+      "area": "경우의 수",
+      "subarea": "숫자 카드의 배열",
+      "detailType": "서로 다른 숫자 카드로 주어진 비와 같은 분수 만들기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 24,
+      "genId": "applied5-q24",
+      "area": "경우의 수",
+      "subarea": "달력에서 도형 놓기",
+      "detailType": "달력 날짜 합 조건을 만족하는 좌우 뒤집기 배치 수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 25,
+      "genId": "applied5-q25",
+      "area": "도형",
+      "subarea": "곡선과 영역",
+      "detailType": "서로 교차하는 원이 나누는 최대 면의 수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 26,
+      "genId": "applied5-q26",
+      "area": "수와 식",
+      "subarea": "규칙과 대응",
+      "detailType": "짝을 지어 번식하는 새의 해마다 개체 수 변화",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 27,
+      "genId": "applied5-q27",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "서로 다른 숫자로 나타낸 곱셈식에서 문자 값 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 28,
+      "genId": "applied5-q28",
+      "area": "도형",
+      "subarea": "입체도형과 주사위",
+      "detailType": "계단 모양으로 쌓은 주사위의 겉면 눈 최댓값",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 29,
+      "genId": "applied5-q29",
+      "area": "경우의 수",
+      "subarea": "두 수의 짝짓기",
+      "detailType": "0과 1로 만든 수의 모든 두 수 합에서 순위 찾기",
+      "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9
     },
