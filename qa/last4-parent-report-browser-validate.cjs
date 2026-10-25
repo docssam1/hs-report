@@ -99,6 +99,8 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
     return {
       vm:window.__qaParentVM,
       ctx:{score:window.__qaCtx.score,ncorr:window.__qaCtx.ncorr,wrong:window.__qaCtx.wrong,miss:window.__qaCtx.miss,rates:window.__qaCtx.rate,items:window.__qaCtx.items,wrongList:window.__qaCtx.wrongList},
+      rank:{verified:window.__qaCtx.rankVerified,pct:window.__qaCtx.pct,cohortSize:window.__qaCtx.S.n,populationVerified:window.__qaCtx.populationVerified},
+      screenHeader:document.querySelector('.report-screen-header')?.innerText||'',
       summary:document.querySelector('#report-summary').innerText,
       trend:document.querySelector('.score-trend-cumulative')?.innerText||'',
       comment:document.querySelector('.docssam-saved-comment')?.innerText||'',
@@ -133,6 +135,9 @@ async function check(label,fn){try{const detail=await fn();evidence.cases.push({
       for(const wrong of [[],[12],[12,28],[1,2,5,8,12,15,19,23,26,28,30]]){
         records=[row('last4',makeOx(wrong))];await open();const v=await view();
         assertPriority(v,genericExpected(v));
+        assert.equal(v.rank.verified,true,'Last4 rank uses its verified cohort reference even when the published score list is shorter');
+        assert.equal(v.rank.cohortSize,120);assert.ok(v.rank.pct>0,'rank percentile must not display 0%');
+        assert.match(v.screenHeader,/석차 백분율/);
         assert.equal(v.ctx.items.length,30);assert.equal(v.ctx.items[25].type,approved.items.find(x=>x.sourceNo===26).detailType);
         assert.ok(v.ctx.items.every(x=>x.subarea&&x.taxonomyReviewStatus==='verified-source-bound'));
         if(wrong.length)await page.waitForFunction(expected=>document.querySelectorAll('#last4PriorityProblems .last3-practice-question').length===expected,Math.min(3,wrong.length)*3);

@@ -59,7 +59,7 @@ function loadFinalCore(options = {}) {
   const exposeFrom = 'window.GF_TEST = { M:M,';
   const exposeTo = `window.GF_TEST = {
     validOx:validOx, validateExamContract:validateExamContract,
-    populationStatsVerified:populationStatsVerified, publicCutVerified:publicCutVerified,
+    populationStatsVerified:populationStatsVerified, rankReferenceVerified:rankReferenceVerified, publicCutVerified:publicCutVerified,
     taxonomyOf:taxonomyOf, computePersonalAttempts:computePersonalAttempts,
     supaLoadRows:supaLoadRows, causeSumHTML:causeSumHTML,
     causeWrapHTML:causeWrapHTML, buildComment:buildComment,
@@ -331,6 +331,21 @@ check('모집단 검증 게이트는 출처·표본·분포·문항별 분모가
     false,
     '백분위 계산에 쓰는 stats.dist가 검증된 evidence.values와 달라도 승인됨',
   );
+});
+
+check('최종4 석차는 기준 인원 120명과 0% 방지 순위로 표시하고 전체 통계는 별도 검증', () => {
+  const { core } = loadFinalCore();
+  const source = loadWindowData('last-score-data.js', 'GFIELD_LAST_SCORE_DATA').rounds['4'];
+  const stats = {
+    mean: source.average, n: source.cohortSize, dist: source.scoreDist,
+    rankEvidence: { status: 'verified-source-rank', sourceId: 'last-score-data-4', sourceRef: '최종 4회 원점수 석차 백분율 기준', verifiedAt: '2026-09-11' },
+  };
+  assert.equal(stats.n, 120);
+  assert.equal(stats.dist.length, 98);
+  assert.equal(core.populationStatsVerified(stats), false, '98개 점수만으로 평균·정답률 모집단까지 검증하면 안 됨');
+  assert.equal(core.rankReferenceVerified(stats), true, '명시된 120명 기준으로 석차 백분율은 계산 가능해야 함');
+  assert.ok(core.percentileOf(Math.min(...stats.dist), stats.dist, stats.n) > 0, '최하위 관측 점수도 0%가 되지 않아야 함');
+  assert.equal(core.percentileOf(100, stats.dist, stats.n), 0.8, '최상위도 (순위 1 ÷ 기준 인원 120)로 계산해야 함');
 });
 
 check('검수 완료 회차와 자동 후보 회차를 약점 판정에서 분리', () => {
