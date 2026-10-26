@@ -1,3 +1,9 @@
+# 2026-10-26 활용2 전체 ZIP 200쪽 배치 검수
+
+- 현재 활성 활용1~9 은행은 270유형×9=2,430문항, 각 회차 보류 0으로 `qa/applied-expanded-inventory-validate.py` 통과. 활용2 Q17은 사용자 확정 원본 그림24칸 기준의 독립 최소값·변형 9개·풀이 그림 덮기 검사를 다시 통과했다.
+- 활용2 전체270문항 ZIP SHA-256 `532ac450b67f241643ea4d055e464d2512b34b39eb4128ec5798e0f852e225d1`에서 문제 PDF72쪽과 상세 풀이 PDF128쪽을 꺼내 모두 80dpi로 렌더했다. 17개 연락시트에서 200쪽의 2단 읽기 순서·그림·풀이·학습 연결·쪽번호를 검토했고, 완전 빈 쪽0·8픽셀 가장자리 접촉0·새로 보이는 큰 잘림/겹침0이었다. 전체 ZIP의 7항목/270ID/정답·A4·상세풀이 검사는 통과했다. 상세 증빙은 `.private-work/hw-expansion-20261023/hw2/q22-review/20261026-applied2-full-zip-layout-review-r1.md`이며 Drive 기존 활용2 폴더에 파일 ID `10GDBiovoB8_JYCcrfBIJcgDlFyqlRSwG`로 보관했다. 원시 재다운로드 1,886바이트, SHA-256 `b0cf2f15c7204769c0d4055e6ef0503fccddff341cb4f1572a69b6fc956ede6b`가 로컬과 일치했다.
+- 이는 축소판 전체 쪽 **배치 검수**이며 모든 문항의 원문·숫자·수식·풀이를 한 줄씩 재대조한 증거가 아니다. 엄격한 `outputReviewed=false` 유지. 기존 콘텐츠·데이터·ZIP·공개 사이트는 변경하지 않았다.
+
 # 2026-10-26 활용8 수정 ZIP 173쪽 개별 배치 검수
 
 - Q02 SVG 표시 영역을 고친 전체270문항 ZIP SHA-256 `a6bfd122d84ecec404cfe46e983a717c91ee498337fb3421008f267a0fc02813`의 문제 PDF 63쪽과 풀이 PDF 110쪽을 각 100dpi 이미지로 렌더해 **모든 쪽을 개별 확인**했다. 문제 4~5쪽의 결함 수정 부분은 180dpi 이미지로도 다시 확인했다. 문제 그림, 2단 흐름, 번호·답란, 풀이 본문·그림·학습 위치/포인트에서 새로 보이는 잘림·겹침·빈 쪽은 없었다. 이미지 경로는 `.private-work/hw-expansion-20261023/hw8/q02-viewport-fix-review/questions-pages-100dpi/`와 `solutions-pages-100dpi/`다.
