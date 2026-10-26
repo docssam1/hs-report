@@ -2,6 +2,7 @@
 
 - 활용5 전체270문항 ZIP의 169쪽은 80dpi 연락시트로 배치·큰 잘림을 확인했지만, 기존 검수 기록은 각 문항의 원문·정답·풀이·그림을 전수 독해하지 않았다고 명시한다. 활성 데이터 `reviewSummary.outputReviewed`가 `true`로 남아 있어 그 한 필드만 `false`로 정정했다.
 - 기존 데이터와 수정본을 JSON으로 대조해 나머지 전 필드, 270문항·답·풀이·그림·분류·색인 버전이 동일함을 확인했다. `qa/applied-expanded-inventory-validate.py`는 1~9회 2,430문항/270유형×9 및 학습·그림·색인 정합을 통과했다. 수정 데이터 SHA-256 `92b26db93d4c070c1c555487643494b562c019f2d9ee4705adfaa9a0a9de5244`. 기존 ZIP의 문항·출력물은 수정 대상이 아니다.
+- GitHub `main` `3fe9933ef1a5122fc1bf416a841917a7187ec065`의 Pages 실행 `40344253702`는 성공했고, 공개 활용5 데이터 270문항/`outputReviewed=false`/SHA-256이 로컬 수정본과 일치했다. 검수 기록 `.private-work/hw-expansion-20261023/hw5/20261026-applied5-output-review-status-correction-r1.md`는 Drive 기존 활용5 폴더의 파일 ID `1jYCN7VkDB46SOMtSws5E6svrCflv91Ee`에 보관, 원시 재다운로드 1,393바이트/SHA-256 `3c3b7f275337dbc1a7f0fc69d02732f65870e505270aee8656bad33bcd306999`가 로컬과 일치했다.
 
 # 2026-10-26 활용1~9 공개본·그림 연결 확인
 
