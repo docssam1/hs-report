@@ -3629,3 +3629,10 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - Q15 수학·자산 검사, 인벤토리, 1~9회 원시험 진단→3/9문항/학습 연결, 자료실 분류, 과거 난도별 잠금 회귀 검사가 통과했다. 실제 선택 ZIP 7항목·문제 PDF3쪽·상세 풀이 PDF9쪽을 전 쪽 렌더했고, 전체 ZIP 7항목·261 ID·문제70쪽·풀이119쪽·정답표/A4/CRC를 대조했다. 문제 2단, 375px, 3회 입력과 첫 기록 보존, 외부 쓰기0. 전체 189쪽 개별 육안 검토는 미완료라 `outputReviewed=false`. 자세한 검수 기록 `.private-work/hw-expansion-20261023/hw2/20261026-applied2-q15-completion-r1.md`.
 - Drive 활용2 기존 데이터 `17dU-1C1_gHxg6GqRIusuLPAFPv6abw9J`, 색인 `1L53ziO8kFUzJk636oVQz8InxG0f0G_Md`, 전체 ZIP `1uTPb6iGHD2UXLtoYBXzW2Px9R3ZX2ehl`를 261문항판으로 갱신하고 선택9 ZIP `1gRw5GN3rgt7uH7sStfZycr1uw4iSSqg9`, 검수 기록 `1TKp9zNDALPu9pdE2-faUDYFs_cMd11NT`를 추가했다. 다섯 파일의 원시 재다운로드 SHA가 로컬과 일치한다. 전체 ZIP SHA `f3095abd3721afd1ebcace59ebf32f0ef18e97f287bcccb54f5f4d44cf69bc20`.
 - 이 절은 GitHub `main`·Pages·실제 사이트 반영 **전**의 작업 기록이다. 배포 확인은 후속 기록으로 분리한다. 기존 미커밋 final7·활용7 Q08 이미지와 `bank/drafts/` 등은 보존한다.
+
+# 2026-10-26 활용2 Q15 GitHub·Pages·실제 사이트 검증 완료
+
+- GitHub `main` 커밋 `66f0707b38252f673414aeef03aae08bf70b1528`에 Q15 9문항과 새 문제·풀이 SVG 18개를 반영했다. Pages 실행 `40318514231`이 `completed/success`였다. 실제 `https://hs.gfieldacademy.net/`에서 변경된 문제은행 런타임·데이터·그림 등 공개 파일 26개를 캐시 우회해 내려받아 로컬 SHA-256과 **26/26 일치**시켰다.
+- 로그인된 실제 사이트의 `bank/pool.html?bank=applied2&nos=15&count=9`에서 활용2 **261문항·1유형 검수 대기**, Q15 9문항·답안 입력칸 9개(최대 3회), 원시험 답안 입력·분석 링크, 문항별 상세 풀이·학습 위치·학습 포인트를 확인했다. 실제 화면 캡처 `.private-work/hw-expansion-20261023/hw2/q15-review/live-site-q15.png`.
+- 그 화면에서 직접 받은 `지필드_활용2회_유사문제_9문항 (1).zip`은 SHA-256 `cec25ef19659ab993e415a0090623353bf3be43514254e3b3e1f9ec73212c3bd`, 4,893,532바이트, 7항목·CRC 정상이다. `applied2-q15-v1`~`v9`와 정답 7·9·10·7·9·10·7·9·10조각이 일치하고, 문제 PDF 3쪽·상세 풀이 PDF 9쪽이 A4다. 실제 계정에 답안을 제출하거나 채점하지 않았다. 전체 261문항 ZIP의 189쪽 모두를 개별 육안 검토한 것은 아니므로 `outputReviewed=false`다.
+- 남은 확대9 검수 대기: 활용2 Q22, 활용8 Q11·Q16, 총 3유형·27문항 자리. 기존 다른 작업의 미커밋 파일은 그대로 보존했다.
