@@ -36,21 +36,35 @@ assert match
 old_rows=json.loads(match[1]);prefix=f'applied|{round_no}|'
 retained={key:value for key,value in old_rows.items()if not key.startswith(prefix)}
 rows=dict(retained)
+pending=set(data.get('pendingSourceNos',[]))
+assert all(isinstance(no,int) and 1<=no<=30 for no in pending)
+assert pending.isdisjoint(set(data['availableSourceNos']))
+assert all(item['reviewStatus'] in ['verified','pending-output-review','pending-source-review']
+           for item in data['items'])
+published=[]
 for no in data['availableSourceNos']:
+    group=[item for item in data['items'] if item['sourceNo']==no]
+    if no in pending or any(item['reviewStatus']!='verified' for item in group):
+        continue
+    published.append(no)
     first=next(x for x in data['items']if x['sourceNo']==no)
     rows[prefix+str(no)]=dict(bank=args.bank,sourceNo=no,count=15,perLevel=5,version=data['version'],
                             **{k:first[k]for k in ['area','subarea','detailType','learningLocation','learningPoint']})
 assert all(rows[key]==value for key,value in retained.items())
-for item in data['items']:
-    assert item['reviewStatus']in ['verified','pending-output-review']
-    item['reviewStatus']='verified'
-data['reviewSummary']=dict(sourceTypes=len(data['availableSourceNos']),perSource=15,perLevel=5,count=count,
+data['reviewSummary']=dict(sourceTypes=len(published),perSource=15,perLevel=5,count=15*len(published),
+    storedSourceTypes=len(data['availableSourceNos']),storedCount=count,
+    pendingSourceTypes=len(pending)+len(data['availableSourceNos'])-len(published),
     preservedLegacyCount=data['preservedLegacyCount'],newAuthoredCount=data['newAuthoredCount'],
-    independentAnswers=True,actualZipReviewed=True,sourceGradeMutation=False,studentDifficultyMeasured=False)
+    independentAnswers=not pending and len(published)==len(data['availableSourceNos']),
+    actualZipReviewed=not pending and len(published)==len(data['availableSourceNos']),
+    sourceGradeMutation=False,studentDifficultyMeasured=False)
 file.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
 index_file.write_text(index[:match.start(1)]+json.dumps(rows,ensure_ascii=False,separators=(',',':'))+index[match.end(1):])
 (work/'release-evidence.json').write_text(json.dumps(dict(bank=args.bank,preReleaseSha256=before,
     releasedSha256=hashlib.sha256(file.read_bytes()).hexdigest(),count=count,
     preservedLegacyCount=data['preservedLegacyCount'],newAuthoredCount=data['newAuthoredCount'],
-    availableSourceNos=data['availableSourceNos'],retainedOtherRoundRows=len(retained)),indent=2)+'\n')
-print(f'Released {args.bank}: {count} checked items; {len(retained)} other-round index rows unchanged')
+    availableSourceNos=published,pendingSourceNos=sorted(pending|set(data['availableSourceNos'])-set(published)),
+    retainedOtherRoundRows=len(retained)),indent=2)+'\n')
+print(f'Released {args.bank}: {15*len(published)} checked items; '
+      f'{len(pending)+len(data["availableSourceNos"])-len(published)} source types locked; '
+      f'{len(retained)} other-round index rows unchanged')

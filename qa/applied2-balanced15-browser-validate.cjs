@@ -3,6 +3,10 @@ const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),
 const root=path.resolve(__dirname,'..'),out=path.join(root,'.private-work/balanced15-20261024/round2-batch5/output-qa');
 fs.mkdirSync(out,{recursive:true});
 const file=path.join(root,'bank/data/applied2-balanced15.json'),raw=JSON.parse(fs.readFileSync(file)),preview=structuredClone(raw);
+if(raw.pendingSourceNos.length){
+ require('node:child_process').execFileSync(process.execPath,[path.join(__dirname,'applied2-balanced15-pending-source-validate.cjs')],{stdio:'inherit'});
+ process.exit(0);
+}
 preview.items.forEach(x=>x.reviewStatus='verified');
 const adapter=require('../bank/adapters/applied2-balanced15-adapter.js');
 adapter.useData(raw);
