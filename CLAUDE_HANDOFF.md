@@ -1,3 +1,8 @@
+# 2026-10-26 활용7 전체 ZIP·Drive 바이트·147쪽 배치 검수
+
+- 활용7 r32 현행 데이터·색인·전체 ZIP은 기존 Drive 파일 ID `16INuVLQeA-XfjIExONKEoMIuwPLAzjTK`·`1vRB8chYeRRb8mAbER_saXiMDv7werWUO`·`1W6s6XO75JtSZIMCdf-ToxM291pRySsk4`에서 원시 재다운로드한 전체 바이트와 각각 일치. ZIP `6edb58e605671cb775e4a0e2887285f8b63a1784bbd2e1f3542e105b31980aaf`는 7항목 CRC 정상, 270개 전체 필드·검수 ID·빠른 정답 CSV가 활성 데이터와 같다. 문제58쪽/풀이89쪽의 전체 147쪽 연락시트를 확인했고 큰 잘림·겹침·빈 쪽·가장자리 접촉0. 기록 `.private-work/hw-expansion-20261023/hw7/full-270-review-20261026/20261026-applied7-full-zip-layout-and-drive-review-r1.md`, Drive ID `1kMCr_LJJ-SsJLlr2mBIRtNVrZQwmJJzY`는 원시 바이트 일치. 미추적 Q08 그림은 활성 데이터가 참조하지 않아 보존하고 배제했다.
+- 이 검수는 축소판 배치 확인이며 270문항의 원문·수학을 한 줄씩 다시 검산한 것은 아니다. `outputReviewed=false` 유지. 활성 은행·사이트·원시험·성적은 변경하지 않았다.
+
 # 2026-10-26 활용5·6·9 전체 ZIP 현행본 및 배치 검수
 
 - 활용2 Q17은 사용자 확정 원본 그림 24칸 기준으로 이미 활성화되어 있으며 `qa/applied2-q17-independent-validate.py` 재실행 PASS(원본 최소 7장, 변형 9개 및 풀이 덮기). 원문 지문의 15개 오류는 출처 기록에 보존하고 원시험·성적은 변경하지 않았다.
