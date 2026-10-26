@@ -115,7 +115,7 @@
   @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
   @media print{.screen-only{display:none!important}.shell{width:100%;padding:0}.area-section{break-inside:avoid;box-shadow:none}}
 </style>
-<link rel="stylesheet" href="catalog-learning.css?v=20261023">
+<link rel="stylesheet" href="catalog-learning.css?v=20261027-bank-classification-r1">
 </head>
 <body class="bank-access-pending">
 <main class="shell">
@@ -187,6 +187,7 @@
           <button class="area-pick" type="button" data-area="도형">도형</button>
           <button class="area-pick" type="button" data-area="경우의 수">경우의 수</button>
         </div>
+        <div class="field subarea-filter"><label for="subarea-filter">소영역</label><select id="subarea-filter"><option value="all">모든 소영역</option></select></div>
         <div class="difficulty-rule">활용: 2.7점대 하 · 3.4점대 중 · 4.2점대 상. 다른 시험은 정답률 우선이며, 없을 때 배점대와 세부 난도를 함께 봅니다. 2.7점대의 상은 전체 기준 중입니다.</div>
       </div>
       <div class="field learning-filter"><label for="difficulty-filter">문제은행 난이도</label><select id="difficulty-filter"><option value="all">상·중·하 전체</option><option value="high">상</option><option value="middle">중</option><option value="low">하</option></select></div>
@@ -392,7 +393,7 @@
 <script>
 window.GFIELD_BANK_ACCESS.ready.then(function(){
   var script=document.createElement('script');
-  script.src='catalog.js?v=20261026-applied8-q11-q16-r6';
+  script.src='catalog.js?v=20261027-bank-classification-r1';
   script.onerror=function(){document.getElementById('result-status').textContent='문제은행을 불러오지 못했습니다.';};
   document.body.appendChild(script);
 });

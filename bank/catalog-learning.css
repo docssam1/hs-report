@@ -14,6 +14,7 @@ h1{font-size:clamp(25px,3vw,35px);font-weight:700;line-height:1.3}.hero p{font-s
 .filters{position:relative;top:auto;padding:18px 20px;border-radius:0;background:var(--paper);box-shadow:none;backdrop-filter:none}
 .finder-tabs{gap:0;border-bottom:1px solid var(--line)}.finder-tab{border:0;border-bottom:2px solid transparent;background:none}.finder-tab.active{color:var(--navy);border-color:var(--navy);background:none;font-weight:700}
 .area-pick{padding:8px 13px}.area-pick.active{background:var(--green-soft);color:var(--navy);border-color:var(--navy)}
+.subarea-filter{width:min(100%,360px);margin-top:14px}
 .field label{font-weight:600;font-size:13px;color:var(--ink)}.difficulty-rule{font-size:13px;line-height:1.6}.learning-filter{width:min(100%,260px);margin-top:16px}
 #result-status{color:var(--muted);font-weight:500;font-size:13px}.filter-foot{margin-top:16px}
 .paper-context{background:var(--paper);border-color:var(--line);border-radius:0}.paper-context h2{color:var(--ink);font-weight:600}.paper-context p{font-size:13px}
@@ -22,8 +23,9 @@ h1{font-size:clamp(25px,3vw,35px);font-weight:700;line-height:1.3}.hero p{font-s
 .area-head h2{font-size:22px;font-weight:600}.area-head span{font-size:13px;color:var(--muted)}.subarea{padding:18px 20px}.subarea h3{font-size:17px;font-weight:600;color:var(--navy)}.subarea-count{font-size:12px}
 .type-grid{display:block}.type-card{border:0;border-top:1px solid var(--line);padding:16px 0;border-radius:0;background:transparent;box-shadow:none}.type-card:first-child{border-top:0}
 .type-card h4{font-weight:500;font-size:16px;color:var(--ink);line-height:1.55}.badge{font-size:12px;font-weight:500;border-radius:2px;padding:4px 7px;line-height:1.4}
+.source-location{margin-bottom:5px;color:var(--muted);font-size:12px}
 .badge.source,.badge.na{background:#f7f2e7;color:var(--muted)}.badge.difficulty.high{background:#f7f2e7;color:#9c3d20}.badge.difficulty.middle{background:#f7f2e7;color:#685525}.badge.difficulty.low{background:var(--green-soft);color:var(--navy)}
 .badge.practice{background:var(--green-soft);color:var(--navy);min-height:44px;padding:10px 12px;font-weight:600}.raw-single{background:none;border:0;color:var(--muted);font-size:12px;padding-left:0}
 .empty,.error{border-radius:0;background:var(--paper)}
-@media(max-width:720px){.shell{width:calc(100% - 24px);padding-top:16px}.hero{padding:14px 0 22px}.hero p{font-size:14px}.filters,.subarea{padding:16px}.area-head{padding:16px}.filter-grid,.type-search{grid-template-columns:1fr}.finder-tab{font-size:14px}.type-card h4{font-size:15px}.learning-filter{width:100%}.paper-context{padding:16px}}
+@media(max-width:720px){.shell{width:calc(100% - 24px);padding-top:16px}.hero{padding:14px 0 22px}.hero p{font-size:14px}.filters,.subarea{padding:16px}.area-head{padding:16px}.filter-grid,.type-search{grid-template-columns:1fr}.finder-tab{font-size:14px}.type-card h4{font-size:15px}.learning-filter,.subarea-filter{width:100%}.paper-context{padding:16px}}
 @media print{html,body{background:#fff;color:#191511}.hero,.filters,.paper-context,.screen-only{display:none!important}.shell{width:auto;margin:0;padding:0}.area-section,.area-head,.subarea,.type-card{border-color:#999;background:#fff;color:#191511}.type-card h4{font-family:'GFIELD Print Serif',serif;font-weight:400;color:#191511}.badge{color:#191511!important;background:#fff!important}.development{display:none}}

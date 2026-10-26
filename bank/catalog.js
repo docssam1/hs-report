@@ -63,11 +63,11 @@
     items.forEach(function(item){
       var tax=P.taxonomy(item);
       var sourceReviewed=!!item.expandedPool||item.reviewStatus==='confirmed'&&item.typeFamilyId==='reviewed-source-override';
-      var groupKey=item.expandedPool?'expanded:'+item.expandedPool.bank+':'+item.sourceRef.no:sourceReviewed?item.canonicalTypeId:item.objectiveTypeId;
+      var groupKey=FINDER_MODE==='paper'?item.sourceKey:item.expandedPool?'expanded:'+item.expandedPool.bank+':'+item.sourceRef.no:sourceReviewed?item.canonicalTypeId:item.objectiveTypeId;
       var group=map[groupKey];
       if(!group){
         group=map[groupKey]={
-          id:groupKey,area:tax.area,subarea:tax.subarea,displayType:item.displayType,learningDifficulties:[],
+          id:groupKey,area:tax.area,subarea:tax.subarea,displayType:item.displayType,paperRef:item.sourceRef,learningDifficulties:[],
           detailTypes:[],detailTypeKeys:[],sourceReviewed:sourceReviewed,
           sourceCounts:{},pointCounts:{},difficultyCounts:{},canonicalTypeIds:[],
           rates:[],points:[],unmeasuredRateCount:0,confirmedCount:0,candidateCount:0,itemCount:0,reviewBases:[],
@@ -171,8 +171,9 @@
     Object.keys(group.balancedRefs||{}).forEach(function(bank){generator+=' <a class="badge practice" href="pool.html?bank='+encodeURIComponent(bank)+'&amp;nos='+encodeURIComponent(unique(group.balancedRefs[bank]).join(','))+'&amp;count=9">하·중·상 3개씩 · 9문제</a>';});
     var originalType=group.sourceReviewed&&group.studentDisplayName!==group.displayType
       ?'<div class="raw-single">기존 유형명 · '+esc(group.displayType)+'</div>':'';
+    var paperRef=FINDER_MODE==='paper'&&group.paperRef?'<div class="source-location">'+esc(SOURCE_LABELS[group.paperRef.set])+' '+esc(group.paperRef.round)+'회 · '+esc(group.paperRef.no)+'번</div>':'';
     return '<article class="type-card" data-type-id="'+esc(group.id)+'">'+
-      '<h4>'+esc(group.studentDisplayName)+'</h4>'+originalType+'<div class="sources" aria-label="출처 문항 수">'+sourceBadges(group)+'</div>'+
+      paperRef+'<h4>'+esc(group.studentDisplayName)+'</h4>'+originalType+'<div class="sources" aria-label="출처 문항 수">'+sourceBadges(group)+'</div>'+
       '<div class="badges" aria-label="난이도 근거">'+evidenceBadges(group)+'</div>'+(generator?'<div class="development">'+generator+'</div>':'')+'</article>';
   }
 
@@ -188,7 +189,9 @@
         return true;
       }
       if(TARGET_SETS.indexOf(item.sourceRef.set)<0)return false;
-      if(TYPE_AREA!=='all'&&P.taxonomy(item).area!==TYPE_AREA)return false;
+      var tax=P.taxonomy(item);
+      if(TYPE_AREA!=='all'&&tax.area!==TYPE_AREA)return false;
+      if(filterValue('subarea-filter')!=='all'&&tax.area+'|'+tax.subarea!==filterValue('subarea-filter'))return false;
       if(!queryMatches(item,query))return false;
       return true;
     });
@@ -285,6 +288,22 @@
     if(Array.prototype.some.call($('round-filter').options,function(option){return option.value===current}))$('round-filter').value=current;
   }
 
+  function fillSubareaFilter(unified){
+    var select=$('subarea-filter'),current=select.value,seen={},rows=[];
+    unified.items.forEach(function(item){
+      if(TARGET_SETS.indexOf(item.sourceRef.set)<0)return;
+      var tax=P.taxonomy(item);
+      if(TYPE_AREA!=='all'&&tax.area!==TYPE_AREA)return;
+      var key=tax.area+'|'+tax.subarea;
+      if(!seen[key]){seen[key]=true;rows.push({key:key,area:tax.area,subarea:tax.subarea});}
+    });
+    rows.sort(function(a,b){return AREA_ORDER.indexOf(a.area)-AREA_ORDER.indexOf(b.area)||a.subarea.localeCompare(b.subarea,'ko')});
+    select.innerHTML='<option value="all">모든 소영역</option>'+rows.map(function(row){
+      return '<option value="'+esc(row.key)+'">'+esc(TYPE_AREA==='all'?row.area+' · '+row.subarea:row.subarea)+'</option>';
+    }).join('');
+    if(seen[current])select.value=current;
+  }
+
   function fail(error){
     $('results').setAttribute('aria-busy','false');
     $('results').innerHTML='<div class="error"><strong>분류 현황을 불러오지 못했습니다.</strong><br>'+esc(error&&error.message||error)+'</div>';
@@ -313,8 +332,9 @@
     var unified=R.buildUnifiedCatalog(models);
     var originalCatalog=R.buildCatalog(window.GFIELD_MOCK_ORIGINAL);
     fillRoundFilter(unified);
+    fillSubareaFilter(unified);
     var groups=renderResults(unified,originalCatalog);
-    ['search','difficulty-filter','round-filter'].forEach(function(id){$(id).addEventListener(id==='search'?'input':'change',function(){groups=renderResults(unified,originalCatalog)})});
+    ['search','difficulty-filter','round-filter','subarea-filter'].forEach(function(id){$(id).addEventListener(id==='search'?'input':'change',function(){groups=renderResults(unified,originalCatalog)})});
     $('source-filter').addEventListener('change',function(){fillRoundFilter(unified);groups=renderResults(unified,originalCatalog)});
     $('filter-form').addEventListener('submit',function(event){event.preventDefault();groups=renderResults(unified,originalCatalog)});
     $('paper-tab').addEventListener('click',function(){setFinderMode('paper',unified,originalCatalog)});
@@ -327,6 +347,7 @@
       button.addEventListener('click',function(){
         TYPE_AREA=button.getAttribute('data-area')||'all';
         Array.prototype.forEach.call(document.querySelectorAll('.area-pick'),function(row){row.classList.toggle('active',row===button)});
+        fillSubareaFilter(unified);
         groups=renderResults(unified,originalCatalog);
       });
     });
@@ -335,7 +356,7 @@
       fetch('data/applied'+round+'-expanded-index.json?v=20261026-applied8-q11-q16-r28',{cache:'no-cache'}).then(function(response){if(!response.ok)throw Error('활용 확대 문항 색인을 불러오지 못했습니다.');return response.json();}).then(function(index){
         if(index.sourceSet!=='applied'||index.sourceRound!==round||!Array.isArray(index.items)||index.itemCount!==index.items.length*9||index.items.some(function(x){return x.variantCount!==9||x.reviewStatus!=='verified';}))throw Error('활용 확대 문항의 출처·검수 범위를 확인해 주세요.');
         index.items.forEach(function(entry){var item=unified.items.find(function(x){return x.sourceRef.set==='applied'&&Number(x.sourceRef.round)===round&&Number(x.sourceRef.no)===entry.sourceNo;});if(!item)throw Error('활용 원문과 확대 문항의 연결이 없습니다.');item.expandedPool={bank:'applied'+round,sourceNo:entry.sourceNo,variantCount:9};item.learningArea=entry.area;item.learningSubarea=entry.subarea;item.learningDetailType=entry.detailType;item.searchEvidence=(item.searchEvidence||[]).concat([entry.detailType,entry.subarea]);});
-        window.__BANK_CATALOG_QA__['expandedIndexLoadedRound'+round]=true;if(round===1)window.__BANK_CATALOG_QA__.expandedIndexLoaded=true;groups=renderResults(unified,originalCatalog);
+        window.__BANK_CATALOG_QA__['expandedIndexLoadedRound'+round]=true;if(round===1)window.__BANK_CATALOG_QA__.expandedIndexLoaded=true;fillSubareaFilter(unified);groups=renderResults(unified,originalCatalog);
       }).catch(function(error){window.__BANK_CATALOG_QA__.expandedIndexError=error.message;});
     });
     Promise.all([1,2,3].map(function(round){
