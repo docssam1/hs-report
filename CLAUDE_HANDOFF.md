@@ -3591,3 +3591,11 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - `git push origin main`은 Mac GitHub 자격 증명 부재(`could not read Username ... Device not configured`)로 실패했다. **로컬 커밋·병합 완료, GitHub 원격 및 실제 사이트 미반영**. 사용자가 Mac GitHub 로그인을 완료하면 `git fetch origin main`으로 최신 원격을 재확인하고 비파괴 병합·검사 후 push해야 한다. 현재 로컬 브랜치는 origin/main보다 2커밋 앞서 있다.
 - 원문 재확인: 활용2 Q13은 길이 1·15의 연결막대와 분기 3·7의 자유 관절 그림으로, 지문 그대로는 연속적인 끝점 거리도 가능해 답의 세는 단위를 확정할 수 없다. Q15는 3회 접기·파란 절단선의 펼침 조건이 그림만으로 불명확하다. 두 문항은 잠금 유지하고 답안 후보를 유일한 근거로 공개하지 않는다.
 - 활용2 Q22 및 활용8 Q11·Q16도 현행 원문 PDF를 확대 확인했고, 활용8 후보 답안 p.3·p.4의 해당 답란이 빈 것을 확인했다. 다섯 문항의 필요한 판정을 `.private-work/hw-expansion-20261023/pending-five-review-20261026.md`에 정리해 Drive `코딩관련` 파일 `1N8mwLvXZMEaWxiTH2uiNt1yK5goE4z7L`에 보관했다(메타데이터 ID·이름·부모·크기 일치). 교사 판정 전까지 공개하지 않는다.
+
+# 2026-10-26 GitHub·실제 사이트 반영 확인 — 활용1~9 265유형
+
+- 위의 ‘GitHub 반영 경계’는 당시 Mac Git 자격 증명 오류를 기록한 과거 상태다. 이후 GitHub 연결 도구로 로컬 검증본과 동일한 Git tree `5afe112858214ad1c465f826e98387a4f04e98c4`를 원격 `main` 커밋 `89ab14d8863969e2c18ac4149dc8fb4cfb702096`에 안전하게 반영했다. 원격 선행 관리자 변경 `61f2835`를 부모로 사용했고, GitHub에서 배포한 tree와 로컬 tree가 일치한다. 로컬 `main`과 `origin/main`은 같은 커밋을 가리킨다. 이전 로컬 커밋 이력은 `codex/local-history-20261026` 및 Drive Git bundle `14YcksSqip_RZzSH_UllpyA6qys9PofFK`에 보존했다.
+- GitHub Pages 실행 `40310408540`이 성공했다. `https://hs.gfieldacademy.net/`의 활용1~9 확장 색인·활용2 데이터·Q17 그림·문제은행 렌더러·학습 연결 등 표본 17파일을 캐시 우회해 받아 로컬 바이트 SHA-256과 전부 일치시켰다. 표본 검사이며 전체 배포 파일을 모두 바이트 비교한 것은 아니다.
+- 실제 로그인된 사이트의 활용2 Q17 선택 화면에서 9문항/전체243문항/3유형 검수 대기, 답 입력칸 9개, 원시험·분석 연결, 학습 위치·포인트, 2단 문제와 상세 풀이를 확인했다. 이 화면에서 직접 받은 `지필드_활용2회_유사문제_9문항.zip`은 4,959,975바이트, 7항목 CRC 정상, 문제 PDF 3쪽·상세 풀이 PDF 9쪽, 목록과 빠른 정답 9개(`applied2-q17-v1`~`v9`)가 일치했다. 실제 계정의 답안 입력·채점은 하지 않았다.
+- 전체 상태: 활용1~9의 265유형×9=2,385문항 공개. 활용2 Q13·Q15·Q22 및 활용8 Q11·Q16, 총 5유형/45문항은 원문 해석·정답의 교사 판정이 필요해 검수 대기 상태다. 판정 근거는 `.private-work/hw-expansion-20261023/pending-five-review-20261026.md`와 Drive `1N8mwLvXZMEaWxiTH2uiNt1yK5goE4z7L`. 전 은행의 모든 PDF 쪽 개별 육안검수는 아직 완료되지 않았으므로 `outputReviewed=false`를 유지한다.
+- unrelated final7 자산·데이터·관리자 QA, 미사용 활용7 Q08 이미지, `bank/drafts/`, `materials/.DS_Store`의 기존 미커밋 파일은 그대로 보존한다.
