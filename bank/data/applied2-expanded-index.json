@@ -1,10 +1,9 @@
 {
-  "version": "20261026-applied2-q17-figure24-confirmed-r1",
+  "version": "20261026-applied2-q13-hinged-rods-r1",
   "sourceSet": "applied",
   "sourceRound": 2,
-  "itemCount": 243,
+  "itemCount": 252,
   "pendingSourceNos": [
-    13,
     15,
     22
   ],
@@ -126,6 +125,16 @@
       "subarea": "격자와 반복",
       "detailType": "번갈아 붙이는 타일의 새 테두리",
       "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 13,
+      "genId": "applied2-q13",
+      "area": "경우의 수",
+      "subarea": "가능한 길이의 열거",
+      "detailType": "접는 연결 막대로 만들 수 있는 길이의 수",
+      "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9
     },
