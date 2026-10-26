@@ -3651,3 +3651,11 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - GitHub `main` 커밋 `cfaadf9b910185d81da9d54c6bc712596b556bdf`, Pages 실행 `40321262828` `completed/success`. 실제 사이트 Q22 관련 28파일의 SHA-256이 로컬과 28/28 일치한다.
 - 로그인된 실제 사이트의 활용2 Q22 9문항 화면에서 전체270문항·검수 대기0, 답안 입력칸9개/3회 재입력 안내, 원시험 연결, 2단 문제지, 상세 풀이·학습 위치·포인트를 확인했다. 화면 `.private-work/hw-expansion-20261023/hw2/q22-review/live-site-q22.png`. 사이트에서 직접 받은 ZIP은 7항목·CRC 정상, 문제 PDF3쪽/풀이 PDF9쪽 A4, SHA-256 `d26e47c0fd4241305f5534cdfe3379ccfb5fb5cd1c0a9712a9e580e517fcb5e5`. 실제 계정 답안 제출은 하지 않았다.
 - 남은 확대9 검수 대기: 활용8 Q11·Q16 2유형/18문항. 과거 활용2 난도별45초안은 계속 잠금. 전체270 ZIP 200쪽 개별 육안 검토는 미완료라 `outputReviewed=false`. 다른 작업 미커밋 파일은 보존한다.
+
+# 2026-10-26 활용8 Q11·Q16 각 9문항 확장·로컬/Drive 검수
+
+- 현행 활용8 시험 PDF p.3의 접기·절단 11번, p.4의 파인 쌓기나무 16번 그림을 직접 확인했다. 교사 강의 [11번 13:15](https://www.youtube.com/watch?v=TyjjNoGEPkA&t=795s)는 13조각, [16번 17:17](https://www.youtube.com/watch?v=TyjjNoGEPkA&t=1037s)는 내부 33개를 판정한다. 원본·시험 성적은 보존했다.
+- 새 그림과 상세 풀이 각 9쌍을 만들고, 11번은 접기 반사·격자 연결요소, 16번은 6방향 이웃·깊이별 단면으로 각각 독립 검산했다. 기존 활용8 252문항 객체는 ID별 동일, 신규 18문항만 추가했다. 활용8 270문항, 활용1~9 전체 2,430문항이며 확대9 검수 대기 0이다. 활용2의 과거 난도별 초안45개는 계속 잠금.
+- 독립 수학 QA, 전체 인벤토리, 1~9회 원시험 진단→3/9문항, 자료실·학습 연결, 답안 3회 재입력/첫 기록 보존, 모바일375px·2단 A4·외부 쓰기0 검사를 통과했다. 선택 ZIP 두 개는 각 7항목·9ID·문제3쪽·풀이9쪽을 전 쪽 렌더했고, 전체270 ZIP은 7항목·270ID·문제63쪽·풀이110쪽·CRC/A4/정답표 일치다. 전체173쪽 개별 육안 검토는 미완료라 `outputReviewed=false`.
+- 세부 수학·출처·파일 SHA와 검수는 `.private-work/hw-expansion-20261023/hw8/20261026-applied8-q11-q16-completion-r1.md`에 기록했다. Drive 검수 기록 `1TQuMJLA-4tnMyM2GYXgXvzLc2ota9sMc`, 데이터 `1zDDcGiV8eGuhd_MKh-N_WrYxCPnmb3O6`, 색인 `1JMDRYH-BIxCCOK1MnJx1lRdBkYz9Sn4_`, 선택 ZIP Q11 `1Rss999LoFiUeBDn0l9RPgA5YZzQVlmYr`/Q16 `1RrT-tVWGUXxYCTEIv5AfK7XIxFkMs1IU`, 전체 ZIP `1CXYOgaSHZVc17syvJkfJzComkkYxzYT8`, 증거 ZIP `1Rrgc3axsw6TvOv_0VB_6D1G_KZ1ZvyQG`. 바이너리·데이터·색인은 Drive 원시 재다운로드 SHA가 로컬과 일치한다.
+- 이 절은 GitHub main·Pages·실제 사이트 배포 전의 기록이다. 기존 final7·활용7 Q08·초안 등 다른 작업의 미커밋 파일은 그대로 둔다.

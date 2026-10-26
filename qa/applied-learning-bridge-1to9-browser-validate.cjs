@@ -6,5 +6,8 @@ const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+decodeU
 try{await page.goto(base+'/mock.html?set=hw');await page.waitForFunction(()=>typeof appliedPoolRound==='function'&&window.GFIELD_APPLIED_LEARNING_INDEX?.rounds?.['9']);
 const rows=await page.evaluate(()=>Array.from({length:9},(_,i)=>{const r=i+1,info=appliedPoolRound(r),nos=Object.keys(info.items).map(Number),first=nos[0],html=appliedStudyHTML(r,first),review=appliedReviewPracticeHTML(r,[{no:first}]);return {round:r,types:nos.length,first,link:appliedPoolUrl(r,[first],9),study:html,review};}));
 assert.equal(rows.length,9);for(const x of rows){assert.ok(x.types>0);assert.match(x.link,new RegExp('bank=applied'+x.round+'.*count=9.*nos='+x.first));assert.match(x.study,/유사문제 3개 · 답안 입력/);assert.match(x.study,/같은 유형 9개/);assert.match(x.review,/원시험 점수는 바뀌지 않습니다/);assert.match(x.review,/유사문제 3개/);}
-assert.equal(rows.reduce((s,x)=>s+x.types,0),268);console.log('PASS original-exam diagnosis bridge: Applied 1–9, 268 reviewed source types, 3/9 practice links');
+assert.equal(rows.reduce((s,x)=>s+x.types,0),270);
+const applied8=await page.evaluate(()=>[11,16].map(no=>({no,link:appliedPoolUrl(8,[no],9),study:appliedStudyHTML(8,no),review:appliedReviewPracticeHTML(8,[{no}])})));
+for(const x of applied8){assert.match(x.link,new RegExp('bank=applied8.*count=9.*nos='+x.no));assert.match(x.study,/유사문제 3개 · 답안 입력/);assert.match(x.study,/같은 유형 9개/);assert.match(x.review,/원시험 점수는 바뀌지 않습니다/);assert.match(x.review,/유사문제 3개/);}
+console.log('PASS original-exam diagnosis bridge: Applied 1–9, 270 reviewed source types, Q11/Q16 3/9 practice links');
 }finally{await browser.close();server.close();}})().catch(e=>{console.error(e);server.close();process.exitCode=1;});

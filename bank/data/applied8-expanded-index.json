@@ -1,12 +1,9 @@
 {
-  "version": "20261025-applied8-expansion-q01-q02-q03-q04-q05-q06-q07-q08-q09-q10-q12-q13-q14-q15-q17-q18-q19-q20-q21-q22-q23-q24-q25-q26-q27-q28-q29-q30-r28",
+  "version": "20261026-applied8-q11-q16-complete-r30",
   "sourceSet": "applied",
   "sourceRound": 8,
-  "itemCount": 252,
-  "pendingSourceNos": [
-    11,
-    16
-  ],
+  "itemCount": 270,
+  "pendingSourceNos": [],
   "items": [
     {
       "sourceNo": 1,
@@ -109,6 +106,16 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 11,
+      "genId": "applied8-q11",
+      "area": "도형",
+      "subarea": "종이 접기와 자르기",
+      "detailType": "두 번 접은 종이의 절단 후 조각 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 12,
       "genId": "applied8-q12",
       "area": "수와 식",
@@ -144,6 +151,16 @@
       "area": "수와 식",
       "subarea": "달력과 요일",
       "detailType": "기준 달력으로 다음 해의 날짜와 요일 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 16,
+      "genId": "applied8-q16",
+      "area": "도형",
+      "subarea": "쌓기나무와 겉면",
+      "detailType": "계단형 입체에서 겉면을 뺀 내부 쌓기나무 수",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9
