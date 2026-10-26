@@ -3644,3 +3644,10 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - Q22 독립 수학·전체 인벤토리·Q13/Q15 수학 회귀, 원시험 진단→3/9, 자료실 프로필·난도·세부유형, 오답/학습 연결, 과거 난도별 잠금 검사가 통과했다. 브라우저는 Q22 9그림+9풀이 그림, 입력·진단·권장 학습·원시험 링크, 3회 재입력과 최초 점수 보존, 모바일 375px, 넘침0, 외부 쓰기0을 확인했다. 실제 선택 ZIP 7항목/9ID/문제3쪽/상세풀이9쪽을 전 쪽 렌더했다. 전체270 ZIP 7항목·270ID·문제72쪽·상세풀이128쪽·A4/정답표/CRC를 검사했다. 전체200쪽 모두 개별 육안 검토는 미완료라 `outputReviewed=false`.
 - 검수 자료 `.private-work/hw-expansion-20261023/hw2/20261026-applied2-q22-completion-r1.md`. Drive 활용2 기존 폴더 `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP`: 기존 데이터 `17dU-1C1_gHxg6GqRIusuLPAFPv6abw9J`, 색인 `1L53ziO8kFUzJk636oVQz8InxG0f0G_Md`, 전체 ZIP `1uTPb6iGHD2UXLtoYBXzW2Px9R3ZX2ehl`을 270문항으로 갱신; 새 선택 ZIP `1vTNQ0YLzKbV12fNmXDMP11hwOezbzuE9`, 검수 기록 `1D953Xy_uXgXIjKZiDsqH_qDBmKzAc2C4`. 데이터 SHA-256 `fe956ff1eab0a5e6b9d6c9bd751207d800d1bdb5e41fef29d1bed48dd22db11a`, 색인 `5a275c7370109b0a3fc98e6c56db8a2d147669419e7f025e247e238066dc6465`, 전체 ZIP `532ac450b67f241643ea4d055e464d2512b34b39eb4128ec5798e0f852e225d1`, 선택 ZIP `fbe5773fadfa8477d8331bf9b327a65fe7dc58acd6bc707e4db68d6a9683d1ac`; 네 파일 모두 Drive 원시 재다운로드 바이트가 로컬과 일치했다.
 - 이 절은 GitHub `main`·Pages·실제 사이트 반영 **전**의 기록이다. 배포 후 실제 파일·화면·ZIP은 별도로 확인한다. 다른 작업의 final7·활용7 Q08·`bank/drafts/` 미커밋 자료는 보존한다.
+
+
+# 2026-10-26 활용2 Q22 GitHub·Pages·실제 사이트 확인 완료
+
+- GitHub `main` 커밋 `cfaadf9b910185d81da9d54c6bc712596b556bdf`, Pages 실행 `40321262828` `completed/success`. 실제 사이트 Q22 관련 28파일의 SHA-256이 로컬과 28/28 일치한다.
+- 로그인된 실제 사이트의 활용2 Q22 9문항 화면에서 전체270문항·검수 대기0, 답안 입력칸9개/3회 재입력 안내, 원시험 연결, 2단 문제지, 상세 풀이·학습 위치·포인트를 확인했다. 화면 `.private-work/hw-expansion-20261023/hw2/q22-review/live-site-q22.png`. 사이트에서 직접 받은 ZIP은 7항목·CRC 정상, 문제 PDF3쪽/풀이 PDF9쪽 A4, SHA-256 `d26e47c0fd4241305f5534cdfe3379ccfb5fb5cd1c0a9712a9e580e517fcb5e5`. 실제 계정 답안 제출은 하지 않았다.
+- 남은 확대9 검수 대기: 활용8 Q11·Q16 2유형/18문항. 과거 활용2 난도별45초안은 계속 잠금. 전체270 ZIP 200쪽 개별 육안 검토는 미완료라 `outputReviewed=false`. 다른 작업 미커밋 파일은 보존한다.
