@@ -3659,3 +3659,10 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - 독립 수학 QA, 전체 인벤토리, 1~9회 원시험 진단→3/9문항, 자료실·학습 연결, 답안 3회 재입력/첫 기록 보존, 모바일375px·2단 A4·외부 쓰기0 검사를 통과했다. 선택 ZIP 두 개는 각 7항목·9ID·문제3쪽·풀이9쪽을 전 쪽 렌더했고, 전체270 ZIP은 7항목·270ID·문제63쪽·풀이110쪽·CRC/A4/정답표 일치다. 전체173쪽 개별 육안 검토는 미완료라 `outputReviewed=false`.
 - 세부 수학·출처·파일 SHA와 검수는 `.private-work/hw-expansion-20261023/hw8/20261026-applied8-q11-q16-completion-r1.md`에 기록했다. Drive 검수 기록 `1TQuMJLA-4tnMyM2GYXgXvzLc2ota9sMc`, 데이터 `1zDDcGiV8eGuhd_MKh-N_WrYxCPnmb3O6`, 색인 `1JMDRYH-BIxCCOK1MnJx1lRdBkYz9Sn4_`, 선택 ZIP Q11 `1Rss999LoFiUeBDn0l9RPgA5YZzQVlmYr`/Q16 `1RrT-tVWGUXxYCTEIv5AfK7XIxFkMs1IU`, 전체 ZIP `1CXYOgaSHZVc17syvJkfJzComkkYxzYT8`, 증거 ZIP `1Rrgc3axsw6TvOv_0VB_6D1G_KZ1ZvyQG`. 바이너리·데이터·색인은 Drive 원시 재다운로드 SHA가 로컬과 일치한다.
 - 이 절은 GitHub main·Pages·실제 사이트 배포 전의 기록이다. 기존 final7·활용7 Q08·초안 등 다른 작업의 미커밋 파일은 그대로 둔다.
+
+# 2026-10-26 활용8 Q11·Q16 GitHub·Pages·실제 사이트 확인 완료
+
+- GitHub `main` `b18de3a607823963f236009f0054df15660f82cc`, Pages 실행 `40324756979` `completed/success`. 공개 사이트에서 이번 변경 대상 46파일 SHA-256이 로컬과 **46/46 일치**한다.
+- 로그인된 실제 사이트에서 활용8 Q11·Q16 각각 9문항/전체270문항/검수 대기0, 답 입력칸9개, 원시험 답안·분석 링크, 3회 재입력 안내, 상세 풀이와 문항별 학습 위치·포인트 9개를 확인했다. 실제 계정에 답안 제출은 하지 않았다.
+- 사이트에서 받은 Q11 ZIP SHA-256 `53ed6745a4c5a24d52dbb4c87ebb87d2cabc9b61b92ffd5b7161660eb15e2c97`(4,911,978바이트), Q16 ZIP `bcf940de655009a29ab8bba48ac2f618bfdf97839d008b90df0331d81da99b62`(5,056,566바이트). 두 ZIP 모두 7항목/9 ID/정답표·목록/CRC/A4/문제3쪽·상세 풀이9쪽을 대조했다. 전체270 ZIP의 173쪽 개별 육안 검토는 완료하지 않아 `outputReviewed=false`다.
+- 검수 기록과 다섯 유형 중앙 판정표는 Drive 기존 파일 ID `1TQuMJLA-4tnMyM2GYXgXvzLc2ota9sMc`, `1N8mwLvXZMEaWxiTH2uiNt1yK5goE4z7L`에 후속 확인을 반영했고, 원시 내용이 로컬과 일치함을 재확인했다. 다른 작업의 미커밋 final7·활용7 Q08 등은 보존했다.
