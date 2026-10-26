@@ -1,19 +1,13 @@
 {
-  "version": "20261024-applied3-expansion-r1",
+  "version": "20261026-applied3-expansion-q04-q07-q12-q14-q18-q21-q06-locked-r11",
   "sourceSet": "applied",
   "sourceRound": 3,
-  "itemCount": 153,
+  "itemCount": 207,
   "pendingSourceNos": [
-    4,
     6,
-    7,
-    12,
     13,
-    14,
     16,
-    18,
     19,
-    21,
     24,
     27,
     29
@@ -50,11 +44,31 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 4,
+      "genId": "applied3-q04",
+      "area": "수와 식",
+      "subarea": "배수와 약수",
+      "detailType": "자리 조건이 있는 가장 작은 배수 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 5,
       "genId": "applied3-q05",
       "area": "도형",
       "subarea": "둘레와 중복",
       "detailType": "세 겹의 정사각 테두리의 점 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 7,
+      "genId": "applied3-q07",
+      "area": "도형",
+      "subarea": "주사위의 굴리기",
+      "detailType": "경로를 따라 굴린 주사위의 윗면 수 합",
       "pointBand": "2.7",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -100,6 +114,26 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 12,
+      "genId": "applied3-q12",
+      "area": "수와 식",
+      "subarea": "시계와 시간",
+      "detailType": "빨라지는 시계가 다시 같은 시각을 가리키는 때",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 14,
+      "genId": "applied3-q14",
+      "area": "경우의 수",
+      "subarea": "선호 조건 추론",
+      "detailType": "사람별 선호와 전체 개수 추론",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 15,
       "genId": "applied3-q15",
       "area": "수와 식",
@@ -120,11 +154,31 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 18,
+      "genId": "applied3-q18",
+      "area": "수와 식",
+      "subarea": "되돌려 계산하기",
+      "detailType": "같은 수만큼 옮기는 세 바구니 역산",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 20,
       "genId": "applied3-q20",
       "area": "수와 식",
       "subarea": "반복수의 계산",
       "detailType": "분배법칙으로 반복수의 자리 합 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 21,
+      "genId": "applied3-q21",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 수식 만들기",
+      "detailType": "서로 다른 숫자카드로 나눗셈식 만들기",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9

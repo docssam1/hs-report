@@ -1,0 +1,309 @@
+{
+  "version": "20261025-applied7-expansion-q01-q02-q03-q04-q05-q06-q07-q08-q09-q10-q11-q12-q13-q14-q15-q16-q17-q18-q19-q20-q21-q22-q23-q24-q25-q26-q27-q28-q29-q30-r32",
+  "sourceSet": "applied",
+  "sourceRound": 7,
+  "itemCount": 270,
+  "pendingSourceNos": [],
+  "items": [
+    {
+      "sourceNo": 1,
+      "genId": "applied7-q01",
+      "area": "도형",
+      "subarea": "겹친 사각형의 둘레",
+      "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 2,
+      "genId": "applied7-q02",
+      "area": "경우의 수",
+      "subarea": "조건을 만족하는 정수 분배",
+      "detailType": "같은 몫과 대소 조건이 있는 분배에서 최소값 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 3,
+      "genId": "applied7-q03",
+      "area": "수와 식",
+      "subarea": "규칙과 대응",
+      "detailType": "입력 수와 출력 수 사이의 일정한 규칙 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 4,
+      "genId": "applied7-q04",
+      "area": "수와 식",
+      "subarea": "길이와 단위",
+      "detailType": "같은 길이의 두 젖은 부분과 마른 부분으로 전체 길이 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 5,
+      "genId": "applied7-q05",
+      "area": "수와 식",
+      "subarea": "속력·시간·거리",
+      "detailType": "반대 방향으로 걸을 때 만나는 횟수와 이동 거리",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 6,
+      "genId": "applied7-q06",
+      "area": "수와 식",
+      "subarea": "수열",
+      "detailType": "홀수 분모 묶음으로 이어지는 분수 수열의 항 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 7,
+      "genId": "applied7-q07",
+      "area": "도형",
+      "subarea": "정사각형의 길이 관계",
+      "detailType": "정사각형 타일 배열에서 한 변 길이의 비례 관계 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 8,
+      "genId": "applied7-q08",
+      "area": "수와 식",
+      "subarea": "규칙과 대응",
+      "detailType": "삼각형 꼭짓점 수의 곱과 나눗셈 관계로 가운데 수 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 9,
+      "genId": "applied7-q09",
+      "area": "수와 식",
+      "subarea": "곱셈과 덧셈의 관계",
+      "detailType": "세 자리 수와 한 자리 수의 합과 곱으로 수 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 10,
+      "genId": "applied7-q10",
+      "area": "수와 식",
+      "subarea": "나머지",
+      "detailType": "같은 수를 여러 번 곱한 결과의 나머지 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 11,
+      "genId": "applied7-q11",
+      "area": "수와 식",
+      "subarea": "달력과 요일",
+      "detailType": "윤년을 포함한 날짜 사이의 요일 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 12,
+      "genId": "applied7-q12",
+      "area": "도형",
+      "subarea": "평면도형의 분할",
+      "detailType": "원 안의 선분으로 나눌 수 있는 최대 부분 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 13,
+      "genId": "applied7-q13",
+      "area": "수와 식",
+      "subarea": "시각과 각도",
+      "detailType": "시침과 분침의 상대 각속도로 경과 시간 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 14,
+      "genId": "applied7-q14",
+      "area": "수와 식",
+      "subarea": "주기와 나머지",
+      "detailType": "양손 손가락 세기 순환에서 특정 수의 손가락 찾기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 15,
+      "genId": "applied7-q15",
+      "area": "경우의 수",
+      "subarea": "경로 세기",
+      "detailType": "번호가 증가하는 이웃 방으로 이동하는 경로 수 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 16,
+      "genId": "applied7-q16",
+      "area": "수와 식",
+      "subarea": "소수의 계산",
+      "detailType": "규칙적으로 이어지는 소수 합의 0 개수 세기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 17,
+      "genId": "applied7-q17",
+      "area": "도형",
+      "subarea": "도형의 개수",
+      "detailType": "격자 도형에서 크고 작은 평행사변형 수 세기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 18,
+      "genId": "applied7-q18",
+      "area": "지문 이해",
+      "subarea": "나이 관계와 시점 이동",
+      "detailType": "과거·미래의 나이 관계로 두 사람의 현재 나이 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 19,
+      "genId": "applied7-q19",
+      "area": "도형",
+      "subarea": "접기와 구멍 세기",
+      "detailType": "두 번 접은 색종이의 펀치 구멍 수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 20,
+      "genId": "applied7-q20",
+      "area": "수와 식",
+      "subarea": "평균과 비율",
+      "detailType": "두 날씨의 하루 수집량과 전체 평균으로 날 수 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 21,
+      "genId": "applied7-q21",
+      "area": "수와 식",
+      "subarea": "자연수의 자릿수 합",
+      "detailType": "0부터 일정한 수까지 이어 쓴 숫자의 합 구하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 22,
+      "genId": "applied7-q22",
+      "area": "지문 이해",
+      "subarea": "포함·제외 관계",
+      "detailType": "두 학년이 아닌 학생 수와 학년 합으로 한 학년 수 구하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 23,
+      "genId": "applied7-q23",
+      "area": "경우의 수",
+      "subarea": "디지털 숫자의 회전 대칭",
+      "detailType": "180도 회전해 같은 수가 되는 디지털 숫자의 개수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 24,
+      "genId": "applied7-q24",
+      "area": "도형",
+      "subarea": "겹친 원의 수 배치",
+      "detailType": "겹친 원마다 같은 합이 되도록 수 배치하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 25,
+      "genId": "applied7-q25",
+      "area": "수와 식",
+      "subarea": "자연수의 배열",
+      "detailType": "대각선으로 번갈아 배열한 자연수의 줄과 위치 찾기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 26,
+      "genId": "applied7-q26",
+      "area": "경우의 수",
+      "subarea": "세 집합의 포함 관계",
+      "detailType": "분수로 주어진 교집합 관계에서 각 집합의 원소 수 구하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 27,
+      "genId": "applied7-q27",
+      "area": "수와 식",
+      "subarea": "연립 관계와 점수",
+      "detailType": "두 색 돌의 개수 관계와 총점으로 돌 한 개 점수 구하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 28,
+      "genId": "applied7-q28",
+      "area": "수와 식",
+      "subarea": "물건의 단위 가격과 남은 돈",
+      "detailType": "기준 금액으로 단가를 구해 같은 묶음 구매 뒤 남은 돈 계산하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 29,
+      "genId": "applied7-q29",
+      "area": "수와 식",
+      "subarea": "곱과 각 자리 숫자",
+      "detailType": "같은 숫자가 반복되는 두 수의 곱에서 각 자리 숫자의 합 구하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 30,
+      "genId": "applied7-q30",
+      "area": "도형",
+      "subarea": "입체도형의 개수 세기",
+      "detailType": "정사각형 층을 쌓은 계단형 쌓기나무에서 보이지 않는 개수 구하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    }
+  ]
+}

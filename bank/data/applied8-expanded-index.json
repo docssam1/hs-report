@@ -1,0 +1,292 @@
+{
+  "version": "20261025-applied8-expansion-q01-q02-q03-q04-q05-q06-q07-q08-q09-q10-q12-q13-q14-q15-q17-q18-q19-q20-q21-q22-q23-q24-q25-q26-q27-q28-q29-q30-r28",
+  "sourceSet": "applied",
+  "sourceRound": 8,
+  "itemCount": 252,
+  "pendingSourceNos": [
+    11,
+    16
+  ],
+  "items": [
+    {
+      "sourceNo": 1,
+      "genId": "applied8-q01",
+      "area": "수와 식",
+      "subarea": "수식 퍼즐",
+      "detailType": "도형이 나타내는 수를 두 암호식에 대입해 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 2,
+      "genId": "applied8-q02",
+      "area": "도형",
+      "subarea": "평면도형의 개수",
+      "detailType": "성냥개비 삼각 격자에서 크기별 삼각형 세기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 3,
+      "genId": "applied8-q03",
+      "area": "수와 식",
+      "subarea": "수의 규칙과 관계",
+      "detailType": "1부터 16까지의 4×4 마방진 빈칸 합 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 4,
+      "genId": "applied8-q04",
+      "area": "수와 식",
+      "subarea": "수의 배열과 자릿수",
+      "detailType": "자연수를 이어 붙인 수의 끝자리 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 5,
+      "genId": "applied8-q05",
+      "area": "경우의 수",
+      "subarea": "수 카드의 배열",
+      "detailType": "숫자 카드 3장으로 나눗셈식 만들기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 6,
+      "genId": "applied8-q06",
+      "area": "수와 식",
+      "subarea": "화폐 단위와 식",
+      "detailType": "세 종류 동전의 개수와 금액",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 7,
+      "genId": "applied8-q07",
+      "area": "수와 식",
+      "subarea": "수의 규칙",
+      "detailType": "삼각형 위치 수의 곱셈·뺄셈 관계",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 8,
+      "genId": "applied8-q08",
+      "area": "경우의 수",
+      "subarea": "합의 경우의 수",
+      "detailType": "세 점수 구역에 화살을 모두 맞힐 때 가능한 총점의 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 9,
+      "genId": "applied8-q09",
+      "area": "도형",
+      "subarea": "평면도형의 개수",
+      "detailType": "별표가 든 칸을 제외한 직사각형 개수 세기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 10,
+      "genId": "applied8-q10",
+      "area": "수와 식",
+      "subarea": "비례 관계",
+      "detailType": "맞물린 톱니바퀴의 회전 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 12,
+      "genId": "applied8-q12",
+      "area": "수와 식",
+      "subarea": "등식과 무게 관계",
+      "detailType": "양팔 저울의 등식으로 도형의 무게 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 13,
+      "genId": "applied8-q13",
+      "area": "수와 식",
+      "subarea": "순차적 변화의 역추적",
+      "detailType": "차례로 절반씩 나누는 사탕의 처음 양 역산",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 14,
+      "genId": "applied8-q14",
+      "area": "수와 식",
+      "subarea": "수열",
+      "detailType": "분자와 분모의 일정한 증가로 분수의 순서 찾기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 15,
+      "genId": "applied8-q15",
+      "area": "수와 식",
+      "subarea": "달력과 요일",
+      "detailType": "기준 달력으로 다음 해의 날짜와 요일 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 17,
+      "genId": "applied8-q17",
+      "area": "수와 식",
+      "subarea": "규칙과 대응",
+      "detailType": "색을 번갈아 놓는 증가 묶음에서 한 색의 개수 세기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 18,
+      "genId": "applied8-q18",
+      "area": "경우의 수",
+      "subarea": "격자에서 최단 경로 세기",
+      "detailType": "같은 속도로 만나는 두 최단 경로의 조합 세기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 19,
+      "genId": "applied8-q19",
+      "area": "수와 식",
+      "subarea": "규칙과 대응",
+      "detailType": "세 가지 색의 반복 배열에서 맞은편 위치의 색 찾기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 20,
+      "genId": "applied8-q20",
+      "area": "수와 식",
+      "subarea": "규칙과 대응",
+      "detailType": "분모별 묶음의 누적 항 수로 분수열의 특정 항 찾기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 21,
+      "genId": "applied8-q21",
+      "area": "경우의 수",
+      "subarea": "방향이 있는 길 찾기",
+      "detailType": "화살표 방향 그래프에서 경로 수 세기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 22,
+      "genId": "applied8-q22",
+      "area": "수와 식",
+      "subarea": "덧셈과 뺄셈",
+      "detailType": "1부터 8까지의 수에 부호를 붙여 목표 합을 만드는 방법 수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 23,
+      "genId": "applied8-q23",
+      "area": "수와 식",
+      "subarea": "비율과 연속적인 부분",
+      "detailType": "남은 비율이 순서대로 줄어드는 선호 조사에서 한 집단 수 역산",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 24,
+      "genId": "applied8-q24",
+      "area": "수와 식",
+      "subarea": "일률과 함께 일하기",
+      "detailType": "세 수도꼭지의 동시 채움 시간에서 한 쌍의 채움 시간 구하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 25,
+      "genId": "applied8-q25",
+      "area": "도형",
+      "subarea": "평면도형",
+      "detailType": "사각형 변 위 점에서 서로 다른 세 변을 골라 삼각형 만들기 가짓수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 26,
+      "genId": "applied8-q26",
+      "area": "수와 식",
+      "subarea": "일률과 함께 일하기",
+      "detailType": "일정한 속도로 자라는 목장의 풀을 소가 먹는 시간 계산",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 27,
+      "genId": "applied8-q27",
+      "area": "수와 식",
+      "subarea": "수의 구성",
+      "detailType": "숫자 카드로 만들 수 있는 네 자리 수의 합",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 28,
+      "genId": "applied8-q28",
+      "area": "도형",
+      "subarea": "도형의 성질과 관계",
+      "detailType": "지도에서 인접한 지역을 색칠하는 최소 색의 수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 29,
+      "genId": "applied8-q29",
+      "area": "수와 식",
+      "subarea": "약수와 배수",
+      "detailType": "곱의 소인수 지수로 같은 수를 반복해서 나누는 횟수 구하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 30,
+      "genId": "applied8-q30",
+      "area": "도형",
+      "subarea": "도형의 성질과 관계",
+      "detailType": "주사위를 정해진 경로로 굴릴 때 밑면 눈의 합 비교",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    }
+  ]
+}

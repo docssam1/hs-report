@@ -1,10 +1,9 @@
 {
-  "version": "20261024-applied2-expansion-r1",
+  "version": "20261025-applied2-expansion-q03-q24-r3",
   "sourceSet": "applied",
   "sourceRound": 2,
-  "itemCount": 126,
+  "itemCount": 144,
   "pendingSourceNos": [
-    3,
     4,
     5,
     7,
@@ -18,7 +17,6 @@
     20,
     21,
     22,
-    24,
     28
   ],
   "items": [
@@ -38,6 +36,16 @@
       "area": "수와 식",
       "subarea": "합과 차의 관계",
       "detailType": "성냥으로 만든 두 종류 도형의 개수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 3,
+      "genId": "applied2-q03",
+      "area": "수와 식",
+      "subarea": "문자와 자릿값",
+      "detailType": "서로 다른 문자의 세로 덧셈",
       "pointBand": "2.7",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -108,6 +116,16 @@
       "area": "수와 식",
       "subarea": "반복수의 계산",
       "detailType": "두 반복수의 곱에서 홀수 숫자 세기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 24,
+      "genId": "applied2-q24",
+      "area": "지문 이해",
+      "subarea": "조건을 연결하는 논리 추론",
+      "detailType": "나이·음식·놀이기구 대응 표",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9

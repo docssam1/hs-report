@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="250" viewBox="0 0 780 250">
+<rect width="780" height="250" fill="#fff"/><rect x="18" y="14" width="744" height="222" rx="6" fill="#fdfbf5" stroke="#2a241c" stroke-width="3"/>
+<text x="390" y="72" text-anchor="middle" font-family="Arial,'Noto Serif KR',serif" font-size="42" fill="#191511">○ ÷ △ ÷ □ = 2</text>
+<text x="390" y="137" text-anchor="middle" font-family="Arial,'Noto Serif KR',serif" font-size="42" fill="#191511">○ ÷ △ × □ = 72</text>
+<line x1="80" y1="158" x2="700" y2="158" stroke="#c9bda2" stroke-width="1.5"/>
+<text x="390" y="211" text-anchor="middle" font-family="Arial,'Noto Serif KR',serif" font-size="42" fill="#191511">△ + □ = 14</text></svg>

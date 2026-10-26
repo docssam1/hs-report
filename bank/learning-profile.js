@@ -21,7 +21,7 @@
   item=item||{};var original=clean(item.area),sub=clean(item.learningSubarea||item.subarea||item.sourceSubarea),detail=clean(item.learningDetailType||item.detailType||item.displayType||item.type),text=sub+' '+detail,area,basis='source-area';
   if(AREAS.indexOf(item.learningArea)>=0){area=item.learningArea;basis='explicit-learning-area';}
   else if(/논리추리|논리 추리|진실과 거짓|참과 거짓|거짓말|참·거짓|선후관계|진술의 참|정답 예상/.test(text)){area='지문 이해';basis='source-reasoning-type';}
-  else if(original==='지문 이해')area='지문 이해';else if(original==='도형')area='도형';else if(original==='경우의 수')area='경우의 수';else if(original==='수·규칙찾기'||original==='식의 계산'||original==='수와 식')area='수와 식';else area='미분류';
+  else if(original==='지문 이해'||original==='지문이해')area='지문 이해';else if(original==='도형')area='도형';else if(original==='경우의 수')area='경우의 수';else if(original==='수·규칙찾기'||original==='식의 계산'||original==='수와 식')area='수와 식';else area='미분류';
   if(area==='지문 이해')sub=/거짓|진실|참·|진술/.test(text)?'참·거짓과 논리':/선후|순서|순위/.test(text)?'순서와 조건 추론':'정보 연결과 조건 추론';
   return {area:area,subarea:sub||'세부 분류 확인',detailType:detail,path:[area,sub||'세부 분류 확인',detail],basis:basis,sourceArea:original,sourceSubarea:clean(item.subarea||item.sourceSubarea),sourceKey:clean(item.sourceKey)};
  }

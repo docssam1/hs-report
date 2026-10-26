@@ -1,11 +1,10 @@
 {
-  "version": "20261024-applied1-expansion-r2",
+  "version": "20261026-applied1-expansion-q08-alphametic-r3",
   "sourceSet": "applied",
   "sourceRound": 1,
-  "itemCount": 216,
+  "itemCount": 225,
   "pendingSourceNos": [
     7,
-    8,
     17,
     19,
     21,
@@ -68,6 +67,16 @@
       "area": "도형",
       "subarea": "평면 도형의 규칙",
       "detailType": "홀수 너비 계단의 성냥개비 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 8,
+      "genId": "applied1-q08",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "자리 숫자 배열에 맞는 곱셈의 두 자리 수 찾기",
       "pointBand": "2.7",
       "reviewStatus": "verified",
       "variantCount": 9

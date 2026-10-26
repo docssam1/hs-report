@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied2-expansion-r1",
+  "version": "20261025-applied2-expansion-q03-q24-r3",
   "sourceSet": "applied",
   "sourceRound": 2,
   "policy": {
@@ -12,6 +12,7 @@
   "availableSourceNos": [
     1,
     2,
+    3,
     6,
     8,
     10,
@@ -19,6 +20,7 @@
     12,
     18,
     23,
+    24,
     25,
     26,
     27,
@@ -26,7 +28,6 @@
     30
   ],
   "pendingSourceNos": [
-    3,
     4,
     5,
     7,
@@ -40,7 +41,6 @@
     20,
     21,
     22,
-    24,
     28
   ],
   "items": [
@@ -1015,6 +1015,987 @@
         "sourceReasoningPreserved": true,
         "measuredVariantRate": null
       }
+    },
+    {
+      "id": "applied2-q03-v1",
+      "genId": "applied2-q03",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 3,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 자릿값",
+      "detailType": "서로 다른 문자의 세로 덧셈",
+      "pointBand": "2.7",
+      "text": "다음 세로셈에서 같은 글자는 같은 숫자, 서로 다른 글자는 서로 다른 숫자를 나타냅니다. 세로셈이 성립할 때 ABCDE를 구하시오. (각 수의 첫 자리 숫자는 0이 아닙니다.)",
+      "answer": "86091",
+      "answerParts": [
+        8,
+        6,
+        0,
+        9,
+        1
+      ],
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "acceptedAnswers": [
+        "86091"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "일의 자리에서는 8＋8＝6＋10×1이므로 받아올림은 1입니다.",
+        "십의 자리에서는 1＋8＋1＝0＋10×1이므로 받아올림은 1입니다.",
+        "백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다.",
+        "세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝8, B＝6, C＝0, D＝9, E＝1입니다.",
+        "따라서 세로셈은 918＋88＝1006이고, 구하는 ABCDE는 86091입니다."
+      ],
+      "solution": "일의 자리에서는 8＋8＝6＋10×1이므로 받아올림은 1입니다. 십의 자리에서는 1＋8＋1＝0＋10×1이므로 받아올림은 1입니다. 백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다. 세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝8, B＝6, C＝0, D＝9, E＝1입니다. 따라서 세로셈은 918＋88＝1006이고, 구하는 ABCDE는 86091입니다.",
+      "learningPoint": "각 자리의 합과 받아올림을 차례로 적용하며 서로 다른 숫자 조건 확인하기",
+      "learningLocation": "활용 2회 · 원문 3번 · 문자를 숫자로 바꾸는 세로 덧셈",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 10P5 distinct digit assignments plus column carry check",
+        "parameters": {
+          "addend1Pattern": "DEA",
+          "addend2Pattern": "AA",
+          "sumPattern": "ECCB",
+          "digitAssignment": {
+            "A": 8,
+            "B": 6,
+            "C": 0,
+            "D": 9,
+            "E": 1
+          },
+          "numericValues": {
+            "addend1": 918,
+            "addend2": 88,
+            "sum": 1006
+          },
+          "columnChecksRightToLeft": [
+            {
+              "fromRight": 1,
+              "first": 8,
+              "second": 8,
+              "carryIn": 0,
+              "resultDigit": 6,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 2,
+              "first": 1,
+              "second": 8,
+              "carryIn": 1,
+              "resultDigit": 0,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 3,
+              "first": 9,
+              "second": 0,
+              "carryIn": 1,
+              "resultDigit": 0,
+              "carryOut": 1
+            }
+          ],
+          "thousandsCarry": 1,
+          "solutionCount": 1
+        },
+        "independentSuite": "qa/applied2-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceAnswerCandidate": "95180",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "arithmeticRows": [
+        "    DEA",
+        "   + AA",
+        "───────",
+        "   ECCB"
+      ]
+    },
+    {
+      "id": "applied2-q03-v2",
+      "genId": "applied2-q03",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 3,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 자릿값",
+      "detailType": "서로 다른 문자의 세로 덧셈",
+      "pointBand": "2.7",
+      "text": "다음 세로셈에서 같은 글자는 같은 숫자, 서로 다른 글자는 서로 다른 숫자를 나타냅니다. 세로셈이 성립할 때 ABCDE를 구하시오. (각 수의 첫 자리 숫자는 0이 아닙니다.)",
+      "answer": "69150",
+      "answerParts": [
+        6,
+        9,
+        1,
+        5,
+        0
+      ],
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "acceptedAnswers": [
+        "69150"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "일의 자리에서는 6＋9＝5＋10×1이므로 받아올림은 1입니다.",
+        "십의 자리에서는 5＋5＋1＝1＋10×1이므로 받아올림은 1입니다.",
+        "백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다.",
+        "세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝6, B＝9, C＝1, D＝5, E＝0입니다.",
+        "따라서 세로셈은 956＋59＝1015이고, 구하는 ABCDE는 69150입니다."
+      ],
+      "solution": "일의 자리에서는 6＋9＝5＋10×1이므로 받아올림은 1입니다. 십의 자리에서는 5＋5＋1＝1＋10×1이므로 받아올림은 1입니다. 백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다. 세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝6, B＝9, C＝1, D＝5, E＝0입니다. 따라서 세로셈은 956＋59＝1015이고, 구하는 ABCDE는 69150입니다.",
+      "learningPoint": "각 자리의 합과 받아올림을 차례로 적용하며 서로 다른 숫자 조건 확인하기",
+      "learningLocation": "활용 2회 · 원문 3번 · 문자를 숫자로 바꾸는 세로 덧셈",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 10P5 distinct digit assignments plus column carry check",
+        "parameters": {
+          "addend1Pattern": "BDA",
+          "addend2Pattern": "DB",
+          "sumPattern": "CECD",
+          "digitAssignment": {
+            "A": 6,
+            "B": 9,
+            "C": 1,
+            "D": 5,
+            "E": 0
+          },
+          "numericValues": {
+            "addend1": 956,
+            "addend2": 59,
+            "sum": 1015
+          },
+          "columnChecksRightToLeft": [
+            {
+              "fromRight": 1,
+              "first": 6,
+              "second": 9,
+              "carryIn": 0,
+              "resultDigit": 5,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 2,
+              "first": 5,
+              "second": 5,
+              "carryIn": 1,
+              "resultDigit": 1,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 3,
+              "first": 9,
+              "second": 0,
+              "carryIn": 1,
+              "resultDigit": 0,
+              "carryOut": 1
+            }
+          ],
+          "thousandsCarry": 1,
+          "solutionCount": 1
+        },
+        "independentSuite": "qa/applied2-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceAnswerCandidate": "95180",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "arithmeticRows": [
+        "    BDA",
+        "   + DB",
+        "───────",
+        "   CECD"
+      ]
+    },
+    {
+      "id": "applied2-q03-v3",
+      "genId": "applied2-q03",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 3,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 자릿값",
+      "detailType": "서로 다른 문자의 세로 덧셈",
+      "pointBand": "2.7",
+      "text": "다음 세로셈에서 같은 글자는 같은 숫자, 서로 다른 글자는 서로 다른 숫자를 나타냅니다. 세로셈이 성립할 때 ABCDE를 구하시오. (각 수의 첫 자리 숫자는 0이 아닙니다.)",
+      "answer": "01549",
+      "answerParts": [
+        0,
+        1,
+        5,
+        4,
+        9
+      ],
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "acceptedAnswers": [
+        "01549"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "일의 자리에서는 1＋4＝5＋10×0이므로 받아올림은 0입니다.",
+        "십의 자리에서는 5＋5＋0＝0＋10×1이므로 받아올림은 1입니다.",
+        "백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다.",
+        "세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝0, B＝1, C＝5, D＝4, E＝9입니다.",
+        "따라서 세로셈은 951＋54＝1005이고, 구하는 ABCDE는 01549입니다."
+      ],
+      "solution": "일의 자리에서는 1＋4＝5＋10×0이므로 받아올림은 0입니다. 십의 자리에서는 5＋5＋0＝0＋10×1이므로 받아올림은 1입니다. 백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다. 세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝0, B＝1, C＝5, D＝4, E＝9입니다. 따라서 세로셈은 951＋54＝1005이고, 구하는 ABCDE는 01549입니다.",
+      "learningPoint": "각 자리의 합과 받아올림을 차례로 적용하며 서로 다른 숫자 조건 확인하기",
+      "learningLocation": "활용 2회 · 원문 3번 · 문자를 숫자로 바꾸는 세로 덧셈",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 10P5 distinct digit assignments plus column carry check",
+        "parameters": {
+          "addend1Pattern": "ECB",
+          "addend2Pattern": "CD",
+          "sumPattern": "BAAC",
+          "digitAssignment": {
+            "A": 0,
+            "B": 1,
+            "C": 5,
+            "D": 4,
+            "E": 9
+          },
+          "numericValues": {
+            "addend1": 951,
+            "addend2": 54,
+            "sum": 1005
+          },
+          "columnChecksRightToLeft": [
+            {
+              "fromRight": 1,
+              "first": 1,
+              "second": 4,
+              "carryIn": 0,
+              "resultDigit": 5,
+              "carryOut": 0
+            },
+            {
+              "fromRight": 2,
+              "first": 5,
+              "second": 5,
+              "carryIn": 0,
+              "resultDigit": 0,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 3,
+              "first": 9,
+              "second": 0,
+              "carryIn": 1,
+              "resultDigit": 0,
+              "carryOut": 1
+            }
+          ],
+          "thousandsCarry": 1,
+          "solutionCount": 1
+        },
+        "independentSuite": "qa/applied2-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceAnswerCandidate": "95180",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "arithmeticRows": [
+        "    ECB",
+        "   + CD",
+        "───────",
+        "   BAAC"
+      ]
+    },
+    {
+      "id": "applied2-q03-v4",
+      "genId": "applied2-q03",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 3,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 자릿값",
+      "detailType": "서로 다른 문자의 세로 덧셈",
+      "pointBand": "2.7",
+      "text": "다음 세로셈에서 같은 글자는 같은 숫자, 서로 다른 글자는 서로 다른 숫자를 나타냅니다. 세로셈이 성립할 때 ABCDE를 구하시오. (각 수의 첫 자리 숫자는 0이 아닙니다.)",
+      "answer": "09152",
+      "answerParts": [
+        0,
+        9,
+        1,
+        5,
+        2
+      ],
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "acceptedAnswers": [
+        "09152"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "일의 자리에서는 2＋9＝1＋10×1이므로 받아올림은 1입니다.",
+        "십의 자리에서는 5＋5＋1＝1＋10×1이므로 받아올림은 1입니다.",
+        "백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다.",
+        "세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝0, B＝9, C＝1, D＝5, E＝2입니다.",
+        "따라서 세로셈은 952＋59＝1011이고, 구하는 ABCDE는 09152입니다."
+      ],
+      "solution": "일의 자리에서는 2＋9＝1＋10×1이므로 받아올림은 1입니다. 십의 자리에서는 5＋5＋1＝1＋10×1이므로 받아올림은 1입니다. 백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다. 세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝0, B＝9, C＝1, D＝5, E＝2입니다. 따라서 세로셈은 952＋59＝1011이고, 구하는 ABCDE는 09152입니다.",
+      "learningPoint": "각 자리의 합과 받아올림을 차례로 적용하며 서로 다른 숫자 조건 확인하기",
+      "learningLocation": "활용 2회 · 원문 3번 · 문자를 숫자로 바꾸는 세로 덧셈",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 10P5 distinct digit assignments plus column carry check",
+        "parameters": {
+          "addend1Pattern": "BDE",
+          "addend2Pattern": "DB",
+          "sumPattern": "CACC",
+          "digitAssignment": {
+            "A": 0,
+            "B": 9,
+            "C": 1,
+            "D": 5,
+            "E": 2
+          },
+          "numericValues": {
+            "addend1": 952,
+            "addend2": 59,
+            "sum": 1011
+          },
+          "columnChecksRightToLeft": [
+            {
+              "fromRight": 1,
+              "first": 2,
+              "second": 9,
+              "carryIn": 0,
+              "resultDigit": 1,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 2,
+              "first": 5,
+              "second": 5,
+              "carryIn": 1,
+              "resultDigit": 1,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 3,
+              "first": 9,
+              "second": 0,
+              "carryIn": 1,
+              "resultDigit": 0,
+              "carryOut": 1
+            }
+          ],
+          "thousandsCarry": 1,
+          "solutionCount": 1
+        },
+        "independentSuite": "qa/applied2-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceAnswerCandidate": "95180",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "arithmeticRows": [
+        "    BDE",
+        "   + DB",
+        "───────",
+        "   CACC"
+      ]
+    },
+    {
+      "id": "applied2-q03-v5",
+      "genId": "applied2-q03",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 3,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 자릿값",
+      "detailType": "서로 다른 문자의 세로 덧셈",
+      "pointBand": "2.7",
+      "text": "다음 세로셈에서 같은 글자는 같은 숫자, 서로 다른 글자는 서로 다른 숫자를 나타냅니다. 세로셈이 성립할 때 ABCDE를 구하시오. (각 수의 첫 자리 숫자는 0이 아닙니다.)",
+      "answer": "09381",
+      "answerParts": [
+        0,
+        9,
+        3,
+        8,
+        1
+      ],
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "acceptedAnswers": [
+        "09381"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "일의 자리에서는 8＋1＝9＋10×0이므로 받아올림은 0입니다.",
+        "십의 자리에서는 3＋8＋0＝1＋10×1이므로 받아올림은 1입니다.",
+        "백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다.",
+        "세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝0, B＝9, C＝3, D＝8, E＝1입니다.",
+        "따라서 세로셈은 938＋81＝1019이고, 구하는 ABCDE는 09381입니다."
+      ],
+      "solution": "일의 자리에서는 8＋1＝9＋10×0이므로 받아올림은 0입니다. 십의 자리에서는 3＋8＋0＝1＋10×1이므로 받아올림은 1입니다. 백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다. 세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝0, B＝9, C＝3, D＝8, E＝1입니다. 따라서 세로셈은 938＋81＝1019이고, 구하는 ABCDE는 09381입니다.",
+      "learningPoint": "각 자리의 합과 받아올림을 차례로 적용하며 서로 다른 숫자 조건 확인하기",
+      "learningLocation": "활용 2회 · 원문 3번 · 문자를 숫자로 바꾸는 세로 덧셈",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 10P5 distinct digit assignments plus column carry check",
+        "parameters": {
+          "addend1Pattern": "BCD",
+          "addend2Pattern": "DE",
+          "sumPattern": "EAEB",
+          "digitAssignment": {
+            "A": 0,
+            "B": 9,
+            "C": 3,
+            "D": 8,
+            "E": 1
+          },
+          "numericValues": {
+            "addend1": 938,
+            "addend2": 81,
+            "sum": 1019
+          },
+          "columnChecksRightToLeft": [
+            {
+              "fromRight": 1,
+              "first": 8,
+              "second": 1,
+              "carryIn": 0,
+              "resultDigit": 9,
+              "carryOut": 0
+            },
+            {
+              "fromRight": 2,
+              "first": 3,
+              "second": 8,
+              "carryIn": 0,
+              "resultDigit": 1,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 3,
+              "first": 9,
+              "second": 0,
+              "carryIn": 1,
+              "resultDigit": 0,
+              "carryOut": 1
+            }
+          ],
+          "thousandsCarry": 1,
+          "solutionCount": 1
+        },
+        "independentSuite": "qa/applied2-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceAnswerCandidate": "95180",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "arithmeticRows": [
+        "    BCD",
+        "   + DE",
+        "───────",
+        "   EAEB"
+      ]
+    },
+    {
+      "id": "applied2-q03-v6",
+      "genId": "applied2-q03",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 3,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 자릿값",
+      "detailType": "서로 다른 문자의 세로 덧셈",
+      "pointBand": "2.7",
+      "text": "다음 세로셈에서 같은 글자는 같은 숫자, 서로 다른 글자는 서로 다른 숫자를 나타냅니다. 세로셈이 성립할 때 ABCDE를 구하시오. (각 수의 첫 자리 숫자는 0이 아닙니다.)",
+      "answer": "65910",
+      "answerParts": [
+        6,
+        5,
+        9,
+        1,
+        0
+      ],
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "acceptedAnswers": [
+        "65910"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "일의 자리에서는 6＋5＝1＋10×1이므로 받아올림은 1입니다.",
+        "십의 자리에서는 5＋5＋1＝1＋10×1이므로 받아올림은 1입니다.",
+        "백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다.",
+        "세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝6, B＝5, C＝9, D＝1, E＝0입니다.",
+        "따라서 세로셈은 956＋55＝1011이고, 구하는 ABCDE는 65910입니다."
+      ],
+      "solution": "일의 자리에서는 6＋5＝1＋10×1이므로 받아올림은 1입니다. 십의 자리에서는 5＋5＋1＝1＋10×1이므로 받아올림은 1입니다. 백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다. 세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝6, B＝5, C＝9, D＝1, E＝0입니다. 따라서 세로셈은 956＋55＝1011이고, 구하는 ABCDE는 65910입니다.",
+      "learningPoint": "각 자리의 합과 받아올림을 차례로 적용하며 서로 다른 숫자 조건 확인하기",
+      "learningLocation": "활용 2회 · 원문 3번 · 문자를 숫자로 바꾸는 세로 덧셈",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 10P5 distinct digit assignments plus column carry check",
+        "parameters": {
+          "addend1Pattern": "CBA",
+          "addend2Pattern": "BB",
+          "sumPattern": "DEDD",
+          "digitAssignment": {
+            "A": 6,
+            "B": 5,
+            "C": 9,
+            "D": 1,
+            "E": 0
+          },
+          "numericValues": {
+            "addend1": 956,
+            "addend2": 55,
+            "sum": 1011
+          },
+          "columnChecksRightToLeft": [
+            {
+              "fromRight": 1,
+              "first": 6,
+              "second": 5,
+              "carryIn": 0,
+              "resultDigit": 1,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 2,
+              "first": 5,
+              "second": 5,
+              "carryIn": 1,
+              "resultDigit": 1,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 3,
+              "first": 9,
+              "second": 0,
+              "carryIn": 1,
+              "resultDigit": 0,
+              "carryOut": 1
+            }
+          ],
+          "thousandsCarry": 1,
+          "solutionCount": 1
+        },
+        "independentSuite": "qa/applied2-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceAnswerCandidate": "95180",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "arithmeticRows": [
+        "    CBA",
+        "   + BB",
+        "───────",
+        "   DEDD"
+      ]
+    },
+    {
+      "id": "applied2-q03-v7",
+      "genId": "applied2-q03",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 3,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 자릿값",
+      "detailType": "서로 다른 문자의 세로 덧셈",
+      "pointBand": "2.7",
+      "text": "다음 세로셈에서 같은 글자는 같은 숫자, 서로 다른 글자는 서로 다른 숫자를 나타냅니다. 세로셈이 성립할 때 ABCDE를 구하시오. (각 수의 첫 자리 숫자는 0이 아닙니다.)",
+      "answer": "91052",
+      "answerParts": [
+        9,
+        1,
+        0,
+        5,
+        2
+      ],
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "acceptedAnswers": [
+        "91052"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "일의 자리에서는 2＋9＝1＋10×1이므로 받아올림은 1입니다.",
+        "십의 자리에서는 5＋5＋1＝1＋10×1이므로 받아올림은 1입니다.",
+        "백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다.",
+        "세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝9, B＝1, C＝0, D＝5, E＝2입니다.",
+        "따라서 세로셈은 952＋59＝1011이고, 구하는 ABCDE는 91052입니다."
+      ],
+      "solution": "일의 자리에서는 2＋9＝1＋10×1이므로 받아올림은 1입니다. 십의 자리에서는 5＋5＋1＝1＋10×1이므로 받아올림은 1입니다. 백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다. 세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝9, B＝1, C＝0, D＝5, E＝2입니다. 따라서 세로셈은 952＋59＝1011이고, 구하는 ABCDE는 91052입니다.",
+      "learningPoint": "각 자리의 합과 받아올림을 차례로 적용하며 서로 다른 숫자 조건 확인하기",
+      "learningLocation": "활용 2회 · 원문 3번 · 문자를 숫자로 바꾸는 세로 덧셈",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 10P5 distinct digit assignments plus column carry check",
+        "parameters": {
+          "addend1Pattern": "ADE",
+          "addend2Pattern": "DA",
+          "sumPattern": "BCBB",
+          "digitAssignment": {
+            "A": 9,
+            "B": 1,
+            "C": 0,
+            "D": 5,
+            "E": 2
+          },
+          "numericValues": {
+            "addend1": 952,
+            "addend2": 59,
+            "sum": 1011
+          },
+          "columnChecksRightToLeft": [
+            {
+              "fromRight": 1,
+              "first": 2,
+              "second": 9,
+              "carryIn": 0,
+              "resultDigit": 1,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 2,
+              "first": 5,
+              "second": 5,
+              "carryIn": 1,
+              "resultDigit": 1,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 3,
+              "first": 9,
+              "second": 0,
+              "carryIn": 1,
+              "resultDigit": 0,
+              "carryOut": 1
+            }
+          ],
+          "thousandsCarry": 1,
+          "solutionCount": 1
+        },
+        "independentSuite": "qa/applied2-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceAnswerCandidate": "95180",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "arithmeticRows": [
+        "    ADE",
+        "   + DA",
+        "───────",
+        "   BCBB"
+      ]
+    },
+    {
+      "id": "applied2-q03-v8",
+      "genId": "applied2-q03",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 3,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 자릿값",
+      "detailType": "서로 다른 문자의 세로 덧셈",
+      "pointBand": "2.7",
+      "text": "다음 세로셈에서 같은 글자는 같은 숫자, 서로 다른 글자는 서로 다른 숫자를 나타냅니다. 세로셈이 성립할 때 ABCDE를 구하시오. (각 수의 첫 자리 숫자는 0이 아닙니다.)",
+      "answer": "29801",
+      "answerParts": [
+        2,
+        9,
+        8,
+        0,
+        1
+      ],
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "acceptedAnswers": [
+        "29801"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "일의 자리에서는 8＋1＝9＋10×0이므로 받아올림은 0입니다.",
+        "십의 자리에서는 2＋9＋0＝1＋10×1이므로 받아올림은 1입니다.",
+        "백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다.",
+        "세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝2, B＝9, C＝8, D＝0, E＝1입니다.",
+        "따라서 세로셈은 928＋91＝1019이고, 구하는 ABCDE는 29801입니다."
+      ],
+      "solution": "일의 자리에서는 8＋1＝9＋10×0이므로 받아올림은 0입니다. 십의 자리에서는 2＋9＋0＝1＋10×1이므로 받아올림은 1입니다. 백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다. 세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝2, B＝9, C＝8, D＝0, E＝1입니다. 따라서 세로셈은 928＋91＝1019이고, 구하는 ABCDE는 29801입니다.",
+      "learningPoint": "각 자리의 합과 받아올림을 차례로 적용하며 서로 다른 숫자 조건 확인하기",
+      "learningLocation": "활용 2회 · 원문 3번 · 문자를 숫자로 바꾸는 세로 덧셈",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 10P5 distinct digit assignments plus column carry check",
+        "parameters": {
+          "addend1Pattern": "BAC",
+          "addend2Pattern": "BE",
+          "sumPattern": "EDEB",
+          "digitAssignment": {
+            "A": 2,
+            "B": 9,
+            "C": 8,
+            "D": 0,
+            "E": 1
+          },
+          "numericValues": {
+            "addend1": 928,
+            "addend2": 91,
+            "sum": 1019
+          },
+          "columnChecksRightToLeft": [
+            {
+              "fromRight": 1,
+              "first": 8,
+              "second": 1,
+              "carryIn": 0,
+              "resultDigit": 9,
+              "carryOut": 0
+            },
+            {
+              "fromRight": 2,
+              "first": 2,
+              "second": 9,
+              "carryIn": 0,
+              "resultDigit": 1,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 3,
+              "first": 9,
+              "second": 0,
+              "carryIn": 1,
+              "resultDigit": 0,
+              "carryOut": 1
+            }
+          ],
+          "thousandsCarry": 1,
+          "solutionCount": 1
+        },
+        "independentSuite": "qa/applied2-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceAnswerCandidate": "95180",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "arithmeticRows": [
+        "    BAC",
+        "   + BE",
+        "───────",
+        "   EDEB"
+      ]
+    },
+    {
+      "id": "applied2-q03-v9",
+      "genId": "applied2-q03",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 3,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 자릿값",
+      "detailType": "서로 다른 문자의 세로 덧셈",
+      "pointBand": "2.7",
+      "text": "다음 세로셈에서 같은 글자는 같은 숫자, 서로 다른 글자는 서로 다른 숫자를 나타냅니다. 세로셈이 성립할 때 ABCDE를 구하시오. (각 수의 첫 자리 숫자는 0이 아닙니다.)",
+      "answer": "56190",
+      "answerParts": [
+        5,
+        6,
+        1,
+        9,
+        0
+      ],
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "acceptedAnswers": [
+        "56190"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "일의 자리에서는 1＋5＝6＋10×0이므로 받아올림은 0입니다.",
+        "십의 자리에서는 6＋5＋0＝1＋10×1이므로 받아올림은 1입니다.",
+        "백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다.",
+        "세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝5, B＝6, C＝1, D＝9, E＝0입니다.",
+        "따라서 세로셈은 961＋55＝1016이고, 구하는 ABCDE는 56190입니다."
+      ],
+      "solution": "일의 자리에서는 1＋5＝6＋10×0이므로 받아올림은 0입니다. 십의 자리에서는 6＋5＋0＝1＋10×1이므로 받아올림은 1입니다. 백의 자리에서는 9＋0＋1＝0＋10×1입니다. 천의 자리는 받아올림 1과 결과의 첫 숫자 1이 같습니다. 세 자리 수와 두 자리 수의 합이 네 자리 수이므로 천의 자리 숫자는 1입니다. 이를 각 자리의 받아올림, 서로 다른 숫자, 첫 자리의 0 금지 조건과 함께 맞추면 가능한 배정은 하나이며 A＝5, B＝6, C＝1, D＝9, E＝0입니다. 따라서 세로셈은 961＋55＝1016이고, 구하는 ABCDE는 56190입니다.",
+      "learningPoint": "각 자리의 합과 받아올림을 차례로 적용하며 서로 다른 숫자 조건 확인하기",
+      "learningLocation": "활용 2회 · 원문 3번 · 문자를 숫자로 바꾸는 세로 덧셈",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 10P5 distinct digit assignments plus column carry check",
+        "parameters": {
+          "addend1Pattern": "DBC",
+          "addend2Pattern": "AA",
+          "sumPattern": "CECB",
+          "digitAssignment": {
+            "A": 5,
+            "B": 6,
+            "C": 1,
+            "D": 9,
+            "E": 0
+          },
+          "numericValues": {
+            "addend1": 961,
+            "addend2": 55,
+            "sum": 1016
+          },
+          "columnChecksRightToLeft": [
+            {
+              "fromRight": 1,
+              "first": 1,
+              "second": 5,
+              "carryIn": 0,
+              "resultDigit": 6,
+              "carryOut": 0
+            },
+            {
+              "fromRight": 2,
+              "first": 6,
+              "second": 5,
+              "carryIn": 0,
+              "resultDigit": 1,
+              "carryOut": 1
+            },
+            {
+              "fromRight": 3,
+              "first": 9,
+              "second": 0,
+              "carryIn": 1,
+              "resultDigit": 0,
+              "carryOut": 1
+            }
+          ],
+          "thousandsCarry": 1,
+          "solutionCount": 1
+        },
+        "independentSuite": "qa/applied2-q03-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceAnswerCandidate": "95180",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      },
+      "arithmeticRows": [
+        "    DBC",
+        "   + AA",
+        "───────",
+        "   CECB"
+      ]
     },
     {
       "id": "applied2-q06-v1",
@@ -4707,6 +5688,2085 @@
       }
     },
     {
+      "id": "applied2-q24-v1",
+      "genId": "applied2-q24",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 24,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "조건을 연결하는 논리 추론",
+      "detailType": "나이·음식·놀이기구 대응 표",
+      "pointBand": "4.2",
+      "text": "놀이공원에 놀러 간 다섯 소년은 모두 나이가 다르고 서로 다른 음식을 먹었으며 서로 다른 놀이기구를 탔습니다. 아래 조건을 보고 표의 각 행에 나이, 먹은 음식, 탄 놀이기구를 차례로 쓰세요. 놀이기구는 청룡열차, T-익스프레스, 후룸라이드, 자이로드롭, 바이킹입니다.",
+      "promptDataLines": [
+        "윤호는 아이스크림을 먹었지만 재중은 핫초코를 먹지는 않았어요.",
+        "14살인 유천은 청룡열차를 타지 않았어요.",
+        "T-익스프레스를 타고 있는 소년은 15살입니다.",
+        "준수는 후룸라이드를 타지 않고 창민은 자이로드롭을 탔어요.",
+        "아이스크림을 먹고 있는 소년은 13살입니다.",
+        "후룸라이드를 타고 있는 소년은 핫바를 먹고 있어요.",
+        "재중은 바이킹을 타면서 핫도그를 먹고 있어요.",
+        "12살인 창민은 츄러스를 먹고 있어요.",
+        "가장 어린 소년은 11살이에요."
+      ],
+      "responseTable": {
+        "label": "다섯 소년의 나이·음식·놀이기구",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "윤호",
+            "",
+            "",
+            ""
+          ],
+          [
+            "유천",
+            "",
+            "",
+            ""
+          ],
+          [
+            "준수",
+            "",
+            "",
+            ""
+          ],
+          [
+            "재중",
+            "",
+            "",
+            ""
+          ],
+          [
+            "창민",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "answer": "윤호: 13살, 아이스크림, 청룡열차 / 유천: 14살, 핫바, 후룸라이드 / 준수: 15살, 핫초코, T-익스프레스 / 재중: 11살, 핫도그, 바이킹 / 창민: 12살, 츄러스, 자이로드롭",
+      "answerParts": [
+        13,
+        "아이스크림",
+        "청룡열차",
+        14,
+        "핫바",
+        "후룸라이드",
+        15,
+        "핫초코",
+        "T-익스프레스",
+        11,
+        "핫도그",
+        "바이킹",
+        12,
+        "츄러스",
+        "자이로드롭"
+      ],
+      "answerLabels": [
+        "윤호 나이",
+        "윤호 음식",
+        "윤호 놀이기구",
+        "유천 나이",
+        "유천 음식",
+        "유천 놀이기구",
+        "준수 나이",
+        "준수 음식",
+        "준수 놀이기구",
+        "재중 나이",
+        "재중 음식",
+        "재중 놀이기구",
+        "창민 나이",
+        "창민 음식",
+        "창민 놀이기구"
+      ],
+      "acceptedAnswers": [
+        "윤호: 13살, 아이스크림, 청룡열차 / 유천: 14살, 핫바, 후룸라이드 / 준수: 15살, 핫초코, T-익스프레스 / 재중: 11살, 핫도그, 바이킹 / 창민: 12살, 츄러스, 자이로드롭"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "윤호는 아이스크림을 먹고, 아이스크림을 먹은 소년은 13살입니다. 따라서 윤호는 13살입니다.",
+        "창민은 12살이고 츄러스를 먹습니다. 또 창민은 자이로드롭을 탑니다. 네 번째와 일곱 번째 조건으로 재중은 바이킹을 타고 핫도그를 먹습니다.",
+        "유천은 14살입니다. T-익스프레스를 탄 소년은 15살입니다. 윤호는 13살이고 재중과 창민의 놀이기구가 각각 정해졌으므로, 준수는 15살이며 T-익스프레스를 탑니다. 남은 나이는 11살이므로 재중은 11살입니다.",
+        "윤호와 유천에게 남은 놀이기구는 청룡열차와 후룸라이드입니다. 두 번째 조건에서 유천은 청룡열차를 타지 않으므로 후룸라이드를 타고, 여섯 번째 조건에 따라 핫바를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다."
+      ],
+      "solution": "윤호는 아이스크림을 먹고, 아이스크림을 먹은 소년은 13살입니다. 따라서 윤호는 13살입니다. 창민은 12살이고 츄러스를 먹습니다. 또 창민은 자이로드롭을 탑니다. 네 번째와 일곱 번째 조건으로 재중은 바이킹을 타고 핫도그를 먹습니다. 유천은 14살입니다. T-익스프레스를 탄 소년은 15살입니다. 윤호는 13살이고 재중과 창민의 놀이기구가 각각 정해졌으므로, 준수는 15살이며 T-익스프레스를 탑니다. 남은 나이는 11살이므로 재중은 11살입니다. 윤호와 유천에게 남은 놀이기구는 청룡열차와 후룸라이드입니다. 두 번째 조건에서 유천은 청룡열차를 타지 않으므로 후룸라이드를 타고, 여섯 번째 조건에 따라 핫바를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다.",
+      "solutionTable": {
+        "label": "완성한 대응 표",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "윤호",
+            13,
+            "아이스크림",
+            "청룡열차"
+          ],
+          [
+            "유천",
+            14,
+            "핫바",
+            "후룸라이드"
+          ],
+          [
+            "준수",
+            15,
+            "핫초코",
+            "T-익스프레스"
+          ],
+          [
+            "재중",
+            11,
+            "핫도그",
+            "바이킹"
+          ],
+          [
+            "창민",
+            12,
+            "츄러스",
+            "자이로드롭"
+          ]
+        ]
+      },
+      "learningPoint": "조건마다 확정되는 범주를 표에 표시하고, 남은 나이·음식·놀이기구를 차례로 좁히기",
+      "learningLocation": "활용 2회 · 원문 24번 · 세 범주 조건을 연결하는 논리 퍼즐",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 5! age, 5! food, and 5! ride assignments against nine transformed clues",
+        "parameters": {
+          "personOrder": [
+            "윤호",
+            "유천",
+            "준수",
+            "재중",
+            "창민"
+          ],
+          "foodOrder": [
+            "아이스크림",
+            "핫바",
+            "핫초코",
+            "핫도그",
+            "츄러스"
+          ],
+          "rideOrder": [
+            "청룡열차",
+            "T-익스프레스",
+            "후룸라이드",
+            "자이로드롭",
+            "바이킹"
+          ],
+          "ageMap": {
+            "11": 11,
+            "12": 12,
+            "13": 13,
+            "14": 14,
+            "15": 15
+          },
+          "solutionByPerson": {
+            "윤호": [
+              13,
+              "아이스크림",
+              "청룡열차"
+            ],
+            "유천": [
+              14,
+              "핫바",
+              "후룸라이드"
+            ],
+            "준수": [
+              15,
+              "핫초코",
+              "T-익스프레스"
+            ],
+            "재중": [
+              11,
+              "핫도그",
+              "바이킹"
+            ],
+            "창민": [
+              12,
+              "츄러스",
+              "자이로드롭"
+            ]
+          },
+          "solutionCount": 1,
+          "clueCount": 9
+        },
+        "independentSuite": "qa/applied2-q24-independent-validate.py",
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 2회.pdf",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 6,
+        "sourceAnswerCandidate": "윤호 13·아이스크림·청룡열차; 유천 14·핫바·후룸라이드; 준수 15·핫초코·T-익스프레스; 재중 11·핫도그·바이킹; 창민 12·츄러스·자이로드롭",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "sourceDrawingCompared": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied2-q24-v2",
+      "genId": "applied2-q24",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 24,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "조건을 연결하는 논리 추론",
+      "detailType": "나이·음식·놀이기구 대응 표",
+      "pointBand": "4.2",
+      "text": "놀이공원에 놀러 간 다섯 소년은 모두 나이가 다르고 서로 다른 음식을 먹었으며 서로 다른 놀이기구를 탔습니다. 아래 조건을 보고 표의 각 행에 나이, 먹은 음식, 탄 놀이기구를 차례로 쓰세요. 놀이기구는 후룸라이드, 자이로드롭, 바이킹, 청룡열차, T-익스프레스입니다.",
+      "promptDataLines": [
+        "유천은 아이스크림을 먹었지만 창민은 핫초코를 먹지는 않았어요.",
+        "15살인 준수는 후룸라이드를 타지 않았어요.",
+        "자이로드롭을 타고 있는 소년은 14살입니다.",
+        "재중은 바이킹을 타지 않고 윤호는 청룡열차를 탔어요.",
+        "아이스크림을 먹고 있는 소년은 13살입니다.",
+        "바이킹을 타고 있는 소년은 핫바를 먹고 있어요.",
+        "창민은 T-익스프레스를 타면서 핫도그를 먹고 있어요.",
+        "12살인 윤호는 츄러스를 먹고 있어요.",
+        "가장 어린 소년은 11살이에요."
+      ],
+      "responseTable": {
+        "label": "다섯 소년의 나이·음식·놀이기구",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "유천",
+            "",
+            "",
+            ""
+          ],
+          [
+            "준수",
+            "",
+            "",
+            ""
+          ],
+          [
+            "재중",
+            "",
+            "",
+            ""
+          ],
+          [
+            "창민",
+            "",
+            "",
+            ""
+          ],
+          [
+            "윤호",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "answer": "유천: 13살, 아이스크림, 후룸라이드 / 준수: 15살, 핫바, 바이킹 / 재중: 14살, 핫초코, 자이로드롭 / 창민: 11살, 핫도그, T-익스프레스 / 윤호: 12살, 츄러스, 청룡열차",
+      "answerParts": [
+        13,
+        "아이스크림",
+        "후룸라이드",
+        15,
+        "핫바",
+        "바이킹",
+        14,
+        "핫초코",
+        "자이로드롭",
+        11,
+        "핫도그",
+        "T-익스프레스",
+        12,
+        "츄러스",
+        "청룡열차"
+      ],
+      "answerLabels": [
+        "유천 나이",
+        "유천 음식",
+        "유천 놀이기구",
+        "준수 나이",
+        "준수 음식",
+        "준수 놀이기구",
+        "재중 나이",
+        "재중 음식",
+        "재중 놀이기구",
+        "창민 나이",
+        "창민 음식",
+        "창민 놀이기구",
+        "윤호 나이",
+        "윤호 음식",
+        "윤호 놀이기구"
+      ],
+      "acceptedAnswers": [
+        "유천: 13살, 아이스크림, 후룸라이드 / 준수: 15살, 핫바, 바이킹 / 재중: 14살, 핫초코, 자이로드롭 / 창민: 11살, 핫도그, T-익스프레스 / 윤호: 12살, 츄러스, 청룡열차"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "유천은 아이스크림을 먹고, 아이스크림을 먹은 소년은 13살입니다. 따라서 유천은 13살입니다.",
+        "윤호는 12살이고 츄러스를 먹습니다. 또 윤호는 청룡열차를 탑니다. 네 번째와 일곱 번째 조건으로 창민은 T-익스프레스를 타고 핫도그를 먹습니다.",
+        "준수는 15살입니다. 자이로드롭을 탄 소년은 14살입니다. 유천은 13살이고 창민과 윤호의 놀이기구가 각각 정해졌으므로, 재중은 14살이며 자이로드롭을 탑니다. 남은 나이는 11살이므로 창민은 11살입니다.",
+        "유천과 준수에게 남은 놀이기구는 후룸라이드와 바이킹입니다. 두 번째 조건에서 준수는 후룸라이드를 타지 않으므로 바이킹을 타고, 여섯 번째 조건에 따라 핫바를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다."
+      ],
+      "solution": "유천은 아이스크림을 먹고, 아이스크림을 먹은 소년은 13살입니다. 따라서 유천은 13살입니다. 윤호는 12살이고 츄러스를 먹습니다. 또 윤호는 청룡열차를 탑니다. 네 번째와 일곱 번째 조건으로 창민은 T-익스프레스를 타고 핫도그를 먹습니다. 준수는 15살입니다. 자이로드롭을 탄 소년은 14살입니다. 유천은 13살이고 창민과 윤호의 놀이기구가 각각 정해졌으므로, 재중은 14살이며 자이로드롭을 탑니다. 남은 나이는 11살이므로 창민은 11살입니다. 유천과 준수에게 남은 놀이기구는 후룸라이드와 바이킹입니다. 두 번째 조건에서 준수는 후룸라이드를 타지 않으므로 바이킹을 타고, 여섯 번째 조건에 따라 핫바를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다.",
+      "solutionTable": {
+        "label": "완성한 대응 표",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "유천",
+            13,
+            "아이스크림",
+            "후룸라이드"
+          ],
+          [
+            "준수",
+            15,
+            "핫바",
+            "바이킹"
+          ],
+          [
+            "재중",
+            14,
+            "핫초코",
+            "자이로드롭"
+          ],
+          [
+            "창민",
+            11,
+            "핫도그",
+            "T-익스프레스"
+          ],
+          [
+            "윤호",
+            12,
+            "츄러스",
+            "청룡열차"
+          ]
+        ]
+      },
+      "learningPoint": "조건마다 확정되는 범주를 표에 표시하고, 남은 나이·음식·놀이기구를 차례로 좁히기",
+      "learningLocation": "활용 2회 · 원문 24번 · 세 범주 조건을 연결하는 논리 퍼즐",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 5! age, 5! food, and 5! ride assignments against nine transformed clues",
+        "parameters": {
+          "personOrder": [
+            "유천",
+            "준수",
+            "재중",
+            "창민",
+            "윤호"
+          ],
+          "foodOrder": [
+            "아이스크림",
+            "핫바",
+            "핫초코",
+            "핫도그",
+            "츄러스"
+          ],
+          "rideOrder": [
+            "후룸라이드",
+            "자이로드롭",
+            "바이킹",
+            "청룡열차",
+            "T-익스프레스"
+          ],
+          "ageMap": {
+            "11": 11,
+            "12": 12,
+            "13": 13,
+            "14": 15,
+            "15": 14
+          },
+          "solutionByPerson": {
+            "유천": [
+              13,
+              "아이스크림",
+              "후룸라이드"
+            ],
+            "준수": [
+              15,
+              "핫바",
+              "바이킹"
+            ],
+            "재중": [
+              14,
+              "핫초코",
+              "자이로드롭"
+            ],
+            "창민": [
+              11,
+              "핫도그",
+              "T-익스프레스"
+            ],
+            "윤호": [
+              12,
+              "츄러스",
+              "청룡열차"
+            ]
+          },
+          "solutionCount": 1,
+          "clueCount": 9
+        },
+        "independentSuite": "qa/applied2-q24-independent-validate.py",
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 2회.pdf",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 6,
+        "sourceAnswerCandidate": "윤호 13·아이스크림·청룡열차; 유천 14·핫바·후룸라이드; 준수 15·핫초코·T-익스프레스; 재중 11·핫도그·바이킹; 창민 12·츄러스·자이로드롭",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "sourceDrawingCompared": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied2-q24-v3",
+      "genId": "applied2-q24",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 24,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "조건을 연결하는 논리 추론",
+      "detailType": "나이·음식·놀이기구 대응 표",
+      "pointBand": "4.2",
+      "text": "놀이공원에 놀러 간 다섯 소년은 모두 나이가 다르고 서로 다른 음식을 먹었으며 서로 다른 놀이기구를 탔습니다. 아래 조건을 보고 표의 각 행에 나이, 먹은 음식, 탄 놀이기구를 차례로 쓰세요. 놀이기구는 바이킹, 청룡열차, T-익스프레스, 후룸라이드, 자이로드롭입니다.",
+      "promptDataLines": [
+        "준수는 아이스크림을 먹었지만 윤호는 핫초코를 먹지는 않았어요.",
+        "13살인 재중은 바이킹을 타지 않았어요.",
+        "청룡열차를 타고 있는 소년은 15살입니다.",
+        "창민은 T-익스프레스를 타지 않고 유천은 후룸라이드를 탔어요.",
+        "아이스크림을 먹고 있는 소년은 14살입니다.",
+        "T-익스프레스를 타고 있는 소년은 핫바를 먹고 있어요.",
+        "윤호는 자이로드롭을 타면서 핫도그를 먹고 있어요.",
+        "12살인 유천은 츄러스를 먹고 있어요.",
+        "가장 어린 소년은 11살이에요."
+      ],
+      "responseTable": {
+        "label": "다섯 소년의 나이·음식·놀이기구",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "준수",
+            "",
+            "",
+            ""
+          ],
+          [
+            "재중",
+            "",
+            "",
+            ""
+          ],
+          [
+            "창민",
+            "",
+            "",
+            ""
+          ],
+          [
+            "윤호",
+            "",
+            "",
+            ""
+          ],
+          [
+            "유천",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "answer": "준수: 14살, 아이스크림, 바이킹 / 재중: 13살, 핫바, T-익스프레스 / 창민: 15살, 핫초코, 청룡열차 / 윤호: 11살, 핫도그, 자이로드롭 / 유천: 12살, 츄러스, 후룸라이드",
+      "answerParts": [
+        14,
+        "아이스크림",
+        "바이킹",
+        13,
+        "핫바",
+        "T-익스프레스",
+        15,
+        "핫초코",
+        "청룡열차",
+        11,
+        "핫도그",
+        "자이로드롭",
+        12,
+        "츄러스",
+        "후룸라이드"
+      ],
+      "answerLabels": [
+        "준수 나이",
+        "준수 음식",
+        "준수 놀이기구",
+        "재중 나이",
+        "재중 음식",
+        "재중 놀이기구",
+        "창민 나이",
+        "창민 음식",
+        "창민 놀이기구",
+        "윤호 나이",
+        "윤호 음식",
+        "윤호 놀이기구",
+        "유천 나이",
+        "유천 음식",
+        "유천 놀이기구"
+      ],
+      "acceptedAnswers": [
+        "준수: 14살, 아이스크림, 바이킹 / 재중: 13살, 핫바, T-익스프레스 / 창민: 15살, 핫초코, 청룡열차 / 윤호: 11살, 핫도그, 자이로드롭 / 유천: 12살, 츄러스, 후룸라이드"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "준수는 아이스크림을 먹고, 아이스크림을 먹은 소년은 14살입니다. 따라서 준수는 14살입니다.",
+        "유천은 12살이고 츄러스를 먹습니다. 또 유천은 후룸라이드를 탑니다. 네 번째와 일곱 번째 조건으로 윤호는 자이로드롭을 타고 핫도그를 먹습니다.",
+        "재중은 13살입니다. 청룡열차를 탄 소년은 15살입니다. 준수는 14살이고 윤호와 유천의 놀이기구가 각각 정해졌으므로, 창민은 15살이며 청룡열차를 탑니다. 남은 나이는 11살이므로 윤호는 11살입니다.",
+        "준수와 재중에게 남은 놀이기구는 바이킹와 T-익스프레스입니다. 두 번째 조건에서 재중은 바이킹을 타지 않으므로 T-익스프레스를 타고, 여섯 번째 조건에 따라 핫바를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다."
+      ],
+      "solution": "준수는 아이스크림을 먹고, 아이스크림을 먹은 소년은 14살입니다. 따라서 준수는 14살입니다. 유천은 12살이고 츄러스를 먹습니다. 또 유천은 후룸라이드를 탑니다. 네 번째와 일곱 번째 조건으로 윤호는 자이로드롭을 타고 핫도그를 먹습니다. 재중은 13살입니다. 청룡열차를 탄 소년은 15살입니다. 준수는 14살이고 윤호와 유천의 놀이기구가 각각 정해졌으므로, 창민은 15살이며 청룡열차를 탑니다. 남은 나이는 11살이므로 윤호는 11살입니다. 준수와 재중에게 남은 놀이기구는 바이킹와 T-익스프레스입니다. 두 번째 조건에서 재중은 바이킹을 타지 않으므로 T-익스프레스를 타고, 여섯 번째 조건에 따라 핫바를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다.",
+      "solutionTable": {
+        "label": "완성한 대응 표",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "준수",
+            14,
+            "아이스크림",
+            "바이킹"
+          ],
+          [
+            "재중",
+            13,
+            "핫바",
+            "T-익스프레스"
+          ],
+          [
+            "창민",
+            15,
+            "핫초코",
+            "청룡열차"
+          ],
+          [
+            "윤호",
+            11,
+            "핫도그",
+            "자이로드롭"
+          ],
+          [
+            "유천",
+            12,
+            "츄러스",
+            "후룸라이드"
+          ]
+        ]
+      },
+      "learningPoint": "조건마다 확정되는 범주를 표에 표시하고, 남은 나이·음식·놀이기구를 차례로 좁히기",
+      "learningLocation": "활용 2회 · 원문 24번 · 세 범주 조건을 연결하는 논리 퍼즐",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 5! age, 5! food, and 5! ride assignments against nine transformed clues",
+        "parameters": {
+          "personOrder": [
+            "준수",
+            "재중",
+            "창민",
+            "윤호",
+            "유천"
+          ],
+          "foodOrder": [
+            "아이스크림",
+            "핫바",
+            "핫초코",
+            "핫도그",
+            "츄러스"
+          ],
+          "rideOrder": [
+            "바이킹",
+            "청룡열차",
+            "T-익스프레스",
+            "후룸라이드",
+            "자이로드롭"
+          ],
+          "ageMap": {
+            "11": 11,
+            "12": 12,
+            "13": 14,
+            "14": 13,
+            "15": 15
+          },
+          "solutionByPerson": {
+            "준수": [
+              14,
+              "아이스크림",
+              "바이킹"
+            ],
+            "재중": [
+              13,
+              "핫바",
+              "T-익스프레스"
+            ],
+            "창민": [
+              15,
+              "핫초코",
+              "청룡열차"
+            ],
+            "윤호": [
+              11,
+              "핫도그",
+              "자이로드롭"
+            ],
+            "유천": [
+              12,
+              "츄러스",
+              "후룸라이드"
+            ]
+          },
+          "solutionCount": 1,
+          "clueCount": 9
+        },
+        "independentSuite": "qa/applied2-q24-independent-validate.py",
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 2회.pdf",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 6,
+        "sourceAnswerCandidate": "윤호 13·아이스크림·청룡열차; 유천 14·핫바·후룸라이드; 준수 15·핫초코·T-익스프레스; 재중 11·핫도그·바이킹; 창민 12·츄러스·자이로드롭",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "sourceDrawingCompared": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied2-q24-v4",
+      "genId": "applied2-q24",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 24,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "조건을 연결하는 논리 추론",
+      "detailType": "나이·음식·놀이기구 대응 표",
+      "pointBand": "4.2",
+      "text": "놀이공원에 놀러 간 다섯 소년은 모두 나이가 다르고 서로 다른 음식을 먹었으며 서로 다른 놀이기구를 탔습니다. 아래 조건을 보고 표의 각 행에 나이, 먹은 음식, 탄 놀이기구를 차례로 쓰세요. 놀이기구는 T-익스프레스, 후룸라이드, 자이로드롭, 바이킹, 청룡열차입니다.",
+      "promptDataLines": [
+        "재중은 핫바를 먹었지만 유천은 핫도그를 먹지는 않았어요.",
+        "15살인 창민은 T-익스프레스를 타지 않았어요.",
+        "후룸라이드를 타고 있는 소년은 13살입니다.",
+        "윤호는 자이로드롭을 타지 않고 준수는 바이킹을 탔어요.",
+        "핫바를 먹고 있는 소년은 14살입니다.",
+        "자이로드롭을 타고 있는 소년은 핫초코를 먹고 있어요.",
+        "유천은 청룡열차를 타면서 츄러스를 먹고 있어요.",
+        "12살인 준수는 아이스크림을 먹고 있어요.",
+        "가장 어린 소년은 11살이에요."
+      ],
+      "responseTable": {
+        "label": "다섯 소년의 나이·음식·놀이기구",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "재중",
+            "",
+            "",
+            ""
+          ],
+          [
+            "창민",
+            "",
+            "",
+            ""
+          ],
+          [
+            "윤호",
+            "",
+            "",
+            ""
+          ],
+          [
+            "유천",
+            "",
+            "",
+            ""
+          ],
+          [
+            "준수",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "answer": "재중: 14살, 핫바, T-익스프레스 / 창민: 15살, 핫초코, 자이로드롭 / 윤호: 13살, 핫도그, 후룸라이드 / 유천: 11살, 츄러스, 청룡열차 / 준수: 12살, 아이스크림, 바이킹",
+      "answerParts": [
+        14,
+        "핫바",
+        "T-익스프레스",
+        15,
+        "핫초코",
+        "자이로드롭",
+        13,
+        "핫도그",
+        "후룸라이드",
+        11,
+        "츄러스",
+        "청룡열차",
+        12,
+        "아이스크림",
+        "바이킹"
+      ],
+      "answerLabels": [
+        "재중 나이",
+        "재중 음식",
+        "재중 놀이기구",
+        "창민 나이",
+        "창민 음식",
+        "창민 놀이기구",
+        "윤호 나이",
+        "윤호 음식",
+        "윤호 놀이기구",
+        "유천 나이",
+        "유천 음식",
+        "유천 놀이기구",
+        "준수 나이",
+        "준수 음식",
+        "준수 놀이기구"
+      ],
+      "acceptedAnswers": [
+        "재중: 14살, 핫바, T-익스프레스 / 창민: 15살, 핫초코, 자이로드롭 / 윤호: 13살, 핫도그, 후룸라이드 / 유천: 11살, 츄러스, 청룡열차 / 준수: 12살, 아이스크림, 바이킹"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "재중은 핫바를 먹고, 핫바를 먹은 소년은 14살입니다. 따라서 재중은 14살입니다.",
+        "준수는 12살이고 아이스크림을 먹습니다. 또 준수는 바이킹을 탑니다. 네 번째와 일곱 번째 조건으로 유천은 청룡열차를 타고 츄러스를 먹습니다.",
+        "창민은 15살입니다. 후룸라이드를 탄 소년은 13살입니다. 재중은 14살이고 유천과 준수의 놀이기구가 각각 정해졌으므로, 윤호는 13살이며 후룸라이드를 탑니다. 남은 나이는 11살이므로 유천은 11살입니다.",
+        "재중과 창민에게 남은 놀이기구는 T-익스프레스와 자이로드롭입니다. 두 번째 조건에서 창민은 T-익스프레스를 타지 않으므로 자이로드롭을 타고, 여섯 번째 조건에 따라 핫초코를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다."
+      ],
+      "solution": "재중은 핫바를 먹고, 핫바를 먹은 소년은 14살입니다. 따라서 재중은 14살입니다. 준수는 12살이고 아이스크림을 먹습니다. 또 준수는 바이킹을 탑니다. 네 번째와 일곱 번째 조건으로 유천은 청룡열차를 타고 츄러스를 먹습니다. 창민은 15살입니다. 후룸라이드를 탄 소년은 13살입니다. 재중은 14살이고 유천과 준수의 놀이기구가 각각 정해졌으므로, 윤호는 13살이며 후룸라이드를 탑니다. 남은 나이는 11살이므로 유천은 11살입니다. 재중과 창민에게 남은 놀이기구는 T-익스프레스와 자이로드롭입니다. 두 번째 조건에서 창민은 T-익스프레스를 타지 않으므로 자이로드롭을 타고, 여섯 번째 조건에 따라 핫초코를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다.",
+      "solutionTable": {
+        "label": "완성한 대응 표",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "재중",
+            14,
+            "핫바",
+            "T-익스프레스"
+          ],
+          [
+            "창민",
+            15,
+            "핫초코",
+            "자이로드롭"
+          ],
+          [
+            "윤호",
+            13,
+            "핫도그",
+            "후룸라이드"
+          ],
+          [
+            "유천",
+            11,
+            "츄러스",
+            "청룡열차"
+          ],
+          [
+            "준수",
+            12,
+            "아이스크림",
+            "바이킹"
+          ]
+        ]
+      },
+      "learningPoint": "조건마다 확정되는 범주를 표에 표시하고, 남은 나이·음식·놀이기구를 차례로 좁히기",
+      "learningLocation": "활용 2회 · 원문 24번 · 세 범주 조건을 연결하는 논리 퍼즐",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 5! age, 5! food, and 5! ride assignments against nine transformed clues",
+        "parameters": {
+          "personOrder": [
+            "재중",
+            "창민",
+            "윤호",
+            "유천",
+            "준수"
+          ],
+          "foodOrder": [
+            "핫바",
+            "핫초코",
+            "핫도그",
+            "츄러스",
+            "아이스크림"
+          ],
+          "rideOrder": [
+            "T-익스프레스",
+            "후룸라이드",
+            "자이로드롭",
+            "바이킹",
+            "청룡열차"
+          ],
+          "ageMap": {
+            "11": 11,
+            "12": 12,
+            "13": 14,
+            "14": 15,
+            "15": 13
+          },
+          "solutionByPerson": {
+            "재중": [
+              14,
+              "핫바",
+              "T-익스프레스"
+            ],
+            "창민": [
+              15,
+              "핫초코",
+              "자이로드롭"
+            ],
+            "윤호": [
+              13,
+              "핫도그",
+              "후룸라이드"
+            ],
+            "유천": [
+              11,
+              "츄러스",
+              "청룡열차"
+            ],
+            "준수": [
+              12,
+              "아이스크림",
+              "바이킹"
+            ]
+          },
+          "solutionCount": 1,
+          "clueCount": 9
+        },
+        "independentSuite": "qa/applied2-q24-independent-validate.py",
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 2회.pdf",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 6,
+        "sourceAnswerCandidate": "윤호 13·아이스크림·청룡열차; 유천 14·핫바·후룸라이드; 준수 15·핫초코·T-익스프레스; 재중 11·핫도그·바이킹; 창민 12·츄러스·자이로드롭",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "sourceDrawingCompared": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied2-q24-v5",
+      "genId": "applied2-q24",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 24,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "조건을 연결하는 논리 추론",
+      "detailType": "나이·음식·놀이기구 대응 표",
+      "pointBand": "4.2",
+      "text": "놀이공원에 놀러 간 다섯 소년은 모두 나이가 다르고 서로 다른 음식을 먹었으며 서로 다른 놀이기구를 탔습니다. 아래 조건을 보고 표의 각 행에 나이, 먹은 음식, 탄 놀이기구를 차례로 쓰세요. 놀이기구는 자이로드롭, 바이킹, 청룡열차, T-익스프레스, 후룸라이드입니다.",
+      "promptDataLines": [
+        "창민은 핫바를 먹었지만 준수는 핫도그를 먹지는 않았어요.",
+        "13살인 윤호는 자이로드롭을 타지 않았어요.",
+        "바이킹을 타고 있는 소년은 14살입니다.",
+        "유천은 청룡열차를 타지 않고 재중은 T-익스프레스를 탔어요.",
+        "핫바를 먹고 있는 소년은 15살입니다.",
+        "청룡열차를 타고 있는 소년은 핫초코를 먹고 있어요.",
+        "준수는 후룸라이드를 타면서 츄러스를 먹고 있어요.",
+        "12살인 재중은 아이스크림을 먹고 있어요.",
+        "가장 어린 소년은 11살이에요."
+      ],
+      "responseTable": {
+        "label": "다섯 소년의 나이·음식·놀이기구",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "창민",
+            "",
+            "",
+            ""
+          ],
+          [
+            "윤호",
+            "",
+            "",
+            ""
+          ],
+          [
+            "유천",
+            "",
+            "",
+            ""
+          ],
+          [
+            "준수",
+            "",
+            "",
+            ""
+          ],
+          [
+            "재중",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "answer": "창민: 15살, 핫바, 자이로드롭 / 윤호: 13살, 핫초코, 청룡열차 / 유천: 14살, 핫도그, 바이킹 / 준수: 11살, 츄러스, 후룸라이드 / 재중: 12살, 아이스크림, T-익스프레스",
+      "answerParts": [
+        15,
+        "핫바",
+        "자이로드롭",
+        13,
+        "핫초코",
+        "청룡열차",
+        14,
+        "핫도그",
+        "바이킹",
+        11,
+        "츄러스",
+        "후룸라이드",
+        12,
+        "아이스크림",
+        "T-익스프레스"
+      ],
+      "answerLabels": [
+        "창민 나이",
+        "창민 음식",
+        "창민 놀이기구",
+        "윤호 나이",
+        "윤호 음식",
+        "윤호 놀이기구",
+        "유천 나이",
+        "유천 음식",
+        "유천 놀이기구",
+        "준수 나이",
+        "준수 음식",
+        "준수 놀이기구",
+        "재중 나이",
+        "재중 음식",
+        "재중 놀이기구"
+      ],
+      "acceptedAnswers": [
+        "창민: 15살, 핫바, 자이로드롭 / 윤호: 13살, 핫초코, 청룡열차 / 유천: 14살, 핫도그, 바이킹 / 준수: 11살, 츄러스, 후룸라이드 / 재중: 12살, 아이스크림, T-익스프레스"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "창민은 핫바를 먹고, 핫바를 먹은 소년은 15살입니다. 따라서 창민은 15살입니다.",
+        "재중은 12살이고 아이스크림을 먹습니다. 또 재중은 T-익스프레스를 탑니다. 네 번째와 일곱 번째 조건으로 준수는 후룸라이드를 타고 츄러스를 먹습니다.",
+        "윤호는 13살입니다. 바이킹을 탄 소년은 14살입니다. 창민은 15살이고 준수와 재중의 놀이기구가 각각 정해졌으므로, 유천은 14살이며 바이킹을 탑니다. 남은 나이는 11살이므로 준수는 11살입니다.",
+        "창민과 윤호에게 남은 놀이기구는 자이로드롭와 청룡열차입니다. 두 번째 조건에서 윤호는 자이로드롭을 타지 않으므로 청룡열차를 타고, 여섯 번째 조건에 따라 핫초코를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다."
+      ],
+      "solution": "창민은 핫바를 먹고, 핫바를 먹은 소년은 15살입니다. 따라서 창민은 15살입니다. 재중은 12살이고 아이스크림을 먹습니다. 또 재중은 T-익스프레스를 탑니다. 네 번째와 일곱 번째 조건으로 준수는 후룸라이드를 타고 츄러스를 먹습니다. 윤호는 13살입니다. 바이킹을 탄 소년은 14살입니다. 창민은 15살이고 준수와 재중의 놀이기구가 각각 정해졌으므로, 유천은 14살이며 바이킹을 탑니다. 남은 나이는 11살이므로 준수는 11살입니다. 창민과 윤호에게 남은 놀이기구는 자이로드롭와 청룡열차입니다. 두 번째 조건에서 윤호는 자이로드롭을 타지 않으므로 청룡열차를 타고, 여섯 번째 조건에 따라 핫초코를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다.",
+      "solutionTable": {
+        "label": "완성한 대응 표",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "창민",
+            15,
+            "핫바",
+            "자이로드롭"
+          ],
+          [
+            "윤호",
+            13,
+            "핫초코",
+            "청룡열차"
+          ],
+          [
+            "유천",
+            14,
+            "핫도그",
+            "바이킹"
+          ],
+          [
+            "준수",
+            11,
+            "츄러스",
+            "후룸라이드"
+          ],
+          [
+            "재중",
+            12,
+            "아이스크림",
+            "T-익스프레스"
+          ]
+        ]
+      },
+      "learningPoint": "조건마다 확정되는 범주를 표에 표시하고, 남은 나이·음식·놀이기구를 차례로 좁히기",
+      "learningLocation": "활용 2회 · 원문 24번 · 세 범주 조건을 연결하는 논리 퍼즐",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 5! age, 5! food, and 5! ride assignments against nine transformed clues",
+        "parameters": {
+          "personOrder": [
+            "창민",
+            "윤호",
+            "유천",
+            "준수",
+            "재중"
+          ],
+          "foodOrder": [
+            "핫바",
+            "핫초코",
+            "핫도그",
+            "츄러스",
+            "아이스크림"
+          ],
+          "rideOrder": [
+            "자이로드롭",
+            "바이킹",
+            "청룡열차",
+            "T-익스프레스",
+            "후룸라이드"
+          ],
+          "ageMap": {
+            "11": 11,
+            "12": 12,
+            "13": 15,
+            "14": 13,
+            "15": 14
+          },
+          "solutionByPerson": {
+            "창민": [
+              15,
+              "핫바",
+              "자이로드롭"
+            ],
+            "윤호": [
+              13,
+              "핫초코",
+              "청룡열차"
+            ],
+            "유천": [
+              14,
+              "핫도그",
+              "바이킹"
+            ],
+            "준수": [
+              11,
+              "츄러스",
+              "후룸라이드"
+            ],
+            "재중": [
+              12,
+              "아이스크림",
+              "T-익스프레스"
+            ]
+          },
+          "solutionCount": 1,
+          "clueCount": 9
+        },
+        "independentSuite": "qa/applied2-q24-independent-validate.py",
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 2회.pdf",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 6,
+        "sourceAnswerCandidate": "윤호 13·아이스크림·청룡열차; 유천 14·핫바·후룸라이드; 준수 15·핫초코·T-익스프레스; 재중 11·핫도그·바이킹; 창민 12·츄러스·자이로드롭",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "sourceDrawingCompared": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied2-q24-v6",
+      "genId": "applied2-q24",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 24,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "조건을 연결하는 논리 추론",
+      "detailType": "나이·음식·놀이기구 대응 표",
+      "pointBand": "4.2",
+      "text": "놀이공원에 놀러 간 다섯 소년은 모두 나이가 다르고 서로 다른 음식을 먹었으며 서로 다른 놀이기구를 탔습니다. 아래 조건을 보고 표의 각 행에 나이, 먹은 음식, 탄 놀이기구를 차례로 쓰세요. 놀이기구는 청룡열차, T-익스프레스, 후룸라이드, 자이로드롭, 바이킹입니다.",
+      "promptDataLines": [
+        "윤호는 핫바를 먹었지만 재중은 핫도그를 먹지는 않았어요.",
+        "14살인 유천은 청룡열차를 타지 않았어요.",
+        "T-익스프레스를 타고 있는 소년은 13살입니다.",
+        "준수는 후룸라이드를 타지 않고 창민은 자이로드롭을 탔어요.",
+        "핫바를 먹고 있는 소년은 15살입니다.",
+        "후룸라이드를 타고 있는 소년은 핫초코를 먹고 있어요.",
+        "재중은 바이킹을 타면서 츄러스를 먹고 있어요.",
+        "12살인 창민은 아이스크림을 먹고 있어요.",
+        "가장 어린 소년은 11살이에요."
+      ],
+      "responseTable": {
+        "label": "다섯 소년의 나이·음식·놀이기구",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "윤호",
+            "",
+            "",
+            ""
+          ],
+          [
+            "유천",
+            "",
+            "",
+            ""
+          ],
+          [
+            "준수",
+            "",
+            "",
+            ""
+          ],
+          [
+            "재중",
+            "",
+            "",
+            ""
+          ],
+          [
+            "창민",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "answer": "윤호: 15살, 핫바, 청룡열차 / 유천: 14살, 핫초코, 후룸라이드 / 준수: 13살, 핫도그, T-익스프레스 / 재중: 11살, 츄러스, 바이킹 / 창민: 12살, 아이스크림, 자이로드롭",
+      "answerParts": [
+        15,
+        "핫바",
+        "청룡열차",
+        14,
+        "핫초코",
+        "후룸라이드",
+        13,
+        "핫도그",
+        "T-익스프레스",
+        11,
+        "츄러스",
+        "바이킹",
+        12,
+        "아이스크림",
+        "자이로드롭"
+      ],
+      "answerLabels": [
+        "윤호 나이",
+        "윤호 음식",
+        "윤호 놀이기구",
+        "유천 나이",
+        "유천 음식",
+        "유천 놀이기구",
+        "준수 나이",
+        "준수 음식",
+        "준수 놀이기구",
+        "재중 나이",
+        "재중 음식",
+        "재중 놀이기구",
+        "창민 나이",
+        "창민 음식",
+        "창민 놀이기구"
+      ],
+      "acceptedAnswers": [
+        "윤호: 15살, 핫바, 청룡열차 / 유천: 14살, 핫초코, 후룸라이드 / 준수: 13살, 핫도그, T-익스프레스 / 재중: 11살, 츄러스, 바이킹 / 창민: 12살, 아이스크림, 자이로드롭"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "윤호는 핫바를 먹고, 핫바를 먹은 소년은 15살입니다. 따라서 윤호는 15살입니다.",
+        "창민은 12살이고 아이스크림을 먹습니다. 또 창민은 자이로드롭을 탑니다. 네 번째와 일곱 번째 조건으로 재중은 바이킹을 타고 츄러스를 먹습니다.",
+        "유천은 14살입니다. T-익스프레스를 탄 소년은 13살입니다. 윤호는 15살이고 재중과 창민의 놀이기구가 각각 정해졌으므로, 준수는 13살이며 T-익스프레스를 탑니다. 남은 나이는 11살이므로 재중은 11살입니다.",
+        "윤호와 유천에게 남은 놀이기구는 청룡열차와 후룸라이드입니다. 두 번째 조건에서 유천은 청룡열차를 타지 않으므로 후룸라이드를 타고, 여섯 번째 조건에 따라 핫초코를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다."
+      ],
+      "solution": "윤호는 핫바를 먹고, 핫바를 먹은 소년은 15살입니다. 따라서 윤호는 15살입니다. 창민은 12살이고 아이스크림을 먹습니다. 또 창민은 자이로드롭을 탑니다. 네 번째와 일곱 번째 조건으로 재중은 바이킹을 타고 츄러스를 먹습니다. 유천은 14살입니다. T-익스프레스를 탄 소년은 13살입니다. 윤호는 15살이고 재중과 창민의 놀이기구가 각각 정해졌으므로, 준수는 13살이며 T-익스프레스를 탑니다. 남은 나이는 11살이므로 재중은 11살입니다. 윤호와 유천에게 남은 놀이기구는 청룡열차와 후룸라이드입니다. 두 번째 조건에서 유천은 청룡열차를 타지 않으므로 후룸라이드를 타고, 여섯 번째 조건에 따라 핫초코를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다.",
+      "solutionTable": {
+        "label": "완성한 대응 표",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "윤호",
+            15,
+            "핫바",
+            "청룡열차"
+          ],
+          [
+            "유천",
+            14,
+            "핫초코",
+            "후룸라이드"
+          ],
+          [
+            "준수",
+            13,
+            "핫도그",
+            "T-익스프레스"
+          ],
+          [
+            "재중",
+            11,
+            "츄러스",
+            "바이킹"
+          ],
+          [
+            "창민",
+            12,
+            "아이스크림",
+            "자이로드롭"
+          ]
+        ]
+      },
+      "learningPoint": "조건마다 확정되는 범주를 표에 표시하고, 남은 나이·음식·놀이기구를 차례로 좁히기",
+      "learningLocation": "활용 2회 · 원문 24번 · 세 범주 조건을 연결하는 논리 퍼즐",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 5! age, 5! food, and 5! ride assignments against nine transformed clues",
+        "parameters": {
+          "personOrder": [
+            "윤호",
+            "유천",
+            "준수",
+            "재중",
+            "창민"
+          ],
+          "foodOrder": [
+            "핫바",
+            "핫초코",
+            "핫도그",
+            "츄러스",
+            "아이스크림"
+          ],
+          "rideOrder": [
+            "청룡열차",
+            "T-익스프레스",
+            "후룸라이드",
+            "자이로드롭",
+            "바이킹"
+          ],
+          "ageMap": {
+            "11": 11,
+            "12": 12,
+            "13": 15,
+            "14": 14,
+            "15": 13
+          },
+          "solutionByPerson": {
+            "윤호": [
+              15,
+              "핫바",
+              "청룡열차"
+            ],
+            "유천": [
+              14,
+              "핫초코",
+              "후룸라이드"
+            ],
+            "준수": [
+              13,
+              "핫도그",
+              "T-익스프레스"
+            ],
+            "재중": [
+              11,
+              "츄러스",
+              "바이킹"
+            ],
+            "창민": [
+              12,
+              "아이스크림",
+              "자이로드롭"
+            ]
+          },
+          "solutionCount": 1,
+          "clueCount": 9
+        },
+        "independentSuite": "qa/applied2-q24-independent-validate.py",
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 2회.pdf",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 6,
+        "sourceAnswerCandidate": "윤호 13·아이스크림·청룡열차; 유천 14·핫바·후룸라이드; 준수 15·핫초코·T-익스프레스; 재중 11·핫도그·바이킹; 창민 12·츄러스·자이로드롭",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "sourceDrawingCompared": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied2-q24-v7",
+      "genId": "applied2-q24",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 24,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "조건을 연결하는 논리 추론",
+      "detailType": "나이·음식·놀이기구 대응 표",
+      "pointBand": "4.2",
+      "text": "놀이공원에 놀러 간 다섯 소년은 모두 나이가 다르고 서로 다른 음식을 먹었으며 서로 다른 놀이기구를 탔습니다. 아래 조건을 보고 표의 각 행에 나이, 먹은 음식, 탄 놀이기구를 차례로 쓰세요. 놀이기구는 후룸라이드, 자이로드롭, 바이킹, 청룡열차, T-익스프레스입니다.",
+      "promptDataLines": [
+        "유천은 핫초코를 먹었지만 창민은 츄러스를 먹지는 않았어요.",
+        "14살인 준수는 후룸라이드를 타지 않았어요.",
+        "자이로드롭을 타고 있는 소년은 15살입니다.",
+        "재중은 바이킹을 타지 않고 윤호는 청룡열차를 탔어요.",
+        "핫초코를 먹고 있는 소년은 12살입니다.",
+        "바이킹을 타고 있는 소년은 핫도그를 먹고 있어요.",
+        "창민은 T-익스프레스를 타면서 아이스크림을 먹고 있어요.",
+        "13살인 윤호는 핫바를 먹고 있어요.",
+        "가장 어린 소년은 11살이에요."
+      ],
+      "responseTable": {
+        "label": "다섯 소년의 나이·음식·놀이기구",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "유천",
+            "",
+            "",
+            ""
+          ],
+          [
+            "준수",
+            "",
+            "",
+            ""
+          ],
+          [
+            "재중",
+            "",
+            "",
+            ""
+          ],
+          [
+            "창민",
+            "",
+            "",
+            ""
+          ],
+          [
+            "윤호",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "answer": "유천: 12살, 핫초코, 후룸라이드 / 준수: 14살, 핫도그, 바이킹 / 재중: 15살, 츄러스, 자이로드롭 / 창민: 11살, 아이스크림, T-익스프레스 / 윤호: 13살, 핫바, 청룡열차",
+      "answerParts": [
+        12,
+        "핫초코",
+        "후룸라이드",
+        14,
+        "핫도그",
+        "바이킹",
+        15,
+        "츄러스",
+        "자이로드롭",
+        11,
+        "아이스크림",
+        "T-익스프레스",
+        13,
+        "핫바",
+        "청룡열차"
+      ],
+      "answerLabels": [
+        "유천 나이",
+        "유천 음식",
+        "유천 놀이기구",
+        "준수 나이",
+        "준수 음식",
+        "준수 놀이기구",
+        "재중 나이",
+        "재중 음식",
+        "재중 놀이기구",
+        "창민 나이",
+        "창민 음식",
+        "창민 놀이기구",
+        "윤호 나이",
+        "윤호 음식",
+        "윤호 놀이기구"
+      ],
+      "acceptedAnswers": [
+        "유천: 12살, 핫초코, 후룸라이드 / 준수: 14살, 핫도그, 바이킹 / 재중: 15살, 츄러스, 자이로드롭 / 창민: 11살, 아이스크림, T-익스프레스 / 윤호: 13살, 핫바, 청룡열차"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "유천은 핫초코를 먹고, 핫초코를 먹은 소년은 12살입니다. 따라서 유천은 12살입니다.",
+        "윤호는 13살이고 핫바를 먹습니다. 또 윤호는 청룡열차를 탑니다. 네 번째와 일곱 번째 조건으로 창민은 T-익스프레스를 타고 아이스크림을 먹습니다.",
+        "준수는 14살입니다. 자이로드롭을 탄 소년은 15살입니다. 유천은 12살이고 창민과 윤호의 놀이기구가 각각 정해졌으므로, 재중은 15살이며 자이로드롭을 탑니다. 남은 나이는 11살이므로 창민은 11살입니다.",
+        "유천과 준수에게 남은 놀이기구는 후룸라이드와 바이킹입니다. 두 번째 조건에서 준수는 후룸라이드를 타지 않으므로 바이킹을 타고, 여섯 번째 조건에 따라 핫도그를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다."
+      ],
+      "solution": "유천은 핫초코를 먹고, 핫초코를 먹은 소년은 12살입니다. 따라서 유천은 12살입니다. 윤호는 13살이고 핫바를 먹습니다. 또 윤호는 청룡열차를 탑니다. 네 번째와 일곱 번째 조건으로 창민은 T-익스프레스를 타고 아이스크림을 먹습니다. 준수는 14살입니다. 자이로드롭을 탄 소년은 15살입니다. 유천은 12살이고 창민과 윤호의 놀이기구가 각각 정해졌으므로, 재중은 15살이며 자이로드롭을 탑니다. 남은 나이는 11살이므로 창민은 11살입니다. 유천과 준수에게 남은 놀이기구는 후룸라이드와 바이킹입니다. 두 번째 조건에서 준수는 후룸라이드를 타지 않으므로 바이킹을 타고, 여섯 번째 조건에 따라 핫도그를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다.",
+      "solutionTable": {
+        "label": "완성한 대응 표",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "유천",
+            12,
+            "핫초코",
+            "후룸라이드"
+          ],
+          [
+            "준수",
+            14,
+            "핫도그",
+            "바이킹"
+          ],
+          [
+            "재중",
+            15,
+            "츄러스",
+            "자이로드롭"
+          ],
+          [
+            "창민",
+            11,
+            "아이스크림",
+            "T-익스프레스"
+          ],
+          [
+            "윤호",
+            13,
+            "핫바",
+            "청룡열차"
+          ]
+        ]
+      },
+      "learningPoint": "조건마다 확정되는 범주를 표에 표시하고, 남은 나이·음식·놀이기구를 차례로 좁히기",
+      "learningLocation": "활용 2회 · 원문 24번 · 세 범주 조건을 연결하는 논리 퍼즐",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 5! age, 5! food, and 5! ride assignments against nine transformed clues",
+        "parameters": {
+          "personOrder": [
+            "유천",
+            "준수",
+            "재중",
+            "창민",
+            "윤호"
+          ],
+          "foodOrder": [
+            "핫초코",
+            "핫도그",
+            "츄러스",
+            "아이스크림",
+            "핫바"
+          ],
+          "rideOrder": [
+            "후룸라이드",
+            "자이로드롭",
+            "바이킹",
+            "청룡열차",
+            "T-익스프레스"
+          ],
+          "ageMap": {
+            "11": 11,
+            "12": 13,
+            "13": 12,
+            "14": 14,
+            "15": 15
+          },
+          "solutionByPerson": {
+            "유천": [
+              12,
+              "핫초코",
+              "후룸라이드"
+            ],
+            "준수": [
+              14,
+              "핫도그",
+              "바이킹"
+            ],
+            "재중": [
+              15,
+              "츄러스",
+              "자이로드롭"
+            ],
+            "창민": [
+              11,
+              "아이스크림",
+              "T-익스프레스"
+            ],
+            "윤호": [
+              13,
+              "핫바",
+              "청룡열차"
+            ]
+          },
+          "solutionCount": 1,
+          "clueCount": 9
+        },
+        "independentSuite": "qa/applied2-q24-independent-validate.py",
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 2회.pdf",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 6,
+        "sourceAnswerCandidate": "윤호 13·아이스크림·청룡열차; 유천 14·핫바·후룸라이드; 준수 15·핫초코·T-익스프레스; 재중 11·핫도그·바이킹; 창민 12·츄러스·자이로드롭",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "sourceDrawingCompared": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied2-q24-v8",
+      "genId": "applied2-q24",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 24,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "조건을 연결하는 논리 추론",
+      "detailType": "나이·음식·놀이기구 대응 표",
+      "pointBand": "4.2",
+      "text": "놀이공원에 놀러 간 다섯 소년은 모두 나이가 다르고 서로 다른 음식을 먹었으며 서로 다른 놀이기구를 탔습니다. 아래 조건을 보고 표의 각 행에 나이, 먹은 음식, 탄 놀이기구를 차례로 쓰세요. 놀이기구는 바이킹, 청룡열차, T-익스프레스, 후룸라이드, 자이로드롭입니다.",
+      "promptDataLines": [
+        "준수는 핫초코를 먹었지만 윤호는 츄러스를 먹지는 않았어요.",
+        "15살인 재중은 바이킹을 타지 않았어요.",
+        "청룡열차를 타고 있는 소년은 14살입니다.",
+        "창민은 T-익스프레스를 타지 않고 유천은 후룸라이드를 탔어요.",
+        "핫초코를 먹고 있는 소년은 12살입니다.",
+        "T-익스프레스를 타고 있는 소년은 핫도그를 먹고 있어요.",
+        "윤호는 자이로드롭을 타면서 아이스크림을 먹고 있어요.",
+        "13살인 유천은 핫바를 먹고 있어요.",
+        "가장 어린 소년은 11살이에요."
+      ],
+      "responseTable": {
+        "label": "다섯 소년의 나이·음식·놀이기구",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "준수",
+            "",
+            "",
+            ""
+          ],
+          [
+            "재중",
+            "",
+            "",
+            ""
+          ],
+          [
+            "창민",
+            "",
+            "",
+            ""
+          ],
+          [
+            "윤호",
+            "",
+            "",
+            ""
+          ],
+          [
+            "유천",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "answer": "준수: 12살, 핫초코, 바이킹 / 재중: 15살, 핫도그, T-익스프레스 / 창민: 14살, 츄러스, 청룡열차 / 윤호: 11살, 아이스크림, 자이로드롭 / 유천: 13살, 핫바, 후룸라이드",
+      "answerParts": [
+        12,
+        "핫초코",
+        "바이킹",
+        15,
+        "핫도그",
+        "T-익스프레스",
+        14,
+        "츄러스",
+        "청룡열차",
+        11,
+        "아이스크림",
+        "자이로드롭",
+        13,
+        "핫바",
+        "후룸라이드"
+      ],
+      "answerLabels": [
+        "준수 나이",
+        "준수 음식",
+        "준수 놀이기구",
+        "재중 나이",
+        "재중 음식",
+        "재중 놀이기구",
+        "창민 나이",
+        "창민 음식",
+        "창민 놀이기구",
+        "윤호 나이",
+        "윤호 음식",
+        "윤호 놀이기구",
+        "유천 나이",
+        "유천 음식",
+        "유천 놀이기구"
+      ],
+      "acceptedAnswers": [
+        "준수: 12살, 핫초코, 바이킹 / 재중: 15살, 핫도그, T-익스프레스 / 창민: 14살, 츄러스, 청룡열차 / 윤호: 11살, 아이스크림, 자이로드롭 / 유천: 13살, 핫바, 후룸라이드"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "준수는 핫초코를 먹고, 핫초코를 먹은 소년은 12살입니다. 따라서 준수는 12살입니다.",
+        "유천은 13살이고 핫바를 먹습니다. 또 유천은 후룸라이드를 탑니다. 네 번째와 일곱 번째 조건으로 윤호는 자이로드롭을 타고 아이스크림을 먹습니다.",
+        "재중은 15살입니다. 청룡열차를 탄 소년은 14살입니다. 준수는 12살이고 윤호와 유천의 놀이기구가 각각 정해졌으므로, 창민은 14살이며 청룡열차를 탑니다. 남은 나이는 11살이므로 윤호는 11살입니다.",
+        "준수와 재중에게 남은 놀이기구는 바이킹와 T-익스프레스입니다. 두 번째 조건에서 재중은 바이킹을 타지 않으므로 T-익스프레스를 타고, 여섯 번째 조건에 따라 핫도그를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다."
+      ],
+      "solution": "준수는 핫초코를 먹고, 핫초코를 먹은 소년은 12살입니다. 따라서 준수는 12살입니다. 유천은 13살이고 핫바를 먹습니다. 또 유천은 후룸라이드를 탑니다. 네 번째와 일곱 번째 조건으로 윤호는 자이로드롭을 타고 아이스크림을 먹습니다. 재중은 15살입니다. 청룡열차를 탄 소년은 14살입니다. 준수는 12살이고 윤호와 유천의 놀이기구가 각각 정해졌으므로, 창민은 14살이며 청룡열차를 탑니다. 남은 나이는 11살이므로 윤호는 11살입니다. 준수와 재중에게 남은 놀이기구는 바이킹와 T-익스프레스입니다. 두 번째 조건에서 재중은 바이킹을 타지 않으므로 T-익스프레스를 타고, 여섯 번째 조건에 따라 핫도그를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다.",
+      "solutionTable": {
+        "label": "완성한 대응 표",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "준수",
+            12,
+            "핫초코",
+            "바이킹"
+          ],
+          [
+            "재중",
+            15,
+            "핫도그",
+            "T-익스프레스"
+          ],
+          [
+            "창민",
+            14,
+            "츄러스",
+            "청룡열차"
+          ],
+          [
+            "윤호",
+            11,
+            "아이스크림",
+            "자이로드롭"
+          ],
+          [
+            "유천",
+            13,
+            "핫바",
+            "후룸라이드"
+          ]
+        ]
+      },
+      "learningPoint": "조건마다 확정되는 범주를 표에 표시하고, 남은 나이·음식·놀이기구를 차례로 좁히기",
+      "learningLocation": "활용 2회 · 원문 24번 · 세 범주 조건을 연결하는 논리 퍼즐",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 5! age, 5! food, and 5! ride assignments against nine transformed clues",
+        "parameters": {
+          "personOrder": [
+            "준수",
+            "재중",
+            "창민",
+            "윤호",
+            "유천"
+          ],
+          "foodOrder": [
+            "핫초코",
+            "핫도그",
+            "츄러스",
+            "아이스크림",
+            "핫바"
+          ],
+          "rideOrder": [
+            "바이킹",
+            "청룡열차",
+            "T-익스프레스",
+            "후룸라이드",
+            "자이로드롭"
+          ],
+          "ageMap": {
+            "11": 11,
+            "12": 13,
+            "13": 12,
+            "14": 15,
+            "15": 14
+          },
+          "solutionByPerson": {
+            "준수": [
+              12,
+              "핫초코",
+              "바이킹"
+            ],
+            "재중": [
+              15,
+              "핫도그",
+              "T-익스프레스"
+            ],
+            "창민": [
+              14,
+              "츄러스",
+              "청룡열차"
+            ],
+            "윤호": [
+              11,
+              "아이스크림",
+              "자이로드롭"
+            ],
+            "유천": [
+              13,
+              "핫바",
+              "후룸라이드"
+            ]
+          },
+          "solutionCount": 1,
+          "clueCount": 9
+        },
+        "independentSuite": "qa/applied2-q24-independent-validate.py",
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 2회.pdf",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 6,
+        "sourceAnswerCandidate": "윤호 13·아이스크림·청룡열차; 유천 14·핫바·후룸라이드; 준수 15·핫초코·T-익스프레스; 재중 11·핫도그·바이킹; 창민 12·츄러스·자이로드롭",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "sourceDrawingCompared": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied2-q24-v9",
+      "genId": "applied2-q24",
+      "sourceSet": "applied",
+      "sourceRound": 2,
+      "sourceNo": 24,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "지문 이해",
+      "subarea": "조건을 연결하는 논리 추론",
+      "detailType": "나이·음식·놀이기구 대응 표",
+      "pointBand": "4.2",
+      "text": "놀이공원에 놀러 간 다섯 소년은 모두 나이가 다르고 서로 다른 음식을 먹었으며 서로 다른 놀이기구를 탔습니다. 아래 조건을 보고 표의 각 행에 나이, 먹은 음식, 탄 놀이기구를 차례로 쓰세요. 놀이기구는 T-익스프레스, 후룸라이드, 자이로드롭, 바이킹, 청룡열차입니다.",
+      "promptDataLines": [
+        "재중은 핫초코를 먹었지만 유천은 츄러스를 먹지는 않았어요.",
+        "12살인 창민은 T-익스프레스를 타지 않았어요.",
+        "후룸라이드를 타고 있는 소년은 15살입니다.",
+        "윤호는 자이로드롭을 타지 않고 준수는 바이킹을 탔어요.",
+        "핫초코를 먹고 있는 소년은 14살입니다.",
+        "자이로드롭을 타고 있는 소년은 핫도그를 먹고 있어요.",
+        "유천은 청룡열차를 타면서 아이스크림을 먹고 있어요.",
+        "13살인 준수는 핫바를 먹고 있어요.",
+        "가장 어린 소년은 11살이에요."
+      ],
+      "responseTable": {
+        "label": "다섯 소년의 나이·음식·놀이기구",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "재중",
+            "",
+            "",
+            ""
+          ],
+          [
+            "창민",
+            "",
+            "",
+            ""
+          ],
+          [
+            "윤호",
+            "",
+            "",
+            ""
+          ],
+          [
+            "유천",
+            "",
+            "",
+            ""
+          ],
+          [
+            "준수",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "answer": "재중: 14살, 핫초코, T-익스프레스 / 창민: 12살, 핫도그, 자이로드롭 / 윤호: 15살, 츄러스, 후룸라이드 / 유천: 11살, 아이스크림, 청룡열차 / 준수: 13살, 핫바, 바이킹",
+      "answerParts": [
+        14,
+        "핫초코",
+        "T-익스프레스",
+        12,
+        "핫도그",
+        "자이로드롭",
+        15,
+        "츄러스",
+        "후룸라이드",
+        11,
+        "아이스크림",
+        "청룡열차",
+        13,
+        "핫바",
+        "바이킹"
+      ],
+      "answerLabels": [
+        "재중 나이",
+        "재중 음식",
+        "재중 놀이기구",
+        "창민 나이",
+        "창민 음식",
+        "창민 놀이기구",
+        "윤호 나이",
+        "윤호 음식",
+        "윤호 놀이기구",
+        "유천 나이",
+        "유천 음식",
+        "유천 놀이기구",
+        "준수 나이",
+        "준수 음식",
+        "준수 놀이기구"
+      ],
+      "acceptedAnswers": [
+        "재중: 14살, 핫초코, T-익스프레스 / 창민: 12살, 핫도그, 자이로드롭 / 윤호: 15살, 츄러스, 후룸라이드 / 유천: 11살, 아이스크림, 청룡열차 / 준수: 13살, 핫바, 바이킹"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "재중은 핫초코를 먹고, 핫초코를 먹은 소년은 14살입니다. 따라서 재중은 14살입니다.",
+        "준수는 13살이고 핫바를 먹습니다. 또 준수는 바이킹을 탑니다. 네 번째와 일곱 번째 조건으로 유천은 청룡열차를 타고 아이스크림을 먹습니다.",
+        "창민은 12살입니다. 후룸라이드를 탄 소년은 15살입니다. 재중은 14살이고 유천과 준수의 놀이기구가 각각 정해졌으므로, 윤호는 15살이며 후룸라이드를 탑니다. 남은 나이는 11살이므로 유천은 11살입니다.",
+        "재중과 창민에게 남은 놀이기구는 T-익스프레스와 자이로드롭입니다. 두 번째 조건에서 창민은 T-익스프레스를 타지 않으므로 자이로드롭을 타고, 여섯 번째 조건에 따라 핫도그를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다."
+      ],
+      "solution": "재중은 핫초코를 먹고, 핫초코를 먹은 소년은 14살입니다. 따라서 재중은 14살입니다. 준수는 13살이고 핫바를 먹습니다. 또 준수는 바이킹을 탑니다. 네 번째와 일곱 번째 조건으로 유천은 청룡열차를 타고 아이스크림을 먹습니다. 창민은 12살입니다. 후룸라이드를 탄 소년은 15살입니다. 재중은 14살이고 유천과 준수의 놀이기구가 각각 정해졌으므로, 윤호는 15살이며 후룸라이드를 탑니다. 남은 나이는 11살이므로 유천은 11살입니다. 재중과 창민에게 남은 놀이기구는 T-익스프레스와 자이로드롭입니다. 두 번째 조건에서 창민은 T-익스프레스를 타지 않으므로 자이로드롭을 타고, 여섯 번째 조건에 따라 핫도그를 먹습니다. 서로 다른 음식·놀이기구 조건으로 남은 칸을 채우면 표가 완성됩니다.",
+      "solutionTable": {
+        "label": "완성한 대응 표",
+        "headers": [
+          "이름",
+          "나이",
+          "음식",
+          "놀이기구"
+        ],
+        "rows": [
+          [
+            "재중",
+            14,
+            "핫초코",
+            "T-익스프레스"
+          ],
+          [
+            "창민",
+            12,
+            "핫도그",
+            "자이로드롭"
+          ],
+          [
+            "윤호",
+            15,
+            "츄러스",
+            "후룸라이드"
+          ],
+          [
+            "유천",
+            11,
+            "아이스크림",
+            "청룡열차"
+          ],
+          [
+            "준수",
+            13,
+            "핫바",
+            "바이킹"
+          ]
+        ]
+      },
+      "learningPoint": "조건마다 확정되는 범주를 표에 표시하고, 남은 나이·음식·놀이기구를 차례로 좁히기",
+      "learningLocation": "활용 2회 · 원문 24번 · 세 범주 조건을 연결하는 논리 퍼즐",
+      "verification": {
+        "primaryMethod": "exhaustive enumeration of all 5! age, 5! food, and 5! ride assignments against nine transformed clues",
+        "parameters": {
+          "personOrder": [
+            "재중",
+            "창민",
+            "윤호",
+            "유천",
+            "준수"
+          ],
+          "foodOrder": [
+            "핫초코",
+            "핫도그",
+            "츄러스",
+            "아이스크림",
+            "핫바"
+          ],
+          "rideOrder": [
+            "T-익스프레스",
+            "후룸라이드",
+            "자이로드롭",
+            "바이킹",
+            "청룡열차"
+          ],
+          "ageMap": {
+            "11": 11,
+            "12": 13,
+            "13": 14,
+            "14": 12,
+            "15": 15
+          },
+          "solutionByPerson": {
+            "재중": [
+              14,
+              "핫초코",
+              "T-익스프레스"
+            ],
+            "창민": [
+              12,
+              "핫도그",
+              "자이로드롭"
+            ],
+            "윤호": [
+              15,
+              "츄러스",
+              "후룸라이드"
+            ],
+            "유천": [
+              11,
+              "아이스크림",
+              "청룡열차"
+            ],
+            "준수": [
+              13,
+              "핫바",
+              "바이킹"
+            ]
+          },
+          "solutionCount": 1,
+          "clueCount": 9
+        },
+        "independentSuite": "qa/applied2-q24-independent-validate.py",
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 2회.pdf",
+        "sourceExamPage": 5,
+        "sourceAnswerPage": 6,
+        "sourceAnswerCandidate": "윤호 13·아이스크림·청룡열차; 유천 14·핫바·후룸라이드; 준수 15·핫초코·T-익스프레스; 재중 11·핫도그·바이킹; 창민 12·츄러스·자이로드롭",
+        "sourceAnswerOfficiality": "unconfirmed",
+        "sourceDrawingCompared": false,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "상",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
       "id": "applied2-q25-v1",
       "genId": "applied2-q25",
       "sourceSet": "applied",
@@ -7463,16 +10523,33 @@
     "10": "앞뒤가0명인1줄의모호성을새지문에서배제; 원문점수보존",
     "18": "현행문제PDF는어느것도좋아하지않는18명,교사PDF다른판본8명. 현행저장답2명보존",
     "23": "원문열자리표현과실제나열길이를같다고가정하지않고새문항은개수명시",
-    "17": "문구15개와실제그림칸수불일치,공개보류"
+    "17": "문구15개와실제그림칸수불일치,공개보류",
+    "3": "원문 p.1 세로셈과 Drive 답안 후보 p.1을 직접 대조. 후보 답 95180은 10P5 완전 열거에서 유일하며 공식 정답표 여부는 미확인.",
+    "24": "현행 문제 PDF p.5와 답안 후보 p.6의 문구·단서를 직접 대조. 답 후보 표는 일치하지만 답안 PDF 제목이 다른 특강 판본을 가리켜 공식성·판본 동일성은 미확인. 변형 9개는 원문과 같은 5×5×5 논리 대응 구조를 보존."
   },
   "reviewSummary": {
-    "independentMathCount": 126,
-    "sourceTypes": 14,
+    "independentMathCount": 144,
+    "sourceTypes": 16,
     "variantsPerType": 9,
     "outputReviewed": true,
     "sourceDrawingCount": 3,
     "originalGradesChanged": false,
     "studentDifficultyMeasured": false,
-    "preReleaseDataSha256": "5f9222ed7c7c564d052fa574c144da341b52505f0e021053a5c5e5f06073da77"
-  }
+    "preReleaseDataSha256": "5f9222ed7c7c564d052fa574c144da341b52505f0e021053a5c5e5f06073da77",
+    "q24DirectSourceComparison": true,
+    "q24IndependentMathCount": 9,
+    "q24AnswerCandidateOfficiality": "unconfirmed",
+    "prior135Exact": true,
+    "q24ActualZipReviewed": true,
+    "q24QuestionPdfPages": 5,
+    "q24SolutionPdfPages": 9,
+    "q24ProblemSolutionPairs": 9,
+    "q24AnswerInputAndDiagnosisReviewed": true,
+    "q24TwoColumnLayoutReviewed": true,
+    "q24Mobile375Reviewed": true,
+    "full144ActualZipReviewed": true,
+    "full144QuestionPdfPages": 39,
+    "full144SolutionPdfPages": 68
+  },
+  "itemCount": 144
 }

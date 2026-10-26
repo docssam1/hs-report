@@ -1,5 +1,5 @@
 {
-  "version": "20261025-applied5-expansion-q03-q05-q06-q08-q09-q11-q12-q14-q15-q16-q17-q18-q19-q20-q22-q23-q24-q25-q26-q27-q28-q29-r23",
+  "version": "20261026-applied5-expansion-q03-q05-q06-q08-q09-q11-q12-q14-q15-q16-q17-q18-q19-q20-q22-q23-q24-q25-q26-q27-q28-q29-taxonomy-r24",
   "sourceSet": "applied",
   "sourceRound": 5,
   "itemCount": 270,
@@ -29,7 +29,7 @@
       "sourceNo": 3,
       "genId": "applied5-q03",
       "area": "경우의 수",
-      "subarea": "숫자카드의 배열",
+      "subarea": "숫자 카드의 배열",
       "detailType": "배수 조건에 맞는 세 자리 수의 개수",
       "pointBand": "2.7",
       "reviewStatus": "verified",
@@ -48,7 +48,7 @@
     {
       "sourceNo": 5,
       "genId": "applied5-q05",
-      "area": "지문이해",
+      "area": "지문 이해",
       "subarea": "조건 추론",
       "detailType": "서로 다른 선택의 배정과 배제 단서",
       "pointBand": "2.7",
@@ -271,7 +271,7 @@
       "area": "수와 식",
       "subarea": "문자와 곱셈식",
       "detailType": "서로 다른 숫자로 나타낸 곱셈식에서 문자 값 찾기",
-      "pointBand": "2.7",
+      "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9
     },

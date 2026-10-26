@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied4-expansion-r1",
+  "version": "20261025-applied4-expansion-q01-q04-r3",
   "sourceSet": "applied",
   "sourceRound": 4,
   "policy": {
@@ -10,6 +10,8 @@
     "sourceGradeMutation": false
   },
   "availableSourceNos": [
+    1,
+    4,
     5,
     6,
     7,
@@ -38,12 +40,1315 @@
     30
   ],
   "pendingSourceNos": [
-    1,
     2,
-    3,
-    4
+    3
   ],
   "items": [
+    {
+      "id": "applied4-q04-v1",
+      "genId": "applied4-q04",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 4,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간과 빠르기",
+      "detailType": "느린 시계의 진행 비율로 실제 시각 구하기",
+      "pointBand": "2.7",
+      "text": "실제 한 시간이 지날 때마다 6분씩 늦어지는 시계를 오늘 오전 8시에 정확히 맞추었습니다. 이 시계가 내일 오전 11시를 가리킬 때 실제 시각은 몇 시입니까?",
+      "asset": null,
+      "answer": "내일 오후 2시",
+      "answerParts": [
+        "내일 오후 2시"
+      ],
+      "acceptedAnswers": [
+        "내일 오후 2시"
+      ],
+      "answerContract": "single-value",
+      "solutionSteps": [
+        "실제 1시간 동안 이 시계는 60-6=54분 진행합니다.",
+        "시계를 맞춘 오늘 오전 8시부터 표시된 내일 오전 11시까지 시계가 진행한 시간은 27시간입니다.",
+        "실제 경과 시간은 27×60÷54=30시간입니다.",
+        "오늘 오전 8시에서 실제 30시간 뒤는 내일 오후 2시입니다."
+      ],
+      "solution": "실제 1시간 동안 이 시계는 60-6=54분 진행합니다. 시계를 맞춘 오늘 오전 8시부터 표시된 내일 오전 11시까지 시계가 진행한 시간은 27시간입니다. 실제 경과 시간은 27×60÷54=30시간입니다. 오늘 오전 8시에서 실제 30시간 뒤는 내일 오후 2시입니다.",
+      "learningPoint": "느린 시계의 한 시간 진행량을 비율로 나타내고 표시된 시간과 실제 경과 시간을 바꾸어 계산하기",
+      "learningLocation": "활용 4회 · 원문 4번 · 느린 시계의 진행 비율과 실제 시각",
+      "verification": {
+        "primaryMethod": "시계의 실제 1시간당 진행 분량과 표시된 경과 시간을 비례식으로 환산",
+        "independentMethod": "분 단위 유리수 비율을 계산해 실제 경과 시간을 시간·일 단위로 환산",
+        "parameters": {
+          "minutesLostPerActualHour": 6,
+          "clockDisplayedElapsedHours": 27,
+          "actualElapsedHours": 30,
+          "startClockHour": 8,
+          "displayTarget": "내일 오전 11시",
+          "actualTarget": "내일 오후 2시"
+        },
+        "independentSuite": "qa/applied4-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "officialAnswerStatus": "답안 후보 PDF p4의 손글씨 ‘오후 8시’를 확인했다. 실제 60시간 경과로 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q04-v2",
+      "genId": "applied4-q04",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 4,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간과 빠르기",
+      "detailType": "느린 시계의 진행 비율로 실제 시각 구하기",
+      "pointBand": "2.7",
+      "text": "실제 한 시간이 지날 때마다 12분씩 늦어지는 시계를 오늘 오전 8시에 정확히 맞추었습니다. 이 시계가 내일 낮 12시를 가리킬 때 실제 시각은 몇 시입니까?",
+      "asset": null,
+      "answer": "내일 오후 7시",
+      "answerParts": [
+        "내일 오후 7시"
+      ],
+      "acceptedAnswers": [
+        "내일 오후 7시"
+      ],
+      "answerContract": "single-value",
+      "solutionSteps": [
+        "실제 1시간 동안 이 시계는 60-12=48분 진행합니다.",
+        "시계를 맞춘 오늘 오전 8시부터 표시된 내일 낮 12시까지 시계가 진행한 시간은 28시간입니다.",
+        "실제 경과 시간은 28×60÷48=35시간입니다.",
+        "오늘 오전 8시에서 실제 35시간 뒤는 내일 오후 7시입니다."
+      ],
+      "solution": "실제 1시간 동안 이 시계는 60-12=48분 진행합니다. 시계를 맞춘 오늘 오전 8시부터 표시된 내일 낮 12시까지 시계가 진행한 시간은 28시간입니다. 실제 경과 시간은 28×60÷48=35시간입니다. 오늘 오전 8시에서 실제 35시간 뒤는 내일 오후 7시입니다.",
+      "learningPoint": "느린 시계의 한 시간 진행량을 비율로 나타내고 표시된 시간과 실제 경과 시간을 바꾸어 계산하기",
+      "learningLocation": "활용 4회 · 원문 4번 · 느린 시계의 진행 비율과 실제 시각",
+      "verification": {
+        "primaryMethod": "시계의 실제 1시간당 진행 분량과 표시된 경과 시간을 비례식으로 환산",
+        "independentMethod": "분 단위 유리수 비율을 계산해 실제 경과 시간을 시간·일 단위로 환산",
+        "parameters": {
+          "minutesLostPerActualHour": 12,
+          "clockDisplayedElapsedHours": 28,
+          "actualElapsedHours": 35,
+          "startClockHour": 8,
+          "displayTarget": "내일 낮 12시",
+          "actualTarget": "내일 오후 7시"
+        },
+        "independentSuite": "qa/applied4-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "officialAnswerStatus": "답안 후보 PDF p4의 손글씨 ‘오후 8시’를 확인했다. 실제 60시간 경과로 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q04-v3",
+      "genId": "applied4-q04",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 4,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간과 빠르기",
+      "detailType": "느린 시계의 진행 비율로 실제 시각 구하기",
+      "pointBand": "2.7",
+      "text": "실제 한 시간이 지날 때마다 18분씩 늦어지는 시계를 오늘 오전 8시에 정확히 맞추었습니다. 이 시계가 내일 오후 7시를 가리킬 때 실제 시각은 몇 시입니까?",
+      "asset": null,
+      "answer": "모레 오전 10시",
+      "answerParts": [
+        "모레 오전 10시"
+      ],
+      "acceptedAnswers": [
+        "모레 오전 10시"
+      ],
+      "answerContract": "single-value",
+      "solutionSteps": [
+        "실제 1시간 동안 이 시계는 60-18=42분 진행합니다.",
+        "시계를 맞춘 오늘 오전 8시부터 표시된 내일 오후 7시까지 시계가 진행한 시간은 35시간입니다.",
+        "실제 경과 시간은 35×60÷42=50시간입니다.",
+        "오늘 오전 8시에서 실제 50시간 뒤는 모레 오전 10시입니다."
+      ],
+      "solution": "실제 1시간 동안 이 시계는 60-18=42분 진행합니다. 시계를 맞춘 오늘 오전 8시부터 표시된 내일 오후 7시까지 시계가 진행한 시간은 35시간입니다. 실제 경과 시간은 35×60÷42=50시간입니다. 오늘 오전 8시에서 실제 50시간 뒤는 모레 오전 10시입니다.",
+      "learningPoint": "느린 시계의 한 시간 진행량을 비율로 나타내고 표시된 시간과 실제 경과 시간을 바꾸어 계산하기",
+      "learningLocation": "활용 4회 · 원문 4번 · 느린 시계의 진행 비율과 실제 시각",
+      "verification": {
+        "primaryMethod": "시계의 실제 1시간당 진행 분량과 표시된 경과 시간을 비례식으로 환산",
+        "independentMethod": "분 단위 유리수 비율을 계산해 실제 경과 시간을 시간·일 단위로 환산",
+        "parameters": {
+          "minutesLostPerActualHour": 18,
+          "clockDisplayedElapsedHours": 35,
+          "actualElapsedHours": 50,
+          "startClockHour": 8,
+          "displayTarget": "내일 오후 7시",
+          "actualTarget": "모레 오전 10시"
+        },
+        "independentSuite": "qa/applied4-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "officialAnswerStatus": "답안 후보 PDF p4의 손글씨 ‘오후 8시’를 확인했다. 실제 60시간 경과로 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q04-v4",
+      "genId": "applied4-q04",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 4,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간과 빠르기",
+      "detailType": "느린 시계의 진행 비율로 실제 시각 구하기",
+      "pointBand": "2.7",
+      "text": "실제 한 시간이 지날 때마다 24분씩 늦어지는 시계를 오늘 오전 8시에 정확히 맞추었습니다. 이 시계가 내일 오후 8시를 가리킬 때 실제 시각은 몇 시입니까?",
+      "asset": null,
+      "answer": "모레 오후 8시",
+      "answerParts": [
+        "모레 오후 8시"
+      ],
+      "acceptedAnswers": [
+        "모레 오후 8시"
+      ],
+      "answerContract": "single-value",
+      "solutionSteps": [
+        "실제 1시간 동안 이 시계는 60-24=36분 진행합니다.",
+        "시계를 맞춘 오늘 오전 8시부터 표시된 내일 오후 8시까지 시계가 진행한 시간은 36시간입니다.",
+        "실제 경과 시간은 36×60÷36=60시간입니다.",
+        "오늘 오전 8시에서 실제 60시간 뒤는 모레 오후 8시입니다."
+      ],
+      "solution": "실제 1시간 동안 이 시계는 60-24=36분 진행합니다. 시계를 맞춘 오늘 오전 8시부터 표시된 내일 오후 8시까지 시계가 진행한 시간은 36시간입니다. 실제 경과 시간은 36×60÷36=60시간입니다. 오늘 오전 8시에서 실제 60시간 뒤는 모레 오후 8시입니다.",
+      "learningPoint": "느린 시계의 한 시간 진행량을 비율로 나타내고 표시된 시간과 실제 경과 시간을 바꾸어 계산하기",
+      "learningLocation": "활용 4회 · 원문 4번 · 느린 시계의 진행 비율과 실제 시각",
+      "verification": {
+        "primaryMethod": "시계의 실제 1시간당 진행 분량과 표시된 경과 시간을 비례식으로 환산",
+        "independentMethod": "분 단위 유리수 비율을 계산해 실제 경과 시간을 시간·일 단위로 환산",
+        "parameters": {
+          "minutesLostPerActualHour": 24,
+          "clockDisplayedElapsedHours": 36,
+          "actualElapsedHours": 60,
+          "startClockHour": 8,
+          "displayTarget": "내일 오후 8시",
+          "actualTarget": "모레 오후 8시"
+        },
+        "independentSuite": "qa/applied4-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "officialAnswerStatus": "답안 후보 PDF p4의 손글씨 ‘오후 8시’를 확인했다. 실제 60시간 경과로 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q04-v5",
+      "genId": "applied4-q04",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 4,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간과 빠르기",
+      "detailType": "느린 시계의 진행 비율로 실제 시각 구하기",
+      "pointBand": "2.7",
+      "text": "실제 한 시간이 지날 때마다 30분씩 늦어지는 시계를 오늘 오전 8시에 정확히 맞추었습니다. 이 시계가 내일 오전 8시를 가리킬 때 실제 시각은 몇 시입니까?",
+      "asset": null,
+      "answer": "모레 오전 8시",
+      "answerParts": [
+        "모레 오전 8시"
+      ],
+      "acceptedAnswers": [
+        "모레 오전 8시"
+      ],
+      "answerContract": "single-value",
+      "solutionSteps": [
+        "실제 1시간 동안 이 시계는 60-30=30분 진행합니다.",
+        "시계를 맞춘 오늘 오전 8시부터 표시된 내일 오전 8시까지 시계가 진행한 시간은 24시간입니다.",
+        "실제 경과 시간은 24×60÷30=48시간입니다.",
+        "오늘 오전 8시에서 실제 48시간 뒤는 모레 오전 8시입니다."
+      ],
+      "solution": "실제 1시간 동안 이 시계는 60-30=30분 진행합니다. 시계를 맞춘 오늘 오전 8시부터 표시된 내일 오전 8시까지 시계가 진행한 시간은 24시간입니다. 실제 경과 시간은 24×60÷30=48시간입니다. 오늘 오전 8시에서 실제 48시간 뒤는 모레 오전 8시입니다.",
+      "learningPoint": "느린 시계의 한 시간 진행량을 비율로 나타내고 표시된 시간과 실제 경과 시간을 바꾸어 계산하기",
+      "learningLocation": "활용 4회 · 원문 4번 · 느린 시계의 진행 비율과 실제 시각",
+      "verification": {
+        "primaryMethod": "시계의 실제 1시간당 진행 분량과 표시된 경과 시간을 비례식으로 환산",
+        "independentMethod": "분 단위 유리수 비율을 계산해 실제 경과 시간을 시간·일 단위로 환산",
+        "parameters": {
+          "minutesLostPerActualHour": 30,
+          "clockDisplayedElapsedHours": 24,
+          "actualElapsedHours": 48,
+          "startClockHour": 8,
+          "displayTarget": "내일 오전 8시",
+          "actualTarget": "모레 오전 8시"
+        },
+        "independentSuite": "qa/applied4-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "officialAnswerStatus": "답안 후보 PDF p4의 손글씨 ‘오후 8시’를 확인했다. 실제 60시간 경과로 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q04-v6",
+      "genId": "applied4-q04",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 4,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간과 빠르기",
+      "detailType": "느린 시계의 진행 비율로 실제 시각 구하기",
+      "pointBand": "2.7",
+      "text": "실제 한 시간이 지날 때마다 36분씩 늦어지는 시계를 오늘 오전 8시에 정확히 맞추었습니다. 이 시계가 내일 오전 10시를 가리킬 때 실제 시각은 몇 시입니까?",
+      "asset": null,
+      "answer": "사흘 뒤 오전 1시",
+      "answerParts": [
+        "사흘 뒤 오전 1시"
+      ],
+      "acceptedAnswers": [
+        "사흘 뒤 오전 1시"
+      ],
+      "answerContract": "single-value",
+      "solutionSteps": [
+        "실제 1시간 동안 이 시계는 60-36=24분 진행합니다.",
+        "시계를 맞춘 오늘 오전 8시부터 표시된 내일 오전 10시까지 시계가 진행한 시간은 26시간입니다.",
+        "실제 경과 시간은 26×60÷24=65시간입니다.",
+        "오늘 오전 8시에서 실제 65시간 뒤는 사흘 뒤 오전 1시입니다."
+      ],
+      "solution": "실제 1시간 동안 이 시계는 60-36=24분 진행합니다. 시계를 맞춘 오늘 오전 8시부터 표시된 내일 오전 10시까지 시계가 진행한 시간은 26시간입니다. 실제 경과 시간은 26×60÷24=65시간입니다. 오늘 오전 8시에서 실제 65시간 뒤는 사흘 뒤 오전 1시입니다.",
+      "learningPoint": "느린 시계의 한 시간 진행량을 비율로 나타내고 표시된 시간과 실제 경과 시간을 바꾸어 계산하기",
+      "learningLocation": "활용 4회 · 원문 4번 · 느린 시계의 진행 비율과 실제 시각",
+      "verification": {
+        "primaryMethod": "시계의 실제 1시간당 진행 분량과 표시된 경과 시간을 비례식으로 환산",
+        "independentMethod": "분 단위 유리수 비율을 계산해 실제 경과 시간을 시간·일 단위로 환산",
+        "parameters": {
+          "minutesLostPerActualHour": 36,
+          "clockDisplayedElapsedHours": 26,
+          "actualElapsedHours": 65,
+          "startClockHour": 8,
+          "displayTarget": "내일 오전 10시",
+          "actualTarget": "사흘 뒤 오전 1시"
+        },
+        "independentSuite": "qa/applied4-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "officialAnswerStatus": "답안 후보 PDF p4의 손글씨 ‘오후 8시’를 확인했다. 실제 60시간 경과로 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q04-v7",
+      "genId": "applied4-q04",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 4,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간과 빠르기",
+      "detailType": "느린 시계의 진행 비율로 실제 시각 구하기",
+      "pointBand": "2.7",
+      "text": "실제 한 시간이 지날 때마다 42분씩 늦어지는 시계를 오늘 오전 8시에 정확히 맞추었습니다. 이 시계가 내일 오후 2시를 가리킬 때 실제 시각은 몇 시입니까?",
+      "asset": null,
+      "answer": "나흘 뒤 낮 12시",
+      "answerParts": [
+        "나흘 뒤 낮 12시"
+      ],
+      "acceptedAnswers": [
+        "나흘 뒤 낮 12시"
+      ],
+      "answerContract": "single-value",
+      "solutionSteps": [
+        "실제 1시간 동안 이 시계는 60-42=18분 진행합니다.",
+        "시계를 맞춘 오늘 오전 8시부터 표시된 내일 오후 2시까지 시계가 진행한 시간은 30시간입니다.",
+        "실제 경과 시간은 30×60÷18=100시간입니다.",
+        "오늘 오전 8시에서 실제 100시간 뒤는 나흘 뒤 낮 12시입니다."
+      ],
+      "solution": "실제 1시간 동안 이 시계는 60-42=18분 진행합니다. 시계를 맞춘 오늘 오전 8시부터 표시된 내일 오후 2시까지 시계가 진행한 시간은 30시간입니다. 실제 경과 시간은 30×60÷18=100시간입니다. 오늘 오전 8시에서 실제 100시간 뒤는 나흘 뒤 낮 12시입니다.",
+      "learningPoint": "느린 시계의 한 시간 진행량을 비율로 나타내고 표시된 시간과 실제 경과 시간을 바꾸어 계산하기",
+      "learningLocation": "활용 4회 · 원문 4번 · 느린 시계의 진행 비율과 실제 시각",
+      "verification": {
+        "primaryMethod": "시계의 실제 1시간당 진행 분량과 표시된 경과 시간을 비례식으로 환산",
+        "independentMethod": "분 단위 유리수 비율을 계산해 실제 경과 시간을 시간·일 단위로 환산",
+        "parameters": {
+          "minutesLostPerActualHour": 42,
+          "clockDisplayedElapsedHours": 30,
+          "actualElapsedHours": 100,
+          "startClockHour": 8,
+          "displayTarget": "내일 오후 2시",
+          "actualTarget": "나흘 뒤 낮 12시"
+        },
+        "independentSuite": "qa/applied4-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "officialAnswerStatus": "답안 후보 PDF p4의 손글씨 ‘오후 8시’를 확인했다. 실제 60시간 경과로 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q04-v8",
+      "genId": "applied4-q04",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 4,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간과 빠르기",
+      "detailType": "느린 시계의 진행 비율로 실제 시각 구하기",
+      "pointBand": "2.7",
+      "text": "실제 한 시간이 지날 때마다 48분씩 늦어지는 시계를 오늘 오전 8시에 정확히 맞추었습니다. 이 시계가 내일 오전 6시를 가리킬 때 실제 시각은 몇 시입니까?",
+      "asset": null,
+      "answer": "나흘 뒤 오후 10시",
+      "answerParts": [
+        "나흘 뒤 오후 10시"
+      ],
+      "acceptedAnswers": [
+        "나흘 뒤 오후 10시"
+      ],
+      "answerContract": "single-value",
+      "solutionSteps": [
+        "실제 1시간 동안 이 시계는 60-48=12분 진행합니다.",
+        "시계를 맞춘 오늘 오전 8시부터 표시된 내일 오전 6시까지 시계가 진행한 시간은 22시간입니다.",
+        "실제 경과 시간은 22×60÷12=110시간입니다.",
+        "오늘 오전 8시에서 실제 110시간 뒤는 나흘 뒤 오후 10시입니다."
+      ],
+      "solution": "실제 1시간 동안 이 시계는 60-48=12분 진행합니다. 시계를 맞춘 오늘 오전 8시부터 표시된 내일 오전 6시까지 시계가 진행한 시간은 22시간입니다. 실제 경과 시간은 22×60÷12=110시간입니다. 오늘 오전 8시에서 실제 110시간 뒤는 나흘 뒤 오후 10시입니다.",
+      "learningPoint": "느린 시계의 한 시간 진행량을 비율로 나타내고 표시된 시간과 실제 경과 시간을 바꾸어 계산하기",
+      "learningLocation": "활용 4회 · 원문 4번 · 느린 시계의 진행 비율과 실제 시각",
+      "verification": {
+        "primaryMethod": "시계의 실제 1시간당 진행 분량과 표시된 경과 시간을 비례식으로 환산",
+        "independentMethod": "분 단위 유리수 비율을 계산해 실제 경과 시간을 시간·일 단위로 환산",
+        "parameters": {
+          "minutesLostPerActualHour": 48,
+          "clockDisplayedElapsedHours": 22,
+          "actualElapsedHours": 110,
+          "startClockHour": 8,
+          "displayTarget": "내일 오전 6시",
+          "actualTarget": "나흘 뒤 오후 10시"
+        },
+        "independentSuite": "qa/applied4-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "officialAnswerStatus": "답안 후보 PDF p4의 손글씨 ‘오후 8시’를 확인했다. 실제 60시간 경과로 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q04-v9",
+      "genId": "applied4-q04",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 4,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "시간과 빠르기",
+      "detailType": "느린 시계의 진행 비율로 실제 시각 구하기",
+      "pointBand": "2.7",
+      "text": "실제 한 시간이 지날 때마다 50분씩 늦어지는 시계를 오늘 오전 8시에 정확히 맞추었습니다. 이 시계가 내일 오전 8시를 가리킬 때 실제 시각은 몇 시입니까?",
+      "asset": null,
+      "answer": "엿새 뒤 오전 8시",
+      "answerParts": [
+        "엿새 뒤 오전 8시"
+      ],
+      "acceptedAnswers": [
+        "엿새 뒤 오전 8시"
+      ],
+      "answerContract": "single-value",
+      "solutionSteps": [
+        "실제 1시간 동안 이 시계는 60-50=10분 진행합니다.",
+        "시계를 맞춘 오늘 오전 8시부터 표시된 내일 오전 8시까지 시계가 진행한 시간은 24시간입니다.",
+        "실제 경과 시간은 24×60÷10=144시간입니다.",
+        "오늘 오전 8시에서 실제 144시간 뒤는 엿새 뒤 오전 8시입니다."
+      ],
+      "solution": "실제 1시간 동안 이 시계는 60-50=10분 진행합니다. 시계를 맞춘 오늘 오전 8시부터 표시된 내일 오전 8시까지 시계가 진행한 시간은 24시간입니다. 실제 경과 시간은 24×60÷10=144시간입니다. 오늘 오전 8시에서 실제 144시간 뒤는 엿새 뒤 오전 8시입니다.",
+      "learningPoint": "느린 시계의 한 시간 진행량을 비율로 나타내고 표시된 시간과 실제 경과 시간을 바꾸어 계산하기",
+      "learningLocation": "활용 4회 · 원문 4번 · 느린 시계의 진행 비율과 실제 시각",
+      "verification": {
+        "primaryMethod": "시계의 실제 1시간당 진행 분량과 표시된 경과 시간을 비례식으로 환산",
+        "independentMethod": "분 단위 유리수 비율을 계산해 실제 경과 시간을 시간·일 단위로 환산",
+        "parameters": {
+          "minutesLostPerActualHour": 50,
+          "clockDisplayedElapsedHours": 24,
+          "actualElapsedHours": 144,
+          "startClockHour": 8,
+          "displayTarget": "내일 오전 8시",
+          "actualTarget": "엿새 뒤 오전 8시"
+        },
+        "independentSuite": "qa/applied4-q04-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 4,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": false,
+        "sourceDrawingPresent": false,
+        "officialAnswerStatus": "답안 후보 PDF p4의 손글씨 ‘오후 8시’를 확인했다. 실제 60시간 경과로 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q01-v1",
+      "genId": "applied4-q01",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 1,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 연산과 기호",
+      "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q01-v1.svg",
+        "width": 436,
+        "height": 230,
+        "description": "별 3개 더하기 원 3개가 마름모·원 2개·3가 되는 세로 덧셈식"
+      },
+      "answer": "9, 4, 1",
+      "answerParts": [
+        9,
+        4,
+        1
+      ],
+      "answerLabels": [
+        "별",
+        "원",
+        "마름모"
+      ],
+      "acceptedAnswers": [
+        "9, 4, 1",
+        "9 4 1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "별을 A, 원을 B, 마름모를 C라 하고, 세 자리 같은 숫자는 111×그 숫자로 나타냅니다.",
+        "111A+111B=1000C+110B+3이므로 111A+B=1000C+3입니다. 왼쪽은 1008 이하이므로 C=1입니다.",
+        "A가 8 이하이면 111A+B는 897 이하라 1000+3가 될 수 없습니다. 따라서 A=9이고, 999+B=1000+3에서 B=4입니다.",
+        "따라서 별 9, 원 4, 마름모 1입니다. 실제 식은 999+444=1443입니다."
+      ],
+      "solution": "별을 A, 원을 B, 마름모를 C라 하고, 세 자리 같은 숫자는 111×그 숫자로 나타냅니다. 111A+111B=1000C+110B+3이므로 111A+B=1000C+3입니다. 왼쪽은 1008 이하이므로 C=1입니다. A가 8 이하이면 111A+B는 897 이하라 1000+3가 될 수 없습니다. 따라서 A=9이고, 999+B=1000+3에서 B=4입니다. 따라서 별 9, 원 4, 마름모 1입니다. 실제 식은 999+444=1443입니다.",
+      "learningPoint": "같은 숫자가 반복되는 수의 자릿값을 식으로 나타내고 일의 자리와 올림 조건을 함께 살피기",
+      "learningLocation": "활용 4회 · 원문 1번 · 반복 덧셈식과 기호가 나타내는 숫자",
+      "verification": {
+        "primaryMethod": "각 기호에 0~9를 대입하되 앞자리 별·마름모는 0이 될 수 없게 하여 가능한 대응을 전수 확인",
+        "independentMethod": "반복단위 식으로 정리하여 선두 자릿수와 끝자리 조건을 이용해 대응을 대수적으로 결정",
+        "parameters": {
+          "repeatedDigitCount": 3,
+          "fixedFinalDigit": 3,
+          "allValidAssignments": [
+            [
+              9,
+              4,
+              1
+            ]
+          ],
+          "repeatedUnit": 111,
+          "resultPattern": "1443",
+          "equation": "★★★ + ●●● = ◆●●3"
+        },
+        "independentSuite": "qa/applied4-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "black-and-white-vector-repeated-digit-addition-layout",
+        "officialAnswerStatus": "답안 후보 PDF p1 손글씨 별 9·원 3·마름모 1을 확인했다. 원문 식을 전수 대입해 같은 답과 유일성을 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q01-v2",
+      "genId": "applied4-q01",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 1,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 연산과 기호",
+      "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q01-v2.svg",
+        "width": 436,
+        "height": 230,
+        "description": "별 3개 더하기 원 3개가 마름모·원 2개·4가 되는 세로 덧셈식"
+      },
+      "answer": "9, 5, 1",
+      "answerParts": [
+        9,
+        5,
+        1
+      ],
+      "answerLabels": [
+        "별",
+        "원",
+        "마름모"
+      ],
+      "acceptedAnswers": [
+        "9, 5, 1",
+        "9 5 1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "별을 A, 원을 B, 마름모를 C라 하고, 세 자리 같은 숫자는 111×그 숫자로 나타냅니다.",
+        "111A+111B=1000C+110B+4이므로 111A+B=1000C+4입니다. 왼쪽은 1008 이하이므로 C=1입니다.",
+        "A가 8 이하이면 111A+B는 897 이하라 1000+4가 될 수 없습니다. 따라서 A=9이고, 999+B=1000+4에서 B=5입니다.",
+        "따라서 별 9, 원 5, 마름모 1입니다. 실제 식은 999+555=1554입니다."
+      ],
+      "solution": "별을 A, 원을 B, 마름모를 C라 하고, 세 자리 같은 숫자는 111×그 숫자로 나타냅니다. 111A+111B=1000C+110B+4이므로 111A+B=1000C+4입니다. 왼쪽은 1008 이하이므로 C=1입니다. A가 8 이하이면 111A+B는 897 이하라 1000+4가 될 수 없습니다. 따라서 A=9이고, 999+B=1000+4에서 B=5입니다. 따라서 별 9, 원 5, 마름모 1입니다. 실제 식은 999+555=1554입니다.",
+      "learningPoint": "같은 숫자가 반복되는 수의 자릿값을 식으로 나타내고 일의 자리와 올림 조건을 함께 살피기",
+      "learningLocation": "활용 4회 · 원문 1번 · 반복 덧셈식과 기호가 나타내는 숫자",
+      "verification": {
+        "primaryMethod": "각 기호에 0~9를 대입하되 앞자리 별·마름모는 0이 될 수 없게 하여 가능한 대응을 전수 확인",
+        "independentMethod": "반복단위 식으로 정리하여 선두 자릿수와 끝자리 조건을 이용해 대응을 대수적으로 결정",
+        "parameters": {
+          "repeatedDigitCount": 3,
+          "fixedFinalDigit": 4,
+          "allValidAssignments": [
+            [
+              9,
+              5,
+              1
+            ]
+          ],
+          "repeatedUnit": 111,
+          "resultPattern": "1554",
+          "equation": "★★★ + ●●● = ◆●●4"
+        },
+        "independentSuite": "qa/applied4-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "black-and-white-vector-repeated-digit-addition-layout",
+        "officialAnswerStatus": "답안 후보 PDF p1 손글씨 별 9·원 3·마름모 1을 확인했다. 원문 식을 전수 대입해 같은 답과 유일성을 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q01-v3",
+      "genId": "applied4-q01",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 1,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 연산과 기호",
+      "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q01-v3.svg",
+        "width": 436,
+        "height": 230,
+        "description": "별 3개 더하기 원 3개가 마름모·원 2개·5가 되는 세로 덧셈식"
+      },
+      "answer": "9, 6, 1",
+      "answerParts": [
+        9,
+        6,
+        1
+      ],
+      "answerLabels": [
+        "별",
+        "원",
+        "마름모"
+      ],
+      "acceptedAnswers": [
+        "9, 6, 1",
+        "9 6 1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "별을 A, 원을 B, 마름모를 C라 하고, 세 자리 같은 숫자는 111×그 숫자로 나타냅니다.",
+        "111A+111B=1000C+110B+5이므로 111A+B=1000C+5입니다. 왼쪽은 1008 이하이므로 C=1입니다.",
+        "A가 8 이하이면 111A+B는 897 이하라 1000+5가 될 수 없습니다. 따라서 A=9이고, 999+B=1000+5에서 B=6입니다.",
+        "따라서 별 9, 원 6, 마름모 1입니다. 실제 식은 999+666=1665입니다."
+      ],
+      "solution": "별을 A, 원을 B, 마름모를 C라 하고, 세 자리 같은 숫자는 111×그 숫자로 나타냅니다. 111A+111B=1000C+110B+5이므로 111A+B=1000C+5입니다. 왼쪽은 1008 이하이므로 C=1입니다. A가 8 이하이면 111A+B는 897 이하라 1000+5가 될 수 없습니다. 따라서 A=9이고, 999+B=1000+5에서 B=6입니다. 따라서 별 9, 원 6, 마름모 1입니다. 실제 식은 999+666=1665입니다.",
+      "learningPoint": "같은 숫자가 반복되는 수의 자릿값을 식으로 나타내고 일의 자리와 올림 조건을 함께 살피기",
+      "learningLocation": "활용 4회 · 원문 1번 · 반복 덧셈식과 기호가 나타내는 숫자",
+      "verification": {
+        "primaryMethod": "각 기호에 0~9를 대입하되 앞자리 별·마름모는 0이 될 수 없게 하여 가능한 대응을 전수 확인",
+        "independentMethod": "반복단위 식으로 정리하여 선두 자릿수와 끝자리 조건을 이용해 대응을 대수적으로 결정",
+        "parameters": {
+          "repeatedDigitCount": 3,
+          "fixedFinalDigit": 5,
+          "allValidAssignments": [
+            [
+              9,
+              6,
+              1
+            ]
+          ],
+          "repeatedUnit": 111,
+          "resultPattern": "1665",
+          "equation": "★★★ + ●●● = ◆●●5"
+        },
+        "independentSuite": "qa/applied4-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "black-and-white-vector-repeated-digit-addition-layout",
+        "officialAnswerStatus": "답안 후보 PDF p1 손글씨 별 9·원 3·마름모 1을 확인했다. 원문 식을 전수 대입해 같은 답과 유일성을 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q01-v4",
+      "genId": "applied4-q01",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 1,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 연산과 기호",
+      "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q01-v4.svg",
+        "width": 436,
+        "height": 230,
+        "description": "별 3개 더하기 원 3개가 마름모·원 2개·6가 되는 세로 덧셈식"
+      },
+      "answer": "9, 7, 1",
+      "answerParts": [
+        9,
+        7,
+        1
+      ],
+      "answerLabels": [
+        "별",
+        "원",
+        "마름모"
+      ],
+      "acceptedAnswers": [
+        "9, 7, 1",
+        "9 7 1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "별을 A, 원을 B, 마름모를 C라 하고, 세 자리 같은 숫자는 111×그 숫자로 나타냅니다.",
+        "111A+111B=1000C+110B+6이므로 111A+B=1000C+6입니다. 왼쪽은 1008 이하이므로 C=1입니다.",
+        "A가 8 이하이면 111A+B는 897 이하라 1000+6가 될 수 없습니다. 따라서 A=9이고, 999+B=1000+6에서 B=7입니다.",
+        "따라서 별 9, 원 7, 마름모 1입니다. 실제 식은 999+777=1776입니다."
+      ],
+      "solution": "별을 A, 원을 B, 마름모를 C라 하고, 세 자리 같은 숫자는 111×그 숫자로 나타냅니다. 111A+111B=1000C+110B+6이므로 111A+B=1000C+6입니다. 왼쪽은 1008 이하이므로 C=1입니다. A가 8 이하이면 111A+B는 897 이하라 1000+6가 될 수 없습니다. 따라서 A=9이고, 999+B=1000+6에서 B=7입니다. 따라서 별 9, 원 7, 마름모 1입니다. 실제 식은 999+777=1776입니다.",
+      "learningPoint": "같은 숫자가 반복되는 수의 자릿값을 식으로 나타내고 일의 자리와 올림 조건을 함께 살피기",
+      "learningLocation": "활용 4회 · 원문 1번 · 반복 덧셈식과 기호가 나타내는 숫자",
+      "verification": {
+        "primaryMethod": "각 기호에 0~9를 대입하되 앞자리 별·마름모는 0이 될 수 없게 하여 가능한 대응을 전수 확인",
+        "independentMethod": "반복단위 식으로 정리하여 선두 자릿수와 끝자리 조건을 이용해 대응을 대수적으로 결정",
+        "parameters": {
+          "repeatedDigitCount": 3,
+          "fixedFinalDigit": 6,
+          "allValidAssignments": [
+            [
+              9,
+              7,
+              1
+            ]
+          ],
+          "repeatedUnit": 111,
+          "resultPattern": "1776",
+          "equation": "★★★ + ●●● = ◆●●6"
+        },
+        "independentSuite": "qa/applied4-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "black-and-white-vector-repeated-digit-addition-layout",
+        "officialAnswerStatus": "답안 후보 PDF p1 손글씨 별 9·원 3·마름모 1을 확인했다. 원문 식을 전수 대입해 같은 답과 유일성을 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q01-v5",
+      "genId": "applied4-q01",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 1,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 연산과 기호",
+      "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q01-v5.svg",
+        "width": 436,
+        "height": 230,
+        "description": "별 3개 더하기 원 3개가 마름모·원 2개·7가 되는 세로 덧셈식"
+      },
+      "answer": "9, 8, 1",
+      "answerParts": [
+        9,
+        8,
+        1
+      ],
+      "answerLabels": [
+        "별",
+        "원",
+        "마름모"
+      ],
+      "acceptedAnswers": [
+        "9, 8, 1",
+        "9 8 1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "별을 A, 원을 B, 마름모를 C라 하고, 세 자리 같은 숫자는 111×그 숫자로 나타냅니다.",
+        "111A+111B=1000C+110B+7이므로 111A+B=1000C+7입니다. 왼쪽은 1008 이하이므로 C=1입니다.",
+        "A가 8 이하이면 111A+B는 897 이하라 1000+7가 될 수 없습니다. 따라서 A=9이고, 999+B=1000+7에서 B=8입니다.",
+        "따라서 별 9, 원 8, 마름모 1입니다. 실제 식은 999+888=1887입니다."
+      ],
+      "solution": "별을 A, 원을 B, 마름모를 C라 하고, 세 자리 같은 숫자는 111×그 숫자로 나타냅니다. 111A+111B=1000C+110B+7이므로 111A+B=1000C+7입니다. 왼쪽은 1008 이하이므로 C=1입니다. A가 8 이하이면 111A+B는 897 이하라 1000+7가 될 수 없습니다. 따라서 A=9이고, 999+B=1000+7에서 B=8입니다. 따라서 별 9, 원 8, 마름모 1입니다. 실제 식은 999+888=1887입니다.",
+      "learningPoint": "같은 숫자가 반복되는 수의 자릿값을 식으로 나타내고 일의 자리와 올림 조건을 함께 살피기",
+      "learningLocation": "활용 4회 · 원문 1번 · 반복 덧셈식과 기호가 나타내는 숫자",
+      "verification": {
+        "primaryMethod": "각 기호에 0~9를 대입하되 앞자리 별·마름모는 0이 될 수 없게 하여 가능한 대응을 전수 확인",
+        "independentMethod": "반복단위 식으로 정리하여 선두 자릿수와 끝자리 조건을 이용해 대응을 대수적으로 결정",
+        "parameters": {
+          "repeatedDigitCount": 3,
+          "fixedFinalDigit": 7,
+          "allValidAssignments": [
+            [
+              9,
+              8,
+              1
+            ]
+          ],
+          "repeatedUnit": 111,
+          "resultPattern": "1887",
+          "equation": "★★★ + ●●● = ◆●●7"
+        },
+        "independentSuite": "qa/applied4-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "black-and-white-vector-repeated-digit-addition-layout",
+        "officialAnswerStatus": "답안 후보 PDF p1 손글씨 별 9·원 3·마름모 1을 확인했다. 원문 식을 전수 대입해 같은 답과 유일성을 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q01-v6",
+      "genId": "applied4-q01",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 1,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 연산과 기호",
+      "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q01-v6.svg",
+        "width": 508,
+        "height": 230,
+        "description": "별 4개 더하기 원 4개가 마름모·원 3개·2가 되는 세로 덧셈식"
+      },
+      "answer": "9, 3, 1",
+      "answerParts": [
+        9,
+        3,
+        1
+      ],
+      "answerLabels": [
+        "별",
+        "원",
+        "마름모"
+      ],
+      "acceptedAnswers": [
+        "9, 3, 1",
+        "9 3 1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "별을 A, 원을 B, 마름모를 C라 하고, 네 자리 같은 숫자는 1111×그 숫자로 나타냅니다.",
+        "1111A+1111B=10000C+1110B+2이므로 1111A+B=10000C+2입니다. 왼쪽은 10008 이하이므로 C=1입니다.",
+        "A가 8 이하이면 1111A+B는 8897 이하라 10000+2가 될 수 없습니다. 따라서 A=9이고, 9999+B=10000+2에서 B=3입니다.",
+        "따라서 별 9, 원 3, 마름모 1입니다. 실제 식은 9999+3333=13332입니다."
+      ],
+      "solution": "별을 A, 원을 B, 마름모를 C라 하고, 네 자리 같은 숫자는 1111×그 숫자로 나타냅니다. 1111A+1111B=10000C+1110B+2이므로 1111A+B=10000C+2입니다. 왼쪽은 10008 이하이므로 C=1입니다. A가 8 이하이면 1111A+B는 8897 이하라 10000+2가 될 수 없습니다. 따라서 A=9이고, 9999+B=10000+2에서 B=3입니다. 따라서 별 9, 원 3, 마름모 1입니다. 실제 식은 9999+3333=13332입니다.",
+      "learningPoint": "같은 숫자가 반복되는 수의 자릿값을 식으로 나타내고 일의 자리와 올림 조건을 함께 살피기",
+      "learningLocation": "활용 4회 · 원문 1번 · 반복 덧셈식과 기호가 나타내는 숫자",
+      "verification": {
+        "primaryMethod": "각 기호에 0~9를 대입하되 앞자리 별·마름모는 0이 될 수 없게 하여 가능한 대응을 전수 확인",
+        "independentMethod": "반복단위 식으로 정리하여 선두 자릿수와 끝자리 조건을 이용해 대응을 대수적으로 결정",
+        "parameters": {
+          "repeatedDigitCount": 4,
+          "fixedFinalDigit": 2,
+          "allValidAssignments": [
+            [
+              9,
+              3,
+              1
+            ]
+          ],
+          "repeatedUnit": 1111,
+          "resultPattern": "13332",
+          "equation": "★★★★ + ●●●● = ◆●●●2"
+        },
+        "independentSuite": "qa/applied4-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "black-and-white-vector-repeated-digit-addition-layout",
+        "officialAnswerStatus": "답안 후보 PDF p1 손글씨 별 9·원 3·마름모 1을 확인했다. 원문 식을 전수 대입해 같은 답과 유일성을 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q01-v7",
+      "genId": "applied4-q01",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 1,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 연산과 기호",
+      "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q01-v7.svg",
+        "width": 508,
+        "height": 230,
+        "description": "별 4개 더하기 원 4개가 마름모·원 3개·3가 되는 세로 덧셈식"
+      },
+      "answer": "9, 4, 1",
+      "answerParts": [
+        9,
+        4,
+        1
+      ],
+      "answerLabels": [
+        "별",
+        "원",
+        "마름모"
+      ],
+      "acceptedAnswers": [
+        "9, 4, 1",
+        "9 4 1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "별을 A, 원을 B, 마름모를 C라 하고, 네 자리 같은 숫자는 1111×그 숫자로 나타냅니다.",
+        "1111A+1111B=10000C+1110B+3이므로 1111A+B=10000C+3입니다. 왼쪽은 10008 이하이므로 C=1입니다.",
+        "A가 8 이하이면 1111A+B는 8897 이하라 10000+3가 될 수 없습니다. 따라서 A=9이고, 9999+B=10000+3에서 B=4입니다.",
+        "따라서 별 9, 원 4, 마름모 1입니다. 실제 식은 9999+4444=14443입니다."
+      ],
+      "solution": "별을 A, 원을 B, 마름모를 C라 하고, 네 자리 같은 숫자는 1111×그 숫자로 나타냅니다. 1111A+1111B=10000C+1110B+3이므로 1111A+B=10000C+3입니다. 왼쪽은 10008 이하이므로 C=1입니다. A가 8 이하이면 1111A+B는 8897 이하라 10000+3가 될 수 없습니다. 따라서 A=9이고, 9999+B=10000+3에서 B=4입니다. 따라서 별 9, 원 4, 마름모 1입니다. 실제 식은 9999+4444=14443입니다.",
+      "learningPoint": "같은 숫자가 반복되는 수의 자릿값을 식으로 나타내고 일의 자리와 올림 조건을 함께 살피기",
+      "learningLocation": "활용 4회 · 원문 1번 · 반복 덧셈식과 기호가 나타내는 숫자",
+      "verification": {
+        "primaryMethod": "각 기호에 0~9를 대입하되 앞자리 별·마름모는 0이 될 수 없게 하여 가능한 대응을 전수 확인",
+        "independentMethod": "반복단위 식으로 정리하여 선두 자릿수와 끝자리 조건을 이용해 대응을 대수적으로 결정",
+        "parameters": {
+          "repeatedDigitCount": 4,
+          "fixedFinalDigit": 3,
+          "allValidAssignments": [
+            [
+              9,
+              4,
+              1
+            ]
+          ],
+          "repeatedUnit": 1111,
+          "resultPattern": "14443",
+          "equation": "★★★★ + ●●●● = ◆●●●3"
+        },
+        "independentSuite": "qa/applied4-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "black-and-white-vector-repeated-digit-addition-layout",
+        "officialAnswerStatus": "답안 후보 PDF p1 손글씨 별 9·원 3·마름모 1을 확인했다. 원문 식을 전수 대입해 같은 답과 유일성을 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q01-v8",
+      "genId": "applied4-q01",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 1,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 연산과 기호",
+      "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q01-v8.svg",
+        "width": 508,
+        "height": 230,
+        "description": "별 4개 더하기 원 4개가 마름모·원 3개·4가 되는 세로 덧셈식"
+      },
+      "answer": "9, 5, 1",
+      "answerParts": [
+        9,
+        5,
+        1
+      ],
+      "answerLabels": [
+        "별",
+        "원",
+        "마름모"
+      ],
+      "acceptedAnswers": [
+        "9, 5, 1",
+        "9 5 1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "별을 A, 원을 B, 마름모를 C라 하고, 네 자리 같은 숫자는 1111×그 숫자로 나타냅니다.",
+        "1111A+1111B=10000C+1110B+4이므로 1111A+B=10000C+4입니다. 왼쪽은 10008 이하이므로 C=1입니다.",
+        "A가 8 이하이면 1111A+B는 8897 이하라 10000+4가 될 수 없습니다. 따라서 A=9이고, 9999+B=10000+4에서 B=5입니다.",
+        "따라서 별 9, 원 5, 마름모 1입니다. 실제 식은 9999+5555=15554입니다."
+      ],
+      "solution": "별을 A, 원을 B, 마름모를 C라 하고, 네 자리 같은 숫자는 1111×그 숫자로 나타냅니다. 1111A+1111B=10000C+1110B+4이므로 1111A+B=10000C+4입니다. 왼쪽은 10008 이하이므로 C=1입니다. A가 8 이하이면 1111A+B는 8897 이하라 10000+4가 될 수 없습니다. 따라서 A=9이고, 9999+B=10000+4에서 B=5입니다. 따라서 별 9, 원 5, 마름모 1입니다. 실제 식은 9999+5555=15554입니다.",
+      "learningPoint": "같은 숫자가 반복되는 수의 자릿값을 식으로 나타내고 일의 자리와 올림 조건을 함께 살피기",
+      "learningLocation": "활용 4회 · 원문 1번 · 반복 덧셈식과 기호가 나타내는 숫자",
+      "verification": {
+        "primaryMethod": "각 기호에 0~9를 대입하되 앞자리 별·마름모는 0이 될 수 없게 하여 가능한 대응을 전수 확인",
+        "independentMethod": "반복단위 식으로 정리하여 선두 자릿수와 끝자리 조건을 이용해 대응을 대수적으로 결정",
+        "parameters": {
+          "repeatedDigitCount": 4,
+          "fixedFinalDigit": 4,
+          "allValidAssignments": [
+            [
+              9,
+              5,
+              1
+            ]
+          ],
+          "repeatedUnit": 1111,
+          "resultPattern": "15554",
+          "equation": "★★★★ + ●●●● = ◆●●●4"
+        },
+        "independentSuite": "qa/applied4-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "black-and-white-vector-repeated-digit-addition-layout",
+        "officialAnswerStatus": "답안 후보 PDF p1 손글씨 별 9·원 3·마름모 1을 확인했다. 원문 식을 전수 대입해 같은 답과 유일성을 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
+    {
+      "id": "applied4-q01-v9",
+      "genId": "applied4-q01",
+      "sourceSet": "applied",
+      "sourceRound": 4,
+      "sourceNo": 1,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "수의 연산과 기호",
+      "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
+      "asset": {
+        "kind": "vector",
+        "src": "assets/applied4/q01-v9.svg",
+        "width": 508,
+        "height": 230,
+        "description": "별 4개 더하기 원 4개가 마름모·원 3개·5가 되는 세로 덧셈식"
+      },
+      "answer": "9, 6, 1",
+      "answerParts": [
+        9,
+        6,
+        1
+      ],
+      "answerLabels": [
+        "별",
+        "원",
+        "마름모"
+      ],
+      "acceptedAnswers": [
+        "9, 6, 1",
+        "9 6 1"
+      ],
+      "answerContract": "ordered-parts",
+      "solutionSteps": [
+        "별을 A, 원을 B, 마름모를 C라 하고, 네 자리 같은 숫자는 1111×그 숫자로 나타냅니다.",
+        "1111A+1111B=10000C+1110B+5이므로 1111A+B=10000C+5입니다. 왼쪽은 10008 이하이므로 C=1입니다.",
+        "A가 8 이하이면 1111A+B는 8897 이하라 10000+5가 될 수 없습니다. 따라서 A=9이고, 9999+B=10000+5에서 B=6입니다.",
+        "따라서 별 9, 원 6, 마름모 1입니다. 실제 식은 9999+6666=16665입니다."
+      ],
+      "solution": "별을 A, 원을 B, 마름모를 C라 하고, 네 자리 같은 숫자는 1111×그 숫자로 나타냅니다. 1111A+1111B=10000C+1110B+5이므로 1111A+B=10000C+5입니다. 왼쪽은 10008 이하이므로 C=1입니다. A가 8 이하이면 1111A+B는 8897 이하라 10000+5가 될 수 없습니다. 따라서 A=9이고, 9999+B=10000+5에서 B=6입니다. 따라서 별 9, 원 6, 마름모 1입니다. 실제 식은 9999+6666=16665입니다.",
+      "learningPoint": "같은 숫자가 반복되는 수의 자릿값을 식으로 나타내고 일의 자리와 올림 조건을 함께 살피기",
+      "learningLocation": "활용 4회 · 원문 1번 · 반복 덧셈식과 기호가 나타내는 숫자",
+      "verification": {
+        "primaryMethod": "각 기호에 0~9를 대입하되 앞자리 별·마름모는 0이 될 수 없게 하여 가능한 대응을 전수 확인",
+        "independentMethod": "반복단위 식으로 정리하여 선두 자릿수와 끝자리 조건을 이용해 대응을 대수적으로 결정",
+        "parameters": {
+          "repeatedDigitCount": 4,
+          "fixedFinalDigit": 5,
+          "allValidAssignments": [
+            [
+              9,
+              6,
+              1
+            ]
+          ],
+          "repeatedUnit": 1111,
+          "resultPattern": "16665",
+          "equation": "★★★★ + ●●●● = ◆●●●5"
+        },
+        "independentSuite": "qa/applied4-q01-independent-validate.py",
+        "sourceExamPage": 1,
+        "sourceAnswerPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사 활용 4회.pdf",
+        "sourceAnswerFile": "초등 선발 모의고사 특강 4회 답안.pdf",
+        "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "black-and-white-vector-repeated-digit-addition-layout",
+        "officialAnswerStatus": "답안 후보 PDF p1 손글씨 별 9·원 3·마름모 1을 확인했다. 원문 식을 전수 대입해 같은 답과 유일성을 독립 재현했다. PDF가 공식 정답표인지 여부는 미확인이다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용4 원문 p1에서 1~12번은 2.7점으로 표시되어 있어 활용 난도는 배점대만 적용한다."
+      }
+    },
     {
       "id": "applied4-q05-v1",
       "genId": "applied4-q05",
@@ -28113,9 +29418,21 @@
     "q30DirectSourceComparison": true,
     "q30IndependentMathCount": 9,
     "q30SourceAnswerStatus": "teacher note 11×2=22; source timing interpretation unresolved",
-    "q30ActualZipReviewed": false
+    "q30ActualZipReviewed": false,
+    "q01DirectSourceComparison": true,
+    "q01IndependentMathCount": 9,
+    "q01SourceAnswerCandidate": [
+      9,
+      3,
+      1
+    ],
+    "q01ActualZipReviewed": true,
+    "q04DirectSourceComparison": true,
+    "q04IndependentMathCount": 9,
+    "q04SourceAnswerCandidate": "모레 오후 8시",
+    "q04ActualZipReviewed": true
   },
-  "revision": "20261024-applied4-expansion-r13-q30",
+  "revision": "20261025-applied4-expansion-q01-q04-r3",
   "additionReviewSummary": {
     "sourceNos": [
       16,
@@ -28200,5 +29517,17 @@
       "middle": 3,
       "high": 3
     }
+  },
+  "q01ExpansionReview": {
+    "variants": 9,
+    "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+    "preservedPriorItemsSha256": "3e083bced3cbc4de837cb012c30e57129b2d3424cd3c117a84a0c40af3cc121b",
+    "status": "independent math, browser and actual ZIP checks passed; 3 problem and 3 solution PDF pages visually reviewed"
+  },
+  "q04ExpansionReview": {
+    "variants": 9,
+    "sourceAnswerDriveFileId": "1-Cr2jAfw1bK8Z-OkvlcyB3iaDyMXu7Av",
+    "preservedPriorItemsSha256": "ad2ef2f14223da0270475d30f806965891e930f2b6aae4676698ad4431d91927",
+    "status": "source and answer page directly reviewed; 9 variants independently checked; browser, actual ZIP and all 5 rendered PDF pages reviewed"
   }
 }

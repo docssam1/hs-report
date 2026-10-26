@@ -1,15 +1,33 @@
 {
-  "version": "20261024-applied4-expansion-r1",
+  "version": "20261025-applied4-expansion-q01-q04-r3",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 234,
+  "itemCount": 252,
   "pendingSourceNos": [
-    1,
     2,
-    3,
-    4
+    3
   ],
   "items": [
+    {
+      "sourceNo": 1,
+      "genId": "applied4-q01",
+      "area": "수와 식",
+      "subarea": "수의 연산과 기호",
+      "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 4,
+      "genId": "applied4-q04",
+      "area": "수와 식",
+      "subarea": "시간과 빠르기",
+      "detailType": "느린 시계의 진행 비율로 실제 시각 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
     {
       "sourceNo": 5,
       "genId": "applied4-q05",

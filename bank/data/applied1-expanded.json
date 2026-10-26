@@ -1,5 +1,5 @@
 {
-  "version": "20261024-applied1-expansion-r2",
+  "version": "20261026-applied1-expansion-q08-alphametic-r3",
   "sourceSet": "applied",
   "sourceRound": 1,
   "policy": {
@@ -16,6 +16,7 @@
     4,
     5,
     6,
+    8,
     9,
     10,
     11,
@@ -37,7 +38,6 @@
   ],
   "pendingSourceNos": [
     7,
-    8,
     17,
     19,
     21,
@@ -45,7 +45,6 @@
   ],
   "pendingReasons": {
     "7": "고정 그림에서 9개 서로 다른 문항을 만들려면 새 그림 승인 필요",
-    "8": "77×ㄱㄴ＝ㄴㄱㄱㄴ 구조의 두 자리 승수는 유일하여 9개 수치 변형 불가",
     "17": "배 뒤집기 고정 그림의 구조 변형 승인 필요",
     "19": "전개도·보기의 구조 변형 승인 필요",
     "21": "격자 그림의 구조 변형 승인 필요",
@@ -2741,6 +2740,492 @@
         "kind": "raster",
         "src": "assets/applied1/odd-stair.png",
         "description": "홀수 너비 계단의 성냥개비 수의 원문 그림"
+      }
+    },
+    {
+      "id": "applied1-q08-v1",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 1,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "자리 숫자 배열에 맞는 곱셈의 두 자리 수 찾기",
+      "pointBand": "2.7",
+      "text": "다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하여라.\n\n89 × ㄱㄴ = ㄱㄱㄱㄴ",
+      "answer": "25",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        25
+      ],
+      "acceptedAnswers": [
+        "25"
+      ],
+      "solutionSteps": [
+        "두 자리 수를 10×ㄱ＋ㄴ으로 놓으면 ㄱㄱㄱㄴ은 1110×ㄱ＋ㄴ입니다.",
+        "89×(10×ㄱ＋ㄴ)＝1110×ㄱ＋ㄴ이므로 88×ㄴ＝220×ㄱ, 즉 2×ㄴ＝5×ㄱ입니다.",
+        "ㄱ은 1부터 9, ㄴ은 0부터 9인 숫자이므로 가능한 값은 ㄱ＝2, ㄴ＝5뿐입니다.",
+        "따라서 두 자리 수 ㄱㄴ은 25입니다."
+      ],
+      "solution": "두 자리 수를 10×ㄱ＋ㄴ으로 놓으면 ㄱㄱㄱㄴ은 1110×ㄱ＋ㄴ입니다. 89×(10×ㄱ＋ㄴ)＝1110×ㄱ＋ㄴ이므로 88×ㄴ＝220×ㄱ, 즉 2×ㄴ＝5×ㄱ입니다. ㄱ은 1부터 9, ㄴ은 0부터 9인 숫자이므로 가능한 값은 ㄱ＝2, ㄴ＝5뿐입니다. 따라서 두 자리 수 ㄱㄴ은 25입니다.",
+      "learningPoint": "곱셈식의 자리 배열을 식으로 나타내어 두 자리 수 찾기",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자와 곱셈식",
+      "verification": {
+        "primaryMethod": "digit-equation algebra plus exhaustive digit-pair enumeration",
+        "parameters": {
+          "multiplier": 89,
+          "productPattern": "AAAB",
+          "answerTensDigit": 2,
+          "answerOnesDigit": 5,
+          "allDigitPairsChecked": 90,
+          "uniqueSolution": [
+            2,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-q08-exhaustive-validate.py",
+        "sourceExamPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied1-q08-v2",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 2,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "자리 숫자 배열에 맞는 곱셈의 두 자리 수 찾기",
+      "pointBand": "2.7",
+      "text": "다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하여라.\n\n77 × ㄱㄴ = ㄱㄱㄴㄴ",
+      "answer": "15",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        15
+      ],
+      "acceptedAnswers": [
+        "15"
+      ],
+      "solutionSteps": [
+        "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄱㄱㄴㄴ은 1100×ㄱ＋11×ㄴ입니다.",
+        "77×(10×ㄱ＋ㄴ)＝1100×ㄱ＋11×ㄴ을 정리하면 ㄴ＝5×ㄱ입니다.",
+        "ㄴ은 0부터 9인 숫자이고 ㄱ은 1부터 9이므로 ㄱ＝1, ㄴ＝5만 가능합니다.",
+        "따라서 두 자리 수 ㄱㄴ은 15입니다."
+      ],
+      "solution": "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄱㄱㄴㄴ은 1100×ㄱ＋11×ㄴ입니다. 77×(10×ㄱ＋ㄴ)＝1100×ㄱ＋11×ㄴ을 정리하면 ㄴ＝5×ㄱ입니다. ㄴ은 0부터 9인 숫자이고 ㄱ은 1부터 9이므로 ㄱ＝1, ㄴ＝5만 가능합니다. 따라서 두 자리 수 ㄱㄴ은 15입니다.",
+      "learningPoint": "곱셈식의 자리 배열을 식으로 나타내어 두 자리 수 찾기",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자와 곱셈식",
+      "verification": {
+        "primaryMethod": "digit-equation algebra plus exhaustive digit-pair enumeration",
+        "parameters": {
+          "multiplier": 77,
+          "productPattern": "AABB",
+          "answerTensDigit": 1,
+          "answerOnesDigit": 5,
+          "allDigitPairsChecked": 90,
+          "uniqueSolution": [
+            1,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-q08-exhaustive-validate.py",
+        "sourceExamPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied1-q08-v3",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "자리 숫자 배열에 맞는 곱셈의 두 자리 수 찾기",
+      "pointBand": "2.7",
+      "text": "다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하여라.\n\n66 × ㄱㄴ = ㄱㄱㄴㄴ",
+      "answer": "18",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        18
+      ],
+      "acceptedAnswers": [
+        "18"
+      ],
+      "solutionSteps": [
+        "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄱㄱㄴㄴ은 1100×ㄱ＋11×ㄴ입니다.",
+        "66×(10×ㄱ＋ㄴ)＝1100×ㄱ＋11×ㄴ을 정리하면 ㄴ＝8×ㄱ입니다.",
+        "ㄴ은 한 자리 숫자이므로 ㄱ＝1, ㄴ＝8만 가능합니다.",
+        "따라서 두 자리 수 ㄱㄴ은 18입니다."
+      ],
+      "solution": "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄱㄱㄴㄴ은 1100×ㄱ＋11×ㄴ입니다. 66×(10×ㄱ＋ㄴ)＝1100×ㄱ＋11×ㄴ을 정리하면 ㄴ＝8×ㄱ입니다. ㄴ은 한 자리 숫자이므로 ㄱ＝1, ㄴ＝8만 가능합니다. 따라서 두 자리 수 ㄱㄴ은 18입니다.",
+      "learningPoint": "곱셈식의 자리 배열을 식으로 나타내어 두 자리 수 찾기",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자와 곱셈식",
+      "verification": {
+        "primaryMethod": "digit-equation algebra plus exhaustive digit-pair enumeration",
+        "parameters": {
+          "multiplier": 66,
+          "productPattern": "AABB",
+          "answerTensDigit": 1,
+          "answerOnesDigit": 8,
+          "allDigitPairsChecked": 90,
+          "uniqueSolution": [
+            1,
+            8
+          ]
+        },
+        "independentSuite": "qa/applied1-q08-exhaustive-validate.py",
+        "sourceExamPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied1-q08-v4",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 4,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "자리 숫자 배열에 맞는 곱셈의 두 자리 수 찾기",
+      "pointBand": "2.7",
+      "text": "다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하여라.\n\n99 × ㄱㄴ = ㄱㄱㄴㄴ",
+      "answer": "45",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        45
+      ],
+      "acceptedAnswers": [
+        "45"
+      ],
+      "solutionSteps": [
+        "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄱㄱㄴㄴ은 1100×ㄱ＋11×ㄴ입니다.",
+        "99×(10×ㄱ＋ㄴ)＝1100×ㄱ＋11×ㄴ을 정리하면 4×ㄴ＝5×ㄱ입니다.",
+        "ㄱ은 4의 배수여야 하므로 ㄱ＝4 또는 8입니다. ㄱ＝4일 때 ㄴ＝5이고, ㄱ＝8이면 ㄴ＝10이 되어 한 자리 숫자가 아닙니다.",
+        "따라서 두 자리 수 ㄱㄴ은 45입니다."
+      ],
+      "solution": "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄱㄱㄴㄴ은 1100×ㄱ＋11×ㄴ입니다. 99×(10×ㄱ＋ㄴ)＝1100×ㄱ＋11×ㄴ을 정리하면 4×ㄴ＝5×ㄱ입니다. ㄱ은 4의 배수여야 하므로 ㄱ＝4 또는 8입니다. ㄱ＝4일 때 ㄴ＝5이고, ㄱ＝8이면 ㄴ＝10이 되어 한 자리 숫자가 아닙니다. 따라서 두 자리 수 ㄱㄴ은 45입니다.",
+      "learningPoint": "곱셈식의 자리 배열을 식으로 나타내어 두 자리 수 찾기",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자와 곱셈식",
+      "verification": {
+        "primaryMethod": "digit-equation algebra plus exhaustive digit-pair enumeration",
+        "parameters": {
+          "multiplier": 99,
+          "productPattern": "AABB",
+          "answerTensDigit": 4,
+          "answerOnesDigit": 5,
+          "allDigitPairsChecked": 90,
+          "uniqueSolution": [
+            4,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-q08-exhaustive-validate.py",
+        "sourceExamPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied1-q08-v5",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 5,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "자리 숫자 배열에 맞는 곱셈의 두 자리 수 찾기",
+      "pointBand": "2.7",
+      "text": "다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하여라.\n\n87 × ㄱㄴ = ㄴㄱㄴㄴ",
+      "answer": "65",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        65
+      ],
+      "acceptedAnswers": [
+        "65"
+      ],
+      "solutionSteps": [
+        "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄴㄱㄴㄴ은 100×ㄱ＋1011×ㄴ입니다.",
+        "87×(10×ㄱ＋ㄴ)＝100×ㄱ＋1011×ㄴ을 정리하면 5×ㄱ＝6×ㄴ입니다.",
+        "ㄱ은 6의 배수여야 하므로 ㄱ＝6, ㄴ＝5만 가능합니다.",
+        "따라서 두 자리 수 ㄱㄴ은 65입니다."
+      ],
+      "solution": "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄴㄱㄴㄴ은 100×ㄱ＋1011×ㄴ입니다. 87×(10×ㄱ＋ㄴ)＝100×ㄱ＋1011×ㄴ을 정리하면 5×ㄱ＝6×ㄴ입니다. ㄱ은 6의 배수여야 하므로 ㄱ＝6, ㄴ＝5만 가능합니다. 따라서 두 자리 수 ㄱㄴ은 65입니다.",
+      "learningPoint": "곱셈식의 자리 배열을 식으로 나타내어 두 자리 수 찾기",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자와 곱셈식",
+      "verification": {
+        "primaryMethod": "digit-equation algebra plus exhaustive digit-pair enumeration",
+        "parameters": {
+          "multiplier": 87,
+          "productPattern": "BABB",
+          "answerTensDigit": 6,
+          "answerOnesDigit": 5,
+          "allDigitPairsChecked": 90,
+          "uniqueSolution": [
+            6,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-q08-exhaustive-validate.py",
+        "sourceExamPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied1-q08-v6",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "자리 숫자 배열에 맞는 곱셈의 두 자리 수 찾기",
+      "pointBand": "2.7",
+      "text": "다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하여라.\n\n21 × ㄱㄴ = ㄴㄱㄴㄴ",
+      "answer": "91",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        91
+      ],
+      "acceptedAnswers": [
+        "91"
+      ],
+      "solutionSteps": [
+        "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄴㄱㄴㄴ은 100×ㄱ＋1011×ㄴ입니다.",
+        "21×(10×ㄱ＋ㄴ)＝100×ㄱ＋1011×ㄴ을 정리하면 ㄱ＝9×ㄴ입니다.",
+        "ㄱ은 1부터 9인 숫자이므로 ㄱ＝9, ㄴ＝1만 가능합니다.",
+        "따라서 두 자리 수 ㄱㄴ은 91입니다."
+      ],
+      "solution": "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄴㄱㄴㄴ은 100×ㄱ＋1011×ㄴ입니다. 21×(10×ㄱ＋ㄴ)＝100×ㄱ＋1011×ㄴ을 정리하면 ㄱ＝9×ㄴ입니다. ㄱ은 1부터 9인 숫자이므로 ㄱ＝9, ㄴ＝1만 가능합니다. 따라서 두 자리 수 ㄱㄴ은 91입니다.",
+      "learningPoint": "곱셈식의 자리 배열을 식으로 나타내어 두 자리 수 찾기",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자와 곱셈식",
+      "verification": {
+        "primaryMethod": "digit-equation algebra plus exhaustive digit-pair enumeration",
+        "parameters": {
+          "multiplier": 21,
+          "productPattern": "BABB",
+          "answerTensDigit": 9,
+          "answerOnesDigit": 1,
+          "allDigitPairsChecked": 90,
+          "uniqueSolution": [
+            9,
+            1
+          ]
+        },
+        "independentSuite": "qa/applied1-q08-exhaustive-validate.py",
+        "sourceExamPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied1-q08-v7",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 7,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "자리 숫자 배열에 맞는 곱셈의 두 자리 수 찾기",
+      "pointBand": "2.7",
+      "text": "다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하여라.\n\n21 × ㄱㄴ = ㄴㄱㄴ",
+      "answer": "25",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        25
+      ],
+      "acceptedAnswers": [
+        "25"
+      ],
+      "solutionSteps": [
+        "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄴㄱㄴ은 101×ㄴ＋10×ㄱ입니다.",
+        "21×(10×ㄱ＋ㄴ)＝101×ㄴ＋10×ㄱ을 정리하면 5×ㄱ＝2×ㄴ입니다.",
+        "ㄱ은 짝수여야 합니다. ㄱ＝2이면 ㄴ＝5이고, 더 큰 짝수에서는 ㄴ이 10보다 커지므로 불가능합니다.",
+        "따라서 두 자리 수 ㄱㄴ은 25입니다."
+      ],
+      "solution": "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄴㄱㄴ은 101×ㄴ＋10×ㄱ입니다. 21×(10×ㄱ＋ㄴ)＝101×ㄴ＋10×ㄱ을 정리하면 5×ㄱ＝2×ㄴ입니다. ㄱ은 짝수여야 합니다. ㄱ＝2이면 ㄴ＝5이고, 더 큰 짝수에서는 ㄴ이 10보다 커지므로 불가능합니다. 따라서 두 자리 수 ㄱㄴ은 25입니다.",
+      "learningPoint": "곱셈식의 자리 배열을 식으로 나타내어 두 자리 수 찾기",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자와 곱셈식",
+      "verification": {
+        "primaryMethod": "digit-equation algebra plus exhaustive digit-pair enumeration",
+        "parameters": {
+          "multiplier": 21,
+          "productPattern": "BAB",
+          "answerTensDigit": 2,
+          "answerOnesDigit": 5,
+          "allDigitPairsChecked": 90,
+          "uniqueSolution": [
+            2,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-q08-exhaustive-validate.py",
+        "sourceExamPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied1-q08-v8",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 8,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "자리 숫자 배열에 맞는 곱셈의 두 자리 수 찾기",
+      "pointBand": "2.7",
+      "text": "다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하여라.\n\n37 × ㄱㄴ = ㄴㄴㄴ",
+      "answer": "15",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        15
+      ],
+      "acceptedAnswers": [
+        "15"
+      ],
+      "solutionSteps": [
+        "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄴㄴㄴ은 111×ㄴ입니다.",
+        "37×(10×ㄱ＋ㄴ)＝111×ㄴ을 정리하면 ㄴ＝5×ㄱ입니다.",
+        "ㄴ은 0부터 9인 숫자이므로 ㄱ＝1, ㄴ＝5만 가능합니다.",
+        "따라서 두 자리 수 ㄱㄴ은 15입니다."
+      ],
+      "solution": "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄴㄴㄴ은 111×ㄴ입니다. 37×(10×ㄱ＋ㄴ)＝111×ㄴ을 정리하면 ㄴ＝5×ㄱ입니다. ㄴ은 0부터 9인 숫자이므로 ㄱ＝1, ㄴ＝5만 가능합니다. 따라서 두 자리 수 ㄱㄴ은 15입니다.",
+      "learningPoint": "곱셈식의 자리 배열을 식으로 나타내어 두 자리 수 찾기",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자와 곱셈식",
+      "verification": {
+        "primaryMethod": "digit-equation algebra plus exhaustive digit-pair enumeration",
+        "parameters": {
+          "multiplier": 37,
+          "productPattern": "BBB",
+          "answerTensDigit": 1,
+          "answerOnesDigit": 5,
+          "allDigitPairsChecked": 90,
+          "uniqueSolution": [
+            1,
+            5
+          ]
+        },
+        "independentSuite": "qa/applied1-q08-exhaustive-validate.py",
+        "sourceExamPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
+      }
+    },
+    {
+      "id": "applied1-q08-v9",
+      "genId": "applied1-q08",
+      "sourceSet": "applied",
+      "sourceRound": 1,
+      "sourceNo": 8,
+      "variantNo": 9,
+      "reviewStatus": "verified",
+      "area": "수와 식",
+      "subarea": "문자와 곱셈식",
+      "detailType": "자리 숫자 배열에 맞는 곱셈의 두 자리 수 찾기",
+      "pointBand": "2.7",
+      "text": "다음 곱셈식을 만족하는 두 자리 수 ㄱㄴ을 구하여라.\n\n21 × ㄱㄴ = ㄴㄴㄴ",
+      "answer": "37",
+      "answerContract": "ordered-parts",
+      "answerParts": [
+        37
+      ],
+      "acceptedAnswers": [
+        "37"
+      ],
+      "solutionSteps": [
+        "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄴㄴㄴ은 111×ㄴ입니다.",
+        "21×(10×ㄱ＋ㄴ)＝111×ㄴ을 정리하면 7×ㄱ＝3×ㄴ입니다.",
+        "ㄱ은 3의 배수여야 합니다. ㄱ＝3일 때 ㄴ＝7이고, ㄱ＝6 또는 9이면 ㄴ이 한 자리 숫자를 넘습니다.",
+        "따라서 두 자리 수 ㄱㄴ은 37입니다."
+      ],
+      "solution": "ㄱㄴ은 10×ㄱ＋ㄴ이고, ㄴㄴㄴ은 111×ㄴ입니다. 21×(10×ㄱ＋ㄴ)＝111×ㄴ을 정리하면 7×ㄱ＝3×ㄴ입니다. ㄱ은 3의 배수여야 합니다. ㄱ＝3일 때 ㄴ＝7이고, ㄱ＝6 또는 9이면 ㄴ이 한 자리 숫자를 넘습니다. 따라서 두 자리 수 ㄱㄴ은 37입니다.",
+      "learningPoint": "곱셈식의 자리 배열을 식으로 나타내어 두 자리 수 찾기",
+      "learningLocation": "활용 1회 · 원문 8번 · 문자와 곱셈식",
+      "verification": {
+        "primaryMethod": "digit-equation algebra plus exhaustive digit-pair enumeration",
+        "parameters": {
+          "multiplier": 21,
+          "productPattern": "BBB",
+          "answerTensDigit": 3,
+          "answerOnesDigit": 7,
+          "allDigitPairsChecked": 90,
+          "uniqueSolution": [
+            3,
+            7
+          ]
+        },
+        "independentSuite": "qa/applied1-q08-exhaustive-validate.py",
+        "sourceExamPage": 2,
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null
       }
     },
     {
@@ -11534,8 +12019,8 @@
     }
   ],
   "reviewSummary": {
-    "independentMathCount": 216,
-    "sourceTypes": 24,
+    "independentMathCount": 225,
+    "sourceTypes": 25,
     "variantsPerType": 9,
     "outputReviewed": true,
     "sourceDrawingCount": 6,

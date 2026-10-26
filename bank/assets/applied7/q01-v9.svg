@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350" role="img" aria-label="직사각형과 정사각형이 겹친 도형, 겹친 삼각형의 둘레 40센티미터, 두 변 13센티미터와 15센티미터, 정사각형 변의 나머지 부분 11센티미터">
+<rect width="560" height="350" fill="#fff"/>
+<g fill="none" stroke="#191511" stroke-width="2.2" stroke-linejoin="round">
+ <rect x="24" y="72" width="336" height="170"/>
+ <path d="M410 32 L538 160 L410 288 L282 160 Z"/>
+ <path d="M360 72 L282 160 L360 242 Z" fill="#e5e5e5"/>
+ <path d="M360 72 L360 242"/>
+ <path d="M360 242 L410 288"/>
+</g>
+<g stroke="#191511" stroke-width="2">
+ <path d="M28 146 h14 M405 218 l10 -10"/>
+</g>
+<g fill="#191511" font-family="serif" font-size="20">
+ <text x="165" y="163" text-anchor="middle">가</text>
+ <text x="455" y="165" text-anchor="middle">나</text>
+ <text x="308" y="108" text-anchor="middle">13 cm</text>
+ <text x="370" y="160">15 cm</text>
+ <text x="386" y="275">11 cm</text>
+ <text x="58" y="300" font-family="sans-serif" font-size="14" fill="#5b554a">그림은 실제 길이와 비례하지 않습니다.</text>
+</g>
+</svg>
