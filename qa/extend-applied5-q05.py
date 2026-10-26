@@ -64,7 +64,7 @@ def item_payload(case,no):
  ]
  assert solution[fixed]==b and solution[two]==d and solution[one]==a and solution[target]==c==answer
  return {'id':f'applied5-q05-v{no}','genId':'applied5-q05','sourceSet':'applied','sourceRound':5,'sourceNo':5,'variantNo':no,'reviewStatus':'verified',
-  'area':'지문이해','subarea':'조건 추론','detailType':'서로 다른 선택의 배정과 배제 단서','pointBand':'2.7','text':text,
+  'area':'지문 이해','subarea':'조건 추론','detailType':'서로 다른 선택의 배정과 배제 단서','pointBand':'2.7','text':text,
   'answer':answer,'answerParts':[answer],'answerLabels':['운동'],'acceptedAnswers':[answer],'answerContract':'ordered-parts','solutionSteps':steps,'solution':' '.join(steps),
   'learningPoint':'서로 다른 선택 조건과 부정 단서를 함께 적용해 남은 선택지를 좁히기','learningLocation':'활용 5회 · 원문 5번 · 조건 추론',
   'verification':{'primaryMethod':'4개 항목의 24가지 일대일 배정을 전부 검사하고 단서 조건을 적용한다.','independentMethod':'고정 선택을 먼저 배제한 뒤 2개 선택 배제와 1개 선택 배제 순서로 남는 값을 확정한다.',
@@ -98,7 +98,7 @@ def main():
  data['version']=VERSION;data['availableSourceNos']=sorted(data['availableSourceNos']+[5]);data['pendingSourceNos']=[n for n in data['pendingSourceNos'] if n!=5]
  data['reviewSummary'].update({'independentMathCount':99,'sourceTypes':11,'variantsPerType':9,'sourceDrawingCount':2})
  ipos=next(i for i,x in enumerate(index['items']) if x['sourceNo']==6)
- index['items'].insert(ipos,{'sourceNo':5,'genId':'applied5-q05','area':'지문이해','subarea':'조건 추론','detailType':'서로 다른 선택의 배정과 배제 단서','pointBand':'2.7','reviewStatus':'verified','variantCount':9})
+ index['items'].insert(ipos,{'sourceNo':5,'genId':'applied5-q05','area':'지문 이해','subarea':'조건 추론','detailType':'서로 다른 선택의 배정과 배제 단서','pointBand':'2.7','reviewStatus':'verified','variantCount':9})
  index['version']=VERSION;index['itemCount']=len(data['items']);index['pendingSourceNos']=list(data['pendingSourceNos'])
  DATA_PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n');INDEX_PATH.write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n')
  review={'sourceExam':{'file':EXAM.name,'driveFileId':'1x7CevkWByUrXPqfbV5xTHidJPNDrbuJp','bytes':EXAM.stat().st_size,'sha256':sha(EXAM),'page':1,'questionNo':5,'directVisualReview':True,'stem':'다음을 읽고 한별이가 좋아하는 운동은 무엇인지 쓰시오.','clues':['네 학생은 축구, 수영, 야구, 스키 중 서로 다른 운동을 하나씩 좋아한다.','규형은 야구를 좋아하지 않는다.','동민은 수영을 좋아한다.','석기는 축구와 야구를 좋아하지 않는다.']},

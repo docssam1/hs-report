@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="268" height="268" viewBox="0 0 268 268">
+<rect width="100%" height="100%" fill="#fff"/>
+<line x1="26" y1="26" x2="242" y2="26" stroke="#202020" stroke-width="1.8"/>
+<line x1="26" y1="80" x2="242" y2="80" stroke="#202020" stroke-width="1.8"/>
+<line x1="26" y1="134" x2="242" y2="134" stroke="#202020" stroke-width="1.8"/>
+<line x1="26" y1="188" x2="242" y2="188" stroke="#202020" stroke-width="1.8"/>
+<line x1="26" y1="242" x2="242" y2="242" stroke="#202020" stroke-width="1.8"/>
+<line x1="26" y1="26" x2="26" y2="242" stroke="#202020" stroke-width="1.8"/>
+<line x1="80" y1="26" x2="80" y2="242" stroke="#202020" stroke-width="1.8"/>
+<line x1="134" y1="26" x2="134" y2="242" stroke="#202020" stroke-width="1.8"/>
+<line x1="188" y1="26" x2="188" y2="242" stroke="#202020" stroke-width="1.8"/>
+<line x1="242" y1="26" x2="242" y2="242" stroke="#202020" stroke-width="1.8"/>
+<line x1="102.0" y1="174.0" x2="102.0" y2="144.0" stroke="#202020" stroke-width="2"/>
+<path d="M 103.0 145.0 L 122.0 151.0 L 103.0 158.0 Z" fill="#202020"/>
+</svg>

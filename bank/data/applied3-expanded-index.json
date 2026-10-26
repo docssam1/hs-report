@@ -1,17 +1,9 @@
 {
-  "version": "20261026-applied3-expansion-q04-q07-q12-q14-q18-q21-q06-locked-r11",
+  "version": "20261026-applied3-q29-confirmed-r1",
   "sourceSet": "applied",
   "sourceRound": 3,
-  "itemCount": 207,
-  "pendingSourceNos": [
-    6,
-    13,
-    16,
-    19,
-    24,
-    27,
-    29
-  ],
+  "itemCount": 270,
+  "pendingSourceNos": [],
   "items": [
     {
       "sourceNo": 1,
@@ -59,6 +51,16 @@
       "area": "도형",
       "subarea": "둘레와 중복",
       "detailType": "세 겹의 정사각 테두리의 점 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 6,
+      "genId": "applied3-q06",
+      "area": "수와 식",
+      "subarea": "일과 시간",
+      "detailType": "함께 일한 양으로 한 사람의 작업 시간 구하기",
       "pointBand": "2.7",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -124,6 +126,16 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 13,
+      "genId": "applied3-q13",
+      "area": "수와 식",
+      "subarea": "도형으로 나타낸 수의 규칙",
+      "detailType": "위치별 값을 합해 도형의 수 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 14,
       "genId": "applied3-q14",
       "area": "경우의 수",
@@ -139,6 +151,16 @@
       "area": "수와 식",
       "subarea": "자릿수와 최댓값",
       "detailType": "자릿수 합과 중복 없는 가장 큰 수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 16,
+      "genId": "applied3-q16",
+      "area": "수와 식",
+      "subarea": "거리의 합과 차",
+      "detailType": "연속한 장소 사이 거리로 구간 거리 찾기",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -160,6 +182,16 @@
       "subarea": "되돌려 계산하기",
       "detailType": "같은 수만큼 옮기는 세 바구니 역산",
       "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 19,
+      "genId": "applied3-q19",
+      "area": "수와 식",
+      "subarea": "경우의 수와 논리",
+      "detailType": "삼각형 변의 합으로 꼭짓점 수의 합 구하기",
+      "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9
     },
@@ -204,6 +236,16 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 24,
+      "genId": "applied3-q24",
+      "area": "수와 식",
+      "subarea": "경우의 수와 논리",
+      "detailType": "여러 줄의 합 조건으로 미지수 정하기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 25,
       "genId": "applied3-q25",
       "area": "경우의 수",
@@ -224,11 +266,31 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 27,
+      "genId": "applied3-q27",
+      "area": "도형",
+      "subarea": "입체 격자와 직육면체",
+      "detailType": "단위 격자 입체에서 크고 작은 직육면체 세기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 28,
       "genId": "applied3-q28",
       "area": "수와 식",
       "subarea": "수의 크기와 자리",
       "detailType": "이어 쓴 수에서 숫자를 지워 최솟값",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 29,
+      "genId": "applied3-q29",
+      "area": "도형",
+      "subarea": "곡선과 면",
+      "detailType": "큰 원 안에 그린 여러 원이 나누는 최대 면의 수",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9

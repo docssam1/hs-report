@@ -25,7 +25,7 @@ assert len({x['id'] for x in items})==len(items)==types*9
 # Compare the complete displayed question, excluding IDs, labels and verification metadata.
 seen=collections.defaultdict(list)
 for x in items:
- q={k:x.get(k) for k in ['text','promptDataLines','givenTable','arithmeticRows','cards']};q['drawing']=x.get('asset',{}).get('src')
+ q={k:x.get(k) for k in ['text','promptDataLines','givenTable','arithmeticRows','cards']};q['drawing']=(x.get('asset') or {}).get('src')
  seen[json.dumps(q,sort_keys=True,ensure_ascii=False)].append(x['id'])
 assert all(len(g)==1 for g in seen.values()),[g for g in seen.values() if len(g)>1]
 venn=collections.defaultdict(list)

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="269" height="197" viewBox="0 0 269 197">
+<rect width="100%" height="100%" fill="white"/>
+<path d="M27,96 L175,96 L243,44 L95,44 Z" fill="#f7f7f7"/>
+<path d="M175,96 L243,44 L243,118 L175,170 Z" fill="#ededed"/>
+<rect x="27" y="96" width="148" height="74" fill="white"/>
+<line x1="27" y1="96" x2="27" y2="170" stroke="#191511" stroke-width="0.9"/>
+<line x1="27" y1="96" x2="95" y2="44" stroke="#191511" stroke-width="0.9"/>
+<line x1="64" y1="96" x2="64" y2="170" stroke="#191511" stroke-width="0.9"/>
+<line x1="64" y1="96" x2="132" y2="44" stroke="#191511" stroke-width="0.9"/>
+<line x1="101" y1="96" x2="101" y2="170" stroke="#191511" stroke-width="0.9"/>
+<line x1="101" y1="96" x2="169" y2="44" stroke="#191511" stroke-width="0.9"/>
+<line x1="138" y1="96" x2="138" y2="170" stroke="#191511" stroke-width="0.9"/>
+<line x1="138" y1="96" x2="206" y2="44" stroke="#191511" stroke-width="0.9"/>
+<line x1="175" y1="96" x2="175" y2="170" stroke="#191511" stroke-width="0.9"/>
+<line x1="175" y1="96" x2="243" y2="44" stroke="#191511" stroke-width="0.9"/>
+<line x1="27" y1="96" x2="175" y2="96" stroke="#191511" stroke-width="0.9"/>
+<line x1="175" y1="96" x2="243" y2="44" stroke="#191511" stroke-width="0.9"/>
+<line x1="27" y1="133" x2="175" y2="133" stroke="#191511" stroke-width="0.9"/>
+<line x1="175" y1="133" x2="243" y2="81" stroke="#191511" stroke-width="0.9"/>
+<line x1="27" y1="170" x2="175" y2="170" stroke="#191511" stroke-width="0.9"/>
+<line x1="175" y1="170" x2="243" y2="118" stroke="#191511" stroke-width="0.9"/>
+<line x1="27" y1="96" x2="175" y2="96" stroke="#191511" stroke-width="0.9"/>
+<line x1="175" y1="96" x2="175" y2="170" stroke="#191511" stroke-width="0.9"/>
+<line x1="44" y1="83" x2="192" y2="83" stroke="#191511" stroke-width="0.9"/>
+<line x1="192" y1="83" x2="192" y2="157" stroke="#191511" stroke-width="0.9"/>
+<line x1="61" y1="70" x2="209" y2="70" stroke="#191511" stroke-width="0.9"/>
+<line x1="209" y1="70" x2="209" y2="144" stroke="#191511" stroke-width="0.9"/>
+<line x1="78" y1="57" x2="226" y2="57" stroke="#191511" stroke-width="0.9"/>
+<line x1="226" y1="57" x2="226" y2="131" stroke="#191511" stroke-width="0.9"/>
+<line x1="95" y1="44" x2="243" y2="44" stroke="#191511" stroke-width="0.9"/>
+<line x1="243" y1="44" x2="243" y2="118" stroke="#191511" stroke-width="0.9"/>
+<line x1="27" y1="96" x2="175" y2="96" stroke="#191511" stroke-width="2"/>
+<line x1="27" y1="96" x2="27" y2="170" stroke="#191511" stroke-width="2"/>
+<line x1="27" y1="170" x2="175" y2="170" stroke="#191511" stroke-width="2"/>
+<line x1="175" y1="96" x2="243" y2="44" stroke="#191511" stroke-width="2"/>
+<line x1="243" y1="44" x2="243" y2="118" stroke="#191511" stroke-width="2"/>
+<line x1="175" y1="170" x2="243" y2="118" stroke="#191511" stroke-width="2"/>
+<line x1="95" y1="44" x2="243" y2="44" stroke="#191511" stroke-width="2"/>
+</svg>

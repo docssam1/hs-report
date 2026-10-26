@@ -1,0 +1,31 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict'),crypto=require('node:crypto'),{chromium}=require('playwright');
+const root=path.resolve(__dirname,'..'),out=path.join(root,'.private-work/hw-expansion-20261023/hw3/q27-review');fs.mkdirSync(out,{recursive:true});
+const raw=JSON.parse(fs.readFileSync(path.join(root,'bank/data/applied3-expanded.json'))),adapter=require('../bank/adapters/applied3-expanded-adapter.js');
+adapter.useData(raw);assert.equal(adapter.listTypes().length,29);assert.equal(adapter.select([27],9).length,9);
+const server=http.createServer((req,res)=>{const f=path.resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname));if(!f.startsWith(root+path.sep)||!fs.existsSync(f)||!fs.statSync(f).isFile()){res.writeHead(404);return res.end();}res.setHeader('content-type',({'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.json':'application/json','.css':'text/css','.woff2':'font/woff2','.png':'image/png','.svg':'image/svg+xml'})[path.extname(f)]||'application/octet-stream');fs.createReadStream(f).pipe(res);});
+(async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port,browser=await chromium.launch(),context=await browser.newContext({acceptDownloads:true}),errors=[],writes=[];
+await context.route(/^https?:\/\//,route=>{const req=route.request(),u=new URL(req.url());if(u.origin!==base){if(!['GET','HEAD'].includes(req.method()))writes.push(req.method()+' '+u.pathname);return route.abort();}return route.continue();});
+const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+async function open(q){await page.goto(base+'/bank/pool.html?bank=applied3&'+q);await page.waitForFunction(()=>window.__POOL_QA__?.ready===true,null,{timeout:30000});}
+try{
+ await page.setViewportSize({width:1440,height:1200});await open('nos=27&count=9');
+ assert.equal(await page.locator('.question').count(),9);assert.equal(await page.locator('.solution').count(),9);assert.equal(await page.locator('[data-item-id^="applied3-q27-v"] .q-figure img').count(),9);
+ assert.equal(await page.locator('[data-item-id^="applied3-q27-v"] .q-figure img').evaluateAll(ns=>ns.every(n=>n.complete&&n.naturalWidth>0)),true);
+ assert.deepEqual(await page.locator('.question,.answers-page .page-body').evaluateAll(ns=>ns.filter(n=>n.scrollHeight>n.clientHeight+1||n.scrollWidth>n.clientWidth+1).map(n=>n.dataset.itemId||'answer')),[]);
+ const order=await page.locator('.questions-page').evaluateAll(ps=>ps.every(p=>{let right=false,last=-Infinity;for(const n of p.querySelectorAll('.question')){const col=n.style.gridColumn,top=n.getBoundingClientRect().top;if(col==='2'&&!right){right=true;last=-Infinity;}if(col==='1'&&right||top<last-1)return false;last=top;}return true;}));assert.equal(order,true);
+ await page.locator('[data-item-id="applied3-q27-v1"]').locator('xpath=ancestor::section[contains(@class,"page")]').screenshot({path:path.join(out,'question-page.png')});
+ await page.locator('.solution[data-answer-id="applied3-q27-v1"]').locator('xpath=ancestor::section[contains(@class,"page")]').screenshot({path:path.join(out,'solution-page.png')});
+ await page.setViewportSize({width:375,height:812});await open('nos=27&count=9');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
+ const variants=raw.items.filter(x=>x.sourceNo===27);for(const x of variants)await page.locator('#a-'+x.id+'-0').fill(String(x.answerParts[0]));
+ await page.click('#grade');assert.match(await page.locator('#diagnosis').textContent(),/9 \/ 9문항 정답/);assert.equal(await page.locator('#diagnosis a[href*="bank=applied3"]').count(),9);assert.equal(await page.locator('#diagnosis a[href*="3%ED%9A%8C.pdf"]').count(),9);
+ const first=await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage)));await page.click('#grade');await page.click('#grade');assert.ok(await page.locator('#answerInputs input').evaluateAll(ns=>ns.every(n=>n.disabled)));
+ const last=await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage)));for(const [k,v] of Object.entries(first))if(k.startsWith('gfield_practice_pool_v2:')){assert.deepEqual(JSON.parse(last[k])[0],JSON.parse(v)[0]);assert.equal(JSON.parse(last[k]).length,3);}
+ await page.screenshot({path:path.join(out,'answer-diagnosis-375.png')});
+ await page.setViewportSize({width:1440,height:1200});await open('nos=27&count=9');let event=page.waitForEvent('download',{timeout:600000});await page.click('#downloadZip');await(await event).saveAs(path.join(out,'q27-selected-9.zip'));assert.match(await page.locator('#exportStatus').textContent(),/9문항을 빠짐없이/);
+ await open('count=9');assert.equal(await page.locator('.question').count(),261);assert.equal(await page.locator('.solution').count(),261);assert.equal(await page.locator('.q-figure img').count(),99);assert.deepEqual(await page.locator('.question,.answers-page .page-body').evaluateAll(ns=>ns.filter(n=>n.scrollHeight>n.clientHeight+1||n.scrollWidth>n.clientWidth+1).map(n=>n.dataset.itemId||'answer')),[]);
+ event=page.waitForEvent('download',{timeout:600000});await page.click('#downloadZip');await(await event).saveAs(path.join(out,'applied3-261.zip'));assert.match(await page.locator('#exportStatus').textContent(),/261문항을 빠짐없이/);
+ assert.deepEqual(errors,[]);assert.deepEqual(writes,[]);
+ fs.writeFileSync(path.join(out,'browser-evidence-r1.json'),JSON.stringify({dataSha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'bank/data/applied3-expanded.json'))).digest('hex'),sourceTypes:29,questionCount:261,solutionCount:261,figureCount:99,selectedQ27:9,answerEntry:true,diagnosisAndLearningLinks:true,twoColumnOrder:order,mobile375:true,maxAttempts:3,firstAttemptPreserved:true,questionOverflow:0,solutionOverflow:0,selectedZip:'q27-selected-9.zip',fullZip:'applied3-261.zip',externalWrites:writes,browserErrors:errors},null,2));
+ console.log('PASS Applied3 Q27: 9 new figures, answer/diagnosis/learning, 2 columns, 375px, 3 attempts, selected/full ZIP, writes 0');
+}finally{await browser.close();server.close();}})().catch(e=>{console.error(e);server.close();process.exitCode=1;});

@@ -18,7 +18,7 @@ from applied2_finalgroups_independent import solve_finalgroups
 from applied2_lastgroups_independent import solve_lastgroups, arithmetic_states, best_digits, card_count
 
 ROOT=Path(__file__).resolve().parents[1];FILE=ROOT/'bank/data/applied2-balanced15.json'
-data=json.loads(FILE.read_text());legacy_bytes=(ROOT/'bank/data/applied2-expanded.json').read_bytes()
+data=json.loads(FILE.read_text());legacy_bytes=subprocess.check_output(['git','show','dcb9bdf:bank/data/applied2-expanded.json'],cwd=ROOT)
 legacy={x['id']:x for x in json.loads(legacy_bytes)['items']}
 assert hashlib.sha256(legacy_bytes).hexdigest()==data['legacyBankSha256']
 
@@ -323,8 +323,12 @@ with tempfile.TemporaryDirectory(prefix='gfield-source2-render-')as temp:
     page=Image.open(output.with_suffix('.png')).convert('RGB')
     for filename,box in [('projections4-original.png',(590,800,1055,970)),('square-cover-original.png',(588,1185,890,1440))]:
         actual=Image.open(ROOT/'bank/assets/applied2'/filename).convert('RGB');assert page.crop(box).size==actual.size and page.crop(box).tobytes()==actual.tobytes()
-for file in ['bank/data/applied1-balanced15.json','bank/data/applied2-expanded.json','bank/assets/applied2/triangle-chain.png','data.js','docssam-columns.js','mock-data-hw.js']:
-    assert(ROOT/file).read_bytes()==subprocess.check_output(['git','show','98cb8ff:'+file],cwd=ROOT),file
+for file in ['bank/data/applied1-balanced15.json','bank/assets/applied2/triangle-chain.png','data.js','docssam-columns.js','mock-data-hw.js']:
+    assert(ROOT/file).read_bytes()==subprocess.check_output(['git','show','dcb9bdf:'+file],cwd=ROOT),file
+expanded=json.loads((ROOT/'bank/data/applied2-expanded.json').read_text())
+expanded_by_id={x['id']:x for x in expanded['items']}
+assert all(expanded_by_id.get(item_id)==item for item_id,item in legacy.items()),'An approved 126-item expansion changed'
+assert set(expanded_by_id)-set(legacy)=={f'applied2-q03-v{i}' for i in range(1,10)}
 previous=json.loads(subprocess.check_output(['git','show','90d0bfd7:bank/data/applied2-balanced15.json'],cwd=ROOT))['items']
 assert data['items'][:360]==previous
 assert len({json.dumps({k:x.get(k)for k in ['text','givenTable','arithmeticRows','promptDataLines','asset','cards','responseTable']},ensure_ascii=False,sort_keys=True)for x in data['items']})==450

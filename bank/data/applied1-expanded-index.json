@@ -1,15 +1,9 @@
 {
-  "version": "20261026-applied1-expansion-q08-alphametic-r3",
+  "version": "20261026-applied1-q17-confirmed-r1",
   "sourceSet": "applied",
   "sourceRound": 1,
-  "itemCount": 225,
-  "pendingSourceNos": [
-    7,
-    17,
-    19,
-    21,
-    28
-  ],
+  "itemCount": 270,
+  "pendingSourceNos": [],
   "items": [
     {
       "sourceNo": 1,
@@ -67,6 +61,16 @@
       "area": "도형",
       "subarea": "평면 도형의 규칙",
       "detailType": "홀수 너비 계단의 성냥개비 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 7,
+      "genId": "applied1-q07",
+      "area": "도형",
+      "subarea": "격자와 직사각형",
+      "detailType": "깃발이 있는 칸을 포함하는 직사각형의 수",
       "pointBand": "2.7",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -162,6 +166,16 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 17,
+      "genId": "applied1-q17",
+      "area": "도형",
+      "subarea": "성냥개비와 대칭",
+      "detailType": "배 모양을 좌우로 뒤집는 최소 성냥개비 이동",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 18,
       "genId": "applied1-q18",
       "area": "경우의 수",
@@ -172,11 +186,31 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 19,
+      "genId": "applied1-q19",
+      "area": "도형",
+      "subarea": "입체도형과 전개도",
+      "detailType": "정육면체 전개도와 접은 모양 비교",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 20,
       "genId": "applied1-q20",
       "area": "수와 식",
       "subarea": "집합과 겹침",
       "detailType": "전체와 먹지 않은 사람의 비로 공통 부분 찾기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 21,
+      "genId": "applied1-q21",
+      "area": "도형",
+      "subarea": "격자와 직사각형",
+      "detailType": "겹치는 세로·가로 격자 띠의 직사각형 개수",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -237,6 +271,16 @@
       "area": "도형",
       "subarea": "입체 도형의 규칙",
       "detailType": "계단형 상자 입체의 성냥개비 수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 28,
+      "genId": "applied1-q28",
+      "area": "수와 식",
+      "subarea": "비례와 단가",
+      "detailType": "공사량·미터당 비용·연간 수익으로 회수 기간 계산",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9

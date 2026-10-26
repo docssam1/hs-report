@@ -1,12 +1,9 @@
 {
-  "version": "20261025-applied4-expansion-q01-q04-r3",
+  "version": "20261026-applied4-q02-q03-confirmed-r1",
   "sourceSet": "applied",
   "sourceRound": 4,
-  "itemCount": 252,
-  "pendingSourceNos": [
-    2,
-    3
-  ],
+  "itemCount": 270,
+  "pendingSourceNos": [],
   "items": [
     {
       "sourceNo": 1,
@@ -14,6 +11,26 @@
       "area": "수와 식",
       "subarea": "수의 연산과 기호",
       "detailType": "같은 기호가 나타내는 숫자를 반복 덧셈에서 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 2,
+      "genId": "applied4-q02",
+      "area": "도형",
+      "subarea": "둘레와 길이",
+      "detailType": "겹쳐 붙인 직사각형의 둘레",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 3,
+      "genId": "applied4-q03",
+      "area": "도형",
+      "subarea": "삼각형 개수 세기",
+      "detailType": "마름모 삼각 격자에서 크기별 삼각형 세기",
       "pointBand": "2.7",
       "reviewStatus": "verified",
       "variantCount": 9

@@ -1,12 +1,9 @@
 {
-  "version": "20261024-applied6-expansion-r27",
+  "version": "20261026-applied6-q28-confirmed-r1",
   "sourceSet": "applied",
   "sourceRound": 6,
-  "itemCount": 252,
-  "pendingSourceNos": [
-    27,
-    28
-  ],
+  "itemCount": 270,
+  "pendingSourceNos": [],
   "items": [
     {
       "sourceNo": 1,
@@ -264,6 +261,26 @@
       "area": "수와 식",
       "subarea": "제한된 숫자와 배수 조건",
       "detailType": "정해진 숫자로만 만든 수 중 나누어지는 가장 작은 수",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 27,
+      "genId": "applied6-q27",
+      "area": "수와 식",
+      "subarea": "자릿수와 최댓값",
+      "detailType": "이어 쓴 수에서 숫자를 지워 최댓값 만들기",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 28,
+      "genId": "applied6-q28",
+      "area": "경우의 수",
+      "subarea": "격자와 배열",
+      "detailType": "서로 다른 바둑돌의 가로·세로 중복 없는 배치",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9

@@ -1,23 +1,12 @@
 {
-  "version": "20261025-applied2-expansion-q03-q24-r3",
+  "version": "20261026-applied2-q17-figure24-confirmed-r1",
   "sourceSet": "applied",
   "sourceRound": 2,
-  "itemCount": 144,
+  "itemCount": 243,
   "pendingSourceNos": [
-    4,
-    5,
-    7,
-    9,
     13,
-    14,
     15,
-    16,
-    17,
-    19,
-    20,
-    21,
-    22,
-    28
+    22
   ],
   "items": [
     {
@@ -51,6 +40,26 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 4,
+      "genId": "applied2-q04",
+      "area": "도형",
+      "subarea": "쌓기나무와 투영",
+      "detailType": "위·앞·옆에서 본 모양을 만족하는 쌓기나무 배열 수",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 5,
+      "genId": "applied2-q05",
+      "area": "수와 식",
+      "subarea": "저울과 무게의 관계",
+      "detailType": "두 저울의 무게 관계로 마름모 개수 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 6,
       "genId": "applied2-q06",
       "area": "수와 식",
@@ -61,11 +70,31 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 7,
+      "genId": "applied2-q07",
+      "area": "수와식",
+      "subarea": "합과 미지수의 관계",
+      "detailType": "연결된 네 우리와 다리 위 합으로 각 우리 수와 전체 구하기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 8,
       "genId": "applied2-q08",
       "area": "수와 식",
       "subarea": "분수와 전체량",
       "detailType": "생애의 분수와 남은 기간으로 전체 찾기",
+      "pointBand": "2.7",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 9,
+      "genId": "applied2-q09",
+      "area": "수와 식",
+      "subarea": "문자와 식",
+      "detailType": "세 쌍의 합으로 각 양 구하기",
       "pointBand": "2.7",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -101,11 +130,71 @@
       "variantCount": 9
     },
     {
+      "sourceNo": 14,
+      "genId": "applied2-q14",
+      "area": "수와 식",
+      "subarea": "문자와 식",
+      "detailType": "색깔별 값을 연립식으로 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 16,
+      "genId": "applied2-q16",
+      "area": "도형",
+      "subarea": "쌓기나무와 투영",
+      "detailType": "위·앞모양으로 옆모양의 네 세로줄 높이 찾기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 17,
+      "genId": "applied2-q17",
+      "area": "도형",
+      "subarea": "정사각형 덮기",
+      "detailType": "격자 도형을 덮는 최소 정사각형 수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
       "sourceNo": 18,
       "genId": "applied2-q18",
       "area": "수와 식",
       "subarea": "집합과 겹침",
       "detailType": "세 집합을 모두 만족하는 사람 수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 19,
+      "genId": "applied2-q19",
+      "area": "경우의 수",
+      "subarea": "빈칸 배치",
+      "detailType": "순서가 정해진 세 묶음의 배치 수",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 20,
+      "genId": "applied2-q20",
+      "area": "경우의 수",
+      "subarea": "수의 배열과 조건",
+      "detailType": "겹치는 원의 합 조건을 만족하는 수 배열",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 21,
+      "genId": "applied2-q21",
+      "area": "수와식",
+      "subarea": "무게와 균형",
+      "detailType": "균형 잡힌 모빌의 가지별 무게로 방울 무게 찾기",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9
@@ -156,6 +245,16 @@
       "area": "수와 식",
       "subarea": "곱셈과 자릿수",
       "detailType": "부분 곱의 자리 단서로 곱셈 완성",
+      "pointBand": "4.2",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 28,
+      "genId": "applied2-q28",
+      "area": "도형",
+      "subarea": "입체 격자와 직육면체",
+      "detailType": "단위 격자 입체에서 크고 작은 직육면체 세기",
       "pointBand": "4.2",
       "reviewStatus": "verified",
       "variantCount": 9

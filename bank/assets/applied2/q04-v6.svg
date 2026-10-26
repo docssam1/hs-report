@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="180" viewBox="0 0 540 180">
+<rect width="100%" height="100%" fill="white"/>
+<rect x="18" y="25" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="43" y="25" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="18" y="50" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="43" y="50" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="18" y="75" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="43" y="75" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="68" y="75" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="205" y="75" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="205" y="50" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="230" y="75" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="230" y="50" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="255" y="75" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="255" y="50" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="335" y="75" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="335" y="50" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="360" y="75" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="360" y="50" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<rect x="385" y="75" width="25" height="25" fill="white" stroke="#202020" stroke-width="1.6"/>
+<text x="43" y="145" text-anchor="middle" font-family="serif" font-size="17">위</text>
+<text x="243" y="145" text-anchor="middle" font-family="serif" font-size="17">앞</text>
+<text x="373" y="145" text-anchor="middle" font-family="serif" font-size="17">옆</text>
+</svg>

@@ -1,3 +1,584 @@
+# 2026-10-26 이어서 진행 — 활용2 확장·검수 기록
+
+## 활용1 Q08 문자 곱셈 유형 확장 완료 r3 — 2026-10-26
+
+- 현행 문제 PDF 2쪽의 `77 × ㄱㄴ = ㄴㄱㄱㄴ`을 직접 확인하고, 유효한 숫자쌍 90개 전수검사에서 원문 유일해 75를 재현했다. 로컬 원자료에는 답안 PDF가 없어 공식 답안표와의 대조는 미확인이라고 구분했다.
+- 기존 문자 곱셈 유형으로 9문항을 작성·독립검산했다. 답 25·15·18·45·65·91·25·15·37. 변형마다 90쌍을 검사하고 자리값 등식 풀이를 작성했다. 영역 `수와 식`, 세부 유형 `문자와 곱셈식`, 원문 배점 2.7점의 `하`. 그림 없음.
+- 활용1 데이터/색인/어댑터/카탈로그/진단 학습 연결을 25유형 ×9=225개로 반영했다. 기존 216개는 보존했다. 시험지·상세풀이 2단 출력, 1440/375, 잘림0, 3회 입력 제한·최초 점수 보존, 진단 연결, 전체 ZIP을 검증했다. ZIP 7개 필수파일·225 고유 ID·정답 CSV 225행, 문제 PDF48쪽·풀이 PDF75쪽. ZIP SHA-256 `09aebf189748f18fc42a01d543568ca21c92c5c19c0b24d0c1dcc10695e8f2b5`; 데이터 SHA `ea2d79c8d6987819f35b99a42cd63f3040c806ab9d17da4328697c8237243a07`. 검수 보고서 `.private-work/hw-expansion-20261023/hw1/20261026-applied1-q08-completion-r3.md`.
+- 전체 현황 238/270 유형·2,142/2,430 문제, 대기 32유형. 다음 후보: 활용3 Q13(그림 승인 대기), 활용2 Q05(그림 승인 대기), 그 밖의 대기는 기존 목록을 이어 본다.
+- 전체 색인 감사 중 활용5 Q27 데이터 4.2점과 색인 2.7점의 불일치를 발견했다. 현행 원문 6쪽 Q27을 대조해 색인을 4.2점으로 고쳤고 `qa/applied-expanded-inventory-validate.py` 전체 통과.
+- 브랜치 `main`, HEAD `cd4ad2a335037c6cfbb05a1f9705dff3e6c9cbf6`. 혼합 미커밋 변경을 보존했고 문제은행 작업은 아직 커밋·푸시·배포하지 않았다. 활용1 작업 폴더 `1XB2t5QvxFll2LlZLwP_R4S9io6vTg8Zk`를 재사용했다. 전체 문제/풀이 ZIP은 기존 ID `1EhKE8oIRh2ejU5psCdnK25eFGdbB6lhX`로 갱신되어 37,994,355B, SHA-256 `09aebf189748f18fc42a01d543568ca21c92c5c19c0b24d0c1dcc10695e8f2b5`의 원시 재다운로드와 로컬 바이트가 일치했다. Q08 완료 보고서 `.private-work/hw-expansion-20261023/hw1/20261026-applied1-q08-completion-r3.md` SHA-256 `0d967c9232034442679c2f7ca69fe4912b2a415ff76768faaf814cca2f2d686e`. Drive 검수증빙 ZIP은 기존 ID `1TjS6-vEwL0JyGxaVTvfGenMRhokJYdag`로 보고서 보관 근거를 추가 갱신했다. 최신 크기 883,856B, 원시 재다운로드 SHA-256 `abe890b017fe0f84db79ccba86e925ef69407ddda78bf409be9658422c482e72`가 로컬과 일치한다.
+
+
+## 활용3 Q13 원문 대조·수치 후보 독립 검산 r1 — 새 그림 승인 대기
+
+- 현행 `materials/초등과정 대비 실전 모의고사 활용 3회.pdf` p.3 Q13을 직접 렌더했다. 원문 SHA-256 `877da93ca12b01d513ef182bbf5998c6a391f2ee6c243059dcf79d901bf8f0f6`. 여섯 예시의 점 배치와 표시값 1·2·3·5·10·11, 목표 모양을 확인했다. Drive 답안 후보 p.3은 동일 문항·도형에 21을 적었다. 후보 SHA `4a88de5043eaedfbb8d8c74090816a2961676a2a82207bd516d241e02e42000c`; 2022 후보와 현행 2024 판본의 공식 짝은 미확인이다. 원문 계산은 자리값 1·2·4·8·9를 복원해 21이다.
+- 원문 점 배치 규칙을 보존한 9개 수치 사양을 만들고, 위치별 직접 합과 예시값 소거식으로 독립 검산했다. 답은 서로 다른 23·24·28·34·40·44·48·53·57이며 셋째 예시의 합 일치와 각 목표값의 유일성을 확인했다. 원본 그림을 바꾸지 않았고 변형용 그림은 아직 만들지 않았다.
+- 후보 JSON `.private-work/hw-expansion-20261023/hw3/q13-review/applied3-q13-nine-pattern-candidates-pending-figure-approval-r1.json`, SHA-256 `adf59768945ad82c42cafa7739691d7634e6defb1746f523876bfadac631d29c` (23,395B). 기록 `.private-work/hw-expansion-20261023/hw3/q13-review/20261026-applied3-q13-review-r1.md`, SHA-256 `c096f9026cdbcdbe86d95f8179d081112fb897072e024ef632c0562a1d2c5bc2` (2,263B).
+- 기존 활용3 Drive 검수 폴더 `1yJ-KpNrkyQi10K0t9h48JPwOSxp2ctnU`에 기록 ID `1jQGLf7ZQw7nWodfVbm_4IPW9NzaV_z4m`, 후보 ID `1se34TGdKPzYaoLSkQ3DulTpwBTYsrd2r`를 추가했다. Drive raw 재다운로드 크기와 SHA-256이 두 로컬 파일과 각각 일치한다. 그림 승인·분류 확정·인쇄·입력/진단·ZIP 검수가 남아 Q13은 계속 대기다. 활성 JSON·색인·ZIP은 변경하지 않았다.
+
+
+## 활용2 Q05 원문 대조·9개 후보 독립 검산 r1 — 새 그림 승인 대기
+
+- 현행 활용2 시험지 PDF p.1 Q05와 원본 저울 그림을 직접 확인했다. 원문 SHA-256 `1af1698985c657774c00eb9abc0466b07f8cb79bca64d2c379ea18b8cae67aab`. Drive 답안 후보 `13CZpw9KjmxLPt4F0vzGxCjUbrq16U3zL` p.2의 필기 답 7과 원문 계산은 일치하지만, 후보 PDF의 공식성·현행 판본 짝은 미확인으로 표시했다.
+- 원문 저울의 무게비는 하트 3, 다이아 1, 클럽 4이며 답은 7이다. 9개 변형은 별도 수량 조합으로 만들고, 각 2개 저울식의 행렬식·양의 무게비·목표 미지수의 유일한 양의 정수 답을 독립 Fraction 계산으로 재검산했다. 답은 1~9. 활용 2.7점대 기준 난도는 하.
+- 후보 기록 `.private-work/hw-expansion-20261023/hw2/q05-review/applied2-q05-source-audit-r1.json` 및 `.private-work/hw-expansion-20261023/hw2/q05-review/applied2-q05-nine-candidates-pending-figure-approval-r1.json`. 원본 그림은 보존했고, 새 그림 제작 승인은 대기 중이다. 새 그림/활성 데이터/색인/ZIP은 만들거나 수정하지 않았다.
+- Drive 활용2 검수 폴더 `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP`에 감사 기록 ID `1it9gOCv_OxcZzbKy04vMXpdpRnLVVTvl`(9,027B), 후보 ID `105IuDTWsH5G-HQY1GZHEYqGWVQWlXV7s`(7,225B)를 보관했다. 양쪽 raw-byte SHA-256을 재다운로드 대조해 로컬과 일치 확인: 감사 `ee165707c6db20e365e2e90f813a0931b39c6ae03baf45f6a2ac2efd919e4baf`, 후보 `8abfa96b978416fce067498103e5755d6a03559e1c1c1170557d1862ba3af39a`.
+- Q05 원문 문구를 p.1에서 직접 읽어 아홉 후보에 그대로 넣었고, 각 후보의 단계별 상세 풀이·정답 문자열도 작성했다. r2 초안 `.private-work/hw-expansion-20261023/hw2/q05-review/applied2-q05-nine-candidates-with-solutions-pending-figure-approval-r2.json`; Drive ID `1VVzi5usor7f5ypGwA5NpLoiflmuwQP_o` (14,880B), raw-byte SHA-256 `36d5fc74d9715a0ad2251d29e8d82f0335cc3700cd7754135561035da64bd0ad` 일치. 이 초안도 그림 승인 및 실제 인쇄 검수 전까지 비공개다.
+- 활성 활용2는 144문항·16유형이며 미검수 목록에 Q05가 계속 포함된다. 이 기록으로 공개 상태를 바꾸지 않는다.
+
+## 2026-10-26 활용5·9 분류 표기 정규화
+
+- 활성 활용1~9 JSON·색인을 다시 대조했다. 전체 2,133문항·237유형에서 영역 표기는 `수와 식` 1,296, `도형` 396, `경우의 수` 360, `지문 이해` 81개이며 이전 표기 `지문이해`는 0개다. 각 유형 9개, 데이터·색인 버전/분류 일치 검사도 통과했다.
+- 활용5 Q05 9개와 활용9 Q18 9개의 영역을 `지문이해`에서 `지문 이해`로, 활용5 Q03 9개의 세부영역을 `숫자카드의 배열`에서 `숫자 카드의 배열`로 표준화했다. 문항·답·풀이·그림·배점은 변경하지 않았다. 생성기 표기도 같은 표준 용어를 사용한다.
+- 1~9회 adapter 18개 조합 검사(정규/기존 지문 라벨)가 모두 `reading`을 표시했다. 1·3·4·8회는 해당 라벨을 `number`로 떨어뜨리던 분류표를 보정하고, 2회도 구 표기 호환을 추가했다. 활용9 개별 독립 검증기 22개를 새 r25 버전 가드에 맞춰 전부 통과시켰다. 기존 활용5 Q03/Q05 검증기는 이전 데이터 수량을 기대해 재사용하지 않았으며 전체 구조·색인 정합 감사로 확인했다. 검수 JSON: `.private-work/hw-expansion-20261023/taxonomy/applied5-applied9-taxonomy-normalization-20261026.json`.
+- 로컬 브랜치 `main`, HEAD `cd4ad2a335037c6cfbb05a1f9705dff3e6c9cbf6`. Drive 기존 데이터·색인 4개를 같은 ID로 갱신했고 원시 다운로드 4개 모두 크기·SHA-256이 로컬과 일치했다. 검수 JSON ID `1Z3WU9wz2ucO9Z6b5pD9PhUP2SI_7_U-M`; 기록의 raw readback도 로컬과 일치한다. Drive `CLAUDE_HANDOFF.md`도 같은 ID로 이번 정규화 기록을 추가해 갱신하고 raw-byte 대조했다. 아직 커밋·푸시·배포하지 않았다. 다른 미커밋 작업은 보존한다.
+
+- 현행 활용2 시험지 PDF p.2 Q09를 직접 렌더해 세 접시·세 연결선·수치 24·20·32와 지문을 확인했다. 원문 SHA-256 `1af1698985c657774c00eb9abc0466b07f8cb79bca64d2c379ea18b8cae67aab`. Drive 답안 후보 PDF p.3도 직접 렌더해 `가+나=24`, `나+다=32`, `가+다=20`, 답 `(가,나,다)=(6,18,2)`를 확인했다. 후보 답안 공식성·현행 판본 짝 여부는 미확인이다.
+- 동일한 세 접시 쌍합 관계로 9개 수치 후보를 비공개 작성했다. 각 정답은 양의 정수이며 각 후보의 연립식은 유일해를 갖는다. 별도 전수검사에서 변형별 비음수 정수해가 정확히 하나임을 확인했다.
+- 후보 JSON `.private-work/hw-expansion-20261023/hw2/q09-review/q09-candidates-pending-figure-approval-r1.json`은 그림 사양만 기록했으며 SVG·활성 JSON·색인·ZIP에는 반영하지 않았다. 사용자에게 활용2 Q09·Q13·Q28 유사문제용 새 그림 제작 범위를 질의했다. 승인 전에는 그림/공개본을 만들지 않는다.
+- 같은 JSON을 Drive 기존 활용2 검수 폴더 `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP`에 `활용2회_Q09_유사문제_수치후보_그림승인대기_r1.json`으로 보관했다. ID `1gBVuEOqF6jLpG4GrPGJgPsHwWZT7ENbC`, 5,334B. 원시 readback SHA-256 `578a5d43b82824eb313d8629b459a2c6ed6c94a3678491a8481ddfeaf779f65d`가 로컬과 일치한다.
+- 2026-10-26 직접 확인 결과 활용2 Q13에도 선분-눈금 도구 그림이 있고, Q28에는 입체 블록 그림이 있어 변형 그림이 필요하다. 활용1 Q08 기존 전수감사에서 같은 `77×ㄱㄴ=ㄴㄱㄱㄴ` 패턴을 유지하면 유일 수치 사례는 5개뿐으로 확인됐으므로 9개 기준과 기존 유형만 확장 원칙을 동시에 만족하지 못해 대기 상태를 유지한다.
+- 이전에 제기했던 활용2 Q03/Q05 번호 불일치는 2단 PDF 텍스트 추출 읽기 순서 오독이었다. 원문 p.1을 직접 렌더해 Q03 문자 덧셈 연결이 맞음을 확인했으며, 기존 번호·데이터 변경은 없다.
+- 활용2 활성 데이터는 여전히 144문항·16유형, pending `[4,5,7,9,13,14,15,16,17,19,20,21,22,28]`. 문제은행 활성 JSON/색인은 수정하지 않았다. 후보 단계의 ZIP·브라우저·인쇄 검수는 아직 해당하지 않는다.
+
+# 2026-10-25 재개 — 활용2 Q14 원문 검산·9개 후보, 새 그림 승인 대기
+
+- 활용2회 현재 문제 PDF p.3의 Q14 문구·원본 색 원 배열을 직접 확인했다. 문제 PDF SHA-256 `1af1698985c657774c00eb9abc0466b07f8cb79bca64d2c379ea18b8cae67aab`. Drive 답안 후보 `1QgKPPGyxWOjFBUYQRy6UjHOQ5LvoPvsD` p.4를 렌더하고 Apple Vision OCR을 사용해 필기 답 `45`를 확인했다. 후보 PDF SHA-256 `074180c770e7e76d77dca35410f14246a5eaa373feba8061d3f390c320b5ffdc`; 공식 정답표·현행 판본의 짝 여부는 미확인이다.
+- 원문 색값 식은 `2W+2B+G=35`, `2W+B+2G=45`, `W+2B+2G=40`; 행렬식 `-5`, 유일한 해 `(W,B,G)=(8,3,13)`. 목표 배열 `(0,2,3)`의 합 45를 독립 계산했다.
+- 동일한 5개 원 배열 구조의 유사문항 9개는 새 그림 없이 수치 후보만 비공개 작성했고, 각 3×3 연립식을 서로 다른 양의 정수 1~20 전수탐색으로 검산했다. 아홉 개 모두 유일해이며 답 `50,39,44,46,32,51,20,43,52`. 3.4점 배점대의 중 난도만 적용한다.
+- 유사문제용 새 배열 그림 제작 허용을 사용자에게 요청했다. 승인 전까지 SVG·활성 JSON·색인·ZIP은 만들거나 수정하지 않는다. 원본·답안 크롭, OCR, 검산 후보와 승인대기 상태는 `.private-work/hw-expansion-20261023/hw2/q14-review/`에 보존했다.
+- Drive 활용2 기존 검수 폴더 `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP`에 대조기록 `1fk3Ih76MJ_1ZqQ2e5WDzWnN3aFQT7P5o`, 승인대기 후보 JSON `1Avgb-e9Dmwxj4kmqs0tKal-T-4sXCjNg`, 증거 ZIP `1KY_2W5G-gegJRJL2FunTMvAxqaJ_DB1q`를 추가했다. ID·이름·MIME·크기·부모 폴더를 확인했고 ZIP 원시 재다운로드 SHA-256은 로컬과 일치(`81b6cd4fafef43a23933d95ec844b7572496c927517c3ab2ebf9795d7125828a`).
+- 현재 활용2는 144문항·16유형이며 Q14는 계속 대기다. Q03·Q24는 활성 검수 완료 유형이다. 이번 후보는 활성 콘텐츠에 포함되지 않았다.
+
+# 2026-10-25 재개 — 활용3 Q06 원문 충돌 유사문항을 활성본에서 잠금 r11
+
+- 현재 활용3 원문 Q06 PDF는 8·10일 및 4·15일 두 작업 조합이라 관호 단독 답이 16일이다. 사용 가능한 2022 답안 후보의 필기는 18일이며 판본 짝이 확인되지 않았다. 2026-10-25 직접 대조 기록은 이 유형을 공개하지 말고 새 변형 9개도 비공개 초안으로 유지하라고 명시한다.
+- 기존 활성 JSON에는 이전 조건 `2·12일 / 4·8일`에 기반한 Q06 변형 9개가 들어 있었고, 독립 검산 수·유형 수·잠금 기록과도 모순됐다. 이 9개를 활성 데이터·색인·ZIP에서 제외하고 Q06을 `pendingSourceNos`에 되돌렸다. 기존 변형은 `.private-work/hw-expansion-20261023/hw3/q06-review/q06-variants-draft-r1.json`에 그대로 보존했다.
+- 새 활성본 `20261026-applied3-expansion-q04-q07-q12-q14-q18-q21-q06-locked-r11`: 207문항·23유형, 대기 `[6,13,16,19,24,27,29]`. 원문당 9개인 완료 유형, 2단 출력, 답안·풀이 연결을 유지했다. 문제/풀이 ZIP A4 46/74쪽, 7개 필수 구성품, ID·빠른 답·상세 풀이 일치, CRC 통과. ZIP에서 Q06 ID 9개가 없고 대기 상태임을 검증했다.
+- 독립 수학 207개·23유형, Q04/Q07/Q12/Q21 문항 검증, Q06 잠금 전용 검사, 브라우저 답 입력·진단·학습 연결·2단·375px·3회 입력·ZIP 검사 PASS. 브라우저 오류/외부 쓰기 0. ZIP 문제 p.6–7과 풀이 p.10을 렌더 검토했다. 데이터 SHA `ac76eaf78bcd444b063df6fe80fe5b5827575ce68e8acda2c3591ae53757439f`, 색인 SHA `57e6f6b56b325e4ea0f8bc402675a448f74a67d0f8e703db79a7b70adce4b77e`, ZIP SHA `90440c9addea41a482b9e5f80da1a7ccb858f81af7fcd2b8ea666c6585ff29e` (42,382,786B). 이전 216문항 상태 스냅샷은 `.private-work/hw-expansion-20261023/hw3/q07-review/drive-readback-r10/*-before-q06-lock-r11.*`에 보존했다.
+- 관련 QA: `qa/applied3-independent-validate.py`, `qa/applied3-q06-independent-validate.py`, `qa/applied3-q04-independent-validate.py`, `qa/applied3-q07-independent-validate.py`, `qa/applied3-q12-independent-validate.py`, `qa/applied3-q21-independent-validate.py`, `qa/applied3-pool-browser-validate.cjs`, `qa/applied3-q04-zip-validate.py`, `qa/applied3-q21-zip-validate.py`. Drive 기존 data/index/ZIP ID를 r11로 갱신했고, 이름·MIME·부모 폴더·크기(648,709/6,816/42,382,786B)는 메타데이터로 확인했다. 연결 도구가 체크섬 계산용 원시 파일을 제공하지 않아 Drive raw-byte SHA 재대조는 미완료다. Q06 검수 기록과 이 handoff도 기존 Drive ID로 갱신했다. 커밋·푸시·사이트 배포는 하지 않았다.
+
+# 2026-10-25 — 최종4 석차 백분율 배포 확인
+
+## 재개 진행 — 활용3회 Q16 거리표 직접 대조, 변형 그림 승인 대기
+
+- 현행 활용3 PDF p.3와 Drive 답안 PDF p.3을 직접 확인했다. 답안 ID `1TWs2Gj7FRGl3ljwWXY64vTxwc1gC-edo`, raw 동기화 사본 3,143,719B, SHA-256 `4a88de5043eaedfbb8d8c74090816a2961676a2a82207bd516d241e02e42000c`. Q16의 별도 답은 표기되지 않았고, PDF 답안의 현행 짝 여부는 미확정이다.
+- 표에서 인접 구간을 독립 계산하면 2.1, 2.5, 3.2, 4.4km이고, 원문 서울역→석계역은 두 합산 방식 모두 12.2km다. 분홍 하트 표식은 원본 그대로 보존한다.
+- 학습 분류 후보는 `수와 식 → 거리의 합과 차 → 연속한 장소 사이 거리로 구간 거리 찾기`다. 활용5 Q11과 같은 삼각형 거리표 소재지만 Q5는 미지 구간 네 개의 합, Q3는 서울역→석계역 1개 거리라는 답 계약이 다르므로 Q5 문항 복사는 하지 않는다. 수정 반영 Drive 감사 파일 `1tc5XyQrWrF2IEMk5d1Dc8CrkN8Z0w5uu` (2242B); 로컬/Drive 텍스트를 다시 읽어 구판 분류 문구 제거를 확인했다.
+- 같은 표를 반복해 목표 역만 바꾸는 아홉 문항은 직접조회형이 섞여 추론 부담이 원문과 같지 않다. 동등 난도의 변형 표 9개가 필요하므로 승인 전까지 공개 데이터·색인·ZIP에 추가하지 않는다. 기록: `.private-work/hw-expansion-20261023/hw3/q16-source-audit-20261025-r1.md`.
+- 기존 `.private-work/hw-expansion-20261023/hw3/source/q16-source-crop-r1.png`는 이름과 달리 다른 문항(과일 선호 논리표) 이미지라 활용3 Q16 근거로 사용하지 않는다. 원본 파일은 보존한다.
+
+## 이어서 진행 — 활용2회 Q20 원문·답안 전수 검산, 새 그림 승인 대기
+
+- 현행 문제 PDF p.4와 Drive 동기화 답안 후보 p.5를 직접 대조했다. 문제 SHA `1af1698985c657774c00eb9abc0466b07f8cb79bca64d2c379ea18b8cae67aab`, 답안 후보 SHA `074180c770e7e76d77dca35410f14246a5eaa373feba8061d3f390c320b5ffdc`. 답안 필기는 왼쪽부터 `9,2,5,4,6,1,7,3,8`이며 현행 조건과 일치한다. 답안 PDF 제목은 2021 시험/2022 특강2회로 표기돼 현행 판본의 공식 짝인지는 미확인이다.
+- 9! 전체 배치를 독립 열거해 모든 원의 합이 같아지는 배열 8개를 찾았다. 원문 합 11·오른쪽 단독영역 8의 답은 유일하며 필기 답과 일치한다. 별도 목표합·단서 위치로 9개 변형 후보를 만들고 각 후보가 유일한 완성 하나만 갖는지 전수 확인했다.
+- 원본 그림은 보존한다. 새 변형 SVG 9개 제작 승인 요청을 사용자에게 보냈다. 승인 전까지 후보는 비공개 초안으로 두고 은행 데이터·색인·ZIP·화면을 수정하지 않는다. 근거 `.private-work/hw-expansion-20261023/hw2/q20-review/20261025-applied2-q20-source-audit-r1.md`; 후보 `.private-work/hw-expansion-20261023/hw2/q20-candidates-pending-figure-approval.json`.
+- Drive 기존 활용2 폴더 `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP`에 감사 기록 `1YFYBjKzk0QTANCa58JaFqjGy691OUG5F`와 승인대기 초안 `1jlPIQDIJEpps3v7ykqrxpZFTxKZVh6kN`을 보관했다. 둘 다 raw-byte 재다운로드 `cmp` 일치; SHA-256은 각각 `d052b5cb319ddc03846c82bbaf9a37989874ec87c6e03c9cc47f93871ed44788`, `259809541ede9bfabd403b9a5e29780cad7abfe29d2e9ff1db95efb59147d4a9`.
+- 현재 활용2 데이터는 144문항·16유형, Q20은 대기 유지. 기존 혼합 미커밋 변경을 보존하며 커밋·푸시·배포하지 않는다.
+
+## 이어서 진행 — 활용6 Q27 답안 사본 대조
+
+- 활용6 Q27 원문 PDF p.5의 조건을 두 독립 알고리즘으로 계산한 최댓값은 `99999785960`이다. 답안 후보 p.5의 필기 `99999648960`보다 137,000 크다.
+- Google Drive 정확한 파일명 검색 결과 답안 PDF가 3개였다. 세 파일 ID는 `1YleWL5sbtEDN76ZsCMfTVMqLviHslHCV`, `1rm0Qjl-FVKeUIdKQoUmd27-HzCBrbQGM`, `1uI6KW9UovhwT41pzN-SVlK8dpPU5vd1Y`이며, 3개 원시 다운로드 SHA-256은 모두 `b1ff5ad327fd669a56508bc1256be8743e809122f1e80b3af5f0731874939975`로 일치했다. 이 정확한 파일명으로는 접근 가능한 검색 결과에 정정본이 없다. 다른 이름의 정정본 또는 검색에 나타나지 않는 파일까지 없다고 단정하지 않는다.
+- 공식 정오표/교사 판정 근거가 아직 없어 Q27은 잠금 상태를 유지한다. 유사문항은 공개 데이터에 추가하지 않았다. 세부 근거: `.private-work/hw-expansion-20261023/hw6/q27-source-answer-review-r28.json`; 독립 계산: `.private-work/hw-expansion-20261023/hw6/q27-independent-math-r28.json`. Drive 감사본 ID `11sKIgpYID6-_1f2ja1EgubkAyh5SI3OF`; 업로드 후 raw readback SHA-256이 로컬과 일치했다.
+- 2026-10-26 추가 확인: 활용6 Drive 결과 폴더 `1XB2t5QvxFll2LlZLwP_R4S9io6vTg8Zk`에서 `Q27`, `Q28`, `정오표`를 폴더 범위로 다시 검색했다. Q27 결과는 기존 완료·컷오프 상태만, Q28 결과는 기존 불일치 감사만 반환했다. 새 정오표나 교사 판정은 이 폴더 검색에서 확인되지 않았다. 이 확인은 지정 폴더의 검색 결과에만 한정되며 다른 폴더·다른 이름·권한 밖 자료의 부재를 뜻하지 않는다.
+
+## 이어서 진행 — 활용1~9 분류·난도 메타데이터 전체 감사
+
+- 로컬 `bank/data/applied1-9-expanded.json` 전 9개와 실제 어댑터를 순회했다. 2,142개 공개 변형·238개 유형, 각 유형 9개, ID 고유성, verified 상태, 풀이 및 학습 연결, 활용 배점대 난도 매핑에서 오류가 없었다. 32개 대기 유형은 공개본에서 제외 상태를 유지한다. 학습 분류 미분류 0.
+- 적용 어댑터 카탈로그에서 활용6 Q21, 활용7 Q18·Q22가 `지문 이해`인데 `number`로 표시될 수 있는 오류를 찾았다. 원자료 분류와 문항 내용을 바꾸지 않고 `bank/adapters/applied6-expanded-adapter.js`, `bank/adapters/applied7-expanded-adapter.js`의 표시 도메인만 `reading`으로 연결했다. 1~9 어댑터와 실제 데이터를 다시 호출한 결과 분류 오류 0, `git diff --check` 통과.
+- 전체 상태·회차별 데이터/어댑터 해시를 Drive 프로젝트 폴더에 보관하고 raw-readback SHA를 확인했다. 감사 JSON ID `14-TtK87NPH_OaqCeKif1IYC6764x2nPg`, 요약 ID `1iNTaxdFupbt01lhEaJwA64G7TUhLC_Dw`. 상세 로컬 기록 `.private-work/hw-expansion-20261023/applied1-9-metadata-audit-20261025.md/.json`. 이 변경은 로컬 작업본이며 커밋·배포하지 않았다.
+
+## 이어서 진행 — 활용6 Q28 답안 기준 재검산
+
+- 현행 원문 PDF p.5와 답안 후보 p.5의 4×4 격자 및 문구를 직접 대조했다. 원문은 서로 다른 A/B/C/D 바둑돌을 쓴다고 명시한다. 답안 후보는 `4×3×2×1=24`로 계산해 돌 표지를 바꾸는 경우를 세지 않는다.
+- 두 독립 계산은 구분하지 않는 돌 24가지, A/B/C/D 표지를 구분하는 돌 576가지(`4!×4!`)다. 네 위치 집합 전수 열거 후 표지 배정하는 방법도 576으로 일치했다. 세 Drive 답안 사본의 원시 SHA-256은 모두 같아 정확한 동일 파일명 사본 간에는 다른 답안 판본이 없다.
+- 공식 채점 기준은 교사 판정/정오표가 없이는 정하지 않으므로 Q28 및 유사문항은 잠금 유지한다. JSON `q28-discrepancy-audit-20261025.json`, 설명 `q28-discrepancy-audit-20261025.md`를 Drive 활용6 폴더에 보관하고 양쪽 raw-readback SHA를 로컬과 대조했다. JSON ID `1FvbTWz4qnHT0Cpsx54LIG28U4EqFqyIN`, 설명 ID `1zVsj81E5vN63Ky7KQMJsGRcN0IsB-0VY`.
+
+## 이어서 진행 — 분류 표기 별칭 정규화
+
+- 활용1~9 현재 2,142개를 공통 학습 분류기로 다시 분류했을 때, `지문이해` 표기 18개(Q5·Q18)가 `미분류`로 떨어지는 것을 확인했다. 메인 영역 표준 `지문 이해`로 매핑하고, 활용5·9 어댑터도 양쪽 표기를 `reading`으로 인식하도록 했다. 원문 문제 데이터, ID, 배점, 정답, 원시험 기록은 바꾸지 않았다.
+- Node 기반 실제 분류 확인 결과 전체 2,142문항 중 미분류 0, 별칭 정규화 18. 활용5 Q05·활용9 Q18 어댑터가 모두 `reading`을 반환했다. 로컬 검수본이며 메인 커밋·배포는 하지 않았다.
+
+## 2026-10-25 최신 — 활용3 Q07 9개 확장·ZIP 검수 r10
+
+- 현행 시험지 p.2의 Q07 지문·주사위 방향·①~⑤ 경로를 직접 대조했다. 시작 면은 윗면2·앞면3·오른쪽1, 동작은 시작→①→②→③→④→⑤ 순으로 오른쪽·오른쪽·앞·왼쪽·왼쪽이다. 독립 주사위 상태 계산은 윗면 `[6,5,4,6,3]`, 답 24이고 답안 후보 p.2 필기 24와 맞는다. 후보의 공식성·판본 짝은 미확인으로 남겼다.
+- 원본 그림 SHA `2a206eaba18176ca5aa5c3875ab7ce3199453ba1690a7dc48cc95ceba38d8c07`를 보존하고, 승인 범위 내 새 변형 그림 9개를 추가했다. 24개 가능한 주사위 방향을 전수 열거해 합이 서로 다른 유효 방향 9개를 선택했다. 변형 정답은 `21,17,23,19,18,14,20,13,11`, 활용 2.7점이라 하 난도다.
+- 원문당 9개·기존 자료 보존. 활용3은 **216문항·24유형**, 보류 `[13,16,19,24,27,29]`. 활용1~9 전체 **2,142/2,430문항·238/270유형**, 보류 32유형·288문항. 활용1 `[7,8,17,19,21,28]`, 활용2 `[4,5,7,9,13,14,15,16,17,19,20,21,22,28]`, 활용3 `[13,16,19,24,27,29]`, 활용4 `[2,3]`, 활용6 `[27,28]`, 활용8 `[11,16]`.
+- 독립 검산 `qa/applied3-q07-independent-validate.py` PASS. 통합 브라우저 PASS: 216 문제·풀이, 54 그림, 입력/진단/학습 연결, 2단 읽기 순서, 375px, 3회 입력, 브라우저 오류·외부 쓰기 0. 실제 ZIP 7개 구성품·216문항, A4 문제 PDF 47쪽·풀이 PDF 77쪽. ZIP SHA `0bcfc4065cdf943ddff5e049a6f011700015585223e35e870e6401510f09fe1a`. Apple Vision ZIP OCR은 문제 pp.11–13의 아홉 그림, 풀이 pp.19–21의 아홉 답과 학습 연결을 확인했다. 상세 기록 `.private-work/hw-expansion-20261023/hw3/q07-review/20261025-applied3-q07-status-r1.md`.
+- Drive 활용3 기존 데이터·색인·ZIP ID를 r10으로 업데이트했다: data `185WfDUNeEmJ1-1CndIMwUwlFknzriGBO`, index `1pp11fgVVMM0MVGIHbFKnYUXbw_m2ZGCZ`, ZIP `1KjIRmeeNhE3TZGpLZNvSMnpQt5PoKhVC`. 세 파일을 원시 다운로드해 로컬 사본과 byte 단위 비교 및 SHA-256 대조를 마쳤다. data `940fb44f8c8f188e9521fae572e382d2e10bdb25e15f414127fe5b640be01c0b`, index `562d8463bddf73d5765e959869b13c0f5fd3e9cf53871ed0681778c77f0217f7`, ZIP `0bcfc4065cdf943ddff5e049a6f011700015585223e35e870e6401510f09fe1a`; 로컬 raw readback `.private-work/hw-expansion-20261023/hw3/q07-review/drive-readback-r10/`에 둔다.
+- 커밋·푸시·문제은행 배포 전이다. 최종4 석차 수정만 `cd4ad2a3`로 공개 배포되었다. 현재 수정된 다른 모의고사·문제은행 변경을 함께 배포하지 않는다.
+
+## 2026-10-25 최신 — 활용3 Q06 확장 완료 r9, 전체 수량·다음 작업 정정
+
+- Q06 원문은 현재 시험지 PDF p.2와 직접 대조했다. 현행 조건의 독립 연립식 `8x+10y=1`, `4x+15y=1`에서 관호 단독 시간은 16일이다. 2022 답안 후보의 18일은 현행 조건과 맞지 않아 공식 정답 근거로 쓰지 않았다.
+- 9개 변형을 활용3 데이터에 넣어 207문항·23유형×9개가 됐다. Q06·전체 독립 검산, Playwright, 실제 207문항 ZIP 검수 PASS. 문제 45쪽·풀이 74쪽, 7개 구성품, 2단·모바일·3회 입력·진단/학습 연결·외부 쓰기 0. 상세 기록: `.private-work/hw-expansion-20261023/hw3/q06-review/20261025-applied3-q06-status-r9.md`.
+- 최신 데이터/색인/ZIP SHA-256은 각각 `2fb37f198948a9b7aa18062ba25770c1f41de60784fdf610c3a89982c5167f9e`, `fe35722979f968e2e9fecff6f2b1b905deec01b806ed98432e7c1caddea11792`, `2ea1b0eb499738e0bf277ba61e78d8677baac4a41306b8166fed2e8f290da9d1`이다. Drive의 기존 활용3 data/index/ZIP 파일을 동일 ID로 r9 갱신하고 원시 재다운로드 체크섬을 확인할 것.
+- 현재 활용1~9는 2,133/2,430문항, 237/270유형이다. 보류 33유형(297문항): 활용1 `[7,8,17,19,21,28]`, 활용2 `[4,5,7,9,13,14,15,16,17,19,20,21,22,28]`, 활용3 `[7,13,16,19,24,27,29]`, 활용4 `[2,3]`, 활용6 `[27,28]`, 활용8 `[11,16]`. 활용5·7·9는 270/270이다.
+- 다음에는 이미 있는 보류 유형의 원문·답안 PDF를 직접 대조하고, 원본 그림을 그대로 재사용할 수 있는 유형을 먼저 진행한다. 변형에 원본과 다른 그림·배치가 필요하면 해당 유형의 승인 범위가 확인될 때까지 잠근다.
+- 이번 작업은 로컬 미커밋이다. 현재 `main`/`origin/main`은 `cd4ad2a335037c6cfbb05a1f9705dff3e6c9cbf6`; 사이트 배포 없음. 혼합 변경 작업본을 정리하거나 전체 배포하지 않는다.
+
+
+## 2026-10-25 추가 — 활용1 Q08 확장 가능성 전수검산
+
+- 현행 시험지 PDF p.2 Q08의 식 `77×ㄱㄴ=ㄴㄱㄱㄴ`을 직접 렌더로 대조했다. 시험지 SHA-256 `6123edccb7f64dc664d57dd29004483e3d27c49665892da39bbf2c032b243924`.
+- `qa/applied1-q08-exhaustive-validate.py` 전수 계산 PASS: ㄱ·ㄴ이 1~9인 81쌍 중 유일해는 75이며, `77×75=5775`. 동일한 `ㄱㄴ→ㄴㄱㄱㄴ` 구조에서 승수도 2~3자리 범위로 바꿔 탐색하면 해를 갖는 승수는 7개, 단일해인 경우는 `(77,75),(121,45),(209,25),(341,15),(451,18)` 5개뿐이다. 따라서 현행 유형의 답을 9개로 늘리려면 추가 조건 또는 자릿수 구조 변경이 필요해 기존 유형 확장 경계를 벗어난다.
+- 결과 `.private-work/hw-expansion-20261023/hw1/q08-exhaustive-audit-r1.json`. 문제 은행 데이터·색인·ZIP은 수정하지 않고 Q08을 검수 대기로 유지한다.
+
+## 2026-10-25 추가 — 활용8 Q11·Q16 원문/답안 대조 보류
+
+- 활용8 현재 자료는 252문항·28유형(r28), pending `[11,16]`이다. 현행 시험지 `materials/초등과정 대비 실전 모의고사활용 8회.pdf`의 p.3 Q11 종이 접기·절단 그림과 p.4 Q16 쌓기나무 그림을 직접 확인했다. SHA-256 `f053379544d41d73bcba673543536e56acbf97f5a0faf4a36e5a4cc008fe74ff`.
+- Drive 원문 ID `1H2KxzZHzeTve5thcTpTrJLEeNyl0F_ae`와 Drive 답안 후보 ID `1ixxsCBOTS4SqJ4PXJesvzHzyQfcBW06p`의 원시 다운로드 SHA가 각각 현지 원문 및 답안 후보와 일치했다. 답안 후보는 SHA `a31ed3197363858b657dc68a0035ef6d16e043ec72585a4fd9eb10d76ac228a7`이고, Q16 쪽은 원 시험지 지문·그림과 빈 답란만 반복한다. 공식 정답 근거가 아니다. Q11도 이번 대조에서 답안표를 찾지 못했다.
+- 두 문항은 원문 그림을 보존하고 변형용 새 그림·답을 별도 검증하기 전까지 추가·공개하지 않는다. 근거 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q11-q16-source-audit.md`; Drive 활용8 폴더 `18-61VnFMNv1FGKbS6ofqYohkT5uA1UCd`에 업로드했고 readback ID는 `1PR1HeRatG0_Dy391QdYofQXl0yjINpyg`이다. 공개 데이터·색인·ZIP·운영 화면은 변경하지 않았다.
+
+## 2026-10-25 추가 — 활용3 Q06 원문·답안 판본 충돌
+
+- 현행 `materials/초등과정 대비 실전 모의고사 활용 3회.pdf` p.2 Q06는 8·10일, 4·15일 작업조합 문제다. 현행 PDF SHA `877da93ca12b01d513ef182bbf5998c6a391f2ee6c243059dcf79d901bf8f0f6`. 독립 식 `8x+10y=1`, `4x+15y=1`의 답은 관호 16일이다.
+- Drive 답안 후보 `16hviiTu8lcpjeghcuLv_aokGaH_i9kgf`의 2022 판본 Q06 필기는 18일이며, 현재 원문 조건을 만족하지 않는다. Drive 2024 원문 후보 `17RKMXpLVoq16x_OoAgIZv-nHgWieO5F8`의 지문은 일치하지만 현재 로컬 PDF와 원시 SHA가 다르다. 정답 판본 짝은 확인 전까지 미확정이다.
+- `qa/build_applied3_q06.py`를 현행 원문에 맞게 고쳐 9개 변형을 `.private-work/hw-expansion-20261023/hw3/q06-review/q06-variants-draft-r1.json` 비공개 초안으로 만들었다. `qa/applied3-q06-independent-validate.py` PASS. Q06는 계속 `pendingSourceNos`에 있고 공개 데이터·색인은 수정하지 않았다.
+- 상세 대조 `.private-work/hw-expansion-20261023/hw3/q06-review/20261025-applied3-q06-source-answer-review-r1.md`; Drive 활용3 폴더 `1yJ-KpNrkyQi10K0t9h48JPwOSxp2ctnU`에 올렸고 readback ID는 `1fYBknorgvS2jqWzzg4bf17dXG3dpGYyG`이다.
+
+- 사용자가 확정한 기준 인원 120명을 분모로 쓰고 0%가 나오지 않도록 한 수정 커밋 `cd4ad2a335037c6cfbb05a1f9705dff3e6c9cbf6`는 이미 GitHub `main`과 공개 사이트에 반영돼 있었다. `https://hs.gfieldacademy.net/final.html`의 응답은 HTTP 200이며, 공개 파일과 커밋 파일 SHA-256이 모두 `78bbe754cb7c7ec85c89f1f7c232c95cf05dcd91d30027dd5253e1f402d27aafb`로 일치했다.
+- 최종4 공개 브라우저 회귀검사 PASS: 합성 학생에서 석차 백분율/기준 인원, 진단·학습 연결, 유사문제·풀이 ZIP 구성, 문항은행 링크를 확인했다. 브라우저 오류·운영 쓰기는 0.
+- 전체 `qa/diagnosis-accuracy-validate.js`는 10개 중 6개 통과, 4개 실패였다. 기존 백분율 숨김 기대와 모집단 검증 게이트, 문제은행 후보 상태, 코멘트 문구 관련 assertion이 실패했으므로 이 결과는 별도 회귀 정리 대상으로 남긴다. 공개 배포 파일 자체는 `main`과 바이트 단위로 일치한다.
+
+# 2026-10-25 재개 최신 — 활용3 Q04 9개 확장·검수 r7
+
+- 활용3 Q04 유사문제 9개를 추가해 189문항·21유형이 됐다. 원문 PDF p.1의 그림 없는 배수/자리 조건을 직접 확인했다. 원문 `[1200,1299]` 범위의 18의 배수 전수 계산은 1206, 1224, 1242, 1260, 1278, 1296으로 원답 1206이다. Drive 답안 후보 p.1에 같은 Q4 지문은 있으나 공식 답안표 여부는 미확인으로 남겼다.
+- 변형 백의 자리 `[0,1,3,4,5,6,7,8,9]`의 정답 `[1008,1116,1314,1404,1512,1602,1710,1800,1908]`을 범위별 18의 배수 전수 열거로 독립 검산했다. 2.7점 하 난도만 표시하고 새 문제 정답률은 주장하지 않는다. 분야: 수와 식 → 배수와 약수 → 자리 조건이 있는 가장 작은 배수 찾기.
+- Q04 및 전체 독립 검산 PASS. 브라우저 PASS: 189문제·풀이, 45개 원문 그림, 2단 좌우 순서, 375px, 27문항 입력/진단·학습 링크·원시험 연결, 3회 입력 후 최초 연습기록 보존, 브라우저 오류/외부 쓰기 0. 실제 ZIP CRC/7개 구성물/ID·정답/A4 검증 PASS; 문제 42쪽·상세풀이 69쪽, ZIP 렌더 Q04 문제 pp.6–7·풀이 pp.10–12 육안 확인.
+- 데이터 SHA `d6ea3b8f9b8a90c5a7d5cda7f7b4abbc8fe92984c02d27dc78c7c7ed86c1a7b0`, 색인 SHA `2184627b2a86629cb41efd6b0c130a8100e9aecd7d9b38084b8097f1297caa6b`, ZIP SHA `b37d86b4c357d6f0400b6864dd0c246af900143a081c5471f54fda0080db3dce` (39,710,345 bytes). 상세 기록 `.private-work/hw-expansion-20261023/hw3/q04-review/20261025-applied3-q04-status-r7.md`.
+- 저장소 `main`에는 기존 여러 회차 미커밋 변경이 있어 이 자료는 로컬 검수본으로 두며 커밋·푸시·사이트 배포하지 않는다. 활용3 대기 원문 `[6,7,12,13,16,19,24,27,29]`; 다음 Q12 원문/답안 직접 대조. Q24는 계산 불일치로 잠금 유지.
+- Drive 기존 활용3 폴더 `1yJ-KpNrkyQi10K0t9h48JPwOSxp2ctnU`의 기존 data ID `185WfDUNeEmJ1-1CndIMwUwlFknzriGBO`(578,936 B), index ID `1pp11fgVVMM0MVGIHbFKnYUXbw_m2ZGCZ`(6,218 B), ZIP ID `1KjIRmeeNhE3TZGpLZNvSMnpQt5PoKhVC`(39,710,345 B)를 r7로 갱신했다. Drive에서 raw bytes를 재다운로드해 세 SHA-256 모두 로컬과 일치했다. Q04 상태 `1I35w37QUBWXPW7wJwv0rtdijV7d1vZbG`, 원문 대조 `1EDOnchEM5tskdTNY6tXQTrfRVPi2bUvQ`, 독립 검산 `1cn8V5RrhHo1tawNbqo24nHRp5KuP2X_8`, ZIP 검수 `1dG5TSx25vhoSAi2M7eKa-mr2Ki7zyw73`, 동기화 영수증 `1GC9VH4ttsbC42k3h1iWrv2y5SuGr6NAy`. 근거 묶음 ZIP은 Drive 업로드 후 ID·크기 확인을 이어간다.
+
+# 2026-10-25 최신 — 활용3 Q21 9개 확장·전체 ZIP 검수 r6
+
+- 활용3 Q21 유사문제 9개를 추가해 기존 문항을 보존한 180문항·20유형이 됐다. 원문 PDF p.5 지문과 실제 식 그림을 대조했고, 글자층의 빈칸 표식 `□□÷□=□`와 확대 렌더를 함께 확인해 두 자리÷한 자리=한 자리로 확정했다. 답안 후보 손글씨 32는 독립 계산과 일치하나 공식 답안표 여부는 미확인이다.
+- 원문 32개 식을 두 방식(순서 있는 식 직접 열거, 순서 없는 곱셈 쌍 열거×2)으로 검산했다. 9개 변형 답은 `20,10,16,16,28,18,16,16,20`; 활용 3.4점 기준 중 난도다. Q21 독립검산과 전체 180문항 검산 PASS.
+- 통합 브라우저 QA PASS: 180문제·풀이, 24개 응답·진단·학습/원시험 연결, 왼쪽 열을 위에서 아래로 읽고 오른쪽 열로 이어지는 2단 순서, 375px, 3회 입력·첫 기록 보존. 브라우저 오류·외부 쓰기 0.
+- 실제 전체 ZIP 7개 구성물, 문제 PDF 40쪽·상세풀이 PDF 66쪽(A4), 180개 ID 및 정답 일치, CRC 통과. Q21 문제 ZIP PDF p.28, 풀이 p.40을 직접 렌더해 식·답·풀이·학습 연결의 선명도와 잘림 없음을 확인했다. 데이터 SHA `9b90f70118caa88403bd7dc59bb20c65c31e3c2c9dcdc3f60d56c5a72e8b8b98`, 색인 SHA `e8d07ecd8f6952496d83a977f2864dc5f5ed244cbec3bcaba3677f760181ec76`, ZIP SHA `0e4cf8cad32c88cd34c81bdca6b920e70b7391897fbae83370e7dc15bd202188`.
+- 상세 기록 `.private-work/hw-expansion-20261023/hw3/q21-review/20261025-applied3-q21-status-r6.md`; 감사 `.private-work/hw-expansion-20261023/hw3/q21-review/q21-zip-audit.json`. 대기 원문 `[4,6,7,12,13,16,19,24,27,29]`. GitHub 반영·사이트 배포 전이며 기존 작업 트리 변경을 보존한다.
+- Drive 활용3 폴더 `1yJ-KpNrkyQi10K0t9h48JPwOSxp2ctnU`에서 데이터 `185WfDUNeEmJ1-1CndIMwUwlFknzriGBO`, 색인 `1pp11fgVVMM0MVGIHbFKnYUXbw_m2ZGCZ`, 전체 ZIP `1KjIRmeeNhE3TZGpLZNvSMnpQt5PoKhVC`를 같은 파일 ID로 r6 갱신했다. Q21 상태 `1-Hs4E6EvnEiH4WbVbt4soszMhB1425KO`, 독립 검산 `1GSzwFLeShi2AcaruxU_pGBjDvM3A_CK6`, ZIP 검산 `1mg_4qygjCPrwnDZGm40bydNCeoifHuv4`, 브라우저 증거 `1uA_3DV7NLOa-ZIBxtVIP7N1c57CxkbJJ`, 원문/답안 크롭·ZIP 렌더 PNG를 같은 폴더에 추가했다. 데이터·색인·전체 ZIP은 Drive 원시 재다운로드의 크기와 SHA-256을 로컬과 대조해 모두 일치했다. 영수증 `1CU9DIj8oM8-plKRQqVenbZsJKMPRmHql`, 로컬 `.private-work/hw-expansion-20261023/hw3/q21-review/q21-drive-sync-receipt-r6.json`.
+
+# 2026-10-25 최신 — 활용3 Q18 9개 확장·전체 ZIP 검수 r4
+
+- 활용3 Q18 유사문제 9개를 추가해 171문항·19유형이 됐다. 현행 원문 PDF p.4와 Drive 답안 후보 p.4를 직접 대조했다. 원문 그림은 300dpi PDF에서 규칙·바구니 라벨까지 그대로 잘라 사용했다. 답안 후보 손글씨의 원문 44개는 역산으로 재현했으며, 공식 정답표 여부는 미확인이다.
+- 변형 최종 수량 `16,24,40,48,56,64,72,80,88`; 처음 ㄱ 정답 `22,33,55,66,77,88,99,110,121`. 이동 세 번을 역산해 유일하게 구하고 모두 순방향 시뮬레이션했다. 활용 배점 3.4에 따라 중 난도다.
+- 기존 162문항은 기존 데이터 SHA `9009f218ab8c3f689631a7ba0d400434f4e62487f61b3689b346e977eaef8154`로 복원 대조되어 보존됐다. 현재 데이터 SHA `489083bd38ff860d0ea183de5747e9ab69400df767dfc3f84ddadc3cfd03403e`; 색인 SHA `d562a0704a363522fd34e2cdf113a52bee80e6ef2c3960565f958ee9201bb5c6`.
+- 독립 풀이·통합 브라우저·ZIP 검수·Apple Vision OCR PASS. 실제 ZIP 7개 항목, 문제 PDF 39쪽·풀이 PDF 63쪽 A4, ZIP SHA `8d8e9920d56608442ec6e54cc390b9a17f9ae63fe34544b6331e0c09e7bd9c18`. PDF p.22 문제 그림·표, p.34 풀이 표·학습 연결을 눈으로 확인했다. 상태/근거 `.private-work/hw-expansion-20261023/hw3/q18-draft/20261025-applied3-q18-status-r4.md`.
+- Drive 기존 활용3 폴더 `1yJ-KpNrkyQi10K0t9h48JPwOSxp2ctnU`의 데이터 `185WfDUNeEmJ1-1CndIMwUwlFknzriGBO`, 색인 `1pp11fgVVMM0MVGIHbFKnYUXbw_m2ZGCZ`, 학생 ZIP `1KjIRmeeNhE3TZGpLZNvSMnpQt5PoKhVC`, 독립 검산 `1Tmi-BZ8BdsT6dnvREKYYd_QwhIf3ufUT`, 브라우저 검수 `1eUUr7Ub1eUJS5ORR1wTnTVTSoXJJeTjA`, ZIP 검수 `1H-aNGFlx2ST2RZBxLhH5O-GapCx-tfbB`, 상태 `1YahUTe-1OmrurqbAcy6zqhmNQEo7lnm8`를 r4로 갱신했다. Q18 검수근거 ZIP `1i0zZzvaXdqx22CXM5HHh78mMnbPANPqs`. Q18 대조 `1LAnynmdw9Yo-9BOjiEfMWQ_i-Y42CxNY`, OCR `1An7pKZWyp-YgBSHaHSoKd4239h3KKTiS`, 그림 `1XOsH99IrJ-tVtzy7lJ9qVhLSQLP_9keL`, 독립검산 `1A3-BVvo38Sr_PAeO71KG-CM4Z6G9pO4F`, 통합검증 `1WLfM1cu-XLQ7P847V_fQ7arAXquE7dRV`. 14개 Drive artifact의 원시 재다운로드 크기와 SHA-256이 로컬과 모두 일치했다. 영수증 `.private-work/hw-expansion-20261023/hw3/drive-sync-r4-receipt.json`.
+- 활용3 미검수 잠금 `[4,6,7,12,13,16,19,21,24,27,29]`. 저장소 `main`에는 다른 작업자의 기존 사용자 변경이 함께 있어 이번 변경은 미커밋·미푸시·미배포로 유지한다. `bank/drafts/`, `materials/.DS_Store` 포함 기존 변경을 보존한다.
+
+---
+
+# 2026-10-25 재개 최신 — 활용8 Q19 9개 확장 검수·Drive 보관 r28
+
+- 활용8 19번 변형 9개를 추가해 통합 자료를 252문항·28유형으로 만들었다. 기존 243개를 보존했다. 원문 PDF p.4와 그림 부재를 직접 확인했다. “마주 놓여 있는”을 원형 배열의 정반대 자리로 해석했고, 새 문항에는 원 둘레·같은 간격을 명시했다. 확보된 답안 PDF는 본문이 같은 빈 답란 사본이라 공식 답안으로 확인되지 않았다. 원문 답은 독립 추론 3번·보라색으로 명시한다.
+- 독립 검산기와 ZIP 검증기 PASS. 실제 ZIP 7개 파일, 문제 9개·풀이 9개 ID 일치, 학습 연결, A4 문제 2쪽·풀이 3쪽. 렌더 5쪽 직접 확인. 브라우저 QA는 입력 9개·진단/학습 링크·2단·375px·3회 입력·기존 이력 보존, 브라우저 오류/외부 쓰기 0.
+- 데이터 r28 SHA-256 `8a8fef47d88b9a2403710f99de36d188f90b5ebebf8493b70db36b3392eff6db`, 색인 `89606ff9b168e62326d6b3df342f406bddb09d2616b12afdfa19ec6564e5e83c`, 학생 ZIP `ec29c86116704e1c48c3b327eaf9390850222a21b37d7d7de95591d8c806cbc3`, 근거 ZIP `a32e025c7e1dab3f95b03578f3bbd9789391ca2c4f045bac30d5550fca630491`.
+- Drive `문제은행 검수 · 활용 8회` 폴더 ID `18-61VnFMNv1FGKbS6ofqYohkT5uA1UCd`에 기존 데이터·색인 ID를 갱신하고 Q19 ZIP·상태·원문대조·독립검산·근거 ZIP·영수증을 추가했다. Drive에서 데이터·색인·두 ZIP을 원시 다운로드해 크기와 SHA-256을 로컬과 대조했다. 주요 신규 ID: 학생 ZIP `1LC_12YmgyqgTejumN85TupRRpZajkeKN`, 근거 ZIP `1osdIpUpwSsJZvLhz2zzg4UQhl7PBT55S`, 상태 `1JJrLFxFluPnWJt3BP5secIiSD8c-yd0C`, 영수증 `1lqMRe3kXhNZX38jghxczhFHNqyYIRSEB`. 자세한 기록 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q19-status-r28.md`, 영수증 `.private-work/hw-expansion-20261023/hw8/q19-drive-receipt-r28.json`.
+- 로컬 `main`/`origin/main`은 `dcb9bdf`. 문제은행 데이터와 QA 파일 다수는 미커밋이며 푸시·사이트 배포하지 않았다. 활용8 원문 대조 대기는 `[11,16]`; 다음에는 원문 PDF·답안 후보 및 승인된 그림 경계를 확인하고 둘 중 진행 가능한 문항을 이어서 검수한다.
+
+---
+
+# 2026-10-25 재개 최신 상태 — 활용9 Q28 확장·전체 ZIP 검수 r24
+
+- 사용자가 마감(2026-10-24 02:00 KST) 뒤 “계속 진행”으로 재개를 지시했다. 아래 r24는 로컬 검수 완료본이다. Drive에 자료·검수 기록은 반영했고, main 원격·사이트에는 아직 반영하지 않았다.
+- 활용9 28번 새 그림 9개를 승인 범위에서 추가했다. 원문 p.5 그림·답안 후보 p.5를 직접 대조했고 원문 경로 수 17을 독립 재계산했다. 답안 후보 공식성·판본 동일성은 미확인으로 기록했다.
+- 처음 ZIP에서 SVG 그림이 PDF에 빠지는 결함을 눈으로 발견했다. SVG 내재 크기 `width`·`height`를 넣고 r24로 다시 내보낸 뒤 문제 PDF 59–61쪽, 풀이 PDF 86–88쪽에서 변형 1~9의 그림·풀이를 직접 확인했다. 잘림·겹침 없음.
+- 독립 검산 22개(`qa/applied9-*-independent-validate.py`) 전부 PASS. 통합 Playwright `qa/applied9-q02-q06-browser-validate.cjs` 재실행 PASS(270문항·풀이, 입력/진단/학습 연결, 2단, 375px, ZIP 다운로드). ZIP `qa/applied9-fullzip-validate.py` 재실행 PASS. 30유형·270문항/풀이, 답 입력·진단·유사문제 학습 연결, 2단, 375px, 외부 쓰기 0. 문제 PDF 64쪽·풀이 PDF 96쪽 모두 A4.
+- r24 ZIP SHA-256 `efbe660133a3bd2be871f6c01000c45b0be4fcf9cafc177562c51df693903765`(재생성본); 데이터 SHA `1725957d79e962f36c80612ae33f481dfb309131d55778557995179d086e0cf8`; 색인 SHA `541e91cb84dc167152c1a40eb25a0875e5460f6b77b97d91b10d045cd0c10be6`. 자세한 로컬 증거 `.private-work/hw-expansion-20261023/hw9/q28-r24-qa.md`, 실제 ZIP은 `hw9/q02-browser-qa/` 아래. Drive 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`에 데이터 `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`, 색인 `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`, 전체 ZIP `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`, Q28 기록 `1HTV79wZVMNnT7XgtuXMKUH5ejFerTBjG`를 반영했다.
+- 원격 공개 기준과 로컬 작업본은 여전히 구분한다. 원격 `main`은 `dcb9bdf92da8ceea04aab67523c1234f87ea73ee`; 기존 변경을 포함한 작업 트리를 초기화하거나 정리하지 않는다. 활용8 Q11·16·19 및 다른 회차 대기 항목은 기존 잠금 사유가 해소되기 전까지 공개하지 않는다.
+
+---
+
+# 2026-10-25 최신 — 활용9 Q24 확장 완료 · r21
+
+## 활용9 진행
+- r21은 기존 28개 원문 유형·252문항이며 미검수 잠금 `[25,28]`이다. Q24 곱셈식 기호 숫자 유형 9문항과 새 그림 9개를 추가했다.
+- 원문 PDF p.4 그림을 직접 대조했다. 표시된 두 끝 숫자 4,4에서 ㄱ=8, ㄴ=3, 합11을 전수 계산으로 재현했다. 답안 후보 p.4의 손글씨와 일치하지만 후보 답안의 공식성·판본 동일성은 미확인이다. 원문은 보존했다.
+- 9개 변형은 끝 숫자 단서 `[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8],[4,0],[4,8]`; 유일한 `(ㄱ,ㄴ)`은 `(9,8),(9,7),(9,6),(9,5),(9,4),(9,3),(9,2),(8,5),(8,6)`. 모든 가운데 숫자 0~9와 결과 행 자릿수를 검산했다.
+- Q24 독립 계산 PASS. 전체 브라우저 PASS: 252/252 입력·진단, 학습 연결, 2단·모바일, 그림144개, 28유형×9, 오류·외부 쓰기0. ZIP 7개 항목, A4 문제59쪽·풀이89쪽, 49,635,610 bytes, SHA `73abd8b0501890708de0ae174c7129053fb351368ec52524295593d4708fe454`. 문제 PDF pp.50–52, 풀이 pp.73–75 시각 검수.
+- 데이터 SHA `dbc2a945d3972e64339c0dada9a87acff2f899aa4a54a3264fd3039e7d892ec6`, 색인 SHA `cefb26a233252fd1044acdc086f3d09e2272dea7d9896d067dd45d513fbf7b75`.
+- 상세 기록 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q24-status-r21.md`; 검산 `.private-work/hw-expansion-20261023/hw9/q24-independent-audit-r21.json`; 실제 ZIP은 `q02-browser-qa/` 안의 `...q23-q24...-252variants.zip`.
+- Drive `문제은행 검수 · 활용 9회` 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`에 반영·메타데이터 확인: 학생 ZIP `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`, 데이터 `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`, 색인 `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`, Q24 상태 `1O8sNFtSAPd6CDC5-k5hcbfBjhia-Mc0s`, Q24 근거 ZIP `1K9ECmC5xZ5wDcEDtXV2aiitVkLaN5duU`, sync receipt `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`. 공용 handoff 기존 ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`도 r21로 갱신했다. Drive에서 제목·MIME·크기 readback 완료; 원격 원시 바이트 SHA 대조는 하지 않았다.
+- 로컬 `main` 미커밋·미푸시·미배포. 다음은 Q25, 이후 Q28.
+
+# 2026-10-25 최신 — 활용9 Q23 확장 완료 · r20; 최종4 ZIP 재검증
+
+## 활용9 진행
+- 활용9 통합본 r20은 기존 유형 27개·243문항이다. Q23(거울에 비추어도 숫자가 되는 성냥개비 카드) 유사문제 9개와 새 카드 그림을 추가했다. 대기 유형 `[24,25,28]`.
+- 원자료 시험지 PDF p.4 Q23 그림과 답안 후보 PDF p.4를 직접 확인했다. 원문 12개 정답 후보 10을 별도 반사/배열 완전 열거로 재현했지만 답안 후보의 공식성·판본 동일성은 확인되지 않았다. 변형 답은 `[5,2,10,4,12,6,16,24,72]`; `qa/applied9-q23-independent-validate.py` PASS.
+- 통합 브라우저 검사 PASS: 답 입력·243/243 진단·학습 포인트·원시험 링크·2단 좌우 순서·모바일·27유형×9 카탈로그. 오류와 외부 쓰기 0. 실제 ZIP은 문제 57쪽·풀이 86쪽 A4, 7개 항목, 48,276,525 bytes, SHA `1351e3d7fa73cd1e7eb2a757f4803f7b4a644d72a84098bdde91eeaedced8bb5`. Q23 문제 pp.48–50, 풀이 pp.70–72 렌더를 확인했다.
+- Q12/Q20/Q22 기존 독립 검산기를 r20 범위로 갱신해 재통과했다. 데이터 SHA `67c135584592fa787661d13265631ac28613cd1a12c77aadca05d444f18e6003`, 색인 SHA `79d4ba710e45ce211153977eb0a70ac7d21e169b7c5925daabd21c428f4ae304`. 상세 상태 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q23-status-r20.md`.
+
+## 최종 4회 ZIP 오류 확인
+- `last4-parent-report-browser-validate.cjs`에서 최종4 진단 코멘트 우선 문항, 학습 계획, 교재 위치, QR 링크가 모두 같은 우선 유형을 가리키고 유형당 승인 유사문제 3개씩 렌더됨을 확인했다. 합성 오답 `[12,15,28]`의 요약 인쇄 준비 결과는 9문제·9풀이, ID 쌍 일치다.
+- 관리자 ZIP 브라우저 검수에서 합성 학생의 최종4 ZIP을 실제 다운로드해 PDF로 열었다. 우선 유형 `[28,29,30]`에 대해 9문제와 동일 9풀이를 포함하며 pending 부록 안내가 없다. 혼합 최종3+4 ZIP도 두 회차 각각 동일하게 검사했고 운영 쓰기는 0.
+- 해당 기존 QA에는 완료 전 상태인 “최종4 유사문제 제외” 예상값이 남아 있어 `qa/admin-last14-batch-browser-validate.js`를 현재 승인본 기준으로 갱신했다. 로컬 재검사 PASS.
+- `admin-final-batch.js`의 인쇄 프레임에서 html2canvas를 가져오지 못하면 관리자 창에 이미 로드된 렌더러를 재사용하도록 보완했다. 이 수정은 `dcb9bdf` (`Fix Last4 diagnosis practice PDF renderer fallback`)로 `main`과 `origin/main`에 반영됐고, 공개 `admin.html`은 캐시 버전 `20261025-last4-renderer-fallback`을 가리킨다. 공개 `admin-final-batch.js`와 `final-summary-practice-print.js`의 SHA-256이 로컬 파일과 각각 일치한다.
+- 2026-10-25 재실행한 합성 학생 전용 관리자 브라우저 검수(`qa/admin-last14-batch-browser-validate.js`) PASS: 최종1~4 개별 ZIP, 혼합 최종3+4 ZIP, 2단계 인쇄물, 코멘트·학습 연결, 최종4 우선 유형 `[28,29,30]`의 유사문제 9개와 풀이 9개 ID 쌍 일치, pending 부록 경고 없음, 브라우저 오류 0, 운영 데이터 쓰기 0. 생성 ZIP의 PDF는 A4 10쪽이며 9문항·9풀이가 포함된다. 새 검수 자료는 `.private-work/last-batch-error-check/current-admin-zip-verification/`에 있다.
+- 검수 당시 공개 사이트 스크립트는 로컬 수정본과 바이트 단위로 일치한다. 실제 계정의 학생별 ZIP은 별도 생성하지 않았으므로 해당 학생 자료에서의 개별 재현 여부는 미확인이다. 최종4의 코드 반영·공개 파일·합성 ZIP 검수는 완료 상태다.
+- 같은 날 `qa/last4-parent-report-browser-validate.cjs`도 합성 기록으로 재실행 PASS: 우선 문항·학습 계획·오답 유형 정렬, 진단 요약 인쇄의 동일 변형 9문제+풀이 9개(4쪽) 연결, 전체/오답/정답 문제 생성기, 최종4 30유형 카탈로그 링크 30개, 공개 쓰기·브라우저 오류 0. 검수 결과는 `.private-work/last-batch-error-check/current-report-verification/last4-report-results.json`에 저장했다.
+
+## 다음 작업
+- 계속 활용9 남은 승인 그림 유형 `[24,25,28]` 원문 시험지·답안 PDF와 실제 그림을 각 문항별로 직접 대조한 뒤 변형을 만든다.
+- Drive r20 보관: 학생 ZIP `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`, 데이터 `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`, 색인 `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`; Q23 상태 `1vss3vZbiu79z04SyKnaGk8AsjJS9q6U5`, Q23 근거 ZIP `1GjO2oqmAmFKMkDrWJXpK0h_yl-jLYrnG`. 기존 r12–r19 근거는 보존한다. 공용 handoff ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`, Drive sync receipt ID `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`에 r20을 반영했다. Drive 폴더 readback에서 r20 파일명·MIME·크기를 확인했다.
+
+---
+
+# 2026-10-25 최신 — 활용9 Q22 확장 완료 · r19
+
+- 활용9 통합본 r19는 기존 원문 유형 26개·234문항이다. Q22 주사위 방향 경로 새 그림 유사문제 9개를 추가했다. 대기 시각 유형 `[23,24,25,28]`.
+- 원문 p.4의 시작면(윗면2·앞면4·오른쪽6)과 1~14 경로를 직접 확인했다. 원문 답안 후보의 `5,9,13`을 3차원 회전으로 재현했다. 후보 답안 공식성·판본 동일성은 미확인이다. 변형 9개는 별도 회전행렬 검산으로 서로 다른 답을 산출했다. Q12와 Q20 검수도 r19에서 재통과.
+- 브라우저 검사 PASS: 234문항·풀이·답입력/진단, 학습 연결, 2단·모바일·26유형 카탈로그, 오류/외부 쓰기 0. ZIP A4 문제 55쪽·풀이 83쪽. Q22 문제 pp.45–47·풀이 pp.67–69 렌더 확인. ZIP 46,562,993B SHA `9d255e69bfebee18b8b6e31fbbd40af68de03b07bee93276be5293ff98fd667a`.
+- Q22 기록 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q22-status-r19.md`, 근거 `GFIELD_활용9회_Q22_검수근거_r19.zip`. 데이터 SHA `e9a955bb42ce22f8976991daf830e3fc001f6c4cb5edf6d5e5a52cae10e31bc8`, 색인 SHA `4271b14592dc742872253e8934ad2875d99fdea27529a3bb89a19516513f2cf5`, 근거 ZIP SHA `2c69584217f8648302f56fa94184128ff35a8f68c67b2a0545d55b42d9a1a562`.
+- Drive r19 갱신 뒤 ID·파일명·MIME·크기를 읽어 대조한다. 로컬 `main` 미커밋·미푸시·미배포. 다음은 시각 유형 `[23,24,25,28]`의 원문·답안 PDF를 먼저 대조한다.
+
+---
+
+# 2026-10-25 이전 최신 — 활용9 Q20 확장 완료 · r18
+
+- 활용9 통합본 r18은 25개 기존 원문 유형·225문항이다. Q20 반복 격자 경로 유형의 새 그림 유사문제 9개를 추가했다. 남은 시각 유형은 `[22,23,24,25,28]`.
+- Q20 원문 p.4 경로는 한 반복 14칸, 8열 이동이다. 답안 후보의 130번째 답 `(나,75)`를 독립 계산으로 재현했으나 답안 후보의 공식성·판본 동일성은 미확인이다. 변형 9개의 행·열 정답은 직접 인덱싱과 몫·나머지로 대조했다. `qa/applied9-q20-independent-validate.py` PASS. Q12의 40,320 배열/복수정답 검수도 r18에서 재통과.
+- 통합 브라우저 검사 PASS: 질문·풀이·답입력·진단 225개, 2단, 학습 연결, 375px, 25유형 카탈로그, 외부 쓰기 0. 실제 ZIP 7개 항목, A4 문제 53쪽·풀이 80쪽. Q20 문제 pp.41–43·풀이 pp.61–63 시각 검수. ZIP 45,262,392B, SHA `64efa6eb3ae9a99e7be03ac2b4855b03a8a1571caa9e1d530f1a9d8ad4a2f6f6`.
+- Q20 기록 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q20-status-r18.md`, 검수근거 `GFIELD_활용9회_Q20_검수근거_r18.zip`. 데이터 SHA `e8e35e4dd72354f81fafcc57f64df1351322f035a7f244e5f9adb1ce62ac13c9`, 색인 SHA `709918de6c81f6dc971ad42e43245e33c6bd4f1b16a8cb89bd58138335ae2910`.
+- Drive r18 갱신 후 ID·파일명·MIME·크기를 읽어 대조한다. 로컬 `main` 미커밋·미푸시·미배포. 다음은 남은 `[22,23,24,25,28]` 중 원문 PDF와 답안 PDF를 먼저 직접 대조한다.
+
+---
+
+# 2026-10-25 최신 — 활용9 Q12 확장 완료 · r17
+
+- 현재 로컬 활용9 통합본 r17은 24개 기존 원문 유형·216문항이다. 마지막 완료는 Q12 새 정육면체 그림 9개다. 남은 시각 원문 `[20,22,23,24,25,28]`; Q18 답안 후보 충돌과 Q27/Q28 그림 대조·승인 상태는 각 상태 기록을 확인한다.
+- Q12 원문 p.2의 정육면체 구조·고정 수 1·2를 직접 대조했다. 1~8 배치 40,320가지 중 여섯 면 합이 같은 144개, 변형별 단서에 맞는 두 완성을 전수 검증했다. 입력은 두 유효 배열 모두 채점한다. 후보 답안 판본·공식성은 미확인이다. `qa/applied9-q12-independent-validate.py` PASS.
+- 통합 브라우저 216문항·답 입력/진단·학습 연결·2단·375px·카탈로그 24유형×9·외부 쓰기 0 PASS. ZIP 7개, 문제 50쪽·풀이 77쪽 A4. Q12 문제 pp.24–26·풀이 pp.35–39 렌더 확인. ZIP 43,767,601B, SHA `18d81890648830be1ac03ba107992ec4cd5873f1ad5e0fccd8a525d11a0824f7`.
+- Q12 상태 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q12-status-r17.md`, 수학 기록 `.private-work/hw-expansion-20261023/hw9/q12-independent-validation-r17.json`. 증거 ZIP `GFIELD_활용9회_Q12_검수근거_r17.zip`.
+- Drive 동기화 완료: 기존 ID 유지 — 학생 ZIP `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`, 데이터 `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`, 색인 `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`, 상태 `1xZt_5x83QSnUob8kT3P2nHgH4hnhmV5S`; Q12 근거 ZIP 추가 `1F9rqbG-b74AGy6LuagqRhZBZfVquWdwv`. 공용 handoff ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`, Drive sync receipt ID `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`. 폴더 목록 readback에서 제목·MIME·바이트 크기를 확인한다. 전체 receipt 및 다음 점검은 `.private-work/hw-expansion-20261023/hw9/drive-sync-r17-receipt.json`.
+- 로컬 `main`, 미커밋·미푸시·미배포. 기존 사용자 변경과 임시 파일을 보존한다. 다음 작업은 활용9 시각 문항 `[20,22,23,24,25,28]`에서 원문과 답안 PDF를 먼저 대조한다.
+
+---
+
+# 2026-10-25 이전 최신 — 활용9 Q04 확장 완료 · r15
+
+- 활용9 r15 통합본 22유형·198문항. 대기 `[8,12,20,22,23,24,25,28]`. Q04 새 삼각형 그림 9개 추가; 원문 그림은 보존했다.
+- Q04 원문 3예가 `가운데=꼭대기×오른쪽 아래÷왼쪽 아래` 관계를 보이며 답안 후보의 9와 일치한다. 아홉 변형 모두 정수로 계산된다. 후보 답안 판본 공식성은 미확인. 독립 Q04 검증 PASS.
+- 전체 독립 검산 14개 PASS. 브라우저 198문항 입력/진단·학습 연결·원시험 링크·2단 좌→우·375px overflow·카탈로그 22×9·오류/외부 쓰기 검사 PASS. ZIP 7개 파일, A4 문제 45쪽·풀이 70쪽. Q04 그림/풀이 렌더 확인. ZIP 39,630,285B, SHA `56488a332a8d77f413de6512ce0e60482683b9fc09c717ea2e27fe1ea7f4cc1f`.
+- Q04 기록 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q04-status-r15.md`, 증거 `.private-work/hw-expansion-20261023/hw9/GFIELD_활용9회_Q04_검수근거_r15.zip`.
+- 로컬 `main`, 미커밋·미푸시·미배포. Drive 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`는 r15 업로드 기록을 보존한다.
+
+---
+
+# 2026-10-25 최신 — 활용9 Q01 확장 완료 · r14
+
+- 활용9 통합본 r14: 21개 원문 유형·189문항. 대기 `[4,8,12,20,22,23,24,25,28]`. Q01 새 격자 그림 9개를 추가했고 Q03 검수본도 보존했다.
+- Q01 원문 p.1 도형은 4열×3행, ● 2행 3열, ♠ 3행 2열이다. 후보 답 16은 직사각형 경계를 전수 열거한 독립 계산과 일치한다(후보 답안 판본 공식성은 미확인). Q01 독립 검수기 PASS.
+- 기존 12개 유형 독립 검산 전부 PASS. 브라우저: 189문항·풀이, 입력/진단 189/189, 학습 위치·포인트, 원시험 연결, 2단 좌→우, 모바일 overflow 0, 오류·외부 쓰기 0, 카탈로그 21유형×9 PASS. 실제 ZIP 7개 파일·A4 문제 43쪽·풀이 67쪽. Q01 문제 그림과 풀이를 ZIP 렌더에서 확인.
+- ZIP 38,416,105B, SHA `743cc4f86b3a4aa2bca9caef86434836b5724f6d2878399d238d4152a504add4`. Q01 상태 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q01-status-r14.md`, 근거 `.private-work/hw-expansion-20261023/hw9/GFIELD_활용9회_Q01_검수근거_r14.zip`. Q03 r13 근거는 아래 이전 최신 기록에 있다.
+- Drive 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`에서 학생 ZIP·데이터·색인을 기존 파일 ID로 r14 갱신하고 Q01 상태/근거 ZIP을 추가했다. Q01 상태 ID `1aYslF2hPHLuBO5QwUpnQvnoXVrfg8UGd`, 근거 ID `1hC1E95ff7F9UNBkX81dEMtMpEvMq7WuN`; r13에서 저장한 Q03 증거도 보존. 공용 인수인계 ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`, receipt ID `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`. 폴더 목록의 ID·이름·MIME·크기 확인; Drive 원시 바이트 SHA 재다운로드 비교는 하지 않았다. 영수증 `.private-work/hw-expansion-20261023/hw9/drive-sync-r14-receipt.json`.
+- 로컬 `main` 미커밋·미푸시·미배포. 다음은 승인된 미완료 그림 유형 중 Q04 원문·답안 페이지를 직접 열어 대조한다.
+
+---
+
+# 2026-10-25 최신 — 활용9 Q03 확장 완료 · r13
+
+- 활용9 통합 데이터 r13: 20개 원문 유형·180문항. 대기 `[1,4,8,12,20,22,23,24,25,28]`. Q03 승인 유사문제 9개·새 식 그림을 추가했고 원문 그림은 보존했다.
+- 원문 Q03 p.1의 세 식을 직접 확인했다. 답안 후보 p.1의 `○=36, △=4, □=3`은 모두 성립하지만 후보 판본의 공식성은 미확인이다. 변형 9개는 `△+□`에 맞는 양의 정수쌍 전부를 열거하고 두 식에 대입해 해가 유일함을 확인했다.
+- `qa/applied9-q03-independent-validate.py`: PASS. 기존 활용9 독립 검산 12개 모두 r13에서 PASS.
+- 브라우저: 180문항/풀이, 답 입력·진단 180/180, 학습 위치·포인트, 원시험 링크, 2단 좌→우, 모바일 overflow 0, 카탈로그 20유형 각각 9개, 오류·외부 쓰기 0. 실제 ZIP 7개 항목·A4 문제 41쪽·풀이 64쪽; Q03 그림/풀이 시각 확인. ZIP 36,822,227B, SHA `cb04f699148b4428094e332bf5522ef5dbc07f7c8ea229a15e7ed7ba25bbcd2b`.
+- Q03 상태 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q03-status-r13.md`, 근거 `.private-work/hw-expansion-20261023/hw9/GFIELD_활용9회_Q03_검수근거_r13.zip`; 통합 로그 `.private-work/hw-expansion-20261023/hw9/q02-browser-qa/browser-validation-r13.log`, 실제 ZIP은 같은 폴더의 `applied9-...-180variants.zip`.
+- 로컬 `main` 작업본이다. 코드 변경은 미커밋·미푸시·미배포. 이전 r12 이하 파일과 작업물은 보존한다. 다음은 사용자 승인에 따라 남은 시각 유형 `1,4,8,12,20,22,23,24,25,28` 가운데 Q01부터 원문/답안/실제 그림을 직접 대조해 진행한다.
+- Drive `문제은행 검수 · 활용 9회` 폴더에 r13 ZIP·데이터·색인을 기존 ID로 갱신하고 Q03 상태·근거 ZIP을 추가했다. ZIP ID `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`, 데이터 `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`, 색인 `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`, Q03 상태 `1_OS6E7iLmovTx0KVYSPjuxt_kiz4FdpB`, Q03 근거 `1V-nCKnfN7oyu8y2ANK4FGEr9SK5BelDR`. 공용 인수인계 ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`, 영수증 기존 ID `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`에 반영했다. 폴더 목록에서 ID·이름·MIME·크기 확인. Drive 원시 바이트 재다운로드 SHA 비교는 하지 않았다. 세부 영수증 `.private-work/hw-expansion-20261023/hw9/drive-sync-r13-receipt.json`.
+
+---
+
+# 2026-10-25 최신 — 활용9 Q09 확장 완료 · r12
+
+- 활용9 로컬 `main` 데이터 r12: 19유형·171문항. 대기 `[1,3,4,8,12,20,22,23,24,25,28]`.
+- Q09 원문 p2 세 체중계의 합(민수+수현 98, 영진+수현 91, 민수+영진 105)을 직접 대조했다. 답안 후보 손글씨 정답(민수56, 수현42, 영진49)은 재현되지만 공식 판본은 미확인. 새 유사문제 9개와 새 그림을 추가했으며, 정답 튜플은 `(16,12,20)`, `(19,12,23)`, `(19,16,21)`, `(22,19,24)`, `(24,19,26)`, `(25,22,27)`, `(27,24,29)`, `(30,25,32)`, `(32,27,34)` kg. 독립 연립계산·세 쌍의 합 대입·그림값과 SVG 해시 검증 PASS.
+- r12 전체 수학 검산기는 Q05/Q07/Q09/Q10/Q11/Q13–18/Q19/Q21/Q26/Q27/Q29/Q30에서 통과했다. 브라우저 171문항 입력/진단·학습 링크·카탈로그·2단 좌→우·모바일 검사 통과. 실제 ZIP 구성·정답·ID 대조 PASS; A4 문제 39쪽·풀이 61쪽. Q09 문제 pp.9–11, 풀이 pp.13–16 렌더 확인. ZIP 35,749,430B, SHA `1bb0f5aa7d8fcc2f39cd0964fdda19717ed3faa87ace7f61353152cc51c42c58`.
+- Q09 기록 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q09-status-r12.md`, 근거 `.private-work/hw-expansion-20261023/hw9/GFIELD_활용9회_Q09_검수근거_r12.zip`.
+- Drive `문제은행 검수 · 활용 9회` 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`에 r12 데이터·색인·학생 ZIP을 기존 ID로 갱신했고, Q09 상태/근거를 추가했다. 영수증 `drive-sync-r12-receipt.json`, receipt Drive ID `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`; 이 handoff의 Drive ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`. Drive metadata readback에서 ID·이름·MIME·크기 확인. 원격 raw SHA 재다운로드는 하지 않았다.
+- 사용자가 승인한 남은 그림 유형은 Q01·03·04·08·12·20·22·23·24·25·28이다. 원본 그림은 보존하고 새 그림은 변형 문항에만 쓴다. Q27 주사위 9개는 별도 승인 대상인 Q27에 r6에서 이미 완료했다.
+- 로컬 `main`에 기존 여러 작업 미커밋이 함께 있어 유지한다. 여기서는 commit/push/site deploy 하지 않았다.
+
+## 이전 스냅샷 — 활용9 Q18 확장 완료 · r11
+
+- 로컬 `main`의 활용9 데이터는 `20261025-applied9-q02-q05-q06-q07-q10-q11-q13-q17-q18-q19-q21-q26-q27-q29-q30-r11`, 18유형·162문항이다. 대기 `[1,3,4,8,9,12,20,22,23,24,25,28]`.
+- Q18 원문 p3의 인쇄된 전체합31은 전수 대입 해가 없고, 답안 후보 손글씨 수정33은 서로 다른 두 답(3회=8 또는4)을 허용한다. 후보 답안의 공식성 미확인이므로 원문은 제외/대기 상태로 둔다. 대신 동일 조건 추론 구조의 새 유사문제 9개(정답1~9)를 추가했다. 독립 전수검산 PASS.
+- 실제 UI 검사 PASS: 162문항·풀이, 입력 후 162/162 진단, 학습 위치·포인트·원시험 링크, 2단 좌→우, 모바일 375px overflow 0, 페이지 오류/외부 쓰기 0, 카탈로그 18유형 모두 9개 연결.
+- 실제 ZIP 7개 구성 파일 및 문제/풀이/문항목록/빠른정답 대조 PASS. A4 문제36쪽·상세풀이58쪽. Q18 문제 pp.21–25, 풀이 pp.34–38을 렌더 확인했다. ZIP 33,970,664B, SHA-256 `130e5ce9b0a9a43ba3729bf19b11c87591c0e20db5564e20f514fc649786b37d`. 데이터 SHA `055e43a0bda461848d29b0e50c7426620869ee7a57152dfaabf5bae89dc3bd11`, 색인 SHA `b8bfc8ef0c076e49eef6a39739b9eb2c9c456e0666b13f08bbe8d0931e740ade`.
+- 상태 기록 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q18-status-r11.md`, 증거 `.private-work/hw-expansion-20261023/hw9/GFIELD_활용9회_Q18_검수근거_r11.zip`.
+- Drive `문제은행 검수 · 활용9회` 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`의 기존 데이터·색인·학생 ZIP ID를 r11로 갱신했고, Q18 상태·증거 ZIP을 추가했다. receipt `drive-sync-r11-receipt.json` (Drive ID `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`)와 이 인수인계 파일(Drive ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`)도 r11로 갱신했다. Drive 목록에서 ID·파일명·MIME·크기 읽기를 확인했다. Drive 원시 바이트 재다운로드 SHA 대조는 하지 않았다.
+- 사용자 확인에 따라 주사위 그림 변형은 Q27에 적용했고, r6에서 9개 완료됐다. Q28은 방향그래프이며 대기.
+- 작업 트리는 기존 미커밋 작업을 보존하며, commit/push/deploy는 하지 않았다.
+
+## 이전 스냅샷 — 활용9 Q5 확장 완료 · r10
+
+- 현재 로컬 데이터·색인 버전 `20261025-applied9-q02-q05-q06-q07-q10-q11-q13-q17-q19-q21-q26-q27-q29-q30-r10`: 기존 유형 17개·153문항. 검수 대기 `[1,3,4,8,9,12,18,20,22,23,24,25,28]`.
+- 활용9 원문 1쪽 Q5와 카드 그림을 직접 확인했다. 답안 후보 1쪽 손글씨 원답 15와 독립 전수 열거가 일치한다. 후보 답안 판본·공식성은 미확인이다. 원본 숫자 카드 그림을 픽셀 그대로 보존해 9개 변형을 만들었다. 배수 조건 `[2,3,4,5,6,7,9,11,12]`의 답 `[30,20,15,12,13,7,6,4,8]`; 독립 검사 `qa/applied9-q05-independent-validate.py` PASS. 상태 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q05-status-r10.md`, 증거 `GFIELD_활용9회_Q05_검수근거_r10.zip`.
+- r10 실제 ZIP 브라우저 검사: 153문항 입력·진단·학습 위치/포인트·원시험 링크, 2단 좌→우, 모바일 375px, overflow 0, 외부 쓰기 0, 오류 0. 전체 ZIP 7개 파일, 문항 ID·빠른 정답·153개 풀이, A4 문제 31쪽·풀이 53쪽을 확인했다. Q5 문제 PDF 2–4쪽과 풀이 4–6쪽의 9문항을 렌더 검수했다. ZIP SHA-256 `4fdaff8799e86eb68f11cdb0b60c9914ad4cf3f9e95d97be54ae24b7ee1d5627`, data SHA `e8dab5f9c4375496f32a7edcd5dea155b41d481ebc365a66902cfc05320a0722`, index SHA `83a2537307564e21ac94784d6bde7b733fa01676e3383d5ec2580bcffa376cde`.
+- 사용자 확인: 주사위 그림 변형은 Q27에 적용. Q27 원문은 3×3×3 주사위이며 그림 9개가 기존 r6에 반영돼 있다. Q28은 방향 그래프 경로 세기이므로 원본 그림을 바꾸지 않고 검수 대기다.
+- Drive 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`에서 학생 ZIP·데이터·색인을 기존 파일 ID로 r10 갱신하고 Q5 상태/근거 ZIP을 추가했다. 폴더 목록 읽기로 이름·MIME·크기·ID를 확인했다. 로컬 SHA-256은 영수증에 기록했으나 Drive 원시 바이트는 재다운로드 비교하지 않았다. receipt Drive ID `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`; handoff ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`.
+- 현재 `main`에는 여러 회차의 미커밋 작업이 함께 있다. 전체 staging·commit·push·배포 금지. 다음은 대기 원문 중 원문·답안 그림이 직접 확인되는 회차부터 계속 검토한다.
+
+## 이전 활용9 스냅샷 — Q26 완료 · r9
+
+- r9는 활용9 기존 유형 16개·144문항이었다. 상세 검수·자료·당시 SHA와 Drive 상태는 아래 작업 일지 및 `.private-work/hw-expansion-20261023/hw9/drive-sync-r9-receipt.json`을 참조한다.
+---
+
+# 2026-10-25 이전 스냅샷 — 활용9 Q10·Q11 확장 r8
+
+- Q10·Q11을 활용9 PDF 원문/답안 후보에서 직접 확인하고, 원본 그림 크롭을 수정 없이 재사용해 유형별 9개를 확장했다. Q10 연립조건은 정확한 유리수 가우스 소거, Q11은 60순열 전수와 구간 계산의 독립 일치로 검산했다. 후보 답안 공식성은 미확인 상태다.
+- r8 데이터·색인 135문항, 15유형. pending `[1,3,4,5,8,9,12,18,20,22,23,24,25,26,28]`. 독립 수학 검산, 실제 브라우저 입력/진단/2단/학습연결/모바일 검사, 실제 ZIP 구성 및 PDF 시각검수 PASS. 문제 26쪽·상세풀이47쪽. ZIP SHA `f8a3afd1e693b9d386de8ede5fd9d045e7b66d35c697abeab9038041bc1c49ac`; 데이터 SHA `2bcae66c862163d5a0a6b9314f1fac561d11de0dba4612b988d22d3149e49b08`; 색인 SHA `a9aca4d4747a09efd7608b972f88f4b0522c461fa105fa3e0ed70aa8321be6cc`. 상세 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q10-q11-status-r8.md`.
+- 최근 “28번 주사위 4층” 승인은 현재 확인한 활용9 원문 PDF와 불일치한다(Q27=3×3×3 주사위, Q28=방향 그래프). Q28 새 그림은 만들지 않았고 승인 대상을 맞는 원문에서 확인할 때까지 잠근다.
+- Drive r8 갱신 완료: 학생 ZIP `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`, 데이터 `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`, 색인 `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`, Q10/Q11 근거 ZIP `1dyw199sk-sGlkrSnreSZESzOvHsY0nCG`, 상태 `1GP3zpg4SrBHWpVj6Ht2G8RHl4pko6Tzx`, receipt `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`, 이 인수인계 `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`. 데이터·색인 raw SHA는 일치; 두 ZIP은 metadata 크기 일치, 원시 SHA 미확인.
+- 작업본 `main`, 기존 미커밋 변경 포함, 미푸시·미배포. 마감 시각(2026-10-24 02:00 KST)이 지나 새 문항 생성은 재개하지 않았다. 다음에 재개할 때 pending 목록부터 확인한다.
+
+---
+
+# 2026-10-25 재개 — 활용9 Q11 유사문제 9개 r7 (최신)
+
+- 활용9 PDF 2쪽 Q11과 답안 후보 2쪽을 직접 대조했다. 원문 카드 5·2·4·8·6은 원본 페이지에서 그대로 크롭해 9개 변형에서 재사용했다. 26으로 나눠 몫 32, 나머지 0 아님 조건의 정답 후보 6개를 전수 계산과 구간 방식으로 확인했다. 답 후보는 손글씨 6으로 일치하나 공식성은 미확인.
+- Q11 변형 9개는 divisor/quotient를 바꾸어 답 1~9가 각각 나오도록 만들었다. 독립 검산 `qa/applied9-q11-independent-validate.py` PASS.
+- 활용9 r7은 126문항·14유형. 브라우저 126 입력/진단·학습/원시험 연결·2단·375px·27그림·외부 쓰기0 검증 PASS. ZIP 문제24쪽·풀이44쪽, SHA `4bc82c99319628a72821888f73d77cd071f6f70c2d13db69ded5030a0d0fff0a`. 세부 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q11-status-r7.md`.
+- 주의: 사용자는 “28번 4층 주사위 새 그림 9개”를 승인했지만 확인한 활용9 원문 5쪽에서 27번은 3×3×3 주사위, 28번은 방향 그래프다. r7에서 Q28 그림은 만들지 않았다. 이전 r6의 Q27 9개 그림은 이 Q28 승인의 근거로 소급하지 않는다. 정확한 회차·원문 특정 후 처리한다.
+- Drive 저장 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`. r7 학생 ZIP `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`, 데이터 `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`, 색인 `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`, Q11 검수근거 ZIP `1zxsXwmImzZPHA-fSwemekheD_1EMgwS-`, 상태 `1GP3zpg4SrBHWpVj6Ht2G8RHl4pko6Tzx`, Drive receipt `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`. 데이터·색인·근거·상태의 원격 raw SHA는 로컬과 일치. 학생 ZIP은 원격 크기 일치, raw 다운로드는 transport 종료로 SHA 미확인.
+- 이번 작업은 `main`의 기존 미커밋 변경과 함께 있으며 미커밋·미푸시·미배포다. 기존 변경은 보존한다.
+
+---
+
+# 2026-10-25 재개 — 활용9 Q27 주사위 그림 확장 r6
+
+- 활용9 PDF 5쪽 원문을 직접 대조했다. 주사위 그림은 **27번**, 28번은 방향 그래프 경로 세기다. 사용자 승인 문구는 “28번 주사위 그림”이었지만, 그림 유형으로 확인되는 Q27에 새 그림 9개를 적용했다. Q28은 번호/그림 불일치와 별도 승인 부재로 잠금 유지.
+- Q27 원문은 3×3×3 주사위 27개다. 답안 후보 p5의 손글씨 378을 확인했고, 직접 좌표 열거에서 접촉쌍 54×각 쌍의 눈 합7=378로 재검산했다. 답안 후보의 전체 판본 동일성과 공식성은 미확인.
+- Q27 변형 크기 2,4,5,6,7,8,9,10,11층, 새 SVG 9개와 독립 계산을 추가했다. 답은 84,1008,2100,3780,6174,9408,13608,18900,25410. 검산기 `qa/applied9-q27-independent-validate.py` PASS.
+- 최신 활용9 데이터 `20261025-applied9-q02-q06-q07-q13-q17-q19-q21-q27-q29-q30-r6`: 기존 원문 13유형·117문항; pending `[1,3,4,5,8,9,10,11,12,18,20,22,23,24,25,26,28]`. Q18 답안 충돌은 잠금. Q7·Q21 후보 답 불일치도 원시험 변경 없이 기록 유지.
+- Q7, Q13–17, Q19/Q21, Q27, Q29/Q30 수학 검산기를 최신 데이터 버전에서 모두 다시 실행해 통과했다. 브라우저에서 117문항/풀이/정답 진단/학습 위치·포인트·원시험 연결, SVG 포함 그림 18개, 2단 좌→우, 375px overflow 0, 외부 쓰기 0 확인. 실제 ZIP 7파일: 문제 22쪽·풀이 41쪽. ZIP SHA-256 `6e03b0ea213cc50b6733aca8df781424f7116cb714a6d79a27439e660942cf5a`; Q27 문제 pp.17–19, 풀이 pp.31–33 렌더 확인.
+- 상세 상태 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q27-status.md`, 근거 `.private-work/hw-expansion-20261023/hw9/GFIELD_활용9회_Q27_주사위_검수근거_r6.zip`.
+- Drive `문제은행 검수 · 활용 9회` 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`에 기존 ID를 유지해 r6를 반영했다: 학생 ZIP `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`, 근거 ZIP `1-1srMmqed6ZHPY0U_1PbcIfcmuaZOmJl`, 데이터 `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`, 색인 `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`, 상태 `1GP3zpg4SrBHWpVj6Ht2G8RHl4pko6Tzx`, receipt `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`. Drive metadata에서 ID·이름·MIME·크기·부모 폴더를 재조회했다. raw-byte SHA-256 재다운로드 대조는 하지 않았다. 로컬 영수증 `.private-work/hw-expansion-20261023/hw9/drive-sync-r6-receipt.json`. 현재 로컬 `main`은 기존 미커밋 작업 포함, commit/push/deploy 미실시.
+
+---
+
+# 2026-10-25 작업 재개 기록 — 활용4 Q1·Q4 로컬 QA 완료
+
+- 사용자가 활용5 Q28 유사문제 새 그림 9개 제작을 허용했으나, 최신 상태 r23에서 해당 9개 그림·문항·검산·ZIP은 이미 완료되어 있어 중복 생성하지 않았다.
+- 추가 확인: 활용8 Q11은 원문 PDF p3의 접은 정사각형 종이를 4곳 자르는 그림 문항이다. 직접 렌더 `.private-work/hw-expansion-20261023/hw8/applied8-source-p3-3.png`; 유사문제 9개에는 새 접기·자르기 그림이 필요하므로 현재 미착수다.
+- 활용4 Q1 실제 ZIP을 현재 데이터 버전에서 다시 내려받아 문제 PDF 3쪽·풀이 PDF 3쪽을 렌더 검수했다. 9개 문항·그림·풀이, 2단, 답 입력·진단·학습 연결, 3회 제한, 기존 응답 기록과 원시험 점수 보존이 확인됐다. Q1 답안은 독립 재현했지만 답안 PDF가 공식 정답표인지 미확인이다. 세부 `.private-work/hw-expansion-20261023/hw4/20261025-applied4-q01-completion-r2.md`.
+- 활용4 Q4는 시험지 p1·답안 p4를 직접 대조해 9개 변형을 추가했다. 원문 표시 35시간/실제 35분당 1시간에서 실제 경과 60시간, 후보 답 ‘모레 오후 8시’를 재현했다. 9개 모두 비례식·시간 시뮬레이션 검산, 2단 답입력·진단·ZIP 검수 완료. 실제 ZIP의 문제 PDF 2쪽·풀이 3쪽 모두 렌더 검수했다. 답안 PDF의 공식 여부는 미확인. 세부 `.private-work/hw-expansion-20261023/hw4/20261025-applied4-q04-completion-r3.md`.
+- 활용4 현재 로컬 데이터는 252문항·28유형, 미완료 `[2,3]`; 데이터 SHA-256 `98e8ed2ad60208ae16032b6261bfdeac9a1575258731975af2eded7a6a942a86`. Q1/Q4 외 기존 234문항은 보존했다. 화면 답안 기록도 원래 데이터 버전 키로 계속 찾아오도록 어댑터의 안정 키를 제공한다. Google Drive 기존 활용4 결과 폴더 `1XB2t5QvxFll2LlZLwP_R4S9io6vTg8Zk`에 Q1 ZIP `1v1evWcCzP-XKg0te-cXGRolAeRS2_tXB`, Q4 ZIP `1sQW2ANF0uTK6iml24rkhNa58PxogFi4t`, 데이터 `1igOuP7009N6BO1z0-SVxyn7AgBqs2VeW`, 색인 `1UFSHb8KVFTvzZNtiRShb--rOrZAtBhzt`, 검수근거 ZIP `16G_XyKVa51YQ4mUKzH6HpwCsuBlZsxsF`와 raw-byte SHA-256 대조 영수증 `.private-work/hw-expansion-20261023/hw4/drive-sync-r3-receipt.json`을 보관했다. 영수증 Drive ID `1r9I-ylkabbKHrgkRJy5Fe6EGUKXSlSu5`. 코드 커밋·푸시와 사이트 배포는 하지 않았다.
+- 활용4 Q2 시험지 p1과 답안 후보 p2를 직접 확인했다. 원문은 20×4cm 직사각형 5장, 2cm 겹침, 후보 둘레 192cm다. 숫자가 그림 안에 인쇄돼 있어 변형용 그림 허가 전에는 공개 데이터에 넣지 않는다. 아홉 텍스트 후보와 둘레 계산(166, 156, 224, 198, 222, 258, 262, 142, 272cm)을 비공개 초안 `.private-work/hw-expansion-20261023/hw4/q02-candidates-pending-figure-approval.json`에 준비했다. 활용4 Q3 시험지 p1·답안 p3도 직접 확인했고 격자 크기4, 답안 후보 60을 `2×(16+9+4+1)`로 재현했다. Q3 변형 그림 허용은 아직 요청하지 않았다. 답안 PDF 공식 여부는 미확인. Q3 근거 `.private-work/hw-expansion-20261023/hw4/q03-source-answer-review-r1.json`.
+- 2026-10-25 후속 활용4 Q02 계산 독립 검수: 원문 PDF 렌더에서 5장·20×4cm·2cm 겹침을 다시 확인하고 원문 둘레 192cm를 재현했다. 비공개 9개 초안의 새 수치를 두 방식(겹침 차감으로 전체 길이 계산, 노출된 바깥 긴 변 분할 합산)으로 검산해 `166,156,224,198,222,258,262,142,272cm`가 모두 일치했다. `qa/applied4-q02-independent-validate.py` PASS, 결과 `.private-work/hw-expansion-20261023/hw4/q02-independent-validation-r1.json`. 변형 도형 신규 제작 승인은 여전히 필요하므로 공개 데이터·색인·ZIP은 바꾸지 않았다.
+- 활용6 Q27은 원문 답안 손글씨와 독립 최댓값 계산이 불일치하므로 계속 잠금 상태다. 이 차이는 이력에 보존하고 공개 데이터에 반영하지 않는다.
+- 최근 재확인된 주사위 그림 승인 대상은 활용5 Q28이며, r23에 9개 변형·그림·검산·ZIP·Drive 반영까지 완료되어 중복 작업하지 않는다.
+- 다음은 활용4 Q2의 원문 겹침 직사각형 유형이다. 사용자에게 새 그림 9개 허용을 문의한 상태라 답을 기다리며, Q3 격자 그림은 아직 승인을 묻지 않았다.
+- 활용6 Q27은 원문 답안 손글씨와 독립 최댓값 계산이 불일치하므로 계속 잠금 상태다. 이 차이는 이력에 보존하고 공개 데이터에 반영하지 않는다.
+- 기존 작업 파일과 다른 회차의 미커밋 변경을 보존한다.
+
+# 2026-10-25 활용5 Q27–29 확장 완료 r23
+
+- 사용자가 작업 재개를 요청했고 Q27·Q28의 유사문제 그림 제작을 허용했다. 이전 작업 마감 안내는 이 재개 요청으로 대체됐다.
+- 로컬 `main` 데이터는 r23, 활용5 기존 유형 30개·270문항(원문당 9개), 신규 유형 0, 대기 원문 `[]`. Q27 문자식 9개, Q28 주사위 쌓기 9개, Q29 수열의 두 수 합 순위 9개가 포함된다. 각 문항에 답·풀이·학습 위치·학습 포인트가 연결됐다.
+- 필수 수학 검산 통과: 전체 기존 검증 135 checks, Q27 전수탐색, Q28 큐브 노출 최대화와 범주 공식, Q29 모든 쌍의 합 정렬. 브라우저에서 답 입력·진단·학습 연결·2단·375px·3회 입력·첫 답 보존·외부 쓰기 0 확인.
+- Q27–29 ZIP 각 7개 항목이며 문제·풀이 PDF 렌더를 시각 검토했다. 전체 ZIP은 270개 ID, 30유형, 그림 153개, 문제 PDF 65쪽, 풀이 PDF 104쪽, 모든 7개 구성 파일을 데이터와 대조해 PASS했다. 전체 169쪽을 모두 개별 육안검토했다고 주장하지 않는다.
+- 공식 답안표 미확인: Q27은 답안 PDF의 손글씨 H=9를 독립 재현했으나 공식 채점표 여부 미확인. Q28은 독립 정답 290이며 답안의 손글씨 단서가 있으나 공식 최종 표기 미확인. Q29 답안 사본에는 원문 문구만 있고 정답 표시가 없어 독립 계산 201을 보관했다. Q27은 서로 다른 문자를 1~9에 일대일 대응한다는 퍼즐 관습을 사용했고, 원문 문장에는 서로 다른 숫자라고 명시되지 않아 해석 전제를 기록했다.
+- 상세 검수 기록 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q27-q29-r23-status.md`; 전체 ZIP `.private-work/hw-expansion-20261023/hw5/output-qa-r23/selected-270.zip`; 증빙 묶음 `.private-work/hw-expansion-20261023/hw5/output-qa-r23/applied5-q27-q29-evidence-r23.zip`.
+- Drive `문제은행 검수 · 활용 5회` 폴더 `1iQZwXc0Ii8Kqx1g_vW2colH8mYfnguYv`에 r23을 반영하고 각 파일 ID·이름·부모 폴더·크기를 재조회했다. 공용 데이터 `1vFCBkVOjpN9rv1xNIwYmy_CUgc5p76bU` (2,386,018B), 인덱스 `1zPhrv9zQEOhdtu32anyLoGBShUugmkTR` (9,112B), 전체 ZIP `1yWMWH9GvTNmdItNyBITxVBD9Y530zKMP` (53,105,863B)는 기존 ID를 유지했다. Q27/28/29 ZIP은 `17r_G84rA2Jle19vqtqAXZBsRwmR5lfPd`, `1LtFe1x_fqRWKC7ZIjymB-XRPRiUYpi3d`, `1m10suoRstrLniZXVeg5IFdFic6xeMUgb`. 상태 `14iddK5trFrZJDRu0PBja0kgLeT85yI2f`, 증빙 ZIP `1AdUW_k7L_EpuSydDlp4ShSWHnBhLdN0L`, 브라우저 증빙 `1pUpHpWRIkJnQEK-JVFtH0PMOtAq2aJ-s`, 전체 ZIP 검증 `10gT0_6EfLFfmHAvM1zNE2sWTicXyMm3o`; 독립 검산 Q27 `1wzVTC_j9maYh1RgOB8FBZ9lGFkAMX8Tf`, Q28 `1h4FRDGO9N1-iFf0out5dzYWBs8f-DS1a`, Q29 `1-iQWQAQRpZBacUmXuHAu7Pz75xUKIHBo`. 업로드 영수증 `1_Zwb_S45l6FrjQE7Fk4dv6AGBqozt568` 및 로컬 `.private-work/hw-expansion-20261023/hw5/drive-sync-r23-receipt.json`. Drive raw bytes SHA 비교는 하지 않았다.
+- 이 handoff는 기존 Drive 파일 ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`에서도 갱신했다. 활용5 범위는 로컬 및 GitHub `main` 커밋 `0549d34a0e20b02ca0cf7b1ddccc0da1c0930df8`로 정렬됐다. 다른 회차의 사용자 미커밋 변경은 보존했고 사이트 배포는 하지 않았다.
+
+---
+
+# 이전 시점의 일시중단 기록 (2026-10-25 재개 전에 작성)
+
+아래 Q25 미완료 표시는 재개 전 상태만 나타낸다. 사용자의 명시적 재개 뒤 Q25는 r20에 완료·Drive 반영됐고 Q27–29는 위 r23에서 완료했다.
+
+---
+
+# 2026-10-25 활용 5회 Q25 확장 완료 r20
+
+- 활용5 r20은 27유형·243문항(원문당 9개)이며 미완료 `[27,28,29]`. 세부 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q25-status-r20.md`.
+- 문제 PDF p5·답안 PDF p25 직접 확인. 손글씨 후보 37은 독립 재현했으나 공식 정답표 여부 미확인. 원문 보기 픽셀 크롭을 정확히 재사용한 Q25 유사문제 9개 정답은 `10,17,26,50,65,82,101,122,145`. 원자료·독립 검산·원본 그림 확인 통과.
+- Q25 ZIP 7파일, 문제3쪽·풀이4쪽, 그림9개 바이트 일치, 학습 링크 연결. 전체 ZIP 7파일·243문항·27유형·135그림·문제59쪽·풀이92쪽. 실제 ZIP/렌더·2단·답 입력/진단/학습 연결·375px·3회 제한 검수 완료. 세부 검증 근거는 위 상태 기록과 `.private-work/hw-expansion-20261023/hw5/output-qa-r20/`.
+- r20 data/index/full ZIP은 기존 Drive ID를 갱신했고, Q25 ZIP·원문 페이지/그림·검산·ZIP/브라우저 근거·상태를 기존 `문제은행 검수 · 활용 5회` 폴더에 추가했다. 메타데이터의 ID/이름/MIME/크기/부모를 재확인했다. 원격 raw-byte SHA 비교는 하지 않았다. receipt `drive-sync-r20-receipt.json` (기존 Drive receipt ID `1Acscm0ESAfeDsutGwusVWItvpUFjoSuX`). 이 인수인계는 Drive ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`에 갱신했다. 다음은 Q27–29 원문·답안 PDF 직접 대조. 작업 트리 `main`은 기존 변경을 포함한 미커밋 상태이며 commit/push/deploy는 하지 않았다.
+
+---
+
+# 2026-10-25 활용 5회 Q24 확장 완료 r19
+
+- 활용5 r19는 26개 원문 유형·234문항(원문당 9개)이다. 완료 유형 `1–24,26,30`; 남은 `[25,27,28,29]`. Q24는 5월 달력의 T형 4칸 조각을 좌우로만 뒤집는 원문 유형이다. 원문은 시험지 PDF p5·답안 PDF p24를 직접 확인했다. 손글씨 후보 8은 독립 재현했으나 공식 답안표 여부는 미확인.
+- 원문 조각 그림은 픽셀 그대로 크롭해 9개 변형에서 바이트 단위 재사용했다. 29개 유효 배치를 전수 열거해 원문 후보 답과 변형 답 `15,13,12,11,9,7,5,3,1`을 확인했다. 기준값 `61,65,69,73,77,81,85,89,93`. 계산기·원문 대조 `.private-work/hw-expansion-20261023/hw5/q24-independent-math-r19.json`, `.private-work/hw-expansion-20261023/hw5/q24-source-answer-review-r19.json`.
+- Q24 ZIP 7개 파일·문제3쪽·풀이3쪽·원본 그림 9개 exact match. 전체 ZIP 7개 파일·234문항·26유형·126그림·문제57쪽·풀이88쪽, SHA `07ecc1792723b7ee871cf0c76e7000532d1ceacb51a3edcf328b40d62ef2c1f9`. 브라우저 답입력·진단·학습 연결·3회 제한·2단·375px·외부 쓰기0 통과. 세부 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q24-status-r19.md`.
+- Q24 `single-number` 계약에 맞게 어댑터 검증 허용값을 보완했고, Q23/Q26 r19 회귀 기준과 전체 ZIP 검수의 실제 57쪽 값을 고쳤다. Q23/Q26/기존135 계산도 다시 통과.
+- Drive `문제은행 검수 · 활용 5회` 폴더에 r19 데이터·색인·전체 ZIP과 Q24 산출물 및 검수 근거를 반영했다. 전체 ZIP [234문항 r19](https://drive.google.com/file/d/1yWMWH9GvTNmdItNyBITxVBD9Y530zKMP/view?usp=drivesdk), Q24 개별 ZIP [9문항 r19](https://drive.google.com/file/d/1HEQmr3Xr4uAh0P-Do5JaYZVTKwpvfaYT/view?usp=drivesdk). ID·이름·크기·부모 폴더 readback 및 미실시 raw-byte SHA 비교는 `.private-work/hw-expansion-20261023/hw5/drive-sync-r19-receipt.json`에 기록했다. 이 업데이트는 Drive receipt ID `1Acscm0ESAfeDsutGwusVWItvpUFjoSuX`에 보관. main 작업본 미커밋·미푸시·미배포이며 기존 변경은 보존한다. 다음 활용5 원문 Q25는 PDF와 답안을 먼저 직접 대조한다.
+
+---
+
+# 2026-10-25 활용 5회 Q23 완료 r18
+
+- 활용5 r18은 기존 25유형·225문항, 원문당 9개. 완료 `1–23,26,30`; 남은 `[24,25,27,28,29]`.
+- Q23 원문 PDF 5쪽 및 답안 후보 p23 직접 확인. 카드 그림은 원문 그림의 정확한 픽셀 크롭을 9변형 모두에 재사용했다. 목표 비율만 바꿔 1~9 카드 완전 사용의 유일 배열을 각 변형별 공통 배수 k 전수 검색으로 확인했다. 후보 답 6729/13458도 재현했으나 공식 답안표인지는 미확인.
+- Q23 독립 검산 및 개별 ZIP 검수 완료: 9개 카드 그림 모두 원본 crop 바이트 일치, 문제 PDF 3쪽·풀이 5쪽. 전체 ZIP 7개 파일·225문항·25유형·그림117개, 문제55쪽·풀이85쪽. SHA `0eb00ebe603c29361b0436911893a4cd7258b536f940889d31afea0d7fd6cb70`. 브라우저 입력·진단·학습 연결·2단·375px·3회 제한·외부 쓰기0 검사 통과. 상세 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q23-status-r18.md`.
+- 활용7 1·8·17·19번 새 변형 그림 승인이 확인됐다. 해당 r32는 이미 로컬에 270문항·30유형으로 들어 있고 관련 36개 그림 및 연결 검수를 기록했다.
+- Drive r18 데이터·색인·전체 ZIP 및 Q23 ZIP·증거 동기화 완료. 상태·검수 ID는 `drive-sync-r18-receipt.json` 참조. 현재 branch `main`은 미커밋·미푸시·미배포이며 기존 변경을 보존한다. 다음 활용5 Q24는 현행 원문 PDF와 답안 PDF를 먼저 대조한다.
+
+---
+
+# 2026-10-25 활용 5회 Q26 완료·Drive 반영 r17
+
+- 활용5 데이터 r17은 기존 24유형·216문항, 원문당 9개. 완료 `1–22,26,30`; 남은 `[23,24,25,27,28,29]`.
+- Q26 문제 PDF 5쪽과 답안 후보 PDF 26쪽을 직접 확인했다. 손글씨 50·250은 독립 재현했으나 공식 답안표로 확인되지는 않았다. 새 변형 9개는 암수 같은 수·모든 새가 짝지어 번식하는 원문 관계를 유지하며 1년·2년 뒤 개체수를 각각 순서대로 답한다.
+- Q26 전용 검산 및 ZIP 검사 통과. 개별 ZIP 문제 3쪽·풀이 3쪽. 전체 ZIP 7파일, 216문항, 24유형, 108그림, 문제 52쪽·풀이 81쪽, SHA `a116329808ad7c3bf1af1608dfa63814a595467c427279e836c6b41b29331246`. 브라우저 입력·진단·학습 링크·2단·375px·3회 제한·외부 쓰기0 검사 통과. 상세 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q26-status-r17.md`.
+- 활용7 Q1/Q8/Q17/Q19의 새 변형 그림 승인은 확인했다. 해당 4유형은 r32에 이미 들어 있어 중복 생성하지 않는다.
+- Drive r17 반영 완료. 기존 핵심 ID data `1vFCBkVOjpN9rv1xNIwYmy_CUgc5p76bU`, index `1zPhrv9zQEOhdtu32anyLoGBShUugmkTR`, 전체 ZIP `1yWMWH9GvTNmdItNyBITxVBD9Y530zKMP`. Q26 개별 ZIP·상태·근거의 ID는 `drive-sync-r17-receipt.json` 참조. 원격 원시 SHA를 내려받아 비교하지 않았으며 Drive ID·크기를 확인했다. 현재 작업은 미커밋·미푸시·미배포. 다음 활용5 Q23은 시험지/답안 PDF와 카드 그림을 대조한다.
+
+---
+
+# 2026-10-25 활용 5회 Q20 완료 r15
+
+- 활용5 Q20 원문 문제 PDF p.4와 답안 PDF p.20을 직접 대조했다. Apple Vision OCR 및 전수검사에서 교사 표시 답 `{1356, 6351, 7350}`를 재현했고, 원문 그림 크롭도 원본 렌더와 픽셀 일치한다. 기존 순서도 비밀번호 유형만 아홉 개 확장, 새 유형 0. 배점 3.4점대 중.
+- r15는 22유형·198문항이다. 완료 원문 유형 `1–21,30`, 미완료 `[22–29]`. 데이터 SHA `66feb40c94bc443db81eb175d81947af8f68943850dd9d32633ca6424e70a6b6`, 인덱스 SHA `dea3caabde94c752d5d31e7f06968c9adc8114251e65d399a32355f1456363cf`.
+- 일반 135개 및 Q17–Q20 전용 독립 검사, Playwright 198문항 입력·진단·학습 링크·2단·375px·3회 제한·실제 ZIP·외부 쓰기 0 통과. 전체 ZIP 7개 파일, 문제 47쪽·풀이 75쪽; Q20 문제 40–44쪽, 답·풀이 65–69쪽. 실제 ZIP에서 PDF를 추출해 시각 및 Apple Vision OCR 확인. ZIP SHA `ae25fe77da6abd7ae30cfba5654aaccfae0db25f1f0849f8e13be6b50bf9fa31`. 상세 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q20-status-r15.md`.
+- 시계 기준: 분침이 시침보다 길다. 두 바늘의 상대 각도 차이는 분당 5.5°; 문제 지문에는 원리 설명 없이 5.5°로 나누어떨어지는 각도만 쓴다.
+- Drive `문제은행 검수 · 활용 5회`에 r15 반영 완료: data `1vFCBkVOjpN9rv1xNIwYmy_CUgc5p76bU`, index `1zPhrv9zQEOhdtu32anyLoGBShUugmkTR`, 전체 ZIP `1yWMWH9GvTNmdItNyBITxVBD9Y530zKMP`, Q20 개별 ZIP `1rxFAkv4UYr2MPcOUm7oUUb9tpRW9Vvv7`, 상태/검수 증거/인수인계는 상세 상태 파일 참조. 메타데이터·크기는 확인했고 원격 다운로드 SHA 대조는 미실시. 작업 경로 `main`; 미커밋·미푸시·미배포이며 사용자 요청으로 기한 이후 작업을 재개했다.
+- 다음은 활용5 Q22 원문과 답안 PDF를 직접 확인하고 기존 유형만 아홉 개 확장한다.
+
+---
+
+# 2026-10-25 활용 5회 Q19 완료·Drive 반영 r14
+
+- r14 데이터는 기존 21유형 189문항이며 원문당 9개다. 미완료 원문 유형 `[20,22–29]`. Q19 원문 p4·답안 p19를 직접 대조해 교사 표시 답 49를 확인하고, 아홉 변형을 두 자리 후보 전체 탐색으로 독립 검산했다. 배점 3.4점대 중.
+- 원문 답안 Drive ID `1QGjWnEBjULxwy4BBX8tLutpGbjQfEh05`. 검수 기록 `.private-work/hw-expansion-20261023/hw5/q19-source-answer-review.json`; math proof `.private-work/hw-expansion-20261023/hw5/q19-independent-math.json`.
+- Q19 독립 수학·ZIP 검증과 135개 legacy 계산 검증 통과. 실제 ZIP 7파일, 문제 42쪽, 풀이 71쪽. Browser evidence: 189문항·답 입력/분석·2단·학습 연결·3회 입력·ZIP·외부 쓰기 0. 문제 p38–39, 풀이 p61–62 확인.
+- 최신 시계 기준: 분침은 시침보다 길다. 상대 각도 차는 분당 5.5° 변한다. 문제에는 계산 설명을 넣지 않으며, 각도값은 5.5의 배수로 고른다. 활용7 Q13에 적용된 수는 55°~495°이고 지문은 속도 설명 없이 구성됐다. 최종7 Q2 그림은 분침 82px·시침 58px다. 활용7 Q8 r29의 상충 문구를 정정했다.
+- 제한 시각 한국 2026-10-24 02:00이 지나 새 문항 생성·배포·병합은 멈춘다. 다음 재개는 활용5 Q20; 시작 전 현행 문제·답안 PDF 직접 대조. 로컬 main 변경은 미커밋·미푸시·미배포다. 상세 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q19-status-r14.md`.
+
+---
+
+# 2026-10-25 활용 5회 Q17/Q18 완료·Drive 반영 r13
+
+- 작업본 `/Users/docssam/Developer/GFIELD/hs-report`, branch `main`. 기존 미커밋·미추적 작업은 보존했다. 커밋·푸시·배포는 하지 않았다.
+- 활용5 확장 데이터 `20261025-applied5-expansion-q03-q05-q06-q08-q09-q11-q12-q14-q15-q16-q17-q18-r13`: 기존 20개 유형 180문항, 유형당 9개. 검수 대기 원문은 `19,20,22–29`. Q17/Q18 답·풀이·실제 ZIP·전체 ZIP 검수 근거는 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q18-status-r13.md`와 같은 작업 폴더에 있다.
+- 활용5 Q17 실제 ZIP 마지막 풀이 쪽의 9번·답 15·상세 계산·학습 연결을 렌더 및 Apple Vision OCR로 확인했다. Q18은 시험지 p.3, 답안 p.18을 대조했고 9개 변형을 독립 전수 검산했다. Q17/Q18 개별 ZIP은 각 7파일이며 3쪽 문제+5쪽 풀이. 180문항 전체 ZIP은 7파일, 40쪽 문제+66쪽 풀이. ZIP 검증 기록은 `q03-q05-q06-q08-q09-q11-q12-q16-q17-q18-output-qa-r13/zip-validation-r13.json`.
+- Drive `문제은행 검수 · 활용 5회` 폴더 `1iQZwXc0Ii8Kqx1g_vW2colH8mYfnguYv`에 반영: 데이터 기존 ID `1vFCBkVOjpN9rv1xNIwYmy_CUgc5p76bU` (698581 bytes), 색인 `1zPhrv9zQEOhdtu32anyLoGBShUugmkTR` (6092 bytes), 전체 ZIP `1yWMWH9GvTNmdItNyBITxVBD9Y530zKMP` (33685634 bytes). 추가 파일 ID: Q17 ZIP `1OrPJmjCrbHD2zsGr4oCl14hVjsX-Hocq`, Q18 ZIP `1CEADhSftR7fsAw4GmlpvefjbqszDN3qX`, Q17 원문 대조 `1W2Gezx7gQ6PvBibOG1tgLeJ7bHfWKrrv`, Q18 원문 대조 `1p1WXzba3x1Pq9VoZ4SVs8SLk_jlu5pT3`, Q18 수학 검산 `1x4jvNwJdUtJiDDp0Sv1PWH1NrtzykL8t`, 전체 ZIP 검사 `1eyOtF0etacDOR1qZ9kRSAu3xxMxhqomN`, 상태 기록 `1YHH7KYisCzgaqt8vXzD6pjlVVJWk5vI9`.
+- 시계 기준 재확인: 최종7 Q2 그림 3개에서 분침 82px, 시침 58px로 분침이 더 길다. 활용7 Q13 문제 문장에는 속도 설명이 없고 각도 차 55–495°는 모두 5.5°의 배수다. 풀이·정답 계산에서 상대 각속도 5.5°/분을 사용한다.
+- 다음은 활용5 Q19의 현행 시험지와 답안 PDF를 직접 대조하는 단계. 아직 새 문항 생성·배포는 시작하지 않았다.
+---
+
+# 2026-10-25 활용 5회 Q16 확장 r11 검수 완료
+
+- 작업 경로 `/Users/docssam/Developer/GFIELD/hs-report`, branch `main`. 기존 미커밋 파일을 보존했고 필요한 파일만 수정했다. 커밋·푸시·배포는 하지 않았다.
+- 최신 시계 기준: 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 오류라 폐기했다. 최종7 Q2 그림과 데이터, 활용7 Q13 지문을 정정했다.
+- 활용5 데이터 `20261025-applied5-expansion-q03-q05-q06-q08-q09-q11-q12-q14-q15-q16-r11`, 18개 기존 유형·162문항. 완료 `1–16,21,30`; 남은 `17–20,22–29`(12유형). 상세 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q16-status-r11.md`.
+- Q16 시험지 p3·답안 p16을 직접 대조했다. 교사 답 12가지를 원문 도로 그래프의 10구간 최단경로로 독립 재현했다. 변형 9개는 서로 다른 호수 주변 일방통행 위치·방향, 답 `18,10,12,20,18,26,20,12,18`; Bellman–Ford와 최단경로 DAG로 각각 검증했다.
+- 전용 계산/Q3–Q15 회귀/135개 일반 계산 모두 통과. 브라우저 162문항·상세풀이·81개 그림, 2단·375px·답 입력·진단·학습 연결·3회 제한·첫 기록 보존·오버플로/JS 오류/외부 쓰기 0 통과.
+- Q16 실제 ZIP 7개 구성 파일, 9 ID·답·풀이·그림 확인. 문제 3쪽+풀이 3쪽. 전체 ZIP 162문항, 문제 36쪽+풀이 57쪽. ZIP에서 꺼낸 Q16 6쪽과 전체 93쪽 접촉표를 시각 확인했다. `qa/applied5-q03-zip-validate.py` 통과.
+- data SHA `659d723c46e52601063d14ef7d38cdd75a90fbd26fe140d2cc32815e04af9397`; index `584f3864820f18172e1d92363f2fa0a3b454063a70a72c463352624508ca908b`; Q16 ZIP `fecc69d24f1e518f3c60c3f59485a203324a1802a38c6dec58866c235b95d771`; 전체 ZIP `c3aa272354c3b984dfb5fc625342e497cf9ea5e4ab797847a85ebf0cc7c3f388`.
+- Google Drive 기존 데이터·색인·전체 ZIP ID 갱신, Q16 ZIP·원문 대조·검수 기록·증거 추가는 아직 남았다. 업로드 전에는 Drive 반영이라고 하지 않는다.
+- 다음은 활용5 Q17. PDF에서 번호·지문·도형을 직접 대조한 뒤 기존 유형만 9개 확장한다.
+---
+
+# 2026-10-25 활용 5회 Q12 확장 r8 (이전 상태)
+
+- 작업 경로 `/Users/docssam/Developer/GFIELD/hs-report`, branch `main`. 활용7/8·final7 등 다른 미커밋 변경은 보존하고 이번 필요한 파일만 수정했다. 커밋·푸시·배포 없음.
+- 현재 데이터 `20261025-applied5-expansion-q03-q05-q06-q08-q09-q11-q12-r8`; 15개 원문 유형·135문항·신규 유형0. 완료 `1–13,21,30`, 검수 대기 `14–20,22–29`. 활용 난도는 배점대만(2.7하·3.4중·4.2상).
+- Q12: 시험지 PDF p2의 4×8 곱셈표·5회 접기 그림과 답안 PDF p12 교사답 9를 직접 대조했다. 원문 방향 R→T→L→B→L 층 추적으로 9를 독립 재현. 유사문제 9개는 동일한 5단계 접기 유형에서 화살표 방향 조합을 바꾸고 각 답 1,2,3,4,5,6,7,8,10으로 만들었다. 각각 독립 시뮬레이션과 답안 풀이를 확인했다. SVG는 `bank/assets/applied5/q12-v1.svg`–`q12-v9.svg`; 전용 검수기 `qa/applied5-q12-independent-validate.py`; 출처·답안 기록 `.private-work/hw-expansion-20261023/hw5/q12-source-answer-review.json`.
+- Q12는 시계 그림이 없는 종이 접기 문제다. 과거 기록의 바늘 길이 해석은 최신 시계 기준으로 정정했다.
+- Q3/5/6/8/9/11/12 독립 검수와 전체135문항 계산, 7개 개별 브라우저 ZIP 실행, 전체 ZIP 검수 통과. 2단·입력/진단·3회 제한/첫 기록 보존·모바일375px·오버플로0·외부 쓰기0. Q12 실제 ZIP은 문제3쪽+풀이3쪽, 전체135 ZIP은 문제29쪽+풀이48쪽이다. Q12와 전체 PDF 접촉표를 시각 확인했다.
+- 상태·출력 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q03-q05-q06-q08-q09-q11-q12-status.md`, `output-qa-r8/`, `q12-zip-review-r8/`, `full-review-r8/`. 데이터 SHA `5f518316bc0d54cbbc3ed777a1400a68b481fb159fe9f3a687b655c4d2c57f15`, 색인 SHA `5a219f24fa4d660a59399ce3b19ea1f95cf3ad8b424e720b303d466f6def3e26`, 전체 ZIP SHA `9fbdbc96920213f0b2d64dd1ebae9bd23476994142119d178d16b04d500efee9`, Q12 ZIP SHA `a4d681d7fb3d0dcade4e19db886793c000d35ae09f9c663f3de50dc416644de0`.
+- Drive에 r8 데이터(`1vFCBkVOjpN9rv1xNIwYmy_CUgc5p76bU`), 색인(`1zPhrv9zQEOhdtu32anyLoGBShUugmkTR`), 전체ZIP(`1yWMWH9GvTNmdItNyBITxVBD9Y530zKMP`), 기존 개별ZIP 6개, 상태(`1uSyems8FgDUwIdhduDajSlBG3jCNG8I3`)를 기존 ID로 갱신했다. Q12 ZIP `1eedO43iSubQu8pKlCxn8hV0XQw4aP3nA`, Q12 원문검수 JSON `14AJhHqYeZp18-3zO1Jc9R8N5jLX7C3-1`, 독립검수 증빙 ZIP `13AIA0QYvxT3BSioGoc0g43-Zvp0MoCwC`를 지정 폴더에 추가했고 Drive 폴더를 다시 읽어 이름·ID·크기를 확인했다. 핸드오프도 기존 Drive ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`로 갱신했다. 원격 파일 내용은 재다운로드하지 않아 SHA를 대조하지 않았다; receipt에 메타데이터 확인과 원격 SHA 미비교를 구분한다.
+- 다음 검수는 활용5 원문 14번. PDF 원문·답안 및 그림을 직접 확인한 뒤 시작한다.
+
+---
+
+# 2026-10-25 활용 5회 Q3·Q5·Q6·Q8·Q9·Q11 확장 r7 (최신 작업 상태)
+
+- 작업 경로 `/Users/docssam/Developer/GFIELD/hs-report`, branch `main`. 현재 진행 중인 Applied7/Applied8·final7·기타 사용자의 미커밋 변경과 분리하여 필요한 파일만 수정한다. staging/초기화/cleanup/commit/push/deploy 금지.
+- 상태 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q03-q05-q06-q08-q09-q11-status.md`; 증거 `.private-work/hw-expansion-20261023/hw5/applied5-q03-q05-q06-q08-q09-q11-evidence-r7.zip`; PDF와 ZIP은 `output-qa-r7/`, 시각 확인은 `pdf-review-r7/render/`.
+- 완료 원문 유형 14개: 1,2,3,4,5,6,7,8,9,10,11,13,21,30. 검수 대기 16개: 12,14–20,22–29. 각 유형당 9문항, 총126문항, 새 유형0. 데이터 `20261025-applied5-expansion-q03-q05-q06-q08-q09-q11-r7`; SHA data `8ffd36c23bf19799482199f7d6af221e3dec1092d6c4c67895ea642ab100faa2`, index `291cdbf7e2e42cb942a3f64606c10f84d61bb0fade14b9e6fb0331c5b5d68530`.
+- Q11: 원문 시험지 p2의 계단형 거리표 및 답안 p11의 교사 합계520을 직접 대조. 원문 미지수 140,70,190,120. 유사문제 9개는 거리표의 장소 순서·셀 배치와 연속 구간 거리 구조를 유지하며 각각 별도의 양의 정수 구간 거리로 검산. 배점2.7(하). Q8: 원문 p2의 10칸 도식과 답안 p8 손글씨 `6+3+1=10개` 확인, 2^10 전수 배열, 유사 9개 독립 검산. Q8 배점2.7(하).
+- 검증: 독립 126문항 전체, Q3/Q5/Q6/Q8/Q9/Q11별 원자료·정답·풀이·그림 검수, Playwright 답안입력·진단·3회 제한·최초 기록 보존·모바일375px·2단 순서·오버플로0·외부 쓰기0 통과. 실제 ZIP별 9문항 및 전체126문항의 7개 구성 파일/ID/정답/풀이/그림 검사 통과. 전체 PDF 27쪽 문제+45쪽 풀이, Q11 개별 ZIP 각3쪽. 전체와 Q11 접촉표 모두 시각 확인했다.
+- 이번에도 시계 문항은 제작하지 않았다. 상대 시계각은 분당5.5°(분침6°, 시침0.5°)를 사용.
+- Drive에 r7 데이터·색인·전체ZIP·Q3/5/6/8/9/11 개별ZIP·증빙·상태·인수인계를 업로드한다. 새 Q11 ZIP은 새 file ID로 저장한다. Drive 크기/ID/부모 메타데이터와 실제 원격 내용의 SHA 대조는 구분한다.
+- 다음 작업은 활용5 원문 12번. 해당 문제 PDF와 답안 PDF에서 도형을 직접 대조하고, 검증 전에는 기존 문항·메타데이터를 승인 처리하지 않는다.
+
+---
+
+# 2026-10-25 활용 5회 Q3·Q5·Q6·Q8·Q9 확장 r6 (이전 상태)
+
+- 경로 `/Users/docssam/Developer/GFIELD/hs-report`, 브랜치 `main`. 같은 작업본에 활용7·8회 등 기존 미커밋 작업이 함께 있으므로 선택 파일 이외의 staging·초기화·정리·commit/push/deploy를 하지 않는다.
+- 현재 상태 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q03-q05-q06-q08-q09-status.md`; 증거 `.private-work/hw-expansion-20261023/hw5/applied5-q03-q05-q06-q08-q09-evidence-r6.zip`; 브라우저 PDF/실제 ZIP은 `output-qa-r6/`, 렌더 contact sheet는 `pdf-review-r6/render/`.
+- 완료 원문 유형 13개: 1,2,3,4,5,6,7,8,9,10,13,21,30. 미검수 17개: 11,12,14–20,22–29. 9개씩 총117문항, 신규 유형 0. 데이터 `20261025-applied5-expansion-q03-q05-q06-q08-q09-r6`; data SHA `98f14d3e83077d241e25320fd967c534964c98bdaf7d8504ea852b8105dc15d4`, index SHA `95790b3d774e33d5d4df02e52808f78cdb3d153bce9ebb2fd78510b81876c97a`.
+- Q8 원문 시험지 p2 10칸 도식과 답안 p8 교사 기록 `6+3+1=10개` 직접 대조. 원문 (3,1,2) 모든 2^10 배열을 세어 답 10 검산. 새 문제 9개는 세 무리의 연속 원·빈칸 사이 분리·10칸 수학 구조 유지. 각 예시 그림은 원본의 셀/빈칸/연속무리 시각 문법을 SVG로 구현하고, 변형별 독립 전수 배열과 조합 계산이 같은 답을 준다. 배점 2.7(하). 세부유형 `경우의 수 → 도형의 배열 → 연속한 원 무리의 위치 정하기`.
+- 독립 검사: 117문항 전체, Q3/Q5/Q6/Q8/Q9 개별 PDF·답안·도형·풀이 계산, 브라우저(2단·375px·답 입력·진단·3회 제한·최초 기록 보존·ZIP 생성·외부 쓰기 0), ZIP 7구성 파일과 문항 ID/정답/풀이/PDF 페이지 검사 통과. Q8 ZIP 문제3+풀이3쪽. 전체 ZIP 문제24+풀이42쪽. Q8/전체 PDF 모든 쪽을 contact sheet로 확인; 잘림·overflow 0.
+- 시계 문제에 쓰는 상대각은 분침 6°/분, 시침 0.5°/분, 상대 변화 5.5°/분이다. 이 확장은 시계 유형이 아니다.
+- Drive 파일 갱신과 receipt는 r6 증빙 생성 뒤 기록한다. 원격 바이트를 새로 다운로드해 대조하지 않은 경우 Drive metadata/size 확인과 content SHA 비교를 구분해 보고한다.
+- 다음 미검수는 원문 5회 11번이다. 현행 문제 PDF와 답안 PDF를 직접 열고 문구·표·답을 대조한 뒤 생성·검산한다. 실패·불확실 항목은 잠그고 미커밋 타 작업을 보존한다.
+
+---
+
+# 2026-10-25 활용 5회 Q3·Q5·Q6·Q9 확장 r5 (이전 상태)
+
+- 작업 경로 `/Users/docssam/Developer/GFIELD/hs-report`, 브랜치 `main`; 데이터·인덱스·어댑터·문제은행 UI와 QA 파일에 미커밋 변경이 있다. 기존의 활용7/8회 작업 등 다른 미커밋 파일도 섞여 있으므로 전체 staging, cleanup, commit, push, deploy 금지.
+- 최신 상태 기록 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q03-q05-q06-q09-status.md`; 검수 증거 `.private-work/hw-expansion-20261023/hw5/applied5-q03-q05-q06-q09-evidence-r5.zip`; 생성된 실제 ZIP과 렌더는 `output-qa-r5/`, `pdf-review-r5/`.
+- 완료 원문 유형 12개: 1,2,3,4,5,6,7,9,10,13,21,30. 미검수 18개: 8,11,12,14–20,22–29. 총 108문항. 데이터 `20261025-applied5-expansion-q03-q05-q06-q09-r5`; SHA-256 data `8b8721e97cd98678307b5eb2c623296c2ccfbdf695fe21c3119da55e89bb0dbb`, index `d2d611293bfa4f6e25e3572fe6fa64fb445666a5cc2fb3bc329ceae8e16e2b09`.
+- Q9 원문 시험지 p2와 답안 p9의 손글씨 정답 45를 직접 대조. 색 값 흰색 8·검은색 3·회색 13; 원문 도형·정답이 일치한다. 9개 변형은 서로 다른 색별 값 패턴이며 전수 유일해 검산, SVG 도형 생성, 배점 2.7(하) 분류 완료. 답안에는 개별 상세 계산이 있다.
+- Q3/Q5/Q6/Q9 독립 계산 및 원자료 검수 통과. 108문항 브라우저 검사 통과: 답안 입력·진단, 3회 입력, 최초 연습 보존, 2단 문항 순서, 모바일 375px, PDF overflow 0, 외부 쓰기 0. ZIP 내용 검사 통과: 각 단독 ZIP 9개, 전체 108개; 전체 문제 22쪽·풀이 39쪽, 7개 구성 파일, 그림과 상세 풀이. 전체 및 Q9 접촉표를 눈으로 확인했다.
+- Drive 업데이트는 지금 보존 단계에서 실시하며 기존 ID를 재사용한다. Drive가 보고한 이름·크기·폴더를 읽어 확인하되, 원격 파일을 내려받아 해시 대조하지 않으면 그 사실을 분명히 남긴다.
+- 상대 시계각 보정: 분침은 분당 6°, 시침은 분당 0.5° 이동해 상대각 변화율은 분당 5.5°다. 이번 활용5 Q9 은행에는 시계 문항이 없어 이를 새 문항에 반영하지 않았다.
+- 다음 작업은 원문·답안 PDF를 직접 열어 미검수 활용5 회차 문항을 하나씩 대조하고, 변형을 생성하기 전에 독립 정답 검산과 그림 구조를 먼저 기록하는 것. 승인된 범위만 이어간다.
+
+---
+
+# 2026-10-25 활용 5회 Q3·Q5·Q6 확장 r4 (최신 작업 상태)
+
+- 확정 기준: 원문 기존 유형만 원문당 9개, 활용 난도는 배점대만. 현재 11개 유형·99문항, 신규 유형 0. 남은 원문 8,9,11,12,14–20,22–29 (19개).
+- Q3는 이미 완료된 유형을 보존하면서 r4 데이터로 다시 검사했다. Q5 원문 문제 PDF 1쪽·답안 PDF 5쪽을 직접 대조, 24가지 배정을 검사해 답안의 한별=야구를 유일하게 확인했다. 조건 추론 유형 9개를 추가하고 각 24가지 배정 전수 검사를 독립 수행했다. 영역 `지문이해`, 세부 `조건 추론 → 서로 다른 선택의 배정과 배제 단서`.
+- Q6 원문 PDF 1쪽·답안 PDF 6쪽 대조. `MATH + ATH + TH + H = 2000`, 원답 1/4/6/5. 9개 변형도 직접수식·자리올림 탐색으로 유일해 검증했다.
+- 독립 99/99, Q3/Q5/Q6 원자료·정답 검수와 ZIP 검사 통과. ZIP은 Q3 3+3쪽, Q5 2+3쪽, Q6 3+5쪽, 전체99 20+36쪽. 브라우저에서 답입력·진단·학습연결, 2단, 모바일375px, 3회 제한과 최초 기록 보존, ZIP 구성, 외부 쓰기0/오류0 확인. Q5 렌더 PDF 문제·풀이를 시각 검수했다.
+- 상세 기록 `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q03-q05-q06-status.md`, 증거 `.private-work/hw-expansion-20261023/hw5/applied5-q03-q05-q06-evidence-r4.zip` 및 `output-qa-r4/`. 데이터 SHA `11cc9568324ded6f45d58d3dc41cf3ee6b4a7582b485782881ab6ed12d2a3bd0`, 인덱스 SHA `fb06474c7ed12353940c91fec14b00d9ceb237a3e37e4e0e172a467e67f32433`; 전체99 ZIP SHA `bfd8a02167344b2682f0a25135a987b4a80a22036ae878f3d094ab9e92ceb19c`.
+- 시계 기준은 분침 6°/분, 시침 0.5°/분, 상대 각도 차이 5.5°/분. 이번 범위에는 시계 유형이 없다.
+- Drive 폴더 https://drive.google.com/drive/folders/1iQZwXc0Ii8Kqx1g_vW2colH8mYfnguYv: 데이터 `1vFCBkVOjpN9rv1xNIwYmy_CUgc5p76bU`, 색인 `1zPhrv9zQEOhdtu32anyLoGBShUugmkTR`, 전체 ZIP `1yWMWH9GvTNmdItNyBITxVBD9Y530zKMP`, Q3 ZIP `1t47x8NEbBCpNF9GaALRKb9Lna-cz3w7F`, Q5 ZIP `1kuk6knxA1HVf-CFUoJlX5VpfTlAbNqYe`, Q6 ZIP `1C10BIKQmOMhTvzmnRvKuMTUfWGllp7L-`, 증거 `1fSvH-HWLMe6wk2JTrG21KcQ3w1uE41s1`, 상태 `1uSyems8FgDUwIdhduDajSlBG3jCNG8I3`, 핸드오프 `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`, receipt `1U10Y_IG0A_SmM3GM6Zs6NCZ4-VldW1Ci`. 업로드 후 Drive 메타데이터 크기/ID/폴더를 대조했고 remote SHA 미비교.
+- 저장소 `main`의 기존 변경 보존; 이번 변경은 아직 커밋·푸시·배포하지 않았다.
+
+---
+
+# 2026-10-25 활용 8회 기존 유형 확장 r27 (이전 회차 최신 작업 상태)
+
+- 원문에 이미 있는 유형만 확장하며 활용 난도는 배점대만 적용한다. r27은 기존 27개 유형·243문항(원문당 9개), 신규 유형 0이다. 완료 원문 `1,2,3,4,5,6,7,8,9,10,12,13,14,15,17,18,20,21,22,23,24,25,26,27,28,29,30`; 미확장 `11,16,19`. Q11은 원문 그림이 접기 횟수·펼친 뒤 절단 수를 유일하게 정하지 않아 잠금 유지, Q16·Q19도 검수 대기다.
+- 시계 기준 정정(2026-10-25): 일반 시계처럼 분침을 시침보다 길게 표시한다. 상대 각속도 차이는 분당 5.5°이며 바늘 길이와 무관하다. 문제에는 공식을 설명하지 말고, 각도값을 5.5의 배수로 정한다.
+- Q1 원문 1쪽의 두 세로 암호식을 직접 확인했다. 답안 후보는 정답 표기가 없는 시험지 복사본이다. 원문 그림을 픽셀 그대로 사용하고 같은 식 구조 변형 8개를 추가했다. 원문 정답은 네모9·동그라미1·세모8로 독립 도출했고 각 변형은 정수 전수대입과 받아올림 열 계산을 별도로 대조했다. 답 `8·1·8·7·5·1·4·1·9`.
+- Q2 원문 1쪽 성냥개비 격자 그림을 직접 대조하고 픽셀 그대로 첫 문항에 보존했다. 무표기 시험지 복사본은 답안 키가 아니다. 원문 답 16은 크기별 배치 공식(작은12·큰4)과 꼭짓점 삼각형 전수 열거로 교차 확인했다. 같은 유형 변형 8개를 추가해 총9개, 답 `16·10·22·16·28·40·22·40·60`.
+- Q3 원문 1쪽의 4×4 마방진을 직접 확인하고 그림을 픽셀 그대로 보존했다. 답안 PDF 후보는 무표기 시험지 복사본이라 답안 키로 쓰지 않았다. 전체합 136에서 주어진 여섯 수의 합 47을 빼어 원답 89를 구했고, 정상 마방진 완성 전수조사에서도 유일한 완성을 확인했다. 같은 유형 9개 모두 독립 검산·실제 ZIP 검사를 통과했다. 상세 산출물은 `q03-source-answer-review.json`, `q03-independent-math.json`, `q3-output-qa-r1/`, 검사기 `qa/applied8-q03-independent-validate.py`, `qa/applied8-q03-zip-validate.py`다.
+- Q9 원문 2쪽의 8칸 격자와 가운데 별을 직접 확인했다. 원문 답은 유효 직사각형 27개 중 별 포함 12개를 빼어 15개로 독립 계산했다. 같은 격자 별 위치 변형 7개와 3×3 변형 1개를 추가했다. 답 `15·21·21·17·21·19·17·21·20`.
+- r27 독립 계산기 27/27과 실제 ZIP 검사기 27/27 통과. Q2 브라우저에서 자료실 연결, 답 입력·진단·학습 링크, 2단 배치, 모바일 375px, 3회 제한·최초 응답 보존, 외부 쓰기 0을 확인했다. Q2 실제 ZIP은 7파일, 문제 PDF 3쪽·상세 풀이 4쪽이며 전체 7쪽을 렌더 검수했다. Q3 개별 독립 검산·ZIP 검사도 각각 통과했다.
+- r27 데이터 SHA-256 `b6a9a555a510b8003f0a13703e72d1300a8f2471b130d87a596c47ea64c43d22`, 색인 `c95d55313212a9e64e6bdfed3fd21d2664371fb07dbfd8462629663a322e8bbd`. Drive 공용 데이터 `1zDDcGiV8eGuhd_MKh-N_WrYxCPnmb3O6`, 색인 `1JMDRYH-BIxCCOK1MnJx1lRdBkYz9Sn4_`; r27 파일 raw 재다운로드 SHA-256 일치 증거는 `.private-work/hw-expansion-20261023/hw8/q12-drive-receipt-r27.json`.
+- Q1 ZIP `1VYsRLTEe95idZCe-xAeojYhy1QrFkzER`; Q2 ZIP `1Q0-U6Eo5njHaGVmhA7Cy37NB_eBL0AB4`, 원문 `1JtvOYes-kwrsPFeWFFKtzPFE5EMPR0a3`, 검산 `13mKVSpI9No2nltu7CoJDdIGK78djjzBD`, 상태 `13ChUVFZTFEV2ghPMIUo5JBh8KzUpb0PN`, 증빙 `1tun2o9omzWa2Ry4e_3NZX8YUp-ZZSyDb`, 영수증 `1eHb7pcM4YpoONog3lNkOgdyDDUqYorBD`. Q2 Drive 원시 읽기 크기는 ZIP 5,218,504, 원문 2,441, 검산 2,800, 상태 4,373, 증빙 3,166,414, 영수증 3,812 bytes다. r25 공용 데이터·색인도 기존 ID를 유지해 각각 969,890·7,927 bytes로 갱신하고 Drive raw read로 대조했다. Q9 ZIP `1CbhBdn0nVjKyULP9zHce2VKub9UYchFZ`, 원문 `1RmTJaZpfWMCgb0EXerxpxyr8lywk_aEr`, 검산 `1XX9H4TyP9FaK8CBu0ECxMAbnKJRD3OGV`, 상태 `1vE0-jkHswgMtZU6Lecy3x08f28Udkmu-`, 증빙 `1F_5cPNqbIt_vAlRhgd2IyzlXBLVczfJ8`, 영수증 `1sO2qOuacYkrtzOp_3yYKb9HfE2tgYExT`.
+- 세부 상태·증거는 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q01-status.md`, `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q09-status.md`, `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q02-status.md`, Q3 원문·검산 JSON과 `q3-output-qa-r1/`다.
+- 로컬 `main` 미커밋·미푸시·미배포. 기존 변경과 보호 미추적 파일을 보존한다. Q3 확장은 이미 완료했으며, Q11은 원문·답안 근거가 유일한 답을 보장하지 않아 잠금 상태다. 다음에는 잠금 근거를 재검토하거나 다른 회차의 미완료 원문 중 원문·답안·그림이 확인되는 항목으로 이동한다.
+
+## 2026-10-25 활용 7회 기존 유형 확장 r21 (별도 회차 상태)
+
+- 적용 범위: **원시험지에 이미 있는 유형만 확장**한다. 활용 모의고사는 배점대만으로 난도를 구분한다. r21 은행은 기존 유형 21개·189문항(원문당 9개), 신규 유형 0개다. 완료 원문 번호: 2·3·4·5·6·7·9·10·11·12·14·16·18·20·21·22·23·25·27·29·30. 판정 대기: 1·8·13·15·17·19·24·26·28.
+- **최신 사용자 정정:** 일반 시계처럼 분침이 시침보다 길다. 두 바늘의 상대 각속도 차이가 1분마다 5.5°다. 이 계산 설명을 문제 지문에 넣지 말고, 각도값을 5.5의 배수로 고른다. 이전의 분침 단축 해석과 그에 맞춘 그림은 잘못된 처리로 보고 찾아 수정한다. 원문 그림은 직접 대조 후 보존한다.
+- Q30 기존 쌓기나무 유형 9개를 추가했다. 원문 시험지 7쪽 그림과 답안 PDF를 직접 대조했다. 원문 그림을 원본 PDF에서 픽셀 그대로 잘라 재사용했다. 답안지에 Q30 표기 답은 없어 원문 6층 값 55는 독립 계산으로 명시했다. 7~15층 변형 답은 91·140·204·285·385·506·650·819·1015이며 큐브별 이웃 열거·층별 제곱합·공식으로 교차 검산했다. Q23도 기존 원문 유형에 포함된다.
+- r21 은행 SHA-256 `5cb3305adbb1ea0bc38f74c6aed1fa946189daba8a0b51dc77732dceaa7d76c5`; 인덱스 SHA-256 `1fbc6847e826d3d3fb8670b3a57a1a60d8d71dcb5d7c9012166ea05fe67edbda`. 검수: 기존 독립 검증기 20/20 통과, 브라우저 189문항/21유형·답 입력·진단·3회 제한·첫 기록 보존·2단·375px·외부 쓰기 0 통과, 실제 ZIP 7개 항목·문제 38쪽·상세 풀이 60쪽 통과. 모든 출력 쪽 렌더 연락판 및 Q30 개별 페이지를 확인했다.
+- 상태와 재현 근거: 로컬 `.private-work/hw-expansion-20261023/hw7/20261025-applied7-r21-status.md`, QA ZIP `.private-work/hw-expansion-20261023/hw7/applied7-r21-qa-bundle.zip`. Drive의 기존 파일 ID 다섯 개를 r21로 갱신하고 전부 재다운로드했다. 데이터 `16INuVLQeA-XfjIExONKEoMIuwPLAzjTK`, 인덱스 `1vRB8chYeRRb8mAbER_saXiMDv7werWUO`, 문제·풀이 ZIP `1W6s6XO75JtSZIMCdf-ToxM291pRySsk4`, QA ZIP `11rBDKU5hQcuCxE--Q-RVOHB-ehnk4hPu`, 상태 `1prj5jypJ3foBPRe2O5K2jG2rJ_SvD1bI`. 다섯 파일 모두 Drive 원시 재다운로드 바이트 수와 SHA-256이 로컬과 일치한다. 상세는 `.private-work/hw-expansion-20261023/hw7/r21-drive-upload-manifest.json`.
+- 작업은 로컬 `main` 미커밋·미푸시·미배포다. 보호 미추적 `bank/drafts/`, `materials/.DS_Store` 보존.
+
+---
+
+# 2026-10-25 활용 7회 기존 유형 확장 r19 (이력)
+
+- 적용 범위: 사용자가 재확인한 대로 **이미 원문에 있는 유형만 확장**한다. 활용 모의고사 7회 원문 중 19개 기존 유형을 원문당 9개로 확장했다(171문항). 신규 유형 0. 활용 난도는 배점대만 적용한다.
+- 완료 원문 번호: 2·3·4·5·6·7·9·10·11·12·14·16·18·20·21·22·25·27·29. 남은 기존 원문 유형 번호: 1·8·13·15·17·19·23·24·26·28·30. Q1·Q8은 숫자가 원본 그림에 고정되어 있어 그림을 바꾸지 않고는 유효 변형이 불가능한지 추가 판정 중. Q13은 원문 440° 회전과 교사 답안 7:45의 불일치로 보류한다. 나머지는 원문 PDF·답안과 그림을 직접 확인한 뒤 같은 유형으로 확장한다.
+- 현 데이터 버전 `20261025-applied7-expansion-q02-q03-q04-q05-q06-q07-q09-q10-q11-q12-q14-q16-q18-q20-q21-q22-q25-q27-q29-r19`; 데이터 SHA는 검수기록 참조. 데이터 SHA-256 `6a6b8902d178c1b0b3fb079c230e7c8f9e35513def436f4ec6e5ca599f39711d`, 인덱스 `a953edd1bfff0a606b23d8d419f6d45c28867c4979839ce15089f814fd275045`. 전체 은행 검사: 1,224문항·136유형×9 통과.
+- Q21은 원문 21번(0부터 10000까지 이어 쓴 숫자의 합) 그대로 상한값만 달리해 9개를 추가했다. 원문·답안 PDF 5쪽과 교사 답 180001을 대조했고, 직접 자릿수 합과 자리별 반복 계산을 독립 검산했다. 상세 풀이에 각 자리의 실제 계산값을 넣었다.
+- 브라우저 QA r19: 171문항·19유형, 답 입력·진단·3회 제한·첫 점수 보존·2단·375px·외부 쓰기 0 통과. 실제 ZIP은 7개 항목, 문제 34쪽·상세 풀이 54쪽. 출력된 모든 쪽을 렌더했고 Q21 문제/풀이 페이지도 개별 확인했다.
+- Drive 보관 폴더 [활용 7회 문제은행 확장 r19](https://drive.google.com/drive/folders/1e0tLxGYa44z719p6aRp2c7Ooa5zjE6Ih). 데이터·인덱스·문제/풀이 ZIP·QA 증거·상태 기록을 r19로 갱신했다. 파일 ID·크기·원격 재다운로드 SHA-256 대조 결과는 진행 상태 문서에 기록했다.
+- 코드와 QA 산출물은 로컬 `main` 작업본의 미커밋 변경이다. GitHub 푸시·사이트 배포는 하지 않았다. 보호 미추적 `bank/drafts/`, `materials/.DS_Store` 유지.
+
+---
+
 # 2026-10-24 활용 6회 기존 유형 확장 r27 (최신)
 
 - 사용자 최신 범위: 이미 원문에 있는 유형만 확장한다. 원문당 9개, 활용 난도는 배점대만 사용한다. 새 원문 유형을 만들지 않는다.
@@ -2534,3 +3115,479 @@ Q27 코드·데이터·검수기·2단 부분 페이지 배치 수정은 GitHub 
 - 아홉 변형은 2·3·4장으로 만드는 수와 성냥개비 합 조건을 조합했다. 거울에도 숫자로 읽히는 카드 0·1·2·3·5·8만 대상으로 모든 순열을 전수 열거하고, 첫·끝 자리에 0이 오는 수를 제외했다. 원문 3장/합12의 독립 계산은 18로 답안과 일치한다.
 - 데이터 `20261024-applied6-expansion-r20`, 180문항·20개 활용6회 출처 유형, 전체 적용 은행 981문항·109유형×9. 수학 전수열거·재고·브라우저 입력/진단/3회 제한/2단/375px/실제 ZIP 검사가 통과했고 문제 3쪽·풀이 3쪽 모두 렌더했다. ZIP SHA-256 `74c622ed541aff2e5727070dcc47b772a45c040f020065bb86b59345c48c00b8`, 증빙 ZIP SHA-256 `76b2fd65ed02051f4946bd3ea97858ed3140dbb70466469295198ac911dd704c`.
 - 다음은 기존 원문 25번이다. Q15는 답안 수치 불일치로 잠금 상태다. 사이트 배포하지 않았다. GitHub 푸시는 인증 오류로 미완료다.
+
+
+## 2026-10-25 활용7회 기존 원문 확장 r22 마감 기록
+
+- 기준은 사용자 확정대로 원문에 이미 나온 유형만 확장, 원문당 9개다. 활용 모의고사 난도는 배점대 기준이다. 신규 유형은 추가하지 않았다.
+- 활용7회 데이터 r22에는 기존 원문 22개 유형·198문항이 있다: 2·3·4·5·6·7·9·10·11·12·14·16·18·20·21·22·23·25·26·27·29·30번. 남은 기존 유형은 1·8·13·15·17·19·24·28번이다.
+- Q26 기존 집합·분수 교집합 유형의 변형 9개를 추가했다. 직접 대조/독립 검산 근거는 `.private-work/hw-expansion-20261023/hw7/q26-source-answer-review.json`, `q26-independent-math.json`에 있다. 독립 검증 21개, 브라우저 및 ZIP 검사 통과. 최종 ZIP은 문제 40쪽·상세풀이 65쪽이며 SHA-256 `c9c5a58fc1f7d165ac08be55fd46cc65a6dd035402c750ebbd083b7f9f9dc8c0`. Q26의 문제 p33–34와 풀이 p55–56을 렌더 확인했다.
+- 마감(2026-10-24 02:00 KST)이 지났다. 로컬 `main` 작업 트리만 수정됐고 커밋·푸시·사이트 배포는 하지 않았다. r22의 Drive 반영/원시 재다운로드 검증은 미완료이며 r21 Drive 사본이 최신이라고 간주하지 않는다. 상세 마감 기록: `.private-work/hw-expansion-20261023/hw7/20261025-applied7-r22-cutoff-status.md`.
+- 다음 재개는 남은 기존 유형만 다룬다. 원문·답안 PDF와 그림을 직접 확인하고 판정이 불명확한 문항은 잠근다. `bank/drafts/`, `materials/.DS_Store` 보호 자료를 유지한다.
+
+
+## 2026-10-25 재개: 활용7회 기존 원문 28번 확장 r23
+
+- 사용자 재개 지시: 이미 만들어진 원문 유형은 확장만 한다. 새로운 문제 유형은 만들지 않는다. 활용7회에서 기존 원문당 9개 유사문제를 유지하고, 활용 난도는 배점대 기준을 적용한다.
+- r23은 원문 28번의 기존 가격 관계·같은 묶음 구매·잔액 계산 유형 9개만 추가했다. 활용7회 23개 기존 유형, 207문항. 완료 번호 `2,3,4,5,6,7,9,10,11,12,14,16,18,20,21,22,23,25,26,27,28,29,30`; 남은 기존 유형 `1,8,13,15,17,19,24`.
+- 원문 시험지 p6와 답안 p6를 직접 대조했다. 답안 인쇄 문구의 ‘연필’은 교사 손글씨로 ‘지우개’로 고쳐져 있고 계산도 이를 뒷받침한다. 원문 답 2를 독립 확인했다. 변형 9개는 단가·선구매·잔액을 정확 분수와 정수 몫/나머지로 각각 검산했다. 검수 기록 `.private-work/hw-expansion-20261023/hw7/q28-source-answer-review.json`, 개별 검증 `qa/applied7-q28-independent-validate.py`.
+- Q2~Q30 완료 유형 전체 독립검산, 브라우저 답안 입력·진단·3회 제한·첫 응답 보존·2단·375px·실제 ZIP 검수가 모두 통과했다. 외부 쓰기 0. ZIP 문제 42쪽·상세풀이 69쪽, SHA-256 `d7d304c54beabad505dab0fbf1c989d19e6165f15c6e0b3dafc937b95b827259`. ZIP 내부 PDF에서 Q28 변형 1~9와 풀이를 렌더 검수했다.
+- 상세 기록 `.private-work/hw-expansion-20261023/hw7/20261025-applied7-r23-status.md`. 로컬 `main` 작업 트리이며 커밋·푸시·사이트 배포는 하지 않았다. Drive의 기존 데이터·색인·ZIP·상태·QA 파일 ID를 r23으로 갱신했고, 다섯 파일의 원시 다운로드 SHA-256을 로컬과 대조했다. 영수증 `.private-work/hw-expansion-20261023/hw7/drive-sync-r23-receipt.json`.
+- 다음 대상은 기존 원문 1·8·13·15·17·19·24번뿐이다. 매번 PDF 원문·답안과 실제 그림을 확인하고 기존 유형만 확장한다. `bank/drafts/`, `materials/.DS_Store` 보호 자료를 보존한다.
+
+
+## 2026-10-25 활용7회 기존 유형 확장 r25
+
+- 사용자 기준: 이미 출제된 유형만 확장하고 새 유형은 만들지 않는다. 원문당 9개, 활용 난도는 배점대 기준이다.
+- r24에서 원문 15번의 기존 인접 방 경로 세기 유형을 9개로 확장해 216문항·24유형이 됐다. 원문 PDF p3와 답안 PDF p3, 원본 그림, 경로 전수열거를 확인했고 브라우저/ZIP QA도 통과했다.
+- r25에서 원문 24번 기존 겹친 원 합 배치 유형 9개를 추가했다. 그림은 원본 크롭을 그대로 재사용했고 원마다 합 11, 1~9 한 번씩 조건을 유지했다. 원문/답안 PDF p5 직접 대조, 720 순열 전수검사, 변형 정답 독립 계산을 마쳤다.
+- 최종 r25 데이터는 25개 기존 유형·225문항이다. 완료 `2,3,4,5,6,7,9,10,11,12,14,15,16,18,20,21,22,23,24,25,26,27,28,29,30`; 미착수/대기 `1,8,13,17,19`. Q13은 원문 440°와 답안 80분이 불일치해 검수 대기이며, 근거는 `.private-work/hw-expansion-20261023/hw7/q13-source-answer-review-pending.json` 및 r25 Drive QA 묶음에 기록했다. 나머지 도형 유형은 원문 그림을 임의 변경하지 않는다. 개별 독립검증 22개, 브라우저/ZIP 검증 통과.
+- 최종 ZIP SHA-256 `91fafc05ca57efc8ac9d53ff59b6e65d9a6387b4ad8290b7b493905a4ec62af3`; 문제 47쪽·상세풀이 74쪽. 실제 ZIP 문제 PDF p34–35와 풀이 p52–54를 렌더 확인했다.
+- 자세한 기록 `.private-work/hw-expansion-20261023/hw7/20261025-applied7-r25-status.md`. Drive의 기존 데이터/색인/문제·풀이 ZIP/상태/QA 파일 ID를 r25 내용으로 갱신했고, 다섯 파일 모두 원시 다운로드 SHA-256·크기가 로컬과 일치한다. 상세 ID와 해시는 `.private-work/hw-expansion-20261023/hw7/drive-sync-r25-receipt.json`. 현재 변경은 로컬 `main`이며 커밋·푸시·배포하지 않았다. `bank/drafts/`, `materials/.DS_Store` 보존.
+# 활용 7회 기존 유형 확장 r26 상태 (2026-10-25)
+
+- 사용자가 확정한 범위대로 이미 원문에 있는 유형만 원문당 9개로 확장한다. 활용 난도는 배점대만 적용한다. r26은 기존 유형 26개·234문항이며 새 유형은 0개다.
+- 완료 원문: 2·3·4·5·6·7·9·10·11·12·13·14·15·16·18·20·21·22·23·24·25·26·27·28·29·30. 그림 확인 또는 판정 대기: 1·8·17·19.
+- Q13은 사용자가 정정한 조건 “분침은 시침보다 1분에 5.5°씩 더 움직인다”를 기준으로 원문과 답안을 재판정했다. 440°÷5.5°/분=80분, 6시25분+80분=7시45분으로 교사 답과 일치한다. 원문 PDF p3·답안 PDF p3를 대조했고, 답안 Drive 동기화 사본은 검수 PDF와 SHA-256이 일치했다. 검토 근거 `q13-source-answer-review.json`.
+- Q13 유사문제 9개는 55°~495°를 5.5°/분으로 나누어 10~90분을 구한 뒤 시작 시각에 더했다. 변형별 답·독립 계산 검증기 통과. 실제 최종 ZIP의 문제 PDF p18–19, 상세 풀이 p29–31을 250dpi로 렌더해 지문, 답, 풀이, 2단 배치, 잘림을 확인했다. 고해상도 증적은 `q13-question-hi-18.png`, `q13-question-hi-19.png`, `q13-solution-final-hi-29.png`~`q13-solution-final-hi-31.png`.
+- 최종 ZIP에는 234문항의 문제·상세 풀이가 정렬되어 있고 7개 항목, 문제 48쪽, 풀이 77쪽이다. ZIP SHA-256 `d4b2c472ff032d39c7c917bffef513c68e5de72313a8533ebfdbfdc57e2a27d3`. 브라우저 근거는 234문항/26유형, 답안입력·진단 234개, 3회 제한·첫 연습 보존, 2단 읽기 순서, 375px, 외부 쓰기 0을 기록한다.
+- 독립 검증기 25개 통과. 브라우저와 실제 ZIP 검증도 통과. `r26-independent-validation-results.json`, `q03-output-qa-r26/browser-evidence.json`, `q03-output-qa-r26/zip-validation.json` 참조.
+- 로컬 `main` 작업본은 미커밋·미푸시·미배포다. Drive 기존 파일 ID 갱신과 원시 재다운로드 크기·SHA-256 대조를 완료했다. 영수증은 `.private-work/hw-expansion-20261023/hw7/drive-sync-r26-receipt.json`이다.
+- 보호 자료 `bank/drafts/`, `materials/.DS_Store`는 보존한다.
+
+- r26 Drive 완료: 기존 데이터·인덱스·문제/풀이 ZIP·상태·QA 5개 파일 ID를 유지해 갱신했다. 원시 재다운로드 크기와 SHA-256이 모두 일치한다. 영수증 `.private-work/hw-expansion-20261023/hw7/drive-sync-r26-receipt.json`. 로컬 `main` 미커밋·미푸시·미배포.
+
+
+## 2026-10-25 재개: 활용8회 기존 원문 13번 확장 r1
+
+- 활용 8회 Q13 기존의 순차 절반 나눔 역추적 유형 9개를 만들었다. 사용자가 확정한 원문당 9개·기존 유형만·활용 배점대 난도(3.4점=중)를 적용했다. 원문 PDF p3를 직접 대조했다. 답안 Drive 폴더의 동명 PDF 3개는 문제와 같은 문구의 무표기 문제지 사본이라 정답 키 대조는 불가능했다. 원문 독립 역산 결과 `(20,35,65)`를 정방향 게임 세 번으로 `(40,40,40)`과 대조했다. 변형 답 9개도 정방향 검산했다.
+- 카탈로그가 기존 1~5회 확대 색인만 읽던 것을 1~8회로 연결했다. 브라우저에서 Q13 검색 카드와 학습지 링크, 9문항 문제/풀이, 2단 좌단→우단 순서, 모바일 375px, 답 입력·진단·학습 위치/포인트, 원시험 링크, 3회 제한/첫 응답 보존을 확인했다. 외부 쓰기·페이지 오류 0.
+- 실제 다운로드 ZIP은 7개 필수 산출물, 문제 PDF 3쪽·상세풀이 PDF 5쪽이며 9개 문항 목록/ID와 일치한다. 페이지 전부 렌더 및 대표 페이지 시각 검수를 마쳤다. 최종 ZIP SHA-256 `a935a69cdc0a83315c193377ba634d9430f130e32d82741527173d67b41afb24`. 세부 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q13-status.md`.
+- 활용8회 전체 완료가 아니다. 로컬 자료실 연결은 Q13 유형 9개뿐이고 나머지 29개 기존 원문은 검수 대기다. 답안 키·교사 정답 대조 완료로 표시하지 않는다. 데이터·색인·학생 ZIP·원문 검수·상태·QA는 Drive `18-61VnFMNv1FGKbS6ofqYohkT5uA1UCd` 아래 `문제은행 검수 · 활용 8회`에 저장하고 원시 재다운로드 SHA-256을 로컬과 대조했다. 영수증 `.private-work/hw-expansion-20261023/hw8/drive-sync-q13-receipt.json` 및 Drive 영수증 ID `1Kw-JD4MbRSRdi34AU1heVOM1blfbg5K5`. 저장소 main 작업 트리 미커밋·미푸시·미배포.
+
+## 2026-10-25 재개: 활용8회 기존 원문 14번 확장 r2
+
+- 사용자 재개 지시 후 Q14 기존 분수열 유형을 원문당 9개로 확장했다. Q13 자료 9개는 보존했다. 활용 8회 원문 PDF 3쪽의 문제와 실제 분수열 `1/12, 3/16, 5/20, 7/24`를 직접 대조했다. 원문 규칙식은 분자 `2n−1`, 분모 `4n+8`, 합 `6n+7`; 합 1261의 원문 독립 답은 209번째이며 `417+844=1261`이다.
+- Drive 답안 사본은 실제 p3 화면과 텍스트에서 빈 문제지 복사본이라 공식 키 대조는 불가했다. 변형 9개는 네 항에서 분자·분모의 등차 증가를 각각 찾아 식을 세운 뒤 목표 합으로 순번을 역산했다. 답은 137·181·113·127·139·101·117·109·97번째다. 별도 독립 검증에서 각 첫 네 항 차이, 목표값 나눗셈의 정수성, n번째 분자·분모 합을 재계산했다. 모두 3.4점 배점대에 따른 중 난도, 신규 원문 유형 0이다.
+- 데이터·색인 버전 `20261025-applied8-expansion-q13-q14-r2`, 18문항·유형 2개(Q13·Q14), 대기 유형 28개. 자료실 색인 카드, Q14 직접 링크와 입력/진단 경로, 답·풀이·학습 위치·포인트를 연결했다. 브라우저 검수에서 375px, 3회 입력 제한과 첫 기록 보존, 외부 쓰기 0, 오류 0을 확인했다. 문제 PDF 2쪽과 상세 풀이 3쪽, 모두 5쪽 렌더를 눈으로 검수했다. 실제 ZIP은 7개 항목과 9개 ID를 포함하며 풀이/학습 연결 및 PDF 페이지 내용이 일치한다.
+- 상태 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q14-status.md`; 생성기 `qa/extend-applied8-q14.py`; 독립 검산 `qa/applied8-q14-independent-validate.py`; 실제 ZIP 검증 `qa/applied8-q14-zip-validate.py`; 브라우저 검증은 `APPLIED8_SOURCE_NO=14 node qa/applied8-q13-browser-validate.cjs`로 실행한다. 렌더 증거 `.private-work/hw-expansion-20261023/hw8/q14-output-qa-r1/`.
+- Drive의 기존 데이터·색인을 r2로 갱신하고 Q14 학생 ZIP·원문 대조·상태·QA 묶음을 `문제은행 검수 · 활용 8회` 폴더에 보관했다. 6개 산출물의 Drive 원시 재다운로드 바이트 수와 SHA-256이 모두 로컬과 일치한다. 영수증 `.private-work/hw-expansion-20261023/hw8/drive-sync-q14-receipt.json`, Drive 영수증 ID `1oTdQofhXpwebpask-gBuO5X589ejgZyu`. 다음 순서는 Q15의 원문·답안 PDF 및 그림을 직접 확인하고, 그 기존 유형만 같은 기준으로 확장하는 것이다. 8회 전체 완료가 아니다. 로컬 main 미커밋·미푸시·미배포다. `bank/drafts/`와 `materials/.DS_Store` 보호 자료를 보존한다.
+
+## 2026-10-25 재개: 활용8회 기존 원문 15번 확장 r3
+
+- Q15 기존 달력 기준 다음 해 날짜의 요일 계산 유형을 원문당 9개로 확장했다. Q13·Q14를 보존했고 새로운 유형은 추가하지 않았다. 활용 난도는 3.4점 배점대에 따라 중으로 분류했다.
+- 문제 PDF p3의 원문 달력과 답안 PDF p3를 직접 열어 대조했다. 답안 Drive 사본은 표시된 정답이 없는 문제지 복사본이라 공식 키 대조는 불가하다. 원문 2020-04-01의 답은 2019-03-01 금요일에서 397일 뒤인 수요일로 독립 계산했다. 변형 9개도 윤년 경과 일수와 7일 나머지로 별도 검산했다.
+- 원문 달력 그림은 PDF에서 정확히 잘라 픽셀 그대로 아홉 문항에 넣었다. 데이터 r3는 27문항·3개 원문 유형이다. Q13~Q15 검증기 및 ZIP 검증기, Q13/Q14 브라우저 회귀, Q15 브라우저 입력·진단·학습 연결·2단·모바일·ZIP 다운로드 검사가 통과했다. 실제 ZIP 7개 항목이며 문제/상세풀이 각 3쪽이다. 여섯 쪽 모두 렌더를 눈으로 확인했다.
+- 상태 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q15-status.md`, 증빙 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q15-review-evidence.zip`. Drive 데이터·색인 최신본, Q15 ZIP·원문 검수·상태·증빙을 `문제은행 검수 · 활용 8회` 폴더에 저장하고 6개 파일의 원시 재다운로드 바이트와 SHA-256이 로컬과 모두 일치함을 확인했다. 상세 ID와 해시는 `.private-work/hw-expansion-20261023/hw8/drive-sync-q15-receipt.json`. 활용8회 나머지 27개 원문 유형은 미완료다. 로컬 `main` 미커밋·미푸시·미배포다. 진행 기한(2026-10-24 02:00 KST)이 지났으므로 새 문제 생성은 중지한다. 재개 시 기존 원문 16번부터 PDF 원문·답안과 그림을 직접 대조한다.
+
+## 2026-10-25 사용자 재개 후: 활용8회 원문 17번 확장 r4
+
+- 사용자가 `계속 진행`으로 명시 재개했다. 활용8회 Q17의 증가하는 흑백 바둑돌 묶음에서 흰색 개수를 세는 기존 유형만 9개로 확장했다. 사용자 확정대로 원문당 9개, 활용 난도는 3.4점 중이다. Q13~Q15를 보존해 36문항·4유형이 됐다.
+- 원문 p4와 Drive 답안 사본 p4를 직접 시각 대조했다. 답안 사본은 답 표시가 없는 문제지 복사본이다. 원문 450개 중 흰색은 219개: 흑백 1~20개 묶음쌍 420개에 흰색 210개, 다음 검은색 21개 뒤 흰색 9개다. 아홉 변형은 닫힌 쌍 공식과 순차 그룹 시뮬레이션으로 따로 검산했다. 원본 그림 크롭은 픽셀 그대로 반복 사용했다.
+- 브라우저 QA에서 카탈로그·시험지·9개 답 입력/진단/학습 연결·2단·모바일·3회 제한·ZIP 다운로드를 확인했다. ZIP은 7개 항목, 문제 3쪽과 상세 풀이 3쪽이며 전 쪽 렌더를 시각 검수했다. 풀이를 고친 뒤 재생성한 실제 ZIP QA도 통과했다.
+- 세부 상태 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q17-status.md`; 독립 검산 `qa/applied8-q17-independent-validate.py`; ZIP 검사 `qa/applied8-q17-zip-validate.py`; 브라우저 QA `APPLIED8_SOURCE_NO=17 node qa/applied8-q13-browser-validate.cjs`. Drive 데이터·색인·Q17 ZIP·검수·상태·증빙을 갱신하고 여섯 파일 원시 재다운로드 바이트/해시 일치를 확인했다. 영수증 `.private-work/hw-expansion-20261023/hw8/drive-sync-q17-receipt.json`.
+- Q16은 p4의 쌓기나무 형상에서 숨은 깊이/빈 공간을 확정하지 못해 검수 대기다. 답안 사본에도 정답 표시는 없다. 추정 답과 변형을 공개하지 말고, 원문 그림의 3D 점유 구조를 확정하는 직접 검수부터 한다. Q18~30 등 활용8회 나머지 26개 원문 유형도 미완료다. 이전 기한 이후 사용자가 재개했으므로 확장은 이어가되, 로컬 `main`에서 커밋·푸시·사이트 배포하지 않는다. 보호 자료 `bank/drafts/`, `materials/.DS_Store`를 유지한다.
+
+## 2026-10-25 재개: 활용8회 기존 원문 20번 확장 r5
+
+- 활용8회 Q20의 분모별 증가 묶음 분수열 유형만 9개 확장했다. 원문당 9개·기존 유형만·3.4점 배점대 중 난도를 적용하고 Q13~Q15·Q17을 보존했다. 원문 PDF p4 지문과 분수열 그림을 직접 열어 대조했으며, 원본 그림의 픽셀 정확한 크롭을 변형 전체에 재사용했다.
+- 답안 Drive 사본 p4는 표시 정답이 없는 빈 문제지 복사본이라 공식 키 확인은 불가능하다. 독립 계산으로 47번째=`2/10`, 57번째=`2/11`을 확인했다. 변형 9쌍의 두 항을 삼각수 경계와 순차 전개로 검산했고, 기약분수 동치도 답 입력에서 허용한다.
+- Q20 검색·자료실 링크, 9문항·풀이, 답 입력/진단/학습 위치·포인트, 2단·모바일·3회 제한·최초 기록 보존, 실제 다운로드 ZIP 검사가 통과했다. 문제 3쪽·상세풀이 5쪽의 전체 렌더를 검토했다. 세부 상태 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q20-status.md` 및 `q20-output-qa-r1/` 참조.
+- 현 데이터 r5는 45문항·5개 기존 유형(13·14·15·17·20)이며 신규 유형 0, 남은 기존 유형 25개다. Q16은 원문 쌓기나무의 숨은 구조와 빈 공간을 확정하지 못해 계속 검수 대기다. 로컬 `main` 미커밋·미푸시·미배포이며 `bank/drafts/`, `materials/.DS_Store`를 보존한다. Drive 원시 재다운로드 대조 영수증은 `.private-work/hw-expansion-20261023/hw8/drive-sync-q20-receipt.json`에 남긴다.
+
+## 2026-10-25 재개: 활용8회 기존 원문 18번 확장 r6
+
+- Q18의 격자 최단 경로에서 같은 속도의 두 사람이 ㄷ에서 만나는 기존 유형을 9개로 확장했다. 원문 PDF p4에서 지문과 모든 선분·점 표식을 직접 대조했고, 답안 Drive 사본은 빈 문제지 복사본임을 확인했다. 원본 격자 그림은 픽셀 그대로 재사용했다.
+- 원문 최단 거리는 두 사람 모두 5칸이다. 그림의 실제 선분 그래프를 BFS/경로 전수열거 및 독립 DFS로 재계산해 ㄱ→ㄷ 9개, ㄴ→ㄷ 8개, 답 72를 확인했다. 경로 쌍은 ㄷ 이외에 일찍 만나는 점이 없다. 일부 변형은 최단 경로 위의 실제 교점을 통과하게 해 경로 조합 수를 달리했으며, 답은 72·32·24·16·8·27·18·54·30이다.
+- 자료실 연결, 답 입력·진단·학습 포인트, 2단·375px·3회 제한, 실제 ZIP 7항목 및 문제 3쪽·상세풀이 5쪽 검증을 통과했고 8쪽 전체를 렌더해 검수했다. 상태 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q18-status.md`, 독립 검산 `qa/applied8-q18-independent-validate.py`, ZIP 검사 `qa/applied8-q18-zip-validate.py`, 결과 `q18-output-qa-r1/`.
+- 현 데이터 r6는 54문항·6개 기존 유형(13·14·15·17·18·20)이며 신규 유형 0, 남은 기존 유형 24개다. Q16은 숨은 쌓기나무 구조를 확정하지 못해 검수 대기다. Drive `문제은행 검수 · 활용 8회`에 r6 데이터·색인·Q18 문제/풀이 ZIP·원문 검수·상태·증빙을 저장했고 데이터·색인·문제 ZIP·원문 검수는 원시 재다운로드 바이트와 SHA-256이 일치함을 확인했다. 상태·증빙을 포함한 6개 파일 모두 원시 재다운로드 크기와 SHA-256이 일치함을 확인했다. 파일 ID·체크섬 영수증은 `.private-work/hw-expansion-20261023/hw8/drive-sync-q18-receipt.json` 참조. 로컬 `main` 미커밋·미푸시·미배포, 보호 자료 유지.
+
+## 2026-10-25 재개: 활용8회 기존 원문 21번 확장 r7
+
+- Q21 원문 PDF p4의 화살표 도식을 직접 확인하고 완전 crop을 픽셀 대조해 보존했다. 도식의 방향 간선을 전사해 A→B 경로 17개를 독립 DFS로 세었다. 변형 9개는 기존 교점 경유 조건만 붙이며 정답은 17·15·7·7·4·4·6·6·5다. 답안 PDF는 무표시 문제지 복사본이다.
+- 문제/풀이의 2단 배치, 답 입력·진단·학습 연결, 375px, 3회 입력 제한과 첫 연습 보존, 실제 ZIP 7개·문제 3쪽·풀이 3쪽을 검사했다. 원본 그림을 문제 HTML에 아홉 번 바이트 동일하게 삽입하고 ZIP PDF 여섯 쪽을 렌더해 확인했다. 상태 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q21-status.md`, 근거 `q21-output-qa-r1/`, 독립 검사 `qa/applied8-q21-independent-validate.py`, ZIP 검사 `qa/applied8-q21-zip-validate.py`.
+- 기존 Q13·14·15·17·18·20 검산 스크립트의 총수/색인 기준을 r7로 갱신해 전부 재통과했다. 데이터 r7는 63문항·7개 기존 유형이며 Q19는 ‘마주 놓인’ 배치가 빠져 검수 대기, 남은 기존 유형은 23개다.
+- Q21 r7 데이터·색인·문제 ZIP·원문 검수·상태·증빙 6개 파일은 Drive `문제은행 검수 · 활용 8회`에 저장했고, 모두 원시 재다운로드 크기와 SHA-256이 로컬과 일치함을 확인했다. Drive ID와 체크섬 영수증은 `.private-work/hw-expansion-20261023/hw8/drive-sync-q21-receipt.json` 참조. 로컬 `main` 미커밋·미푸시·미배포이며 기존 보호 자료를 유지한다.
+
+## 2026-10-25 재개: 활용8회 기존 원문 22번 확장 r8
+
+- 현행 PDF p5에서 세 수도꼭지 문제를 직접 읽었다. 답안 사본은 무표시 문제지다. 원문 조건을 정확한 분당 탱크 속도로 바꿔 ㄷ=`1/90+1/120−1/60=1/360`, ㄱ+ㄴ=`1/60−1/360=1/72`, 원문 답 72분으로 독립 산출했다. 기존 유형에서 시간 값만 바꾼 9개 변형 답은 72·75·90·150·70·108·60·100·120분이다. 각 꼭지 개별 속도의 양수성과 계산을 `qa/applied8-q22-independent-validate.py`에서 검증했다.
+- 브라우저에서 카탈로그·9문제/풀이·답 입력·진단·학습 연결·2단 순서·375px·3회 제한·ZIP을 검수했다. 실제 ZIP 7개 항목, 문제 PDF 2쪽, 풀이 3쪽이며 5쪽 렌더 확인을 완료했다. 결과 `q22-output-qa-r1/`, ZIP 검사 `qa/applied8-q22-zip-validate.py`.
+- 데이터 r8은 72문항·8개 기존 유형(13·14·15·17·18·20·21·22), 신규 유형 0이다. Q19는 배치 조건이 불분명해 검수 대기, 기존 유형 22개 남음. Q22 r8 데이터·색인·문제 ZIP·원문 검수·상태·증빙 6개 파일은 Drive `문제은행 검수 · 활용 8회`에 저장하고 원시 재다운로드 크기와 SHA-256 일치를 확인했다. 파일 ID 및 영수증은 Q22 상태 문서와 `.private-work/hw-expansion-20261023/hw8/drive-sync-q22-receipt.json` 참조. 기존 미커밋 보호 자료 보존, 로컬 `main` 미커밋·미푸시·미배포.
+
+
+## 2026-10-25 재개: 활용8회 기존 원문 23번 확장 r9
+
+- Q23은 원문 PDF p5와 답안 후보 p5를 직접 대조했다. 답안은 무표시 사본이라 독립 계산했다. 남은 비율 `4/5×5/8×2/5=1/5`; 원문 전체 200명에서 수학 선호 60명이다. 변형 9개 인원수 및 답은 정확한 분수·정수 인원수로 별도 검산했다. 배점 4.2 기준 상, 기존 유형 확장, 새 유형 0.
+- 자료실 링크·답입력·진단·학습 링크·2단 배치·모바일·3회 제한·ZIP을 검사했다. 실제 ZIP 7개 항목, 문제 PDF 3쪽, 풀이 PDF 3쪽 전부 렌더 확인. 세부 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q23-status.md`, ZIP QA `qa/applied8-q23-zip-validate.py`.
+- r9: 81문항·9개 기존 유형(13·14·15·17·18·20·21·22·23). Q19는 원문에 전구 배치가 없어 대기, 기타 미착수 기존 유형 20개. 로컬 `main` 미커밋·미푸시·미배포. 이 변경분은 Drive 업로드/바이트 검증 전이다. 기존 사용자 미커밋·미추적 파일 보존.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+
+## 2026-10-25 정정: 활용8회 Q22/Q24 문항 번호 바인딩 오류와 r10
+
+- 원문 시험지 5쪽 전체를 다시 비교해 이전 Q22의 수도꼭지 검수가 Q24를 잘못 참조했음을 발견했다. 정확한 번호는 Q22=`100 □ 1 □ 2 □ 3 □ 4 □ 5 □ 6 □ 7 □ 8=108` 부호 배치 가짓수, Q24=세 수도꼭지 일률이다. 오류를 숨기지 않고 해당 데이터·독립검증·ZIP 검증·상태 기록을 정정했다.
+- Q22 정답은 부호가 −인 수들의 합 14를 만족하는 1~8 부분집합 12개이며, 256개 전체 부호 배치 전수검산을 했다. 새 Q22 변형 9개 답: 12·14·13·11·9·7·5·3·1. 기존 수도꼭지 9개는 Q24 ID·학습 위치로 옮기고 답 72·75·90·150·70·108·60·100·120분을 유리수로 재검산했다.
+- Q22/Q24 각각 자료실 연결, 입력·진단·학습 연결, 2단·375px·3회 제한과 실제 ZIP의 2쪽 문제/3쪽 풀이를 검사했다. 상세 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q22-status.md`, Q24 상태 동반.
+- 데이터 r10: 90문항·10개 기존 유형(13·14·15·17·18·20·21·22·23·24). Q19는 원문 배치 정보 부족으로 검수 대기. 로컬 `main` 미커밋·미푸시·미배포. Q22의 기존 Drive ZIP `10tOVStC7t63nfXYmj5Sbfy6cbpGIb85y`, 원문 `10PWlDLyO75XoYBahqx4v6U1IGSYs_Jbr`, 상태 `1OyXMotCm6sC3U-_clluhmh8SSyPlfZHE`, 증빙 `1Vm5ApF7QWAQAAIrSLgfLuxMmWTaNudz6`, 영수증 `1E7bq6DGemAOu4WxfnzARa57dAUmvESOG`를 정정본으로 교체했다. 공용 데이터/색인 ID는 기존 그대로 갱신했다. Q24 ZIP `1cjh6KyhpQPo8D9kjv--CmZcVHL9gONwC`, 원문 `1TMUxhlyndNEH4SOm1DEMkSTeoD7-NJMW`, 상태 `1s92witPrn1Db9Mn-chqSjGtGYqMj4eNG`, 증빙 `13xzsXTH5mfOXysgZ2kNthl9w61nldeQG`, 영수증 `1tLkW-i6wRxId9qBSUWAWKy-VMbWGUxZ-`를 새로 저장했다. Q22/Q24 자료 및 공용 데이터·색인·상태·증빙·영수증 등 12개 Drive 파일을 원시 재다운로드해 로컬 바이트 크기와 SHA-256이 모두 일치함을 확인했다. 이전에 오표기된 Q22 파일은 같은 ID에 정정본을 저장했다.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+
+## 2026-10-25 활용8회 기존 원문 25번 확장 r11
+
+- 원본 시험지·답안 후보 PDF p5를 직접 확인했다. 원본 그림에는 변 내부 점 12개가 있고, 위·오른쪽·아래·왼쪽 변에 3·3·4·2개다. 꼭짓점은 점이 아니며, 답안 사본은 무표시다. 변별 곱의 합 `3×3×4+3×3×2+3×4×2+3×4×2=102`, 점 12개의 유효 세 점 조합 전수열거로 원문 답 102를 확인했다.
+- 원본 그림을 crop-only로 정확히 재사용해 9개 조건 변형을 만들었다. 이미지 바이트가 9회 모두 픽셀 동일하다. 답은 36·18·54·42·48·60·66·78·102. 자료실/답입력/진단/학습 연결/2단/모바일/3회 제한/ZIP 검사 완료, 문제 3쪽·풀이 3쪽 렌더 확인. 자세한 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q25-status.md`.
+- r11 데이터 99문항·11개 기존 출처 유형(13·14·15·17·18·20·21·22·23·24·25); 신규 유형 0. Q19는 배치 불명으로 검수 대기, 기타 미착수 기존 유형 18개. 로컬 `main` 미커밋·미푸시·미배포. Drive 데이터 `1zDDcGiV8eGuhd_MKh-N_WrYxCPnmb3O6`, 색인 `1JMDRYH-BIxCCOK1MnJx1lRdBkYz9Sn4_`, Q25 ZIP `1mDSO6Jx4-T03nCIZZ877OR_6SrzI5i4v`, 원문 검수 `1UA_4vAeIzLt-GoYpzL_n_kwrEyit03yI`, 상태 `1CzXLy6alQ9qCyGAlrvs5pNldKCrGWRLi`, QA 증빙 `1zVAIvypv-lloChVqBdE9TDkUHUmBmICx`, 영수증 `16yVZ5T47-obbGAx2BWfetfU8qaLDWiff`를 Drive에 저장했다. 7개 파일의 원시 재다운로드 크기·SHA-256이 모두 일치한다.
+
+
+## 2026-10-25 활용 8회 Q26 추가 검수와 시계 유형 지침
+
+- Q26 목장 풀의 일정 성장·소 소비 유형을 기존 형태로 9개 추가했다. 원문 PDF 6쪽을 직접 대조했고 Drive 답안 후보는 정답 표시 없는 동일 텍스트 사본이다. 원문 정답 5일, 변형 정답 5·4·7·6·8·5·9·7·8일을 유리수 계산과 양 조건 재대입으로 확인했다. 배점 4.2점 기준 상.
+- Q26 문제은행 연결, 답 입력·진단·학습 링크, 원시험 링크, 2단 문제 PDF, 상세 풀이, 실제 ZIP 7개 항목, 모바일 375px, 3회 답 입력/원점수 보존을 확인했다. 실제 산출 PDF는 문제 2쪽, 풀이 5쪽이며 렌더 전 페이지를 육안 확인했다. 브라우저 외부 쓰기 없음. 검증 스크립트 `qa/applied8-q26-independent-validate.py`, `qa/applied8-q26-zip-validate.py`; 브라우저는 기존 `qa/applied8-q13-browser-validate.cjs`를 `APPLIED8_SOURCE_NO=26`으로 실행했다.
+- 인벤토리는 108문항·12개 기존 원문 유형(13·14·15·17·18·20·21·22·23·24·25·26), 신규 유형 0이다. Q19는 원문 그림 배치 정보가 없어 검수 대기.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- 사용자에게 지정된 진행 시한(한국 시간 2026-10-24 02:00)이 지났다. 새 유형 생성은 더 시작하지 않는다. 로컬 `main` 변경은 미커밋·미푸시·미배포 상태로 보존한다.
+- Q26 Drive 산출물: 문제·풀이 ZIP `12FRxrzL2MQI9p-Pd14FErwhDT_qXcq1j`, 원문 대조 `14_zLU0P_wFYhvarSVPPayvQuyKlBppAv`, 상태 `1mlqsPEoKXi-9vmXzZL5XN7DPv5txrCMj`, 체크섬 영수증 `1BoWGZ7i4GOFEyXcOfCamx5ueJx6pGbDI`, 검수 증빙 ZIP `1zPlkqgtLvZaVi5xXN15O1pvqsYBEUht_`. 데이터·색인 기존 Drive ID도 갱신했으며 총 7개 파일을 raw로 내려받아 로컬 SHA-256과 대조했다.
+
+
+## 2026-10-25 활용8회 기존 원문 Q27 확장 r13
+
+- Q27 숫자카드 유형(0·3·7 각 4장으로 가능한 네 자리 수의 합)을 9개로 확장했다. 시험지 PDF 6쪽의 원문 카드 그림·지문을 직접 확인했고, 답안 후보 같은 쪽은 정답이 없는 원문 복사본이다. 원문 54개 유효한 서로 다른 숫자를 전수 합산하고 자릿값별 기여로 독립 확인해 289,980을 구했다. 기존 문제은행의 동일 숫자카드 수 합 유형(파이널 1회 Q29)과 같은 중복 숫자값 처리 방식을 적용했다. 변형 답은 86,994·144,990·202,986·260,982·318,978·347,976·376,974·405,972.
+- 첫 카드 그림은 원문 crop을 정확히 재사용하고, 변형 8개에는 같은 배치의 SVG 카드 그림을 붙였다. 자료실/입력/진단/학습 링크, 2단, 모바일, 3회 답 시도, 원점수 보존, 7개 ZIP 구성품, 문제/풀이 각 3쪽을 검증했다. Q25~Q27 독립 검증·ZIP 검증, Q26/Q27 브라우저 회귀가 통과했다. 상세 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q27-status.md`.
+- r13은 117문항·13개 기존 원문 유형(13·14·15·17·18·20·21·22·23·24·25·26·27), 신규 유형 0. 남은 17개 유형은 1~12,16,19,28~30; Q19는 배치 불명으로 검수 대기.
+- Drive 데이터/색인 기존 ID `1zDDcGiV8eGuhd_MKh-N_WrYxCPnmb3O6` / `1JMDRYH-BIxCCOK1MnJx1lRdBkYz9Sn4_`; Q27 ZIP `1Kx6Z-pGafSkCQKY8pn8o3dnfMKJb8GFT`, 원문대조 `144R4O4u8DPd7a5qyHYtMlpzkatgAF7GM`, 상태 `1CxHnIlSrkqp4toRnP6PEdzcpJnfNynhi`, 영수증 `1eHXm7sSLeVfz5uJd0UQHeOGRfaVbl2wz`, 증빙 ZIP `1I-_qB5ptxshvI9taCdGl2RlMYf6jxatE`. 7개를 원시 다운로드해 바이트/SHA-256 일치를 확인했다.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- 현재 로컬 `main` 미커밋·미푸시·미배포.
+
+## 2026-10-25 활용8회 기존 원문 28번 확장 r14
+
+- Q28 지도 색칠 기존 유형에 9문항을 연결했다. 원문 PDF 6쪽 그림을 직접 확인해 20개 지역·공유 경계 42개를 복원했고, 5개 홀수 고리와 중심 지역으로 4색 미만이 불가능함을 보인 뒤 실제 4색 칠하기를 확인했다. 원문 답안 사본에는 정답 표시가 없어 공식 키를 확인했다고 쓰지 않았다. 원문 그림 crop 그대로, 변형 지도 그림 8개, 풀이 그림 9개를 썼다.
+- Q28 9문항·상(배점 4.2)·2단·답 입력/진단/학습 연결·375px·3회 제한·원점수/최초 연습 보존·실제 ZIP 7항목을 브라우저에서 검사했다. PDF 문제 3쪽·상세풀이 8쪽 전부 렌더 확인. Q13~Q28 독립/ZIP 검증 회귀 통과.
+- r14 126문항·14개 기존 유형. Q28 Drive 자료와 공용 데이터/색인을 저장했다. ID·폴더 부모·크기는 확인; 원시 바이트 SHA-256은 미검증으로 영수증에 정정했다. 상세 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q28-status.md`와 `q28-drive-receipt.json` 참조.
+
+## 2026-10-25 활용8회 기존 원문 29번 확장 r15
+
+- Q29 원문 PDF 6쪽의 `1×2×…×100`을 12로 반복 나눌 때 첫 나머지 순서를 묻는 기존 유형만 9개로 확장했다. 답안 PDF 후보의 답란은 공란이며 문제 페이지와 텍스트가 일치한다. 100!의 소인수 지수 `v₂=97`, `v₃=48`이므로 12를 48회 정확히 나눌 수 있고 49번째에서 처음 나머지가 생긴다. 여덟 변형도 레장드르 공식과 임의 정밀도 정수 직접 나눗셈으로 대조했다.
+- 9문항·상(배점 4.2)·문제 2쪽/상세풀이 3쪽. 카탈로그, 답 입력·진단·권장 학습·학습 포인트·원시험 링크, 2단 순서, 375px, 3회 제한·첫 기록 보존, ZIP 7항목, PDF 5쪽 렌더를 확인했다. 외부 쓰기 0. Q13~Q29 독립검산·ZIP 회귀 전부 통과.
+- r15는 135문항·15개 기존 유형 `13,14,15,17,18,20,21,22,23,24,25,26,27,28,29`; 남은 `1~12,16,19,30`. Q16 쌓기나무 구조와 Q19 배치 의미는 계속 검수 대기다. 새 유형 0개.
+- Drive `문제은행 검수 · 활용 8회`에 데이터·색인(Q29 원문 포함 갱신), Q29 ZIP·원문대조·독립검산·상태·증빙·영수증을 보관했다. 모든 파일 ID·부모 폴더·크기를 확인했다. Drive 원시 바이트 SHA-256은 로컬 해시용 스트림이 없어 미검증으로 남기며 이를 일치로 주장하지 않는다. ID는 `.private-work/hw-expansion-20261023/hw8/q29-drive-receipt.json` 참조.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+
+## 2026-10-25 활용8회 Q30 확장 r16 및 시계 조건 재확인
+
+- Q30 주사위 경로 합산이라는 기존 유형을 9문항으로 확장했다. 원문 PDF 그림을 내장 JP2에서 무손실 PNG로 추출해 원문 문항 그림과 픽셀 동일성을 확인했다. 네 경로를 직접 추적하고 매 이동 때 바닥면을 독립 시뮬레이션했다. 원문 경로 합은 14·16·21·14, 같은 합인 경로는 1·4번이다. 답안 후보는 무표시 문제지 사본이라 이 계산을 정답 근거로 삼았다. 변형 8개도 경로·주사위 방향·합을 독립 검산했고 동률 경로가 실제로 포함됨을 확인했다.
+- 자료실, 답안 입력, 진단·학습 연결, 2단 배치, 375px, 3회 답안 입력과 원점수 보존을 브라우저에서 검사했다. ZIP은 7항목, 문제 PDF 3쪽, 상세 풀이 PDF 3쪽이며 9개 그림·6개 페이지를 렌더 확인했다. Q13~Q30 전체 독립 검증·ZIP 회귀가 통과했다. 상세 상태 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q30-status.md` 및 `q30-drive-receipt.json`.
+- r16은 144문항·16개 기존 원문 유형 `13,14,15,17,18,20,21,22,23,24,25,26,27,28,29,30`; 신규 유형 0. 남은 것은 1~12,16,19이며 Q16의 쌓기나무 구조와 Q19의 배치 조건은 계속 검수 대기다.
+- 공유 Drive 데이터/색인 ID는 기존 것을 유지해 r16으로 갱신했다. 현재 메타데이터 크기는 각각 627,139 / 5,323바이트. Q30 ZIP `1_RZQwESrfq5rEt7K2ejdJZDavV1zXju5`, 원문 검수 `1DxtzXrwTic_8nq3TyM6DPUoyY1WYFK1r`, 독립 계산 `1sZ-HPVLwnhaN_sGAJiTLKM7zozFFH7ET`, 상태 `1egCtajvJ2kEEi-2y6x95Oh-McIt6wrEv`, 증빙 ZIP `1fHQ8wIV4gqnYcCksB_u7XyM_naazzvuX`. 체크섬 영수증에는 Drive 파일 ID·부모·크기와 로컬 SHA-256을 기록하되, 현재 Drive의 raw byte SHA-256을 내려받아 비교했다고 주장하지 않는다.
+- 기존 Q28·Q29 영수증은 원래 업로드 SHA-256·크기를 역사 기록으로 보존하고, 공용 데이터/색인이 Q30 r16으로 대체된 사실과 현재 크기를 별도로 명시했다. 업데이트 영수증 파일 ID는 이 섹션을 Drive 업로드 후 보충한다.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- Drive 영수증 파일(같은 검수 폴더, 각 ID·부모·크기 재조회 확인): Q28 `1JHuQ_zXJFZR1sXV4IryAE--GF4H2kLs0` (7,170B), Q29 `1YweIIXQhqQ1CTgi80N8NtVtfZMMiJJ3k` (6,447B), Q30 `1_DlZfWXjbmKQA40Io_2rkF_waiQ0pWbQ` (5,103B). 공용 데이터 627,139B, 색인 5,323B도 현재 파일 ID·부모·크기를 재확인했다. SHA-256은 로컬 파일만 계산했으며 현재 Drive raw bytes와 비교한 것은 아니다.
+
+## 2026-10-25 활용8회 Q05 확장 r17 및 시계 각도 조건 정정
+
+- 활용 8회 원문 5번의 기존 유형(숫자 카드 8장 중 서로 다른 3장을 나눗셈식 `□÷□=□`에 놓는 경우의 수)을 9문항으로 확장했다. 새 유형은 0개. 원문 p.2의 지문과 카드 그림을 직접 대조하고, 그림은 원본 PDF에서 도식 영역만 픽셀 crop해 첫 문항에 그대로 썼다. Drive 원문과 Mac 로컬 PDF는 SHA-256 `f053379544d41d73bcba673543536e56acbf97f5a0faf4a36e5a4cc008fe74ff`로 바이트 동일하다.
+- Drive 답안 후보 `1ixxsCBOTS4SqJ4PXJesvzHzyQfcBW06p`의 p.2는 원문과 텍스트가 동일하고 답란이 비어 있다. 공식 정답 키 확인으로 표시하지 않는다. 원문 답은 8가지이며 순서 있는 나눗셈 배치 전수열거와 몫×나누는 수 카드 곱셈 관계라는 별도 계산이 같은 8식을 냈다. 변형 8개도 두 방식의 식 목록을 전부 대조했다.
+- 2.7점 배점대만 적용해 하. 자료실 연결·9개 답 입력·진단/권장학습/포인트 링크·원시험 링크·2단 순서·375px·3회 제한/첫 기록 보존·원점수 보존을 실제 브라우저로 확인했다. ZIP 7항목, 문제 PDF 3쪽·상세풀이 3쪽. 9개 도식, 풀이의 모든 유효 식 및 6쪽 렌더를 육안 확인했다. 외부 쓰기 0.
+- 현재 r17은 153문항·17개 기존 유형 `5,13,14,15,17,18,20,21,22,23,24,25,26,27,28,29,30`; Q16·Q19는 계속 검수 대기, 그 외 미착수 유형은 `1,2,3,4,6,7,8,9,10,11,12`. Q5와 Q13~Q30 독립 검증 및 ZIP 검증 모두 통과.
+- Drive 폴더 `18-61VnFMNv1FGKbS6ofqYohkT5uA1UCd`에 r17 데이터·색인과 Q5 결과를 보관하고 ID·부모 폴더·크기를 재조회했다. 데이터 `1zDDcGiV8eGuhd_MKh-N_WrYxCPnmb3O6` (671,555B), 색인 `1JMDRYH-BIxCCOK1MnJx1lRdBkYz9Sn4_` (5,612B), Q5 ZIP `15SVcNbmW7ACoNEZ-mM3d-bCmpxIzGB3g`, 원문 대조 `1Hw64nDewoT8aryW5J10ycT1CjLOtwtse`, 독립 검산 `1n2rvgTBKlU7jBAzaHH2fnh2a5isuRR9e`, 상태 `1S0W6YG8SlSW22kQxvyEUd0EKt9aJi9p2`, 검수 증빙 `10JE62GkQPYnIYSuwMbCrrdeXjnsTJq88`, 체크섬 영수증 `1LddPl7XhJBGfExXkcLAeTEaD_x3fIsjv`. Q28/Q29/Q30의 역사 영수증도 원래 SHA·크기는 보존하고 공용 데이터·색인이 r17로 교체된 사실을 현재 크기와 함께 수정했다. Drive raw bytes 자체의 SHA-256을 로컬에서 계산했다고 주장하지 않는다.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- 저장소는 로컬 `main`, 미커밋·미푸시·미배포. `bank/drafts/`, `materials/.DS_Store`와 앞서 있던 미커밋 파일을 보존한다. 다음은 남은 원문 PDF와 답안 후보를 직접 확인하고, 검수 가능한 기존 유형 하나를 골라 이어 간다.
+
+
+## 2026-10-25 활용8회 기존 원문 Q10 확장 r18 및 시계 각도 조건
+
+- Q10의 맞물린 톱니바퀴 회전 수 유형을 원문당 9개로 확장했다. 현행 시험지 PDF p.3의 지문과 수치(가 63톱니, 나 42톱니, 가 6바퀴)를 직접 확인했다. 원문에는 별도 그림이 없어 새 그림을 덧붙이지 않았다. Drive 답안 후보 p.3은 텍스트가 동일한 빈 문제지 사본이라 공식 정답 키로 취급하지 않았다.
+- 원문 답은 `63×6÷42=9`바퀴. 식을 세우는 계산과 맞물림을 지나는 톱니 수를 한 개씩 묶는 시뮬레이션의 두 방법으로 원문과 변형 8개를 검산했다. 변형 답은 12·10·15·12·8·8·9·12바퀴. 원문 배점 2.7만 적용해 하.
+- 카탈로그·9개 답입력·진단/학습 위치·포인트 연결·2단·375px·3회 제한·원점수와 첫 연습 보존·실제 ZIP을 검수했다. ZIP은 7개 파일, 문제 PDF 2쪽, 상세풀이 3쪽이다. 5쪽 전체를 렌더해 육안 확인했다. Q10 독립검산, 브라우저, ZIP 검증과 기존 Q5/Q13~Q30 독립·ZIP 검증 전부 통과.
+- r18 공용 데이터 162문항·18개 기존 원문 유형 `5,10,13,14,15,17,18,20,21,22,23,24,25,26,27,28,29,30`; 신규 유형 0. 미확장 `1,2,3,4,6,7,8,9,11,12,16,19`; Q16 그림 구조와 Q19 배치 조건은 검수 대기.
+- Drive 폴더 `18-61VnFMNv1FGKbS6ofqYohkT5uA1UCd`의 데이터·색인 기존 ID를 유지하고 r18로 갱신했다. 데이터 `1zDDcGiV8eGuhd_MKh-N_WrYxCPnmb3O6` (702,200B), 색인 `1JMDRYH-BIxCCOK1MnJx1lRdBkYz9Sn4_` (5,880B). Q10 ZIP `1orAlA4305emNLxFQWi0mRFciPzu_pAYv`, 원문 대조 `1q_Zrg-7v0XeOhBUxIxLz6jUBGUUaUeXd`, 독립 검산 `1hRFvCFLmLwdqDXCaSxt21sHBUy40lLqk`, 상태 `1QtBk0r8CSusprvzOBSwxZMKHvHU0cGZ-`, 증빙 ZIP `1C0nMC70z5npyXvHtnhgO3abgZtT8E7VY`, Q10 영수증 `14HuGi2HeCFfxrmjiQBO5IMZKbWKNCm45`. 각 파일의 Drive ID·부모 폴더·크기를 메타데이터로 확인했다. raw Drive bytes의 SHA-256 일치라고 주장하지 않는다. Q5/Q28/Q29/Q30 역사 영수증도 현재 공용 데이터·색인이 r18임을 업데이트했다.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- 계속 로컬 `main` 미커밋·미푸시·미배포. 기존 사용자 변경과 `bank/drafts/`, `materials/.DS_Store` 보존.
+
+
+## 2026-10-25 활용8회 기존 원문 Q04 확장 r19
+
+- Q4 `1부터 자연수를 이어 붙여 전체 357자리 수를 만들고 끝 세 숫자의 합 구하기`를 기존 유형 그대로 9개로 확장했다. 현행 PDF p.1 지문을 직접 열어 원문을 확인했다. 페이지에서 원문 그림은 없고 숫자열 `12345678910111213…`과 마지막 세 빈칸을 보여 준다. 변형도 같은 숫자열 형식과 세 빈칸을 유지했다.
+- Drive 답안 후보 p.1도 열어봤으며 표시 정답 없는 문제지 복사본이다. 공식 답안으로 기록하지 않았다. 원문은 1~9가 9자리, 10~99가 180자리로 99까지 189자리이며, 357자리 끝은 `155`, 숫자 합 11이다. 각 변형의 마지막 세 자리를 블록 위치 계산과 자연수 문자열 실제 연결의 두 독립 방법으로 대조했다. 끝 세 자리/합: 357=`155`/11, 194=`010`/1, 197=`110`/2, 199=`021`/3, 204=`104`/5, 215=`710`/8, 222=`110`/2, 245=`711`/9, 327=`145`/10. `010`처럼 첫 숫자가 0인 경우도 마지막 세 자리의 자릿수로 보존했다.
+- 브라우저 카탈로그→9문항, 답입력·진단/학습 위치, 2단, 375px, 3회 제한, 원점수/첫 연습 보존, 외부 쓰기 0을 확인했다. 실제 ZIP 7개 항목이고 문제 PDF 2쪽·상세풀이 3쪽의 전 페이지 렌더를 육안 확인했다. Q4·Q5·Q10·Q13~Q30 독립 검산 19개와 실제 ZIP 검사 19개가 r19에서 통과했다. 세부 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q04-status.md`, `q4-output-qa-r1/`, `q04-independent-math.json`.
+- r19 공용 데이터 171문항·19개 기존 유형 `4,5,10,13,14,15,17,18,20,21,22,23,24,25,26,27,28,29,30`; 신규 유형 0. 미확장 `1,2,3,6,7,8,9,11,12,16,19`; Q16의 쌓기나무 구조와 Q19의 배치 조건은 계속 검수 대기다.
+- Drive 폴더 `18-61VnFMNv1FGKbS6ofqYohkT5uA1UCd`의 공용 데이터 `1zDDcGiV8eGuhd_MKh-N_WrYxCPnmb3O6` (734,433B), 색인 `1JMDRYH-BIxCCOK1MnJx1lRdBkYz9Sn4_` (6,175B)를 기존 ID에 갱신했다. Q4 ZIP `1NyaXULJ3cbBKjellcfpUcSWDVw8bYYYf`, 원문 대조 `1rhhY3nQoReVk2Qw0tF2-XRUOocXQlUNW`, 검산 `1jiYnWJnGsj80Op8Xi0B1IJz0woqqCj7u`, 상태 `1nKGER5cdKDPxMhPlreJikF1mrB1oRcSv`, 증빙 ZIP `1AuJ80wGms2VJvfxfdI8KigSwAS_UAOwR`, 영수증 `136uoBrlubD2NGSx1FKnZ3qB8rmhcFDnS`. ID·부모·크기는 Drive 메타데이터로 대조했다. 공용 데이터가 r19인 점을 반영해 Q5/Q10/Q28/Q29/Q30 영수증도 같은 기존 Drive ID에서 갱신했다. 원시 Drive 바이트 SHA-256 일치라고 주장하지 않는다.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- 로컬 `main` 변경은 계속 미커밋·미푸시·미배포. `bank/drafts/`, `materials/.DS_Store`와 다른 미커밋 자산은 보존한다.
+
+
+## 2026-10-25 활용8회 기존 원문 Q06 확장 r20
+
+- Q6의 세 종류 동전 수와 금액으로 50원 동전 개수를 구하는 기존 유형을 9문항으로 확장했다. 시험지 PDF p.2 지문을 직접 열어 100원·50원·10원 동전 19개, 총 480원 조건을 확인했다. 그림은 없는 문항이다. Drive 답안 후보 p.2 역시 정답 표시가 없는 문제지 복사본이라 공식 키로 보지 않았다.
+- `H,F,T`를 각 동전 수로 두면 `H+F+T=N`, `10H+5F+T=V/10`, 소거 후 `9H+4F=V/10−N`이다. 독립 전수 대입으로 각 문제에 비음수 정수해가 유일함을 확인했다. 원문 답 5개, 변형 답 2·7·1·8·3·6·2·7개. 배점대 2.7 기준 하.
+- 카탈로그, 9문항 답 입력, 진단·학습 위치/포인트, 2단 배치, 375px, 3회 제한, 원점수·첫 연습 보존, 실제 다운로드 ZIP을 검수했다. 문제 PDF 2쪽·풀이 3쪽의 전 페이지를 렌더 확인했다. Q4/Q5/Q6/Q10/Q13~Q30 독립 검산 20개와 ZIP 검사 20개 전부 r20에서 통과했다. 자세한 내용은 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q06-status.md`, `q06-independent-math.json`, `q6-output-qa-r1/`.
+- r20 공용 은행은 180문항·20개 기존 유형 `4,5,6,10,13,14,15,17,18,20,21,22,23,24,25,26,27,28,29,30`; 신규 유형 0. 미확장 `1,2,3,7,8,9,11,12,16,19`. Q16 그림 구조와 Q19 배치 조건은 계속 검수 대기다.
+- Drive `문제은행 검수 · 활용 8회` 폴더 `18-61VnFMNv1FGKbS6ofqYohkT5uA1UCd`의 기존 데이터 ID `1zDDcGiV8eGuhd_MKh-N_WrYxCPnmb3O6`(767,782B)와 색인 ID `1JMDRYH-BIxCCOK1MnJx1lRdBkYz9Sn4_`(6,451B)를 r20으로 갱신했다. Q6 ZIP `1i5gP1W36SeQVzTaXNFTynN5v_ajwf1mh`, 원문 대조 `1oiIckcF5amW_6tcBxGlcwMheKDe1voLN`, 독립 검산 `1t0he9l6YmxWQJbRR49h_kjY3G8C2sTES`, 상태 `1LoU90xtrtIQjppzldVRUSvN45RA4synZ`, 증빙 ZIP `1D4inCzaU8HnBCLuFDDcEAvZ7xM2UmAxY`, 영수증 `1w8MfCjHEVM8_KV-N7bi8pZ5NGfKcapGs`. ID·부모 폴더·크기를 메타데이터로 확인했다. Q4/Q5/Q10/Q28/Q29/Q30 역사 영수증의 현재 공유 데이터/색인 상태도 r20으로 갱신했다. Drive 원시 바이트의 SHA-256 일치 여부는 주장하지 않는다.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- 로컬 `main` 미커밋·미푸시·미배포. `bank/drafts/`, `materials/.DS_Store` 등 사용자 기존 미커밋 자료를 보존한다.
+
+
+## 2026-10-25 활용8회 Q12 기존 유형 확장 r27 — 최신 상태
+
+- 활용8회 현행 원문 PDF 3쪽의 세 양팔 저울과 문장을 직접 대조했다. A: ▲+■=3■, B: 2●=2■+2▲, C: 2●+▲=빈 접시이므로 ■=1, ▲=2, ●=3, 원문 답 8이다. 원문 그림은 첫 문항에 페이지 crop 그대로 보존했다. Drive 답안 후보는 정답 표시가 없는 시험지 복사본이어서 공식 답안으로 취급하지 않았다.
+- 같은 기존 유형의 문항을 8개 추가해 Q12를 9개로 만들었다. 정답은 8·7·10·15·16·14·17·20·23. 각 변형에서 저울 등식을 다시 대입하고 마지막 접시 무게를 독립 계산했다. 배점 2.7점 기준 난도 하.
+- 카탈로그, 답 입력, 진단·권장 학습·학습 포인트, 원시험 링크, 2단 순서, 375px, 3회 답변 제한·첫 연습 보존·원점수 비변경을 확인했다. 브라우저 외부 쓰기는 0회. 실제 ZIP은 7개 구성품이며 문제 3쪽과 상세 풀이 3쪽을 전부 렌더 확인했다. Q12 브라우저·독립 검산·ZIP 검증과 기존 수록 유형 회귀 54/54 통과.
+- 공용 은행 r27은 243문항·27개 기존 원문 유형이다. 미완료 11·16·19번 중 Q11은 접기·자르기 원문 그림이 작업 횟수와 펼친 뒤 절단 수를 유일하게 정하지 않고 답안도 무표기 사본이어서 검수 대기로 잠갔다. Q16·Q19의 기존 보류 사유도 유지한다. 신규 유형은 만들지 않았다.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- Drive 폴더 `18-61VnFMNv1FGKbS6ofqYohkT5uA1UCd`에서 공용 데이터 `1zDDcGiV8eGuhd_MKh-N_WrYxCPnmb3O6`와 색인 `1JMDRYH-BIxCCOK1MnJx1lRdBkYz9Sn4_`를 갱신하고 Q12 ZIP `1UFjIOuWmrtwCEBlyX7527ke1kAFdd2Jq`, 원문 대조 `12ir5rPx1D04o7lDgLwU3B7boHHxPSl0h`, 독립 검산 `1IL8AnVHVqvQTW8F9gh84stNI1P8n1mho`, 상태 `1Gd4UTX7uJVnIMM1RiwNNWX7nvBOXMQ0z`, 검수 증빙 `15t4J0R6HviEo7l82r9L6vUZYHMIwMlSs`, 영수증 `1mQ_pc47aQjLdpgnr107phjHVnMnjOu6J`를 보관했다. 영수증에 기록된 모든 핵심 파일의 원시 재다운로드 크기·SHA-256이 로컬과 일치한다. 상세 `.private-work/hw-expansion-20261023/hw8/20261025-applied8-q12-status.md`.
+- 지정 진행 시한(2026-10-24 02:00 KST)이 지났다. 새 문항 생성·배포·병합은 시작하지 않는다. 로컬 `main`은 미커밋·미푸시·미배포이며, 기존 미커밋 자료 및 `bank/drafts/`, `materials/.DS_Store`를 보존한다.
+
+## 2026-10-25 사용자 시계 조건 정정
+
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- 이 정정은 종이 접기 Q19와 무관하다. Q19는 접기 횟수와 펀치 위치별 층수가 확정될 때까지 검수 대기로 유지한다.
+
+## 2026-10-25 활용7회 기존 원문 17번 확장 r27
+
+- 활용7회 현행 시험지 4쪽의 평행사변형 격자를 직접 대조해 기존 유형만 9문항으로 확장했다. 원문 그림은 픽셀 crop으로 보존했고, 변형 8개에는 동일한 격자 구조의 새 그림을 썼다.
+- 답안 PDF는 무표기 시험지 복사본이라 공식 답은 미확인으로 기록했다. 원문 답 666은 가운데 5×8 격자의 행·열 구간을 세는 계산과 네 경계 선분 전수열거로 독립 검산했다. 변형 답은 346·540·558·996·420·600·870·730이며 두 방법이 모두 일치한다.
+- 활용7회 r27은 243문항·27개 기존 유형이며 남은 미확장 원문은 1·8·19번이다. 17번의 세부 근거는 `.private-work/hw-expansion-20261023/hw7/20261025-applied7-q17-r27-status.md`, `q17-source-answer-review.json`, `q17-independent-math.json`에 있다.
+- 전체 브라우저 QA와 실제 ZIP 검증이 통과했다. ZIP 7개 항목, 문제 PDF 51쪽, 상세 풀이 81쪽. ZIP에서 문제 26쪽과 풀이 39쪽을 렌더 확인했다. 데이터·인덱스·ZIP 해시는 상태 파일에 적었다.
+- Drive 폴더 `1e0tLxGYa44z719p6aRp2c7Ooa5zjE6Ih`에서 기존 파일 ID를 유지해 데이터 `16INuVLQeA-XfjIExONKEoMIuwPLAzjTK`, 인덱스 `1vRB8chYeRRb8mAbER_saXiMDv7werWUO`, 문제·풀이 ZIP `1W6s6XO75JtSZIMCdf-ToxM291pRySsk4`, 상태 `1prj5jypJ3foBPRe2O5K2jG2rJ_SvD1bI`를 r27로 갱신했다. 검수 증빙 ZIP `18-KEMnbTYct479DyoQtjo_sGS2RkXqk_`와 Drive 반영 영수증 `1uyZzK-C7ZYwSA_0prcVkgR9IPz7e_9ip`를 같은 폴더에 보관했다. 다섯 핵심 파일과 영수증을 원시 재다운로드해 크기·SHA-256 일치를 확인했다. 상세 `.private-work/hw-expansion-20261023/hw7/q17-drive-sync-r27-receipt.json`.
+- 현재 `main`은 미커밋·미푸시·미배포이며, 기존 미커밋 자료와 보호 파일을 그대로 보존한다.
+
+## 2026-10-25 활용7회 기존 원문 8번 확장 r29
+
+- 원문 PDF 2쪽의 삼각형 수 규칙 문제와 그림을 직접 대조해 기존 유형만 9문항으로 확장했다. 답안 PDF는 인쇄 답란이 비어 있으나 손글씨 `6×12÷8=9`가 있다. 작성자를 확인할 수 없어 공식 답안으로 간주하지 않고, 원문 세 예시의 관계 `윗수×오른쪽 아래 수÷왼쪽 아래 수`와 교차곱으로 답 9를 독립 검산했다.
+- 변형 그림 8개를 같은 구조로 만들고 마지막 답칸은 원문처럼 동그라미 친 ㄱ으로 비웠다. 첫 시안에서 답 노출을 발견해 수정한 뒤 전체 검수를 다시 했다.
+- 브라우저 검사와 실제 ZIP 검사 통과. 252문항·28개 기존 유형, 문제 PDF 53쪽·상세풀이 84쪽. 2단 배치, 이미지, 답 입력·진단·원문/학습 링크, 375px 화면, 3회 입력 제한·최초 연습 보존 확인. ZIP 문제 11~13쪽 및 풀이 18·19·21쪽을 시각 확인했다. 미확장 원문은 1·19번이다. 상세 상태 `.private-work/hw-expansion-20261023/hw7/20261025-applied7-q08-r29-status.md`.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- 로컬 `main`은 미커밋·미푸시·미배포 상태이고 기존 작업 파일을 보존한다. Q8 r29 데이터를 Drive의 기존 파일에 갱신하고 별도 상태·검산 자료를 보관할 예정이다.
+- Q8 r29 로컬 SHA-256: 데이터 872,917B `329006dc6f1b7df63c1f8369aeb34b68a1f6b602e66f99e126b950dece8c53a2`, 색인 9,045B `ed38df10220a99789bd7fbeb58fd97dc0307fa483d16202503180330a63d8542`, 전체 ZIP 48,305,293B `768284edb9df7539449a0bb2ea8f30cda36a9c64424bc4a7e5e67725901a3f53`, Q8 검수 증빙 ZIP 2,470,404B `dc45437d967ca2d3e40d47419ac259e11da857cfb984fc529e7295a7e6fd1398`. 원문·답안 출처 대조 `.private-work/hw-expansion-20261023/hw7/q08-source-answer-review-r29.json`.
+- Drive 동기화 완료: 폴더 `1e0tLxGYa44z719p6aRp2c7Ooa5zjE6Ih`. 기존 데이터 `16INuVLQeA-XfjIExONKEoMIuwPLAzjTK`, 색인 `1vRB8chYeRRb8mAbER_saXiMDv7werWUO`, 전체 ZIP `1W6s6XO75JtSZIMCdf-ToxM291pRySsk4`, 상태 `1prj5jypJ3foBPRe2O5K2jG2rJ_SvD1bI` ID를 유지해 r29 갱신했다. Q8 검수 증빙 ZIP `1r7ZntLWJ5JN2XuMeI6XspCUWoAe5-A1V`를 추가했다. 다섯 파일을 Drive 원시 재다운로드해 각 크기·SHA-256을 로컬과 비교해 일치 확인했다. 영수증 `.private-work/hw-expansion-20261023/hw7/q08-drive-receipt-r29.json`.
+- r29 Drive 영수증 파일도 같은 폴더의 기존 receipt ID `1uyZzK-C7ZYwSA_0prcVkgR9IPz7e_9ip`로 갱신했고 원시 재다운로드 바이트가 로컬 영수증과 일치했다.
+
+## 2026-10-25 활용7회 원문 19번 확장 r30 및 Drive 반영
+
+- 활용7회 원문 19번(두 번 접은 색종이의 펀치 구멍 수)을 기존 유형으로 9문항 확장했다. 원문 PDF 4쪽의 문구·그림을 직접 대조했고 원본 그림 자산은 출처 crop과 픽셀 동일하다. 층 수·구멍 위치·중복 여부를 변형별로 독립 검산했다. 답은 6·8·10·12·14·16·18·20·22개이며 새 원문 유형은 0개.
+- 동기화된 답안 파일은 공식 답안표가 아니라 빈 점수 기록지다. 후보 PDF에 적힌 10개를 확인했고 계산으로 별도 검산했다. 공식 답안/정오표 확인으로 표현하지 않는다.
+- r30은 261문항·29개 기존 유형(원문 2~30번)이다. 원문 1번은 직접 원본 그림·답안 대조가 끝날 때까지 검수 대기이며 공개 문항에서 제외한다. 활용 난도는 배점대만 사용한다(2.7 하, 3.4 중, 4.2 상).
+- Q19 단독 ZIP은 7항목, 문제 3쪽, 상세 풀이 3쪽이며 그림·정답·학습 위치/포인트·풀이를 시각 확인했다. 전체 ZIP은 문항목록·데이터 ID 261개 일치, Q19 9개 포함, 그림 99개, 문제 56쪽·상세풀이 87쪽이며 모든 페이지의 PDF 렌더 객체를 확인했다. 검수 `qa/applied7-q19-independent-validate.py`, `qa/applied7-q19-zip-validate.py`, `qa/applied7-fullzip-validate.py` 통과.
+- Drive 폴더 `1e0tLxGYa44z719p6aRp2c7Ooa5zjE6Ih`에서 기존 데이터/인덱스/전체 ZIP/상태 파일 ID를 유지해 r30으로 갱신했고 Q19 검수 증빙 ZIP을 추가했다. 데이터·인덱스·상태·증빙 ZIP은 원시 readback SHA-256을 로컬과 비교해 일치 확인. 49,947,704B 전체 ZIP은 이름·부모·크기를 확인했으며 대용량 원시 readback SHA는 계산하지 않았다. Drive 업로드 영수증 ID `1dLjBupAd6vzSWfoT4eBwt4jRCPl-YzFt`, 로컬 `.private-work/hw-expansion-20261023/hw7/drive-sync-r30-receipt.json`.
+- r30 상세 상태 `.private-work/hw-expansion-20261023/hw7/20261025-applied7-r30-status.md`; Q19 검수 패키지 `.private-work/hw-expansion-20261023/hw7/q19-output-qa-r30/applied7-q19-r30-evidence.zip`.
+- 시계 기준 최신 정정(2026-10-25): 일반 시계처럼 분침은 시침보다 길다. 5.5°/분은 상대 각속도 차이이며 바늘 길이와 무관하다. 문제 지문에는 속도 설명을 넣지 않고, 각도값은 5.5의 배수로 고른다. 이전 “분침이 짧다” 해석은 폐기.
+- 현재 저장소는 로컬 `main` 작업 트리다. 이전부터 있던 Applied7/8 수정 파일이 많아 전체 커밋·푸시·배포는 하지 않았다. 그 파일들은 보존한다.
+
+## 2026-10-25 사용자 시계 정정 및 활용7 Q1 재확인
+
+- 최신 시계 기준: 분침은 일반 시계처럼 시침보다 길다. 5.5°는 바늘 길이가 아니라 두 바늘의 상대 각속도 차이다. 문제 지문에 이 풀이 설명을 넣지 않고, 각도 차이는 5.5의 배수로 고른다. 생성기 `qa/build-final7-q01-q04-assets.js`에서 시침 반경 58, 분침 반경 82를 확인했고 `bank/assets/final7/q02-v1.png`를 직접 육안 확인했다. `qa/applied7-q13-independent-validate.py` 통과. 이전 상태 문구의 반대 설명을 고쳐 Drive r30 상태 파일도 같은 ID로 갱신했다.
+- 당시에는 Q1 답 후보의 공식성 및 그림 변형 승인 전이라 생성을 보류했다. 이후 사용자가 Q1/8/17/19번의 변형용 새 그림을 승인해 Q1을 확장했고, 공식 답안표 미확인 사실은 유지했다. 상세 최신 기록 `.private-work/hw-expansion-20261023/hw7/20261025-applied7-q01-q08-q17-q19-r32-status.md`.
+- Drive의 기존 검토 대기 기록 ID `1-YaTeXd4IltiGYLyPwCsuq072M-b7Ybg`는 r32 검토 완료 JSON으로 갱신했다. 새 범위와 데이터 상태는 아래 r32 섹션을 기준으로 한다.
+
+## 2026-10-25 활용7회 원문 1·8·17·19번 확장 r32
+
+- 사용자가 변형용 새 그림을 승인한 뒤 활용7 Q1을 포함했다. Q1 시험지 PDF 1쪽의 원본 그림·4cm·5cm·3cm를 확인했고 원본 자산은 바꾸지 않았다. 답 후보에 손글씨 36이 있으나 공식 키는 미확인으로 표기했다. 독립 계산은 삼각형의 나머지 변 3cm, 정사각형 변 6cm, 직사각형 12×6cm, 둘레 36cm다.
+- Q1 유형 변형 9개 답은 42·54·66·78·90·102·114·126·138. 매개변수별 삼각형 부등식과 도형 관계를 재검산했다. Q8·Q17·Q19의 9개 변형은 각각 기존 그림·유형 검증을 r32 현재 데이터 기준으로 다시 통과했다.
+- 활용7 데이터 r32는 270문항·30개 기존 유형, 미검수 대기 `[]`, 신규 유형 0. 브라우저 검수에서 1·8·17·19번 36문항의 답안·진단·학습 연결, 2단 순서, 375px 화면, 3회 입력 및 첫 연습 보존, 외부 쓰기 0을 확인했다. 선택 ZIP은 7개 파일, 문제 PDF 9쪽, 상세풀이 14쪽, 36개 그림을 포함한다. 전체 ZIP은 7개 파일, 문제 PDF 58쪽, 상세풀이 89쪽, 그림 108개다. 전체 ZIP은 270개 ID와 현행 데이터 일치, HTML 답·학습 링크·그림, 빠른 정답 270행, A4 규격 및 모든 PDF 페이지의 렌더 객체를 검사했다. `qa/applied7-q01-selected-zip-validate.py`, `qa/applied7-fullzip-validate.py` 및 Q1/Q8/Q17/Q19 독립 검증 스크립트를 실행했다. 전체 147쪽을 개별 육안 검토했다고 주장하지 않는다.
+- 상세 상태 `.private-work/hw-expansion-20261023/hw7/20261025-applied7-q01-q08-q17-q19-r32-status.md`; ZIP/브라우저 증빙 `.private-work/hw-expansion-20261023/hw7/q01-output-qa-r32/`.
+- Drive 폴더 `1e0tLxGYa44z719p6aRp2c7Ooa5zjE6Ih`의 데이터 `16INuVLQeA-XfjIExONKEoMIuwPLAzjTK`, 인덱스 `1vRB8chYeRRb8mAbER_saXiMDv7werWUO`, 전체 ZIP `1W6s6XO75JtSZIMCdf-ToxM291pRySsk4`, 상태 `1prj5jypJ3foBPRe2O5K2jG2rJ_SvD1bI`를 r32로 갱신했다. 선택 ZIP `1Gf_q52GW6TdYbSm51Q3NctseHF3pIsCt`, 검수근거 ZIP `1vRL1AOzSoJHz_9YCUCeG90PVdcYnqU3y`를 추가했다. 데이터·색인·ZIP 등 Drive 파일 메타데이터의 ID/이름/크기를 읽어 확인했으며 raw-byte SHA 일치는 검증하지 않았다. 영수증 `.private-work/hw-expansion-20261023/hw7/drive-sync-r32-receipt.json`.
+- `main`은 미커밋·미푸시·미배포 상태이며 기존 사용자 변경 파일은 보존한다.
+# 2026-10-25 활용 5회 Q25 미완료 — 작업 시간 제한 도달
+
+- 사용자 지정 마감 2026-10-24 02:00 KST가 지난 뒤 상태를 확인했다. 이 제한에 따라 새 문항 생성·ZIP 재생성·배포·병합은 하지 않았다.
+- 기준 공개 데이터는 Q24 완료 r19(26유형·234문항)이며 Q25와 Q27–29는 미완료다. Q25 원문 PDF p5, 답안 PDF p25를 직접 확인했다. 손글씨 후보 37은 독립 계산으로 재현되나 공식 정답표인지는 미확인.
+- 원문 `[보기]` 크롭 후보는 `.private-work/hw-expansion-20261023/hw5/q25-source-review/crop4.png` (605×260)이다. 이 파일은 검수 근거이며 현재 데이터에 새 문항이나 그림으로 연결되지 않았다.
+- Q25 검수·재개 상세: `.private-work/hw-expansion-20261023/hw5/20261025-applied5-q25-status-paused.md`. 변형 9개 계획은 원문 예시 그림을 그대로 쓰고 작은 원 수를 바꾸는 안이며, 답 후보 `[10,17,26,50,65,82,101,122,145]`이다. 미생성 상태.
+- 다음 재개 시 r19와 사용자 미커밋 변경을 보존하고 Q25 9개만 제작한 뒤 계산·풀이·개별/전체 ZIP·답안입력/진단/학습연결·2단 배치를 검수한다. 이어 Q27–29는 각 원문·답안 PDF 직접 대조 후 별도 처리한다. 완료본·검수근거를 Drive에 반영하기 전에는 업로드 완료로 표현하지 않는다.
+- 현재 기록 작성은 로컬 상태 문서와 인수인계만 갱신했다. 작업 트리는 미커밋이며 commit/push/deploy/Drive 업로드는 하지 않았다.
+
+# 2026-10-25 활용 5회 Q24 확장 완료 r19
+
+## 2026-10-25 사용자 재개 후 활용9 Q2·Q6 확장
+
+- 사용자 요청으로 확장 작업을 재개했다. 활용9 현행 문제 p.1을 직접 대조했다. 답 후보 `초등과정 대비 실전 모의고사 특강 9회 답안.pdf` p.1은 제목 이름은 다르지만 페이지 제목·문항 순서·문구·배치가 활용9 p.1과 일치한다. Q2 손글씨 답 98, Q6 손글씨 답 오후 5시 48분을 독립 계산과 각각 확인했다. 판본 전체 동일성은 확정하지 않고 답안 후보로 표기했다.
+- 텍스트형 기존 문항 Q2와 Q6를 각각 9개 확장(총 18문항). Q2는 `(10x+d)−(100d+x)=Δ`, 답 `21,27,41,50,60,70,80,90,87`. 풀이 마지막 직접 확인식의 순서를 q02-r2에서 고쳤다. Q6은 실제 60분 동안 표시가 75분 전진하므로 실제 경과시간은 표시 경과의 4/5. 원문 표시 경과 21시간 → 실제 16시간48분 → 오후 5:48. 변형 답은 오전 5:00, 6:48, 8:36, 10:24; 오후 12:12, 2:00, 3:48, 5:36, 6:12. 두 유형 모두 2.7점 배점대 하, 신규 유형 0.
+- 현재 통합 데이터 `20261025-applied9-q02-q06-r1`, 원문당 9개, 합 18문항이다. 미검수 원문 `[1,3,4,5,7–30]`은 잠김. 문제은행 adapter, catalog index, pool routing 반영. 브라우저에서 원문 Q2/Q6 카탈로그 링크, 18문제/18풀이, 답 입력 36칸, 18/18 진단, 각 풀이 확인식, 2단, 375px 가로 넘침 없음 및 외부 쓰기 0을 확인했다. 통합 ZIP 7개 항목, 문제 PDF A4 3쪽·풀이 A4 6쪽·빠른 정답 18행. 생성/산술 QA `qa/build-applied9-q02-q06.py`, 브라우저 QA `qa/applied9-q02-q06-browser-validate.cjs`; 산출물 `.private-work/hw-expansion-20261023/hw9/q02-browser-qa/applied9-q02-q06-18variants.zip`, 화면 `pool-1440.png`.
+- 최신 상태 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q02-q06-status.md`. Google Drive `문제은행 검수 · 활용 9회` 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`에 q02+q06 통합 18문항으로 업데이트했다. 학생 ZIP `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`, 검수근거 ZIP `1-1srMmqed6ZHPY0U_1PbcIfcmuaZOmJl`, 데이터 `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`, 색인 `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`, 상태 `1GP3zpg4SrBHWpVj6Ht2G8RHl4pko6Tzx`, 영수증 `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`. 폴더 메타데이터에서 이름·크기 대조; raw bytes SHA-256은 별도 재검증하지 않았다. 로컬 `main` 미커밋·미푸시·미배포, 기존 변경 보존.
+
+## 2026-10-25 활용9 Q13~Q17 기존 유형 확장 r2
+
+- Q13~Q17을 9개씩 추가해 Q2·Q6 포함 63문항·7개 기존 유형으로 통합했다. 원문 p.3과 답안 후보 p.3을 직접 대조했고, 후보 페이지 손글씨 답 96·71·5/16·5분27초·46을 별도 계산으로 확인했다. 답안 후보의 정확한 판본 동일성은 미확인으로 표시했다.
+- 수학 검산·브라우저/ZIP 검수: 45개 신규 변형 독립 재계산, 9개별 답 유일성, 답 입력/진단/학습 연결, 2단, 375px, 외부 쓰기 0. 통합 문제 PDF 11쪽·상세풀이 21쪽(A4), ZIP 7개 항목. 상세 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q13-q17-status.md`.
+- Q18은 원문 인쇄 총계 31과 답안 후보의 33 수정 흔적이 충돌해 잠금 유지. 활용9 현행 Q27은 주사위 쌓기, Q28은 방향 그래프 경로 세기라 두 유형은 미검수·잠금이다. 사용자의 ‘원본 4층 주사위’ 승인은 활용5 Q28에 해당하며 r23에서 9변형·그림·ZIP·Drive 반영까지 완료된 작업이다. 그 승인을 활용9에 재사용하지 않는다. 앞서 보낸 활용9 문항 번호 확인 질문은 회차를 잘못 연결해 취소했다.
+- 버전 `20261025-applied9-q02-q06-q13-q17-r2`. Google Drive `문제은행 검수 · 활용 9회` 폴더 `1uMcVq5kD34z_-t9C840Esi5rrFv7b74t`의 ZIP·증빙·데이터·색인·상태·영수증을 기존 ID에서 r2로 갱신하고 metadata/list readback으로 이름·크기·부모를 확인했다. Drive raw bytes SHA-256 비교는 하지 않았고 로컬 파일 해시를 영수증에 분리 기록했다. 이 handoff 파일도 Drive ID `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`에서 갱신. commit·push·deploy는 하지 않았다.
+
+## 2026-10-25 활용9 Q19·Q21 확장 r3 로컬 상태 — 마감 후 보류
+
+- Q19·Q21 기존 유형을 각각 9개로 확장해 로컬 활용9 데이터가 81문항·9개 기존 유형, 버전 `20261025-applied9-q02-q06-q13-q17-q19-q21-r3`가 됐다. Q19(나눗셈과 나머지)와 Q21(부호 배열)은 3.4점 배점대 중으로 분류했다. 신규 유형 0.
+- 활용9 시험지 p.4와 답안 후보 p.4를 직접 대조했다. Q19 원문 29로 나누는 문제의 후보 답 985는 최대 합 61, `985=29×33+28`로 확인했다. 변형 제수 10·12·14·15·16·21·23·24의 답은 999·995·993·989·991·986·988·983이며 전수 비교에서 유일하다.
+- Q21 `100 ○ 1 ○ 2 ○ … ○ 8 = 108`에서 후보 답안 손글씨 14는 부호 배열 전수 검산값 12와 불일치한다. 답안 후보의 공식성·판본 동일성은 미확인이다. 원점수/원답은 변경하지 않았고 변형 목표 78~94의 답 5~13은 각각 유일하다.
+- 로컬 전체 ZIP `.private-work/hw-expansion-20261023/hw9/q02-browser-qa/applied9-q02-q06-q13-q17-81variants.zip`은 7개 구성품, 문제 PDF A4 14쪽, 상세풀이 PDF A4 27쪽이다. 상세풀이 24~27쪽 렌더를 확인했다. QA와 아티팩트 세부는 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q19-q21-status-paused.md` 참조.
+- Drive에는 r2(63문항)까지만 확인돼 있다. r3의 데이터·색인·ZIP·근거·상태는 미동기화다. Drive r2 기존 ID는 학생 ZIP `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`, 근거 ZIP `1-1srMmqed6ZHPY0U_1PbcIfcmuaZOmJl`, 데이터 `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`, 색인 `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`, 상태 `1GP3zpg4SrBHWpVj6Ht2G8RHl4pko6Tzx`, 영수증 `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`이다. 기존 Drive handoff ID는 `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`다.
+- 사용자가 지정한 2026-10-24 02:00 KST 시한이 지난 뒤이므로 신규 문항 생성·배포·병합을 중단했다. 활용9 미검수 원문 `[1,3,4,5,7,8,9,10,11,12,18,20,22,23,24,25,26,27,28,29,30]`. Q18 답안 충돌 잠금 유지. 활용9 Q27 주사위와 Q28 방향 그래프도 잠금이다. 사용자가 허용한 원본 4층 주사위는 활용5 Q28 r23 작업이며 이미 완료했다.
+- `main` 미커밋·미푸시·미배포. 기존 미커밋 변경과 임시 자산을 그대로 보존한다.
+
+## 2026-10-25 활용9 Q29·Q30 기존 유형 확장 r4 — 최신 로컬 상태
+
+- Q29와 Q30 텍스트형 기존 유형을 9개씩 확장했다. 활용9 로컬 데이터는 버전 `20261025-applied9-q02-q06-q13-q17-q19-q21-q29-q30-r4`, 99문항·11유형이다. Q29 수와 식 > 큰 수의 곱셈과 자릿값, Q30 도형 > 시계의 각도와 시간. 둘 다 4.2점 배점대 상. 새 문항 그림·원문 유형은 추가하지 않았다.
+- 시험지 p.6과 답안 후보 p.6을 직접 대조했다. Q29 반복 숫자 3을 열 자리 쓴 수의 제곱 자릿수 합은 90. Q30 시작시각은 9시 32 8/11분, 174° 최초 도달 종료시각은 10시 20 8/11분. 답안 후보 손글씨와 독립 계산은 일치하지만, 후보 파일의 정확한 판본 동일성·공식성은 미확인이다.
+- Q29 정답은 숫자 1~9의 반복 수를 각각 제곱해 자릿수 합을 구했다. Q30 종료각 `[102,111,120,129,138,147,156,165,174]°`의 정답은 원문 시작시각과 종료시각을 모두 답하도록 저장했다. 독립 검산 `qa/applied9-q29-q30-independent-validate.py` 통과.
+- 브라우저에서 99문항/99풀이/입력/진단/학습위치/학습포인트·원문 링크, 2단 흐름과 모바일 폭을 확인했다. 실제 ZIP 7개 구성, 문제 PDF A4 17쪽, 상세풀이 A4 35쪽. 전체 데이터 ID·빠른 정답 CSV와 ZIP contents 대조 통과. ZIP `.private-work/hw-expansion-20261023/hw9/q02-browser-qa/applied9-q02-q06-q13-q17-q19-q21-q29-q30-99variants.zip`. Q29 문제 pp.14–15·풀이 pp.28–30, Q30 문제 pp.16–17·풀이 pp.31–35를 시각 확인했다. 상세 `.private-work/hw-expansion-20261023/hw9/20261025-applied9-q29-q30-status.md`.
+- 활용9 미검수 원문 `[1,3,4,5,7,8,9,10,11,12,18,20,22,23,24,25,26,27,28]`. Q18 answer candidate conflict lock remains. Figure-dependent items remain locked until exact figure review and applicable approval. Q27 dice/Q28 directed graph approval for new art not inferred; the user's four-layer dice authorization was Applied5 Q28, already complete in r23.
+- Drive r4 sync completed in the existing `문제은행 검수 · 활용 9회` IDs. Metadata readback confirms the updated names, sizes, and parent folder for the student ZIP (19,006,889B), evidence ZIP (10,635,415B), data (400,674B), index (3,911B), and status. Raw Drive byte SHA-256 was not rechecked. Status file ID `1GP3zpg4SrBHWpVj6Ht2G8RHl4pko6Tzx`; student ZIP `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`; evidence ZIP `1-1srMmqed6ZHPY0U_1PbcIfcmuaZOmJl`; data `1J1Cz-UX8G2yZhWZsAMsI-EYjVMIz_mml`; index `1-N9IpO8Mjp5so-zTeU4rDd8nzAOw6I51`; receipt `1DFvrUDnRLv-bHu02QmRYHyoRuWiUZwEl`; handoff `1ZlSXWNkXfwOwihkvnFi_DKcRVFO0gP4e`. Local sync receipt `.private-work/hw-expansion-20261023/hw9/drive-sync-r4-receipt.json` is authoritative for local hashes and metadata evidence.
+- `main` worktree has extensive pre-existing modifications; keep local `main` uncommitted and do not push/deploy. Existing user edits, `bank/drafts/`, and temporary files remain preserved.
+
+## 2026-10-25 활용2회 Q03 r2 검증·Drive 보관
+- Q03의 기존 승인 126문항은 기준 `dcb9bdf`와 동일하고, 기존 유형의 유사문제 9개만 더해 활용2회 135문항·15유형이다. Q03 변형은 10P5 전수 유일성/받아올림 검산을 현행 데이터 해시 기준으로 재실행했고 통과했다. 전체 135문항 독립 수학 검산과 활용2회 기존 유형 보존 회귀(450개 답안/그룹)도 통과했다.
+- 최종 데이터 SHA-256 `ecd9a4ff2f9e4b6065fc2f95db24014aeaa4929f4f61078fe049c9075b083f69`; 색인 `ef8a2dc46887606fb35bba0c6fcbc1b4c882facbc71fae229d4501852f99c07e`; 선택 ZIP `51788c99a6de7ca663b6689a33b1adf4462765ecb9f90d37f92685c66e8df794`(28,551,662B); Q03 증거 ZIP `79665ef576226695e40eb76f9bddfbb6e40f3c4692d74b3f7fdec7efe4e11b07`(3,097,421B). 브라우저·ZIP·Vision 결과는 데이터/ZIP 해시와 일치하며, 문제 35쪽·상세풀이 59쪽, Q03 9문제·9풀이 및 학습 위치/포인트를 기록했다.
+- Drive `코딩관련/문제은행 검수 · 활용 2회` 폴더 ID `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP`. 데이터 `17dU-1C1_gHxg6GqRIusuLPAFPv6abw9J`, 색인 `1L53ziO8kFUzJk636oVQz8InxG0f0G_Md`, 학생 ZIP `1uTPb6iGHD2UXLtoYBXzW2Px9R3ZX2ehl`, 검수증거 ZIP `1l4CV1vQd1s7ABmsN0Cs965oT4sG3669H`, 상태 `1bnO8NDqw1wpzw-qPO6gvF1G8MhMYdg4X`, 원문대조 `1jd-QHB3OQYA4zWF51dsa0j_TZkOzBy1v`, Drive 영수증 `1HOf6uIqclcCFbAjDvS2tV5znITWjs4Nu`. 위 6개 핵심 파일을 Drive에서 원시 재다운로드해 로컬과 바이트·SHA-256 일치 확인했다. 세부 `.private-work/hw-expansion-20261023/hw2/drive-sync-r2-receipt.json`.
+- 활용2회 미검수 원문은 `[4,5,7,9,13,14,15,16,17,19,20,21,22,24,28]`이다. 사용자 지정 마감 2026-10-24 02:00 KST가 지났으므로 이후 신규 문항 제작·배포·병합은 시작하지 않는다. 저장소 `main`의 진행 변경은 미커밋·미푸시·미배포로 보존한다. 다음 재개는 사용자가 새 작업 시한/범위를 정한 뒤 원문 PDF·답안·그림 직접 대조부터 한다.
+- Q04의 원문·답안 PDF p1을 직접 대조했다. 점유 7칸의 높이 `1..3`을 `3^7` 전수열거해 세 투영을 만족하는 배열 8개를 재현했다. 답안 후보 페이지에도 `8가지`가 있으나 답안 PDF 메타데이터의 회차/연도 제목이 현행 시험 메타데이터와 다르므로 공식 답안표 확정은 보류했다. 유사문항은 만들지 않고 그림 승인 대기 상태를 유지한다. 기록 `.private-work/hw-expansion-20261023/hw2/20261025-applied2-q04-source-audit.md`. Drive Q04 기록 `12g_ILu7el11s-GSXPujZmOJqcgvvT5m6`, 캡처/검산 ZIP `1iiKq8CoVVLic3pls3myUjfhzjxm3_K8Z`; 원시 재다운로드 바이트가 로컬과 일치했다.
+
+## 2026-10-25 활용3회 Q14 9개 확장 r3 로컬 QA 완료
+- 현행 활용3회 시험지 p.3과 Drive 답안 `1TWs2Gj7FRGl3ljwWXY64vTxwc1gC-edo` p.3을 직접 대조했다. 답안 파일명은 `초등 선발 모의고사 특강 3회 답안.pdf`, SHA-256 `4a88de5043eaedfbb8d8c74090816a2961676a2a82207bd516d241e02e42000c`다. 페이지의 인쇄 문항은 현재 원문 p.3과 일치하고 교사 필기는 `귤`; 독립 원문 조건 계산도 `귤`로 유일하다.
+- Q14 텍스트 변형 9개는 3.4점 기준 중 난도다. 답은 배·포도·멜론·귤·자두·사과·체리·귤·복숭아. 각 변형에서 1,296개(6^4) 가능한 배치를 열거해 B의 나머지 과일이 유일함을 증명했다. `qa/applied3-independent-validate.py` 전체 162문항 검산 pass. 기존 153개 항목은 `HEAD`와 객체 내용이 동일하다.
+- 현행 데이터/색인 버전 `20261025-applied3-expansion-q14-r3`, 162개·18유형. 브라우저 QA는 자료실·답 입력/진단·원시험 연결·권장학습 위치와 포인트·3회 제한/최초 기록 보존·외부 쓰기0·잘림0을 확인했다. 전체 문제 PDF 33쪽·답안/상세풀이 58쪽. 실제 ZIP 7항목, 162 ID가 JSON/CSV/검수기록에 일치한다. Q14 실제 ZIP PDF 문제 p.16–17·풀이 p.25–27을 렌더링 확인하고 Apple Vision OCR로 유사문제 1~9, 답, 학습 연결을 확인했다.
+- 데이터 SHA-256 `9009f218ab8c3f689631a7ba0d400434f4e62487f61b3689b346e977eaef8154`; 전체 ZIP 30,503,353B/SHA-256 `23516940929c1cf35b92c374af3c442c3893708db2ab6b5f615377f426b0041c`. 상태/상세 `.private-work/hw-expansion-20261023/hw3/q14-draft/applied3-q14-status.md` 및 `.private-work/hw-expansion-20261023/hw3/output-qa/`.
+- Drive Q14 폴더 `1yJ-KpNrkyQi10K0t9h48JPwOSxp2ctnU`: 통합 데이터 `185WfDUNeEmJ1-1CndIMwUwlFknzriGBO`, 색인 `1pp11fgVVMM0MVGIHbFKnYUXbw_m2ZGCZ`, 학생 ZIP `1KjIRmeeNhE3TZGpLZNvSMnpQt5PoKhVC`, 브라우저 QA `1eUUr7Ub1eUJS5ORR1wTnTVTSoXJJeTjA`, ZIP 검수 `1H-aNGFlx2ST2RZBxLhH5O-GapCx-tfbB`, Apple Vision OCR `1yqVgFl4cC0J-Z3mAb4dZzDod-gIyh1TB`, 상태 `1YahUTe-1OmrurqbAcy6zqhmNQEo7lnm8`, 독립 검산 `1Tmi-BZ8BdsT6dnvREKYYd_QwhIf3ufUT`; Q14 초안/독립 검산의 기존 ID `19j3nSSb1MEezhMKkih7eSZCPW1yU31Yj`/`14Wqzh6XrGP1oOiKCusbQ_XtQisO3Z-TD`를 갱신했다. 파일명·크기·부모 폴더 readback 완료. 미커밋·미푸시·미배포. 다른 회차 및 사용자 변경·`bank/drafts/`·`materials/.DS_Store`는 보존한다.
+
+## 2026-10-26 추가 — 활용1 Q28 Drive 정오표 이름 검색
+
+- Drive에서 답안 PDF의 세 동일 제목 사본이 있는 부모 폴더(`1bqSUcO3ugyJisdEuN2i1GoAVA5qQvGsN`, `1qqSnGzwHGEaLjEqoMBXXW5H6BxK25ldn`, `14y4Kc1eibxDrVtb3Y_et-GkBSzfpLsHr`) 각각에 파일명 `정오표` 검색을 실행했고, 검색 결과는 모두 0건이었다. 이는 해당 폴더의 이름 검색 결과만 뜻하며, 다른 이름·다른 폴더·권한 밖 자료의 부재를 증명하지 않는다.
+- Q28 답안 후보 필기 10년과 원문 조건 독립 계산 16년의 충돌은 미해결이며, 문항과 9개 초안은 계속 잠근다. 상세 `.private-work/hw-expansion-20261023/hw1/q28-source-answer-review-r2.md`. 답안 후보 ID `1Gz7-XKyGrbJJChyVS4R7--r8J6MsSroW`와 같은 폴더의 다른 제목 답안 ID `1cGlEmuJA8Uluyy00qvaAqw8-rEr5B8vk`는 원시 바이트 SHA-256 `1e8a14128840dededcdf69a8951dac4c2cd6373483c67f34ebf15cfca6944c54`로 동일했다. 갱신 검수기록 Drive ID `1uL45iJVy_bZzNEIYTvuDseDPS6l06V89` (4,329B), 로컬 SHA-256 `da9ddae846f632d621e280324793dedc31430d5f4a3f74431d80a4f853008852`; Drive 원시 재다운로드 SHA-256도 일치한다.
+
+## 2026-10-26 활용6 Q27 비공개 변형 후보 Drive 재검증
+
+- 원문 1~60 이어쓰기 문제에서 답안 후보와 독립 계산이 충돌해 활성 은행은 잠근 채, 제거 자릿수 91~99인 텍스트형 후보 9개만 비공개로 작성했다. 단조 스택·길이별 동적계획법이 아홉 정답을 모두 일치하게 검산했다. 현행 원문 정답·성적은 변경하지 않았다.
+- 검토 ZIP은 Drive 폴더 `1XB2t5QvxFll2LlZLwP_R4S9io6vTg8Zk`, 파일 `1b3_Qy0zY_-CVc0yK2iglj7BU_K3VtXXu`에 있다. 크기 746,470B, 원시 재다운로드 SHA-256 `1014e883ed0897e25e86ea2d12cb8ba48c3fa90ecccdab5494fe367de4b4aa64`가 로컬과 일치한다. 상태 기록 Drive 파일 `1cFqyYtKohyEF2yLFYl39z-77Os5qvaJ7`, 로컬 `.private-work/hw-expansion-20261023/hw6/q27-candidates-pending-answer-ruling/20261026-applied6-q27-draft-status-r1.md`.
+
+## 2026-10-26 활용3 Q16 시각 근거 파일명 대조 정정
+
+- 현행 활용3 원문 PDF 3쪽에서 Q16은 지하철 거리표 문항이다. 직접 렌더한 `hw3/source/q16-0.png`가 근거다. 같은 폴더의 `q16-source-crop-r1.png`는 다른 쌓기나무 문제 그림이므로 현행 Q16 근거로 사용하지 않는다. 잘못된 crop 원본은 삭제·덮어쓰지 않고 보존하며, Q16은 새 표 그림 승인 전까지 잠근다. 감사 기록은 Drive `1VbhpUWsweDmVkegHixuZaOJg3i4xIGm3`, 로컬 SHA-256 `f7644c8ec52677e5623acff9acbdda335f5ecd6432373f5d2d03f5e9fde7aeb7`, 로컬 경로 `hw3/q16-source-audit-20261025-r1.md`.
+
+## 2026-10-26 문제은행 현재 수량 스냅샷
+
+- `qa/applied-expanded-inventory-validate.py` 실행 결과: 활용1~9 활성 데이터에 2,142개 유사문항, 238개 원문 유형×9개이며 분류·그림·색인 연결 검사가 통과했다. 이는 2,430 목표 전체 완료가 아니다.
+- 데이터의 `pendingSourceNos` 기준 남은 유형은 활용1 `[7,17,19,21,28]`, 활용2 `[4,5,7,9,13,14,15,16,17,19,20,21,22,28]`, 활용3 `[6,13,16,19,24,27,29]`, 활용4 `[2,3]`, 활용6 `[27,28]`, 활용8 `[11,16]`이다. 합계 32개 원문 유형(288개 변형 자리)이며 활용5·7·9는 현재 활성 데이터에서 각 30개씩이다.
+- 최신 진행은 Drive 후보·검수 기록 저장과 원문 증거 파일명 불일치 수정이며, 활성 문항 수는 증가하지 않았다. 미완성·승인 대기 문항은 별도 승인이나 정답 근거 없이 풀거나 배포하지 않는다.
+
+## 2026-10-26 활용2 Q05·활용3 Q13 변형 수학 재검산
+
+- 사용자 그림 승인 대기 중인 기존 후보 JSON을 독립 재계산했다. 활용2 Q05 저울식 9개는 행렬식이 모두 0이 아니고 양의 무게비와 답 `1~9`가 일치한다. 활용3 Q13 위치 가중치 9개는 예시 행렬 랭크 5, 직접 합·소거식·저장 답이 각각 일치하며 답은 `23,24,28,34,40,44,48,53,57`이다.
+- 아직 변형 그림·활성 데이터·색인·ZIP은 만들거나 바꾸지 않았다. 독립 재검산 기록 Drive `1aO_MTef7G6PCRQ7iF4SKxukkkhBEGzI3`, 로컬 SHA-256 `9d614425dcae93c370973cd2101a97cc0ad78983169df8b611957b109297a0a0`, 로컬 `.private-work/hw-expansion-20261023/pending-figure-math-recheck-20261026-r1.md`.
+- 활용6 Q27 정오표 관련 Drive 이름 검색에서는 해당 원문·답에 대한 공식 정오표나 교사 판정을 찾지 못했다. 기존 답안 후보와 독립 계산의 충돌은 계속 미해결이며 비공개 후보는 활성화하지 않는다. 검색 0건은 접근 가능한 Drive 검색 범위의 결과이지 자료 부재를 증명하지 않는다.
+
+## 2026-10-26 활용3 Q06 답안 후보 추가 대조
+
+- Drive의 동일 제목 활용3 답안 3개 사본은 3,143,719B이며 Mac 연결 Drive에서 SHA-256 `4a88de5043eaedfbb8d8c74090816a2961676a2a82207bd516d241e02e42000c`로 바이트 동일했다. p.2의 손글씨 결론은 18일이고 현행 원문 조건으로 독립 계산한 값은 16일이다. 같은 파일의 사본은 독립 근거 수로 세지 않는다.
+- 제작 판본/공식 채점표 여부를 확인할 수 없어 원문 Q06과 변형 초안은 검수 대기다. 활성 데이터·색인·ZIP은 수정하지 않았다.
+- 상세 추가 대조 기록 Drive ID `1XRveUEgbTZP45WP12KupvwIFY6OvHF51`, 크기 1,692B, 부모 활용3 검수 폴더 `1yJ-KpNrkyQi10K0t9h48JPwOSxp2ctnU`. Drive 메타데이터와 본문 재읽기로 업로드를 확인했다. 로컬 기록 `.private-work/hw-expansion-20261023/hw3/q06-review/20261026-applied3-q06-answer-candidate-crosscheck-r1.md`.
+- 이어서 현행 문제 PDF p.4–6을 렌더링해 pending Q19(삼각 배열), Q24(배열식 격자), Q27(직육면체), Q29(원 분할) 모두 그림형임을 확인했다. p.2 Q06만 텍스트형이지만 답안 충돌로 잠금이며, 남은 활용3 pending을 그림 승인 없이 신규 유형 확장할 수 있는지 아직 확인되지 않았다. 현행 PDF 페이지 렌더는 `.private-work/hw-expansion-20261023/hw3/source/pending-map-{4,5,6}.png`에 있다.
+
+
+# 2026-10-26 사용자 판정 추가 — 활용1 Q28·활용3 Q06·활용6 Q27 확정
+
+- 사용자가 세 원문 답안 충돌에 대해 “독립 계산값으로 확정”을 선택했다. 활용1 Q28=16년(필기 후보 10년 미채택), 활용3 Q06=16일(필기 후보 18일 미채택), 활용6 Q27=99999785960(필기 후보 99999648960 미채택). 원시험 답안·성적과 원 PDF는 수정하지 않았다.
+- 세 그룹 각각 변형 9개가 활성화되어 있으며 `qa/applied-pending-rulings-20261026-validate.py` PASS. 세 선택 ZIP의 CRC, 7개 필수 구성, 활성 JSON과의 9문항 완전 일치, 문제/풀이 PDF 쪽수(각 2/3, 2/3, 2/5)와 첫 쪽 렌더를 확인했다. 상세 기록 `.private-work/hw-expansion-20261023/20261026-applied-source-rulings-status-r2.md`.
+- 전체 `qa/applied-expanded-inventory-validate.py` PASS: 2,259문항·251유형×9. 여전히 19개 원문 유형은 미확정: 활용1 `[7,17,19,21]`, 활용2 `[4,7,13,15,16,17,19,21,22,28]`, 활용3 `[27,29]`, 활용4 `[]`, 활용6 `[28]`, 활용8 `[11,16]`. 이 목록에는 답안·그림·판본 대조가 별도로 필요한 유형이 남아 있어 세 건의 판정을 일반화하지 않는다.
+- 세 그룹의 선택 ZIP 확인은 해당 원문 유형만 대상으로 하며, 전체 회차 ZIP의 출력 검수가 끝났다는 뜻이 아니다. `reviewSummary.outputReviewed`는 false 유지. 커밋·push·배포는 하지 않았고 기존 작업 트리 변경을 보존한다.
+# 2026-10-26 추가 진행 — 활용1 Q07 깃발 격자 유형 확장 완료 r1
+
+- 활용1 Q07 현행 시험 PDF p.2의 4×5 격자와 깃발 위치(2행 4열)를 확인했다. 원문 PDF SHA-256 `6123edccb7f64dc664d57dd29004483e3d27c49665892da39bbf2c032b243924`. 답안 후보 PDF p.7의 필기 48을 Apple Vision OCR 및 렌더에서 확인했고, 독립 경계 조합 계산 2×3×4×2=48과 일치한다. 답안 PDF SHA-256 `1e8a14128840dededcdf69a8951dac4c2cd6373483c67f34ebf15cfca6944c54`; 공식 답안표 판본 동일성은 미확인이다.
+- 새 SVG 9개(원문 그림은 불변), 정답 `[48,24,108,36,96,40,64,120,90]`; 독립 전수 검산과 학습 연결 포함. 데이터/색인 버전 `20261026-applied1-q07-confirmed-r1`. 기록 `.private-work/hw-expansion-20261023/hw1/20261026-applied1-q07-completion-r1.md`.
+- 브라우저 전체 활용1 QA PASS 243문항/243풀이, 이미지 63개, 2단 A4, 1440/375px, 잘림·넘침 0, Q07 답 입력·진단·권장 위치/포인트·연습 링크, 3회 입력 제한·최초 기록 보존, 운영 쓰기/오류 0. 기존 Q28 2단 문제 넘침도 확인해 한 쪽 2문항 배치로 조정했다. 전체 ZIP 7개, CRC 정상, 243 고유문항, 문제 56쪽·풀이 81쪽; Q07 풀이 ZIP 페이지 18–20을 렌더/OCR 확인. ZIP SHA-256 `cd6ff96c5cd26becab90a97fdcacc1ee17e39cbb83c2b104d2242df668020808`.
+- 전체 인벤토리 PASS: 활용1~9 총 2,268문항·252유형×9. 남은 18개 원문 유형: 활용1 `[17,19,21]`, 활용2 `[4,7,13,15,16,17,19,21,22,28]`, 활용3 `[27,29]`, 활용6 `[28]`, 활용8 `[11,16]`. 아직 GitHub/사이트/commit/deploy 하지 않았다.
+
+# 2026-10-26 추가 진행 — 활용2 Q04 쌓기나무 투영 유형 확장 완료 r1
+
+- 원문 p.1 그림을 다시 직접 읽어 원자료 메모의 방향 오류(깊이 행 최고 높이 1,2,3)를 정정했다. 위쪽 행부터 2,1,3, 오른쪽 옆모양은 좌우 반전되어 3,1,2; 7칸 각 높이 1~3의 전체 전수 계산과 행별 독립 분해 모두 원문 정답 8이다. 답안 후보 필기 8도 일치하지만 PDF 제목 메타데이터가 달라 공식 판본 동일성은 미확정으로 기록한다.
+- 원문 그림은 보존하고 새 SVG 9개를 제작했다. 답 [3,4,5,6,7,8,9,11,12]; 별도 전수 계산과 분해 계산이 변형별로 일치한다. 데이터 버전 20261026-applied2-q04-confirmed-r1.
+- 활용2 전체 브라우저/ZIP 검사 PASS: 문제·풀이 189개씩, 72개 그림, A4 2단, 넘침 0, 답 입력·진단·학습 연결·375px 화면, 오류/외부 쓰기 0. ZIP 7개 구성·CRC 정상; 문제 52쪽, 상세 풀이 82쪽; ZIP 안 Q04 9문항 및 풀이/학습 위치 Vision OCR 확인. 근거 .private-work/hw-expansion-20261023/hw2/20261026-applied2-q04-completion-r1.md.
+- 전체 인벤토리 최신: 활용1~9 2,277문항·253유형×9, 남은 17유형(활용1 [17,19,21], 활용2 [7,13,15,16,17,19,21,22,28], 활용3 [27,29], 활용6 [28], 활용8 [11,16]). 전체 인쇄물의 페이지별 육안검수 완료로 과장하지 않으며 reviewSummary.outputReviewed=false.
+- 현재 작업 트리의 기존 변경을 보존했다. 이 진행에서 commit/push/deploy는 하지 않았다.
+
+# 2026-10-26 추가 진행 — 활용2 Q07 우리와 다리 합 유형 확장 완료 r1
+
+- 현행 원문 p.2 그래프의 다섯 연결을 직접 대조했다. 원문 답 후보의 40과 별도 양의 정수 전수탐색 및 합 소거식 계산이 일치한다. 답안 후보 PDF는 메타데이터 판본이 달라 공식 동일성은 미확정 유지.
+- 원본 그림은 보존하고 동일 연결 구조의 새 SVG 9개를 추가했다. 답 [31,33,36,40,36,34,43,37,39], 각 변형의 전수탐색/소거식 검산이 모두 유일해에서 일치. Q07은 수와식 / 합과 미지수의 관계로 분류.
+- 활용2 전체 198문항·풀이 198개·이미지 81개 브라우저/ZIP 검사 PASS: A4 2단, 모바일, 답 입력/진단/학습 연결, 잘림 0, 오류/외부 쓰기 0. ZIP 7개, CRC 정상, 문제 53쪽·풀이 85쪽; 실제 ZIP Q07 문제 그림 p.14, 해설 p.18~23 Apple Vision OCR 대조. 상세 .private-work/hw-expansion-20261023/hw2/20261026-applied2-q07-completion-r1.md.
+- 최신 전체 인벤토리 2,286문항·254유형×9. 남은 16유형: 활용1 [17,19,21], 활용2 [13,15,16,17,19,21,22,28], 활용3 [27,29], 활용6 [28], 활용8 [11,16]. 전체 은행 모든 페이지 육안 검수는 아직이라 outputReviewed=false.
+- 이 진행에서도 commit/push/deploy하지 않았다.
+
+# 2026-10-26 추가 진행 — 활용1 Q21 격자 직사각형 유형 확장 완료 r1
+
+- 현행 원문 p.4를 직접 확대해 세로5열×7행, 가로10열×2행, 겹침5열×2행을 확인했다. 포함배제 420+165-45=540과 전체 경계 전수 열거 540이 답안 후보 p.21의 540과 일치한다. 답안 PDF 공식 판본 동일성은 미확정이다.
+- 원본 그림을 보존하고 구조가 같은 새 SVG 9개를 제작했다. 답 [288,405,385,435,543,510,415,792,660], 각 문항을 포함배제 및 독립 전수 열거로 검산. 분류 도형/격자와 직사각형, 원문 3.4점=중.
+- 활용1 전체 브라우저/ZIP PASS: 문제·풀이 252개, 그림 72개, A4 2단, 넘침 0, 375px, 답 입력·진단·학습 연결, 3회 입력/최초 기록 보존, 오류/외부 쓰기 0. 실제 ZIP 7개 CRC 정상, 문제 57쪽·풀이 84쪽, Q21 문제 p.34 및 풀이 p.54~59 Vision OCR 대조. 상세 .private-work/hw-expansion-20261023/hw1/20261026-applied1-q21-completion-r1.md.
+- 최신 전체 2,295문항·255유형×9, 남은 15유형: 활용1 [17,19], 활용2 [13,15,16,17,19,21,22,28], 활용3 [27,29], 활용6 [28], 활용8 [11,16]. 전체 은행 페이지별 육안 검수는 아직이므로 outputReviewed=false. commit/push/deploy하지 않았다.
+
+# 2026-10-26 추가 진행 — 활용2 Q19 연속한 묶음 배치 유형 확장 완료 r1
+
+- 원문 p.4의 10칸, 연속한 동그라미 (2,3,1) 예시 2줄을 직접 확인했다. 답안 후보 p.5의 필기 10과 0/1 칸 배열 전수 열거 및 필수 간격 뒤 남은 빈칸 네 곳 분배 계산의 10이 일치한다. 답안 후보 PDF의 공식 판본 동일성은 미확정이다. 원본 그림은 보존했다.
+- 유사문제 새 SVG 9개, 답 `[4,20,35,10,20,35,10,20,35]`를 별도 전수 열거·분배식으로 검산했다. 각 문항은 보기 포함 기준을 명시한다. 분류 경우의 수/빈칸 배치, 3.4점=중. 상세 `.private-work/hw-expansion-20261023/hw2/20261026-applied2-q19-completion-r1.md`.
+- 활용2 전체 브라우저/ZIP PASS: 문제·상세 풀이 207개씩, 그림 90개, A4 2단, 넘침 0, 모바일 375px, Q19 답 입력·진단·권장 학습 연결, 외부 쓰기/오류 0. 실제 ZIP 7개 CRC 정상, 문제 56쪽·풀이 88쪽; ZIP에서 꺼낸 Q19 문제 p.35·풀이 p.44 렌더 및 풀이 p.44~47 Apple Vision OCR로 9개 답·학습 위치 확인. 전체 인벤토리 2,304문항·256유형×9.
+- Drive 활용2 검수 폴더 `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP`의 기존 데이터/색인/학생 ZIP ID를 현재 207문항판으로 갱신하고 Q19 상태·증빙·영수증을 추가했다. 6개 파일 ID·이름·부모·크기를 재조회해 일치 확인. 로컬 SHA-256만 계산했으며 Drive 원시 바이트 SHA 비교는 하지 않았다. 영수증 `.private-work/hw-expansion-20261023/hw2/drive-sync-r4-receipt.json`, Drive ID `1yizrr3b8MsdtexSkO5QQWe1Yni2bfPki`. 활용1 Q21 자료도 별도 Drive 폴더 `1YsPvYhkat8XBpb1Xus2OjPg8JqQ6Ra5U`에서 메타데이터 재조회했다. 이전 활용2 Drive 영수증은 해당 시점의 과거 파일 버전을 기록한 것이며 현재 파일 바이트 증명이 아니다.
+- 남은 14원문 유형: 활용1 [17,19], 활용2 [13,15,16,17,21,22,28], 활용3 [27,29], 활용6 [28], 활용8 [11,16]. 전체 은행 페이지별 육안 검수는 미완료라 `outputReviewed=false` 유지. 현재 `main` 작업본의 기존 미커밋 변경을 보존했고 이 진행에서 commit/push/배포하지 않았다.
+
+# 2026-10-26 추가 진행 — 활용2 Q28 격자 직육면체 유형 확장 완료 r1
+
+- 원문 p.5를 250dpi로 다시 렌더해 앞면 가로5칸·높이3칸, 윗면·오른쪽 면 깊이3칸을 직접 확인했다. 답안 후보 p.7 필기 540과 축별 선 선택 15×6×6=540, 3축 구간 전수 열거 540이 일치한다. 저해상도에서 깊이를 2칸으로 오독할 위험을 확인해 고해상도 판독 전에는 활성 데이터를 수정하지 않았다. 답안 후보 PDF의 공식 판본 동일성은 미확정이다.
+- 원본 그림은 그대로 보존하고 유사문제용 새 격자 SVG 9개를 제작했다. 답 `[180,378,270,360,450,756,252,300,504]`를 독립 전수 열거와 곱셈으로 검산. 분류 도형/입체 격자와 직육면체, 4.2점=상. 상세 `.private-work/hw-expansion-20261023/hw2/20261026-applied2-q28-completion-r1.md`.
+- 활용2 전체 브라우저/ZIP PASS: 문제·상세 풀이 216개씩, 그림 99개, A4 2단, 넘침 0, 모바일 375px, Q28 답 입력·진단·권장 학습 연결, 외부 쓰기/오류 0. 실제 ZIP 7개 CRC 정상, 문제 58쪽·풀이 91쪽; ZIP 원본 PDF 문제 p.52·풀이 p.72 렌더 및 풀이 p.72~74 Apple Vision OCR로 Q28 9답·학습 위치 확인. 최신 전체 인벤토리 2,313문항·257유형×9.
+- Drive 활용2 폴더 `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP` 기존 데이터·색인·학생 ZIP ID를 216문항판으로 갱신했다. Q28 상태·증빙·영수증을 추가하고 6개 파일 ID/이름/부모/크기 재조회 일치. 로컬 SHA만 계산했으며 원격 원시 바이트 SHA 비교는 하지 않았다. 영수증 `.private-work/hw-expansion-20261023/hw2/drive-sync-r5-receipt.json`, Drive ID `1Oq9mCHq08ylrXtXA79tRe3d6oMdltro4`. 이전 Q19 보관 영수증은 207문항판 당시 기록이다.
+- 남은 13원문 유형: 활용1 [17,19], 활용2 [13,15,16,17,21,22], 활용3 [27,29], 활용6 [28], 활용8 [11,16]. 전체 은행 페이지별 육안검수는 아직이므로 `outputReviewed=false`. 기존 미커밋 변경을 보존했으며 이 진행에서 commit/push/배포하지 않았다.
+
+# 2026-10-26 추가 진행 — 활용2 Q21 모빌 유형 확장 완료 r1, Q17 원문 충돌 대기
+
+- 활용2 Q21 현행 원문 p.4의 방울12개·균형 막대11개와 ㄱ·오른쪽 끝32g 위치를 직접 확인했다. 답안 후보 p.6 필기16g과 가지별 무게 전파 및 12변수 유리수 연립방정식의 유일해16g이 일치한다. 후보 PDF의 공식 판본 동일성은 미확정이다. 원본 그림은 보존하고 알려 준 방울 위치를 세 곳으로 바꾼 SVG 유사문제 9개를 제작했다. 답 `[8,12,20,14,22,30,16,24,28]g`를 독립 검산했다.
+- 첫 인쇄 캡처에서 작은 무게 표시는 유사문제 SVG 안의 위치·크기와 활용2 Q21에 한정한 그림 최대 높이(`bank/pool.css` 190px)를 조정해 다시 렌더했다. A4 2단 PDF에서 숫자·ㄱ·연결선을 직접 읽었다. 활용2 전체 225문제·225상세 풀이, 그림108개, 넘침0, 모바일375px, Q21 답 입력→진단→권장 학습 연결, 외부 쓰기/오류0 브라우저 검사 PASS. 전체 실제 ZIP 7개 CRC 정상, 문제61쪽·풀이94쪽, Q21 ZIP 문제 p.39·풀이 p.50 직접 확인. 선택 Q21 9문항 ZIP도 별도 확인했다. 최신 인벤토리 2,322문항·258유형×9. 상세 `.private-work/hw-expansion-20261023/hw2/20261026-applied2-q21-completion-r1.md`.
+- Drive 활용2 폴더 `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP`의 기존 데이터·색인·학생 ZIP ID를 225문항판으로 갱신했다. Q21 상태·증빙과 Q17 충돌 기록을 올리고 7개 파일 ID/이름/부모/크기를 재조회했다. 영수증 `.private-work/hw-expansion-20261023/hw2/drive-sync-r6-receipt.json`, Drive ID `1MjrexT28Gq_zWXursX5aNkIjellzv1O5`. SHA는 로컬만 계산했고 Drive 원시 바이트 SHA 비교는 하지 않았다. 과거 Q19/Q28 영수증은 각 당시 207/216문항판의 이력이다.
+- Q17은 현행 원문 p.3 지문 ‘정사각형15개’와 그림의 24칸(윗줄4칸 + 아래4줄×5칸)이 충돌한다. 그림24칸의 정사각형 덮기 전수 탐색 최소7장은 답안 후보 p.5의 7장과 일치한다. 사용자에게 기준 판정을 요청했으며 답변 전까지 활성화하지 않는다. 근거 `.private-work/hw-expansion-20261023/hw2/q17-source-figure-conflict-20261026.md`, Drive ID `1yfz-f4lhsTQRKsQ2E-KBEhy4egjQIy0Y`.
+- 남은 12원문 유형: 활용1 [17,19], 활용2 [13,15,16,17,22], 활용3 [27,29], 활용6 [28], 활용8 [11,16]. 전체 은행 페이지별 육안검수 미완료라 `outputReviewed=false`. 현재 로컬 main의 기존 미커밋 변경을 보존했고 이 진행에서 commit/push/배포하지 않았다.
+
+# 2026-10-26 추가 진행 — 활용2 Q16 위·앞·옆 쌓기나무 유형 확장 완료 r1
+
+- 현행 원문 p.3의 위모양 4×4 격자에서 6개 색칠 칸 및 앞모양 열 높이 [4,1,3,2]를 고해상도 직접 크롭으로 대조했다. 높이 1~4의 모든 쌓기 배치를 대입하면 유일한 입체가 나오고, 옆에서 가까운 쪽부터 [4,3,2,1]이다. 답안 후보 p.4 옆모양 그림과 일치하지만 후보 공식 판본 동일성은 미확정이다. 원본 그림은 보존했다.
+- 새 SVG 9개는 위·앞 그림과 빈 옆 격자를 보여 준다. 학생이 옆모양을 그린 후 네 세로줄 높이를 답 입력에 기록하도록 연결했다. 독립 전수 대입에서 각 변형의 높이 배열이 유일하고 답이 일치했다. 분류 도형/쌓기나무와 투영, 3.4점=중. 상세 `.private-work/hw-expansion-20261023/hw2/20261026-applied2-q16-completion-r1.md`.
+- 활용2 전체 브라우저/ZIP PASS: 문제·상세 풀이 각234, 그림117, A4 2단, 넘침0, 모바일375px, Q16 네 답 입력·진단·권장 학습 연결, 외부 쓰기/오류0. 실제 ZIP 7개 CRC 정상, 문제63쪽·풀이97쪽, Q16 ZIP 문제 p.32·풀이 p.41~44 렌더와 Vision OCR로 문제/풀이/학습 위치 확인. 최신 전체 인벤토리 2,331문항·259유형×9, 학습 색인142유형/1,278변형.
+- Drive 활용2 폴더 `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP`의 기존 데이터·색인·학생 ZIP ID를 234문항판으로 갱신했다. Q16 상태·증빙·영수증을 추가하고 6개 파일 ID·이름·부모·크기를 재조회했다. 영수증 `.private-work/hw-expansion-20261023/hw2/drive-sync-r7-receipt.json`, Drive ID `1iAb6nYHwCupVgUFn_2QNHPEw11nLp9WP`. SHA는 로컬만 계산했고 Drive 원시 바이트 SHA 비교는 하지 않았다. Q17은 사용자 판정 전까지 계속 잠금.
+- 남은 11원문 유형: 활용1 [17,19], 활용2 [13,15,17,22], 활용3 [27,29], 활용6 [28], 활용8 [11,16]. 전체 은행 페이지별 육안검수는 미완료라 `outputReviewed=false`. 현재 main의 기존 미커밋 변경을 보존했고 이 진행에서 commit/push/배포하지 않았다.
+
+# 2026-10-26 추가 진행 — 활용3 Q27·Q29 확장, 활용3 30유형 완성
+
+- 현행 활용3 원문 p.6 Q27 격자는 가로5·깊이3·높이4로 직접 확인. 후보 답안 p.6 필기900과 축 구간 전수 계산 15×6×10=900 일치. 새 SVG 9개·답/풀이/학습 연결을 완료. Q29는 원본의 작은 원 2개가 만든 5면 예시 그림을 그대로 잘라 재사용했고 7개 원의 최대 면50을 새 원별 증가 및 평면 그래프·실현 배치로 독립 검산했다. Q29 9변형도 검산. 답안 후보의 공식 판본 동일성은 미확정. 상세 `.private-work/hw-expansion-20261023/hw3/20261026-applied3-q27-q29-completion-r1.md`.
+- 활용3 활성 270문항·30유형×9, pending 없음. Q27/Q29 입력→진단·권장 학습·모바일375px·3회 시도·2단·외부 쓰기0 브라우저 통과. 최종 실제 ZIP 7파일·CRC 정상·고유 ID270, 문제64쪽/풀이93쪽 A4. ZIP Q27 문제 p.56·풀이 p.80 및 Q29 문제 p.60·풀이 p.88을 렌더해 직접 확인하고 Q29는 Apple Vision OCR로 학습 문구까지 대조했다.
+- Drive 활용3 폴더 `1yJ-KpNrkyQi10K0t9h48JPwOSxp2ctnU`: 데이터 `185WfDUNeEmJ1-1CndIMwUwlFknzriGBO`, 색인 `1pp11fgVVMM0MVGIHbFKnYUXbw_m2ZGCZ`, 전체 ZIP `1KjIRmeeNhE3TZGpLZNvSMnpQt5PoKhVC`를 최신 270문항판으로 갱신. 상태 `1tGDQGjDuZMUMw4FJg51a65_RVT1AAYz_`, 증빙 `1-G3E6F7Y-_YbQrMZdFMzLSoyW5k5bE3I`, 영수증 `1tOh9M-L8zmHCkQ0wHBaxX_a_3GrsegAs` 추가. 6개 ID·이름·부모·크기 재조회 일치. 영수증 로컬 `.private-work/hw-expansion-20261023/hw3/drive-sync-q27-q29-r1-receipt.json`; Drive 원시 바이트 SHA 비교는 하지 않았다.
+
+# 2026-10-26 추가 진행 — 활용6 Q28 확장, 활용6 30유형 완성·활용1~9 진단 연결 확대
+
+- 현행 활용6 원문 p.5 Q28은 **서로 다른 A·B·C·D**를 4×4 격자에 각 행·열 하나씩 놓는다. 답안 후보 p.5의 24는 위치만 센 값이고 이름까지 구별한 독립 전수 계산은 4!×4!=576이다. 원시험 정답·학생 점수는 변경하지 않았다. 유사문제에는 구별 조건을 명시하고 새 격자 SVG 9개를 제작해 36~518400의 답을 직접 열거로 검산했다. 원문/후보 충돌과 풀이 상세 `.private-work/hw-expansion-20261023/hw6/20261026-applied6-q28-completion-r1.md`.
+- 활용6 활성 270문항·30유형×9, pending 없음. 실제 전체 ZIP 7파일·CRC 정상·고유 ID270, 문제55쪽/풀이103쪽 A4, Q28 문제 p.49·풀이 p.93 직접 렌더·Apple Vision OCR 확인. 답 입력→진단/학습 링크, 2단, 375px, 3회 시도·첫 기록 보존, 외부 쓰기0 통과.
+- Drive 활용6 폴더 `1XB2t5QvxFll2LlZLwP_R4S9io6vTg8Zk`에 최신 데이터 `1tLbN_zDsf4uCnmAZJAcZ2ATq1Or35-q2`, 색인 `1iMnK1TYc5yOHDhWMUkBTrFx8HX9mov6-`, 전체 ZIP `1bmu5ijksjQ1jMNkFz6sHMfpB45mIXk90`, 상태 `13rsJeJbrVXCT9vIWKZvLz8MK38JmTMgA`, 증빙 `1wIL0aURWk6MMlCpL5u-mDBttKViqLuB_`, 영수증 `1O8TAy3lSLfe0R5FUfgaP2ZnD1kfwbqWE`를 새 파일로 보관했다. 6개 ID·이름·부모·크기 재조회 일치. 로컬 영수증 `.private-work/hw-expansion-20261023/hw6/drive-sync-q28-r1-receipt.json`; 원시 바이트 SHA 비교는 하지 않았다.
+- `bank/applied-learning-index.js`를 활용1~9 전체 **262유형·2,358문항**에서 생성했다. `mock.html`의 활용 원시험 진단에서 각 회차 오답 유형의 3문항 답 입력과 9문항 추가 연습 링크를 여는 브라우저 검사 `qa/applied-learning-bridge-1to9-browser-validate.cjs` 통과. 원시험 점수는 보존. 활용8 Q11·Q16은 원문 p.3·p.4와 답안 후보 p.3·p.4를 열었지만 답안란 공백, 접기/입체 그림 해석 불확실로 아직 활성화하지 않았다.
+- 현재 남은 **8원문 유형/72개 변형 자리**: 활용1 `[17,19]`, 활용2 `[13,15,17,22]`, 활용8 `[11,16]`. 활용2 Q17은 지문15칸과 그림24칸 충돌로 사용자 기준 판정 대기. 전체 PDF 모든 쪽 개별 육안검수·실물 인쇄·실제 계정 공개 검수는 미실시, `outputReviewed=false`. 로컬 `main` 미커밋·미푸시·미배포이며 기존 타 작업 파일은 보존.
+
+# 2026-10-26 추가 진행 — 활용1 Q19 정육면체 전개도 9문항 확장
+
+- 현행 시험 PDF p.4 Q19의 여섯 면·다섯 보기를 직접 확대해 대조했다. 답안 후보 PDF p.19는 ②·⑤ 표시이나 공식 판본 동일성은 미확정이다. 원문 그림은 그대로 두고 9개 변형 SVG를 새로 만들었다. 면 법선과 24회전으로 각 보기의 가능성을 계산했고, 별도 마주 보는 면쌍·손잡이 방향 전수 검증도 9문항 모두 통과. 두 정답의 순서가 바뀌어도 정답 처리한다. 유형 분류 도형/입체도형과 전개도, 3.4점=중. 상세 `.private-work/hw-expansion-20261023/hw1/20261026-applied1-q19-completion-r1.md`.
+- 활용1 **261문항/29유형×9**, 활용1 Q17만 검수 대기. 활용1~9 전체 **2,367문항/263유형×9**, 남은 **7원문 유형/63자리**: 활용1 `[17]`, 활용2 `[13,15,17,22]`, 활용8 `[11,16]`. 원시험 진단의 1~9회 263유형 학습 연결 검사를 통과했다.
+- 브라우저 검수 PASS: 문제·상세 풀이 261개씩, 그림81개, A4 2단, 넘침0, 375px, 역순 답 입력·진단·권장 학습 연결, 3회 시도·첫 기록 보존, 외부 쓰기0. 실제 선택 ZIP 7파일·문제3쪽/풀이5쪽, 전체 ZIP 7파일·문제60쪽/풀이89쪽·261고유ID·CRC정상. 선택 ZIP 첫 문제/풀이 쪽과 전체 ZIP Q19 문제 p.34·풀이 p.53 렌더 확인; 전체 149쪽 전부 개별 육안검수한 것은 아니다. ZIP SHA256 `3102a2ed9678b899310a71a8805c0e7a629d4dc1d5e6e5a519c603b54d2e3a6b`.
+- Drive 활용1 폴더 `1YsPvYhkat8XBpb1Xus2OjPg8JqQ6Ra5U`의 기존 데이터 `1v-6tmR_AmM82CuAaABqF_B2E4W761hC3`, 색인 `1hG4vMhb3YZE3exH7hQYhY7eo765UE7dg`, 전체 ZIP `193fHp1D4W7xINgDRLs44lWQDPWJ9Y45V`를 261문항판으로 갱신. 상태 `1oImT6x0DQjRywwW51qXR1gRBnl23y24_`, 증빙 `1gl2xnGR9RYpaYs5TzSPuJ1lL4CyN_mIf`, 영수증 `14UDeYXqgYM8giggNEkDoIdhhk2fH6uT8` 추가. 5개 파일 ID·이름·부모·크기 재조회 일치. 로컬 영수증 `.private-work/hw-expansion-20261023/hw1/drive-sync-q19-r1-receipt.json`; 원시 Drive 바이트 SHA 비교는 하지 않았다.
+- 로컬 `main`에는 다른 작업의 미커밋 변경도 존재한다. 이번 진행에서 GitHub commit/push 및 사이트 배포는 하지 않았다. 활용2 Q17은 지문15칸/그림24칸 판정 전까지 계속 잠금.
+
+# 2026-10-26 추가 진행 — 활용1 Q17 성냥개비 배, 활용1 30유형 완성
+
+- 현행 활용1 원문 p.3 배 그림을 확대 확인했고 답안 후보 p.17의 4개를 좌우 반사·평행이동 전수 계산으로 독립 확인했다. 밑부분 비대칭 1개+돛 기울기 2개+오른쪽 끝 1개다. 원본 그림은 보존하고 같은 길이의 성냥개비로 새 그림 9개를 제작. 실제 SVG 선분을 읽는 독립 검사에서 정답 `[3,4,4,5,4,5,5,6,3]` 모두 일치했다. 상세 `.private-work/hw-expansion-20261023/hw1/20261026-applied1-q17-completion-r1.md`.
+- 활용1 **270문항·30유형×9, pending 없음**. 브라우저 답 입력→진단·학습, A4 2단, 문제/풀이 270개씩, 그림90개, 375px, 3회 입력·첫 기록 보존, 넘침/외부 쓰기0 통과. 최종 실제 ZIP 7파일·270고유ID·CRC정상, 문제62쪽/풀이92쪽. Q17 문제 p.32·풀이 p.49 및 Q19 문제 p.36·풀이 p.56 직접 렌더 확인. ZIP SHA256 `076ae18fd21833e39d8fc97b6e04d02111a98d4c98542260e686c12c673148e4`. 전체 154쪽 개별 육안검수 미완료, outputReviewed=false.
+- Drive 활용1 폴더 `1YsPvYhkat8XBpb1Xus2OjPg8JqQ6Ra5U`의 기존 데이터 `1v-6tmR_AmM82CuAaABqF_B2E4W761hC3`, 색인 `1hG4vMhb3YZE3exH7hQYhY7eo765UE7dg`, 전체 ZIP `193fHp1D4W7xINgDRLs44lWQDPWJ9Y45V`를 최종270문항판으로 갱신. Q17 상태 `1Q7ieP_txTlAhNA97qpRsHJWSzKs7RQYT`, 증빙 `15jes-cO34KwbqDYrt8hlblwlL04pWeSU`, 영수증 `1Ggu9WPzOYYa7AreFxEZb4v7Ds0BCgOlF` 추가. 5개 파일 ID·이름·부모·크기 메타데이터 재조회 일치; Drive 원시 바이트 SHA는 미비교. 로컬 영수증 `.private-work/hw-expansion-20261023/hw1/drive-sync-q17-r1-receipt.json`.
+- 사용자 답변으로 활용2 Q17은 **원본 그림24칸 기준** 확정. 기존 보류 노트 `.private-work/hw-expansion-20261023/hw2/q17-source-figure-conflict-20261026.md`에 판정을 추가했다. 원본 지문15칸 오류·원시험 성적은 변경하지 않는다. 활용2 Q17 제작과 출력 검수를 이어 진행 중이다.
+
+# 2026-10-26 추가 진행 — 활용2 Q17 24칸 기준 확정·9개 제작 완료
+
+- 사용자 판정에 따라 원본 그림(5×5에서 왼쪽 위 1칸 제외) 24칸을 기준으로 삼았다. 원본 지문의 15칸 오기와 원시험 성적은 보존했다. 답안 후보 7장과 독립 완전 탐색 최소 7장이 일치한다. 공식 답안 PDF의 판본 동일성은 미확정이다.
+- 새 격자 문제·풀이 SVG를 각각 9개 제작했고, 정답은 `[5,5,8,6,6,8,6,9,6]`이다. 별도 행 우선 완전 탐색으로 정답 최소값과 풀이 그림의 빈틈 없는 덮기를 확인했다. 활용2는 **243문항·27유형×9**이며 남은 보류는 13·15·22번이다. 전체 활용1~9는 **2,385문항·265유형×9**, 남은 보류는 활용2 3유형과 활용8 2유형이다.
+- 브라우저 QA: 답 입력→진단·학습/원시험 연결, 2단 A4, 문제·풀이 각243, 문제그림126, Q17 풀이그림9, 375px, 3회 입력·최초 기록 보존, 넘침·외부 쓰기0. 전체 ZIP 7항목·243고유ID·CRC 정상, 문제65쪽/상세풀이106쪽. 실제 전체 ZIP 문제 p.35–40 및 풀이 p.44, p.47–52를 렌더 확인했고 Apple Vision OCR로 p.35의 칸 수를 확인했다. 전171쪽 개별 육안검수는 미완료(`outputReviewed=false`). ZIP SHA256 `2df98add4c41318f720ee1ad0d67e5faee653d8ec4c498675f0cd652c1fddff7`.
+- 검수 기록 `.private-work/hw-expansion-20261023/hw2/20261026-applied2-q17-completion-r1.md`; 증빙 `.private-work/hw-expansion-20261023/hw2/applied2-q17-review-evidence-r1.zip`. Drive 활용2 폴더 `1Rf3wFYr4sEHdYK2W-viJFcXDgtuREneP`의 데이터 `17dU-1C1_gHxg6GqRIusuLPAFPv6abw9J`, 색인 `1L53ziO8kFUzJk636oVQz8InxG0f0G_Md`, 전체 ZIP `1uTPb6iGHD2UXLtoYBXzW2Px9R3ZX2ehl`를 243문항판으로 갱신. 새 상태 `1Xq8aV9k1d9tGAz4fHymRJ662hBpCi74b`, 증빙 `13vGxsR6ZlX4KB73qEuCue_8WUjVpuhJD`, 영수증 `1uHM1CmbkuoYX7VNhopsrovZ5X3hoYLj4`. 6개 파일의 ID·이름·부모·크기 메타데이터 재조회 일치, Drive 원시 바이트 SHA는 미비교.
+- 이번 추가 작업은 아직 GitHub commit/push 또는 사이트 배포를 하지 않았다. 나머지 5유형은 원문·정답의 유일한 해석 검증 전까지 잠금 유지한다.
+
+# 2026-10-26 GitHub 반영 경계
+
+- 검증된 활용1~9 확대 자료와 관련 렌더러·색인·QA만 로컬 `main` 커밋 `ca516d3`에 반영했다(515파일). 관련 없는 final7 자산·데이터·관리자 QA, 미사용 활용7 Q08 이미지 8개, `bank/drafts/`, `materials/.DS_Store`는 작업 트리에 보존하고 커밋에서 제외했다.
+- 원격 `origin/main`이 관리자 콘솔의 `data.js` 변경 `61f2835`로 먼저 진행된 것을 확인했다. 이 변경을 로컬 `main`에 병합했으며 DOCSSAM 칼럼 보존 검사 21항목 PASS(원문5편·실제 쓰기0). 병합 뒤 활용 인벤토리 2,385문항·265유형×9 PASS.
+- `git push origin main`은 Mac GitHub 자격 증명 부재(`could not read Username ... Device not configured`)로 실패했다. **로컬 커밋·병합 완료, GitHub 원격 및 실제 사이트 미반영**. 사용자가 Mac GitHub 로그인을 완료하면 `git fetch origin main`으로 최신 원격을 재확인하고 비파괴 병합·검사 후 push해야 한다. 현재 로컬 브랜치는 origin/main보다 2커밋 앞서 있다.
+- 원문 재확인: 활용2 Q13은 길이 1·15의 연결막대와 분기 3·7의 자유 관절 그림으로, 지문 그대로는 연속적인 끝점 거리도 가능해 답의 세는 단위를 확정할 수 없다. Q15는 3회 접기·파란 절단선의 펼침 조건이 그림만으로 불명확하다. 두 문항은 잠금 유지하고 답안 후보를 유일한 근거로 공개하지 않는다.
+- 활용2 Q22 및 활용8 Q11·Q16도 현행 원문 PDF를 확대 확인했고, 활용8 후보 답안 p.3·p.4의 해당 답란이 빈 것을 확인했다. 다섯 문항의 필요한 판정을 `.private-work/hw-expansion-20261023/pending-five-review-20261026.md`에 정리해 Drive `코딩관련` 파일 `1N8mwLvXZMEaWxiTH2uiNt1yK5goE4z7L`에 보관했다(메타데이터 ID·이름·부모·크기 일치). 교사 판정 전까지 공개하지 않는다.

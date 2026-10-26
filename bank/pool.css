@@ -20,7 +20,7 @@
 .q-figure[data-round="2"][data-source="7"] img,.q-figure[data-round="2"][data-source="9"] img{max-height:200px}
 
 .q-figure[data-round="2"][data-source="14"] img{max-height:180px}
-.q-figure[data-round="2"][data-source="17"] img{max-height:190px}
+.q-figure[data-round="2"][data-source="17"] img{max-height:230px}
 .solution-figure{margin:12px 0;text-align:center;break-inside:avoid}.solution-figure img{max-width:100%;object-fit:contain}.solution-figure figcaption{font:400 11px/1.6 "GFIELD Print Serif",serif;margin-top:5px}
 
 .response-table,.solution-table{border-collapse:collapse;width:100%;margin:12px 0;font:400 12px/1.5 "GFIELD Print Serif",serif}.response-table th,.response-table td,.solution-table th,.solution-table td{border:1px solid #888;padding:5px;text-align:center;font-weight:400}.response-table td{height:28px}.given-table[aria-label="보관함의 실제 단서"] td{text-align:left}
@@ -32,6 +32,10 @@
 
 .q-figure[data-round="3"][data-source="27"] img{max-height:200px}
 .q-figure[data-round="3"][data-source="29"] img{max-height:180px}
+
+/* Cube-net choices must remain legible in the printed two-column sheet. */
+.q-figure[data-round="1"][data-source="19"] img{max-height:270px}
+.q-figure[data-round="1"][data-source="17"] img{max-height:190px}
 
 .q-figure[data-round="4"][data-source="1"] img{max-height:180px}
 .q-figure[data-round="4"][data-source="3"] img{max-height:190px}
@@ -47,3 +51,4 @@
 .q-figure[data-round="9"][data-source="8"] img{max-height:200px}
 
 .q-figure[data-round="9"][data-source="12"] img{max-height:205px}
+.q-figure[data-round="2"][data-source="21"] img{max-height:190px}
