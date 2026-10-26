@@ -1,3 +1,12 @@
+# 2026-10-26 활용5·6·9 전체 ZIP 현행본 및 배치 검수
+
+- 활용2 Q17은 사용자 확정 원본 그림 24칸 기준으로 이미 활성화되어 있으며 `qa/applied2-q17-independent-validate.py` 재실행 PASS(원본 최소 7장, 변형 9개 및 풀이 덮기). 원문 지문의 15개 오류는 출처 기록에 보존하고 원시험·성적은 변경하지 않았다.
+- 활용5 r24 현행 데이터와 기존 r23 ZIP은 Q03·Q05의 분류 18건이 달랐다. 현행 전체 ZIP `eb374320e4127f6bdfc95afeed7b9b41c0171d3be3029f3b499320fbcec6fd13`(53,106,114B)을 다시 만들어 7항목·270개 전체 필드·정답 CSV·A4 문제65쪽/풀이104쪽을 확인했다. 169쪽 연락시트에서 큰 배치 오류·빈 쪽·가장자리 접촉0. Drive 기존 ZIP ID `1yWMWH9GvTNmdItNyBITxVBD9Y530zKMP`를 갱신하고 원시 바이트 일치. 기록 Drive ID `1pdBi08GE8z3POs1cMlbapUxsGHOACFRg`도 원시 바이트 일치. 로컬 기록 `.private-work/hw-expansion-20261023/hw5/full-270-review-20261026/20261026-applied5-full-zip-layout-review-r1.md`.
+- 활용6 기존 전체 ZIP `5104cb50b00fafff93b664750decfa802c9688863a28ca5dd0720e3783d98275`(57,738,860B)은 Drive ID `1bmu5ijksjQ1jMNkFz6sHMfpB45mIXk90`의 원시 바이트 및 현행 데이터 270개 전체 필드·정답 CSV와 일치했다. A4 문제55쪽/풀이103쪽의 158쪽 연락시트에서 큰 배치 오류·빈 쪽·가장자리 접촉0. 기록 Drive ID `1YKqd4a_ujHXJ5VFm-xGn0dxCw-4FBuso` 원시 바이트 일치. 로컬 기록 `.private-work/hw-expansion-20261023/hw6/full-270-review-20261026/20261026-applied6-full-zip-layout-and-drive-review-r1.md`.
+- 활용9 현행 r25 데이터·색인은 기존 Drive ID에서 원시 바이트 일치했으나 기존 r24 ZIP은 Q18 변형9개의 영역 표기가 달랐다. 기존 r24 ZIP은 로컬에 보존했다. 현행 ZIP `c094ce263dcf8540f74dea7d27882f2481ac31248d58b5babbdc7c936a79db89`(53,124,009B)을 다시 만들고 브라우저 입력·진단·학습·2단·모바일·카탈로그 및 ZIP 7항목·270개 전체 필드·정답 CSV를 검증했다. A4 문제64쪽/풀이96쪽의 160쪽 연락시트에서 큰 배치 오류·빈 쪽·가장자리 접촉0. Drive 기존 ZIP ID `18pYB872uFYuBLbJFCDmepifBpvYkpNHP`를 갱신하고 원시 바이트 일치. 기록 Drive ID `1jJFnwLN6eMjBtCmuJzDnxoyh99HQ1Lgt` 원시 바이트 일치. 로컬 기록 `.private-work/hw-expansion-20261023/hw9/full-270-review-20261026/20261026-applied9-full-zip-taxonomy-layout-review-r1.md`.
+- 위 전체 쪽 검수는 축소판의 조판·표시 확인이다. 모든 810문항을 원본·답안과 한 줄씩 재대조하거나 독립 재검산한 증거는 아니므로 해당 데이터의 `outputReviewed=false`는 유지한다. 원시험·학생 점수·은행 코드·공개 사이트는 변경하지 않았다. 다음은 활용7의 동시 미커밋 작업과 충돌하지 않도록 담당 상태를 확인하고 남은 개별 원문/수학 검수 범위를 좁혀 진행한다.
+
+
 # 2026-10-26 활용3 전체 ZIP 검수·16번 거리표 잘림 수정
 
 - 기존 Drive 활용3 전체 ZIP ID `1KjIRmeeNhE3TZGpLZNvSMnpQt5PoKhVC`를 원시 재다운로드해 로컬과 52,191,415바이트 전체 일치(SHA-256 `ca899d70603a2b5c81faee4e1e42edb9c51972e572c3c1f20a16b9b7d0c95fcd`)를 확인했다. 7개 항목 CRC·270문항 ID/순서/정답/풀이 단계/학습 위치·포인트/빠른 정답이 현재 활성 데이터와 일치했다. 문제 PDF 64쪽·상세 풀이 PDF 93쪽의 157쪽 전체를 80dpi 연락시트로 보며 배치·그림 표시를 확인하던 중 문제 28쪽의 16번 유형 거리표 마지막 행 잘림을 발견했다.
