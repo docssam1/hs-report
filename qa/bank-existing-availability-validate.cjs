@@ -2,7 +2,7 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'..'),personal=require('../bank/personal-mock.js');
 const ctx={window:{},Set,Map,URLSearchParams};vm.runInNewContext(fs.readFileSync(path.join(root,'bank/bank-fixed.js'),'utf8'),ctx);
-const all={archiveAccess:{'최종 모의고사':['검수학생']},archiveProductAccess:Object.fromEntries(['mock-final-7','mock-final-8','mock-signature-1','mock-signature-2','mock-mid-7'].map(k=>[k,['검수학생']]))};
+const all={archiveAccess:{'최종 모의고사':['검수학생']},archiveProductAccess:Object.fromEntries(['mock-final-7','mock-final-8','mock-signature-1','mock-signature-2','mock-mid-7','mock-mid-8'].map(k=>[k,['검수학생']]))};
 const dataFiles=fs.readdirSync(path.join(root,'bank/data')).filter(f=>/^(?:final\d+-fixed90|original\d+-fixed90|(?:final|last|middle)\d+-reviewed)\.json$/.test(f));
 const codes=[];
 (async()=>{
@@ -22,7 +22,7 @@ for(const file of dataFiles){
   }
   codes.push(code);
 }
-assert.equal(dataFiles.length,12);assert.ok(codes.includes('middle7')&&codes.includes('last3'));
+assert.equal(dataFiles.length,14);assert.ok(codes.includes('middle7')&&codes.includes('middle8')&&codes.includes('last3')&&codes.includes('last4'));
 const preparing=['hw1','6','4','3','2','1'].map(key=>personal.availability({key},'검수학생',all));
 assert.ok(preparing.every(s=>s.reason==='preparing'));
 assert.deepEqual(preparing.map(x=>x.label),['활용 모의고사 1회','중급 모의고사 6회','중급 모의고사 4회','중급 모의고사 3회','중급 모의고사 2회','중급 모의고사 1회']);
