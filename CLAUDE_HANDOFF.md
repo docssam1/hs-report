@@ -1,3 +1,10 @@
+# 2026-10-26 활용1~9 공개본·그림 연결 확인
+
+- 공개 사이트의 활성 데이터·색인 18개와 문제은행 화면 파일 4개를 현재 `main`과 원시 바이트로 대조해 22/22 일치했다. 활성 2,430문항이 참조하는 고유 그림 763개도 공개 주소와 로컬 파일의 SHA-256이 763/763 일치했다.
+- 기존 로그인 브라우저에서 활용1~9 모두 회차별 9문항·답 입력칸·원시험 링크·ZIP 버튼을 읽기 전용으로 확인했다. 실제 답 제출·채점 저장은 하지 않았으므로 계정별 3회 제한과 진단 저장의 실사용 검증으로 확대하지 않는다.
+- 활용2 Q17은 사용자 확정대로 원본 그림의 24칸을 기준으로 유지했다. 원본 최소 7장 및 활성 변형 9개의 독립 덮기 검사가 재통과했다. 원문 지문의 15개 불일치는 출처 기록에 보존하며 원시험·성적은 변경하지 않았다.
+- 검수 기록 `.private-work/hw-expansion-20261023/20261026-applied1-9-live-publication-audit-r1.md`는 Drive 기존 `코딩관련` 폴더 파일 ID `1W5dns1Hv_SG6ceCJune8H8fMhSxMvD7i`에 보관했고 원시 재다운로드 1,812바이트/SHA-256 `3b589021201485211f1ad11ff2349bb7b9e753bd88c00020a71426ba22d745c1`이 로컬과 일치했다. 개별 원문·수학 전수감사와 실제 채점 제출은 계속 별도 범위다. `outputReviewed=false`는 유지한다.
+
 # 2026-10-26 활용7 전체 ZIP·Drive 바이트·147쪽 배치 검수
 
 - 활용7 r32 현행 데이터·색인·전체 ZIP은 기존 Drive 파일 ID `16INuVLQeA-XfjIExONKEoMIuwPLAzjTK`·`1vRB8chYeRRb8mAbER_saXiMDv7werWUO`·`1W6s6XO75JtSZIMCdf-ToxM291pRySsk4`에서 원시 재다운로드한 전체 바이트와 각각 일치. ZIP `6edb58e605671cb775e4a0e2887285f8b63a1784bbd2e1f3542e105b31980aaf`는 7항목 CRC 정상, 270개 전체 필드·검수 ID·빠른 정답 CSV가 활성 데이터와 같다. 문제58쪽/풀이89쪽의 전체 147쪽 연락시트를 확인했고 큰 잘림·겹침·빈 쪽·가장자리 접촉0. 기록 `.private-work/hw-expansion-20261023/hw7/full-270-review-20261026/20261026-applied7-full-zip-layout-and-drive-review-r1.md`, Drive ID `1kMCr_LJJ-SsJLlr2mBIRtNVrZQwmJJzY`는 원시 바이트 일치. 미추적 Q08 그림은 활성 데이터가 참조하지 않아 보존하고 배제했다.
