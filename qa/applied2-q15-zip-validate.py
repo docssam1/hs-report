@@ -17,7 +17,10 @@ REQUIRED = {"문제.pdf", "답안과상세풀이.pdf", "문제.html", "답안과
 
 
 def check(name, count, selected=False):
-    with zipfile.ZipFile(OUT / name) as z:
+    archive = OUT / name
+    if name == "applied2-270.zip":
+        archive = ROOT / ".private-work/hw-expansion-20261023/hw2/q22-review" / name
+    with zipfile.ZipFile(archive) as z:
         assert z.testzip() is None
         assert set(z.namelist()) == REQUIRED
         listing = json.loads(z.read("문항목록.json"))
@@ -52,5 +55,5 @@ def check(name, count, selected=False):
 
 
 small = check("q15-selected-9.zip", 9, selected=True)
-full = check("applied2-261.zip", 261)
-print(f"PASS Q15 ZIP: selected9 PDFs {small}; full261 PDFs {full}; CRC, IDs, answers, A4, detailed solutions")
+full = check("applied2-270.zip", 270)
+print(f"PASS Q15 ZIP: selected9 PDFs {small}; full270 PDFs {full}; CRC, IDs, answers, A4, detailed solutions")

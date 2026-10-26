@@ -1,11 +1,9 @@
 {
-  "version": "20261026-applied2-q15-paper-fold-cut-r1",
+  "version": "20261026-applied2-q22-complete-circles-r1",
   "sourceSet": "applied",
   "sourceRound": 2,
-  "itemCount": 261,
-  "pendingSourceNos": [
-    22
-  ],
+  "itemCount": 270,
+  "pendingSourceNos": [],
   "items": [
     {
       "sourceNo": 1,
@@ -213,6 +211,16 @@
       "area": "수와식",
       "subarea": "무게와 균형",
       "detailType": "균형 잡힌 모빌의 가지별 무게로 방울 무게 찾기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 22,
+      "genId": "applied2-q22",
+      "area": "도형",
+      "subarea": "접기와 원형 구멍",
+      "detailType": "펼친 종이의 완전한 원 세기",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9

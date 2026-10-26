@@ -49,5 +49,5 @@ for n, item in enumerate(sorted(items, key=lambda x: x["variantNo"]), 1):
     assert "접힌 쪽" in item["text"] and "아래쪽" in item["text"]
     assert "점선" in item["solution"] and item["solutionAsset"]["caption"]
 
-assert data["itemCount"] == 261 and data["pendingSourceNos"] == [22]
+assert data["itemCount"] == 270 and data["pendingSourceNos"] == []
 print("PASS Applied2 Q15: source nine pieces; nine variants, exact graph/face counts, SVGs and solution links")

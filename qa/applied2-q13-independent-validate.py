@@ -41,5 +41,5 @@ for item in items:
     assert sum(1 for node in xml.iter() if node.tag.endswith("circle")) == 5
     assert sum(1 for node in xml.iter() if node.tag.endswith("line")) == 4
 
-assert data["itemCount"] == 261 and data["pendingSourceNos"] == [22]
+assert data["itemCount"] == 270 and data["pendingSourceNos"] == []
 print("PASS Applied2 Q13: original 19 lengths; nine coordinate enumerations, answers, SVG labels and geometry")
