@@ -1,3 +1,10 @@
+# 2026-10-26 활용3 전체 ZIP 검수·16번 거리표 잘림 수정
+
+- 기존 Drive 활용3 전체 ZIP ID `1KjIRmeeNhE3TZGpLZNvSMnpQt5PoKhVC`를 원시 재다운로드해 로컬과 52,191,415바이트 전체 일치(SHA-256 `ca899d70603a2b5c81faee4e1e42edb9c51972e572c3c1f20a16b9b7d0c95fcd`)를 확인했다. 7개 항목 CRC·270문항 ID/순서/정답/풀이 단계/학습 위치·포인트/빠른 정답이 현재 활성 데이터와 일치했다. 문제 PDF 64쪽·상세 풀이 PDF 93쪽의 157쪽 전체를 80dpi 연락시트로 보며 배치·그림 표시를 확인하던 중 문제 28쪽의 16번 유형 거리표 마지막 행 잘림을 발견했다.
+- 원인: 9개 유사문제 SVG의 `viewBox` 높이 326이 실제 표의 아래끝 y=478보다 작고, 단위 표기 y=315는 표 안에 겹쳤다. 원본/정답/풀이 수치는 보존하고 변형 9개 SVG 표시 영역을 520×530으로 넓히고 단위 표기를 y=510으로 옮겼다. 활용3 16번 그림 높이만 250px로 조정했고 `bank/pool.html`·`bank/pool.js`의 CSS/JS 캐시 버전을 갱신했다.
+- `qa/applied3-q16-viewport-validate.py`의 SVG 경계 검사와 `qa/applied3-q16-viewport-browser-validate.cjs`의 9/270문항·풀이·2단·넘침0·외부 쓰기0 검사를 통과했다. 수정 ZIP 7항목 CRC·270ID·정답/풀이/학습 연결 일치, 문제64쪽/풀이93쪽. 선택 9문항 문제3쪽과 전체 ZIP 문제28~30쪽을 150dpi로 렌더해 9개 표의 마지막 행·수치·역 이름·단위를 확인했다. 수정 ZIP 52,219,250바이트, SHA-256 `40ce9b661088ed0ae4abd6fa4cfcec3d94d7858be0ca08a7f5a2cdbc85a658bd`를 기존 Drive 파일 ID에 갱신하고 원시 재다운로드 바이트 일치를 확인했다.
+- 검수 기록 `.private-work/hw-expansion-20261023/hw3/q16-viewport-fix-review/20261026-applied3-full-zip-q16-viewport-review-r1.md`는 기존 활용3 Drive 폴더에 ID `1Vnnx2WkLl38pLQnKXMrf_rQFQWdeMSij`로 보관, 2,500바이트/SHA-256 `cb1c2e7663fbeaadfe1becd5afca79d28e9421817e82281177d4cdf399db3235` 원시 재다운로드 일치. 축소판 배치 검수는 270문항의 수학·원본 한 줄 재대조가 아니므로 `outputReviewed=false` 유지. 다른 미커밋 파일은 보존한다.
+
 # 2026-10-26 활용1 전체 ZIP Drive 바이트·154쪽 배치 검수
 
 - 활용1 전체270문항 ZIP `076ae18fd21833e39d8fc97b6e04d02111a98d4c98542260e686c12c673148e4`(45,261,851바이트)을 기존 Drive 파일 ID `193fHp1D4W7xINgDRLs44lWQDPWJ9Y45V`에서 원시 재다운로드했고, 로컬과 길이·SHA-256·전체 바이트 일치. ZIP 7항목 CRC·270ID와 순서·정답·풀이 단계·학습 위치/포인트·빠른 정답 270행이 활성 데이터와 일치한다.
