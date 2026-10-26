@@ -7,7 +7,7 @@
 
 - 전체270문항 ZIP 문제 PDF 4~5쪽 개별 확대 중 원문2번 유형 변형7~9(인쇄16~18번)의 왼쪽 끝 성냥개비 선·점이 SVG 표시 영역 안에서 잘린 것을 발견했다. 세 SVG의 x 최소값 `-18`이 기존 `viewBox` 시작점 `0` 밖이었다. 선·점 좌표/답/원본 그림은 보존하고 세 SVG의 표시 영역 시작점만 `-84`로 옮겼다. 생성기와 ZIP 검수에도 같은 범위 검사를 넣고 `QUESTION-BANK-QUALITY-STANDARD.md`에 SVG 내부 잘림 검수 규칙을 추가했다.
 - 수정 후 전체270 ZIP SHA-256 `a6bfd122d84ecec404cfe46e983a717c91ee498337fb3421008f267a0fc02813`(59,207,187바이트), 7파일/270ID/문제63쪽/상세풀이110쪽/CRC/A4·정답표 일치. 브라우저 넘침·외부 쓰기0, 기존 ZIP은 새 검사 실패, 수정 ZIP은 통과. 문제 PDF 4~5쪽을 180dpi로 확대해 세 도형의 모든 꼭짓점·선이 보이는 것을 확인했다. 기록 `.private-work/hw-expansion-20261023/hw8/q02-viewport-fix-review/20261026-applied8-q02-svg-viewport-fix-r1.md`. 전체173쪽 개별 독해는 계속 미완료이므로 `outputReviewed=false`다.
-- Drive 기존 전체 ZIP ID `1CXYOgaSHZVc17syvJkfJzComkkYxzYT8`을 수정본으로 갱신하고 원시 다운로드 참조에서 파일 ID·MIME·59,207,187바이트를 재확인했다. 검수 기록 기존 ID `1TQuMJLA-4tnMyM2GYXgXvzLc2ota9sMc`도 정정했고, 별도 Q02 상세 기록 ID `1cdlDvAzO4iWS0sCOzybHSdDVDQ7akpmA`를 같은 활용8 폴더에 보관했다. 새 Drive ZIP의 원시 재다운로드 SHA-256은 아직 비교하지 않았으므로 로컬 체크섬과 같은 바이트라고 단정하지 않는다.
+- Drive 기존 전체 ZIP ID `1CXYOgaSHZVc17syvJkfJzComkkYxzYT8`을 수정본으로 갱신했다. 원시 재다운로드는 59,207,187바이트, SHA-256 `a6bfd122d84ecec404cfe46e983a717c91ee498337fb3421008f267a0fc02813`으로 로컬 검수본과 일치했다. 검수 기록 기존 ID `1TQuMJLA-4tnMyM2GYXgXvzLc2ota9sMc`도 정정했고, 별도 Q02 상세 기록 ID `1cdlDvAzO4iWS0sCOzybHSdDVDQ7akpmA`를 같은 활용8 폴더에 보관했다.
 
 # 2026-10-26 활용8 전체 ZIP PDF 배치 검수 추가
 
