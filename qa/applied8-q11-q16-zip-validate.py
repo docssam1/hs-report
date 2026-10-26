@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import csv
+import base64
 import io
 import json
+import os
 import re
 import subprocess
 import tempfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from zipfile import ZipFile
 
@@ -26,6 +29,34 @@ def pdf_pages_and_size(blob):
     pages = int(re.search(r'^Pages:\s+(\d+)', info, re.M).group(1))
     assert re.search(r'^Page size:\s+595\.2\d* x 841\.8\d* pts \(A4\)', info, re.M)
     return pages
+
+
+def check_q02_svg_viewports(question_html):
+    for variant in (7, 8, 9):
+        item_id = f'applied8-q02-v{variant}'
+        article = re.search(rf'<article class="question" data-item-id="{item_id}".*?</article>', question_html, re.S)
+        assert article, item_id
+        match = re.search(r'<img src="data:image/svg\+xml;base64,([^"]+)"', article.group())
+        assert match, item_id
+        embedded = base64.b64decode(match.group(1))
+        source = (ROOT / f'bank/assets/applied8/q2-matchstick-triangles-v{variant}.svg').read_bytes()
+        assert embedded == source, item_id
+        svg = ET.fromstring(embedded)
+        left, top, width, height = map(float, svg.attrib['viewBox'].split())
+        for shape in svg:
+            tag = shape.tag.rsplit('}', 1)[-1]
+            if tag == 'line':
+                xs = [float(shape.attrib[k]) for k in ('x1', 'x2')]
+                ys = [float(shape.attrib[k]) for k in ('y1', 'y2')]
+                pad = float(shape.attrib['stroke-width']) / 2
+            elif tag == 'circle':
+                xs = [float(shape.attrib['cx'])]
+                ys = [float(shape.attrib['cy'])]
+                pad = float(shape.attrib['r'])
+            else:
+                raise AssertionError((item_id, tag))
+            assert all(left + pad <= x <= left + width - pad for x in xs), item_id
+            assert all(top + pad <= y <= top + height - pad for y in ys), item_id
 
 
 def check(path, selected):
@@ -51,11 +82,13 @@ def check(path, selected):
         assert q_pages >= 3 and a_pages >= 9
         q_html, a_html = z.read('문제.html').decode(), z.read('답안과상세풀이.html').decode()
         assert all(x['id'] in q_html and x['id'] in a_html for x in selected)
+        if len(selected) == DATA['itemCount']:
+            check_q02_svg_viewports(q_html)
         print(path.name, len(ids), q_pages, a_pages, path.stat().st_size)
 
 
 for no in (11, 16):
     items = [x for x in DATA['items'] if x['sourceNo'] == no]
     check(OUT / f'q{no}-output-qa-r1/applied8-q{no}.zip', items)
-check(OUT / 'q11-q16-final-review/applied8-270.zip', DATA['items'])
+check(Path(os.environ['GFIELD_FULL_ZIP']) if 'GFIELD_FULL_ZIP' in os.environ else OUT / 'q11-q16-final-review/applied8-270.zip', DATA['items'])
 print('Applied 8 selected/full ZIP validation PASS')

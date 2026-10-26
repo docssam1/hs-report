@@ -114,7 +114,10 @@ def svg(width: int, height: int) -> str:
         strokes.append(f'<circle cx="{x(a,b):.1f}" cy="{y(a,b):.1f}" r="3.2" fill="#241c16"/>')
     vbw = max(400, int(margin_x * 2 + unit * width + 20))
     vbh = int(margin_y * 2 + row * height + 18)
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{vbw}" height="{vbh}" viewBox="0 0 {vbw} {vbh}">'
+    min_x = x(0, height)
+    max_x = x(width, 0)
+    view_x = round((min_x + max_x - vbw) / 2) if min_x < 0 else 0
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{vbw}" height="{vbh}" viewBox="{view_x} 0 {vbw} {vbh}">'
             + ''.join(strokes) + '</svg>')
 
 
