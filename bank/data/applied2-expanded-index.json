@@ -1,10 +1,9 @@
 {
-  "version": "20261026-applied2-q13-hinged-rods-r1",
+  "version": "20261026-applied2-q15-paper-fold-cut-r1",
   "sourceSet": "applied",
   "sourceRound": 2,
-  "itemCount": 252,
+  "itemCount": 261,
   "pendingSourceNos": [
-    15,
     22
   ],
   "items": [
@@ -144,6 +143,16 @@
       "area": "수와 식",
       "subarea": "문자와 식",
       "detailType": "색깔별 값을 연립식으로 구하기",
+      "pointBand": "3.4",
+      "reviewStatus": "verified",
+      "variantCount": 9
+    },
+    {
+      "sourceNo": 15,
+      "genId": "applied2-q15",
+      "area": "도형",
+      "subarea": "접기와 자르기",
+      "detailType": "접힌 종이를 펼친 뒤 조각 수 세기",
       "pointBand": "3.4",
       "reviewStatus": "verified",
       "variantCount": 9

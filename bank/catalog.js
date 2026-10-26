@@ -332,7 +332,7 @@
     });
     window.__BANK_CATALOG_QA__={summary:unified.summary,groups:groups,unified:unified,difficultyPolicy:P.policy};
     [1,2,3,4,5,6,7,8,9].forEach(function(round){
-      fetch('data/applied'+round+'-expanded-index.json?v=20261026-applied2-q13-r24',{cache:'no-cache'}).then(function(response){if(!response.ok)throw Error('활용 확대 문항 색인을 불러오지 못했습니다.');return response.json();}).then(function(index){
+      fetch('data/applied'+round+'-expanded-index.json?v=20261026-applied2-q15-r25',{cache:'no-cache'}).then(function(response){if(!response.ok)throw Error('활용 확대 문항 색인을 불러오지 못했습니다.');return response.json();}).then(function(index){
         if(index.sourceSet!=='applied'||index.sourceRound!==round||!Array.isArray(index.items)||index.itemCount!==index.items.length*9||index.items.some(function(x){return x.variantCount!==9||x.reviewStatus!=='verified';}))throw Error('활용 확대 문항의 출처·검수 범위를 확인해 주세요.');
         index.items.forEach(function(entry){var item=unified.items.find(function(x){return x.sourceRef.set==='applied'&&Number(x.sourceRef.round)===round&&Number(x.sourceRef.no)===entry.sourceNo;});if(!item)throw Error('활용 원문과 확대 문항의 연결이 없습니다.');item.expandedPool={bank:'applied'+round,sourceNo:entry.sourceNo,variantCount:9};item.learningArea=entry.area;item.learningSubarea=entry.subarea;item.learningDetailType=entry.detailType;item.searchEvidence=(item.searchEvidence||[]).concat([entry.detailType,entry.subarea]);});
         window.__BANK_CATALOG_QA__['expandedIndexLoadedRound'+round]=true;if(round===1)window.__BANK_CATALOG_QA__.expandedIndexLoaded=true;groups=renderResults(unified,originalCatalog);
