@@ -30,6 +30,20 @@ for(let no=1;no<=30;no++){
   assert.equal(new Set(group.map(item=>item.itemContentHash)).size,3,`${no}번 세 문항은 서로 달라야 합니다.`);
 }
 assert.deepEqual(index.items.map(item=>item.id),data.items.map(item=>item.id));
+assert.deepEqual(index.items.map(item=>item.text),data.items.map(item=>item.text),'검색 색인과 문제 본문이 같아야 합니다.');
+const fractions=new Map([
+  [14,[[1,4],[1,4],[1,3]]],
+  [15,[[1,2],[1,2],[1,2]]],
+  [24,[[1,3],[1,4],[1,4]]],
+]);
+for(const [no,expected] of fractions){
+  const group=data.items.filter(item=>item.sourceNo===no);
+  group.forEach((item,i)=>{
+    const [numerator,denominator]=expected[i];
+    assert.match(item.text,new RegExp(`<math xmlns="http://www\\.w3\\.org/1998/Math/MathML"><mfrac><mn>${numerator}</mn><mn>${denominator}</mn></mfrac></math>`),`${item.id}: 세로 분수`);
+  });
+}
+assert.ok(data.items.every(item=>!/(?<!\d)\d{1,2} \d{1,2}(?!\d)/.test(item.text)),'분자가 분모와 공백으로 분리된 문항이 없어야 합니다.');
 
 const sandbox={window:{}};
 vm.runInNewContext(fs.readFileSync(path.join(ROOT,'bank','bank-registry.js'),'utf8'),sandbox);

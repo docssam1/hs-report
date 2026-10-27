@@ -32,6 +32,17 @@ function server(){
     assert.match(await page.locator('.f1-title').innerText(),/파이널 4회 약점 유형/);
     assert.equal(await page.locator('.cover-page input').count(),30);
     assert.equal(await page.locator('.qcard').count(),90);
+    for(const [sourceNo,denominators] of [[14,[4,4,3]],[15,[2,2,2]],[24,[3,4,4]]]){
+      const cards=page.locator(`.qcard[data-source-no="${sourceNo}"]`);
+      assert.equal(await cards.count(),3);
+      for(let variant=0;variant<3;variant++){
+        const fraction=cards.nth(variant).locator('.qtext math mfrac');
+        assert.equal(await fraction.count(),1,`${sourceNo}번 ${variant+1}번째 유사문제의 세로 분수`);
+        assert.deepEqual(await fraction.locator('mn').allTextContents(),['1',String(denominators[variant])]);
+        const boxes=await fraction.locator('mn').evaluateAll(nodes=>nodes.map(node=>{const box=node.getBoundingClientRect();return {top:box.top,bottom:box.bottom};}));
+        assert.ok(boxes[0].bottom<boxes[1].top,`${sourceNo}번 ${variant+1}번째 유사문제에서 분자와 분모가 위아래로 보여야 합니다.`);
+      }
+    }
     assert.equal(await page.locator('.solution-card').count(),90);
     assert.equal(await page.locator('.question-page img').count(),12);
     assert.deepEqual(await page.locator('.qcard').evaluateAll(cards=>cards.slice(0,6).map(card=>Number(card.dataset.sourceNo))),[1,1,1,2,2,2]);
