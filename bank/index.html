@@ -7,7 +7,8 @@
 <title>지필드 생각하는 초등 황소 약점 유형 문제은행 | 지필드 영재교육</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="final1-worksheet.css?v=20261023-webfont-r1">
+<link rel="stylesheet" href="final1-worksheet.css?v=20261027-mathml-1">
+<link rel="stylesheet" href="math-markup.css?v=20261027-mathml-1">
 <style>
   :root{
     --bg:#f5f7fb; --card:#ffffff; --soft:#eef5ff;
@@ -244,7 +245,7 @@
 <script src="bank-access.js?v=20261022-last4"></script>
 <script>
 (function(){var v=Date.now();
- ['important-types.js','core/adapter-registry.js','adapters/final7-reviewed-adapter.js','adapters/final8-reviewed-adapter.js','adapters/last1-reviewed-adapter.js','adapters/last2-reviewed-adapter.js','adapters/last3-reviewed-adapter.js','adapters/last4-reviewed-adapter.js','adapters/middle7-reviewed-adapter.js','adapters/middle8-reviewed-adapter.js','bank-core.js','bank-fixed.js','final-source-generators.js','bank-raster.js','shape-network.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js','important-generators.js'].forEach(function(f){
+ ['important-types.js','core/adapter-registry.js','adapters/final7-reviewed-adapter.js','adapters/final8-reviewed-adapter.js','adapters/last1-reviewed-adapter.js','adapters/last2-reviewed-adapter.js','adapters/last3-reviewed-adapter.js','adapters/last4-reviewed-adapter.js','adapters/middle7-reviewed-adapter.js','adapters/middle8-reviewed-adapter.js','bank-core.js','math-markup.js','bank-fixed.js','final-source-generators.js','bank-raster.js','shape-network.js','gens/g-rect.js','gens/g-tri.js','gens/g-path.js','gens/g-cube.js','gens/g-repeat.js','gens/g-weekday.js','gens/g-inclusion.js','gens/g-remainder.js','gens/g-overlap-range-sum.js','gens/g-remainder-yes-no.js','gens/g-final1.js','important-generators.js'].forEach(function(f){
    document.write('<scr'+'ipt src="'+f+'?v='+v+'"><\/scr'+'ipt>');});})();
 </script>
 <script>
@@ -256,7 +257,7 @@ window.GFIELD_BANK_ACCESS.ready.then(function(){
   var fixed=!!bankCode;
   if(!fixed)return;
   document.body.classList.add('fixed-bank-mode');
-  var s=document.createElement('script');s.src='final1-worksheet.js?v=20261022-last4';s.onload=function(){
+  var s=document.createElement('script');s.src='final1-worksheet.js?v=20261027-mathml-1';s.onload=function(){
     var hasGens=q.has('gens'), raw=hasGens?(q.get('gens')||'').split(','):(q.get('practice')==='wrong'?[]:null);
     if(!hasGens&&q.get('gen')&&q.get('gen')!=='mix')raw=[q.get('gen')];
     var typeIds=bankCode==='important'?(q.get('types')||'').split(',').filter(Boolean):null;

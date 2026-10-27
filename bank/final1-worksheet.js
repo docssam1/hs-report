@@ -1,12 +1,7 @@
 (function(global){
   'use strict';
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  function mathText(v){
-    var text=global.BANK_CORE.reviewedMathText(v);
-    return text.split(/(<math\b[\s\S]*?<\/math>)/g).map(function(part){return part.startsWith('<math')?part:part.replace(/(^|[^0-9])(\d{1,3})\/(\d{1,3})(?![0-9])/g,function(_,prefix,numerator,denominator){
-      return prefix+'<span class="f1-frac" role="math" aria-label="'+denominator+'분의 '+numerator+'"><span>'+numerator+'</span><span>'+denominator+'</span></span>';
-    });}).join('');
-  }
+  function mathText(v){return global.GFIELD_MATH_MARKUP.render(v);}
   function chunks(a,n){var out=[];for(var i=0;i<a.length;i+=n)out.push(a.slice(i,i+n));return out;}
   function largeFigure(x){return x.sourceSet==='middle'&&(Number(x.sourceRound)===7&&Number(x.sourceNo)===13||Number(x.sourceRound)===8&&[13,17,20,26,27,30].includes(Number(x.sourceNo)))||x.sourceSet==='final'&&Number(x.sourceRound)===8&&Number(x.sourceNo)===25||x.sourceSet==='last'&&Number(x.sourceRound)===1&&Number(x.sourceNo)===6&&[2,3].includes(Number(x.variantNo))||x.sourceSet==='last'&&Number(x.sourceRound)===2&&[15,20,28,29].includes(Number(x.sourceNo))||x.sourceSet==='last'&&Number(x.sourceRound)===3&&[15,18,23,30].includes(Number(x.sourceNo));}
   function editorialWide(x){

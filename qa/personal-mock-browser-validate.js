@@ -25,6 +25,7 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await page.addInitScript(()=>localStorage.setItem('gfield_student','김서연'));
     await page.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([record('김서연','original1','O'.repeat(30))])}));
     await page.goto(base+'/bank/personal-mock.html');
+    assert.equal(await page.evaluate(()=>typeof GFIELD_MATH_MARKUP.render),'function');
     await page.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000});
     await page.locator('[data-band="4.2"]').click();
     await page.locator('#pmStatus').getByText('자료실 공개 보충 6문항').waitFor({timeout:30000});

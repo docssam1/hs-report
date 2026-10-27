@@ -51,7 +51,7 @@ try{
  await open('nos=13,14,15&count=15');
  const newest=preview.items.filter(x=>[13,14,15].includes(x.sourceNo));
  assert.equal(await p.locator('.cards').count(),15);assert.equal(await p.locator('.card-digit').count(),90);
- assert.equal(await p.locator('[data-item-id^="applied1-q15"] .given .frac').count(),250);
+ assert.equal(await p.locator('[data-item-id^="applied1-q15"] .given math mfrac').count(),250);
  const firstFoundation=preview.items.find(x=>x.id==='applied1-q13-low-v1');await p.locator('[data-answer-row="'+firstFoundation.id+'"] input').fill('0');await p.click('#grade');
  for(const item of newest){const inputs=p.locator('[data-answer-row="'+item.id+'"] input');assert.equal(await inputs.count(),item.answerParts.length);assert.equal(await p.evaluate(item=>window.__POOL_QA__.checkAnswer(item,item.answerParts.map(String)),item),true);for(let part=0;part<item.answerParts.length;part++)await inputs.nth(part).fill(String(item.answerParts[part]));}
  assert.equal(await p.locator('[data-answer-row="applied1-q15-high-v3"] input').count(),1);assert.equal(await p.locator('[data-answer-row="applied1-q15-high-v3"] input').getAttribute('placeholder'),'순서');

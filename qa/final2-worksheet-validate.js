@@ -105,15 +105,17 @@ async function assertWatermarks(page) {
     assert.equal(await page.locator('.qcard[data-source-no="18"]').count(), 3, 'all Q18 variants are present');
     assert.doesNotMatch(await page.locator('.qcard[data-source-no="18"]').allTextContents().then((values) => values.join(' ')), /부류/, 'Q18 uses natural elementary wording');
     assert.match(await page.locator('.qcard[data-source-no="18"]').first().textContent(), /가운데 한 가지에만 해당합니다/, 'Q18 states the non-overlap rule without old classification jargon');
-    const fractions = page.locator('.qcard[data-source-no="26"] .f1-frac');
+    const fractions = page.locator('.qcard[data-source-no="26"] math mfrac');
     assert.equal(await fractions.count(), 6, 'all six age ratios are typeset as stacked fractions');
-    assert.ok(await fractions.evaluateAll((nodes) => nodes.every((node) => {
-      const style = getComputedStyle(node);
+    const fractionGeometry = await fractions.evaluateAll((nodes) => nodes.map((node) => {
       const first = node.firstElementChild.getBoundingClientRect();
       const second = node.lastElementChild.getBoundingClientRect();
       const box = node.getBoundingClientRect();
-      return style.display === 'inline-grid' && getComputedStyle(node.firstElementChild).borderBottomStyle === 'solid' && first.bottom <= second.top + 2 && box.height > 18;
-    })), 'fraction bar, numerator and denominator are visibly separated');
+      return {namespace:node.namespaceURI,numeratorBottom:first.bottom,denominatorTop:second.top,height:box.height};
+    }));
+    assert.ok(fractionGeometry.every(({namespace,numeratorBottom,denominatorTop,height})=>
+      namespace === 'http://www.w3.org/1998/Math/MathML' && numeratorBottom <= denominatorTop + 2 && height > 18
+    ), 'native MathML must visibly stack numerator and denominator: '+JSON.stringify(fractionGeometry));
     assert.ok(await page.locator('.qcard[data-source-no="26"] .f1-qtext').evaluateAll((nodes) => nodes.every((node) => !node.innerHTML.includes('1/'))), 'plain slash fractions are absent from printed prompts');
     assert.ok(await page.locator('.qcard[data-source-no="25"] .qfigure img').evaluateAll((images) => images.every((image) => image.naturalWidth === 510 && image.naturalHeight === 200)), 'Q25 uses the corrected three-stage triangular lattice figure');
     const answerBlanks = page.locator('.f1-answerline .f1-answer-blank');
@@ -188,7 +190,7 @@ async function assertWatermarks(page) {
     assert.equal(typeRules.numberBackground, 'rgba(0, 0, 0, 0)', 'question number is not placed in a decorative color block');
     assert.equal(typeRules.pageHeadingColor, 'rgb(24, 34, 48)', 'question page heading avoids decorative blue');
     assert.ok(typeRules.pageHeadingWeight >= 600 && typeRules.pageHeadingWeight <= 700, 'question page heading uses restrained emphasis');
-    assert.ok(typeRules.workspaceMinHeight >= 55 && /repeating-linear-gradient/.test(typeRules.workspaceLines), 'editorial problems reserve ruled solving space');
+    assert.ok(typeRules.workspaceMinHeight >= 55 && typeRules.workspaceLines === 'none', 'editorial problems reserve clear solving space');
     assert.equal(typeRules.primaryBackground, 'rgb(36, 86, 196)', 'the single primary action uses GFIELD blue');
     assert.equal(typeRules.coverBackground, 'rgb(255, 255, 255)', 'the cover stays white, not yellow or beige');
     assert.deepEqual(await page.locator('#f1Pages img').evaluateAll((images) => images.filter((image) => !image.complete || !image.naturalWidth || !image.naturalHeight).map((image) => image.alt)), [], 'all figures decode');

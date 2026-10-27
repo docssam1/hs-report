@@ -6,7 +6,7 @@
   var SCOPE_LABEL={all:'응시 시험 전체',wrong:'틀린 문제',correct:'맞은 문제'};
   var COUNTS={10:{'2.7':4,'3.4':3,'4.2':3},20:{'2.7':8,'3.4':7,'4.2':5},30:{'2.7':12,'3.4':10,'4.2':8}};
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-  function mathText(v){return root.BANK_CORE&&root.BANK_CORE.reviewedMathText?root.BANK_CORE.reviewedMathText(v):esc(v);}
+  function mathText(v){return typeof document==='undefined'?esc(v):root.GFIELD_MATH_MARKUP.render(v);}
   function label(code){if(/^middle[78]$/.test(code))return '중급 모의고사 '+code.slice(6)+'회';if(/^last[1234]$/.test(code))return '최종 실전 '+code.slice(4)+'회';if(code.indexOf('original')===0)return '시그니처 '+code.slice(8)+'회';var n=Number(code.slice(5));return n===7?'최종 실전 7회':n===8?'최종 실전 8회':'파이널 '+n+'회';}
   function codeOf(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||'');if(key==='7'||key==='8')return 'middle'+key;return SUPPORTED.test(key)?key:'';}
   function attemptLabel(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||''),code=codeOf(attempt),m;if(code)return label(code);if(/^\d+$/.test(key))return '중급 모의고사 '+Number(key)+'회';if((m=/^hw(\d+)$/.exec(key)))return '활용 모의고사 '+Number(m[1])+'회';if((m=/^last(\d+)$/.exec(key)))return '최종 실전 '+Number(m[1])+'회';if((m=/^final(\d+)$/.exec(key)))return '파이널 '+Number(m[1])+'회';return '응시 회차 '+key;}

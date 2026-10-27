@@ -75,7 +75,7 @@ function startServer(){
     assert.equal(await page.locator('.qcard[data-source-no="6"] img').count(),3);
     assert.equal(await page.locator('.qcard[data-source-no="7"] img').count(),3);
     assert.equal(await page.locator('.qcard[data-source-no="8"] img').count(),3);
-    assert.equal(await page.locator('.qcard[data-source-no="18"] .f1-frac').count(),9);
+    assert.equal(await page.locator('.qcard[data-source-no="18"] math mfrac').count(),9);
     assert.ok(await page.locator('.qcard[data-source-no="18"] .f1-qtext').evaluateAll(nodes=>nodes.every(node=>!node.innerHTML.includes('1/'))));
     assert.deepEqual(await page.locator('#f1Pages img').evaluateAll(images=>images.filter(image=>!image.complete||!image.naturalWidth||!image.naturalHeight).map(image=>image.alt)),[],'모든 그림이 정상적으로 표시됩니다.');
     assert.doesNotMatch(await page.locator('#final1Worksheet').innerText(),/undefined|NaN|\[object Object\]/);
