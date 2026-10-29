@@ -7,7 +7,7 @@ require('./email-login-test-stub'); // QA 전용: 학부모 이메일 인증 단
 const {chromium}=require(process.env.GFIELD_QA_PLAYWRIGHT||'playwright');
 const mockBank=require('../bank/personal-mock.js');
 const root=path.resolve(__dirname,'..');
-const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8'};
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.svg':'image/svg+xml'};
 const server=http.createServer((request,response)=>{
   const pathname=decodeURIComponent(new URL(request.url,'http://localhost').pathname);
   const file=path.resolve(root,'.'+pathname);
@@ -23,10 +23,30 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     const approvedOnly=await browser.newPage({viewport:{width:1440,height:900}});
     await approvedOnly.addInitScript(()=>localStorage.setItem('gfield_student','박서진'));
     await approvedOnly.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:'[]'}));
-    await approvedOnly.goto(base+'/bank/personal-mock.html');
-    await approvedOnly.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000});
+    await approvedOnly.goto(base+'/bank/personal-mock.html?source=applied1');
+    await approvedOnly.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000}).catch(async error=>{console.error('APPLIED STATUS',await approvedOnly.locator('#pmStatus').innerText());throw error;});
+    assert.equal(await approvedOnly.locator('#pmSource').inputValue(),'applied1');
     assert.equal(await approvedOnly.locator('.pm-q').count(),30,'승인된 회차는 정오답 입력 없이 출제');
+    assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied1-"]').count(),30);
     assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),false);
+    await approvedOnly.emulateMedia({media:'print'});
+    const columnPositions=await approvedOnly.locator('.pm-four-grid.pm-question-page').first().locator('.pm-q').evaluateAll(cards=>cards.map(card=>({x:card.getBoundingClientRect().x,y:card.getBoundingClientRect().y})));
+    assert.equal(columnPositions.length,4);
+    assert.equal(columnPositions[0].x,columnPositions[1].x,'왼쪽에 2문항');
+    assert.ok(columnPositions[0].y<columnPositions[1].y);
+    assert.equal(columnPositions[2].x,columnPositions[3].x,'오른쪽에 2문항');
+    assert.ok(columnPositions[2].x>columnPositions[0].x&&columnPositions[2].y<columnPositions[3].y);
+    assert.deepEqual(await approvedOnly.evaluate(()=>[...document.querySelectorAll('.pm-q,.pm-answer')].filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>card.dataset.itemId||card.dataset.answerId)),[],'활용 1회 A4 잘림 없음');
+    const appliedPdf=path.join(os.tmpdir(),'gfield-personal-mock-applied1-qa.pdf');
+    await approvedOnly.pdf({path:appliedPdf,format:'A4',printBackground:true,preferCSSPageSize:true});
+    assert.ok(fs.statSync(appliedPdf).size>10000);
+    await approvedOnly.emulateMedia({media:'screen'});
+    for(let round=2;round<=9;round++){
+      await approvedOnly.locator('#pmSource').selectOption('applied'+round);
+      await approvedOnly.waitForFunction(n=>document.querySelector('#pmStatus')?.textContent.includes('활용 모의고사 '+n+'회')&&document.querySelector('#pmPrint')?.disabled===false,round,{timeout:30000});
+      assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied'+round+'-"]').count(),30,'활용 '+round+'회 승인 출제');
+      assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),false);
+    }
     await approvedOnly.locator('[data-scope="wrong"]').click();
     await approvedOnly.locator('#pmStatus').getByText('선택한 조건의 검수 유사문제가 없습니다.').waitFor();
     assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),true);

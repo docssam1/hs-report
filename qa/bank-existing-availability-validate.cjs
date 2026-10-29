@@ -23,9 +23,11 @@ for(const file of dataFiles){
   codes.push(code);
 }
 assert.equal(dataFiles.length,14);assert.ok(codes.includes('middle7')&&codes.includes('middle8')&&codes.includes('last3')&&codes.includes('last4'));
-const preparing=['hw1','6','4','3','2','1'].map(key=>personal.availability({key},'검수학생',all));
+const preparing=['6','4','3','2','1'].map(key=>personal.availability({key},'검수학생',all));
 assert.ok(preparing.every(s=>s.reason==='preparing'));
-assert.deepEqual(preparing.map(x=>x.label),['활용 모의고사 1회','중급 모의고사 6회','중급 모의고사 4회','중급 모의고사 3회','중급 모의고사 2회','중급 모의고사 1회']);
+assert.deepEqual(preparing.map(x=>x.label),['중급 모의고사 6회','중급 모의고사 4회','중급 모의고사 3회','중급 모의고사 2회','중급 모의고사 1회']);
+assert.equal(personal.availability({key:'hw1'},'검수학생',all).reason,'denied');
+assert.equal(personal.availability({key:'hw1'},'검수학생',{archiveAccess:{'활용 모의고사':['검수학생']}}).reason,'ready');
 assert.equal(personal.availability({key:'7'},'다른학생',all).reason,'denied');
 assert.equal(personal.availability({key:'original1'},'다른학생',all).reason,'denied');
 const note=personal.availabilityNote({preparing:preparing.map(s=>s.label),denied:[],failed:[]});

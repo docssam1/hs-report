@@ -15,6 +15,16 @@ assert.equal(noOx.available,30,'승인되고 정오답 입력이 없어도 전�
 assert.equal(bank.buildPool(approved,{original1},'wrong','all',30).available,0,'오답 범위는 입력 기록 필요');
 assert.equal(bank.buildPool(approved,{original1},'correct','all',30).available,0,'정답 범위는 입력 기록 필요');
 assert.equal(bank.approvedAttempts([attempt('original1')],'학생',approvedData).filter(row=>row.key==='original1').length,1,'입력 기록과 승인 회차 중복 방지');
+const applied1=require('../bank/data/applied1-expanded.json');
+const appliedApproval={archiveAccess:{'활용 모의고사':['학생']}};
+const appliedAttempts=bank.approvedAttempts([], '학생', appliedApproval);
+assert.ok(appliedAttempts.some(row=>row.key==='applied1'&&row.approvedOnly));
+assert.equal(bank.isAllowed('applied1','다른 학생',appliedApproval),false);
+const appliedPaper=bank.buildPool(appliedAttempts.filter(row=>row.key==='applied1'),{applied1},'all','all',30);
+assert.equal(appliedPaper.available,30,'활용 1회 승인·정오답 미입력 출제');
+assert.ok(appliedPaper.questions.every(row=>row.code==='applied1'));
+assert.equal(bank.buildPool(appliedAttempts.filter(row=>row.key==='applied1'),{applied1},'wrong','all',30).available,0);
+assert.match(bank.renderPaper(appliedPaper,'all','all','테스트'),/assets\/applied1\/hands\.png/);
 require('../bank/important-types.js');
 const libraryItems=globalThis.GFIELD_IMPORTANT_TYPES.types.flatMap(type=>type.sources.flatMap(source=>dataset('final'+source.round).items.filter(item=>item.sourceNo===source.no).map(item=>({...item,importantTypeId:type.id,importantTypeTitle:type.title}))));
 const library={items:libraryItems};

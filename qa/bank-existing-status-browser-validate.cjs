@@ -11,7 +11,7 @@ const server=http.createServer((req,res)=>{
   if(req.method!=='GET'){evidence.writes.push(req.method);res.writeHead(405);return res.end();}
   const f=path.resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname));
   if(!f.startsWith(root+path.sep)||f.includes('.private')||!fs.existsSync(f)||!fs.statSync(f).isFile()){res.writeHead(404);return res.end();}
-  res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'application/javascript','.css':'text/css','.json':'application/json'})[path.extname(f)]||'application/octet-stream');fs.createReadStream(f).pipe(res);
+  res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'application/javascript','.css':'text/css','.json':'application/json','.png':'image/png','.svg':'image/svg+xml'})[path.extname(f)]||'application/octet-stream');fs.createReadStream(f).pipe(res);
 });
 function row(round){return {student,round,ox:'O'.repeat(30),score:100,wrong:0,source:'admin',updated_at:'2026-10-16T00:00:00Z'};}
 (async()=>{
@@ -36,10 +36,11 @@ function row(round){return {student,round,ox:'O'.repeat(30),score:100,wrong:0,so
   async function open(){await page.goto(base+'/bank/personal-mock.html');await page.waitForFunction(()=>document.querySelector('#pmPrint')?.disabled===false);return page.locator('#pmStatus').innerText();}
   try{
     attempts=['hw1','6','4','3','2','1','last3','7'];const status=await open();
-    assert.match(status,/유사문제 준비 중:.*활용 모의고사 1회.*중급 모의고사 6회/);assert.doesNotMatch(status,/권한|hw1|미등록\//);
+    assert.match(status,/유사문제 준비 중:.*중급 모의고사 6회/);assert.doesNotMatch(status,/권한|hw1|미등록\//);
+    assert.equal(await page.locator('#pmSource option[value="applied1"]').count(),1);
     assert.ok(loaded.includes('middle7')&&loaded.includes('last3'));await page.screenshot({path:path.join(out,'all-rights-preparing-1280.png')});
     await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(out,'all-rights-preparing-390.png')});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false);
-    evidence.cases.push({name:'same six unsupported attempt keys never imply missing permission',pass:true,status});await page.setViewportSize({width:1280,height:960});
+    evidence.cases.push({name:'approved applied one is ready; unsupported middle keys remain preparing',pass:true,status});await page.setViewportSize({width:1280,height:960});
     attempts=codes;loaded.length=0;const ready=await open();
     assert.match(ready,/30문항 준비 완료/);assert.doesNotMatch(ready,/준비 중|권한|실패/);assert.deepEqual([...new Set(loaded)].sort(),codes.map(c=>/^[78]$/.test(c)?'middle'+c:c).sort());
     evidence.cases.push({name:'all fourteen stored banks actually load in the generator',pass:true,banks:[...new Set(loaded)].sort()});

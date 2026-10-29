@@ -1,20 +1,21 @@
 /* Official-attempt practice, supplemented with reviewed public source-linked items. */
 (function(root){
   'use strict';
-  var SUPPORTED=/^(?:final[123478]|original[12]|last[1234]|middle[78])$/;
-  var BANK_CODES=['final1','final2','final3','final4','final7','final8','original1','original2','last1','last2','last3','last4','middle7','middle8'];
+  var SUPPORTED=/^(?:final[123478]|original[12]|last[1234]|middle[78]|applied[1-9])$/;
+  var BANK_CODES=['final1','final2','final3','final4','final7','final8','original1','original2','last1','last2','last3','last4','middle7','middle8','applied1','applied2','applied3','applied4','applied5','applied6','applied7','applied8','applied9'];
   var BAND_LABEL={all:'전체 배점','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
   var SCOPE_LABEL={all:'승인된 시험 전체',wrong:'틀린 문제',correct:'맞은 문제'};
   var COUNTS={10:{'2.7':4,'3.4':3,'4.2':3},20:{'2.7':8,'3.4':7,'4.2':5},30:{'2.7':12,'3.4':10,'4.2':8}};
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function mathText(v){return typeof document==='undefined'?esc(v):root.GFIELD_MATH_MARKUP.render(v);}
-  function label(code){if(/^middle[78]$/.test(code))return '중급 모의고사 '+code.slice(6)+'회';if(/^last[1234]$/.test(code))return '최종 실전 '+code.slice(4)+'회';if(code.indexOf('original')===0)return '시그니처 '+code.slice(8)+'회';var n=Number(code.slice(5));return n===7?'최종 실전 7회':n===8?'최종 실전 8회':'파이널 '+n+'회';}
-  function codeOf(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||'');if(key==='7'||key==='8')return 'middle'+key;return SUPPORTED.test(key)?key:'';}
+  function label(code){if(/^applied[1-9]$/.test(code))return '활용 모의고사 '+code.slice(7)+'회';if(/^middle[78]$/.test(code))return '중급 모의고사 '+code.slice(6)+'회';if(/^last[1234]$/.test(code))return '최종 실전 '+code.slice(4)+'회';if(code.indexOf('original')===0)return '시그니처 '+code.slice(8)+'회';var n=Number(code.slice(5));return n===7?'최종 실전 7회':n===8?'최종 실전 8회':'파이널 '+n+'회';}
+  function codeOf(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||'');if(key==='7'||key==='8')return 'middle'+key;if(/^hw[1-9]$/.test(key))return 'applied'+key.slice(2);return SUPPORTED.test(key)?key:'';}
   function attemptLabel(attempt){var key=String(attempt&&attempt.key||attempt&&attempt.round||''),code=codeOf(attempt),m;if(code)return label(code);if(/^\d+$/.test(key))return '중급 모의고사 '+Number(key)+'회';if((m=/^hw(\d+)$/.exec(key)))return '활용 모의고사 '+Number(m[1])+'회';if((m=/^last(\d+)$/.exec(key)))return '최종 실전 '+Number(m[1])+'회';if((m=/^final(\d+)$/.exec(key)))return '파이널 '+Number(m[1])+'회';return '응시 회차 '+key;}
   function availability(attempt,student,data){var code=codeOf(attempt);return {code:code,label:attemptLabel(attempt),reason:!code?'preparing':isAllowed(code,student,data)?'ready':'denied'};}
   function availabilityNote(issues){return [['preparing','유사문제 준비 중'],['denied','열람 권한 없음'],['failed','자료 불러오기 실패']].filter(function(pair){return issues[pair[0]]&&issues[pair[0]].length;}).map(function(pair){return ' · '+pair[1]+': '+Array.from(new Set(issues[pair[0]])).join(', ');}).join('');}
   function isAllowed(code,student,data){
     if(!code||!student)return false;
+    if(/^applied[1-9]$/.test(code)){var applied=(data&&data.archiveAccess||{})['활용 모의고사'];return Array.isArray(applied)&&(applied.indexOf('*')>=0||applied.indexOf(student)>=0);}
     if(/^last[1234]$/.test(code)){var acc=(data&&data.archiveAccess||{})['최종 모의고사'],att=data&&data.attendance||{},week={last1:'oct-5',last2:'oct-12',last3:'oct-19',last4:'oct-26'}[code];return Array.isArray(acc)&&(acc.indexOf('*')>=0||acc.indexOf(student)>=0)||Array.isArray(att[student])&&att[student].indexOf(week)>=0;}
     if(/^middle[78]$/.test(code)||code.indexOf('original')===0||code==='final7'||code==='final8'){
       var key=/^middle[78]$/.test(code)?'mock-mid-'+code.slice(6):code.indexOf('original')===0?'mock-signature-'+code.slice(8):(code==='final7'?'mock-final-7':(code==='final8'?'mock-final-8':'mock-last-1'));
@@ -29,6 +30,14 @@
       if(!seen.has(code)&&isAllowed(code,student,data))result.push({key:code,approvedOnly:true});
     });
     return result;
+  }
+  function loadDataset(code){
+    if(/^applied[1-9]$/.test(code)){
+      var adapter=root.QUESTION_BANK_ADAPTERS&&root.QUESTION_BANK_ADAPTERS.get('gfield-'+code+'-expanded');
+      if(!adapter||typeof adapter.load!=='function')return Promise.reject(Error('활용 회차 어댑터를 확인할 수 없습니다.'));
+      return adapter.load();
+    }
+    return root.BANK_FIXED.load(code);
   }
   function signature(item){return JSON.stringify([item.text,item.promptDataLines||[],item.asset&&item.asset.src||'',item.answer]);}
   /* 이미 푼(인쇄한) 문항 식별: 검수 문항은 id, 생성형은 내용 서명 */
@@ -137,11 +146,11 @@
   }
   function figure(asset){
     if(!asset)return '';
-    if(asset.kind!=='raster'||!/^data:image\/png;base64,/.test(asset.src||''))throw Error('검수 그림을 확인할 수 없습니다.');
+    if(!/^data:image\/png;base64,/.test(asset.src||'')&&!/^assets\/[A-Za-z0-9/_-]+\.(?:png|svg)$/.test(asset.src||''))throw Error('검수 그림을 확인할 수 없습니다.');
     return '<img src="'+esc(asset.src)+'" alt="'+esc(asset.description||'문항 그림')+'">';
   }
-  function page(title,number,total,content,kind){
-    return '<section class="pm-page pm-'+kind+'-page"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content"><header><span>지필드 영재교육 · 맞춤 모의고사</span><span>'+esc(title)+' · '+number+'/'+total+'</span></header><div class="pm-'+kind+'-grid">'+content+'</div></div></section>';
+  function page(title,number,total,content,kind,fourGrid){
+    return '<section class="pm-page pm-'+kind+'-page'+(fourGrid?' pm-four-grid':'')+'"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content"><header><span>지필드 영재교육 · 맞춤 모의고사</span><span>'+esc(title)+' · '+number+'/'+total+'</span></header><div class="pm-'+kind+'-grid">'+content+'</div></div></section>';
   }
   function questionWide(entry){
     var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' '):'';
@@ -184,8 +193,8 @@
   function renderPaper(paper,scope,band,student){
     if(!paper.questions.length||paper.questions.length>paper.target)throw Error('인쇄할 검수 문항이 없습니다.');
     var qPages=[],aPages=[],questionGroups=rows(paper.questions,questionWide,questionTall),answerGroups=rows(paper.questions,answerWide,answerTall);
-    questionGroups.forEach(function(group,index){qPages.push(page('문제',index+1,questionGroups.length,group.map(questionCard).join(''),'question'));});
-    answerGroups.forEach(function(group,index){aPages.push(page('정답과 풀이',index+1,answerGroups.length,group.map(answerCard).join(''),'answer'));});
+    questionGroups.forEach(function(group,index){qPages.push(page('문제',index+1,questionGroups.length,group.map(questionCard).join(''),'question',group.length===4&&group.every(function(entry){return !questionWide(entry)&&!questionTall(entry);})));});
+    answerGroups.forEach(function(group,index){aPages.push(page('정답과 풀이',index+1,answerGroups.length,group.map(answerCard).join(''),'answer',group.length===4&&group.every(function(entry){return !answerWide(entry)&&!answerTall(entry);})));});
     var duplexBlank=qPages.length%2?['<section class="pm-page pm-duplex-blank" aria-hidden="true"></section>']:[];
     return qPages.concat(duplexBlank,aPages).join('');
   }
@@ -200,7 +209,7 @@
     var student=String(account.student||((account.role==='admin'||account.role==='teacher')?query.get('name'):'')||'').trim();
     var status=document.getElementById('pmStatus'),print=document.getElementById('pmPrint'),pages=document.getElementById('pmPages');
     if(!student){status.textContent='학생 이름으로 자료실에 입장해 주세요.';return;}
-    var scope=Object.prototype.hasOwnProperty.call(SCOPE_LABEL,query.get('scope'))?query.get('scope'):'all',band=Object.prototype.hasOwnProperty.call(BAND_LABEL,query.get('band'))?query.get('band'):'all';
+    var scope=Object.prototype.hasOwnProperty.call(SCOPE_LABEL,query.get('scope'))?query.get('scope'):'all',band=Object.prototype.hasOwnProperty.call(BAND_LABEL,query.get('band'))?query.get('band'):'all',source='all';
     var count=COUNTS[query.get('count')]?Number(query.get('count')):30;
     var attempts=[],datasets={},unavailable={preparing:[],denied:[],failed:[]},revision=0,currentPaperCount=0,library=null,libraryPromise=null,freshRound=0;
     var doneKeys=new Set(),skipDone=true,currentKeys=[];
@@ -221,7 +230,7 @@
       document.querySelectorAll('[data-band]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.band===band));});
       document.querySelectorAll('[data-count]').forEach(function(button){button.setAttribute('aria-pressed',String(Number(button.dataset.count)===count));});
       var fresh=document.getElementById('pmFresh');
-      fresh.disabled=scope!=='all'||!attempts.length;
+      fresh.disabled=scope!=='all'||source!=='all'||!attempts.length;
       fresh.textContent=freshRound?'다른 새 문제로 바꾸기':'새 문제 섞기';
       var skip=document.getElementById('pmSkipDone');
       if(skip){skip.setAttribute('aria-pressed',String(skipDone));skip.textContent=skipDone?'이미 푼 문제 제외 · 켜짐':'이미 푼 문제 제외 · 꺼짐';}
@@ -230,20 +239,21 @@
     }
     async function render(){
       var current=++revision;controls();print.disabled=true;pages.innerHTML='';currentPaperCount=0;
-      var paper=buildPool(attempts,datasets,scope,band,count,null,null,0,null,skipSet()),note=availabilityNote(unavailable);
+      var selectedAttempts=source==='all'?attempts:attempts.filter(function(attempt){return codeOf(attempt)===source;});
+      var paper=buildPool(selectedAttempts,datasets,scope,band,count,null,null,0,null,skipSet()),note=availabilityNote(unavailable);
       if(skipDone&&doneKeys.size)note+=' · 이미 푼 문제 제외';
-      if(!attempts.length){status.textContent='출제 가능한 승인 회차가 없습니다.';return;}
-      if(scope==='all'&&(paper.missing||freshRound>0)&&Array.isArray(root.GFIELD_DATA&&root.GFIELD_DATA.students)&&root.GFIELD_DATA.students.includes(student)){
+      if(!selectedAttempts.length){status.textContent='출제 가능한 승인 회차가 없습니다.';return;}
+      if(source==='all'&&scope==='all'&&(paper.missing||freshRound>0)&&Array.isArray(root.GFIELD_DATA&&root.GFIELD_DATA.students)&&root.GFIELD_DATA.students.includes(student)){
         try{
           if(!libraryPromise)libraryPromise=root.BANK_FIXED.load('important');
           library=await libraryPromise;
           if(current!==revision)return;
-          paper=buildPool(attempts,datasets,scope,band,count,library,root.BANK_IMPORTANT_GENERATORS,freshRound,root.BANK_FINAL_SOURCE_GENERATORS,skipSet());
+          paper=buildPool(selectedAttempts,datasets,scope,band,count,library,root.BANK_IMPORTANT_GENERATORS,freshRound,root.BANK_FINAL_SOURCE_GENERATORS,skipSet());
         }catch(error){libraryPromise=null;note+=' · 자료실 공개 문제를 불러오지 못했습니다.';}
       }
       if(!paper.available){status.innerHTML='<span class="pm-short">선택한 조건의 검수 유사문제가 없습니다.</span>'+esc(note);return;}
       var sourceNote=paper.libraryCount||paper.generatedCount?' · 승인 회차 '+paper.attemptCount+'문항 + 자료실 공개 보충 '+paper.libraryCount+'문항 + 새 문제 '+paper.generatedCount+'문항':'';
-      status.innerHTML=paper.missing?'<span class="pm-short">'+count+'문항 중 '+paper.available+'문항 확보 · '+paper.missing+'문항 부족</span> · 확보된 문항은 인쇄할 수 있습니다.'+esc(sourceNote+note):'<span class="pm-ready">'+count+'문항 준비 완료</span> · '+esc(SCOPE_LABEL[scope])+' · '+esc(BAND_LABEL[band]+sourceNote+note);
+      status.innerHTML=paper.missing?'<span class="pm-short">'+count+'문항 중 '+paper.available+'문항 확보 · '+paper.missing+'문항 부족</span> · 확보된 문항은 인쇄할 수 있습니다.'+esc(sourceNote+note):'<span class="pm-ready">'+count+'문항 준비 완료</span> · '+esc(SCOPE_LABEL[scope])+' · '+esc(source==='all'?'모든 승인 회차':label(source))+' · '+esc(BAND_LABEL[band]+sourceNote+note);
       try{
         pages.innerHTML=renderPaper(paper,scope,band,student);
         await Promise.all([document.fonts.ready].concat(Array.from(pages.querySelectorAll('img')).map(function(img){return img.decode();})));
@@ -254,9 +264,10 @@
       }catch(error){pages.innerHTML='';status.innerHTML='<span class="pm-error">'+esc(error.message||'시험지를 만들지 못했습니다.')+'</span>';}
     }
     document.querySelectorAll('[data-scope]').forEach(function(button){button.addEventListener('click',function(){scope=button.dataset.scope;render();});});
+    document.getElementById('pmSource').addEventListener('change',function(event){source=event.target.value;freshRound=0;render();});
     document.querySelectorAll('[data-band]').forEach(function(button){button.addEventListener('click',function(){band=button.dataset.band;render();});});
     document.querySelectorAll('[data-count]').forEach(function(button){button.addEventListener('click',function(){count=Number(button.dataset.count);render();});});
-    document.getElementById('pmFresh').addEventListener('click',function(){if(scope!=='all')return;freshRound++;render();});
+    document.getElementById('pmFresh').addEventListener('click',function(){if(scope!=='all'||source!=='all')return;freshRound++;render();});
     var skipBtn=document.getElementById('pmSkipDone');
     if(skipBtn)skipBtn.addEventListener('click',function(){skipDone=!skipDone;render();});
     print.addEventListener('click',function(){if(!print.disabled&&currentPaperCount>0&&pages.querySelectorAll('.pm-q').length===currentPaperCount){root.print();saveHistory();}});
@@ -266,8 +277,11 @@
       await Promise.all(attempts.map(async function(attempt){
         var state=availability(attempt,student,root.GFIELD_DATA),code=state.code;
         if(state.reason!=='ready'){unavailable[state.reason].push(state.label);return;}
-        try{datasets[code]=await root.BANK_FIXED.load(code);}catch(error){unavailable.failed.push(state.label);}
+        try{datasets[code]=await loadDataset(code);}catch(error){unavailable.failed.push(state.label);}
       }));
+      var availableCodes=Array.from(new Set(attempts.map(codeOf).filter(function(code){return !!datasets[code];}))),select=document.getElementById('pmSource');
+      select.innerHTML='<option value="all">모든 승인 회차</option>'+availableCodes.map(function(code){return '<option value="'+esc(code)+'">'+esc(label(code))+'</option>';}).join('');
+      source=availableCodes.indexOf(query.get('source'))>=0?query.get('source'):'all';select.value=source;
       render();
     }catch(error){status.innerHTML='<span class="pm-error">'+esc(error.message||'응시 기록을 확인하지 못했습니다.')+'</span>';}
   }
