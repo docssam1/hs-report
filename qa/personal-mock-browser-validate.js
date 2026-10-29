@@ -29,6 +29,18 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     assert.equal(await approvedOnly.locator('.pm-q').count(),30,'승인된 회차는 정오답 입력 없이 출제');
     assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied1-"]').count(),30);
     assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),false);
+    const taxonomyCoverage=await approvedOnly.evaluate(async()=>{
+      const result={};
+      for(const code of ['final8','last1']){
+        const data=await BANK_FIXED.load(code);
+        result[code]=data.items.filter(item=>item.variantNo===1).filter(item=>{
+          const meta=GFIELD_PERSONAL_MOCK.profileOf(item);
+          return meta.area==='미분류'||meta.subarea==='세부 분류 확인'||!meta.type;
+        }).map(item=>item.sourceNo);
+      }
+      return result;
+    });
+    assert.deepEqual(taxonomyCoverage,{final8:[],last1:[]},'어댑터를 거친 승인 문항의 영역·유형 분류');
     await approvedOnly.emulateMedia({media:'print'});
     const columnPositions=await approvedOnly.locator('.pm-four-grid.pm-question-page').first().locator('.pm-q').evaluateAll(cards=>cards.map(card=>({x:card.getBoundingClientRect().x,y:card.getBoundingClientRect().y})));
     assert.equal(columnPositions.length,4);
@@ -41,6 +53,20 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await approvedOnly.pdf({path:appliedPdf,format:'A4',printBackground:true,preferCSSPageSize:true});
     assert.ok(fs.statSync(appliedPdf).size>10000);
     await approvedOnly.emulateMedia({media:'screen'});
+    await approvedOnly.locator('#pmArea').selectOption('도형');
+    await approvedOnly.locator('#pmDifficulty').selectOption('low');
+    assert.ok(await approvedOnly.locator('#pmTypeList input').count()>0);
+    await approvedOnly.locator('#pmTypeList button[data-preview-key]').first().click();
+    assert.ok(await approvedOnly.locator('#pmPreview h3').isVisible(),'세부 유형 대표 문항 미리보기');
+    assert.equal(await approvedOnly.locator('#pmPreview').getByText(/^답 /).count(),0,'대표 문항에는 답을 표시하지 않음');
+    await approvedOnly.locator('#pmTypeList input').first().check();
+    await approvedOnly.waitForFunction(()=>document.querySelector('#pmStatus')?.textContent.includes('문항 확보')&&document.querySelector('#pmPrint')?.disabled===false);
+    const filtered=await approvedOnly.locator('.pm-q').count();
+    assert.ok(filtered>0&&filtered<=9,'한 세부 유형의 검수된 변형만 출제');
+    assert.match(await approvedOnly.locator('#pmTypeSummary').innerText(),/선택 1개/);
+    await approvedOnly.locator('#pmClearTypes').click();
+    await approvedOnly.locator('#pmArea').selectOption('all');
+    await approvedOnly.locator('#pmDifficulty').selectOption('all');
     for(let round=2;round<=9;round++){
       await approvedOnly.locator('#pmSource').selectOption('applied'+round);
       await approvedOnly.waitForFunction(n=>document.querySelector('#pmStatus')?.textContent.includes('활용 모의고사 '+n+'회')&&document.querySelector('#pmPrint')?.disabled===false,round,{timeout:30000});
@@ -138,6 +164,18 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await ready.locator('#pmStatus').getByText('30문항 준비 완료').waitFor();
     await ready.waitForFunction(()=>!document.getElementById('pmPrint').disabled);
     assert.equal(await ready.locator('.pm-q').count(),30);
+    const wrongByType=await browser.newPage({viewport:{width:1280,height:900}});
+    await wrongByType.addInitScript(()=>localStorage.setItem('gfield_student','김서연'));
+    await wrongByType.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([record('김서연','original1','XXXX'+'O'.repeat(26))])}));
+    await wrongByType.goto(base+'/bank/personal-mock.html?source=original1&scope=wrong');
+    await wrongByType.locator('#pmStatus').getByText('문항 확보').waitFor({timeout:30000});
+    assert.equal(await wrongByType.locator('.pm-q').count(),12);
+    await wrongByType.locator('#pmDifficulty').selectOption('high');
+    await wrongByType.waitForFunction(()=>document.querySelector('#pmTypeSummary')?.textContent.includes('원문'));
+    const highRows=await wrongByType.locator('.pm-q').count();
+    assert.ok(highRows<=12,'오답과 난이도 조건 교집합');
+    assert.ok(await wrongByType.locator('.pm-q').evaluateAll(cards=>cards.every(card=>Number(card.dataset.itemId.match(/q(\d+)/)?.[1])<=4)),'오답 원문 1~4번만 남음');
+    await wrongByType.close();
     const mobile=await browser.newPage({viewport:{width:390,height:844}});
     await mobile.addInitScript(()=>localStorage.setItem('gfield_student','김서연'));
     await mobile.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([record('김서연','original1','O'.repeat(30))])}));

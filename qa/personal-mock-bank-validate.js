@@ -2,6 +2,8 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const bank=require('../bank/personal-mock.js');
+globalThis.GFIELD_BANK_LEARNING_PROFILE=require('../bank/learning-profile.js');
+globalThis.GFIELD_APPLIED_LEARNING_INDEX=require('../bank/applied-learning-index.js');
 const sourceDynamic=require('../bank/final-source-generators.js');
 function dataset(code){return JSON.parse(fs.readFileSync(path.join(__dirname,'../bank/data',code+'-fixed90.json'),'utf8'));}
 function attempt(code,ox='O'.repeat(30)){return {key:code,score:{ox}};}
@@ -23,6 +25,12 @@ assert.equal(bank.isAllowed('applied1','다른 학생',appliedApproval),false);
 const appliedPaper=bank.buildPool(appliedAttempts.filter(row=>row.key==='applied1'),{applied1},'all','all',30);
 assert.equal(appliedPaper.available,30,'활용 1회 승인·정오답 미입력 출제');
 assert.ok(appliedPaper.questions.every(row=>row.code==='applied1'));
+assert.equal(bank.profileOf(applied1.items[0]).difficulty,'low');
+const applied2=require('../bank/data/applied2-expanded.json');
+assert.equal(bank.profileOf(applied2.items.find(item=>item.sourceNo===7)).area,'수와 식','승인 분류의 수와식 표기를 4대 영역으로 정규화');
+assert.equal(bank.sourceItems(appliedAttempts.filter(row=>row.key==='applied1'),{applied1},'all','applied1','all','all').length,30);
+const geometry=bank.buildPool(appliedAttempts.filter(row=>row.key==='applied1'),{applied1},'all','all',30,null,null,0,null,new Set(),item=>bank.profileOf(item).area==='도형');
+assert.ok(geometry.available>0&&geometry.questions.every(row=>bank.profileOf(row.item).area==='도형'));
 assert.equal(bank.buildPool(appliedAttempts.filter(row=>row.key==='applied1'),{applied1},'wrong','all',30).available,0);
 assert.match(bank.renderPaper(appliedPaper,'all','all','테스트'),/assets\/applied1\/hands\.png/);
 require('../bank/important-types.js');

@@ -42,7 +42,36 @@
   function signature(item){return JSON.stringify([item.text,item.promptDataLines||[],item.asset&&item.asset.src||'',item.answer]);}
   /* 이미 푼(인쇄한) 문항 식별: 검수 문항은 id, 생성형은 내용 서명 */
   function itemKey(item){return String(item&&item.id||signature(item)).slice(0,300);}
-  function buildPool(attempts,datasets,scope,band,target,library,dynamic,freshRound,sourceDynamic,excluded){
+  function profileOf(item){
+    var P=root.GFIELD_BANK_LEARNING_PROFILE;
+    if(!P||!item)return {area:'미분류',subarea:'분류 확인',type:'유형 확인',difficulty:'unclassified',basis:'insufficient-evidence'};
+    var index=root.GFIELD_APPLIED_LEARNING_INDEX,round=index&&index.rounds&&index.rounds[String(item.sourceRound)];
+    var override=item.sourceSet==='applied'&&round&&round.items&&round.items[String(item.sourceNo)];
+    var learningArea=override&&override.area==='수와식'?'수와 식':override&&override.area;
+    var tax=P.taxonomy(override?Object.assign({},item,{learningArea:learningArea,learningSubarea:override.subarea,learningDetailType:override.detailType}):item);
+    if(tax.area==='미분류'&&item.area==='측정'&&item.subarea==='시각과 시간')tax.area='수와 식';
+    var diff=P.difficulty(item);
+    return {area:tax.area,subarea:tax.subarea,type:tax.detailType,difficulty:diff.id,basis:diff.basis};
+  }
+  function typeKey(meta){return JSON.stringify([meta.area,meta.subarea,meta.type]);}
+  function sourceItems(attempts,datasets,scope,source,band,difficulty){
+    var rows=[];
+    (attempts||[]).forEach(function(attempt){
+      var code=codeOf(attempt),data=datasets&&datasets[code],ox=String(attempt.score&&attempt.score.ox||attempt.ox||'').toUpperCase();
+      if(!code||source!=='all'&&code!==source||!data||!Array.isArray(data.items)||scope!=='all'&&!/^[OX]{30}$/.test(ox))return;
+      var seen=new Set();
+      data.items.forEach(function(item){
+        var no=Number(item&&item.sourceNo),meta;
+        if(!Number.isInteger(no)||no<1||no>30||seen.has(no)||item.reviewStatus!=='verified'||
+          band!=='all'&&item.pointBand!==band||scope==='wrong'&&ox[no-1]!=='X'||scope==='correct'&&ox[no-1]!=='O')return;
+        meta=profileOf(item);
+        if(difficulty!=='all'&&meta.difficulty!==difficulty)return;
+        seen.add(no);rows.push({code:code,no:no,meta:meta,item:item});
+      });
+    });
+    return rows;
+  }
+  function buildPool(attempts,datasets,scope,band,target,library,dynamic,freshRound,sourceDynamic,excluded,filter){
     excluded=excluded instanceof Set?excluded:new Set();
     target=Object.prototype.hasOwnProperty.call(COUNTS,target)?Number(target):30;
     var groups=[];
@@ -55,7 +84,7 @@
       data.items.forEach(function(item){
         var no=Number(item&&item.sourceNo);
         if(!Number.isInteger(no)||no<1||no>30||item.reviewStatus!=='verified'||
-           band!=='all'&&item.pointBand!==band||scope==='wrong'&&ox[no-1]!=='X'||scope==='correct'&&ox[no-1]!=='O'||excluded.has(itemKey(item)))return;
+           band!=='all'&&item.pointBand!==band||scope==='wrong'&&ox[no-1]!=='X'||scope==='correct'&&ox[no-1]!=='O'||excluded.has(itemKey(item))||filter&&!filter(item))return;
         if(!byNo.has(no))byNo.set(no,[]);
         byNo.get(no).push(item);
       });
@@ -65,7 +94,7 @@
       groups.push({code:code,sources:sources});
     });
     var selected=[],seenIds=new Set(),seenQuestions=new Set();
-    for(var variant=0;variant<3;variant++){
+    for(var variant=0;variant<9;variant++){
       for(var depth=0;depth<30;depth++){
         groups.forEach(function(group){
           var item=group.sources[depth]&&group.sources[depth][variant];
@@ -77,7 +106,7 @@
         });
       }
     }
-    var chosen=band==='all'?['2.7','3.4','4.2'].flatMap(function(point){return selected.filter(function(entry){return entry.item.pointBand===point;}).slice(0,COUNTS[target][point]);}):selected.slice(0,target);
+    var chosen=band==='all'&&!filter?['2.7','3.4','4.2'].flatMap(function(point){return selected.filter(function(entry){return entry.item.pointBand===point;}).slice(0,COUNTS[target][point]);}):selected.slice(0,target);
     if(scope==='all'&&library&&Array.isArray(library.items)&&chosen.length<target){
       var usedIds=new Set(chosen.map(function(entry){return entry.item.id;}));
       var usedContent=new Set(chosen.map(function(entry){return signature(entry.item);}));
@@ -209,11 +238,39 @@
     var student=String(account.student||((account.role==='admin'||account.role==='teacher')?query.get('name'):'')||'').trim();
     var status=document.getElementById('pmStatus'),print=document.getElementById('pmPrint'),pages=document.getElementById('pmPages');
     if(!student){status.textContent='학생 이름으로 자료실에 입장해 주세요.';return;}
-    var scope=Object.prototype.hasOwnProperty.call(SCOPE_LABEL,query.get('scope'))?query.get('scope'):'all',band=Object.prototype.hasOwnProperty.call(BAND_LABEL,query.get('band'))?query.get('band'):'all',source='all';
+    var scope=Object.prototype.hasOwnProperty.call(SCOPE_LABEL,query.get('scope'))?query.get('scope'):'all',band=Object.prototype.hasOwnProperty.call(BAND_LABEL,query.get('band'))?query.get('band'):'all',source='all',area='all',subarea='all',difficulty='all',selectedTypes=new Set(),visibleTypes=[],previewKey='';
     var count=COUNTS[query.get('count')]?Number(query.get('count')):30;
     var attempts=[],datasets={},unavailable={preparing:[],denied:[],failed:[]},revision=0,currentPaperCount=0,library=null,libraryPromise=null,freshRound=0;
     var doneKeys=new Set(),skipDone=true,currentKeys=[];
     function skipSet(){return skipDone?doneKeys:new Set();}
+    function taxonomyActive(){return area!=='all'||subarea!=='all'||difficulty!=='all'||selectedTypes.size>0;}
+    function currentFilter(){return !taxonomyActive()?null:function(item){var meta=profileOf(item);return (area==='all'||meta.area===area)&&(subarea==='all'||meta.subarea===subarea)&&(difficulty==='all'||meta.difficulty===difficulty)&&(!selectedTypes.size||selectedTypes.has(typeKey(meta)));};}
+    function fillOptions(id,values,current,allLabel){
+      var select=document.getElementById(id),unique=Array.from(new Set(values)).sort(function(a,b){return a.localeCompare(b,'ko');});
+      select.innerHTML='<option value="all">'+esc(allLabel)+'</option>'+unique.map(function(value){return '<option value="'+esc(value)+'">'+esc(value)+'</option>';}).join('');
+      var next=unique.indexOf(current)>=0?current:'all';select.value=next;return next;
+    }
+    function renderPreview(){
+      var box=document.getElementById('pmPreview'),group=visibleTypes.find(function(row){return row.key===previewKey;});
+      if(!group){box.innerHTML='<p>세부 유형의 ‘문항 보기’를 누르면 대표 문항을 볼 수 있습니다.</p>';return;}
+      var item=group.sample,given=Array.isArray(item.promptDataLines)?item.promptDataLines:[];
+      box.innerHTML='<h3>'+esc(group.meta.type)+'</h3><div class="pm-preview-source">'+esc(group.meta.area+' · '+group.meta.subarea+' · '+label(group.code))+' · 원문 '+group.no+'번 유형</div><p>'+mathText(item.stemHtml||item.text)+'</p>'+(given.length?'<div class="pm-given">'+given.map(mathText).join('<br>')+'</div>':'')+figure(item.asset);
+    }
+    function refreshTaxonomy(){
+      var rows=sourceItems(attempts,datasets,scope,source,band,difficulty);
+      area=fillOptions('pmArea',rows.map(function(row){return row.meta.area;}),area,'전체 대영역');
+      var areaRows=rows.filter(function(row){return area==='all'||row.meta.area===area;});
+      subarea=fillOptions('pmSubarea',areaRows.map(function(row){return row.meta.subarea;}),subarea,'전체 소영역');
+      var shown=areaRows.filter(function(row){return subarea==='all'||row.meta.subarea===subarea;}),groups=new Map();
+      shown.forEach(function(row){var key=typeKey(row.meta),group=groups.get(key);if(!group){group={key:key,meta:row.meta,count:0,sample:row.item,code:row.code,no:row.no};groups.set(key,group);}group.count++;});
+      visibleTypes=Array.from(groups.values()).sort(function(a,b){return a.meta.type.localeCompare(b.meta.type,'ko');});
+      document.getElementById('pmTypeList').innerHTML=visibleTypes.length?visibleTypes.map(function(group){return '<div class="pm-type-row"><label><input type="checkbox" data-type-key="'+esc(group.key)+'"'+(selectedTypes.has(group.key)?' checked':'')+'><span>'+esc(group.meta.subarea+' · '+group.meta.type)+' · 원문 '+group.count+'개</span></label><button type="button" data-preview-key="'+esc(group.key)+'" aria-label="'+esc(group.meta.type)+' 문항 보기">문항 보기</button></div>';}).join(''):'<div class="pm-empty">현재 조건에 맞는 승인 유형이 없습니다.</div>';
+      var hidden=Array.from(selectedTypes).filter(function(key){return !groups.has(key);}).length;
+      document.getElementById('pmTypeSummary').textContent=visibleTypes.length+'개 유형 · '+shown.length+'개 원문 · 선택 '+selectedTypes.size+'개'+(hidden?' · 현재 결과 밖 '+hidden+'개':'');
+      document.getElementById('pmSelectVisible').disabled=!visibleTypes.length;
+      document.getElementById('pmClearTypes').disabled=!selectedTypes.size;
+      renderPreview();
+    }
     function hdr(){var auth=root.GFIELD_AUTH;return {apikey:auth.PUBLISHABLE_KEY,Authorization:'Bearer '+auth.PUBLISHABLE_KEY,'x-gfield-student':btoa(unescape(encodeURIComponent(student))),'Content-Type':'application/json'};}
     async function loadHistory(){
       try{var auth=root.GFIELD_AUTH;var r=await fetch(auth.SUPABASE_URL+'/rest/v1/bank_print_history?select=item_key&student=eq.'+encodeURIComponent(student)+'&limit=5000',{headers:hdr()});
@@ -230,7 +287,7 @@
       document.querySelectorAll('[data-band]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.band===band));});
       document.querySelectorAll('[data-count]').forEach(function(button){button.setAttribute('aria-pressed',String(Number(button.dataset.count)===count));});
       var fresh=document.getElementById('pmFresh');
-      fresh.disabled=scope!=='all'||source!=='all'||!attempts.length;
+      fresh.disabled=scope!=='all'||source!=='all'||taxonomyActive()||!attempts.length;
       fresh.textContent=freshRound?'다른 새 문제로 바꾸기':'새 문제 섞기';
       var skip=document.getElementById('pmSkipDone');
       if(skip){skip.setAttribute('aria-pressed',String(skipDone));skip.textContent=skipDone?'이미 푼 문제 제외 · 켜짐':'이미 푼 문제 제외 · 꺼짐';}
@@ -238,12 +295,12 @@
       if(skipInfo)skipInfo.textContent='지금까지 인쇄한 문항 '+doneKeys.size+'개 · 인쇄하면 다음 시험지에서 빠집니다';
     }
     async function render(){
-      var current=++revision;controls();print.disabled=true;pages.innerHTML='';currentPaperCount=0;
+      var current=++revision;refreshTaxonomy();controls();print.disabled=true;pages.innerHTML='';currentPaperCount=0;
       var selectedAttempts=source==='all'?attempts:attempts.filter(function(attempt){return codeOf(attempt)===source;});
-      var paper=buildPool(selectedAttempts,datasets,scope,band,count,null,null,0,null,skipSet()),note=availabilityNote(unavailable);
+      var filter=currentFilter(),paper=buildPool(selectedAttempts,datasets,scope,band,count,null,null,0,null,skipSet(),filter),note=availabilityNote(unavailable);
       if(skipDone&&doneKeys.size)note+=' · 이미 푼 문제 제외';
       if(!selectedAttempts.length){status.textContent='출제 가능한 승인 회차가 없습니다.';return;}
-      if(source==='all'&&scope==='all'&&(paper.missing||freshRound>0)&&Array.isArray(root.GFIELD_DATA&&root.GFIELD_DATA.students)&&root.GFIELD_DATA.students.includes(student)){
+      if(source==='all'&&scope==='all'&&!filter&&(paper.missing||freshRound>0)&&Array.isArray(root.GFIELD_DATA&&root.GFIELD_DATA.students)&&root.GFIELD_DATA.students.includes(student)){
         try{
           if(!libraryPromise)libraryPromise=root.BANK_FIXED.load('important');
           library=await libraryPromise;
@@ -253,7 +310,7 @@
       }
       if(!paper.available){status.innerHTML='<span class="pm-short">선택한 조건의 검수 유사문제가 없습니다.</span>'+esc(note);return;}
       var sourceNote=paper.libraryCount||paper.generatedCount?' · 승인 회차 '+paper.attemptCount+'문항 + 자료실 공개 보충 '+paper.libraryCount+'문항 + 새 문제 '+paper.generatedCount+'문항':'';
-      status.innerHTML=paper.missing?'<span class="pm-short">'+count+'문항 중 '+paper.available+'문항 확보 · '+paper.missing+'문항 부족</span> · 확보된 문항은 인쇄할 수 있습니다.'+esc(sourceNote+note):'<span class="pm-ready">'+count+'문항 준비 완료</span> · '+esc(SCOPE_LABEL[scope])+' · '+esc(source==='all'?'모든 승인 회차':label(source))+' · '+esc(BAND_LABEL[band]+sourceNote+note);
+      status.innerHTML=paper.missing?'<span class="pm-short">'+count+'문항 중 '+paper.available+'문항 확보 · '+paper.missing+'문항 부족</span> · 확보된 문항은 인쇄할 수 있습니다.'+esc(sourceNote+note):'<span class="pm-ready">'+count+'문항 준비 완료</span> · '+esc(SCOPE_LABEL[scope])+' · '+esc(source==='all'?'모든 승인 회차':label(source))+' · '+esc(BAND_LABEL[band]+(difficulty==='all'?'':' · 난이도 '+({low:'하',middle:'중',high:'상'}[difficulty]))+sourceNote+note);
       try{
         pages.innerHTML=renderPaper(paper,scope,band,student);
         await Promise.all([document.fonts.ready].concat(Array.from(pages.querySelectorAll('img')).map(function(img){return img.decode();})));
@@ -265,9 +322,16 @@
     }
     document.querySelectorAll('[data-scope]').forEach(function(button){button.addEventListener('click',function(){scope=button.dataset.scope;render();});});
     document.getElementById('pmSource').addEventListener('change',function(event){source=event.target.value;freshRound=0;render();});
+    document.getElementById('pmArea').addEventListener('change',function(event){area=event.target.value;subarea='all';render();});
+    document.getElementById('pmSubarea').addEventListener('change',function(event){subarea=event.target.value;render();});
+    document.getElementById('pmDifficulty').addEventListener('change',function(event){difficulty=event.target.value;render();});
+    document.getElementById('pmTypeList').addEventListener('change',function(event){var key=event.target&&event.target.dataset.typeKey;if(!key)return;if(event.target.checked)selectedTypes.add(key);else selectedTypes.delete(key);render();var next=Array.from(document.querySelectorAll('#pmTypeList input')).find(function(node){return node.dataset.typeKey===key;});if(next)next.focus();});
+    document.getElementById('pmTypeList').addEventListener('click',function(event){var button=event.target.closest('button[data-preview-key]');if(!button)return;previewKey=button.dataset.previewKey;renderPreview();});
+    document.getElementById('pmSelectVisible').addEventListener('click',function(){visibleTypes.forEach(function(group){selectedTypes.add(group.key);});render();});
+    document.getElementById('pmClearTypes').addEventListener('click',function(){selectedTypes.clear();render();});
     document.querySelectorAll('[data-band]').forEach(function(button){button.addEventListener('click',function(){band=button.dataset.band;render();});});
     document.querySelectorAll('[data-count]').forEach(function(button){button.addEventListener('click',function(){count=Number(button.dataset.count);render();});});
-    document.getElementById('pmFresh').addEventListener('click',function(){if(scope!=='all'||source!=='all')return;freshRound++;render();});
+    document.getElementById('pmFresh').addEventListener('click',function(){if(scope!=='all'||source!=='all'||taxonomyActive())return;freshRound++;render();});
     var skipBtn=document.getElementById('pmSkipDone');
     if(skipBtn)skipBtn.addEventListener('click',function(){skipDone=!skipDone;render();});
     print.addEventListener('click',function(){if(!print.disabled&&currentPaperCount>0&&pages.querySelectorAll('.pm-q').length===currentPaperCount){root.print();saveHistory();}});
@@ -285,7 +349,7 @@
       render();
     }catch(error){status.innerHTML='<span class="pm-error">'+esc(error.message||'응시 기록을 확인하지 못했습니다.')+'</span>';}
   }
-  root.GFIELD_PERSONAL_MOCK={buildPool:buildPool,isAllowed:isAllowed,approvedAttempts:approvedAttempts,renderPaper:renderPaper,availability:availability,availabilityNote:availabilityNote};
+  root.GFIELD_PERSONAL_MOCK={buildPool:buildPool,isAllowed:isAllowed,approvedAttempts:approvedAttempts,profileOf:profileOf,sourceItems:sourceItems,renderPaper:renderPaper,availability:availability,availabilityNote:availabilityNote};
   if(typeof module!=='undefined'&&module.exports)module.exports=root.GFIELD_PERSONAL_MOCK;
   if(typeof document!=='undefined')mount();
 })(typeof window!=='undefined'?window:globalThis);
