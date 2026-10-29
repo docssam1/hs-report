@@ -31,6 +31,9 @@ assert.equal(bank.profileOf(applied2.items.find(item=>item.sourceNo===7)).area,'
 assert.equal(bank.sourceItems(appliedAttempts.filter(row=>row.key==='applied1'),{applied1},'all','applied1','all','all').length,30);
 const geometry=bank.buildPool(appliedAttempts.filter(row=>row.key==='applied1'),{applied1},'all','all',30,null,null,0,null,new Set(),item=>bank.profileOf(item).area==='도형');
 assert.ok(geometry.available>0&&geometry.questions.every(row=>bank.profileOf(row.item).area==='도형'));
+const lowOnly=bank.buildPool(appliedAttempts.filter(row=>row.key==='applied1'),{applied1},'all','all',30,null,null,0,null,new Set(),item=>bank.profileOf(item).difficulty==='low');
+assert.equal(lowOnly.available,12,'30문항 모의고사형은 유형 필터 후에도 2.7점 12문항 상한을 지킴');
+assert.ok(lowOnly.questions.every(row=>row.item.pointBand==='2.7'));
 assert.equal(bank.buildPool(appliedAttempts.filter(row=>row.key==='applied1'),{applied1},'wrong','all',30).available,0);
 assert.match(bank.renderPaper(appliedPaper,'all','all','테스트'),/assets\/applied1\/hands\.png/);
 require('../bank/important-types.js');

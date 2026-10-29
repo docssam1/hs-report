@@ -24,11 +24,17 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await approvedOnly.addInitScript(()=>localStorage.setItem('gfield_student','박서진'));
     await approvedOnly.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:'[]'}));
     await approvedOnly.goto(base+'/bank/personal-mock.html?source=applied1');
+    assert.ok(await approvedOnly.locator('html').evaluate(el=>getComputedStyle(el).fontFamily.includes('GF Print Sans')),'생성기 화면 Pretendard 글꼴');
     await approvedOnly.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000}).catch(async error=>{console.error('APPLIED STATUS',await approvedOnly.locator('#pmStatus').innerText());throw error;});
     assert.equal(await approvedOnly.locator('#pmSource').inputValue(),'applied1');
     assert.equal(await approvedOnly.locator('.pm-q').count(),30,'승인된 회차는 정오답 입력 없이 출제');
     assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied1-"]').count(),30);
+    await approvedOnly.waitForFunction(()=>!document.getElementById('pmPrint').disabled,{timeout:30000});
     assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),false);
+    assert.equal(await approvedOnly.locator('.pm-score-table td').allTextContents().then(rows=>rows.join(',')),'2.7점,3.4점,4.2점,12,10,8,30');
+    assert.match(await approvedOnly.locator('.pm-exam-cover').first().innerText(),/맞춤 모의고사[\s\S]*박서진/);
+    assert.match(await approvedOnly.locator('.pm-exam-cover').first().innerText(),/30문항 · 100점/);
+    assert.ok(await approvedOnly.locator('.pm-q p').first().evaluate(el=>getComputedStyle(el).fontFamily.includes('GF Print Serif')));
     const taxonomyCoverage=await approvedOnly.evaluate(async()=>{
       const result={};
       for(const code of ['final8','last1']){
@@ -48,7 +54,7 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     assert.ok(columnPositions[0].y<columnPositions[1].y);
     assert.equal(columnPositions[2].x,columnPositions[3].x,'오른쪽에 2문항');
     assert.ok(columnPositions[2].x>columnPositions[0].x&&columnPositions[2].y<columnPositions[3].y);
-    assert.deepEqual(await approvedOnly.evaluate(()=>[...document.querySelectorAll('.pm-q,.pm-answer')].filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>card.dataset.itemId||card.dataset.answerId)),[],'활용 1회 A4 잘림 없음');
+    assert.deepEqual(await approvedOnly.evaluate(()=>[...document.querySelectorAll('.pm-q,.pm-answer')].filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>({id:card.dataset.itemId||card.dataset.answerId,scroll:card.scrollHeight,client:card.clientHeight,parts:[...card.children].map(el=>({tag:el.tagName,height:Math.round(el.getBoundingClientRect().height)}))}))),[],'활용 1회 A4 잘림 없음');
     const appliedPdf=path.join(os.tmpdir(),'gfield-personal-mock-applied1-qa.pdf');
     await approvedOnly.pdf({path:appliedPdf,format:'A4',printBackground:true,preferCSSPageSize:true});
     assert.ok(fs.statSync(appliedPdf).size>10000);
@@ -154,6 +160,16 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
       await ready.locator('#pmPages').evaluate((el,html)=>{el.innerHTML=html;},mockBank.renderPaper(paper,'all','all','테스트'));
       const clipped=await ready.evaluate(()=>[...document.querySelectorAll('.pm-q,.pm-answer')].filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>({id:card.getAttribute('data-item-id')||card.getAttribute('data-answer-id'),scroll:card.scrollHeight,client:card.clientHeight,parts:[...card.children].map(el=>({tag:el.tagName,height:el.getBoundingClientRect().height,scroll:el.scrollHeight}))})));
       assert.deepEqual(clipped,[],code+' A4 print card clipping');
+    }
+    for(const code of ['final8','last1','last2','last3','last4','middle7','middle8',...Array.from({length:9},(_,i)=>'applied'+(i+1))]){
+      const clipped=await ready.evaluate(async source=>{
+        const data=source.startsWith('applied')?await QUESTION_BANK_ADAPTERS.get('gfield-'+source+'-expanded').load():await BANK_FIXED.load(source);
+        const paper=GFIELD_PERSONAL_MOCK.buildPool([{key:source,score:{ox:'O'.repeat(30)}}],{[source]:data},'all','all',30);
+        const root=document.getElementById('pmPages');root.innerHTML=GFIELD_PERSONAL_MOCK.renderPaper(paper,'all','all','검수');
+        await Promise.all([document.fonts.ready,...Array.from(root.querySelectorAll('img')).map(img=>img.decode())]);
+        return Array.from(root.querySelectorAll('.pm-q,.pm-answer,.pm-page-content')).filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>({id:card.dataset.itemId||card.dataset.answerId||card.className,scroll:card.scrollHeight,client:card.clientHeight}));
+      },code);
+      assert.deepEqual(clipped,[],code+' 모의고사 시험지/답안 A4 잘림');
     }
     await ready.emulateMedia({media:'screen'});
     await ready.locator('[data-scope="wrong"]').click();

@@ -106,7 +106,9 @@
         });
       }
     }
-    var chosen=band==='all'&&!filter?['2.7','3.4','4.2'].flatMap(function(point){return selected.filter(function(entry){return entry.item.pointBand===point;}).slice(0,COUNTS[target][point]);}):selected.slice(0,target);
+    /* 30문항 시험지는 필터를 써도 12·10·8 배점을 바꾸지 않는다. 부족한 배점대는 부분 인쇄로 알린다. */
+    var keepMockRatio=band==='all'&&(target===30||!filter);
+    var chosen=keepMockRatio?['2.7','3.4','4.2'].flatMap(function(point){return selected.filter(function(entry){return entry.item.pointBand===point;}).slice(0,COUNTS[target][point]);}):selected.slice(0,target);
     if(scope==='all'&&library&&Array.isArray(library.items)&&chosen.length<target){
       var usedIds=new Set(chosen.map(function(entry){return entry.item.id;}));
       var usedContent=new Set(chosen.map(function(entry){return signature(entry.item);}));
@@ -178,8 +180,12 @@
     if(!/^data:image\/png;base64,/.test(asset.src||'')&&!/^assets\/[A-Za-z0-9/_-]+\.(?:png|svg)$/.test(asset.src||''))throw Error('검수 그림을 확인할 수 없습니다.');
     return '<img src="'+esc(asset.src)+'" alt="'+esc(asset.description||'문항 그림')+'">';
   }
-  function page(title,number,total,content,kind,fourGrid){
-    return '<section class="pm-page pm-'+kind+'-page'+(fourGrid?' pm-four-grid':'')+'"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content"><header><span>지필드 영재교육 · 맞춤 모의고사</span><span>'+esc(title)+' · '+number+'/'+total+'</span></header><div class="pm-'+kind+'-grid">'+content+'</div></div></section>';
+  function page(title,number,total,content,kind,fourGrid,meta){
+    var first=number===1,heading=kind==='question'?'맞춤 모의고사':'맞춤 모의고사 정답과 풀이';
+    var mast='<div class="pm-exam-mast"><span class="pm-brand">G·FIELD <small>지필드 영재교육</small></span><span>성공하는 공부 습관을 만드는<br>대치 지필드 영재교육</span></div>';
+    var cover=first?'<div class="pm-exam-cover"><h2>'+heading+'</h2><div class="pm-student-fields"><span>학교 <i></i></span><span>학년 <i></i></span><span>이름 <b>'+esc(meta.student)+'</b></span><span>날짜 <i></i></span></div><div class="pm-exam-count">'+meta.count+'문항 · '+meta.totalScore+'점</div></div>':'';
+    var score=first&&kind==='question'?'<table class="pm-score-table" aria-label="출제 배점표"><tbody><tr><th>배점</th><td>2.7점</td><td>3.4점</td><td>4.2점</td><th>합계</th></tr><tr><th>문항 수</th><td>'+meta.counts['2.7']+'</td><td>'+meta.counts['3.4']+'</td><td>'+meta.counts['4.2']+'</td><td>'+meta.count+'</td></tr></tbody></table>':'';
+    return '<section class="pm-page pm-'+kind+'-page'+(fourGrid?' pm-four-grid':'')+(first?' pm-first':'')+'"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content">'+(first?mast+cover+score:'<div class="pm-compact-head"><span>G·FIELD · 지필드 영재교육</span><span>'+esc(title)+'</span></div>')+'<div class="pm-'+kind+'-grid">'+content+'</div><footer class="pm-exam-footer"><span>지필드 영재교육 · 맞춤 모의고사</span><span>- '+number+' / '+total+' -</span></footer></div></section>';
   }
   function questionWide(entry){
     var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' '):'';
@@ -187,7 +193,7 @@
   }
   function questionTall(entry){return entry.item.sourceSet==='middle'&&Number(entry.item.sourceRound)===7&&Number(entry.item.sourceNo)===13;}
   function answerWide(entry){var x=entry.item;return !!x.solutionAsset||String(x.solution||'').length>190||Array.isArray(x.solutionSteps)&&x.solutionSteps.join('').length>190;}
-  function answerTall(entry){var x=entry.item;return !!x.solutionAsset&&Array.isArray(x.solutionSteps)&&x.solutionSteps.join('').length>190;}
+  function answerTall(entry){var x=entry.item,steps=Array.isArray(x.solutionSteps)?x.solutionSteps.join(''):String(x.solution||'');return steps.length>420||!!x.solutionAsset&&steps.length>190;}
   function rows(items,wide,tall){
     var out=[],pending=[];
     items.forEach(function(entry){
@@ -211,7 +217,7 @@
   }
   function questionCard(entry){
     var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines:[];
-    return '<article class="pm-q'+(questionWide(entry)||questionTall(entry)?' pm-wide':'')+(questionTall(entry)?' pm-tall':'')+'" data-item-id="'+esc(x.id)+'"><h3>'+entry.index+'번 <span class="pm-type">'+esc(x.detailType||'')+' · '+(x.sourceEquivalentConfirmed===false?'원문 참고 배점 ':'')+esc(x.pointBand)+'점'+(x.variantRoleLabel?' · '+esc(x.variantRoleLabel):'')+(entry.origin==='library'?' · 자료실 보충':entry.origin==='generated'?' · 새 문제':'')+'</span></h3><p>'+mathText(x.stemHtml||x.text)+'</p>'+
+    return '<article class="pm-q'+(questionWide(entry)||questionTall(entry)?' pm-wide':'')+(questionTall(entry)?' pm-tall':'')+'" data-item-id="'+esc(x.id)+'"><div class="pm-qhead"><h3>'+entry.index+'.</h3><span class="pm-points">['+esc(x.pointBand)+'점]</span><span class="pm-type">'+esc(x.detailType||'')+(entry.origin==='library'?' · 자료실 보충':entry.origin==='generated'?' · 새 문제':'')+'</span></div><p>'+mathText(x.stemHtml||x.text)+'</p>'+
       (given.length?'<div class="pm-given">'+given.map(mathText).join('<br>')+'</div>':'')+figure(x.asset)+
       '<div class="pm-work" aria-hidden="true"><span></span><span></span><span></span><span></span></div><div class="pm-answerline">답 <span></span></div></article>';
   }
@@ -221,9 +227,11 @@
   }
   function renderPaper(paper,scope,band,student){
     if(!paper.questions.length||paper.questions.length>paper.target)throw Error('인쇄할 검수 문항이 없습니다.');
+    var counts={'2.7':0,'3.4':0,'4.2':0};paper.questions.forEach(function(entry){if(!Object.prototype.hasOwnProperty.call(counts,entry.item.pointBand))throw Error('문항 배점을 확인할 수 없습니다.');counts[entry.item.pointBand]++;});
+    var meta={student:student,count:paper.questions.length,counts:counts,totalScore:(counts['2.7']*2.7+counts['3.4']*3.4+counts['4.2']*4.2).toFixed(1).replace(/\.0$/,'')};
     var qPages=[],aPages=[],questionGroups=rows(paper.questions,questionWide,questionTall),answerGroups=rows(paper.questions,answerWide,answerTall);
-    questionGroups.forEach(function(group,index){qPages.push(page('문제',index+1,questionGroups.length,group.map(questionCard).join(''),'question',group.length===4&&group.every(function(entry){return !questionWide(entry)&&!questionTall(entry);})));});
-    answerGroups.forEach(function(group,index){aPages.push(page('정답과 풀이',index+1,answerGroups.length,group.map(answerCard).join(''),'answer',group.length===4&&group.every(function(entry){return !answerWide(entry)&&!answerTall(entry);})));});
+    questionGroups.forEach(function(group,index){qPages.push(page('문제',index+1,questionGroups.length,group.map(questionCard).join(''),'question',group.length===4&&group.every(function(entry){return !questionWide(entry)&&!questionTall(entry);}),meta));});
+    answerGroups.forEach(function(group,index){aPages.push(page('정답과 풀이',index+1,answerGroups.length,group.map(answerCard).join(''),'answer',group.length===4&&group.every(function(entry){return !answerWide(entry)&&!answerTall(entry);}),meta));});
     var duplexBlank=qPages.length%2?['<section class="pm-page pm-duplex-blank" aria-hidden="true"></section>']:[];
     return qPages.concat(duplexBlank,aPages).join('');
   }
