@@ -20,6 +20,17 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
   const base='http://127.0.0.1:'+server.address().port;
   const browser=await chromium.launch({headless:true,...(process.env.GFIELD_QA_BROWSER?{executablePath:process.env.GFIELD_QA_BROWSER}:{})});
   try{
+    const approvedOnly=await browser.newPage({viewport:{width:1440,height:900}});
+    await approvedOnly.addInitScript(()=>localStorage.setItem('gfield_student','박서진'));
+    await approvedOnly.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:'[]'}));
+    await approvedOnly.goto(base+'/bank/personal-mock.html');
+    await approvedOnly.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000});
+    assert.equal(await approvedOnly.locator('.pm-q').count(),30,'승인된 회차는 정오답 입력 없이 출제');
+    assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),false);
+    await approvedOnly.locator('[data-scope="wrong"]').click();
+    await approvedOnly.locator('#pmStatus').getByText('선택한 조건의 검수 유사문제가 없습니다.').waitFor();
+    assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),true);
+    await approvedOnly.close();
     const page=await browser.newPage({viewport:{width:1440,height:900}});
     page.on('pageerror',error=>console.error('PAGE ERROR',error.message));
     await page.addInitScript(()=>localStorage.setItem('gfield_student','김서연'));
@@ -28,11 +39,10 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     assert.equal(await page.evaluate(()=>typeof GFIELD_MATH_MARKUP.render),'function');
     await page.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000});
     await page.locator('[data-band="4.2"]').click();
-    await page.locator('#pmStatus').getByText('자료실 공개 보충 6문항').waitFor({timeout:30000});
+    await page.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000});
     await page.waitForFunction(()=>!document.getElementById('pmPrint').disabled);
     assert.equal(await page.locator('.pm-q').count(),30);
-    assert.equal(await page.locator('.pm-q').filter({hasText:'자료실 보충'}).count(),6);
-    assert.equal(await page.locator('.pm-answer').filter({hasText:'자료실 공개 보충'}).count(),6);
+    assert.equal(await page.locator('.pm-answer').count(),30);
     await page.locator('#pmFresh').click();
     await page.locator('#pmStatus').getByText('새 문제 9문항').waitFor({timeout:30000});
     assert.equal(await page.locator('.pm-q').count(),30);
@@ -114,7 +124,7 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await mobile.goto(base+'/bank/personal-mock.html');
     await mobile.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000});
     await mobile.locator('[data-band="4.2"]').click();
-    await mobile.locator('#pmStatus').getByText('자료실 공개 보충 6문항').waitFor({timeout:30000});
+    await mobile.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000});
     assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),'390px horizontal overflow');
     const output=path.join(os.tmpdir(),'gfield-personal-mock-qa.pdf');
     await ready.emulateMedia({media:'print'});

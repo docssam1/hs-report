@@ -6,6 +6,15 @@ const sourceDynamic=require('../bank/final-source-generators.js');
 function dataset(code){return JSON.parse(fs.readFileSync(path.join(__dirname,'../bank/data',code+'-fixed90.json'),'utf8'));}
 function attempt(code,ox='O'.repeat(30)){return {key:code,score:{ox}};}
 const original1=dataset('original1'),original2=dataset('original2');
+const approvedData={archiveProductAccess:{'mock-signature-1':['학생'],'mock-signature-2':['다른 학생'],'mock-mid-7':[]}};
+const approved=bank.approvedAttempts([], '학생', approvedData);
+assert.ok(approved.some(row=>row.key==='original1'&&row.approvedOnly));
+assert.ok(!approved.some(row=>row.key==='original2'||row.key==='middle7'));
+const noOx=bank.buildPool(approved,{original1},'all','all',30);
+assert.equal(noOx.available,30,'승인되고 정오답 입력이 없어도 전체 범위 출제');
+assert.equal(bank.buildPool(approved,{original1},'wrong','all',30).available,0,'오답 범위는 입력 기록 필요');
+assert.equal(bank.buildPool(approved,{original1},'correct','all',30).available,0,'정답 범위는 입력 기록 필요');
+assert.equal(bank.approvedAttempts([attempt('original1')],'학생',approvedData).filter(row=>row.key==='original1').length,1,'입력 기록과 승인 회차 중복 방지');
 require('../bank/important-types.js');
 const libraryItems=globalThis.GFIELD_IMPORTANT_TYPES.types.flatMap(type=>type.sources.flatMap(source=>dataset('final'+source.round).items.filter(item=>item.sourceNo===source.no).map(item=>({...item,importantTypeId:type.id,importantTypeTitle:type.title}))));
 const library={items:libraryItems};

@@ -2,8 +2,9 @@
 (function(root){
   'use strict';
   var SUPPORTED=/^(?:final[123478]|original[12]|last[1234]|middle[78])$/;
+  var BANK_CODES=['final1','final2','final3','final4','final7','final8','original1','original2','last1','last2','last3','last4','middle7','middle8'];
   var BAND_LABEL={all:'전체 배점','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
-  var SCOPE_LABEL={all:'응시 시험 전체',wrong:'틀린 문제',correct:'맞은 문제'};
+  var SCOPE_LABEL={all:'승인된 시험 전체',wrong:'틀린 문제',correct:'맞은 문제'};
   var COUNTS={10:{'2.7':4,'3.4':3,'4.2':3},20:{'2.7':8,'3.4':7,'4.2':5},30:{'2.7':12,'3.4':10,'4.2':8}};
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function mathText(v){return typeof document==='undefined'?esc(v):root.GFIELD_MATH_MARKUP.render(v);}
@@ -22,6 +23,13 @@
     }
     return true; // Final 1–4 follow the existing registered-student bank access.
   }
+  function approvedAttempts(attempts,student,data){
+    var result=(attempts||[]).slice(),seen=new Set(result.map(codeOf));
+    BANK_CODES.forEach(function(code){
+      if(!seen.has(code)&&isAllowed(code,student,data))result.push({key:code,approvedOnly:true});
+    });
+    return result;
+  }
   function signature(item){return JSON.stringify([item.text,item.promptDataLines||[],item.asset&&item.asset.src||'',item.answer]);}
   /* 이미 푼(인쇄한) 문항 식별: 검수 문항은 id, 생성형은 내용 서명 */
   function itemKey(item){return String(item&&item.id||signature(item)).slice(0,300);}
@@ -33,7 +41,7 @@
       var code=codeOf(attempt),data=datasets&&datasets[code];
       if(!code||!data||!Array.isArray(data.items))return;
       var ox=String(attempt.score&&attempt.score.ox||attempt.ox||'').toUpperCase();
-      if(!/^[OX]{30}$/.test(ox))return;
+      if(scope!=='all'&&!/^[OX]{30}$/.test(ox))return;
       var byNo=new Map();
       data.items.forEach(function(item){
         var no=Number(item&&item.sourceNo);
@@ -224,7 +232,7 @@
       var current=++revision;controls();print.disabled=true;pages.innerHTML='';currentPaperCount=0;
       var paper=buildPool(attempts,datasets,scope,band,count,null,null,0,null,skipSet()),note=availabilityNote(unavailable);
       if(skipDone&&doneKeys.size)note+=' · 이미 푼 문제 제외';
-      if(!attempts.length){status.textContent='확인된 최초 응시 기록이 없습니다.';return;}
+      if(!attempts.length){status.textContent='출제 가능한 승인 회차가 없습니다.';return;}
       if(scope==='all'&&(paper.missing||freshRound>0)&&Array.isArray(root.GFIELD_DATA&&root.GFIELD_DATA.students)&&root.GFIELD_DATA.students.includes(student)){
         try{
           if(!libraryPromise)libraryPromise=root.BANK_FIXED.load('important');
@@ -234,7 +242,7 @@
         }catch(error){libraryPromise=null;note+=' · 자료실 공개 문제를 불러오지 못했습니다.';}
       }
       if(!paper.available){status.innerHTML='<span class="pm-short">선택한 조건의 검수 유사문제가 없습니다.</span>'+esc(note);return;}
-      var sourceNote=paper.libraryCount||paper.generatedCount?' · 응시 기반 '+paper.attemptCount+'문항 + 자료실 공개 보충 '+paper.libraryCount+'문항 + 새 문제 '+paper.generatedCount+'문항':'';
+      var sourceNote=paper.libraryCount||paper.generatedCount?' · 승인 회차 '+paper.attemptCount+'문항 + 자료실 공개 보충 '+paper.libraryCount+'문항 + 새 문제 '+paper.generatedCount+'문항':'';
       status.innerHTML=paper.missing?'<span class="pm-short">'+count+'문항 중 '+paper.available+'문항 확보 · '+paper.missing+'문항 부족</span> · 확보된 문항은 인쇄할 수 있습니다.'+esc(sourceNote+note):'<span class="pm-ready">'+count+'문항 준비 완료</span> · '+esc(SCOPE_LABEL[scope])+' · '+esc(BAND_LABEL[band]+sourceNote+note);
       try{
         pages.innerHTML=renderPaper(paper,scope,band,student);
@@ -253,7 +261,7 @@
     if(skipBtn)skipBtn.addEventListener('click',function(){skipDone=!skipDone;render();});
     print.addEventListener('click',function(){if(!print.disabled&&currentPaperCount>0&&pages.querySelectorAll('.pm-q').length===currentPaperCount){root.print();saveHistory();}});
     try{
-      attempts=await fetchAttempts(student);
+      attempts=approvedAttempts(await fetchAttempts(student),student,root.GFIELD_DATA);
       await loadHistory();
       await Promise.all(attempts.map(async function(attempt){
         var state=availability(attempt,student,root.GFIELD_DATA),code=state.code;
@@ -263,7 +271,7 @@
       render();
     }catch(error){status.innerHTML='<span class="pm-error">'+esc(error.message||'응시 기록을 확인하지 못했습니다.')+'</span>';}
   }
-  root.GFIELD_PERSONAL_MOCK={buildPool:buildPool,isAllowed:isAllowed,renderPaper:renderPaper,availability:availability,availabilityNote:availabilityNote};
+  root.GFIELD_PERSONAL_MOCK={buildPool:buildPool,isAllowed:isAllowed,approvedAttempts:approvedAttempts,renderPaper:renderPaper,availability:availability,availabilityNote:availabilityNote};
   if(typeof module!=='undefined'&&module.exports)module.exports=root.GFIELD_PERSONAL_MOCK;
   if(typeof document!=='undefined')mount();
 })(typeof window!=='undefined'?window:globalThis);
