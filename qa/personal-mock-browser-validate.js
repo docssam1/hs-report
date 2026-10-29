@@ -37,7 +37,9 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await onlinePage.close();
     assert.ok(await approvedOnly.locator('html').evaluate(el=>getComputedStyle(el).fontFamily.includes('GF Print Sans')),'생성기 화면 Pretendard 글꼴');
     await approvedOnly.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000}).catch(async error=>{console.error('APPLIED STATUS',await approvedOnly.locator('#pmStatus').innerText());throw error;});
-    assert.equal(await approvedOnly.locator('#pmSource').inputValue(),'applied1');
+    assert.equal(await approvedOnly.locator('#pmSourceList input[value="applied1"]').isChecked(),true);
+    assert.equal(await approvedOnly.locator('#pmSourceList input:checked').count(),1,'URL로 지정한 회차만 선택');
+    assert.ok(await approvedOnly.locator('#pmSourceList input[value="applied1"]').evaluate(input=>{const box=input.closest('label').getBoundingClientRect(),list=input.closest('#pmSourceList').getBoundingClientRect();return box.top>=list.top-1&&box.bottom<=list.bottom+1;}),'지정 회차가 목록 안에 보임');
     assert.equal(await approvedOnly.locator('.pm-q').count(),30,'승인된 회차는 정오답 입력 없이 출제');
     assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied1-"]').count(),30);
     await approvedOnly.waitForFunction(()=>!document.getElementById('pmPrint').disabled,{timeout:30000});
@@ -52,6 +54,37 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await approvedOnly.locator('#pmTitle').fill('');
     await approvedOnly.locator('#pmTitle').blur();
     assert.equal(await approvedOnly.locator('#pmTitle').inputValue(),'지필드 맞춤 모의고사');
+    const layout=await approvedOnly.evaluate(()=>({filter:document.querySelector('.pm-filter-panel').getBoundingClientRect().x,paper:document.querySelector('.pm-page').getBoundingClientRect().x}));
+    assert.ok(layout.filter<layout.paper,'넓은 화면 왼쪽에 필터 배치');
+    const firstIds=await approvedOnly.locator('.pm-q').evaluateAll(cards=>cards.map(card=>card.dataset.itemId));
+    await approvedOnly.locator('.pm-q .pm-replace').first().click();
+    await approvedOnly.locator('#pmStatus').getByText('1번 문제 교체 완료').waitFor();
+    const replacedIds=await approvedOnly.locator('.pm-q').evaluateAll(cards=>cards.map(card=>card.dataset.itemId));
+    assert.notEqual(replacedIds[0],firstIds[0]);
+    assert.deepEqual(replacedIds.slice(1),firstIds.slice(1),'클릭한 한 문항 외에는 보존');
+    assert.equal(await approvedOnly.locator('.pm-answer[data-answer-id="'+replacedIds[0]+'"]').count(),1,'교체 문항의 풀이 동시 변경');
+    await approvedOnly.locator('#pmFresh').click();
+    await approvedOnly.waitForFunction(before=>JSON.stringify([...document.querySelectorAll('.pm-q')].map(card=>card.dataset.itemId))!==before,JSON.stringify(replacedIds));
+    assert.equal(await approvedOnly.locator('.pm-q').count(),30,'한 회차에서 다른 검수 변형으로 교체');
+    await approvedOnly.locator('#pmSourceList input[value="applied2"]').check();
+    await approvedOnly.waitForFunction(()=>document.querySelectorAll('.pm-q[data-item-id^="applied1-"]').length>0&&document.querySelectorAll('.pm-q[data-item-id^="applied2-"]').length>0);
+    assert.equal(await approvedOnly.locator('#pmSourceList input:checked').count(),2,'출제 회차 복수 선택');
+    await approvedOnly.locator('#pmSourceList input[value="applied2"]').uncheck();
+    await approvedOnly.locator('#pmStatus').getByText('30문항 준비 완료').waitFor();
+    const scores=[];
+    for(const mode of ['easy','normal','hard']){
+      await approvedOnly.locator('[data-priority="'+mode+'"]').click();
+      await approvedOnly.locator('#pmStatus').getByText(({easy:'쉬운 모의고사',normal:'보통 모의고사',hard:'어려운 모의고사'})[mode]).waitFor();
+      scores.push(Number((await approvedOnly.locator('.pm-exam-count').first().innerText()).match(/· ([\d.]+)점/)?.[1]));
+    }
+    assert.ok(scores[0]<scores[1]&&scores[1]<scores[2],`쉬움·보통·어려움 총점 ${scores.join(',')}`);
+    await approvedOnly.locator('[data-priority="balanced"]').click();
+    await approvedOnly.locator('[data-page-density="6"]').click();
+    await approvedOnly.waitForFunction(()=>document.querySelector('[data-page-density="6"]')?.getAttribute('aria-pressed')==='true');
+    await approvedOnly.emulateMedia({media:'print'});
+    assert.deepEqual(await approvedOnly.evaluate(()=>[...document.querySelectorAll('.pm-q,.pm-answer')].filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>card.dataset.itemId||card.dataset.answerId)),[],'6문항 배치 A4 잘림 없음');
+    await approvedOnly.emulateMedia({media:'screen'});
+    await approvedOnly.locator('[data-page-density="4"]').click();
     assert.ok(await approvedOnly.locator('.pm-q p').first().evaluate(el=>getComputedStyle(el).fontFamily.includes('GF Print Serif')));
     const taxonomyCoverage=await approvedOnly.evaluate(async()=>{
       const result={};
@@ -77,7 +110,8 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await approvedOnly.pdf({path:appliedPdf,format:'A4',printBackground:true,preferCSSPageSize:true});
     assert.ok(fs.statSync(appliedPdf).size>10000);
     await approvedOnly.emulateMedia({media:'screen'});
-    await approvedOnly.locator('#pmArea').selectOption('도형');
+    await approvedOnly.locator('[data-filter-clear="area"]').click();
+    await approvedOnly.locator('#pmAreaList input[value="도형"]').check();
     await approvedOnly.locator('#pmDifficulty').selectOption('low');
     assert.ok(await approvedOnly.locator('#pmTypeList input').count()>0);
     await approvedOnly.locator('#pmTypeList button[data-preview-key]').first().click();
@@ -89,14 +123,39 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     assert.ok(filtered>0&&filtered<=9,'한 세부 유형의 검수된 변형만 출제');
     assert.match(await approvedOnly.locator('#pmTypeSummary').innerText(),/선택 1개/);
     await approvedOnly.locator('#pmClearTypes').click();
-    await approvedOnly.locator('#pmArea').selectOption('all');
+    await approvedOnly.locator('[data-filter-all="area"]').click();
     await approvedOnly.locator('#pmDifficulty').selectOption('all');
+    await approvedOnly.locator('[data-filter-clear="area"]').click();
+    await approvedOnly.locator('#pmAreaList input[value="도형"]').check();
+    await approvedOnly.locator('#pmAreaList input[value="수와 식"]').check();
+    assert.match(await approvedOnly.locator('#pmAreaSummary').innerText(),/^2 \/ /,'대영역 복수 선택');
+    await approvedOnly.locator('[data-filter-clear="subarea"]').click();
+    await approvedOnly.locator('#pmSubareaList input').first().check();
+    await approvedOnly.locator('#pmSubareaList input').nth(1).check();
+    assert.match(await approvedOnly.locator('#pmSubareaSummary').innerText(),/^2 \/ /,'소영역 복수 선택');
+    await approvedOnly.locator('[data-filter-all="area"]').click();
+    await approvedOnly.locator('[data-filter-all="subarea"]').click();
     for(let round=2;round<=9;round++){
-      await approvedOnly.locator('#pmSource').selectOption('applied'+round);
+      await approvedOnly.locator('[data-filter-clear="source"]').click();
+      await approvedOnly.locator('#pmSourceList input[value="applied'+round+'"]').check();
       await approvedOnly.waitForFunction(n=>document.querySelector('#pmStatus')?.textContent.includes('활용 모의고사 '+n+'회')&&document.querySelector('#pmPrint')?.disabled===false,round,{timeout:30000});
       assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied'+round+'-"]').count(),30,'활용 '+round+'회 승인 출제');
       assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),false);
     }
+    await approvedOnly.locator('[data-page-density="6"]').click();
+    await approvedOnly.locator('.pm-six-grid.pm-question-page').first().waitFor();
+    await approvedOnly.emulateMedia({media:'print'});
+    assert.ok(await approvedOnly.locator('.pm-six-grid.pm-question-page').count()>0,'짧은 문항은 한 쪽 6문항');
+    const sixPositions=await approvedOnly.locator('.pm-six-grid.pm-question-page').first().locator('.pm-q').evaluateAll(cards=>cards.map(card=>({x:card.getBoundingClientRect().x,y:card.getBoundingClientRect().y})));
+    assert.ok(sixPositions.length>=5&&sixPositions.length<=6,'6칸에서 긴 문항 앞의 마지막 칸은 비울 수 있음');
+    assert.equal(sixPositions[0].x,sixPositions[1].x);
+    assert.equal(sixPositions[1].x,sixPositions[2].x);
+    assert.ok(sixPositions[0].y<sixPositions[1].y&&sixPositions[1].y<sixPositions[2].y,'왼쪽에 고른 간격의 3문항');
+    assert.equal(sixPositions[3].x,sixPositions[4].x);
+    if(sixPositions[5])assert.equal(sixPositions[4].x,sixPositions[5].x);
+    assert.ok(sixPositions[3].x>sixPositions[0].x&&sixPositions[3].y<sixPositions[4].y&&(!sixPositions[5]||sixPositions[4].y<sixPositions[5].y),'오른쪽에도 고른 간격으로 배치');
+    await approvedOnly.emulateMedia({media:'screen'});
+    await approvedOnly.locator('[data-page-density="4"]').click();
     await approvedOnly.locator('[data-scope="wrong"]').click();
     await approvedOnly.locator('#pmStatus').getByText('선택한 조건의 검수 유사문제가 없습니다.').waitFor();
     assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),true);
@@ -178,14 +237,26 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
       await ready.locator('#pmPages').evaluate((el,html)=>{el.innerHTML=html;},mockBank.renderPaper(paper,'all','all','테스트'));
       const clipped=await ready.evaluate(()=>[...document.querySelectorAll('.pm-q,.pm-answer')].filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>({id:card.getAttribute('data-item-id')||card.getAttribute('data-answer-id'),scroll:card.scrollHeight,client:card.clientHeight,parts:[...card.children].map(el=>({tag:el.tagName,height:el.getBoundingClientRect().height,scroll:el.scrollHeight}))})));
       assert.deepEqual(clipped,[],code+' A4 print card clipping');
+      await ready.locator('#pmPages').evaluate((el,html)=>{el.innerHTML=html;},mockBank.renderPaper(paper,'all','all','테스트','',6));
+      const clippedSix=await ready.evaluate(()=>[...document.querySelectorAll('.pm-q,.pm-answer')].filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>card.getAttribute('data-item-id')||card.getAttribute('data-answer-id')));
+      assert.deepEqual(clippedSix,[],code+' A4 6칸 선택 시 잘림');
     }
     for(const code of ['final8','last1','last2','last3','last4','middle7','middle8',...Array.from({length:9},(_,i)=>'applied'+(i+1))]){
       const clipped=await ready.evaluate(async source=>{
         const data=source.startsWith('applied')?await QUESTION_BANK_ADAPTERS.get('gfield-'+source+'-expanded').load():await BANK_FIXED.load(source);
         const paper=GFIELD_PERSONAL_MOCK.buildPool([{key:source,score:{ox:'O'.repeat(30)}}],{[source]:data},'all','all',30);
-        const root=document.getElementById('pmPages');root.innerHTML=GFIELD_PERSONAL_MOCK.renderPaper(paper,'all','all','검수');
-        await Promise.all([document.fonts.ready,...Array.from(root.querySelectorAll('img')).map(img=>img.decode())]);
-        return Array.from(root.querySelectorAll('.pm-q,.pm-answer,.pm-page-content')).filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>({id:card.dataset.itemId||card.dataset.answerId||card.className,scroll:card.scrollHeight,client:card.clientHeight}));
+        const root=document.getElementById('pmPages'),errors=[];
+        for(const density of [4,6]){
+          root.innerHTML=GFIELD_PERSONAL_MOCK.renderPaper(paper,'all','all','검수','',density);
+          await Promise.all([document.fonts.ready,...Array.from(root.querySelectorAll('img')).map(img=>img.decode())]);
+          errors.push(...Array.from(root.querySelectorAll('.pm-q,.pm-answer,.pm-page-content')).filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>({density,id:card.dataset.itemId||card.dataset.answerId||card.className,scroll:card.scrollHeight,client:card.clientHeight})));
+          errors.push(...Array.from(root.querySelectorAll('.pm-q')).filter(card=>card.getBoundingClientRect().width>card.closest('.pm-question-grid').getBoundingClientRect().width/2+12).map(card=>({density,id:card.dataset.itemId,reason:'질문이 두 칼럼을 차지함'})));
+        }
+        if(source==='final8'){
+          const figures=data.items.filter(item=>item.sourceNo===15);
+          if(figures.length!==3||figures.some(item=>item.asset?.src!=='assets/final8/q15-four-stages.svg'))errors.push({reason:'파이널8 15번 네 단계 그림 누락'});
+        }
+        return errors;
       },code);
       assert.deepEqual(clipped,[],code+' 모의고사 시험지/답안 A4 잘림');
     }

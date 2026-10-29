@@ -5,7 +5,7 @@
 <script src="../hs-student-guard.js?v=20261011-email-login-1"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>모의고사 생성기 | 지필드 영재교육</title>
-<link rel="stylesheet" href="personal-mock.css?v=20261029-custom-title">
+<link rel="stylesheet" href="personal-mock.css?v=20261029-multi-filter">
 <link rel="stylesheet" href="math-markup.css?v=20261027-mathml-1">
 </head>
 <body class="bank-access-pending">
@@ -15,24 +15,38 @@
     <div><p>G·FIELD MOCK EXAM</p><h1>모의고사 생성기</h1></div>
   </header>
   <p class="pm-intro">약점 유형 완벽 해결 모의고사 생성기. 수강 신청한 모든 회차의 유사 유형을 섞어 학습할 수 있습니다.</p>
-  <section class="pm-controls" aria-label="문항 선택 기준">
-    <div class="pm-control-row"><label for="pmSource"><strong>출제 회차</strong></label><select id="pmSource"><option value="all">모든 승인 회차</option></select></div>
-    <div class="pm-control-row"><strong>출제 범위</strong><button type="button" data-scope="all">승인된 시험 전체</button><button type="button" data-scope="wrong">틀린 문제</button><button type="button" data-scope="correct">맞은 문제</button></div>
-    <div class="pm-filter-grid" aria-label="학습 유형과 난이도"><label>대영역<select id="pmArea"><option value="all">전체 대영역</option></select></label><label>소영역<select id="pmSubarea"><option value="all">전체 소영역</option></select></label><label>난이도<select id="pmDifficulty"><option value="all">전체 난이도</option><option value="low">하</option><option value="middle">중</option><option value="high">상</option></select></label></div>
+  <div class="pm-layout">
+  <aside class="pm-filter-panel" aria-label="출제 필터">
+    <section class="pm-filter-group" aria-labelledby="pmSourceHeading"><div class="pm-filter-heading"><h2 id="pmSourceHeading">출제 회차</h2><span id="pmSourceSummary">불러오는 중</span></div><div class="pm-filter-actions"><button type="button" data-filter-all="source">전체 선택</button><button type="button" data-filter-clear="source">선택 해제</button></div><div id="pmSourceList" class="pm-check-list" role="group" aria-label="출제 회차 여러 개 선택"></div></section>
+    <section class="pm-filter-group" aria-labelledby="pmAreaHeading"><div class="pm-filter-heading"><h2 id="pmAreaHeading">대영역</h2><span id="pmAreaSummary">전체</span></div><div class="pm-filter-actions"><button type="button" data-filter-all="area">전체 선택</button><button type="button" data-filter-clear="area">선택 해제</button></div><div id="pmAreaList" class="pm-check-list" role="group" aria-label="대영역 여러 개 선택"></div></section>
+    <section class="pm-filter-group" aria-labelledby="pmSubareaHeading"><div class="pm-filter-heading"><h2 id="pmSubareaHeading">소영역</h2><span id="pmSubareaSummary">전체</span></div><div class="pm-filter-actions"><button type="button" data-filter-all="subarea">전체 선택</button><button type="button" data-filter-clear="subarea">선택 해제</button></div><div id="pmSubareaList" class="pm-check-list" role="group" aria-label="소영역 여러 개 선택"></div></section>
+    <label class="pm-filter-select" for="pmDifficulty">난이도<select id="pmDifficulty"><option value="all">전체 난이도</option><option value="low">하</option><option value="middle">중</option><option value="high">상</option></select></label>
+    <section class="pm-filter-group" aria-label="세부 유형">
     <div class="pm-type-head"><strong>세부 유형</strong><span id="pmTypeSummary">승인 문항을 불러오는 중</span><button type="button" id="pmSelectVisible">현재 결과 유형 선택</button><button type="button" id="pmClearTypes">유형 선택 비우기</button></div>
     <div id="pmTypeList" class="pm-type-list" role="group" aria-label="세부 유형 선택"></div>
     <div id="pmPreview" class="pm-preview" aria-live="polite"><p>세부 유형의 ‘문항 보기’를 누르면 대표 문항을 볼 수 있습니다.</p></div>
+    </section>
+  </aside>
+  <div class="pm-workspace">
+  <section class="pm-controls" aria-label="시험지 설정">
+    <div class="pm-control-row"><strong>출제 범위</strong><button type="button" data-scope="all">승인된 시험 전체</button><button type="button" data-scope="wrong">틀린 문제</button><button type="button" data-scope="correct">맞은 문제</button></div>
+    <div class="pm-control-row" role="group" aria-label="시험 난이도"><strong>시험 난이도</strong><button type="button" data-priority="balanced">배점 균형형</button><button type="button" data-priority="easy">쉬운 모의고사</button><button type="button" data-priority="normal">보통 모의고사</button><button type="button" data-priority="hard">어려운 모의고사</button><span class="pm-priority-hint">쉬운·보통·어려운 구성은 원문 정답률을 우선합니다. 정답률이 없는 활용·중급은 검수된 배점 난도를 사용하며, 총점은 선택 문항에 따라 달라집니다.</span></div>
     <div class="pm-control-row"><strong>배점대</strong><button type="button" data-band="all">전체</button><button type="button" data-band="2.7">2점대</button><button type="button" data-band="3.4">3점대</button><button type="button" data-band="4.2">4점대</button></div>
     <div class="pm-control-row"><strong>문항 수</strong><button type="button" data-count="10">10문항</button><button type="button" data-count="20">20문항</button><button type="button" data-count="30">모의고사형 · 30문항</button></div>
+    <div class="pm-control-row" role="group" aria-label="한 쪽 문항 수"><strong>한 쪽 배치</strong><button type="button" data-page-density="4">2단 · 4문항</button><button type="button" data-page-density="6">2단 · 6문항</button><span>긴 지문·그림이 있는 쪽은 잘림을 막기 위해 문항 수를 줄입니다.</span></div>
     <div class="pm-control-row pm-title-row"><label for="pmTitle"><strong>시험지 제목</strong></label><input id="pmTitle" type="text" maxlength="30" value="지필드 맞춤 모의고사" aria-describedby="pmTitleHint" autocomplete="off"><span id="pmTitleHint">문제지와 정답·풀이에 함께 표시됩니다.</span></div>
-    <div class="pm-control-row"><strong>추가 연습</strong><button type="button" id="pmFresh" disabled>새 문제 섞기</button><span>승인된 시험 전체에서만 사용 · 공개된 파이널 중요 유형 생성기</span></div>
+    <div class="pm-control-row"><strong>다른 시험지</strong><button type="button" id="pmFresh" disabled>다른 새 문제로 바꾸기</button><span id="pmFreshHint">선택한 조건의 다른 검수 문항으로 바꿉니다.</span></div>
     <div class="pm-control-row"><strong>중복 방지</strong><button type="button" id="pmSkipDone" aria-pressed="true">이미 푼 문제 제외 · 켜짐</button><span id="pmSkipInfo">인쇄한 문항은 다음 시험지에서 빠집니다</span></div>
     <div class="pm-actions"><p id="pmStatus" role="status">응시 기록을 확인하고 있습니다.</p><button id="pmPrint" type="button" disabled>시험지·답안 인쇄 / PDF 저장</button></div>
   </section>
   <div id="pmPages"></div>
+  </div>
+  </div>
 </main>
 <script src="../hs-auth.js?v=20260913-bank-access"></script>
 <script>document.write('<script src="../data.js?v='+Date.now()+'"><\/script>');</script>
+<script src="../mock-data-final.js?v=20261029-priority"></script>
+<script src="../last-score-data.js?v=20261029-priority"></script>
 <script src="bank-access.js?v=20261016-existing-banks"></script>
 <script src="../student-result-hub.js?v=20261013-report-qr"></script>
 <script src="learning-profile.js?v=20261023-learning-taxonomy"></script>
@@ -64,6 +78,6 @@
 <script src="gens/g-final1.js?v=20261001-personal-mock"></script>
 <script src="important-generators.js?v=20261001-personal-mock"></script>
 <script src="final-source-generators.js?v=20261001-final34-pilot"></script>
-<script src="personal-mock.js?v=20261029-custom-title"></script>
+<script src="personal-mock.js?v=20261029-multi-filter"></script>
 </body>
 </html>
