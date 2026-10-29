@@ -6,6 +6,7 @@
   var BAND_LABEL={all:'전체 배점','2.7':'2점대','3.4':'3점대','4.2':'4점대'};
   var SCOPE_LABEL={all:'승인된 시험 전체',wrong:'틀린 문제',correct:'맞은 문제'};
   var COUNTS={10:{'2.7':4,'3.4':3,'4.2':3},20:{'2.7':8,'3.4':7,'4.2':5},30:{'2.7':12,'3.4':10,'4.2':8}};
+  function examTitle(value,count){var title=Array.from(String(value||'').replace(/\s+/g,' ').trim()).slice(0,30).join('');return title||(Number(count)===30?'지필드 맞춤 모의고사':'지필드 유형별 연습지');}
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function mathText(v){return typeof document==='undefined'?esc(v):root.GFIELD_MATH_MARKUP.render(v);}
   function label(code){if(/^applied[1-9]$/.test(code))return '활용 모의고사 '+code.slice(7)+'회';if(/^middle[78]$/.test(code))return '중급 모의고사 '+code.slice(6)+'회';if(/^last[1234]$/.test(code))return '최종 실전 '+code.slice(4)+'회';if(code.indexOf('original')===0)return '시그니처 '+code.slice(8)+'회';var n=Number(code.slice(5));return n===7?'최종 실전 7회':n===8?'최종 실전 8회':'파이널 '+n+'회';}
@@ -181,11 +182,11 @@
     return '<img src="'+esc(asset.src)+'" alt="'+esc(asset.description||'문항 그림')+'">';
   }
   function page(title,number,total,content,kind,fourGrid,meta){
-    var first=number===1,heading=kind==='question'?'맞춤 모의고사':'맞춤 모의고사 정답과 풀이';
+    var first=number===1,heading=meta.title+(kind==='answer'?' · 정답과 풀이':'');
     var mast='<div class="pm-exam-mast"><span class="pm-brand">G·FIELD <small>지필드 영재교육</small></span><span>성공하는 공부 습관을 만드는<br>대치 지필드 영재교육</span></div>';
-    var cover=first?'<div class="pm-exam-cover"><h2>'+heading+'</h2><div class="pm-student-fields"><span>학교 <i></i></span><span>학년 <i></i></span><span>이름 <b>'+esc(meta.student)+'</b></span><span>날짜 <i></i></span></div><div class="pm-exam-count">'+meta.count+'문항 · '+meta.totalScore+'점</div></div>':'';
+    var cover=first?'<div class="pm-exam-cover'+(heading.length>22?' pm-long-title':'')+'"><h2>'+esc(heading)+'</h2><div class="pm-student-fields"><span>학교 <i></i></span><span>학년 <i></i></span><span>이름 <b>'+esc(meta.student)+'</b></span><span>날짜 <i></i></span></div><div class="pm-exam-count">'+meta.count+'문항 · '+meta.totalScore+'점</div></div>':'';
     var score=first&&kind==='question'?'<table class="pm-score-table" aria-label="출제 배점표"><tbody><tr><th>배점</th><td>2.7점</td><td>3.4점</td><td>4.2점</td><th>합계</th></tr><tr><th>문항 수</th><td>'+meta.counts['2.7']+'</td><td>'+meta.counts['3.4']+'</td><td>'+meta.counts['4.2']+'</td><td>'+meta.count+'</td></tr></tbody></table>':'';
-    return '<section class="pm-page pm-'+kind+'-page'+(fourGrid?' pm-four-grid':'')+(first?' pm-first':'')+'"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content">'+(first?mast+cover+score:'<div class="pm-compact-head"><span>G·FIELD · 지필드 영재교육</span><span>'+esc(title)+'</span></div>')+'<div class="pm-'+kind+'-grid">'+content+'</div><footer class="pm-exam-footer"><span>지필드 영재교육 · 맞춤 모의고사</span><span>- '+number+' / '+total+' -</span></footer></div></section>';
+    return '<section class="pm-page pm-'+kind+'-page'+(fourGrid?' pm-four-grid':'')+(first?' pm-first':'')+'"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content">'+(first?mast+cover+score:'<div class="pm-compact-head"><span>G·FIELD · 지필드 영재교육</span><span>'+esc(meta.title+' · '+title)+'</span></div>')+'<div class="pm-'+kind+'-grid">'+content+'</div><footer class="pm-exam-footer"><span>'+esc('지필드 영재교육 · '+meta.title)+'</span><span>- '+number+' / '+total+' -</span></footer></div></section>';
   }
   function questionWide(entry){
     var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' '):'';
@@ -225,10 +226,10 @@
     var x=entry.item,steps=Array.isArray(x.solutionSteps)&&x.solutionSteps.length?x.solutionSteps:[x.solution];
     return '<article class="pm-answer'+(answerWide(entry)?' pm-wide':'')+(answerTall(entry)?' pm-tall':'')+'" data-answer-id="'+esc(x.id)+'"><h3>'+entry.index+'번 · '+esc(x.detailType||'')+'</h3><p class="pm-source">'+(entry.origin==='library'?'자료실 공개 보충 · ':entry.origin==='generated'?'자료실 공개 생성형 · ':'')+esc(label(entry.code))+' 원문 '+x.sourceNo+'번 · '+(entry.origin==='generated'?'추가 연습문제':'검수 유사문제 '+x.variantNo)+'</p><strong>답 '+mathText(x.answer)+'</strong><ol>'+steps.map(function(step){return '<li>'+mathText(step)+'</li>';}).join('')+'</ol>'+figure(x.solutionAsset)+'</article>';
   }
-  function renderPaper(paper,scope,band,student){
+  function renderPaper(paper,scope,band,student,title){
     if(!paper.questions.length||paper.questions.length>paper.target)throw Error('인쇄할 검수 문항이 없습니다.');
     var counts={'2.7':0,'3.4':0,'4.2':0};paper.questions.forEach(function(entry){if(!Object.prototype.hasOwnProperty.call(counts,entry.item.pointBand))throw Error('문항 배점을 확인할 수 없습니다.');counts[entry.item.pointBand]++;});
-    var meta={student:student,count:paper.questions.length,counts:counts,totalScore:(counts['2.7']*2.7+counts['3.4']*3.4+counts['4.2']*4.2).toFixed(1).replace(/\.0$/,'')};
+    var meta={student:student,title:examTitle(title,paper.target),count:paper.questions.length,counts:counts,totalScore:(counts['2.7']*2.7+counts['3.4']*3.4+counts['4.2']*4.2).toFixed(1).replace(/\.0$/,'')};
     var qPages=[],aPages=[],questionGroups=rows(paper.questions,questionWide,questionTall),answerGroups=rows(paper.questions,answerWide,answerTall);
     questionGroups.forEach(function(group,index){qPages.push(page('문제',index+1,questionGroups.length,group.map(questionCard).join(''),'question',group.length===4&&group.every(function(entry){return !questionWide(entry)&&!questionTall(entry);}),meta));});
     answerGroups.forEach(function(group,index){aPages.push(page('정답과 풀이',index+1,answerGroups.length,group.map(answerCard).join(''),'answer',group.length===4&&group.every(function(entry){return !answerWide(entry)&&!answerTall(entry);}),meta));});
@@ -248,6 +249,20 @@
     if(!student){status.textContent='학생 이름으로 자료실에 입장해 주세요.';return;}
     var scope=Object.prototype.hasOwnProperty.call(SCOPE_LABEL,query.get('scope'))?query.get('scope'):'all',band=Object.prototype.hasOwnProperty.call(BAND_LABEL,query.get('band'))?query.get('band'):'all',source='all',area='all',subarea='all',difficulty='all',selectedTypes=new Set(),visibleTypes=[],previewKey='';
     var count=COUNTS[query.get('count')]?Number(query.get('count')):30;
+    var titleInput=document.getElementById('pmTitle'),titleEdited=false;
+    titleInput.value=examTitle('',count);
+    document.title=titleInput.value+' | 지필드 영재교육';
+    function currentTitle(){return examTitle(titleEdited?titleInput.value:'',count);}
+    function showTitle(){
+      var title=currentTitle();document.title=title+' | 지필드 영재교육';
+      pages.querySelectorAll('.pm-page').forEach(function(section){
+        var answer=section.classList.contains('pm-answer-page'),kind=answer?'정답과 풀이':'문제';
+        var cover=section.querySelector('.pm-exam-cover'),heading=title+(answer?' · 정답과 풀이':'');
+        if(cover){cover.querySelector('h2').textContent=heading;cover.classList.toggle('pm-long-title',heading.length>22);}
+        var compact=section.querySelector('.pm-compact-head span:last-child');if(compact)compact.textContent=title+' · '+kind;
+        var footer=section.querySelector('.pm-exam-footer span:first-child');if(footer)footer.textContent='지필드 영재교육 · '+title;
+      });
+    }
     var attempts=[],datasets={},unavailable={preparing:[],denied:[],failed:[]},revision=0,currentPaperCount=0,library=null,libraryPromise=null,freshRound=0;
     var doneKeys=new Set(),skipDone=true,currentKeys=[];
     function skipSet(){return skipDone?doneKeys:new Set();}
@@ -320,7 +335,7 @@
       var sourceNote=paper.libraryCount||paper.generatedCount?' · 승인 회차 '+paper.attemptCount+'문항 + 자료실 공개 보충 '+paper.libraryCount+'문항 + 새 문제 '+paper.generatedCount+'문항':'';
       status.innerHTML=paper.missing?'<span class="pm-short">'+count+'문항 중 '+paper.available+'문항 확보 · '+paper.missing+'문항 부족</span> · 확보된 문항은 인쇄할 수 있습니다.'+esc(sourceNote+note):'<span class="pm-ready">'+count+'문항 준비 완료</span> · '+esc(SCOPE_LABEL[scope])+' · '+esc(source==='all'?'모든 승인 회차':label(source))+' · '+esc(BAND_LABEL[band]+(difficulty==='all'?'':' · 난이도 '+({low:'하',middle:'중',high:'상'}[difficulty]))+sourceNote+note);
       try{
-        pages.innerHTML=renderPaper(paper,scope,band,student);
+        pages.innerHTML=renderPaper(paper,scope,band,student,currentTitle());
         await Promise.all([document.fonts.ready].concat(Array.from(pages.querySelectorAll('img')).map(function(img){return img.decode();})));
         if(current!==revision)return;
         pages.querySelectorAll('.wm-layer').forEach(function(layer){root.BANK_CORE.buildWatermarkTiles(layer,student);});
@@ -338,7 +353,9 @@
     document.getElementById('pmSelectVisible').addEventListener('click',function(){visibleTypes.forEach(function(group){selectedTypes.add(group.key);});render();});
     document.getElementById('pmClearTypes').addEventListener('click',function(){selectedTypes.clear();render();});
     document.querySelectorAll('[data-band]').forEach(function(button){button.addEventListener('click',function(){band=button.dataset.band;render();});});
-    document.querySelectorAll('[data-count]').forEach(function(button){button.addEventListener('click',function(){count=Number(button.dataset.count);render();});});
+    document.querySelectorAll('[data-count]').forEach(function(button){button.addEventListener('click',function(){count=Number(button.dataset.count);if(!titleEdited)titleInput.value=examTitle('',count);render();});});
+    titleInput.addEventListener('input',function(){titleEdited=!!titleInput.value.trim();showTitle();});
+    titleInput.addEventListener('blur',function(){if(!titleEdited)titleInput.value=examTitle('',count);});
     document.getElementById('pmFresh').addEventListener('click',function(){if(scope!=='all'||source!=='all'||taxonomyActive())return;freshRound++;render();});
     var skipBtn=document.getElementById('pmSkipDone');
     if(skipBtn)skipBtn.addEventListener('click',function(){skipDone=!skipDone;render();});
@@ -357,7 +374,7 @@
       render();
     }catch(error){status.innerHTML='<span class="pm-error">'+esc(error.message||'응시 기록을 확인하지 못했습니다.')+'</span>';}
   }
-  root.GFIELD_PERSONAL_MOCK={buildPool:buildPool,isAllowed:isAllowed,approvedAttempts:approvedAttempts,profileOf:profileOf,sourceItems:sourceItems,renderPaper:renderPaper,availability:availability,availabilityNote:availabilityNote};
+  root.GFIELD_PERSONAL_MOCK={buildPool:buildPool,isAllowed:isAllowed,approvedAttempts:approvedAttempts,profileOf:profileOf,sourceItems:sourceItems,examTitle:examTitle,renderPaper:renderPaper,availability:availability,availabilityNote:availabilityNote};
   if(typeof module!=='undefined'&&module.exports)module.exports=root.GFIELD_PERSONAL_MOCK;
   if(typeof document!=='undefined')mount();
 })(typeof window!=='undefined'?window:globalThis);

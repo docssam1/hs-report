@@ -24,6 +24,17 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await approvedOnly.addInitScript(()=>localStorage.setItem('gfield_student','박서진'));
     await approvedOnly.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:'[]'}));
     await approvedOnly.goto(base+'/bank/personal-mock.html?source=applied1');
+    const onlineStudent=await approvedOnly.evaluate(()=>{
+      const name=GFIELD_DATA.students.find(student=>GFIELD_DATA.studentTypes?.[student]==='online');
+      return name&&GFIELD_BANK_ACCESS.allowed({role:'student',student:name,active:true})?name:'';
+    });
+    assert.ok(onlineStudent,'온라인 회원도 공통 문제은행 접근 자격');
+    const onlinePage=await browser.newPage();
+    await onlinePage.addInitScript(name=>localStorage.setItem('gfield_student',name),onlineStudent);
+    await onlinePage.goto(base+'/bank/personal-mock.html');
+    await onlinePage.locator('#pmTitle').waitFor({state:'visible',timeout:30000});
+    assert.equal(await onlinePage.locator('#pmTitle').inputValue(),'지필드 맞춤 모의고사','온라인 회원 제목 입력 공통 제공');
+    await onlinePage.close();
     assert.ok(await approvedOnly.locator('html').evaluate(el=>getComputedStyle(el).fontFamily.includes('GF Print Sans')),'생성기 화면 Pretendard 글꼴');
     await approvedOnly.locator('#pmStatus').getByText('30문항 준비 완료').waitFor({timeout:30000}).catch(async error=>{console.error('APPLIED STATUS',await approvedOnly.locator('#pmStatus').innerText());throw error;});
     assert.equal(await approvedOnly.locator('#pmSource').inputValue(),'applied1');
@@ -34,6 +45,13 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     assert.equal(await approvedOnly.locator('.pm-score-table td').allTextContents().then(rows=>rows.join(',')),'2.7점,3.4점,4.2점,12,10,8,30');
     assert.match(await approvedOnly.locator('.pm-exam-cover').first().innerText(),/맞춤 모의고사[\s\S]*박서진/);
     assert.match(await approvedOnly.locator('.pm-exam-cover').first().innerText(),/30문항 · 100점/);
+    await approvedOnly.locator('#pmTitle').fill('우리 반 도전 모의고사');
+    assert.equal(await approvedOnly.locator('.pm-question-page .pm-exam-cover h2').innerText(),'우리 반 도전 모의고사');
+    assert.equal(await approvedOnly.locator('.pm-answer-page .pm-exam-cover h2').innerText(),'우리 반 도전 모의고사 · 정답과 풀이');
+    assert.equal(await approvedOnly.title(),'우리 반 도전 모의고사 | 지필드 영재교육');
+    await approvedOnly.locator('#pmTitle').fill('');
+    await approvedOnly.locator('#pmTitle').blur();
+    assert.equal(await approvedOnly.locator('#pmTitle').inputValue(),'지필드 맞춤 모의고사');
     assert.ok(await approvedOnly.locator('.pm-q p').first().evaluate(el=>getComputedStyle(el).fontFamily.includes('GF Print Serif')));
     const taxonomyCoverage=await approvedOnly.evaluate(async()=>{
       const result={};
