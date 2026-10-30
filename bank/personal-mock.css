@@ -99,3 +99,5 @@
 .pm-answer-grid .pm-answer ol{margin:1mm 0 0;line-height:1.4}
 .pm-answer-grid .pm-answer li{margin-bottom:1mm}
 .pm-answer-grid .pm-answer img{max-height:60mm}
+/* 네 칸 시험지의 좌우 문항 시작 위치를 문항 길이와 관계없이 맞춘다. */
+.pm-question-grid .pm-q,.pm-question-grid .pm-q:nth-child(odd),.pm-question-grid .pm-q:nth-child(even){padding-left:1mm;padding-right:1mm}

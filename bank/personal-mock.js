@@ -203,21 +203,22 @@
   }
   function replaceOne(paper,index,attempts,datasets,scope,band,excluded,filter){
     var current=paper&&paper.questions&&paper.questions[index];if(!current)return null;
+    var type=typeKey(profileOf(current.item));
     var usedIds=new Set(paper.questions.map(function(row){return row.item.id;})),usedContent=new Set(paper.questions.map(function(row){return signature(row.item);})),choices=[];
     (attempts||[]).forEach(function(attempt){
       var code=codeOf(attempt),data=datasets&&datasets[code],ox=String(attempt.score&&attempt.score.ox||attempt.ox||'').toUpperCase();
       if(!code||!data||!Array.isArray(data.items)||scope!=='all'&&!/^[OX]{30}$/.test(ox))return;
       data.items.forEach(function(item){var no=Number(item.sourceNo);
-        if(item.reviewStatus!=='verified'||item.pointBand!==current.item.pointBand||band!=='all'&&item.pointBand!==band||scope==='wrong'&&ox[no-1]!=='X'||scope==='correct'&&ox[no-1]!=='O'||excluded&&excluded.has(itemKey(item))||filter&&!filter(item)||usedIds.has(item.id)||usedContent.has(signature(item)))return;
+        if(item.reviewStatus!=='verified'||item.pointBand!==current.item.pointBand||band!=='all'&&item.pointBand!==band||scope==='wrong'&&ox[no-1]!=='X'||scope==='correct'&&ox[no-1]!=='O'||excluded&&excluded.has(itemKey(item))||filter&&!filter(item)||usedIds.has(item.id)||usedContent.has(signature(item))||typeKey(profileOf(item))!==type)return;
         choices.push({item:item,code:code});
       });
     });
     var sameSourceChoices=choices.filter(function(row){return row.code===current.code&&Number(row.item.sourceNo)===Number(current.item.sourceNo);});
     if(sameSourceChoices.length)choices=sameSourceChoices;
-    var type=typeKey(profileOf(current.item)),currentVariant=Number(current.item.variantNo)||0;
+    var currentVariant=Number(current.item.variantNo)||0;
     choices.sort(function(a,b){
-      function rank(row){var sameSource=row.code===current.code&&Number(row.item.sourceNo)===Number(current.item.sourceNo),sameType=typeKey(profileOf(row.item))===type;
-        return [sameSource?0:sameType?1:row.code===current.code?2:3,sameSource?((Number(row.item.variantNo)||0)-currentVariant+99)%99:Number(row.item.sourceNo)||0];}
+      function rank(row){var sameSource=row.code===current.code&&Number(row.item.sourceNo)===Number(current.item.sourceNo);
+        return [sameSource?0:row.code===current.code?1:2,sameSource?((Number(row.item.variantNo)||0)-currentVariant+99)%99:Number(row.item.sourceNo)||0];}
       var x=rank(a),y=rank(b);return x[0]-y[0]||x[1]-y[1]||a.code.localeCompare(b.code);
     });
     if(!choices.length)return null;
@@ -245,19 +246,20 @@
     var first=number===1,heading=meta.title+(kind==='answer'?' · 정답과 풀이':'');
     var mast='<div class="pm-exam-mast"><span class="pm-brand">G·FIELD <small>지필드 영재교육</small></span><span>성공하는 공부 습관을 만드는<br>대치 지필드 영재교육</span></div>';
     var cover=first?'<div class="pm-exam-cover'+(heading.length>22?' pm-long-title':'')+'"><h2>'+esc(heading)+'</h2><div class="pm-student-fields"><span>학교 <i></i></span><span>학년 <i></i></span><span>이름 <b>'+esc(meta.student)+'</b></span><span>날짜 <i></i></span></div><div class="pm-exam-count">'+meta.count+'문항 · '+meta.totalScore+'점</div></div>':'';
-    var score=first&&kind==='question'?'<table class="pm-score-table" aria-label="출제 배점표"><tbody><tr><th>배점</th><td>2.7점</td><td>3.4점</td><td>4.2점</td><th>합계</th></tr><tr><th>문항 수</th><td>'+meta.counts['2.7']+'</td><td>'+meta.counts['3.4']+'</td><td>'+meta.counts['4.2']+'</td><td>'+meta.count+'</td></tr></tbody></table>':'';
-    return '<section class="pm-page pm-'+kind+'-page'+(fourGrid?' pm-four-grid':'')+(sixGrid?' pm-six-grid':'')+(first?' pm-first':'')+'"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content">'+(first?mast+cover+score:'<div class="pm-compact-head"><span>G·FIELD · 지필드 영재교육</span><span>'+esc(meta.title+' · '+title)+'</span></div>')+'<div class="pm-'+kind+'-grid">'+content+'</div><footer class="pm-exam-footer"><span>'+esc('지필드 영재교육 · '+meta.title)+'</span><span>- '+number+' / '+total+' -</span></footer></div></section>';
+    return '<section class="pm-page pm-'+kind+'-page'+(fourGrid?' pm-four-grid':'')+(sixGrid?' pm-six-grid':'')+(first?' pm-first':'')+'"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content">'+(first?mast+cover:'<div class="pm-compact-head"><span>G·FIELD · 지필드 영재교육</span><span>'+esc(meta.title+' · '+title)+'</span></div>')+'<div class="pm-'+kind+'-grid">'+content+'</div><footer class="pm-exam-footer"><span>'+esc('지필드 영재교육 · '+meta.title)+'</span><span>- '+number+' / '+total+' -</span></footer></div></section>';
   }
   function questionWide(entry){
     var x=entry.item,given=questionLines(x).join(' ');
-    return !!x.responseTable||!!x.givenTable||!!x.arithmeticRows||!!(x.actualEssentialData&&x.actualEssentialData.rows)||Array.isArray(x.cards)&&x.cards.length>8||String(x.text||'').length+given.length>210||!!x.asset&&(String(x.text||'').length+given.length>125||[28,30].includes(Number(x.sourceNo)));
+    var length=String(x.text||'').length+given.length;
+    var tables=[x.responseTable,x.givenTable,x.actualEssentialData&&x.actualEssentialData.rows?{rows:x.actualEssentialData.rows}:null];
+    return !!x.responseTable||/^final8-q15-/.test(String(x.id||''))||length>320||!!x.asset&&length>220||tables.some(function(table){return table&&Array.isArray(table.rows)&&table.rows.length>5;});
   }
   function questionCompactWide(entry){var x=entry.item;return questionWide(entry)||!!x.asset||String(x.text||'').length+questionLines(x).join(' ').length>165;}
   function questionTall(entry){return entry.item.sourceSet==='middle'&&Number(entry.item.sourceRound)===7&&Number(entry.item.sourceNo)===13;}
   function answerWide(entry){var x=entry.item;return !!x.solutionAsset||!!x.solutionTable||String(x.solution||'').length>190||Array.isArray(x.solutionSteps)&&x.solutionSteps.join('').length>190;}
   function answerCompactWide(entry){return answerWide(entry);}
   function answerTall(entry){var x=entry.item,steps=Array.isArray(x.solutionSteps)?x.solutionSteps.join(''):String(x.solution||'');return steps.length>420||!!x.solutionAsset&&steps.length>190;}
-  function rows(items,wide,tall,perPage){
+  function rows(items,wide,tall,perPage,balanceSparse){
     var out=[],pending=[];
     items.forEach(function(entry){
       if(wide(entry)||tall&&tall(entry)){
@@ -277,6 +279,14 @@
       if(current.length===(hasWide?2:Number(perPage)===6?3:2)){pages.push(current.flatMap(function(x){return x.entries;}));current=[];hasWide=false;}
     });
     if(current.length)pages.push(current.flatMap(function(x){return x.entries;}));
+    if(balanceSparse&&Number(perPage)===4){
+      pages.forEach(function(group,index){
+        if(group.length!==2)return;
+        var previous=pages[index-1],next=pages[index+1];
+        if(previous&&previous.length===4&&!wide(previous[3])&&!wide(group[0])&&!tall(previous[3]))group.unshift(previous.pop());
+        else if(next&&next.length===4&&!wide(group[1])&&!wide(next[0])&&!tall(next[0]))group.push(next.shift());
+      });
+    }
     return pages;
   }
   function questionLines(item){
@@ -297,7 +307,7 @@
     if(!paper.questions.length||paper.questions.length>paper.target)throw Error('인쇄할 검수 문항이 없습니다.');
     var counts={'2.7':0,'3.4':0,'4.2':0};paper.questions.forEach(function(entry){if(!Object.prototype.hasOwnProperty.call(counts,entry.item.pointBand))throw Error('문항 배점을 확인할 수 없습니다.');counts[entry.item.pointBand]++;});
     var meta={student:student,title:examTitle(title,paper.target),count:paper.questions.length,counts:counts,totalScore:(counts['2.7']*2.7+counts['3.4']*3.4+counts['4.2']*4.2).toFixed(1).replace(/\.0$/,'')};
-    var density=Number(perPage)===6?6:4,qWide=density===6?questionCompactWide:questionWide,aWide=density===6?answerCompactWide:answerWide,qPages=[],aPages=[],questionGroups=rows(paper.questions,qWide,questionTall,density),answerGroups=rows(paper.questions,aWide,answerTall,density);
+    var density=Number(perPage)===6?6:4,qWide=density===6?questionCompactWide:questionWide,aWide=density===6?answerCompactWide:answerWide,qPages=[],aPages=[],questionGroups=rows(paper.questions,qWide,questionTall,density,true),answerGroups=rows(paper.questions,aWide,answerTall,density,false);
     questionGroups.forEach(function(group,index){var ordinary=group.every(function(entry){return !qWide(entry)&&!questionTall(entry);});qPages.push(page('문제',index+1,questionGroups.length,group.map(function(entry){return questionCard(entry,qWide);}).join(''),'question',group.length===4&&ordinary,meta,density===6&&group.length>=5&&ordinary));});
     answerGroups.forEach(function(group,index){var ordinary=group.every(function(entry){return !aWide(entry)&&!answerTall(entry);});aPages.push(page('정답과 풀이',index+1,answerGroups.length,group.map(function(entry){return answerCard(entry,aWide);}).join(''),'answer',group.length===4&&ordinary,meta,density===6&&group.length>=5&&ordinary));});
     var duplexBlank=qPages.length%2?['<section class="pm-page pm-duplex-blank" aria-hidden="true"></section>']:[];
@@ -461,7 +471,7 @@
       var card=event.target&&event.target.closest&&event.target.closest('.pm-q');
       if(!card||!currentPaper||root.getSelection&&String(root.getSelection()).trim())return;
       var index=Number(card.dataset.questionIndex),next=replaceOne(currentPaper,index,currentAttempts,datasets,scope,band,skipSet(),currentFilterFn);
-      if(!next){status.textContent=(index+1)+'번은 현재 조건에서 바꿀 다른 검수 문항이 없습니다.';return;}
+      if(!next){status.textContent=(index+1)+'번은 현재 조건에서 같은 세부 유형의 다른 검수 문항이 없습니다.';return;}
       var current=++revision;print.disabled=true;typstButton.disabled=true;currentPaper=next;
       try{pages.innerHTML=renderPaper(next,scope,band,student,currentTitle(),pageDensity);
         await Promise.all([document.fonts.ready].concat(Array.from(pages.querySelectorAll('img')).map(function(img){return img.decode();})));

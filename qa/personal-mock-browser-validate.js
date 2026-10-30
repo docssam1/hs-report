@@ -76,12 +76,31 @@ function assertTypstPages(pages,questionPages,count){
     await generatedPdf.saveAs(typstPdf);
     const typstDocument=await PDFDocument.load(fs.readFileSync(typstPdf));
     assert.ok(typstDocument.getPageCount()>=5,'문제·정답 전체 PDF 페이지 생성');
-    assertTypstPages(await pdfItems(typstPdf),tenQuestionPages,10);
+    const tenPdfPages=await pdfItems(typstPdf);
+    assertTypstPages(tenPdfPages,tenQuestionPages,10);
+    assert.equal(tenPdfPages[0].some(text=>/배점|문항 수/.test(text)),false,'PDF 첫 장 배점·문항 수 표 없음');
     await approvedOnly.locator('[data-count="30"]').click();
     await approvedOnly.waitForFunction(()=>document.querySelectorAll('.pm-q').length===30);
     assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied1-q13-"] .pm-number-cards span').count(),6,'활용 1회 13번 수 카드 6장');
     assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied1-q29-"] .pm-number-cards span').count(),4,'활용 1회 29번 수 카드 4장');
     const thirtyQuestionPages=await approvedOnly.locator('.pm-question-page').count();
+    assert.deepEqual(await approvedOnly.locator('.pm-question-page').evaluateAll(pages=>pages.map(page=>page.querySelectorAll('.pm-q').length).filter(count=>count<3)),[],'활용 1회 문제지는 2문항짜리 쪽 없음');
+    for(const code of ['applied2','applied3','applied4','applied5','applied6','applied7','applied8','applied9']){
+      const next=approvedOnly.locator('#pmSourceList input[value="'+code+'"]');
+      if(!(await next.count()))continue;
+      await approvedOnly.locator('#pmSourceList input[value="applied1"]').uncheck();
+      await next.check();
+      await approvedOnly.waitForFunction(source=>document.querySelector('.pm-q')?.dataset.itemId.startsWith(source+'-'),code);
+      const pageCounts=await approvedOnly.locator('.pm-question-page').evaluateAll(pages=>pages.map(page=>page.querySelectorAll('.pm-q').length));
+      assert.ok(pageCounts.every(count=>count>=3),code+' 문제지는 2문항짜리 쪽 없음: '+pageCounts.join(','));
+      await approvedOnly.emulateMedia({media:'print'});
+      assert.deepEqual(await approvedOnly.evaluate(()=>[...document.querySelectorAll('.pm-q')].filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>card.dataset.itemId)),[],code+' 4문항 배치 A4 잘림 없음');
+      assert.deepEqual(await approvedOnly.locator('.pm-four-grid .pm-question-grid').evaluateAll(grids=>grids.flatMap(grid=>{const cards=[...grid.querySelectorAll('.pm-q')],r=cards.map(card=>card.getBoundingClientRect());return r.length===4&&Math.abs(r[0].x-r[1].x)<2&&Math.abs(r[2].x-r[3].x)<2&&Math.abs(r[0].y-r[2].y)<2&&Math.abs(r[1].y-r[3].y)<2?[]:[cards.map(card=>card.dataset.itemId)];})),[],code+' 4문항은 같은 2단 칸 정렬');
+      await approvedOnly.emulateMedia({media:'screen'});
+      await next.uncheck();
+      await approvedOnly.locator('#pmSourceList input[value="applied1"]').check();
+      await approvedOnly.waitForFunction(()=>document.querySelector('.pm-q')?.dataset.itemId.startsWith('applied1-'));
+    }
     const fullDownload=approvedOnly.waitForEvent('download',{timeout:90000});
     await approvedOnly.locator('#pmTypst').click();
     const fullPdfFile=path.join(os.tmpdir(),'gfield-personal-mock-typst-30-qa.pdf');
@@ -91,7 +110,7 @@ function assertTypstPages(pages,questionPages,count){
     assertTypstPages(await pdfItems(fullPdfFile),thirtyQuestionPages,30);
     const fullBytes=fs.readFileSync(fullPdfFile).toString('latin1');
     for(const font of ['NotoSerifKR','Pretendard','STIXTwoMath'])assert.ok(fullBytes.includes(font),`${font} PDF 글꼴 포함`);
-    assert.equal(await approvedOnly.locator('.pm-score-table td').allTextContents().then(rows=>rows.join(',')),'2.7점,3.4점,4.2점,12,10,8,30');
+    assert.equal(await approvedOnly.locator('.pm-score-table').count(),0,'화면·인쇄 첫 장 배점·문항 수 표 없음');
     assert.match(await approvedOnly.locator('.pm-exam-cover').first().innerText(),/맞춤 모의고사[\s\S]*박서진/);
     assert.match(await approvedOnly.locator('.pm-exam-cover').first().innerText(),/30문항 · 100점/);
     await approvedOnly.locator('#pmTitle').fill('우리 반 도전 모의고사');
@@ -104,10 +123,22 @@ function assertTypstPages(pages,questionPages,count){
     const layout=await approvedOnly.evaluate(()=>({filter:document.querySelector('.pm-filter-panel').getBoundingClientRect().x,paper:document.querySelector('.pm-page').getBoundingClientRect().x}));
     assert.ok(layout.filter<layout.paper,'넓은 화면 왼쪽에 필터 배치');
     const firstIds=await approvedOnly.locator('.pm-q').evaluateAll(cards=>cards.map(card=>card.dataset.itemId));
+    const firstType=await approvedOnly.locator('.pm-q .pm-type').first().innerText();
     await approvedOnly.locator('.pm-q .pm-replace').first().click();
     await approvedOnly.locator('#pmStatus').getByText('1번 문제 교체 완료').waitFor();
     const replacedIds=await approvedOnly.locator('.pm-q').evaluateAll(cards=>cards.map(card=>card.dataset.itemId));
     assert.notEqual(replacedIds[0],firstIds[0]);
+    assert.equal(await approvedOnly.locator('.pm-q .pm-type').first().innerText(),firstType,'한 문제 교체는 같은 세부 유형');
+    assert.deepEqual(await approvedOnly.evaluate(()=>{
+      const item=(id,type)=>({id,text:id,answer:'1',pointBand:'2.7',sourceNo:1,variantNo:1,sourceSet:'final',area:'도형',subarea:'도형 분류',detailType:type,reviewStatus:'verified'});
+      const original=item('original','같은 유형'),other=item('other','다른 유형'),same=item('same','같은 유형');
+      const paper={questions:[{index:1,item:original,code:'final1',origin:'attempt'}]};
+      const attempts=[{key:'final1',approvedOnly:true}],datasets={final1:{items:[other]}};
+      const blocked=GFIELD_PERSONAL_MOCK.replaceOne(paper,0,attempts,datasets,'all','all',new Set(),null);
+      datasets.final1.items.push(same);
+      const replaced=GFIELD_PERSONAL_MOCK.replaceOne(paper,0,attempts,datasets,'all','all',new Set(),null);
+      return [blocked,replaced?.questions[0].item.id];
+    }),[null,'same'],'같은 유형 후보가 없으면 교체하지 않고, 후보가 있으면 해당 유형만 사용');
     assert.deepEqual(replacedIds.slice(1),firstIds.slice(1),'클릭한 한 문항 외에는 보존');
     assert.equal(await approvedOnly.locator('.pm-answer[data-answer-id="'+replacedIds[0]+'"]').count(),1,'교체 문항의 풀이 동시 변경');
     await approvedOnly.locator('#pmFresh').click();

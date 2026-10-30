@@ -79,13 +79,13 @@
       '#set page(paper: "a4", margin: (top: 15mm, bottom: 15mm, left: 15mm, right: 15mm), background: context { if counter(page).get().first() == blank-page { none } else { align(center + horizon, rotate(-25deg, text(font: "Pretendard", size: 22pt, fill: rgb("eeeeee"), '+literal(watermark)+'))) } }, footer: context { if counter(page).get().first() == blank-page { none } else { align(center, text(font: "Pretendard", size: 8pt, fill: rgb("555555"), [지필드 영재교육 · #counter(page).display()])) } })\n'+
       '#set text(font: "Noto Serif KR", size: 10.5pt, fill: rgb("191511"))\n#show math.equation: set text(font: "STIX Two Math")\n#set par(leading: 0.58em)\n';
     var questionSheets=questionPages.map(function(columns,pageIndex){
+      var bodyHeight=pageIndex?240:180;
       var firstHeader='#text(font: "Pretendard", weight: "bold", size: 13pt)[G·FIELD] #h(1fr) #text(font: "Pretendard", size: 8pt)[지필드 영재교육]\n'+
         '#v(2mm)\n#line(length: 100%, stroke: 0.6pt)\n#v(3mm)\n#align(center)[#text(font: "Noto Serif KR", size: 17pt, '+literal(title)+')]\n#v(3mm)\n'+
         '#align(center)[#text(font: "Pretendard", size: 9pt, '+literal('학교 __________   학년 ______   이름 '+student+'   날짜 __________')+')]\n'+
-        '#align(right)[#text(font: "Pretendard", size: 8pt, '+literal(paper.questions.length+'문항 · '+total+'점')+')]\n'+
-        '#v(2mm)\n#table(columns: (1fr, 1fr, 1fr, 1fr, 1fr), inset: 2pt, stroke: 0.4pt, align: center, [배점], [2.7점], [3.4점], [4.2점], [합계], [문항 수], ['+counts['2.7']+'], ['+counts['3.4']+'], ['+counts['4.2']+'], ['+paper.questions.length+'])\n';
+        '#align(right)[#text(font: "Pretendard", size: 8pt, '+literal(paper.questions.length+'문항 · '+total+'점')+')]\n';
       return (pageIndex?'#align(center)[#text(font: "Noto Serif KR", size: 11pt, '+literal(title)+')]\n':firstHeader)+
-        '#v(3mm)\n#line(length: 100%, stroke: 1pt)\n#v(4mm)\n#block(height: '+(pageIndex?240:180)+'mm)[#grid(columns: (1fr, 1fr), column-gutter: 10mm, '+column(columns[0])+', '+column(columns[1])+')]';
+        '#v(3mm)\n#line(length: 100%, stroke: 1pt)\n#v(4mm)\n#block(height: '+bodyHeight+'mm)[#grid(columns: (1fr, 0.5pt, 1fr), column-gutter: 5mm, '+column(columns[0])+', box(width: 0.5pt, height: '+bodyHeight+'mm, fill: rgb("999999")), '+column(columns[1])+')]';
     }).join('\n#pagebreak()\n');
     var answerSheet='#pagebreak(to: "odd")\n#align(center)[#text(font: "Noto Serif KR", size: 15pt, '+literal(title+' · 정답과 풀이')+')]\n#v(5mm)\n#line(length: 100%, stroke: 1pt)\n#v(6mm)\n'+paper.questions.map(answer).join('\n');
     return head+questionSheets+'\n'+answerSheet+'\n';
