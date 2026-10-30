@@ -55,11 +55,11 @@
       "subarea": "겹친 사각형의 둘레",
       "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
       "pointBand": "2.7",
-      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 15cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
+      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 12 cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied7/q01-v1.svg",
-        "description": "직사각형과 정사각형의 겹친 삼각형 둘레 15cm, 두 변 5cm·6cm, 정사각형 변의 이어진 부분 3cm"
+        "src": "assets/applied7/q01-v1-r2.svg",
+        "description": "직사각형과 정사각형의 정확한 겹침: 삼각형 둘레 12 cm, 표시된 두 변 4 cm·5 cm, 이어진 변 4 cm"
       },
       "answer": "42",
       "answerParts": [
@@ -75,29 +75,30 @@
       ],
       "answerContract": "single-number",
       "solutionSteps": [
-        "겹친 삼각형의 세 변의 길이의 합이 15cm이고, 두 변이 5cm와 6cm이므로 나머지 변은 15−5−6=4cm입니다.",
-        "정사각형 한 변은 겹친 삼각형의 4cm 변과 이어진 3cm 부분의 합이므로 4+3=7cm입니다. 직사각형의 짧은 변도 7cm입니다.",
-        "직사각형의 긴 변은 짧은 변의 2배인 14cm입니다. 따라서 둘레는 (7+14)×2=42cm입니다."
+        "겹친 삼각형의 세 변의 합은 12 cm이고 두 변은 4 cm와 5 cm이므로 남은 변은 12−4−5=3 cm입니다.",
+        "정사각형의 한 변은 3+4=7 cm입니다. 직사각형의 세로도 7 cm입니다.",
+        "직사각형의 가로는 14 cm이므로 둘레는 (14+7)×2=42 cm입니다."
       ],
-      "solution": "겹친 삼각형의 세 변의 길이의 합이 15cm이고, 두 변이 5cm와 6cm이므로 나머지 변은 15−5−6=4cm입니다. 정사각형 한 변은 겹친 삼각형의 4cm 변과 이어진 3cm 부분의 합이므로 4+3=7cm입니다. 직사각형의 짧은 변도 7cm입니다. 직사각형의 긴 변은 짧은 변의 2배인 14cm입니다. 따라서 둘레는 (7+14)×2=42cm입니다.",
+      "solution": "겹친 삼각형의 세 변의 합은 12 cm이고 두 변은 4 cm와 5 cm이므로 남은 변은 12−4−5=3 cm입니다. 정사각형의 한 변은 3+4=7 cm입니다. 직사각형의 세로도 7 cm입니다. 직사각형의 가로는 14 cm이므로 둘레는 (14+7)×2=42 cm입니다.",
       "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
       "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
       "verification": {
         "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
-        "independentMethod": "삼각형 세 변의 합과 직사각형 가로:세로=2:1을 식으로 두고 둘레를 직접 계산해 같은 값을 얻는다.",
+        "independentMethod": "3:4:5 직각삼각형의 각 변 길이를 좌표에서 다시 측정하고 정사각형·직사각형의 실제 SVG 길이와 답을 대조한다.",
         "parameters": {
-          "trianglePerimeter": 15,
+          "trianglePerimeter": 12,
           "knownTriangleSides": [
-            5,
-            6
+            4,
+            5
           ],
-          "unknownTriangleSide": 4,
-          "exposedSquareSideSegment": 3,
+          "unknownTriangleSide": 3,
+          "exposedSquareSideSegment": 4,
           "squareSide": 7,
           "rectangleWidth": 14,
-          "rectanglePerimeter": 42
+          "rectanglePerimeter": 42,
+          "geometryScale": 1
         },
-        "independentSuite": "qa/applied7-q01-independent-validate.py",
+        "independentSuite": "qa/applied-q01-artwork-r2-validate.py",
         "sourceExamPage": 1,
         "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
         "sourceAnswerPage": 1,
@@ -116,7 +117,8 @@
         "measuredVariantRate": null,
         "estimated": false,
         "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
-      }
+      },
+      "practiceStorageVersion": "20261030-applied7-q01-geometry-r2"
     },
     {
       "id": "applied7-q01-v2",
@@ -130,11 +132,88 @@
       "subarea": "겹친 사각형의 둘레",
       "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
       "pointBand": "2.7",
-      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 18cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
+      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 12 cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied7/q01-v2.svg",
-        "description": "직사각형과 정사각형의 겹친 삼각형 둘레 18cm, 두 변 6cm·7cm, 정사각형 변의 이어진 부분 4cm"
+        "src": "assets/applied7/q01-v2-r2.svg",
+        "description": "직사각형과 정사각형의 정확한 겹침: 삼각형 둘레 12 cm, 표시된 두 변 4 cm·5 cm, 이어진 변 5 cm"
+      },
+      "answer": "48",
+      "answerParts": [
+        48
+      ],
+      "answerLabels": [
+        "직사각형 가의 둘레(cm)"
+      ],
+      "acceptedAnswers": [
+        "48",
+        "48cm",
+        "48 cm"
+      ],
+      "answerContract": "single-number",
+      "solutionSteps": [
+        "겹친 삼각형의 세 변의 합은 12 cm이고 두 변은 4 cm와 5 cm이므로 남은 변은 12−4−5=3 cm입니다.",
+        "정사각형의 한 변은 3+5=8 cm입니다. 직사각형의 세로도 8 cm입니다.",
+        "직사각형의 가로는 16 cm이므로 둘레는 (16+8)×2=48 cm입니다."
+      ],
+      "solution": "겹친 삼각형의 세 변의 합은 12 cm이고 두 변은 4 cm와 5 cm이므로 남은 변은 12−4−5=3 cm입니다. 정사각형의 한 변은 3+5=8 cm입니다. 직사각형의 세로도 8 cm입니다. 직사각형의 가로는 16 cm이므로 둘레는 (16+8)×2=48 cm입니다.",
+      "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
+      "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
+      "verification": {
+        "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
+        "independentMethod": "3:4:5 직각삼각형의 각 변 길이를 좌표에서 다시 측정하고 정사각형·직사각형의 실제 SVG 길이와 답을 대조한다.",
+        "parameters": {
+          "trianglePerimeter": 12,
+          "knownTriangleSides": [
+            4,
+            5
+          ],
+          "unknownTriangleSide": 3,
+          "exposedSquareSideSegment": 5,
+          "squareSide": 8,
+          "rectangleWidth": 16,
+          "rectanglePerimeter": 48,
+          "geometryScale": 1
+        },
+        "independentSuite": "qa/applied-q01-artwork-r2-validate.py",
+        "sourceExamPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
+        "sourceAnswerPage": 1,
+        "sourceExamDriveFileId": "1qtshEh5Zkv3X4DMMcXHjWw1kRgibbvxf",
+        "sourceAnswerDriveFileId": "1zIN-XzODa-_T2AUjGbmuzHSPvCdVb2_j",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "new-overlap-diagram-same-geometry-relations",
+        "officialAnswerStatus": "답안 후보 PDF 1쪽의 손글씨 36을 확인했다. 공식 정답표로 식별하지 않았으며 원문 조건을 독립 계산해 같은 답 36cm를 재현했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
+      },
+      "practiceStorageVersion": "20261030-applied7-q01-geometry-r2"
+    },
+    {
+      "id": "applied7-q01-v3",
+      "genId": "applied7-q01",
+      "sourceSet": "applied",
+      "sourceRound": 7,
+      "sourceNo": 1,
+      "variantNo": 3,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "겹친 사각형의 둘레",
+      "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
+      "pointBand": "2.7",
+      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 12 cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
+      "asset": {
+        "kind": "svg",
+        "src": "assets/applied7/q01-v3-r2.svg",
+        "description": "직사각형과 정사각형의 정확한 겹침: 삼각형 둘레 12 cm, 표시된 두 변 4 cm·5 cm, 이어진 변 6 cm"
       },
       "answer": "54",
       "answerParts": [
@@ -150,29 +229,30 @@
       ],
       "answerContract": "single-number",
       "solutionSteps": [
-        "겹친 삼각형의 세 변의 길이의 합이 18cm이고, 두 변이 6cm와 7cm이므로 나머지 변은 18−6−7=5cm입니다.",
-        "정사각형 한 변은 겹친 삼각형의 5cm 변과 이어진 4cm 부분의 합이므로 5+4=9cm입니다. 직사각형의 짧은 변도 9cm입니다.",
-        "직사각형의 긴 변은 짧은 변의 2배인 18cm입니다. 따라서 둘레는 (9+18)×2=54cm입니다."
+        "겹친 삼각형의 세 변의 합은 12 cm이고 두 변은 4 cm와 5 cm이므로 남은 변은 12−4−5=3 cm입니다.",
+        "정사각형의 한 변은 3+6=9 cm입니다. 직사각형의 세로도 9 cm입니다.",
+        "직사각형의 가로는 18 cm이므로 둘레는 (18+9)×2=54 cm입니다."
       ],
-      "solution": "겹친 삼각형의 세 변의 길이의 합이 18cm이고, 두 변이 6cm와 7cm이므로 나머지 변은 18−6−7=5cm입니다. 정사각형 한 변은 겹친 삼각형의 5cm 변과 이어진 4cm 부분의 합이므로 5+4=9cm입니다. 직사각형의 짧은 변도 9cm입니다. 직사각형의 긴 변은 짧은 변의 2배인 18cm입니다. 따라서 둘레는 (9+18)×2=54cm입니다.",
+      "solution": "겹친 삼각형의 세 변의 합은 12 cm이고 두 변은 4 cm와 5 cm이므로 남은 변은 12−4−5=3 cm입니다. 정사각형의 한 변은 3+6=9 cm입니다. 직사각형의 세로도 9 cm입니다. 직사각형의 가로는 18 cm이므로 둘레는 (18+9)×2=54 cm입니다.",
       "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
       "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
       "verification": {
         "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
-        "independentMethod": "삼각형 세 변의 합과 직사각형 가로:세로=2:1을 식으로 두고 둘레를 직접 계산해 같은 값을 얻는다.",
+        "independentMethod": "3:4:5 직각삼각형의 각 변 길이를 좌표에서 다시 측정하고 정사각형·직사각형의 실제 SVG 길이와 답을 대조한다.",
         "parameters": {
-          "trianglePerimeter": 18,
+          "trianglePerimeter": 12,
           "knownTriangleSides": [
-            6,
-            7
+            4,
+            5
           ],
-          "unknownTriangleSide": 5,
-          "exposedSquareSideSegment": 4,
+          "unknownTriangleSide": 3,
+          "exposedSquareSideSegment": 6,
           "squareSide": 9,
           "rectangleWidth": 18,
-          "rectanglePerimeter": 54
+          "rectanglePerimeter": 54,
+          "geometryScale": 1
         },
-        "independentSuite": "qa/applied7-q01-independent-validate.py",
+        "independentSuite": "qa/applied-q01-artwork-r2-validate.py",
         "sourceExamPage": 1,
         "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
         "sourceAnswerPage": 1,
@@ -191,25 +271,26 @@
         "measuredVariantRate": null,
         "estimated": false,
         "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
-      }
+      },
+      "practiceStorageVersion": "20261030-applied7-q01-geometry-r2"
     },
     {
-      "id": "applied7-q01-v3",
+      "id": "applied7-q01-v4",
       "genId": "applied7-q01",
       "sourceSet": "applied",
       "sourceRound": 7,
       "sourceNo": 1,
-      "variantNo": 3,
+      "variantNo": 4,
       "reviewStatus": "verified",
       "area": "도형",
       "subarea": "겹친 사각형의 둘레",
       "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
       "pointBand": "2.7",
-      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 21cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
+      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 24 cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied7/q01-v3.svg",
-        "description": "직사각형과 정사각형의 겹친 삼각형 둘레 21cm, 두 변 7cm·8cm, 정사각형 변의 이어진 부분 5cm"
+        "src": "assets/applied7/q01-v4-r2.svg",
+        "description": "직사각형과 정사각형의 정확한 겹침: 삼각형 둘레 24 cm, 표시된 두 변 8 cm·10 cm, 이어진 변 5 cm"
       },
       "answer": "66",
       "answerParts": [
@@ -225,29 +306,30 @@
       ],
       "answerContract": "single-number",
       "solutionSteps": [
-        "겹친 삼각형의 세 변의 길이의 합이 21cm이고, 두 변이 7cm와 8cm이므로 나머지 변은 21−7−8=6cm입니다.",
-        "정사각형 한 변은 겹친 삼각형의 6cm 변과 이어진 5cm 부분의 합이므로 6+5=11cm입니다. 직사각형의 짧은 변도 11cm입니다.",
-        "직사각형의 긴 변은 짧은 변의 2배인 22cm입니다. 따라서 둘레는 (11+22)×2=66cm입니다."
+        "겹친 삼각형의 세 변의 합은 24 cm이고 두 변은 8 cm와 10 cm이므로 남은 변은 24−8−10=6 cm입니다.",
+        "정사각형의 한 변은 6+5=11 cm입니다. 직사각형의 세로도 11 cm입니다.",
+        "직사각형의 가로는 22 cm이므로 둘레는 (22+11)×2=66 cm입니다."
       ],
-      "solution": "겹친 삼각형의 세 변의 길이의 합이 21cm이고, 두 변이 7cm와 8cm이므로 나머지 변은 21−7−8=6cm입니다. 정사각형 한 변은 겹친 삼각형의 6cm 변과 이어진 5cm 부분의 합이므로 6+5=11cm입니다. 직사각형의 짧은 변도 11cm입니다. 직사각형의 긴 변은 짧은 변의 2배인 22cm입니다. 따라서 둘레는 (11+22)×2=66cm입니다.",
+      "solution": "겹친 삼각형의 세 변의 합은 24 cm이고 두 변은 8 cm와 10 cm이므로 남은 변은 24−8−10=6 cm입니다. 정사각형의 한 변은 6+5=11 cm입니다. 직사각형의 세로도 11 cm입니다. 직사각형의 가로는 22 cm이므로 둘레는 (22+11)×2=66 cm입니다.",
       "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
       "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
       "verification": {
         "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
-        "independentMethod": "삼각형 세 변의 합과 직사각형 가로:세로=2:1을 식으로 두고 둘레를 직접 계산해 같은 값을 얻는다.",
+        "independentMethod": "3:4:5 직각삼각형의 각 변 길이를 좌표에서 다시 측정하고 정사각형·직사각형의 실제 SVG 길이와 답을 대조한다.",
         "parameters": {
-          "trianglePerimeter": 21,
+          "trianglePerimeter": 24,
           "knownTriangleSides": [
-            7,
-            8
+            8,
+            10
           ],
           "unknownTriangleSide": 6,
           "exposedSquareSideSegment": 5,
           "squareSide": 11,
           "rectangleWidth": 22,
-          "rectanglePerimeter": 66
+          "rectanglePerimeter": 66,
+          "geometryScale": 2
         },
-        "independentSuite": "qa/applied7-q01-independent-validate.py",
+        "independentSuite": "qa/applied-q01-artwork-r2-validate.py",
         "sourceExamPage": 1,
         "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
         "sourceAnswerPage": 1,
@@ -266,25 +348,103 @@
         "measuredVariantRate": null,
         "estimated": false,
         "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
-      }
+      },
+      "practiceStorageVersion": "20261030-applied7-q01-geometry-r2"
     },
     {
-      "id": "applied7-q01-v4",
+      "id": "applied7-q01-v5",
       "genId": "applied7-q01",
       "sourceSet": "applied",
       "sourceRound": 7,
       "sourceNo": 1,
-      "variantNo": 4,
+      "variantNo": 5,
       "reviewStatus": "verified",
       "area": "도형",
       "subarea": "겹친 사각형의 둘레",
       "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
       "pointBand": "2.7",
-      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 25cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
+      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 24 cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied7/q01-v4.svg",
-        "description": "직사각형과 정사각형의 겹친 삼각형 둘레 25cm, 두 변 8cm·10cm, 정사각형 변의 이어진 부분 6cm"
+        "src": "assets/applied7/q01-v5-r2.svg",
+        "description": "직사각형과 정사각형의 정확한 겹침: 삼각형 둘레 24 cm, 표시된 두 변 8 cm·10 cm, 이어진 변 6 cm"
+      },
+      "answer": "72",
+      "answerParts": [
+        72
+      ],
+      "answerLabels": [
+        "직사각형 가의 둘레(cm)"
+      ],
+      "acceptedAnswers": [
+        "72",
+        "72cm",
+        "72 cm"
+      ],
+      "answerContract": "single-number",
+      "solutionSteps": [
+        "겹친 삼각형의 세 변의 합은 24 cm이고 두 변은 8 cm와 10 cm이므로 남은 변은 24−8−10=6 cm입니다.",
+        "정사각형의 한 변은 6+6=12 cm입니다. 직사각형의 세로도 12 cm입니다.",
+        "직사각형의 가로는 24 cm이므로 둘레는 (24+12)×2=72 cm입니다."
+      ],
+      "solution": "겹친 삼각형의 세 변의 합은 24 cm이고 두 변은 8 cm와 10 cm이므로 남은 변은 24−8−10=6 cm입니다. 정사각형의 한 변은 6+6=12 cm입니다. 직사각형의 세로도 12 cm입니다. 직사각형의 가로는 24 cm이므로 둘레는 (24+12)×2=72 cm입니다.",
+      "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
+      "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
+      "verification": {
+        "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
+        "independentMethod": "3:4:5 직각삼각형의 각 변 길이를 좌표에서 다시 측정하고 정사각형·직사각형의 실제 SVG 길이와 답을 대조한다.",
+        "parameters": {
+          "trianglePerimeter": 24,
+          "knownTriangleSides": [
+            8,
+            10
+          ],
+          "unknownTriangleSide": 6,
+          "exposedSquareSideSegment": 6,
+          "squareSide": 12,
+          "rectangleWidth": 24,
+          "rectanglePerimeter": 72,
+          "geometryScale": 2
+        },
+        "independentSuite": "qa/applied-q01-artwork-r2-validate.py",
+        "sourceExamPage": 1,
+        "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
+        "sourceAnswerPage": 1,
+        "sourceExamDriveFileId": "1qtshEh5Zkv3X4DMMcXHjWw1kRgibbvxf",
+        "sourceAnswerDriveFileId": "1zIN-XzODa-_T2AUjGbmuzHSPvCdVb2_j",
+        "sourceDrawingCompared": true,
+        "sourceDrawingPresent": true,
+        "variantDrawingType": "new-overlap-diagram-same-geometry-relations",
+        "officialAnswerStatus": "답안 후보 PDF 1쪽의 손글씨 36을 확인했다. 공식 정답표로 식별하지 않았으며 원문 조건을 독립 계산해 같은 답 36cm를 재현했다.",
+        "studentDifficultyMeasured": false
+      },
+      "difficultyEvidence": {
+        "basis": "source-point-band",
+        "label": "하",
+        "sourceReasoningPreserved": true,
+        "measuredVariantRate": null,
+        "estimated": false,
+        "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
+      },
+      "practiceStorageVersion": "20261030-applied7-q01-geometry-r2"
+    },
+    {
+      "id": "applied7-q01-v6",
+      "genId": "applied7-q01",
+      "sourceSet": "applied",
+      "sourceRound": 7,
+      "sourceNo": 1,
+      "variantNo": 6,
+      "reviewStatus": "verified",
+      "area": "도형",
+      "subarea": "겹친 사각형의 둘레",
+      "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
+      "pointBand": "2.7",
+      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 24 cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
+      "asset": {
+        "kind": "svg",
+        "src": "assets/applied7/q01-v6-r2.svg",
+        "description": "직사각형과 정사각형의 정확한 겹침: 삼각형 둘레 24 cm, 표시된 두 변 8 cm·10 cm, 이어진 변 7 cm"
       },
       "answer": "78",
       "answerParts": [
@@ -300,29 +460,30 @@
       ],
       "answerContract": "single-number",
       "solutionSteps": [
-        "겹친 삼각형의 세 변의 길이의 합이 25cm이고, 두 변이 8cm와 10cm이므로 나머지 변은 25−8−10=7cm입니다.",
-        "정사각형 한 변은 겹친 삼각형의 7cm 변과 이어진 6cm 부분의 합이므로 7+6=13cm입니다. 직사각형의 짧은 변도 13cm입니다.",
-        "직사각형의 긴 변은 짧은 변의 2배인 26cm입니다. 따라서 둘레는 (13+26)×2=78cm입니다."
+        "겹친 삼각형의 세 변의 합은 24 cm이고 두 변은 8 cm와 10 cm이므로 남은 변은 24−8−10=6 cm입니다.",
+        "정사각형의 한 변은 6+7=13 cm입니다. 직사각형의 세로도 13 cm입니다.",
+        "직사각형의 가로는 26 cm이므로 둘레는 (26+13)×2=78 cm입니다."
       ],
-      "solution": "겹친 삼각형의 세 변의 길이의 합이 25cm이고, 두 변이 8cm와 10cm이므로 나머지 변은 25−8−10=7cm입니다. 정사각형 한 변은 겹친 삼각형의 7cm 변과 이어진 6cm 부분의 합이므로 7+6=13cm입니다. 직사각형의 짧은 변도 13cm입니다. 직사각형의 긴 변은 짧은 변의 2배인 26cm입니다. 따라서 둘레는 (13+26)×2=78cm입니다.",
+      "solution": "겹친 삼각형의 세 변의 합은 24 cm이고 두 변은 8 cm와 10 cm이므로 남은 변은 24−8−10=6 cm입니다. 정사각형의 한 변은 6+7=13 cm입니다. 직사각형의 세로도 13 cm입니다. 직사각형의 가로는 26 cm이므로 둘레는 (26+13)×2=78 cm입니다.",
       "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
       "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
       "verification": {
         "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
-        "independentMethod": "삼각형 세 변의 합과 직사각형 가로:세로=2:1을 식으로 두고 둘레를 직접 계산해 같은 값을 얻는다.",
+        "independentMethod": "3:4:5 직각삼각형의 각 변 길이를 좌표에서 다시 측정하고 정사각형·직사각형의 실제 SVG 길이와 답을 대조한다.",
         "parameters": {
-          "trianglePerimeter": 25,
+          "trianglePerimeter": 24,
           "knownTriangleSides": [
             8,
             10
           ],
-          "unknownTriangleSide": 7,
-          "exposedSquareSideSegment": 6,
+          "unknownTriangleSide": 6,
+          "exposedSquareSideSegment": 7,
           "squareSide": 13,
           "rectangleWidth": 26,
-          "rectanglePerimeter": 78
+          "rectanglePerimeter": 78,
+          "geometryScale": 2
         },
-        "independentSuite": "qa/applied7-q01-independent-validate.py",
+        "independentSuite": "qa/applied-q01-artwork-r2-validate.py",
         "sourceExamPage": 1,
         "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
         "sourceAnswerPage": 1,
@@ -341,63 +502,65 @@
         "measuredVariantRate": null,
         "estimated": false,
         "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
-      }
+      },
+      "practiceStorageVersion": "20261030-applied7-q01-geometry-r2"
     },
     {
-      "id": "applied7-q01-v5",
+      "id": "applied7-q01-v7",
       "genId": "applied7-q01",
       "sourceSet": "applied",
       "sourceRound": 7,
       "sourceNo": 1,
-      "variantNo": 5,
+      "variantNo": 7,
       "reviewStatus": "verified",
       "area": "도형",
       "subarea": "겹친 사각형의 둘레",
       "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
       "pointBand": "2.7",
-      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 28cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
+      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 36 cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied7/q01-v5.svg",
-        "description": "직사각형과 정사각형의 겹친 삼각형 둘레 28cm, 두 변 9cm·11cm, 정사각형 변의 이어진 부분 7cm"
+        "src": "assets/applied7/q01-v7-r2.svg",
+        "description": "직사각형과 정사각형의 정확한 겹침: 삼각형 둘레 36 cm, 표시된 두 변 12 cm·15 cm, 이어진 변 7 cm"
       },
-      "answer": "90",
+      "answer": "96",
       "answerParts": [
-        90
+        96
       ],
       "answerLabels": [
         "직사각형 가의 둘레(cm)"
       ],
       "acceptedAnswers": [
-        "90",
-        "90cm",
-        "90 cm"
+        "96",
+        "96cm",
+        "96 cm"
       ],
       "answerContract": "single-number",
       "solutionSteps": [
-        "겹친 삼각형의 세 변의 길이의 합이 28cm이고, 두 변이 9cm와 11cm이므로 나머지 변은 28−9−11=8cm입니다.",
-        "정사각형 한 변은 겹친 삼각형의 8cm 변과 이어진 7cm 부분의 합이므로 8+7=15cm입니다. 직사각형의 짧은 변도 15cm입니다.",
-        "직사각형의 긴 변은 짧은 변의 2배인 30cm입니다. 따라서 둘레는 (15+30)×2=90cm입니다."
+        "겹친 삼각형의 세 변의 합은 36 cm이고 두 변은 12 cm와 15 cm이므로 남은 변은 36−12−15=9 cm입니다.",
+        "정사각형의 한 변은 9+7=16 cm입니다. 직사각형의 세로도 16 cm입니다.",
+        "직사각형의 가로는 32 cm이므로 둘레는 (32+16)×2=96 cm입니다."
       ],
-      "solution": "겹친 삼각형의 세 변의 길이의 합이 28cm이고, 두 변이 9cm와 11cm이므로 나머지 변은 28−9−11=8cm입니다. 정사각형 한 변은 겹친 삼각형의 8cm 변과 이어진 7cm 부분의 합이므로 8+7=15cm입니다. 직사각형의 짧은 변도 15cm입니다. 직사각형의 긴 변은 짧은 변의 2배인 30cm입니다. 따라서 둘레는 (15+30)×2=90cm입니다.",
+      "solution": "겹친 삼각형의 세 변의 합은 36 cm이고 두 변은 12 cm와 15 cm이므로 남은 변은 36−12−15=9 cm입니다. 정사각형의 한 변은 9+7=16 cm입니다. 직사각형의 세로도 16 cm입니다. 직사각형의 가로는 32 cm이므로 둘레는 (32+16)×2=96 cm입니다.",
       "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
       "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
       "verification": {
         "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
-        "independentMethod": "삼각형 세 변의 합과 직사각형 가로:세로=2:1을 식으로 두고 둘레를 직접 계산해 같은 값을 얻는다.",
+        "independentMethod": "3:4:5 직각삼각형의 각 변 길이를 좌표에서 다시 측정하고 정사각형·직사각형의 실제 SVG 길이와 답을 대조한다.",
         "parameters": {
-          "trianglePerimeter": 28,
+          "trianglePerimeter": 36,
           "knownTriangleSides": [
-            9,
-            11
+            12,
+            15
           ],
-          "unknownTriangleSide": 8,
+          "unknownTriangleSide": 9,
           "exposedSquareSideSegment": 7,
-          "squareSide": 15,
-          "rectangleWidth": 30,
-          "rectanglePerimeter": 90
+          "squareSide": 16,
+          "rectangleWidth": 32,
+          "rectanglePerimeter": 96,
+          "geometryScale": 3
         },
-        "independentSuite": "qa/applied7-q01-independent-validate.py",
+        "independentSuite": "qa/applied-q01-artwork-r2-validate.py",
         "sourceExamPage": 1,
         "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
         "sourceAnswerPage": 1,
@@ -416,25 +579,26 @@
         "measuredVariantRate": null,
         "estimated": false,
         "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
-      }
+      },
+      "practiceStorageVersion": "20261030-applied7-q01-geometry-r2"
     },
     {
-      "id": "applied7-q01-v6",
+      "id": "applied7-q01-v8",
       "genId": "applied7-q01",
       "sourceSet": "applied",
       "sourceRound": 7,
       "sourceNo": 1,
-      "variantNo": 6,
+      "variantNo": 8,
       "reviewStatus": "verified",
       "area": "도형",
       "subarea": "겹친 사각형의 둘레",
       "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
       "pointBand": "2.7",
-      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 31cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
+      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 36 cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied7/q01-v6.svg",
-        "description": "직사각형과 정사각형의 겹친 삼각형 둘레 31cm, 두 변 10cm·12cm, 정사각형 변의 이어진 부분 8cm"
+        "src": "assets/applied7/q01-v8-r2.svg",
+        "description": "직사각형과 정사각형의 정확한 겹침: 삼각형 둘레 36 cm, 표시된 두 변 12 cm·15 cm, 이어진 변 8 cm"
       },
       "answer": "102",
       "answerParts": [
@@ -450,29 +614,30 @@
       ],
       "answerContract": "single-number",
       "solutionSteps": [
-        "겹친 삼각형의 세 변의 길이의 합이 31cm이고, 두 변이 10cm와 12cm이므로 나머지 변은 31−10−12=9cm입니다.",
-        "정사각형 한 변은 겹친 삼각형의 9cm 변과 이어진 8cm 부분의 합이므로 9+8=17cm입니다. 직사각형의 짧은 변도 17cm입니다.",
-        "직사각형의 긴 변은 짧은 변의 2배인 34cm입니다. 따라서 둘레는 (17+34)×2=102cm입니다."
+        "겹친 삼각형의 세 변의 합은 36 cm이고 두 변은 12 cm와 15 cm이므로 남은 변은 36−12−15=9 cm입니다.",
+        "정사각형의 한 변은 9+8=17 cm입니다. 직사각형의 세로도 17 cm입니다.",
+        "직사각형의 가로는 34 cm이므로 둘레는 (34+17)×2=102 cm입니다."
       ],
-      "solution": "겹친 삼각형의 세 변의 길이의 합이 31cm이고, 두 변이 10cm와 12cm이므로 나머지 변은 31−10−12=9cm입니다. 정사각형 한 변은 겹친 삼각형의 9cm 변과 이어진 8cm 부분의 합이므로 9+8=17cm입니다. 직사각형의 짧은 변도 17cm입니다. 직사각형의 긴 변은 짧은 변의 2배인 34cm입니다. 따라서 둘레는 (17+34)×2=102cm입니다.",
+      "solution": "겹친 삼각형의 세 변의 합은 36 cm이고 두 변은 12 cm와 15 cm이므로 남은 변은 36−12−15=9 cm입니다. 정사각형의 한 변은 9+8=17 cm입니다. 직사각형의 세로도 17 cm입니다. 직사각형의 가로는 34 cm이므로 둘레는 (34+17)×2=102 cm입니다.",
       "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
       "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
       "verification": {
         "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
-        "independentMethod": "삼각형 세 변의 합과 직사각형 가로:세로=2:1을 식으로 두고 둘레를 직접 계산해 같은 값을 얻는다.",
+        "independentMethod": "3:4:5 직각삼각형의 각 변 길이를 좌표에서 다시 측정하고 정사각형·직사각형의 실제 SVG 길이와 답을 대조한다.",
         "parameters": {
-          "trianglePerimeter": 31,
+          "trianglePerimeter": 36,
           "knownTriangleSides": [
-            10,
-            12
+            12,
+            15
           ],
           "unknownTriangleSide": 9,
           "exposedSquareSideSegment": 8,
           "squareSide": 17,
           "rectangleWidth": 34,
-          "rectanglePerimeter": 102
+          "rectanglePerimeter": 102,
+          "geometryScale": 3
         },
-        "independentSuite": "qa/applied7-q01-independent-validate.py",
+        "independentSuite": "qa/applied-q01-artwork-r2-validate.py",
         "sourceExamPage": 1,
         "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
         "sourceAnswerPage": 1,
@@ -491,157 +656,8 @@
         "measuredVariantRate": null,
         "estimated": false,
         "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
-      }
-    },
-    {
-      "id": "applied7-q01-v7",
-      "genId": "applied7-q01",
-      "sourceSet": "applied",
-      "sourceRound": 7,
-      "sourceNo": 1,
-      "variantNo": 7,
-      "reviewStatus": "verified",
-      "area": "도형",
-      "subarea": "겹친 사각형의 둘레",
-      "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
-      "pointBand": "2.7",
-      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 34cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
-      "asset": {
-        "kind": "svg",
-        "src": "assets/applied7/q01-v7.svg",
-        "description": "직사각형과 정사각형의 겹친 삼각형 둘레 34cm, 두 변 11cm·13cm, 정사각형 변의 이어진 부분 9cm"
       },
-      "answer": "114",
-      "answerParts": [
-        114
-      ],
-      "answerLabels": [
-        "직사각형 가의 둘레(cm)"
-      ],
-      "acceptedAnswers": [
-        "114",
-        "114cm",
-        "114 cm"
-      ],
-      "answerContract": "single-number",
-      "solutionSteps": [
-        "겹친 삼각형의 세 변의 길이의 합이 34cm이고, 두 변이 11cm와 13cm이므로 나머지 변은 34−11−13=10cm입니다.",
-        "정사각형 한 변은 겹친 삼각형의 10cm 변과 이어진 9cm 부분의 합이므로 10+9=19cm입니다. 직사각형의 짧은 변도 19cm입니다.",
-        "직사각형의 긴 변은 짧은 변의 2배인 38cm입니다. 따라서 둘레는 (19+38)×2=114cm입니다."
-      ],
-      "solution": "겹친 삼각형의 세 변의 길이의 합이 34cm이고, 두 변이 11cm와 13cm이므로 나머지 변은 34−11−13=10cm입니다. 정사각형 한 변은 겹친 삼각형의 10cm 변과 이어진 9cm 부분의 합이므로 10+9=19cm입니다. 직사각형의 짧은 변도 19cm입니다. 직사각형의 긴 변은 짧은 변의 2배인 38cm입니다. 따라서 둘레는 (19+38)×2=114cm입니다.",
-      "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
-      "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
-      "verification": {
-        "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
-        "independentMethod": "삼각형 세 변의 합과 직사각형 가로:세로=2:1을 식으로 두고 둘레를 직접 계산해 같은 값을 얻는다.",
-        "parameters": {
-          "trianglePerimeter": 34,
-          "knownTriangleSides": [
-            11,
-            13
-          ],
-          "unknownTriangleSide": 10,
-          "exposedSquareSideSegment": 9,
-          "squareSide": 19,
-          "rectangleWidth": 38,
-          "rectanglePerimeter": 114
-        },
-        "independentSuite": "qa/applied7-q01-independent-validate.py",
-        "sourceExamPage": 1,
-        "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
-        "sourceAnswerPage": 1,
-        "sourceExamDriveFileId": "1qtshEh5Zkv3X4DMMcXHjWw1kRgibbvxf",
-        "sourceAnswerDriveFileId": "1zIN-XzODa-_T2AUjGbmuzHSPvCdVb2_j",
-        "sourceDrawingCompared": true,
-        "sourceDrawingPresent": true,
-        "variantDrawingType": "new-overlap-diagram-same-geometry-relations",
-        "officialAnswerStatus": "답안 후보 PDF 1쪽의 손글씨 36을 확인했다. 공식 정답표로 식별하지 않았으며 원문 조건을 독립 계산해 같은 답 36cm를 재현했다.",
-        "studentDifficultyMeasured": false
-      },
-      "difficultyEvidence": {
-        "basis": "source-point-band",
-        "label": "하",
-        "sourceReasoningPreserved": true,
-        "measuredVariantRate": null,
-        "estimated": false,
-        "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
-      }
-    },
-    {
-      "id": "applied7-q01-v8",
-      "genId": "applied7-q01",
-      "sourceSet": "applied",
-      "sourceRound": 7,
-      "sourceNo": 1,
-      "variantNo": 8,
-      "reviewStatus": "verified",
-      "area": "도형",
-      "subarea": "겹친 사각형의 둘레",
-      "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
-      "pointBand": "2.7",
-      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 37cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
-      "asset": {
-        "kind": "svg",
-        "src": "assets/applied7/q01-v8.svg",
-        "description": "직사각형과 정사각형의 겹친 삼각형 둘레 37cm, 두 변 12cm·14cm, 정사각형 변의 이어진 부분 10cm"
-      },
-      "answer": "126",
-      "answerParts": [
-        126
-      ],
-      "answerLabels": [
-        "직사각형 가의 둘레(cm)"
-      ],
-      "acceptedAnswers": [
-        "126",
-        "126cm",
-        "126 cm"
-      ],
-      "answerContract": "single-number",
-      "solutionSteps": [
-        "겹친 삼각형의 세 변의 길이의 합이 37cm이고, 두 변이 12cm와 14cm이므로 나머지 변은 37−12−14=11cm입니다.",
-        "정사각형 한 변은 겹친 삼각형의 11cm 변과 이어진 10cm 부분의 합이므로 11+10=21cm입니다. 직사각형의 짧은 변도 21cm입니다.",
-        "직사각형의 긴 변은 짧은 변의 2배인 42cm입니다. 따라서 둘레는 (21+42)×2=126cm입니다."
-      ],
-      "solution": "겹친 삼각형의 세 변의 길이의 합이 37cm이고, 두 변이 12cm와 14cm이므로 나머지 변은 37−12−14=11cm입니다. 정사각형 한 변은 겹친 삼각형의 11cm 변과 이어진 10cm 부분의 합이므로 11+10=21cm입니다. 직사각형의 짧은 변도 21cm입니다. 직사각형의 긴 변은 짧은 변의 2배인 42cm입니다. 따라서 둘레는 (21+42)×2=126cm입니다.",
-      "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
-      "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
-      "verification": {
-        "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
-        "independentMethod": "삼각형 세 변의 합과 직사각형 가로:세로=2:1을 식으로 두고 둘레를 직접 계산해 같은 값을 얻는다.",
-        "parameters": {
-          "trianglePerimeter": 37,
-          "knownTriangleSides": [
-            12,
-            14
-          ],
-          "unknownTriangleSide": 11,
-          "exposedSquareSideSegment": 10,
-          "squareSide": 21,
-          "rectangleWidth": 42,
-          "rectanglePerimeter": 126
-        },
-        "independentSuite": "qa/applied7-q01-independent-validate.py",
-        "sourceExamPage": 1,
-        "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
-        "sourceAnswerPage": 1,
-        "sourceExamDriveFileId": "1qtshEh5Zkv3X4DMMcXHjWw1kRgibbvxf",
-        "sourceAnswerDriveFileId": "1zIN-XzODa-_T2AUjGbmuzHSPvCdVb2_j",
-        "sourceDrawingCompared": true,
-        "sourceDrawingPresent": true,
-        "variantDrawingType": "new-overlap-diagram-same-geometry-relations",
-        "officialAnswerStatus": "답안 후보 PDF 1쪽의 손글씨 36을 확인했다. 공식 정답표로 식별하지 않았으며 원문 조건을 독립 계산해 같은 답 36cm를 재현했다.",
-        "studentDifficultyMeasured": false
-      },
-      "difficultyEvidence": {
-        "basis": "source-point-band",
-        "label": "하",
-        "sourceReasoningPreserved": true,
-        "measuredVariantRate": null,
-        "estimated": false,
-        "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
-      }
+      "practiceStorageVersion": "20261030-applied7-q01-geometry-r2"
     },
     {
       "id": "applied7-q01-v9",
@@ -655,49 +671,50 @@
       "subarea": "겹친 사각형의 둘레",
       "detailType": "겹친 삼각형의 둘레와 변의 관계로 직사각형 둘레 구하기",
       "pointBand": "2.7",
-      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 40cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
+      "text": "직사각형 가와 정사각형 나의 한 변의 길이는 같습니다. 직사각형 가의 가로는 세로의 2배입니다. 두 도형이 겹쳐 생긴 삼각형의 세 변의 길이의 합은 36 cm입니다. 직사각형 가의 둘레는 몇 cm입니까?",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied7/q01-v9.svg",
-        "description": "직사각형과 정사각형의 겹친 삼각형 둘레 40cm, 두 변 13cm·15cm, 정사각형 변의 이어진 부분 11cm"
+        "src": "assets/applied7/q01-v9-r2.svg",
+        "description": "직사각형과 정사각형의 정확한 겹침: 삼각형 둘레 36 cm, 표시된 두 변 12 cm·15 cm, 이어진 변 9 cm"
       },
-      "answer": "138",
+      "answer": "108",
       "answerParts": [
-        138
+        108
       ],
       "answerLabels": [
         "직사각형 가의 둘레(cm)"
       ],
       "acceptedAnswers": [
-        "138",
-        "138cm",
-        "138 cm"
+        "108",
+        "108cm",
+        "108 cm"
       ],
       "answerContract": "single-number",
       "solutionSteps": [
-        "겹친 삼각형의 세 변의 길이의 합이 40cm이고, 두 변이 13cm와 15cm이므로 나머지 변은 40−13−15=12cm입니다.",
-        "정사각형 한 변은 겹친 삼각형의 12cm 변과 이어진 11cm 부분의 합이므로 12+11=23cm입니다. 직사각형의 짧은 변도 23cm입니다.",
-        "직사각형의 긴 변은 짧은 변의 2배인 46cm입니다. 따라서 둘레는 (23+46)×2=138cm입니다."
+        "겹친 삼각형의 세 변의 합은 36 cm이고 두 변은 12 cm와 15 cm이므로 남은 변은 36−12−15=9 cm입니다.",
+        "정사각형의 한 변은 9+9=18 cm입니다. 직사각형의 세로도 18 cm입니다.",
+        "직사각형의 가로는 36 cm이므로 둘레는 (36+18)×2=108 cm입니다."
       ],
-      "solution": "겹친 삼각형의 세 변의 길이의 합이 40cm이고, 두 변이 13cm와 15cm이므로 나머지 변은 40−13−15=12cm입니다. 정사각형 한 변은 겹친 삼각형의 12cm 변과 이어진 11cm 부분의 합이므로 12+11=23cm입니다. 직사각형의 짧은 변도 23cm입니다. 직사각형의 긴 변은 짧은 변의 2배인 46cm입니다. 따라서 둘레는 (23+46)×2=138cm입니다.",
+      "solution": "겹친 삼각형의 세 변의 합은 36 cm이고 두 변은 12 cm와 15 cm이므로 남은 변은 36−12−15=9 cm입니다. 정사각형의 한 변은 9+9=18 cm입니다. 직사각형의 세로도 18 cm입니다. 직사각형의 가로는 36 cm이므로 둘레는 (36+18)×2=108 cm입니다.",
       "learningPoint": "삼각형 둘레에서 나머지 변을 구하고, 겹친 변의 연속 길이를 정사각형과 직사각형의 같은 변으로 연결하기",
       "learningLocation": "활용 7회 · 원문 1번 · 겹친 삼각형에서 두 사각형의 변과 직사각형 둘레 찾기",
       "verification": {
         "primaryMethod": "삼각형 둘레에서 알려진 두 변을 빼 나머지 변을 구한 뒤 정사각형 한 변, 직사각형 가로, 둘레를 차례로 계산한다.",
-        "independentMethod": "삼각형 세 변의 합과 직사각형 가로:세로=2:1을 식으로 두고 둘레를 직접 계산해 같은 값을 얻는다.",
+        "independentMethod": "3:4:5 직각삼각형의 각 변 길이를 좌표에서 다시 측정하고 정사각형·직사각형의 실제 SVG 길이와 답을 대조한다.",
         "parameters": {
-          "trianglePerimeter": 40,
+          "trianglePerimeter": 36,
           "knownTriangleSides": [
-            13,
+            12,
             15
           ],
-          "unknownTriangleSide": 12,
-          "exposedSquareSideSegment": 11,
-          "squareSide": 23,
-          "rectangleWidth": 46,
-          "rectanglePerimeter": 138
+          "unknownTriangleSide": 9,
+          "exposedSquareSideSegment": 9,
+          "squareSide": 18,
+          "rectangleWidth": 36,
+          "rectanglePerimeter": 108,
+          "geometryScale": 3
         },
-        "independentSuite": "qa/applied7-q01-independent-validate.py",
+        "independentSuite": "qa/applied-q01-artwork-r2-validate.py",
         "sourceExamPage": 1,
         "sourceExamFile": "초등과정 대비 실전 모의고사활용 7회.pdf",
         "sourceAnswerPage": 1,
@@ -716,7 +733,8 @@
         "measuredVariantRate": null,
         "estimated": false,
         "rationale": "활용 7회 원문 1번은 1~12번의 2.7점 배점대이며, 활용 난도는 배점대만 적용한다."
-      }
+      },
+      "practiceStorageVersion": "20261030-applied7-q01-geometry-r2"
     },
     {
       "id": "applied7-q02-v1",

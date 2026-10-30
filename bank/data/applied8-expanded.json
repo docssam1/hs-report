@@ -137,7 +137,7 @@
       "text": "다음 모양에서 같은 모양은 같은 숫자를 나타냅니다. △가 나타내는 수를 구하세요.",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied8/q1-shape-arithmetic-v2.svg",
+        "src": "assets/applied8/q1-shape-arithmetic-v2-r2.svg",
         "description": "두 자리 반복 도형 수의 덧셈·뺄셈 암호식"
       },
       "answer": "1",
@@ -217,7 +217,7 @@
       "text": "다음 모양에서 같은 모양은 같은 숫자를 나타냅니다. △가 나타내는 수를 구하세요.",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied8/q1-shape-arithmetic-v3.svg",
+        "src": "assets/applied8/q1-shape-arithmetic-v3-r2.svg",
         "description": "두 자리 반복 도형 수의 덧셈·뺄셈 암호식"
       },
       "answer": "8",
@@ -297,7 +297,7 @@
       "text": "다음 모양에서 같은 모양은 같은 숫자를 나타냅니다. △가 나타내는 수를 구하세요.",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied8/q1-shape-arithmetic-v4.svg",
+        "src": "assets/applied8/q1-shape-arithmetic-v4-r2.svg",
         "description": "두 자리 반복 도형 수의 덧셈·뺄셈 암호식"
       },
       "answer": "7",
@@ -377,7 +377,7 @@
       "text": "다음 모양에서 같은 모양은 같은 숫자를 나타냅니다. △가 나타내는 수를 구하세요.",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied8/q1-shape-arithmetic-v5.svg",
+        "src": "assets/applied8/q1-shape-arithmetic-v5-r2.svg",
         "description": "두 자리 반복 도형 수의 덧셈·뺄셈 암호식"
       },
       "answer": "5",
@@ -457,7 +457,7 @@
       "text": "다음 모양에서 같은 모양은 같은 숫자를 나타냅니다. △가 나타내는 수를 구하세요.",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied8/q1-shape-arithmetic-v6.svg",
+        "src": "assets/applied8/q1-shape-arithmetic-v6-r2.svg",
         "description": "두 자리 반복 도형 수의 덧셈·뺄셈 암호식"
       },
       "answer": "1",
@@ -537,7 +537,7 @@
       "text": "다음 모양에서 같은 모양은 같은 숫자를 나타냅니다. △가 나타내는 수를 구하세요.",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied8/q1-shape-arithmetic-v7.svg",
+        "src": "assets/applied8/q1-shape-arithmetic-v7-r2.svg",
         "description": "두 자리 반복 도형 수의 덧셈·뺄셈 암호식"
       },
       "answer": "4",
@@ -617,7 +617,7 @@
       "text": "다음 모양에서 같은 모양은 같은 숫자를 나타냅니다. △가 나타내는 수를 구하세요.",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied8/q1-shape-arithmetic-v8.svg",
+        "src": "assets/applied8/q1-shape-arithmetic-v8-r2.svg",
         "description": "두 자리 반복 도형 수의 덧셈·뺄셈 암호식"
       },
       "answer": "1",
@@ -697,7 +697,7 @@
       "text": "다음 모양에서 같은 모양은 같은 숫자를 나타냅니다. △가 나타내는 수를 구하세요.",
       "asset": {
         "kind": "svg",
-        "src": "assets/applied8/q1-shape-arithmetic-v9.svg",
+        "src": "assets/applied8/q1-shape-arithmetic-v9-r2.svg",
         "description": "두 자리 반복 도형 수의 덧셈·뺄셈 암호식"
       },
       "answer": "9",

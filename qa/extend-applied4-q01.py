@@ -27,14 +27,15 @@ def sha(path: Path) -> str:
 
 def svg_for(fixed_digit: int, width: int) -> str:
     step = 72
-    star_x = [140 + i * step for i in range(width)]
+    result_positions = [140 + i * step for i in range(width + 1)]
+    # Align the ones place of both addends with the fixed final digit.
+    star_x = result_positions[1:]
     y1, y2, line_y, y3 = 54, 112, 142, 196
     stars = "\n".join(f'<polygon points="{x},{y1-18} {x+5},{y1-5} {x+19},{y1-5} {x+8},{y1+3} {x+12},{y1+17} {x},{y1+9} {x-12},{y1+17} {x-8},{y1+3} {x-19},{y1-5} {x-5},{y1-5}"/>' for x in star_x)
     circles = " ".join(f'<circle cx="{x}" cy="{y2}" r="14"/>' for x in star_x)
-    result_positions = [140 + i * step for i in range(width)]
     diamond_x = result_positions[0]
-    result_circles = " ".join(f'<circle cx="{x}" cy="{y3}" r="14"/>' for x in result_positions[1:])
-    d_x = result_positions[-1] + step
+    result_circles = " ".join(f'<circle cx="{x}" cy="{y3}" r="14"/>' for x in result_positions[1:-1])
+    d_x = result_positions[-1]
     svg_w = d_x + 80
     line_left, line_right = 112, d_x + 24
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{svg_w}" height="230" viewBox="0 0 {svg_w} 230" role="img" aria-label="별 {width}개 더하기 원 {width}개는 마름모, 원 {width-1}개, 숫자 {fixed_digit}로 이루어진 수입니다.">
@@ -84,7 +85,7 @@ def main() -> None:
         assert len(solutions) == 1, (width, fixed_digit, solutions)
         star, circle, diamond = solutions[0]
         assert star == 9 and diamond == 1 and circle == fixed_digit + 1
-        svg_path = ROOT / f"bank/assets/applied4/q01-v{variant}.svg"
+        svg_path = ROOT / f"bank/assets/applied4/q01-v{variant}-r2.svg"
         svg_path.parent.mkdir(parents=True, exist_ok=True)
         svg_path.write_text(svg_for(fixed_digit, width), encoding="utf-8")
         ET.parse(svg_path)

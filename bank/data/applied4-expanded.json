@@ -58,7 +58,7 @@
       "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q01-v1.svg",
+        "src": "assets/applied4/q01-v1-r2.svg",
         "width": 436,
         "height": 230,
         "description": "별 3개 더하기 원 3개가 마름모·원 2개·3가 되는 세로 덧셈식"
@@ -141,7 +141,7 @@
       "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q01-v2.svg",
+        "src": "assets/applied4/q01-v2-r2.svg",
         "width": 436,
         "height": 230,
         "description": "별 3개 더하기 원 3개가 마름모·원 2개·4가 되는 세로 덧셈식"
@@ -224,7 +224,7 @@
       "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q01-v3.svg",
+        "src": "assets/applied4/q01-v3-r2.svg",
         "width": 436,
         "height": 230,
         "description": "별 3개 더하기 원 3개가 마름모·원 2개·5가 되는 세로 덧셈식"
@@ -307,7 +307,7 @@
       "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q01-v4.svg",
+        "src": "assets/applied4/q01-v4-r2.svg",
         "width": 436,
         "height": 230,
         "description": "별 3개 더하기 원 3개가 마름모·원 2개·6가 되는 세로 덧셈식"
@@ -390,7 +390,7 @@
       "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q01-v5.svg",
+        "src": "assets/applied4/q01-v5-r2.svg",
         "width": 436,
         "height": 230,
         "description": "별 3개 더하기 원 3개가 마름모·원 2개·7가 되는 세로 덧셈식"
@@ -473,7 +473,7 @@
       "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q01-v6.svg",
+        "src": "assets/applied4/q01-v6-r2.svg",
         "width": 508,
         "height": 230,
         "description": "별 4개 더하기 원 4개가 마름모·원 3개·2가 되는 세로 덧셈식"
@@ -556,7 +556,7 @@
       "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q01-v7.svg",
+        "src": "assets/applied4/q01-v7-r2.svg",
         "width": 508,
         "height": 230,
         "description": "별 4개 더하기 원 4개가 마름모·원 3개·3가 되는 세로 덧셈식"
@@ -639,7 +639,7 @@
       "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q01-v8.svg",
+        "src": "assets/applied4/q01-v8-r2.svg",
         "width": 508,
         "height": 230,
         "description": "별 4개 더하기 원 4개가 마름모·원 3개·4가 되는 세로 덧셈식"
@@ -722,7 +722,7 @@
       "text": "덧셈식에서 같은 모양은 같은 숫자를 나타냅니다. 별, 원, 마름모에 알맞은 숫자를 차례로 구하세요.",
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q01-v9.svg",
+        "src": "assets/applied4/q01-v9-r2.svg",
         "width": 508,
         "height": 230,
         "description": "별 4개 더하기 원 4개가 마름모·원 3개·5가 되는 세로 덧셈식"

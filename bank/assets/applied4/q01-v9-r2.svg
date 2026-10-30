@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="508" height="230" viewBox="0 0 508 230" role="img" aria-label="별 4개 더하기 원 4개는 마름모, 원 3개, 숫자 5로 이루어진 수입니다.">
+<rect width="100%" height="100%" fill="#fff"/>
+<g fill="none" stroke="#191511" stroke-width="2.1" stroke-linejoin="round">
+<g fill="#fff"><polygon points="212,36 217,49 231,49 220,57 224,71 212,63 200,71 204,57 193,49 207,49"/>
+<polygon points="284,36 289,49 303,49 292,57 296,71 284,63 272,71 276,57 265,49 279,49"/>
+<polygon points="356,36 361,49 375,49 364,57 368,71 356,63 344,71 348,57 337,49 351,49"/>
+<polygon points="428,36 433,49 447,49 436,57 440,71 428,63 416,71 420,57 409,49 423,49"/></g>
+<g fill="#fff"><circle cx="212" cy="112" r="14"/> <circle cx="284" cy="112" r="14"/> <circle cx="356" cy="112" r="14"/> <circle cx="428" cy="112" r="14"/></g>
+<line x1="112" y1="142" x2="452" y2="142"/>
+<polygon points="140,179 157,196 140,213 123,196" fill="#fff"/>
+<g fill="#fff"><circle cx="212" cy="196" r="14"/> <circle cx="284" cy="196" r="14"/> <circle cx="356" cy="196" r="14"/></g>
+</g>
+<text x="70" y="121" text-anchor="middle" font-family="serif" font-size="27" fill="#191511">+</text>
+<text x="428" y="206" text-anchor="middle" font-family="serif" font-size="28" fill="#191511">5</text>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="350" viewBox="0 0 560 350" role="img" aria-label="직사각형 가와 정사각형 나의 겹친 삼각형. 삼각형의 둘레 12 cm, 표시된 변 4 cm와 5 cm, 이어진 변 6 cm">
+<rect width="560" height="350" fill="#fff"/>
+<g stroke="#191511" stroke-width="2.2" stroke-linejoin="round">
+ <rect x="76.000" y="62.000" width="270.000" height="135.000" fill="none"/>
+ <path d="M 310.000,170.000 L 391.000,62.000 L 499.000,143.000 L 418.000,251.000 Z" fill="none"/>
+ <path d="M 310.000,170.000 L 346.000,122.000 L 346.000,197.000 Z" fill="#e5e5e5"/>
+</g>
+<g fill="#191511" font-family="Noto Serif KR,serif" font-size="19">
+ <text x="173.200" y="136.250" text-anchor="middle">가</text>
+ <text x="458.500" y="143.000" text-anchor="middle">나</text>
+ <text x="318.280" y="135.960" text-anchor="middle">4 cm</text>
+ <text x="356.000" y="159.500">5 cm</text>
+ <text x="391.440" y="249.080" text-anchor="middle">6 cm</text>
+</g>
+</svg>

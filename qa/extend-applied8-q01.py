@@ -48,7 +48,7 @@ def svg(case):
                   f'<text x="{opx-26}" y="177" text-anchor="middle" font-size="28" font-family="Noto Serif KR,serif" fill="#191511">{op}</text>',
                   shape('C',opx,170),shape('C',opx+42,170),
                   '<line x1="320" y1="190" x2="402" y2="190" stroke="#191511" stroke-width="2"/>',
-                  shape(target,opx+10,222),shape(target,opx+52,222)])
+                  shape(target,opx,222),shape(target,opx+42,222)])
     return '<svg xmlns="http://www.w3.org/2000/svg" width="440" height="270" viewBox="0 0 440 270">'+''.join(parts)+'</svg>'
 
 def item(i,case):
@@ -56,7 +56,7 @@ def item(i,case):
     steps=[f"첫째 식에서 같은 네모 두 개는 {ss}, 같은 동그라미 두 개는 {cc}, {k}와 {addshape}가 있는 수는 {term}이고, 오른쪽 세 자리 수는 {result}입니다.",
       f"둘째 식은 {ss}{op}{cc}={repeated}이므로 네모·동그라미·세모의 값을 식에 대입해 두 식을 함께 만족하는 한 자리 수를 찾습니다. 첫째 식의 백의 자리 모양은 0이 될 수 없습니다.",
       f"두 식을 만족하는 값은 네모 {d['S']}, 동그라미 {d['C']}, 세모 {d['T']} 하나뿐입니다. 따라서 △가 나타내는 수는 {answer}입니다. 정수 후보 000~999를 모양 자리에 대입해도 같은 해만 남습니다."]
-    asset={'kind':'raster','src':'assets/applied8/q1-shape-arithmetic-original.png','description':'활용 8회 원문 1번의 도형 암호식 두 식을 원본 PDF에서 그대로 crop'} if i==1 else {'kind':'svg','src':f'assets/applied8/q1-shape-arithmetic-v{i}.svg','description':'두 자리 반복 도형 수의 덧셈·뺄셈 암호식'}
+    asset={'kind':'raster','src':'assets/applied8/q1-shape-arithmetic-original.png','description':'활용 8회 원문 1번의 도형 암호식 두 식을 원본 PDF에서 그대로 crop'} if i==1 else {'kind':'svg','src':f'assets/applied8/q1-shape-arithmetic-v{i}-r2.svg','description':'두 자리 반복 도형 수의 덧셈·뺄셈 암호식'}
     return {'id':f'applied8-q01-v{i}','genId':'applied8-q01','sourceSet':'applied','sourceRound':8,'sourceNo':1,'variantNo':i,'reviewStatus':'verified',
       'area':'수와 식','subarea':'수식 퍼즐','detailType':'도형이 나타내는 수를 두 암호식에 대입해 찾기','pointBand':'2.7',
       'text':'다음 모양에서 같은 모양은 같은 숫자를 나타냅니다. △가 나타내는 수를 구하세요.','asset':asset,'answer':str(answer),'answerParts':[answer],'answerLabels':['△가 나타내는 수'],'acceptedAnswers':[str(answer),f'{answer}입니다'],'answerContract':'single-number',
@@ -77,7 +77,7 @@ def main():
     data['availableSourceNos']=nos;data['pendingSourceNos']=[n for n in range(1,31) if n not in nos];data['itemCount']=len(data['items']);data['version']=VERSION;data['policy']['newSourceTypes']=0
     idx['items'].append({'sourceNo':1,'genId':'applied8-q01','area':'수와 식','subarea':'수식 퍼즐','detailType':'도형이 나타내는 수를 두 암호식에 대입해 찾기','pointBand':'2.7','reviewStatus':'verified','variantCount':9})
     idx['items'].sort(key=lambda x:x['sourceNo']);idx['pendingSourceNos']=data['pendingSourceNos'];idx['itemCount']=data['itemCount'];idx['version']=VERSION
-    for i,c in enumerate(CASES[1:],2):(ROOT/f'bank/assets/applied8/q1-shape-arithmetic-v{i}.svg').write_text(svg(c),encoding='utf-8')
+    for i,c in enumerate(CASES[1:],2):(ROOT/f'bank/assets/applied8/q1-shape-arithmetic-v{i}-r2.svg').write_text(svg(c),encoding='utf-8')
     DATA.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n');INDEX.write_text(json.dumps(idx,ensure_ascii=False,indent=2)+'\n')
     rows=[]
     for c in CASES:
