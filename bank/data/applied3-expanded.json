@@ -11200,10 +11200,10 @@
       "subarea": "경우의 수와 논리",
       "detailType": "삼각형 변의 합으로 꼭짓점 수의 합 구하기",
       "pointBand": "4.2",
-      "text": "1부터 9까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 23가 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
+      "text": "1부터 9까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 23이 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
       "asset": {
-        "kind": "raster",
-        "src": "assets/applied3/q19-v1.svg",
+        "kind": "svg",
+        "src": "assets/applied3/q19-v1-r2.svg",
         "description": "유사문제용 새 삼각형 배치. 원문 그림은 그대로 보존함."
       },
       "answer": "24",
@@ -11255,7 +11255,7 @@
           ],
           "answer": 24
         },
-        "sourceExamPage": 5,
+        "sourceExamPage": 4,
         "sourceTextDirectlyReviewed": true,
         "sourceFigureCompared": true,
         "sourceFigurePreserved": true,
@@ -11282,10 +11282,10 @@
       "subarea": "경우의 수와 논리",
       "detailType": "삼각형 변의 합으로 꼭짓점 수의 합 구하기",
       "pointBand": "4.2",
-      "text": "2부터 10까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 27가 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
+      "text": "2부터 10까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 27이 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
       "asset": {
-        "kind": "raster",
-        "src": "assets/applied3/q19-v2.svg",
+        "kind": "svg",
+        "src": "assets/applied3/q19-v2-r2.svg",
         "description": "유사문제용 새 삼각형 배치. 원문 그림은 그대로 보존함."
       },
       "answer": "27",
@@ -11337,7 +11337,7 @@
           ],
           "answer": 27
         },
-        "sourceExamPage": 5,
+        "sourceExamPage": 4,
         "sourceTextDirectlyReviewed": true,
         "sourceFigureCompared": true,
         "sourceFigurePreserved": true,
@@ -11364,10 +11364,10 @@
       "subarea": "경우의 수와 논리",
       "detailType": "삼각형 변의 합으로 꼭짓점 수의 합 구하기",
       "pointBand": "4.2",
-      "text": "3부터 11까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 31가 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
+      "text": "3부터 11까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 31이 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
       "asset": {
-        "kind": "raster",
-        "src": "assets/applied3/q19-v3.svg",
+        "kind": "svg",
+        "src": "assets/applied3/q19-v3-r2.svg",
         "description": "유사문제용 새 삼각형 배치. 원문 그림은 그대로 보존함."
       },
       "answer": "30",
@@ -11419,7 +11419,7 @@
           ],
           "answer": 30
         },
-        "sourceExamPage": 5,
+        "sourceExamPage": 4,
         "sourceTextDirectlyReviewed": true,
         "sourceFigureCompared": true,
         "sourceFigurePreserved": true,
@@ -11448,8 +11448,8 @@
       "pointBand": "4.2",
       "text": "4부터 12까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 35가 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
       "asset": {
-        "kind": "raster",
-        "src": "assets/applied3/q19-v4.svg",
+        "kind": "svg",
+        "src": "assets/applied3/q19-v4-r2.svg",
         "description": "유사문제용 새 삼각형 배치. 원문 그림은 그대로 보존함."
       },
       "answer": "33",
@@ -11501,7 +11501,7 @@
           ],
           "answer": 33
         },
-        "sourceExamPage": 5,
+        "sourceExamPage": 4,
         "sourceTextDirectlyReviewed": true,
         "sourceFigureCompared": true,
         "sourceFigurePreserved": true,
@@ -11530,8 +11530,8 @@
       "pointBand": "4.2",
       "text": "5부터 13까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 39가 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
       "asset": {
-        "kind": "raster",
-        "src": "assets/applied3/q19-v5.svg",
+        "kind": "svg",
+        "src": "assets/applied3/q19-v5-r2.svg",
         "description": "유사문제용 새 삼각형 배치. 원문 그림은 그대로 보존함."
       },
       "answer": "36",
@@ -11583,7 +11583,7 @@
           ],
           "answer": 36
         },
-        "sourceExamPage": 5,
+        "sourceExamPage": 4,
         "sourceTextDirectlyReviewed": true,
         "sourceFigureCompared": true,
         "sourceFigurePreserved": true,
@@ -11610,10 +11610,10 @@
       "subarea": "경우의 수와 논리",
       "detailType": "삼각형 변의 합으로 꼭짓점 수의 합 구하기",
       "pointBand": "4.2",
-      "text": "6부터 14까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 43가 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
+      "text": "6부터 14까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 43이 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
       "asset": {
-        "kind": "raster",
-        "src": "assets/applied3/q19-v6.svg",
+        "kind": "svg",
+        "src": "assets/applied3/q19-v6-r2.svg",
         "description": "유사문제용 새 삼각형 배치. 원문 그림은 그대로 보존함."
       },
       "answer": "39",
@@ -11665,7 +11665,7 @@
           ],
           "answer": 39
         },
-        "sourceExamPage": 5,
+        "sourceExamPage": 4,
         "sourceTextDirectlyReviewed": true,
         "sourceFigureCompared": true,
         "sourceFigurePreserved": true,
@@ -11692,10 +11692,10 @@
       "subarea": "경우의 수와 논리",
       "detailType": "삼각형 변의 합으로 꼭짓점 수의 합 구하기",
       "pointBand": "4.2",
-      "text": "7부터 15까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 47가 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
+      "text": "7부터 15까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 47이 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
       "asset": {
-        "kind": "raster",
-        "src": "assets/applied3/q19-v7.svg",
+        "kind": "svg",
+        "src": "assets/applied3/q19-v7-r2.svg",
         "description": "유사문제용 새 삼각형 배치. 원문 그림은 그대로 보존함."
       },
       "answer": "42",
@@ -11747,7 +11747,7 @@
           ],
           "answer": 42
         },
-        "sourceExamPage": 5,
+        "sourceExamPage": 4,
         "sourceTextDirectlyReviewed": true,
         "sourceFigureCompared": true,
         "sourceFigurePreserved": true,
@@ -11774,10 +11774,10 @@
       "subarea": "경우의 수와 논리",
       "detailType": "삼각형 변의 합으로 꼭짓점 수의 합 구하기",
       "pointBand": "4.2",
-      "text": "8부터 16까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 51가 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
+      "text": "8부터 16까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 51이 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
       "asset": {
-        "kind": "raster",
-        "src": "assets/applied3/q19-v8.svg",
+        "kind": "svg",
+        "src": "assets/applied3/q19-v8-r2.svg",
         "description": "유사문제용 새 삼각형 배치. 원문 그림은 그대로 보존함."
       },
       "answer": "45",
@@ -11829,7 +11829,7 @@
           ],
           "answer": 45
         },
-        "sourceExamPage": 5,
+        "sourceExamPage": 4,
         "sourceTextDirectlyReviewed": true,
         "sourceFigureCompared": true,
         "sourceFigurePreserved": true,
@@ -11858,8 +11858,8 @@
       "pointBand": "4.2",
       "text": "9부터 17까지의 수를 한 번씩 삼각형의 아홉 칸에 넣었습니다. 삼각형의 한 변에 놓인 네 수의 합이 모두 55가 되게 했을 때, 세 꼭짓점에 들어갈 수의 합을 구하시오.",
       "asset": {
-        "kind": "raster",
-        "src": "assets/applied3/q19-v9.svg",
+        "kind": "svg",
+        "src": "assets/applied3/q19-v9-r2.svg",
         "description": "유사문제용 새 삼각형 배치. 원문 그림은 그대로 보존함."
       },
       "answer": "48",
@@ -11911,7 +11911,7 @@
           ],
           "answer": 48
         },
-        "sourceExamPage": 5,
+        "sourceExamPage": 4,
         "sourceTextDirectlyReviewed": true,
         "sourceFigureCompared": true,
         "sourceFigurePreserved": true,

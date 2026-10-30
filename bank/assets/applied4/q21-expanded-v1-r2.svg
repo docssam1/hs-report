@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="156" height="156" viewBox="0 0 156 156" role="img" aria-label="관통 구멍이 있는 주사위 직육면체">
+<g stroke="#252525" stroke-width="1.3" stroke-linejoin="round">
+<polygon fill="#d4d4d4" points="14.0,141.7 42.0,141.7 42.0,113.7 14.0,113.7"/>
+<polygon fill="#d4d4d4" points="14.0,113.7 42.0,113.7 42.0,85.7 14.0,85.7"/>
+<polygon fill="#d4d4d4" points="42.0,141.7 70.0,141.7 70.0,113.7 42.0,113.7"/>
+<polygon fill="#d4d4d4" points="14.0,85.7 42.0,85.7 42.0,57.7 14.0,57.7"/>
+<polygon fill="#e6e6e6" points="14.0,57.7 42.0,57.7 56.6,43.1 28.6,43.1"/>
+<polygon fill="#d4d4d4" points="42.0,113.7 70.0,113.7 70.0,85.7 42.0,85.7"/>
+<polygon fill="#d4d4d4" points="70.0,141.7 98.0,141.7 98.0,113.7 70.0,113.7"/>
+<polygon fill="#bdbdbd" points="98.0,141.7 112.6,127.1 112.6,99.1 98.0,113.7"/>
+<polygon fill="#e6e6e6" points="28.6,43.1 56.6,43.1 71.1,28.6 43.1,28.6"/>
+<polygon fill="#d4d4d4" points="42.0,85.7 70.0,85.7 70.0,57.7 42.0,57.7"/>
+<polygon fill="#e6e6e6" points="42.0,57.7 70.0,57.7 84.6,43.1 56.6,43.1"/>
+<polygon fill="#d4d4d4" points="70.0,113.7 98.0,113.7 98.0,85.7 70.0,85.7"/>
+<polygon fill="#bdbdbd" points="98.0,113.7 112.6,99.1 112.6,71.1 98.0,85.7"/>
+<polygon fill="#bdbdbd" points="112.6,127.1 127.1,112.6 127.1,84.6 112.6,99.1"/>
+<polygon fill="#e6e6e6" points="43.1,28.6 71.1,28.6 85.7,14.0 57.7,14.0"/>
+<polygon fill="#e6e6e6" points="56.6,43.1 84.6,43.1 99.1,28.6 71.1,28.6"/>
+<polygon fill="#d4d4d4" points="70.0,85.7 98.0,85.7 98.0,57.7 70.0,57.7"/>
+<polygon fill="#e6e6e6" points="70.0,57.7 98.0,57.7 112.6,43.1 84.6,43.1"/>
+<polygon fill="#bdbdbd" points="98.0,85.7 112.6,71.1 112.6,43.1 98.0,57.7"/>
+<polygon fill="#bdbdbd" points="112.6,99.1 127.1,84.6 127.1,56.6 112.6,71.1"/>
+<polygon fill="#bdbdbd" points="127.1,112.6 141.7,98.0 141.7,70.0 127.1,84.6"/>
+<polygon fill="#e6e6e6" points="71.1,28.6 99.1,28.6 113.7,14.0 85.7,14.0"/>
+<polygon fill="#e6e6e6" points="84.6,43.1 112.6,43.1 127.1,28.6 99.1,28.6"/>
+<polygon fill="#bdbdbd" points="112.6,71.1 127.1,56.6 127.1,28.6 112.6,43.1"/>
+<polygon fill="#bdbdbd" points="127.1,84.6 141.7,70.0 141.7,42.0 127.1,56.6"/>
+<polygon fill="#e6e6e6" points="99.1,28.6 127.1,28.6 141.7,14.0 113.7,14.0"/>
+<polygon fill="#bdbdbd" points="127.1,56.6 141.7,42.0 141.7,14.0 127.1,28.6"/>
+<polygon fill="#fff" stroke="#191511" stroke-width="3" points="112.6,99.1 127.1,84.6 127.1,56.6 112.6,71.1"/>
+</g></svg>

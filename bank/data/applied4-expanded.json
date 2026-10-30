@@ -14495,8 +14495,8 @@
       },
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q21-expanded-v1.svg",
-        "description": "관통 구멍이 있는 새 주사위 직육면체 그림"
+        "src": "assets/applied4/q21-expanded-v1-r2.svg",
+        "description": "회색 주사위 직육면체의 흰색 관통 구멍 입구"
       },
       "verification": {
         "primaryMethod": "sum each remaining die’s maximum/minimum across all 24 proper rotations for its exposed faces",
@@ -15033,8 +15033,8 @@
       },
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q21-expanded-v2.svg",
-        "description": "관통 구멍이 있는 새 주사위 직육면체 그림"
+        "src": "assets/applied4/q21-expanded-v2-r2.svg",
+        "description": "회색 주사위 직육면체의 흰색 관통 구멍 입구"
       },
       "verification": {
         "primaryMethod": "sum each remaining die’s maximum/minimum across all 24 proper rotations for its exposed faces",
@@ -15708,8 +15708,8 @@
       },
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q21-expanded-v3.svg",
-        "description": "관통 구멍이 있는 새 주사위 직육면체 그림"
+        "src": "assets/applied4/q21-expanded-v3-r2.svg",
+        "description": "회색 주사위 직육면체의 흰색 관통 구멍 입구"
       },
       "verification": {
         "primaryMethod": "sum each remaining die’s maximum/minimum across all 24 proper rotations for its exposed faces",
@@ -16383,8 +16383,8 @@
       },
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q21-expanded-v4.svg",
-        "description": "관통 구멍이 있는 새 주사위 직육면체 그림"
+        "src": "assets/applied4/q21-expanded-v4-r2.svg",
+        "description": "회색 주사위 직육면체의 흰색 관통 구멍 입구"
       },
       "verification": {
         "primaryMethod": "sum each remaining die’s maximum/minimum across all 24 proper rotations for its exposed faces",
@@ -17206,8 +17206,8 @@
       },
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q21-expanded-v5.svg",
-        "description": "관통 구멍이 있는 새 주사위 직육면체 그림"
+        "src": "assets/applied4/q21-expanded-v5-r2.svg",
+        "description": "회색 주사위 직육면체의 흰색 관통 구멍 입구"
       },
       "verification": {
         "primaryMethod": "sum each remaining die’s maximum/minimum across all 24 proper rotations for its exposed faces",
@@ -18029,8 +18029,8 @@
       },
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q21-expanded-v6.svg",
-        "description": "관통 구멍이 있는 새 주사위 직육면체 그림"
+        "src": "assets/applied4/q21-expanded-v6-r2.svg",
+        "description": "회색 주사위 직육면체의 흰색 관통 구멍 입구"
       },
       "verification": {
         "primaryMethod": "sum each remaining die’s maximum/minimum across all 24 proper rotations for its exposed faces",
@@ -18852,8 +18852,8 @@
       },
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q21-expanded-v7.svg",
-        "description": "관통 구멍이 있는 새 주사위 직육면체 그림"
+        "src": "assets/applied4/q21-expanded-v7-r2.svg",
+        "description": "회색 주사위 직육면체의 흰색 관통 구멍 입구"
       },
       "verification": {
         "primaryMethod": "sum each remaining die’s maximum/minimum across all 24 proper rotations for its exposed faces",
@@ -20015,8 +20015,8 @@
       },
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q21-expanded-v8.svg",
-        "description": "관통 구멍이 있는 새 주사위 직육면체 그림"
+        "src": "assets/applied4/q21-expanded-v8-r2.svg",
+        "description": "회색 주사위 직육면체의 흰색 관통 구멍 입구"
       },
       "verification": {
         "primaryMethod": "sum each remaining die’s maximum/minimum across all 24 proper rotations for its exposed faces",
@@ -21178,8 +21178,8 @@
       },
       "asset": {
         "kind": "vector",
-        "src": "assets/applied4/q21-expanded-v9.svg",
-        "description": "관통 구멍이 있는 새 주사위 직육면체 그림"
+        "src": "assets/applied4/q21-expanded-v9-r2.svg",
+        "description": "회색 주사위 직육면체의 흰색 관통 구멍 입구"
       },
       "verification": {
         "primaryMethod": "sum each remaining die’s maximum/minimum across all 24 proper rotations for its exposed faces",
