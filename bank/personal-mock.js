@@ -296,7 +296,7 @@
   async function mount(){
     var account=await root.GFIELD_BANK_ACCESS.ready,query=new URLSearchParams(location.search);
     var student=String(account.student||((account.role==='admin'||account.role==='teacher')?query.get('name'):'')||'').trim();
-    var status=document.getElementById('pmStatus'),print=document.getElementById('pmPrint'),pages=document.getElementById('pmPages');
+    var status=document.getElementById('pmStatus'),print=document.getElementById('pmPrint'),typstButton=document.getElementById('pmTypst'),pages=document.getElementById('pmPages');
     if(!student){status.textContent='학생 이름으로 자료실에 입장해 주세요.';return;}
     var scope=Object.prototype.hasOwnProperty.call(SCOPE_LABEL,query.get('scope'))?query.get('scope'):'all',band=Object.prototype.hasOwnProperty.call(BAND_LABEL,query.get('band'))?query.get('band'):'all',priority='balanced',selectedSources=null,selectedAreas=null,selectedSubareas=null,difficulty='all',selectedTypes=new Set(),visibleTypes=[],previewKey='',availableCodes=[],areaOptions=[],subareaOptions=[];
     var count=COUNTS[query.get('count')]?Number(query.get('count')):30,pageDensity=4;
@@ -398,7 +398,7 @@
       return choices.size>paper.available;
     }
     async function render(){
-      var current=++revision;refreshTaxonomy();controls();print.disabled=true;pages.innerHTML='';currentPaperCount=0;currentPaper=null;
+      var current=++revision;refreshTaxonomy();controls();print.disabled=true;typstButton.disabled=true;pages.innerHTML='';currentPaperCount=0;currentPaper=null;
       var selectedAttempts=selectedSources===null?attempts:attempts.filter(function(attempt){return selectedSources.has(codeOf(attempt));});
       var filter=currentFilter(),paper=buildPool(selectedAttempts,datasets,scope,band,count,null,null,freshRound,root.BANK_FINAL_SOURCE_GENERATORS,skipSet(),filter,priority),note=availabilityNote(unavailable);
       if(skipDone&&doneKeys.size)note+=' · 이미 푼 문제 제외';
@@ -422,7 +422,7 @@
         await Promise.all([document.fonts.ready].concat(Array.from(pages.querySelectorAll('img')).map(function(img){return img.decode();})));
         if(current!==revision)return;
         pages.querySelectorAll('.wm-layer').forEach(function(layer){root.BANK_CORE.buildWatermarkTiles(layer,student);});
-        currentPaper=paper;currentAttempts=selectedAttempts;currentFilterFn=filter;currentPaperCount=paper.questions.length;print.disabled=false;
+        currentPaper=paper;currentAttempts=selectedAttempts;currentFilterFn=filter;currentPaperCount=paper.questions.length;print.disabled=false;typstButton.disabled=false;
         currentKeys=paper.questions.map(function(q){return {key:itemKey(q.item),code:q.code};});
       }catch(error){pages.innerHTML='';status.innerHTML='<span class="pm-error">'+esc(error.message||'시험지를 만들지 못했습니다.')+'</span>';}
     }
@@ -446,18 +446,32 @@
       if(!card||!currentPaper||root.getSelection&&String(root.getSelection()).trim())return;
       var index=Number(card.dataset.questionIndex),next=replaceOne(currentPaper,index,currentAttempts,datasets,scope,band,skipSet(),currentFilterFn);
       if(!next){status.textContent=(index+1)+'번은 현재 조건에서 바꿀 다른 검수 문항이 없습니다.';return;}
-      var current=++revision;print.disabled=true;currentPaper=next;
+      var current=++revision;print.disabled=true;typstButton.disabled=true;currentPaper=next;
       try{pages.innerHTML=renderPaper(next,scope,band,student,currentTitle(),pageDensity);
         await Promise.all([document.fonts.ready].concat(Array.from(pages.querySelectorAll('img')).map(function(img){return img.decode();})));
         if(current!==revision)return;
         pages.querySelectorAll('.wm-layer').forEach(function(layer){root.BANK_CORE.buildWatermarkTiles(layer,student);});
-        currentPaperCount=next.questions.length;currentKeys=next.questions.map(function(q){return {key:itemKey(q.item),code:q.code};});print.disabled=false;
+        currentPaperCount=next.questions.length;currentKeys=next.questions.map(function(q){return {key:itemKey(q.item),code:q.code};});print.disabled=false;typstButton.disabled=false;
         status.innerHTML='<span class="pm-ready">'+(index+1)+'번 문제 교체 완료</span> · '+next.questions.length+'문항 · '+esc(sourceLabel());
       }catch(error){pages.innerHTML='';status.innerHTML='<span class="pm-error">'+esc(error.message||'문항을 바꾸지 못했습니다.')+'</span>';}
     });
     var skipBtn=document.getElementById('pmSkipDone');
     if(skipBtn)skipBtn.addEventListener('click',function(){skipDone=!skipDone;render();});
     print.addEventListener('click',function(){if(!print.disabled&&currentPaperCount>0&&pages.querySelectorAll('.pm-q').length===currentPaperCount){root.print();saveHistory();}});
+    typstButton.addEventListener('click',async function(){
+      if(typstButton.disabled||!currentPaper||pages.querySelectorAll('.pm-q').length!==currentPaperCount)return;
+      var paper=currentPaper,current=revision,title=currentTitle(),filename=title.replace(/[\\/:*?"<>|]/g,'_').trim()||'지필드 모의고사';
+      typstButton.disabled=true;status.textContent='시험지와 풀이 PDF를 조판하고 있습니다.';
+      try{
+        var plan=root.GFIELD_PERSONAL_MOCK_TYPST.planFromDom(paper,pages);
+        var pdf=await root.GFIELD_PERSONAL_MOCK_TYPST.pdf(paper,plan,title,student);
+        if(current!==revision)return;
+        var url=URL.createObjectURL(new Blob([pdf],{type:'application/pdf'})),link=document.createElement('a');
+        link.href=url;link.download=filename+'-시험지와풀이.pdf';document.body.appendChild(link);link.click();link.remove();setTimeout(function(){URL.revokeObjectURL(url);},60000);
+        saveHistory();status.textContent='시험지와 풀이 PDF 저장을 시작했습니다.';
+      }catch(error){console.error('Typst PDF export failed',error);if(current===revision)status.innerHTML='<span class="pm-error">'+esc(error&&error.message||String(error)||'PDF를 만들지 못했습니다.')+'</span>';}
+      finally{if(current===revision)typstButton.disabled=false;}
+    });
     try{
       attempts=approvedAttempts(await fetchAttempts(student),student,root.GFIELD_DATA);
       await loadHistory();

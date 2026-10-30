@@ -5,7 +5,7 @@
 <script src="../hs-student-guard.js?v=20261011-email-login-1"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>모의고사 생성기 | 지필드 영재교육</title>
-<link rel="stylesheet" href="personal-mock.css?v=20261029-multi-filter">
+<link rel="stylesheet" href="personal-mock.css?v=20261030-typst-pdf">
 <link rel="stylesheet" href="math-markup.css?v=20261027-mathml-1">
 </head>
 <body class="bank-access-pending">
@@ -37,7 +37,7 @@
     <div class="pm-control-row pm-title-row"><label for="pmTitle"><strong>시험지 제목</strong></label><input id="pmTitle" type="text" maxlength="30" value="지필드 맞춤 모의고사" aria-describedby="pmTitleHint" autocomplete="off"><span id="pmTitleHint">문제지와 정답·풀이에 함께 표시됩니다.</span></div>
     <div class="pm-control-row"><strong>다른 시험지</strong><button type="button" id="pmFresh" disabled>다른 새 문제로 바꾸기</button><span id="pmFreshHint">선택한 조건의 다른 검수 문항으로 바꿉니다.</span></div>
     <div class="pm-control-row"><strong>중복 방지</strong><button type="button" id="pmSkipDone" aria-pressed="true">이미 푼 문제 제외 · 켜짐</button><span id="pmSkipInfo">인쇄한 문항은 다음 시험지에서 빠집니다</span></div>
-    <div class="pm-actions"><p id="pmStatus" role="status">응시 기록을 확인하고 있습니다.</p><button id="pmPrint" type="button" disabled>시험지·답안 인쇄 / PDF 저장</button></div>
+    <div class="pm-actions"><p id="pmStatus" role="status">응시 기록을 확인하고 있습니다.</p><div class="pm-export-actions"><button id="pmTypst" type="button" disabled>시험지·풀이 PDF 저장</button><button id="pmPrint" type="button" disabled>브라우저 인쇄</button></div></div>
   </section>
   <div id="pmPages"></div>
   </div>
@@ -78,6 +78,7 @@
 <script src="gens/g-final1.js?v=20261001-personal-mock"></script>
 <script src="important-generators.js?v=20261001-personal-mock"></script>
 <script src="final-source-generators.js?v=20261001-final34-pilot"></script>
-<script src="personal-mock.js?v=20261029-multi-filter"></script>
+<script src="personal-mock-typst.js?v=20261030-pdf-1"></script>
+<script src="personal-mock.js?v=20261030-typst-pdf"></script>
 </body>
 </html>

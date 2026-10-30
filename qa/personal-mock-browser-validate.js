@@ -3,8 +3,10 @@ const fs=require('node:fs');
 const http=require('node:http');
 const os=require('node:os');
 const path=require('node:path');
+const {pathToFileURL}=require('node:url');
 require('./email-login-test-stub'); // QA 전용: 학부모 이메일 인증 단계를 인증된 브라우저로 취급
 const {chromium}=require(process.env.GFIELD_QA_PLAYWRIGHT||'playwright');
+const {PDFDocument}=require('pdf-lib');
 const mockBank=require('../bank/personal-mock.js');
 const root=path.resolve(__dirname,'..');
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.svg':'image/svg+xml'};
@@ -15,6 +17,23 @@ const server=http.createServer((request,response)=>{
   fs.readFile(file,(error,data)=>{if(error){response.writeHead(404);response.end();return;}response.writeHead(200,{'content-type':types[path.extname(file)]||'application/octet-stream'});response.end(data);});
 });
 function record(student,round,ox){return {student,round,ox,score:Math.round([...ox].reduce((sum,v,index)=>sum+(v==='O'?(index<12?2.7:index<22?3.4:4.2):0),0)*10)/10,wrong:[...ox].filter(v=>v==='X').length,source:'teacher',updated_at:'2026-09-30T00:00:00Z'};}
+async function pdfItems(file){
+  const pdfjs=await import(pathToFileURL(require.resolve('pdfjs-dist/legacy/build/pdf.mjs')).href);
+  const document=await pdfjs.getDocument({data:new Uint8Array(fs.readFileSync(file))}).promise;
+  const pages=[];
+  for(let number=1;number<=document.numPages;number++)pages.push((await(await document.getPage(number)).getTextContent()).items.map(item=>item.str));
+  return pages;
+}
+function assertTypstPages(pages,questionPages,count){
+  const answerStart=pages.findIndex(items=>items.some(text=>text.includes('정답과 풀이')))+1;
+  assert.equal(answerStart,questionPages+(questionPages%2?2:1),'답안은 양면 인쇄 앞면에서 시작');
+  assert.equal(answerStart%2,1);
+  const questions=pages.slice(0,answerStart-1).flat().filter(text=>/^\d+\.$/.test(text)).map(text=>Number(text.slice(0,-1)));
+  const answers=pages.slice(answerStart-1).flat().filter(text=>/^\d+번 · 답$/.test(text)).map(text=>Number(text.match(/^\d+/)[0]));
+  assert.deepEqual(questions,Array.from({length:count},(_,index)=>index+1),'문항 번호와 2단 읽기 순서');
+  assert.deepEqual(answers,questions,'답안 번호와 문항 번호 일치');
+  assert.equal(pages.filter(items=>items.join('').length<40).length,questionPages%2,'양면 인쇄용 빈 면만 허용');
+}
 (async()=>{
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   const base='http://127.0.0.1:'+server.address().port;
@@ -23,6 +42,7 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     const approvedOnly=await browser.newPage({viewport:{width:1440,height:900}});
     await approvedOnly.addInitScript(()=>localStorage.setItem('gfield_student','박서진'));
     await approvedOnly.route('**/rest/v1/mock_results*',route=>route.fulfill({status:200,contentType:'application/json',body:'[]'}));
+    await approvedOnly.route('**/rest/v1/bank_print_history*',route=>route.fulfill({status:route.request().method()==='POST'?201:200,contentType:'application/json',body:route.request().method()==='POST'?'':'[]'}));
     await approvedOnly.goto(base+'/bank/personal-mock.html?source=applied1');
     const onlineStudent=await approvedOnly.evaluate(()=>{
       const name=GFIELD_DATA.students.find(student=>GFIELD_DATA.studentTypes?.[student]==='online');
@@ -44,6 +64,31 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied1-"]').count(),30);
     await approvedOnly.waitForFunction(()=>!document.getElementById('pmPrint').disabled,{timeout:30000});
     assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),false);
+    await approvedOnly.locator('[data-count="10"]').click();
+    await approvedOnly.waitForFunction(()=>document.querySelectorAll('.pm-q').length===10);
+    const tenQuestionPages=await approvedOnly.locator('.pm-question-page').count();
+    assert.equal(await approvedOnly.locator('#pmTypst').isDisabled(),false,'같은 문항으로 Typst PDF 저장 가능');
+    const typstDownload=approvedOnly.waitForEvent('download',{timeout:20000});
+    await approvedOnly.locator('#pmTypst').click();
+    const generatedPdf=await typstDownload.catch(async error=>{console.error('TYPST STATUS',await approvedOnly.locator('#pmStatus').innerText());throw error;});
+    assert.match(generatedPdf.suggestedFilename(),/시험지와풀이\.pdf$/);
+    const typstPdf=path.join(os.tmpdir(),'gfield-personal-mock-typst-qa.pdf');
+    await generatedPdf.saveAs(typstPdf);
+    const typstDocument=await PDFDocument.load(fs.readFileSync(typstPdf));
+    assert.ok(typstDocument.getPageCount()>=5,'문제·정답 전체 PDF 페이지 생성');
+    assertTypstPages(await pdfItems(typstPdf),tenQuestionPages,10);
+    await approvedOnly.locator('[data-count="30"]').click();
+    await approvedOnly.waitForFunction(()=>document.querySelectorAll('.pm-q').length===30);
+    const thirtyQuestionPages=await approvedOnly.locator('.pm-question-page').count();
+    const fullDownload=approvedOnly.waitForEvent('download',{timeout:90000});
+    await approvedOnly.locator('#pmTypst').click();
+    const fullPdfFile=path.join(os.tmpdir(),'gfield-personal-mock-typst-30-qa.pdf');
+    await (await fullDownload).saveAs(fullPdfFile);
+    const fullDocument=await PDFDocument.load(fs.readFileSync(fullPdfFile));
+    assert.ok(fullDocument.getPageCount()>=10,'30문항 문제·풀이 전체 쪽 생성');
+    assertTypstPages(await pdfItems(fullPdfFile),thirtyQuestionPages,30);
+    const fullBytes=fs.readFileSync(fullPdfFile).toString('latin1');
+    for(const font of ['NotoSerifKR','Pretendard','STIXTwoMath'])assert.ok(fullBytes.includes(font),`${font} PDF 글꼴 포함`);
     assert.equal(await approvedOnly.locator('.pm-score-table td').allTextContents().then(rows=>rows.join(',')),'2.7점,3.4점,4.2점,12,10,8,30');
     assert.match(await approvedOnly.locator('.pm-exam-cover').first().innerText(),/맞춤 모의고사[\s\S]*박서진/);
     assert.match(await approvedOnly.locator('.pm-exam-cover').first().innerText(),/30문항 · 100점/);
@@ -83,6 +128,7 @@ function record(student,round,ox){return {student,round,ox,score:Math.round([...
     await approvedOnly.waitForFunction(()=>document.querySelector('[data-page-density="6"]')?.getAttribute('aria-pressed')==='true');
     await approvedOnly.emulateMedia({media:'print'});
     assert.deepEqual(await approvedOnly.evaluate(()=>[...document.querySelectorAll('.pm-q,.pm-answer')].filter(card=>card.scrollHeight>card.clientHeight+2).map(card=>card.dataset.itemId||card.dataset.answerId)),[],'6문항 배치 A4 잘림 없음');
+    assert.deepEqual(await approvedOnly.evaluate(()=>[...document.querySelectorAll('.pm-answer-grid')].filter(grid=>grid.scrollHeight>grid.clientHeight+2).map(grid=>grid.closest('.pm-page').className)),[],'답안 연속 배치 A4 잘림 없음');
     await approvedOnly.emulateMedia({media:'screen'});
     await approvedOnly.locator('[data-page-density="4"]').click();
     assert.ok(await approvedOnly.locator('.pm-q p').first().evaluate(el=>getComputedStyle(el).fontFamily.includes('GF Print Serif')));

@@ -88,3 +88,13 @@
 @media print{.pm-replace{display:none!important}}
 .pm-question-grid [data-item-id^="final8-q15-"] img{max-height:80mm;width:auto}
 .pm-first .pm-question-grid [data-item-id^="final8-q15-"] img{max-height:65mm}
+.pm-export-actions{display:flex;gap:8px;flex-wrap:wrap;flex:none}.pm-export-actions button{min-height:44px;white-space:nowrap;border:1px solid #2f6b4a;border-radius:5px;padding:8px 12px;font:600 13px 'GF Print Sans',sans-serif;cursor:pointer}#pmTypst{background:#2f6b4a;color:#fff}#pmPrint{background:#fdfbf5;color:#1e4631}#pmTypst:disabled,#pmPrint:disabled{background:#e2d9c6;border-color:#e2d9c6;color:#7a6f5c;cursor:not-allowed}@media(max-width:600px){.pm-actions{display:block}.pm-export-actions{margin-top:10px}.pm-export-actions button{flex:1}}
+/* 문제는 2단 고정 칸, 답안은 내용 길이에 따라 연속 배치한다. */
+.pm-answer-grid,.pm-six-grid .pm-answer-grid{display:block;overflow:visible}
+.pm-answer-grid:before{display:none}
+.pm-answer-grid .pm-answer,.pm-answer-grid .pm-answer:nth-child(odd),.pm-answer-grid .pm-answer:nth-child(even){display:block;width:100%;height:auto;min-height:0;padding:0 0 4mm;margin:0;overflow:visible}
+.pm-answer-grid .pm-answer h3{font:700 12px 'GF Print Sans',sans-serif;margin:0 0 1mm}
+.pm-answer-grid .pm-answer .pm-source{margin:0 0 1mm}
+.pm-answer-grid .pm-answer ol{margin:1mm 0 0;line-height:1.4}
+.pm-answer-grid .pm-answer li{margin-bottom:1mm}
+.pm-answer-grid .pm-answer img{max-height:60mm}
