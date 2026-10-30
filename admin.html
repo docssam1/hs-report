@@ -246,7 +246,7 @@
       </div>
       <div class="card">
         <h3>추가 모의고사 회차 승인</h3>
-        <div class="hint"><b>중급 7·8회 · 최종 7·8회 · 시크릿 마무리 1회</b>를 이용할 학생을 회차별로 체크하세요. 서재의 같은 회차 승인과 함께 바뀌며, 폴더 승인이나 파이널 출석만으로 다른 회차가 열리지는 않습니다. 시그니처는 위의 별도 항목에서 승인합니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
+        <div class="hint"><b>중급 7·8회 · 최종 7·8회 · 시크릿 마무리 1·2회</b>를 이용할 학생을 회차별로 체크하세요. 서재의 같은 회차 승인과 함께 바뀌며, 폴더 승인이나 파이널 출석만으로 다른 회차가 열리지는 않습니다. 시그니처는 위의 별도 항목에서 승인합니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
         <div class="matrix-scroll additional-round-approvals"><table id="final7-acc-matrix" aria-label="추가 모의고사 회차별 승인"></table></div>
       </div>
       <div class="card">
@@ -993,7 +993,7 @@
   /* 추가 모의고사: 기존 회차 승인 표와 서재의 제품별 명단을 함께 사용한다. */
   const FINAL7_ACCESS_KEY='mock-final-7';
   const FINAL8_ACCESS_KEY='mock-final-8';
-  const ADDITIONAL_ROUND_ACCESS=[['mock-mid-7','중급 7회','middle7'],['mock-mid-8','중급 8회','middle8'],[FINAL7_ACCESS_KEY,'최종 7회',7],[FINAL8_ACCESS_KEY,'최종 8회',8],['mock-top-secret-finish-1','시크릿 마무리 1회','secretFinish1']];
+  const ADDITIONAL_ROUND_ACCESS=[['mock-mid-7','중급 7회','middle7'],['mock-mid-8','중급 8회','middle8'],[FINAL7_ACCESS_KEY,'최종 7회',7],[FINAL8_ACCESS_KEY,'최종 8회',8],['mock-top-secret-finish-1','시크릿 마무리 1회','secretFinish1'],['mock-top-secret-finish-2','시크릿 마무리 2회','secretFinish2']];
   function finalRoundAccessKey(round){ const item=ADDITIONAL_ROUND_ACCESS.find(item=>String(item[2])===String(round)); return item?item[0]:''; }
   function isAdditionalAccessKey(key){ return ADDITIONAL_ROUND_ACCESS.some(item=>item[0]===key); }
   function finalRoundAccessArr(round){ const key=finalRoundAccessKey(round); return Array.isArray(S.archiveProductAccess[key])?S.archiveProductAccess[key]:[]; }
@@ -1075,6 +1075,7 @@
     ['mock-final-8','최종 실전 모의고사 8회'],
     ['mock-final-9','최종 실전 모의고사 9회'],
     ['mock-top-secret-finish-1','시크릿 마무리 모의고사 1회'],
+    ['mock-top-secret-finish-2','시크릿 마무리 모의고사 2회'],
     ['mock-signature-1','초등선발 대비 시그니처 실전 모의고사 1회'],
     ['mock-signature-2','초등선발 대비 시그니처 실전 모의고사 2회']
   ];
