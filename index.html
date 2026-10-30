@@ -1236,7 +1236,7 @@
       ? `<a class="bv-act" href="${escAttr(b.video)}" target="_blank" rel="noopener">▶ 강의 새 창</a>` : '';
     if(b.imgdir && b.pages) acts += `<button class="bv-act" onclick="printBvBook()">🖨 인쇄</button>`;
     else if(b.pdf && isRealPdf(b.pdf)) acts += `<button class="bv-act" onclick="printBvBook()">🖨 시험지 인쇄 / PDF 저장</button>`;
-    (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=bookLinkUrl(b, l.url); acts+=`<a class="bv-act" href="${escAttr(lurl)}" target="_blank" rel="noopener">🔗 ${escHtml(l.label||'링크')}</a>`; } });
+    (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=bookLinkUrl(b, l.url); const destination=l.download?` download="${escAttr(l.download)}"`:' target="_blank" rel="noopener"'; acts+=`<a class="bv-act" href="${escAttr(lurl)}"${destination}>${l.download?'⬇':'🔗'} ${escHtml(l.label||'링크')}</a>`; } });
     document.getElementById('bv-actions').innerHTML = acts;
     document.getElementById('bookviewer').classList.add('open');
   }

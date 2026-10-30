@@ -1982,6 +1982,7 @@ window.GFIELD_DATA = {
       "임유준"
     ],
     "mock-final-9": [],
+    "mock-top-secret-finish-1": [],
     "mock-signature-1": [
       "남기현",
       "이동윤",
@@ -2512,6 +2513,35 @@ window.GFIELD_DATA = {
         {
           "label": "답안·교재 연결표",
           "url": "https://hs.gfieldacademy.net/answer.html?set=final&round=9"
+        }
+      ]
+    },
+    {
+      "folder": "추가 모의고사",
+      "title": "시크릿 마무리 모의고사 1회",
+      "accessKey": "mock-top-secret-finish-1",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/top-secret-finish-1-questions.pdf",
+      "imgdir": "top-secret-finish-1",
+      "pages": 7,
+      "cover": "materials/top-secret-finish-1/001.jpg",
+      "desc": "30문항 · 100점",
+      "video": "",
+      "date": "2026-10-30",
+      "links": [
+        {
+          "label": "정답과 풀이 PDF 받기",
+          "url": "materials/top-secret-finish-1-solutions.pdf",
+          "download": "시크릿-마무리-1회-정답과-풀이.pdf"
+        },
+        {
+          "label": "유사문제 PDF 받기",
+          "url": "materials/top-secret-finish-1-similar-questions.pdf",
+          "download": "시크릿-마무리-1회-유사문제.pdf"
+        },
+        {
+          "label": "유사문제 풀이 PDF 받기",
+          "url": "materials/top-secret-finish-1-similar-solutions.pdf",
+          "download": "시크릿-마무리-1회-유사문제-풀이.pdf"
         }
       ]
     },
