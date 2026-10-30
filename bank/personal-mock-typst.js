@@ -25,7 +25,9 @@
     return '#v(2mm)\n#table(columns: '+columns+', inset: 2pt, stroke: 0.4pt, align: center, '+cells.join(', ')+')\n';
   }
   function visualDataExpr(item){
+    var essential=item.actualEssentialData;
     var out=tableExpr(item.givenTable);
+    if(essential&&Array.isArray(essential.rows))out+=tableExpr({headers:essential.rows[0],rows:essential.rows.slice(1)});
     if(Array.isArray(item.arithmeticRows))out+='#v(2mm)\n'+item.arithmeticRows.map(function(row){return '#align(center)[#text(font: "Pretendard", size: 11pt, '+literal(row)+')]\n';}).join('');
     if(Array.isArray(item.cards)&&item.cards.length){
       var columns=Math.min(item.cards.length,6),widths='('+Array.from({length:columns},function(){return '1fr';}).join(', ')+(columns===1?',':'')+')';
@@ -35,10 +37,12 @@
   }
   function question(entry,columnCount){
     var item=entry.item,figureHeight=columnCount===1?100:columnCount===2?50:31;
+    var essential=item.actualEssentialData;
+    var given=(Array.isArray(item.conditionLines)?item.conditionLines:[]).concat(Array.isArray(item.promptDataLines)?item.promptDataLines:[],essential&&typeof essential.text==='string'?essential.text.split('\n'):[]);
     return 'block(width: 100%, height: 100%, breakable: false)['+
       '#text(font: "Pretendard", weight: "bold", size: 11pt)['+entry.index+'.] #h(1fr) #text(font: "Pretendard", size: 8pt, '+literal(item.pointBand+' 점')+')\n'+
       '#v(3mm)\n#('+rich(item.stemHtml||item.text)+')\n'+
-      (Array.isArray(item.promptDataLines)?item.promptDataLines.map(function(line){return '#v(2mm)\n#('+rich(line)+')\n';}).join(''):'')+
+      given.map(function(line){return '#v(2mm)\n#('+rich(line)+')\n';}).join('')+
       visualDataExpr(item)+
       imageExpr(item,'question',figureHeight)+
       '#v(1fr)\n#align(right)[#text(font: "Pretendard", size: 9pt)[답] #line(length: 18mm, stroke: 0.4pt)]\n]';
@@ -53,7 +57,7 @@
     return '#block(width: 100%, breakable: false, below: 5mm)['+
       '#text(font: "Pretendard", weight: "bold", size: 10pt)['+entry.index+'번 · 답] #('+rich(item.answer)+')\n#v(2mm)\n'+
       steps.map(function(step){return '#('+rich(step)+')\n#v(1.5mm)\n';}).join('')+
-      imageExpr(item,'solution',65)+']';
+      imageExpr(item,'solution',65)+tableExpr(item.solutionTable)+']';
   }
   function planFromDom(paper,pages){
     var byId=new Map(paper.questions.map(function(entry){return [String(entry.item.id),entry];}));

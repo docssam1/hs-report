@@ -30,6 +30,8 @@ const fixture='window.GFIELD_DATA={students:["검수학생"],studentTypes:{},arc
       await page.goto(base+'/bank/index.html?bank=middle7&layout='+layout+'&view=grouped&printMode=both');
       await page.waitForFunction(()=>document.querySelector('#final1Worksheet #btnPrint')?.disabled===false,{timeout:30000});
       assert.equal(await page.locator('#final1Worksheet .qcard').count(),90);
+      assert.equal(await page.locator('#final1Worksheet .qcard[data-source-no="22"] .f1-essential-table').count(),3,'22번 요금표 3변형');
+      assert.equal(await page.locator('#final1Worksheet .qcard[data-source-no="29"] .f1-essential-text').count(),3,'29번 기자 발언 3변형');
       assert.equal(await page.locator('#final1Worksheet [data-answer-id]').count(),90);
       assert.equal(await page.locator('#stage .question-page').count(),0);
       const pc=await measure();await page.emulateMedia({media:'print'});const print=await measure();

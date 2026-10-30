@@ -5,8 +5,10 @@
   function chunks(a,n){var out=[];for(var i=0;i<a.length;i+=n)out.push(a.slice(i,i+n));return out;}
   function largeFigure(x){return x.sourceSet==='middle'&&(Number(x.sourceRound)===7&&Number(x.sourceNo)===13||Number(x.sourceRound)===8&&[13,17,20,26,27,30].includes(Number(x.sourceNo)))||x.sourceSet==='final'&&Number(x.sourceRound)===8&&Number(x.sourceNo)===25||x.sourceSet==='last'&&Number(x.sourceRound)===1&&Number(x.sourceNo)===6&&[2,3].includes(Number(x.variantNo))||x.sourceSet==='last'&&Number(x.sourceRound)===2&&[15,20,28,29].includes(Number(x.sourceNo))||x.sourceSet==='last'&&Number(x.sourceRound)===3&&[15,18,23,30].includes(Number(x.sourceNo));}
   function editorialWide(x){
-    var dataLength=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0;
+    var essential=x.actualEssentialData;
+    var dataLength=(Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0)+(essential&&essential.text?essential.text.length:0);
     var total=(x.text||'').length+dataLength;
+    if(essential&&Array.isArray(essential.rows))return true;
     if(Number(x.sourceRound)===1)return total>180||!!x.asset&&(total>110||[18,20,28].includes(Number(x.sourceNo)));
     if(x.sourceSet==='final'&&Number(x.sourceRound)===7&&[5,6,12].includes(Number(x.sourceNo)))return true;
     if(x.sourceSet==='final'&&Number(x.sourceRound)===7&&[14,15,17,29].includes(Number(x.sourceNo)))return false;
@@ -61,6 +63,12 @@
     if(!a)return '';
     if(a.kind!=='raster'||!/^data:image\/png;base64,/.test(a.src||''))throw Error('문항 그림을 확인할 수 없습니다. 선생님께 문의해 주세요.');
     return '<img class="'+cls+'" src="'+esc(a.src)+'"'+(a.width&&a.height?' width="'+Number(a.width)+'" height="'+Number(a.height)+'"':'')+' alt="'+esc(a.description||'문항 그림')+'">';
+  }
+  function essentialBlock(item){
+    var data=item.actualEssentialData;if(!data)return '';
+    if(Array.isArray(data.rows))return '<table class="f1-essential-table" aria-label="문항 표"><tbody>'+data.rows.map(function(row){return '<tr>'+row.map(function(cell){return '<td>'+esc(cell==null||cell===''?'\u00a0':cell)+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table>';
+    if(typeof data.text==='string')return '<div class="f1-essential-text">'+data.text.split('\n').map(function(line){return '<p>'+mathText(line)+'</p>';}).join('')+'</div>';
+    return '';
   }
   function mount(opts){
     document.body.classList.add('fixed-bank-mode');
@@ -130,7 +138,7 @@
         var given=Array.isArray(x.promptDataLines)&&x.promptDataLines.length?x.promptDataLines:[];
         var givenBlock=given.length?'<div class="f1-qgiven"><b>'+esc(x.promptDataLabel||'주어진 조건')+'</b><div class="f1-qgiven-lines">'+given.map(t=>'<span>'+mathText(t)+'</span>').join('')+'</div></div>':'';
         var sourceLabel=important?'파이널 '+x.sourceRound+'회 '+x.sourceNo+'번':'원문 '+x.sourceNo+'번';
-        html+='<article class="f1-qcard qcard"'+(reportColumns?' style="grid-column:'+String(Math.floor(index/reportRows)+1)+';grid-row:'+String(index%reportRows+2)+'"':'')+' data-index="'+x.index+'" data-source-no="'+x.sourceNo+'" data-source-round="'+x.sourceRound+'" data-points="'+esc(x.pointBand)+'" data-gen="'+esc(x.genId)+'" data-wide="'+String(layout==='editorial'&&editorialWide(x))+'"><div class="f1-qcard-head"><span class="f1-qno">'+x.index+'.</span><span class="f1-qtype">['+esc(x.importantTypeTitle||x.detailType)+']</span></div><div class="f1-qtext qtext">'+mathText(promptText)+'</div>'+givenBlock+'<div class="f1-qmeta qmeta fixed-item" data-item-id="'+esc(x.id)+'">'+sourceLabel+' / '+(x.reviewStatus==='runtime-verified'?'새 문제 '+(x.variantNo-3):'유사문제 '+x.variantNo)+(x.variantRoleLabel?' · '+esc(x.variantRoleLabel):'')+' / '+(x.sourceEquivalentConfirmed===false?'원문 참고 배점 ':'')+esc(x.pointBand)+'점</div>'+(x.asset?'<div class="f1-qfigure qfigure">'+raster(x.asset,'')+'</div>':'')+'<div class="f1-workspace" aria-hidden="true">'+writeLines+'</div><div class="f1-answerline answerline"><span>답</span><span class="f1-answer-blank" aria-hidden="true"></span></div></article>';
+        html+='<article class="f1-qcard qcard"'+(reportColumns?' style="grid-column:'+String(Math.floor(index/reportRows)+1)+';grid-row:'+String(index%reportRows+2)+'"':'')+' data-index="'+x.index+'" data-source-no="'+x.sourceNo+'" data-source-round="'+x.sourceRound+'" data-points="'+esc(x.pointBand)+'" data-gen="'+esc(x.genId)+'" data-wide="'+String(layout==='editorial'&&editorialWide(x))+'"><div class="f1-qcard-head"><span class="f1-qno">'+x.index+'.</span><span class="f1-qtype">['+esc(x.importantTypeTitle||x.detailType)+']</span></div><div class="f1-qtext qtext">'+mathText(promptText)+'</div>'+givenBlock+essentialBlock(x)+'<div class="f1-qmeta qmeta fixed-item" data-item-id="'+esc(x.id)+'">'+sourceLabel+' / '+(x.reviewStatus==='runtime-verified'?'새 문제 '+(x.variantNo-3):'유사문제 '+x.variantNo)+(x.variantRoleLabel?' · '+esc(x.variantRoleLabel):'')+' / '+(x.sourceEquivalentConfirmed===false?'원문 참고 배점 ':'')+esc(x.pointBand)+'점</div>'+(x.asset?'<div class="f1-qfigure qfigure">'+raster(x.asset,'')+'</div>':'')+'<div class="f1-workspace" aria-hidden="true">'+writeLines+'</div><div class="f1-answerline answerline"><span>답</span><span class="f1-answer-blank" aria-hidden="true"></span></div></article>';
       });
       var lastTwo=layout==='editorial'&&n===total&&group.length===2&&group.every(x=>!editorialWide(x));
       return sheet('question-page'+(lastTwo?' f1-last-two':'')+(single?' f1-single-question':'')+(twoWithWide?' f1-two-with-wide':'')+(group.length===1&&largeFigure(group[0])?' f1-large-figure':''),html+'</div>');

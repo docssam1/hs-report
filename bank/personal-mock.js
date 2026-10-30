@@ -42,7 +42,7 @@
     }
     return root.BANK_FIXED.load(code);
   }
-  function signature(item){return JSON.stringify([item.text,item.promptDataLines||[],item.cards||[],item.givenTable||null,item.arithmeticRows||[],item.responseTable||null,item.asset&&item.asset.src||'',item.answer]);}
+  function signature(item){return JSON.stringify([item.text,item.conditionLines||[],item.promptDataLines||[],item.actualEssentialData||null,item.cards||[],item.givenTable||null,item.arithmeticRows||[],item.responseTable||null,item.asset&&item.asset.src||'',item.answer]);}
   /* 이미 푼(인쇄한) 문항 식별: 검수 문항은 id, 생성형은 내용 서명 */
   function itemKey(item){return String(item&&item.id||signature(item)).slice(0,300);}
   function profileOf(item){
@@ -234,7 +234,9 @@
     return '<table class="pm-data-table pm-'+kind+'" aria-label="'+esc(table.label||'문항 표')+'"><thead><tr>'+table.headers.map(function(cell){return '<th>'+mathText(cell)+'</th>';}).join('')+'</tr></thead><tbody>'+table.rows.map(function(row){return '<tr>'+row.map(function(cell){return '<td>'+mathText(cell==null||cell===''?'\u00a0':cell)+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table>';
   }
   function visualData(item){
+    var essential=item.actualEssentialData;
     return dataTable(item.givenTable,'given-table')+
+      (essential&&Array.isArray(essential.rows)?dataTable({label:'문항 표',headers:essential.rows[0],rows:essential.rows.slice(1)},'essential-table'):'')+
       (Array.isArray(item.arithmeticRows)?'<div class="pm-arithmetic" aria-label="세로셈">'+item.arithmeticRows.map(function(row){return '<div>'+esc(row)+'</div>';}).join('')+'</div>':'')+
       (Array.isArray(item.cards)?'<div class="pm-number-cards" aria-label="수 카드 '+esc(item.cards.join(', '))+'">'+item.cards.map(function(digit){return '<span>'+esc(digit)+'</span>';}).join('')+'</div>':'')+
       dataTable(item.responseTable,'response-table');
@@ -247,12 +249,12 @@
     return '<section class="pm-page pm-'+kind+'-page'+(fourGrid?' pm-four-grid':'')+(sixGrid?' pm-six-grid':'')+(first?' pm-first':'')+'"><div class="pm-watermark"><div class="wm-layer"></div></div><div class="pm-page-content">'+(first?mast+cover+score:'<div class="pm-compact-head"><span>G·FIELD · 지필드 영재교육</span><span>'+esc(meta.title+' · '+title)+'</span></div>')+'<div class="pm-'+kind+'-grid">'+content+'</div><footer class="pm-exam-footer"><span>'+esc('지필드 영재교육 · '+meta.title)+'</span><span>- '+number+' / '+total+' -</span></footer></div></section>';
   }
   function questionWide(entry){
-    var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' '):'';
-    return !!x.responseTable||!!x.givenTable||!!x.arithmeticRows||Array.isArray(x.cards)&&x.cards.length>8||String(x.text||'').length+given.length>210||!!x.asset&&(String(x.text||'').length+given.length>125||[28,30].includes(Number(x.sourceNo)));
+    var x=entry.item,given=questionLines(x).join(' ');
+    return !!x.responseTable||!!x.givenTable||!!x.arithmeticRows||!!(x.actualEssentialData&&x.actualEssentialData.rows)||Array.isArray(x.cards)&&x.cards.length>8||String(x.text||'').length+given.length>210||!!x.asset&&(String(x.text||'').length+given.length>125||[28,30].includes(Number(x.sourceNo)));
   }
-  function questionCompactWide(entry){var x=entry.item;return questionWide(entry)||!!x.asset||String(x.text||'').length+(Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0)>165;}
+  function questionCompactWide(entry){var x=entry.item;return questionWide(entry)||!!x.asset||String(x.text||'').length+questionLines(x).join(' ').length>165;}
   function questionTall(entry){return entry.item.sourceSet==='middle'&&Number(entry.item.sourceRound)===7&&Number(entry.item.sourceNo)===13;}
-  function answerWide(entry){var x=entry.item;return !!x.solutionAsset||String(x.solution||'').length>190||Array.isArray(x.solutionSteps)&&x.solutionSteps.join('').length>190;}
+  function answerWide(entry){var x=entry.item;return !!x.solutionAsset||!!x.solutionTable||String(x.solution||'').length>190||Array.isArray(x.solutionSteps)&&x.solutionSteps.join('').length>190;}
   function answerCompactWide(entry){return answerWide(entry);}
   function answerTall(entry){var x=entry.item,steps=Array.isArray(x.solutionSteps)?x.solutionSteps.join(''):String(x.solution||'');return steps.length>420||!!x.solutionAsset&&steps.length>190;}
   function rows(items,wide,tall,perPage){
@@ -277,15 +279,19 @@
     if(current.length)pages.push(current.flatMap(function(x){return x.entries;}));
     return pages;
   }
+  function questionLines(item){
+    var essential=item.actualEssentialData;
+    return (Array.isArray(item.conditionLines)?item.conditionLines:[]).concat(Array.isArray(item.promptDataLines)?item.promptDataLines:[],essential&&typeof essential.text==='string'?essential.text.split('\n'):[]);
+  }
   function questionCard(entry,wide){
-    var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines:[];
+    var x=entry.item,given=questionLines(x);
     return '<article class="pm-q'+(wide(entry)||questionTall(entry)?' pm-wide':'')+(questionTall(entry)?' pm-tall':'')+'" data-item-id="'+esc(x.id)+'" data-question-index="'+(entry.index-1)+'"><div class="pm-qhead"><h3>'+entry.index+'.</h3><span class="pm-points">['+esc(x.pointBand)+'점]</span><span class="pm-type">'+esc(typeLabel(x.detailType))+(entry.origin==='library'?' · 자료실 보충':entry.origin==='generated'?' · 새 문제':'')+'</span><button type="button" class="pm-replace" aria-label="'+entry.index+'번 문제만 바꾸기">이 문제만 바꾸기</button></div><p>'+mathText(x.stemHtml||x.text)+'</p>'+
       (given.length?'<div class="pm-given">'+given.map(mathText).join('<br>')+'</div>':'')+visualData(x)+figure(x.asset)+
       '<div class="pm-work" aria-hidden="true"><span></span><span></span><span></span><span></span></div><div class="pm-answerline">답 <span></span></div></article>';
   }
   function answerCard(entry,wide){
     var x=entry.item,steps=Array.isArray(x.solutionSteps)&&x.solutionSteps.length?x.solutionSteps:[x.solution];
-    return '<article class="pm-answer'+(wide(entry)?' pm-wide':'')+(answerTall(entry)?' pm-tall':'')+'" data-answer-id="'+esc(x.id)+'"><h3>'+entry.index+'번 · '+esc(typeLabel(x.detailType))+'</h3><p class="pm-source">'+(entry.origin==='library'?'자료실 공개 보충 · ':entry.origin==='generated'?'자료실 공개 생성형 · ':'')+esc(label(entry.code))+' 원문 '+x.sourceNo+'번 · '+(entry.origin==='generated'?'추가 연습문제':'검수 유사문제 '+x.variantNo)+'</p><strong>답 '+mathText(x.answer)+'</strong><ol>'+steps.map(function(step){return '<li>'+mathText(step)+'</li>';}).join('')+'</ol>'+figure(x.solutionAsset)+'</article>';
+    return '<article class="pm-answer'+(wide(entry)?' pm-wide':'')+(answerTall(entry)?' pm-tall':'')+'" data-answer-id="'+esc(x.id)+'"><h3>'+entry.index+'번 · '+esc(typeLabel(x.detailType))+'</h3><p class="pm-source">'+(entry.origin==='library'?'자료실 공개 보충 · ':entry.origin==='generated'?'자료실 공개 생성형 · ':'')+esc(label(entry.code))+' 원문 '+x.sourceNo+'번 · '+(entry.origin==='generated'?'추가 연습문제':'검수 유사문제 '+x.variantNo)+'</p><strong>답 '+mathText(x.answer)+'</strong><ol>'+steps.map(function(step){return '<li>'+mathText(step)+'</li>';}).join('')+'</ol>'+figure(x.solutionAsset)+dataTable(x.solutionTable,'solution-table')+'</article>';
   }
   function renderPaper(paper,scope,band,student,title,perPage){
     if(!paper.questions.length||paper.questions.length>paper.target)throw Error('인쇄할 검수 문항이 없습니다.');
@@ -352,7 +358,7 @@
     function renderPreview(){
       var box=document.getElementById('pmPreview'),group=visibleTypes.find(function(row){return row.key===previewKey;});
       if(!group){box.innerHTML='<p>세부 유형의 ‘문항 보기’를 누르면 대표 문항을 볼 수 있습니다.</p>';return;}
-      var item=group.sample,given=Array.isArray(item.promptDataLines)?item.promptDataLines:[];
+      var item=group.sample,given=questionLines(item);
       box.innerHTML='<h3>'+esc(group.meta.type)+'</h3><div class="pm-preview-source">'+esc(group.meta.area+' · '+group.meta.subarea+' · '+label(group.code))+' · 원문 '+group.no+'번 유형</div><p>'+mathText(item.stemHtml||item.text)+'</p>'+(given.length?'<div class="pm-given">'+given.map(mathText).join('<br>')+'</div>':'')+visualData(item)+figure(item.asset);
     }
     function refreshTaxonomy(){

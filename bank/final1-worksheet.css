@@ -181,6 +181,10 @@ body.fixed-bank-mode #final1Worksheet .f1-qhead{color:var(--f1-ink);border-botto
 #final1Worksheet[data-bank-code="middle7"] .f1-qtext{font-size:13pt;line-height:1.55}
 #final1Worksheet[data-bank-code="middle7"] .f1-single-question .qcard{grid-column:1/-1}
 #final1Worksheet[data-bank-code="middle7"] .f1-qtext,#final1Worksheet[data-bank-code="middle7"] .f1-qfigure,#final1Worksheet[data-bank-code="middle7"] .f1-qgiven{flex-shrink:0}
+#final1Worksheet[data-bank-code="middle7"] .f1-essential-table{border-collapse:collapse;width:100%;margin:3mm 0;font:400 11pt/1.35 'GF Print Sans',sans-serif;color:#191511}
+#final1Worksheet[data-bank-code="middle7"] .f1-essential-table td{border:1px solid #555;padding:1.2mm;text-align:center}
+#final1Worksheet[data-bank-code="middle7"] .f1-essential-text{margin:2mm 0;font:400 11pt/1.45 'GF Print Serif',serif;color:#191511}
+#final1Worksheet[data-bank-code="middle7"] .f1-essential-text p{margin:0 0 2mm}
 #final1Worksheet[data-bank-code="middle7"] .qcard[data-source-no="16"] .f1-qfigure img{max-height:62mm}
 #final1Worksheet[data-bank-code="middle7"] .f1-solution-asset{max-height:85mm}
 #final1Worksheet[data-bank-code="middle7"] .solution-card[data-source-no="13"] .f1-solution-asset{height:85mm;max-height:85mm;width:auto}
