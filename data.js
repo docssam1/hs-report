@@ -2550,7 +2550,7 @@ window.GFIELD_DATA = {
       "folder": "추가 모의고사",
       "title": "시크릿 마무리 모의고사 2회",
       "accessKey": "mock-top-secret-finish-2",
-      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/materials/top-secret-finish-2-questions.pdf",
+      "pdf": "",
       "imgdir": "top-secret-finish-2",
       "pages": 7,
       "cover": "materials/top-secret-finish-2/001.jpg",

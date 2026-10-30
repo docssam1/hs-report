@@ -21,6 +21,7 @@ async function verifyTopSecretFinishTwo(browser) {
   const key = 'mock-top-secret-finish-2';
   const book = dataContext.window.GFIELD_DATA.books.find(item => item && item.accessKey === key);
   assert.equal(book?.title, '시크릿 마무리 모의고사 2회');
+  assert.equal(book?.pdf, '', '시험지는 페이지별 이미지로만 연결');
   assert.equal(book?.pages, 7);
   assert.equal(book?.video, '', '강의는 아직 연결하지 않음');
   assert.equal(book?.links?.length, 3, '정답·유사문제·유사문제 풀이 PDF 링크');
