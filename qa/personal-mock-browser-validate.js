@@ -79,6 +79,8 @@ function assertTypstPages(pages,questionPages,count){
     assertTypstPages(await pdfItems(typstPdf),tenQuestionPages,10);
     await approvedOnly.locator('[data-count="30"]').click();
     await approvedOnly.waitForFunction(()=>document.querySelectorAll('.pm-q').length===30);
+    assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied1-q13-"] .pm-number-cards span').count(),6,'활용 1회 13번 수 카드 6장');
+    assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied1-q29-"] .pm-number-cards span').count(),4,'활용 1회 29번 수 카드 4장');
     const thirtyQuestionPages=await approvedOnly.locator('.pm-question-page').count();
     const fullDownload=approvedOnly.waitForEvent('download',{timeout:90000});
     await approvedOnly.locator('#pmTypst').click();

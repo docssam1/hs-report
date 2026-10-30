@@ -18,12 +18,28 @@
   function safeName(value){return String(value||'').replace(/[^A-Za-z0-9_-]/g,'_').slice(0,70);}
   function assetPath(item,kind){var asset=kind==='solution'?item.solutionAsset:item.asset;if(!asset)return null;return '/images/'+safeName(item.id)+'-'+kind+(/\.svg(?:$|\?)/i.test(asset.src||'')?'.svg':'.png');}
   function imageExpr(item,kind,height){var path=assetPath(item,kind);return path?'#v(2mm)\n#align(center)[#image('+literal(path)+', width: 100%, height: '+height+'mm, fit: "contain")]\n':'';}
+  function tableExpr(data){
+    if(!data||!Array.isArray(data.headers)||!Array.isArray(data.rows))return '';
+    var columns='('+data.headers.map(function(){return '1fr';}).join(', ')+(data.headers.length===1?',':'')+')';
+    var cells=data.headers.concat(data.rows.flat()).map(function(cell){return '[#text('+literal(cell)+')]';});
+    return '#v(2mm)\n#table(columns: '+columns+', inset: 2pt, stroke: 0.4pt, align: center, '+cells.join(', ')+')\n';
+  }
+  function visualDataExpr(item){
+    var out=tableExpr(item.givenTable);
+    if(Array.isArray(item.arithmeticRows))out+='#v(2mm)\n'+item.arithmeticRows.map(function(row){return '#align(center)[#text(font: "Pretendard", size: 11pt, '+literal(row)+')]\n';}).join('');
+    if(Array.isArray(item.cards)&&item.cards.length){
+      var columns=Math.min(item.cards.length,6),widths='('+Array.from({length:columns},function(){return '1fr';}).join(', ')+(columns===1?',':'')+')';
+      out+='#v(2mm)\n#grid(columns: '+widths+', column-gutter: 1.5mm, row-gutter: 1.5mm, '+item.cards.map(function(digit){return '[#box(width: 100%, height: 11mm, stroke: 0.5pt, radius: 1pt)[#align(center + horizon)[#text(font: "Pretendard", size: 12pt, '+literal(digit)+')]]]';}).join(', ')+')\n';
+    }
+    return out+tableExpr(item.responseTable);
+  }
   function question(entry,columnCount){
     var item=entry.item,figureHeight=columnCount===1?100:columnCount===2?50:31;
     return 'block(width: 100%, height: 100%, breakable: false)['+
       '#text(font: "Pretendard", weight: "bold", size: 11pt)['+entry.index+'.] #h(1fr) #text(font: "Pretendard", size: 8pt, '+literal(item.pointBand+' 점')+')\n'+
       '#v(3mm)\n#('+rich(item.stemHtml||item.text)+')\n'+
       (Array.isArray(item.promptDataLines)?item.promptDataLines.map(function(line){return '#v(2mm)\n#('+rich(line)+')\n';}).join(''):'')+
+      visualDataExpr(item)+
       imageExpr(item,'question',figureHeight)+
       '#v(1fr)\n#align(right)[#text(font: "Pretendard", size: 9pt)[답] #line(length: 18mm, stroke: 0.4pt)]\n]';
   }

@@ -42,7 +42,7 @@
     }
     return root.BANK_FIXED.load(code);
   }
-  function signature(item){return JSON.stringify([item.text,item.promptDataLines||[],item.asset&&item.asset.src||'',item.answer]);}
+  function signature(item){return JSON.stringify([item.text,item.promptDataLines||[],item.cards||[],item.givenTable||null,item.arithmeticRows||[],item.responseTable||null,item.asset&&item.asset.src||'',item.answer]);}
   /* 이미 푼(인쇄한) 문항 식별: 검수 문항은 id, 생성형은 내용 서명 */
   function itemKey(item){return String(item&&item.id||signature(item)).slice(0,300);}
   function profileOf(item){
@@ -229,6 +229,16 @@
     if(!/^data:image\/png;base64,/.test(asset.src||'')&&!/^assets\/[A-Za-z0-9/_-]+\.(?:png|svg)$/.test(asset.src||''))throw Error('검수 그림을 확인할 수 없습니다.');
     return '<img src="'+esc(asset.src)+'" alt="'+esc(asset.description||'문항 그림')+'">';
   }
+  function dataTable(table,kind){
+    if(!table||!Array.isArray(table.headers)||!Array.isArray(table.rows))return '';
+    return '<table class="pm-data-table pm-'+kind+'" aria-label="'+esc(table.label||'문항 표')+'"><thead><tr>'+table.headers.map(function(cell){return '<th>'+mathText(cell)+'</th>';}).join('')+'</tr></thead><tbody>'+table.rows.map(function(row){return '<tr>'+row.map(function(cell){return '<td>'+mathText(cell==null||cell===''?'\u00a0':cell)+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table>';
+  }
+  function visualData(item){
+    return dataTable(item.givenTable,'given-table')+
+      (Array.isArray(item.arithmeticRows)?'<div class="pm-arithmetic" aria-label="세로셈">'+item.arithmeticRows.map(function(row){return '<div>'+esc(row)+'</div>';}).join('')+'</div>':'')+
+      (Array.isArray(item.cards)?'<div class="pm-number-cards" aria-label="수 카드 '+esc(item.cards.join(', '))+'">'+item.cards.map(function(digit){return '<span>'+esc(digit)+'</span>';}).join('')+'</div>':'')+
+      dataTable(item.responseTable,'response-table');
+  }
   function page(title,number,total,content,kind,fourGrid,meta,sixGrid){
     var first=number===1,heading=meta.title+(kind==='answer'?' · 정답과 풀이':'');
     var mast='<div class="pm-exam-mast"><span class="pm-brand">G·FIELD <small>지필드 영재교육</small></span><span>성공하는 공부 습관을 만드는<br>대치 지필드 영재교육</span></div>';
@@ -238,7 +248,7 @@
   }
   function questionWide(entry){
     var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines.join(' '):'';
-    return String(x.text||'').length+given.length>210||!!x.asset&&(String(x.text||'').length+given.length>125||[28,30].includes(Number(x.sourceNo)));
+    return !!x.responseTable||!!x.givenTable||!!x.arithmeticRows||Array.isArray(x.cards)&&x.cards.length>8||String(x.text||'').length+given.length>210||!!x.asset&&(String(x.text||'').length+given.length>125||[28,30].includes(Number(x.sourceNo)));
   }
   function questionCompactWide(entry){var x=entry.item;return questionWide(entry)||!!x.asset||String(x.text||'').length+(Array.isArray(x.promptDataLines)?x.promptDataLines.join(' ').length:0)>165;}
   function questionTall(entry){return entry.item.sourceSet==='middle'&&Number(entry.item.sourceRound)===7&&Number(entry.item.sourceNo)===13;}
@@ -270,7 +280,7 @@
   function questionCard(entry,wide){
     var x=entry.item,given=Array.isArray(x.promptDataLines)?x.promptDataLines:[];
     return '<article class="pm-q'+(wide(entry)||questionTall(entry)?' pm-wide':'')+(questionTall(entry)?' pm-tall':'')+'" data-item-id="'+esc(x.id)+'" data-question-index="'+(entry.index-1)+'"><div class="pm-qhead"><h3>'+entry.index+'.</h3><span class="pm-points">['+esc(x.pointBand)+'점]</span><span class="pm-type">'+esc(typeLabel(x.detailType))+(entry.origin==='library'?' · 자료실 보충':entry.origin==='generated'?' · 새 문제':'')+'</span><button type="button" class="pm-replace" aria-label="'+entry.index+'번 문제만 바꾸기">이 문제만 바꾸기</button></div><p>'+mathText(x.stemHtml||x.text)+'</p>'+
-      (given.length?'<div class="pm-given">'+given.map(mathText).join('<br>')+'</div>':'')+figure(x.asset)+
+      (given.length?'<div class="pm-given">'+given.map(mathText).join('<br>')+'</div>':'')+visualData(x)+figure(x.asset)+
       '<div class="pm-work" aria-hidden="true"><span></span><span></span><span></span><span></span></div><div class="pm-answerline">답 <span></span></div></article>';
   }
   function answerCard(entry,wide){
@@ -343,7 +353,7 @@
       var box=document.getElementById('pmPreview'),group=visibleTypes.find(function(row){return row.key===previewKey;});
       if(!group){box.innerHTML='<p>세부 유형의 ‘문항 보기’를 누르면 대표 문항을 볼 수 있습니다.</p>';return;}
       var item=group.sample,given=Array.isArray(item.promptDataLines)?item.promptDataLines:[];
-      box.innerHTML='<h3>'+esc(group.meta.type)+'</h3><div class="pm-preview-source">'+esc(group.meta.area+' · '+group.meta.subarea+' · '+label(group.code))+' · 원문 '+group.no+'번 유형</div><p>'+mathText(item.stemHtml||item.text)+'</p>'+(given.length?'<div class="pm-given">'+given.map(mathText).join('<br>')+'</div>':'')+figure(item.asset);
+      box.innerHTML='<h3>'+esc(group.meta.type)+'</h3><div class="pm-preview-source">'+esc(group.meta.area+' · '+group.meta.subarea+' · '+label(group.code))+' · 원문 '+group.no+'번 유형</div><p>'+mathText(item.stemHtml||item.text)+'</p>'+(given.length?'<div class="pm-given">'+given.map(mathText).join('<br>')+'</div>':'')+visualData(item)+figure(item.asset);
     }
     function refreshTaxonomy(){
       checkList('pmSourceList',availableCodes,selectedSources,'pmSourceSummary',label);
