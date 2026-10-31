@@ -1,0 +1,669 @@
+{
+ "request_revision": "master-v3-final-20261031-0726",
+ "voice": "docssam-omnivoice",
+ "voice_version": "docssam-clone-v3-slow(speed 0.8)",
+ "input_file": "hwangso-briefing-20261101-default-final.voice.json",
+ "input_sha256": "5dde80e9c5be5c993b7a5bad423a10f4ad0d0d3916844208ae946585bd91be2b",
+ "segment_count": 82,
+ "total_duration_s": 2005.4,
+ "listening_approved": false,
+ "note": "자동 받아쓰기 검사(CER)만 통과. 사람이 들은 승인 전. cue 실측 정렬은 미실시.",
+ "segments": [
+  {
+   "id": "hb261101-v3-p01",
+   "file": "hb261101-v3-p01-40b8b3f61b.mp3",
+   "text_sha256": "4bb8d72dc6e1148bb22a02ca4061c2165018395fdd8d1fa85e575e0f6ed7b5de",
+   "audio_sha256": "daac4fed74765f7bf14b62993311f3df340b1bd73d5379c8b9528bd57856f541",
+   "duration_s": 14.16,
+   "asr_cer": 0.033
+  },
+  {
+   "id": "hb261101-v3-p02",
+   "file": "hb261101-v3-p02-bfecaf23ad.mp3",
+   "text_sha256": "03746b2ce0c752092f2e055a0712347eb496e635b115d4b1d8e92670a6812ca5",
+   "audio_sha256": "22f452a3f906c5e30557e2f164bea4d2d34b1d21cddfcfefb655ae0654864bee",
+   "duration_s": 26.23,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-p03",
+   "file": "hb261101-v3-p03-1038fd4337.mp3",
+   "text_sha256": "51a0c27c9cc43f39c51ec90b7c0cab3614202ea57ab2882808416677bf3a13dd",
+   "audio_sha256": "8091f527155891ae5d5aff1754f90b8e18ca563bd4c7e1413ebc40bcaa61c412",
+   "duration_s": 32.23,
+   "asr_cer": 0.006
+  },
+  {
+   "id": "hb261101-v3-p04",
+   "file": "hb261101-v3-p04-7653b83f93.mp3",
+   "text_sha256": "349ff3ef8a75811cc5570cb8c9ff56b3128765b1e01cd874b59c929c630a8d6d",
+   "audio_sha256": "6139e9eb9b840626b5a192b4664fec7689ee5edfd66160d65307c65e7fdca402",
+   "duration_s": 35.83,
+   "asr_cer": 0.006
+  },
+  {
+   "id": "hb261101-v3-p04b",
+   "file": "hb261101-v3-p04b-d0bece129f.mp3",
+   "text_sha256": "16aeea8f2867ea392607adebd554fcb6a8c165f83e6f97214a373e364d55ab14",
+   "audio_sha256": "7535c04720019397e6dc71b3ab5fcb88fca0ceffb1a3dbe1641ac55026063b71",
+   "duration_s": 24.82,
+   "asr_cer": 0.009
+  },
+  {
+   "id": "hb261101-v3-p05",
+   "file": "hb261101-v3-p05-6c0527edae.mp3",
+   "text_sha256": "84ee8dab23b6431c445f7e5146eb18582d4ae9d9054e0fac150aabc6bd88fc17",
+   "audio_sha256": "bde16af2356ad036573062c5a10bc643aedbe6dba687f1c5e3e8de70ab1bff4d",
+   "duration_s": 22.01,
+   "asr_cer": 0.039
+  },
+  {
+   "id": "hb261101-v3-p06",
+   "file": "hb261101-v3-p06-21ac8336bb.mp3",
+   "text_sha256": "9763752049d0d73851bf461050cbad3ff57415953e2bc95245df2b45de6ec518",
+   "audio_sha256": "970b0b9e797f77f73dac9cc77916128171addbe0bd3680d44efd6ea8d5804bce",
+   "duration_s": 26.33,
+   "asr_cer": 0.068
+  },
+  {
+   "id": "hb261101-v3-p07",
+   "file": "hb261101-v3-p07-b400c08bb0.mp3",
+   "text_sha256": "89ed40b7e67093cba994ab0544f66aa6849f8e9fe7f7927f2e09dbc5ce67e341",
+   "audio_sha256": "64cb277deef86cd8174a9ac52dc06b81604a89cd9a8ef53d0f53d43dc4eb6416",
+   "duration_s": 12.05,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-p08_parent_thanks",
+   "file": "hb261101-v3-p08_parent_thanks-f83e25d59f.mp3",
+   "text_sha256": "9c04d419386666dcb67277f816dcb9b37685393a767af6c0340e0fcb41848fd2",
+   "audio_sha256": "924012292dfc75eb3b8d15524bcec639a28861255a1d07a44b3cb74a4425a762",
+   "duration_s": 26.06,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-p09_parent_prep",
+   "file": "hb261101-v3-p09_parent_prep-fdc4161bf2.mp3",
+   "text_sha256": "cc4fbcc07e2317ffcfb6dce05d9148c9cbb66bf21f17bc8c11fd3191e1120da7",
+   "audio_sha256": "c0bf75b850099e9821fcf81d6dac9e08aca21a8beb77ad4e7d945534adaa96f1",
+   "duration_s": 16.18,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-p09b_regional_weather",
+   "file": "hb261101-v3-p09b_regional_weather-d8cbc370c5.mp3",
+   "text_sha256": "5045a54cf2918ac19d9350376b8de0f72bb285a6b819d37cc4f1e63f1e058206",
+   "audio_sha256": "dac55470bd58cdb4d99ebbcda53c37ac6219c588e08c972a037550f5f2cf8736",
+   "duration_s": 19.97,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-p10_parent_temperature",
+   "file": "hb261101-v3-p10_parent_temperature-512a7570e5.mp3",
+   "text_sha256": "a85d3065f0d4cffcf08c96a6b5ab203534545fdf153dc2bfdc737d1beef1adc2",
+   "audio_sha256": "87b79b0eeb527b7c260f33ca44346c7c0ca5ba7983ff2a9cdeb0affa9239c23a",
+   "duration_s": 19.9,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-child_card",
+   "file": "hb261101-v3-child_card-e1647e55aa.mp3",
+   "text_sha256": "d1679538e94908522e347d7053d290645fdaaf21119604a71131d0fcbb9dcf26",
+   "audio_sha256": "4add58fb0495a2e73d1fe9fa732b8c1d831b2ce9ec4966debad8c39d8d2e7122",
+   "duration_s": 2.42,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-c01",
+   "file": "hb261101-v3-c01-e7ec300859.mp3",
+   "text_sha256": "a918eeb373a4deb90ba4c7cb544d104b266362a862552b7de7de8fa4419a5060",
+   "audio_sha256": "93db1d4cba1a262352b2c15e345afe13be6ab263665734477e16f0a550a6ad8d",
+   "duration_s": 11.28,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-c02",
+   "file": "hb261101-v3-c02-2d1f679b9a.mp3",
+   "text_sha256": "b64b72c634c398baf763ca4581aeafc2118d88ab0e5ce7def972f163ce716ff6",
+   "audio_sha256": "b55409facbbf008385d08f8f9380707a531b878ce674226f482c9a7152829d2b",
+   "duration_s": 11.57,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-c03",
+   "file": "hb261101-v3-c03-8b05b261f8.mp3",
+   "text_sha256": "5ca20d18f91bf866509f455b7937357dbdfcaa6b288d7c72e9cd0fa702e27844",
+   "audio_sha256": "6e0f3277ba31a9e797e8dbd307ce22c8ce58c82dade3c6e1b8d45cc9c4248919",
+   "duration_s": 15.98,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-c04",
+   "file": "hb261101-v3-c04-b800a04a71.mp3",
+   "text_sha256": "3f106f9aeedb88ae9fef91c5452c01f96faa264fc8335e183ad2132ad1773d84",
+   "audio_sha256": "d3f1743f65018b82d94378af25b7a3f9558f39a25965eff8712046b7b3ae4530",
+   "duration_s": 21.82,
+   "asr_cer": 0.01
+  },
+  {
+   "id": "hb261101-v3-tip_intro",
+   "file": "hb261101-v3-tip_intro-03af3f6a10.mp3",
+   "text_sha256": "1b10e96ffa667e3fd100d3bb3387711f1373d84fd65640d6cc23081bb61f7a66",
+   "audio_sha256": "e0685371de1115fc1ce0ad5ce79c2994cc8f552569217c625282ffa245185144",
+   "duration_s": 7.56,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-time01",
+   "file": "hb261101-v3-time01-92317254ab.mp3",
+   "text_sha256": "690b6b549154772615b2787c32002a2e823199b47a5de6d0d0c81c0efa948bb7",
+   "audio_sha256": "856e9ba4c24897c0d0b1af938e73b4449ccf5ede39c6a853f5725cb84d8efd4d",
+   "duration_s": 34.66,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-count01",
+   "file": "hb261101-v3-count01-9c2ddcc3d2.mp3",
+   "text_sha256": "880d576a35c6e8a7f2e2ad23a828c45e662b5bed102611119d53d12f3aeb628a",
+   "audio_sha256": "3367d5b8d4224d6357a9510ec67db944f130c88050bc2c163bf94d5958981285",
+   "duration_s": 14.81,
+   "asr_cer": 0.031
+  },
+  {
+   "id": "hb261101-v3-count_complement",
+   "file": "hb261101-v3-count_complement-0995a2a009.mp3",
+   "text_sha256": "2eacc6851cdf0c52ce12c9e4101573f9d210a5f0b883ea2e24028e2067a22ddb",
+   "audio_sha256": "6cd4f23dbf955dfeeaff914ce83699dfd7193fdf892851d62fe8cd116b26588a",
+   "duration_s": 16.61,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-star7_review",
+   "file": "hb261101-v3-star7_review-0e2df008d8.mp3",
+   "text_sha256": "64e48f75c15193e2f5d1b5ba9bd2095f6df1f7d20c4f52c8d420f6f7a2149f15",
+   "audio_sha256": "33ec206570d5b5e964a378daf306c476a6704933cead89f120350ac8d97c7541",
+   "duration_s": 20.57,
+   "asr_cer": 0.023
+  },
+  {
+   "id": "hb261101-v3-digits01",
+   "file": "hb261101-v3-digits01-7dc795dc7f.mp3",
+   "text_sha256": "a2c5ac8e40ab1989055ea9879392f4f7573cf6c6c1bb1ce22f1af70c742bc400",
+   "audio_sha256": "9f19f6d36d4b1dad4b988f571b3cc18fa26e9d002026a8dd70905863cf8e2fdc",
+   "duration_s": 15.96,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-rings01",
+   "file": "hb261101-v3-rings01-74aa7b46b3.mp3",
+   "text_sha256": "dcc664fec0b10a4ce2b72910587e4591354693b3d5c378eda1086a3dcb313756",
+   "audio_sha256": "5c861422eaba3b5ab1cacdddcf684cca8baa96739e091031d3f09365845c143b",
+   "duration_s": 16.82,
+   "asr_cer": 0.012
+  },
+  {
+   "id": "hb261101-v3-rings_review",
+   "file": "hb261101-v3-rings_review-904d924315.mp3",
+   "text_sha256": "8aa3aaf236703adcc54c60892e4b730b1eb9e6204d7673bc7def72cb9b9a62df",
+   "audio_sha256": "23decae0044f0e4aff2c11b5d01847efb32e7e990195bcf52ed22ec894091c99",
+   "duration_s": 14.83,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-pencil01",
+   "file": "hb261101-v3-pencil01-73fbb77075.mp3",
+   "text_sha256": "9d1feaaa9107bd1d57abbd1570d39773030bd7ddd7024a6511bcaf22b89a3484",
+   "audio_sha256": "417961815a9c0906f85a990e8b0717ccb8fe51b67897fe46425b87e0febdc8dd",
+   "duration_s": 12.12,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-pencil_review",
+   "file": "hb261101-v3-pencil_review-1af7fc00ef.mp3",
+   "text_sha256": "d672699a387a61b92ba565f21c983875f3a442a9ee59c85bcdfc8053c92402ad",
+   "audio_sha256": "3242b2b3b22d2ca28ac5b86e3fdb454a673aaa04c77cf69be5329a8cbbc08961",
+   "duration_s": 14.76,
+   "asr_cer": 0.099
+  },
+  {
+   "id": "hb261101-v3-slippers01",
+   "file": "hb261101-v3-slippers01-6d139c3e77.mp3",
+   "text_sha256": "322f29ba6931288f2ef952f3797b384db5ff7935f0267b2a035670e363740e80",
+   "audio_sha256": "71c335158b6164801a8957ec0a7d55946d0e3f9a56aecd89c4df45f566ac5db0",
+   "duration_s": 21.29,
+   "asr_cer": 0.01
+  },
+  {
+   "id": "hb261101-v3-slippers_review",
+   "file": "hb261101-v3-slippers_review-6bbee2d0f7.mp3",
+   "text_sha256": "5147b15eec0109b0bfef717be35a018fe92b02cfd0d673a45b663d2a63fa5337",
+   "audio_sha256": "8f581b251daa830a502d844eb85f30ec2ce090f4756ce3f677b9ecee6fec2b6f",
+   "duration_s": 14.9,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-path01",
+   "file": "hb261101-v3-path01-c2d5b40940.mp3",
+   "text_sha256": "5dbc6592e3959c6d1681ec2212bfbf2f851fb2bab45e633b530fd0ed3f6c8107",
+   "audio_sha256": "5084d889fb8a6ff601b2c3c7bbeff27f5f74b01fb6f21405dd6f63db537bef70",
+   "duration_s": 14.3,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-hex01",
+   "file": "hb261101-v3-hex01-ad424bfa11.mp3",
+   "text_sha256": "9030fd683fc1d5726ecb26a33d6d9291ba334b34e849c674cb4ac4325672764d",
+   "audio_sha256": "02d132e91d16e4c19a2d53fef6170b3cae456a8a9c5de9aece734821c3487d1e",
+   "duration_s": 19.03,
+   "asr_cer": 0.048
+  },
+  {
+   "id": "hb261101-v3-hex_review",
+   "file": "hb261101-v3-hex_review-d4ee60f8e9.mp3",
+   "text_sha256": "3e0218db1eb8bed52064d2ce8352d47d74f7d320617e2d23eb28befeab8912ee",
+   "audio_sha256": "c26424fcb14475eb88e4f36693d81b14fcc0b8c1982e60e8a42d71b406dc3239",
+   "duration_s": 15.5,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-pattern01",
+   "file": "hb261101-v3-pattern01-a324b9bc78.mp3",
+   "text_sha256": "294c2fefc3da75dc2ce71ca26a4b8dc587ffe5264ba1e3811ba0ab6944acffcc",
+   "audio_sha256": "c5d6319b60f5132777231591c24a7464b7a3dc8f72ff215db69c81b6a4b4dbef",
+   "duration_s": 15.29,
+   "asr_cer": 0.015
+  },
+  {
+   "id": "hb261101-v3-w_review",
+   "file": "hb261101-v3-w_review-9c16b8ff30.mp3",
+   "text_sha256": "13ae485832cdb8c915d18ff7d218619c64d5210c8cca06eb9e241f1f1fc3bc1f",
+   "audio_sha256": "ffb4012ae7ff358ac60b1615dfadb1ddec0722edab4f3295da2bda16d5e1cc80",
+   "duration_s": 18.72,
+   "asr_cer": 0.084
+  },
+  {
+   "id": "hb261101-v3-square_review",
+   "file": "hb261101-v3-square_review-cffa662988.mp3",
+   "text_sha256": "d7bcf8648ec6d44ff910f4082fd757c1e304072ba37605ddf66f370cb4f6fc80",
+   "audio_sha256": "9c4d5e7ed72c3a97e39158163f514adab84fdb722844698dbfcc30befb7f3668",
+   "duration_s": 22.7,
+   "asr_cer": 0.04
+  },
+  {
+   "id": "hb261101-v3-read01",
+   "file": "hb261101-v3-read01-813a08c263.mp3",
+   "text_sha256": "7620fbd6d310400d3ddfa72b1ab00a1180f2268e300fe265deb853f3b7067c45",
+   "audio_sha256": "d28fe57b282faf1c2cedf1e6d1883d3d625bb3042c83067f19443a95140d7a0a",
+   "duration_s": 16.49,
+   "asr_cer": 0.014
+  },
+  {
+   "id": "hb261101-v3-bonus_midpoint_notice",
+   "file": "hb261101-v3-bonus_midpoint_notice-22a995e6e1.mp3",
+   "text_sha256": "ac95075c9ae610b8d2b6d38e4216ca03f6e3a6c68c6cf105612b2cc4336e1662",
+   "audio_sha256": "adebda96afc11a86e3cee751735ab64c1c4821feab3d8700666bf71c1af80544",
+   "duration_s": 7.94,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-fish_review",
+   "file": "hb261101-v3-fish_review-44c4f855eb.mp3",
+   "text_sha256": "11b3ecafbe777f2b28bec544314f5112b7178eb00b7276b0509b2c6606ce0e1e",
+   "audio_sha256": "158e293d7172262ea3fd499c35cb22e18646dfb2a9b1c3f4430aa4d21e3d19d5",
+   "duration_s": 16.01,
+   "asr_cer": 0.014
+  },
+  {
+   "id": "hb261101-v3-ages_review",
+   "file": "hb261101-v3-ages_review-a74fa42037.mp3",
+   "text_sha256": "3b345778e3df3063917fcdaaffd07d095d1fd283a675e460287f1a2c6e835c69",
+   "audio_sha256": "072bbe711ab7c9558d3f2676d5d940e7b59e0a73ab2db0bc35c1c5903940c6cc",
+   "duration_s": 26.81,
+   "asr_cer": 0.182
+  },
+  {
+   "id": "hb261101-v3-structure01",
+   "file": "hb261101-v3-structure01-d1d6d1f5ea.mp3",
+   "text_sha256": "c8316986ca978bae551c11df4ba40a0b94a6a3ece3146f82e7d6b9152c6d5ace",
+   "audio_sha256": "31c446085664888fb2c605946823928edc11b7651a3ed46ee42cdb40cd74e3c6",
+   "duration_s": 15.36,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-venn_review",
+   "file": "hb261101-v3-venn_review-d5764220d8.mp3",
+   "text_sha256": "31750125afa0d4b3a4e83be4f1006f0782b4530abd99b7ebdbe71cdf934a363e",
+   "audio_sha256": "bcce9e980ebf2f6830a055403ba2baa0af5fb233eb676dbbfd0dc7c31f51ea92",
+   "duration_s": 15.84,
+   "asr_cer": 0.015
+  },
+  {
+   "id": "hb261101-v3-table_review",
+   "file": "hb261101-v3-table_review-086ca98d34.mp3",
+   "text_sha256": "e67cd8c41038538a932b8da6737e2cf49503c35146cad83d5b82e17affa0237e",
+   "audio_sha256": "850d360a552291a78daaf9323af04ab0d587e9557021f62a07c60927df978da5",
+   "duration_s": 17.18,
+   "asr_cer": 0.039
+  },
+  {
+   "id": "hb261101-v3-calendar01",
+   "file": "hb261101-v3-calendar01-afda2ff7dc.mp3",
+   "text_sha256": "59011a3b15255fae65963cf8ba7e443524b1d0038f333ccb3c5a74d714881777",
+   "audio_sha256": "6e2e0083199e1755a7d77d3d4dac0259ff8fce4666001e5b85fbe5e5e2e66dba",
+   "duration_s": 22.92,
+   "asr_cer": 0.01
+  },
+  {
+   "id": "hb261101-v3-calendar_review",
+   "file": "hb261101-v3-calendar_review-d29641e97b.mp3",
+   "text_sha256": "10168bb7e3af6965abda5cbcc678f1950c3b58771cef6924b7ec85a38fa92eac",
+   "audio_sha256": "bd964d58b4531d02101e14cce33a422935554db4bf6b57b360d85775563cdeff",
+   "duration_s": 19.97,
+   "asr_cer": 0.14
+  },
+  {
+   "id": "hb261101-v3-weekday_caution",
+   "file": "hb261101-v3-weekday_caution-c9140c7f85.mp3",
+   "text_sha256": "5419d237557e04df31ce0e9a5005a8bca67d88fd65a3c281a3011e0fd8aab16e",
+   "audio_sha256": "0b8a2a869c00c4059e2bf4c4907c035a7f8674299538579a3c3d80366df81fd3",
+   "duration_s": 23.21,
+   "asr_cer": 0.01
+  },
+  {
+   "id": "hb261101-v3-pieces01",
+   "file": "hb261101-v3-pieces01-b4e3c2226d.mp3",
+   "text_sha256": "b97c289023c0a8d17fbe6e9d0b5868d71e4bcb44e95e63877e232c2e7b59e397",
+   "audio_sha256": "c55c7b0a868e20e666f0b7656d0c5185c2be5871e756c58732a0186bd1133aca",
+   "duration_s": 17.21,
+   "asr_cer": 0.104
+  },
+  {
+   "id": "hb261101-v3-scale01",
+   "file": "hb261101-v3-scale01-e4df004638.mp3",
+   "text_sha256": "3fdf2e64c8eb5dcf48cd9d5e068c7d2314dd90d97959316783432fe2dcef528b",
+   "audio_sha256": "84ea99dc9583ca688c594ef84c26ece63af8cef699cb34e0afe5c8db67f13cd0",
+   "duration_s": 21.41,
+   "asr_cer": 0.011
+  },
+  {
+   "id": "hb261101-v3-scale_review",
+   "file": "hb261101-v3-scale_review-3ff0d4f192.mp3",
+   "text_sha256": "d610e9f478f40901c94c6caeeca18e34acc79a7eb2da300564f25d213d82ef78",
+   "audio_sha256": "6ef38d2076dac662719b4973c0d5f6d3afb3ba2830818b147c91d17f1da7f813",
+   "duration_s": 22.46,
+   "asr_cer": 0.042
+  },
+  {
+   "id": "hb261101-v3-tips_close",
+   "file": "hb261101-v3-tips_close-a5e269861a.mp3",
+   "text_sha256": "ac747dfa75926445fb9a7600bfa0e0ea895dc7693b4a86d499762668cb4ecab1",
+   "audio_sha256": "2c8d1066942471bdd86dc9ffa6f7ff9d57ef8acabb4bd2be28ef658da790165e",
+   "duration_s": 31.8,
+   "asr_cer": 0.014
+  },
+  {
+   "id": "hb261101-v3-result_notice",
+   "file": "hb261101-v3-result_notice-3f0cd01971.mp3",
+   "text_sha256": "f0a402a0014b360e37a711c52e55141c3a2748ab5d91dba3edc7234d5ca768fe",
+   "audio_sha256": "0b11e0547b9d435dca9999208230d7d6ee7b299ab065294343c3f7a611e329b7",
+   "duration_s": 23.45,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-recall_event",
+   "file": "hb261101-v3-recall_event-1fa32bec2b.mp3",
+   "text_sha256": "f522bb7feb1272a765246a45993b05715ce1c8280de5480c77c4eeab53b8c7ba",
+   "audio_sha256": "ad55231b8190c7c5b3d9b227b97b344baa68644ef0172b983344db85d7395d06",
+   "duration_s": 44.21,
+   "asr_cer": 0.01
+  },
+  {
+   "id": "hb261101-v3-gfield_counseling",
+   "file": "hb261101-v3-gfield_counseling-a6cb3aeaac.mp3",
+   "text_sha256": "22f3a5197e10bb96f9a5a944864c279d455e2198786015fbd6248caf5d96e14a",
+   "audio_sha256": "2169292a49b1cb4d023ab3f592a90676f5b653c7ce4d7d5b3fe43c28c6a32e54",
+   "duration_s": 12.72,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-recall_rewards",
+   "file": "hb261101-v3-recall_rewards-6ea0012a17.mp3",
+   "text_sha256": "3b56f98cf162029a20f4cb7353226455fb330ec7347396f40a57dac22fc9ef87",
+   "audio_sha256": "ae25fbb519840cd6081e37b8e094b6451a7fb81441772a6edd20369ef2a6ca39",
+   "duration_s": 7.82,
+   "asr_cer": 0.03
+  },
+  {
+   "id": "hb261101-v3-parent_after_intro",
+   "file": "hb261101-v3-parent_after_intro-e43decd52a.mp3",
+   "text_sha256": "165514fca7a688fff9923469236b15222c1b9744d5022301b02891ed3537baee",
+   "audio_sha256": "c615f0cc172cae376824c1e6a22cfd912f572ca89dfffdbc3c4150fc7f01ca19",
+   "duration_s": 38.81,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-score_targets",
+   "file": "hb261101-v3-score_targets-b02d2618c3.mp3",
+   "text_sha256": "c92fc116bf142271e2f258806ae768dbb15893535c0fe9846a0202bb1b37e45b",
+   "audio_sha256": "35dd72271d13aee0f891e8b135cdf9f13f4c4a72f742901b624a812cc35d8d8c",
+   "duration_s": 55.78,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-s16-01",
+   "file": "hb261101-s16-01-eeb017f709.mp3",
+   "text_sha256": "d0959f1ab8a23b59f879dcc913bf7517fb02fca3bb3c209e5d847eff83a58b37",
+   "audio_sha256": "b668b89c19670eb47a63767c33c9e72fd046d396cbd50f203934c2c0d6942e12",
+   "duration_s": 34.51,
+   "asr_cer": 0.013
+  },
+  {
+   "id": "hb261101-s17-01",
+   "file": "hb261101-s17-01-e5d9cafdf8.mp3",
+   "text_sha256": "038d0409d8dbc4f40c00cc86edce86b1d271b029beb8514f5594798a43cfd3cf",
+   "audio_sha256": "0651099ec1b738afcc7a8d29bf51c200f7ed607d7766d39adc5171fb1dec06ea",
+   "duration_s": 28.61,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-admit_learning_base",
+   "file": "hb261101-v3-admit_learning_base-1bbc75ee08.mp3",
+   "text_sha256": "5f538992ec4a12b92231b3f98d5fcdc54cbc3d62be81747605ff1ddbd7c8d7e1",
+   "audio_sha256": "0188932eb64c3007d3d1a51987794a876c664dfff4acba467a21893cb4809ab8",
+   "duration_s": 39.43,
+   "asr_cer": 0.006
+  },
+  {
+   "id": "hb261101-v3-admit_timing",
+   "file": "hb261101-v3-admit_timing-741dcd3d10.mp3",
+   "text_sha256": "ddb5992b2be844969affea885734af1b7cc4fc9d69b9fa136192e78c386f0a9d",
+   "audio_sha256": "316e86e49d62d94716deb1e7da6d1694fd3fb82e27cffcb6b4effd74dc068b01",
+   "duration_s": 25.42,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-admit_september_option",
+   "file": "hb261101-v3-admit_september_option-ef812a99c7.mp3",
+   "text_sha256": "1c14cc4fbfec22ec1b53d1f10fbe7cd5373bc047a989d40403c018b77bedadb4",
+   "audio_sha256": "33d4703e3451c756f6abfb5e695c964b8750bb78db50d7692e5cc57873636d4d",
+   "duration_s": 30.94,
+   "asr_cer": 0.007
+  },
+  {
+   "id": "hb261101-v3-admit_one_level_lower",
+   "file": "hb261101-v3-admit_one_level_lower-bc100aa5e2.mp3",
+   "text_sha256": "fe8fea4932aa13ad204061bb870491355ae8dcc11b766901a6857218924047f6",
+   "audio_sha256": "55bfaf07c49409b064a3eb1ad55febb40093aa5aedc1603e7bfdcb70e4df7de2",
+   "duration_s": 40.58,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-admit_two_levels_lower",
+   "file": "hb261101-v3-admit_two_levels_lower-c42da57093.mp3",
+   "text_sha256": "0e932369bcb923b3f864c36994ba6edfd2c1348612a35e87074320b64143c9b0",
+   "audio_sha256": "d68eb1967f8c21257ff080661c1f67b662da616ce9d72900aa622d0576ff9964",
+   "duration_s": 35.93,
+   "asr_cer": 0.006
+  },
+  {
+   "id": "hb261101-v3-ilpum_adaptation",
+   "file": "hb261101-v3-ilpum_adaptation-093b789da7.mp3",
+   "text_sha256": "e8d0c352457ef1068002df5cd368510650dc88c97663dc0318826c1fb2d210af",
+   "audio_sha256": "e412b99ed0200dd35d16e65987c47a03fcf079f0bbb25a56e29b9aa2406b7eb2",
+   "duration_s": 43.2,
+   "asr_cer": 0.015
+  },
+  {
+   "id": "hb261101-v3-ilpum_start_month",
+   "file": "hb261101-v3-ilpum_start_month-a257affff5.mp3",
+   "text_sha256": "ed1fa8d01c40fa3ec99ecf03fd4a7da5e522d212b5192daaaa0ce64da39dd090",
+   "audio_sha256": "769337b524b6f2a7e034f2c4844de484fa1a0c9a28d2f606ed6dcd0a75c0d2b2",
+   "duration_s": 58.87,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-s18-01",
+   "file": "hb261101-s18-01-962fd3e24a.mp3",
+   "text_sha256": "dd40abaac247da21d2d7dcd2450dfed5c670c6e09384a75f3af60ecf1276f7bf",
+   "audio_sha256": "c94fd78f37ca21f935b0ff7cf37ba11c5ffc19cf823a3d191060e36f98e8f1f0",
+   "duration_s": 50.66,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-s19-01",
+   "file": "hb261101-s19-01-b7bf85328a.mp3",
+   "text_sha256": "361c01ceb8c13a79057bdd9ef2fcc900baedbd84f54b4a2f41e9212f9449fc28",
+   "audio_sha256": "21cb6dbfd93bd2d8a9187a30c33f5795acaca7808f0fbdc493338ee80d16fde1",
+   "duration_s": 34.8,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-s20-01",
+   "file": "hb261101-s20-01-e7f0431590.mp3",
+   "text_sha256": "136265ab168eea140b1dcc60f27bbfe79aa49f531cebfd0745b9e781141a3084",
+   "audio_sha256": "27113681c62db338f98b4dc93b981363a07a1f80fc6778ac27be195f653eccf1",
+   "duration_s": 25.56,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-s21-01",
+   "file": "hb261101-s21-01-c04bff8e30.mp3",
+   "text_sha256": "2d61381068b1d1d80c24c0c6d901c6c6ba7d4437cb6c6cc7140ce2d86b213605",
+   "audio_sha256": "d47b66eb1e00606199af25ced6f6b17ae42c2ee0ae28d497fd6c0218c376bced",
+   "duration_s": 26.88,
+   "asr_cer": 0.047
+  },
+  {
+   "id": "hb261101-v3-transfer01",
+   "file": "hb261101-v3-transfer01-792578ebbf.mp3",
+   "text_sha256": "469ef7a364d95917d29ce18f32c00e074d4cf27b43d60c37367937297e6b48f9",
+   "audio_sha256": "3bcf62ee042ec80479f9815487bb6a240805b6fd665f13084451a518fc7eab57",
+   "duration_s": 27.84,
+   "asr_cer": 0.024
+  },
+  {
+   "id": "hb261101-v3-forecast42",
+   "file": "hb261101-v3-forecast42-bf70ecb1f0.mp3",
+   "text_sha256": "90b783978d08032c15e279f2702b510504b042ec2cc8cba8ff967f11d8b2fb99",
+   "audio_sha256": "e62f42038e9825155734ab56826741b67a1e3334a08c11b410a9f1a97be8e8e3",
+   "duration_s": 33.07,
+   "asr_cer": 0.007
+  },
+  {
+   "id": "hb261101-v3-plan_after_rest",
+   "file": "hb261101-v3-plan_after_rest-80ce985b68.mp3",
+   "text_sha256": "81d1bd31d2181a20c8f7b1c63f8369ee69bccd0540193b08cb60b239a0aadca5",
+   "audio_sha256": "ea262fdd53799b82e3b7e2568993c7a76d4ffff250940559fced2fcb36a72447",
+   "duration_s": 48.31,
+   "asr_cer": 0.005
+  },
+  {
+   "id": "hb261101-s23-01",
+   "file": "hb261101-s23-01-fec0211e76.mp3",
+   "text_sha256": "d910fb1b3639ea1d446a3af4000c91d4ec4da49fa533ac2b4c450688082b46cc",
+   "audio_sha256": "7052c22c9410ac63f97ddcda4337f9517c51ad5fc0429940a696b75c9558e151",
+   "duration_s": 65.23,
+   "asr_cer": 0.003
+  },
+  {
+   "id": "hb261101-v3-mgmt_quicktest",
+   "file": "hb261101-v3-mgmt_quicktest-87b0b4c92e.mp3",
+   "text_sha256": "ec5ae2925ad664aaf11cb7b9dba73d35cdd5c9a7eb3a0949ce702e9c2fc95cb5",
+   "audio_sha256": "a9d978a6c6377b007073a313cc59d2c8f628e1aabfcff0b78d48fc22c5408176",
+   "duration_s": 27.53,
+   "asr_cer": 0.008
+  },
+  {
+   "id": "hb261101-v3-mgmt_homework",
+   "file": "hb261101-v3-mgmt_homework-af790b70bb.mp3",
+   "text_sha256": "c182a00d09406ff6be7d01cdc607f7bcfe73d9f54f08a148dffa48b1b425311f",
+   "audio_sha256": "8cf9db68ea24ac3128225111c5427d734d1a928ee2061fccc3637411a13805df",
+   "duration_s": 26.3,
+   "asr_cer": 0.008
+  },
+  {
+   "id": "hb261101-v3-mgmt_parent",
+   "file": "hb261101-v3-mgmt_parent-f63862554f.mp3",
+   "text_sha256": "547cc433f4520a2ca4d2ced71c00995d72d11d40be555a1a73d6249efa4ac2d9",
+   "audio_sha256": "cbc739f41127e9458cd7357d79a24742b5a824f5f4e61d78b359659005393280",
+   "duration_s": 33.12,
+   "asr_cer": 0.02
+  },
+  {
+   "id": "hb261101-v3-gfield_weekly_support",
+   "file": "hb261101-v3-gfield_weekly_support-06ccc2f33e.mp3",
+   "text_sha256": "57364acb58310477ca7df78e5996c5351f2a833866b2bce6e1972d8f2e8c2a7d",
+   "audio_sha256": "f9e7ec22e5079d8610aad85fa8183838e0cfaaba0114ccddc10497ec705f379f",
+   "duration_s": 30.77,
+   "asr_cer": 0.007
+  },
+  {
+   "id": "hb261101-v3-gfield_concept",
+   "file": "hb261101-v3-gfield_concept-5f74494c6a.mp3",
+   "text_sha256": "5d80c09bb5fb87299352e65d983517dbd545a28295e5b0f4faec64896b12ff54",
+   "audio_sha256": "b9e7771e616a6e2aeb6d9398d52d6295026a3774a058f0eaf5b39233db62157e",
+   "duration_s": 26.52,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-gfield_practice",
+   "file": "hb261101-v3-gfield_practice-c93418e8ee.mp3",
+   "text_sha256": "216b7377c00df3cf733271a142990dc60ba7f63dc3e254a2f7d2a6f1cff4b5fc",
+   "audio_sha256": "0832d27eff13f813895a3f65d9bf942ff04c2c2388f6d3dcebfecffd25da2f24",
+   "duration_s": 18.12,
+   "asr_cer": 0.035
+  },
+  {
+   "id": "hb261101-v3-gfield_timetable",
+   "file": "hb261101-v3-gfield_timetable-fb953dd140.mp3",
+   "text_sha256": "c839fcf40e5d7aff11a528b2dfa6c68d9ff1b167e2e2aee83621a2680f44fab8",
+   "audio_sha256": "f8ede0d0805c18f2859850d76da139c8cc0c476f2f2d280ef3dbc53ed361aa7f",
+   "duration_s": 19.54,
+   "asr_cer": 0.0
+  },
+  {
+   "id": "hb261101-v3-gfield_past_results",
+   "file": "hb261101-v3-gfield_past_results-78c2fab742.mp3",
+   "text_sha256": "693e412664e5f5f53de05a9fe0dd29d5fc2ed8f363d32f7235b23ade8db862e0",
+   "audio_sha256": "d09557f658d2afe871c1699acf0f50ab4b075cbdb07ef147577e903652bda21f",
+   "duration_s": 28.7,
+   "asr_cer": 0.008
+  },
+  {
+   "id": "hb261101-v3-gfield_materials",
+   "file": "hb261101-v3-gfield_materials-ecc45fd004.mp3",
+   "text_sha256": "c56d800c033c9a4dba12da97f559a6f98b387b2c04e690c96a0eb0c915f11fdb",
+   "audio_sha256": "87b07b490cfab4222e9b152a19b56bafed5bfa102081117ca140374c565e6d02",
+   "duration_s": 12.14,
+   "asr_cer": 0.053
+  },
+  {
+   "id": "hb261101-s24-01",
+   "file": "hb261101-s24-01-d69a70982b.mp3",
+   "text_sha256": "9b0239d52e57da3dc845ee1a626ef1db9e0a5ef9fbbb79406d3bc5ddf48d5d9a",
+   "audio_sha256": "cba945949b4af8c7a7a08d7282154d04f629eb2f40b42602167d7df7c7e1841f",
+   "duration_s": 26.18,
+   "asr_cer": 0.0
+  }
+ ]
+}
