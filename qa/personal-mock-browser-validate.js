@@ -61,6 +61,13 @@ function assertTypstPages(pages,questionPages,count){
     assert.equal(await approvedOnly.locator('#pmSourceList input:checked').count(),1,'URL로 지정한 회차만 선택');
     assert.ok(await approvedOnly.locator('#pmSourceList input[value="applied1"]').evaluate(input=>{const box=input.closest('label').getBoundingClientRect(),list=input.closest('#pmSourceList').getBoundingClientRect();return box.top>=list.top-1&&box.bottom<=list.bottom+1;}),'지정 회차가 목록 안에 보임');
     assert.equal(await approvedOnly.locator('.pm-q').count(),30,'승인된 회차는 정오답 입력 없이 출제');
+    const previewFill=await approvedOnly.locator('.pm-question-page').evaluateAll(sections=>sections.slice(0,2).map(section=>{
+      const page=section.getBoundingClientRect();
+      const grid=section.querySelector('.pm-question-grid').getBoundingClientRect();
+      const footer=section.querySelector('.pm-exam-footer').getBoundingClientRect();
+      return {pageHeight:page.height,gridHeight:grid.height,gap:footer.top-grid.bottom};
+    }));
+    assert.ok(previewFill.length===2&&previewFill.every(box=>box.pageHeight>1100&&box.gridHeight>600&&box.gap>=0&&box.gap<20),'화면 미리보기 두 단이 A4 바닥글까지 고르게 채움');
     assert.equal(await approvedOnly.locator('.pm-q[data-item-id^="applied1-"]').count(),30);
     await approvedOnly.waitForFunction(()=>!document.getElementById('pmPrint').disabled,{timeout:30000});
     assert.equal(await approvedOnly.locator('#pmPrint').isDisabled(),false);

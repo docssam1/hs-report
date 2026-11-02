@@ -101,3 +101,5 @@
 .pm-answer-grid .pm-answer img{max-height:60mm}
 /* 네 칸 시험지의 좌우 문항 시작 위치를 문항 길이와 관계없이 맞춘다. */
 .pm-question-grid .pm-q,.pm-question-grid .pm-q:nth-child(odd),.pm-question-grid .pm-q:nth-child(even){padding-left:1mm;padding-right:1mm}
+/* 화면 미리보기도 인쇄물과 같은 A4 높이를 사용해 두 단의 칸을 끝까지 펼친다. */
+@media screen and (min-width:431px){.pm-page{height:297mm}.pm-page-content{height:269mm}}
