@@ -66,5 +66,8 @@ $('pdf-links').innerHTML=D.bonus.map(b=>`<a href="${esc(b.url)}" target="_blank"
 $('prev').onclick=()=>adjacent(-1);$('next').onclick=()=>adjacent(1);$('play').onclick=()=>{if(state.status==='playing')pause();else if(S[state.id].optional)status('paused','이 추가 안내는 글로 제공됩니다.');else if(state.audio)attempt();else enter(state.id,true);};$('enable').onclick=()=>state.audio?attempt():enter(state.id,true);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});window.addEventListener('pagehide',stop);
 if(typeof Image!=='undefined')for(const key of ['A1','A2','A5','B2','B4']){const img=new Image();img.src=D.poses[key];}
-window.BriefingApp={state,enter,jump,pause,adjacent,stop};enter(D.default[0],true);
+const directScene=new URLSearchParams(window.location.search).get('scene');
+const initial=directScene==='PARENT_AFTER_INTRO'&&S[directScene]?directScene:D.default[0];
+if(initial!==D.default[0]){state.queue=D.default.slice(D.default.indexOf(initial));state.noticePlayed=true;}
+window.BriefingApp={state,enter,jump,pause,adjacent,stop};enter(initial,true,{intercept:false});
 })();
