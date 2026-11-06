@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>지필드 영재교육 | 2026년 생각하는 황소 초등 선발 분석 및 대비 방법 · 음성 설명</title>
+  <style>
+    html,body{width:100%;height:100%;margin:0;background:#242b26;overflow:hidden}
+    iframe{display:block;width:100%;height:100%;border:0}
+  </style>
+</head>
+<body>
+  <iframe id="seminar" data-voice="1" title="2026년 생각하는 황소 초등 선발 분석 및 대비 방법 음성 설명" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  <script>
+    const frame=document.getElementById('seminar');
+    fetch('../2026/index.html',{cache:'no-store'})
+      .then(response=>{if(!response.ok)throw new Error(response.status);return response.text();})
+      .then(html=>{
+        html=html.replace('<head>','<head><base href="../2026/"><link rel="stylesheet" href="../2026-voice/voice.css?v=20261106">')
+          .replace(/styles\.css\?v=[^\"]+/,'styles.css?v=20261106-voice')
+          .replace(/slides\.js\?v=[^\"]+/,'slides.js?v=20261106-voice');
+        frame.srcdoc=html;
+      })
+      .catch(()=>{frame.src='../2026/?voice=1';});
+  </script>
+</body>
+</html>

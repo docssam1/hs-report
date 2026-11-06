@@ -1,0 +1,18 @@
+/* Narrated-edition controls; the original seminar URL never loads this file. */
+.voice-mode #voiceControls{display:flex;align-items:center;gap:10px;padding-left:10px;border-left:1px solid #cdd3c4}
+.voice-mode #voiceControls button{background:#16382a;color:#fdfbf5;min-width:104px}
+.voice-mode #voiceControls button:hover{background:#2f6b4a}
+.voice-mode #voiceControls label{display:flex;align-items:center;gap:6px;white-space:nowrap;color:#536052}
+.voice-mode #voiceControls input{accent-color:#2f6b4a}
+.voice-mode #voiceStatus{max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#758073}
+.voice-start-panel{position:fixed;inset:0 0 64px;display:grid;place-items:center;background:#10251bb8;backdrop-filter:blur(3px);z-index:20}
+.voice-start-panel button{width:min(440px,calc(100vw - 40px));padding:24px 28px;text-align:left;color:#f8f5ea;background:#16382a;border:1px solid #b89860;border-radius:6px;box-shadow:0 24px 90px #0005}
+.voice-start-panel button:hover{background:#204a35}
+.voice-start-panel strong{display:block;font-size:24px;font-weight:600;letter-spacing:-.025em}
+.voice-start-panel span{display:block;margin-top:8px;font-size:14px;color:#cbd5c6}
+@media(max-width:900px){
+  .voice-mode #voiceStatus{display:none}
+  .voice-mode #voiceControls{gap:5px;padding-left:4px}
+  .voice-mode #voiceControls label{font-size:10px}
+  .voice-mode #voiceControls button{min-width:82px;padding:6px 8px}
+}
