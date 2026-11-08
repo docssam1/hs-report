@@ -79,7 +79,7 @@
       if (!window.pdfjsLib) throw new Error('인쇄 도구를 불러오지 못했습니다. 새로고침해 주세요.');
       window.pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('../../vendor/pdfjs/3.11.174/pdf.worker.min.js', location.href).href;
       const source = round === 'recall'
-        ? (kind === 'questions' ? '../2026/2026-hwangso-questions.pdf' : '2026-hwangso-answers.pdf')
+        ? (kind === 'questions' ? '../2026/2026-hwangso-questions.pdf' : '2026-hwangso-answers.pdf?v=20261108-q02-c')
         : `../../materials/top-secret-finish-${round}-${kind}.pdf`;
       const url = new URL(source, location.href).href;
       pdf = await window.pdfjsLib.getDocument({ url }).promise;

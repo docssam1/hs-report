@@ -10,9 +10,11 @@
     },
     {
       "number": 2,
-      "answer": null,
-      "explanation": "2번의 정답과 풀이는 확인 중입니다.",
-      "status": "pending"
+      "answer": "C",
+      "explanation": "실이 겹친 곳의 위아래 관계를 따라가면, C는 양끝을 당겨도 가운데 고리가 걸려 매듭이 남습니다. A·B·D·E는 겹친 부분이 풀려 펴집니다.",
+      "status": "reviewed",
+      "reviewBasis": "사용자 직접 검수 완료",
+      "reviewedOn": "2026-11-08"
     },
     {
       "number": 3,
