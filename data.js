@@ -783,7 +783,34 @@ window.GFIELD_DATA = {
     "김시후",
     "박제아",
     "정유현",
-    "허유민"
+    "허유민",
+    "김다인",
+    "김사빈",
+    "조하나",
+    "윤민호",
+    "황윤재",
+    "임정",
+    "김정한",
+    "이준형",
+    "방지율",
+    "이정훈",
+    "김서현",
+    "김서하",
+    "백재윤",
+    "김하율",
+    "김지안",
+    "조성훈",
+    "김도현",
+    "이효준",
+    "민채원",
+    "심채안",
+    "정도겸",
+    "박시우",
+    "이준",
+    "노유진",
+    "한주원",
+    "이도이",
+    "박선우"
   ],
   "attendance": {
     "허유민": [
@@ -1290,7 +1317,34 @@ window.GFIELD_DATA = {
     ],
     "조혜연": [
       "oct-26"
-    ]
+    ],
+    "김다인": [],
+    "김사빈": [],
+    "조하나": [],
+    "윤민호": [],
+    "황윤재": [],
+    "임정": [],
+    "김정한": [],
+    "이준형": [],
+    "방지율": [],
+    "이정훈": [],
+    "김서현": [],
+    "김서하": [],
+    "백재윤": [],
+    "김하율": [],
+    "김지안": [],
+    "조성훈": [],
+    "김도현": [],
+    "이효준": [],
+    "민채원": [],
+    "심채안": [],
+    "정도겸": [],
+    "박시우": [],
+    "이준": [],
+    "노유진": [],
+    "한주원": [],
+    "이도이": [],
+    "박선우": []
   },
   "specialStudents": [
     "김소라",
@@ -3609,7 +3663,7 @@ window.GFIELD_DATA = {
     "박제아": "graduated",
     "허유민": "graduated",
     "정유현": "graduated",
-    "한재이": "graduated",
+    "한재이": "online",
     "김시후": "graduated",
     "주성현": "graduated",
     "김라율": "graduated",
@@ -3617,7 +3671,7 @@ window.GFIELD_DATA = {
     "김지온": "graduated",
     "0836": "graduated",
     "김건아": "graduated",
-    "김나율": "graduated",
+    "김나율": "online",
     "김도란": "graduated",
     "김도윤": "graduated",
     "김명서": "graduated",
@@ -3636,7 +3690,7 @@ window.GFIELD_DATA = {
     "문선우": "graduated",
     "민준기": "graduated",
     "박서진": "graduated",
-    "변서진": "graduated",
+    "변서진": "online",
     "신지한": "graduated",
     "안예준": "graduated",
     "안채연": "graduated",
@@ -3645,12 +3699,39 @@ window.GFIELD_DATA = {
     "이동윤": "graduated",
     "이민혁": "graduated",
     "이성우": "graduated",
-    "이하린": "graduated",
+    "이하린": "online",
     "임유준": "graduated",
     "정지안": "graduated",
     "조혜서": "graduated",
     "조혜연": "graduated",
-    "DEMO": "graduated"
+    "DEMO": "graduated",
+    "김다인": "online",
+    "김사빈": "online",
+    "조하나": "online",
+    "윤민호": "online",
+    "황윤재": "online",
+    "임정": "online",
+    "김정한": "online",
+    "이준형": "online",
+    "방지율": "online",
+    "이정훈": "online",
+    "김서현": "online",
+    "김서하": "online",
+    "백재윤": "online",
+    "김하율": "online",
+    "김지안": "online",
+    "조성훈": "online",
+    "김도현": "online",
+    "이효준": "online",
+    "민채원": "online",
+    "심채안": "online",
+    "정도겸": "online",
+    "박시우": "online",
+    "이준": "online",
+    "노유진": "online",
+    "한주원": "online",
+    "이도이": "online",
+    "박선우": "online"
   },
   "vipAccess": {
     "report": [
@@ -4020,7 +4101,11 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [],
-      "products": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
       "vip": [],
       "textbooks": []
     },
@@ -4191,7 +4276,11 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [],
-      "products": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
       "vip": [],
       "textbooks": []
     },
@@ -4272,7 +4361,11 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [],
-      "products": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
       "vip": [],
       "textbooks": []
     },
@@ -4461,7 +4554,11 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [],
-      "products": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
       "vip": [],
       "textbooks": []
     },
@@ -4498,6 +4595,357 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김다인": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "김사빈": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "조하나": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "윤민호": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "황윤재": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "임정": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "김정한": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "이준형": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "방지율": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "이정훈": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "김서현": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "김서하": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "백재윤": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "김하율": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "김지안": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "조성훈": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "김도현": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "이효준": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "민채원": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "심채안": {
+      "startedAt": "2026-11-08T11:02:22.187Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "정도겸": {
+      "startedAt": "2026-11-08T11:02:22.188Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "박시우": {
+      "startedAt": "2026-11-08T11:02:22.188Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "이준": {
+      "startedAt": "2026-11-08T11:02:22.188Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "노유진": {
+      "startedAt": "2026-11-08T11:02:22.188Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "한주원": {
+      "startedAt": "2026-11-08T11:02:22.188Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "이도이": {
+      "startedAt": "2026-11-08T11:02:22.188Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
+      "vip": [],
+      "textbooks": []
+    },
+    "박선우": {
+      "startedAt": "2026-11-08T11:02:22.188Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [
+        "seminar-hwangso-2026",
+        "mock-top-secret-finish-1",
+        "mock-top-secret-finish-2"
+      ],
       "vip": [],
       "textbooks": []
     }
