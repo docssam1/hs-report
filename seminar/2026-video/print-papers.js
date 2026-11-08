@@ -4,36 +4,13 @@
   const status = document.getElementById('print-status');
   const loginLink = document.getElementById('login-link');
   let busy = false;
-  let rosterPromise;
-  function roster() {
-    if (!rosterPromise) rosterPromise = fetch(new URL('../../data.js', location.href), { cache: 'no-store' })
-      .then(response => {
-        if (!response.ok) throw new Error('학생 명단을 불러오지 못했습니다. 새로고침해 주세요.');
-        return response.text();
-      }).then(source => {
-        // Load the same source used by the archive, without changing its data.
-        const script = document.createElement('script');
-        script.textContent = source;
-        document.head.appendChild(script);
-        script.remove();
-        return window.GFIELD_DATA;
-      }).catch(error => { rosterPromise = null; throw error; });
-    return rosterPromise;
-  }
   async function identity() {
-    const session = await window.GFIELD_AUTH?.getSession('student');
-    const name = String(session?.login_name || '').trim();
-    if (!name) throw new Error('자료실에 로그인하면 학생 이름으로 인쇄할 수 있습니다.');
-    const verified = await window.GFIELD_EMAIL_LOGIN?.check(name);
-    if (!verified?.ok) throw new Error('로그인을 다시 확인해 주세요.');
-    const data = await roster();
-    if (!Array.isArray(data.students) || !data.students.includes(name) || data.studentTypes?.[name] === 'withdrawn') {
-      throw new Error('재원 확인이 필요합니다. 학원에 문의해 주세요.');
-    }
-    return { name, data };
+    if (!window.GFIELD_SEMINAR_ACCESS?.requireApproval) throw new Error('승인 확인 도구를 불러오지 못했습니다. 새로고침해 주세요.');
+    return window.GFIELD_SEMINAR_ACCESS.requireApproval();
   }
   function approved(user, round) {
     if (round === 'recall') return true;
+    if (Object.prototype.hasOwnProperty.call(user.data.studentAccessProfiles || {}, user.name)) return !!window.GFIELD_STUDENT_ACCESS?.allows(user.data, user.name, 'products', `mock-top-secret-finish-${round}`, false);
     const access = user.data.archiveProductAccess?.[`mock-top-secret-finish-${round}`];
     return Array.isArray(access) && (access.includes('*') || access.includes(user.name));
   }
@@ -46,7 +23,7 @@
       loginLink.hidden = true;
     } catch (error) {
       status.textContent = error.message;
-      loginLink.hidden = false;
+      loginLink.hidden = error.code !== 'LOGIN_REQUIRED';
     }
   }
   function printWindow() {
@@ -110,6 +87,8 @@
         page.cleanup();
         view.document.getElementById('progress').textContent = `${no} / ${pdf.numPages}쪽 준비`;
       }
+      const current = await identity();
+      if (current.name !== user.name || !approved(current, round)) throw new Error('인쇄 준비 중 로그인 또는 승인 상태가 변경되었습니다. 다시 확인해 주세요.');
       view.document.getElementById('progress').textContent = '인쇄 준비가 완료되었습니다.';
       const again = view.document.createElement('button');
       again.id = 'print-again';

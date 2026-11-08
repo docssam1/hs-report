@@ -3595,26 +3595,62 @@ window.GFIELD_DATA = {
   ],
   "examSets": [],
   "studentTypes": {
-    "김소라": "online",
-    "유현우": "online",
-    "박재연": "online",
-    "이현서": "online",
-    "최지우": "online",
-    "이재아": "online",
-    "김도율": "online",
-    "최지안": "online",
-    "이서원": "online",
-    "이용준": "online",
-    "김준서": "online",
-    "박제아": "withdrawn",
-    "허유민": "withdrawn",
-    "정유현": "withdrawn",
-    "한재이": "online",
-    "김시후": "withdrawn",
-    "주성현": "online",
-    "김라율": "online",
-    "정지아": "online",
-    "김지온": "online"
+    "김소라": "graduated",
+    "유현우": "graduated",
+    "박재연": "graduated",
+    "이현서": "graduated",
+    "최지우": "graduated",
+    "이재아": "graduated",
+    "김도율": "graduated",
+    "최지안": "graduated",
+    "이서원": "graduated",
+    "이용준": "graduated",
+    "김준서": "graduated",
+    "박제아": "graduated",
+    "허유민": "graduated",
+    "정유현": "graduated",
+    "한재이": "graduated",
+    "김시후": "graduated",
+    "주성현": "graduated",
+    "김라율": "graduated",
+    "정지아": "graduated",
+    "김지온": "graduated",
+    "0836": "graduated",
+    "김건아": "graduated",
+    "김나율": "graduated",
+    "김도란": "graduated",
+    "김도윤": "graduated",
+    "김명서": "graduated",
+    "김민재": "graduated",
+    "김서연": "graduated",
+    "김서율": "graduated",
+    "김신유": "graduated",
+    "김예지": "graduated",
+    "김유준": "graduated",
+    "김유현": "graduated",
+    "김주빈": "graduated",
+    "김주한": "graduated",
+    "김지유": "graduated",
+    "김현우": "graduated",
+    "남기현": "graduated",
+    "문선우": "graduated",
+    "민준기": "graduated",
+    "박서진": "graduated",
+    "변서진": "graduated",
+    "신지한": "graduated",
+    "안예준": "graduated",
+    "안채연": "graduated",
+    "유호연": "graduated",
+    "윤하영": "graduated",
+    "이동윤": "graduated",
+    "이민혁": "graduated",
+    "이성우": "graduated",
+    "이하린": "graduated",
+    "임유준": "graduated",
+    "정지안": "graduated",
+    "조혜서": "graduated",
+    "조혜연": "graduated",
+    "DEMO": "graduated"
   },
   "vipAccess": {
     "report": [
@@ -3958,6 +3994,2716 @@ window.GFIELD_DATA = {
       "정지아",
       "조혜연",
       "조혜서"
+    ]
+  },
+  "studentAccessProfiles": {
+    "0836": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김건아": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김나율": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김도란": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김도윤": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김명서": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김민재": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김서연": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김서율": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김신유": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김예지": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김유준": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김유현": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김주빈": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김주한": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김지유": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김현우": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "남기현": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "문선우": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "민준기": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "박서진": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "변서진": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "신지한": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "안예준": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "안채연": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "유호연": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "윤하영": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "이동윤": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "이민혁": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "이성우": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "이하린": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "임유준": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "정지안": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "조혜서": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "조혜연": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "DEMO": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김도율": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김라율": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김소라": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김준서": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김지온": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "박재연": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "유현우": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "이서원": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "이용준": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "이재아": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "이현서": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "정지아": {
+      "startedAt": "2026-11-08T10:37:03.501Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "주성현": {
+      "startedAt": "2026-11-08T10:37:03.502Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "최지안": {
+      "startedAt": "2026-11-08T10:37:03.502Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "최지우": {
+      "startedAt": "2026-11-08T10:37:03.502Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "한재이": {
+      "startedAt": "2026-11-08T10:37:03.502Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "김시후": {
+      "startedAt": "2026-11-08T10:37:03.502Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "박제아": {
+      "startedAt": "2026-11-08T10:37:03.502Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "정유현": {
+      "startedAt": "2026-11-08T10:37:03.502Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    },
+    "허유민": {
+      "startedAt": "2026-11-08T10:37:03.502Z",
+      "attendance": [],
+      "special": false,
+      "folders": [],
+      "products": [],
+      "vip": [],
+      "textbooks": []
+    }
+  },
+  "studentAccessHistory": {
+    "0836": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.499Z",
+        "permissions": {
+          "attendance": [
+            "sep-14"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김건아": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "jul-w5",
+            "jul-w4",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김나율": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "mock-final-8",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김도란": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "oct-12",
+            "oct-5",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김도윤": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "sep-w1",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26",
+            "sep-14"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김명서": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w1",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김민재": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "mock-mid-8",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김서연": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w1",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w1",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "aug-w2",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core",
+            "mock-final-7",
+            "mock-signature-1"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김서율": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "sep-21",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "mock-mid-7",
+            "mock-final-7",
+            "mock-final-8",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김신유": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "jul-w2"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김예지": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김유준": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w1",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김유현": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "oct-5",
+            "sep-28",
+            "sep-21",
+            "sep-14",
+            "sep-w1",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김주빈": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "sep-14",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "mock-final-8",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김주한": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w1",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "개념 교재",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김지유": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "mock-mid-7",
+            "mock-final-7",
+            "mock-final-8",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김현우": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w1",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core",
+            "mock-mid-8",
+            "mock-final-7",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "남기현": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [],
+          "products": [
+            "question-bank",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": []
+        }
+      }
+    ],
+    "문선우": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "jul-w5",
+            "jul-w4",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "민준기": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w1",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "aug-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "박서진": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w1",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "jul-w5",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core",
+            "mock-mid-7",
+            "mock-mid-8",
+            "mock-final-7",
+            "mock-final-8",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "변서진": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "aug-w1",
+            "jul-w4",
+            "jul-w5",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "신지한": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "안예준": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "mock-signature-1"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "안채연": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w1",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "유호연": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core",
+            "mock-final-7",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "윤하영": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w1",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "이동윤": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": []
+        }
+      }
+    ],
+    "이민혁": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "sep-14",
+            "sep-w1",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "mock-signature-1"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "이성우": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "oct-26",
+            "oct-19"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "이하린": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w1",
+            "jul-w2",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "임유준": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "may-w34",
+            "jun-w12",
+            "jun-w3",
+            "jun-w4",
+            "jul-w2",
+            "jul-w1",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "sep-28",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "추가 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core",
+            "mock-mid-7",
+            "mock-final-7",
+            "mock-final-8",
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "정지안": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "jul-w1",
+            "jul-w2",
+            "jun-w4",
+            "jul-w3",
+            "jul-w4",
+            "oct-5",
+            "oct-12",
+            "oct-19",
+            "oct-26"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core",
+            "mock-final-7"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "조혜서": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "oct-26"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "조혜연": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "oct-26"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "DEMO": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "jul-w2",
+            "jul-w1",
+            "may-w34",
+            "jul-w3"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김도율": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김라율": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [
+            "oct-5",
+            "oct-12"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김소라": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김준서": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김지온": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "박재연": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "유현우": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "이서원": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "이용준": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "mock-signature-1"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "이재아": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "이현서": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "정지아": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.501Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "규칙 보충학습"
+          ],
+          "products": [
+            "mock-signature-1",
+            "mock-signature-2"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "주성현": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.502Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "최지안": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.502Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "최지우": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.502Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "활용 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "한재이": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.502Z",
+        "permissions": {
+          "attendance": [],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "추가 모의고사",
+            "중급 모의고사",
+            "파이널 모의고사",
+            "최종 모의고사",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "mock-mid-7",
+            "mock-final-7",
+            "mock-final-8"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "김시후": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.502Z",
+        "permissions": {
+          "attendance": [
+            "jul-w1",
+            "jun-w4"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "박제아": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.502Z",
+        "permissions": {
+          "attendance": [
+            "oct-5"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "mock-final-8"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "정유현": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.502Z",
+        "permissions": {
+          "attendance": [
+            "jul-w4",
+            "jul-w2",
+            "jul-w5",
+            "jul-w3",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3"
+          ],
+          "special": true,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
+    ],
+    "허유민": [
+      {
+        "archivedAt": "2026-11-08T10:37:03.502Z",
+        "permissions": {
+          "attendance": [
+            "jul-w1",
+            "jul-w2",
+            "jun-w4",
+            "jul-w3",
+            "jul-w4",
+            "jul-w5",
+            "aug-w1",
+            "aug-w2",
+            "aug-w3",
+            "aug-w4",
+            "jun-w12",
+            "jun-w3",
+            "sep-w1",
+            "sep-14",
+            "sep-21",
+            "oct-5",
+            "sep-28"
+          ],
+          "special": false,
+          "folders": [
+            "보충학습",
+            "약점 유형",
+            "사고력 교재",
+            "GFIELD APPLICATION",
+            "개념 교재",
+            "규칙 보충학습",
+            "3% 1과정 영역별 테스트"
+          ],
+          "products": [
+            "question-bank",
+            "concept-basic",
+            "concept-core"
+          ],
+          "vip": [
+            "report",
+            "ses",
+            "cou",
+            "clinic",
+            "col",
+            "mag"
+          ]
+        }
+      }
     ]
   }
 };

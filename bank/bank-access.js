@@ -53,7 +53,14 @@
     if(!account||account.active!==true)return false;
     if(account.role==='admin'||account.role==='teacher')return true;
     if(account.role!=='student'||!account.student)return false;
-    if(((root.GFIELD_DATA||{}).studentTypes||{})[account.student]==='withdrawn')return false;
+    if(['withdrawn','graduated'].includes(((root.GFIELD_DATA||{}).studentTypes||{})[account.student]))return false;
+    var data=root.GFIELD_DATA||{},name=account.student,policy=root.GFIELD_STUDENT_ACCESS;
+    if(Object.prototype.hasOwnProperty.call(data.studentAccessProfiles||{},name)){
+      if(!policy)return false;
+      var key=scopedProductKey();
+      if(/^mock-last-[1234]$/.test(key))return policy.allows(data,name,'folders','최종 모의고사',false)||policy.attendance(data,name).indexOf({'mock-last-1':'oct-5','mock-last-2':'oct-12','mock-last-3':'oct-19','mock-last-4':'oct-26'}[key])>=0;
+      return registeredStudent(name)&&policy.allows(data,name,'products',key||PRODUCT_KEY,false);
+    }
     /* 일반 문제은행은 자료실 등록 학생 전체, 회차 자료는 해당 회차 승인만 허용한다. */
     if(scopedProductKey())return listed(scopedPermissionList(),account.student);
     return registeredStudent(account.student);

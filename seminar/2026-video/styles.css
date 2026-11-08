@@ -5,4 +5,6 @@
 
 #login-link[hidden]{display:none}
 
+.play:disabled{cursor:default}.play:disabled .play-icon{opacity:.45}.player-details #access-status{line-height:1.6;text-align:right}#slides-link[aria-disabled="true"]{color:#566274;cursor:default;text-decoration:none}.player img{-webkit-user-drag:none}.player{-webkit-user-select:none;user-select:none}@media(max-width:600px){.player-details{align-items:start}#access-status{max-width:70%}}
+
 .recall-actions .recall-note{grid-column:1/-1;margin:10px 0 0;color:#566274;font-size:12px;line-height:1.7}

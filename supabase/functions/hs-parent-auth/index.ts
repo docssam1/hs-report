@@ -168,6 +168,7 @@ async function resolveStudent(rawName: unknown): Promise<{ name: string; account
   } catch (error) {
     if (!account) throw error;
   }
+  if (roster?.types[name] === "graduated") throw new HttpError(403, "STUDENT_GRADUATED");
   const withdrawn = roster ? roster.types[name] === "withdrawn" : false;
   if (account) {
     if (account.role !== "student") throw new HttpError(404, "STUDENT_NOT_FOUND");
@@ -440,9 +441,13 @@ async function touch(req: Request, body: Record<string, unknown>) {
   if (accountError) throw new HttpError(500, "ACCOUNT_LOOKUP_FAILED");
   if (!account || account.role !== "student") throw new HttpError(403, "STUDENT_NOT_FOUND");
   let withdrawn = false;
+  let graduated = false;
   try {
-    withdrawn = (await loadRoster()).types[displayName(account.student)] === "withdrawn";
+    const type = (await loadRoster()).types[displayName(account.student)];
+    withdrawn = type === "withdrawn";
+    graduated = type === "graduated";
   } catch { /* 명단을 못 읽으면 계정 active 값으로 판단한다. */ }
+  if (graduated) throw new HttpError(403, "STUDENT_GRADUATED");
   if (!account.active || withdrawn) throw new HttpError(403, "STUDENT_INACTIVE");
   const link = await findLink(account.user_id);
   if (!link) throw new HttpError(403, "EMAIL_NOT_VERIFIED");

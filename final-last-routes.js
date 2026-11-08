@@ -16,7 +16,7 @@
   }
   function assigned(data,name,series,round){
     var node=(series==='last'?LAST_NODE_BY_ROUND:FINAL_NODE_BY_ROUND)[round];
-    var attendance=data&&data.attendance&&data.attendance[name];
+    var attendance=root.GFIELD_STUDENT_ACCESS?root.GFIELD_STUDENT_ACCESS.attendance(data,name):(Object.prototype.hasOwnProperty.call(data.studentAccessProfiles||{},name)?[]:data&&data.attendance&&data.attendance[name]);
     return !!(node&&Array.isArray(attendance)&&attendance.indexOf(node)>=0);
   }
   function accessAllowed(data,name,series,round){
@@ -25,15 +25,16 @@
     round=Number(round);
     if(name.toLowerCase()==='docssam') return true;
     if(!name||!Array.isArray(data.students)||data.students.indexOf(name)<0) return false;
-    if((data.studentTypes||{})[name]==='withdrawn') return false;
+    if(['withdrawn','graduated'].includes((data.studentTypes||{})[name])) return false;
+    function permit(kind,key,legacy){return root.GFIELD_STUDENT_ACCESS?root.GFIELD_STUDENT_ACCESS.allows(data,name,kind,key,legacy):(!Object.prototype.hasOwnProperty.call(data.studentAccessProfiles||{},name)&&legacy);}
     if(series==='final'&&(round===5||round===7||round===8)){
-      return includesName((data.archiveProductAccess||{})['mock-final-'+round],name);
+      return permit('products','mock-final-'+round,includesName((data.archiveProductAccess||{})['mock-final-'+round],name));
     }
     if(series==='final'&&round>=1&&round<=4){
-      return assigned(data,name,'final',round)||includesName((data.archiveAccess||{})['파이널 모의고사'],name);
+      return assigned(data,name,'final',round)||permit('folders','파이널 모의고사',includesName((data.archiveAccess||{})['파이널 모의고사'],name));
     }
     if(series==='last'&&round>=1&&round<=4){
-      return assigned(data,name,'last',round)||includesName((data.archiveAccess||{})['최종 모의고사'],name);
+      return assigned(data,name,'last',round)||permit('folders','최종 모의고사',includesName((data.archiveAccess||{})['최종 모의고사'],name));
     }
     return false;
   }

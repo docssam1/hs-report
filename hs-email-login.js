@@ -21,6 +21,7 @@
     INVALID_EMAIL:'이메일 주소를 확인해 주세요.',
     STUDENT_NOT_FOUND:'등록된 학생만 입장할 수 있어요. 이름을 정확히 입력해 주세요.',
     STUDENT_INACTIVE:'접속이 정지된 회원입니다. 학원에 문의해 주세요.',
+    STUDENT_GRADUATED:'원에 연락해 주세요.',
     LINKED_TO_OTHER_EMAIL:'이 학생은 이미 다른 학부모 이메일로 등록되어 있어요. 처음 인증한 이메일을 입력하거나 학원에 문의해 주세요.',
     TOO_MANY_ATTEMPTS:'요청이 많아요. 잠시 후 다시 시도해 주세요.',
     EMAIL_SEND_FAILED:'인증 메일을 보내지 못했어요. 이메일 주소를 확인하거나 잠시 후 다시 시도해 주세요.',
@@ -59,7 +60,7 @@
       var status=Number(error&&error.status||0);
       if(status===403){
         auth.clear('student');
-        return {ok:false,reason:error.code==='STUDENT_INACTIVE'?'INACTIVE':'NOT_VERIFIED'};
+        return {ok:false,reason:error.code==='STUDENT_GRADUATED'?'GRADUATED':error.code==='STUDENT_INACTIVE'?'INACTIVE':'NOT_VERIFIED'};
       }
       if(status===401){auth.clear('student');return {ok:false,reason:'NO_SESSION'}}
       /* 일시적 연결 오류: 아직 만료되지 않은 서버 발급 세션이면 입장(데이터 권한은 서버 RLS가 다시 확인). */
@@ -127,7 +128,7 @@
       setTimeout(function(){el('el-code').focus()},50);
     }catch(error){
       setError(messageFor(error));
-      if(error&&error.code==='STUDENT_INACTIVE'&&state.reject){var r=state.reject;state.reject=null;r(error)}
+      if(error&&['STUDENT_INACTIVE','STUDENT_GRADUATED'].indexOf(error.code)>=0&&state.reject){var r=state.reject;state.reject=null;r(error)}
     }finally{setBusy(false)}
   }
 

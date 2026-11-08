@@ -174,6 +174,7 @@
     }
     if(item&&item.meta.kind==='original'){
       var key='mock-signature-'+item.meta.round;
+      if(Object.prototype.hasOwnProperty.call((options.data||{}).studentAccessProfiles||{},options.student))return !!root.GFIELD_STUDENT_ACCESS?.allows(options.data,options.student,'products',key,false);
       var names=options.data&&options.data.archiveProductAccess&&options.data.archiveProductAccess[key];
       return Array.isArray(names)&&(names.indexOf('*')>=0||names.indexOf(options.student)>=0);
     }

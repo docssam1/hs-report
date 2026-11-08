@@ -322,9 +322,10 @@
 <div class="toast" id="toast"></div>
 
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
-<script src="final-last-routes.js?v=20261013-report-qr"></script>
+<script src="student-access-policy.js?v=20261108-fresh-access1"></script>
+<script src="final-last-routes.js?v=20261108-fresh-access1"></script>
 <script>if(window.GFIELD_FINAL_LAST_ROUTES)window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('mock.html');</script>
-<script src="middle-access.js?v=20261006-withdrawn"></script>
+<script src="middle-access.js?v=20261108-fresh-access1"></script>
 <script src="mock-data.js?v=20261018-middle8-q4-answer"></script>
 <script src="mock-data-hw.js?v=20261012-hw1-q25"></script>
 <script src="bank/applied-learning-index.js?v=20261026-r20"></script>
@@ -499,12 +500,14 @@ function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.
 function bp(no){ return M.blueprint.find(b=>b.no===no)||{no:no,area:'',pts:0}; }
 function roundKeys(){ return Object.keys(M.rounds).sort((a,b)=>+a-+b); }
 function parentRoundKeys(){
+  if(window.GFIELD_STUDENT_ACCESS?.restricted(D,me)&&SET==='hw')return roundKeys().filter(r=>window.GFIELD_STUDENT_ACCESS.appliedRound(D,me,r));
+  if(!window.GFIELD_STUDENT_ACCESS&&Object.prototype.hasOwnProperty.call(D.studentAccessProfiles||{},me))return [];
   if(SET!=='mid'||!window.GFIELD_MIDDLE_ACCESS) return roundKeys();
   return window.GFIELD_MIDDLE_ACCESS.rounds(D,me,M);
 }
 function middle8CanPractice(r){
   const approved=(D.archiveProductAccess||{})['mock-mid-8'];
-  return SET==='mid'&&Number(r)===8&&(mode==='teacher'||Array.isArray(approved)&&(approved.includes('*')||approved.includes(me)));
+  return SET==='mid'&&Number(r)===8&&(mode==='teacher'||window.GFIELD_STUDENT_ACCESS.allows(D,me,'products','mock-mid-8',Array.isArray(approved)&&(approved.includes('*')||approved.includes(me))));
 }
 function middle8VariantUrl(numbers){
   const query=new URLSearchParams({bank:'middle8',printMode:'both',layout:numbers.length===1?'editorial':'compact',view:numbers.length===1?'grouped':'mixed',from:'archive',name:me||''});
@@ -656,7 +659,7 @@ function enter(){
   if(!v){ return; }
   if(v.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; startTeacher(); return; }
   if(!(D.students||[]).includes(v)){ document.getElementById('gate-err').textContent='등록된 학생만 입장할 수 있어요.'; return; }
-  if((D.studentTypes||{})[v]==='withdrawn'){ document.getElementById('gate-err').textContent='접속이 정지된 회원입니다. 학원에 문의해 주세요.'; return; }
+  if(['withdrawn','graduated'].includes((D.studentTypes||{})[v])){ document.getElementById('gate-err').textContent=(D.studentTypes||{})[v]==='graduated'?'원에 연락해 주세요.':'접속이 정지된 회원입니다. 학원에 문의해 주세요.'; return; }
   mode='parent'; me=v; if(!PREVIEW){ try{ localStorage.setItem('gfield_student',v); }catch(e){} }
   const pending=window._pendingRound; window._pendingRound=null;
   startParent({round:pending,reportOnly:REPORT_ONLY});
@@ -1448,7 +1451,7 @@ function typeset(){ if(!window.renderMathInElement) return; clearTimeout(_mathT)
   let stu=urlName;
   if(!stu){ try{ stu=localStorage.getItem('gfield_student')||''; }catch(e){} }
   if(stu && stu.toLowerCase()==='docssam'){ mode='teacher'; me='원장'; try{ localStorage.setItem('gfield_student',stu); }catch(e){} startTeacher(); return; }
-  if(stu && (D.students||[]).includes(stu)&&(D.studentTypes||{})[stu]!=='withdrawn'){
+  if(stu && (D.students||[]).includes(stu)&&!['withdrawn','graduated'].includes((D.studentTypes||{})[stu])){
     mode='parent'; me=stu; if(!PREVIEW){ try{ localStorage.setItem('gfield_student',stu); }catch(e){} }
     startParent({round:rd,reportOnly:REPORT_ONLY});
     return;

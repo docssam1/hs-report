@@ -584,7 +584,8 @@ td.weak-cell{white-space:nowrap}
 <div id="app"></div>
 <button class="print-btn no-print" id="printBtn" style="display:none">🖨 인쇄</button>
 
-<script src="final-last-routes.js?v=20261013-report-qr"></script>
+<script src="student-access-policy.js?v=20261108-fresh-access1"></script>
+<script src="final-last-routes.js?v=20261108-fresh-access1"></script>
 <script>(function(){
   if(window.GFIELD_FINAL_LAST_ROUTES&&window.GFIELD_FINAL_LAST_ROUTES.redirectCurrent('final.html')) return;
   // Keep published static scripts cacheable. Admin-generated data.js changes
@@ -643,6 +644,7 @@ td.weak-cell{white-space:nowrap}
   files.push('exam-cues.js');
   files.forEach(function(f){
     var version=f==='data.js'?dataVersion:(f==='final-last-routes.js'||(f==='exam-cues.js'&&isFinal8)?'20261005-final8-answers':(f==='mock-data-final.js'&&isFinal8?'20261005-final8-q20-43':(f==='mock-data-original.js'?signatureAnswerVersion:((f==='mock-data-final.js'||f==='final4-detailed-data.js')?final4AnswerVersion:staticVersion))));
+    if(f==='final-last-routes.js')version='20261108-fresh-access1';
     if(['bank/bank-registry.js','last4-report-practice.js'].includes(f))version='20261022-last4';
     if(f==='final-summary-practice-print.js')version='20261025-last4-renderer-fallback';
     if(f==='final-parent-report.js'||f==='final7-benchmark.js'||f==='final8-benchmark.js')version='20261012-final78-signature';
@@ -798,7 +800,13 @@ td.weak-cell{white-space:nowrap}
     if(preview||name.toLowerCase()==='docssam') return true;
     if(teacherEntry) return !!name;
     if(!(D.students||[]).includes(name)) return false;
-    if((D.studentTypes||{})[name]==='withdrawn') return false;
+    if(['withdrawn','graduated'].includes((D.studentTypes||{})[name])) return false;
+    var policy=window.GFIELD_STUDENT_ACCESS;
+    if(policy&&policy.restricted(D,name)){
+      if(isOriginal)return policy.allows(D,name,'products','mock-signature-'+roundNum,false);
+      return window.GFIELD_FINAL_LAST_ROUTES.accessAllowed(D,name,isLast?'last':'final',roundNum);
+    }
+    if(!policy&&Object.prototype.hasOwnProperty.call(D.studentAccessProfiles||{},name))return false;
     if(isOriginal){
       var signatureAccess=((D.archiveProductAccess||{})['mock-signature-'+roundNum])||[];
       return Array.isArray(signatureAccess)&&(signatureAccess.indexOf('*')>=0||signatureAccess.indexOf(name)>=0);
@@ -2582,7 +2590,7 @@ td.weak-cell{white-space:nowrap}
     function enter(){
       var v=(inp.value||'').trim();
       if(!v){ document.getElementById('gerr').textContent='이름을 입력해 주세요.'; return; }
-      if(!allowedForRound(v)){ document.getElementById('gerr').textContent='이 회차의 열람 권한이 없습니다.'; return; }
+      if(!allowedForRound(v)){ document.getElementById('gerr').textContent=(D.studentTypes||{})[v]==='graduated'?'원에 연락해 주세요.':'이 회차의 열람 권한이 없습니다.'; return; }
       state.name=v;
       if(!preview){ try{ localStorage.setItem('gfield_student', v); }catch(e){} }
       enterFlow();

@@ -40,6 +40,8 @@
   .card .hint{font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6;}
 
   .matrix-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;}
+  #bank-acc-matrix{white-space:normal;table-layout:fixed;}
+  #bank-acc-matrix th{width:36%;white-space:normal;}
   table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap;}
   th,td{border:1px solid var(--line);padding:8px 10px;text-align:center;}
   thead th{background:#f7f9fc;position:sticky;top:0;font-weight:700;font-size:11.5px;color:#555;}
@@ -187,7 +189,7 @@
           <button class="btn add" onclick="addStudent()">＋ 추가</button>
         </div>
         <div id="student-chips"></div>
-        <div class="hint">회원 상태를 클릭하면 재원생 → 온라인 → 퇴원생 순서로 전환됩니다. 퇴원·복귀는 확인 후 자동 저장하며, 이름 로그인 차단은 사이트 반영 후 적용됩니다. 성적·출석·코멘트는 보존합니다.</div>
+        <div class="hint">회원 상태에서 재원생·온라인·졸업생·퇴원생을 선택합니다. 졸업생은 출석 명단에 나오지 않고 접속·자료 열람이 정지되며, 재원생 또는 온라인으로 복귀할 수 있습니다. 졸업·퇴원·복귀는 확인 후 자동 저장합니다. 성적·출석·코멘트·승인 기록은 보존하며, <b>×는 학생 삭제</b>이므로 졸업 정리에 사용하지 마세요.</div>
       </div>
       <div class="card" id="student-email-auth"></div>
     </section>
@@ -231,12 +233,17 @@
       </div>
       <div class="card">
         <h3>폴더별 학생 권한</h3>
-        <div class="hint">‘전체공개’가 켜지면(🔓) 로그인한 모든 학생이 봅니다. 끄면 체크한 학생만 그 폴더를 열람합니다. <b>새로 만든 폴더는 비공개로 시작</b>하므로, 공개하려면 🔓를 켜거나 학생을 체크하세요.</div>
+        <div class="hint">‘전체공개’가 켜지면(🔓) 기존 학생이 봅니다. 졸업 후 복귀생은 전체공개와 별도로 학생 칸을 체크해 새로 승인합니다. <b>새로 만든 폴더는 비공개로 시작</b>합니다.</div>
         <div class="matrix-scroll"><table id="acc-matrix"></table></div>
+      </div>
+      <div class="card" id="seminar-approval-panel">
+        <h3>2026 황소 설명회 영상·자료 승인</h3>
+        <div class="hint">체크한 회원만 설명회 영상을 시청하고 복기 문제·답안을 이름 워터마크로 인쇄합니다. 시크릿 마무리 1·2회는 아래의 회차 승인도 필요합니다. 선택 후 하단 <b>GitHub에 저장</b>을 누르세요. 기존 회원에게 자동 승인하지 않습니다.</div>
+        <div class="matrix-scroll"><table id="seminar-acc-matrix" aria-label="2026 황소 설명회 학생별 승인"></table></div>
       </div>
       <div class="card">
         <h3>문제은행 학생 이용</h3>
-        <div class="hint">황소 약점 유형 문제은행은 <b>자료실에 등록된 학생 전체가 승인번호 없이</b> 이용합니다. 최종 7회처럼 회차별 승인이 필요한 자료는 아래의 별도 명단을 따릅니다.</div>
+        <div class="hint">황소 약점 유형 문제은행은 <b>기존 등록 학생이 승인번호 없이</b> 이용합니다. 졸업 후 복귀생은 아래에서 새로 승인합니다. 회차별 자료는 해당 회차 승인도 필요합니다.</div>
         <div class="matrix-scroll"><table id="bank-acc-matrix"></table></div>
       </div>
       <div class="card signature-round-approvals">
@@ -422,12 +429,14 @@
 </div>
 
 <script src="vendor/pdfjs/3.11.174/pdf.min.js"></script>
-<script src="data.js?v=20261010-docssam-columns"></script>
+<script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
 <script src="docssam-columns.js?v=20261010a"></script>
 <script src="mock-data.js"></script>
 <script src="hs-auth.js?v=20261011-email-login-1"></script>
 <script src="admin-email-auth-view.js?v=20261018-unlimited-devices"></script>
-<script src="admin-student-membership.js?v=20261006a"></script>
+<script src="student-access-policy.js?v=20261108-fresh-access1"></script>
+<script src="admin-student-membership.js?v=20261108-fresh-access1"></script>
+<script src="seminar/2026-video/access.js?v=20261108-access1"></script>
 <script>
   const REPO = "docssam1/hs-report";
   const FILE_PATH = "data.js";
@@ -580,10 +589,14 @@
   }
 
   /* 학생 순서: 재원생 먼저, 온라인 회원 다음, 각각 가나다순 — 모든 표가 같은 순서를 씀 */
-  function studentType(name){ return S.studentTypes[name]==='withdrawn'?'withdrawn':S.studentTypes[name]==='online'?'online':'resident'; }
-  function studentTypeLabel(name){ return {resident:'재원생',online:'온라인',withdrawn:'퇴원생'}[studentType(name)]; }
-  function studentTypeStyle(name){ return {resident:'background:#e6f1fb;color:#185fa5',online:'background:#faeeda;color:#854f0b',withdrawn:'background:#f3e8e8;color:#942e2e'}[studentType(name)]; }
-  function sortStudents(){ if(!Array.isArray(S.students)) return; const order={resident:0,online:1,withdrawn:2}; S.students.sort((x,y)=>order[studentType(x)]-order[studentType(y)]||x.localeCompare(y,'ko')); }
+  function studentType(name){ return ['online','withdrawn','graduated'].includes(S.studentTypes[name])?S.studentTypes[name]:'resident'; }
+  function scopedStudent(name){return window.GFIELD_STUDENT_ACCESS.restricted(S,name);}
+  function accessOn(kind,key,name,legacy){return window.GFIELD_STUDENT_ACCESS.allows(S,name,kind,key,legacy);}
+  function toggleScoped(kind,key,name){if(!scopedStudent(name))return false;window.GFIELD_STUDENT_ACCESS.grant(S,name,kind,key,!accessOn(kind,key,name,false));return true;}
+  function grantScopedAll(kind,key,on){S.students.forEach(name=>window.GFIELD_STUDENT_ACCESS.grant(S,name,kind,key,on));}
+  function studentTypeLabel(name){ return {resident:'재원생',online:'온라인',withdrawn:'퇴원생',graduated:'졸업생'}[studentType(name)]; }
+  function studentTypeStyle(name){ return {resident:'background:#e6f1fb;color:#185fa5',online:'background:#faeeda;color:#854f0b',withdrawn:'background:#f3e8e8;color:#942e2e',graduated:'background:#edf0f4;color:#566274'}[studentType(name)]; }
+  function sortStudents(){ if(!Array.isArray(S.students)) return; const order={resident:0,online:1,graduated:2,withdrawn:3}; S.students.sort((x,y)=>order[studentType(x)]-order[studentType(y)]||x.localeCompare(y,'ko')); }
   function renderAll(){ sortStudents(); renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderExam(); renderGhStat(); }
 
   function ensureStudent(name){ if(!S.attendance[name]) S.attendance[name]=[]; }
@@ -594,46 +607,58 @@
     weeks.forEach(w=>{ html+=`<th title="${w.title}">${w.date.replace('주차','주').replace(' ','')}</th>`; });
     if(sp) html+='<th>⭐특강</th>';
     html+='</tr></thead><tbody>';
-    const ordered=S.students.slice();
+    const ordered=S.students.filter(name=>studentType(name)!=='graduated');
     const colspan=weeks.length+(sp?2:1);let lastGrp='';
     ordered.forEach(name=>{
       const grp=studentTypeLabel(name);
       if(grp!==lastGrp){const cnt=ordered.filter(n=>studentTypeLabel(n)===grp).length;html+=`<tr><th colspan="${colspan}" style="text-align:left;${studentTypeStyle(name)};font-size:12px">${grp} ${cnt}명</th></tr>`;lastGrp=grp;}
       ensureStudent(name);
       html+=`<tr><th>${name} <span style="font-size:10px;font-weight:800;padding:1px 6px;border-radius:8px;${studentTypeStyle(name)}">${studentTypeLabel(name)}</span></th>`;
-      weeks.forEach(w=>{ const on=S.attendance[name].includes(w.id); html+=`<td class="cell ${on?'on':'off'}" onclick="toggleCell('${name}','${w.id}',this)"></td>`; });
-      if(sp){ const on=S.specialStudents.includes(name); html+=`<td class="cell special-col ${on?'on':'off'}" onclick="toggleSpecial('${name}',this)"></td>`; }
+      weeks.forEach(w=>{ const on=window.GFIELD_STUDENT_ACCESS.attendance(S,name).includes(w.id); html+=`<td class="cell ${on?'on':'off'}" onclick="toggleCell('${name}','${w.id}',this)"></td>`; });
+      if(sp){ const on=window.GFIELD_STUDENT_ACCESS.special(S,name); html+=`<td class="cell special-col ${on?'on':'off'}" onclick="toggleSpecial('${name}',this)"></td>`; }
       html+='</tr>';
     });
     html+='</tbody>';
     document.getElementById('matrix').innerHTML=html;
   }
-  function toggleCell(name,wid,td){ ensureStudent(name); const arr=S.attendance[name]; const i=arr.indexOf(wid); if(i>=0){ arr.splice(i,1); td.className='cell off'; } else { arr.push(wid); td.className='cell on'; } dirty(); }
-  function toggleSpecial(name,td){ const i=S.specialStudents.indexOf(name); if(i>=0){ S.specialStudents.splice(i,1); td.className='cell special-col off'; } else { S.specialStudents.push(name); td.className='cell special-col on'; } dirty(); }
+  function toggleCell(name,wid,td){ if(studentType(name)==='graduated')return; if(toggleScoped('attendance',wid,name)){td.className='cell '+(accessOn('attendance',wid,name,false)?'on':'off');dirty();return;} ensureStudent(name); const arr=S.attendance[name]; const i=arr.indexOf(wid); if(i>=0){ arr.splice(i,1); td.className='cell off'; } else { arr.push(wid); td.className='cell on'; } dirty(); }
+  function toggleSpecial(name,td){ if(studentType(name)==='graduated')return; if(scopedStudent(name)){const p=S.studentAccessProfiles[name];p.special=!p.special;td.className='cell special-col '+(p.special?'on':'off');dirty();return;} const i=S.specialStudents.indexOf(name); if(i>=0){ S.specialStudents.splice(i,1); td.className='cell special-col off'; } else { S.specialStudents.push(name); td.className='cell special-col on'; } dirty(); }
 
   function renderStudents(){
-    let html='';
+    let html='',lastGroup='';
     S.students.forEach(name=>{
-      html+=`<span class="chip">${name}<button type="button" class="membership-toggle" ${membershipBusy?'disabled':''} onclick="toggleType('${name}')" style="cursor:pointer;margin-left:5px;min-height:32px;font-size:11px;font-weight:800;padding:2px 7px;border-radius:9px;${studentTypeStyle(name)}" title="재원생 → 온라인 → 퇴원생 (퇴원생 클릭 시 복귀)" aria-label="${name} ${studentTypeLabel(name)} 회원 상태 변경">${studentTypeLabel(name)}</button><button onclick="removeStudent('${name}')">×</button></span>`;
+      const group=studentType(name);
+      if(group!==lastGroup){html+=`<div style="width:100%;margin:14px 0 6px;font-size:13px;font-weight:700">${studentTypeLabel(name)} · ${S.students.filter(n=>studentType(n)===group).length}명</div>`;lastGroup=group;}
+      const types={resident:'재원생',online:'온라인',graduated:'졸업생',withdrawn:'퇴원생'};
+      html+=`<span class="chip">${esc(name)}<select class="membership-toggle" ${membershipBusy?'disabled':''} onchange="changeStudentType(${JSON.stringify(name).replace(/"/g,'&quot;')},this.value)" style="cursor:pointer;margin-left:5px;min-height:36px;width:auto;font-size:12px;padding:3px 7px;border-radius:6px;${studentTypeStyle(name)}" aria-label="${esc(name)} 회원 상태">${Object.entries(types).map(([value,label])=>`<option value="${value}" ${studentType(name)===value?'selected':''}>${label}</option>`).join('')}</select><button onclick="removeStudent('${name}')">×</button></span>`;
+      const history=(S.studentAccessHistory||{})[name];
+      if(Array.isArray(history)&&history.length)html+=`<details style="width:100%;font-size:12px;line-height:1.7;margin:2px 0 8px"><summary>${esc(name)} · 이전 출석·승인 기록 ${history.length}건 보관</summary><p>이전 권한은 보관용이며 복귀 시 자동 복구하지 않습니다.</p>${history.map(record=>{const p=record.permissions||{};return `<div>${esc(new Date(record.archivedAt).toLocaleDateString('ko-KR'))} · 출석 ${(p.attendance||[]).length}개 · 자료 승인 ${(p.folders||[]).length+(p.products||[]).length}개 · VIP ${(p.vip||[]).length}개</div>`;}).join('')}</details>`;
     });
     document.getElementById('student-chips').innerHTML=html||'<span class="hint">등록된 학생이 없습니다.</span>';
     if(window.GFIELD_EMAIL_AUTH_VIEW) window.GFIELD_EMAIL_AUTH_VIEW.render(S.students);
   }
   let membershipBusy=false;
   async function toggleType(name){
+    return changeStudentType(name,{resident:'online',online:'withdrawn',withdrawn:'resident',graduated:'resident'}[studentType(name)]);
+  }
+  async function changeStudentType(name,next){
     if(membershipBusy)return;
-    const current=studentType(name),next={resident:'online',online:'withdrawn',withdrawn:'resident'}[current];
-    if(next==='withdrawn'||current==='withdrawn'){
-      if(!confirm(next==='withdrawn'?`${name} 학생을 퇴원생으로 분류하고 접속을 정지할까요? 성적·출석·코멘트는 삭제하지 않습니다.`:`${name} 학생을 재원생으로 복귀시키고 접속을 허용할까요?`))return;
-      const token=ghToken();if(!token)return;
+    const current=studentType(name),blocked=type=>['withdrawn','graduated'].includes(type);
+    if(!S.students.includes(name)||!['resident','online','withdrawn','graduated'].includes(next)||next===current){renderStudents();return;}
+    if(blocked(next)||blocked(current)){
+      const label={resident:'재원생',online:'온라인',withdrawn:'퇴원생',graduated:'졸업생'}[next];
+      const fresh=next==='graduated'||current==='graduated'||scopedStudent(name);
+      if(!confirm(blocked(next)?`${name} 학생을 ${label}으로 분류하고 접속을 정지할까요? 성적·출석·코멘트·승인 기록은 보존합니다.`:`${name} 학생을 ${label}으로 복귀시킬까요? ${fresh?'과거 자료 권한은 복구되지 않습니다. 필요한 자료를 새로 승인해 주세요.':'기존 승인 범위로 접속을 허용합니다.'}`)){renderStudents();return;}
+      const token=ghToken();if(!token){renderStudents();return;}
       const saveStatus=document.getElementById('save-status'),previous=saveStatus.textContent;
       membershipBusy=true;renderStudents();saveStatus.textContent='회원 상태 저장 중…';
       try{
-        await window.GFIELD_STUDENT_MEMBERSHIP.persist({student:name,type:next,token,repo:REPO,path:FILE_PATH,branch:BRANCH});
+        const saved=await window.GFIELD_STUDENT_MEMBERSHIP.persist({student:name,type:next,token,repo:REPO,path:FILE_PATH,branch:BRANCH});
+        if(saved.accessProfile){S.studentAccessProfiles=S.studentAccessProfiles||{};S.studentAccessProfiles[name]=saved.accessProfile;S.studentAccessHistory=S.studentAccessHistory||{};S.studentAccessHistory[name]=saved.accessHistory;}
         if(next==='resident')delete S.studentTypes[name];else S.studentTypes[name]=next;
-        sortStudents();renderMatrix();renderAccMatrix();
+        sortStudents();renderMatrix();renderArchiveAdmin();
         saveStatus.textContent=previous.includes('저장되지 않은')?previous:'✅ 회원 상태 저장 완료 (사이트 반영 1~2분)';
-        toast(next==='withdrawn'?'퇴원생으로 저장했습니다. 성적·출석 기록은 보존됩니다.':'재원생으로 복귀했습니다.');
+        toast(blocked(next)?`${label}으로 저장했습니다. 성적·출석·승인 기록은 보존됩니다.`:`${label}으로 복귀했습니다.`);
       }catch(error){saveStatus.textContent=previous;alert('회원 상태를 완료하지 못했습니다. '+error.message);}
       finally{membershipBusy=false;renderStudents();}
       return;
@@ -924,7 +949,7 @@
 
   /* ===== ⑤ 자료실 ===== */
   function accArr(f){ if(!Array.isArray(S.archiveAccess[f])) S.archiveAccess[f]=["*"]; return S.archiveAccess[f]; }
-  function renderArchiveAdmin(){ renderFolders(); renderAccMatrix(); renderBankAccessMatrix(); renderFinal7AccessMatrix(); renderBooks(); }
+  function renderArchiveAdmin(){ renderFolders(); renderAccMatrix(); renderBankAccessMatrix(); renderFinal7AccessMatrix(); renderBooks(); renderSeminarAccessMatrix(); }
   function renderFolders(){
     let h='';
     S.archiveFolders.forEach((f,i)=>{ h+=`<div class="tb-row"><input type="text" value="${esc(f)}" onchange="renameFolder(${i},this.value)"><button class="btn del" onclick="delFolder(${i})">삭제</button></div>`; });
@@ -943,7 +968,7 @@
       S.archiveFolders.forEach((f,fi)=>{
         const acc=accArr(f); const open=acc.includes('*');
         html+=`<tr><th>${f}</th><td class="cell ${open?'on':'off'}" onclick="toggleOpen(${fi},this)"></td><td style="text-align:center"><button class="mini" onclick="accAll(${fi})" title="전원 개별 체크로 전환">☑</button></td>`;
-        S.students.forEach((s,si)=>{ const on=!open&&acc.includes(s); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="toggleAcc(${fi},'${s}',this)"></td>`; });
+        S.students.forEach((s,si)=>{ const on=accessOn('folders',f,s,!open&&acc.includes(s)); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="toggleAcc(${fi},'${s}',this)"></td>`; });
         html+='</tr>';
       });
       html+='</tbody>';
@@ -952,17 +977,19 @@
     renderVipAccMatrix();
     renderSpAccMatrix();
     renderSignatureAccessMatrix();
+    renderSeminarAccessMatrix();
   }
-  function accAll(fi){ const f=S.archiveFolders[fi]; S.archiveAccess[f]=S.students.slice(); renderAccMatrix(); dirty(); }
+  function accAll(fi){ const f=S.archiveFolders[fi]; S.archiveAccess[f]=S.students.slice();grantScopedAll('folders',f,true); renderAccMatrix(); dirty(); }
   const QUESTION_BANK_ACCESS_KEY='question-bank';
   function bankAccessArr(){ if(!Array.isArray(S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY])) S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=[]; return S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]; }
   function renderBankAccessMatrix(){
     const el=document.getElementById('bank-acc-matrix'); if(!el)return;
-    el.innerHTML='<tbody><tr><th>황소 약점 유형 문제은행</th><td style="padding:14px"><b>등록 학생 '+S.students.length+'명 자동 허용</b><br><span class="hint">별도 승인번호와 개별 체크가 필요하지 않습니다.</span></td></tr></tbody>';
+    const returned=S.students.filter(scopedStudent);
+    el.innerHTML='<tbody><tr><th>황소 약점 유형 문제은행</th><td style="padding:14px"><b>기존 등록 학생 자동 허용 · 복귀생 별도 승인</b><br><span class="hint">졸업 후 복귀한 학생은 아래에서 새로 승인합니다.</span>'+returned.map(name=>'<label style="display:inline-flex;align-items:center;gap:5px;margin:8px"><input type="checkbox" aria-label="'+esc(name)+' 문제은행 승인" '+(accessOn('products',QUESTION_BANK_ACCESS_KEY,name,false)?'checked':'')+' onchange="bankAccessToggleStudent('+S.students.indexOf(name)+')">'+esc(name)+'</label>').join('')+'</td></tr></tbody>';
   }
   function bankAccessToggleOpen(){const acc=bankAccessArr();S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=acc.includes('*')?[]:['*'];renderBankAccessMatrix();dirty()}
-  function bankAccessAll(){S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=S.students.slice();renderBankAccessMatrix();dirty()}
-  function bankAccessToggleStudent(studentIndex){const student=S.students[studentIndex];if(!student)return;let acc=bankAccessArr();if(acc.includes('*'))acc=S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=[];const i=acc.indexOf(student);if(i>=0)acc.splice(i,1);else acc.push(student);renderBankAccessMatrix();dirty()}
+  function bankAccessAll(){S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=S.students.slice();grantScopedAll('products',QUESTION_BANK_ACCESS_KEY,true);renderBankAccessMatrix();dirty()}
+  function bankAccessToggleStudent(studentIndex){const student=S.students[studentIndex];if(!student)return;if(toggleScoped('products',QUESTION_BANK_ACCESS_KEY,student)){renderBankAccessMatrix();dirty();return;}let acc=bankAccessArr();if(acc.includes('*'))acc=S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=[];const i=acc.indexOf(student);if(i>=0)acc.splice(i,1);else acc.push(student);renderBankAccessMatrix();dirty()}
 
   const SIGNATURE_ROUND_ACCESS=[['mock-signature-1','시그니처 1회',1],['mock-signature-2','시그니처 2회',2]];
   function signatureRoundAccessKey(round){ const item=SIGNATURE_ROUND_ACCESS.find(item=>item[2]===Number(round)); return item?item[0]:''; }
@@ -979,7 +1006,7 @@
       html+='<td class="cell '+(open?'on':'off')+'" role="button" tabindex="0" aria-pressed="'+open+'" aria-label="'+label+' 전체공개 '+(open?'해제':'설정')+'" onclick="'+toggle+'" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();'+toggle+'}"></td>';
       html+='<td style="text-align:center"><button class="mini" onclick="signatureRoundAccessAll('+round+')" title="'+label+' 전원 개별 체크로 전환">☑</button></td>';
       S.students.forEach((student,index)=>{
-        const on=!open&&acc.includes(student),action='signatureRoundAccessToggleStudent('+round+','+index+')';
+        const on=accessOn('products',key,student,!open&&acc.includes(student)),action='signatureRoundAccessToggleStudent('+round+','+index+')';
         html+='<td class="cell '+(on?'on':'off')+'" role="button" tabindex="0" aria-pressed="'+on+'" aria-label="'+label+' '+esc(student)+' '+(on?'승인 해제':'승인')+'" style="'+(open?'opacity:.4':'')+'" onclick="'+action+'" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();'+action+'}"></td>';
       });
       html+='</tr>';
@@ -987,8 +1014,8 @@
     el.innerHTML=html+'</tbody>';
   }
   function signatureRoundAccessToggleOpen(round){ const key=signatureRoundAccessKey(round); if(!key)return; const acc=productArr(key); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderSignatureAccessMatrix(); renderBooks(); dirty(); }
-  function signatureRoundAccessAll(round){ const key=signatureRoundAccessKey(round); if(!key)return; S.archiveProductAccess[key]=S.students.slice(); renderSignatureAccessMatrix(); renderBooks(); dirty(); }
-  function signatureRoundAccessToggleStudent(round,index){ const key=signatureRoundAccessKey(round),student=S.students[index]; if(!key||!student)return; let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const i=acc.indexOf(student); if(i>=0)acc.splice(i,1);else acc.push(student); renderSignatureAccessMatrix(); renderBooks(); dirty(); }
+  function signatureRoundAccessAll(round){ const key=signatureRoundAccessKey(round); if(!key)return; S.archiveProductAccess[key]=S.students.slice();grantScopedAll('products',key,true); renderSignatureAccessMatrix(); renderBooks(); dirty(); }
+  function signatureRoundAccessToggleStudent(round,index){ const key=signatureRoundAccessKey(round),student=S.students[index]; if(!key||!student)return; if(toggleScoped('products',key,student)){renderArchiveAdmin();dirty();return;} let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const i=acc.indexOf(student); if(i>=0)acc.splice(i,1);else acc.push(student); renderSignatureAccessMatrix(); renderBooks(); dirty(); }
 
   /* 추가 모의고사: 기존 회차 승인 표와 서재의 제품별 명단을 함께 사용한다. */
   const FINAL7_ACCESS_KEY='mock-final-7';
@@ -1008,15 +1035,15 @@
       html+='<tr data-access-key="'+key+'"><th>'+label+'</th>';
       html+='<td class="cell '+(open?'on':'off')+'" role="button" tabindex="0" aria-pressed="'+open+'" aria-label="'+label+' 전체공개 '+(open?'해제':'설정')+'" onclick="'+toggle+'" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();'+toggle+'}"></td>';
       html+='<td style="text-align:center"><button class="mini" onclick="finalRoundAccessAll('+arg+')" title="'+label+' 전원 개별 체크로 전환">☑</button></td>';
-      S.students.forEach((student,studentIndex)=>{ const on=!open&&acc.includes(student),action='finalRoundAccessToggleStudent('+arg+','+studentIndex+')'; html+='<td class="cell '+(on?'on':'off')+'" role="button" tabindex="0" aria-pressed="'+on+'" aria-label="'+label+' '+esc(student)+' '+(on?'승인 해제':'승인')+'" style="'+(open?'opacity:.4':'')+'" onclick="'+action+'" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();'+action+'}"></td>'; });
+      S.students.forEach((student,studentIndex)=>{ const on=accessOn('products',key,student,!open&&acc.includes(student)),action='finalRoundAccessToggleStudent('+arg+','+studentIndex+')'; html+='<td class="cell '+(on?'on':'off')+'" role="button" tabindex="0" aria-pressed="'+on+'" aria-label="'+label+' '+esc(student)+' '+(on?'승인 해제':'승인')+'" style="'+(open?'opacity:.4':'')+'" onclick="'+action+'" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();'+action+'}"></td>'; });
       html+='</tr>';
     });
     html+='</tbody>';
     el.innerHTML=html;
   }
   function finalRoundAccessToggleOpen(round){ const key=finalRoundAccessKey(round); if(!key)return; const acc=finalRoundAccessArr(round); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderFinal7AccessMatrix(); renderBooks(); dirty(); }
-  function finalRoundAccessAll(round){ const key=finalRoundAccessKey(round); if(!key)return; S.archiveProductAccess[key]=S.students.slice(); renderFinal7AccessMatrix(); renderBooks(); dirty(); }
-  function finalRoundAccessToggleStudent(round,studentIndex){ const student=S.students[studentIndex],key=finalRoundAccessKey(round); if(!student||!key)return; let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const i=acc.indexOf(student); if(i>=0)acc.splice(i,1);else acc.push(student); renderFinal7AccessMatrix(); renderBooks(); dirty(); }
+  function finalRoundAccessAll(round){ const key=finalRoundAccessKey(round); if(!key)return; S.archiveProductAccess[key]=S.students.slice();grantScopedAll('products',key,true); renderFinal7AccessMatrix(); renderBooks(); dirty(); }
+  function finalRoundAccessToggleStudent(round,studentIndex){ const student=S.students[studentIndex],key=finalRoundAccessKey(round); if(!student||!key)return; if(toggleScoped('products',key,student)){renderArchiveAdmin();dirty();return;} let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const i=acc.indexOf(student); if(i>=0)acc.splice(i,1);else acc.push(student); renderFinal7AccessMatrix(); renderBooks(); dirty(); }
   /* ── VIP 라운지 메뉴별 열람 권한 ── */
   const VIP_MENUS=[['report','진단 결과·코멘트'],['ses','프리미엄 설명회'],['cou','신규 강좌 공지'],['clinic','결석·클리닉 신청'],['col','DOCSSAM 칼럼'],['mag','교육 매거진']];
   function vipArr(k){ if(!Array.isArray(S.vipAccess[k])) S.vipAccess[k]=["*"]; return S.vipAccess[k]; }
@@ -1028,15 +1055,15 @@
     VIP_MENUS.forEach(([k,label])=>{
       const acc=vipArr(k); const open=acc.includes('*');
       html+=`<tr><th>${label}</th><td class="cell ${open?'on':'off'}" onclick="vipToggleOpen('${k}')"></td><td style="text-align:center"><button class="mini" onclick="vipAll('${k}')" title="전원 개별 체크로 전환">☑</button></td>`;
-      S.students.forEach(st=>{ const on=!open&&acc.includes(st); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="vipToggleAcc('${k}','${st}')"></td>`; });
+      S.students.forEach(st=>{ const on=accessOn('vip',k,st,!open&&acc.includes(st)); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="vipToggleAcc('${k}','${st}')"></td>`; });
       html+='</tr>';
     });
     html+='</tbody>';
     el.innerHTML=html;
   }
   function vipToggleOpen(k){ const acc=vipArr(k); S.vipAccess[k]=acc.includes('*')?[]:["*"]; renderVipAccMatrix(); dirty(); }
-  function vipToggleAcc(k,st){ let acc=vipArr(k); if(acc.includes('*')) acc=S.vipAccess[k]=[]; const i=acc.indexOf(st); if(i>=0) acc.splice(i,1); else acc.push(st); renderVipAccMatrix(); dirty(); }
-  function vipAll(k){ S.vipAccess[k]=S.students.slice(); renderVipAccMatrix(); dirty(); }
+  function vipToggleAcc(k,st){ if(toggleScoped('vip',k,st)){renderVipAccMatrix();dirty();return;} let acc=vipArr(k); if(acc.includes('*')) acc=S.vipAccess[k]=[]; const i=acc.indexOf(st); if(i>=0) acc.splice(i,1); else acc.push(st); renderVipAccMatrix(); dirty(); }
+  function vipAll(k){ S.vipAccess[k]=S.students.slice();grantScopedAll('vip',k,true); renderVipAccMatrix(); dirty(); }
   /* ── 특강(활용 모의고사) 회차별 수강 권한 ── */
   function spTBs(){ return cObj('special-summer').textbooks||[]; }
   function spArr(i){ const t=spTBs()[i]; if(!t) return ["*"]; if(!Array.isArray(t.access)) t.access=["*"]; return t.access; }
@@ -1051,20 +1078,44 @@
       const acc=spArr(i); const open=acc.includes('*');
       const label=(t.title||('항목 '+(i+1))).replace(/\s*[·|].*$/,'');
       html+=`<tr><th>${label}</th><td class="cell ${open?'on':'off'}" onclick="spToggleOpen(${i})"></td><td style="text-align:center"><button class="mini" onclick="spAll(${i})" title="전원 개별 체크로 전환">☑</button></td>`;
-      S.students.forEach(st=>{ const on=!open&&acc.includes(st); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="spToggleAcc(${i},'${st}')"></td>`; });
+      S.students.forEach(st=>{ const on=accessOn('textbooks',window.GFIELD_STUDENT_ACCESS.textbookKey(t),st,!open&&acc.includes(st)); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="spToggleAcc(${i},'${st}')"></td>`; });
       html+='</tr>';
     });
     html+='</tbody>';
     el.innerHTML=html;
   }
   function spToggleOpen(i){ const acc=spArr(i); spTBs()[i].access=acc.includes('*')?[]:["*"]; renderSpAccMatrix(); dirty(); }
-  function spToggleAcc(i,st){ let acc=spArr(i); if(acc.includes('*')){ acc=[]; spTBs()[i].access=acc; } const idx=acc.indexOf(st); if(idx>=0) acc.splice(idx,1); else acc.push(st); renderSpAccMatrix(); dirty(); }
-  function spAll(i){ spTBs()[i].access=S.students.slice(); renderSpAccMatrix(); dirty(); }
+  function spToggleAcc(i,st){ if(toggleScoped('textbooks',window.GFIELD_STUDENT_ACCESS.textbookKey(spTBs()[i]),st)){renderSpAccMatrix();dirty();return;} let acc=spArr(i); if(acc.includes('*')){ acc=[]; spTBs()[i].access=acc; } const idx=acc.indexOf(st); if(idx>=0) acc.splice(idx,1); else acc.push(st); renderSpAccMatrix(); dirty(); }
+  function spAll(i){ spTBs()[i].access=S.students.slice();grantScopedAll('textbooks',window.GFIELD_STUDENT_ACCESS.textbookKey(spTBs()[i]),true); renderSpAccMatrix(); dirty(); }
   function toggleOpen(fi){ const f=S.archiveFolders[fi]; const acc=accArr(f); if(acc.includes('*')) S.archiveAccess[f]=[]; else S.archiveAccess[f]=["*"]; renderAccMatrix(); dirty(); }
-  function toggleAcc(fi,s){ const f=S.archiveFolders[fi]; let acc=accArr(f); if(acc.includes('*')) acc=S.archiveAccess[f]=[]; const i=acc.indexOf(s); if(i>=0) acc.splice(i,1); else acc.push(s); renderAccMatrix(); dirty(); }
+  function toggleAcc(fi,s){ const f=S.archiveFolders[fi]; if(toggleScoped('folders',f,s)){renderAccMatrix();dirty();return;} let acc=accArr(f); if(acc.includes('*')) acc=S.archiveAccess[f]=[]; const i=acc.indexOf(s); if(i>=0) acc.splice(i,1); else acc.push(s); renderAccMatrix(); dirty(); }
 
   /* ── 교재·모의고사의 독립 승인 ── */
+  const SEMINAR_ACCESS_KEY=window.GFIELD_SEMINAR_ACCESS?.key||'seminar-hwangso-2026';
+  function renderSeminarAccessMatrix(){
+    const el=document.getElementById('seminar-acc-matrix');if(!el)return;
+    const access=productArr(SEMINAR_ACCESS_KEY),open=access.includes('*');
+    let html='<thead><tr><th>자료</th><th>명단 선택</th>';
+    S.students.forEach(student=>{html+=stuTh(student)});
+    html+='</tr></thead><tbody><tr><th>2026 황소 설명회<br>영상·복기 자료</th><td><button class="mini" onclick="seminarAccessAll()">모두 선택</button> <button class="mini" onclick="seminarAccessClear()">선택 비우기</button></td>';
+    S.students.forEach((student,index)=>{
+      const checked=accessOn('products',SEMINAR_ACCESS_KEY,student,open||access.includes(student));
+      html+=`<td class="cell ${checked?'on':'off'}"><input type="checkbox" aria-label="${esc(student)} 설명회 승인" ${checked?'checked':''} onchange="seminarAccessToggleStudent(${index})"></td>`;
+    });
+    el.innerHTML=html+'</tr></tbody>';
+  }
+  function seminarAccessAll(){S.archiveProductAccess[SEMINAR_ACCESS_KEY]=S.students.slice();grantScopedAll('products',SEMINAR_ACCESS_KEY,true);renderSeminarAccessMatrix();renderBooks();dirty()}
+  function seminarAccessClear(){S.archiveProductAccess[SEMINAR_ACCESS_KEY]=[];grantScopedAll('products',SEMINAR_ACCESS_KEY,false);renderSeminarAccessMatrix();renderBooks();dirty()}
+  function seminarAccessToggleStudent(index){
+    const student=S.students[index];if(!student)return;
+    if(toggleScoped('products',SEMINAR_ACCESS_KEY,student)){renderSeminarAccessMatrix();renderBooks();dirty();return;}
+    let access=productArr(SEMINAR_ACCESS_KEY);
+    if(access.includes('*'))access=S.archiveProductAccess[SEMINAR_ACCESS_KEY]=S.students.slice();
+    const pos=access.indexOf(student);if(pos>=0)access.splice(pos,1);else access.push(student);
+    renderSeminarAccessMatrix();renderBooks();dirty();
+  }
   const LIBRARY_PRODUCTS=[
+    [SEMINAR_ACCESS_KEY,'2026 황소 설명회 영상·자료'],
     ['concept-basic','개념 과정 BASIC'],
     ['concept-core','개념 과정 CORE'],
     ['mock-mid-7','중급 모의고사 7회'],
@@ -1085,17 +1136,17 @@
     if(!key) return '<div class="field"><label>승인 학생</label><span class="hint">이 교재는 위에서 선택한 폴더 권한을 사용합니다.</span></div>';
     const acc=productArr(key),open=acc.includes('*');
     const students=S.students.map((student,studentIndex)=>{
-      const checked=open||acc.includes(student);
-      return `<label style="display:inline-flex;align-items:center;gap:4px;margin:3px 8px 3px 0;font-size:12px"><input type="checkbox" ${checked?'checked':''} ${open?'disabled':''} onchange="bookToggleStudent(${bookIndex},${studentIndex})">${esc(student)}</label>`;
+      const checked=accessOn('products',key,student,open||acc.includes(student));
+      return `<label style="display:inline-flex;align-items:center;gap:4px;margin:3px 8px 3px 0;font-size:12px"><input type="checkbox" ${checked?'checked':''} ${open&&!scopedStudent(student)?'disabled':''} onchange="bookToggleStudent(${bookIndex},${studentIndex})">${esc(student)}</label>`;
     }).join('');
     return `<div class="field"><label>승인 학생</label><div class="${isSignatureAccessKey(key)?'signature-book-approval':''}" style="flex:1;min-width:${isSignatureAccessKey(key)?'0':'260px'};border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff">
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:5px"><button class="btn ${open?'ok':'add'} sm" onclick="bookToggleOpen(${bookIndex})">${open?'🔓 전체 공개 중':'전체 공개'}</button><button class="btn sm" onclick="bookAllStudents(${bookIndex})">학생 모두 선택</button><span class="hint" style="margin:0">이 서재 항목에서 바로 승인합니다.</span></div>${students||'<span class="hint">등록된 학생이 없습니다.</span>'}
     </div></div>`;
   }
   function bookAccessKey(bookIndex){ const book=S.books&&S.books[bookIndex]; return book&&String(book.accessKey||''); }
-  function bookToggleOpen(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; const acc=productArr(key); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderBooks(); if(isAdditionalAccessKey(key))renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); dirty(); }
-  function bookAllStudents(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; S.archiveProductAccess[key]=S.students.slice(); renderBooks(); if(isAdditionalAccessKey(key))renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); dirty(); }
-  function bookToggleStudent(bookIndex,studentIndex){ const key=bookAccessKey(bookIndex),student=S.students[studentIndex]; if(!key||!student)return; let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const pos=acc.indexOf(student); if(pos>=0)acc.splice(pos,1);else acc.push(student); renderBooks(); if(isAdditionalAccessKey(key))renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); dirty(); }
+  function bookToggleOpen(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; const acc=productArr(key); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderBooks(); if(isAdditionalAccessKey(key))renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); if(key===SEMINAR_ACCESS_KEY)renderSeminarAccessMatrix(); dirty(); }
+  function bookAllStudents(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; S.archiveProductAccess[key]=S.students.slice();grantScopedAll('products',key,true); renderBooks(); if(isAdditionalAccessKey(key))renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); if(key===SEMINAR_ACCESS_KEY)renderSeminarAccessMatrix(); dirty(); }
+  function bookToggleStudent(bookIndex,studentIndex){ const key=bookAccessKey(bookIndex),student=S.students[studentIndex]; if(!key||!student)return; if(toggleScoped('products',key,student)){renderArchiveAdmin();dirty();return;} let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const pos=acc.indexOf(student); if(pos>=0)acc.splice(pos,1);else acc.push(student); renderBooks(); if(isAdditionalAccessKey(key))renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); if(key===SEMINAR_ACCESS_KEY)renderSeminarAccessMatrix(); dirty(); }
 
   function renderBooks(){
     let h='';
@@ -1126,7 +1177,7 @@
   }
   function addBook(){ (S.books=S.books||[]).push({folder:S.archiveFolders[0]||'', title:'', pdf:'', video:'', cover:'', date:today(), links:[]}); renderBooks(); dirty(); }
   function setBook(i,key,val){ if(S.books[i]){ S.books[i][key]=(key==='date')?val:val.trim(); dirty(); } }
-  function setBookAccessKey(i,val){ if(!S.books[i]) return; if(val) S.books[i].accessKey=val; else delete S.books[i].accessKey; renderBooks(); dirty(); }
+  function setBookAccessKey(i,val){ if(!S.books[i]) return; if(val) S.books[i].accessKey=val; else delete S.books[i].accessKey; renderBooks(); renderSeminarAccessMatrix(); dirty(); }
   function delBook(i){ S.books.splice(i,1); renderBooks(); dirty(); }
   function addBookLink(i){ const b=S.books[i]; if(!b) return; (b.links=b.links||[]).push({label:'',url:''}); renderBooks(); dirty(); }
   function setBookLink(i,li,key,v){ const b=S.books[i]; if(b&&b.links&&b.links[li]){ b.links[li][key]=v.trim(); dirty(); } }

@@ -18,6 +18,14 @@
   function availabilityNote(issues){return [['preparing','유사문제 준비 중'],['denied','열람 권한 없음'],['failed','자료 불러오기 실패']].filter(function(pair){return issues[pair[0]]&&issues[pair[0]].length;}).map(function(pair){return ' · '+pair[1]+': '+Array.from(new Set(issues[pair[0]])).join(', ');}).join('');}
   function isAllowed(code,student,data){
     if(!code||!student)return false;
+    if(Object.prototype.hasOwnProperty.call(data&&data.studentAccessProfiles||{},student)){
+      var policy=root.GFIELD_STUDENT_ACCESS;if(!policy)return false;
+      if(/^applied[1-9]$/.test(code))return policy.appliedRound(data,student,code.slice(7));
+      if(/^last[1234]$/.test(code))return policy.allows(data,student,'folders','최종 모의고사',false)||policy.attendance(data,student).indexOf({last1:'oct-5',last2:'oct-12',last3:'oct-19',last4:'oct-26'}[code])>=0;
+      if(/^final[1234]$/.test(code))return policy.allows(data,student,'folders','파이널 모의고사',false)||policy.attendance(data,student).indexOf({final1:'sep-w1',final2:'sep-14',final3:'sep-21',final4:'sep-28'}[code])>=0;
+      var product=/^middle[78]$/.test(code)?'mock-mid-'+code.slice(6):/^original[12]$/.test(code)?'mock-signature-'+code.slice(8):/^final[78]$/.test(code)?'mock-final-'+code.slice(5):'';
+      return !!product&&policy.allows(data,student,'products',product,false);
+    }
     if(/^applied[1-9]$/.test(code)){var applied=(data&&data.archiveAccess||{})['활용 모의고사'];return Array.isArray(applied)&&(applied.indexOf('*')>=0||applied.indexOf(student)>=0);}
     if(/^last[1234]$/.test(code)){var acc=(data&&data.archiveAccess||{})['최종 모의고사'],att=data&&data.attendance||{},week={last1:'oct-5',last2:'oct-12',last3:'oct-19',last4:'oct-26'}[code];return Array.isArray(acc)&&(acc.indexOf('*')>=0||acc.indexOf(student)>=0)||Array.isArray(att[student])&&att[student].indexOf(week)>=0;}
     if(/^middle[78]$/.test(code)||code.indexOf('original')===0||code==='final7'||code==='final8'){
