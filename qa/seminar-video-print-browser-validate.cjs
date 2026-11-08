@@ -4,7 +4,7 @@ const ROOT=path.resolve(__dirname,'..'),pw=process.env.GFIELD_QA_PLAYWRIGHT||'pl
 process.env.GFIELD_QA_PLAYWRIGHT=pw;require(path.join(ROOT,'qa/email-login-test-stub'));const {chromium}=require(pw);
 const mime={'.html':'text/html','.js':'application/javascript','.css':'text/css','.jpg':'image/jpeg','.woff2':'font/woff2','.pdf':'application/pdf'};
 const server=http.createServer((req,res)=>{let name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);if(name.endsWith('/'))name+='index.html';const file=path.join(ROOT,name);if(!file.startsWith(ROOT+path.sep)){res.writeHead(403);return res.end();}fs.readFile(file,(e,b)=>{res.writeHead(e?404:200,{'Content-Type':mime[path.extname(file)]||'application/octet-stream'});res.end(e?'Not found':b);});});
-const OUTPUT=path.join(ROOT,'.private-work/seminar-video-20261108');fs.mkdirSync(OUTPUT,{recursive:true});
+const OUTPUT=process.env.GFIELD_QA_PRINT_OUTPUT_DIR||path.join(ROOT,'.private-work/seminar-video-20261108');fs.mkdirSync(OUTPUT,{recursive:true});
 const NAME='검수학생',SOURCE=fs.readFileSync(path.join(ROOT,'data.js'),'utf8');
 (async()=>{
  await new Promise((r,j)=>{server.once('error',j);server.listen(0,'127.0.0.1',r)});const base=`http://127.0.0.1:${server.address().port}`;
@@ -29,6 +29,7 @@ const NAME='검수학생',SOURCE=fs.readFileSync(path.join(ROOT,'data.js'),'utf8
    report.layouts.push({width,overflow:false,placement:width>900?'beside video':'below video'});
    if(width===1440){
     for(const round of [1,2,'recall'])for(const kind of ['questions','solutions']){
+     const started=Date.now();
      const opened=page.waitForEvent('popup');await page.locator(`.exam-print[data-round="${round}"][data-kind="${kind}"]`).click();const print=await opened;
      await print.waitForFunction(()=>document.documentElement.dataset.printReady==='true',null,{timeout:60000}).catch(async e=>{console.error(await print.locator('body').innerText());throw e;});await print.waitForFunction(()=>window.__printCalls===1);
      const pages=await print.locator('.sheet').count();assert.ok(pages>0);
@@ -39,7 +40,7 @@ const NAME='검수학생',SOURCE=fs.readFileSync(path.join(ROOT,'data.js'),'utf8
      assert.equal(await print.evaluate(()=>document.fonts.check('600 22pt sans-serif')),true);
      const output=path.join(OUTPUT,`print-${round}-${kind}.pdf`);await print.pdf({path:output,preferCSSPageSize:true,printBackground:true});
      if(round===1&&kind==='questions')await print.screenshot({path:path.join(OUTPUT,'named-print-preview.png'),fullPage:false});
-     report.outputs.push({round,kind,pages,marks:pages*3,file:output,printCalls:1});await print.close();
+     report.outputs.push({round,kind,pages,marks:pages*3,file:output,printCalls:1,elapsedMs:Date.now()-started});await print.close();
      await page.waitForFunction(()=>[...document.querySelectorAll('.exam-print')].every(b=>!b.disabled));
     }
     // Failed document load must not expose an unmarked original or partially print.

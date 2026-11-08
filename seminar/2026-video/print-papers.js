@@ -4,6 +4,13 @@
   const status = document.getElementById('print-status');
   const loginLink = document.getElementById('login-link');
   let busy = false;
+  function deadline(promise, milliseconds, message) {
+    let timer;
+    const timeout = new Promise((resolve, reject) => {
+      timer = setTimeout(() => reject(new Error(message)), milliseconds);
+    });
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+  }
   async function identity() {
     if (!window.GFIELD_SEMINAR_ACCESS?.requireApproval) throw new Error('승인 확인 도구를 불러오지 못했습니다. 새로고침해 주세요.');
     return window.GFIELD_SEMINAR_ACCESS.requireApproval();
@@ -43,11 +50,13 @@
     if (!/^(?:1|2|recall)$/.test(round) || !['questions', 'solutions'].includes(kind)) return;
     let view;
     let pdf;
+    let loadingTask;
     let failure;
     try {
       view = printWindow();
       busy = true;
       buttons.forEach(item => { item.disabled = true; });
+      view.document.getElementById('progress').textContent = '로그인·인쇄 승인을 확인하고 있습니다.';
       const user = await identity();
       if (!approved(user, round)) throw new Error('이 회차는 아직 승인되지 않았습니다.');
       const label = kind === 'questions' ? '시험지' : '답안';
@@ -59,15 +68,26 @@
         ? (kind === 'questions' ? '../2026/2026-hwangso-questions.pdf' : '2026-hwangso-answers.pdf?v=20261108-q02-c')
         : `../../materials/top-secret-finish-${round}-${kind}.pdf`;
       const url = new URL(source, location.href).href;
-      pdf = await window.pdfjsLib.getDocument({ url }).promise;
+      view.document.getElementById('progress').textContent = 'PDF를 불러오고 있습니다.';
+      loadingTask = window.pdfjsLib.getDocument({ url });
+      loadingTask.onProgress = ({ loaded, total }) => {
+        if (view.closed) return;
+        const amount = total > 0 ? `${Math.min(100, Math.round(loaded / total * 100))}%` : `${Math.round(loaded / 1024)}KB`;
+        view.document.getElementById('progress').textContent = `PDF 불러오는 중 · ${amount}`;
+      };
+      pdf = await deadline(loadingTask.promise, 45000, 'PDF를 불러오는 데 오래 걸리고 있습니다. 연결을 확인한 뒤 다시 인쇄해 주세요.');
+      loadingTask.onProgress = null;
       for (let no = 1; no <= pdf.numPages; no++) {
         if (view.closed) throw new Error('인쇄 창이 닫혔습니다. 다시 인쇄해 주세요.');
+        view.document.getElementById('progress').textContent = `${no} / ${pdf.numPages}쪽 · 이름 워터마크를 준비하고 있습니다.`;
         const page = await pdf.getPage(no);
         const viewport = page.getViewport({ scale: 2 });
         const canvas = document.createElement('canvas');
         canvas.width = Math.ceil(viewport.width);
         canvas.height = Math.ceil(viewport.height);
-        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+        // Display rendering waits for animation frames, which a background parent tab may suspend.
+        // Print intent renders without that dependency when the newly opened popup is active.
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport, intent: 'print' }).promise;
         const sheet = view.document.createElement('section');
         sheet.className = viewport.width > viewport.height ? 'sheet landscape' : 'sheet';
         const image = view.document.createElement('img');
@@ -107,7 +127,7 @@
         view.document.getElementById('progress').textContent = status.textContent;
       }
     } finally {
-      if (pdf) await pdf.destroy();
+      if (loadingTask) await loadingTask.destroy().catch(() => {});
       busy = false;
       await refresh();
       if (failure) status.textContent = failure;
