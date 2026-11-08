@@ -2036,8 +2036,12 @@ window.GFIELD_DATA = {
       "임유준"
     ],
     "mock-final-9": [],
-    "mock-top-secret-finish-1": [],
-    "mock-top-secret-finish-2": [],
+    "mock-top-secret-finish-1": [
+      "노관호"
+    ],
+    "mock-top-secret-finish-2": [
+      "노관호"
+    ],
     "mock-signature-1": [
       "남기현",
       "이동윤",
