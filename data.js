@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 11. 9. 오후 12:02:13
+ * 생성: 2026. 11. 9. 오후 12:49:30
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -4765,12 +4765,18 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [
         "규칙 보충학습",
-        "보충학습"
+        "보충학습",
+        "약점 유형",
+        "사고력 교재",
+        "GFIELD APPLICATION",
+        "개념 교재",
+        "최종 모의고사"
       ],
       "products": [
         "seminar-hwangso-2026",
         "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "mock-top-secret-finish-2",
+        "question-bank"
       ],
       "vip": [],
       "textbooks": []
