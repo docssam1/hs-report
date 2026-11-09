@@ -3681,7 +3681,7 @@ window.GFIELD_DATA = {
     "주성현": "graduated",
     "김라율": "graduated",
     "정지아": "graduated",
-    "김지온": "graduated",
+    "김지온": "online",
     "0836": "graduated",
     "김건아": "graduated",
     "김나율": "online",
