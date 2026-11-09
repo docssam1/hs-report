@@ -574,7 +574,7 @@
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>document.write('<script src="data.js?v='+Date.now()+'"><\/script>');</script>
 <script src="docssam-columns.js?v=20261010a"></script>
-<script src="student-access-policy.js?v=20261108-fresh-access1"></script>
+<script src="student-access-policy.js?v=20261109-concept-folder1"></script>
 <script src="final-last-routes.js?v=20261108-fresh-access1"></script>
 <script src="archive-info.js?v=20260825b"></script>
 <script src="bank/important-types.js?v=20260913a"></script>
@@ -1016,6 +1016,8 @@
 
   function canSeeFolder(folder){ const acc=(D.archiveAccess||{})[folder]; return window.GFIELD_STUDENT_ACCESS.allows(D,currentStudent,'folders',folder,Array.isArray(acc)&&(acc.includes('*')||acc.includes(currentStudent))); }
   function canSeeProduct(key){
+    const folder=window.GFIELD_STUDENT_ACCESS.inheritedFolder(key);
+    if(folder)return canSeeFolder(folder);
     if(key==='question-bank') return window.GFIELD_STUDENT_ACCESS.allows(D,currentStudent,'products',key,!isDemo&&Array.isArray(D.students)&&D.students.includes(currentStudent));
     const acc=(D.archiveProductAccess||{})[key]; return window.GFIELD_STUDENT_ACCESS.allows(D,currentStudent,'products',key,Array.isArray(acc)&&(acc.includes('*')||acc.includes(currentStudent)));
   }

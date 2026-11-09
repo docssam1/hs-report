@@ -14,8 +14,8 @@ const core = data.books.find(book => book && /Thinking Core/i.test(String(book.t
 
 assert.ok(basic, 'THINKING BASIC 교재가 있어야 함');
 assert.ok(core, 'Thinking Core 교재가 있어야 함');
-assert.equal(basic.accessKey, 'concept-basic', 'BASIC은 독립 승인 키를 사용');
-assert.equal(core.accessKey, 'concept-core', 'CORE는 독립 승인 키를 사용');
+assert.equal(basic.accessKey, 'concept-basic', 'BASIC 식별 키 보존');
+assert.equal(core.accessKey, 'concept-core', 'CORE 식별 키 보존');
 assert.notEqual(basic.accessKey, core.accessKey, 'BASIC과 CORE 승인 키는 달라야 함');
 
 const products = data.archiveProductAccess || {};
@@ -23,8 +23,6 @@ assert.ok(Array.isArray(products['concept-basic']), 'BASIC 승인 명단 필요'
 assert.ok(Array.isArray(products['concept-core']), 'CORE 승인 명단 필요');
 assert.notStrictEqual(products['concept-basic'], products['concept-core'], '두 승인 명단은 독립 배열이어야 함');
 
-assert.ok(products['concept-basic'].includes('노관호'), '기존 BASIC 승인 명단은 유지');
-assert.ok(products['concept-core'].includes('노관호'), '기존 CORE 승인 명단은 유지');
 
 const mockItems = [
   ['중급 모의고사 7회', 'mock-mid-7'],
@@ -59,6 +57,7 @@ for (let page = 1; page <= 7; page += 1) {
 
 function canSeeBook(book, student, productAccess, folderAccess) {
   const key = String(book.accessKey || '');
+  if (key==='concept-basic'||key==='concept-core') return (folderAccess['개념 교재']||[]).includes(student);
   if (!key) return (folderAccess[book.folder] || []).includes(student);
   const access = productAccess[key];
   return Array.isArray(access) && (access.includes('*') || access.includes(student));
@@ -70,10 +69,12 @@ const splitAccess = {
   'mock-final-5': ['5회학생'],
   'mock-final-6': ['6회학생'],
 };
-assert.equal(canSeeBook(basic, 'BASIC학생', splitAccess, {}), true);
+assert.equal(canSeeBook(basic, 'BASIC학생', splitAccess, {}), false);
+assert.equal(canSeeBook(basic, '폴더학생', splitAccess, {'개념 교재':['폴더학생']}), true);
+assert.equal(canSeeBook(core, '폴더학생', splitAccess, {'개념 교재':['폴더학생']}), true);
 assert.equal(canSeeBook(core, 'BASIC학생', splitAccess, {}), false);
 assert.equal(canSeeBook(basic, 'CORE학생', splitAccess, {}), false);
-assert.equal(canSeeBook(core, 'CORE학생', splitAccess, {}), true);
+assert.equal(canSeeBook(core, 'CORE학생', splitAccess, {}), false);
 const final6 = data.books.find(book => book && book.title === '최종 실전 모의고사 6회');
 assert.equal(canSeeBook(final5, '5회학생', splitAccess, {}), true);
 assert.equal(canSeeBook(final6, '5회학생', splitAccess, {}), false);
@@ -105,4 +106,4 @@ assert.ok(extraItems.some(item => item.accessKey === 'mock-final-5'), '로드맵
 assert.match(index, /t&&t\.accessKey/, '로드맵 교재가 서재 승인 키를 확인');
 assert.match(index, /data-book-key/, '로드맵에서 승인된 서재 뷰어를 직접 엶');
 
-console.log('PASS independent approvals and final round 5 library assets');
+console.log('PASS concept folder approval, independent mock approvals and final round 5 library assets');

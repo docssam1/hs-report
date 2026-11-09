@@ -16,7 +16,7 @@ vm.createContext(dataContext);
 vm.runInContext(SOURCE, dataContext, { filename: 'data.js' });
 const appliedBooks = dataContext.window.GFIELD_DATA.books.filter(book => book && book.folder === '활용 모의고사');
 
-async function verifyCase(browser, student, basicAllowed, coreAllowed, final5Allowed, signature1Allowed) {
+async function verifyCase(browser, student, basicAllowed, coreAllowed, final5Allowed, signature1Allowed, folderAllowed = false) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const page = await context.newPage();
   page.setDefaultTimeout(8000);
@@ -25,7 +25,7 @@ async function verifyCase(browser, student, basicAllowed, coreAllowed, final5All
     status: 200,
     contentType: 'application/javascript; charset=utf-8',
     body: SOURCE + `\n;(function(){var D=window.GFIELD_DATA,n=${JSON.stringify(student)};` +
-      `if(!D.students.includes(n))D.students.push(n);D.archiveAccess['개념 교재']=[n];` +
+      `if(!D.students.includes(n))D.students.push(n);D.archiveAccess['개념 교재']=${folderAllowed ? '[n]' : '[]'};` +
       `D.archiveProductAccess['concept-basic']=${basicAllowed ? '[n]' : '[]'};` +
       `D.archiveProductAccess['concept-core']=${coreAllowed ? '[n]' : '[]'};` +
       `D.archiveProductAccess['mock-final-5']=${final5Allowed ? '[n]' : '[]'};` +
@@ -43,8 +43,8 @@ async function verifyCase(browser, student, basicAllowed, coreAllowed, final5All
   const core = page.getByRole('button', { name: /Thinking Core/i });
   const final5 = page.getByRole('button', { name: /최종 실전 모의고사 5회/ });
   const signature1 = page.getByRole('button', { name: /초등선발 대비 시그니처 실전 모의고사 1회/ });
-  assert.equal(await basic.count(), basicAllowed ? 1 : 0, `${student} BASIC 표시`);
-  assert.equal(await core.count(), coreAllowed ? 1 : 0, `${student} CORE 표시`);
+  assert.equal(await basic.count(), folderAllowed ? 1 : 0, `${student} BASIC 표시`);
+  assert.equal(await core.count(), folderAllowed ? 1 : 0, `${student} CORE 표시`);
   assert.equal(await final5.count(), final5Allowed ? 1 : 0, `${student} 최종 5회 표시`);
   assert.equal(await signature1.count(), signature1Allowed ? 1 : 0, `${student} 시그니처 1회 표시`);
   if (final5Allowed) {
@@ -133,6 +133,7 @@ async function verifyAppliedAnswerAccess(browser) {
   });
   try {
     if (process.env.GFIELD_QA_APPLIED5_ONLY !== '1') {
+      await verifyCase(browser, '개념폴더승인검수', false, false, false, false, true);
       await verifyCase(browser, 'BASIC전용검수', true, false, false, false);
       await verifyCase(browser, 'CORE전용검수', false, true, false, false);
       await verifyCase(browser, '최종5회전용검수', false, false, true, false);

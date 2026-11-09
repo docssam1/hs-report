@@ -20,8 +20,12 @@
     return Array.isArray(list)?list:[];
   }
   function special(data,name){return restricted(data,name)?profile(data,name).special===true:(data.specialStudents||[]).indexOf(name)>=0;}
+  // BASIC and CORE share the concept-library approval; legacy product lists stay untouched.
+  function inheritedFolder(key){return key==='concept-basic'||key==='concept-core'?'개념 교재':'';}
   function textbookKey(book){return String(book.title||'')+'\n'+String(book.url||'');}
   function textbook(data,name,book,legacy){
+    var folder=inheritedFolder(book&&book.accessKey);
+    if(folder){var access=(data.archiveAccess||{})[folder];return allows(data,name,'folders',folder,Array.isArray(access)&&(access.indexOf('*')>=0||access.indexOf(name)>=0));}
     if(!restricted(data,name))return !!legacy;
     if(book.accessKey)return allows(data,name,'products',book.accessKey,false);
     if(allows(data,name,'textbooks',textbookKey(book),false))return true;
@@ -53,5 +57,5 @@
     data.studentAccessProfiles=data.studentAccessProfiles||{};
     data.studentAccessProfiles[name]={startedAt:new Date().toISOString(),attendance:[],special:false,folders:[],products:[],vip:[],textbooks:[]};
   }
-  root.GFIELD_STUDENT_ACCESS=Object.freeze({restricted:restricted,allows:allows,grant:grant,attendance:attendance,special:special,textbookKey:textbookKey,textbook:textbook,appliedRound:appliedRound,reset:reset});
+  root.GFIELD_STUDENT_ACCESS=Object.freeze({restricted:restricted,allows:allows,grant:grant,attendance:attendance,special:special,inheritedFolder:inheritedFolder,textbookKey:textbookKey,textbook:textbook,appliedRound:appliedRound,reset:reset});
 })(window);

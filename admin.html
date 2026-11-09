@@ -434,7 +434,7 @@
 <script src="mock-data.js"></script>
 <script src="hs-auth.js?v=20261011-email-login-1"></script>
 <script src="admin-email-auth-view.js?v=20261018-unlimited-devices"></script>
-<script src="student-access-policy.js?v=20261108-fresh-access1"></script>
+<script src="student-access-policy.js?v=20261109-concept-folder1"></script>
 <script src="admin-student-membership.js?v=20261108-fresh-access1"></script>
 <script src="seminar/2026-video/access.js?v=20261108-access1"></script>
 <script>
@@ -1133,6 +1133,7 @@
   function productArr(key){ if(!Array.isArray(S.archiveProductAccess[key])) S.archiveProductAccess[key]=[]; return S.archiveProductAccess[key]; }
   function bookApprovalHtml(bookIndex,item){
     const key=String(item.accessKey||'');
+    if(window.GFIELD_STUDENT_ACCESS.inheritedFolder(key))return '<div class="field concept-folder-approval"><label>열람 승인</label><span class="hint">자료실의 개념 교재 폴더 승인을 따릅니다. BASIC·CORE를 따로 승인할 필요가 없습니다.</span></div>';
     if(!key) return '<div class="field"><label>승인 학생</label><span class="hint">이 교재는 위에서 선택한 폴더 권한을 사용합니다.</span></div>';
     const acc=productArr(key),open=acc.includes('*');
     const students=S.students.map((student,studentIndex)=>{
@@ -1143,7 +1144,7 @@
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:5px"><button class="btn ${open?'ok':'add'} sm" onclick="bookToggleOpen(${bookIndex})">${open?'🔓 전체 공개 중':'전체 공개'}</button><button class="btn sm" onclick="bookAllStudents(${bookIndex})">학생 모두 선택</button><span class="hint" style="margin:0">이 서재 항목에서 바로 승인합니다.</span></div>${students||'<span class="hint">등록된 학생이 없습니다.</span>'}
     </div></div>`;
   }
-  function bookAccessKey(bookIndex){ const book=S.books&&S.books[bookIndex]; return book&&String(book.accessKey||''); }
+  function bookAccessKey(bookIndex){ const book=S.books&&S.books[bookIndex]; return book&&!window.GFIELD_STUDENT_ACCESS.inheritedFolder(book.accessKey)&&String(book.accessKey||''); }
   function bookToggleOpen(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; const acc=productArr(key); S.archiveProductAccess[key]=acc.includes('*')?[]:['*']; renderBooks(); if(isAdditionalAccessKey(key))renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); if(key===SEMINAR_ACCESS_KEY)renderSeminarAccessMatrix(); dirty(); }
   function bookAllStudents(bookIndex){ const key=bookAccessKey(bookIndex); if(!key)return; S.archiveProductAccess[key]=S.students.slice();grantScopedAll('products',key,true); renderBooks(); if(isAdditionalAccessKey(key))renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); if(key===SEMINAR_ACCESS_KEY)renderSeminarAccessMatrix(); dirty(); }
   function bookToggleStudent(bookIndex,studentIndex){ const key=bookAccessKey(bookIndex),student=S.students[studentIndex]; if(!key||!student)return; if(toggleScoped('products',key,student)){renderArchiveAdmin();dirty();return;} let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const pos=acc.indexOf(student); if(pos>=0)acc.splice(pos,1);else acc.push(student); renderBooks(); if(isAdditionalAccessKey(key))renderFinal7AccessMatrix(); if(isSignatureAccessKey(key))renderSignatureAccessMatrix(); if(key===SEMINAR_ACCESS_KEY)renderSeminarAccessMatrix(); dirty(); }
@@ -1155,11 +1156,12 @@
       const pdfState = it.pdf ? `<span style="color:var(--ok);font-size:12px">✓ ${esc((it.pdf||'').split('/').pop())}</span>` : `<span style="color:var(--muted);font-size:12px">아직 없음</span>`;
       const productOpts=[['','폴더 권한 사용']].concat(LIBRARY_PRODUCTS).map(p=>`<option value="${p[0]}" ${p[0]===(it.accessKey||'')?'selected':''}>${esc(p[1])}</option>`).join('');
       const approval=bookApprovalHtml(i,it);
+      const approvalGroup=window.GFIELD_STUDENT_ACCESS.inheritedFolder(it.accessKey)?'':`<div class="field"><label>개별 승인 그룹</label><select onchange="setBookAccessKey(${i},this.value)">${productOpts}</select><span class="hint">학생별로 따로 공개할 교재나 모의고사를 선택합니다.</span></div>`;
       let linkRows='';
       (it.links||[]).forEach((l,li)=>{ linkRows+=`<div class="tb-row"><input type="text" value="${esc(l.label)}" oninput="setBookLink(${i},${li},'label',this.value)" placeholder="버튼 이름 (예: 답안 PDF / 재생목록)"><input type="url" value="${esc(l.url)}" oninput="setBookLink(${i},${li},'url',this.value)" placeholder="링크 주소"><button class="btn del" onclick="delBookLink(${i},${li})">삭제</button></div>`; });
       h+=`<div class="content-week">
         <div class="field"><label>폴더(책장)</label><select onchange="setBook(${i},'folder',this.value)">${opts}</select></div>
-        <div class="field"><label>개별 승인 그룹</label><select onchange="setBookAccessKey(${i},this.value)">${productOpts}</select><span class="hint">학생별로 따로 공개할 교재나 모의고사를 선택합니다.</span></div>
+        ${approvalGroup}
         ${approval}
         <div class="field"><label>제목</label><input type="text" value="${esc(it.title)}" oninput="setBook(${i},'title',this.value)" placeholder="교재 제목"></div>
         <div class="field"><label>교재 PDF</label><label class="dz" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" accept="application/pdf" onchange="uploadBookPdf(${i},this)"><span>또는 드래그</span></label> &nbsp; ${pdfState}</div>
