@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 11. 9. 오후 12:49:30
+ * 생성: 2026. 11. 9. 오후 12:50:01
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -3749,346 +3749,526 @@ window.GFIELD_DATA = {
   },
   "vipAccess": {
     "report": [
-      "허유민",
-      "김현우",
-      "김유준",
-      "이하린",
-      "정지안",
-      "안채연",
-      "박서진",
-      "민준기",
-      "김서연",
-      "김명서",
-      "임유준",
-      "김시후",
       "노관호",
-      "윤하영",
-      "DEMO",
-      "문선우",
-      "유호연",
-      "김서율",
-      "김지유",
-      "김소라",
-      "유현우",
-      "정유현",
-      "김건아",
-      "김주한",
-      "박재연",
-      "김신유",
-      "변서진",
-      "이현서",
-      "최지우",
-      "안예준",
-      "이재아",
-      "이민혁",
-      "0836",
-      "김도율",
-      "최지안",
-      "김주빈",
       "김나율",
-      "김유현",
-      "신지한",
-      "김민재",
-      "이서원",
-      "박제아",
-      "김예지",
-      "이용준",
-      "김라율",
-      "김준서",
-      "한재이",
-      "김도윤",
-      "주성현",
-      "이성우",
-      "김도란",
+      "김다인",
+      "김도현",
+      "김사빈",
+      "김서하",
+      "김서현",
+      "김정한",
+      "김지안",
       "김지온",
+      "김하율",
+      "노유진",
+      "민채원",
+      "박선우",
+      "박시우",
+      "방지율",
+      "백재윤",
+      "변서진",
+      "심채안",
+      "윤민호",
+      "이도이",
+      "이승민",
+      "이정훈",
+      "이준",
+      "이준형",
+      "이하린",
+      "이효준",
+      "임정",
+      "정도겸",
+      "조성훈",
+      "조하나",
+      "한재이",
+      "한주원",
+      "황윤재",
+      "0836",
+      "김건아",
+      "김도란",
+      "김도윤",
+      "김도율",
+      "김라율",
+      "김명서",
+      "김민재",
+      "김서연",
+      "김서율",
+      "김소라",
+      "김시후",
+      "김신유",
+      "김예지",
+      "김유준",
+      "김유현",
+      "김주빈",
+      "김주한",
+      "김준서",
+      "김지유",
+      "김현우",
+      "남기현",
+      "문선우",
+      "민준기",
+      "박서진",
+      "박재연",
+      "박제아",
+      "신지한",
+      "안예준",
+      "안채연",
+      "유현우",
+      "유호연",
+      "윤하영",
+      "이동윤",
+      "이민혁",
+      "이서원",
+      "이성우",
+      "이용준",
+      "이재아",
+      "이현서",
+      "임유준",
+      "정유현",
       "정지아",
+      "정지안",
       "조혜서",
-      "조혜연"
+      "조혜연",
+      "주성현",
+      "최지안",
+      "최지우",
+      "허유민",
+      "DEMO"
     ],
     "ses": [
-      "허유민",
-      "김현우",
-      "김유준",
-      "이하린",
-      "정지안",
-      "안채연",
-      "박서진",
-      "민준기",
-      "김서연",
-      "김명서",
-      "임유준",
-      "김시후",
       "노관호",
-      "윤하영",
-      "DEMO",
-      "문선우",
-      "유호연",
-      "김서율",
-      "김지유",
-      "김소라",
-      "유현우",
-      "정유현",
-      "김건아",
-      "김주한",
-      "박재연",
-      "김신유",
-      "변서진",
-      "최지우",
-      "이현서",
-      "안예준",
-      "이재아",
-      "이민혁",
-      "0836",
-      "김도율",
-      "최지안",
-      "김주빈",
       "김나율",
-      "김유현",
-      "신지한",
-      "김민재",
-      "이서원",
-      "박제아",
-      "김예지",
-      "이용준",
-      "김라율",
-      "김준서",
-      "한재이",
-      "김도윤",
-      "주성현",
-      "이성우",
-      "김도란",
+      "김다인",
+      "김도현",
+      "김사빈",
+      "김서하",
+      "김서현",
+      "김정한",
+      "김지안",
       "김지온",
+      "김하율",
+      "노유진",
+      "민채원",
+      "박선우",
+      "박시우",
+      "방지율",
+      "백재윤",
+      "변서진",
+      "심채안",
+      "윤민호",
+      "이도이",
+      "이승민",
+      "이정훈",
+      "이준",
+      "이준형",
+      "이하린",
+      "이효준",
+      "임정",
+      "정도겸",
+      "조성훈",
+      "조하나",
+      "한재이",
+      "한주원",
+      "황윤재",
+      "0836",
+      "김건아",
+      "김도란",
+      "김도윤",
+      "김도율",
+      "김라율",
+      "김명서",
+      "김민재",
+      "김서연",
+      "김서율",
+      "김소라",
+      "김시후",
+      "김신유",
+      "김예지",
+      "김유준",
+      "김유현",
+      "김주빈",
+      "김주한",
+      "김준서",
+      "김지유",
+      "김현우",
+      "남기현",
+      "문선우",
+      "민준기",
+      "박서진",
+      "박재연",
+      "박제아",
+      "신지한",
+      "안예준",
+      "안채연",
+      "유현우",
+      "유호연",
+      "윤하영",
+      "이동윤",
+      "이민혁",
+      "이서원",
+      "이성우",
+      "이용준",
+      "이재아",
+      "이현서",
+      "임유준",
+      "정유현",
       "정지아",
+      "정지안",
+      "조혜서",
       "조혜연",
-      "조혜서"
+      "주성현",
+      "최지안",
+      "최지우",
+      "허유민",
+      "DEMO"
     ],
     "cou": [
-      "허유민",
-      "김현우",
-      "김유준",
-      "이하린",
-      "정지안",
-      "안채연",
-      "박서진",
-      "민준기",
-      "김서연",
-      "김명서",
-      "임유준",
-      "김시후",
       "노관호",
-      "윤하영",
-      "DEMO",
-      "문선우",
-      "유호연",
-      "김서율",
-      "김지유",
-      "김소라",
-      "유현우",
-      "정유현",
-      "김건아",
-      "김주한",
-      "박재연",
-      "김신유",
-      "변서진",
-      "이현서",
-      "최지우",
-      "안예준",
-      "이재아",
-      "이민혁",
-      "0836",
-      "김도율",
-      "최지안",
-      "김주빈",
       "김나율",
-      "김유현",
-      "신지한",
-      "김민재",
-      "이서원",
-      "박제아",
-      "김예지",
-      "이용준",
-      "김라율",
-      "김준서",
-      "한재이",
-      "김도윤",
-      "주성현",
-      "이성우",
-      "김도란",
+      "김다인",
+      "김도현",
+      "김사빈",
+      "김서하",
+      "김서현",
+      "김정한",
+      "김지안",
       "김지온",
+      "김하율",
+      "노유진",
+      "민채원",
+      "박선우",
+      "박시우",
+      "방지율",
+      "백재윤",
+      "변서진",
+      "심채안",
+      "윤민호",
+      "이도이",
+      "이승민",
+      "이정훈",
+      "이준",
+      "이준형",
+      "이하린",
+      "이효준",
+      "임정",
+      "정도겸",
+      "조성훈",
+      "조하나",
+      "한재이",
+      "한주원",
+      "황윤재",
+      "0836",
+      "김건아",
+      "김도란",
+      "김도윤",
+      "김도율",
+      "김라율",
+      "김명서",
+      "김민재",
+      "김서연",
+      "김서율",
+      "김소라",
+      "김시후",
+      "김신유",
+      "김예지",
+      "김유준",
+      "김유현",
+      "김주빈",
+      "김주한",
+      "김준서",
+      "김지유",
+      "김현우",
+      "남기현",
+      "문선우",
+      "민준기",
+      "박서진",
+      "박재연",
+      "박제아",
+      "신지한",
+      "안예준",
+      "안채연",
+      "유현우",
+      "유호연",
+      "윤하영",
+      "이동윤",
+      "이민혁",
+      "이서원",
+      "이성우",
+      "이용준",
+      "이재아",
+      "이현서",
+      "임유준",
+      "정유현",
       "정지아",
+      "정지안",
       "조혜서",
-      "조혜연"
+      "조혜연",
+      "주성현",
+      "최지안",
+      "최지우",
+      "허유민",
+      "DEMO"
     ],
     "clinic": [
-      "허유민",
-      "김현우",
-      "김유준",
-      "이하린",
-      "정지안",
-      "안채연",
-      "박서진",
-      "민준기",
-      "김서연",
-      "김명서",
-      "임유준",
-      "김시후",
       "노관호",
-      "윤하영",
-      "DEMO",
-      "문선우",
-      "유호연",
-      "김서율",
-      "김지유",
-      "김소라",
-      "유현우",
-      "정유현",
-      "김건아",
-      "김주한",
-      "박재연",
-      "김신유",
-      "변서진",
-      "최지우",
-      "이현서",
-      "안예준",
-      "이재아",
-      "이민혁",
-      "0836",
-      "김도율",
-      "최지안",
-      "김주빈",
       "김나율",
-      "김유현",
-      "신지한",
-      "김민재",
-      "이서원",
-      "박제아",
-      "김예지",
-      "이용준",
-      "김라율",
-      "김준서",
-      "한재이",
-      "김도윤",
-      "주성현",
-      "이성우",
-      "김도란",
+      "김다인",
+      "김도현",
+      "김사빈",
+      "김서하",
+      "김서현",
+      "김정한",
+      "김지안",
       "김지온",
+      "김하율",
+      "노유진",
+      "민채원",
+      "박선우",
+      "박시우",
+      "방지율",
+      "백재윤",
+      "변서진",
+      "심채안",
+      "윤민호",
+      "이도이",
+      "이승민",
+      "이정훈",
+      "이준",
+      "이준형",
+      "이하린",
+      "이효준",
+      "임정",
+      "정도겸",
+      "조성훈",
+      "조하나",
+      "한재이",
+      "한주원",
+      "황윤재",
+      "0836",
+      "김건아",
+      "김도란",
+      "김도윤",
+      "김도율",
+      "김라율",
+      "김명서",
+      "김민재",
+      "김서연",
+      "김서율",
+      "김소라",
+      "김시후",
+      "김신유",
+      "김예지",
+      "김유준",
+      "김유현",
+      "김주빈",
+      "김주한",
+      "김준서",
+      "김지유",
+      "김현우",
+      "남기현",
+      "문선우",
+      "민준기",
+      "박서진",
+      "박재연",
+      "박제아",
+      "신지한",
+      "안예준",
+      "안채연",
+      "유현우",
+      "유호연",
+      "윤하영",
+      "이동윤",
+      "이민혁",
+      "이서원",
+      "이성우",
+      "이용준",
+      "이재아",
+      "이현서",
+      "임유준",
+      "정유현",
       "정지아",
+      "정지안",
+      "조혜서",
       "조혜연",
-      "조혜서"
+      "주성현",
+      "최지안",
+      "최지우",
+      "허유민",
+      "DEMO"
     ],
     "col": [
-      "허유민",
-      "김현우",
-      "김유준",
-      "이하린",
-      "정지안",
-      "안채연",
-      "박서진",
-      "민준기",
-      "김서연",
-      "김명서",
-      "임유준",
-      "김시후",
       "노관호",
-      "윤하영",
-      "DEMO",
-      "문선우",
-      "유호연",
-      "김서율",
-      "김지유",
-      "김소라",
-      "유현우",
-      "정유현",
-      "김건아",
-      "김주한",
-      "박재연",
-      "김신유",
-      "변서진",
-      "이현서",
-      "최지우",
-      "안예준",
-      "이재아",
-      "이민혁",
-      "0836",
-      "김도율",
-      "최지안",
-      "김주빈",
       "김나율",
-      "김유현",
-      "신지한",
-      "김민재",
-      "이서원",
-      "박제아",
-      "김예지",
-      "이용준",
-      "김라율",
-      "김준서",
-      "한재이",
-      "김도윤",
-      "주성현",
-      "이성우",
-      "김도란",
+      "김다인",
+      "김도현",
+      "김사빈",
+      "김서하",
+      "김서현",
+      "김정한",
+      "김지안",
       "김지온",
+      "김하율",
+      "노유진",
+      "민채원",
+      "박선우",
+      "박시우",
+      "방지율",
+      "백재윤",
+      "변서진",
+      "심채안",
+      "윤민호",
+      "이도이",
+      "이승민",
+      "이정훈",
+      "이준",
+      "이준형",
+      "이하린",
+      "이효준",
+      "임정",
+      "정도겸",
+      "조성훈",
+      "조하나",
+      "한재이",
+      "한주원",
+      "황윤재",
+      "0836",
+      "김건아",
+      "김도란",
+      "김도윤",
+      "김도율",
+      "김라율",
+      "김명서",
+      "김민재",
+      "김서연",
+      "김서율",
+      "김소라",
+      "김시후",
+      "김신유",
+      "김예지",
+      "김유준",
+      "김유현",
+      "김주빈",
+      "김주한",
+      "김준서",
+      "김지유",
+      "김현우",
+      "남기현",
+      "문선우",
+      "민준기",
+      "박서진",
+      "박재연",
+      "박제아",
+      "신지한",
+      "안예준",
+      "안채연",
+      "유현우",
+      "유호연",
+      "윤하영",
+      "이동윤",
+      "이민혁",
+      "이서원",
+      "이성우",
+      "이용준",
+      "이재아",
+      "이현서",
+      "임유준",
+      "정유현",
       "정지아",
+      "정지안",
       "조혜서",
-      "조혜연"
+      "조혜연",
+      "주성현",
+      "최지안",
+      "최지우",
+      "허유민",
+      "DEMO"
     ],
     "mag": [
-      "허유민",
-      "김현우",
-      "김유준",
-      "이하린",
-      "정지안",
-      "안채연",
-      "박서진",
-      "민준기",
-      "김서연",
-      "김명서",
-      "임유준",
-      "김시후",
       "노관호",
-      "윤하영",
-      "DEMO",
-      "문선우",
-      "유호연",
-      "김서율",
-      "김지유",
-      "김소라",
-      "유현우",
-      "정유현",
-      "김건아",
-      "김주한",
-      "박재연",
-      "김신유",
-      "변서진",
-      "이현서",
-      "최지우",
-      "안예준",
-      "이재아",
-      "이민혁",
-      "0836",
-      "김도율",
-      "최지안",
-      "김주빈",
       "김나율",
-      "김유현",
-      "신지한",
-      "김민재",
-      "이서원",
-      "박제아",
-      "김예지",
-      "이용준",
-      "김라율",
-      "김준서",
-      "한재이",
-      "김도윤",
-      "주성현",
-      "이성우",
-      "김도란",
+      "김다인",
+      "김도현",
+      "김사빈",
+      "김서하",
+      "김서현",
+      "김정한",
+      "김지안",
       "김지온",
+      "김하율",
+      "노유진",
+      "민채원",
+      "박선우",
+      "박시우",
+      "방지율",
+      "백재윤",
+      "변서진",
+      "심채안",
+      "윤민호",
+      "이도이",
+      "이승민",
+      "이정훈",
+      "이준",
+      "이준형",
+      "이하린",
+      "이효준",
+      "임정",
+      "정도겸",
+      "조성훈",
+      "조하나",
+      "한재이",
+      "한주원",
+      "황윤재",
+      "0836",
+      "김건아",
+      "김도란",
+      "김도윤",
+      "김도율",
+      "김라율",
+      "김명서",
+      "김민재",
+      "김서연",
+      "김서율",
+      "김소라",
+      "김시후",
+      "김신유",
+      "김예지",
+      "김유준",
+      "김유현",
+      "김주빈",
+      "김주한",
+      "김준서",
+      "김지유",
+      "김현우",
+      "남기현",
+      "문선우",
+      "민준기",
+      "박서진",
+      "박재연",
+      "박제아",
+      "신지한",
+      "안예준",
+      "안채연",
+      "유현우",
+      "유호연",
+      "윤하영",
+      "이동윤",
+      "이민혁",
+      "이서원",
+      "이성우",
+      "이용준",
+      "이재아",
+      "이현서",
+      "임유준",
+      "정유현",
       "정지아",
+      "정지안",
+      "조혜서",
       "조혜연",
-      "조혜서"
+      "주성현",
+      "최지안",
+      "최지우",
+      "허유민",
+      "DEMO"
     ]
   },
   "studentAccessProfiles": {
@@ -4098,7 +4278,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김건아": {
@@ -4107,7 +4294,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김나율": {
@@ -4123,7 +4317,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김도란": {
@@ -4132,7 +4333,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김도윤": {
@@ -4141,7 +4349,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김명서": {
@@ -4150,7 +4365,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김민재": {
@@ -4159,7 +4381,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김서연": {
@@ -4168,7 +4397,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김서율": {
@@ -4177,7 +4413,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김신유": {
@@ -4186,7 +4429,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김예지": {
@@ -4195,7 +4445,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김유준": {
@@ -4204,7 +4461,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김유현": {
@@ -4213,7 +4477,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김주빈": {
@@ -4222,7 +4493,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김주한": {
@@ -4231,7 +4509,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김지유": {
@@ -4240,7 +4525,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김현우": {
@@ -4249,7 +4541,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "남기현": {
@@ -4258,7 +4557,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "문선우": {
@@ -4267,7 +4573,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "민준기": {
@@ -4276,7 +4589,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "박서진": {
@@ -4285,7 +4605,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "변서진": {
@@ -4301,7 +4628,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "신지한": {
@@ -4310,7 +4644,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "안예준": {
@@ -4319,7 +4660,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "안채연": {
@@ -4328,7 +4676,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "유호연": {
@@ -4337,7 +4692,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "윤하영": {
@@ -4346,7 +4708,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이동윤": {
@@ -4355,7 +4724,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이민혁": {
@@ -4364,7 +4740,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이성우": {
@@ -4373,7 +4756,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이하린": {
@@ -4389,7 +4779,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "임유준": {
@@ -4398,7 +4795,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "정지안": {
@@ -4407,7 +4811,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "조혜서": {
@@ -4416,7 +4827,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "조혜연": {
@@ -4425,7 +4843,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "DEMO": {
@@ -4434,7 +4859,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김도율": {
@@ -4443,7 +4875,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김라율": {
@@ -4452,7 +4891,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김소라": {
@@ -4461,7 +4907,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김준서": {
@@ -4470,7 +4923,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김지온": {
@@ -4486,7 +4946,14 @@ window.GFIELD_DATA = {
         "question-bank",
         "seminar-hwangso-2026"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "박재연": {
@@ -4495,7 +4962,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "유현우": {
@@ -4504,7 +4978,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이서원": {
@@ -4513,7 +4994,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이용준": {
@@ -4522,7 +5010,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이재아": {
@@ -4531,7 +5026,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이현서": {
@@ -4540,7 +5042,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "정지아": {
@@ -4549,7 +5058,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "주성현": {
@@ -4558,7 +5074,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "최지안": {
@@ -4567,7 +5090,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "최지우": {
@@ -4576,7 +5106,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "한재이": {
@@ -4592,7 +5129,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김시후": {
@@ -4601,7 +5145,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "박제아": {
@@ -4610,7 +5161,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "정유현": {
@@ -4619,7 +5177,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "허유민": {
@@ -4628,7 +5193,14 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [],
       "products": [],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김다인": {
@@ -4644,7 +5216,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김사빈": {
@@ -4660,7 +5239,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "조하나": {
@@ -4676,7 +5262,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "윤민호": {
@@ -4692,7 +5285,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "황윤재": {
@@ -4708,7 +5308,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "임정": {
@@ -4724,7 +5331,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김정한": {
@@ -4740,7 +5354,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이준형": {
@@ -4756,7 +5377,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "방지율": {
@@ -4765,20 +5393,21 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [
         "규칙 보충학습",
-        "보충학습",
-        "약점 유형",
-        "사고력 교재",
-        "GFIELD APPLICATION",
-        "개념 교재",
-        "최종 모의고사"
+        "보충학습"
       ],
       "products": [
         "seminar-hwangso-2026",
         "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2",
-        "question-bank"
+        "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이정훈": {
@@ -4797,7 +5426,14 @@ window.GFIELD_DATA = {
         "mock-signature-1",
         "mock-signature-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김서현": {
@@ -4813,7 +5449,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김서하": {
@@ -4829,7 +5472,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "백재윤": {
@@ -4845,7 +5495,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김하율": {
@@ -4863,7 +5520,14 @@ window.GFIELD_DATA = {
         "mock-signature-1",
         "mock-signature-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김지안": {
@@ -4879,7 +5543,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "조성훈": {
@@ -4895,7 +5566,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "김도현": {
@@ -4911,7 +5589,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이효준": {
@@ -4927,7 +5612,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "민채원": {
@@ -4943,7 +5635,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "심채안": {
@@ -4959,7 +5658,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "정도겸": {
@@ -4975,7 +5681,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "박시우": {
@@ -4991,7 +5704,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이준": {
@@ -5007,7 +5727,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "노유진": {
@@ -5023,7 +5750,14 @@ window.GFIELD_DATA = {
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "한주원": {
@@ -5041,7 +5775,14 @@ window.GFIELD_DATA = {
         "mock-signature-1",
         "mock-signature-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "이도이": {
@@ -5059,7 +5800,14 @@ window.GFIELD_DATA = {
         "mock-signature-1",
         "mock-signature-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     },
     "박선우": {
@@ -5077,7 +5825,14 @@ window.GFIELD_DATA = {
         "mock-signature-1",
         "mock-signature-2"
       ],
-      "vip": [],
+      "vip": [
+        "report",
+        "ses",
+        "cou",
+        "clinic",
+        "col",
+        "mag"
+      ],
       "textbooks": []
     }
   },
