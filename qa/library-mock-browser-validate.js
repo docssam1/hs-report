@@ -116,15 +116,10 @@ function expectedHref(locator, pattern, label) {
 
     await page.getByRole('button', { name: /최종 실전 모의고사 1회/ }).click();
     await page.waitForSelector('#bookviewer.open');
-    const lastCorrection = page.locator('#bookviewer .bv-correction');
-    assert.equal(await lastCorrection.count(), 1, '최종 1회 서재 첫 장 정정 안내');
-    assert.equal(await page.locator('#bookviewer .bv-doc.scroll > :first-child').getAttribute('class'), 'bv-correction', '정정 안내가 이미지보다 앞에 표시됨');
-    assert.match(await lastCorrection.innerText(), /29번의 예시 숫자는 1211로 읽으세요\. 나머지 조건은 그대로입니다\./);
-    assert.doesNotMatch(await lastCorrection.innerText(), /140가지/, '시험지 정정 안내에 답 노출 없음');
-    assert.equal(await page.locator('#bookviewer .bv-pg').count(), 6, '최종 1회 서재 이미지 쪽수');
-    assert.equal(await page.locator('#bookviewer .bv-pg .wm3 span').count(), 18, '최종 1회 원본 이미지 워터마크 수');
-    assert.equal(await page.locator('#bookviewer .bv-correction .wm3 span').count(), 3, '최종 1회 정정지 워터마크 수');
-    assert.equal(await page.locator('#bookviewer .wm3 span').evaluateAll(nodes => nodes.filter(node => Number(getComputedStyle(node).opacity) > 0).length), 7, '최종 화면은 정정지와 원본 쪽마다 흐린 워터마크 한 줄');
+    assert.equal(await page.locator('#bookviewer .bv-correction').count(), 0, '최종 1회 정정 안내 없음');
+    assert.equal(await page.locator('#bookviewer .bv-doc.scroll > :first-child').getAttribute('class'), 'bv-pg', '원본 시험지로 시작');
+    assert.equal(await page.locator('#bookviewer .bv-pg').count(), 6, '최종 1회 원본 이미지 6쪽');
+    assert.equal(await page.locator('#bookviewer .wm3 span').count(), 18, '원본 워터마크 보존');
     assert.match(await page.locator('#bookviewer .bv-pg').first().locator('img').getAttribute('src'), /last_final_1\/001\.jpg$/, '영상 쪽 이동용 첫 JPG 순서 유지');
     assert.match(await page.locator('#bookviewer .bv-pg').last().locator('img').getAttribute('src'), /last_final_1\/006\.jpg$/, '영상 쪽 이동용 마지막 JPG 순서 유지');
     assert.equal(await page.locator('#bookviewer .bv-copyright').count(), 0, '최종 1회 원본 꼬리말 중복 방지');
@@ -139,17 +134,14 @@ function expectedHref(locator, pattern, label) {
     const lastPopupPromise = page.waitForEvent('popup');
     await page.getByRole('button', { name: /인쇄/ }).click();
     const lastPrintPage = await lastPopupPromise;
-    await lastPrintPage.waitForSelector('.pg.correction');
-    assert.equal(await lastPrintPage.locator('.pg').count(), 7, '최종 1회 인쇄는 정정지 1쪽과 원본 JPG 6쪽');
-    assert.equal(await lastPrintPage.locator('#wrap > :first-child').getAttribute('class'), 'pg correction', '인쇄 첫 장 정정 안내');
-    assert.match(await lastPrintPage.locator('.pg.correction').innerText(), /29번의 예시 숫자는 1211로 읽으세요\. 나머지 조건은 그대로입니다\./);
-    assert.equal(await lastPrintPage.locator('.pg img').count(), 6, '최종 1회 원본 JPG 6장 보존');
-    assert.equal(await lastPrintPage.locator('.pg.correction .wm span').first().textContent(), `${STUDENT} · 지필드 영재교육`, '정정지 학생 워터마크');
-    await lastPrintPage.emulateMedia({ media: 'print' });
-    assert.equal(await lastPrintPage.locator('.pg.correction').evaluate(node => getComputedStyle(node).breakAfter), 'page', '정정지 뒤 A4 새 장 시작');
+    await lastPrintPage.waitForSelector('.pg img');
+    assert.equal(await lastPrintPage.locator('.pg').count(), 6, '인쇄는 원본 JPG 6쪽만');
+    assert.equal(await lastPrintPage.locator('.pg.correction').count(), 0, '인쇄 정정 안내 없음');
+    assert.match(await lastPrintPage.locator('#wrap > :first-child img').getAttribute('src'), /last_final_1\/001\.jpg$/, '인쇄 첫 장 원본');
+    assert.equal(await lastPrintPage.locator('.pg img').count(), 6, '원본 JPG 보존');
     await lastPrintPage.close();
     await page.setViewportSize({ width: 390, height: 844 });
-    assert.ok(await lastCorrection.evaluate(node => node.getBoundingClientRect().right <= window.innerWidth + 1), '최종 1회 정정지 모바일 가로 넘침 없음');
+    assert.equal(await page.locator('#bookviewer .bv-correction').count(), 0, '모바일 정정 안내 없음');
     await page.setViewportSize({ width: 1440, height: 1000 });
 
     await page.click('#bookviewer .bv-back');
