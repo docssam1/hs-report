@@ -11,7 +11,7 @@ window.GFIELD_ROADMAP_FEB = {
     examLabel: '생각하는 황소 입학시험',
     examDate: '2027-02-07',
     examDateNote: '예정',
-    status: 'draft',
+    status: 'published',
     currentWeekId: 'feb-w01',
     members: ['박선우', '김서현', '이승우', '정준우'],
     novMaterials: { label: '11월 시험 복기 문제·답안과 설명회 영상', url: 'seminar/2026-video/' },
