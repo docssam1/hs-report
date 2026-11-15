@@ -3734,7 +3734,6 @@ window.GFIELD_DATA = {
     "신지한": "graduated",
     "안예준": "graduated",
     "안채연": "online",
-    "윤하영": "graduated",
     "이동윤": "graduated",
     "이민혁": "graduated",
     "이성우": "graduated",
