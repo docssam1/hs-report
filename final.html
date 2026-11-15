@@ -2815,7 +2815,7 @@ td.weak-cell{white-space:nowrap}
     function say(txt,key){
       if(!$('#vc').checked) return;
       if(key!=null && M.exam.useRecordedCues!==false){
-        var a=new Audio('voice/cue-'+key+'.mp3');
+        var a=new Audio('voice/'+(typeof key==='string'?key:'cue-'+key)+'.mp3');   /* 문자열 key는 파일 이름(예: last-cue-0), 숫자는 기존 cue-N */
         a.onerror=function(){ tts(txt); };
         a.play().then(function(){}).catch(function(){ tts(txt); });
         return;
@@ -2880,7 +2880,7 @@ td.weak-cell{white-space:nowrap}
           $('#now').style.display='block';
           $('#nt').textContent=mmss(c.at)+' 안내';
           $('#nm').textContent=c.msg;
-          say(c.msg,i);
+          say(c.msg,c.voice!=null?c.voice:i);
           showCueModal(c);
           var d=document.createElement('div');
           d.innerHTML='<b>'+mmss(c.at)+'</b> · '+esc(c.msg);

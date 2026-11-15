@@ -33,9 +33,11 @@ const host=http.createServer((req,res)=>{res.setHeader('content-type','text/html
     }
     assert.match(await page.locator('#phaseName').innerText(),/시험 종료/);
     const audio=await page.evaluate(()=>({spoken:window.__spoken,audio:window.__audio}));
-    assert.ok(audio.spoken.some(text=>text.includes('65분')&&text.includes('15분')));
-    assert.ok(audio.spoken.some(text=>text.includes('80분')));
-    assert.ok(!audio.audio.some(url=>/cue-(5|7)\.mp3$/.test(url)),'old 75/90-minute speech must not play');
+    // 65·80분 안내는 이제 전용 녹음(t80-cue-5/7)으로 재생하고, 기기 합성 음성으로 읽지 않는다.
+    assert.ok(!audio.spoken.some(text=>text.includes('65분')||text.includes('80분')),'65/80-minute cues must use the recorded voice, not device speech');
+    assert.ok(audio.audio.some(url=>/\/voice\/t80-cue-5\.mp3$/.test(url)),'t80-cue-5.mp3 must play');
+    assert.ok(audio.audio.some(url=>/\/voice\/t80-cue-7\.mp3$/.test(url)),'t80-cue-7.mp3 must play');
+    assert.ok(!audio.audio.some(url=>/\/voice\/cue-(5|7)\.mp3$/.test(url)),'old 75/90-minute speech must not play');
     await page.locator('#resetBtn').click();assert.equal(await page.locator('#clock').innerText(),'80:00');
     await page.locator('#voiceToggle').click();await page.locator('#startBtn').click();
     await page.evaluate(()=>{window.__now+=60000;tick(window.__now);});await page.locator('#pauseBtn').click();
