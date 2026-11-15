@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 11. 15. 오후 7:48:21
+ * 생성: 2026. 11. 15. 오후 7:59:00
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1470,7 +1470,8 @@ window.GFIELD_DATA = {
       "이승우",
       "이지안",
       "정준우",
-      "정도헌"
+      "정도헌",
+      "김지인"
     ],
     "약점 유형": [
       "신지한",
@@ -1531,7 +1532,8 @@ window.GFIELD_DATA = {
       "조혜서",
       "이승우",
       "정준우",
-      "정도헌"
+      "정도헌",
+      "김지인"
     ],
     "사고력 교재": [
       "신지한",
@@ -1590,7 +1592,8 @@ window.GFIELD_DATA = {
       "조혜서",
       "조혜연",
       "이승우",
-      "정준우"
+      "정준우",
+      "김지인"
     ],
     "GFIELD APPLICATION": [
       "허유민",
@@ -1621,7 +1624,9 @@ window.GFIELD_DATA = {
       "이서원",
       "김예지",
       "김라율",
-      "이승우"
+      "이승우",
+      "김지인",
+      "정준우"
     ],
     "활용 모의고사": [
       "김소라",
@@ -1811,7 +1816,10 @@ window.GFIELD_DATA = {
       "이현서",
       "최지우",
       "김예지",
-      "김라율"
+      "김라율",
+      "이승우",
+      "김지인",
+      "정준우"
     ],
     "규칙 보충학습": [
       "김서율",
@@ -1873,7 +1881,8 @@ window.GFIELD_DATA = {
       "이승우",
       "이지안",
       "정준우",
-      "정도헌"
+      "정도헌",
+      "김지인"
     ],
     "3% 1과정 영역별 테스트": [
       "0836",
@@ -1933,9 +1942,14 @@ window.GFIELD_DATA = {
       "조혜서",
       "이승우",
       "정준우",
-      "정도헌"
+      "정도헌",
+      "김지인"
     ],
-    "승급과정 문제은행": []
+    "승급과정 문제은행": [
+      "노관호",
+      "박재이",
+      "정연우"
+    ]
   },
   "archiveProductAccess": {
     "question-bank": [
@@ -2107,7 +2121,10 @@ window.GFIELD_DATA = {
       "이승우",
       "이지안",
       "정준우",
-      "정도헌"
+      "정도헌",
+      "김지인",
+      "박재이",
+      "정연우"
     ]
   },
   "books": [
@@ -3870,7 +3887,10 @@ window.GFIELD_DATA = {
       "이승우",
       "이지안",
       "정도헌",
-      "정준우"
+      "정준우",
+      "김지인",
+      "박재이",
+      "정연우"
     ],
     "ses": [
       "노관호",
@@ -3961,7 +3981,10 @@ window.GFIELD_DATA = {
       "이승우",
       "이지안",
       "정준우",
-      "정도헌"
+      "정도헌",
+      "김지인",
+      "박재이",
+      "정연우"
     ],
     "cou": [
       "노관호",
@@ -4052,7 +4075,10 @@ window.GFIELD_DATA = {
       "이승우",
       "이지안",
       "정도헌",
-      "정준우"
+      "정준우",
+      "김지인",
+      "박재이",
+      "정연우"
     ],
     "clinic": [
       "노관호",
@@ -4143,7 +4169,10 @@ window.GFIELD_DATA = {
       "이승우",
       "이지안",
       "정준우",
-      "정도헌"
+      "정도헌",
+      "김지인",
+      "박재이",
+      "정연우"
     ],
     "col": [
       "노관호",
@@ -4234,7 +4263,10 @@ window.GFIELD_DATA = {
       "이승우",
       "이지안",
       "정도헌",
-      "정준우"
+      "정준우",
+      "김지인",
+      "박재이",
+      "정연우"
     ],
     "mag": [
       "노관호",
@@ -4325,7 +4357,10 @@ window.GFIELD_DATA = {
       "이승우",
       "이지안",
       "정준우",
-      "정도헌"
+      "정도헌",
+      "김지인",
+      "박재이",
+      "정연우"
     ]
   },
   "studentAccessProfiles": {
@@ -4366,8 +4401,7 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "규칙 보충학습",
-        "보충학습"
+        "승급과정 문제은행"
       ],
       "products": [
         "seminar-hwangso-2026",
@@ -4548,8 +4582,12 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T10:37:03.501Z",
       "attendance": [],
       "special": false,
-      "folders": [],
-      "products": [],
+      "folders": [
+        "승급과정 문제은행"
+      ],
+      "products": [
+        "seminar-hwangso-2026"
+      ],
       "vip": [
         "report",
         "ses",
@@ -4580,8 +4618,12 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T10:37:03.501Z",
       "attendance": [],
       "special": false,
-      "folders": [],
-      "products": [],
+      "folders": [
+        "승급과정 문제은행"
+      ],
+      "products": [
+        "seminar-hwangso-2026"
+      ],
       "vip": [
         "report",
         "ses",
@@ -4660,8 +4702,12 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T10:37:03.501Z",
       "attendance": [],
       "special": false,
-      "folders": [],
-      "products": [],
+      "folders": [
+        "승급과정 문제은행"
+      ],
+      "products": [
+        "seminar-hwangso-2026"
+      ],
       "vip": [
         "report",
         "ses",
@@ -4677,8 +4723,7 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "규칙 보충학습",
-        "보충학습"
+        "승급과정 문제은행"
       ],
       "products": [
         "seminar-hwangso-2026",
@@ -4750,7 +4795,9 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [],
-      "products": [],
+      "products": [
+        "seminar-hwangso-2026"
+      ],
       "vip": [
         "report",
         "ses",
@@ -4765,8 +4812,12 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T10:37:03.501Z",
       "attendance": [],
       "special": false,
-      "folders": [],
-      "products": [],
+      "folders": [
+        "승급과정 문제은행"
+      ],
+      "products": [
+        "seminar-hwangso-2026"
+      ],
       "vip": [
         "report",
         "ses",
@@ -4900,8 +4951,12 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T10:37:03.501Z",
       "attendance": [],
       "special": false,
-      "folders": [],
-      "products": [],
+      "folders": [
+        "승급과정 문제은행"
+      ],
+      "products": [
+        "seminar-hwangso-2026"
+      ],
       "vip": [
         "report",
         "ses",
@@ -5293,8 +5348,7 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "규칙 보충학습",
-        "보충학습"
+        "승급과정 문제은행"
       ],
       "products": [
         "seminar-hwangso-2026",
@@ -5514,13 +5568,19 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
+        "보충학습",
+        "약점 유형",
+        "사고력 교재",
+        "GFIELD APPLICATION",
+        "개념 교재",
         "규칙 보충학습",
-        "보충학습"
+        "3% 1과정 영역별 테스트"
       ],
       "products": [
         "seminar-hwangso-2026",
         "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "mock-top-secret-finish-2",
+        "question-bank"
       ],
       "vip": [
         "report",
@@ -5726,8 +5786,7 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "규칙 보충학습",
-        "보충학습"
+        "승급과정 문제은행"
       ],
       "products": [
         "seminar-hwangso-2026",
@@ -5896,14 +5955,16 @@ window.GFIELD_DATA = {
         "약점 유형",
         "사고력 교재",
         "GFIELD APPLICATION",
-        "3% 1과정 영역별 테스트"
+        "3% 1과정 영역별 테스트",
+        "개념 교재"
       ],
       "products": [
         "seminar-hwangso-2026",
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2",
         "mock-signature-1",
-        "mock-signature-2"
+        "mock-signature-2",
+        "question-bank"
       ],
       "vip": [
         "report",
