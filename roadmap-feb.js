@@ -19,6 +19,7 @@
     if (!cfg) return;
     if (Array.isArray(cfg.members)) R.meta.members = cfg.members;
     if (cfg.currentWeekId) R.meta.currentWeekId = cfg.currentWeekId;
+    if (cfg.weeks && typeof cfg.weeks === 'object') R.meta.openWeeks = cfg.weeks;
   })();
   var weeks = R.nodes.filter(function (n) { return n.type === 'week'; });
 
@@ -32,6 +33,7 @@
   }
   function isOpen(node) {
     var i = weeks.indexOf(node), cur = currentIndex();
+    if (R.meta.openWeeks && isMember()) return (R.meta.openWeeks[student()] || []).indexOf(node.id) >= 0;
     if (i < 0 || cur < 0 || i > cur) return false;
     return isMember() || (!published && preview && !demo());
   }

@@ -18,9 +18,11 @@
     if (type === 'withdrawn' || type === 'graduated') return NONE;
     var weeks = (R.nodes || []).filter(function (n) { return n.type === 'week'; });
     var current = weeks.findIndex(function (n) { return n.id === currentId; });
-    if (current < 0) return NONE;
+    /* 어드민이 주차별로 출석 체크한 값(cfg.weeks)이 있으면 체크한 주차만 열고, 없으면 현재 주차까지 연다. */
+    var picked = cfg.weeks && typeof cfg.weeks === 'object' ? (cfg.weeks[name] || []) : null;
+    if (!picked && current < 0) return NONE;
     var out = { attendance: [], products: [], folders: [] };
-    weeks.slice(0, current + 1).forEach(function (node) {
+    weeks.filter(function (n, i) { return picked ? picked.indexOf(n.id) >= 0 : i <= current; }).forEach(function (node) {
       var s = node.source || {};
       out.attendance.push(node.id);
       if (s.final) out.attendance.push(NOV_ID.final[s.final - 1]);
