@@ -30,15 +30,15 @@ const F='승급과정 문제은행',T1='초등과정 4-1 일일테스트 1단원
   await p.waitForTimeout(600);await p.evaluate(()=>nav('archive'));await p.waitForTimeout(400);
   return p;
  }
- const titles=p=>p.$$eval('#archive-list .shelf-sec:has(.ub-bar) .book .label',e=>e.map(x=>x.textContent));
- const pressed=p=>p.$$eval('#archive-list .ub-chip[aria-pressed="true"]',e=>e.map(x=>x.textContent));
+ const titles=p=>p.$$eval('#archive-list .shelf-sec:has(.ub-top) .ub-top .book .label',e=>e.map(x=>x.textContent));
+ const pressed=p=>p.$$eval('#archive-list .ub-top .ub-chip[aria-pressed="true"]',e=>e.map(x=>x.textContent));
  const out={};
  for(const name of ['정준우','박선우','이승우']){
   const p=await open(name);
   const txt=await p.$eval('#archive-list',e=>e.innerText);
   out[name]=txt.includes(F);
   if(name==='이승우'){
-    const sec='#archive-list .shelf-sec:has(.ub-bar)';
+    const sec='#archive-list .shelf-sec:has(.ub-top)';
     assert.deepEqual(await titles(p),[T1,T2],'전체: 시험지 이름이 그대로');
     assert.match(await p.$eval(sec+' .ub-sum',e=>e.innerText),/선택한 시험지 2장/);
     // 단원별
@@ -58,7 +58,63 @@ const F='승급과정 문제은행',T1='초등과정 4-1 일일테스트 1단원
     srcs=await pop.$$eval('.pg img',e=>e.map(x=>x.getAttribute('src').replace(/^.*materials\//,'')));
     assert.deepEqual(srcs,['daily_41_u1_12/001.jpg','daily_41_u1_34/001.jpg']);
     assert.equal(await pop.$$eval('.wm',e=>e.length),2);await pop.close();
+    // ---- 유사문제 학습 (규칙으로 새로 만드는 생성기) ----
+    const P=sec+' .ub-practice';
+    const readQs=()=>p.$$eval(P+' .ub-q',e=>e.map(x=>({tag:x.querySelector('.ub-tag').textContent,txt:x.querySelector('.ub-q-t').innerText.replace(/\n+/g,'\n'),ans:!!x.querySelector('.ub-ans')})));
+    const seedOf=async()=>Number(await p.locator(P+' .ub-note',{hasText:'생성 번호'}).locator('b').innerText());
+    await p.click(sec+' [data-mode="all"]');
+    await p.waitForSelector(P+' [data-src]');
+    assert.equal(await p.$$eval(P+' [data-src]',e=>e.length),9,'전체: 시험지 문제 9개');
+    assert.equal(await p.$$eval(P+' [data-lv]',e=>e.length),3);
+    assert.deepEqual(await p.$$eval(P+' [data-lv][aria-pressed="true"]',e=>e.map(x=>x.textContent)),['같은 수준']);
+    // 회차별로 줄이면 그 회차의 문제만
+    await p.click(sec+' [data-mode="session"]');
+    const isOn=async s=>(await p.getAttribute(sec+' .ub-top [data-session="'+s+'"]','aria-pressed'))==='true';
+    if(!(await isOn('3,4차시')))await p.click(sec+' .ub-top [data-session="3,4차시"]');   // 어떤 상태에서 시작해도 3,4차시만 선택
+    if(await isOn('1,2차시'))await p.click(sec+' .ub-top [data-session="1,2차시"]');
+    assert.deepEqual([await isOn('1,2차시'),await isOn('3,4차시')],[false,true]);
+    assert.equal(await p.$$eval(P+' [data-src]',e=>e.length),5,'3,4차시 문제 5개');
+    // 만들기: 1문제 × 같은 수준 × 3개
+    await p.click(P+' [data-act="make"]');
+    let qs=await readQs();assert.equal(qs.length,3);
+    assert.ok(qs.every(q=>q.tag==='같은 수준'&&!q.ans),'정답은 처음에 숨김');
+    const seed1=await seedOf(),firstSrc=await p.$eval(P+' [data-src][aria-pressed="true"]',e=>e.dataset.src);
+    // 화면의 문제·정답이 생성기가 같은 번호로 만든 결과와 같다
+    const regen=await p.evaluate(([src,seed])=>UPGRADE41_GEN.generateSet([{source:src,level:'same',count:3}],seed).map(x=>({text:x.text,answer:x.answer})),[firstSrc,seed1]);
+    assert.deepEqual(qs.map(q=>q.txt),regen.map(r=>r.text),'같은 번호로 다시 만든 문제와 같음');
+    await p.locator(P+' .ub-q').first().locator('[data-ans]').click();
+    const ans=await p.locator(P+' .ub-q').first().locator('.ub-ans').innerText();
+    assert.ok(ans.includes('정답')&&ans.includes(regen[0].answer));
+    // 다시 만들기: 다른 번호·다른 문제 / 번호 입력: 같은 문제
+    await p.click(P+' [data-act="make"]');const seed2=await seedOf();assert.notEqual(seed2,seed1);
+    const qs2=await readQs();assert.notDeepEqual(qs2.map(q=>q.txt),qs.map(q=>q.txt),'다시 만들면 다른 문제');
+    await p.fill(P+' .ub-seed',String(seed1));await p.click(P+' [data-act="seed"]');
+    assert.deepEqual((await readQs()).map(q=>q.txt),qs.map(q=>q.txt),'같은 번호는 같은 문제');
+    // 난이도 3개 + 문제 2개 × 개수 2 → 12문항
+    await p.click(P+' [data-lv="lower"]');await p.click(P+' [data-lv="higher"]');
+    const srcIds=await p.$$eval(P+' [data-src]',e=>e.map(x=>x.dataset.src));
+    await p.click(P+' [data-src="'+srcIds[1]+'"]');
+    await p.selectOption(P+' select.ub-sel','2');await p.click(P+' [data-act="make"]');
+    const tags=(await readQs()).map(q=>q.tag);
+    assert.equal(tags.length,2*3*2);assert.deepEqual([...new Set(tags)].sort(),['같은 수준','높여서','낮춰서'].sort());
+    // 인쇄: 문제지에는 정답이 없고, 정답지에는 정답이 있다. 둘 다 이름과 생성 번호
+    const [popQ]=await Promise.all([p.waitForEvent('popup'),p.click(P+' [data-act="print-q"]')]);await popQ.waitForLoadState('domcontentloaded');
+    const bodyQ=await popQ.innerText('body');
+    assert.equal(await popQ.$$eval('.q',e=>e.length),12);assert.ok(bodyQ.includes('이승우')&&bodyQ.includes('생성 번호'),'이름·생성 번호');
+    assert.ok(!bodyQ.includes('정답'),'문제지에 정답이 없음');await popQ.close();
+    const [popA]=await Promise.all([p.waitForEvent('popup'),p.click(P+' [data-act="print-a"]')]);await popA.waitForLoadState('domcontentloaded');
+    assert.equal(await popA.$$eval('.q',e=>e.length),12);assert.ok((await popA.innerText('body')).includes('정답'));await popA.close();
+    // 좁은 범위(서로 다른 문제가 적은 조합)는 부족분을 알려 준다
+    await p.click(sec+' [data-mode="all"]');
+    const small='u1-3-q5';
+    for(const id of await p.$$eval(P+' [data-src][aria-pressed="true"]',e=>e.map(x=>x.dataset.src)))if(id!==small&&(await p.$$eval(P+' [data-src][aria-pressed="true"]',e=>e.length))>1)await p.click(P+' [data-src="'+id+'"]');
+    if(!(await p.$eval(P+' [data-src="'+small+'"]',e=>e.getAttribute('aria-pressed')==='true')))await p.click(P+' [data-src="'+small+'"]');
+    for(const id of await p.$$eval(P+' [data-src][aria-pressed="true"]',e=>e.map(x=>x.dataset.src)))if(id!==small)await p.click(P+' [data-src="'+id+'"]');
+    for(const lv of ['same','higher'])if(await p.$eval(P+' [data-lv="'+lv+'"]',e=>e.getAttribute('aria-pressed')==='true'))await p.click(P+' [data-lv="'+lv+'"]');
+    await p.selectOption(P+' select.ub-sel','10');await p.click(P+' [data-act="make"]');
+    assert.ok((await readQs()).length>=1&&(await readQs()).length<=10);
     // 카드 → 시험지 열기(이름 워터마크)
+    await p.click(sec+' [data-mode="all"]');
     await p.locator(sec+' .book',{hasText:T1}).click();await p.waitForTimeout(500);
     const v=await p.evaluate(()=>({title:document.getElementById('bv-name').textContent,
       imgs:[...document.querySelectorAll('#bv-stage .bv-pg img')].map(i=>({src:i.getAttribute('src'),w:i.naturalWidth})),
