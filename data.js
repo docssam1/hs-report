@@ -3731,7 +3731,6 @@ window.GFIELD_DATA = {
     "남기현": "graduated",
     "문선우": "graduated",
     "민준기": "graduated",
-    "박서진": "graduated",
     "변서진": "online",
     "신지한": "graduated",
     "안예준": "graduated",
