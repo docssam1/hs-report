@@ -160,16 +160,11 @@
       <button data-tab="report" onclick="tab('report')">⑧ 진단 결과</button>
       <button data-tab="exam" onclick="tab('exam')">⑨ AI 진단</button>
       <button data-tab="mock" onclick="tab('mock')">⑩ 모의고사 결과</button>
+      <button data-tab="hs" onclick="tab('hs')">⑫ 황소 관리</button>
       <a href="bank/index.html" target="_blank" rel="noopener" style="text-decoration:none"><button type="button">⑪ 문제은행 ↗</button></a>
     </div>
 
     <section id="tab-attend">
-      <div class="card" id="feb-admin">
-        <h3>2월 로드맵 · 수강 학생과 현재 주차</h3>
-        <div class="hint"><b>2월 과정</b>에 체크한 학생이 대상이고, <b>선생님이 출석 체크한 주차</b>의 자료(개념·중급 과제·파이널·최종)만 열립니다. 주차 칸을 누르면 그 학생의 그 주차가 열리거나 닫힙니다. 현재 주차는 로드맵 화면의 "현재 진행 중" 표시용입니다. 재원생·온라인 모두 같습니다. 바꾼 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
-        <div style="margin:8px 0">현재 주차 <select id="feb-cur" onchange="febSetCurrent(this.value)"></select></div>
-        <div class="matrix-scroll"><table id="feb-matrix"></table></div>
-      </div>
       <div class="card">
         <h3>주차별 출석 체크 (권한 부여)</h3>
         <div class="hint">칸을 클릭하면 해당 학생의 그 주차 영상·자료가 열립니다(🔓). ⭐ 열은 방학 특강 수강 여부입니다.</div>
@@ -183,6 +178,20 @@
         </div>
         <div class="hint">학생이 사이트에 로그인한 횟수와 최근 접속 시각입니다.</div>
         <div id="al-body">🔄 새로고침을 눌러 불러오세요.</div>
+      </div>
+    </section>
+
+    <section id="tab-hs" class="hidden">
+      <div class="card" id="feb-admin">
+        <h3>2월 로드맵 · 수강 학생과 현재 주차</h3>
+        <div class="hint"><b>2월 과정</b>에 체크한 학생이 대상이고, <b>선생님이 출석 체크한 주차</b>의 자료(개념·중급 과제·파이널·최종)만 열립니다. 주차 칸을 누르면 그 학생의 그 주차가 열리거나 닫힙니다. 현재 주차는 로드맵 화면의 "현재 진행 중" 표시용입니다. 재원생·온라인 모두 같습니다. 바꾼 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
+        <div style="margin:8px 0">현재 주차 <select id="feb-cur" onchange="febSetCurrent(this.value)"></select></div>
+        <div class="matrix-scroll"><table id="feb-matrix"></table></div>
+      </div>
+      <div class="card" id="upg-admin">
+        <h3>승급과정 문제은행 · 열람 학생</h3>
+        <div class="hint">편입(승급)과정 학생 중 <b>승급과정 문제은행</b> 폴더를 볼 학생을 체크합니다. 2월 로드맵과는 별개입니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
+        <div class="matrix-scroll"><table id="upg-matrix"></table></div>
       </div>
     </section>
 
@@ -588,7 +597,7 @@
   async function lockAgain(){ await window.GFIELD_AUTH.signOut('admin'); location.reload(); }
 
   function tab(name){
-    ['attend','students','content','settings','archive','vip','mag','report','exam','mock'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
+    ['attend','students','content','settings','archive','vip','mag','report','exam','mock','hs'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
     if(name==='mock' && window.GFIELD_ADMIN_LAST_ENTRY) window.GFIELD_ADMIN_LAST_ENTRY.mount(S.students);
     if(name==='mock' && window.loadMockResults) loadMockResults();
@@ -604,11 +613,25 @@
   function studentTypeLabel(name){ return {resident:'재원생',online:'온라인',withdrawn:'퇴원생',graduated:'졸업생'}[studentType(name)]; }
   function studentTypeStyle(name){ return {resident:'background:#e6f1fb;color:#185fa5',online:'background:#faeeda;color:#854f0b',withdrawn:'background:#f3e8e8;color:#942e2e',graduated:'background:#edf0f4;color:#566274'}[studentType(name)]; }
   function sortStudents(){ if(!Array.isArray(S.students)) return; const order={resident:0,online:1,graduated:2,withdrawn:3}; S.students.sort((x,y)=>order[studentType(x)]-order[studentType(y)]||x.localeCompare(y,'ko')); }
-  function renderAll(){ sortStudents(); renderMatrix(); renderFeb(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderExam(); renderGhStat(); }
+  function renderAll(){ sortStudents(); renderMatrix(); renderFeb(); renderUpg(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderExam(); renderGhStat(); }
 
   function ensureStudent(name){ if(!S.attendance[name]) S.attendance[name]=[]; }
 
   /* 2월 로드맵: 수강 학생·현재 주차를 data.js의 febRoadmap에 저장한다 */
+  /* 승급과정 문제은행: 폴더 열람 학생을 황소 관리 탭에서 바로 지정한다(자료실 폴더 권한과 같은 값) */
+  const UPG_FOLDER='승급과정 문제은행';
+  function upgToggle(name){const fi=S.archiveFolders.indexOf(UPG_FOLDER);if(fi<0){toast('승급과정 문제은행 폴더가 없습니다');return;}toggleAcc(fi,name);renderUpg();}
+  function renderUpg(){
+    const t=document.getElementById('upg-matrix');if(!t)return;
+    const f=UPG_FOLDER,acc=Array.isArray(S.archiveAccess[f])?S.archiveAccess[f]:[],open=acc.includes('*');
+    let h='<thead><tr><th>학생</th><th>문제은행 열람</th></tr></thead><tbody>';
+    if(open)h+='<tr><td colspan="2" class="hint" style="padding:10px">이 폴더는 현재 전체공개입니다. 자료실 탭에서 전체공개를 끄면 체크한 학생만 봅니다.</td></tr>';
+    S.students.filter(n=>studentType(n)!=='graduated'&&studentType(n)!=='withdrawn').forEach(name=>{
+      const on=accessOn('folders',f,name,!open&&acc.includes(name));
+      h+=`<tr><th>${esc(name)} <span style="font-size:10px;font-weight:800;padding:1px 6px;border-radius:8px;${studentTypeStyle(name)}">${studentTypeLabel(name)}</span></th><td class="cell ${on?'on':'off'}" onclick="upgToggle('${esc(name)}')"></td></tr>`;
+    });
+    t.innerHTML=h+'</tbody>';
+  }
   function febNodes(){return ((window.GFIELD_ROADMAP_FEB||{}).nodes||[]).filter(n=>n.type==='week');}
   function febCfg(){
     const R=window.GFIELD_ROADMAP_FEB;if(!R)return null;
