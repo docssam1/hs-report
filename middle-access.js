@@ -26,7 +26,7 @@
       var match=/^mock-mid-(\d+)$/.exec(key);
       if(match&&permit('products',key,allows(data.archiveProductAccess[key],name)))allowed[String(Number(match[1]))]=true;
     });
-    if(scoped&&root.GFIELD_STUDENT_ACCESS)all.forEach(function(round){if(permit('products','mock-mid-'+round,false))allowed[round]=true;});
+    if((scoped||isOnline(data,name))&&root.GFIELD_STUDENT_ACCESS)all.forEach(function(round){if(permit('products','mock-mid-'+round,false))allowed[round]=true;});
     return all.filter(function(round){return allowed[round]===true;});
   }
   function allowsRound(data,name,round,model){return rounds(data,name,model).indexOf(String(Number(round)))>=0;}

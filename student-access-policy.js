@@ -3,7 +3,11 @@
   // A returned graduate has a new permission scope. Original records stay intact.
   function restricted(data,name){return Object.prototype.hasOwnProperty.call(data.studentAccessProfiles||{},name);}
   function profile(data,name){return (data.studentAccessProfiles||{})[name]||{};}
+  // Optional cohort provider (e.g. the Feb course). It can only add grants; without it nothing changes.
+  function extra(data,name){var p=root.GFIELD_COHORT_ACCESS;return p&&typeof p.grants==='function'?(p.grants(data,name)||{}):{};}
+  function granted(data,name,kind,key){var list=extra(data,name)[kind];return Array.isArray(list)&&list.indexOf(String(key))>=0;}
   function allows(data,name,kind,key,legacy){
+    if(granted(data,name,kind,key))return true;
     if(!restricted(data,name))return !!legacy;
     var list=profile(data,name)[kind];
     return Array.isArray(list)&&list.indexOf(String(key))>=0;
@@ -17,7 +21,9 @@
   }
   function attendance(data,name){
     var list=restricted(data,name)?profile(data,name).attendance:(data.attendance||{})[name];
-    return Array.isArray(list)?list:[];
+    list=Array.isArray(list)?list:[];
+    var add=extra(data,name).attendance;
+    return Array.isArray(add)&&add.length?list.concat(add.filter(function(id){return list.indexOf(id)<0;})):list;
   }
   function special(data,name){return restricted(data,name)?profile(data,name).special===true:(data.specialStudents||[]).indexOf(name)>=0;}
   // BASIC and CORE share the concept-library approval; legacy product lists stay untouched.
