@@ -164,6 +164,12 @@
     </div>
 
     <section id="tab-attend">
+      <div class="card" id="feb-admin">
+        <h3>2월 로드맵 · 수강 학생과 현재 주차</h3>
+        <div class="hint">체크한 학생에게 <b>현재 주차까지</b>의 2월 로드맵 자료(개념·중급 과제·파이널·최종)가 자동으로 열립니다. 현재 주차를 바꾸면 다음 주차 자료가 열립니다. 재원생·온라인 모두 같습니다. 바꾼 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
+        <div style="margin:8px 0">현재 주차 <select id="feb-cur" onchange="febSetCurrent(this.value)"></select></div>
+        <div class="matrix-scroll"><table id="feb-matrix"></table></div>
+      </div>
       <div class="card">
         <h3>주차별 출석 체크 (권한 부여)</h3>
         <div class="hint">칸을 클릭하면 해당 학생의 그 주차 영상·자료가 열립니다(🔓). ⭐ 열은 방학 특강 수강 여부입니다.</div>
@@ -435,6 +441,7 @@
 <script src="hs-auth.js?v=20261011-email-login-1"></script>
 <script src="admin-email-auth-view.js?v=20261018-unlimited-devices"></script>
 <script src="student-access-policy.js?v=20261109-concept-folder1"></script>
+<script src="roadmap-feb-data.js?v=20261115-feb-roadmap"></script>
 <script src="admin-student-membership.js?v=20261108-fresh-access1"></script>
 <script src="seminar/2026-video/access.js?v=20261108-access1"></script>
 <script>
@@ -597,10 +604,28 @@
   function studentTypeLabel(name){ return {resident:'재원생',online:'온라인',withdrawn:'퇴원생',graduated:'졸업생'}[studentType(name)]; }
   function studentTypeStyle(name){ return {resident:'background:#e6f1fb;color:#185fa5',online:'background:#faeeda;color:#854f0b',withdrawn:'background:#f3e8e8;color:#942e2e',graduated:'background:#edf0f4;color:#566274'}[studentType(name)]; }
   function sortStudents(){ if(!Array.isArray(S.students)) return; const order={resident:0,online:1,graduated:2,withdrawn:3}; S.students.sort((x,y)=>order[studentType(x)]-order[studentType(y)]||x.localeCompare(y,'ko')); }
-  function renderAll(){ sortStudents(); renderMatrix(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderExam(); renderGhStat(); }
+  function renderAll(){ sortStudents(); renderMatrix(); renderFeb(); renderStudents(); renderContent(); renderSettings(); renderArchiveAdmin(); renderVip(); renderMag(); renderReportAdmin(); renderExam(); renderGhStat(); }
 
   function ensureStudent(name){ if(!S.attendance[name]) S.attendance[name]=[]; }
 
+  /* 2월 로드맵: 수강 학생·현재 주차를 data.js의 febRoadmap에 저장한다 */
+  function febNodes(){return ((window.GFIELD_ROADMAP_FEB||{}).nodes||[]).filter(n=>n.type==='week');}
+  function febCfg(){const R=window.GFIELD_ROADMAP_FEB;if(!R)return null;if(!S.febRoadmap)S.febRoadmap={members:(R.meta.members||[]).slice(),currentWeekId:R.meta.currentWeekId};return S.febRoadmap;}
+  function febSetCurrent(id){febCfg().currentWeekId=id;renderFeb();dirty();}
+  function febToggle(name){const c=febCfg(),i=c.members.indexOf(name);if(i>=0)c.members.splice(i,1);else c.members.push(name);renderFeb();dirty();}
+  function renderFeb(){
+    const t=document.getElementById('feb-matrix');if(!t||!window.GFIELD_ROADMAP_FEB)return;
+    const c=febCfg(),weeks=febNodes(),cur=weeks.findIndex(w=>w.id===c.currentWeekId);
+    document.getElementById('feb-cur').innerHTML=weeks.map(w=>`<option value="${w.id}"${w.id===c.currentWeekId?' selected':''}>${esc(w.date)} · ${esc(w.title)}</option>`).join('');
+    let h='<thead><tr><th>학생</th><th>2월 과정</th>'+weeks.map(w=>`<th title="${esc(w.title)}">${esc(w.date.replace('주차','주').replace(' ',''))}</th>`).join('')+'</tr></thead><tbody>';
+    S.students.filter(n=>studentType(n)!=='graduated'&&studentType(n)!=='withdrawn').forEach(name=>{
+      const on=c.members.includes(name);
+      h+=`<tr><th>${esc(name)} <span style="font-size:10px;font-weight:800;padding:1px 6px;border-radius:8px;${studentTypeStyle(name)}">${studentTypeLabel(name)}</span></th><td class="cell ${on?'on':'off'}" onclick="febToggle('${esc(name)}')"></td>`;
+      weeks.forEach((w,i)=>{h+=`<td class="cell ${on&&i<=cur?'on':'off'}" style="cursor:default"></td>`;});
+      h+='</tr>';
+    });
+    t.innerHTML=h+'</tbody>';
+  }
   function renderMatrix(){
     const weeks=weekNodes(); const sp=specialNode();
     let html='<thead><tr><th>학생</th>';

@@ -10,11 +10,14 @@
     var R = root.GFIELD_ROADMAP_FEB;
     name = String(name || '').trim();
     if (!R || !R.meta || R.meta.status !== 'published' || !name) return NONE;
-    if (!Array.isArray(R.meta.members) || R.meta.members.indexOf(name) < 0) return NONE;
+    var cfg = (data && data.febRoadmap) || {};   /* 어드민 설정이 있으면 파일 기본값보다 우선 */
+    var members = Array.isArray(cfg.members) ? cfg.members : R.meta.members;
+    var currentId = cfg.currentWeekId || R.meta.currentWeekId;
+    if (!Array.isArray(members) || members.indexOf(name) < 0) return NONE;
     var type = ((data && data.studentTypes) || {})[name];
     if (type === 'withdrawn' || type === 'graduated') return NONE;
     var weeks = (R.nodes || []).filter(function (n) { return n.type === 'week'; });
-    var current = weeks.findIndex(function (n) { return n.id === R.meta.currentWeekId; });
+    var current = weeks.findIndex(function (n) { return n.id === currentId; });
     if (current < 0) return NONE;
     var out = { attendance: [], products: [], folders: [] };
     weeks.slice(0, current + 1).forEach(function (node) {

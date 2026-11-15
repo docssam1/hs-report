@@ -13,6 +13,13 @@
   var preview = false;
   try { preview = new URLSearchParams(location.search).get('feb') === 'preview'; } catch (e) {}
   var published = R.meta.status === 'published';
+  /* 어드민(data.js의 febRoadmap)에서 정한 명단·현재 주차가 있으면 파일 기본값 대신 쓴다. */
+  (function () {
+    var cfg = (window.GFIELD_DATA || {}).febRoadmap;
+    if (!cfg) return;
+    if (Array.isArray(cfg.members)) R.meta.members = cfg.members;
+    if (cfg.currentWeekId) R.meta.currentWeekId = cfg.currentWeekId;
+  })();
   var weeks = R.nodes.filter(function (n) { return n.type === 'week'; });
 
   function student() { return typeof currentStudent !== 'undefined' && currentStudent ? currentStudent : ''; }
