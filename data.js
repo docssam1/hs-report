@@ -1399,7 +1399,8 @@ window.GFIELD_DATA = {
     "최종 모의고사",
     "추가 모의고사",
     "규칙 보충학습",
-    "3% 1과정 영역별 테스트"
+    "3% 1과정 영역별 테스트",
+    "승급과정 문제은행"
   ],
   "archiveAccess": {
     "보충학습": [
@@ -1927,7 +1928,8 @@ window.GFIELD_DATA = {
       "이승우",
       "정준우",
       "정도헌"
-    ]
+    ],
+    "승급과정 문제은행": []
   },
   "archiveProductAccess": {
     "question-bank": [
@@ -3186,6 +3188,28 @@ window.GFIELD_DATA = {
       "cover": "",
       "date": "2026-10-08",
       "links": []
+    },
+    {
+      "folder": "승급과정 문제은행",
+      "title": "초등과정 4-1 일일테스트 1단원 1,2차시",
+      "pdf": "",
+      "imgdir": "daily_41_u1_12",
+      "pages": 1,
+      "cover": "materials/daily_41_u1_12/001.jpg",
+      "date": "2026-11-15",
+      "unit": 1,
+      "session": "1,2차시"
+    },
+    {
+      "folder": "승급과정 문제은행",
+      "title": "초등과정 4-1 일일테스트 1단원 3,4차시",
+      "pdf": "",
+      "imgdir": "daily_41_u1_34",
+      "pages": 1,
+      "cover": "materials/daily_41_u1_34/001.jpg",
+      "date": "2026-11-15",
+      "unit": 1,
+      "session": "3,4차시"
     }
   ],
   "pins": {},
