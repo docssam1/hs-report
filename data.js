@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 11. 16. 오후 5:50:46
+ * 생성: 2026. 11. 16. 오후 5:58:42
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -3214,6 +3214,22 @@ window.GFIELD_DATA = {
       "unit": 1,
       "session": "3,4차시",
       "video": "https://youtu.be/NdMrEYBaxl0"
+    },
+    {
+      "folder": "승급 복습강의",
+      "title": "LEVEL UP심화 4-1-1 큰수 1,2,3,4차시",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1794819215248_0ds3_LEVEL_UP___4-1-1_____v251125_.pdf",
+      "video": "https://youtu.be/WBdbOoLzg6M",
+      "cover": "",
+      "date": "2026-11-16",
+      "links": [
+        {
+          "label": "",
+          "url": ""
+        }
+      ],
+      "imgdir": "bk_mwj10v90",
+      "pages": 19
     }
   ],
   "pins": {},
