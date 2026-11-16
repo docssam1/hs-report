@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 11. 16. 오후 4:50:23
+ * 생성: 2026. 11. 16. 오후 5:25:48
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1443,9 +1443,7 @@ window.GFIELD_DATA = {
       "김지온",
       "조혜서",
       "조혜연",
-      "이승민",
       "이승우",
-      "이지안",
       "정준우",
       "정도헌",
       "김지인"
@@ -1850,9 +1848,7 @@ window.GFIELD_DATA = {
       "김지온",
       "조혜서",
       "조혜연",
-      "이승민",
       "이승우",
-      "이지안",
       "정준우",
       "정도헌",
       "김지인"
@@ -4876,10 +4872,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T10:37:03.501Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5049,7 +5042,6 @@ window.GFIELD_DATA = {
       "special": false,
       "folders": [
         "보충학습",
-        "규칙 보충학습",
         "파이널 모의고사",
         "약점 유형",
         "사고력 교재"
@@ -5231,10 +5223,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T10:37:03.502Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5316,10 +5305,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5361,10 +5347,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5382,10 +5365,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5403,10 +5383,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5424,10 +5401,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5445,10 +5419,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5466,10 +5437,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5519,10 +5487,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5569,10 +5534,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5590,10 +5552,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026",
         "concept-basic",
@@ -5613,10 +5572,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5634,10 +5590,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5655,10 +5608,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5676,10 +5626,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5697,10 +5644,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5718,10 +5662,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.187Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5763,10 +5704,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.188Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5784,10 +5722,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.188Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5805,10 +5740,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.188Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5826,10 +5758,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.188Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5847,10 +5776,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.188Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
@@ -5868,10 +5794,7 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T11:02:22.188Z",
       "attendance": [],
       "special": false,
-      "folders": [
-        "규칙 보충학습",
-        "보충학습"
-      ],
+      "folders": [],
       "products": [
         "seminar-hwangso-2026"
       ],
