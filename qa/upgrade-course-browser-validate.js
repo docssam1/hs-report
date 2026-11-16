@@ -87,7 +87,7 @@ const INJECT=';(function(D){var F=["승급 복습강의","승급과정 문제은
   console.log(JSON.stringify(out));
   assert.equal(out.outsiderTab,false);assert.equal(out.outsiderArchive,false);
   assert.ok(out.archivePointer&&out.pointerOpens&&out.novBack);
-  assert.deepEqual(out.sections,['🎬 복습용 강의','📝 Test 문제은행','📖 승급·편입 자료실']);
+  assert.deepEqual(out.sections,['복습용 강의','Test 문제은행','승급·편입 자료실']);
   assert.deepEqual(out.courses,['4-1 Level Up 심화','4-2 Level Up 심화']);
   assert.ok(out.bankDrawn);assert.deepEqual(out.lecture,{split:true,img:true});
   assert.deepEqual(out.flip,['1 / 7쪽','2–3 / 7쪽','4–5 / 7쪽','2–3 / 7쪽']);

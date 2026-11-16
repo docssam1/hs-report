@@ -15,24 +15,24 @@
   var style = document.createElement('style');
   style.textContent =
     '.ub-bar{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px;}' +
-    '.ub-mode,.ub-chip{min-height:44px;padding:9px 16px;border-radius:999px;border:1px solid var(--line2);background:var(--card);' +
+    '.ub-mode,.ub-chip{min-height:44px;padding:9px 16px;border-radius:999px;border:2px solid #1b2340;background:#fff;' +
     'color:var(--ink2);font-size:14px;font-weight:700;}' +
-    '.ub-mode[aria-pressed="true"]{background:var(--orange);border-color:var(--orange-d);color:#fff;}' +
-    '.ub-chip[aria-pressed="true"]{background:#edf3ff;border-color:#2456c4;color:#1f3f8f;}' +
+    '.ub-mode[aria-pressed="true"]{background:#141b5d;border-color:#141b5d;color:#fff;}' +
+    '.ub-chip[aria-pressed="true"]{background:#ece3fb;border-color:#1b2340;color:#1b2340;}' +
     '.ub-mode:focus-visible,.ub-chip:focus-visible,.ub-print:focus-visible,.ub-btn:focus-visible,.ub-sel:focus-visible{outline:3px solid #2456c4;outline-offset:3px;}' +
     '.ub-sum{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:4px 0 12px;font-size:13.5px;color:var(--ink2);}' +
-    '.ub-print,.ub-btn{min-height:44px;padding:9px 16px;border-radius:12px;border:1px solid #2456c4;background:#2456c4;color:#fff;font-size:14px;font-weight:700;}' +
-    '.ub-btn.ghost{background:#fff;color:#1f3f8f;}' +
+    '.ub-print,.ub-btn{min-height:44px;padding:9px 16px;border-radius:12px;border:2px solid #141b5d;background:#141b5d;color:#fff;font-size:14px;font-weight:700;box-shadow:0 3px 0 #070b33;}' +
+    '.ub-btn.ghost{background:#fff;color:#141b5d;box-shadow:0 3px 0 #141b5d;}' +
     '.ub-print:disabled,.ub-btn:disabled{opacity:.45;cursor:not-allowed;}' +
-    '.ub-prac{margin:22px 0 10px;padding:16px 16px 18px;background:#fff;border:1px solid var(--line);border-radius:16px;}' +
+    '.ub-prac{margin:18px 0 4px;padding:16px 16px 18px;background:#ece3fb;border:2px solid #1b2340;border-radius:18px;}' +
     '.ub-prac h4{font-size:17px;margin:0 0 4px;color:var(--ink);}' +
     '.ub-note{font-size:12.5px;color:var(--ink2);line-height:1.6;margin:2px 0 10px;}' +
     '.ub-lab{font-size:13px;font-weight:700;color:var(--ink2);margin:12px 0 4px;}' +
     '.ub-sel{min-height:44px;padding:8px 12px;border-radius:10px;border:1px solid var(--line2);background:#fff;font-size:14px;}' +
-    '.ub-q{margin:12px 0;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fffdf9;}' +
+    '.ub-q{margin:12px 0;padding:14px;border:2px solid #d6e2f5;border-radius:14px;background:#fff;}' +
     '.ub-q-h{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12.5px;color:var(--ink2);margin-bottom:6px;}' +
     '.ub-q-n{font-weight:800;color:var(--ink);font-size:15px;}' +
-    '.ub-tag{padding:2px 9px;border-radius:999px;background:#fff3e6;border:1px solid #fcdcb8;color:var(--accent);font-weight:700;}' +
+    '.ub-tag{padding:2px 9px;border-radius:999px;background:#ece3fb;border:1.5px solid #1b2340;color:#1b2340;font-weight:700;}' +
     '.ub-q-t{white-space:pre-wrap;line-height:1.75;font-size:15px;color:var(--ink);}' +
     '.ub-ans{margin-top:10px;padding:10px 12px;border-radius:10px;background:#edf3ff;border:1px solid #cbd8ec;font-size:14px;line-height:1.7;}' +
     '.ub-ans b{color:#1f3f8f;}' +
@@ -135,8 +135,8 @@
           h += '<div class="ub-note">생성 번호 <b>' + st.seed + '</b> · 같은 번호를 입력하면 같은 문제를 다시 만들 수 있습니다.</div>';
           if (st.capped) h += '<div class="ub-note">문항이 너무 많아 조합마다 개수를 줄였습니다.</div>';
           if (st.short.length) h += '<div class="ub-note">' + st.short.map(function (x) { var s2 = data.sources.find(function (y) { return y.id === x.source; }); return escHtml(s2.session + ' ' + s2.no + '번 ' + ruleOf(x.level).label) + '은(는) 서로 다른 문제를 ' + x.made + '개까지만 만들 수 있습니다.'; }).join('<br>') + '</div>';
-          h += '<div class="ub-bar"><button type="button" class="ub-btn" data-act="print-q">🖨 문제지 인쇄</button>' +
-            '<button type="button" class="ub-btn ghost" data-act="print-a">🖨 정답·풀이 인쇄</button></div>';
+          h += '<div class="ub-bar"><button type="button" class="ub-btn" data-act="print-q">문제지 인쇄</button>' +
+            '<button type="button" class="ub-btn ghost" data-act="print-a">정답·풀이 인쇄</button></div>';
           h += st.picked.map(function (it, n) {
             var s = data.sources.find(function (x) { return x.id === it.source; });
             var open = !!st.shown[it.id];
@@ -240,12 +240,13 @@
         }).join('') + '</div>';
       }
       h += '<div class="ub-sum"><span>선택한 시험지 <b>' + pick.length + '</b>장</span>' +
-        '<button type="button" class="ub-print"' + (pick.length ? '' : ' disabled') + '>🖨 선택한 시험지 한 번에 인쇄</button></div>';
+        '<button type="button" class="ub-print"' + (pick.length ? '' : ' disabled') + '>선택한 시험지 한 번에 인쇄</button></div>';
       h += '<div class="shelf">' + pick.map(function (b) {
         var i = (D.books || []).indexOf(b);
         var cover = b.cover ? '<span class="cover"><img loading="lazy" src="' + escAttr(b.cover) + '" alt="' + escAttr(b.title) + '"></span>'
+          : window.GFIELD_ILLUST ? '<span class="cover drawn">' + window.GFIELD_ILLUST.cover(b.title) + '</span>'
           : '<span class="cover noimg"><span class="cv-title">' + escHtml(b.title) + '</span></span>';
-        return '<button class="book" data-ub="' + i + '">' + cover + '<span class="label">' + escHtml(b.title) + '</span><span class="pages">📄 시험지</span></button>';
+        return '<button class="book" data-ub="' + i + '">' + cover + '<span class="label">' + escHtml(b.title) + '</span><span class="pages">시험지</span></button>';
       }).join('') + '</div>';
       top.innerHTML = h;
     }

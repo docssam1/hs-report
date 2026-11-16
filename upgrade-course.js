@@ -10,6 +10,7 @@
   var tabs = view && view.querySelector('.rm-tabs');
   if (!view || !tabs) return;
   var D = window.GFIELD_DATA || {};
+  var I = window.GFIELD_ILLUST || null;
   var F = { lec: '승급 복습강의', bank: '승급과정 문제은행', book: '승급·편입 자료실' };
   var FOLDERS = [F.lec, F.bank, F.book];
   window.GFIELD_UPGRADE_FOLDERS = FOLDERS.slice();
@@ -27,19 +28,48 @@
 
   var style = document.createElement('style');
   style.textContent =
-    '.up-sec{margin:0 0 22px;padding:16px 16px 18px;background:var(--card);border:1px solid var(--line);border-radius:16px;}' +
-    '.up-h{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:800;color:var(--ink);margin:0 0 4px;}' +
-    '.up-d{font-size:13px;color:var(--ink2);line-height:1.6;margin:0 0 12px;}' +
-    '.up-empty{padding:14px;border:1px dashed var(--line2);border-radius:12px;color:var(--ink2);font-size:13.5px;line-height:1.6;}' +
-    '.up-course{font-size:14.5px;font-weight:800;color:#1f3f8f;margin:14px 0 6px;}' +
-    '.up-lock{padding:28px 18px;text-align:center;color:var(--ink2);font-size:14.5px;line-height:1.7;background:var(--card);border:1px solid var(--line);border-radius:16px;}' +
+    /* 승급과정: 외곽선 #1b2340 · 라일락 #7b55c7 · 남색 #141b5d (그림은 hs-illust.js) */
+    '.up-hero{position:relative;border:2.5px solid #1b2340;border-radius:24px;overflow:hidden;background:#e9e0fb;box-shadow:0 5px 0 #1b2340;margin:0 0 20px;}' +
+    '.up-hero .hs-scene{display:block;width:100%;height:auto;}' +
+    '.up-hero-c{position:absolute;left:22px;top:18px;max-width:46%;}' +
+    '.up-hero-c h2{font-size:27px;font-weight:400;color:#1b2340;line-height:1.2;}' +
+    '.up-hero-c p{margin-top:6px;font-size:13.5px;font-weight:500;line-height:1.6;color:#2e2850;}' +
+    '.up-sec{margin:0 0 20px;padding:16px 16px 18px;background:#fff;border:2.5px solid #1b2340;border-radius:22px;}' +
+    '.up-top{display:flex;align-items:center;gap:12px;margin:0 0 12px;}' +
+    '.up-top .hs-ic{flex:none;width:50px;height:50px;}' +
+    '.up-h{font-size:20px;font-weight:400;color:#1b2340;margin:0;}' +
+    '.up-d{font-size:13px;color:#4e5878;line-height:1.55;margin:2px 0 0;font-weight:500;}' +
+    '.up-empty{padding:14px;border:2px dashed #8d99b8;border-radius:14px;color:#4e5878;font-size:13.5px;line-height:1.6;}' +
+    '.up-course{display:inline-block;font-size:13px;font-weight:700;color:#1b2340;margin:12px 0 4px;padding:3px 10px;border-radius:8px;border:1.5px solid #1b2340;background:#ece3fb;}' +
+    '.up-lock{padding:28px 18px;text-align:center;color:#1b2340;font-size:14.5px;line-height:1.7;background:#fff;border:2.5px solid #1b2340;border-radius:20px;}' +
     '.up-bank .shelf-h{display:none;}' +
+    /* 강의: 한 줄 카드(썸네일 + 제목) */
+    '#rm-upg .up-rows{display:grid;gap:10px;margin-top:6px;}' +
+    '#rm-upg .book.up-row{flex-direction:row;align-items:center;gap:12px;width:100%;padding:10px;border:2px solid #d6e2f5;border-radius:16px;background:#fff;text-align:left;}' +
+    '#rm-upg .book.up-row:hover{border-color:#1b2340;}' +
+    '#rm-upg .up-row .hs-thumb,#rm-upg .up-row .up-thumb{flex:none;width:96px;height:64px;border:2px solid #1b2340;border-radius:10px;overflow:hidden;display:block;object-fit:cover;}' +
+    '#rm-upg .up-row .up-rt{display:flex;flex-direction:column;gap:2px;min-width:0;}' +
+    '#rm-upg .up-row .label{text-align:left;font-size:14.5px;}' +
+    '#rm-upg .up-row .desc{text-align:left;font-size:12px;color:#4e5878;}' +
+    '#rm-upg .book .pages{color:#5b3ea3;font-size:11.5px;font-weight:700;}' +
+    /* 책장: 그린 표지 */
+    '#rm-upg .shelf{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:18px 14px;}' +
+    '#rm-upg .book .cover.drawn{transform:none;box-shadow:none;aspect-ratio:120/160;width:100%;}' +
+    '#rm-upg .book .cover.drawn::before,#rm-upg .book .cover.drawn::after{display:none;}' +
+    '#rm-upg .book .cover.drawn svg{display:block;width:100%;height:100%;}' +
+    '#rm-upg .book:hover .cover.drawn{transform:translateY(-4px);}' +
+    '#rm-upg .book .label{color:#1b2340;}' +
+    '#rm-upg .book:focus-visible{outline:3px solid #2456c4;outline-offset:3px;border-radius:12px;}' +
+    '@media (max-width:600px){.up-hero-c{position:static;max-width:none;padding:14px 16px 16px;background:#e9e0fb;border-top:2.5px solid #1b2340;}' +
+    '.up-hero .hs-scene{height:190px;}.up-hero-c h2{font-size:24px;}}' +
+    '@media (prefers-reduced-motion: reduce){#rm-upg .book:hover .cover.drawn{transform:none;}}' +
     /* 책넘김 뷰어 */
     '.ufb{position:fixed;inset:0;z-index:2000;background:#2b2d31;display:none;flex-direction:column;color:#fff;}' +
     '.ufb.open{display:flex;}' +
-    '.ufb-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#1e3c72;}' +
+    '.ufb-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#141b5d;}' +
     '.ufb-t{flex:1;min-width:0;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
     '.ufb-pg{font-size:13px;opacity:.9;white-space:nowrap;}' +
+    '.ufb-b .hs-li{width:16px;height:16px;vertical-align:-3px;margin-right:4px;}' +
     '.ufb-b{min-height:44px;min-width:44px;padding:8px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-size:14px;font-weight:700;}' +
     '.ufb-b:disabled{opacity:.35;}' +
     '.ufb-b:focus-visible{outline:3px solid #ffd27a;outline-offset:2px;}' +
@@ -65,7 +95,7 @@
   var btn = document.createElement('button');
   btn.type = 'button'; btn.className = 'rm-tab'; btn.id = 'rm-tab-upg';
   btn.setAttribute('role', 'tab'); btn.setAttribute('aria-selected', 'false'); btn.setAttribute('aria-controls', 'rm-upg');
-  btn.textContent = '승급과정';
+  btn.innerHTML = '<span class="rm-dot">' + (I ? I.LINE.stairs : '') + '</span>승급과정';
   btn.style.display = 'none';
   tabs.appendChild(btn);
   var panel = document.createElement('div');
@@ -93,39 +123,47 @@
   function cardHtml(b, tag) {
     var i = (D.books || []).indexOf(b);
     var cover = b.cover ? '<span class="cover"><img loading="lazy" src="' + esc(b.cover) + '" alt="' + esc(b.title || '교재') + '"></span>'
+      : I ? '<span class="cover drawn">' + I.cover(b.title) + '</span>'
       : '<span class="cover noimg"><span class="cv-title">' + esc(b.title || '교재') + '</span></span>';
     return '<button class="book" data-up="' + i + '">' + cover + '<span class="label">' + esc(b.title || '교재') + '</span>' +
       (b.desc ? '<span class="desc">' + esc(b.desc) + '</span>' : '') + '<span class="pages">' + tag + '</span></button>';
   }
+  function rowHtml(b, tag) {
+    var i = (D.books || []).indexOf(b);
+    var th = b.cover ? '<img class="up-thumb" loading="lazy" src="' + esc(b.cover) + '" alt="">' : (I ? I.lecThumb(b.title) : '');
+    return '<button class="book up-row" data-up="' + i + '">' + th + '<span class="up-rt"><span class="label">' + esc(b.title || '교재') + '</span>' +
+      (b.desc ? '<span class="desc">' + esc(b.desc) + '</span>' : '') + '<span class="pages">' + tag + '</span></span></button>';
+  }
+  function head(key, id, title, desc) {
+    return '<div class="up-top">' + (I ? I.ICON[key] : '') + '<div><h3 class="up-h disp" id="' + id + '">' + title + '</h3><p class="up-d">' + desc + '</p></div></div>';
+  }
   function lecHtml() {
     var list = booksOf(F.lec);
-    var h = '<section class="up-sec" aria-labelledby="up-h-lec"><h3 class="up-h disp" id="up-h-lec">🎬 복습용 강의</h3>' +
-      '<p class="up-d">수업한 교재와 복습 영상을 함께 봅니다. 영상과 교재가 나란히 열립니다.</p>';
+    var h = '<section class="up-sec" aria-labelledby="up-h-lec">' + head('lec', 'up-h-lec', '복습용 강의', '교재를 옆에 펴 놓고 영상으로 다시 봐요. 영상과 교재가 나란히 열립니다.');
     if (!list.length) return h + '<div class="up-empty">아직 올라온 복습 강의가 없습니다.</div></section>';
     var courses = [];
     list.forEach(function (b) { var c = String(b.course || '').trim() || '기타'; if (courses.indexOf(c) < 0) courses.push(c); });
     courses.forEach(function (c) {
-      h += '<div class="up-course">' + esc(c) + '</div><div class="shelf">' + list.filter(function (b) { return (String(b.course || '').trim() || '기타') === c; })
-        .map(function (b) { return cardHtml(b, b.video ? '🎬 교재 + 복습영상' : (b.links && b.links.length ? '▶ 영상 링크' : '📄 교재')); }).join('') + '</div>';
+      h += '<div class="up-course">' + esc(c) + '</div><div class="up-rows">' + list.filter(function (b) { return (String(b.course || '').trim() || '기타') === c; })
+        .map(function (b) { return rowHtml(b, b.video ? '교재 + 복습영상' : (b.links && b.links.length ? '영상 링크' : '교재')); }).join('') + '</div>';
     });
     return h + '</section>';
   }
   function bookHtml() {
     var list = booksOf(F.book);
-    var h = '<section class="up-sec" aria-labelledby="up-h-book"><h3 class="up-h disp" id="up-h-book">📖 승급·편입 자료실</h3>' +
-      '<p class="up-d">책을 넘기듯 양쪽으로 펼쳐 봅니다. 화면과 인쇄물 모두 ' + esc(student()) + ' 님의 이름이 워터마크로 들어갑니다.</p>';
+    var h = '<section class="up-sec" aria-labelledby="up-h-book">' + head('book', 'up-h-book', '승급·편입 자료실', '책처럼 양쪽으로 넘겨 봐요. 화면과 인쇄물에 ' + esc(student()) + ' 님의 이름이 워터마크로 들어갑니다.');
     if (!list.length) return h + '<div class="up-empty">아직 올라온 교재가 없습니다.</div></section>';
-    return h + '<div class="shelf">' + list.map(function (b) { return cardHtml(b, b.imgdir && b.pages ? '📖 ' + b.pages + '쪽 · 책넘김' : '📄 교재'); }).join('') + '</div></section>';
+    return h + '<div class="shelf">' + list.map(function (b) { return cardHtml(b, b.imgdir && b.pages ? b.pages + '쪽 · 책넘김' : '교재'); }).join('') + '</div></section>';
   }
   function render() {
     if (!allowed()) {
       panel.innerHTML = '<div class="up-lock"><b>승급과정 학생에게 열리는 공간입니다.</b><br>선생님이 열어 주시면 이곳에서 볼 수 있습니다.</div>';
       return;
     }
-    var h = '';
+    var h = '<section class="up-hero">' + (I ? I.upgScene('황소가 복습 강의, Test 문제은행, 편입 자료실 계단을 차례로 올라가는 그림') : '') +
+      '<div class="up-hero-c"><h2 class="disp">승급과정</h2><p>강의로 복습하고, 시험지로 확인하고,<br>자료실 책으로 다져서 한 칸씩 올라가요.</p></div></section>';
     if (canFolder(F.lec)) h += lecHtml();
-    if (canFolder(F.bank)) h += '<section class="up-sec up-bank" aria-labelledby="up-h-bank"><h3 class="up-h disp" id="up-h-bank">📝 Test 문제은행</h3>' +
-      '<p class="up-d">시험지를 열면 답안과 해설강의(있는 경우)가 함께 나옵니다. 아래에서 유사문제를 낮춰서·같은 수준·높여서 만들어 풀 수 있습니다.</p><div class="up-bank-host"></div></section>';
+    if (canFolder(F.bank)) h += '<section class="up-sec up-bank" aria-labelledby="up-h-bank">' + head('bank', 'up-h-bank', 'Test 문제은행', '시험지를 열면 답안과 해설강의(있는 경우)가 함께 나와요. 아래에서 비슷한 문제를 낮춰서·같은 수준·높여서 만들어 풀 수 있어요.') + '<div class="up-bank-host"></div></section>';
     if (canFolder(F.book)) h += bookHtml();
     panel.innerHTML = h;
     var host = panel.querySelector('.up-bank-host');
@@ -147,7 +185,7 @@
   var fb = document.createElement('div');
   fb.className = 'ufb'; fb.setAttribute('role', 'dialog'); fb.setAttribute('aria-modal', 'true'); fb.setAttribute('aria-labelledby', 'ufb-t');
   fb.innerHTML = '<div class="ufb-bar"><span class="ufb-t" id="ufb-t"></span><span class="ufb-pg" aria-live="polite"></span>' +
-    '<button type="button" class="ufb-b" data-act="print">🖨 인쇄</button><button type="button" class="ufb-b" data-act="close" aria-label="닫기">✕</button></div>' +
+    '<button type="button" class="ufb-b" data-act="print">' + (I ? I.LINE.print : '') + '인쇄</button><button type="button" class="ufb-b" data-act="close" aria-label="닫기">✕</button></div>' +
     '<div class="ufb-stage"><div class="ufb-book"></div></div>' +
     '<div class="ufb-nav"><button type="button" class="ufb-b" data-act="prev" aria-label="이전 쪽">‹ 이전</button>' +
     '<input type="range" class="ufb-range" min="0" value="0" aria-label="쪽 이동"><button type="button" class="ufb-b" data-act="next" aria-label="다음 쪽">다음 ›</button></div>';
@@ -297,7 +335,7 @@
       if (removed || allowed()) {
         var box = document.createElement('div');
         box.className = 'shelf-sec';
-        box.innerHTML = '<div class="shelf-h disp">🎓 승급과정</div><div class="up-empty" style="border-style:solid;background:#edf3ff;border-color:#cbd8ec">' +
+        box.innerHTML = '<div class="shelf-h disp">' + (I ? '<span style="display:inline-flex;width:20px;height:20px">' + I.LINE.stairs + '</span>' : '') + '승급과정</div><div class="up-empty" style="border:2px solid #1b2340;background:#ece3fb;color:#1b2340">' +
           '복습용 강의 · Test 문제은행 · 승급·편입 자료실은 <b>로드맵 → 승급과정</b> 탭에 모여 있습니다. ' +
           '<button type="button" class="ub-btn" data-go-upg style="margin-top:8px">승급과정으로 가기</button></div>';
         wrap.insertBefore(box, wrap.firstChild);

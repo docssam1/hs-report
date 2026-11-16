@@ -115,20 +115,76 @@
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
+  var I = window.GFIELD_ILLUST || null;
   var style = document.createElement('style');
+  /* 로드맵 탭(11월·2월·승급)과 2월 화면. 색: 남색 #141b5d · 2월 파랑 #3f6fe0 · 승급 라일락 #7b55c7, 외곽선 #1b2340 */
   style.textContent =
-    '.rm-tabs{display:flex;gap:8px;padding:4px 0 10px;}' +
-    '.rm-tab{flex:1;min-height:44px;padding:10px 14px;border-radius:999px;border:1px solid var(--line2);' +
-    'background:var(--card);color:var(--ink2);font-size:14px;font-weight:700;}' +
-    '.rm-tab[aria-selected="true"]{background:var(--orange);border-color:var(--orange-d);color:#fff;}' +
+    '.rm-tabs{display:flex;flex-wrap:wrap;gap:8px;padding:4px 0 14px;}' +
+    '.rm-tab{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:5px 16px 5px 5px;border-radius:999px;border:2px solid #1b2340;' +
+    'background:#fff;color:#1b2340;font-size:14.5px;font-weight:700;box-shadow:0 3px 0 #1b2340;}' +
+    '.rm-tab .rm-dot{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:2px solid #1b2340;background:#eef2fa;}' +
+    '.rm-tab .hs-li{width:17px;height:17px;}' +
+    '#rm-tab-feb .rm-dot{background:#dfe9ff}#rm-tab-upg .rm-dot{background:#ece3fb}' +
+    '.rm-tab[aria-selected="true"]{background:#141b5d;color:#fff;}' +
+    '#rm-tab-feb[aria-selected="true"]{background:#3f6fe0;}#rm-tab-upg[aria-selected="true"]{background:#7b55c7;}' +
+    '.rm-tab[aria-selected="true"] .rm-dot{border-color:#fff;color:#1b2340;}' +
+    '.rm-tab:active{transform:translateY(2px);box-shadow:0 1px 0 #1b2340;}' +
     '.rm-tab:focus-visible{outline:3px solid #2456c4;outline-offset:3px;}' +
-    '.rm-feb-note{margin:6px 0 12px;padding:12px 14px;border-radius:12px;background:#fff7ec;border:1px solid #fcdcb8;' +
-    'color:var(--ink2);font-size:13.5px;line-height:1.6;}' +
-    '.rm-feb-nov{display:flex;align-items:center;min-height:44px;margin:0 0 10px;padding:10px 14px;border-radius:12px;' +
-    'background:#edf3ff;border:1px solid #cbd8e8;color:#1f3f8f;font-size:14px;font-weight:700;text-decoration:none;}' +
+    '.rm-feb-note{margin:6px 0 12px;padding:12px 14px;border-radius:12px;background:#fff;border:2px dashed #8d99b8;color:#1b2340;font-size:13.5px;line-height:1.6;}' +
+    '.rm-feb-nov{display:flex;align-items:center;gap:8px;min-height:44px;margin:14px 0 0;padding:10px 14px;border-radius:14px;' +
+    'background:#fff;border:2px solid #1b2340;color:#1b2340;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 3px 0 #1b2340;}' +
+    '.rm-feb-nov .hs-li{width:18px;height:18px;flex:none;color:#3f6fe0;}' +
     '.rm-feb-nov:focus-visible{outline:3px solid #2456c4;outline-offset:3px;}' +
-    '.rm-feb-empty{padding:28px 18px;text-align:center;color:var(--ink2);font-size:14.5px;line-height:1.7;' +
-    'background:var(--card);border:1px solid var(--line);border-radius:16px;}';
+    '.rm-feb-empty{padding:28px 18px;text-align:center;color:#1b2340;font-size:14.5px;line-height:1.7;background:#fff;border:2px solid #1b2340;border-radius:20px;}' +
+    /* 큰 그림 */
+    '.fb-hero{position:relative;border:2.5px solid #1b2340;border-radius:24px;overflow:hidden;background:#cfe2ff;box-shadow:0 5px 0 #1b2340;}' +
+    '.fb-hero .hs-scene{display:block;width:100%;height:auto;}' +
+    '.fb-copy{position:absolute;left:22px;top:18px;max-width:48%;}' +
+    '.fb-copy h2{font-size:27px;line-height:1.2;color:#1b2340;font-weight:400;}' +
+    '.fb-copy p{margin-top:6px;font-size:13.5px;font-weight:500;line-height:1.6;color:#27304f;}' +
+    '.fb-dday{display:inline-flex;align-items:baseline;gap:6px;margin-top:10px;background:#fff;border:2px solid #1b2340;border-radius:12px;' +
+    'padding:5px 11px;box-shadow:0 3px 0 #1b2340;font-weight:700;font-size:13px;color:#1b2340;}' +
+    '.fb-dday b{font-family:Jua,sans-serif;font-weight:400;font-size:22px;color:#3f6fe0;}' +
+    /* 단계 카드 */
+    '.fb-phase{margin-top:18px;background:#fff;border:2.5px solid #1b2340;border-radius:22px;overflow:hidden;}' +
+    '.fb-ph-top{display:flex;align-items:stretch;border-bottom:2.5px solid #1b2340;}' +
+    '.fb-ph-top .hs-ph-art{display:block;width:180px;height:80px;flex:none;border-right:2.5px solid #1b2340;}' +
+    '.fb-ph-h{padding:12px 16px;align-self:center;}' +
+    '.fb-ph-h h3{font-size:19px;font-weight:400;color:#1b2340;}' +
+    '.fb-ph-h p{font-size:12.5px;color:#4e5878;font-weight:500;margin-top:2px;}' +
+    '.fb-steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);margin:0;padding:16px 10px 14px;position:relative;}' +
+    '.fb-steps::before{content:"";position:absolute;left:12%;right:12%;top:32px;border-top:2.5px dashed #9fb2d8;}' +
+    '.fb-step{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;width:100%;padding:0 4px 4px;' +
+    'background:none;border:0;border-radius:14px;color:#1b2340;cursor:pointer;font-family:inherit;}' +
+    '.fb-step:focus-visible{outline:3px solid #2456c4;outline-offset:2px;}' +
+    '.fb-num{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:2.5px solid #1b2340;background:#fff;' +
+    'font-family:Jua,sans-serif;font-size:16px;position:relative;z-index:1;margin-bottom:4px;}' +
+    '.fb-t{font-size:13px;font-weight:700;line-height:1.3;word-break:keep-all;}' +
+    '.fb-d{font-size:11.5px;color:#4e5878;font-weight:500;}' +
+    '.fb-st{display:inline-flex;align-items:center;gap:3px;margin-top:3px;font-size:11.5px;font-weight:700;border-radius:8px;padding:2px 7px;}' +
+    '.fb-st .hs-li{width:12px;height:12px;}' +
+    '.fb-step.done .fb-num{background:#4fb884;color:#fff;}' +
+    '.fb-step.done .fb-st{color:#1d6b46;background:#e0f4ea;}' +
+    '.fb-step.open .fb-num{background:#dfe9ff;}' +
+    '.fb-step.open .fb-st{color:#1f3f8f;background:#e8efff;}' +
+    '.fb-step.now .fb-num{background:#f6cf47;}' +
+    '.fb-step.now .fb-st{background:#1b2340;color:#fff;}' +
+    '.fb-step.locked{color:#5d6683;cursor:not-allowed;}' +
+    '.fb-step.locked .fb-num{background:#eef2fa;color:#5d6683;border-color:#8d99b8;}' +
+    '.fb-step.locked .fb-st{color:#5d6683;}' +
+    '.fb-step:not(.locked):hover .fb-num{transform:translateY(-2px);}' +
+    '@media (max-width:600px){' +
+    '.fb-copy{position:static;max-width:none;padding:14px 16px 16px;background:#cfe2ff;border-top:2.5px solid #1b2340;}' +
+    '.fb-hero .hs-scene{height:200px;}' +
+    '.fb-copy h2{font-size:24px;}' +
+    '.fb-ph-top .hs-ph-art{width:110px;}' +
+    '.fb-steps{grid-template-columns:1fr;padding:10px 14px 12px;}' +
+    '.fb-steps::before{left:31px;right:auto;top:24px;bottom:24px;border-top:0;border-left:2.5px dashed #9fb2d8;}' +
+    '.fb-step{flex-direction:row;text-align:left;gap:10px;padding:6px 0;}' +
+    '.fb-num{margin:0;flex:none;}' +
+    '.fb-step .fb-txt{flex:1;min-width:0;}' +
+    '.fb-st{margin:0 0 0 auto;flex:none;}}' +
+    '@media (prefers-reduced-motion: reduce){.fb-step:not(.locked):hover .fb-num{transform:none;}}';
   document.head.appendChild(style);
 
   var tabs = document.createElement('div');
@@ -136,8 +192,8 @@
   tabs.setAttribute('role', 'tablist');
   tabs.setAttribute('aria-label', '로드맵 선택');
   tabs.innerHTML =
-    '<button type="button" class="rm-tab" role="tab" id="rm-tab-nov" aria-selected="true" aria-controls="timeline">11월 로드맵</button>' +
-    '<button type="button" class="rm-tab" role="tab" id="rm-tab-feb" aria-selected="false" aria-controls="rm-feb">2월 로드맵</button>';
+    '<button type="button" class="rm-tab" role="tab" id="rm-tab-nov" aria-selected="true" aria-controls="timeline"><span class="rm-dot">' + (I ? I.LINE.map : '') + '</span>11월 로드맵</button>' +
+    '<button type="button" class="rm-tab" role="tab" id="rm-tab-feb" aria-selected="false" aria-controls="rm-feb"><span class="rm-dot">' + (I ? I.LINE.flag : '') + '</span>2월 로드맵</button>';
   view.insertBefore(tabs, view.firstChild);
 
   var panel = document.createElement('div');
@@ -154,30 +210,49 @@
     }
     var html = '';
     if (!published) html += '<div class="rm-feb-note">미리보기입니다. 학생에게는 아직 공개되지 않은 초안입니다.</div>';
-    if (R.meta.novMaterials) {
-      html += '<a class="rm-feb-nov" href="' + esc(R.meta.novMaterials.url) + '">📎 ' + esc(R.meta.novMaterials.label) + ' 보기</a>';
-    }
-    html += '<div class="legend">' +
-      '<span><i style="background:var(--exam)"></i>Thinking Core + 과제</span>' +
-      '<span><i style="background:var(--final)"></i>파이널·최종 모의고사</span></div>';
-    html += '<div class="timeline" id="timeline-feb">';
+    var cur = currentIndex(), name = student();
+    var goal = R.nodes.find(function (n) { return n.type === 'goal'; });
+    var dd = dday(goal);
+    html += '<section class="fb-hero">' + (I ? I.febScene('황소가 언덕길을 따라 2월 시험 깃발이 꽂힌 산 정상으로 올라가는 그림') : '') +
+      '<div class="fb-copy"><h2 class="disp">' + (name && !demo() ? esc(name) + '의 2월 시험 길' : '2월 시험 길') + '</h2>' +
+      '<p>' + weeks.length + '주를 세 단계로 나눠 산 정상까지 올라가요.<br>선생님이 출석을 확인하면 그 주 길이 열려요.</p>' +
+      (goal ? '<div class="fb-dday">' + esc(goal.title) + (dd != null ? ' <b>D-' + dd + '</b>' : ' · ' + esc(goal.date)) + '</div>' : '') +
+      '</div></section>';
+    var phases = [], ph = null;
     R.nodes.forEach(function (n) {
-      if (n.type === 'divider') {
-        html += '<div class="divider"><span>' + esc(n.label) + '</span></div>';
-      } else if (n.type === 'goal') {
-        html += '<div class="node goal"><div class="date">' + esc(n.date) + '</div><h3 class="disp">' +
-          esc(n.title) + '</h3><div class="desc">' + esc(n.desc) + '</div></div>';
-      } else {
-        var open = isOpen(n), cur = R.meta.currentWeekId && n.id === R.meta.currentWeekId;
-        html += '<div class="node ' + esc(n.track) + (open ? '' : ' locked') + (cur ? ' current' : '') + '" data-feb-node="' + esc(n.id) +
-          '" tabindex="0" role="button" aria-disabled="' + (open ? 'false' : 'true') + '">' +
-          '<div class="icon-status" role="img" aria-label="' + (open ? '열림 · 이용 가능' : '잠김 · 이용 불가') + '">' + (open ? '🔓' : '🔒') + '</div>' +
-          '<div class="date">' + esc(n.date) + (cur ? ' · 현재 진행 중' : '') + '</div><h3 class="disp">' + esc(n.title) + '</h3><div class="desc">' + esc(n.desc) + '</div>' +
-          (n.focus ? '<div class="focus">' + esc(n.focus) + '</div>' : '') + '</div>';
-      }
+      if (n.type === 'divider') { ph = { label: n.label, list: [] }; phases.push(ph); }
+      else if (n.type === 'week') { if (!ph) { ph = { label: '', list: [] }; phases.push(ph); } ph.list.push(n); }
     });
-    html += '</div>';
+    var NAMES = ['생각 힘 기르기', '파이널 실전', '최종 실전'];
+    phases.forEach(function (p, pi) {
+      var sub = String(p.label || '').replace(/^Phase\s*\d+\s*·\s*/i, '');
+      html += '<section class="fb-phase"><div class="fb-ph-top">' + (I ? I.phaseArt(Math.min(pi, 2)) : '') +
+        '<div class="fb-ph-h"><h3 class="disp">' + (pi + 1) + '단계 · ' + esc(NAMES[pi] || sub) + '</h3><p>' + esc(sub) + '</p></div></div><ol class="fb-steps">';
+      p.list.forEach(function (n) {
+        var i = weeks.indexOf(n), open = isOpen(n), now = i === cur;
+        var st = now ? 'now' : (!open ? 'locked' : (i < cur ? 'done' : 'open'));
+        var tag = now ? '이번 주' : st === 'done' ? (I ? I.LINE.check : '') + '지난 주' : st === 'open' ? '열림' : (I ? I.LINE.lock : '') + '잠김';
+        html += '<li><button type="button" class="fb-step ' + st + '" data-feb-node="' + esc(n.id) + '" aria-disabled="' + (open ? 'false' : 'true') + '"' +
+          ' aria-label="' + esc((i + 1) + '주차 ' + n.title + ' · ' + n.date + ' · ' + (open ? '열림' : '잠김')) + (now ? ' · 이번 주' : '') + '">' +
+          '<span class="fb-num" aria-hidden="true">' + (i + 1) + '</span><span class="fb-txt"><span class="fb-t">' + esc(n.title) + '</span><br><span class="fb-d">' + esc(n.date) + '</span></span>' +
+          '<span class="fb-st" aria-hidden="true">' + tag + '</span></button></li>';
+      });
+      html += '</ol></section>';
+    });
+    if (R.meta.novMaterials) {
+      html += '<a class="rm-feb-nov" href="' + esc(R.meta.novMaterials.url) + '">' + (I ? I.LINE.clip : '') + esc(R.meta.novMaterials.label) + ' 보기</a>';
+    }
     panel.innerHTML = html;
+    if (I) I.placeWalker(panel.querySelector('.hs-scene'), cur < 0 ? 0.03 : 0.03 + 0.82 * cur / Math.max(1, weeks.length - 1),   /* 정상(시험)은 깃발 자리로 남겨 둔다 */
+       cur < 0 ? '' : '지금 ' + (cur + 1) + '주차!');
+  }
+  /* "2027년 2월 7일" 같은 날짜까지 남은 날 */
+  function dday(goal) {
+    var m = goal && /(\d{4})년\s*(\d+)월\s*(\d+)일/.exec(goal.date || '');
+    if (!m) return null;
+    var t = new Date(+m[1], +m[2] - 1, +m[3]), now = new Date();
+    var d = Math.round((t - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
+    return d >= 0 ? d : null;
   }
 
   function select(which) {
@@ -192,8 +267,8 @@
   function openNode(id) {
     var node = R.nodes.find(function (n) { return n.id === id; });
     if (!node || node.type !== 'week') return;
-    if (demo()) { if (typeof toast === 'function') toast('🔎 데모에서는 열람할 수 없습니다'); return; }
-    if (!isOpen(node)) { if (typeof toast === 'function') toast('🔒 아직 열리지 않은 주차입니다'); return; }
+    if (demo()) { if (typeof toast === 'function') toast('데모에서는 열람할 수 없습니다'); return; }
+    if (!isOpen(node)) { if (typeof toast === 'function') toast('아직 열리지 않은 주차입니다'); return; }
     contentFor(node);
     openModal(node, true);
   }
@@ -204,7 +279,7 @@
     var node = weeks[currentIndex()];
     if (!card || !node) return false;
     var c = contentFor(node);
-    var h = '<div class="home-head"><div class="hh-tag">📍 이번 주 · ' + esc(node.date) + '</div><h2 class="disp">' + esc(node.title) + '</h2>' +
+    var h = '<div class="home-head"><div class="hh-tag">이번 주 · ' + esc(node.date) + '</div><h2 class="disp">' + esc(node.title) + '</h2>' +
       '<div class="hh-desc">' + esc(node.desc || '') + '</div>' + (node.focus ? '<div class="focus">' + esc(node.focus) + '</div>' : '') + '</div>';
     h += '<div class="videoframe" id="home-videoframe"><iframe id="home-iframe" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>';
     h += '<div class="content-card">' + sectionsHTML(c, node) + '</div>';
