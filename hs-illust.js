@@ -1,5 +1,5 @@
 /* 로드맵 2월 시험·승급과정 화면의 그림(손그림 느낌 SVG).
-   같은 외곽선(#1b2340)·단색 면·그라데이션 없음. 황소 캐릭터는 두 화면이 같은 모양을 쓴다.
+   같은 외곽선(#1b2340)·단색 면·그라데이션 없음. 남학생·여학생 캐릭터는 두 화면이 같은 모양을 쓴다.
    roadmap-feb.js, upgrade-course.js, upgrade-bank.js가 window.GFIELD_ILLUST로 가져다 쓴다. */
 (function () {
   'use strict';
@@ -11,24 +11,45 @@
   var C = { ink: INK, navy: '#141b5d', feb: '#3f6fe0', febSoft: '#dfe9ff', upg: '#7b55c7', upgSoft: '#ece3fb',
     sun: '#f6cf47', leaf: '#4fb884', coral: '#ff9f7a', sky: '#cfe2ff', lilac: '#e9e0fb' };
 
-  /* 황소: 몸(옆모습)+앞을 보는 얼굴. 가방 색만 바꾼다. 원점은 몸 왼쪽 위 */
-  function bull(bag) {
-    return '<g class="hs-bull">' +
-      '<ellipse cx="38" cy="62" rx="40" ry="6" fill="' + INK + '" opacity=".18"/>' +
-      '<g stroke="' + INK + '" stroke-width="3" fill="#a96f38" stroke-linejoin="round">' +
-      '<rect x="8" y="38" width="10" height="22" rx="4"/><rect x="22" y="40" width="10" height="20" rx="4"/>' +
-      '<rect x="44" y="40" width="10" height="20" rx="4"/><rect x="56" y="38" width="10" height="22" rx="4"/></g>' +
-      '<rect x="2" y="12" width="70" height="36" rx="18" fill="#c98a4b" stroke="' + INK + '" stroke-width="3"/>' +
-      '<path d="M4 24c-8 2-10 10-6 14" fill="none" stroke="' + INK + '" stroke-width="3" stroke-linecap="round"/>' +
-      '<rect x="18" y="4" width="28" height="24" rx="6" fill="' + bag + '" stroke="' + INK + '" stroke-width="3"/>' +
-      '<path d="M24 12h16" stroke="#fff" stroke-width="3" stroke-linecap="round"/>' +
-      '<g transform="translate(58,-14)">' +
-      '<path d="M4 10c-4-2-6-8-2-11 1 4 5 6 9 6M34 10c4-2 6-8 2-11-1 4-5 6-9 6" fill="#fff6dd" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/>' +
-      '<ellipse cx="19" cy="20" rx="15" ry="14" fill="#c98a4b" stroke="' + INK + '" stroke-width="3"/>' +
-      '<ellipse cx="22" cy="28" rx="11" ry="7" fill="#f2c9a0" stroke="' + INK + '" stroke-width="3"/>' +
-      '<circle cx="19" cy="28" r="1.6" fill="' + INK + '"/><circle cx="26" cy="28" r="1.6" fill="' + INK + '"/>' +
-      '<circle cx="16" cy="16" r="2.4" fill="' + INK + '"/><circle cx="27" cy="16" r="2.4" fill="' + INK + '"/>' +
-      '<circle cx="16.8" cy="15.2" r=".8" fill="#fff"/><circle cx="27.8" cy="15.2" r=".8" fill="#fff"/></g></g>';
+  /* 학생: 가방 멘 아이가 오른쪽으로 걷는 모습(얼굴은 앞). 가방 색만 바꾼다. 발이 y=58 근처, 가운데가 x=40 */
+  function limb(d, color) {
+    return '<path d="' + d + '" fill="none" stroke="' + INK + '" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>';
+  }
+  /* girl이 참이면 단발머리·원피스. 둘 다 같은 몸 틀을 쓴다 */
+  function kid(bag, girl) {
+    var SKIN = '#f7d2b0', PANTS = '#2d3f86', SHIRT = girl ? '#ff9f7a' : '#f6cf47', HAIR = '#2b2233';
+    var body = girl
+      ? '<path d="M36 2 h12 a10 10 0 0 1 10 10 l5 30 h-42 l5 -30 a10 10 0 0 1 10 -10z" fill="' + SHIRT + '" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/>'
+      : '<rect x="26" y="2" width="30" height="38" rx="12" fill="' + SHIRT + '" stroke="' + INK + '" stroke-width="3"/>';
+    var hair = girl
+      ? '<path d="M23 -6 C22 -24 32 -30 42 -30 C52 -30 62 -24 61 -6 L61 2 C58 4 55 3 55 -1 C55 -12 51 -18 42 -18 C34 -18 30 -13 29 -4 C29 2 26 4 23 2z" fill="' + HAIR + '" stroke="' + INK + '" stroke-width="2.5" stroke-linejoin="round"/>'
+      : '<circle cx="27" cy="-11" r="4" fill="' + SKIN + '" stroke="' + INK + '" stroke-width="2.5"/>' +
+        '<circle cx="57" cy="-11" r="4" fill="' + SKIN + '" stroke="' + INK + '" stroke-width="2.5"/>';
+    var cap = girl ? '' : '<path d="M26 -13 C26 -24 34 -29 42 -29 C51 -29 58 -23 58 -13 C53 -19 47 -20 42 -17 C37 -14 31 -13 26 -13z" fill="' + HAIR + '" stroke="' + INK + '" stroke-width="2.5" stroke-linejoin="round"/>';
+    return '<g class="hs-kid' + (girl ? ' girl' : '') + '">' +
+      '<ellipse cx="40" cy="62" rx="24" ry="5" fill="' + INK + '" opacity=".18"/>' +
+      limb('M36 36 L27 56', PANTS) + limb('M45 36 L53 56', PANTS) +
+      '<g fill="' + INK + '"><ellipse cx="25" cy="58" rx="7" ry="4"/><ellipse cx="56" cy="58" rx="7" ry="4"/></g>' +
+      limb('M30 12 L22 30', SKIN) +
+      '<rect x="12" y="4" width="20" height="30" rx="7" fill="' + bag + '" stroke="' + INK + '" stroke-width="3"/>' +
+      '<rect x="15" y="18" width="14" height="10" rx="3" fill="#fff" opacity=".85" stroke="' + INK + '" stroke-width="2"/>' +
+      body +
+      '<path d="M32 5 L35 30" stroke="' + INK + '" stroke-width="3" stroke-linecap="round"/>' +
+      limb('M48 11 L58 27', SKIN) +
+      hair +
+      '<circle cx="42" cy="-12" r="16" fill="' + SKIN + '" stroke="' + INK + '" stroke-width="3"/>' +
+      (girl ? '<path d="M27 -12 C27 -24 34 -29 42 -29 C50 -29 57 -24 57 -12 C52 -18 47 -19 42 -16 C38 -19 31 -18 27 -12z" fill="' + HAIR + '" stroke="' + INK + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+        '<rect x="49" y="-26" width="9" height="5" rx="2" fill="' + C.sun + '" stroke="' + INK + '" stroke-width="2" transform="rotate(25 53 -23)"/>' : cap) +
+      '<circle cx="36.5" cy="-10" r="2.3" fill="' + INK + '"/><circle cx="47.5" cy="-10" r="2.3" fill="' + INK + '"/>' +
+      '<circle cx="37.2" cy="-10.8" r=".8" fill="#fff"/><circle cx="48.2" cy="-10.8" r=".8" fill="#fff"/>' +
+      '<circle cx="33" cy="-4" r="2.6" fill="#ffb3a7"/><circle cx="51" cy="-4" r="2.6" fill="#ffb3a7"/>' +
+      '<path d="M38.5 -4 Q42 0 45.5 -4" fill="none" stroke="' + INK + '" stroke-width="2.2" stroke-linecap="round"/>' +
+      '</g>';
+  }
+  /* 남학생과 여학생이 나란히 걷는다(여학생이 한 걸음 뒤). 기준점은 남학생과 같다 */
+  function pair(bag) {
+    return '<g transform="translate(-34,2)">' + kid('#4fb884', true) + '</g>' + kid(bag, false);
   }
   function sign(x, y, label, h) {
     return '<g transform="translate(' + x + ',' + y + ')"><path d="M0 0v' + (h || 28) + '" stroke="' + INK + '" stroke-width="3"/>' +
@@ -36,7 +57,7 @@
       '<text y="-4" font-family="Jua" font-size="15" text-anchor="middle" fill="' + INK + '">' + label + '</text></g>';
   }
 
-  /* 2월 큰 그림. 길(.hs-trail)을 따라 황소(.hs-walker)와 말풍선(.hs-bubble)을 놓는 것은 placeWalker가 한다 */
+  /* 2월 큰 그림. 길(.hs-trail)을 따라 학생(.hs-walker)와 말풍선(.hs-bubble)을 놓는 것은 placeWalker가 한다 */
   var TRAIL = 'M250 370 C300 330 360 316 430 300 C520 280 600 262 660 236 C720 210 760 170 800 122';
   function febScene(label) {
     return '<svg class="hs-scene" viewBox="0 0 1000 380" preserveAspectRatio="xMaxYMid slice" role="img" aria-label="' + label + '">' +
@@ -60,26 +81,26 @@
       '<path d="' + TRAIL + '" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/>' +
       '<path class="hs-trail" d="' + TRAIL + '" fill="none" stroke="' + INK + '" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>' +
       sign(160, 302, '1단계', 30) + sign(575, 318, '2단계', 26) + sign(745, 262, '3단계', 24) +
-      '<g class="hs-walker">' + bull(C.feb) + '</g>' +
+      '<g class="hs-walker">' + pair(C.feb) + '</g>' +
       '<g class="hs-bubble"><path d="M0 0h132a10 10 0 0 1 10 10v28a10 10 0 0 1-10 10H34l-14 14 2-14H10A10 10 0 0 1 0 38V10A10 10 0 0 1 10 0z" fill="#fff" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/>' +
       '<text class="hs-bubble-t" x="71" y="31" font-family="Jua" font-size="18" text-anchor="middle" fill="' + INK + '"></text></g>' +
       '</svg>';
   }
-  /* 지금 주차 위치(0~1)에 황소를 세운다. 화면에 붙인 뒤 불러야 길이를 잴 수 있다 */
+  /* 지금 주차 위치(0~1)에 학생을 세운다. 화면에 붙인 뒤 불러야 길이를 잴 수 있다 */
   function placeWalker(svg, t, bubbleText) {
     var path = svg && svg.querySelector('.hs-trail'), w = svg && svg.querySelector('.hs-walker'), b = svg && svg.querySelector('.hs-bubble');
     if (!path || !w || !path.getTotalLength) return;
     /* 휴대폰(600px 이하)은 그림을 잘라 쓰므로 길 시작부터 깃발까지만 보이게 한다 */
     var narrow = false;
     try { narrow = matchMedia('(max-width:600px)').matches; } catch (e) {}
-    svg.setAttribute('viewBox', narrow ? '190 0 690 380' : '0 0 1000 380');
+    svg.setAttribute('viewBox', narrow ? '150 0 730 380' : '0 0 1000 380');
     var L = path.getTotalLength(), pt = path.getPointAtLength(Math.max(0, Math.min(1, t)) * L);
-    w.setAttribute('transform', 'translate(' + (pt.x - 40) + ',' + (pt.y - 58) + ')');
+    w.setAttribute('transform', 'translate(' + (pt.x - 54) + ',' + (pt.y - 78) + ') scale(1.35)');
     if (!b) return;
     if (!bubbleText) { b.style.display = 'none'; return; }
     b.querySelector('.hs-bubble-t').textContent = bubbleText;
-    var high = pt.y < 235;   // 정상 가까이에서는 깃발을 가리지 않게 황소 왼쪽에 둔다
-    var bx = high ? pt.x - 200 : Math.min(pt.x + 20, 840), by = high ? pt.y - 30 : pt.y - 140;
+    var high = pt.y < 235;   // 정상 가까이에서는 깃발을 가리지 않게 학생 왼쪽에 둔다
+    var bx = high ? pt.x - 250 : Math.min(pt.x + 32, 840), by = high ? pt.y - 30 : pt.y - 140;
     b.querySelector('path').setAttribute('transform', high ? 'translate(142,0) scale(-1,1)' : '');
     b.setAttribute('transform', 'translate(' + bx + ',' + by + ')');
   }
@@ -106,7 +127,7 @@
     return s + '</svg>';
   }
 
-  /* 승급 큰 그림: 세 영역을 계단으로 (복습 강의 → Test → 자료실 → 승급) */
+  /* 승급 큰 그림: 세 영역을 계단으로 (복습 강의 → Test → 자료실 → 편입·승급) */
   function upgScene(label) {
     function step(x, y, w, h, fill, text, tc) {
       return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="6" fill="' + fill + '"/>' +
@@ -123,8 +144,8 @@
       step(600, 206, 160, 50, C.feb, 'Test 문제은행', '#fff') +
       step(700, 152, 160, 54, C.sun, '편입 자료실', INK) +
       '<rect x="800" y="94" width="150" height="58" rx="6" fill="#fff" stroke-dasharray="8 6"/>' +
-      '<text x="875" y="130" fill="#5b4a92" stroke="none">승급!</text></g>' +
-      '<g transform="translate(630,140)">' + bull(C.upg) + '</g>' +
+      '<text x="875" y="130" fill="#5b4a92" stroke="none">편입·승급!</text></g>' +
+      '<g transform="translate(632,122) scale(1.35)">' + pair(C.upg) + '</g>' +
       '</svg>';
   }
 
@@ -186,6 +207,6 @@
       '<circle cx="68" cy="32" r="14" fill="' + pal[0] + '" stroke="' + INK + '" stroke-width="2"/><path d="M64 25l10 7-10 7z" fill="#fff" stroke="' + INK + '" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   }
 
-  window.GFIELD_ILLUST = { C: C, bull: bull, febScene: febScene, placeWalker: placeWalker, phaseArt: phaseArt,
+  window.GFIELD_ILLUST = { C: C, kid: kid, pair: pair, febScene: febScene, placeWalker: placeWalker, phaseArt: phaseArt,
     upgScene: upgScene, ICON: ICON, LINE: LINE, cover: cover, lecThumb: lecThumb };
 })();

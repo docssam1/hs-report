@@ -34,7 +34,7 @@ const INJECT=';(function(D){var F=["승급 복습강의","승급과정 문제은
   // 2) 이승우(2월 과정 학생): 로드맵은 2월 탭으로 열리고, 승급과정 탭을 누르면 세 영역
   {const p=await page({width:1400,height:900});await login(p,'이승우');
     await p.evaluate(()=>nav('archive'));const arc=await p.innerText('#archive-list');
-    out.archivePointer=arc.includes('로드맵 → 승급과정')&&!/📚 승급/.test(arc);
+    out.archivePointer=arc.includes('로드맵 → 편입·승급과정')&&!/📚 승급/.test(arc);
     await p.click('#archive-list [data-go-upg]');await p.waitForTimeout(400);
     out.pointerOpens=await p.isVisible('#rm-upg .up-sec');
     await p.click('#rm-tab-nov');out.novBack=await p.isVisible('#timeline')&&!(await p.isVisible('#rm-upg'));

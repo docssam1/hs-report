@@ -175,7 +175,7 @@
     '.fb-step:not(.locked):hover .fb-num{transform:translateY(-2px);}' +
     '@media (max-width:600px){' +
     '.fb-copy{position:static;max-width:none;padding:14px 16px 16px;background:#cfe2ff;border-top:2.5px solid #1b2340;}' +
-    '.fb-hero .hs-scene{height:200px;}' +
+    '.fb-hero .hs-scene{height:auto;}' +
     '.fb-copy h2{font-size:24px;}' +
     '.fb-ph-top .hs-ph-art{width:110px;}' +
     '.fb-steps{grid-template-columns:1fr;padding:10px 14px 12px;}' +
@@ -213,8 +213,8 @@
     var cur = currentIndex(), name = student();
     var goal = R.nodes.find(function (n) { return n.type === 'goal'; });
     var dd = dday(goal);
-    html += '<section class="fb-hero">' + (I ? I.febScene('황소가 언덕길을 따라 2월 시험 깃발이 꽂힌 산 정상으로 올라가는 그림') : '') +
-      '<div class="fb-copy"><h2 class="disp">' + (name && !demo() ? esc(name) + '의 2월 시험 길' : '2월 시험 길') + '</h2>' +
+    html += '<section class="fb-hero">' + (I ? I.febScene('남학생과 여학생이 언덕길을 따라 2월 시험 깃발이 꽂힌 산 정상으로 올라가는 그림') : '') +
+      '<div class="fb-copy"><h2 class="disp">' + (name && !demo() ? esc(name) + '의 2월 대비 로드맵' : '2월 대비 로드맵') + '</h2>' +
       '<p>' + weeks.length + '주를 세 단계로 나눠 산 정상까지 올라가요.<br>선생님이 출석을 확인하면 그 주 길이 열려요.</p>' +
       (goal ? '<div class="fb-dday">' + esc(goal.title) + (dd != null ? ' <b>D-' + dd + '</b>' : ' · ' + esc(goal.date)) + '</div>' : '') +
       '</div></section>';

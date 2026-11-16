@@ -95,7 +95,7 @@
   var btn = document.createElement('button');
   btn.type = 'button'; btn.className = 'rm-tab'; btn.id = 'rm-tab-upg';
   btn.setAttribute('role', 'tab'); btn.setAttribute('aria-selected', 'false'); btn.setAttribute('aria-controls', 'rm-upg');
-  btn.innerHTML = '<span class="rm-dot">' + (I ? I.LINE.stairs : '') + '</span>승급과정';
+  btn.innerHTML = '<span class="rm-dot">' + (I ? I.LINE.stairs : '') + '</span>편입·승급과정';
   btn.style.display = 'none';
   tabs.appendChild(btn);
   var panel = document.createElement('div');
@@ -157,11 +157,11 @@
   }
   function render() {
     if (!allowed()) {
-      panel.innerHTML = '<div class="up-lock"><b>승급과정 학생에게 열리는 공간입니다.</b><br>선생님이 열어 주시면 이곳에서 볼 수 있습니다.</div>';
+      panel.innerHTML = '<div class="up-lock"><b>편입·승급과정 학생에게 열리는 공간입니다.</b><br>선생님이 열어 주시면 이곳에서 볼 수 있습니다.</div>';
       return;
     }
-    var h = '<section class="up-hero">' + (I ? I.upgScene('황소가 복습 강의, Test 문제은행, 편입 자료실 계단을 차례로 올라가는 그림') : '') +
-      '<div class="up-hero-c"><h2 class="disp">승급과정</h2><p>강의로 복습하고, 시험지로 확인하고,<br>자료실 책으로 다져서 한 칸씩 올라가요.</p></div></section>';
+    var h = '<section class="up-hero">' + (I ? I.upgScene('남학생과 여학생이 복습 강의, Test 문제은행, 편입 자료실 계단을 차례로 올라가는 그림') : '') +
+      '<div class="up-hero-c"><h2 class="disp">' + (student() ? esc(student()) + '의 ' : '') + '편입·승급과정</h2><p>강의로 복습하고, 시험지로 확인하고,<br>자료실 책으로 다져서 한 칸씩 올라가요.</p></div></section>';
     if (canFolder(F.lec)) h += lecHtml();
     if (canFolder(F.bank)) h += '<section class="up-sec up-bank" aria-labelledby="up-h-bank">' + head('bank', 'up-h-bank', 'Test 문제은행', '시험지를 열면 답안과 해설강의(있는 경우)가 함께 나와요. 아래에서 비슷한 문제를 낮춰서·같은 수준·높여서 만들어 풀 수 있어요.') + '<div class="up-bank-host"></div></section>';
     if (canFolder(F.book)) h += bookHtml();
@@ -335,9 +335,9 @@
       if (removed || allowed()) {
         var box = document.createElement('div');
         box.className = 'shelf-sec';
-        box.innerHTML = '<div class="shelf-h disp">' + (I ? '<span style="display:inline-flex;width:20px;height:20px">' + I.LINE.stairs + '</span>' : '') + '승급과정</div><div class="up-empty" style="border:2px solid #1b2340;background:#ece3fb;color:#1b2340">' +
-          '복습용 강의 · Test 문제은행 · 승급·편입 자료실은 <b>로드맵 → 승급과정</b> 탭에 모여 있습니다. ' +
-          '<button type="button" class="ub-btn" data-go-upg style="margin-top:8px">승급과정으로 가기</button></div>';
+        box.innerHTML = '<div class="shelf-h disp">' + (I ? '<span style="display:inline-flex;width:20px;height:20px">' + I.LINE.stairs + '</span>' : '') + '편입·승급과정</div><div class="up-empty" style="border:2px solid #1b2340;background:#ece3fb;color:#1b2340">' +
+          '복습용 강의 · Test 문제은행 · 승급·편입 자료실은 <b>로드맵 → 편입·승급과정</b> 탭에 모여 있습니다. ' +
+          '<button type="button" class="ub-btn" data-go-upg style="margin-top:8px">편입·승급과정으로 가기</button></div>';
         wrap.insertBefore(box, wrap.firstChild);
         box.querySelector('[data-go-upg]').addEventListener('click', function () { if (typeof nav === 'function') nav('roadmap'); select(true); });
         var empty = wrap.querySelector(':scope > .empty-note');
