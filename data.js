@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 11. 16. 오후 4:42:50
+ * 생성: 2026. 11. 16. 오후 4:50:23
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -1608,7 +1608,6 @@ window.GFIELD_DATA = {
     "활용 모의고사": [
       "김소라",
       "김현우",
-      "노관호",
       "유현우",
       "박재연",
       "김도율",
@@ -1645,7 +1644,6 @@ window.GFIELD_DATA = {
       "최지우"
     ],
     "추가 모의고사": [
-      "노관호",
       "한재이",
       "임유준"
     ],
@@ -1689,7 +1687,6 @@ window.GFIELD_DATA = {
       "최지안"
     ],
     "파이널 모의고사": [
-      "노관호",
       "김소라",
       "유현우",
       "박재연",
@@ -1728,7 +1725,6 @@ window.GFIELD_DATA = {
       "최지우"
     ],
     "최종 모의고사": [
-      "노관호",
       "박재연",
       "최지안",
       "DEMO",
@@ -4885,9 +4881,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5061,9 +5055,7 @@ window.GFIELD_DATA = {
         "사고력 교재"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5244,9 +5236,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5331,9 +5321,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5378,9 +5366,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5401,9 +5387,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5424,9 +5408,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5447,9 +5429,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5470,9 +5450,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5493,9 +5471,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5525,8 +5501,6 @@ window.GFIELD_DATA = {
       ],
       "products": [
         "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2",
         "question-bank",
         "mock-signature-1",
         "mock-signature-2"
@@ -5550,12 +5524,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2",
-        "question-bank",
-        "mock-signature-1",
-        "mock-signature-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5605,9 +5574,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5629,8 +5596,6 @@ window.GFIELD_DATA = {
       ],
       "products": [
         "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2",
         "concept-basic",
         "concept-core"
       ],
@@ -5653,11 +5618,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2",
-        "mock-signature-1",
-        "mock-signature-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5678,10 +5639,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2",
-        "question-bank"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5702,9 +5660,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5725,9 +5681,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5748,9 +5702,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5771,9 +5723,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5818,9 +5768,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5841,9 +5789,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5864,9 +5810,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5887,9 +5831,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5910,11 +5852,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2",
-        "mock-signature-1",
-        "mock-signature-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5935,11 +5873,7 @@ window.GFIELD_DATA = {
         "보충학습"
       ],
       "products": [
-        "seminar-hwangso-2026",
-        "mock-top-secret-finish-1",
-        "mock-top-secret-finish-2",
-        "mock-signature-1",
-        "mock-signature-2"
+        "seminar-hwangso-2026"
       ],
       "vip": [
         "report",
@@ -5968,9 +5902,9 @@ window.GFIELD_DATA = {
         "seminar-hwangso-2026",
         "mock-top-secret-finish-1",
         "mock-top-secret-finish-2",
+        "question-bank",
         "mock-signature-1",
-        "mock-signature-2",
-        "question-bank"
+        "mock-signature-2"
       ],
       "vip": [
         "report",
