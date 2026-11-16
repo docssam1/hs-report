@@ -94,7 +94,8 @@
     } else if (s.final) c = roundContent('final', s.final);
     else if (s.last) c = roundContent('last', s.last);
     else c = { notice: '', homework: '', textbooks: [] };
-    var note = String(node.comment || '').trim();   // 선생님 코멘트는 학습 내용 맨 앞
+    var saved = (D.febRoadmap && D.febRoadmap.comments) ? D.febRoadmap.comments[node.id] : '';   // 어드민에서 쓴 코멘트가 우선
+    var note = String(saved || node.comment || '').trim();   // 선생님 코멘트는 학습 내용 맨 앞
     if (note) c.notice = note + (c.notice ? '\n\n' + c.notice : '');
     return c;
   }

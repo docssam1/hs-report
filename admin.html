@@ -73,6 +73,17 @@
   .email-auth-devices{font-size:11px;color:#6b7280;}
   .chip{display:inline-flex;align-items:center;gap:8px;background:#f2f5fa;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:13.5px;margin:0 6px 8px 0;}
   .chip button{background:none;border:none;color:var(--danger);font-weight:800;font-size:15px;}
+  .stu-group{margin:0 0 14px;}
+  .stu-group-h{font-size:13px;font-weight:700;margin:0 0 8px;}
+  .stu-grid{display:flex;flex-wrap:wrap;gap:8px;}
+  .stu-grid .chip{margin:0;}
+  .stu-history{margin-top:6px;border:1px solid var(--line);border-radius:10px;padding:6px 12px;background:#fafbfd;font-size:12.5px;}
+  .stu-history summary{cursor:pointer;font-weight:700;min-height:36px;display:flex;align-items:center;}
+  .stu-history p{margin:0 0 6px;}
+  .stu-hist-row{padding:7px 0;border-top:1px dashed var(--line);line-height:1.65;}
+  .stu-hist-row b{display:block;}
+  .stu-hist-n{font-weight:500;color:#566274;}
+  .stu-hist-row div{color:#566274;}
 
   .content-week{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;}
   .content-week .wt{font-weight:700;font-size:14px;margin-bottom:2px;}
@@ -187,6 +198,12 @@
         <div class="hint"><b>2월 과정</b>에 체크한 학생이 대상이고, <b>선생님이 출석 체크한 주차</b>의 자료(개념·중급 과제·파이널·최종)만 열립니다. 주차 칸을 누르면 그 학생의 그 주차가 열리거나 닫힙니다. 현재 주차는 로드맵 화면의 "현재 진행 중" 표시용입니다. 재원생·온라인 모두 같습니다. 바꾼 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
         <div style="margin:8px 0">현재 주차 <select id="feb-cur" onchange="febSetCurrent(this.value)"></select></div>
         <div class="matrix-scroll"><table id="feb-matrix"></table></div>
+        <div id="feb-comment-box" style="margin-top:16px;padding-top:14px;border-top:1px dashed #cfd6e6">
+          <h4 style="font-size:15px;margin:0 0 4px">주차별 선생님 코멘트</h4>
+          <div class="hint">고른 주차의 <b>학습 내용 맨 앞</b>에 학생에게 보입니다. 글자를 드래그하면 꾸미기 도구(빨강·형광 등)가 나오고, 줄을 바꾸면 줄이 바뀝니다. 비워 두면 코멘트 없이 나옵니다. 쓴 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
+          <div style="margin:8px 0">주차 <select id="feb-cm-week" onchange="febCommentLoad()"></select> <span id="feb-cm-state" class="hint"></span></div>
+          <textarea id="feb-cm-text" class="rich" rows="6" style="width:100%;font:inherit;padding:10px;border:1px solid #cfd6e6;border-radius:8px" placeholder="예) 이번 주는 [[red:Thinking Core 1장]]을 끝내고 중급 모의고사 1회를 풀어 오세요." oninput="febCommentSave()"></textarea>
+        </div>
       </div>
       <div class="card" id="upg-admin">
         <h3>편입·승급과정 · 열람 학생</h3>
@@ -655,6 +672,24 @@
     }
     return c;
   }
+  /* 주차별 선생님 코멘트: data.js의 febRoadmap.comments[주차 id]에 저장하고, 학생 화면(roadmap-feb.js)이 학습 내용 맨 앞에 보여 준다 */
+  function febCommentOf(id){const c=febCfg();return (c&&c.comments&&c.comments[id])||'';}
+  function febCommentLoad(){
+    const sel=document.getElementById('feb-cm-week'),ta=document.getElementById('feb-cm-text');if(!sel||!ta)return;
+    ta.value=febCommentOf(sel.value);febCommentState();
+  }
+  function febCommentState(){
+    const st=document.getElementById('feb-cm-state'),sel=document.getElementById('feb-cm-week');if(!st||!sel)return;
+    const n=febNodes().filter(w=>febCommentOf(w.id).trim()).length;
+    st.textContent=n?`코멘트가 있는 주차 ${n}개`:'아직 쓴 코멘트가 없습니다';
+  }
+  function febCommentSave(){
+    const sel=document.getElementById('feb-cm-week'),ta=document.getElementById('feb-cm-text');if(!sel||!ta)return;
+    const c=febCfg();if(!c)return;if(!c.comments)c.comments={};
+    const v=ta.value.replace(/\s+$/,'');
+    if(v.trim())c.comments[sel.value]=v;else delete c.comments[sel.value];
+    febCommentState();dirty();
+  }
   function febSetCurrent(id){febCfg().currentWeekId=id;renderFeb();dirty();}
   function febToggle(name){const c=febCfg(),i=c.members.indexOf(name);if(i>=0)c.members.splice(i,1);else c.members.push(name);if(!c.weeks[name])c.weeks[name]=[];renderFeb();dirty();}
   function febWeek(name,wid){const c=febCfg();if(!c.members.includes(name))c.members.push(name);const a=c.weeks[name]=c.weeks[name]||[],i=a.indexOf(wid);if(i>=0)a.splice(i,1);else a.push(wid);renderFeb();dirty();}
@@ -670,6 +705,8 @@
       h+='</tr>';
     });
     t.innerHTML=h+'</tbody>';
+    const cw=document.getElementById('feb-cm-week');
+    if(cw){const keep=cw.value||c.currentWeekId;cw.innerHTML=weeks.map(w=>`<option value="${w.id}"${w.id===keep?' selected':''}>${esc(w.date)} · ${esc(w.title)}${febCommentOf(w.id).trim()?' (코멘트 있음)':''}</option>`).join('');febCommentLoad();}
   }
   function renderMatrix(){
     const weeks=weekNodes(); const sp=specialNode();
@@ -694,16 +731,15 @@
   function toggleCell(name,wid,td){ if(studentType(name)==='graduated')return; if(toggleScoped('attendance',wid,name)){td.className='cell '+(accessOn('attendance',wid,name,false)?'on':'off');dirty();return;} ensureStudent(name); const arr=S.attendance[name]; const i=arr.indexOf(wid); if(i>=0){ arr.splice(i,1); td.className='cell off'; } else { arr.push(wid); td.className='cell on'; } dirty(); }
   function toggleSpecial(name,td){ if(studentType(name)==='graduated')return; if(scopedStudent(name)){const p=S.studentAccessProfiles[name];p.special=!p.special;td.className='cell special-col '+(p.special?'on':'off');dirty();return;} const i=S.specialStudents.indexOf(name); if(i>=0){ S.specialStudents.splice(i,1); td.className='cell special-col off'; } else { S.specialStudents.push(name); td.className='cell special-col on'; } dirty(); }
 
+  /* 학생 목록: 회원 상태별로 이름 칸을 한 묶음으로 모으고, 이전 출석·승인 기록은 맨 아래 접힘 상자 하나에 모은다 */
   function renderStudents(){
-    let html='',lastGroup='';
-    S.students.forEach(name=>{
-      const group=studentType(name);
-      if(group!==lastGroup){html+=`<div style="width:100%;margin:14px 0 6px;font-size:13px;font-weight:700">${studentTypeLabel(name)} · ${S.students.filter(n=>studentType(n)===group).length}명</div>`;lastGroup=group;}
-      const types={resident:'재원생',online:'온라인',graduated:'졸업생',withdrawn:'퇴원생'};
-      html+=`<span class="chip">${esc(name)}<select class="membership-toggle" ${membershipBusy?'disabled':''} onchange="changeStudentType(${JSON.stringify(name).replace(/"/g,'&quot;')},this.value)" style="cursor:pointer;margin-left:5px;min-height:36px;width:auto;font-size:12px;padding:3px 7px;border-radius:6px;${studentTypeStyle(name)}" aria-label="${esc(name)} 회원 상태">${Object.entries(types).map(([value,label])=>`<option value="${value}" ${studentType(name)===value?'selected':''}>${label}</option>`).join('')}</select><button onclick="removeStudent('${name}')">×</button></span>`;
-      const history=(S.studentAccessHistory||{})[name];
-      if(Array.isArray(history)&&history.length)html+=`<details style="width:100%;font-size:12px;line-height:1.7;margin:2px 0 8px"><summary>${esc(name)} · 이전 출석·승인 기록 ${history.length}건 보관</summary><p>이전 권한은 보관용이며 복귀 시 자동 복구하지 않습니다.</p>${history.map(record=>{const p=record.permissions||{};return `<div>${esc(new Date(record.archivedAt).toLocaleDateString('ko-KR'))} · 출석 ${(p.attendance||[]).length}개 · 자료 승인 ${(p.folders||[]).length+(p.products||[]).length}개 · VIP ${(p.vip||[]).length}개</div>`;}).join('')}</details>`;
-    });
+    const types={resident:'재원생',online:'온라인',graduated:'졸업생',withdrawn:'퇴원생'};
+    const chip=name=>`<span class="chip">${esc(name)}<select class="membership-toggle" ${membershipBusy?'disabled':''} onchange="changeStudentType(${JSON.stringify(name).replace(/"/g,'&quot;')},this.value)" style="cursor:pointer;margin-left:5px;min-height:36px;width:auto;font-size:12px;padding:3px 7px;border-radius:6px;${studentTypeStyle(name)}" aria-label="${esc(name)} 회원 상태">${Object.entries(types).map(([value,label])=>`<option value="${value}" ${studentType(name)===value?'selected':''}>${label}</option>`).join('')}</select><button onclick="removeStudent('${name}')">×</button></span>`;
+    const groups=[];
+    S.students.forEach(name=>{const g=studentType(name);let grp=groups[groups.length-1];if(!grp||grp.type!==g){grp={type:g,names:[]};groups.push(grp);}grp.names.push(name);});
+    let html=groups.map(grp=>`<div class="stu-group"><div class="stu-group-h">${studentTypeLabel(grp.names[0])} · ${grp.names.length}명</div><div class="stu-grid">${grp.names.map(chip).join('')}</div></div>`).join('');
+    const kept=S.students.filter(n=>Array.isArray((S.studentAccessHistory||{})[n])&&S.studentAccessHistory[n].length);
+    if(kept.length)html+=`<details class="stu-history"><summary>이전 출석·승인 기록 보관 · ${kept.length}명</summary><p class="hint">이전 권한은 보관용이며 복귀 시 자동 복구하지 않습니다.</p>${kept.map(name=>`<div class="stu-hist-row"><b>${esc(name)} <span class="stu-hist-n">· 기록 ${S.studentAccessHistory[name].length}건</span></b>${S.studentAccessHistory[name].map(record=>{const p=record.permissions||{};return `<div>${esc(new Date(record.archivedAt).toLocaleDateString('ko-KR'))} · 출석 ${(p.attendance||[]).length}개 · 자료 승인 ${(p.folders||[]).length+(p.products||[]).length}개 · VIP ${(p.vip||[]).length}개</div>`;}).join('')}</div>`).join('')}</details>`;
     document.getElementById('student-chips').innerHTML=html||'<span class="hint">등록된 학생이 없습니다.</span>';
     if(window.GFIELD_EMAIL_AUTH_VIEW) window.GFIELD_EMAIL_AUTH_VIEW.render(S.students);
   }

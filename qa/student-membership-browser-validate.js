@@ -122,7 +122,8 @@ const server=http.createServer((req,res)=>{
     await member.selectOption('online');await page.waitForFunction(()=>!membershipBusy);assert.equal(account.active,true);
     const kept=JSON.parse(JSON.stringify(published));await member.selectOption('graduated');await page.waitForFunction(()=>!membershipBusy);
     assert.equal(published.studentTypes[student],'graduated');assert.equal(account.active,false);assert.equal(await page.locator('#matrix').innerText().then(text=>text.includes(student)),false);
-    assert.ok((await page.locator('#student-chips').innerText()).includes('이전 출석·승인 기록 1건 보관'));
+    await page.evaluate(()=>{const d=document.querySelector('#student-chips .stu-history');if(d)d.open=true;});
+    assert.ok((await page.locator('#student-chips .stu-history').innerText()).includes(student+' · 기록 1건'));   // 이전 기록 보관 상자(맨 아래 접힘)에 학생별 건수가 나온다
     assert.deepEqual(published.attendance,kept.attendance);assert.deepEqual(published.reports,kept.reports);assert.deepEqual(published.archiveProductAccess,kept.archiveProductAccess);
     await home.reload();await home.waitForFunction(()=>document.getElementById('membership-login-notice').textContent==='원에 연락해 주세요.');assert.equal(await home.locator('#dashboard').isVisible(),false);
     assert.equal(await home.locator('#membership-login-notice').isVisible(),true);
