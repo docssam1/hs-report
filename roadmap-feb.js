@@ -301,6 +301,42 @@
       return r;
     };
   }
+  /* ---------- 2월 과정 학생: 상태 카드(현재 주차·진행률·D-day)와 브리핑도 2월 로드맵 기준 ---------- */
+  function febGoalDays() {   // 시험일까지 남은 날(지나면 음수). 날짜가 없으면 null
+    var goal = R.nodes.find(function (n) { return n.type === 'goal'; });
+    var m = goal && /(\d{4})년\s*(\d+)월\s*(\d+)일/.exec(goal.date || '');
+    if (!m) return null;
+    var t = new Date(+m[1], +m[2] - 1, +m[3]), now = new Date();
+    return Math.round((t - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
+  }
+  function febDone() {   // 선생님이 체크해 연 주차 수(체크 표가 없으면 현재 주차까지)
+    var open = R.meta.openWeeks ? (R.meta.openWeeks[student()] || []) : null;
+    if (open) return weeks.filter(function (n) { return open.indexOf(n.id) >= 0; }).length;
+    return Math.max(0, currentIndex() + 1);
+  }
+  function febStatus() {
+    var cur = weeks[currentIndex()], total = weeks.length, done = febDone(), pct = total ? Math.round(done / total * 100) : 0;
+    var now = document.getElementById('now-text'), bar = document.getElementById('progressbar'), lab = document.getElementById('progress-label'), dd = document.getElementById('dday');
+    if (now) now.textContent = cur ? '현재 학습: ' + cur.date + ' · ' + cur.title : '진행 중인 주차 정보 없음';
+    if (bar) bar.style.width = pct + '%';
+    if (lab) lab.textContent = '2월 대비 전체 ' + total + '주차 중 ' + done + '주차 진행 (' + pct + '%)';
+    var d = febGoalDays(), goal = R.nodes.find(function (n) { return n.type === 'goal'; });
+    if (dd && d != null) {
+      dd.textContent = d > 0 ? '시험 D-' + d : (d === 0 ? '시험 D-DAY' : '시험 종료');
+      dd.title = (goal ? goal.title : '시험') + ' · ' + (goal ? goal.date : '');
+    }
+  }
+  if (typeof renderStatus === 'function') {
+    var origStatus = renderStatus;
+    renderStatus = function () { var r = origStatus.apply(this, arguments); if (isMember()) febStatus(); return r; };
+  }
+  if (typeof daysToExam === 'function') {   // 브리핑의 D-day 문구
+    var origDays = daysToExam;
+    daysToExam = function () { if (isMember()) { var d = febGoalDays(); if (d != null) return d; } return origDays.apply(this, arguments); };
+  }
+  /* 브리핑 인사말(index-enhancements.js)이 지금 주차를 물을 때 2월 학생에게는 2월 주차를 준다 */
+  window.GFIELD_FEB_CURRENT = function () { return isMember() ? (weeks[currentIndex()] || null) : null; };
+
   var landed = false, openedFeb = false;
   if (typeof nav === 'function') {
     var origNav = nav;

@@ -468,7 +468,8 @@
       if(!currentStudent||isDemo)return;
       const mood=document.querySelector('#briefing .brief-mood');
       if(!mood)return;
-      const given=givenName(currentStudent),node=currentNode(),mode=audienceMode();
+      const feb=typeof window.GFIELD_FEB_CURRENT==='function'?window.GFIELD_FEB_CURRENT():null;   // 2월 과정 학생은 2월 주차
+      const given=givenName(currentStudent),node=feb||currentNode(),mode=audienceMode();
       const w=window.GFIELD_WEATHER;
       const detail=mode==='parent'
         ? `${esc2(given)} 학생은 현재 <b>${esc2(node?node.title:'오늘의 학습')}</b> 구간을 지나고 있습니다. ${esc2(weatherLineParent(w))}`
