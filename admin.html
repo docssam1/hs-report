@@ -160,7 +160,7 @@
       <button data-tab="report" onclick="tab('report')">⑧ 진단 결과</button>
       <button data-tab="exam" onclick="tab('exam')">⑨ AI 진단</button>
       <button data-tab="mock" onclick="tab('mock')">⑩ 모의고사 결과</button>
-      <button data-tab="hs" onclick="tab('hs')">⑫ 황소 관리</button>
+      <button data-tab="hs" onclick="tab('hs')">⑫ 2월 대비 · 편입·승급</button>
       <a href="bank/index.html" target="_blank" rel="noopener" style="text-decoration:none"><button type="button">⑪ 문제은행 ↗</button></a>
     </div>
 
@@ -183,14 +183,14 @@
 
     <section id="tab-hs" class="hidden">
       <div class="card" id="feb-admin">
-        <h3>2월 로드맵 · 수강 학생과 현재 주차</h3>
+        <h3>2월 대비 로드맵 · 수강 학생과 현재 주차</h3>
         <div class="hint"><b>2월 과정</b>에 체크한 학생이 대상이고, <b>선생님이 출석 체크한 주차</b>의 자료(개념·중급 과제·파이널·최종)만 열립니다. 주차 칸을 누르면 그 학생의 그 주차가 열리거나 닫힙니다. 현재 주차는 로드맵 화면의 "현재 진행 중" 표시용입니다. 재원생·온라인 모두 같습니다. 바꾼 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
         <div style="margin:8px 0">현재 주차 <select id="feb-cur" onchange="febSetCurrent(this.value)"></select></div>
         <div class="matrix-scroll"><table id="feb-matrix"></table></div>
       </div>
       <div class="card" id="upg-admin">
-        <h3>승급과정 · 열람 학생</h3>
-        <div class="hint">체크한 학생은 학생 화면의 <b>로드맵 → 승급과정</b> 탭에서 세 영역을 봅니다. 체크 하나로 세 폴더가 함께 열립니다. 2월 로드맵과는 별개입니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.<br>
+        <h3>편입·승급과정 · 열람 학생</h3>
+        <div class="hint">체크한 학생은 학생 화면의 <b>로드맵 → 편입·승급과정</b> 탭에서 세 영역을 봅니다. 체크 하나로 세 폴더가 함께 열립니다. 2월 대비 로드맵과는 별개입니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.<br>
         자료는 <b>⑤ 자료실 → 교재</b>에서 폴더를 골라 올립니다.<br>
         · <b>승급 복습강의</b>: 교재 PDF + 복습영상 주소. '과정' 칸(예: 4-1 Level Up 심화)으로 묶여 보입니다.<br>
         · <b>승급과정 문제은행</b>: 시험지 PDF(이미지 분할) + 답안은 링크 버튼, 해설강의는 영상 주소.<br>
