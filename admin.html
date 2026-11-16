@@ -189,8 +189,12 @@
         <div class="matrix-scroll"><table id="feb-matrix"></table></div>
       </div>
       <div class="card" id="upg-admin">
-        <h3>승급과정 문제은행 · 열람 학생</h3>
-        <div class="hint">편입(승급)과정 학생 중 <b>승급과정 문제은행</b> 폴더를 볼 학생을 체크합니다. 2월 로드맵과는 별개입니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
+        <h3>승급과정 · 열람 학생</h3>
+        <div class="hint">체크한 학생은 학생 화면의 <b>로드맵 → 승급과정</b> 탭에서 세 영역을 봅니다. 체크 하나로 세 폴더가 함께 열립니다. 2월 로드맵과는 별개입니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.<br>
+        자료는 <b>⑤ 자료실 → 교재</b>에서 폴더를 골라 올립니다.<br>
+        · <b>승급 복습강의</b>: 교재 PDF + 복습영상 주소. '과정' 칸(예: 4-1 Level Up 심화)으로 묶여 보입니다.<br>
+        · <b>승급과정 문제은행</b>: 시험지 PDF(이미지 분할) + 답안은 링크 버튼, 해설강의는 영상 주소.<br>
+        · <b>승급·편입 자료실</b>: 교재 PDF를 이미지로 분할하면 워터마크가 들어간 양면 책넘김으로 보이고, 인쇄도 워터마크로 나옵니다.</div>
         <div class="matrix-scroll"><table id="upg-matrix"></table></div>
       </div>
     </section>
@@ -620,14 +624,27 @@
   /* 2월 로드맵: 수강 학생·현재 주차를 data.js의 febRoadmap에 저장한다 */
   /* 승급과정 문제은행: 폴더 열람 학생을 황소 관리 탭에서 바로 지정한다(자료실 폴더 권한과 같은 값) */
   const UPG_FOLDER='승급과정 문제은행';
-  function upgToggle(name){const fi=S.archiveFolders.indexOf(UPG_FOLDER);if(fi<0){toast('승급과정 문제은행 폴더가 없습니다');return;}toggleAcc(fi,name);renderUpg();}
+  const UPG_FOLDERS=['승급 복습강의','승급과정 문제은행','승급·편입 자료실'];
+  function upgEnsureFolders(){let added=false;UPG_FOLDERS.forEach(f=>{if(!S.archiveFolders.includes(f)){S.archiveFolders.push(f);added=true;}if(!Array.isArray(S.archiveAccess[f]))S.archiveAccess[f]=[];});return added;}
+  function upgOn(name){const acc=S.archiveAccess[UPG_FOLDER]||[],open=acc.includes('*');return accessOn('folders',UPG_FOLDER,name,!open&&acc.includes(name));}
+  /* 체크 하나로 승급과정 세 폴더(복습강의·문제은행·자료실)를 함께 열고 닫는다 */
+  function upgToggle(name){
+    if(upgEnsureFolders())renderArchiveAdmin();
+    const next=!upgOn(name);
+    UPG_FOLDERS.forEach(f=>{
+      if(scopedStudent(name)){window.GFIELD_STUDENT_ACCESS.grant(S,name,'folders',f,next);return;}
+      let acc=S.archiveAccess[f];if(acc.includes('*'))return;
+      const i=acc.indexOf(name);if(next&&i<0)acc.push(name);if(!next&&i>=0)acc.splice(i,1);
+    });
+    renderUpg();renderAccMatrix();dirty();
+  }
   function renderUpg(){
     const t=document.getElementById('upg-matrix');if(!t)return;
     const f=UPG_FOLDER,acc=Array.isArray(S.archiveAccess[f])?S.archiveAccess[f]:[],open=acc.includes('*');
-    let h='<thead><tr><th>학생</th><th>문제은행 열람</th></tr></thead><tbody>';
-    if(open)h+='<tr><td colspan="2" class="hint" style="padding:10px">이 폴더는 현재 전체공개입니다. 자료실 탭에서 전체공개를 끄면 체크한 학생만 봅니다.</td></tr>';
+    let h='<thead><tr><th>학생</th><th>승급과정 열람</th></tr></thead><tbody>';
+    if(open)h+='<tr><td colspan="2" class="hint" style="padding:10px">문제은행 폴더가 현재 전체공개입니다. 자료실 탭에서 전체공개를 끄면 체크한 학생만 봅니다.</td></tr>';
     S.students.filter(n=>studentType(n)!=='graduated'&&studentType(n)!=='withdrawn').forEach(name=>{
-      const on=accessOn('folders',f,name,!open&&acc.includes(name));
+      const on=upgOn(name);
       h+=`<tr><th>${esc(name)} <span style="font-size:10px;font-weight:800;padding:1px 6px;border-radius:8px;${studentTypeStyle(name)}">${studentTypeLabel(name)}</span></th><td class="cell ${on?'on':'off'}" onclick="upgToggle('${esc(name)}')"></td></tr>`;
     });
     t.innerHTML=h+'</tbody>';
@@ -1218,10 +1235,11 @@
       let linkRows='';
       (it.links||[]).forEach((l,li)=>{ linkRows+=`<div class="tb-row"><input type="text" value="${esc(l.label)}" oninput="setBookLink(${i},${li},'label',this.value)" placeholder="버튼 이름 (예: 답안 PDF / 재생목록)"><input type="url" value="${esc(l.url)}" oninput="setBookLink(${i},${li},'url',this.value)" placeholder="링크 주소"><button class="btn del" onclick="delBookLink(${i},${li})">삭제</button></div>`; });
       h+=`<div class="content-week">
-        <div class="field"><label>폴더(책장)</label><select onchange="setBook(${i},'folder',this.value)">${opts}</select></div>
+        <div class="field"><label>폴더(책장)</label><select onchange="setBook(${i},'folder',this.value);renderBooks()">${opts}</select></div>
         ${approvalGroup}
         ${approval}
         <div class="field"><label>제목</label><input type="text" value="${esc(it.title)}" oninput="setBook(${i},'title',this.value)" placeholder="교재 제목"></div>
+        ${it.folder==='승급 복습강의'?`<div class="field"><label>과정</label><input type="text" value="${esc(it.course||'')}" oninput="setBook(${i},'course',this.value)" placeholder="예: 4-1 Level Up 심화"><span class="hint">같은 과정끼리 묶여 보입니다.</span></div>`:''}
         <div class="field"><label>교재 PDF</label><label class="dz" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" accept="application/pdf" onchange="uploadBookPdf(${i},this)"><span>또는 드래그</span></label> &nbsp; ${pdfState}</div>
         <div class="field"><label>PDF 링크</label><input type="url" value="${esc(it.pdf)}" oninput="setBook(${i},'pdf',this.value)" placeholder="업로드하면 자동 입력 / 직접 링크도 가능"></div>
         <div class="field"><label>이미지 뷰어</label><button class="btn add sm" onclick="splitBook(${i})">🖼 PDF를 이미지로 분할</button> &nbsp; <span id="bspl-${i}" style="font-size:12px;color:var(--muted)">${it.imgdir&&it.pages?('✅ 이미지 '+it.pages+'p 준비됨'):'PDF 업로드 시 자동 분할'}</span></div>

@@ -1406,7 +1406,9 @@ window.GFIELD_DATA = {
     "추가 모의고사",
     "규칙 보충학습",
     "3% 1과정 영역별 테스트",
-    "승급과정 문제은행"
+    "승급 복습강의",
+    "승급과정 문제은행",
+    "승급·편입 자료실"
   ],
   "archiveAccess": {
     "보충학습": [
@@ -1946,6 +1948,16 @@ window.GFIELD_DATA = {
       "김지인"
     ],
     "승급과정 문제은행": [
+      "노관호",
+      "박재이",
+      "정연우"
+    ],
+    "승급 복습강의": [
+      "노관호",
+      "박재이",
+      "정연우"
+    ],
+    "승급·편입 자료실": [
       "노관호",
       "박재이",
       "정연우"
@@ -4402,7 +4414,9 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "승급과정 문제은행"
+        "승급과정 문제은행",
+        "승급 복습강의",
+        "승급·편입 자료실"
       ],
       "products": [
         "seminar-hwangso-2026",
@@ -4584,7 +4598,9 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "승급과정 문제은행"
+        "승급과정 문제은행",
+        "승급 복습강의",
+        "승급·편입 자료실"
       ],
       "products": [
         "seminar-hwangso-2026"
@@ -4620,7 +4636,9 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "승급과정 문제은행"
+        "승급과정 문제은행",
+        "승급 복습강의",
+        "승급·편입 자료실"
       ],
       "products": [
         "seminar-hwangso-2026"
@@ -4704,7 +4722,9 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "승급과정 문제은행"
+        "승급과정 문제은행",
+        "승급 복습강의",
+        "승급·편입 자료실"
       ],
       "products": [
         "seminar-hwangso-2026"
@@ -4724,7 +4744,9 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "승급과정 문제은행"
+        "승급과정 문제은행",
+        "승급 복습강의",
+        "승급·편입 자료실"
       ],
       "products": [
         "seminar-hwangso-2026",
@@ -4814,7 +4836,9 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "승급과정 문제은행"
+        "승급과정 문제은행",
+        "승급 복습강의",
+        "승급·편입 자료실"
       ],
       "products": [
         "seminar-hwangso-2026"
@@ -4953,7 +4977,9 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "승급과정 문제은행"
+        "승급과정 문제은행",
+        "승급 복습강의",
+        "승급·편입 자료실"
       ],
       "products": [
         "seminar-hwangso-2026"
@@ -5349,7 +5375,9 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "승급과정 문제은행"
+        "승급과정 문제은행",
+        "승급 복습강의",
+        "승급·편입 자료실"
       ],
       "products": [
         "seminar-hwangso-2026",
@@ -5787,7 +5815,9 @@ window.GFIELD_DATA = {
       "attendance": [],
       "special": false,
       "folders": [
-        "승급과정 문제은행"
+        "승급과정 문제은행",
+        "승급 복습강의",
+        "승급·편입 자료실"
       ],
       "products": [
         "seminar-hwangso-2026",

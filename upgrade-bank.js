@@ -1,6 +1,7 @@
 /* '승급과정 문제은행' 자료실 폴더
    1) 시험지를 전체 / 단원별 / 회차별로 골라 보고, 고른 시험지를 한 번에 인쇄한다.
    2) 고른 시험지의 문제마다 낮춰서 / 같은 수준 / 높여서 유사문제를 규칙으로 새로 만들어(무한 생성) 풀고, 정답·풀이는 따로 열어 보며, 문제지와 답안을 따로 인쇄한다.
+   시험지를 열면(openBook) 링크 버튼(답안)과 영상(해설강의)이 함께 나온다.
    폴더 열람 권한은 기존 자료실 권한(archiveAccess·학생별 폴더 승인)을 그대로 따른다.
    책장 기본 목록은 pdf·영상·링크가 있는 교재만 올리므로, 이미지 쪽으로만 이루어진 이 폴더는 여기서 직접 그린다. */
 (function () {
@@ -211,7 +212,7 @@
     var units = uniq(all.map(function (b) { return b.unit; }));
     var sessions = uniq(all.map(function (b) { return b.session; }));
     var state = { mode: 'all', units: units.slice(0, 1), sessions: sessions.slice(0, 1) };
-    var head = '<div class="shelf-h disp">📚 ' + escHtml(FOLDER) + '<span class="c">' + all.length + '권</span></div>';
+    var head = '';
     if (!all.length) { sec.innerHTML = head + '<div class="empty-note" style="text-align:left;padding:8px 0">등록된 시험지가 없습니다.</div>'; return; }
     sec.innerHTML = head + '<div class="ub-top"></div><div class="ub-practice"></div>';
     var top = sec.querySelector('.ub-top'), host = sec.querySelector('.ub-practice');
@@ -270,19 +271,6 @@
     render();
   }
 
-  var original = renderArchive;
-  renderArchive = function () {
-    var r = original.apply(this, arguments);
-    var wrap = document.getElementById('archive-list');
-    if (!wrap || (typeof isDemo !== 'undefined' && isDemo)) return r;
-    Array.prototype.slice.call(wrap.querySelectorAll('.shelf-sec')).forEach(function (sec) {
-      var head = sec.querySelector('.shelf-h');
-      if (head && head.textContent.indexOf(FOLDER) >= 0) {
-        var fresh = sec.cloneNode(false);            // 이전 이벤트 연결을 버리고 새로 그린다
-        sec.parentNode.replaceChild(fresh, sec);
-        draw(fresh);
-      }
-    });
-    return r;
-  };
+  /* 로드맵 > 승급과정 탭(upgrade-course.js)의 "Test 문제은행" 영역이 이 화면을 그린다. */
+  window.GFIELD_UPGRADE_BANK = { draw: draw };
 })();

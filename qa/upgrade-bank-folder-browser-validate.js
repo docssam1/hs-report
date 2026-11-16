@@ -21,24 +21,25 @@ const F='승급과정 문제은행',T1='초등과정 4-1 일일테스트 1단원
   await p.route(/supabase\.co|\/functions\/v1|api\.github\.com/,r=>{net++;r.abort()});
   // 테스트에서만: 이승우(기존 방식)·박선우(새 권한 범위)에게 폴더를 열어 준다. 정준우는 목록 밖.
   await p.route('**/data.js*',async r=>{const res=await r.fetch();let t=await res.text();
-    t=t.replace('"승급과정 문제은행": []','"승급과정 문제은행": ["이승우"]');
-    t=t.replace(/("박선우": \{[^}]*?"folders": \[)/,'$1"승급과정 문제은행", ');
+    t+=';(function(D){D.archiveAccess["승급과정 문제은행"]=["이승우"];["승급 복습강의","승급·편입 자료실"].forEach(function(f){D.archiveAccess[f]=[];});'+
+      'var p=(D.studentAccessProfiles||{})["박선우"];if(p){p.folders=(p.folders||[]).filter(function(f){return f.indexOf("승급")<0;});p.folders.push("승급과정 문제은행");}'+
+      'var q=(D.studentAccessProfiles||{})["정준우"];if(q)q.folders=(q.folders||[]).filter(function(f){return f.indexOf("승급")<0;});})(window.GFIELD_DATA);';
     r.fulfill({response:res,body:t});});
   await p.goto(base+'/index.html');
   await p.waitForFunction(()=>typeof enterAs==='function');
   await p.evaluate(n=>{document.getElementById('video-intro')&&(document.getElementById('video-intro').style.display='none');enterAs(n,false)},name);
-  await p.waitForTimeout(600);await p.evaluate(()=>nav('archive'));await p.waitForTimeout(400);
+  await p.waitForTimeout(600);await p.evaluate(()=>nav('roadmap'));await p.waitForTimeout(300);
+  if(await p.isVisible('#rm-tab-upg')){await p.click('#rm-tab-upg');await p.waitForTimeout(400);}
   return p;
  }
- const titles=p=>p.$$eval('#archive-list .shelf-sec:has(.ub-top) .ub-top .book .label',e=>e.map(x=>x.textContent));
- const pressed=p=>p.$$eval('#archive-list .ub-top .ub-chip[aria-pressed="true"]',e=>e.map(x=>x.textContent));
+ const titles=p=>p.$$eval('#rm-upg .up-bank .ub-top .book .label',e=>e.map(x=>x.textContent));
+ const pressed=p=>p.$$eval('#rm-upg .ub-top .ub-chip[aria-pressed="true"]',e=>e.map(x=>x.textContent));
  const out={};
  for(const name of ['정준우','박선우','이승우']){
   const p=await open(name);
-  const txt=await p.$eval('#archive-list',e=>e.innerText);
-  out[name]=txt.includes(F);
+  out[name]=await p.isVisible('#rm-upg .up-bank');
   if(name==='이승우'){
-    const sec='#archive-list .shelf-sec:has(.ub-top)';
+    const sec='#rm-upg .up-bank';
     assert.deepEqual(await titles(p),[T1,T2],'전체: 시험지 이름이 그대로');
     assert.match(await p.$eval(sec+' .ub-sum',e=>e.innerText),/선택한 시험지 2장/);
     // 단원별
@@ -126,6 +127,6 @@ const F='승급과정 문제은행',T1='초등과정 4-1 일일테스트 1단원
  }
  assert.deepEqual(out,{정준우:false,박선우:true,이승우:true});
  assert.deepEqual(errs,[]);
- console.log('PASS 열람 권한(목록 밖 비공개·새 권한 범위 학생 열림), 전체·단원별·회차별 선택, 한 번에 인쇄, 시험지 열기·워터마크, 오류 없음 (차단한 외부 요청 '+net+'건)');
+ console.log('PASS (로드맵 → 승급과정 탭) 열람 권한(목록 밖 비공개·새 권한 범위 학생 열림), 전체·단원별·회차별 선택, 한 번에 인쇄, 시험지 열기·워터마크, 오류 없음 (차단한 외부 요청 '+net+'건)');
  await b.close();host.close();
 })().catch(e=>{console.error('FAIL',e.message);process.exit(1)});
