@@ -33,6 +33,10 @@
     '.up-hero .hs-scene{display:block;width:100%;height:auto;}' +
     '.up-hero-c{position:absolute;left:22px;top:18px;max-width:46%;}' +
     '.up-hero-c h2{font-size:27px;font-weight:400;color:#1b2340;line-height:1.2;}' +
+    '.up-manual{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-top:10px;padding:0 14px;border:2px solid #1b2340;border-radius:12px;background:#fff;color:#1b2340;font-weight:800;font-size:14px;text-decoration:none;box-shadow:0 3px 0 #1b2340;}' +
+    '.up-manual:hover{background:#f7f3ff;}' +
+    '.up-manual:focus-visible{outline:3px solid #2456c4;outline-offset:3px;}' +
+    '.up-manual .hs-li{width:18px;height:18px;}' +
     '.up-hero-c p{margin-top:6px;font-size:13.5px;font-weight:500;line-height:1.6;color:#2e2850;}' +
     '.up-sec{margin:0 0 20px;padding:16px 16px 18px;background:#fff;border:2.5px solid #1b2340;border-radius:22px;}' +
     '.up-top{display:flex;align-items:center;gap:12px;margin:0 0 12px;}' +
@@ -211,7 +215,8 @@
       return;
     }
     var h = '<section class="up-hero">' + (I ? I.upgScene('남학생과 여학생이 복습 강의, Test 문제은행, 편입 자료실 계단을 차례로 올라가는 그림') : '') +
-      '<div class="up-hero-c"><h2 class="disp">' + (student() ? esc(student()) + '의 ' : '') + '편입·승급과정</h2><p>강의로 복습하고, 시험지로 확인하고,<br>자료실 책으로 다져서 한 칸씩 올라가요.</p></div></section>';
+      '<div class="up-hero-c"><h2 class="disp">' + (student() ? esc(student()) + '의 ' : '') + '편입·승급과정</h2><p>강의로 복습하고, 시험지로 확인하고,<br>자료실 책으로 다져서 한 칸씩 올라가요.</p>' +
+        '<a class="up-manual" href="manual-upg.html" target="_blank" rel="noopener">' + (I ? I.icon('clipboard') : '') + '사용법 보기</a></div></section>';
     if (canFolder(F.lec)) h += lecHtml();
     if (canFolder(F.bank)) h += '<section class="up-sec up-bank" aria-labelledby="up-h-bank">' + head('bank', 'up-h-bank', 'Test 문제은행', '시험지를 열면 답안과 해설강의(있는 경우)가 함께 나와요. 아래에서 비슷한 문제를 낮춰서·같은 수준·높여서 만들어 풀 수 있어요.') + dailyBox() + '</section>';
     if (canFolder(F.book)) h += bookHtml();
