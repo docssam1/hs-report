@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 11. 16. 오후 5:26:59
+ * 생성: 2026. 11. 16. 오후 5:50:46
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -3200,7 +3200,8 @@ window.GFIELD_DATA = {
       "cover": "materials/daily_41_u1_12/001.jpg",
       "date": "2026-11-15",
       "unit": 1,
-      "session": "1,2차시"
+      "session": "1,2차시",
+      "video": "https://youtu.be/vQrlJiGPJt8"
     },
     {
       "folder": "승급과정 문제은행",
@@ -3211,7 +3212,8 @@ window.GFIELD_DATA = {
       "cover": "materials/daily_41_u1_34/001.jpg",
       "date": "2026-11-15",
       "unit": 1,
-      "session": "3,4차시"
+      "session": "3,4차시",
+      "video": "https://youtu.be/NdMrEYBaxl0"
     }
   ],
   "pins": {},
