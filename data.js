@@ -3794,7 +3794,6 @@ window.GFIELD_DATA = {
     "김도란": "graduated",
     "김명서": "graduated",
     "김민재": "graduated",
-    "김서연": "graduated",
     "김서율": "graduated",
     "김신유": "graduated",
     "김예지": "graduated",
