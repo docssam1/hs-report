@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f3f5f4">
+  <title>4학년 유사문제 | G-FIELD 편입·승급 자료실</title>
+  <link rel="stylesheet" href="./styles.css?v=20261108-answer-key-watermark">
+  <link rel="stylesheet" href="./worksheet-tools.css?v=bank-20261015j">
+  <link rel="stylesheet" href="./typography.css?v=bank-20260924a">
+  <link rel="stylesheet" href="./four-up-print.css?v=20261108-p102-q10-print">
+  <script src="../data.js"></script>
+  <script src="../student-access-policy.js"></script>
+  <script src="./gate.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar bank-topbar">
+      <a class="topbar-back" href="../index.html" aria-label="자료실로 돌아가기">← 자료실</a>
+      <div class="topbar-brand">
+        <span class="eyebrow">G-FIELD 편입·승급 자료실</span>
+        <h1>황소 초등 문제은행</h1>
+      </div>
+      <ol class="workflow-steps" aria-label="문제 제작 단계">
+        <li class="is-active"><b>1</b><span>유형 선택</span></li>
+        <li><b>2</b><span>문제 검토</span></li>
+      </ol>
+    </header>
+
+    <main class="bank-layout" id="bankLayout" aria-label="황소 초등 문제은행">
+      <section class="selection-panel" aria-label="학습지 종류와 범위 선택">
+        <header class="selection-head">
+          <div>
+            <span class="panel-kicker">STEP 1</span>
+            <h2>학습지 종류와 범위 선택</h2>
+          </div>
+          <p>원본 심화 문제를 한 문제 한 유형으로 나누고, 학년·학기와 단원에 맞춰 정리했습니다.</p>
+        </header>
+
+        <div class="semester-filter">
+          <div class="filter-caption">학년</div>
+          <div class="segmented grade-segments" id="gradeFilter" role="group" aria-label="학년 필터">
+            <button type="button" class="segment is-active" data-grade="4">4학년</button>
+          </div>
+          <div class="filter-caption">학기</div>
+          <div class="segmented term-segments" id="termFilter" role="group" aria-label="학기 필터">
+            <button type="button" class="segment is-active" data-term="1">1학기</button>
+            <button type="button" class="segment" data-term="2">2학기</button>
+          </div>
+        </div>
+
+        <div class="selector-layout">
+          <section class="tree-pane" id="catalogPanel" aria-label="학년·학기, 대단원, 소단원, 유형 목록">
+            <header class="tree-pane-head">
+              <div>
+                <h3>단원과 세부 유형</h3>
+              </div>
+              <label class="tree-search" for="typeSearchInput">
+                <span class="sr-only">소단원과 유형 검색</span>
+                <input id="typeSearchInput" class="input-text" type="search" placeholder="소단원·유형 검색">
+              </label>
+            </header>
+            <div class="tree-tools">
+              <label for="unitFilter">
+                <span class="sr-only">대단원 선택</span>
+                <select id="unitFilter" class="input-select">
+                  <option value="">전체 대단원</option>
+                </select>
+              </label>
+              <span class="tree-standard">심화 문제은행</span>
+            </div>
+            <div class="type-tree" id="typeList" aria-live="polite"></div>
+            <div class="catalog-empty" id="catalogEmpty" hidden>조건에 맞는 유형이 없습니다.</div>
+          </section>
+
+          <aside class="composition-pane" id="workspacePanel" aria-label="문제 구성 설정">
+            <header class="composition-head">
+              <span class="panel-kicker">문제 구성</span>
+              <h3>선택한 유형</h3>
+            </header>
+            <div class="selection-metrics" aria-label="선택 요약">
+              <div><span>유형</span><strong id="selectedTypeSummary">0개</strong></div>
+              <div><span>문항</span><strong id="selectedQuestionSummary">0문항</strong></div>
+            </div>
+
+            <div class="field-group count-field">
+              <div class="field-label">문항 수</div>
+              <div class="count-control">
+                <div class="count-presets" role="group" aria-label="문항 수 빠른 선택">
+                  <button type="button" data-count="8">8</button>
+                  <button type="button" data-count="12" class="is-active">12</button>
+                  <button type="button" data-count="20">20</button>
+                  <button type="button" data-count="30">30</button>
+                  <button type="button" data-count="40">40</button>
+                </div>
+                <label class="count-input" for="questionCountInput"><span>직접 입력</span><input id="questionCountInput" class="input-number" type="number" min="1" max="120" step="1" value="12"></label>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <span class="field-label">심화 문제 변형 단계</span>
+              <div class="segmented" id="difficultyFilter" role="group" aria-label="심화 문제 변형 단계">
+                <button type="button" class="segment" data-difficulty="-1">심화 쉬움</button>
+                <button type="button" class="segment is-active" data-difficulty="0">심화 기준</button>
+                <button type="button" class="segment" data-difficulty="1">심화 어려움</button>
+              </div>
+            </div>
+
+            <label class="field-group" for="studentNameInput">
+              <span class="field-label">학생 이름</span>
+              <input id="studentNameInput" class="input-text" type="text" maxlength="20" placeholder="로그인 이름 자동 입력" readonly aria-readonly="true">
+            </label>
+
+            <label class="switch-row" for="watermarkToggle">
+              <span>이름 워터마크</span>
+              <input id="watermarkToggle" type="checkbox" checked>
+            </label>
+
+            <div class="selected-types" id="selectedTypeList"></div>
+          </aside>
+        </div>
+
+        <footer class="selection-footer">
+          <div class="selection-total"><span>선택한 유형</span><strong id="selectedTypeCount">0개</strong><i></i><span>생성 문항</span><strong id="selectedQuestionCount">0문항</strong></div>
+          <p id="selectionCapacityNotice" class="selection-capacity-notice" role="status" aria-live="polite" hidden></p>
+          <button id="mobileSettingsButton" class="mobile-settings-button" type="button">문제 설정</button>
+          <button id="generateButton" class="primary-button generate-button" type="button">문제 구성하기 →</button>
+        </footer>
+      </section>
+    </main>
+
+    <section class="worksheet" id="worksheet" hidden>
+      <div class="worksheet-toolbar">
+        <button id="backButton" class="secondary-button" type="button">← 유형 다시 선택</button>
+        <div class="preview-tabs" role="tablist" aria-label="문제와 풀이 탭">
+          <button id="problemTab" class="tab-button is-active" type="button" role="tab" aria-selected="true">문제</button>
+          <button id="solutionTab" class="tab-button" type="button" role="tab" aria-selected="false">정답·풀이</button>
+        </div>
+        <div class="toolbar-actions">
+          <button id="newProblemButton" class="secondary-button" type="button">새 문제</button>
+          <button id="solutionViewerButton" class="secondary-button" type="button">전체 해설</button>
+          <div class="print-menu" id="printMenu">
+            <button id="printMenuButton" class="primary-button" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="printMenuList">인쇄 선택</button>
+            <div id="printMenuList" class="print-menu-list" role="menu" hidden>
+              <button type="button" role="menuitem" data-print-mode="problem">문제만 인쇄</button>
+              <button type="button" role="menuitem" data-print-mode="answer-key">정답만 인쇄</button>
+              <button type="button" role="menuitem" data-print-mode="solution">정답·풀이 인쇄</button>
+              <button type="button" role="menuitem" data-print-mode="all">문제+정답·풀이 인쇄</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="review-layout">
+        <aside class="review-sidebar" aria-label="선택한 문제 목록">
+          <header class="worksheet-head">
+            <div><span>G-FIELD 편입·승급</span><h2 id="worksheetTitle">맞춤 유사문제</h2><p id="worksheetMeta"></p></div>
+            <dl><div><dt>이름</dt><dd id="worksheetStudent"></dd></div></dl>
+          </header>
+          <section class="review-selected">
+            <h3>선택한 유형</h3>
+            <div id="reviewSelectedTypes"></div>
+          </section>
+          <nav class="review-question-list" id="reviewQuestionList" aria-label="문항 바로가기"></nav>
+        </aside>
+        <section class="review-stage" aria-label="선택한 문제 미리 보기">
+          <header class="review-stage-head"><span>선택한 문제 목록</span><strong id="reviewStageMeta"></strong></header>
+          <div class="question-pages" id="problemView"></div>
+          <div class="answer-pages" id="solutionView" hidden></div>
+          <div class="answer-key-pages" id="answerKeyView" hidden></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="solutionViewer" class="solution-viewer" hidden aria-labelledby="solutionViewerTitle">
+      <div class="solution-viewer-backdrop" data-solution-viewer-close></div>
+      <div class="solution-viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="solutionViewerTitle" tabindex="-1">
+        <header class="solution-viewer-head">
+          <div>
+            <span>전체 해설</span>
+            <h2 id="solutionViewerTitle">문항별 정답과 풀이</h2>
+          </div>
+          <button id="solutionViewerClose" class="solution-viewer-close" type="button" aria-label="전체 해설 닫기">×</button>
+        </header>
+        <div class="solution-viewer-body">
+          <nav id="solutionViewerJump" class="solution-viewer-jump" aria-label="해설 문항 바로가기"></nav>
+          <article id="solutionViewerContent" class="solution-viewer-content" aria-live="polite"></article>
+        </div>
+        <footer class="solution-viewer-footer">
+          <button id="solutionViewerPrevious" class="secondary-button" type="button">← 이전</button>
+          <strong id="solutionViewerPosition" aria-live="polite">1 / 1</strong>
+          <button id="solutionViewerNext" class="primary-button" type="button">다음 →</button>
+        </footer>
+      </div>
+    </section>
+  </div>
+
+  <script defer src="./source-inventory-4-1.js?v=bank-20260913f"></script>
+  <script defer src="./source-inventory-4-2-quadrilateral.js?v=bank-20260922d"></script>
+  <script defer src="./curriculum.js?v=20261109-u2p82-q63-nine"></script>
+  <script defer src="./grade4-only.js"></script>
+  <script defer src="./generators.js?v=bank-20261105-cuboid-paper-fit"></script>
+  <script defer src="./source-4-2-perpendicular-parallel.js?v=20261104-parallel-labels"></script>
+  <script defer src="./source-4-2-parallel-angle.js?v=bank-20260924a"></script>
+  <script defer src="./source-4-2-parallel-angle-chain-one.js?v=20261104-angle-prompt"></script>
+  <script defer src="./source-4-2-parallel-angle-chain-two-mission3.js?v=bank-20260924a"></script>
+  <script defer src="./math-notation.js?v=bank-20260827l"></script>
+  <script defer src="./identity.js?v=identity-20260824a"></script>
+  <script defer src="./app.js?v=20261108-alternative-visibility"></script>
+</body>
+</html>

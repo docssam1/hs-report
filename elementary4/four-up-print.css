@@ -1,0 +1,232 @@
+@page hseFourUp { size:A4; margin:8mm 0; }
+@media print {
+  /* Four-up cells already provide writing space above each answer line. */
+  #problemView .print-page--four-up :is(.source52-p29m1-workspace, .source52-p29m2c-workspace, .source52-p29m3-workspace) { display:none; }
+  #problemView .print-page--four-up .question-item:is([data-type-id="5-1-u1-t1"], [data-type-id="5-1-u1-t1-2"], [data-type-id="5-1-u1-t1-3"], [data-type-id="5-1-u1-t1-4"]) .equation {
+    margin-top: 3mm; padding: 1.5mm; font-family: "Noto Serif KR", "Batang", serif;
+    font-size: 10pt; font-weight: 400; line-height: 1.4; letter-spacing: -0.02em; white-space: normal; overflow: visible;
+  }
+  #problemView .print-page--four-up :is(.mixed-calculation-prefix, .mixed-calculation-ending) { white-space: nowrap; }
+  /* Preserve drawing space while avoiding a second fixed writing area. */
+  #problemView .print-page--four-up :is(.u3ex11-work, .u3ex12-work, .u3m4-work) { min-height: 100px; }
+  #problemView .print-page--four-up :is(.p28e33-workspace, .p28e34-workspace, .source52-p28e32-workspace, .p30e41-workspace, .source52-p30e43-workspace, .source52-p30e44-workspace) { display:none; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u1-e3-exploration-life-synthetic"] > div[aria-hidden="true"] { height:1.4em !important; margin-bottom:0.15em !important; }
+  #problemView .print-page--four-up .question-item[data-type-id="5-2-u3-e1-mission-6"] .u3m6 ol { line-height:1.3; margin:0.2em 0; }
+  #problemView .print-page--four-up .source52-p29m6-workspace { display:none; }
+  #problemView .print-page--four-up :is(.u3m5, .u3e23-pair) ol { line-height:1.35; margin:0.2em 0; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-mission-3-dot-cut-synthetic"] { font-size:10pt; line-height:1.35; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-mission-3-dot-cut-synthetic"] p { margin:0.3em 0; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-mission-3-dot-cut-synthetic"] svg { max-height:100px; }
+  .print-page.print-page--four-up { page:hseFourUp; }
+  .print-page.print-page--four-up .question-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); grid-auto-flow:column; grid-template-rows:repeat(2,minmax(auto,1fr)); min-height:235mm; }
+  #problemView .print-page.print-page--four-up:has(.question-item .graph-figure + .graph-figure) .question-grid { display:grid; }
+  #problemView .print-page.print-page--four-up:has(.question-item .graph-figure + .graph-figure) .question-item+.question-item { break-before:auto; page-break-before:auto; }
+  .print-page.print-page--four-up .question-item { min-height:0; padding:8px 0; }
+  #problemView .print-page.print-page--four-up .question-prompt { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #solutionView .solution-item p,
+  #solutionView .solution-item [data-source-answer] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u1-practice-8-bus-range-similar"],
+  #solutionView [data-source-answer="5-2-u1-practice-8-bus-range-similar"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u1-practice-37-packing-time-similar"],
+  #solutionView [data-source-answer="5-2-u1-practice-37-packing-time-similar"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView .print-page--four-up .question-item[data-compact-fraction="true"] .question-prompt { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView .print-page--four-up .question-item[data-compact-fraction="true"] .equation:not(:has(br)) { white-space:normal; overflow:visible; background:transparent; border-color:#888; }
+  .print-page.print-page--four-up .question-prompt svg { width:auto !important; max-width:100%; max-height:150px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u4-practice-10-original"] svg { max-height:210px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-mission-5-original"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-mission-4-original"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-mission-2-original"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-mission-1-original"] svg { max-height:200px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-example-8-3-original"] svg { max-height:210px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-example-8-2-original"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-example-8-1-original"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-exploration-8-original"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e7-mission-1-original"] svg { max-height:200px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e7-example-7-4-original"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e7-example-7-1-original"] svg { max-height:215px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-mission-4-original"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-mission-1-original"] svg,
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-mission-3-original"] svg { max-height:190px; }
+  #problemView .print-page--four-up .question-graph-pair { display:flex; gap:14px; margin-top:8px; padding:0 8px 0 12px; }
+  #problemView .print-page--four-up .question-graph-pair .graph-figure { flex:1; min-width:0; margin:0; }
+  #problemView .print-page--four-up .question-graph-pair .graph-scale-note { min-height:36px; margin:0 0 4px; font-size:9px; line-height:12px; }
+  #problemView .print-page--four-up .question-graph-pair svg { width:100% !important; height:auto; max-height:130px; overflow:visible; }
+  #problemView .print-page--four-up .question-graph-pair svg text { font-size:12px; font-weight:700; }
+  #problemView .print-page--four-up .question-graph-pair .paired-dense-hidden { display:none; }
+  #problemView .print-page--four-up .question-item:is([data-type-id="4-2-u5-t1-4"],[data-type-id="4-2-u5-t1-7"],[data-type-id="4-2-u5-t1-8"]) .graph-figure svg .chart-unit { font-size:8px; transform:translateY(-7px); }
+  #problemView .print-page--four-up .question-item:is([data-type-id="4-2-u5-t1-2"],[data-type-id="4-2-u5-t1-3"],[data-type-id="4-2-u5-t1-6"],[data-type-id="4-2-u5-t1-9"],[data-type-id="4-2-u5-t1-5"],[data-type-id="4-2-u5-t1-10"],[data-type-id="4-2-u5-t2-2"],[data-type-id="4-2-u5-t2-6"],[data-type-id="4-2-u5-t2-3"],[data-type-id="4-2-u5-t2-4"],[data-type-id="4-2-u5-t2-7"],[data-type-id="4-2-u5-t2-8"],[data-type-id="4-2-u5-t1"],[data-type-id="4-2-u5-t2-9"],[data-type-id="4-2-u5-t2-10"]) .graph-figure svg { max-height:175px; overflow:visible; }
+  #problemView .print-page--four-up .question-item:is([data-type-id="4-2-u5-t1-2"],[data-type-id="4-2-u5-t1-3"],[data-type-id="4-2-u5-t1-6"],[data-type-id="4-2-u5-t1-9"],[data-type-id="4-2-u5-t1-5"],[data-type-id="4-2-u5-t1-10"],[data-type-id="4-2-u5-t2-2"],[data-type-id="4-2-u5-t2-6"],[data-type-id="4-2-u5-t2-3"],[data-type-id="4-2-u5-t2-4"],[data-type-id="4-2-u5-t2-7"],[data-type-id="4-2-u5-t2-8"],[data-type-id="4-2-u5-t1"],[data-type-id="4-2-u5-t2-9"],[data-type-id="4-2-u5-t2-10"]) .graph-figure svg text { font-size:11px; font-weight:700; }
+  #problemView .print-page--four-up .question-item:is([data-type-id="4-2-u5-t1-2"],[data-type-id="4-2-u5-t1-3"],[data-type-id="4-2-u5-t1-6"],[data-type-id="4-2-u5-t1-9"],[data-type-id="4-2-u5-t1-5"],[data-type-id="4-2-u5-t1-10"],[data-type-id="4-2-u5-t2-2"],[data-type-id="4-2-u5-t2-6"],[data-type-id="4-2-u5-t2-3"],[data-type-id="4-2-u5-t2-4"],[data-type-id="4-2-u5-t2-7"],[data-type-id="4-2-u5-t2-8"],[data-type-id="4-2-u5-t1"],[data-type-id="4-2-u5-t2-9"],[data-type-id="4-2-u5-t2-10"]) .graph-figure svg .chart-unit { font-size:7px; transform:translateY(-7px); }
+  #problemView .print-page--four-up .question-item:is([data-type-id="4-2-u5-t1-2"],[data-type-id="4-2-u5-t1-3"],[data-type-id="4-2-u5-t1-6"],[data-type-id="4-2-u5-t1-9"],[data-type-id="4-2-u5-t1-5"],[data-type-id="4-2-u5-t1-10"],[data-type-id="4-2-u5-t2-2"],[data-type-id="4-2-u5-t2-6"],[data-type-id="4-2-u5-t2-3"],[data-type-id="4-2-u5-t2-4"],[data-type-id="4-2-u5-t2-7"],[data-type-id="4-2-u5-t2-8"],[data-type-id="4-2-u5-t1"],[data-type-id="4-2-u5-t2-9"],[data-type-id="4-2-u5-t2-10"]) .graph-figure svg .chart-question { font-size:14px; }
+  /* Folding steps need enough room for students to read the labels. */
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-mission-1-fold-fourths-synthetic"] svg,
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-mission-4-folded-triangle-synthetic"] svg { max-height:235px; overflow:visible; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-mission-1-fold-fourths-synthetic"] svg text,
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-mission-4-folded-triangle-synthetic"] svg text { font-size:18px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-mission-3-wedge-ball-synthetic"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-1-original"] { font-size:13px; line-height:1.4; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-1-original"] p { margin:0.3em 0; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-1-original"] svg { max-height:100px; }
+  /* Place the two figures side by side so labels remain legible in a half-page cell. */
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-37-original"],
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-39-original"] { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:center; font-size:13px; line-height:1.4; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-37-original"] p,
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-39-original"] p { grid-column:1 / -1; margin:0.3em 0; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-37-original"] svg,
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-39-original"] svg { max-height:150px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-47-original"] svg { width:100% !important; height:auto; max-height:320px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u5-practice-48-original"] svg { max-height:250px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-example-1-reflection-synthetic"] svg { max-height:230px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-example-4-circle-axis-synthetic"] svg { max-height:230px; }
+  #problemView [data-source-item-id="5-2-u3-e5-example-4-circle-axis-synthetic"],
+  #solutionView [data-source-answer="5-2-u3-e5-example-4-circle-axis-synthetic"],
+  #solutionView [data-source-answer="5-2-u3-e5-example-3"],
+  #solutionView [data-source-answer="5-2-u3-e5-example-3"] p,
+  #problemView [data-source-item-id="5-2-u3-e5-example-1-reflection-synthetic"],
+  #solutionView [data-source-answer="5-2-u3-e5-example-1-reflection-synthetic"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-practice-78-original"] svg { max-height:220px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e4-mission-6"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e4-example-2"] svg { max-height:190px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e7-mission-5"] svg { max-height:180px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e7-mission-6"] svg { max-height:200px; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-example-3-overlap-synthetic"] svg { max-height:150px; }
+  #problemView .print-page--four-up .question-item:has([data-source-item-id="5-2-u3-e8-example-3-overlap-synthetic"]) .question-prompt { font-size:13px; line-height:1.45; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e8-example-2-cut-synthetic"] svg { max-height:200px; }
+  #problemView [data-source-item-id="5-2-u3-e8-example-3-overlap-synthetic"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u3-e8-example-2-cut-synthetic"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u3-e8-example-4-stone-synthetic"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u3-e8-example-1-circle-difference-synthetic"],
+  #problemView [data-source-item-id="5-2-u3-e8-exploration-staircase-half-synthetic"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-example-3"] svg { max-height:190px; }
+  #problemView [data-source-item-id="5-2-u3-e7-mission-5"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u3-e5-exploration"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u3-e5-example-3"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u3-e7-mission-6"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u3-e7-mission-2"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u3-e7-mission-3"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u3-e7-mission-4"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u2-e1-example-4-synthetic"],
+  #problemView [data-source-item-id="5-2-u2-e4-mission-2-synthetic"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView .question-item[data-type-id="4-2-u1-t1"] .question-prompt,
+  #problemView .question-item[data-type-id="4-2-u1-t1-4"] .question-prompt,
+  #problemView .question-item[data-type-id="4-2-u1-t3-10"] .question-prompt,
+  #problemView .question-item[data-type-id="4-2-u1-t6"] .question-prompt { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  .print-page.print-page--four-up .answer-line { padding-top:12px; }
+}
+
+@page hseU5P53PracticeAnswer { size:A4; margin:10mm 0; }
+@media print {
+  .answer-page:has([data-source-answer="5-2-u5-e3-mission-3-synthetic"]) { page:hseU5P53PracticeAnswer; }
+  #problemView [data-source-item-id="5-2-u5-e3-mission-3-synthetic"],
+  #solutionView [data-source-answer="5-2-u5-e3-mission-3-synthetic"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u5-e1-mission-1-grid-synthetic"],
+  #solutionView [data-source-answer="5-2-u5-e1-mission-1-grid-synthetic"],
+  #solutionView [data-source-answer="5-2-u5-e1-mission-1-grid-synthetic"] p { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u5-e1-example-1-4-synthetic"],
+  #solutionView [data-source-answer="5-2-u5-e1-example-1-4-synthetic"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u5-check108-q8-packing-synthetic"],
+  #solutionView [data-source-answer="5-2-u5-check108-q8-packing-synthetic"],
+  #solutionView [data-source-answer="5-2-u5-check108-q8-packing-synthetic"] p { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u5-check113-q43-arrow-synthetic"],
+  #solutionView [data-source-answer="5-2-u5-check113-q43-arrow-synthetic"],
+  #solutionView [data-source-answer="5-2-u5-check113-q43-arrow-synthetic"] p { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+}
+
+@media print {
+  #problemView .print-page--four-up .question-prompt .u4p106-wall { max-height: 205px; }
+}
+
+@media print {
+  #problemView .source52-perimeter-question,
+  #solutionView .source52-perimeter-solution { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+}
+
+@media print {
+  #problemView .source52-citrus-sales-question,
+  #solutionView .source52-citrus-sales-solution { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+}
+
+@media print {
+  #problemView [data-source-item-id="5-2-u1-e4-exploration-rounded-range-original"],
+  #problemView [data-source-item-id="5-2-u1-e4-example-1-original"],
+  #problemView [data-source-item-id="5-2-u1-e4-exploration-rounded-range"],
+  #problemView [data-source-item-id="5-2-u1-e4-example-1"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView [data-source-item-id="5-2-u1-e4-example-1-original"] ul { margin: .3em 0 0; padding-left: 1.4em; }
+}
+
+@media print {
+  #problemView [data-source-item-id="5-2-u1-e4-example-2-original"],
+  #problemView [data-source-item-id="5-2-u1-e4-example-3-original"],
+  #problemView [data-source-item-id="5-2-u1-e4-example-2"],
+  #problemView [data-source-item-id="5-2-u1-e4-example-3"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+}
+
+@media print {
+  #problemView [data-source-item-id="5-2-u1-e4-example-4-original"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u1-e4-example-4-original"] .source52-e44-graph { max-height:210px !important; margin:4px auto; }
+  #problemView [data-source-item-id="5-2-u1-e4-example-4-original"] .source52-e44-graph .tick,
+  #problemView [data-source-item-id="5-2-u1-e4-example-4-original"] .source52-e44-graph .year { font-size:17px; }
+  #problemView [data-source-item-id="5-2-u1-e4-example-4-original"] .source52-e44-graph .axis-unit,
+  #problemView [data-source-item-id="5-2-u1-e4-example-4-original"] .source52-e44-graph .series-label { font-size:16px; }
+}
+
+@media print {
+  #solutionView [data-source-answer="5-2-u1-e4-example-4-original"] { color:#191511; font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+  #problemView .source52-e44-graph .female-line, #problemView .source52-e44-graph .male-line,
+  #solutionView .source52-e44-graph .female-line, #solutionView .source52-e44-graph .male-line { stroke:#191511; }
+  #problemView .source52-e44-graph .female-point, #problemView .source52-e44-graph .male-point,
+  #solutionView .source52-e44-graph .female-point, #solutionView .source52-e44-graph .male-point { fill:#191511; }
+}
+
+@media print {
+  #problemView [data-source-item-id="5-2-u1-e4-mission-1-rounded-count-original"],
+  #problemView [data-source-item-id="5-2-u1-e4-mission-1-rounded-count"] { font-family:"Noto Serif KR", "Batang", serif; font-weight:400; }
+}
+
+@media print {
+  /* 두 원의 대칭축을 학생이 모눈에 직접 그릴 수 있도록 크기를 확보한다. */
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-example-4-original"] svg { max-height:220px; }
+}
+
+@media print {
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-example-1-original"] svg { max-height:220px; }
+}
+
+@media print {
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-example-2-original"] svg { max-height:210px; }
+}
+
+@media print {
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-mission-5-original"] svg,
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-mission-6-original"] svg { max-height:200px; }
+}
+
+.p33-octagon-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2px 8px; }
+@media print {
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-mission-1-original"] svg { max-height:160px; margin:2px auto; }
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-mission-1-original"] .p33-octagon-choices { font-size:9pt; line-height:1.25; }
+}
+
+@media print {
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-mission-3-original"] svg { max-height:220px; }
+}
+
+@media print {
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-mission-4-original"] svg { max-height:205px; }
+}
+
+@media print {
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e5-mission-2-original"] svg { max-height:200px; }
+}
+
+@media print {
+  #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-exploration-original"] svg { max-height:180px; }
+}
+
+@media print { #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-example-1-original"] svg { max-height:190px; } }
+
+@media print { #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-example-2-original"] svg { max-height:180px; } }
+
+@media print { #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-example-4-original"] svg { max-height:190px; } }
+
+@media print { #problemView .print-page--four-up [data-source-item-id="5-2-u3-e6-mission-6-original"] svg { max-height:200px; } }

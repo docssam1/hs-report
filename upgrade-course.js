@@ -43,6 +43,15 @@
     '.up-course{display:inline-block;font-size:13px;font-weight:700;color:#1b2340;margin:12px 0 4px;padding:3px 10px;border-radius:8px;border:1.5px solid #1b2340;background:#ece3fb;}' +
     '.up-lock{padding:28px 18px;text-align:center;color:#1b2340;font-size:14.5px;line-height:1.7;background:#fff;border:2.5px solid #1b2340;border-radius:20px;}' +
     '.up-bank .shelf-h{display:none;}' +
+    '.up-e4{display:flex;align-items:center;gap:12px;margin:0 0 16px;padding:12px 14px;border:2px solid #1b2340;border-radius:18px;background:#dfe9ff;color:#1b2340;text-decoration:none;box-shadow:0 3px 0 #1b2340;}' +
+    '.up-e4:hover{background:#d3e2ff;}' +
+    '.up-e4:focus-visible{outline:3px solid #2456c4;outline-offset:3px;}' +
+    '.up-e4-ic{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;border:2px solid #1b2340;background:#fff;flex:none;}' +
+    '.up-e4-ic .hs-li{width:24px;height:24px;}' +
+    '.up-e4-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}' +
+    '.up-e4-t b{font-size:17px;font-weight:400;}' +
+    '.up-e4-t small{font-size:12.5px;color:#4e5878;font-weight:500;line-height:1.45;}' +
+    '.up-e4-go{flex:none;font-weight:800;font-size:13.5px;background:#141b5d;color:#fff;border-radius:10px;padding:8px 12px;box-shadow:0 2px 0 #070b33;}' +
     '.up-fold,.arc-fold{border:2px solid #1b2340;border-radius:18px;background:#fff;overflow:hidden;}' +
     '.up-fold-sum,.arc-fold-sum{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;list-style:none;min-height:56px;}' +
     '.up-fold-sum::-webkit-details-marker,.arc-fold-sum::-webkit-details-marker{display:none;}' +
@@ -176,8 +185,16 @@
   function bookHtml() {
     var list = booksOf(F.book);
     var h = '<section class="up-sec" aria-labelledby="up-h-book">' + head('book', 'up-h-book', '승급·편입 자료실', '책처럼 양쪽으로 넘겨 봐요. 화면과 인쇄물에 ' + esc(student()) + ' 님의 이름이 워터마크로 들어갑니다.');
+    h += elem4Card();
     if (!list.length) return h + '<div class="up-empty">아직 올라온 교재가 없습니다.</div></section>';
     return h + '<div class="shelf">' + list.map(function (b) { return cardHtml(b, b.imgdir && b.pages ? b.pages + '쪽 · 책넘김' : '교재'); }).join('') + '</div></section>';
+  }
+  /* 4학년 유사문제 은행(elementary4/): 승급·편입 자료실이 열린 학생에게만 보인다 */
+  function elem4Card() {
+    return '<a class="up-e4" href="elementary4/index.html" target="_blank" rel="noopener" data-e4>' +
+      '<span class="up-e4-ic">' + (I ? I.icon('pencil') : '') + '</span>' +
+      '<span class="up-e4-t"><b class="disp">4학년 유사문제 은행</b><small>4-1·4-2 단원과 유형을 골라 심화 유사문제를 만들고, 이름 워터마크로 인쇄해요.</small></span>' +
+      '<span class="up-e4-go">열기 ›</span></a>';
   }
   /* 데일리 테스트(시험지·유사문제)는 길어서 접히는 상자 하나에 넣는다. 열림 상태는 기기에 기억 */
   function dailyBox() {
@@ -208,6 +225,11 @@
     }
   }
   panel.addEventListener('click', function (e) {
+    var e4 = e.target.closest && e.target.closest('[data-e4]');
+    if (e4) {   // 새 탭의 입장 확인용 표시(같은 학생·12시간)
+      try { sessionStorage.setItem('gfield_elem4_handoff', JSON.stringify({ student: student(), issuedAt: Date.now() })); } catch (err) {}
+      return;
+    }
     var el = e.target.closest && e.target.closest('[data-up]');
     if (!el || !panel.contains(el)) return;
     var b = (D.books || [])[Number(el.getAttribute('data-up'))];
