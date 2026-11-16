@@ -24,22 +24,22 @@ const host=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new UR
    await extra.click();await p.locator('#overlay:not(.hidden)').waitFor();
    assert.deepEqual(await p.locator('#modal-body [data-book-key]').evaluateAll(ns=>ns.map(n=>n.dataset.bookKey)),[key],'unapproved sibling exams do not appear');
    await p.evaluate(()=>closeModal());
-   if(!before){assert.equal(await extra.locator('.icon-status').innerText(),'🔓');assert.equal(await extra.locator('.icon-status').getAttribute('aria-label'),'열림 · 이용 가능');}
+   if(!before){assert.equal(await extra.locator('.icon-status').getAttribute('aria-label'),'열림 · 이용 가능');assert.equal(await extra.locator('.icon-status').getAttribute('aria-label'),'열림 · 이용 가능');}
   }
   if(!before){
    // Normal weekly attendance rules stay unchanged even when an exam is approved.
    await p.evaluate(name=>{window.GFIELD_DATA.attendance[name]=['sep-w1'];renderTimeline();document.getElementById('toast').classList.remove('show');},student);
    const week=p.locator('#timeline .node').filter({has:p.locator('h3',{hasText:'파이널 실전 모의고사 1회'})});
-   assert.equal(await week.locator('.icon-status').innerText(),'🔓');
+   assert.equal(await week.locator('.icon-status').getAttribute('aria-label'),'열림 · 이용 가능');
    const future=p.locator('#timeline .node').filter({has:p.locator('h3',{hasText:'최종 실전 모의고사 3회'})});
-   assert.equal(await future.locator('.icon-status').innerText(),'🔒');
+   assert.equal(await future.locator('.icon-status').getAttribute('aria-label'),'잠김 · 이용 불가');
    // Regular residents: check every week against the same gate used by clicking.
    const weeks=await p.evaluate(()=>window.GFIELD_DATA.nodes.filter(n=>n.type==='week').map(n=>({id:n.id,title:n.title})));
    for(const approved of [true,false]){
     await p.evaluate(({name,ids})=>{window.GFIELD_DATA.attendance[name]=ids;renderTimeline();},{name:student,ids:approved?weeks.map(n=>n.id):[]});
     for(const node of weeks){
      const exact=p.locator('#timeline .node').filter({has:p.getByRole('heading',{name:node.title,exact:true})});
-     assert.equal(await exact.locator('.icon-status').innerText(),approved?'🔓':'🔒',node.id+' icon');
+     assert.equal(await exact.locator('.icon-status').getAttribute('aria-label'),approved?'열림 · 이용 가능':'잠김 · 이용 불가',node.id+' icon');
      assert.equal(await exact.evaluate(el=>el.classList.contains('locked')),!approved,node.id+' locked class');
      await exact.click();assert.equal(await p.locator('#overlay').isVisible(),approved,node.id+' actual access');
      if(approved)await p.evaluate(()=>closeModal());
@@ -49,7 +49,7 @@ const host=http.createServer((req,res)=>{const file=path.resolve(root,'.'+new UR
    for(const width of [1280,390]){await p.setViewportSize({width,height:900});await week.scrollIntoViewIfNeeded();assert.ok((await week.locator('.icon-status').boundingBox()).x>=0);if(out)await p.screenshot({path:path.join(out,'regular-week-'+width+'.png')});}
    for(const width of [1280,390]){await p.setViewportSize({width,height:900});await extra.scrollIntoViewIfNeeded();assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.ok((await extra.locator('.icon-status').boundingBox()).x>=0,'approval marker stays inside the viewport');if(out){fs.mkdirSync(out,{recursive:true});await p.screenshot({path:path.join(out,'approved-extra-'+width+'.png')});}}
    await p.evaluate(()=>{for(const key of ['mock-final-5','mock-final-7','mock-final-8','mock-mid-7','mock-mid-8'])window.GFIELD_DATA.archiveProductAccess[key]=[];renderTimeline();});
-   assert.equal(await extra.locator('.icon-status').innerText(),'🔒');await extra.click();assert.equal(await p.locator('#overlay').isVisible(),false);
+   assert.equal(await extra.locator('.icon-status').getAttribute('aria-label'),'잠김 · 이용 불가');await extra.click();assert.equal(await p.locator('#overlay').isVisible(),false);
   }
   assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);console.log(before?'PASS baseline approval mismatch reproduced':'PASS approved roadmap icons, per-exam child filtering, normal/future weeks, revoked access, PC/390px, zero writes');
  }finally{await browser.close();host.close();}

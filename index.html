@@ -288,7 +288,7 @@
   .bv-ext .ic{font-size:40px;opacity:.9}
   .bv-ext .t{font-size:15px;font-weight:800;}
   .bv-ext .d{font-size:12.5px;color:#b9c4d2;line-height:1.7;max-width:330px;}
-  .bv-ext a.go{background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;font-size:13.5px;padding:11px 20px;border-radius:10px;text-decoration:none;box-shadow:0 6px 16px rgba(234,88,12,.32);}
+  .bv-ext a.go{background:#141b5d;color:#fff;font-weight:800;font-size:13.5px;padding:11px 20px;border-radius:10px;text-decoration:none;box-shadow:0 6px 16px rgba(234,88,12,.32);}
   .bv-doc iframe{width:100%;height:100%;border:0;}
   .bv-doc .empty-note{margin:auto;color:#fff;}
   .bv-doc.scroll{display:block;overflow:auto;background:#525659;padding:16px 0;}
@@ -423,7 +423,7 @@
 <section id="video-intro" aria-label="지필드 인트로">
   <video id="introVideo" autoplay playsinline webkit-playsinline preload="auto"
     src="https://raw.githubusercontent.com/docssam1/ad/main/fields-classic/KakaoTalk_20260619_023621724.mp4"></video>
-  <button type="button" id="unmuteHint" class="hidden" onclick="unmuteIntro()">🔊 탭하여 소리 켜기</button>
+  <button type="button" id="unmuteHint" class="hidden" onclick="unmuteIntro()"><i data-ic="sound"></i> 탭하여 소리 켜기</button>
   <button type="button" id="skipBtn" onclick="skipIntro()">건너뛰기 →</button>
 </section>
 
@@ -474,9 +474,9 @@
   <div class="topbar">
     <div class="brand disp">G-FIELD<small id="brand-sub">생각하는 황소 대비 아카이브</small></div>
     <div class="topbar-actions" style="display:flex;gap:8px;align-items:center;">
-      <button class="logout" onclick="window.open('https://hs.gfieldacademy.net/exam-timer-voice.html','_blank')">⏱ 시험 타이머</button>
-      <button class="logout" onclick="window.open('manual.html','_blank')">📋 성적진단 매뉴얼</button>
-      <button class="logout" onclick="window.open('https://open.kakao.com/me/gfield','_blank')">🆘 유형 요청</button>
+      <button class="logout" onclick="window.open('https://hs.gfieldacademy.net/exam-timer-voice.html','_blank')"><i data-ic="timer"></i> 시험 타이머</button>
+      <button class="logout" onclick="window.open('manual.html','_blank')"><i data-ic="clipboard"></i> 성적진단 매뉴얼</button>
+      <button class="logout" onclick="window.open('https://open.kakao.com/me/gfield','_blank')"><i data-ic="help"></i> 유형 요청</button>
       <button class="logout" onclick="logout()">나가기</button>
       <button class="logout" onclick="logout(true)">로그아웃</button>
     </div>
@@ -484,13 +484,13 @@
 
   <div class="stickyhead">
     <nav class="nav">
-      <button class="nav-btn active" data-v="home" onclick="nav('home')">📍 이번 주</button>
-      <button class="nav-btn" data-v="roadmap" onclick="nav('roadmap')">🗺 로드맵</button>
-      <button class="nav-btn" data-v="archive" onclick="nav('archive')">🗂 자료실</button>
-      <button class="nav-btn" data-v="vip" onclick="nav('vip')">👑 VIP 라운지</button>
+      <button class="nav-btn active" data-v="home" onclick="nav('home')"><i data-ic="pin"></i> 이번 주</button>
+      <button class="nav-btn" data-v="roadmap" onclick="nav('roadmap')"><i data-ic="map"></i> 로드맵</button>
+      <button class="nav-btn" data-v="archive" onclick="nav('archive')"><i data-ic="box"></i> 자료실</button>
+      <button class="nav-btn" data-v="vip" onclick="nav('vip')"><i data-ic="crown"></i> VIP 라운지</button>
     </nav>
     <div class="statusbar">
-      <div class="sb-top"><span class="sb-name"><b id="who"></b> 학생, 오늘도 파이팅! 🔥</span><span class="dday" id="dday"></span></div>
+      <div class="sb-top"><span class="sb-name"><b id="who"></b> 학생, 오늘도 파이팅!</span><span class="dday" id="dday"></span></div>
       <div class="sb-now"><span class="dot"></span><span id="now-text"></span></div>
       <div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
       <div class="progress-label" id="progress-label"></div>
@@ -517,7 +517,7 @@
   </section>
 
   <section id="view-archive" class="hidden">
-    <div class="arc-intro">📚 <b>GFIELD 서재</b> — 책장에서 교재를 골라 표지를 누르면 PDF로 펼쳐집니다. 강의 영상이 있으면 영상과 함께 보여요.</div>
+    <div class="arc-intro"><i data-ic="shelf"></i> <b>GFIELD 서재</b> — 책장에서 교재를 골라 표지를 누르면 PDF로 펼쳐집니다. 강의 영상이 있으면 영상과 함께 보여요.</div>
     <div id="archive-list"></div>
   </section>
 
@@ -526,7 +526,7 @@
       <span class="vh-stack s1"></span>
       <span class="vh-stack s2"></span>
       <div class="vh-glass">
-        <div class="vh-badge">👑 GFIELD VIP LOUNGE</div>
+        <div class="vh-badge"><i data-ic="crown"></i> GFIELD VIP LOUNGE</div>
         <h2 class="disp">지필드 VIP 라운지</h2>
         <p>재원생·학부모님만을 위한 프리미엄 공간.<br><b>나의 진단 결과·코멘트</b>, 원장님의 <b>프리미엄 설명회·칼럼</b>, 매일 갱신되는 <b>교육 매거진</b>, <b>강좌 소식·클리닉 신청</b>까지 한곳에.</p>
         <span class="vh-arrow">↓</span>
@@ -585,7 +585,9 @@
 <script src="hs-email-login.js?v=20261108-graduated1"></script>
 <script src="seminar/2026-video/access.js?v=20261108-access1"></script>
 <script src="student-result-hub.js?v=20261108-fresh-access1"></script>
+<script src="hs-illust.js?v=20261116-theme"></script>
 <script>
+  function hsIc(n){ return (window.GFIELD_ILLUST&&window.GFIELD_ILLUST.icon)?window.GFIELD_ILLUST.icon(n):''; }
   const D = window.GFIELD_DATA;
   let currentStudent = null;
   let isDemo = false;
@@ -603,14 +605,14 @@
   function givenName(name){ return name.length>=2 ? name.slice(1) : name; }
   function josa(n){ if(!n) return '야'; const c=n.charCodeAt(n.length-1); if(c<0xAC00||c>0xD7A3) return '야'; return ((c-0xAC00)%28)?'아':'야'; }
   function cheerPool(g,j){ return [
-    {big:`${g}${j} 할 수 있어!!!!<br>아잣아잣 파이팅`, sub:'DOCSSAM이 응원한다 🔥'},
-    {big:`${g}${j} 오늘도 한 걸음씩!<br>천천히, 그러나 확실하게`, sub:'DOCSSAM이 함께 간다 💪'},
-    {big:`${g}${j}, 어제보다 오늘 더!<br>넌 분명 해낼 거야`, sub:'황소까지 같이 달리자 🐂'},
-    {big:`${g}${j} 집중 모드 ON 🔥<br>딱 한 문제만 더!`, sub:'DOCSSAM이 믿는다 ✨'},
-    {big:`${g}${j} 멋지다!<br>실수해도 괜찮아, 다시 가보자`, sub:'포기만 안 하면 된다 💛'},
-    {big:`${g}${j} 오늘의 주인공!<br>한 칸씩 정복하자`, sub:'DOCSSAM이 응원한다 🔥'},
-    {big:`${g}${j}, 꾸준함이 재능을 이긴다<br>오늘도 출석 완료!`, sub:'잘하고 있어 👍'},
-    {big:`${g}${j} 파이팅!<br>네 속도로 가면 돼`, sub:'DOCSSAM이 지켜본다 🙌'}
+    {big:`${g}${j} 할 수 있어!!!!<br>아잣아잣 파이팅`, sub:'DOCSSAM이 응원한다'},
+    {big:`${g}${j} 오늘도 한 걸음씩!<br>천천히, 그러나 확실하게`, sub:'DOCSSAM이 함께 간다'},
+    {big:`${g}${j}, 어제보다 오늘 더!<br>넌 분명 해낼 거야`, sub:'황소까지 같이 달리자'},
+    {big:`${g}${j} 집중 모드 ON<br>딱 한 문제만 더!`, sub:'DOCSSAM이 믿는다'},
+    {big:`${g}${j} 멋지다!<br>실수해도 괜찮아, 다시 가보자`, sub:'포기만 안 하면 된다'},
+    {big:`${g}${j} 오늘의 주인공!<br>한 칸씩 정복하자`, sub:'DOCSSAM이 응원한다'},
+    {big:`${g}${j}, 꾸준함이 재능을 이긴다<br>오늘도 출석 완료!`, sub:'잘하고 있어'},
+    {big:`${g}${j} 파이팅!<br>네 속도로 가면 돼`, sub:'DOCSSAM이 지켜본다'}
   ]; }
   function showCheer(given){
     const el=document.getElementById('cheer'), t=document.getElementById('cheer-text');
@@ -803,21 +805,21 @@
   function trafficNow(){
     const now=new Date(); const h=now.getHours(); const mins=h*60+now.getMinutes();
     const inR=(a,b)=>mins>=a&&mins<=b;
-    let center='🟢 원활', em='🟢 원활', note='두 방향 모두 비교적 원활합니다.';
-    if(h<8||h>=22){ center='🌙 야간'; em='🌙 야간'; note='야간 시간대입니다. 안전하게 이동하세요.'; }
-    else if(inR(13*60,15*60+30)){ center='🟡 서행'; em='🔴 정체'; note='EM프라자 쪽 혼잡. 주민센터 방향을 먼저 확인하세요.'; }
-    else if(inR(17*60+30,19*60+30)){ center='🔴 정체'; em='🟡 서행'; note='피크 시간대입니다. 출발을 조금 앞당겨 주세요.'; }
-    else if(inR(21*60+30,22*60+30)){ center='🔴 정체'; em='🔴 정체'; note='하원 피크. 짧은 승하차를 권장합니다.'; }
+    let center='<span class="tr-dot g"></span>원활', em='<span class="tr-dot g"></span>원활', note='두 방향 모두 비교적 원활합니다.';
+    if(h<8||h>=22){ center='<span class="tr-dot n"></span>야간'; em='<span class="tr-dot n"></span>야간'; note='야간 시간대입니다. 안전하게 이동하세요.'; }
+    else if(inR(13*60,15*60+30)){ center='<span class="tr-dot y"></span>서행'; em='<span class="tr-dot r"></span>정체'; note='EM프라자 쪽 혼잡. 주민센터 방향을 먼저 확인하세요.'; }
+    else if(inR(17*60+30,19*60+30)){ center='<span class="tr-dot r"></span>정체'; em='<span class="tr-dot y"></span>서행'; note='피크 시간대입니다. 출발을 조금 앞당겨 주세요.'; }
+    else if(inR(21*60+30,22*60+30)){ center='<span class="tr-dot r"></span>정체'; em='<span class="tr-dot r"></span>정체'; note='하원 피크. 짧은 승하차를 권장합니다.'; }
     return {center,em,note};
   }
   function wcodeIcon(c){
     c=Number(c);
-    if([0,1].includes(c)) return '☀️';
-    if([2,3,45,48].includes(c)) return '☁️';
-    if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(c)) return '🌧️';
-    if([71,73,75,77,85,86].includes(c)) return '❄️';
-    if([95,96,99].includes(c)) return '⛈️';
-    return '🌤️';
+    if([0,1].includes(c)) return 'sun';
+    if([2,3,45,48].includes(c)) return 'cloud';
+    if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(c)) return 'rain';
+    if([71,73,75,77,85,86].includes(c)) return 'snow';
+    if([95,96,99].includes(c)) return 'storm';
+    return 'partsun';
   }
   function weatherAdvice(w, mode){
     if(!w||!w.current) return '';
@@ -858,15 +860,15 @@
     const given=givenName(currentStudent);
     const mode=audienceMode();
     const ph=dPhase(daysToExam());
-    const headline = mode==='parent' ? '💛 학부모님께 드리는 한마디' : '💛 DOCSSAM의 한마디';
+    const headline = hsIc('heart')+(mode==='parent' ? ' 학부모님께 드리는 한마디' : ' DOCSSAM의 한마디');
     const who = mode==='parent' ? `${escHtml(given)} 학생 어머님,` : `${escHtml(given)}${josa(given)},`;
     const tr=trafficNow();
     el.innerHTML=`<div class="brief-card">
       <div class="brief-mood"><b>${headline}</b><br>${who} ${escHtml(pickCoach(mode))}</div>
-      ${ph?`<div class="brief-dday">🎯 ${escHtml(D.meta.examLabel||'시험')} <b>${ph.tag}</b> · ${escHtml(ph.line)}</div>`:''}
+      ${ph?`<div class="brief-dday">${escHtml(D.meta.examLabel||'시험')} <b>${ph.tag}</b> · ${escHtml(ph.line)}</div>`:''}
       <div class="brief-grid">
-        <div class="brief-box"><div class="bb-h">🌤 날씨</div><div class="bb-main" id="wx-main">불러오는 중…</div><div class="bb-sub" id="wx-sub"></div></div>
-        <div class="brief-box"><div class="bb-h">🚦 교통</div><div class="bt-row"><span class="bt-chip">주민센터 ${tr.center}</span><span class="bt-chip">EM프라자 ${tr.em}</span></div><div class="bb-sub">${escHtml(tr.note)}</div></div>
+        <div class="brief-box"><div class="bb-h">날씨</div><div class="bb-main" id="wx-main">불러오는 중…</div><div class="bb-sub" id="wx-sub"></div></div>
+        <div class="brief-box"><div class="bb-h">교통</div><div class="bt-row"><span class="bt-chip">주민센터 ${tr.center}</span><span class="bt-chip">EM프라자 ${tr.em}</span></div><div class="bb-sub">${escHtml(tr.note)}</div></div>
       </div>
       <div class="brief-wadvice" id="wx-advice" style="display:none"></div>
     </div>`;
@@ -878,10 +880,10 @@
       const lo=Math.round((dly.temperature_2m_min||[])[0]), hi=Math.round((dly.temperature_2m_max||[])[0]);
       const pop=(dly.precipitation_probability_max||[])[0];
       const lo2=Math.round((dly.temperature_2m_min||[])[1]), hi2=Math.round((dly.temperature_2m_max||[])[1]);
-      wm.textContent=`${wcodeIcon(cur.weather_code)} 지금 ${Math.round(cur.temperature_2m)}°`;
+      wm.innerHTML=`${hsIc(wcodeIcon(cur.weather_code))} 지금 ${Math.round(cur.temperature_2m)}°`;
       ws.innerHTML=`오늘 ${lo}~${hi}°${pop!=null?` · 강수 ${pop}%`:''}<br>내일 ${lo2}~${hi2}°`;
       const adv=weatherAdvice(w,mode);
-      if(ad&&adv){ ad.textContent='🧥 '+adv; ad.style.display='block'; }
+      if(ad&&adv){ ad.textContent=adv; ad.style.display='block'; }
     } else { wm.textContent='날씨를 불러오지 못했어요'; ws.textContent=''; if(ad) ad.style.display='none'; }
   }
 
@@ -896,7 +898,7 @@
   const RICH_STYLE={ b:'font-weight:800', i:'font-style:italic', u:'text-decoration:underline', red:'color:#dc2626;font-weight:700', blue:'color:#2563eb;font-weight:700', green:'color:#16a34a;font-weight:700', big:'font-size:1.28em;font-weight:800', hl:'background:#fff2a6;border-radius:3px;padding:0 2px', hlg:'background:#c6f6d5;border-radius:3px;padding:0 2px', hlp:'background:#fbd4e6;border-radius:3px;padding:0 2px', hlb:'background:#cfe4ff;border-radius:3px;padding:0 2px' };
   function inlineFmt(str){
     let s=escHtml(str);
-    s=s.replace(/\[모의고사:(\d+)\]/g,(m,n)=>`<a class="lnk ext mock-hw" href="mock.html?round=${n}&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:9px 14px;border-radius:10px;text-decoration:none;margin:5px 0">📝 중급 모의고사 ${n}회 진단하기 ›</a>`);
+    s=s.replace(/\[모의고사:(\d+)\]/g,(m,n)=>`<a class="lnk ext mock-hw" href="mock.html?round=${n}&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-flex;align-items:center;gap:6px;background:#141b5d;color:#fff;font-weight:800;padding:9px 14px;border-radius:10px;text-decoration:none;margin:5px 0">중급 모의고사 ${n}회 진단하기 ›</a>`);
     s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
     s=s.replace(/\[강조\]([\s\S]*?)\[\/강조\]/g,'<b>$1</b>');
     s=s.replace(/==([\s\S]+?)==/g,'<mark class="hl">$1</mark>');
@@ -907,7 +909,7 @@
       if(yt) return `<button class="lnk yt" data-embed="https://www.youtube.com/embed/${yt}?autoplay=1&rel=0">▶ 영상 재생</button>`;
       const vm=url.match(/vimeo\.com\/(\d+)/);
       if(vm) return `<button class="lnk yt" data-embed="https://player.vimeo.com/video/${vm[1]}?autoplay=1">▶ 영상 재생</button>`;
-      return `<a class="lnk ext" href="${url}" target="_blank" rel="noopener">🔗 자료 열기</a>`;
+      return `<a class="lnk ext" href="${url}" target="_blank" rel="noopener">자료 열기</a>`;
     });
     return s;
   }
@@ -926,24 +928,24 @@
   }
   function sectionsHTML(c, node){
     let h='';
-    if(c.notice&&c.notice.trim()) h+=`<div class="m-sec"><h4>📘 학습 내용</h4><div class="notice">${linkify(c.notice)}</div></div>`;
-    if(c.homework&&c.homework.trim()) h+=`<div class="m-sec"><h4>📌 과제</h4><div class="notice">${linkify(c.homework)}</div></div>`;
-    if(node && /THINKING\s*BASIC/i.test((node.title||'')+' '+(node.desc||''))){ h+=`<div class="m-sec"><a href="gfield_ugigi_tutor.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#6847ef,#28b58a);color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 10px rgba(85,52,216,.28)"><span>🧩</span> THINKING BASIC AI 튜터 열기 ›</a><div style="font-size:11.5px;color:#6f6b7a;margin-top:6px">우기기 등 문제 푸는 방법을 단계별로 익히고, 막히면 AI 튜터에게 질문하세요.</div></div>`; }
+    if(c.notice&&c.notice.trim()) h+=`<div class="m-sec"><h4>학습 내용</h4><div class="notice">${linkify(c.notice)}</div></div>`;
+    if(c.homework&&c.homework.trim()) h+=`<div class="m-sec"><h4>과제</h4><div class="notice">${linkify(c.homework)}</div></div>`;
+    if(node && /THINKING\s*BASIC/i.test((node.title||'')+' '+(node.desc||''))){ h+=`<div class="m-sec"><a href="gfield_ugigi_tutor.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;background:#243184;color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 0 #0b1240"><span>${hsIc('bulb')}</span> THINKING BASIC AI 튜터 열기 ›</a><div style="font-size:11.5px;color:#6f6b7a;margin-top:6px">우기기 등 문제 푸는 방법을 단계별로 익히고, 막히면 AI 튜터에게 질문하세요.</div></div>`; }
     const _rt=((node&&((node.desc||'')+' '+(node.title||'')+' '+(node.focus||'')))||'')+' '+(c.homework||'')+' '+(c.notice||'');
     const _rm=_rt.match(/중급\s*모의고사\s*(\d+)\s*회/)||_rt.match(/모의고사\s*중급\s*(\d+)\s*회/);
-    if(_rm){ const rn=_rm[1]; h+=`<div class="m-sec"><a href="mock.html?round=${rn}&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#fb923c,#ea580c);color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 10px rgba(234,88,12,.3)"><span>📝</span> 중급 모의고사 ${rn}회 진단하기 ›</a><div style="font-size:11.5px;color:#94794f;margin-top:6px">집에서 푼 시험지의 틀린 번호만 체크하면 약점·점수가 바로 나와요.</div></div>`; }
+    if(_rm){ const rn=_rm[1]; h+=`<div class="m-sec"><a href="mock.html?round=${rn}&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-flex;align-items:center;gap:7px;background:#141b5d;color:#fff;font-weight:800;padding:11px 16px;border-radius:11px;text-decoration:none;box-shadow:0 3px 0 #070b33"><span>${hsIc('doc')}</span> 중급 모의고사 ${rn}회 진단하기 ›</a><div style="font-size:11.5px;color:#94794f;margin-top:6px">집에서 푼 시험지의 틀린 번호만 체크하면 약점·점수가 바로 나와요.</div></div>`; }
     const lastRound=({'oct-5':1,'oct-12':2,'oct-19':3,'oct-26':4})[node&&node.id];
     if(lastRound){
       const student=encodeURIComponent(currentStudent||'');
-      h+=`<div class="m-sec"><h4>📝 최종 ${lastRound}회 실전·성적</h4><a class="tb-btn" href="final.html?set=last&round=${lastRound}&go=timer&name=${student}" target="_blank" rel="noopener">⏱ 실전 타이머 열기</a>`;
-      h+=`<a class="tb-btn" href="last1-entry.html?round=${lastRound}&name=${student}" target="_blank" rel="noopener">✍️ 오답 입력·분석 열기</a>`;
+      h+=`<div class="m-sec"><h4>최종 ${lastRound}회 실전·성적</h4><a class="tb-btn" href="final.html?set=last&round=${lastRound}&go=timer&name=${student}" target="_blank" rel="noopener">${hsIc('timer')} 실전 타이머 열기</a>`;
+      h+=`<a class="tb-btn" href="last1-entry.html?round=${lastRound}&name=${student}" target="_blank" rel="noopener">오답 입력·분석 열기</a>`;
       h+='</div>';
     }
     const tbs=(c.textbooks||[]).filter(t=>t&&((t.folder&&t.pages)||t.url||t.accessKey)&&canSeeTB(t));
     if(tbs.length){
-      h+=`<div class="m-sec"><h4>📕 교재 자료 <span class="wm-tag">(이름 워터마크 인쇄)</span></h4>`;
-      tbs.forEach(t=>{ if(t.accessKey){ h+=`<button class="tb-btn" data-book-key="${escAttr(t.accessKey)}"><span class="ico">📝</span> ${escHtml(t.title||'추가 모의고사')} 열기</button>`; } else if(lastRound&&t.folder==='last_final_'+lastRound){ h+=`<button class="tb-btn" data-last-round="${lastRound}"><span class="ico">🎬</span> ${escHtml(t.title||'원본 시험지')} · 강의와 함께 보기</button>`; } else if(t.folder&&t.pages){ h+=`<button class="tb-btn" data-tbf="${escAttr(t.folder)}" data-tbp="${t.pages}" data-tbt="${escAttr(t.title)}"><span class="ico">🖨</span> ${escHtml(t.title||'교재 자료')} 인쇄</button>`; } else if(/\.html(?:[?#]|$)/i.test(t.url||'')){ h+=`<a class="tb-btn" href="${escAttr(t.url)}" target="_blank" rel="noopener"><span class="ico">🔗</span> ${escHtml(t.title||'학습 자료')} 열기</a>`; } else { h+=`<button class="tb-btn" data-tb="${encodeURIComponent(t.url)}" data-tbt="${escAttr(t.title)}"><span class="ico">📕</span> ${escHtml(t.title||'교재 자료')} 받기</button>`; } });
-      h+=`<div class="watermark-note">🖨 인쇄물에는 ${escHtml(currentStudent)} 님의 이름이 흐린 대각선 워터마크로 새겨집니다. 무단 공유를 삼가주세요.</div></div>`;
+      h+=`<div class="m-sec"><h4>교재 자료 <span class="wm-tag">(이름 워터마크 인쇄)</span></h4>`;
+      tbs.forEach(t=>{ if(t.accessKey){ h+=`<button class="tb-btn" data-book-key="${escAttr(t.accessKey)}"><span class="ico">${hsIc('doc')}</span> ${escHtml(t.title||'추가 모의고사')} 열기</button>`; } else if(lastRound&&t.folder==='last_final_'+lastRound){ h+=`<button class="tb-btn" data-last-round="${lastRound}"><span class="ico">${hsIc('video')}</span> ${escHtml(t.title||'원본 시험지')} · 강의와 함께 보기</button>`; } else if(t.folder&&t.pages){ h+=`<button class="tb-btn" data-tbf="${escAttr(t.folder)}" data-tbp="${t.pages}" data-tbt="${escAttr(t.title)}"><span class="ico">${hsIc('print')}</span> ${escHtml(t.title||'교재 자료')} 인쇄</button>`; } else if(/\.html(?:[?#]|$)/i.test(t.url||'')){ h+=`<a class="tb-btn" href="${escAttr(t.url)}" target="_blank" rel="noopener"><span class="ico">${hsIc('link')}</span> ${escHtml(t.title||'학습 자료')} 열기</a>`; } else { h+=`<button class="tb-btn" data-tb="${encodeURIComponent(t.url)}" data-tbt="${escAttr(t.title)}"><span class="ico">${hsIc('book')}</span> ${escHtml(t.title||'교재 자료')} 받기</button>`; } });
+      h+=`<div class="watermark-note">인쇄물에는 ${escHtml(currentStudent)} 님의 이름이 흐린 대각선 워터마크로 새겨집니다. 무단 공유를 삼가주세요.</div></div>`;
     }
     if(!h) h='<div class="empty-note">아직 등록된 학습 자료가 없습니다. 준비되면 열립니다.</div>';
     return h;
@@ -970,9 +972,9 @@
     const card=document.getElementById('home-card');
     if(!node){ card.innerHTML=''; return; }
     const unlocked=isUnlocked(node);
-    let h=`<div class="home-head"><div class="hh-tag">📍 이번 주 · ${node.date}</div><h2 class="disp">${escHtml(node.title)}</h2><div class="hh-desc">${escHtml(node.desc)}</div>${node.focus?`<div class="focus">${escHtml(node.focus)}</div>`:''}</div>`;
-    if(isDemo){ card.innerHTML=h+`<div class="locked-msg">🔎 데모 미리보기입니다.<br>실제 학습 영상·자료는 재원생 로그인 후 제공됩니다.</div>`; return; }
-    if(!unlocked){ card.innerHTML=h+`<div class="locked-msg">🔒 이번 주 자료는 출석 확인 후 열립니다.</div>`; return; }
+    let h=`<div class="home-head"><div class="hh-tag">이번 주 · ${node.date}</div><h2 class="disp">${escHtml(node.title)}</h2><div class="hh-desc">${escHtml(node.desc)}</div>${node.focus?`<div class="focus">${escHtml(node.focus)}</div>`:''}</div>`;
+    if(isDemo){ card.innerHTML=h+`<div class="locked-msg">데모 미리보기입니다.<br>실제 학습 영상·자료는 재원생 로그인 후 제공됩니다.</div>`; return; }
+    if(!unlocked){ card.innerHTML=h+`<div class="locked-msg">이번 주 자료는 출석 확인 후 열립니다.</div>`; return; }
     const c=Object.assign({notice:'',homework:'',textbooks:[]},(D.content&&D.content[node.id])||{});
     h+=`<div class="videoframe" id="home-videoframe"><iframe id="home-iframe" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
     h+=`<div class="content-card">${sectionsHTML(c, node)}</div>`;
@@ -989,7 +991,7 @@
       const unlocked=isUnlocked(node), isCurrent=(node.id===D.meta.currentWeekId);
       const el=document.createElement('div');
       el.className=`node ${node.track}${unlocked?'':' locked'}${isCurrent?' current':''}`;
-      const icon=unlocked?'🔓':'🔒',accessLabel=unlocked?'열림 · 이용 가능':'잠김 · 이용 불가';
+      const icon=hsIc(unlocked?'unlock':'lock'),accessLabel=unlocked?'열림 · 이용 가능':'잠김 · 이용 불가';
       el.innerHTML=`${isCurrent?'<div class="marker">'+runner+'</div>':''}<div class="icon-status" role="img" aria-label="${accessLabel}" title="${accessLabel}">${icon}</div>`
         +`<div class="date">${node.date}${isCurrent?' · 현재 진행 중':''}</div><h3 class="disp">${escHtml(node.title)}</h3>`
         +`<div class="desc">${escHtml(node.desc)}</div>${node.focus?`<div class="focus">${escHtml(node.focus)}</div>`:''}`;
@@ -1000,7 +1002,7 @@
   }
 
   function openModal(node, unlocked){
-    if(!unlocked){ toast(isDemo?'🔎 데모에서는 열람할 수 없습니다':(node.type==='special'?'🔒 방학 특강 수강생에게만 열리는 자료입니다':node.type==='extra'?'🔒 서재에서 승인된 학생에게만 열리는 추가 모의고사입니다':'🔒 아직 오픈되지 않은 수업입니다')); return; }
+    if(!unlocked){ toast(isDemo?'데모에서는 열람할 수 없습니다':(node.type==='special'?'방학 특강 수강생에게만 열리는 자료입니다':node.type==='extra'?'서재에서 승인된 학생에게만 열리는 추가 모의고사입니다':'아직 오픈되지 않은 수업입니다')); return; }
     const c=Object.assign({notice:'',homework:'',textbooks:[]},(D.content&&D.content[node.id])||{});
     document.getElementById('m-date').textContent=node.date;
     document.getElementById('m-title').textContent=node.title;
@@ -1105,7 +1107,7 @@
     const eyebrow=[info.step,info.count].filter(Boolean).join(' · ');
     const badge=info.badge ? `<span class="arc-info-badge">${escHtml(info.badge)}</span>` : '';
     const body=(info.body||[]).map(p=>`<p class="arc-info-p">${p}</p>`).join('');
-    const who=info.who ? `<div class="arc-info-who">💡 이런 학생에게 맞습니다: ${escHtml(info.who)}</div>` : '';
+    const who=info.who ? `<div class="arc-info-who">이런 학생에게 맞습니다: ${escHtml(info.who)}</div>` : '';
     const tags=(info.tags&&info.tags.length) ? `<div class="arc-info-tags">${info.tags.map(t=>`<span class="arc-info-tag">#${escHtml(t)}</span>`).join('')}</div>` : '';
     return `<div class="arc-info${open?' open':''}" data-folder="${escAttr(folder)}">
       <button type="button" class="arc-info-head">
@@ -1127,18 +1129,22 @@
     const folders=(D.archiveFolders||[]).filter(canSeeArchiveFolder);
     if(!folders.length&&!bankVisible&&!seminarVisible){ wrap.innerHTML='<div class="empty-note">열람 가능한 자료실이 없습니다.</div>'; return; }
     if(seminarVisible) wrap.insertAdjacentHTML('beforeend',`<a class="archive-seminar-video" href="seminar/2026-video/" aria-label="2026 생각하는 황소 초등 선발 분석 설명회 영상 보기"><span class="seminar-video-thumb"><img src="seminar/2026-video/poster.jpg" alt="" loading="lazy"><span class="seminar-video-play" aria-hidden="true">▶</span></span><span><span class="seminar-video-label">설명회 영상 · 시험지·답안 인쇄</span><strong>2026 생각하는 황소<br>초등 선발 분석 설명회</strong><span class="seminar-video-description">설명회 영상과 발표 자료를 보고, 시크릿 마무리 1·2회와 복기 문제·답안을 학생 이름 워터마크로 인쇄합니다.</span><span class="seminar-video-action">설명회 보기 · 시험지·답안 인쇄 ›</span></span></a>`);
-    if(bankVisible){wrap.insertAdjacentHTML('beforeend',studentBankHtml());wireStudentBank(wrap);}
-    const generatorHtml=`<section class="shelf-sec" aria-label="모의고사 생성기"><div class="shelf-h disp">📝 모의고사 생성기</div><div style="padding:15px 18px;background:#edf3ff;border:1px solid #cbd8ec;border-radius:12px;margin:12px 0 20px"><p style="font-size:13px;line-height:1.6;margin:0 0 10px">자료실에서 승인된 모의고사의 검수 유사문제로 시험지와 답안을 만듭니다. 활용 1~9회를 포함해 원하는 승인 회차를 고를 수 있고, 정오답을 입력하지 않아도 ‘승인된 시험 전체’에서 출제됩니다. 부족한 문항은 자료실 공개 중요 유형 문제로 보충하고 출처를 표시합니다. 맞은 문제·틀린 문제는 실제 정오답 범위만 사용합니다. 10·20·30문항을 선택할 수 있습니다.</p><a href="bank/personal-mock.html?from=archive&name=${encodeURIComponent(currentStudent||'')}" style="display:inline-block;background:#2456c4;color:#fff;padding:10px 15px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:800;margin-right:12px">모의고사 생성기 열기 ›</a><a href="mock-generator-guide.html" style="display:inline-block;color:#2456c4;padding:10px 0;text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:800">사용 안내 영상 보기 ›</a></div></section>`;
-    let total=0, generatorShown=false;
-    if(bankVisible&&!folders.some(folder=>/모의고사/.test(folder))){wrap.insertAdjacentHTML('beforeend',generatorHtml);generatorShown=true;}
+    /* 문제은행 유형 + 모의고사 생성기: 길어서 접히는 상자 하나에 모은다(열림 상태는 기기에 기억) */
+    let bankOpen=false; try{ bankOpen=localStorage.getItem('gfield_arc_bank_open')==='1'; }catch(e){}
+    const foldParts=[];
+    const generatorHtml=`<section class="arc-gen" aria-label="모의고사 생성기"><h3 class="arc-gen-h">모의고사 생성기</h3><div class="arc-gen-b"><p style="font-size:13px;line-height:1.6;margin:0 0 10px">자료실에서 승인된 모의고사의 검수 유사문제로 시험지와 답안을 만듭니다. 활용 1~9회를 포함해 원하는 승인 회차를 고를 수 있고, 정오답을 입력하지 않아도 ‘승인된 시험 전체’에서 출제됩니다. 부족한 문항은 자료실 공개 중요 유형 문제로 보충하고 출처를 표시합니다. 맞은 문제·틀린 문제는 실제 정오답 범위만 사용합니다. 10·20·30문항을 선택할 수 있습니다.</p><a class="arc-gen-go" href="bank/personal-mock.html?from=archive&name=${encodeURIComponent(currentStudent||'')}">모의고사 생성기 열기 ›</a><a class="arc-gen-guide" href="mock-generator-guide.html">사용 안내 영상 보기 ›</a></div></section>`;
+    let total=0;
+    if(bankVisible){ foldParts.push(studentBankHtml()); foldParts.push(generatorHtml); }
+    if(foldParts.length){
+      wrap.insertAdjacentHTML('beforeend',`<details class="arc-fold" id="arc-bank-fold"${bankOpen?' open':''}><summary class="arc-fold-sum"><span class="arc-fold-ic">${hsIc('folder')}</span><span class="arc-fold-t"><b class="disp">문제은행 · 모의고사 생성기</b><small>약점 유형을 골라 문제지를 만들고, 승인된 모의고사로 새 시험지를 만듭니다.</small></span><span class="arc-fold-chev">${hsIc('chevron')}</span></summary><div class="arc-fold-body">${foldParts.join('')}</div></details>`);
+      const fold=wrap.querySelector('#arc-bank-fold');
+      fold.addEventListener('toggle',()=>{ try{ localStorage.setItem('gfield_arc_bank_open',fold.open?'1':'0'); }catch(e){} });
+      if(bankVisible) wireStudentBank(wrap);
+    }
     folders.forEach(folder=>{
-      if(!generatorShown&&/모의고사/.test(folder)&&bankVisible){
-        generatorShown=true;
-        wrap.insertAdjacentHTML('beforeend',generatorHtml);
-      }
       const books=(D.books||[]).filter(b=>b&&b.folder===folder&&canSeeBook(b)&&(b.pdf||b.video||(b.links&&b.links.length)));
       const sec=document.createElement('div'); sec.className='shelf-sec';
-      let inner=`<div class="shelf-h disp">📚 ${escHtml(folder)}<span class="c">${books.length}권</span></div>`;
+      let inner=`<div class="shelf-h disp">${hsIc('shelf')} ${escHtml(folder)}<span class="c">${books.length}권</span></div>`;
       inner+=arcInfoHtml(folder);
       if(books.length){
         total+=books.length;
@@ -1147,12 +1153,12 @@
           const i=(D.books||[]).indexOf(b);
           const cover=b.cover
             ? `<span class="cover"><img loading="lazy" src="${escAttr(b.cover)}" alt="${escAttr(b.title||'교재')}"></span>`
-            : `<span class="cover noimg"><span class="cv-title">${escHtml(b.title||'교재')}</span></span>`;
-          let tag='📄 교재';
-          if(b.video) tag = ytSingle(b.video)?'🎬 강의 포함':'▶ 영상 링크';
-          else if(isPlainPdfBook(b)) tag='📥 PDF 받기';
-          else if(b.links&&b.links.length) tag='🔗 링크 포함';
-          else if(b.pdf && !(b.imgdir&&b.pages) && !isRealPdf(b.pdf)) tag='🔗 외부 링크';
+            : (window.GFIELD_ILLUST?`<span class="cover drawn">${window.GFIELD_ILLUST.cover(b.title||'교재')}</span>`:`<span class="cover noimg"><span class="cv-title">${escHtml(b.title||'교재')}</span></span>`);
+          let tag='교재';
+          if(b.video) tag = ytSingle(b.video)?'강의 포함':'영상 링크';
+          else if(isPlainPdfBook(b)) tag='PDF 받기';
+          else if(b.links&&b.links.length) tag='링크 포함';
+          else if(b.pdf && !(b.imgdir&&b.pages) && !isRealPdf(b.pdf)) tag='외부 링크';
           inner+=`<button class="book" data-bi="${i}">${cover}<span class="label">${escHtml(b.title||'교재')}</span>${b.desc?`<span class="desc">${escHtml(b.desc)}</span>`:''}<span class="pages">${tag}</span></button>`;
         });
         inner+='</div>';
@@ -1233,7 +1239,7 @@
         docPane=`<div class="bv-doc"><iframe src="${escAttr(src)}#toolbar=0&navpanes=0&view=FitH" title="교재"></iframe>${wm}</div>`;
       } else {
         /* 네이버 MYBOX 등 외부 공유 링크는 화면 안에 넣을 수 없어 새 창으로 안내 */
-        docPane=`<div class="bv-doc"><div class="bv-ext"><div class="ic">🔗</div><div class="t">외부 보관함에 있는 교재입니다</div><div class="d">이 교재는 네이버 MYBOX 등 외부 링크로 연결되어 있어 화면 안에서 바로 펼칠 수 없어요. 아래 버튼을 누르면 새 창에서 열립니다.</div><a class="go" href="${escAttr(b.pdf)}" target="_blank" rel="noopener">새 창에서 교재 열기 ›</a></div></div>`;
+        docPane=`<div class="bv-doc"><div class="bv-ext"><div class="ic">${hsIc('link')}</div><div class="t">외부 보관함에 있는 교재입니다</div><div class="d">이 교재는 네이버 MYBOX 등 외부 링크로 연결되어 있어 화면 안에서 바로 펼칠 수 없어요. 아래 버튼을 누르면 새 창에서 열립니다.</div><a class="go" href="${escAttr(b.pdf)}" target="_blank" rel="noopener">새 창에서 교재 열기 ›</a></div></div>`;
       }
     } else {
       docPane=`<div class="bv-doc"><div class="empty-note">교재 파일이 없습니다.</div></div>`;
@@ -1247,9 +1253,9 @@
     }
     let acts = (b.video&&(mode==='link'||/초등선발 대비 시그니처 실전 모의고사 [12]회/.test(String(b.title||''))))
       ? `<a class="bv-act" href="${escAttr(b.video)}" target="_blank" rel="noopener">▶ 강의 새 창</a>` : '';
-    if(b.imgdir && b.pages) acts += `<button class="bv-act" onclick="printBvBook()">🖨 인쇄</button>`;
-    else if(b.pdf && isRealPdf(b.pdf)) acts += `<button class="bv-act" onclick="printBvBook()">🖨 시험지 인쇄 / PDF 저장</button>`;
-    (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=bookLinkUrl(b, l.url); const destination=l.download?` download="${escAttr(l.download)}"`:' target="_blank" rel="noopener"'; acts+=`<a class="bv-act" href="${escAttr(lurl)}"${destination}>${l.download?'⬇':'🔗'} ${escHtml(l.label||'링크')}</a>`; } });
+    if(b.imgdir && b.pages) acts += `<button class="bv-act" onclick="printBvBook()">인쇄</button>`;
+    else if(b.pdf && isRealPdf(b.pdf)) acts += `<button class="bv-act" onclick="printBvBook()">시험지 인쇄 / PDF 저장</button>`;
+    (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=bookLinkUrl(b, l.url); const destination=l.download?` download="${escAttr(l.download)}"`:' target="_blank" rel="noopener"'; acts+=`<a class="bv-act" href="${escAttr(lurl)}"${destination}>${hsIc(l.download?'download':'link')} ${escHtml(l.label||'링크')}</a>`; } });
     document.getElementById('bv-actions').innerHTML = acts;
     document.getElementById('bookviewer').classList.add('open');
   }
@@ -1272,7 +1278,7 @@
       if(r.comment&&r.comment.trim()) h+=`<div class="rep-comment"><b>선생님 코멘트</b><br>${escHtml(r.comment).replace(/\n/g,'<br>')}</div>`;
       const files=(r.files||[]).filter(f=>f&&f.url);
       let btns='';
-      files.forEach(f=>{ btns+=`<a class="rep-file" href="${escAttr(f.url)}" target="_blank" rel="noopener">📄 ${escHtml(f.label||'첨부파일')}</a>`; });
+      files.forEach(f=>{ btns+=`<a class="rep-file" href="${escAttr(f.url)}" target="_blank" rel="noopener">${escHtml(f.label||'첨부파일')}</a>`; });
       if(r.video){ const e=vidEmbed(r.video); if(e) btns+=`<button class="rep-file vid" data-v="${escAttr(r.video)}">▶ 풀이 영상</button>`; else btns+=`<a class="rep-file vid" href="${escAttr(r.video)}" target="_blank" rel="noopener">▶ 풀이 영상</a>`; }
       if(btns) h+=`<div class="rep-files">${btns}</div>`;
       h+='</div>';
@@ -1295,12 +1301,12 @@
     const mag=(V.magazine||[]).filter(m=>m&&m.title).length;
     const rep=((D.reports&&D.reports[currentStudent])||[]).length;
     const BTN={
-      report:`<button class="vip-mbtn full" data-k="report" style="border:1.5px solid #fcd3a3;background:#fff7ec"><span class="mi">📊</span><span><span class="mt">진단 결과 · 코멘트</span><span class="mc" style="display:block">모의고사 진단 · 본인 확인 ${rep?`(${rep})`:''} ›</span></span></button>`,
-      ses:`<button class="vip-mbtn" data-k="ses"><span class="mi">🎬</span><span class="mt">프리미엄 설명회</span><span class="mc">${ses}개 영상 ›</span></button>`,
-      cou:`<button class="vip-mbtn" data-k="cou"><span class="mi">📣</span><span class="mt">신규 강좌 공지</span><span class="mc">${cou}건 ›</span></button>`,
-      clinic:`<button class="vip-mbtn" data-k="clinic"><span class="mi">🩺</span><span class="mt">결석·클리닉 신청</span><span class="mc">바로 신청 ›</span></button>`,
-      col:`<button class="vip-mbtn" data-k="col"><span class="mi">✒️</span><span class="mt">DOCSSAM 칼럼</span><span class="mc">${col}편 ›</span></button>`,
-      mag:`<button class="vip-mbtn full" data-k="mag"><span class="mi">📰</span><span><span class="mt">교육 매거진</span><span class="mc" style="display:block">${mag}건 · 매일 업데이트 ›</span></span></button>`
+      report:`<button class="vip-mbtn full" data-k="report" style="border:1.5px solid #fcd3a3;background:#fff7ec"><span class="mi">${hsIc('chart')}</span><span><span class="mt">진단 결과 · 코멘트</span><span class="mc" style="display:block">모의고사 진단 · 본인 확인 ${rep?`(${rep})`:''} ›</span></span></button>`,
+      ses:`<button class="vip-mbtn" data-k="ses"><span class="mi">${hsIc('video')}</span><span class="mt">프리미엄 설명회</span><span class="mc">${ses}개 영상 ›</span></button>`,
+      cou:`<button class="vip-mbtn" data-k="cou"><span class="mi">${hsIc('megaphone')}</span><span class="mt">신규 강좌 공지</span><span class="mc">${cou}건 ›</span></button>`,
+      clinic:`<button class="vip-mbtn" data-k="clinic"><span class="mi">${hsIc('calendar')}</span><span class="mt">결석·클리닉 신청</span><span class="mc">바로 신청 ›</span></button>`,
+      col:`<button class="vip-mbtn" data-k="col"><span class="mi">${hsIc('pen')}</span><span class="mt">DOCSSAM 칼럼</span><span class="mc">${col}편 ›</span></button>`,
+      mag:`<button class="vip-mbtn full" data-k="mag"><span class="mi">${hsIc('news')}</span><span><span class="mt">교육 매거진</span><span class="mc" style="display:block">${mag}건 · 매일 업데이트 ›</span></span></button>`
     };
     const keys=visibleVipKeys();
     if(!keys.length){ wrap.innerHTML='<div class="empty-note">열람 가능한 메뉴가 없습니다.</div>'; return; }
@@ -1320,11 +1326,11 @@
         if(String(inp).replace(/\D/g,'').slice(-4)!==String(pin).replace(/\D/g,'').slice(-4)){ toast('번호가 일치하지 않습니다'); vipMenu(); return; }
         reportUnlocked=true;
       }
-      wrap.innerHTML=back+`<div class="vip-h disp">📊 ${escHtml(givenName(currentStudent))} 학생 진단 결과</div>`+reportHTML();
+      wrap.innerHTML=back+`<div class="vip-h disp">${escHtml(givenName(currentStudent))} 학생 진단 결과</div>`+reportHTML();
       wrap.querySelectorAll('.rep-file.vid[data-v]').forEach(b=>b.onclick=()=>playVid(b.dataset.v));
     } else if(k==='ses'){
       const ses=(V.sessions||[]).filter(s=>s&&s.url);
-      let h=back+`<div class="vip-h disp">🎬 프리미엄 설명회</div>`;
+      let h=back+`<div class="vip-h disp">프리미엄 설명회</div>`;
       if(ses.length){
         h+='<div class="carousel" id="sessCar">';
         ses.forEach((s,i)=>{ const th=sessThumb(s); h+=`<button class="vid-card" data-ses="${i}"><span class="vid-thumb">${th?`<img loading="lazy" src="${escAttr(th)}" onerror="this.style.display='none'">`:''}<span class="vid-play">▶</span></span><span class="vc-t">${escHtml(s.title||'설명회 영상')}</span></button>`; });
@@ -1337,22 +1343,22 @@
       startCarousel();
     } else if(k==='cou'){
       const courses=(V.courses||[]).filter(c=>c&&(c.title||c.body));
-      let h=back+`<div class="vip-h disp">📣 신규 강좌 공지</div>`;
+      let h=back+`<div class="vip-h disp">신규 강좌 공지</div>`;
       if(courses.length){
         courses.forEach(c=>{
-          h+=`<div class="folder"><div class="folder-h disp"><span class="folder-ic">📣</span> ${escHtml(c.title||'공지')}${c.date?`<span class="folder-c">${escHtml(c.date)}</span>`:''}</div><div class="folder-b">`;
+          h+=`<div class="folder"><div class="folder-h disp"><span class="folder-ic">${hsIc('megaphone')}</span> ${escHtml(c.title||'공지')}${c.date?`<span class="folder-c">${escHtml(c.date)}</span>`:''}</div><div class="folder-b">`;
           if(c.body&&c.body.trim()) h+=`<div class="notice" style="padding:6px 2px">${linkify(c.body)}</div>`;
-          if(c.link) h+=`<a class="tb-btn" href="${escAttr(c.link)}" target="_blank" rel="noopener" style="margin-top:10px"><span class="ico">🔗</span> 자세히 보기 / 신청</a>`;
+          if(c.link) h+=`<a class="tb-btn" href="${escAttr(c.link)}" target="_blank" rel="noopener" style="margin-top:10px"><span class="ico">${hsIc('link')}</span> 자세히 보기 / 신청</a>`;
           h+='</div></div>';
         });
       } else h+='<div class="empty-note" style="text-align:left">등록된 강좌 공지가 없습니다.</div>';
       wrap.innerHTML=h;
     } else if(k==='clinic'){
       const cl=V.clinic||{};
-      wrap.innerHTML=back+`<div class="vip-h disp">🩺 결석 · 클리닉 신청</div><div class="clinic-card"><p>${escHtml(cl.notice||'결석·보강·클리닉 신청은 아래 버튼으로 접수해주세요.')}</p>${cl.url?`<a class="clinic-btn" href="${escAttr(cl.url)}" target="_blank" rel="noopener">📝 신청하러 가기</a>`:'<span class="empty-note" style="display:inline-block">신청 링크 준비중입니다. 담당 선생님께 문의해주세요.</span>'}</div>`;
+      wrap.innerHTML=back+`<div class="vip-h disp">결석 · 클리닉 신청</div><div class="clinic-card"><p>${escHtml(cl.notice||'결석·보강·클리닉 신청은 아래 버튼으로 접수해주세요.')}</p>${cl.url?`<a class="clinic-btn" href="${escAttr(cl.url)}" target="_blank" rel="noopener">신청하러 가기</a>`:'<span class="empty-note" style="display:inline-block">신청 링크 준비중입니다. 담당 선생님께 문의해주세요.</span>'}</div>`;
     } else if(k==='col'){
       const cols=(V.columns||[]).filter(c=>c&&c.title);
-      let h=back+`<div class="vip-h disp">👑 DOCSSAM의 프리미엄 칼럼</div><div class="col-banner"><span class="cb-ic">✒️</span><div><b>DOCSSAM의 프리미엄 칼럼</b><span>원장이 직접 쓰는 학습·입시 인사이트</span></div></div>`;
+      let h=back+`<div class="vip-h disp">DOCSSAM의 프리미엄 칼럼</div><div class="col-banner"><span class="cb-ic">${hsIc('pen')}</span><div><b>DOCSSAM의 프리미엄 칼럼</b><span>원장이 직접 쓰는 학습·입시 인사이트</span></div></div>`;
       if(cols.length){
         cols.forEach((c,i)=>{ h+=`<button class="col-card" data-col="${i}"><div style="flex:1"><div class="cc-t">${escHtml(c.title)}</div><div class="cc-d">${escHtml([c.category,c.date].filter(Boolean).join(' · '))}</div></div><span style="color:var(--orange-d);font-weight:800">›</span></button>`; });
       } else h+='<div class="empty-note" style="text-align:left">아직 등록된 칼럼이 없습니다.</div>';
@@ -1360,7 +1366,7 @@
       wrap.querySelectorAll('[data-col]').forEach(b=>b.onclick=()=>openCol(cols[+b.dataset.col]));
     } else if(k==='mag'){
       const mags=(V.magazine||[]).filter(m=>m&&m.title);
-      let h=back+`<div class="vip-h disp">📰 교육 매거진</div>`;
+      let h=back+`<div class="vip-h disp">교육 매거진</div>`;
       if(mags.length){
         h+='<div class="mag-grid">';
         mags.forEach((m,i)=>{
@@ -1399,7 +1405,7 @@
     let h='';
     if(m.image) h+=`<img src="${escAttr(m.image)}" style="width:100%;border-radius:12px;margin:4px 0 12px" onerror="this.style.display='none'">`;
     h+=`<div class="notice">${linkify(m.desc||'')}</div>`;
-    if(m.sourceUrl) h+=`<a class="lnk ext" href="${escAttr(m.sourceUrl)}" target="_blank" rel="noopener" style="margin-top:12px">🔗 출처 보기</a>`;
+    if(m.sourceUrl) h+=`<a class="lnk ext" href="${escAttr(m.sourceUrl)}" target="_blank" rel="noopener" style="margin-top:12px">출처 보기</a>`;
     const body=document.getElementById('modal-body');
     body.innerHTML=h;
     body.querySelectorAll('.lnk.yt[data-embed]').forEach(b=>b.onclick=()=>window.open(b.dataset.embed,'_blank'));
@@ -1496,7 +1502,7 @@
       });
       const out=await pdf.save(); const blob=new Blob([out],{type:'application/pdf'});
       const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${(title||'자료')}_${currentStudent}.pdf`;
-      document.body.appendChild(a); a.click(); a.remove(); toast('인쇄용 PDF를 다운로드했습니다. 열어서 인쇄해 주세요 ✅');
+      document.body.appendChild(a); a.click(); a.remove(); toast('인쇄용 PDF를 다운로드했습니다. 열어서 인쇄해 주세요');
     }catch(e){ window.open(url,'_blank'); toast('인쇄용 PDF 준비에 실패해 원본을 새 창에서 엽니다'); }
   }
 
@@ -1518,10 +1524,10 @@
     }catch(e){}
   })();
 </script>
-<script src="index-enhancements.js?v=20261020-roadmap-middle-viewer"></script>
-<script src="hs-illust.js?v=20261116-pair"></script>
+<script src="index-enhancements.js?v=20261116-theme"></script>
 <script src="roadmap-feb.js?v=20261116-pair"></script>
 <script src="upgrade-bank.js?v=20261116-pair"></script>
-<script src="upgrade-course.js?v=20261116-pair"></script>
+<script src="upgrade-course.js?v=20261116-theme"></script>
+<script src="hs-theme.js?v=20261116-theme"></script>
 </body>
 </html>

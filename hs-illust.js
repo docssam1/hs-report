@@ -6,7 +6,8 @@
   var INK = '#1b2340';
   /* 사이트 공통 글꼴(* 선택자)이 SVG 글자에도 걸리므로 그림 글자는 Jua로 되돌린다 */
   var st = document.createElement('style');
-  st.textContent = '.hs-scene text,.hs-cover text,.hs-ph-art text{font-family:Jua,sans-serif;font-weight:400;}';
+  st.textContent = '.hs-scene text,.hs-cover text,.hs-ph-art text{font-family:Jua,sans-serif;font-weight:400;}' +
+    'i[data-ic]{display:inline-flex;font-style:normal;vertical-align:-3px;}i[data-ic] .hs-li,.hs-li{width:1.15em;height:1.15em;flex:none;}';
   document.head.appendChild(st);
   var C = { ink: INK, navy: '#141b5d', feb: '#3f6fe0', febSoft: '#dfe9ff', upg: '#7b55c7', upgSoft: '#ece3fb',
     sun: '#f6cf47', leaf: '#4fb884', coral: '#ff9f7a', sky: '#cfe2ff', lilac: '#e9e0fb' };
@@ -189,12 +190,12 @@
   function cover(title, small) {
     var h = hash(title), pal = COVERS[h % COVERS.length], k = (h >> 3) % 4;
     var t = String(title || '교재').replace(/[&<>"']/g, '');
-    var short = t.length > 9 ? t.slice(0, 8) + '…' : t;
+    var short = t;   /* 긴 제목은 표지에 쓰지 않는다(책 아래에 전체 제목이 나온다) */
     return '<svg class="hs-cover" viewBox="0 0 120 160" aria-hidden="true">' +
       '<rect x="6" y="4" width="108" height="150" rx="6" fill="' + pal[0] + '" stroke="' + INK + '" stroke-width="3"/>' +
       '<rect x="6" y="4" width="14" height="150" rx="4" fill="' + pal[1] + '" stroke="' + INK + '" stroke-width="3"/>' +
       motif(k, pal[0] === C.sun) +
-      (small ? '' : '<rect x="26" y="108" width="82" height="26" rx="5" fill="#fff" stroke="' + INK + '" stroke-width="2.5"/>' +
+      (small || t.length > 7 ? '' : '<rect x="26" y="108" width="82" height="26" rx="5" fill="#fff" stroke="' + INK + '" stroke-width="2.5"/>' +
         '<text x="67" y="126" font-family="Jua" font-size="13" text-anchor="middle" fill="' + INK + '">' + short + '</text>') +
       '</svg>';
   }
@@ -207,6 +208,61 @@
       '<circle cx="68" cy="32" r="14" fill="' + pal[0] + '" stroke="' + INK + '" stroke-width="2"/><path d="M64 25l10 7-10 7z" fill="#fff" stroke="' + INK + '" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   }
 
+
+  /* 사이트 전체 선 아이콘(이모지 대신). 경로만 적고 svg 틀은 한 곳에서 씌운다 */
+  var PATHS = {
+    pin: '<path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.6"/>',
+    box: '<path d="M3 8h18v12H3z M2 4h20v4H2z M9 12h6"/>',
+    crown: '<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z M5 19h14"/>',
+    clipboard: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.8h6V4 M8.5 10h7 M8.5 14h7 M8.5 18h4"/>',
+    timer: '<circle cx="12" cy="13" r="8"/><path d="M12 13V9 M10 2h4 M18.5 6.5l1.5-1.5"/>',
+    help: '<path d="M4 5h16v11H9l-5 4z"/><path d="M10 9a2 2 0 1 1 2.8 1.8c-.6.3-.8.7-.8 1.2 M12 14.2v.1"/>',
+    book: '<path d="M3 5c3-1.5 6-1.5 9 0v15c-3-1.5-6-1.5-9 0z M21 5c-3-1.5-6-1.5-9 0v15c3-1.5 6-1.5 9 0z"/>',
+    shelf: '<path d="M3 20h18 M5 20V5h3v15 M10 20V8h3v12 M15.5 20.5l-2-11 3-.6 2 11"/>',
+    pencil: '<path d="M4 20l1-5L16 4l4 4L9 19z M14 6l4 4"/>',
+    video: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/>',
+    link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1 M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+    download: '<path d="M12 4v11 M7 10l5 5 5-5 M4 20h16"/>',
+    doc: '<path d="M6 3h8l4 4v14H6z M14 3v4h4 M9 12h6 M9 16h6"/>',
+    chart: '<path d="M4 20V4 M4 20h16 M8 16v-4 M12 16V8 M16 16v-6"/>',
+    megaphone: '<path d="M3 10v4h3l8 5V5L6 10z M18 9a4 4 0 0 1 0 6"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18 M8 3v4 M16 3v4 M8 15h3"/>',
+    pen: '<path d="M14 4l6 6-9 9H5v-6z M12 6l6 6"/>',
+    news: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10 M7 12h5 M7 16h5 M14 12h3v4h-3z"/>',
+    bulb: '<path d="M9 18h6 M10 21h4 M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+    target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6"/>',
+    heart: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2 M12 20v2 M2 12h2 M20 12h2 M5 5l1.4 1.4 M17.6 17.6L19 19 M5 19l1.4-1.4 M17.6 6.4L19 5"/>',
+    cloud: '<path d="M7 18h10a4 4 0 0 0 .6-8A6 6 0 0 0 6 9.5 4.3 4.3 0 0 0 7 18z"/>',
+    rain: '<path d="M7 15h10a4 4 0 0 0 .6-8A6 6 0 0 0 6 6.5 4.3 4.3 0 0 0 7 15z M8 18l-1 3 M12 18l-1 3 M16 18l-1 3"/>',
+    snow: '<path d="M12 3v18 M4.2 7.5l15.6 9 M4.2 16.5l15.6-9"/>',
+    storm: '<path d="M7 14h10a4 4 0 0 0 .6-8A6 6 0 0 0 6 5.5 4.3 4.3 0 0 0 7 14z M12 14l-2 4h3l-2 4"/>',
+    partsun: '<path d="M8 6.5A3.5 3.5 0 0 1 14 5 M5 9.5h1 M8 2v1 M3.8 4.3l.7.7 M9 19h9a3.5 3.5 0 0 0 .4-7A5 5 0 0 0 9 11a4 4 0 0 0 0 8z"/>',
+    moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+    car: '<path d="M4 16v-4l2-5h12l2 5v4z M4 16v3h3v-3 M17 16v3h3v-3 M4 12h16"/><circle cx="8" cy="14" r=".8"/><circle cx="16" cy="14" r=".8"/>',
+    sound: '<path d="M4 9v6h4l5 4V5L8 9z M16.5 8.5a5 5 0 0 1 0 7 M19 6a8.5 8.5 0 0 1 0 12"/>',
+    search: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/>',
+    coat: '<path d="M9 3l3 3 3-3 5 3-2 5-2-1v11H8V10l-2 1-2-5z M12 6v15"/>',
+    unlock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.5-1.9"/>',
+    star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+    chat: '<path d="M4 5h16v11H9l-5 4z M8 10h8"/>',
+    folder: '<path d="M3 6a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>',
+    chevron: '<path d="M6 9l6 6 6-6"/>',
+    arrowDown: '<path d="M12 4v15 M6 13l6 6 6-6"/>',
+    play: '<path d="M8 5l11 7-11 7z"/>'
+  };
+  function icon(name, cls) {
+    var p = PATHS[name] || (LINE[name] ? null : PATHS.doc);
+    if (!p) return LINE[name];
+    return '<svg class="hs-li' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>';
+  }
+  /* 정적인 화면 글의 <i data-ic="이름"> 자리에 아이콘을 넣는다 */
+  function fillIcons(root) {
+    Array.prototype.forEach.call((root || document).querySelectorAll('i[data-ic]:not([data-ic-done])'), function (el) {
+      el.innerHTML = icon(el.getAttribute('data-ic')); el.setAttribute('data-ic-done', '1'); el.setAttribute('aria-hidden', 'true');
+    });
+  }
   window.GFIELD_ILLUST = { C: C, kid: kid, pair: pair, febScene: febScene, placeWalker: placeWalker, phaseArt: phaseArt,
-    upgScene: upgScene, ICON: ICON, LINE: LINE, cover: cover, lecThumb: lecThumb };
+    upgScene: upgScene, ICON: ICON, LINE: LINE, cover: cover, lecThumb: lecThumb, icon: icon, fillIcons: fillIcons };
+  fillIcons();
 })();

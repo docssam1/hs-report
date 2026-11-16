@@ -38,7 +38,7 @@ const INJECT=';(function(D){var F=["승급 복습강의","승급과정 문제은
     await p.click('#archive-list [data-go-upg]');await p.waitForTimeout(400);
     out.pointerOpens=await p.isVisible('#rm-upg .up-sec');
     await p.click('#rm-tab-nov');out.novBack=await p.isVisible('#timeline')&&!(await p.isVisible('#rm-upg'));
-    await p.click('#rm-tab-upg');await p.waitForTimeout(300);
+    await p.click('#rm-tab-upg');await p.waitForTimeout(300);await p.evaluate(()=>{const d=document.getElementById('up-daily');if(d)d.open=true;});
     out.sections=await p.$$eval('#rm-upg .up-h',e=>e.map(x=>x.textContent));
     out.courses=await p.$$eval('#rm-upg .up-course',e=>e.map(x=>x.textContent));
     out.bankDrawn=await p.isVisible('#rm-upg .up-bank .ub-top .book');

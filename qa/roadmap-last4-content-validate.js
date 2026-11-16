@@ -18,6 +18,7 @@ function sectionRenderer(online) {
     currentStudent: '검수',
     isOnline: () => online,
     canSeeTB: () => true,
+    hsIc: () => '',
     escHtml: (value) => String(value || ''),
     escAttr: (value) => String(value || ''),
     linkify: (value) => String(value || ''),

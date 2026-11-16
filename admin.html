@@ -252,18 +252,13 @@
       </div>
       <div class="card">
         <h3>폴더별 학생 권한</h3>
-        <div class="hint">‘전체공개’가 켜지면(🔓) 기존 학생이 봅니다. 졸업 후 복귀생은 전체공개와 별도로 학생 칸을 체크해 새로 승인합니다. <b>새로 만든 폴더는 비공개로 시작</b>합니다.</div>
+        <div class="hint">‘전체공개’가 켜지면(🔓) 기존 학생이 봅니다. 졸업 후 복귀생은 전체공개와 별도로 학생 칸을 체크해 새로 승인합니다. <b>새로 만든 폴더는 비공개로 시작</b>합니다. 맨 아래 <b>황소 약점 유형 문제은행</b> 줄: 기존 등록 학생은 자동으로 이용하고(흐린 칸), 졸업 후 복귀 등 개별 권한 학생은 칸을 눌러 승인합니다. 회차별 자료는 해당 회차 승인도 필요합니다.</div>
         <div class="matrix-scroll"><table id="acc-matrix"></table></div>
       </div>
       <div class="card" id="seminar-approval-panel">
         <h3>2026 황소 설명회 영상·자료 승인</h3>
         <div class="hint">체크한 회원만 설명회 영상을 시청하고 복기 문제·답안을 이름 워터마크로 인쇄합니다. 시크릿 마무리 1·2회는 아래의 회차 승인도 필요합니다. 선택 후 하단 <b>GitHub에 저장</b>을 누르세요. 기존 회원에게 자동 승인하지 않습니다.</div>
         <div class="matrix-scroll"><table id="seminar-acc-matrix" aria-label="2026 황소 설명회 학생별 승인"></table></div>
-      </div>
-      <div class="card">
-        <h3>문제은행 학생 이용</h3>
-        <div class="hint">황소 약점 유형 문제은행은 <b>기존 등록 학생이 승인번호 없이</b> 이용합니다. 졸업 후 복귀생은 아래에서 새로 승인합니다. 회차별 자료는 해당 회차 승인도 필요합니다.</div>
-        <div class="matrix-scroll"><table id="bank-acc-matrix"></table></div>
       </div>
       <div class="card signature-round-approvals">
         <h3>시그니처 1·2회 별도 승인</h3>
@@ -1046,6 +1041,7 @@
         S.students.forEach((s,si)=>{ const on=accessOn('folders',f,s,!open&&acc.includes(s)); html+=`<td class="cell ${on?'on':'off'}" style="${open?'opacity:.4':''}" onclick="toggleAcc(${fi},'${s}',this)"></td>`; });
         html+='</tr>';
       });
+      html+=bankAccessRow();
       html+='</tbody>';
       document.getElementById('acc-matrix').innerHTML=html;
     }
@@ -1057,8 +1053,23 @@
   function accAll(fi){ const f=S.archiveFolders[fi]; S.archiveAccess[f]=S.students.slice();grantScopedAll('folders',f,true); renderAccMatrix(); dirty(); }
   const QUESTION_BANK_ACCESS_KEY='question-bank';
   function bankAccessArr(){ if(!Array.isArray(S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY])) S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]=[]; return S.archiveProductAccess[QUESTION_BANK_ACCESS_KEY]; }
+  /* 황소 약점 유형 문제은행: 폴더별 학생 권한 표의 한 줄로 그린다(학생을 더하거나 바꾸면 표와 함께 바로 갱신).
+     기존 등록 학생은 자동 허용(흐린 칸), 개별 권한 학생만 칸을 눌러 승인한다. 학생 화면의 canSeeProduct('question-bank')와 같은 규칙 */
+  function bankAccessRow(){
+    const key=QUESTION_BANK_ACCESS_KEY;
+    let row='<tr class="bank-acc-row"><th>황소 약점 유형 문제은행<br><span style="font-size:10px;font-weight:600;color:#566274">기존 학생 자동 · 개별 권한 학생 체크</span></th>'+
+      '<td class="cell on" style="opacity:.4;cursor:default" title="기존 등록 학생은 자동으로 이용합니다"></td>'+
+      '<td style="text-align:center"><button class="mini" onclick="bankAccessAllScoped()" title="개별 권한 학생 모두 승인">☑</button></td>';
+    S.students.forEach((name,si)=>{
+      if(!scopedStudent(name)){ row+=`<td class="cell on" style="opacity:.4;cursor:default" title="${esc(name)} · 기존 등록 학생 자동 허용"></td>`; return; }
+      const on=accessOn('products',key,name,false);
+      row+=`<td class="cell ${on?'on':'off'}" role="checkbox" aria-checked="${on}" aria-label="${esc(name)} 문제은행 승인" tabindex="0" onclick="bankAccessToggleStudent(${si})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();bankAccessToggleStudent(${si})}"></td>`;
+    });
+    return row+'</tr>';
+  }
+  function bankAccessAllScoped(){ grantScopedAll('products',QUESTION_BANK_ACCESS_KEY,true); renderAccMatrix(); dirty(); }
   function renderBankAccessMatrix(){
-    const el=document.getElementById('bank-acc-matrix'); if(!el)return;
+    const el=document.getElementById('bank-acc-matrix'); if(!el){ if(document.getElementById('acc-matrix')) renderAccMatrix(); return; }
     const returned=S.students.filter(scopedStudent);
     el.innerHTML='<tbody><tr><th>황소 약점 유형 문제은행</th><td style="padding:14px"><b>기존 등록 학생 자동 허용 · 복귀생 별도 승인</b><br><span class="hint">졸업 후 복귀한 학생은 아래에서 새로 승인합니다.</span>'+returned.map(name=>'<label style="display:inline-flex;align-items:center;gap:5px;margin:8px"><input type="checkbox" aria-label="'+esc(name)+' 문제은행 승인" '+(accessOn('products',QUESTION_BANK_ACCESS_KEY,name,false)?'checked':'')+' onchange="bankAccessToggleStudent('+S.students.indexOf(name)+')">'+esc(name)+'</label>').join('')+'</td></tr></tbody>';
   }

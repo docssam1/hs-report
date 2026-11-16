@@ -29,7 +29,7 @@ const F='승급과정 문제은행',T1='초등과정 4-1 일일테스트 1단원
   await p.waitForFunction(()=>typeof enterAs==='function');
   await p.evaluate(n=>{document.getElementById('video-intro')&&(document.getElementById('video-intro').style.display='none');enterAs(n,false)},name);
   await p.waitForTimeout(600);await p.evaluate(()=>nav('roadmap'));await p.waitForTimeout(300);
-  if(await p.isVisible('#rm-tab-upg')){await p.click('#rm-tab-upg');await p.waitForTimeout(400);}
+  if(await p.isVisible('#rm-tab-upg')){await p.click('#rm-tab-upg');await p.waitForTimeout(400);}await p.evaluate(()=>{const d=document.getElementById('up-daily');if(d)d.open=true;});
   return p;
  }
  const titles=p=>p.$$eval('#rm-upg .up-bank .ub-top .book .label',e=>e.map(x=>x.textContent));

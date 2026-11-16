@@ -164,7 +164,7 @@ const server=http.createServer((req,res)=>{
     assert.deepEqual(await home.evaluate(()=>({folder:canSeeFolder('최종 모의고사'),signature:canSeeProduct('mock-signature-2'),bank:canSeeProduct('question-bank'),vip:canSeeVipMenu('col'),week:isUnlocked({id:'oct-5',type:'week'})})),{folder:false,signature:false,bank:false,vip:false,week:false});
     await answer.reload();await answer.waitForFunction(()=>typeof allowed==='function');assert.equal(await answer.evaluate(n=>allowed(n),student),false);
     await bank.reload();await bank.waitForFunction(()=>window.GFIELD_BANK_ACCESS);assert.equal(await bank.evaluate(n=>GFIELD_BANK_ACCESS.allowed({student:n,role:'student',active:true}),student),false);
-    if(out){await page.evaluate(()=>tab('archive'));await page.locator('#bank-acc-matrix').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,'returned-approval-mobile.png')});}
+    if(out){await page.evaluate(()=>tab('archive'));await page.locator('#acc-matrix .bank-acc-row').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,'returned-approval-mobile.png')});}
     assert.equal(externalWrites,0);assert.deepEqual(errors,[]);
     console.log(JSON.stringify({pass:true,cycle:true,cancel:true,rollback:true,noAccount:true,recordsPreserved:true,narrowSave:true,nameAndSavedLoginBlocked:true,reportAnswerBankBlocked:true,staffAccessPreserved:true,graduateHiddenFromAttendance:true,graduateContactMessage:true,restoreResidentAndOnline:true,productionWrites:0,syntheticSaves:puts}));
   }finally{await browser.close();server.close();}

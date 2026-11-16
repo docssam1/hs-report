@@ -43,6 +43,30 @@
     '.up-course{display:inline-block;font-size:13px;font-weight:700;color:#1b2340;margin:12px 0 4px;padding:3px 10px;border-radius:8px;border:1.5px solid #1b2340;background:#ece3fb;}' +
     '.up-lock{padding:28px 18px;text-align:center;color:#1b2340;font-size:14.5px;line-height:1.7;background:#fff;border:2.5px solid #1b2340;border-radius:20px;}' +
     '.up-bank .shelf-h{display:none;}' +
+    '.up-fold,.arc-fold{border:2px solid #1b2340;border-radius:18px;background:#fff;overflow:hidden;}' +
+    '.up-fold-sum,.arc-fold-sum{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;list-style:none;min-height:56px;}' +
+    '.up-fold-sum::-webkit-details-marker,.arc-fold-sum::-webkit-details-marker{display:none;}' +
+    '.up-fold-sum:focus-visible,.arc-fold-sum:focus-visible{outline:3px solid #2456c4;outline-offset:-3px;border-radius:16px;}' +
+    '.up-fold-ic,.arc-fold-ic{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;border:2px solid #1b2340;background:#ece3fb;color:#1b2340;flex:none;}' +
+    '.arc-fold-ic{background:#dfe9ff;}' +
+    '.up-fold-ic .hs-li,.arc-fold-ic .hs-li{width:22px;height:22px;}' +
+    '.up-fold-t,.arc-fold-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}' +
+    '.up-fold-t b,.arc-fold-t b{font-size:17px;font-weight:400;color:#1b2340;}' +
+    '.up-fold-t small,.arc-fold-t small{font-size:12.5px;color:#4e5878;font-weight:500;line-height:1.45;}' +
+    '.up-fold-chev,.arc-fold-chev{flex:none;color:#1b2340;transition:transform .2s;display:grid;}' +
+    '.up-fold-chev .hs-li,.arc-fold-chev .hs-li{width:22px;height:22px;}' +
+    '.up-fold[open] .up-fold-chev,.arc-fold[open] .arc-fold-chev{transform:rotate(180deg);}' +
+    '.up-fold[open] .up-fold-sum{border-bottom:2px solid #d6e2f5;background:#f7f3ff;}' +
+    '.arc-fold[open] .arc-fold-sum{border-bottom:2px solid #d6e2f5;background:#f3f7ff;}' +
+    '.up-fold-body,.arc-fold-body{padding:12px 14px 14px;}' +
+    '.arc-fold{margin:0 0 22px;}' +
+    '.arc-fold .bank-launch{margin:0 0 14px;border:0;box-shadow:none;padding:0;border-radius:0;}' +
+    '.arc-gen{border-top:2px dashed #d6e2f5;padding-top:14px;}' +
+    '.arc-gen-h{font-family:Jua,sans-serif;font-weight:400;font-size:17px;color:#1b2340;margin:0 0 6px;}' +
+    '.arc-gen-b p{font-size:13px;line-height:1.6;margin:0 0 10px;color:#4e5878;}' +
+    '.arc-gen-go{display:inline-flex;align-items:center;min-height:44px;background:#141b5d;color:#fff;padding:10px 15px;border-radius:12px;text-decoration:none;font-size:13.5px;font-weight:800;margin-right:12px;box-shadow:0 3px 0 #070b33;}' +
+    '.arc-gen-guide{display:inline-flex;align-items:center;min-height:44px;color:#243184;text-decoration:underline;text-underline-offset:3px;font-size:13.5px;font-weight:800;}' +
+    '@media (prefers-reduced-motion: reduce){.up-fold-chev,.arc-fold-chev{transition:none;}}' +
     /* 강의: 한 줄 카드(썸네일 + 제목) */
     '#rm-upg .up-rows{display:grid;gap:10px;margin-top:6px;}' +
     '#rm-upg .book.up-row{flex-direction:row;align-items:center;gap:12px;width:100%;padding:10px;border:2px solid #d6e2f5;border-radius:16px;background:#fff;text-align:left;}' +
@@ -155,6 +179,15 @@
     if (!list.length) return h + '<div class="up-empty">아직 올라온 교재가 없습니다.</div></section>';
     return h + '<div class="shelf">' + list.map(function (b) { return cardHtml(b, b.imgdir && b.pages ? b.pages + '쪽 · 책넘김' : '교재'); }).join('') + '</div></section>';
   }
+  /* 데일리 테스트(시험지·유사문제)는 길어서 접히는 상자 하나에 넣는다. 열림 상태는 기기에 기억 */
+  function dailyBox() {
+    var n = booksOf(F.bank).length, open = false;
+    try { open = localStorage.getItem('gfield_upg_daily_open') === '1'; } catch (e) {}
+    return '<details class="up-fold" id="up-daily"' + (open ? ' open' : '') + '><summary class="up-fold-sum">' +
+      '<span class="up-fold-ic">' + (I ? I.icon('calendar') : '') + '</span><span class="up-fold-t"><b class="disp">데일리 테스트</b>' +
+      '<small>시험지 ' + n + '장 · 답안 · 비슷한 문제 만들기</small></span><span class="up-fold-chev">' + (I ? I.icon('chevron') : '') + '</span></summary>' +
+      '<div class="up-fold-body"><div class="up-bank-host"></div></div></details>';
+  }
   function render() {
     if (!allowed()) {
       panel.innerHTML = '<div class="up-lock"><b>편입·승급과정 학생에게 열리는 공간입니다.</b><br>선생님이 열어 주시면 이곳에서 볼 수 있습니다.</div>';
@@ -163,9 +196,11 @@
     var h = '<section class="up-hero">' + (I ? I.upgScene('남학생과 여학생이 복습 강의, Test 문제은행, 편입 자료실 계단을 차례로 올라가는 그림') : '') +
       '<div class="up-hero-c"><h2 class="disp">' + (student() ? esc(student()) + '의 ' : '') + '편입·승급과정</h2><p>강의로 복습하고, 시험지로 확인하고,<br>자료실 책으로 다져서 한 칸씩 올라가요.</p></div></section>';
     if (canFolder(F.lec)) h += lecHtml();
-    if (canFolder(F.bank)) h += '<section class="up-sec up-bank" aria-labelledby="up-h-bank">' + head('bank', 'up-h-bank', 'Test 문제은행', '시험지를 열면 답안과 해설강의(있는 경우)가 함께 나와요. 아래에서 비슷한 문제를 낮춰서·같은 수준·높여서 만들어 풀 수 있어요.') + '<div class="up-bank-host"></div></section>';
+    if (canFolder(F.bank)) h += '<section class="up-sec up-bank" aria-labelledby="up-h-bank">' + head('bank', 'up-h-bank', 'Test 문제은행', '시험지를 열면 답안과 해설강의(있는 경우)가 함께 나와요. 아래에서 비슷한 문제를 낮춰서·같은 수준·높여서 만들어 풀 수 있어요.') + dailyBox() + '</section>';
     if (canFolder(F.book)) h += bookHtml();
     panel.innerHTML = h;
+    var fold = panel.querySelector('#up-daily');
+    if (fold) fold.addEventListener('toggle', function () { try { localStorage.setItem('gfield_upg_daily_open', fold.open ? '1' : '0'); } catch (e) {} });
     var host = panel.querySelector('.up-bank-host');
     if (host) {
       if (window.GFIELD_UPGRADE_BANK) window.GFIELD_UPGRADE_BANK.draw(host);

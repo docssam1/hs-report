@@ -372,7 +372,7 @@
     .node.current{background:linear-gradient(135deg,#fff,#fff8ee);overflow:visible}
     .node.current::after{content:'';position:absolute;inset:-2px;border-radius:18px;border:1px solid rgba(249,115,22,.28);pointer-events:none}
     .brief-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#fff,#fffaf4)}
-    .brief-card::after{content:'✦';position:absolute;right:14px;top:5px;font-size:56px;color:rgba(249,115,22,.07);transform:rotate(12deg);pointer-events:none}
+    .brief-card::after{content:'';position:absolute;right:14px;top:5px;font-size:56px;color:rgba(249,115,22,.07);transform:rotate(12deg);pointer-events:none}
     .brief-mood{position:relative;z-index:1}
     .brief-personal{display:block;margin-top:5px;color:#5a4432;font-weight:600}
     .cheer .ch-inner{font-size:38px;line-height:1.34}
@@ -443,11 +443,11 @@
   function roadmapBubble(node){
     const w=window.GFIELD_WEATHER;
     const c=w&&w.current?Number(w.current.weather_code):null;
-    if(c!=null&&[51,53,55,61,63,65,80,81,82].includes(c))return'비 오는 날엔 더 차분하게! ☔';
-    if(node&&node.type==='special')return'승인된 특강 회차만 함께 가요 ⭐';
-    if(node&&node.type==='extra')return'서재에서 승인된 추가 모의고사만 보여요 ⭐';
-    if(node&&/모의고사/.test((node.title||'')+' '+(node.desc||'')))return'틀린 문제는 성장 지도야! 📝';
-    return'우리 둘과 오늘도 한 칸 전진! ✨';
+    if(c!=null&&[51,53,55,61,63,65,80,81,82].includes(c))return'비 오는 날엔 더 차분하게!';
+    if(node&&node.type==='special')return'승인된 특강 회차만 함께 가요';
+    if(node&&node.type==='extra')return'서재에서 승인된 추가 모의고사만 보여요';
+    if(node&&/모의고사/.test((node.title||'')+' '+(node.desc||'')))return'틀린 문제는 성장 지도야!';
+    return'우리 둘과 오늘도 한 칸 전진!';
   }
 
   if(typeof loadWeather==='function'){
@@ -473,7 +473,7 @@
       const detail=mode==='parent'
         ? `${esc2(given)} 학생은 현재 <b>${esc2(node?node.title:'오늘의 학습')}</b> 구간을 지나고 있습니다. ${esc2(weatherLineParent(w))}`
         : `<b>${esc2(given)}${esc2(josa(given))}</b>, ${esc2(dayGreeting())}. 지금 우리는 <b>${esc2(node?node.title:'학습 준비')}</b>를 하고 있어. ${esc2(weatherLine(w))}`;
-      mood.innerHTML=(mode==='parent'?'<b>💛 DOCSSAM의 오늘 안내</b>':'<b>💛 DOCSSAM이 보내는 오늘의 인사</b>')+`<span class="brief-personal">${detail}</span>`;
+      mood.innerHTML=(mode==='parent'?'<b>DOCSSAM의 오늘 안내</b>':'<b>DOCSSAM이 보내는 오늘의 인사</b>')+`<span class="brief-personal">${detail}</span>`;
       if(typeof renderTimeline==='function')renderTimeline();
     };
   }
@@ -487,19 +487,19 @@
     '머리가 아프다는 건<br>지금 쑥쑥 크고 있다는 뜻이야',
     '실수해도 괜찮아<br>왜 틀렸는지 알면 그게 실력이 돼',
     '오늘 푼 한 문제가<br>시험날의 자신감이 된다!',
-    '집중 모드 ON 🔥<br>딱 30분만 몰입해보자',
+    '집중 모드 ON<br>딱 30분만 몰입해보자',
     '잘하고 있어, 정말이야<br>선생님이 다 보고 있어',
     '포기하고 싶은 그 순간이<br>제일 많이 크는 순간이야',
     '오늘도 씩씩하게!<br>아잣아잣 파이팅!!',
     '틀린 문제는 보물이야<br>하나 찾으면 하나 더 강해져',
-    '황소까지 같이 달리자<br>우리는 한 팀이야 🐂',
+    '황소까지 같이 달리자<br>우리는 한 팀이야',
     '머리보다 엉덩이!<br>오래 앉아 있는 사람이 이긴다',
     '숨 한 번 크게 쉬고<br>자, 오늘도 시작해볼까?'
   ];
   const CHEER_TAGS=[
-    'DOCSSAM이 응원한다 🔥','DOCSSAM이 지켜본다 🙌','오늘도 파이팅! 💪',
-    '선생님이 믿는다 ✨','우리 같이 가자 🐂','천천히, 그러나 확실하게 👊',
-    '꾸준함이 재능을 이긴다 💛'
+    'DOCSSAM이 응원한다','DOCSSAM이 지켜본다','오늘도 파이팅!',
+    '선생님이 믿는다','우리 같이 가자','천천히, 그러나 확실하게',
+    '꾸준함이 재능을 이긴다'
   ];
   if(typeof showCheer==='function'){
     showCheer=function(given){
@@ -545,8 +545,8 @@
       });
       const unique=[...new Set(rounds)].sort((a,b)=>+a-+b);
       if(!unique.length)return base;
-      const links=unique.map(r=>`<button type="button" class="special-viewer-link" onclick="openSpecialHwBook('${r}')"><span>📝</span> 활용 모의고사 ${r}회 강의·시험지 뷰어 <small>오답분석 포함 ›</small></button>`).join('');
-      return `<div class="special-viewer-panel"><div class="special-viewer-title">⭐ 방학특강 승인 회차</div>${links}<div style="margin-top:8px;font-size:11px;color:#74668c;line-height:1.55">승인된 회차만 표시됩니다. 외부 수강생과 같은 강의·JPG 워터마크 뷰어와 별도 오답 분석을 사용합니다.</div></div>`+base;
+      const links=unique.map(r=>`<button type="button" class="special-viewer-link" onclick="openSpecialHwBook('${r}')">활용 모의고사 ${r}회 강의·시험지 뷰어 <small>오답분석 포함 ›</small></button>`).join('');
+      return `<div class="special-viewer-panel"><div class="special-viewer-title">방학특강 승인 회차</div>${links}<div style="margin-top:8px;font-size:11px;color:#74668c;line-height:1.55">승인된 회차만 표시됩니다. 외부 수강생과 같은 강의·JPG 워터마크 뷰어와 별도 오답 분석을 사용합니다.</div></div>`+base;
     };
   }
 
@@ -557,15 +557,15 @@
         if(node.type==='divider'){const d=document.createElement('div');d.className='divider';d.innerHTML=`<span>${esc2(node.label)}</span>`;tl.appendChild(d);return}
         if(node.type==='promo'){
           const p=document.createElement('div');p.className='node promo-node';
-          p.innerHTML=`<div class="pico">✨</div><span class="ptag">${esc2(node.label||'추천')}</span>`+
+          p.innerHTML=`<div class="pico">${window.GFIELD_ILLUST?window.GFIELD_ILLUST.icon('star'):''}</div><span class="ptag">${esc2(node.label||'추천')}</span>`+
             `<h3 class="disp">${esc2(node.title)}</h3><p>${esc2(node.desc)}</p>`+
-            (node.url?`<a class="pcta" href="${esc2(node.url)}" target="_blank" rel="noopener">💬 ${esc2(node.cta||'문의하기')}</a>`:'');
+            (node.url?`<a class="pcta" href="${esc2(node.url)}" target="_blank" rel="noopener">${esc2(node.cta||'문의하기')}</a>`:'');
           tl.appendChild(p);return;
         }
         if(node.type==='goal'){const g=document.createElement('div');g.className='node goal';g.innerHTML=`<div class="date">${esc2(node.date)}</div><h3 class="disp">${esc2(node.title)}</h3><div class="desc">${esc2(node.desc)}</div>`;tl.appendChild(g);return}
         const unlocked=isUnlocked(node),isCurrent=node.id===D.meta.currentWeekId,el=document.createElement('div');
         el.className=`node ${node.track}${unlocked?'':' locked'}${isCurrent?' current':''}`;
-        const icon=unlocked?'🔓':'🔒',accessLabel=unlocked?'열림 · 이용 가능':'잠김 · 이용 불가';
+        const icon=(window.GFIELD_ILLUST?window.GFIELD_ILLUST.icon(unlocked?'unlock':'lock'):''),accessLabel=unlocked?'열림 · 이용 가능':'잠김 · 이용 불가';
         const friends=isCurrent?`<div class="companion-marker"><div class="friend boy">${RUNNER_BOY}</div><div class="friend girl">${RUNNER_GIRL}</div><div class="companion-bubble">${esc2(roadmapBubble(node))}</div></div>`:'';
         el.innerHTML=`${friends}<div class="icon-status" role="img" aria-label="${accessLabel}" title="${accessLabel}">${icon}</div><div class="date">${esc2(node.date)}${isCurrent?' · 현재 진행 중':''}</div><h3 class="disp">${esc2(node.title)}</h3><div class="desc">${esc2(node.desc)}</div>${node.focus?`<div class="focus">${esc2(node.focus)}</div>`:''}`;
         el.onclick=()=>openModal(node,unlocked);
@@ -636,7 +636,7 @@
             var finalActions=document.createElement('div'); finalActions.className='last1-node-actions final-report-action';
             var finalButton=document.createElement('button');
             finalButton.type='button'; finalButton.className='last1-node-btn';
-            finalButton.textContent='📊 '+studentName()+' 학생 파이널 성적표';
+            finalButton.textContent=studentName()+' 학생 파이널 성적표';
             finalButton.onclick=function(ev){ev.stopPropagation();openFinalResult(finalRound);};
             finalActions.appendChild(finalButton); el.appendChild(finalActions);
           }
@@ -647,17 +647,17 @@
           if(el.querySelector('.last1-node-actions')) return;
           var actions=document.createElement('div'); actions.className='last1-node-actions';
           var bookButton=document.createElement('button');
-          bookButton.type='button'; bookButton.className='last1-node-btn'; bookButton.textContent='🎬 강의·시험지 보기';
+          bookButton.type='button'; bookButton.className='last1-node-btn'; bookButton.textContent='강의·시험지 보기';
           bookButton.onclick=function(ev){ev.stopPropagation();openLastBook(round);}; actions.appendChild(bookButton);
           var timerButton=document.createElement('button');
           timerButton.type='button'; timerButton.className='last1-node-btn'; timerButton.textContent='⏱ 실전 타이머 열기';
           timerButton.onclick=function(ev){ev.stopPropagation();openTimer(round);}; actions.appendChild(timerButton);
           var e=document.createElement('button');
-          e.type='button'; e.className='last1-node-btn entry'; e.innerHTML='✍️ 오답 입력·분석 열기';
+          e.type='button'; e.className='last1-node-btn entry'; e.innerHTML='오답 입력·분석 열기';
           e.onclick=function(ev){ev.stopPropagation();openEntry(round);}; actions.appendChild(e);
           var b=document.createElement('button');
           b.type='button'; b.className='last1-node-btn';
-          b.innerHTML='📊 성적 확인';
+          b.innerHTML='성적 확인';
           b.onclick=function(ev){ ev.stopPropagation(); openResult(round); };
           actions.appendChild(b); el.appendChild(actions);
         });

@@ -64,6 +64,7 @@ async function run() {
     await returning.goto(base + '/index.html');
     await returning.locator('#dashboard:not(.hidden)').waitFor({ timeout: 15000 });
     await returning.locator('.nav-btn[data-v="archive"]').click();
+    await returning.locator('#arc-bank-fold > summary').click();   // 문제은행·생성기 상자를 연다
     await returning.locator('a[href="mock-generator-guide.html"]').waitFor({ timeout: 15000 });
 
     const desktop = await browser.newPage({ viewport: { width: 1280, height: 900 } });
