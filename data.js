@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 11. 16. 오후 7:34:03
+ * 생성: 2026. 11. 16. 오후 7:48:45
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -4492,7 +4492,11 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T10:37:03.501Z",
       "attendance": [],
       "special": false,
-      "folders": [],
+      "folders": [
+        "승급 복습강의",
+        "승급과정 문제은행",
+        "승급·편입 자료실"
+      ],
       "products": [],
       "vip": [
         "report",
@@ -4540,7 +4544,11 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T10:37:03.501Z",
       "attendance": [],
       "special": false,
-      "folders": [],
+      "folders": [
+        "승급 복습강의",
+        "승급과정 문제은행",
+        "승급·편입 자료실"
+      ],
       "products": [],
       "vip": [
         "report",
@@ -4856,7 +4864,11 @@ window.GFIELD_DATA = {
       "startedAt": "2026-11-08T10:37:03.501Z",
       "attendance": [],
       "special": false,
-      "folders": [],
+      "folders": [
+        "승급 복습강의",
+        "승급과정 문제은행",
+        "승급·편입 자료실"
+      ],
       "products": [
         "seminar-hwangso-2026"
       ],
