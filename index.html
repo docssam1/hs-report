@@ -849,10 +849,22 @@
   }
   async function loadWeather(){
     const lat=(D.meta&&D.meta.lat)||37.4996, lng=(D.meta&&D.meta.lng)||127.0584;
+    /* 기기에 30분 저장: 다시 열 때마다 날씨 서버를 부르지 않아 빠르고, 서버 사용량도 줄어든다 */
+    const key='gfield_weather_v2_'+lat+'_'+lng; let cached=null;
+    try{ cached=JSON.parse(localStorage.getItem(key)||'null'); }catch(e){}
+    if(cached&&cached.data&&Date.now()-cached.at<30*60*1000) return cached.data;
+    const ctrl=new AbortController(), timer=setTimeout(()=>ctrl.abort(),8000);
     try{
       const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&timezone=Asia%2FSeoul&forecast_days=2`;
-      const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw 0; return await r.json();
-    }catch(e){ return null; }
+      const r=await fetch(url,{cache:'no-store',signal:ctrl.signal}); clearTimeout(timer);
+      if(!r.ok) throw 0;
+      const data=await r.json();
+      try{ localStorage.setItem(key,JSON.stringify({at:Date.now(),data})); }catch(e){}
+      return data;
+    }catch(e){
+      /* 학원처럼 한 공유기에서 여럿이 접속하면 무료 날씨 서버가 잠시 막힐 수 있다 → 3시간 안의 저장본이 있으면 그것을 보여 준다 */
+      return (cached&&cached.data&&Date.now()-cached.at<3*60*60*1000)?cached.data:null;
+    }
   }
   async function renderBriefing(){
     const el=document.getElementById('briefing'); if(!el) return;
