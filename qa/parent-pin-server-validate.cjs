@@ -37,7 +37,7 @@ async function run(){
   if(body.email){otpCount++;return body.token==='12345678'?{data:{session:{access_token:'parent-token'},user:{id:'parent-id',email:body.email}}}:{error:{}};}
   return {data:{session:{access_token:'student-token',refresh_token:'student-refresh',expires_in:3600},user:{id}}};
  },signInWithOtp:async()=>({})}};
- const context=vm.createContext({crypto:webcrypto,TextEncoder,Request,Response,atob,btoa,console,fetch:async()=>({ok:true,text:async()=>JSON.stringify({students:[name],studentTypes:{[name]:account.active?'resident':'withdrawn'}})}),createClient:(_url,key)=>key==='service'?service:publicAuth,Deno:{env:{get:key=>({SUPABASE_URL:'https://qa.invalid',SUPABASE_SERVICE_ROLE_KEY:'service',SUPABASE_ANON_KEY:'anon',HS_PARENT_PIN_PEPPER:pepper})[key]},serve:fn=>{handler=fn}}});
+ const context=vm.createContext({crypto:webcrypto,TextEncoder,Request,Response,URL,atob,btoa,console,fetch:async()=>({ok:true,text:async()=>JSON.stringify({students:[name],studentTypes:{[name]:account.active?'resident':'withdrawn'}})}),createClient:(_url,key)=>key==='service'?service:publicAuth,Deno:{env:{get:key=>({SUPABASE_URL:'https://qa.invalid',SUPABASE_SERVICE_ROLE_KEY:'service',SUPABASE_ANON_KEY:'anon',HS_PARENT_PIN_PEPPER:pepper})[key]},serve:fn=>{handler=fn}}});
  const helper=fs.readFileSync(path.join(root,'supabase/functions/hs-parent-auth/pin-security.ts'),'utf8').replace(/^export /gm,'');
  const source=fs.readFileSync(path.join(root,'supabase/functions/hs-parent-auth/index.ts'),'utf8').replace(/^import .*;\r?\n/gm,'');
  vm.runInContext(stripTypeScriptTypes(helper+'\n'+source),context);

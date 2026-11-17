@@ -11,7 +11,7 @@ async function scenario(type,hasAccount=true,active=true){
  const service={auth:{getUser:async()=>({data:{user:{id}}}),admin:new Proxy({}, {get:()=>async()=>{privilegedCalls++;throw new Error('No account mutation is allowed');}})},rpc:async()=>({data:[{allowed:true}]}),from(table){
   assert.equal(table,'hs_accounts');const q={select:()=>q,eq:()=>q,maybeSingle:async()=>({data:account})};return q;
  }};
- const context=vm.createContext({crypto:webcrypto,TextEncoder,Request,Response,atob,btoa,console,
+ const context=vm.createContext({crypto:webcrypto,TextEncoder,Request,Response,URL,atob,btoa,console,
   fetch:async()=>({ok:true,text:async()=>JSON.stringify({students:[name],studentTypes:{[name]:type}})}),
   createClient:(_url,key)=>key==='service'?service:{auth:new Proxy({}, {get:()=>async()=>{privilegedCalls++;throw new Error('No email or session may be issued');}})},
   Deno:{env:{get:key=>({SUPABASE_URL:'https://qa.invalid',SUPABASE_SERVICE_ROLE_KEY:'service',SUPABASE_ANON_KEY:'anon',HS_PARENT_PIN_PEPPER:'qa-only-private-pepper-that-is-never-deployed'})[key]},serve:fn=>{handler=fn}}

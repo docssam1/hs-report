@@ -581,7 +581,8 @@
 <script src="archive-info.js?v=20260825b"></script>
 <script src="bank/important-types.js?v=20260913a"></script>
 <script src="middle-access.js?v=20261108-fresh-access1"></script>
-<script src="hs-auth.js?v=20261014-parent-pin"></script>
+<script src="hs-auth.js?v=20261117-hf-handoff"></script>
+<script src="hs-hyperfocus-link.js?v=20261117-hf-handoff"></script>
 <script src="hs-email-login.js?v=20261108-graduated1"></script>
 <script src="seminar/2026-video/access.js?v=20261108-access1"></script>
 <script src="student-result-hub.js?v=20261108-fresh-access1"></script>
@@ -1183,7 +1184,9 @@
     wrap.querySelectorAll('.book[data-bi]').forEach(btn=>btn.onclick=()=>{
       const bk=(D.books||[])[+btn.dataset.bi];
       if(isPlainPdfBook(bk)) downloadWatermarked(pdfHref(bk.pdf), bk.title||'교재');
-      else if(isDirectLinkBook(bk)) window.open(bookLinkUrl(bk, bk.links[0].url), '_blank');
+      else if(isDirectLinkBook(bk)){
+        if(!window.GFIELD_HF_LINK||!window.GFIELD_HF_LINK.launchBook(bk,bk.links[0].url))window.open(bookLinkUrl(bk,bk.links[0].url),'_blank');
+      }
       else openBook(bk);
     });
     wrap.querySelectorAll('.arc-info > .arc-info-head').forEach(btn=>btn.onclick=()=>{
@@ -1213,6 +1216,7 @@
   function isDirectLinkBook(b){ return !!(b && !b.pdf && !b.video && b.links && b.links.length===1 && b.links[0] && b.links[0].url); }
   /* GFIELD APPLICATION 외부 링크에 gname(학생명) 자동 로그인 파라미터 부착 */
   function bookLinkUrl(b, url){
+    if(window.GFIELD_HF_LINK&&window.GFIELD_HF_LINK.isBook(b,url))return window.GFIELD_HF_LINK.target;
     let lurl=url;
     const routeHelper=window.GFIELD_FINAL_LAST_ROUTES;
     if(routeHelper){
@@ -1267,7 +1271,7 @@
       ? `<a class="bv-act" href="${escAttr(b.video)}" target="_blank" rel="noopener">▶ 강의 새 창</a>` : '';
     if(b.imgdir && b.pages) acts += `<button class="bv-act" onclick="printBvBook()">인쇄</button>`;
     else if(b.pdf && isRealPdf(b.pdf)) acts += `<button class="bv-act" onclick="printBvBook()">시험지 인쇄 / PDF 저장</button>`;
-    (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=bookLinkUrl(b, l.url); const destination=l.download?` download="${escAttr(l.download)}"`:' target="_blank" rel="noopener"'; acts+=`<a class="bv-act" href="${escAttr(lurl)}"${destination}>${hsIc(l.download?'download':'link')} ${escHtml(l.label||'링크')}</a>`; } });
+    (b.links||[]).forEach(l=>{ if(l&&l.url){ let lurl=bookLinkUrl(b, l.url); const destination=l.download?` download="${escAttr(l.download)}"`:' target="_blank" rel="noopener"'; acts+=`<a class="bv-act" href="${escAttr(lurl)}"${window.GFIELD_HF_LINK&&window.GFIELD_HF_LINK.isBook(b,l.url)?' data-hf-report-link="1"':''}${destination}>${hsIc(l.download?'download':'link')} ${escHtml(l.label||'링크')}</a>`; } });
     document.getElementById('bv-actions').innerHTML = acts;
     document.getElementById('bookviewer').classList.add('open');
   }

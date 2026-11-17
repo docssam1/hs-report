@@ -1,3 +1,4 @@
+import { createHandler as createReportHandoffHandler } from "./report-handoff.ts";
 import "jsr:@supabase/functions-js@2.5.0/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2.112.4";
 import { validPin, pinSalt, pinDigest } from "./pin-security.ts";
@@ -467,6 +468,7 @@ async function touch(req: Request, body: Record<string, unknown>) {
 }
 
 Deno.serve(async (req: Request) => {
+  if (new URL(req.url).searchParams.get("scope") === "hyperfocus") return createReportHandoffHandler(service)(req);
   if (!allowedOrigin(req)) return json(req, { error: "ORIGIN_NOT_ALLOWED" }, 403);
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(req) });
   if (req.method !== "POST") return json(req, { error: "METHOD_NOT_ALLOWED" }, 405);

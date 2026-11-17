@@ -239,10 +239,10 @@
     try{await authRequest('/logout',{method:'POST',headers:{Authorization:'Bearer '+session.access_token},body:'{}'})}catch(e){}
   }
 
-  async function functionCall(slug,body,slot){
+  async function functionCall(slug,body,slot,route){
     var target=slotName(slot);
     async function send(session){
-      var response=await fetch(SUPABASE_URL+'/functions/v1/'+encodeURIComponent(slug),{
+      var response=await fetch(SUPABASE_URL+'/functions/v1/'+encodeURIComponent(slug)+(route==='hyperfocus'?'?scope=hyperfocus':''),{
         method:'POST',
         headers:{apikey:PUBLISHABLE_KEY,Authorization:'Bearer '+session.access_token,'Content-Type':'application/json'},
         body:JSON.stringify(body||{})
@@ -341,6 +341,10 @@
     return functionCall('hs-parent-auth',{action:'touch',deviceToken:deviceToken()},'student');
   }
 
+  async function issueHyperfocusLink(){
+    return functionCall('hs-parent-auth',{action:'issue',deviceToken:requireDevice()},'student','hyperfocus');
+  }
+
   global.GFIELD_AUTH={
     SUPABASE_URL:SUPABASE_URL,
     PUBLISHABLE_KEY:PUBLISHABLE_KEY,
@@ -359,6 +363,7 @@
     verifyEmailLogin:verifyEmailLogin,
     pinLogin:pinLogin,
     touchStudent:touchStudent,
+    issueHyperfocusLink:issueHyperfocusLink,
     hasAdminDevice:function(){return !!readAdminDevice()},
     forgetAdminDevice:forgetAdminDevice
   };
