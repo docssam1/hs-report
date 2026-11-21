@@ -32,7 +32,7 @@ const COMMENT='이번 주는 [[red:Thinking Core 1장]]을 끝내요.\n- 영상 
       return {saved,state,inPayload,other,back,cleared,dirty:document.getElementById('save-status').textContent.includes('저장되지 않은'),options:sel.options.length};},{text:COMMENT});
     await p.context().close();}
   // 2) 학생 화면: 저장된 코멘트가 학습 내용 맨 앞에 보이고 [[red:]]가 적용된다
-  {const inject=';(function(D){D.febRoadmap=D.febRoadmap||{};D.febRoadmap.comments={"feb-w01":'+JSON.stringify(COMMENT)+'};})(window.GFIELD_DATA);';
+  {const inject=';(function(D){D.febRoadmap=D.febRoadmap||{};D.febRoadmap.currentWeekId="feb-w01";D.febRoadmap.comments={"feb-w01":'+JSON.stringify(COMMENT)+'};})(window.GFIELD_DATA);';
     const p=await pageOf({width:1280,height:900},inject);await p.goto(base+'/index.html');await p.waitForFunction(()=>typeof enterAs==='function');
     await p.evaluate(()=>{const v=document.getElementById('video-intro');if(v)v.style.display='none';enterAs('이승우',false)});await p.waitForTimeout(3800);
     await p.evaluate(()=>nav('home'));await p.waitForTimeout(800);

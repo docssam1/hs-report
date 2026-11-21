@@ -86,11 +86,26 @@
     }
     return { notice: book && book.video ? '학습영상) ' + book.video : '', homework: '', textbooks: tbs };
   }
+  function reviewContent(n) {
+    var book = bookList().find(function (b) { return b && b.folder === '중급 모의고사' && new RegExp('모의고사\\s*' + n + '회\\s*중급$').test(b.title || ''); });
+    var lec = '';
+    ((book && book.links) || []).forEach(function (l) { if (l && /리뷰\s*강의/.test(l.label || '')) lec = l.url; });
+    var re = new RegExp('모의고사\\s*' + n + '회\\s*중급\\s*리뷰$');
+    var paper = novTextbooks().find(function (t) { return re.test(t.title || '') && (t.folder || t.url); });
+    var lines = ['중급 모의고사 ' + n + '회 리뷰 · 유사문제'];
+    if (lec) lines.push('리뷰 강의) ' + lec);
+    return { notice: lines.join('\n'), textbooks: paper ? [paper] : [] };
+  }
   function build(node) {
     var s = node.source || {}, c;
     if (s.core) {
       var a = coreContent(s.core), m = midContent(s.mid);
       c = { notice: a.notice, homework: m.homework, textbooks: a.textbooks.concat(m.textbooks) };
+      if (s.review) {   // 수업 시간에 다시 푸는 중급 모의고사 리뷰(유사문제) 교재와 리뷰 강의
+        var rv = reviewContent(s.review);
+        if (rv.notice) c.notice += '\n\n' + rv.notice;
+        c.textbooks = c.textbooks.concat(rv.textbooks);
+      }
     } else if (s.final) c = roundContent('final', s.final);
     else if (s.last) c = roundContent('last', s.last);
     else c = { notice: '', homework: '', textbooks: [] };
