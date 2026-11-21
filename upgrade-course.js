@@ -178,10 +178,15 @@
     var list = booksOf(F.lec);
     var h = '<section class="up-sec" aria-labelledby="up-h-lec">' + head('lec', 'up-h-lec', '복습용 강의', '교재를 옆에 펴 놓고 영상으로 다시 봐요. 영상과 교재가 나란히 열립니다.');
     if (!list.length) return h + '<div class="up-empty">아직 올라온 복습 강의가 없습니다.</div></section>';
-    var courses = [];
-    list.forEach(function (b) { var c = String(b.course || '').trim() || '기타'; if (courses.indexOf(c) < 0) courses.push(c); });
-    courses.forEach(function (c) {
-      h += '<div class="up-course">' + esc(c) + '</div><div class="up-rows">' + list.filter(function (b) { return (String(b.course || '').trim() || '기타') === c; })
+    /* 과정 이름은 대소문자·공백 차이를 무시하고 한 묶음으로 본다(처음 입력된 표기를 보여 준다). */
+    var courses = [], names = {};
+    function courseKey(b) { return String(b.course || '').replace(/\s+/g, ' ').trim().toLowerCase() || '기타'; }
+    list.forEach(function (b) {
+      var k = courseKey(b);
+      if (!(k in names)) { names[k] = String(b.course || '').replace(/\s+/g, ' ').trim() || '기타'; courses.push(k); }
+    });
+    courses.forEach(function (k) {
+      h += '<div class="up-course">' + esc(names[k]) + '</div><div class="up-rows">' + list.filter(function (b) { return courseKey(b) === k; })
         .map(function (b) { return rowHtml(b, b.video ? '교재 + 복습영상' : (b.links && b.links.length ? '영상 링크' : '교재')); }).join('') + '</div>';
     });
     return h + '</section>';
