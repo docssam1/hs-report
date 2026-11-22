@@ -1,7 +1,7 @@
 /* =========================================================
  * 지필드 영재교육 · 생각하는 황소 대비 아카이브 (GFIELD-ON)
  * 공용 데이터 파일 — 관리자 콘솔에서 자동 생성됨
- * 생성: 2026. 11. 22. 오후 4:45:28
+ * 생성: 2026. 11. 22. 오후 4:47:53
  * ========================================================= */
 window.GFIELD_DATA = {
   "meta": {
@@ -3324,6 +3324,23 @@ window.GFIELD_DATA = {
       ],
       "imgdir": "bk_mwrj37ig",
       "pages": 3
+    },
+    {
+      "folder": "승급 복습강의",
+      "title": "LEVEL UP심화 4-1-2 각도 1,2,3차시",
+      "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1795333612153_g1gn______________-_-2.pdf",
+      "video": "https://youtu.be/obDKxr5lQks?si=0XQjCvUrqof72lYz",
+      "cover": "",
+      "date": "2026-11-22",
+      "links": [
+        {
+          "label": "답안",
+          "url": "https://drive.google.com/file/d/1AWhI0lpAXCE53aBnpCE_TAWkcMD2Ph4u/view?usp=sharing"
+        }
+      ],
+      "course": "4-1 LEVEL UP 심화",
+      "imgdir": "bk_mwrja3mk",
+      "pages": 19
     }
   ],
   "pins": {},
