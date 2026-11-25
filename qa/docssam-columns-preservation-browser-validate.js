@@ -262,7 +262,7 @@ async function verifyEmptyRemoteRecovery(browser, width) {
 async function verifyFailedPutRetry(browser, width) {
   const { context, page, state } = await newPage(browser, width, fixture(ORIGINALS));
   try {
-    await page.locator('button[data-tab="vip"]').click();
+    await page.locator('button[data-tab="archive"]').click();
     const before = await currentState(page);
     const baseline = await page.evaluate(() => JSON.parse(JSON.stringify(columnSaveBaseline)));
     const remote = fixture(ORIGINALS);
@@ -342,7 +342,7 @@ async function verifyPendingColumnEdit(browser, width, remoteAdded) {
 async function verifyLastColumnDeletion(browser, width) {
   const { context, page, state } = await newPage(browser, width, fixture(ORIGINALS));
   try {
-    await page.locator('button[data-tab="vip"]').click();
+    await page.locator('button[data-tab="archive"]').click();
     const before = await currentState(page);
     for (let index = 0; index < 4; index++) await page.evaluate(() => delCol(0));
     assert.equal((await currentState(page)).vip.columns.length, 1);

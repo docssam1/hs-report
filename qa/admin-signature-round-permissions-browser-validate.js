@@ -123,7 +123,7 @@ async function verifyViewport(browser, width) {
   try {
     await page.goto(BASE_URL + '/admin.html', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#app:not(.hidden)');
-    await page.click('button[data-tab="archive"]');
+    await page.click('button[data-tab="approve"]');
     assert.deepEqual(await page.locator('#signature-acc-matrix tbody tr > th').allTextContents(), ['시그니처 1회', '시그니처 2회']);
     assert.deepEqual(await page.locator('#final7-acc-matrix tbody tr > th').allTextContents(), ['중급 7회', '중급 8회', '최종 7회', '최종 8회']);
     assert.equal(await page.locator('#mid-acc-matrix').count(), 0, 'focused release does not add an unrelated Mid table');

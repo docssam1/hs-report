@@ -528,7 +528,7 @@
       <div class="vh-glass">
         <div class="vh-badge"><i data-ic="crown"></i> GFIELD VIP LOUNGE</div>
         <h2 class="disp">지필드 VIP 라운지</h2>
-        <p>재원생·학부모님만을 위한 프리미엄 공간.<br><b>나의 진단 결과·코멘트</b>, 원장님의 <b>프리미엄 설명회·칼럼</b>, 매일 갱신되는 <b>교육 매거진</b>, <b>강좌 소식·클리닉 신청</b>까지 한곳에.</p>
+        <p>재원생·학부모님만을 위한 프리미엄 공간.<br><b>나의 진단 결과·코멘트</b>, 원장님의 <b>프리미엄 설명회·칼럼</b>, 매일 갱신되는 <b>교육 매거진</b>까지 한곳에.</p>
         <span class="vh-arrow">↓</span>
       </div>
     </div>
@@ -1099,7 +1099,7 @@
   function isOnline(){ return ((D.studentTypes||{})[currentStudent])==='online'; }
   /* VIP 메뉴 권한: 키가 없으면 재원생만(온라인 회원은 비공개) */
   function canSeeVipMenu(k){ const a=(D.vipAccess||{})[k]; return window.GFIELD_STUDENT_ACCESS.allows(D,currentStudent,'vip',k,!Array.isArray(a)?!isOnline():a.includes('*')||a.includes(currentStudent)); }
-  function visibleVipKeys(){ return ['report','ses','cou','clinic','col','mag'].filter(canSeeVipMenu); }
+  function visibleVipKeys(){ return ['report','ses','col','mag'].filter(canSeeVipMenu); }
   function applyMemberTabs(){
     const on=isOnline();
     document.querySelectorAll('.nav-btn').forEach(b=>{
@@ -1312,15 +1312,12 @@
     if(isDemo){ wrap.innerHTML='<div class="empty-note">데모에서는 VIP 라운지가 제공되지 않습니다.</div>'; return; }
     const V=D.vip||{};
     const ses=(V.sessions||[]).filter(s=>s&&s.url).length;
-    const cou=(V.courses||[]).filter(c=>c&&(c.title||c.body)).length;
     const col=(V.columns||[]).filter(c=>c&&c.title).length;
     const mag=(V.magazine||[]).filter(m=>m&&m.title).length;
     const rep=((D.reports&&D.reports[currentStudent])||[]).length;
     const BTN={
       report:`<button class="vip-mbtn full" data-k="report" style="border:1.5px solid #fcd3a3;background:#fff7ec"><span class="mi">${hsIc('chart')}</span><span><span class="mt">진단 결과 · 코멘트</span><span class="mc" style="display:block">모의고사 진단 · 본인 확인 ${rep?`(${rep})`:''} ›</span></span></button>`,
       ses:`<button class="vip-mbtn" data-k="ses"><span class="mi">${hsIc('video')}</span><span class="mt">프리미엄 설명회</span><span class="mc">${ses}개 영상 ›</span></button>`,
-      cou:`<button class="vip-mbtn" data-k="cou"><span class="mi">${hsIc('megaphone')}</span><span class="mt">신규 강좌 공지</span><span class="mc">${cou}건 ›</span></button>`,
-      clinic:`<button class="vip-mbtn" data-k="clinic"><span class="mi">${hsIc('calendar')}</span><span class="mt">결석·클리닉 신청</span><span class="mc">바로 신청 ›</span></button>`,
       col:`<button class="vip-mbtn" data-k="col"><span class="mi">${hsIc('pen')}</span><span class="mt">DOCSSAM 칼럼</span><span class="mc">${col}편 ›</span></button>`,
       mag:`<button class="vip-mbtn full" data-k="mag"><span class="mi">${hsIc('news')}</span><span><span class="mt">교육 매거진</span><span class="mc" style="display:block">${mag}건 · 매일 업데이트 ›</span></span></button>`
     };
@@ -1357,21 +1354,6 @@
       wrap.innerHTML=h;
       wrap.querySelectorAll('[data-ses]').forEach(b=>b.onclick=()=>{ const s=ses[+b.dataset.ses]; if(s) playVid(s.url); });
       startCarousel();
-    } else if(k==='cou'){
-      const courses=(V.courses||[]).filter(c=>c&&(c.title||c.body));
-      let h=back+`<div class="vip-h disp">신규 강좌 공지</div>`;
-      if(courses.length){
-        courses.forEach(c=>{
-          h+=`<div class="folder"><div class="folder-h disp"><span class="folder-ic">${hsIc('megaphone')}</span> ${escHtml(c.title||'공지')}${c.date?`<span class="folder-c">${escHtml(c.date)}</span>`:''}</div><div class="folder-b">`;
-          if(c.body&&c.body.trim()) h+=`<div class="notice" style="padding:6px 2px">${linkify(c.body)}</div>`;
-          if(c.link) h+=`<a class="tb-btn" href="${escAttr(c.link)}" target="_blank" rel="noopener" style="margin-top:10px"><span class="ico">${hsIc('link')}</span> 자세히 보기 / 신청</a>`;
-          h+='</div></div>';
-        });
-      } else h+='<div class="empty-note" style="text-align:left">등록된 강좌 공지가 없습니다.</div>';
-      wrap.innerHTML=h;
-    } else if(k==='clinic'){
-      const cl=V.clinic||{};
-      wrap.innerHTML=back+`<div class="vip-h disp">결석 · 클리닉 신청</div><div class="clinic-card"><p>${escHtml(cl.notice||'결석·보강·클리닉 신청은 아래 버튼으로 접수해주세요.')}</p>${cl.url?`<a class="clinic-btn" href="${escAttr(cl.url)}" target="_blank" rel="noopener">신청하러 가기</a>`:'<span class="empty-note" style="display:inline-block">신청 링크 준비중입니다. 담당 선생님께 문의해주세요.</span>'}</div>`;
     } else if(k==='col'){
       const cols=(V.columns||[]).filter(c=>c&&c.title);
       let h=back+`<div class="vip-h disp">DOCSSAM의 프리미엄 칼럼</div><div class="col-banner"><span class="cb-ic">${hsIc('pen')}</span><div><b>DOCSSAM의 프리미엄 칼럼</b><span>원장이 직접 쓰는 학습·입시 인사이트</span></div></div>`;

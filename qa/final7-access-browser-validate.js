@@ -70,7 +70,7 @@ async function installRoundFixture(page) {
     });
     await admin.goto(`${BASE_URL}/admin.html`, { waitUntil: 'domcontentloaded' });
     await admin.waitForSelector('#app:not(.hidden)');
-    await admin.click('button[data-tab="archive"]');
+    await admin.click('button[data-tab="approve"]');
     await admin.evaluate(() => {
       S.students = ['회차승인검수A', '회차승인검수B'];
       S.archiveProductAccess['mock-final-7'] = [];

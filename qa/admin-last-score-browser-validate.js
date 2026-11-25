@@ -156,7 +156,7 @@ const server = http.createServer((request, response) => {
     await page.locator('#admin-last-reload').click();
     await page.waitForFunction(() => document.querySelector('#admin-last-status')?.textContent.includes('저장된 최초 성적이 없습니다'));
 
-    await page.locator('[data-tab="archive"]').click();
+    await page.locator('[data-tab="approve"]').click();
     const matrix = page.locator('#final7-acc-matrix');
     assert.equal(await matrix.locator('tbody tr').count(), 2);
     assert.match(await matrix.locator('tbody tr').nth(1).innerText(), /학생용 자료 보류/);

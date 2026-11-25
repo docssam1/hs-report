@@ -60,7 +60,7 @@ const server=http.createServer((req,res)=>{if(req.method!=='GET'){evidence.write
    evidence.cases.push({approvalRevokedDuringPdfPreparationBlocksPrint:true});await ctx.close();
   }
   {
-   const {page,ctx}=await setup({grant:false,admin:true});await page.goto(base+'/admin.html');await page.waitForFunction(()=>!document.querySelector('#app').classList.contains('hidden'));await page.locator('[data-tab="archive"]').click();
+   const {page,ctx}=await setup({grant:false,admin:true});await page.goto(base+'/admin.html');await page.waitForFunction(()=>!document.querySelector('#app').classList.contains('hidden'));await page.locator('[data-tab="approve"]').click();
    await page.locator('#seminar-approval-panel').scrollIntoViewIfNeeded();assert.equal(await page.locator('#seminar-acc-matrix input:checked').count(),0);
    const before=await page.evaluate(()=>JSON.parse(JSON.stringify(S.archiveProductAccess)));
    await page.getByRole('checkbox',{name:name+' 설명회 승인',exact:true}).check();assert.deepEqual(await page.evaluate(key=>S.archiveProductAccess[key],key),[name]);

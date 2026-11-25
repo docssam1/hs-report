@@ -88,7 +88,7 @@ async function verifyTopSecretFinishOne(browser) {
   });
   await admin.goto(`${BASE_URL}/admin.html`, { waitUntil: 'domcontentloaded' });
   await admin.waitForSelector('#app:not(.hidden)');
-  await admin.click('button[data-tab="archive"]');
+  await admin.click('button[data-tab="approve"]');
   await admin.evaluate(accessKey => {
     S.students = ['시크릿검수A', '시크릿검수B'];
     S.archiveProductAccess[accessKey] = [];

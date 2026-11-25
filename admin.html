@@ -32,6 +32,11 @@
   .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 80px;}
 
   .tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
+  #sc-exam ~ .card .field>label{white-space:normal;min-width:0;max-width:100%;flex-shrink:1;}
+  .subnav{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;}
+  .subnav button{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-height:38px;font-size:13px;font-weight:700;color:var(--navy);cursor:pointer;}
+  [id^="ap-"],[id^="mt-"],[id^="sc-"],[id^="lesson-"]{scroll-margin-top:12px;}
+  .fold-old>summary{cursor:pointer;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-weight:800;color:var(--navy);margin-bottom:14px;}
   .tabs button{background:#fff;border:1px solid var(--line);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;color:#555;}
   .tabs button.active{background:var(--navy);color:#fff;border-color:var(--navy);}
 
@@ -161,62 +166,16 @@
 
   <div class="wrap">
     <div class="tabs">
-      <button class="active" data-tab="attend" onclick="tab('attend')">① 출석 · 권한</button>
-      <button data-tab="students" onclick="tab('students')">② 학생 명단</button>
-      <button data-tab="content" onclick="tab('content')">③ 콘텐츠</button>
-      <button data-tab="settings" onclick="tab('settings')">④ 진행 주차</button>
-      <button data-tab="archive" onclick="tab('archive')">⑤ 자료실</button>
-      <button data-tab="vip" onclick="tab('vip')">⑥ VIP 라운지</button>
-      <button data-tab="mag" onclick="tab('mag')">⑦ 교육 매거진</button>
-      <button data-tab="report" onclick="tab('report')">⑧ 진단 결과</button>
-      <button data-tab="exam" onclick="tab('exam')">⑨ AI 진단</button>
-      <button data-tab="mock" onclick="tab('mock')">⑩ 모의고사 결과</button>
-      <button data-tab="hs" onclick="tab('hs')">⑫ 2월 대비 · 편입·승급</button>
-      <a href="bank/index.html" target="_blank" rel="noopener" style="text-decoration:none"><button type="button">⑪ 문제은행 ↗</button></a>
+      <button class="active" data-tab="students" onclick="tab('students')">① 학생</button>
+      <button data-tab="approve" onclick="tab('approve')">② 승인</button>
+      <button data-tab="content" onclick="tab('content')">③ 수업 내용</button>
+      <button data-tab="archive" onclick="tab('archive')">④ 자료</button>
+      <button data-tab="mock" onclick="tab('mock')">⑤ 성적·진단</button>
+      <button data-tab="settings" onclick="tab('settings')">⑥ 설정</button>
+      <a href="bank/index.html" target="_blank" rel="noopener" style="text-decoration:none"><button type="button">문제은행 ↗</button></a>
     </div>
 
-    <section id="tab-attend">
-      <div class="card">
-        <h3>주차별 출석 체크 (권한 부여)</h3>
-        <div class="hint">칸을 클릭하면 해당 학생의 그 주차 영상·자료가 열립니다(🔓). ⭐ 열은 방학 특강 수강 여부입니다.</div>
-        <div class="matrix-scroll"><table id="matrix"></table></div>
-      </div>
-      <div class="card">
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-          <h3 style="margin:0">📊 학생 접속 기록</h3>
-          <button class="btn" onclick="loadAccessLog()">🔄 새로고침</button>
-          <span id="al-status" class="hint" style="margin:0"></span>
-        </div>
-        <div class="hint">학생이 사이트에 로그인한 횟수와 최근 접속 시각입니다.</div>
-        <div id="al-body">🔄 새로고침을 눌러 불러오세요.</div>
-      </div>
-    </section>
-
-    <section id="tab-hs" class="hidden">
-      <div class="card" id="feb-admin">
-        <h3>2월 대비 로드맵 · 수강 학생과 현재 주차</h3>
-        <div class="hint"><b>2월 과정</b>에 체크한 학생이 대상이고, <b>선생님이 출석 체크한 주차</b>의 자료(개념·중급 과제·파이널·최종)만 열립니다. 주차 칸을 누르면 그 학생의 그 주차가 열리거나 닫힙니다. 현재 주차는 로드맵 화면의 "현재 진행 중" 표시용입니다. 재원생·온라인 모두 같습니다. 바꾼 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
-        <div style="margin:8px 0">현재 주차 <select id="feb-cur" onchange="febSetCurrent(this.value)"></select></div>
-        <div class="matrix-scroll"><table id="feb-matrix"></table></div>
-        <div id="feb-comment-box" style="margin-top:16px;padding-top:14px;border-top:1px dashed #cfd6e6">
-          <h4 style="font-size:15px;margin:0 0 4px">주차별 선생님 코멘트</h4>
-          <div class="hint">고른 주차의 <b>학습 내용 맨 앞</b>에 학생에게 보입니다. 글자를 드래그하면 꾸미기 도구(빨강·형광 등)가 나오고, 줄을 바꾸면 줄이 바뀝니다. 비워 두면 코멘트 없이 나옵니다. 쓴 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
-          <div style="margin:8px 0">주차 <select id="feb-cm-week" onchange="febCommentLoad()"></select> <span id="feb-cm-state" class="hint"></span></div>
-          <textarea id="feb-cm-text" class="rich" rows="6" style="width:100%;font:inherit;padding:10px;border:1px solid #cfd6e6;border-radius:8px" placeholder="예) 이번 주는 [[red:Thinking Core 1장]]을 끝내고 중급 모의고사 1회를 풀어 오세요." oninput="febCommentSave()"></textarea>
-        </div>
-      </div>
-      <div class="card" id="upg-admin">
-        <h3>편입·승급과정 · 열람 학생</h3>
-        <div class="hint">체크한 학생은 학생 화면의 <b>로드맵 → 편입·승급과정</b> 탭에서 세 영역을 봅니다. 체크 하나로 세 폴더가 함께 열립니다. 2월 대비 로드맵과는 별개입니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.<br>
-        자료는 <b>⑤ 자료실 → 교재</b>에서 폴더를 골라 올립니다.<br>
-        · <b>승급 복습강의</b>: 교재 PDF + 복습영상 주소. '과정' 칸(예: 4-1 Level Up 심화)으로 묶여 보입니다.<br>
-        · <b>승급과정 문제은행</b>: 시험지 PDF(이미지 분할) + 답안은 링크 버튼, 해설강의는 영상 주소.<br>
-        · <b>승급·편입 자료실</b>: 교재 PDF를 이미지로 분할하면 워터마크가 들어간 양면 책넘김으로 보이고, 인쇄도 워터마크로 나옵니다.</div>
-        <div class="matrix-scroll"><table id="upg-matrix"></table></div>
-      </div>
-    </section>
-
-    <section id="tab-students" class="hidden">
+    <section id="tab-students">
       <div class="card">
         <h3>학생 추가</h3>
         <div class="hint">학생이 로그인 화면에서 입력할 이름과 정확히 같아야 합니다.</div>
@@ -228,50 +187,41 @@
         <div class="hint">회원 상태에서 재원생·온라인·졸업생·퇴원생을 선택합니다. 졸업생은 출석 명단에 나오지 않고 접속·자료 열람이 정지되며, 재원생 또는 온라인으로 복귀할 수 있습니다. 졸업·퇴원·복귀는 확인 후 자동 저장합니다. 성적·출석·코멘트·승인 기록은 보존하며, <b>×는 학생 삭제</b>이므로 졸업 정리에 사용하지 마세요.</div>
       </div>
       <div class="card" id="student-email-auth"></div>
-    </section>
-
-    <section id="tab-content" class="hidden">
       <div class="card">
-        <h3>🌟 특강(활용 모의고사) 회차별 수강 권한</h3>
-        <div class="hint">특강은 <b>일부 회차만 신청한 학생</b>이 있을 수 있어, 회차별로 볼 수 있는 학생을 따로 정합니다. 전체공개를 끄면 체크한 학생만 그 회차를 봅니다. <b>모두 체크(☑)</b>를 누르면 전원이 개별 체크로 풀리므로 빼고 싶은 사람만 해제하면 됩니다. (특강 자체를 볼 수 있는지는 ② 학생 명단의 [선택] 특강 등록 여부가 먼저 결정하고, 여기서는 그중 어떤 회차인지를 정합니다)</div>
-        <div class="matrix-scroll"><table id="sp-acc-matrix"></table></div>
-      </div>
-      <div class="card">
-        <h3>주차별 콘텐츠 (학습내용 · 과제 · 교재)</h3>
-        <div class="hint">안내문을 그대로 붙여넣으면 학생 화면에서 유튜브/링크가 자동 변환됩니다. · <b>텍스트를 드래그하면 꾸미기 버튼</b>(굵게·형광펜·색·별)이 떠요. · 교재 PDF는 <b>웹 링크</b> 또는 <b>로컬 PDF 파일 선택/드래그</b>로 자동 업로드됩니다. (업로드엔 GitHub 토큰 필요)</div>
-        <div id="content-list"></div>
-      </div>
-    </section>
-
-    <section id="tab-settings" class="hidden">
-      <div class="card">
-        <h3>현재 진행 중인 주차</h3>
-        <div class="hint">캐릭터(러너)가 멈춰 서고 강조 표시되는 주차입니다.</div>
-        <select class="select" id="current-week"></select>
-      </div>
-      <div class="card">
-        <h3>🔑 GitHub 토큰</h3>
-        <div class="hint">저장·PDF 업로드에 쓰는 개인 토큰입니다. <b>이 브라우저에 계속 저장</b>되며(사이트엔 안 올라감), 저장 실패가 나도 자동으로 지워지지 않습니다. 공용 PC에서는 저장하지 마세요.</div>
-        <div class="field"><label>토큰</label><input type="password" id="ghKey" placeholder="github_pat_... (Contents: Read and write)"><button class="btn add sm" onclick="saveGhKey()">저장</button><button class="btn del sm" onclick="clearGhKey()">삭제</button></div>
-        <span id="ghStat" class="hint"></span>
-      </div>
-    </section>
-
-    <section id="tab-archive" class="hidden">
-      <div class="card">
-        <h3>자료실 폴더</h3>
-        <div class="hint">학생 화면 자료실에 보이는 폴더입니다. 이름을 바꾸면 자료·권한도 함께 따라갑니다.</div>
-        <div id="folder-list"></div>
-        <div class="student-row" style="margin-top:10px;">
-          <input type="text" id="new-folder" placeholder="새 폴더 이름" onkeypress="if(event.key==='Enter')addFolder()">
-          <button class="btn add" onclick="addFolder()">＋ 폴더 추가</button>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <h3 style="margin:0">📊 학생 접속 기록</h3>
+          <button class="btn" onclick="loadAccessLog()">🔄 새로고침</button>
+          <span id="al-status" class="hint" style="margin:0"></span>
         </div>
+        <div class="hint">학생이 사이트에 로그인한 횟수와 최근 접속 시각입니다.</div>
+        <div id="al-body">🔄 새로고침을 눌러 불러오세요.</div>
       </div>
-      <div class="card">
+    </section>
+
+    <section id="tab-approve" class="hidden">
+      <nav class="subnav" aria-label="이 탭 안에서 바로 가기"><button type="button" onclick="jumpTo('ap-feb')">2월 대비</button><button type="button" onclick="jumpTo('ap-upg')">편입·승급</button><button type="button" onclick="jumpTo('ap-folder')">자료실 폴더</button><button type="button" onclick="jumpTo('ap-mock')">모의고사 회차</button><button type="button" onclick="jumpTo('ap-vip')">VIP</button><button type="button" onclick="jumpTo('ap-sp')">특강</button><button type="button" onclick="jumpTo('ap-nov')">11월 출석</button></nav>
+      <div id="ap-feb"></div>
+      <div class="card" id="feb-admin">
+        <h3>2월 대비 로드맵 · 수강 학생과 열람 주차</h3>
+        <div class="hint"><b>2월 과정</b>에 체크한 학생이 대상이고, <b>선생님이 출석 체크한 주차</b>의 자료(개념·중급 과제·파이널·최종)만 열립니다. 주차 칸을 누르면 그 학생의 그 주차가 열리거나 닫힙니다. <b>현재 주차</b>는 「③ 수업 내용」 탭에서 바꾸며, 로드맵 화면의 "현재 진행 중" 표시용입니다. 재원생·온라인 모두 같습니다. 바꾼 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
+        <div class="matrix-scroll"><table id="feb-matrix"></table></div>
+      </div>
+      <div id="ap-upg"></div>
+      <div class="card" id="upg-admin">
+        <h3>편입·승급과정 · 열람 학생</h3>
+        <div class="hint">체크한 학생은 학생 화면의 <b>로드맵 → 편입·승급과정</b> 탭에서 세 영역을 봅니다. 체크 하나로 세 폴더가 함께 열립니다. 2월 대비 로드맵과는 별개입니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.<br>
+        자료는 <b>④ 자료 → 교재(책) 등록</b>에서 폴더를 골라 올립니다.<br>
+        · <b>승급 복습강의</b>: 교재 PDF + 복습영상 주소. '과정' 칸(예: 4-1 Level Up 심화)으로 묶여 보입니다.<br>
+        · <b>승급과정 문제은행</b>: 시험지 PDF(이미지 분할) + 답안은 링크 버튼, 해설강의는 영상 주소.<br>
+        · <b>승급·편입 자료실</b>: 교재 PDF를 이미지로 분할하면 워터마크가 들어간 양면 책넘김으로 보이고, 인쇄도 워터마크로 나옵니다.</div>
+        <div class="matrix-scroll"><table id="upg-matrix"></table></div>
+      </div>
+      <div id="ap-folder" class="card">
         <h3>폴더별 학생 권한</h3>
         <div class="hint">‘전체공개’가 켜지면(🔓) 기존 학생이 봅니다. 졸업 후 복귀생은 전체공개와 별도로 학생 칸을 체크해 새로 승인합니다. <b>새로 만든 폴더는 비공개로 시작</b>합니다. 맨 아래 <b>황소 약점 유형 문제은행</b> 줄: 기존 등록 학생은 자동으로 이용하고(흐린 칸), 졸업 후 복귀 등 개별 권한 학생은 칸을 눌러 승인합니다. 회차별 자료는 해당 회차 승인도 필요합니다.</div>
         <div class="matrix-scroll"><table id="acc-matrix"></table></div>
       </div>
+      <div id="ap-mock"></div>
       <div class="card" id="seminar-approval-panel">
         <h3>2026 황소 설명회 영상·자료 승인</h3>
         <div class="hint">체크한 회원만 설명회 영상을 시청하고 복기 문제·답안을 이름 워터마크로 인쇄합니다. 시크릿 마무리 1·2회는 아래의 회차 승인도 필요합니다. 선택 후 하단 <b>GitHub에 저장</b>을 누르세요. 기존 회원에게 자동 승인하지 않습니다.</div>
@@ -287,51 +237,72 @@
         <div class="hint"><b>중급 7·8회 · 최종 7·8회 · 시크릿 마무리 1·2회</b>를 이용할 학생을 회차별로 체크하세요. 서재의 같은 회차 승인과 함께 바뀌며, 폴더 승인이나 파이널 출석만으로 다른 회차가 열리지는 않습니다. 시그니처는 위의 별도 항목에서 승인합니다. 체크한 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
         <div class="matrix-scroll additional-round-approvals"><table id="final7-acc-matrix" aria-label="추가 모의고사 회차별 승인"></table></div>
       </div>
+      <div id="ap-vip" class="card">
+        <h3>🔑 VIP 메뉴별 열람 권한</h3>
+        <div class="hint">‘전체공개’가 켜지면(초록) 로그인한 모든 학생이 그 메뉴를 봅니다. 끄면 체크한 학생만 봅니다. <b>모두 체크(☑)</b>를 누르면 전원이 개별 체크로 풀리므로, 빼고 싶은 사람만 해제하면 됩니다. 온라인 회원은 이름 아래 배지로 표시됩니다. (학생 유형은 ② 학생 명단에서 전환)</div>
+        <div class="matrix-scroll"><table id="vip-acc-matrix"></table></div>
+      </div>
+      <div id="ap-sp" class="card">
+        <h3>🌟 특강(활용 모의고사) 회차별 수강 권한</h3>
+        <div class="hint">특강은 <b>일부 회차만 신청한 학생</b>이 있을 수 있어, 회차별로 볼 수 있는 학생을 따로 정합니다. 전체공개를 끄면 체크한 학생만 그 회차를 봅니다. <b>모두 체크(☑)</b>를 누르면 전원이 개별 체크로 풀리므로 빼고 싶은 사람만 해제하면 됩니다. (특강 자체를 볼 수 있는지는 ② 학생 명단의 [선택] 특강 등록 여부가 먼저 결정하고, 여기서는 그중 어떤 회차인지를 정합니다)</div>
+        <div class="matrix-scroll"><table id="sp-acc-matrix"></table></div>
+      </div>
+      <details id="ap-nov" class="fold-old">
+        <summary>11월 과정 출석 체크 · ⭐ 방학 특강 수강 여부 (눌러서 펼치기)</summary>
       <div class="card">
+        <h3>11월 과정 주차별 출석 체크 (권한 부여) · ⭐ 방학 특강 수강 여부</h3>
+        <div class="hint">칸을 클릭하면 해당 학생의 그 주차 영상·자료가 열립니다(🔓). ⭐ 열은 방학 특강 수강 여부입니다.</div>
+        <div class="matrix-scroll"><table id="matrix"></table></div>
+      </div>
+      </details>
+    </section>
+
+    <section id="tab-content" class="hidden">
+      <div id="lesson-week" class="card">
+        <h3>현재 진행 중인 주차</h3>
+        <div class="hint">로드맵 화면에서 강조되는 주차입니다. 2월 대비와 11월 과정을 따로 정합니다.</div>
+        <div style="margin:10px 0"><b>2월 대비</b> <select id="feb-cur" onchange="febSetCurrent(this.value)"></select></div>
+        <div><b>11월 과정</b> <select class="select" id="current-week"></select></div>
+      </div>
+      <div id="lesson-feb" class="card">
+        <div id="feb-comment-box">
+          <h3>2월 대비 · 주차별 선생님 코멘트</h3>
+          <div class="hint">고른 주차의 <b>학습 내용 맨 앞</b>에 학생에게 보입니다. 글자를 드래그하면 꾸미기 도구(빨강·형광 등)가 나오고, 줄을 바꾸면 줄이 바뀝니다. 비워 두면 코멘트 없이 나옵니다. 쓴 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
+          <div style="margin:8px 0">주차 <select id="feb-cm-week" onchange="febCommentLoad()"></select> <span id="feb-cm-state" class="hint"></span></div>
+          <textarea id="feb-cm-text" class="rich" rows="6" style="width:100%;font:inherit;padding:10px;border:1px solid #cfd6e6;border-radius:8px" placeholder="예) 이번 주는 [[red:Thinking Core 1장]]을 끝내고 중급 모의고사 1회를 풀어 오세요." oninput="febCommentSave()"></textarea>
+        </div>
+      </div>
+      <div class="card">
+        <h3>11월 과정 · 주차별 콘텐츠 (학습내용 · 과제 · 교재)</h3>
+        <div class="hint">안내문을 그대로 붙여넣으면 학생 화면에서 유튜브/링크가 자동 변환됩니다. · <b>텍스트를 드래그하면 꾸미기 버튼</b>(굵게·형광펜·색·별)이 떠요. · 교재 PDF는 <b>웹 링크</b> 또는 <b>로컬 PDF 파일 선택/드래그</b>로 자동 업로드됩니다. (업로드엔 GitHub 토큰 필요)</div>
+        <div id="content-list"></div>
+      </div>
+    </section>
+
+    <section id="tab-archive" class="hidden">
+      <nav class="subnav" aria-label="이 탭 안에서 바로 가기"><button type="button" onclick="jumpTo('mt-folder')">폴더</button><button type="button" onclick="jumpTo('mt-books')">교재 등록</button><button type="button" onclick="jumpTo('mt-ses')">설명회 영상</button><button type="button" onclick="jumpTo('mt-col')">칼럼</button><button type="button" onclick="jumpTo('mt-news')">교육 뉴스</button></nav>
+      <div id="mt-folder" class="card">
+        <h3>자료실 폴더</h3>
+        <div class="hint">학생 화면 자료실에 보이는 폴더입니다. 이름을 바꾸면 자료·권한도 함께 따라갑니다.</div>
+        <div id="folder-list"></div>
+        <div class="student-row" style="margin-top:10px;">
+          <input type="text" id="new-folder" placeholder="새 폴더 이름" onkeypress="if(event.key==='Enter')addFolder()">
+          <button class="btn add" onclick="addFolder()">＋ 폴더 추가</button>
+        </div>
+      </div>
+      <div id="mt-books" class="card">
         <h3>교재(책) 등록 — 서재</h3>
         <div class="hint">PDF를 <b>파일 선택 또는 드래그</b>하면 저장소 <b>books/</b> 폴더에 자동으로 올라가고 링크가 자동 입력됩니다. (GitHub 토큰 1회 필요) · 재생목록·답안 파일은 [링크 버튼]으로 넣으세요. 업로드 후 하단 [GitHub에 저장]도 눌러 목록을 반영하세요.</div>
         <div id="book-items"></div>
         <button class="btn add sm" onclick="addBook()" style="margin-top:8px;">＋ 교재 추가</button>
       </div>
-    </section>
-
-    <section id="tab-vip" class="hidden">
-      <div class="card">
-        <h3>🔑 VIP 메뉴별 열람 권한</h3>
-        <div class="hint">‘전체공개’가 켜지면(초록) 로그인한 모든 학생이 그 메뉴를 봅니다. 끄면 체크한 학생만 봅니다. <b>모두 체크(☑)</b>를 누르면 전원이 개별 체크로 풀리므로, 빼고 싶은 사람만 해제하면 됩니다. 온라인 회원은 이름 아래 배지로 표시됩니다. (학생 유형은 ② 학생 명단에서 전환)</div>
-        <div class="matrix-scroll"><table id="vip-acc-matrix"></table></div>
-      </div>
-      <div class="card">
+      <div id="mt-ses" class="card">
         <h3>🎬 프리미엄 설명회 (영상)</h3>
         <div class="hint">유튜브/Vimeo 단일영상 링크를 넣으면 학생 화면에 썸네일 캐러셀 + 목록으로 누적됩니다. 썸네일은 비우면 유튜브에서 자동 추출돼요. (재생목록 링크는 임베드가 안 되니 단일영상 권장)</div>
         <div id="ses-items"></div>
         <button class="btn add sm" onclick="addSes()" style="margin-top:8px;">＋ 설명회 추가</button>
       </div>
-      <div class="card">
-        <h3>📣 신규 강좌 공지</h3>
-        <div class="hint">제목·본문·(선택)링크. 본문 안 링크는 자동 버튼이 됩니다. · 본문 텍스트를 드래그하면 꾸미기 버튼이 떠요.</div>
-        <div id="course-items"></div>
-        <button class="btn add sm" onclick="addCourse()" style="margin-top:8px;">＋ 공지 추가</button>
-      </div>
-      <div class="card">
-        <h3>🩺 결석 · 클리닉 신청</h3>
-        <div class="hint">학생 버튼이 연결될 <b>네이버 폼</b>(또는 카톡) 주소와 안내문을 넣으세요. 주소가 비면 학생 화면에 ‘준비중’으로 표시됩니다.</div>
-        <label class="flbl">안내문</label>
-        <textarea class="cta" id="clinic-notice" style="min-height:70px" oninput="setClinic('notice',this.value)"></textarea>
-        <div class="field" style="margin-top:8px"><label>신청 링크</label><input type="url" id="clinic-url" oninput="setClinic('url',this.value)" placeholder="https://naver.me/... (네이버 폼)"></div>
-      </div>
-    </section>
-
-    <section id="tab-mag" class="hidden">
-      <div class="card">
-        <h3>🤖 Gemini API 키</h3>
-        <div class="hint">AI 자동 생성에 쓰는 원장님 개인 키입니다. <b>이 브라우저에만</b> 저장되며 사이트에 올라가지 않습니다. (aistudio.google.com/app/apikey 에서 발급)</div>
-        <div class="field"><label>Gemini Key</label><input type="password" id="gmKey" placeholder="AIza..."><button class="btn add sm" onclick="saveGmKey()">저장</button></div>
-        <div class="field"><label>모델</label><input type="text" id="gmModel" placeholder="gemini-2.0-flash"><button class="btn add sm" onclick="saveGmModel()">저장</button></div>
-        <span id="gmStat" class="hint"></span>
-      </div>
-
-      <div class="card">
+      <div id="mt-col" class="card">
         <h3>✒️ DOCSSAM의 프리미엄 칼럼</h3>
         <div class="hint">원장님 칼럼. 주제만 넣고 AI로 초안을 만들거나, NotebookLM 요약을 붙여넣어 정리하거나, 직접 쓰세요. 본문은 <b>HTML도 가능</b>(생성기 결과 그대로 붙여넣기). 학생 VIP 라운지 칼럼 게시판에 표시됩니다.</div>
         <div class="field"><label>주제</label><input type="text" id="colTopic" placeholder="예: 초등 사고력 수학, 오답 정리의 힘"><button class="btn ai sm" id="colGenBtn" onclick="genColumn()">✨ AI 칼럼 생성</button></div>
@@ -341,8 +312,7 @@
         <div id="col-items" style="margin-top:14px"></div>
         <button class="btn add sm" onclick="addColumn()" style="margin-top:8px;">＋ 칼럼 직접 추가</button>
       </div>
-
-      <div class="card">
+      <div id="mt-news" class="card">
         <h3>📰 교육 매거진 (뉴스)</h3>
         <div class="hint">매일 오전 자동으로 대치동 유·초·중등 교육 뉴스가 여기에 쌓입니다(예약 작업). 직접 추가·수정·삭제도 가능하고, 키워드로 즉시 AI 수집도 됩니다.</div>
         <div class="field"><label>키워드 수집</label><input type="text" id="newsQ" placeholder="예: 생각하는 황소 입학테스트 / 비우면 일반 교육뉴스"><button class="btn ai sm" id="newsBtn" onclick="genNews()">🔍 AI 뉴스 수집</button></div>
@@ -351,36 +321,8 @@
       </div>
     </section>
 
-    <section id="tab-report" class="hidden">
-      <div class="card">
-        <h3>📊 학생별 진단 결과 · 코멘트</h3>
-        <div class="hint">학생을 선택해 <b>전화번호 뒷 4자리(잠금)</b>·점수·코멘트를 입력하고, <b>성적표·복습용 시험지 PDF/사진</b>과 <b>풀이 영상 링크</b>를 첨부하세요(파일 선택 또는 드래그). 진단 이름은 자유롭게 직접 입력합니다. 학생 화면 → 👑 VIP 라운지 → 진단 결과에서 본인만 열람합니다. (뒷자리가 비면 잠금 없이 열립니다) · 업로드엔 GitHub 토큰이 필요합니다.</div>
-        <div class="field"><label>학생 선택</label><select class="select" id="rep-student" onchange="repSelect(this.value)"></select></div>
-        <div id="rep-body"></div>
-      </div>
-    </section>
-
-    <section id="tab-exam" class="hidden">
-      <div class="card">
-        <h3>🤖 AI 일일테스트 진단 — 시험 세트</h3>
-        <div class="hint">시험별로 <b>영상·스크립트·프롬프트·문항수·장수</b>를 저장해두면 다음에 같은 시험을 볼 때 그대로 재사용됩니다. <b>학생당 장수</b>를 넣으면 반 전체를 순서대로 올려도 정확히 학생별로 나눕니다(권장). 비우면 첫 장 이름으로 자동 분리합니다.</div>
-        <div class="field"><label>시험 세트</label><select class="select" id="exam-sel" onchange="examSelect(this.value)"></select><button class="btn add sm" onclick="examNew()">＋ 새 세트</button></div>
-        <div id="exam-form"></div>
-      </div>
-      <div class="card">
-        <h3>📸 반 시험지 업로드 → 자동 채점·코멘트</h3>
-        <div class="hint">위 세트를 선택하고 반 학생 시험지를 <b>순서대로 한 번에</b> 올리세요(파일 선택 또는 드래그, 여러 장 가능). <b>시험지 부분만 자동으로 크롭</b>한 뒤, 각 학생 첫 장의 이름으로 분류하고 동그라미/점수 표기를 세어 득점·코멘트를 학생별로 생성합니다. <b>결과를 검토·수정한 뒤</b> 저장하세요. (Gemini 키 필요)</div>
-        <div class="field"><label>AI 모델</label><input type="text" id="examModel" oninput="setExamModel(this.value)" placeholder="gemini-2.5-flash" style="max-width:240px;min-width:160px"><span class="hint" style="margin:0">무료 넉넉 gemini-2.5-flash · 최고품질(결제) gemini-2.5-pro</span></div>
-        <div class="field"><label style="width:auto"><input type="checkbox" id="exam-firstclass" style="width:auto;min-width:0;margin-right:6px">🌱 아직 안 배운 범위 (진도 전·결석 — 못 풀어도 지적하지 않고 격려 톤)</label></div>
-        <label class="dz big" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" id="exam-imgs" accept="image/*" multiple onchange="examImgsPicked(this)"><span>📸 시험지 사진 파일 선택 · 또는 여기로 드래그</span></label>
-        <div id="exam-imgstat" class="hint"></div>
-        <div class="field"><label style="width:auto"><input type="checkbox" id="exam-attach" checked style="width:auto;min-width:0;margin-right:6px">크롭한 시험지를 사진 파일로 학생별 첨부(업로드)</label></div>
-        <button class="btn ai" id="exam-run" onclick="runAiDiagnosis()">🤖 AI 분석 시작</button>
-        <div id="exam-results" style="margin-top:14px"></div>
-      </div>
-    </section>
-
     <section id="tab-mock" class="hidden">
+      <nav class="subnav" aria-label="이 탭 안에서 바로 가기"><button type="button" onclick="jumpTo('sc-mock')">모의고사 결과</button><button type="button" onclick="jumpTo('sc-weak')">약점 유형</button><button type="button" onclick="jumpTo('sc-report')">진단 결과·코멘트</button><button type="button" onclick="jumpTo('sc-exam')">AI 일일테스트</button></nav>
       <div class="card" id="admin-last-score-entry">
         <h3>최종 실전 모의고사 · 회차별 성적 입력</h3>
         <div class="hint">최종 1~4회와 독립된 최종 8회의 <b>맞은 번호만 O로 체크</b>합니다. 나머지 번호는 미응답을 포함해 X로 기록하며, 점수는 배점에 따라 자동 계산됩니다. 최초 기록은 덮어쓰지 않습니다. 8회 정답·진단 자료의 공개는 원본 검수와 별개입니다.</div>
@@ -394,9 +336,9 @@
         <div id="admin-last-grid" class="admin-last-grid" aria-label="최종 모의고사 문항별 O/X"></div>
         <div class="admin-last-footer"><strong id="admin-last-summary">기록 불러오는 중</strong><button class="btn save" type="button" id="admin-last-save" disabled>최초 성적 저장</button></div>
       </div>
-      <div class="card">
+      <div id="sc-mock" class="card">
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-          <h3 style="margin:0">⑩ 모의고사 결과</h3>
+          <h3 style="margin:0">모의고사 결과</h3>
           <label for="apply-final-round" style="font-size:12px;font-weight:700;color:var(--muted)">백분율 반영 회차</label>
           <select class="select" id="apply-final-round" aria-label="백분율을 반영할 파이널·최종 회차">
             <option value="1" selected>파이널 1회</option>
@@ -415,7 +357,7 @@
         <div class="hint">응시한 모의고사 결과가 자동으로 모입니다. 학생을 고르면 회차별 O/X와 약점을 보고, 파이널·최종 1~4회 진단 요약을 아래에서 한 번에 저장할 수 있습니다.</div>
         <div id="mock-body">🔄 새로고침을 눌러 결과를 불러오세요.</div>
       </div>
-      <div class="card">
+      <div id="sc-weak" class="card">
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <h3 style="margin:0">🧩 학생별 약점 유형</h3>
           <button class="btn" onclick="loadWeakTypes()">🔄 새로고침</button>
@@ -426,6 +368,45 @@
         <div id="wt-body">🔄 새로고침을 눌러 불러오세요.</div>
         <h4 style="margin:16px 0 6px">👀 전체 학생 미해결 현황</h4>
         <div id="wt-overview"></div>
+      </div>
+      <div id="sc-report" class="card">
+        <h3>📊 학생별 진단 결과 · 코멘트</h3>
+        <div class="hint">학생을 선택해 <b>전화번호 뒷 4자리(잠금)</b>·점수·코멘트를 입력하고, <b>성적표·복습용 시험지 PDF/사진</b>과 <b>풀이 영상 링크</b>를 첨부하세요(파일 선택 또는 드래그). 진단 이름은 자유롭게 직접 입력합니다. 학생 화면 → 👑 VIP 라운지 → 진단 결과에서 본인만 열람합니다. (뒷자리가 비면 잠금 없이 열립니다) · 업로드엔 GitHub 토큰이 필요합니다.</div>
+        <div class="field"><label>학생 선택</label><select class="select" id="rep-student" onchange="repSelect(this.value)"></select></div>
+        <div id="rep-body"></div>
+      </div>
+      <div id="sc-exam" class="card">
+        <h3>🤖 AI 일일테스트 진단 — 시험 세트</h3>
+        <div class="hint">시험별로 <b>영상·스크립트·프롬프트·문항수·장수</b>를 저장해두면 다음에 같은 시험을 볼 때 그대로 재사용됩니다. <b>학생당 장수</b>를 넣으면 반 전체를 순서대로 올려도 정확히 학생별로 나눕니다(권장). 비우면 첫 장 이름으로 자동 분리합니다.</div>
+        <div class="field"><label>시험 세트</label><select class="select" id="exam-sel" onchange="examSelect(this.value)"></select><button class="btn add sm" onclick="examNew()">＋ 새 세트</button></div>
+        <div id="exam-form"></div>
+      </div>
+      <div class="card">
+        <h3>📸 반 시험지 업로드 → 자동 채점·코멘트</h3>
+        <div class="hint">위 세트를 선택하고 반 학생 시험지를 <b>순서대로 한 번에</b> 올리세요(파일 선택 또는 드래그, 여러 장 가능). <b>시험지 부분만 자동으로 크롭</b>한 뒤, 각 학생 첫 장의 이름으로 분류하고 동그라미/점수 표기를 세어 득점·코멘트를 학생별로 생성합니다. <b>결과를 검토·수정한 뒤</b> 저장하세요. (Gemini 키 필요)</div>
+        <div class="field"><label>AI 모델</label><input type="text" id="examModel" oninput="setExamModel(this.value)" placeholder="gemini-2.5-flash" style="max-width:240px;min-width:160px"><span class="hint" style="margin:0">무료 넉넉 gemini-2.5-flash · 최고품질(결제) gemini-2.5-pro</span></div>
+        <div class="field"><label style="width:auto"><input type="checkbox" id="exam-firstclass" style="width:auto;min-width:0;margin-right:6px">🌱 아직 안 배운 범위 (진도 전·결석 — 못 풀어도 지적하지 않고 격려 톤)</label></div>
+        <label class="dz big" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" id="exam-imgs" accept="image/*" multiple onchange="examImgsPicked(this)"><span>📸 시험지 사진 파일 선택 · 또는 여기로 드래그</span></label>
+        <div id="exam-imgstat" class="hint"></div>
+        <div class="field"><label style="width:auto"><input type="checkbox" id="exam-attach" checked style="width:auto;min-width:0;margin-right:6px">크롭한 시험지를 사진 파일로 학생별 첨부(업로드)</label></div>
+        <button class="btn ai" id="exam-run" onclick="runAiDiagnosis()">🤖 AI 분석 시작</button>
+        <div id="exam-results" style="margin-top:14px"></div>
+      </div>
+    </section>
+
+    <section id="tab-settings" class="hidden">
+      <div class="card">
+        <h3>🔑 GitHub 토큰</h3>
+        <div class="hint">저장·PDF 업로드에 쓰는 개인 토큰입니다. <b>이 브라우저에 계속 저장</b>되며(사이트엔 안 올라감), 저장 실패가 나도 자동으로 지워지지 않습니다. 공용 PC에서는 저장하지 마세요.</div>
+        <div class="field"><label>토큰</label><input type="password" id="ghKey" placeholder="github_pat_... (Contents: Read and write)"><button class="btn add sm" onclick="saveGhKey()">저장</button><button class="btn del sm" onclick="clearGhKey()">삭제</button></div>
+        <span id="ghStat" class="hint"></span>
+      </div>
+      <div class="card">
+        <h3>🤖 Gemini API 키</h3>
+        <div class="hint">AI 자동 생성에 쓰는 원장님 개인 키입니다. <b>이 브라우저에만</b> 저장되며 사이트에 올라가지 않습니다. (aistudio.google.com/app/apikey 에서 발급)</div>
+        <div class="field"><label>Gemini Key</label><input type="password" id="gmKey" placeholder="AIza..."><button class="btn add sm" onclick="saveGmKey()">저장</button></div>
+        <div class="field"><label>모델</label><input type="text" id="gmModel" placeholder="gemini-2.0-flash"><button class="btn add sm" onclick="saveGmModel()">저장</button></div>
+        <span id="gmStat" class="hint"></span>
       </div>
     </section>
   </div>
@@ -612,8 +593,12 @@
   }
   async function lockAgain(){ await window.GFIELD_AUTH.signOut('admin'); location.reload(); }
 
+  const TAB_NAMES=['students','approve','content','archive','mock','settings'];
+  const TAB_ALIAS={hs:'approve',attend:'approve',vip:'archive',mag:'archive',report:'mock',exam:'mock'};
+  function jumpTo(id){const el=document.getElementById(id);if(!el)return;if(el.tagName==='DETAILS')el.open=true;el.scrollIntoView({block:'start'});}
   function tab(name){
-    ['attend','students','content','settings','archive','vip','mag','report','exam','mock','hs'].forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
+    name=TAB_ALIAS[name]||name;
+    TAB_NAMES.forEach(t=>{ document.getElementById('tab-'+t).classList.toggle('hidden', t!==name); });
     document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
     if(name==='mock' && window.GFIELD_ADMIN_LAST_ENTRY) window.GFIELD_ADMIN_LAST_ENTRY.mount(S.students);
     if(name==='mock' && window.loadMockResults) loadMockResults();
@@ -1167,7 +1152,7 @@
   function finalRoundAccessAll(round){ const key=finalRoundAccessKey(round); if(!key)return; S.archiveProductAccess[key]=S.students.slice();grantScopedAll('products',key,true); renderFinal7AccessMatrix(); renderBooks(); dirty(); }
   function finalRoundAccessToggleStudent(round,studentIndex){ const student=S.students[studentIndex],key=finalRoundAccessKey(round); if(!student||!key)return; if(toggleScoped('products',key,student)){renderArchiveAdmin();dirty();return;} let acc=productArr(key); if(acc.includes('*'))acc=S.archiveProductAccess[key]=[]; const i=acc.indexOf(student); if(i>=0)acc.splice(i,1);else acc.push(student); renderFinal7AccessMatrix(); renderBooks(); dirty(); }
   /* ── VIP 라운지 메뉴별 열람 권한 ── */
-  const VIP_MENUS=[['report','진단 결과·코멘트'],['ses','프리미엄 설명회'],['cou','신규 강좌 공지'],['clinic','결석·클리닉 신청'],['col','DOCSSAM 칼럼'],['mag','교육 매거진']];
+  const VIP_MENUS=[['report','진단 결과·코멘트'],['ses','프리미엄 설명회'],['col','DOCSSAM 칼럼'],['mag','교육 매거진']];
   function vipArr(k){ if(!Array.isArray(S.vipAccess[k])) S.vipAccess[k]=["*"]; return S.vipAccess[k]; }
   function renderVipAccMatrix(){
     const el=document.getElementById('vip-acc-matrix'); if(!el) return;
@@ -1379,25 +1364,10 @@
       <button class="btn del sm" onclick="delSes(${i})">삭제</button></div>`; });
     document.getElementById('ses-items').innerHTML=h||'<span class="hint">등록된 설명회가 없습니다.</span>';
 
-    let c='';
-    V.courses.forEach((o,i)=>{ c+=`<div class="content-week">
-      <div class="field"><label>제목</label><input type="text" value="${esc(o.title)}" oninput="setCourse(${i},'title',this.value)" placeholder="공지 제목"></div>
-      <div class="field"><label>날짜</label><input type="date" value="${esc(o.date)}" oninput="setCourse(${i},'date',this.value)"></div>
-      <div class="field"><label>링크(선택)</label><input type="url" value="${esc(o.link)}" oninput="setCourse(${i},'link',this.value)" placeholder="신청/자세히 링크"></div>
-      <label class="flbl">본문 (드래그해서 꾸미기)</label><textarea class="cta rich" oninput="setCourse(${i},'body',this.value)">${esc(o.body)}</textarea>
-      <button class="btn del sm" onclick="delCourse(${i})" style="margin-top:8px">삭제</button></div>`; });
-    document.getElementById('course-items').innerHTML=c||'<span class="hint">등록된 공지가 없습니다.</span>';
-
-    document.getElementById('clinic-notice').value=V.clinic.notice||'';
-    document.getElementById('clinic-url').value=V.clinic.url||'';
   }
   function addSes(){ vip().sessions.push({title:'',url:'',thumb:'',date:today()}); renderVip(); dirty(); }
   function setSes(i,k,v){ const a=vip().sessions; if(a[i]){ a[i][k]=(k==='date')?v:v.trim(); dirty(); } }
   function delSes(i){ vip().sessions.splice(i,1); renderVip(); dirty(); }
-  function addCourse(){ vip().courses.unshift({title:'',date:today(),link:'',body:''}); renderVip(); dirty(); }
-  function setCourse(i,k,v){ const a=vip().courses; if(a[i]){ a[i][k]=(k==='date'||k==='body')?v:v.trim(); dirty(); } }
-  function delCourse(i){ vip().courses.splice(i,1); renderVip(); dirty(); }
-  function setClinic(k,v){ vip().clinic[k]=(k==='notice')?v:v.trim(); dirty(); }
 
   /* ===== Gemini 공통 ===== */
   const GM_MODEL_DEFAULT='gemini-2.0-flash';

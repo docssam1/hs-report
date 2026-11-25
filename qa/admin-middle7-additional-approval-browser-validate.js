@@ -152,7 +152,7 @@ async function verifyAdmin(browser, width) {
     assert.equal(await page.locator('#student-email-auth [data-reset-devices]').innerText(), '전체 로그아웃');
     assert.equal(state.mockedAuthReads, 1, 'authentication records are read through the existing endpoint');
     checkGroups++;
-    await page.locator('button[data-tab="archive"]').click();
+    await page.locator('button[data-tab="approve"]').click();
     assert.deepEqual(await page.locator('#final7-acc-matrix tbody tr > th').allTextContents(), LABELS);
     assert.deepEqual(await page.locator('#final7-acc-matrix tbody tr').evaluateAll(rows => rows.map(row => row.dataset.accessKey)), ROUND_KEYS);
     assert.equal(await page.locator('.additional-round-approvals').count(), 1);

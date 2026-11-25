@@ -47,7 +47,7 @@ const server=http.createServer((req,res)=>{
   try{
     await page.goto(base+'/admin.html');
     await page.locator('#app:not(.hidden)').waitFor();
-    await page.getByRole('button',{name:'⑩ 모의고사 결과'}).click();
+    await page.getByRole('button',{name:'⑤ 성적·진단'}).click();
     await page.locator('#mock-body select').waitFor();
     await page.getByRole('button',{name:'파이널 모의고사'}).click();
     await page.locator('#mock-body select').selectOption({label:student});
