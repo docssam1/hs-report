@@ -199,11 +199,11 @@
     </section>
 
     <section id="tab-approve" class="hidden">
-      <nav class="subnav" aria-label="이 탭 안에서 바로 가기"><button type="button" onclick="jumpTo('ap-feb')">2월 대비</button><button type="button" onclick="jumpTo('ap-upg')">편입·승급</button><button type="button" onclick="jumpTo('ap-folder')">자료실 폴더</button><button type="button" onclick="jumpTo('ap-mock')">모의고사 회차</button><button type="button" onclick="jumpTo('ap-vip')">VIP</button><button type="button" onclick="jumpTo('ap-sp')">특강</button><button type="button" onclick="jumpTo('ap-nov')">11월 출석</button></nav>
+      <nav class="subnav" aria-label="이 탭 안에서 바로 가기"><button type="button" onclick="jumpTo('ap-feb')">2월 대비 출석</button><button type="button" onclick="jumpTo('ap-upg')">편입·승급</button><button type="button" onclick="jumpTo('ap-folder')">자료실 폴더</button><button type="button" onclick="jumpTo('ap-mock')">모의고사 회차</button><button type="button" onclick="jumpTo('ap-vip')">VIP</button><button type="button" onclick="jumpTo('ap-sp')">특강</button><button type="button" onclick="jumpTo('ap-nov')">11월 대비 출석</button></nav>
       <div id="ap-feb"></div>
       <div class="card" id="feb-admin">
-        <h3>2월 대비 로드맵 · 수강 학생과 열람 주차</h3>
-        <div class="hint"><b>2월 과정</b>에 체크한 학생이 대상이고, <b>선생님이 출석 체크한 주차</b>의 자료(개념·중급 과제·파이널·최종)만 열립니다. 주차 칸을 누르면 그 학생의 그 주차가 열리거나 닫힙니다. <b>현재 주차</b>는 「③ 수업 내용」 탭에서 바꾸며, 로드맵 화면의 "현재 진행 중" 표시용입니다. 재원생·온라인 모두 같습니다. 바꾼 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
+        <h3>2월 대비 주차별 출석 체크 (권한 부여)</h3>
+        <div class="hint"><b>2월 대비</b>에 체크한 학생이 대상이고, <b>선생님이 출석 체크한 주차</b>의 자료(개념·중급 과제·파이널·최종)만 열립니다. 주차 칸을 누르면 그 학생의 그 주차가 열리거나 닫힙니다. <b>현재 주차</b>는 「③ 수업 내용」 탭에서 바꾸며, 로드맵 화면의 "현재 진행 중" 표시용입니다. 재원생·온라인 모두 같습니다. 바꾼 뒤 하단 <b>GitHub에 저장</b>을 누르세요.</div>
         <div class="matrix-scroll"><table id="feb-matrix"></table></div>
       </div>
       <div id="ap-upg"></div>
@@ -248,9 +248,9 @@
         <div class="matrix-scroll"><table id="sp-acc-matrix"></table></div>
       </div>
       <details id="ap-nov" class="fold-old">
-        <summary>11월 과정 출석 체크 · ⭐ 방학 특강 수강 여부 (눌러서 펼치기)</summary>
+        <summary>11월 대비 출석 체크 · ⭐ 방학 특강 수강 여부 (눌러서 펼치기)</summary>
       <div class="card">
-        <h3>11월 과정 주차별 출석 체크 (권한 부여) · ⭐ 방학 특강 수강 여부</h3>
+        <h3>11월 대비 주차별 출석 체크 (권한 부여) · ⭐ 방학 특강 수강 여부</h3>
         <div class="hint">칸을 클릭하면 해당 학생의 그 주차 영상·자료가 열립니다(🔓). ⭐ 열은 방학 특강 수강 여부입니다.</div>
         <div class="matrix-scroll"><table id="matrix"></table></div>
       </div>
@@ -260,9 +260,9 @@
     <section id="tab-content" class="hidden">
       <div id="lesson-week" class="card">
         <h3>현재 진행 중인 주차</h3>
-        <div class="hint">로드맵 화면에서 강조되는 주차입니다. 2월 대비와 11월 과정을 따로 정합니다.</div>
+        <div class="hint">로드맵 화면에서 강조되는 주차입니다. 2월 대비와 11월 대비를 따로 정합니다.</div>
         <div style="margin:10px 0"><b>2월 대비</b> <select id="feb-cur" onchange="febSetCurrent(this.value)"></select></div>
-        <div><b>11월 과정</b> <select class="select" id="current-week"></select></div>
+        <div><b>11월 대비</b> <select class="select" id="current-week"></select></div>
       </div>
       <div id="lesson-feb" class="card">
         <div id="feb-comment-box">
@@ -273,7 +273,7 @@
         </div>
       </div>
       <div class="card">
-        <h3>11월 과정 · 주차별 콘텐츠 (학습내용 · 과제 · 교재)</h3>
+        <h3>11월 대비 · 주차별 콘텐츠 (학습내용 · 과제 · 교재)</h3>
         <div class="hint">안내문을 그대로 붙여넣으면 학생 화면에서 유튜브/링크가 자동 변환됩니다. · <b>텍스트를 드래그하면 꾸미기 버튼</b>(굵게·형광펜·색·별)이 떠요. · 교재 PDF는 <b>웹 링크</b> 또는 <b>로컬 PDF 파일 선택/드래그</b>로 자동 업로드됩니다. (업로드엔 GitHub 토큰 필요)</div>
         <div id="content-list"></div>
       </div>
@@ -682,7 +682,7 @@
     const t=document.getElementById('feb-matrix');if(!t||!window.GFIELD_ROADMAP_FEB)return;
     const c=febCfg(),weeks=febNodes();
     document.getElementById('feb-cur').innerHTML=weeks.map(w=>`<option value="${w.id}"${w.id===c.currentWeekId?' selected':''}>${esc(w.date)} · ${esc(w.title)}</option>`).join('');
-    let h='<thead><tr><th>학생</th><th>2월 과정</th>'+weeks.map(w=>`<th title="${esc(w.title)}"${w.id===c.currentWeekId?' style="color:#c2410c"':''}>${esc(w.date.replace('주차','주').replace(' ',''))}</th>`).join('')+'</tr></thead><tbody>';
+    let h='<thead><tr><th>학생</th><th>2월 대비</th>'+weeks.map(w=>`<th title="${esc(w.title)}"${w.id===c.currentWeekId?' style="color:#c2410c"':''}>${esc(w.date.replace('주차','주').replace(' ',''))}</th>`).join('')+'</tr></thead><tbody>';
     S.students.filter(n=>studentType(n)!=='graduated'&&studentType(n)!=='withdrawn').forEach(name=>{
       const on=c.members.includes(name),got=c.weeks[name]||[];
       h+=`<tr><th>${esc(name)} <span style="font-size:10px;font-weight:800;padding:1px 6px;border-radius:8px;${studentTypeStyle(name)}">${studentTypeLabel(name)}</span></th><td class="cell ${on?'on':'off'}" onclick="febToggle('${esc(name)}')"></td>`;
