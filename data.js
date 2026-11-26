@@ -8317,23 +8317,27 @@ window.GFIELD_DATA = {
       "정연우",
       "홍원표"
     ],
-    "currentWeekId": "feb-w02",
+    "currentWeekId": "feb-w03",
     "weeks": {
       "박선우": [
         "feb-w01",
-        "feb-w02"
+        "feb-w02",
+        "feb-w03"
       ],
       "김서현": [
         "feb-w01",
-        "feb-w02"
+        "feb-w02",
+        "feb-w03"
       ],
       "이승우": [
         "feb-w01",
-        "feb-w02"
+        "feb-w02",
+        "feb-w03"
       ],
       "정준우": [
         "feb-w01",
-        "feb-w02"
+        "feb-w02",
+        "feb-w03"
       ],
       "김사빈": [],
       "조혜연": [],
@@ -8343,11 +8347,13 @@ window.GFIELD_DATA = {
       "김나율": [],
       "김지인": [
         "feb-w01",
-        "feb-w02"
+        "feb-w02",
+        "feb-w03"
       ],
       "노관호": [
         "feb-w01",
-        "feb-w02"
+        "feb-w02",
+        "feb-w03"
       ],
       "박서진": [],
       "박재이": [],
@@ -8357,7 +8363,8 @@ window.GFIELD_DATA = {
       "정연우": [],
       "홍원표": [
         "feb-w01",
-        "feb-w02"
+        "feb-w02",
+        "feb-w03"
       ]
     }
   }
