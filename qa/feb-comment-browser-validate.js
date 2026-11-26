@@ -41,7 +41,7 @@ const COMMENT='이번 주는 [[red:Thinking Core 1장]]을 끝내요.\n- 영상 
   console.log(JSON.stringify(out));
   assert.equal(out.admin.saved,COMMENT);assert.equal(out.admin.inPayload,COMMENT);
   assert.ok(/코멘트가 있는 주차 1개/.test(out.admin.state));
-  assert.equal(out.admin.other,'');assert.equal(out.admin.back,COMMENT);assert.equal(out.admin.cleared,true);assert.ok(out.admin.dirty);assert.equal(out.admin.options,12);
+  assert.equal(out.admin.other,'');assert.equal(out.admin.back,COMMENT);assert.equal(out.admin.cleared,true);assert.ok(out.admin.dirty);assert.equal(out.admin.options,13);
   assert.ok(out.student&&out.student.text.startsWith('이번 주는 Thinking Core 1장'),'학생 화면 맨 앞');
   assert.ok(out.student.red,'빨강 강조');assert.equal(out.student.list,2);
   assert.deepEqual(errs,[]);

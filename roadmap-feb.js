@@ -168,8 +168,8 @@
     '.fb-ph-h{padding:12px 16px;align-self:center;}' +
     '.fb-ph-h h3{font-size:19px;font-weight:400;color:#1b2340;}' +
     '.fb-ph-h p{font-size:12.5px;color:#4e5878;font-weight:500;margin-top:2px;}' +
-    '.fb-steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);margin:0;padding:16px 10px 14px;position:relative;}' +
-    '.fb-steps::before{content:"";position:absolute;left:12%;right:12%;top:32px;border-top:2.5px dashed #9fb2d8;}' +
+    '.fb-steps{list-style:none;display:grid;grid-template-columns:repeat(var(--cols,4),1fr);margin:0;padding:16px 10px 14px;position:relative;}' +
+    '.fb-steps::before{content:"";position:absolute;left:calc(48% / var(--cols,4));right:calc(48% / var(--cols,4));top:32px;border-top:2.5px dashed #9fb2d8;}' +
     '.fb-step{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;width:100%;padding:0 4px 4px;' +
     'background:none;border:0;border-radius:14px;color:#1b2340;cursor:pointer;font-family:inherit;}' +
     '.fb-step:focus-visible{outline:3px solid #2456c4;outline-offset:2px;}' +
@@ -243,7 +243,7 @@
     phases.forEach(function (p, pi) {
       var sub = String(p.label || '').replace(/^Phase\s*\d+\s*·\s*/i, '');
       html += '<section class="fb-phase"><div class="fb-ph-top">' + (I ? I.phaseArt(Math.min(pi, 2)) : '') +
-        '<div class="fb-ph-h"><h3 class="disp">' + (pi + 1) + '단계 · ' + esc(NAMES[pi] || sub) + '</h3><p>' + esc(sub) + '</p></div></div><ol class="fb-steps">';
+        '<div class="fb-ph-h"><h3 class="disp">' + (pi + 1) + '단계 · ' + esc(NAMES[pi] || sub) + '</h3><p>' + esc(sub) + '</p></div></div><ol class="fb-steps" style="--cols:' + Math.max(4, p.list.length) + '">';
       p.list.forEach(function (n) {
         var i = weeks.indexOf(n), open = isOpen(n), now = i === cur;
         var st = now ? 'now' : (!open ? 'locked' : (i < cur ? 'done' : 'open'));
