@@ -1,7 +1,7 @@
 /* 로드맵 화면의 세 번째 탭 "승급과정".
    세 영역은 각각 자료실 폴더 하나를 그대로 쓴다(어드민 교재 편집기로 넣고, 폴더 권한으로 연다).
    1) 복습용 강의  : 폴더 '승급 복습강의'   · 교재의 course(예: 4-1 Level Up 심화)로 묶고, 교재+복습영상을 함께 연다.
-   2) Test 문제은행: 폴더 '승급과정 문제은행' · 시험지·답안(링크)·해설강의(영상) + 유사문제 생성(upgrade-bank.js).
+   2) 문제은행 program: 테스트 문제은행(폴더 '승급과정 문제은행', testbank/)과 4학년 유사문제 은행(elementary4/), 그 아래 시험지·답안·해설강의 목록.
    3) 승급·편입 자료실(ebook): 폴더 '승급·편입 자료실' · 워터마크가 들어간 양면 책넘김 뷰어, 인쇄도 워터마크.
    세 폴더는 일반 자료실 목록에서는 빼고, 자료실에는 이 탭으로 가는 안내만 남긴다. */
 (function () {
@@ -47,15 +47,27 @@
     '.up-course{display:inline-block;font-size:13px;font-weight:700;color:#1b2340;margin:12px 0 4px;padding:3px 10px;border-radius:8px;border:1.5px solid #1b2340;background:#ece3fb;}' +
     '.up-lock{padding:28px 18px;text-align:center;color:#1b2340;font-size:14.5px;line-height:1.7;background:#fff;border:2.5px solid #1b2340;border-radius:20px;}' +
     '.up-bank .shelf-h{display:none;}' +
-    '.up-e4{display:flex;align-items:center;gap:12px;margin:0 0 16px;padding:12px 14px;border:2px solid #1b2340;border-radius:18px;background:#dfe9ff;color:#1b2340;text-decoration:none;box-shadow:0 3px 0 #1b2340;}' +
-    '.up-e4:hover{background:#d3e2ff;}' +
-    '.up-e4:focus-visible{outline:3px solid #2456c4;outline-offset:3px;}' +
-    '.up-e4-ic{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;border:2px solid #1b2340;background:#fff;flex:none;}' +
-    '.up-e4-ic .hs-li{width:24px;height:24px;}' +
-    '.up-e4-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}' +
-    '.up-e4-t b{font-size:17px;font-weight:400;}' +
-    '.up-e4-t small{font-size:12.5px;color:#4e5878;font-weight:500;line-height:1.45;}' +
-    '.up-e4-go{flex:none;font-weight:800;font-size:13.5px;background:#141b5d;color:#fff;border-radius:10px;padding:8px 12px;box-shadow:0 2px 0 #070b33;}' +
+    '.up-prog{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;margin:0 0 16px;}' +
+    '.up-pbtn{display:flex;align-items:center;gap:14px;min-height:112px;padding:16px 18px;border:2.5px solid #1b2340;border-radius:20px;text-align:left;text-decoration:none;font-family:inherit;cursor:pointer;box-shadow:0 5px 0 #1b2340;}' +
+    '.up-pbtn:active{transform:translateY(3px);box-shadow:0 2px 0 #1b2340;}.up-pbtn:focus-visible{outline:3px solid #2456c4;outline-offset:4px;}' +
+    '#rm-upg .up-pbtn.t1{background:#141b5d;color:#fff;}#rm-upg .up-pbtn.t1:hover{background:#1f2a80;}' +
+    '#rm-upg .up-pbtn.t2{background:#3f6fe0;color:#fff;}#rm-upg .up-pbtn.t2:hover{background:#3561cc;}' +
+    '.up-pbtn-ic{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;border:2px solid #1b2340;background:#fff;color:#141b5d;flex:none;}' +
+    '.up-pbtn-ic .hs-li{width:30px;height:30px;}' +
+    '.up-pbtn-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;}' +
+    '.up-pbtn-t b{font-family:Jua,sans-serif;font-weight:400;font-size:22px;line-height:1.25;word-break:keep-all;}' +
+    '.up-pbtn-t small{font-size:13px;font-weight:500;line-height:1.5;color:#fff;word-break:keep-all;}' +
+    '.up-pbtn-go{flex:none;font-weight:800;font-size:14px;background:#f6cf47;color:#1b2340;border:2px solid #1b2340;border-radius:12px;padding:8px 13px;}' +
+    '@media (max-width:600px){.up-pbtn{min-height:96px;gap:10px;padding:12px;}.up-pbtn-ic{width:44px;height:44px;}.up-pbtn-t b{font-size:19px;}.up-pbtn-go{padding:6px 9px;font-size:13px;}}' +
+    /* 복습 강의: 왼쪽 단원 메뉴 + 오른쪽 강의 목록 */
+    '.up-lecwrap{display:grid;grid-template-columns:168px minmax(0,1fr);gap:14px;align-items:start;margin-top:6px;}' +
+    '.up-unav{display:flex;flex-direction:column;gap:8px;}' +
+    '.up-ubtn{display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-height:58px;padding:8px 14px;border:2px solid #1b2340;border-radius:14px;background:#fff;color:#1b2340;font-family:inherit;text-align:left;cursor:pointer;}' +
+    '.up-ubtn b{font-family:Jua,sans-serif;font-weight:400;font-size:18px;}.up-ubtn small{font-size:12px;font-weight:600;color:#4e5878;}' +
+    '.up-ubtn[aria-pressed="true"]{background:#141b5d;color:#fff;}.up-ubtn[aria-pressed="true"] small{color:#fff;}' +
+    '.up-ubtn:focus-visible{outline:3px solid #2456c4;outline-offset:3px;}' +
+    '#rm-upg .up-lecwrap .up-rows{margin-top:0;}#rm-upg .up-rows[hidden]{display:none;}' +
+    '@media (max-width:600px){.up-lecwrap{grid-template-columns:1fr;gap:10px;}.up-unav{flex-direction:row;flex-wrap:wrap;}.up-ubtn{flex:1 1 96px;min-height:52px;padding:6px 10px;}}' +
     '.up-fold,.arc-fold{border:2px solid #1b2340;border-radius:18px;background:#fff;overflow:hidden;}' +
     '.up-fold-sum,.arc-fold-sum{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;list-style:none;min-height:56px;}' +
     '.up-fold-sum::-webkit-details-marker,.arc-fold-sum::-webkit-details-marker{display:none;}' +
@@ -177,6 +189,14 @@
   function head(key, id, title, desc) {
     return '<div class="up-top">' + (I ? I.ICON[key] : '') + '<div><h3 class="up-h disp" id="' + id + '">' + title + '</h3><p class="up-d">' + desc + '</p></div></div>';
   }
+  /* 강의의 단원: 교재에 적힌 unit, 없으면 제목의 "4-1-2"나 "2단원"에서 읽는다. 알 수 없으면 기타(0) */
+  var UNIT_NAMES = { 1: '큰 수', 2: '각도', 3: '곱셈과 나눗셈', 4: '평면도형의 이동', 5: '막대그래프', 6: '규칙 찾기' };
+  var lecUnit = {};
+  function unitOf(b) {
+    if (b.unit) return Number(b.unit);
+    var t = String(b.title || ''), m = /\d\s*-\s*\d\s*-\s*(\d+)/.exec(t) || /(\d+)\s*단원/.exec(t);
+    return m ? Number(m[1]) : 0;
+  }
   function lecHtml() {
     var list = booksOf(F.lec);
     var h = '<section class="up-sec" aria-labelledby="up-h-lec">' + head('lec', 'up-h-lec', '복습용 강의', '교재를 옆에 펴 놓고 영상으로 다시 봐요. 영상과 교재가 나란히 열립니다.');
@@ -189,32 +209,45 @@
       if (!(k in names)) { names[k] = String(b.course || '').replace(/\s+/g, ' ').trim() || '기타'; courses.push(k); }
     });
     courses.forEach(function (k) {
-      h += '<div class="up-course">' + esc(names[k]) + '</div><div class="up-rows">' + list.filter(function (b) { return courseKey(b) === k; })
-        .map(function (b) { return rowHtml(b, b.video ? '교재 + 복습영상' : (b.links && b.links.length ? '영상 링크' : '교재')); }).join('') + '</div>';
+      var mine = list.filter(function (b) { return courseKey(b) === k; });
+      var units = [];
+      mine.forEach(function (b) { var u = unitOf(b); if (units.indexOf(u) < 0) units.push(u); });
+      units.sort(function (a, b) { return (a || 99) - (b || 99); });
+      if (units.indexOf(lecUnit[k]) < 0) lecUnit[k] = units[0];
+      h += '<div class="up-course">' + esc(names[k]) + '</div><div class="up-lecwrap"><div class="up-unav" role="group" aria-label="' + esc(names[k]) + ' 단원 선택">' + units.map(function (u) {
+        var n = mine.filter(function (b) { return unitOf(b) === u; }).length;
+        return '<button type="button" class="up-ubtn" data-lecunit="' + u + '" data-course="' + esc(k) + '" aria-pressed="' + (lecUnit[k] === u) + '"><b>' + (u ? u + '단원' : '기타') + '</b><small>' + esc((UNIT_NAMES[u] ? UNIT_NAMES[u] + ' · ' : '') + n + '강') + '</small></button>';
+      }).join('') + '</div><div>' + units.map(function (u) {
+        return '<div class="up-rows" data-lecpanel="' + u + '" data-course="' + esc(k) + '"' + (lecUnit[k] === u ? '' : ' hidden') + '>' + mine.filter(function (b) { return unitOf(b) === u; })
+          .map(function (b) { return rowHtml(b, b.video ? '교재 + 복습영상' : (b.links && b.links.length ? '영상 링크' : '교재')); }).join('') + '</div>';
+      }).join('') + '</div></div>';
     });
     return h + '</section>';
   }
   function bookHtml() {
     var list = booksOf(F.book);
     var h = '<section class="up-sec" aria-labelledby="up-h-book">' + head('book', 'up-h-book', '승급·편입 자료실', '책처럼 양쪽으로 넘겨 봐요. 화면과 인쇄물에 ' + esc(student()) + ' 님의 이름이 워터마크로 들어갑니다.');
-    h += elem4Card();
     if (!list.length) return h + '<div class="up-empty">아직 올라온 교재가 없습니다.</div></section>';
     return h + '<div class="shelf">' + list.map(function (b) { return cardHtml(b, b.imgdir && b.pages ? b.pages + '쪽 · 책넘김' : '교재'); }).join('') + '</div></section>';
   }
-  /* 4학년 유사문제 은행(elementary4/): 승급·편입 자료실이 열린 학생에게만 보인다 */
-  function elem4Card() {
-    return '<a class="up-e4" href="elementary4/index.html" target="_blank" rel="noopener" data-e4>' +
-      '<span class="up-e4-ic">' + (I ? I.icon('pencil') : '') + '</span>' +
-      '<span class="up-e4-t"><b class="disp">4학년 유사문제 은행</b><small>4-1·4-2 단원과 유형을 골라 심화 유사문제를 만들고, 이름 워터마크로 인쇄해요.</small></span>' +
-      '<span class="up-e4-go">열기 ›</span></a>';
+  /* 문제은행 program: 큰 버튼 두 개. 테스트 문제은행은 '승급과정 문제은행' 권한, 4학년 은행은 '승급·편입 자료실' 권한 */
+  function progButton(tag, attrs, cls, icon, title, desc) {
+    return '<' + tag + ' class="up-pbtn ' + cls + '" ' + attrs + '><span class="up-pbtn-ic">' + (I ? I.icon(icon) : '') + '</span>' +
+      '<span class="up-pbtn-t"><b>' + title + '</b><small>' + desc + '</small></span><span class="up-pbtn-go">열기 ›</span></' + tag + '>';
   }
-  /* 데일리 테스트(시험지·유사문제)는 길어서 접히는 상자 하나에 넣는다. 열림 상태는 기기에 기억 */
+  function programHtml(test, elem) {
+    var h = '<section class="up-sec up-program' + (test ? ' up-bank' : '') + '" aria-labelledby="up-h-bank">' +
+      head('bank', 'up-h-bank', '문제은행 program', '수업 시험지와 같은 유형을 연습하거나, 4학년 전체 유형에서 문제를 만들어요.') + '<div class="up-prog">';
+    if (test) h += progButton('a', 'href="testbank/index.html" target="_blank" rel="noopener" data-e4 data-testbank', 't1', 'pencil', '테스트 문제은행', '수업 시험지에서 시험지·유형을 골라 유사문제를 만들어요.');
+    if (elem) h += progButton('a', 'href="elementary4/index.html" target="_blank" rel="noopener" data-e4', 't2', 'book', '4학년 유사문제 은행', '4-1·4-2 단원과 유형을 골라 심화 유사문제를 만들어요.');
+    return h + '</div>' + (test ? dailyBox() : '') + '</section>';
+  }
+  /* 시험지 목록(보기·인쇄)은 길어서 접히는 상자 하나에 넣는다. 열림 상태는 기기에 기억 */
   function dailyBox() {
-    var n = booksOf(F.bank).length, open = false;
+    var open = false;
     try { open = localStorage.getItem('gfield_upg_daily_open') === '1'; } catch (e) {}
     return '<details class="up-fold" id="up-daily"' + (open ? ' open' : '') + '><summary class="up-fold-sum">' +
-      '<span class="up-fold-ic">' + (I ? I.icon('calendar') : '') + '</span><span class="up-fold-t"><b class="disp">데일리 테스트</b>' +
-      '<small>시험지 ' + n + '장 · 답안 · 비슷한 문제 만들기</small></span><span class="up-fold-chev">' + (I ? I.icon('chevron') : '') + '</span></summary>' +
+      '<span class="up-fold-ic">' + (I ? I.icon('calendar') : '') + '</span><span class="up-fold-t"><b class="disp">일일테스트·단원테스트 복습</b></span><span class="up-fold-chev">' + (I ? I.icon('chevron') : '') + '</span></summary>' +
       '<div class="up-fold-body"><div class="up-bank-host"></div></div></details>';
   }
   function render() {
@@ -222,11 +255,11 @@
       panel.innerHTML = '<div class="up-lock"><b>편입·승급과정 학생에게 열리는 공간입니다.</b><br>선생님이 열어 주시면 이곳에서 볼 수 있습니다.</div>';
       return;
     }
-    var h = '<section class="up-hero">' + (I ? I.upgScene('남학생과 여학생이 복습 강의, Test 문제은행, 편입 자료실 계단을 차례로 올라가는 그림') : '') +
+    var h = '<section class="up-hero">' + (I ? I.upgScene('남학생과 여학생이 복습 강의, 문제은행, 편입 자료실 계단을 차례로 올라가는 그림') : '') +
       '<div class="up-hero-c"><h2 class="disp">' + (student() ? esc(student()) + '의 ' : '') + '편입·승급과정</h2><p>강의로 복습하고, 시험지로 확인하고,<br>자료실 책으로 다져서 한 칸씩 올라가요.</p>' +
         '<a class="up-manual" href="manual-upg.html" target="_blank" rel="noopener">' + (I ? I.icon('clipboard') : '') + '사용법 보기</a></div></section>';
     if (canFolder(F.lec)) h += lecHtml();
-    if (canFolder(F.bank)) h += '<section class="up-sec up-bank" aria-labelledby="up-h-bank">' + head('bank', 'up-h-bank', 'Test 문제은행', '시험지를 열면 답안과 해설강의(있는 경우)가 함께 나와요. 아래에서 비슷한 문제를 낮춰서·같은 수준·높여서 만들어 풀 수 있어요.') + dailyBox() + '</section>';
+    if (canFolder(F.bank) || canFolder(F.book)) h += programHtml(canFolder(F.bank), canFolder(F.book));
     if (canFolder(F.book)) h += bookHtml();
     panel.innerHTML = h;
     var fold = panel.querySelector('#up-daily');
@@ -238,6 +271,14 @@
     }
   }
   panel.addEventListener('click', function (e) {
+    var lu = e.target.closest && e.target.closest('[data-lecunit]');
+    if (lu) {
+      var course = lu.getAttribute('data-course'), u = Number(lu.getAttribute('data-lecunit'));
+      lecUnit[course] = u;
+      panel.querySelectorAll('[data-lecunit]').forEach(function (b) { if (b.getAttribute('data-course') === course) b.setAttribute('aria-pressed', String(Number(b.getAttribute('data-lecunit')) === u)); });
+      panel.querySelectorAll('[data-lecpanel]').forEach(function (p) { if (p.getAttribute('data-course') === course) p.hidden = Number(p.getAttribute('data-lecpanel')) !== u; });
+      return;
+    }
     var e4 = e.target.closest && e.target.closest('[data-e4]');
     if (e4) {   // 새 탭의 입장 확인용 표시(같은 학생·12시간)
       try { sessionStorage.setItem('gfield_elem4_handoff', JSON.stringify({ student: student(), issuedAt: Date.now() })); } catch (err) {}
@@ -406,7 +447,7 @@
         var box = document.createElement('div');
         box.className = 'shelf-sec';
         box.innerHTML = '<div class="shelf-h disp">' + (I ? '<span style="display:inline-flex;width:20px;height:20px">' + I.LINE.stairs + '</span>' : '') + '편입·승급과정</div><div class="up-empty" style="border:2px solid #1b2340;background:#ece3fb;color:#1b2340">' +
-          '복습용 강의 · Test 문제은행 · 승급·편입 자료실은 <b>로드맵 → 편입·승급과정</b> 탭에 모여 있습니다. ' +
+          '복습용 강의 · 문제은행 program · 승급·편입 자료실은 <b>로드맵 → 편입·승급과정</b> 탭에 모여 있습니다. ' +
           '<button type="button" class="ub-btn" data-go-upg style="margin-top:8px">편입·승급과정으로 가기</button></div>';
         wrap.insertBefore(box, wrap.firstChild);
         box.querySelector('[data-go-upg]').addEventListener('click', function () { if (typeof nav === 'function') nav('roadmap'); select(true); });

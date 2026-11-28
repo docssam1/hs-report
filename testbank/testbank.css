@@ -1,0 +1,8 @@
+/* 테스트 문제은행에서만 더하는 모양 */
+.tb-hover{position:fixed;z-index:60;width:min(520px,calc(100vw - 24px));max-height:min(76vh,640px);overflow:hidden;padding:0 0 14px;background:#fff;border:2px solid #1f5f7a;border-radius:10px;box-shadow:0 18px 50px rgba(15,35,55,.28);pointer-events:none;}
+.tb-hover[hidden]{display:none;}
+.tb-hover header{display:block;padding:10px 16px;background:#eef6fb;border-bottom:1px solid #bfd6e6;}
+.tb-hover header small{display:block;font-size:11.5px;font-weight:800;color:#1f5f7a;}
+.tb-hover header b{display:block;margin-top:2px;font-size:15px;color:#13283a;}
+.tb-hover .question-prompt{margin:0;padding:12px 18px 0;font-size:14px;line-height:1.7;}
+.tb-load-fail{padding:24px;text-align:center;}

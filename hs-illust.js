@@ -142,7 +142,7 @@
       '<path d="M0 300 H1000 V340 H0z" fill="#c9b6f0" stroke="' + INK + '" stroke-width="3"/>' +
       '<g stroke="' + INK + '" stroke-width="3" stroke-linejoin="round" font-family="Jua" font-size="20" text-anchor="middle">' +
       step(500, 256, 160, 44, C.upg, '복습 강의', '#fff') +
-      step(600, 206, 160, 50, C.feb, 'Test 문제은행', '#fff') +
+      step(600, 206, 160, 50, C.feb, '문제은행', '#fff') +
       step(700, 152, 160, 54, C.sun, '편입 자료실', INK) +
       '<rect x="800" y="94" width="150" height="58" rx="6" fill="#fff" stroke-dasharray="8 6"/>' +
       '<text x="875" y="130" fill="#5b4a92" stroke="none">편입·승급!</text></g>' +

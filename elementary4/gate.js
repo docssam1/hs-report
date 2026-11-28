@@ -4,7 +4,7 @@
    정적 사이트라 파일 자체를 숨기지는 못한다. 다른 자료실 자료와 같은 수준의 화면 잠금이다. */
 (function (root) {
   'use strict';
-  var FOLDER = '승급·편입 자료실';
+  var FOLDER = root.GFIELD_GATE_FOLDER || '승급·편입 자료실';   // 테스트 문제은행(testbank/)은 '승급과정 문제은행'
   var HANDOFF_KEY = 'gfield_elem4_handoff';
   var HANDOFF_MAX_AGE = 12 * 60 * 60 * 1000;
   var localHost = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && root.__GFIELD_ELEM4_FORCE__ !== true;
@@ -63,8 +63,8 @@
     gate();
     if (localHost) { allow(studentName() || '검수'); return; }
     var name = studentName();
-    if (!name) { deny('자료실에서 학생 이름으로 로그인한 뒤 「승급·편입 자료실」에서 열어 주세요.'); return; }
-    if (!permitted(name)) { deny(name + ' 학생은 아직 승급·편입 자료실이 열리지 않았습니다. 선생님께 문의해 주세요.'); return; }
+    if (!name) { deny('자료실에서 학생 이름으로 로그인한 뒤 「' + FOLDER + '」에서 열어 주세요.'); return; }
+    if (!permitted(name)) { deny(name + ' 학생은 아직 ' + FOLDER + ' 권한이 열리지 않았습니다. 선생님께 문의해 주세요.'); return; }
     allow(name);
   }
   root.GFIELD_ELEM4_GATE = { permitted: permitted, studentName: studentName, start: start };

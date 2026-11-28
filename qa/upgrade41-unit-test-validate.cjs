@@ -7,7 +7,7 @@ global.window={};
 require(path.join(ROOT,'elementary4/source-inventory-4-1.js'));require(path.join(ROOT,'elementary4/generators.js'));
 const API=window.HSE_GENERATORS,ITEMS=window.HSE_SOURCE_INVENTORY_41.items;
 const data=require(path.join(ROOT,'upgrade-bank/data/upgrade41.json'));
-const sources=data.sources.filter(s=>s.engine==='elem4');
+const sources=data.sources.filter(s=>s.engine==='elem4'&&s.sheet==='4-1-1 큰수 단원테스트 12문항');
 assert.equal(sources.length,12);assert.deepEqual(sources.map(s=>s.no),[1,2,3,4,5,6,7,8,9,10,11,12]);
 const text=h=>h.replace(/<span hidden[^>]*><\/span>/g,'').replace(/<span class="math-digit-slot[^>]*><\/span>/g,'□').replace(/<\/(div|li|br)>|<br\s*\/?>/g,'\n').replace(/<[^>]+>/g,'').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
 const int=s=>BigInt(String(s).replace(/,/g,''));

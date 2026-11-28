@@ -43,6 +43,8 @@ const INJECT=';(function(D){var F=["승급 복습강의","승급과정 문제은
     out.courses=await p.$$eval('#rm-upg .up-course',e=>e.map(x=>x.textContent));
     out.bankDrawn=await p.isVisible('#rm-upg .up-bank .ub-top .book');
     // 복습강의: 교재+영상이 나란히 열린다
+    // 강의는 왼쪽 단원 메뉴 아래에 묶인다: 그 강의가 든 단원을 먼저 고른다
+    await p.evaluate(()=>{const row=[...document.querySelectorAll('#rm-upg .up-row')].find(x=>x.textContent.includes('QA 복습 1강'));const panel=row.closest('[data-lecpanel]');if(panel.hidden)document.querySelector('#rm-upg [data-lecunit="'+panel.dataset.lecpanel+'"][data-course="'+panel.dataset.course+'"]').click();});
     await p.locator('#rm-upg .book',{hasText:'QA 복습 1강'}).click();await p.waitForTimeout(300);
     out.lecture=await p.evaluate(()=>({split:document.getElementById('bv-stage').classList.contains('split'),img:!!document.querySelector('#bv-stage .bv-pg img')}));
     await p.evaluate(()=>closeBook());
@@ -87,7 +89,7 @@ const INJECT=';(function(D){var F=["승급 복습강의","승급과정 문제은
   console.log(JSON.stringify(out));
   assert.equal(out.outsiderTab,false);assert.equal(out.outsiderArchive,false);
   assert.ok(out.archivePointer&&out.pointerOpens&&out.novBack);
-  assert.deepEqual(out.sections,['복습용 강의','Test 문제은행','승급·편입 자료실']);
+  assert.deepEqual(out.sections,['복습용 강의','문제은행 program','승급·편입 자료실']);
   assert.deepEqual(out.courses.map(c=>c.toLowerCase()),['4-1 level up 심화','4-2 level up 심화'],'과정 이름은 대소문자가 달라도 한 묶음');
   assert.ok(out.bankDrawn);assert.deepEqual(out.lecture,{split:true,img:true});
   assert.deepEqual(out.flip,['1 / 7쪽','2–3 / 7쪽','4–5 / 7쪽','2–3 / 7쪽']);

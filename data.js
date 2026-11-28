@@ -3260,6 +3260,30 @@ window.GFIELD_DATA = {
       "video": "https://youtu.be/NdMrEYBaxl0"
     },
     {
+      "folder": "승급과정 문제은행",
+      "title": "초등과정 4-1 일일테스트 2단원 1,2차시",
+      "pdf": "",
+      "imgdir": "daily_41_u2_12",
+      "pages": 2,
+      "cover": "materials/daily_41_u2_12/001.jpg",
+      "date": "2026-11-28",
+      "unit": 2,
+      "session": "1,2차시",
+      "video": "https://youtu.be/6FABZ2mgcU8"
+    },
+    {
+      "folder": "승급과정 문제은행",
+      "title": "초등과정 4-1 일일테스트 2단원 3,4차시",
+      "pdf": "",
+      "imgdir": "daily_41_u2_34",
+      "pages": 2,
+      "cover": "materials/daily_41_u2_34/001.jpg",
+      "date": "2026-11-28",
+      "unit": 2,
+      "session": "3,4차시",
+      "video": "https://youtu.be/Plxex0fAVvA"
+    },
+    {
       "folder": "승급 복습강의",
       "title": "LEVEL UP심화 4-1-1 큰수 1,2,3,4차시",
       "pdf": "https://raw.githubusercontent.com/docssam1/hs-report/main/books/1794819215248_0ds3_LEVEL_UP___4-1-1_____v251125_.pdf",

@@ -9,7 +9,7 @@
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
   const hash = (value) => [...value].reduce((sum, character) => Math.imul(sum ^ character.charCodeAt(0), 16777619), 2166136261) >>> 0;
   const typeDisplayName = type => type.label && type.label !== "핵심 유형" ? type.label : type.name;
-  const difficultyBandLabel = type => ({ "-1": "심화 쉬움", "0": "심화 기준", "1": "심화 어려움" })[String(type.difficultyBand)] || "심화 기준";
+  const difficultyBandLabel = type => curriculum.showBand === false ? "" : ({ "-1": "심화 쉬움", "0": "심화 기준", "1": "심화 어려움" })[String(type.difficultyBand)] || "심화 기준";
 
   function renderMathNotation(markup) {
     const template = document.createElement("template");
@@ -146,7 +146,8 @@
   }
 
   function currentDifficultyLabel() {
-    return ({ "-1": "심화 쉬움", "0": "심화 기준", "1": "심화 어려움" })[String(state.difficulty)] || "심화 기준";
+    const labels = curriculum.difficultyLabels || { "-1": "심화 쉬움", "0": "심화 기준", "1": "심화 어려움" };
+    return labels[String(state.difficulty)] || labels["0"];
   }
 
   function visibleTypes() {
@@ -191,7 +192,7 @@
     return '<div class="tree-type ' + (selected ? "is-selected" : "") + (ready || linked ? "" : " is-pending") + (alternativeHint ? " has-alternative" : "") + '" data-preview-type-id="' + type.id + '" role="button" tabindex="0" aria-label="' + escapeHtml(typeDisplayName(type)) + (alternativeHint ? ' 유사문항 있음' : '') + ' 유형 예시 미리보기" aria-controls="typePreviewPopover" aria-expanded="false">' +
       '<input type="checkbox" data-type-id="' + type.id + '" ' + (selected ? "checked" : "") + (ready ? "" : " disabled") + '>' +
       '<span class="tree-type-number">' + number + '</span>' +
-      '<span class="tree-type-copy"><strong>' + escapeHtml(typeDisplayName(type)) + '</strong><small>' + sourceLabel + type.grade + '학년 ' + type.term + '학기 · <i class="difficulty-band difficulty-band-' + type.difficultyBand + '">' + difficultyBandLabel(type) + '</i>' + (linked ? ' · 공통 유형 연결' : '') + alternativeHint + '</small></span>' +
+      '<span class="tree-type-copy"><strong>' + escapeHtml(typeDisplayName(type)) + '</strong><small>' + (type.rowNote ? escapeHtml(type.rowNote) + '</small></span>' : sourceLabel + type.grade + '학년 ' + type.term + '학기 · <i class="difficulty-band difficulty-band-' + type.difficultyBand + '">' + difficultyBandLabel(type) + '</i>' + (linked ? ' · 공통 유형 연결' : '') + alternativeHint + '</small></span>') +
       '<span class="tree-type-preview-action" aria-hidden="true">미리보기</span>' +
       '<span class="tree-type-state ' + (ready || linked ? "is-ready" : "") + '">' + (ready ? "생성 가능" : linked ? "공통 유형" : "검수 대기") + '</span>' +
     '</div>';
@@ -204,7 +205,8 @@
     const markup = (semester?.units || []).map(unit => {
       const unitTypes = visible.filter(type => type.unitId === unit.id);
       if (!unitTypes.length) return "";
-      const isOpen = !state.collapsedUnits.has(unit.id);
+      /* 닫힌 채로 시작하는 문제은행에서도, 검색하는 동안에는 찾은 유형이 바로 보이게 펼친다 */
+      const isOpen = !state.collapsedUnits.has(unit.id) || Boolean(curriculum.startCollapsed && state.search.trim());
       const readyCount = new Set(unitTypes.flatMap(type => {
         if (type.generator && !type.reviewLocked) return [type.id];
         const commonType = commonQuestionType(type);
@@ -218,7 +220,7 @@
         '<div class="tree-branch" ' + (isOpen ? "" : "hidden") + '>' + (unit.subunits || []).map(subunit => {
           const subunitTypes = unitTypes.filter(type => type.subunitId === subunit.id);
           if (!subunitTypes.length) return "";
-          return '<section class="tree-subunit"><div class="tree-subunit-head"><span>소단원 ' + String(subunit.number).padStart(2, "0") + '</span><strong>' + escapeHtml(subunit.name) + '</strong></div>' + subunitTypes.map(typeTreeRow).join("") + '</section>';
+          return '<section class="tree-subunit"><div class="tree-subunit-head"><span>' + (curriculum.subunitCaption || '소단원') + ' ' + String(subunit.number).padStart(2, "0") + '</span><strong>' + escapeHtml(subunit.name) + '</strong></div>' + subunitTypes.map(typeTreeRow).join("") + '</section>';
         }).join("") + '</div>' +
       '</section>';
     }).join("");
@@ -390,7 +392,7 @@
     $("selectedTypeList").innerHTML = selected.length ? selected.map(type =>
       '<div><span><b>' + escapeHtml(type.subunitName) + ' · ' + escapeHtml(typeDisplayName(type)) + '</b><small>' + type.grade + '학년 ' + type.term + '학기 · ' + type.unitNumber + '단원 ' + escapeHtml(type.unitName) + ' · ' + difficultyBandLabel(type) + (type.generationMode === "fixed-verified-pool" ? ' · 검증 문항 ' + type.verifiedVariantCount + '개' : '') + '</small></span>' +
       '<button type="button" data-remove-type="' + type.id + '" aria-label="' + escapeHtml(typeDisplayName(type)) + ' 선택 해제">×</button></div>'
-    ).join("") : '<p>왼쪽 교육과정 트리에서 유형을 선택하세요.</p>';
+    ).join("") : '<p>' + escapeHtml(curriculum.emptySelection || '왼쪽 교육과정 트리에서 유형을 선택하세요.') + '</p>';
   }
 
   function setQuestionCount(value) {
@@ -830,7 +832,7 @@
     const selected = selectedQuestionTypes();
     $("worksheetStudent").textContent = student;
     $("worksheetTitle").textContent = state.view === "problem" ? "맞춤 유사문제" : "맞춤 유사문제 정답·풀이";
-    $("worksheetMeta").textContent = `심화 문제은행 · ${currentDifficultyLabel()} · ${state.questions.length}문항 · ${selected.length}개 유형`;
+    $("worksheetMeta").textContent = `${curriculum.bankName || "심화 문제은행"} · ${currentDifficultyLabel()} · ${state.questions.length}문항 · ${selected.length}개 유형`;
     $("problemView").hidden = state.view !== "problem";
     $("solutionView").hidden = state.view !== "solution";
     $("answerKeyView").hidden = true;
@@ -855,7 +857,7 @@
   bindSegment("termFilter", "term", "term", Number);
   bindSegment("difficultyFilter", "difficulty", "difficulty", Number);
 
-  $("unitFilter").addEventListener("change", event => { state.unitId = event.target.value; renderCatalog(); });
+  $("unitFilter").addEventListener("change", event => { state.unitId = event.target.value; state.collapsedUnits.delete(state.unitId); renderCatalog(); });
   $("typeSearchInput").addEventListener("input", event => { state.search = event.target.value; renderCatalog(); });
   $("questionCountInput").addEventListener("input", event => {
     setQuestionCount(Number(event.target.value));
@@ -1002,6 +1004,7 @@
     refreshSegments("termFilter", "term", state.term);
     refreshSegments("difficultyFilter", "difficulty", state.difficulty);
   }
+  if (curriculum.startCollapsed) curriculum.semesters.forEach(semester => semester.units.forEach(unit => state.collapsedUnits.add(unit.id)));
   ensurePreviewPopover();
   renderUnitOptions();
   renderCatalog();
