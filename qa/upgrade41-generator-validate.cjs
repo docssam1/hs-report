@@ -4,7 +4,8 @@
 const assert=require('node:assert/strict'),path=require('node:path');
 const G=require(path.join(__dirname,'..','upgrade-bank','generators.js'));
 const data=require(path.join(__dirname,'..','upgrade-bank','data','upgrade41.json'));
-assert.equal(data.sources.length,9);assert.deepEqual(G.sources.slice().sort(),data.sources.map(s=>s.id).sort());assert.deepEqual(G.levels,['lower','same','higher']);
+const ruleSources=data.sources.filter(s=>!s.engine);   // 문제은행 유형(engine)은 upgrade41-unit-test-validate.cjs가 검사한다
+assert.equal(ruleSources.length,9);assert.deepEqual(G.sources.slice().sort(),ruleSources.map(s=>s.id).sort());assert.deepEqual(G.levels,['lower','same','higher']);
 let total=0,mismatches=0,rechecked=0;
 const UNIT={'1조':1e12,'1000억':1e11,'100억':1e10,'10억':1e9,'1억':1e8,'1000만':1e7,'100만':1e6,'10만':1e5,'1만':1e4,'1000':1000,'100':100,'10':10,'1':1};
 const permsDesc=cards=>{const seen=new Set();const rec=(rest,cur)=>{if(!rest.length){if(cur[0]!==0)seen.add(cur.join(''));return;}rest.forEach((d,i)=>{if(rest.indexOf(d)!==i)return;rec(rest.filter((_,j)=>j!==i),cur.concat(d));});};rec(cards.slice().sort((a,b)=>a-b),[]);return [...seen].sort().reverse();};

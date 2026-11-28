@@ -21,6 +21,8 @@ const F='승급과정 문제은행',T1='초등과정 4-1 일일테스트 1단원
   await p.route(/supabase\.co|\/functions\/v1|api\.github\.com/,r=>{net++;r.abort()});
   // 테스트에서만: 이승우(기존 방식)·박선우(새 권한 범위)에게 폴더를 열어 준다. 정준우는 목록 밖.
   await p.route('**/data.js*',async r=>{const res=await r.fetch();let t=await res.text();
+    // 이 검사는 일일테스트 2장 기준이다. 나중에 어드민에서 더한 시험지는 빼고 본다(단원테스트는 upgrade-bank-unit-test-browser-validate.js).
+    t+=';(function(D){D.books=D.books.filter(function(b){return b.folder!=="승급과정 문제은행"||b.title.indexOf("일일테스트")>=0;});})(window.GFIELD_DATA);';
     t+=';(function(D){D.archiveAccess["승급과정 문제은행"]=["이승우"];["승급 복습강의","승급·편입 자료실"].forEach(function(f){D.archiveAccess[f]=[];});'+
       'var p=(D.studentAccessProfiles||{})["박선우"];if(p){p.folders=(p.folders||[]).filter(function(f){return f.indexOf("승급")<0;});p.folders.push("승급과정 문제은행");}'+
       'var q=(D.studentAccessProfiles||{})["정준우"];if(q)q.folders=(q.folders||[]).filter(function(f){return f.indexOf("승급")<0;});})(window.GFIELD_DATA);';
