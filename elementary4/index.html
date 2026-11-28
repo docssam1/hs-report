@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f3f5f4">
   <title>4학년 유사문제 | G-FIELD 편입·승급 자료실</title>
-  <link rel="stylesheet" href="./styles.css?v=20261108-answer-key-watermark">
+  <link rel="stylesheet" href="./styles.css?v=20261128-hw45">
   <link rel="stylesheet" href="./worksheet-tools.css?v=bank-20261015j">
   <link rel="stylesheet" href="./typography.css?v=bank-20260924a">
-  <link rel="stylesheet" href="./four-up-print.css?v=20261108-p102-q10-print">
+  <link rel="stylesheet" href="./four-up-print.css?v=20261128-hw45">
   <script src="../data.js"></script>
   <script src="../student-access-policy.js"></script>
   <script src="./gate.js?v=20261128-testbank"></script>
@@ -47,6 +47,8 @@
             <button type="button" class="segment is-active" data-term="1">1학기</button>
             <button type="button" class="segment" data-term="2">2학기</button>
           </div>
+          <div class="filter-caption">함께 고르기</div>
+          <div class="semester-chips" id="semesterPicker" role="group" aria-label="여러 학년·학기를 함께 보기"></div>
         </div>
 
         <div class="selector-layout">
@@ -90,10 +92,15 @@
                   <button type="button" data-count="8">8</button>
                   <button type="button" data-count="12" class="is-active">12</button>
                   <button type="button" data-count="20">20</button>
+                  <button type="button" data-count="25">25</button>
                   <button type="button" data-count="30">30</button>
                   <button type="button" data-count="40">40</button>
+                  <button type="button" data-count="50">50</button>
+                  <button type="button" data-count="75">75</button>
+                  <button type="button" data-count="100">100</button>
                 </div>
-                <label class="count-input" for="questionCountInput"><span>직접 입력</span><input id="questionCountInput" class="input-number" type="number" min="1" max="120" step="1" value="12"></label>
+                <label class="count-range" for="questionCountRange"><span class="sr-only">문항 수 슬라이더</span><input id="questionCountRange" type="range" min="1" max="150" step="1" value="12"><span class="count-range-scale" aria-hidden="true"><i>1</i><i>150</i></span></label>
+                <label class="count-input" for="questionCountInput"><span>직접 입력</span><input id="questionCountInput" class="input-number" type="number" min="1" max="150" step="1" value="12"></label>
               </div>
             </div>
 
@@ -104,6 +111,7 @@
                 <button type="button" class="segment is-active" data-difficulty="0">심화 기준</button>
                 <button type="button" class="segment" data-difficulty="1">심화 어려움</button>
               </div>
+              <label class="mix-toggle" for="difficultyMixToggle"><input id="difficultyMixToggle" type="checkbox"><span>여러 난이도 섞기</span></label>
             </div>
 
             <label class="field-group" for="studentNameInput">
@@ -196,15 +204,31 @@
 
   <script defer src="./source-inventory-4-1.js?v=bank-20260913f"></script>
   <script defer src="./source-inventory-4-2-quadrilateral.js?v=bank-20260922d"></script>
-  <script defer src="./curriculum.js?v=20261109-u2p82-q63-nine"></script>
-  <script defer src="./grade4-only.js"></script>
-  <script defer src="./generators.js?v=bank-20261128-u2"></script>
+  <script defer src="./curriculum.js?v=20261128-hw45"></script>
+  <script defer src="./source-lower-release-20261122-registry.js?v=20261122b"></script>
+  <script defer src="./source-lower-release-20261122.js?v=20261122b"></script>
+  <script defer src="./source-lock-reasons-20261122.js?v=20261122b"></script>
+  <script defer src="./generators.js?v=20261129-jo-range"></script>
   <script defer src="./source-4-2-perpendicular-parallel.js?v=20261104-parallel-labels"></script>
   <script defer src="./source-4-2-parallel-angle.js?v=bank-20260924a"></script>
-  <script defer src="./source-4-2-parallel-angle-chain-one.js?v=20261104-angle-prompt"></script>
+  <script defer src="./source-4-2-parallel-angle-chain-one.js?v=20261124-label-clear"></script>
   <script defer src="./source-4-2-parallel-angle-chain-two-mission3.js?v=bank-20260924a"></script>
+  <link rel="stylesheet" href="./print-typography.css?v=20261126-print-serif4">
+  <script defer src="./source-4-2-u3-original.js?v=20261122i"></script>
+  <script defer src="./source-4-2-u4-b-original.js?v=20261128-hw45"></script>
+  <script defer src="./source-4-1-original.js?v=20261122b"></script>
+  <script defer src="./source-4-2-u4-c-original.js?v=20261122b"></script>
+  <script defer src="./source-4-2-u4-a-original.js?v=20261122b"></script>
+  <script defer src="./source-4-2-a-original.js?v=20261122h"></script>
+  <script defer src="./source-45-last-original.js?v=20261122b"></script>
+  <script defer src="./figure-dimension-arcs.js?v=20261121-2"></script>
+  <script defer src="./source-original-answer-text-20261122.js?v=20261122b"></script>
+  <script defer src="./problem-hint-policy.js?v=20261125-list-hints"></script>
+  <script defer src="./grade4-only.js?v=20261129-sync"></script>
+  <script defer src="./bank-access-open.js?v=20261129-sync"></script>
   <script defer src="./math-notation.js?v=bank-20260827l"></script>
   <script defer src="./identity.js?v=identity-20260824a"></script>
-  <script defer src="./app.js?v=20261128-fold"></script>
+  <script defer src="./number-josa.js?v=20261128-josa3"></script>
+  <script defer src="./app.js?v=20261129-sync"></script>
 </body>
 </html>

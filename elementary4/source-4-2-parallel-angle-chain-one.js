@@ -68,10 +68,55 @@
       name(point(31, upper), labels[0]); name(point(31, lower), labels[1]);
       relations.push({ kind: "parallel", segments: ["upper", "lower"] });
     };
+    // 2026-11-24: 각도 글자가 그 각의 두 변이 아닌 다른 선분(정사각형 변 등)에 닿으면 이등분선을 따라 조금씩 밀어낸다.
+    const labelBox = html => {
+      const match = html.match(/<text class="pa-(?:target|value)"[^>]* x="([-\d.]+)" y="([-\d.]+)">([^<]*)<\/text>/);
+      if (!match) return null;
+      const width = Array.from(match[3]).reduce((sum, character) => sum + 18 * (/\d/.test(character) ? 0.62 : character === "°" ? 0.55 : 1), 0);
+      return { x: Number(match[1]), y: Number(match[2]), hw: width / 2 + 6, hh: 18 * 0.58 + 6 };
+    };
+    const segmentHitsBox = (a, b, box) => {
+      let t0 = 0, t1 = 1;
+      const dx = b.x - a.x, dy = b.y - a.y;
+      for (const [p, q] of [[-dx, a.x - (box.x - box.hw)], [dx, (box.x + box.hw) - a.x], [-dy, a.y - (box.y - box.hh)], [dy, (box.y + box.hh) - a.y]]) {
+        if (p === 0) { if (q < 0) return false; continue; }
+        const r = q / p;
+        if (p < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; }
+      }
+      return true;
+    };
     const mark = (role, vertex, rayA, rayB, value, target = false, extra = {}) => {
       angles.push({ role, vertex, rayA, rayB, value, target });
       const radius = Math.max(28, Math.ceil(26 / (value * Math.PI / 180)));
-      content += angleMark({ role, vertex, rayA, rayB, value, label: target ? (role === "target-b" ? "㉡" : "㉠") : `${value}°`, solved, radius, labelRadius: Math.max(64, radius + 36), ...extra });
+      const draw = labelRadius => angleMark({ role, vertex, rayA, rayB, value, label: target ? (role === "target-b" ? "㉡" : "㉠") : `${value}°`, solved, radius, labelRadius, ...extra });
+      const clear = html => {
+        const box = labelBox(html);
+        return !box || !segments.some(item => segmentHitsBox(item.a, item.b, box));
+      };
+      const labelRadius = Math.max(64, radius + 36);
+      let html = draw(labelRadius);
+      // 문제(㉠)와 풀이(수치) 글자 모두 같은 자리를 쓰므로, 더 넓은 풀이 글자 기준으로 비어 있는지 본다.
+      const widest = options => angleMark({ role, vertex, rayA, rayB, value, label: `${value}°`, solved: true, radius, labelRadius, ...extra, ...options });
+      if (!extra.labelPosition && !(clear(html) && clear(widest({})))) {
+        // 이등분선 자리가 다른 선분에 닿으면, 호의 가운데에서 가까운 빈자리에 글자를 두고 지시선으로 잇는다.
+        const mid = (html.match(/data-angle-midpoint="([-\d.]+),([-\d.]+)"/) || []).slice(1).map(Number);
+        const inside = box => box.x - box.hw >= 0 && box.x + box.hw <= width && box.y - box.hh >= 0 && box.y + box.hh <= height;
+        let chosen = null;
+        if (mid.length === 2) for (const distance of [44, 56, 70, 86]) {
+          for (const degrees of [-90, -60, -120, -30, -150, 0, 180, 30, 150, 60, 120, 90]) {
+            const candidate = point(mid[0] + distance * Math.cos(degrees * Math.PI / 180), mid[1] + distance * Math.sin(degrees * Math.PI / 180));
+            const trial = widest({ labelPosition: candidate });
+            const box = labelBox(trial);
+            // 꼭짓점 이름(ㄱ, ㄴ …)이 놓이는 꼭짓점 가까이와 이미 그린 글자 자리는 피한다.
+            const nearVertex = box && Object.values(points).some(p => Math.abs(p.x - box.x) < box.hw + 22 && Math.abs(p.y - box.y) < box.hh + 22);
+            const nearText = box && [...content.matchAll(/<text[^>]* x="([-\d.]+)" y="([-\d.]+)"/g)].some(m => Math.abs(Number(m[1]) - box.x) < box.hw + 14 && Math.abs(Number(m[2]) - box.y) < box.hh + 10);
+            if (box && inside(box) && clear(trial) && !nearVertex && !nearText) { chosen = candidate; break; }
+          }
+          if (chosen) break;
+        }
+        if (chosen) html = angleMark({ role, vertex, rayA, rayB, value, label: target ? (role === "target-b" ? "㉡" : "㉠") : `${value}°`, solved, radius, labelRadius, ...extra, labelPosition: chosen });
+      }
+      content += html;
     };
     const right = (vertex, direction, owners) => { content += rightMark(vertex, direction, 13); relations.push({ kind: "perpendicular", owners, vertex, direction }); };
 

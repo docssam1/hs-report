@@ -4,6 +4,14 @@
 > 사이트: https://hs.gfieldacademy.net  
 > 레포: docssam1/hs-report (GitHub Pages, main 브랜치)
 
+> **2026-11-29 — 4학년 유사문제 은행(elementary4/)을 황소 초등 문제은행 최신판으로 맞춤** (Claude Code / Opus 5.5, Mac)
+> - 원본: docssam1/lete-on `hselementary/question-bank` (커밋은 `elementary4/.source-commit`). 이전 사본은 11-16(518428e33) 판이라 118유형이 검수 대기로 잠겨 있었고, 그 뒤 고친 답 25유형·숫자 뒤 조사 보정·문제 힌트 정책·인쇄 명조가 빠져 있었다.
+> - 옮긴 것: 4학년 생성기·교육과정·11-22 공개 등록·원문 생성기 6개(`source-4-*-original.js`, `source-45-last-original.js`)·`problem-hint-policy.js`·`number-josa.js`·`print-typography.css`(명조 글꼴은 `elementary4/assets/fonts/`, OFL)·최신 화면(여러 학기 함께 보기·여러 난이도 섞기·문항 수 슬라이더).
+> - 자료실 전용 부분은 유지: `gate.js` 입장 확인, `grade4-only.js`, G-FIELD 표시·워터마크, `bankName`·`difficultyLabels` 등 testbank 설정. lete-on의 학년·학기 승인번호 대신 `bank-access-open.js`(불러온 학기 모두 열기)를 쓴다. testbank/index.html에도 이 모듈·조사 보정·인쇄 명조와 새 app.js가 찾는 칸 3개를 넣었다.
+> - 큰 수 '단위 개수로 만든 수의 특정 자리 숫자 찾기' 어려움 단계는 lete-on에서 조 단위 안(1조 200~899개 × 10배)으로 고친 판을 쓴다(이 사본의 11-28 수정을 대신함).
+> - `qa/upgrade41-unit-test-validate.cjs` 1번: 문제은행이 'n분의 1로'를 '1/n로'로 쓰므로 둘 다 읽게 고침.
+> - 검사: 브라우저에서 4학년 635유형 모두 lete-on 최신판과 같은 시드 문항 일치·잠김 0, qa 7개(elementary4·upgrade-bank 2개·upgrade-course·upgrade41 3개) 통과.
+
 ---
 
 ## 1. 시스템 개요
