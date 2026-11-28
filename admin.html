@@ -111,6 +111,10 @@
   .dz.over{border-color:var(--navy);background:#e9f0ff;color:var(--navy);}
   .dz input[type=file]{max-width:150px;font-size:12px;min-width:0;}
   .dz span{white-space:nowrap;}
+  .field label.dz{width:auto;max-width:100%;flex-wrap:wrap;}
+  .field label.dz.file-dz{flex:1 1 220px;min-height:48px;}
+  .field label.dz.file-dz span{white-space:normal;}
+  .field .file-hint{flex-basis:100%;margin:2px 0 0;font-size:12px;color:var(--muted);line-height:1.6;}
   .dz.big{display:flex;justify-content:center;padding:16px;font-size:13px;}
 
   .rich-bar{position:fixed;z-index:95;display:flex;flex-wrap:wrap;gap:3px;max-width:330px;background:#2d3436;border-radius:9px;padding:5px 6px;box-shadow:0 8px 22px rgba(0,0,0,.35);transform:translate(-50%,-118%);}
@@ -1276,6 +1280,7 @@
         <div class="field"><label>PDF 링크</label><input type="url" value="${esc(it.pdf)}" oninput="setBook(${i},'pdf',this.value)" placeholder="업로드하면 자동 입력 / 직접 링크도 가능"></div>
         <div class="field"><label>이미지 뷰어</label><button class="btn add sm" onclick="splitBook(${i})">🖼 PDF를 이미지로 분할</button> &nbsp; <span id="bspl-${i}" style="font-size:12px;color:var(--muted)">${it.imgdir&&it.pages?('✅ 이미지 '+it.pages+'p 준비됨'):'PDF 업로드 시 자동 분할'}</span></div>
         <div class="field"><label>영상 주소(선택)</label><input type="url" value="${esc(it.video)}" oninput="setBook(${i},'video',this.value)" placeholder="유튜브 단일영상이면 좌우 배치(강의+교재)"></div>
+        <div class="field"><label>파일 첨부</label><label class="dz file-dz" ondragover="dzOver(event)" ondragleave="dzOff(event)" ondrop="dzDrop(event)"><input type="file" class="book-file" multiple accept="${BOOK_FILE_EXT.map(x=>'.'+x).join(',')}" onchange="uploadBookFiles(${i},this)"><span>ZIP·PDF·한글·오피스·사진 파일을 선택하거나 드래그</span></label><span class="file-hint">올리면 아래 링크 버튼에 「내려받기」로 자동 추가됩니다(파일 하나 ${BOOK_FILE_MAX_MB}MB까지). 추가한 뒤 [GitHub에 저장]을 눌러야 학생에게 보입니다. 저장소가 공개라서 주소를 아는 사람은 로그인 없이 받을 수 있습니다.</span></div>
         <label class="flbl">🔗 링크 버튼(선택) — 영상 재생목록 · 답안 파일 등</label>
         <div class="tb-list">${linkRows}</div>
         <button class="btn add sm" onclick="addBookLink(${i})">＋ 링크 버튼 추가</button>
@@ -1340,6 +1345,38 @@
     return {err:(e.message||res.status)};
   }
   function ghUploadPdf(file, dir){ return ghUploadBlob(file, dir, file.name); }
+  /* 교재에 첨부하는 파일(ZIP 등): books/files/에 올리고 교재의 링크 버튼에 '내려받기'로 넣는다.
+     주소는 같은 사이트의 상대 주소라서 학생이 받을 때 원래 파일 이름(download)이 그대로 쓰인다. */
+  const BOOK_FILE_EXT=['zip','pdf','hwp','hwpx','doc','docx','ppt','pptx','xls','xlsx','jpg','jpeg','png','mp3'];
+  const BOOK_FILE_MAX_MB=25;
+  let bookFileBusy=false;
+  async function uploadBookFiles(i, input){
+    const files=Array.from(input.files||[]); input.value=''; if(!files.length) return;
+    const book=S.books[i]; if(!book) return;
+    if(bookFileBusy){ toast('앞의 파일을 올리는 중입니다. 끝난 뒤 다시 선택해 주세요'); return; }
+    const bad=files.filter(f=>!BOOK_FILE_EXT.includes((f.name.split('.').pop()||'').toLowerCase()));
+    if(bad.length){ toast('올릴 수 없는 형식: '+bad.map(f=>f.name).join(', ')); return; }
+    const big=files.filter(f=>f.size>BOOK_FILE_MAX_MB*1024*1024||!f.size);
+    if(big.length){ toast((big[0].size?BOOK_FILE_MAX_MB+'MB보다 큰 파일: ':'빈 파일: ')+big.map(f=>f.name).join(', ')); return; }
+    bookFileBusy=true;
+    let done=0;
+    try{
+      for(const f of files){
+        toast('파일 올리는 중… '+(done+1)+'/'+files.length+' '+f.name);
+        const r=await ghUploadBlob(f,'books/files',f.name);
+        if(r.err==='perm'){ toast('토큰 권한이 없습니다. [🔑 토큰 변경]으로 Contents 쓰기 권한 토큰을 넣어주세요'); break; }
+        if(!r.url){ if(r.err!=='notoken') toast('업로드 실패: '+f.name+' · '+r.err); break; }
+        /* 올리는 동안 목록이 바뀌었을 수 있어 같은 교재를 다시 찾는다 */
+        if(S.books.indexOf(book)<0){ toast('그 교재가 목록에서 삭제되어 연결하지 않았습니다'); break; }
+        const rel=r.url.replace(/^https:\/\/raw\.githubusercontent\.com\/[^\/]+\/[^\/]+\/[^\/]+\//,'');
+        (book.links=book.links||[]).push({label:f.name,url:rel,download:f.name});
+        if(!book.title) book.title=f.name.replace(/\.[^.]+$/,'');
+        done++; renderBooks(); dirty();
+      }
+    }catch(e){ toast('업로드 실패: '+(e&&e.message||'네트워크를 확인해 주세요')); }
+    finally{ bookFileBusy=false; }
+    if(done===files.length) toast('파일 '+done+'개를 올렸습니다. [GitHub에 저장]을 눌러야 학생에게 보입니다');
+  }
   function dataUrlToBlob(dataUrl){ const parts=dataUrl.split(','); const mime=((parts[0].match(/:(.*?);/))||[])[1]||'image/jpeg'; const bin=atob(parts[1]); const arr=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i); return new Blob([arr],{type:mime}); }
   async function uploadBookPdf(i, input){
     const f=input.files&&input.files[0]; if(!f) return;
