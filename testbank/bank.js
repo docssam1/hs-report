@@ -80,7 +80,7 @@
       generatorKey: function (type) { return type.generatorKey || ''; },
       generate: function (type, rank, offset, seed) { return make(type.source, offset, seed); }
     };
-    return load('../elementary4/app.js?v=20261128-fold').then(function () {
+    return load('../elementary4/app.js?v=20261129-sync').then(function () {
       /* app.js가 이름 칸을 채운 뒤에 자료실 로그인 이름을 다시 넣는다 */
       if (root.GFIELD_ELEM4_GATE) root.GFIELD_ELEM4_GATE.start();
       return load('./hover.js?v=20261128a');

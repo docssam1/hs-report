@@ -1437,26 +1437,26 @@ button{
 .source61-e3-answer .source61-math-board{width:min(430px,100%);margin-top:0}
 .source61-e3-answer .source61-math-row>b{font-family:Pretendard,"Malgun Gothic",Arial,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:0}
 .geometry-diagram.source61-vs-e3-diagram{display:block;width:min(440px,100%);height:auto;margin:10px auto 0;overflow:visible}
-.source61-vs-e3-diagram text{fill:#244b68;font-family:Pretendard,"Malgun Gothic",Arial,sans-serif;font-size:11px;font-weight:850;font-variant-numeric:tabular-nums;letter-spacing:0;text-anchor:middle;dominant-baseline:middle;paint-order:stroke;stroke:#fff;stroke-width:2.5px;stroke-linejoin:round}
-.source61-vs-e3-edge{fill:none;stroke:#244b68;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.source61-vs-e3-hidden-edge{fill:none;stroke:#8195a3;stroke-width:1.55;stroke-dasharray:5 4;opacity:.82;vector-effect:non-scaling-stroke}
-.source61-vs-e3-face{fill:#e8f3f7;fill-opacity:.58;stroke:#244b68;stroke-width:1.7;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.source61-vs-e3-top-face{fill:#dcecf5}.source61-vs-e3-front-face{fill:#f8fbfd}.source61-vs-e3-right-face{fill:#e7f2ed}
-.source61-vs-e3-cut-face{fill:#f4d27b;fill-opacity:.62;stroke:#b77909;stroke-width:2;stroke-dasharray:4 3;vector-effect:non-scaling-stroke}
-.source61-vs-e3-cut-face.is-solved,.source61-vs-e3-cut-plane.is-solved{fill:#f3c954;fill-opacity:.8;stroke:#a65f00;stroke-width:3}
-.source61-vs-e3-cut-edge{fill:none;stroke:#b77909;stroke-width:2.3;stroke-dasharray:4 3;vector-effect:non-scaling-stroke}
-.source61-vs-e3-measure{fill:#315f7d!important;font-size:11px;font-weight:950}.source61-vs-e3-note{fill:#607a8e!important;font-size:10px}.source61-vs-e3-cut-label,.source61-vs-e3-result-label{fill:#9a5f00!important;font-weight:950}
-.source61-vs-e3-net-face{stroke:#244b68;stroke-width:1.6;vector-effect:non-scaling-stroke}.source61-vs-e3-net-a{fill:#e7f2ed}.source61-vs-e3-net-b{fill:#e8f3f7}.source61-vs-e3-net-c{fill:#fff0bd}
-.source61-vs-e3-net-edge{fill:none;stroke-width:3.5;vector-effect:non-scaling-stroke}.source61-vs-e3-net-edge.is-a{stroke:#2f7d67}.source61-vs-e3-net-edge.is-b{stroke:#2f6f9f}.source61-vs-e3-net-edge.is-c{stroke:#b77909}
-.source61-vs-e3-chain-front{fill:#d7eaf3;stroke:#244b68;stroke-width:1.6}.source61-vs-e3-chain-top{fill:#c2ddeb;stroke:#244b68;stroke-width:1.6}.source61-vs-e3-chain-side{fill:#d4e9de;stroke:#244b68;stroke-width:1.6}.source61-vs-e3-chain-cube{fill:#ffefb5;stroke:#9a6500;stroke-width:1.8}.source61-vs-e3-chain-cube-top{fill:#ffd76e;stroke:#9a6500;stroke-width:1.8}.source61-vs-e3-chain-cube-side{fill:#efc874;stroke:#9a6500;stroke-width:1.8}.source61-vs-e3-contact-face{fill:#f4d27b;fill-opacity:.78;stroke:#9a6500;stroke-width:2;vector-effect:non-scaling-stroke}.source61-vs-e3-contact-face.is-solved{fill:#f3b83f;fill-opacity:.95;stroke:#9a5f00;stroke-width:3}.source61-vs-e3-chain-seam{fill:none;stroke:#7891a5;stroke-width:1.8;stroke-dasharray:3 2;vector-effect:non-scaling-stroke}.source61-vs-e3-contact{stroke:#aebdc5;stroke-width:1.5;stroke-dasharray:4 3}.source61-vs-e3-contact.is-solved{stroke:#bd7808;stroke-width:4;stroke-dasharray:none}
-.source61-vs-e3-annotation-band rect{fill:#fff8df;stroke:#c69223;stroke-width:1.4;vector-effect:non-scaling-stroke}
-.source61-vs-e3-area-face-a{fill:#dcecf5}.source61-vs-e3-area-face-b{fill:#fff0bd}.source61-vs-e3-area-face-c{fill:#e7f2ed}
-.source61-vs-e3-stair-cell{fill:#e8f3f7;stroke:#244b68;stroke-width:1;vector-effect:non-scaling-stroke}.source61-vs-e3-stair-cell.layer-1{fill:#fff0bd}.source61-vs-e3-stair-cell.layer-2{fill:#e7f2ed}.source61-vs-e3-stair-cell.layer-3{fill:#f4d9d4}.source61-vs-e3-stair-face{fill-opacity:.94;stroke:#244b68;stroke-width:1.5;vector-effect:non-scaling-stroke}.source61-vs-e3-stair-top-face{fill:#c6e0ee}.source61-vs-e3-stair-front-face{fill:#d8eaf2}.source61-vs-e3-stair-right-face{fill:#d5e9df}.source61-vs-e3-stair-face.is-solved{fill-opacity:.98;stroke:#a65f00;stroke-width:2.3}.source61-vs-e3-stair-top-face.is-solved{fill:#f6ca61}.source61-vs-e3-stair-front-face.is-solved{fill:#f4d27b}.source61-vs-e3-stair-right-face.is-solved{fill:#e8bb52}.source61-vs-e3-stair-layer-cell{fill:#e8f3f7;stroke:#7891a5;stroke-width:1;vector-effect:non-scaling-stroke}.source61-vs-e3-stair-layer-cell.is-solved{fill:#f4c95d;stroke:#9a6500;stroke-width:1.5}
-.source61-vs-e3-cube-top{fill:#dcecf5;stroke:#244b68;stroke-width:1.6}.source61-vs-e3-cube-side{fill:#e7f2ed;stroke:#244b68;stroke-width:1.6}.source61-vs-e3-cube-front{fill:#e8f3f7;stroke:#244b68;stroke-width:1.6}.source61-vs-e3-cube-front.is-solved{fill:#ffe0a1;stroke:#b77909;stroke-width:2.3}.source61-vs-e3-shared-face{stroke:#bd7808;stroke-width:4;vector-effect:non-scaling-stroke}.source61-vs-e3-cross-label{fill:#244b68!important;font-size:9px!important;font-weight:950}
-.source61-vs-e3-cut-plane{fill:#f4d27b;fill-opacity:.5;stroke:#b77909;stroke-width:2;stroke-dasharray:5 3;vector-effect:non-scaling-stroke}.source61-vs-e3-view-face{fill:#e8f3f7;stroke:#244b68;stroke-width:2}.source61-vs-e3-view-label{fill:#244b68!important;font-size:13px;font-weight:950}.source61-vs-e3-layer-cell{fill:#e8f3f7;stroke:#244b68;stroke-width:1;vector-effect:non-scaling-stroke}
+.geometry-diagram .source61-vs-e3-diagram text{fill:#244b68;font-family:Pretendard,"Malgun Gothic",Arial,sans-serif;font-size:11px;font-weight:850;font-variant-numeric:tabular-nums;letter-spacing:0;text-anchor:middle;dominant-baseline:middle;paint-order:stroke;stroke:#fff;stroke-width:2.5px;stroke-linejoin:round}
+.geometry-diagram .source61-vs-e3-edge{fill:none;stroke:#244b68;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.geometry-diagram .source61-vs-e3-hidden-edge{fill:none;stroke:#8195a3;stroke-width:1.55;stroke-dasharray:5 4;opacity:.82;vector-effect:non-scaling-stroke}
+.geometry-diagram .source61-vs-e3-face{fill:#e8f3f7;fill-opacity:.58;stroke:#244b68;stroke-width:1.7;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.geometry-diagram .source61-vs-e3-top-face{fill:#dcecf5}.geometry-diagram .source61-vs-e3-front-face{fill:#f8fbfd}.geometry-diagram .source61-vs-e3-right-face{fill:#e7f2ed}
+.geometry-diagram .source61-vs-e3-cut-face{fill:#f4d27b;fill-opacity:.62;stroke:#b77909;stroke-width:2;vector-effect:non-scaling-stroke}
+.geometry-diagram .source61-vs-e3-cut-face.is-solved,.geometry-diagram .source61-vs-e3-cut-plane.is-solved{fill:#f3c954;fill-opacity:.8;stroke:#a65f00;stroke-width:3}
+.geometry-diagram .source61-vs-e3-cut-edge{fill:none;stroke:#b77909;stroke-width:2.3;vector-effect:non-scaling-stroke}
+.geometry-diagram .source61-vs-e3-measure{fill:#315f7d!important;font-size:11px;font-weight:950}.geometry-diagram .source61-vs-e3-note{fill:#607a8e!important;font-size:10px}.geometry-diagram .source61-vs-e3-cut-label,.geometry-diagram .source61-vs-e3-result-label{fill:#9a5f00!important;font-weight:950}
+.source61-vs-e3-net-face{stroke:#244b68;stroke-width:1.6;vector-effect:non-scaling-stroke}.geometry-diagram .source61-vs-e3-net-a{fill:#e7f2ed}.geometry-diagram .source61-vs-e3-net-b{fill:#e8f3f7}.geometry-diagram .source61-vs-e3-net-c{fill:#fff0bd}
+.geometry-diagram .source61-vs-e3-net-edge{fill:none;stroke-width:3.5;vector-effect:non-scaling-stroke}.source61-vs-e3-net-edge.is-a{stroke:#2f7d67}.source61-vs-e3-net-edge.is-b{stroke:#2f6f9f}.source61-vs-e3-net-edge.is-c{stroke:#b77909}
+.geometry-diagram .source61-vs-e3-chain-front{fill:#d7eaf3;stroke:#244b68;stroke-width:1.6}.geometry-diagram .source61-vs-e3-chain-top{fill:#c2ddeb;stroke:#244b68;stroke-width:1.6}.geometry-diagram .source61-vs-e3-chain-side{fill:#d4e9de;stroke:#244b68;stroke-width:1.6}.geometry-diagram .source61-vs-e3-chain-cube{fill:#ffefb5;stroke:#9a6500;stroke-width:1.8}.geometry-diagram .source61-vs-e3-chain-cube-top{fill:#ffd76e;stroke:#9a6500;stroke-width:1.8}.geometry-diagram .source61-vs-e3-chain-cube-side{fill:#efc874;stroke:#9a6500;stroke-width:1.8}.geometry-diagram .source61-vs-e3-contact-face{fill:#f4d27b;fill-opacity:.78;stroke:#9a6500;stroke-width:2;vector-effect:non-scaling-stroke}.geometry-diagram .source61-vs-e3-contact-face.is-solved{fill:#f3b83f;fill-opacity:.95;stroke:#9a5f00;stroke-width:3}.geometry-diagram .source61-vs-e3-chain-seam{fill:none;stroke:#7891a5;stroke-width:1.8;stroke-dasharray:3 2;vector-effect:non-scaling-stroke}.source61-vs-e3-contact{stroke:#aebdc5;stroke-width:1.5;stroke-dasharray:4 3}.source61-vs-e3-contact.is-solved{stroke:#bd7808;stroke-width:4;stroke-dasharray:none}
+.geometry-diagram .source61-vs-e3-annotation-band rect{fill:#fff8df;stroke:#c69223;stroke-width:1.4;vector-effect:non-scaling-stroke}
+.geometry-diagram .source61-vs-e3-area-face-a{fill:#dcecf5}.geometry-diagram .source61-vs-e3-area-face-b{fill:#fff0bd}.geometry-diagram .source61-vs-e3-area-face-c{fill:#e7f2ed}
+.geometry-diagram .source61-vs-e3-stair-cell{fill:#e8f3f7;stroke:#244b68;stroke-width:1;vector-effect:non-scaling-stroke}.geometry-diagram .source61-vs-e3-stair-cell.layer-1{fill:#fff0bd}.geometry-diagram .source61-vs-e3-stair-cell.layer-2{fill:#e7f2ed}.geometry-diagram .source61-vs-e3-stair-cell.layer-3{fill:#f4d9d4}.source61-vs-e3-stair-face{fill-opacity:1;stroke:#244b68;stroke-width:1.5;vector-effect:non-scaling-stroke}.geometry-diagram .source61-vs-e3-stair-top-face{fill:#c6e0ee}.geometry-diagram .source61-vs-e3-stair-front-face{fill:#d8eaf2}.geometry-diagram .source61-vs-e3-stair-right-face{fill:#d5e9df}.source61-vs-e3-stair-face.is-solved{fill-opacity:.98;stroke:#a65f00;stroke-width:2.3}.geometry-diagram .source61-vs-e3-stair-top-face.is-solved{fill:#f6ca61}.geometry-diagram .source61-vs-e3-stair-front-face.is-solved{fill:#f4d27b}.geometry-diagram .source61-vs-e3-stair-right-face.is-solved{fill:#e8bb52}.geometry-diagram .source61-vs-e3-stair-layer-cell{fill:#e8f3f7;stroke:#7891a5;stroke-width:1;vector-effect:non-scaling-stroke}.geometry-diagram .source61-vs-e3-stair-layer-cell.is-solved{fill:#f4c95d;stroke:#9a6500;stroke-width:1.5}
+.geometry-diagram .source61-vs-e3-cube-top{fill:#dcecf5;stroke:#244b68;stroke-width:1.6}.geometry-diagram .source61-vs-e3-cube-side{fill:#e7f2ed;stroke:#244b68;stroke-width:1.6}.geometry-diagram .source61-vs-e3-cube-front{fill:#e8f3f7;stroke:#244b68;stroke-width:1.6}.geometry-diagram .source61-vs-e3-cube-front.is-solved{fill:#ffe0a1;stroke:#b77909;stroke-width:2.3}.source61-vs-e3-shared-face{stroke:#bd7808;stroke-width:4;vector-effect:non-scaling-stroke}.geometry-diagram .source61-vs-e3-cross-label{fill:#244b68!important;font-size:9px!important;font-weight:950}
+.geometry-diagram .source61-vs-e3-cut-plane{fill:#f4d27b;fill-opacity:.5;stroke:none;vector-effect:non-scaling-stroke}.geometry-diagram .source61-vs-e3-view-face{fill:#e8f3f7;stroke:#244b68;stroke-width:2}.geometry-diagram .source61-vs-e3-view-label{fill:#244b68!important;font-size:13px;font-weight:950}.geometry-diagram .source61-vs-e3-layer-cell{fill:#e8f3f7;stroke:#244b68;stroke-width:1;vector-effect:non-scaling-stroke}
 .source61-vs-e3-answer .source61-math-board{width:min(440px,100%);margin-top:0}.source61-vs-e3-answer .source61-math-row>b{font-family:Pretendard,"Malgun Gothic",Arial,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:0}
-.geometry-diagram.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"]{width:min(620px,100%)}.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"] text{font-size:18px}.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"] .source61-vs-e3-note{font-size:16px}.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"] .source61-vs-e3-result-label{font-size:18px}.source61-vs-e3-dimension{fill:none;stroke:#315f7d;stroke-width:1.5;vector-effect:non-scaling-stroke}.source61-vs-e3-side-measure{text-anchor:middle!important}
-.source61-vs-e3-callout line{stroke:#7891a5;stroke-width:1.25;vector-effect:non-scaling-stroke}.source61-vs-e3-callout circle{fill:#315f7d;stroke:#fff;stroke-width:1;vector-effect:non-scaling-stroke}
+.geometry-diagram.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"]{width:min(620px,100%)}.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"] text{font-size:18px}.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"] .source61-vs-e3-note{font-size:16px}.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"] .source61-vs-e3-result-label{font-size:18px}.geometry-diagram .source61-vs-e3-dimension{fill:none;stroke:#315f7d;stroke-width:1.5;vector-effect:non-scaling-stroke}.source61-vs-e3-side-measure{text-anchor:middle!important}
+.source61-vs-e3-callout line{stroke:#7891a5;stroke-width:1.25;vector-effect:non-scaling-stroke}.geometry-diagram .source61-vs-e3-callout circle{fill:#315f7d;stroke:#fff;stroke-width:1;vector-effect:non-scaling-stroke}
 @media(max-width:720px){.geometry-diagram.source61-vs-e3-diagram{width:min(360px,100%);margin-top:7px}.source61-vs-e3-diagram text{font-size:9px;stroke-width:1.8px}.geometry-diagram.source61-vs-e3-diagram[data-source61-vs-e3-structure="alternating-chain-surface"] text,.geometry-diagram.source61-vs-e3-diagram[data-source61-vs-e3-structure="staircase-unpainted-surface"] text{font-size:16px;stroke-width:2px}.geometry-diagram.source61-vs-e3-diagram[data-source61-vs-e3-structure="alternating-chain-surface"] .source61-vs-e3-result-label,.geometry-diagram.source61-vs-e3-diagram[data-source61-vs-e3-structure="staircase-unpainted-surface"] .source61-vs-e3-note,.geometry-diagram.source61-vs-e3-diagram[data-source61-vs-e3-structure="staircase-unpainted-surface"] .source61-vs-e3-result-label{font-size:16px}.source61-vs-e3-note{font-size:8px}.source61-vs-e3-answer .source61-math-row{grid-template-columns:minmax(78px,.7fr) minmax(0,1.3fr);gap:7px;padding:7px 8px}.source61-vs-e3-answer .source61-math-row>b{font-size:13px}}
 @media(max-width:720px){.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"] text{font-size:20px;stroke-width:2.4px}.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"] .source61-vs-e3-note{font-size:17px}.source61-vs-e3-diagram[data-source61-vs-e3-structure="step-prism-net-unknown-edge"] .source61-vs-e3-result-label{font-size:20px}}
 @media print{.geometry-diagram.source61-vs-e3-diagram{width:min(330px,100%);max-height:220px;margin:5px auto 0}.print-page:has(.source61-vs-e3-diagram) .question-item,.print-page:has(.source61-vs-e3-diagram) .solution-item{break-inside:avoid;page-break-inside:avoid}.answer-page:has(.source61-vs-e3-diagram) .solution-list{display:block}.answer-page:has(.source61-vs-e3-diagram) .solution-item+.solution-item{margin-top:9px}}
@@ -1498,7 +1498,7 @@ button{
 .source61-e4-truncated-pyramid{aspect-ratio:330/230!important}
 .source61-e4-tetrahedron{aspect-ratio:330/220!important}
 .source61-e4-joined-solid{aspect-ratio:330/180!important}
-.source61-e4-bipyramid{aspect-ratio:330/190!important}
+.source61-e4-bipyramid{aspect-ratio:330/300!important}
 .source61-e4-square-net{aspect-ratio:330/300!important}
 .source61-e4-cube-pyramids.is-solved,.source61-e4-joined-solid.is-solved,.source61-e4-bipyramid.is-solved{aspect-ratio:330/300!important}
 .source61-e4-square-net .source61-e4-net-frame{fill:#fff;stroke:#244b68;stroke-width:2.2;stroke-linejoin:round;vector-effect:non-scaling-stroke}
@@ -1682,6 +1682,60 @@ button{
 
 /* Keep a physical margin on every printed solution page, including overflow pages. */
 @page bank-answer { size: A4; margin: 12mm 0; }
+/* Type-specific answer pages use zero print padding (see the rule below), so each named page needs the same physical margin. */
+@page source51E2Example21Answer { size: A4; margin: 12mm 0; }
+@page source51E3Example31Answer { size: A4; margin: 12mm 0; }
+@page source51E3Mission2Answer { size: A4; margin: 12mm 0; }
+@page source51E3TriangleAreaAnswer { size: A4; margin: 12mm 0; }
+@page source51E4AreaAnswer { size: A4; margin: 12mm 0; }
+@page source51E4Example41Answer { size: A4; margin: 12mm 0; }
+@page source51E4ExamplesAnswer { size: A4; margin: 12mm 0; }
+@page source61E1M3Answer { size: A4; margin: 12mm 0; }
+@page source61E2Example2Answer { size: A4; margin: 12mm 0; }
+@page source61E2Example4Answer { size: A4; margin: 12mm 0; }
+@page source61E2Mission6Answer { size: A4; margin: 12mm 0; }
+@page source61E4Example1Answer { size: A4; margin: 12mm 0; }
+@page source61E4Mission4Answer { size: A4; margin: 12mm 0; }
+@page source61SurfaceE1Answer { size: A4; margin: 12mm 0; }
+@page source61VolumeE4Answer { size: A4; margin: 12mm 0; }
+@page source62E1Example1Answer { size: A4; margin: 12mm 0; }
+@page source62E1Example2Answer { size: A4; margin: 12mm 0; }
+@page source62E1Example3Answer { size: A4; margin: 12mm 0; }
+@page source62E1Example4Answer { size: A4; margin: 12mm 0; }
+@page source62E1Mission1Answer { size: A4; margin: 12mm 0; }
+@page source62E1Mission2Answer { size: A4; margin: 12mm 0; }
+@page source62E1Mission3Answer { size: A4; margin: 12mm 0; }
+@page source62E1Mission4Answer { size: A4; margin: 12mm 0; }
+@page source62E1Mission5Answer { size: A4; margin: 12mm 0; }
+@page source62E1Mission6Answer { size: A4; margin: 12mm 0; }
+@page source62E2Example1Answer { size: A4; margin: 12mm 0; }
+@page source62E2Example2Answer { size: A4; margin: 12mm 0; }
+@page source62E2Example3Answer { size: A4; margin: 12mm 0; }
+@page source62E2Example4Answer { size: A4; margin: 12mm 0; }
+@page source62E2ExplorationAnswer { size: A4; margin: 12mm 0; }
+@page source62E2Mission1Answer { size: A4; margin: 12mm 0; }
+@page source62E2Mission3Answer { size: A4; margin: 12mm 0; }
+@page source62E2Mission4Answer { size: A4; margin: 12mm 0; }
+@page source62E2Mission5Answer { size: A4; margin: 12mm 0; }
+@page source62E2Mission6Answer { size: A4; margin: 12mm 0; }
+@page source62E3Example1Answer { size: A4; margin: 12mm 0; }
+@page source62E3Example2Answer { size: A4; margin: 12mm 0; }
+@page source62E3Example3Answer { size: A4; margin: 12mm 0; }
+@page source62E3Example4Answer { size: A4; margin: 12mm 0; }
+@page source62E3Mission1Answer { size: A4; margin: 12mm 0; }
+@page source62E3Mission2Answer { size: A4; margin: 12mm 0; }
+@page source62E4ExplorationAnswer { size: A4; margin: 12mm 0; }
+@page source62E4Mission1Answer { size: A4; margin: 12mm 0; }
+@page source62E4Mission2Answer { size: A4; margin: 12mm 0; }
+@page source62E4Mission3Answer { size: A4; margin: 12mm 0; }
+@page source62E4Mission4Answer { size: A4; margin: 12mm 0; }
+@page source62E4Mission5Answer { size: A4; margin: 12mm 0; }
+@page source62E4Mission6Answer { size: A4; margin: 12mm 0; }
+@page source62E5Example1Answer { size: A4; margin: 12mm 0; }
+@page source62E5Example3Answer { size: A4; margin: 12mm 0; }
+@page source62E5Example4Answer { size: A4; margin: 12mm 0; }
+@page source62E5ExplorationAnswer { size: A4; margin: 12mm 0; }
+@page source62E5Mission1Answer { size: A4; margin: 12mm 0; }
 @media print {
   :where(.answer-pages) > .answer-page { page: bank-answer; padding-top: 0; padding-bottom: 0; }
   /* Let overflow from one answer group share a physical page with the next. */
@@ -1701,3 +1755,56 @@ button{
 /* Keep the available alternative legible while the original stays locked. */
 .tree-type.is-pending.has-alternative { opacity: 1; }
 .tree-alternative-hint { display: block; margin-top: 3px; color: #2f6b4a; font-size: 11px; font-weight: 600; }
+
+/* 2026-11-22: 혼자 A4보다 긴 문항은 인쇄에서 문항 안에서 다음 장으로 이어지게 한다(이름표만 있는 빈 장 방지). */
+@media print{.print-page--oversize .question-item{break-inside:auto!important;page-break-inside:auto!important;min-height:0!important}.print-page--oversize .page-label{break-after:avoid;page-break-after:avoid}}
+/* 2026-11-22: 인쇄에서는 가로 스크롤이 없으므로 긴 식이 칸을 넘으면 잘리지 않고 줄바꿈되게 한다. */
+@media print{.equation.equation--wrap{overflow:visible;white-space:normal;overflow-wrap:anywhere}}
+/* 2026-11-22: 큰 수에서 특정 자리를 가리키는 기호(㉠·㉡)는 숫자 옆이 아니라 그 숫자 바로 아래에 작게 놓아 수의 일부로 보이지 않게 한다. */
+.marked-digit{display:inline-flex;flex-direction:column;align-items:center;line-height:1;margin:0 .02em;vertical-align:baseline}
+.marked-digit>u{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:2px;line-height:1.15}
+.marked-digit>small{font-size:.6em;line-height:1;margin-top:1px;font-weight:700;letter-spacing:0}
+/* 2026-11-22: 4문항 한 장(four-up) 인쇄에서 큰 입체·전개도 그림이 칸을 넘지 않도록 그림 최대 높이를 칸에 맞춘다. */
+@media print{.print-page--four-up .question-prompt svg{max-height:62mm;width:auto;max-width:100%;height:auto}}
+/* 2026-11-22: 한 문항이 A4 한 장을 넘지 않도록 인쇄 시 문제 그림의 최대 높이를 제한한다(비율 유지). */
+@media print{.question-prompt svg{max-height:130mm;width:auto;max-width:100%;height:auto}.print-page--four-up .question-prompt svg{max-height:62mm}}
+@media print{.print-page--paired .source62-sugar-packing-flow{grid-template-columns:minmax(0,1fr) 20px minmax(0,.72fr);gap:6px;padding:10px}.print-page--paired .source62-student-change-rows>span{grid-template-columns:52px minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr)}.print-page--paired .source62-student-change-rows strong,.print-page--paired .source62-student-change-rows b,.print-page--paired .source62-student-change-rows i{padding:8px 4px;overflow-wrap:anywhere}}
+@media print{.print-page--fit .question-prompt svg,.print-page--fit .question-prompt img{max-height:150mm!important;width:auto!important;max-width:100%!important;height:auto!important}}
+@media print{.print-page--fit-tight .question-prompt svg,.print-page--fit-tight .question-prompt img{max-height:100mm!important}}
+
+/* 6-1 2단원 원본 복원: Mission 6 종이 사용표, 예제 3-1 조건식 */
+.source61-e3-paper-usage{border-collapse:collapse;margin:10px auto 0;font-variant-numeric:tabular-nums}.source61-e3-paper-usage th,.source61-e3-paper-usage td{border:1px solid #9aa8b3;padding:4px 14px;text-align:center}.source61-e3-paper-usage thead th{background:#eef3f6}.source61-e3-condition{text-align:center;margin:10px 0 0}
+
+/* 2026-11-24: 6-1 5단원 그래프(그림그래프·띠그래프·원그래프) 그림은 생성기가 fill 속성으로 칸·범례 색을 정한다. 위의 .geometry-diagram 공통 fill:none 규칙이 이 색을 지워 원그래프 범례와 부채꼴을 구분할 수 없었으므로, fill 속성이 있는 도형만 그 색을 되살린다. */
+.geometry-diagram:is(.source61-graphs-e1-diagram,.source61-graphs-e2-diagram,.source61-graphs-e2-pictograph,.source61-graphs-e3-diagram,.source61-e3-pets,.source61-graphs-e4-diagram) :is(path,polygon,rect,circle,ellipse)[fill]{fill:revert-layer}
+/* 2026-11-24: 6학년의 다른 그림도 생성기가 fill 속성으로 면·겹친 부분·점을 구분하므로 같은 방식으로 되살린다(전개도 면, 두 삼각형, 테이프 겹친 부분, 나무 자리 등). */
+.geometry-diagram:is(.source61-e2-diagram,.source61-triangular-prism-net,.source61-decimal-e4-diagram,.source61-ratio-e2-diagram,.source61-ratio-e3-diagram,.source61-ratio-e4-diagram,.source61-ratio-e5-diagram,.source62-tape-count,.e6-geometry) :is(path,polygon,rect,circle,ellipse)[fill],.source62-tree-method-figure .geometry-diagram :is(path,polygon,rect,circle,ellipse)[fill]{fill:revert-layer}
+
+/* 2026-11-25: 겨냥도 모서리 규칙 — 보이는 모서리는 실선, 보이지 않는 모서리만 점선(잘린 면의 보이지 않는 모서리는 주황 점선). */
+.geometry-diagram .source61-vs-e3-cut-hidden-edge{fill:none;stroke:#b77909;stroke-width:1.8;stroke-dasharray:4 3;vector-effect:non-scaling-stroke}
+
+/* 2026-11-25: 여러 학년·학기·단원 함께 고르기, 여러 난이도 섞기, 문항 수 1~150 */
+.semester-filter{flex-wrap:wrap}
+.semester-chips{display:flex;flex-wrap:wrap;gap:6px}
+.semester-chip{min-height:32px;padding:0 13px;border:1px solid #bcc9ca;border-radius:16px;background:#fff;color:#52676d;font-size:12px;font-weight:800;cursor:pointer}
+.semester-chip.is-active{border-color:#2f7d8a;background:#e3f1f3;color:#1f5f69}
+.semester-chip.is-primary{border-color:#1f5f69;background:#1f5f69;color:#fff;cursor:default;opacity:1}
+.tree-semester{border-top:2px solid #cbd4d4}
+.tree-semester:first-child{border-top:0}
+.tree-semester-head{display:flex;align-items:center;gap:9px;padding:11px 12px;background:#eaf2f3;color:#1f4f59;font-size:14px}
+.tree-unit-row{display:flex;align-items:center}
+.tree-unit-row .tree-unit-toggle{flex:1 1 auto;min-width:0}
+.tree-group-check{flex:0 0 auto;width:16px;height:16px;margin:0 2px 0 10px;accent-color:#2f7d8a;cursor:pointer}
+.tree-subunit-head .tree-group-check,.tree-semester-head .tree-group-check{margin:0}
+.count-presets{grid-template-columns:repeat(5,minmax(0,1fr))}
+.count-range{display:block}
+.count-range input{width:100%;accent-color:#2f7d8a}
+.count-range-scale{display:flex;justify-content:space-between;color:#6b7f85;font-size:11px}
+.count-range-scale i{font-style:normal}
+.mix-toggle{display:flex;align-items:center;gap:7px;margin-top:9px;color:#4d636a;font-size:12px;font-weight:700;cursor:pointer}
+.mix-toggle input{width:16px;height:16px;accent-color:#2f7d8a}
+.segmented.is-mixed .segment.is-active{background:#2f7d8a;color:#fff;box-shadow:none}
+.segmented.is-mixed .segment.is-active::before{content:"✓ ";font-weight:900}
+@media print{.semester-chips,.count-range,.mix-toggle{display:none!important}}
+/* 4-1 심화 p.23 Mission 5·6: 각 위치를 호로 표시 (2026-11-28) */
+.source41-two-turn-octagon .source41-angle-arc,.source41-four-triangle-cross .source41-angle-arc{fill:none!important;stroke:#526b7d!important;stroke-width:1.5!important}.source41-two-turn-octagon .source41-angle-mark.is-target .source41-angle-arc{stroke:#c88408!important;stroke-width:2.2!important}

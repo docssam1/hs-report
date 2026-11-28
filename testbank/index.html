@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f3f5f4">
   <title>테스트 문제은행 | G-FIELD 편입·승급 자료실</title>
-  <link rel="stylesheet" href="../elementary4/styles.css?v=20261108-answer-key-watermark">
+  <link rel="stylesheet" href="../elementary4/styles.css?v=20261128-hw45">
   <link rel="stylesheet" href="../elementary4/worksheet-tools.css?v=bank-20261015j">
   <link rel="stylesheet" href="../elementary4/typography.css?v=bank-20260924a">
-  <link rel="stylesheet" href="../elementary4/four-up-print.css?v=20261108-p102-q10-print">
+  <link rel="stylesheet" href="../elementary4/four-up-print.css?v=20261128-hw45">
   <link rel="stylesheet" href="./testbank.css?v=20261128a">
+  <link rel="stylesheet" href="../elementary4/print-typography.css?v=20261126-print-serif4">
   <script src="../data.js"></script>
   <script src="../student-access-policy.js"></script>
   <script>window.GFIELD_GATE_FOLDER='승급과정 문제은행';</script>
@@ -48,6 +49,8 @@
           <div class="segmented term-segments" id="termFilter" role="group" aria-label="학기 필터">
             <button type="button" class="segment is-active" data-term="1">1학기</button>
           </div>
+          <!-- 2026-11-29: 문제은행 app.js가 여러 학기 함께 보기 칸을 쓴다. 이 은행은 한 학기라 숨겨 둔다. -->
+          <div class="semester-chips" id="semesterPicker" role="group" aria-label="여러 학년·학기를 함께 보기" hidden></div>
         </div>
 
         <div class="selector-layout">
@@ -94,6 +97,7 @@
                   <button type="button" data-count="30">30</button>
                   <button type="button" data-count="40">40</button>
                 </div>
+                <label class="count-range" for="questionCountRange"><span class="sr-only">문항 수 슬라이더</span><input id="questionCountRange" type="range" min="1" max="120" step="1" value="12"><span class="count-range-scale" aria-hidden="true"><i>1</i><i>120</i></span></label>
                 <label class="count-input" for="questionCountInput"><span>직접 입력</span><input id="questionCountInput" class="input-number" type="number" min="1" max="120" step="1" value="12"></label>
               </div>
             </div>
@@ -105,6 +109,7 @@
                 <button type="button" class="segment is-active" data-difficulty="0">같은 수준</button>
                 <button type="button" class="segment" data-difficulty="1">높여서</button>
               </div>
+              <label class="mix-toggle" for="difficultyMixToggle"><input id="difficultyMixToggle" type="checkbox"><span>여러 수준 섞기</span></label>
             </div>
 
             <label class="field-group" for="studentNameInput">
@@ -196,11 +201,13 @@
   </div>
 
   <script defer src="../elementary4/source-inventory-4-1.js?v=20261128-u1"></script>
-  <script defer src="../elementary4/generators.js?v=20261128-u2"></script>
+  <script defer src="../elementary4/generators.js?v=20261129-jo-range"></script>
   <script defer src="../upgrade-bank/generators.js?v=20261115-gen1"></script>
   <script defer src="../upgrade-bank/generators-u2.js?v=20261128-u2fig"></script>
   <script defer src="../elementary4/math-notation.js?v=bank-20260827l"></script>
   <script defer src="../elementary4/identity.js?v=identity-20260824a"></script>
+  <script defer src="../elementary4/bank-access-open.js?v=20261129-sync"></script>
+  <script defer src="../elementary4/number-josa.js?v=20261128-josa3"></script>
   <script defer src="./bank.js?v=20261128b"></script>
 </body>
 </html>
