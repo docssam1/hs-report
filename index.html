@@ -64,6 +64,8 @@
 
   /* 대시보드 */
   #dashboard{position:relative;z-index:10;max-width:760px;margin:0 auto;padding:18px 18px 80px;}
+  /* PC 화면(1100px 이상): 창을 넓게 쓴다. 휴대폰·태블릿 세로는 위의 760px 기준 그대로 */
+  @media (min-width:1100px){ #dashboard{max-width:1200px;padding-left:24px;padding-right:24px;} }
   .topbar{display:flex;justify-content:space-between;align-items:center;padding:8px 4px 10px;}
   .topbar .brand{color:var(--orange-d);font-size:20px;}
   .topbar .brand small{display:block;font-family:'Noto Sans KR',sans-serif;font-weight:500;color:var(--dim);font-size:11px;}
@@ -1523,9 +1525,9 @@
   })();
 </script>
 <script src="index-enhancements.js?v=20261116-status"></script>
-<script src="roadmap-feb.js?v=20261126-ch3"></script>
-<script src="upgrade-bank.js?v=20261128-u1"></script>
-<script src="upgrade-course.js?v=20261121-course"></script>
+<script src="roadmap-feb.js?v=20261128-pc"></script>
+<script src="upgrade-bank.js?v=20261128-u2"></script>
+<script src="upgrade-course.js?v=20261128-pc"></script>
 <script src="hs-theme.js?v=20261116-theme"></script>
 </body>
 </html>

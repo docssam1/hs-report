@@ -11,7 +11,7 @@
   var GEN_URL = 'upgrade-bank/generators.js?v=20261115-gen1';
   var MAX_TOTAL = 60;
   /* 단원테스트 유사문제는 황소 초등 문제은행 4학년(elementary4/)의 같은 유형 생성기를 그대로 쓴다. 파일이 커서 필요할 때만 불러온다. */
-  var ELEM_SCRIPTS = ['elementary4/source-inventory-4-1.js?v=20261128-u1', 'elementary4/generators.js?v=20261128-u1'];
+  var ELEM_SCRIPTS = ['elementary4/source-inventory-4-1.js?v=20261128-u1', 'elementary4/generators.js?v=20261128-u2'];
   var ELEM_OFFSET = { lower: -1, same: 0, higher: 1 };
   /* 문제은행 문제의 빈칸·수직선·숫자 칸 모양(elementary4/styles.css에서 4학년 1단원에 필요한 것만). 화면과 인쇄에 함께 쓴다. */
   var ELEM_CSS =

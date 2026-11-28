@@ -97,6 +97,9 @@
     '#rm-upg .book:hover .cover.drawn{transform:translateY(-4px);}' +
     '#rm-upg .book .label{color:#1b2340;}' +
     '#rm-upg .book:focus-visible{outline:3px solid #2456c4;outline-offset:3px;border-radius:12px;}' +
+    '@media (min-width:1100px){.up-hero{display:flex;flex-direction:row-reverse;align-items:stretch;}' +
+    '.up-hero .hs-scene{flex:1;min-width:0;border-left:2.5px solid #1b2340;}' +
+    '.up-hero-c{position:static;flex:0 0 360px;max-width:none;align-self:center;padding:20px 22px;}}' +
     '@media (max-width:600px){.up-hero-c{position:static;max-width:none;padding:14px 16px 16px;background:#e9e0fb;border-top:2.5px solid #1b2340;}' +
     '.up-hero .hs-scene{height:190px;}.up-hero-c h2{font-size:24px;}}' +
     '@media (prefers-reduced-motion: reduce){#rm-upg .book:hover .cover.drawn{transform:none;}}' +

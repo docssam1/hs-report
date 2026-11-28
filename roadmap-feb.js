@@ -189,6 +189,10 @@
     '.fb-step.locked .fb-num{background:#eef2fa;color:#5d6683;border-color:#8d99b8;}' +
     '.fb-step.locked .fb-st{color:#5d6683;}' +
     '.fb-step:not(.locked):hover .fb-num{transform:translateY(-2px);}' +
+    /* PC: 글 칸과 그림을 좌우로 놓아 넓어진 폭에서도 그림이 지나치게 커지지 않게 한다 */
+    '@media (min-width:1100px){.fb-hero{display:flex;flex-direction:row-reverse;align-items:stretch;}' +
+    '.fb-hero .hs-scene{flex:1;min-width:0;border-left:2.5px solid #1b2340;}' +
+    '.fb-copy{position:static;flex:0 0 360px;max-width:none;align-self:center;padding:20px 22px;}}' +
     '@media (max-width:600px){' +
     '.fb-copy{position:static;max-width:none;padding:14px 16px 16px;background:#cfe2ff;border-top:2.5px solid #1b2340;}' +
     '.fb-hero .hs-scene{height:auto;}' +

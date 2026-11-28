@@ -5243,7 +5243,7 @@
         const configs = [
           { exponents: [7, 4, 1], scalePower: 2, ranges: [[20, 99], [120, 999], [120, 999]] },
           { exponents: [9, 6, 3], scalePower: 3, ranges: [[200, 899], [1000, 8999], [1000, 8999]] },
-          { exponents: [12, 8, 4], scalePower: 4, ranges: [[2000, 8999], [10000, 89999], [10000, 89999]] }
+          { exponents: [9, 6, 3], scalePower: 3, ranges: [[2000, 8999], [10000, 89999], [10000, 89999]] }
         ];
         const config = configs[level];
         const counts = config.ranges.map(rangeValue => int(rng, ...rangeValue));
